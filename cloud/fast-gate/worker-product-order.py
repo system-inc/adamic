@@ -16,6 +16,8 @@ compiler = prefix + 'TestProduct_WorkerCompiler'
 checks = prefix + 'TestProduct_WorkerChecks'
 seed = prefix + 'TestProduct_WorkerWasmTransform'
 waits = {compiler: ['internal/native TestProduct_WASICompiler'], checks: [compiler], seed: [compiler]}
+waits[prefix + "TestProduct_WorkerComputeCorpus"] = [compiler]
+waits[prefix + "TestProduct_WorkerComputeSieveMutant"] = [compiler]
 wasm = []
 for index in range(products['TestProduct_WorkerWasm']):
     name = prefix + f'TestProduct_WorkerWasm_{index:03}'

@@ -154,7 +154,19 @@ func Analyze(program *ir.Program) []Function {
 			reason = "signature: constructor not crossable"
 		}
 		if pure[i] && reason == "" {
-			if len(function.Boundary.Parameters) != len(function.Parameters) {
+			for j, param := range function.Parameters {
+				if reason == "" && program.Locals[param].Type.IsTypedArray() {
+					if a.writes[i][param] {
+						reason = fmt.Sprintf("writes parameter %d", j+1)
+					} else {
+						reason = fmt.Sprintf("signature: typed-array parameter %d not crossable", j+1)
+					}
+				}
+			}
+			if reason == "" && function.Returns.IsTypedArray() {
+				reason = "signature: typed-array return not crossable"
+			}
+			if reason == "" && len(function.Boundary.Parameters) != len(function.Parameters) {
 				reason = "signature: missing boundary schema"
 			}
 			for j, schema := range function.Boundary.Parameters {
@@ -549,7 +561,7 @@ func (a *analysis) origins(value ir.Expression) roots {
 		if (node.Method == "assign" || node.Method == "freeze") && len(node.Arguments) > 0 {
 			add(result, a.origins(node.Arguments[0]))
 		}
-	case ir.ArrayLiteral, ir.ObjectLiteral, ir.MapNew, ir.SetNew, ir.ArraySlice, ir.ArrayConcat, ir.ArrayMap, ir.ArrayFrom, ir.ArraySplice, ir.JSONDecode, ir.RegExpNew, ir.ObjectKeys:
+	case ir.TypedArrayNew, ir.ArrayLiteral, ir.ObjectLiteral, ir.MapNew, ir.SetNew, ir.ArraySlice, ir.ArrayConcat, ir.ArrayMap, ir.ArrayFrom, ir.ArraySplice, ir.JSONDecode, ir.RegExpNew, ir.ObjectKeys:
 		// Allocated containers have their own identity at the binding. Their shared
 		// fields and elements are tracked separately by contained.
 
@@ -739,9 +751,10 @@ func knownExpression(expression ir.Expression) bool {
 }
 
 // JSON decode and encode perform no I/O; their results depend only on arguments.
+// Only TypedArrayNew is reviewed; Fill, Sort, Set and sharing Subarray remain unknown.
 var knownExpressions = func() map[string]bool {
 	result := map[string]bool{}
-	for _, name := range strings.Fields(`ArrayConcat ArrayFill ArrayFrom ArrayIndex ArrayJoin ArrayLiteral ArrayMap ArrayPop ArrayPush ArrayReduce ArrayReverse ArraySearch ArraySlice ArraySort ArraySplice ArrayVisit Binary BooleanConstant BooleanToString Box Call CallClosure CharCodeAt CheckedCast ClosureSelf Coalesce CodePoints CollectionIterator Concat Conditional Defined FileStatus HasAccessor HasOwn InstanceOf IsNull IsUndefined JSONDecode JSONEncode JSONNull JSONStringify Length LibraryGlobal MakeClosure MakeError MapClear MapDelete MapEntries MapForEach MapGet MapHas MapKeys MapNew MapSet MapSize MapValues MathCall MaybeOf MaybeToString Narrow Null NumberCall NumberConstant NumberFormat NumberToString ObjectCall ObjectKeys ObjectLiteral ProgramArguments Property Read ReadDirectory ReadTextFile RegExpCall RegExpGroup RegExpNew RegExpProperty SetAdd SetNew SetValues StringCall StringConstant StringFromCodes StringIndex StringLength ToFixed Trim TypeOf Unary Undefined UnionToString Unwrap Utf8At Utf8Length WeakOf WeakTarget WriteTextFile`) {
+	for _, name := range strings.Fields(`ArrayConcat ArrayFill ArrayFrom ArrayIndex ArrayJoin ArrayLiteral ArrayMap ArrayPop ArrayPush ArrayReduce ArrayReverse ArraySearch ArraySlice ArraySort ArraySplice ArrayVisit Binary BooleanConstant BooleanToString Box Call CallClosure CharCodeAt CheckedCast ClosureSelf Coalesce CodePoints CollectionIterator Concat Conditional Defined FileStatus HasAccessor HasOwn InstanceOf IsNull IsUndefined JSONDecode JSONEncode JSONNull JSONStringify Length LibraryGlobal MakeClosure MakeError MapClear MapDelete MapEntries MapForEach MapGet MapHas MapKeys MapNew MapSet MapSize MapValues MathCall MaybeOf MaybeToString Narrow Null NumberCall NumberConstant NumberFormat NumberToString ObjectCall ObjectKeys ObjectLiteral ProgramArguments Property Read ReadDirectory ReadTextFile RegExpCall RegExpGroup RegExpNew RegExpProperty SetAdd SetNew SetValues StringCall StringConstant StringFromCodes StringIndex StringLength ToFixed Trim TypeOf TypedArrayNew Unary Undefined UnionToString Unwrap Utf8At Utf8Length WeakOf WeakTarget WriteTextFile`) {
 		result[name] = true
 	}
 	return result
@@ -816,6 +829,9 @@ func (a *analysis) contained(value ir.Expression) roots {
 		if reference(node.Element) {
 			add(result, a.elements(node.Array))
 		}
+		return result
+	case ir.TypedArrayNew:
+		// Length allocation and FromArray scalar copies share no source storage.
 		return result
 	case ir.JSONDecode, ir.ObjectKeys, ir.RegExpNew:
 		return result
