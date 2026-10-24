@@ -54,18 +54,20 @@ static bool regex_compile_names(regex_context *r, adamic_regex_program *p) {
     qsort(names,count,sizeof(*names),regex_compile_capture_order);
     adamic_regex_group *groups=adamic_regex_parse_allocate(r,count*sizeof(*groups));
     const char **shape_names=adamic_regex_parse_allocate(r,count*sizeof(*shape_names));
-    bool *references=adamic_regex_parse_allocate(r,count*sizeof(*references));
+    bool *references=adamic_regex_parse_allocate(r,count*(sizeof(*references)+sizeof(adamic_field_kind)));
     adamic_shape *shape=adamic_regex_parse_allocate(r,sizeof(*shape));
     if(groups==NULL||shape_names==NULL||references==NULL||shape==NULL)return false;
+    // Keep kinds in the existing metadata block, so arena ownership counts do not change.
+    adamic_field_kind *kinds=(adamic_field_kind *)(references+count);
     size_t groups_count=0;
     for(size_t i=0;i<count;) {
         size_t end=i+1;while(end<count && strcmp(names[i]->name,names[end]->name)==0)end++;
         size_t *ids=adamic_regex_parse_allocate(r,(end-i)*sizeof(*ids));if(ids==NULL)return false;
         for(size_t j=i;j<end;j++)ids[j-i]=names[j]->index;
         groups[groups_count]=(adamic_regex_group){names[i]->name,ids,end-i};
-        shape_names[groups_count]=names[i]->name;references[groups_count]=true;groups_count++;i=end;
+        shape_names[groups_count]=names[i]->name;references[groups_count]=true;kinds[groups_count]=adamic_field_reference;groups_count++;i=end;
     }
-    *shape=(adamic_shape){groups_count,shape_names,references,NULL};p->groups=groups;p->group_count=groups_count;p->group_shape=shape;return true;
+    *shape=(adamic_shape){groups_count,shape_names,references,NULL,kinds};adamic_shape_check(shape);p->groups=groups;p->group_count=groups_count;p->group_shape=shape;return true;
 }
 static bool regex_compile_bound(regex_context *r, const char *digits, uint64_t *bound) {
     *bound=0;if(digits==NULL)return true;

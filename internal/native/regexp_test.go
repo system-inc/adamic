@@ -654,8 +654,9 @@ func TestRegExpIteratorResultShape(t *testing.T) {
 #include <stdio.h>
 static const char *const names[] = {"value", "done"};
 static const bool references[] = {false, false};
-static const adamic_shape missing = {1,names,references,NULL};
-static const adamic_shape reordered = {2,names,references,NULL};
+static const adamic_field_kind kinds[] = {adamic_field_number, adamic_field_boolean};
+static const adamic_shape missing = {1,names,references,NULL,kinds};
+static const adamic_shape reordered = {2,names,references,NULL,kinds};
 int main(int argc,char **argv) {
  adamic_start(argc,argv);
  adamic_object *object=adamic_object_new(&missing);object->slots[0].number=42;

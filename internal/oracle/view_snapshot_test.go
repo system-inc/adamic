@@ -88,7 +88,8 @@ console.log(typeof viewed.value);
 #include <stdio.h>
 static const char *const names[]={"value"};
 static const bool references[]={true};
-static const adamic_shape shape={1,names,references,NULL};
+static const adamic_field_kind kinds[]={adamic_field_reference};
+static const adamic_shape shape={1,names,references,NULL,kinds};
 int main(void){
  adamic_object *object=adamic_object_new(&shape);
  adamic_typed_array *array=adamic_typed_array_new(adamic_typed_array_uint8,1);
