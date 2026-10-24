@@ -231,11 +231,7 @@ func unemittableCheckedViewRead(program *ir.Program) error {
 		if !isProperty || read.View == "" || read.Method || !program.CheckedField(read.ViewReceiverTypeID, read.Name) {
 			return true
 		}
-		// Readiness hands emission the contract the read's declared type has by then.
-		contract := read.ViewContract
-		if read.ViewTypeID != 0 {
-			contract = program.ViewContractTypes[read.ViewTypeID]
-		}
+		contract := emittedViewContract(program, read)
 		if contract > 0 && int(contract) <= len(program.ViewContracts) {
 			descriptor := program.ViewContracts[contract-1]
 			if descriptor.Kind == ir.ViewUnion || descriptor.FixedTuple || descriptor.Kind == ir.ViewCallable && descriptor.ProducerCertified {

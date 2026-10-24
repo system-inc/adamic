@@ -289,8 +289,8 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 					expression.ViewType = ""
 					expression.ViewAllowed = nil
 					expression.ViewContract = 0
-				} else if expression.ViewTypeID != 0 {
-					expression.ViewContract = program.ViewContractTypes[expression.ViewTypeID]
+				} else {
+					expression.ViewContract = emittedViewContract(program, expression)
 				}
 				proven := false
 				if local, ok := readinessObject(expression.Object); ok {
@@ -440,4 +440,14 @@ stored:
 		assigned = ir.Narrow{Value: read, To: to}
 	}
 	return []ir.Statement{ir.Declare{Local: local, Value: value}}, present, assigned, nil
+}
+
+// emittedViewContract is the contract a checked read hands emission: its declared type's, once lowering knows the
+// type, otherwise the one the read was built with. Readiness writes it and unemittableCheckedViewRead reads it, so a
+// read is judged by the contract emission will see, whichever of them runs first.
+func emittedViewContract(program *ir.Program, read ir.Property) ir.ViewContractID {
+	if read.ViewTypeID != 0 {
+		return program.ViewContractTypes[read.ViewTypeID]
+	}
+	return read.ViewContract
 }
