@@ -59,8 +59,18 @@ fail before writing the refusal overlay, with `lowering.refuse` and the missing
 structure in the error. It never rewrites unrelated `return true` statements.
 `go test ./stage3/census/latent/refusalrewrite/...` covers the complete 41231d51
 source, compiled continuation/body-skip behavior, and missing-function and
-changed-child-walk mutants. Other overlay sections retain their existing
-instrumentation and assertions.
+changed-child-walk mutants. Top-level preflights are recognized by AST shape:
+`if err := l.method(module); err != nil { return err }`, without a method-name list.
+Wrapped errors, nested preflights, assignments instead of declarations and other
+arguments fail closed. The slice-3 compiler snapshot and an unknown-name compiled
+behavior probe hold this contract.
+
+After all overlay rewrites, `importclean` parses every generated file and uses
+`astutil.UsesImport` and `DeleteNamedImport` to remove unused imports. Explicit
+blank and dot imports are preserved. This replaces the old textual removal of
+`path/filepath`. Disabling production `Lower` also removes its async normalization
+and error-location code, the only uses of `flow` and `errors`; those imports must
+therefore be removed in the scratch copy. Production files are untouched.
 
 This measurement binary sees beyond a program's first refusal. It is built with a
 scratch Go overlay; no production compiler source is edited or committed. All
