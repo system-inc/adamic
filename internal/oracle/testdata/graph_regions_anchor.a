@@ -1,0 +1,14 @@
+interface AnchorNode { readonly label: string; next: AnchorNode | undefined; }
+function build(): AnchorNode {
+ const first: AnchorNode = { label: `first${1}`, next: undefined };
+ const second: AnchorNode = { label: `second${2}`, next: undefined };
+ first.next = second; second.next = first;
+ return first;
+}
+function run(): void {
+ let anchor: AnchorNode | undefined = build();
+ console.log(`${anchor.next?.next?.label}`);
+ anchor = undefined;
+ console.log('anchor dropped');
+}
+run();

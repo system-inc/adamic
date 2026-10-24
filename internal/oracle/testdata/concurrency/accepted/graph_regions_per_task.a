@@ -1,0 +1,11 @@
+import { parallelMap } from 'adamic';
+interface Ring { readonly value: number; next: Ring | undefined; }
+const items: readonly number[] = Array.from({ length: 4096 }, (_unused, index) => index);
+const results = parallelMap(items, (item: number): number => {
+  const first: Ring = { value: item, next: undefined };
+  const second: Ring = { value: item + 1, next: undefined };
+  first.next = second;
+  second.next = first;
+  return first.value + second.value;
+});
+console.log(`${results.length} ${results[0]}`);

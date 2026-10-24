@@ -1,0 +1,14 @@
+interface Cached { readonly label: string; self: Cached | undefined; }
+function build(): Map<string, Cached> {
+ const value: Cached = { label: `cached${7}`, self: undefined };
+ value.self = value;
+ const cache = new Map<string, Cached>(); cache.set(`key${7}`, value);
+ return cache;
+}
+function run(): void {
+ let cache: Map<string, Cached> | undefined = build();
+ const kept = cache.get(`key${7}`);
+ cache = undefined;
+ console.log(`${kept?.self?.label}`);
+}
+run();
