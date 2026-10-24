@@ -1,0 +1,29 @@
+async function walk(): Promise<void> {
+    const items = new Map<string, number>([["a", 1], ["b", 2], ["c", 3]]);
+    for (const [key, value] of items) {
+        await Promise.resolve();
+        console.log(`entry:${key}:${value}`);
+    }
+    for (const [key, value] of items.entries()) {
+        await Promise.resolve();
+        console.log(`explicit:${key}:${value}`);
+    }
+    for (const key of items.keys()) {
+        await Promise.resolve();
+        console.log(`key:${key}`);
+    }
+    for (const value of items.values()) {
+        await Promise.resolve();
+        console.log(`value:${value}`);
+    }
+    for (const entry of items) {
+        await Promise.resolve();
+        console.log(`tuple:${entry[0]}:${entry[1]}`);
+    }
+    for (const [key, value] of items) {
+        await Promise.resolve();
+        console.log(`break:${key}:${value}`);
+        break;
+    }
+}
+await walk();

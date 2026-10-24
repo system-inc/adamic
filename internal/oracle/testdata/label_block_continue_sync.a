@@ -1,0 +1,12 @@
+function syncContinue(): void {
+    for (let i = 0; i < 3; i++) {
+        box: {
+            console.log(`sync continue${i}`);
+            continue;
+            console.log('sync missed continue');
+        }
+        console.log('sync wrong block continue');
+    }
+    console.log('sync continue done');
+}
+syncContinue();

@@ -1,0 +1,12 @@
+async function asyncBreak(): Promise<void> {
+    for (let i = 0; i < 3; i++) {
+        box: {
+            await Promise.resolve(); console.log(`async break${i}`);
+            break;
+            console.log('async missed break');
+        }
+        console.log('async wrong block break');
+    }
+    console.log('async break done');
+}
+await asyncBreak();

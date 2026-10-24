@@ -12,7 +12,7 @@ import (
 )
 
 // Refused sources still run independently on Node. The frame ownership cycle is
-// forbidden; iteration cells and thenable adoption are semantics not yet proven.
+// forbidden; thenable adoption remains a semantic gap.
 func assertAsyncWitnessRefusal(t *testing.T, key, path string, diagnostic error) bool {
 	t.Helper()
 	var want, output string
@@ -20,8 +20,6 @@ func assertAsyncWitnessRefusal(t *testing.T, key, path string, diagnostic error)
 	switch key {
 	case "internal/oracle/testdata/async_refused/async_refuse_frame_capture_cycle.a":
 		want, output, cycle = "async frame capture cycle", "seed3:held:7\n", true
-	case "internal/oracle/testdata/async_refused/async_refuse_loop_body_capture.a":
-		want, output = "async per-iteration captured cells", "item0 item1 item2\n"
 	case "internal/oracle/testdata/async_refused/async_refuse_return_thenable.a", "internal/oracle/testdata/async_refused/async_refuse_arrow_thenable.a":
 		want, output = "return of thenables", "7\n"
 	default:

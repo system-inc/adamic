@@ -1,0 +1,1 @@
+for (const x of "\ud800x\udc00😀") { await Promise.resolve(); console.log(`${x.length}:${x.charCodeAt(0)}`); }

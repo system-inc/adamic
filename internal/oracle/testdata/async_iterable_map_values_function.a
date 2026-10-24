@@ -1,0 +1,4 @@
+async function walk(): Promise<void> {
+const m = new Map<string, number>([["a",1],["b",2]]); for (const v of m.values()) { await Promise.resolve(); console.log(`${v}`); }
+}
+await walk();

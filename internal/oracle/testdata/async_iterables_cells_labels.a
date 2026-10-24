@@ -1,0 +1,17 @@
+async function run(): Promise<void> {
+    const readers: (() => string)[] = [];
+    const entries = new Map<string, number>([["a", 1], ["b", 2], ["c", 3]]);
+    outer: for (const [key, value] of entries) {
+        for (const delay of [0]) {
+            readers.push(() => `${key}:${value}`);
+            await Promise.resolve(delay);
+            if (value === 2) break outer;
+        }
+    }
+    for (const element of "x💡") {
+        readers.push(() => element);
+        await Promise.resolve();
+    }
+    for (const read of readers) console.log(read());
+}
+await run();

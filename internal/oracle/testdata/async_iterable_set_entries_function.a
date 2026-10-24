@@ -1,0 +1,4 @@
+async function walk(): Promise<void> {
+const s = new Set<string>(["a","b"]); for (const [k,v] of s.entries()) { await Promise.resolve(); console.log(`${k}:${v}`); }
+}
+await walk();

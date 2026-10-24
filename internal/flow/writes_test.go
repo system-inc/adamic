@@ -120,6 +120,7 @@ var writesNothing = []struct {
 	{ir.StringConstant{}, "a constant"},
 	{ir.StringFromCodes{}, "a new string"},
 	{ir.StringIndex{}, "reads a string"},
+	{ir.StringIterator{}, "a new iterator holding an immutable string"},
 	{ir.StringLength{}, "reads a string"},
 	{ir.ToFixed{}, "a new string"},
 	{ir.Trim{}, "a new string"},

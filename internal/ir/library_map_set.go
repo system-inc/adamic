@@ -10,3 +10,8 @@ type CollectionIterator struct {
 }
 
 func (CollectionIterator) Type() Type { return Object }
+
+// StringIterator retains its string and advances by JavaScript code points.
+type StringIterator struct{ Value Expression }
+
+func (StringIterator) Type() Type { return Object }
