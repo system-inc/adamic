@@ -1,7 +1,6 @@
 package oracle
 
 import (
-	"bytes"
 	"context"
 	"errors"
 	"fmt"
@@ -10,10 +9,10 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
-	"syscall"
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/native/runtimeproducts"
@@ -158,9 +157,6 @@ func executeParallelDeadline(t *testing.T, threads string, leaks bool, deadline 
 	ctx, cancel := context.WithTimeout(context.Background(), deadline)
 	t.Cleanup(cancel)
 	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-	command.WaitDelay = 5 * time.Second
 	command.Env = []string{}
 	for _, entry := range os.Environ() {
 		if strings.HasPrefix(entry, "ADAMIC_THREADS=") || strings.HasPrefix(entry, "ASAN_OPTIONS=") || strings.HasPrefix(entry, "TSAN_OPTIONS=") || strings.HasPrefix(entry, "ADAMIC_TSAN_PERTURB=") {
@@ -179,14 +175,12 @@ func executeParallelDeadline(t *testing.T, threads string, leaks bool, deadline 
 		}
 		command.Env = append(command.Env, fmt.Sprintf("ASAN_OPTIONS=detect_leaks=%d", flag))
 	}
-	var stdout, stderr bytes.Buffer
-	command.Stdout, command.Stderr = &stdout, &stderr
-	err := command.Run()
+	stdout, stderr, err := childguard.Capture(ctx, command)
 	var failure *exec.ExitError
 	if err != nil && !errors.As(err, &failure) {
 		t.Fatalf("%s: %v", name, err)
 	}
-	result := run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+	result := run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 	rememberRun(t, result)
 	return result
 }
