@@ -106,6 +106,7 @@ var writesNothing = []struct {
 	{ir.NumberToString{}, "a new string"},
 	{ir.ObjectKeys{}, "a new array of an object's keys"},
 	{ir.ObjectLiteral{}, "a new object"},
+	{ir.PhantomMember{}, "undefined read from a primitive, or a TypeError made when the value is missing"},
 	{ir.ProgramArguments{}, "a new array of the arguments"},
 	{ir.PromiseValue{}, "a new settled promise"},
 	{ir.Property{}, "reads a field; a getter is a Call"},
