@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/lint/context.ts b/stage1/cohere/lint/context.ts
+index 85c0b771..1056fa56 100644
+--- a/stage1/cohere/lint/context.ts
++++ b/stage1/cohere/lint/context.ts
+@@ -65,6 +65,8 @@ export function space(character: string): boolean {
+     return character === ' ' || character === '\t' || character === '\r' || character === '\n';
+ }
+ 
++export function benchmarkEmptyFunction(): void {}
++
+ export class RuleContext {
+     readonly source: string;
+     readonly settings: Settings;
