@@ -7,7 +7,7 @@ static const adamic_json_schema merge_hook = {.kind = adamic_json_toJSON};
 static const adamic_json_schema merge_numbers = {.kind = adamic_json_record, .element = &merge_number};
 static const adamic_json_schema merge_hooks = {.kind = adamic_json_record, .element = &merge_hook};
 static const adamic_json_schema merge_cycle = {.kind = adamic_json_record, .element = &merge_cycle};
-static const adamic_shape merge_shape = {0, NULL, NULL, NULL};
+static const adamic_shape merge_shape = {0, NULL, NULL, NULL, NULL};
 static adamic_record *merge_value;
 static bool merge_throwing;
 static adamic_string *merge_text(const char *text) {

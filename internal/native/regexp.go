@@ -64,3 +64,24 @@ func (e *emitter) regexProperty(property ir.RegExpProperty) string {
 	}
 	return e.snapshot(property.Type(), value)
 }
+
+// Capture-group descriptors come from the regexp serializer rather than shapeOf.
+// Include their real names in counted startup, even if no match ever allocates one.
+func (e *emitter) regexpShapeNames() []string {
+	var names []string
+	if e.program == nil {
+		return names
+	}
+	for _, program := range e.program.Regexps {
+		tokens, err := cTokens(program.Declarations)
+		if err != nil {
+			panic("native: malformed generated regexp declarations: " + err.Error())
+		}
+		for index := 0; index+4 < len(tokens); index++ {
+			if tokens[index].text == "static" && tokens[index+1].text == "const" && tokens[index+2].text == "adamic_shape" && tokens[index+4].text == "=" {
+				names = append(names, tokens[index+3].text)
+			}
+		}
+	}
+	return names
+}
