@@ -317,29 +317,9 @@ func splitC(source string) (string, []compilationUnit, error) {
 		state.WriteString(rewrite(tokens) + "\n")
 	}
 	header.WriteString("#endif\n")
-	// Sixteen consecutive functions amortize clang startup and repeated header parsing. A body
-	// edit changes one group; main stays separate from the shared state and function groups.
-	var groups []compilationUnit
-	functionsInGroup := 0
-	for _, unit := range units {
-		if unit.name == "main.c" {
-			continue
-		}
-		index := len(groups) - 1
-		if index < 0 || functionsInGroup == 16 {
-			groups = append(groups, compilationUnit{name: fmt.Sprintf("functions_%04d.c", len(groups))})
-			index++
-			functionsInGroup = 0
-		}
-		groups[index].source += unit.source
-		functionsInGroup++
-	}
-	for _, unit := range units {
-		if unit.name == "main.c" {
-			groups = append(groups, unit)
-		}
-	}
-	units = append([]compilationUnit{{"state.c", state.String()}}, groups...)
+	// A declaration owns its translation unit. Grouping consecutive declarations
+	// makes an insertion rewrite every following group's bytes and cache identity.
+	units = append([]compilationUnit{{"state.c", state.String()}}, units...)
 	for i := range units {
 		units[i].source = "#include \"units.h\"\n" + units[i].source
 	}

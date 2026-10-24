@@ -59,7 +59,7 @@ func TestAsyncCapturedBindingSurvivesFinishMutant(t *testing.T) {
 	}
 	control := native.C(program)
 	code := control
-	for index, function := range program.Functions {
+	for _, function := range program.Functions {
 		if function.Name != "make" {
 			continue
 		}
@@ -67,7 +67,27 @@ func TestAsyncCapturedBindingSurvivesFinishMutant(t *testing.T) {
 			if program.Locals[local].Name != "held" || !program.Locals[local].Captured {
 				continue
 			}
-			marker := fmt.Sprintf("static void adamic_async_finish_%d(adamic_generated_frame_%d *frame) {\n", index, index)
+			start := strings.Index(control, "static void adamic_async_finish_fn_")
+			marker := ""
+			for start >= 0 {
+				end := strings.Index(control[start:], " {\n")
+				if end < 0 {
+					break
+				}
+				line := control[start : start+end+3]
+				if strings.Contains(line, "_make_") {
+					marker = line
+					break
+				}
+				next := strings.Index(control[start+1:], "static void adamic_async_finish_fn_")
+				if next < 0 {
+					break
+				}
+				start += next + 1
+			}
+			if marker == "" {
+				t.Fatal("missing stable async finish marker")
+			}
 			detach := fmt.Sprintf(" void *adamic_test_captured = frame->cells[%d].value.reference; frame->cells[%d].value.reference = NULL; adamic_release(adamic_test_captured);\n", slot, slot)
 			code = strings.Replace(code, marker, marker+detach, 1)
 		}
