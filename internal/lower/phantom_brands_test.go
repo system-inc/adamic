@@ -70,6 +70,14 @@ console.log(out(into('made' + 'now')));`
 	}
 	// Checker function IDs are local to each load, and this fixture has no indirect calls.
 	got.FunctionTypeTargets, want.FunctionTypeTargets = nil, nil
+	// Each source is lowered from its own temporary directory, so its file's path differs. A
+	// boundary schema describes a parameter's or result's declared type, not a cast, and a brand
+	// can't be described as boundary data (ir.FunctionBoundary: no Schema), where string can. The
+	// bodies, which are what a cast could change, are compared whole.
+	for index := range got.Functions {
+		got.Functions[index].Position.File = want.Functions[index].Position.File
+		got.Functions[index].Boundary, want.Functions[index].Boundary = ir.FunctionBoundary{}, ir.FunctionBoundary{}
+	}
 	if !reflect.DeepEqual(got, want) {
 		t.Fatalf("casts must leave identical IR:\ngot %#v\nwant %#v", got.Functions, want.Functions)
 	}
