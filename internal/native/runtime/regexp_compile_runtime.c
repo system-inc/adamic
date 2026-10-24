@@ -51,10 +51,11 @@ adamic_object *adamic_regex_compile_new(adamic_string *pattern,adamic_string *fl
     }
     if(program->group_count!=0){
         size_t n=program->group_count;adamic_shape *shape=adamic_regex_parse_allocate(&result,sizeof(*shape));
-        const char **names=adamic_regex_parse_allocate(&result,(n+1)*sizeof(*names));bool *references=adamic_regex_parse_allocate(&result,(n+1)*sizeof(*references));
+        const char **names=adamic_regex_parse_allocate(&result,(n+1)*sizeof(*names));bool *references=adamic_regex_parse_allocate(&result,(n+1)*(sizeof(*references)+sizeof(adamic_field_kind)));
         if(shape==NULL||names==NULL||references==NULL)adamic_panic("out of memory",13);
-        for(size_t i=0;i<n;i++){names[i]=program->group_shape->names[i];references[i]=true;}names[n]="#compiler";references[n]=true;
-        *shape=(adamic_shape){n+1,names,references,NULL};program->group_shape=shape;
+        adamic_field_kind *kinds=(adamic_field_kind *)(references+n+1);
+        for(size_t i=0;i<n;i++){kinds[i]=adamic_field_reference;names[i]=program->group_shape->names[i];references[i]=true;}names[n]="#compiler";references[n]=true;kinds[n]=adamic_field_reference;
+        *shape=(adamic_shape){n+1,names,references,NULL,kinds};adamic_shape_check(shape);program->group_shape=shape;
     }
     adamic_string *source=regex_runtime_source(pattern,program->flags);
     char ordered[8];size_t count=0;const char *letters="dgimsuvy";const unsigned bits[]={32,8,1,2,128,4,64,16};
