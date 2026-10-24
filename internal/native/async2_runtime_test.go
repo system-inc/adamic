@@ -122,5 +122,5 @@ func TestAsync2RuntimeFreeChildren(t *testing.T) {
 
 func TestAsync2RuntimeRelease(t *testing.T) {
 	t.Parallel()
-	async2RuntimeGuard(t, "environment", "heap.c", "heap = ((adamic_cell *)heap)->owner;\n\t}\n#endif\n\tif (heap == NULL)", "(void)heap;\n\t}\n#endif\n\tif (heap == NULL)", "Assertion")
+	async2RuntimeGuard(t, "environment", "heap.c", "heap = ((adamic_cell *)heap)->owner;\n\t}\n#endif\n\tif (heap == NULL || adamic_program_is(heap))", "(void)heap;\n\t}\n#endif\n\tif (heap == NULL || adamic_program_is(heap))", "Assertion")
 }
