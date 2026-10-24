@@ -6,6 +6,7 @@ import "testing"
 // index-named fields reads a Map's entry as Node does, and a tuple view reads a Set's [value, value] entry, natively,
 // sanitized and on the JavaScript backend.
 func TestRuntimePairTuples(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"map_entries_object_view", "set_entries_tuple_view"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
@@ -17,6 +18,7 @@ func TestRuntimePairTuples(t *testing.T) {
 // Four native sites build a pair with no field-type bytes, so their review programs await #qyfyh4p natively. The
 // JavaScript backend marks the same pairs, and is held to Node on them here until the review programs run.
 func TestRuntimePairTuplesJavaScript(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"map_spread", "plain_object_entries", "checked_object_entries", "regexp_indices"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
