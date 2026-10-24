@@ -1883,6 +1883,45 @@
     ]
   },
   {
+    "file": "internal/worker/workerd_test.go",
+    "test": "requireWorkerd",
+    "id": "TestProduct_WorkerdJavaScript,TestProduct_WorkerdWebAssembly,TestWorkerdCleanupLeavesNoServer,TestWorkerdJavaScriptCorpus_000,TestWorkerdJavaScriptCorpus_001,TestWorkerdJavaScriptCorpus_002,TestWorkerdJavaScriptCorpus_003,TestWorkerdJavaScriptCorpus_004,TestWorkerdJavaScriptCorpus_005,TestWorkerdJavaScriptCorpus_006,TestWorkerdJavaScriptCorpus_007,TestWorkerdRetriesAnOccupiedPort,TestWorkerdWebAssemblyCorpus_000,TestWorkerdWebAssemblyCorpus_001,TestWorkerdWebAssemblyCorpus_002,TestWorkerdWebAssemblyCorpus_003,TestWorkerdWebAssemblyCorpus_004,TestWorkerdWebAssemblyCorpus_005,TestWorkerdWebAssemblyCorpus_006,TestWorkerdWebAssemblyCorpus_007:98913330a10fef3cf264bac0dcedf94a5f5c3344d3eb037fecd39a3fc141c076",
+    "line": 22,
+    "condition": "os.Getenv(\"ADAMIC_WORKER_WORKERD\") != \"1\"",
+    "reads": [
+      "exec.LookPath(\"workerd\")",
+      "os.Getenv(\"ADAMIC_WORKER_WORKERD\")"
+    ],
+    "callers": [
+      "TestProduct_WorkerdJavaScript",
+      "TestProduct_WorkerdWebAssembly",
+      "TestWorkerdCleanupLeavesNoServer",
+      "TestWorkerdJavaScriptCorpus_000",
+      "TestWorkerdJavaScriptCorpus_001",
+      "TestWorkerdJavaScriptCorpus_002",
+      "TestWorkerdJavaScriptCorpus_003",
+      "TestWorkerdJavaScriptCorpus_004",
+      "TestWorkerdJavaScriptCorpus_005",
+      "TestWorkerdJavaScriptCorpus_006",
+      "TestWorkerdJavaScriptCorpus_007",
+      "TestWorkerdRetriesAnOccupiedPort",
+      "TestWorkerdWebAssemblyCorpus_000",
+      "TestWorkerdWebAssemblyCorpus_001",
+      "TestWorkerdWebAssemblyCorpus_002",
+      "TestWorkerdWebAssemblyCorpus_003",
+      "TestWorkerdWebAssemblyCorpus_004",
+      "TestWorkerdWebAssemblyCorpus_005",
+      "TestWorkerdWebAssemblyCorpus_006",
+      "TestWorkerdWebAssemblyCorpus_007"
+    ],
+    "message": "\"set ADAMIC_WORKER_WORKERD=1 to run the workerd corpus; Workers maintainers run this lane by hand with cloud/setup.sh --workerd\"",
+    "class": "opt-in-lane",
+    "provides": "The workerd lane: bash cloud/setup.sh --workerd lays workerd 1.20261007.1, pinned by its sha256 (chg_7wv0p3cv), and ADAMIC_WORKER_WORKERD=1 runs the Workers JavaScript and WebAssembly corpus (600 cases each) under a real workerd on loopback. No gate sets it until a recipe does (#p9gbepn condition 4); Workers maintainers run it by hand. With the switch on and no workerd on the path it's t.Fatal, never a skip, so a lane that's off is never read as one that ran. TestWorkerdRefusesNonLoopbackAddresses isn't a caller and runs on every runner.",
+    "opt_in_off": [
+      "ADAMIC_WORKER_WORKERD"
+    ]
+  },
+  {
     "file": "internal/oracle/wasi_engines_test.go",
     "test": "TestWasmtimeAgreesWithNode",
     "id": "TestWasmtimeAgreesWithNode:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9",
