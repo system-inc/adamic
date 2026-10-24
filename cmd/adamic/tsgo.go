@@ -15,7 +15,7 @@ func build(path, output string, arguments []string) int {
 }
 
 func buildWithNative(path, output string, arguments []string, buildNative func(string, string, native.Options) error) int {
-	options := native.Options{Release: true}
+	options := native.Options{Release: true, ProgramRegion: os.Getenv("ADAMIC_PROGRAM_REGION") == "1"}
 	archive := ""
 	explain := false
 	reactor := false
