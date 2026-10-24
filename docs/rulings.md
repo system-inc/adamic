@@ -346,7 +346,7 @@ Each is two rulings that can't both hold. Where code on main decides it, that is
 14. **Prototype names on records.** docs/index-signatures.md:36-38: `k in o` matches JavaScript, prototype names included. docs/records.md:108-135: a dynamic `get` or `has` miss on a prototype name stops exit 70. R-T135 (Oct 9): prototype-chain access on a record-lowered value is refused at compile time. Main: compile-time refusal for static reads, `in` and sets (internal/oracle/records_refusal_test.go:80-85), plus the native stop for dynamic misses (internal/native/record_test.go). The `k in o` design line is dead and should be marked so.
 15. **Record representation.** docs/index-signatures.md:79 (ruled Oct 6): a dictionary pointer on every plain object. docs/records.md:26-33 (Oct 7): a table from creation, no promotion. Meaning only, but a reader can't tell which is current.
 16. **`any`: Refused or NotYet.** R-T10 (Oct 7): `any` is a permanent refusal and must report Refused, never NotYet. Stage 0 reports a NotYet, "a value of type any" (internal/lower/taste_representation_test.go:14), and only cohere refuses. **Resolved October 19 by @system_adamic:** Refused, never NotYet; routed to Lower with `eval`, `new Function` and array `length` assignment.
-17. **Generators: Refused or NotYet.** R-T11 (Oct 8): NotYet means intended support. R-T105 (Oct 9) designs generators. Stage 0 reports `Refused` for "yield (generators)" and "a generator function" (internal/lower/refusals.go:22; internal/lower/iteration_test.go:70), and docs/user-iterators.md:33-49 calls them refused. By R-T11's vocabulary they should be NotYet.
+17. **Generators: Refused or NotYet.** R-T11 (Oct 8): NotYet means intended support. R-T105 (Oct 9) designs generators. Stage 0 reports `Refused` for "yield (generators)" and "a generator function" (internal/lower/refusals.go:22; internal/lower/iteration_test.go:70), and docs/user-iterators.md:33-49 calls them refused. By R-T11's vocabulary they should be NotYet. **Resolved October 23 by @system_adamic:** NotYet, not Refused (designed in R-T105, ruled native on #yvgst44), so Refused broke R-T11; Lower owes the change, and the conformance case lands as `// Expect: notyet` when it does.
 18. **Import cycles and namespace imports.** docs/0.1.md (What's in, Modules): no namespace imports, no import cycles. docs/namespaces.md:88-103 (Oct 8) admits ESM namespace imports, and main lowers and runs import cycles with readiness checks (internal/oracle/import_cycles_test.go:83 TestImportCycleLoadTimeReads; internal/lower/import_cycle_ready_test.go:15).
 19. **Const enums.** docs/0.1.md (the "Constant module enums" paragraph): const enums say NotYet. docs/enums.md:36-46: const enum members inline and no object exists; main pins that (internal/lower/enums_test.go:140).
 20. **`JSON.parse`.** R-T91 (Oct 8, #bw3xg7c mbpssmxq): a document that doesn't fit the declared type hits a terminal boundary check. Main refuses `JSON.parse` at compile time: internal/lower/library_json_stringify.go:14, "JSON.parse: its result's type can't be proven from the text".
@@ -361,19 +361,19 @@ Each is two rulings that can't both hold. Where code on main decides it, that is
 Every current Refuse or Check ruling whose test column is NONE. A refusal here can be deleted with every test still green.
 
 1. Gate: the `cohere:adamic` set membership itself (adamic.json); a rule can leave the set unnoticed.
-2. Refuse: a write to a slot through a union must fit every member (#yawc0z5, Oct 18).
-3. Refuse: ambient declarations, augmentation and `/// <reference>` (#3bddhs8, Oct 18).
+2. Refuse: a write to a slot through a union must fit every member (#yawc0z5, Oct 18). **Pinned:** internal/conformance/testdata/unions (Oct 20).
+3. Refuse: ambient declarations, augmentation and `/// <reference>` (#3bddhs8, Oct 18). **Pinned:** internal/conformance/testdata/ambient (Oct 20).
 4. Refuse: reading a `void` value (#x2gt39p, Oct 18).
 5. Refuse: length-changing tuple methods and a mutable tuple as a mutable array (#ktyqy3c, Oct 18; only a NotYet is pinned).
-6. Refuse: `adamic/single-spread` in stage 0 (implemented at internal/lower/object.go:29; cohere only).
+6. Refuse: `adamic/single-spread` in stage 0 (implemented at internal/lower/object.go:29; cohere only). **Pinned:** internal/conformance/testdata/untested/single_spread.a (Oct 22).
 7. Refuse: expandos, function expandos included, and tsc's `MultiMap` expando.
 8. Refuse: `eval` and `new Function`.
 9. Refuse: `any` in stage 0 as a Refused (stage 0 has only a NotYet; cohere only).
-10. Refuse: the `Function` type in stage 0 (cohere only).
+10. Refuse: the `Function` type in stage 0 (cohere only). **Pinned:** internal/conformance/testdata/legacy/function_type.a (Oct 23).
 11. Refuse: class/interface declaration merging in stage 0 (cohere only).
-12. Refuse: decorators (implemented at internal/lower/refusals.go:24).
+12. Refuse: decorators (implemented at internal/lower/refusals.go:24). **Pinned:** internal/conformance/testdata/refusals/decorator.a (Oct 19).
 13. Refuse: `with` (implemented at internal/lower/refusals.go:25).
-14. Refuse: `export default` (implemented at internal/lower/refusals.go:26).
+14. Refuse: `export default` (implemented at internal/lower/refusals.go:26). **Pinned:** internal/conformance/testdata/untested/export_default.a (Oct 22).
 15. Refuse: a checked view whose target has a callable field or newly asserted callable contract (implemented at internal/lower/interface_cast.go:342).
 16. Refuse: a phantom brand whose member name exists on the primitive.
 17. Refuse: observing an undefined-typed array-brand member's presence.
@@ -391,7 +391,7 @@ Every current Refuse or Check ruling whose test column is NONE. A refusal here c
 29. Refuse: `WeakRef` and `FinalizationRegistry`.
 30. Refuse: a foreign value captured into parallel work.
 31. Refuse: `export *` name collisions (TypeScript's refusal; no Adamic test).
-32. Refuse: `sort` without a comparator (implemented at internal/lower/object.go:1803).
+32. Refuse: `sort` without a comparator (implemented at internal/lower/object.go:1803). **Pinned:** internal/conformance/testdata/untested/sort_without_comparator.a (Oct 22).
 33. Refuse: assigning an array's `length`.
 34. Check: negative and fractional index writes on a plain array.
 35. Check: a write through a wider view in .ts (main refuses instead).
