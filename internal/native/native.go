@@ -65,6 +65,8 @@ func cLiteral(value string) string {
 type Options struct {
 	// Release enables ThinLTO only for shipped native, uncounted, unsanitized builds.
 	Release bool
+	// ProgramRegion enables the one-shot CLI Program region.
+	ProgramRegion bool
 
 	// Target is empty for native, or wasm32-wasi for a WASI module.
 	Target string
@@ -130,6 +132,9 @@ func Flags(options Options) []string {
 	if options.Target != "wasm32-wasi" {
 		flags = append(flags, "-pthread")
 	}
+	if options.ProgramRegion {
+		flags = append(flags, "-DADAMIC_PROGRAM_REGION")
+	}
 	if options.Count {
 		flags = append(flags, "-DADAMIC_COUNT")
 	}
@@ -191,6 +196,8 @@ func objectPrefixFlags() []string {
 
 // Build compiles C source and the runtime into a native binary at output.
 func Build(source string, output string, options Options) error {
+	// Resolve the opt-in before forming runtime keys; Flags and lean builds read only Options.
+	options.ProgramRegion = options.ProgramRegion || os.Getenv("ADAMIC_PROGRAM_REGION") == "1"
 	if err := ValidateOptions(options); err != nil {
 		return err
 	}
@@ -203,6 +210,10 @@ func Build(source string, output string, options Options) error {
 // BuildFlags is Build with the compiler flags the caller gives in place of Flags(options), in one translation unit
 // (markdownblocks' mutant canary, at -O0): the binary names no build directory, as Build's doesn't.
 func BuildFlags(source string, output string, options Options, flags []string) error {
+	options.ProgramRegion = options.ProgramRegion || os.Getenv("ADAMIC_PROGRAM_REGION") == "1"
+	if options.ProgramRegion && !slices.Contains(flags, "-DADAMIC_PROGRAM_REGION") {
+		flags = append(slices.Clone(flags), "-DADAMIC_PROGRAM_REGION")
+	}
 	if err := ValidateOptions(options); err != nil {
 		return err
 	}

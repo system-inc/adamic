@@ -1,0 +1,3 @@
+// a-check: refused adamic/cycle-capable
+class Node {next:Node|undefined=undefined;label:string;constructor(){this.label=`node${1}`;this.next=this;}}
+const node=new Node();console.log(String(node.next?.label));
