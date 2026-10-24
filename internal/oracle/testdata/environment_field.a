@@ -1,0 +1,9 @@
+interface Holder { read: () => string; }
+function fill(holder: Holder, start: number): void {
+ const scratch = 'scratch' + String(start);
+ function read(): string { return scratch; }
+ holder.read = read;
+}
+const holder: Holder = { read: () => '' };
+fill(holder, 3);
+console.log(holder.read());

@@ -54,7 +54,7 @@ var shapeProducers = []struct{ name, path string }{
 	{"Reflection", "runtime/library_object.c"}, {"Iterators", "runtime/map_set.c"},
 	{"CaptureGroups", ""}, {"Emitted", ""},
 	{"Graph", "graph_regions_test.go"}, {"GraphAdoption", "graph_concurrency_test.go"},
-	{"Region", "region_end_test.go"}, {"Program", "testdata/program_region/core.c"},
+	{"Region", "region_end_test.go"}, {"EnvironmentMixed", "environment_placement_runtime_test.go"}, {"Program", "testdata/program_region/core.c"},
 	{"FieldCache", "testdata/runtime-statics/field_cache.c"},
 	{"ShapeRegistry", "testdata/runtime-statics/shape_types.c"},
 	{"JSON", "testdata/runtime-statics/json.c"}, {"EmptyWeak", "testdata/runtime-statics/heap_weak.c"},
@@ -535,4 +535,9 @@ int main(int argc,char **argv) {
 	if got.exit != 0 || len(got.stdout) != 0 || !strings.HasPrefix(string(got.stderr), "adamic: counts:") {
 		t.Fatalf("dynamic shape control: %+v", got)
 	}
+}
+
+func TestShapeKindsEnvironmentMixed(t *testing.T) {
+	t.Parallel()
+	checkShapeProducer(t, "EnvironmentMixed")
 }
