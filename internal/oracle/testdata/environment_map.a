@@ -1,0 +1,9 @@
+function fill(values: Map<string, () => string>, start: number): void {
+ const scratch = 'scratch' + String(start);
+ function read(): string { return scratch; }
+ values.set('read', read);
+}
+const values = new Map<string, () => string>();
+fill(values, 3);
+const read = values.get('read');
+if (read !== undefined) { console.log(read()); }

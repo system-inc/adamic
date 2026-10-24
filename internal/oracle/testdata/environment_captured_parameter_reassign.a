@@ -1,0 +1,11 @@
+function check(text: string, fail: boolean): string {
+ function replace(): void { text = 'replacement' + String(7); }
+ const first = text;
+ replace();
+ if (fail) { throw new Error(first + ':' + text); }
+ return first + ':' + text;
+}
+for (const fail of [false, true]) {
+ try { console.log(check('input' + String(3), fail)); }
+ catch (error) { if (error instanceof Error) { console.log(error.message); } }
+}
