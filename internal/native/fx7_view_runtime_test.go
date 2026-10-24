@@ -17,8 +17,9 @@ func TestFX7ViewCycleAndStackGuard(t *testing.T) {
 #include <stdint.h>
 int main(int argc, char **argv) {
  (void)argv;
- const char *names[]={"next"}; const bool references[]={true};
- adamic_shape shape={1,names,references,NULL};
+ static const char *const names[]={"next"}; static const bool references[]={true};
+ static const adamic_field_kind kinds[]={adamic_field_reference};
+ static const adamic_shape shape={1,names,references,NULL,kinds};
  adamic_object *object=adamic_object_new(&shape);
  object->slots[0].reference=object;
  adamic_object_field_types(object)[0]=adamic_rep_object;
@@ -104,7 +105,7 @@ func fx7TupleSelectionBeforeDiagnosticKind(t *testing.T, sanitized bool) {
 	source := `
 #include "view_unions_untagged.h"
 int main(void) {
- adamic_shape shape={0,NULL,NULL,NULL};
+ static const adamic_shape shape={0,NULL,NULL,NULL,NULL};
  adamic_object *object=adamic_object_new(&shape);
  object->tuple=true;
  const adamic_view_untagged_contract contracts[]={
