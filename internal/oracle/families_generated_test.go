@@ -870,6 +870,16 @@ func TestNativeAgreesWithNode_counters_square_jump(t *testing.T) {
 	runNativeAgreesShard(t, -45)
 }
 
+func TestNativeAgreesWithNode_release_fast_graph(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -46)
+}
+
+func TestNativeAgreesWithNode_release_fast_shared(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -47)
+}
+
 func TestFamiliesCatchAPlantedCase_NativeAgreesWithNode(t *testing.T) {
 	t.Parallel()
 	catchPlantedCase(t, "TestNativeAgreesWithNode")
@@ -1728,6 +1738,16 @@ func TestWASIAgreesWithNode_counters_shapes(t *testing.T) {
 func TestWASIAgreesWithNode_counters_square_jump(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -43)
+}
+
+func TestWASIAgreesWithNode_release_fast_graph(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -44)
+}
+
+func TestWASIAgreesWithNode_release_fast_shared(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -45)
 }
 
 func TestFamiliesCatchAPlantedCase_WASIAgreesWithNode(t *testing.T) {
@@ -2843,6 +2863,16 @@ func TestCountsAreRecorded_counters_shapes(t *testing.T) {
 func TestCountsAreRecorded_counters_square_jump(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -37)
+}
+
+func TestCountsAreRecorded_release_fast_graph(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -38)
+}
+
+func TestCountsAreRecorded_release_fast_shared(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -39)
 }
 
 func TestFamiliesCatchAPlantedCase_CountsAreRecorded(t *testing.T) {
