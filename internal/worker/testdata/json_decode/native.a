@@ -1,0 +1,15 @@
+import { decodeJson, readTextFile, programArguments } from 'adamic';
+import { observe } from './cases.a';
+const file = readTextFile(programArguments()[0] ?? '');
+if (file.kind === 'Error') console.log(file.message);
+else {
+const input = decodeJson<readonly string[]>(file.text);
+if (input.kind === 'Error') console.log(input.message);
+else {
+	let index = 0;
+	for (const text of input.value) {
+		console.log(observe(Math.floor(index / 10000), text));
+		index += 1;
+	}
+}
+}

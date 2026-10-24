@@ -16,6 +16,7 @@ and when `build` parses a flag the block doesn't name.
 usage:
   adamic types <file.a|file.ts>...
   adamic c <file.a|file.ts> [--explain-checks]
+  adamic worker <entry.a> --out <directory> [--wasm <name>[,<name>...]]
   adamic js <file.a|file.ts> [--explain-checks]
   adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--export <name>]... [--abi-json <path>] [--explain-checks]
 ```

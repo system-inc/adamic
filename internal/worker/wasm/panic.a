@@ -1,0 +1,10 @@
+import { panic } from 'adamic';
+
+let calls = 0;
+export function handleRequest(request: string): string {
+  calls += 1;
+  if (request.includes('explode')) {
+    panic('host fixture exploded');
+  }
+  return `{"status":200,"headers":[],"body":"fresh:${calls}"}`;
+}

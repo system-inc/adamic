@@ -1,6 +1,10 @@
 {
   "version": 1,
   "packages": {
+    "cmd/adamic-split": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
+    "internal/split": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
+    "internal/worker": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
+    "internal/worker/wasm": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "oracle": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "internal/native": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "internal/boundedrun": ["cmd/adamic"],

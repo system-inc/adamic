@@ -1,0 +1,9 @@
+const limit: number = 3;
+function compute(values: readonly number[]): number {
+	let result = limit;
+	for (let index = 0; index < values.length; index++) {
+		result += 1;
+	}
+	return result;
+}
+console.log(`${compute([1, 2, 3])}`);

@@ -1,0 +1,8 @@
+using Workerd = import "/workerd/workerd.capnp";
+const config :Workerd.Config = (
+  services = [(name = "bench", worker = (
+    modules = [{{MODULES}}],
+    compatibilityDate = "{{DATE}}"
+  ))],
+  sockets = [(name = "http", address = "127.0.0.1:{{PORT}}", http = (), service = "bench")]
+);

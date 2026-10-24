@@ -21,6 +21,11 @@ var compilerNames = []string{"clang", "clang++", "cc", "gcc"}
 // (landable-15's markdown list layout, landable-18's malformed events). A version query, buildcache.Tool(name,
 // "--version" or "-v"), passes without a reason.
 var compilerSites = map[string]string{
+	"internal/worker/json_decode_test.go:TestWorkerDecodeJSON":    "checks clang is installed; builds fixture C through the adamic CLI, never a product compiler",
+	"internal/worker/json_encode_test.go:TestWorkerEncodeJSON":    "checks clang is installed; builds fixture C through the adamic CLI, never a product compiler",
+	"internal/worker/wasm/crossing_test.go:TestGeneratedCrossing": "independent WASI availability and raw crossing-layout probes, built in t.TempDir; compiler output is built through the CLI",
+	"internal/worker/wasm/wasm_test.go:TestWorkersWASM":           "independent WASI availability and trap/instance-recreation probes in t.TempDir; compiler output is built through the CLI",
+
 	"internal/oracle/release_stack_test.go:reservationProbe":                                          "compiles the isolated stack constructor probe in a scratch directory, never a product",
 	"internal/fuzz/confirm_test.go:TestFindingReproducesAlone":                                        "names clang as a fixture failure stage; compiles nothing",
 	"internal/fuzz/confirm_test.go:flakyCheckout":                                                     "writes fixture tools that simulate failed executions; compiles nothing",

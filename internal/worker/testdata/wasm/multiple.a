@@ -1,0 +1,10 @@
+
+import type { HttpRequest, HttpResponse } from 'adamic/http';
+function offset(value: number): number { return value + 7; }
+export function multiply(left: number, right: number): number { return offset(left) * right; }
+let starts = 0;
+starts += 1;
+const startup = offset(1);
+export function handle(request: HttpRequest): HttpResponse {
+ return {status: 200, headers: [], body: String(starts + startup + multiply(Number(request.body), 3) + offset(2))};
+}
