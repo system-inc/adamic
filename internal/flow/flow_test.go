@@ -391,6 +391,8 @@ func uninstrumentedAsyncFixture(path string) bool {
 // These boundary witnesses pin lowering refusals in the oracle and have no flow graph.
 func runtimeBoundaryLoweringReason(path string) string {
 	switch filepath.Base(path) {
+	case "json_decode_coverage_empty.a", "json_decode_empty_object.a":
+		return "stage 0 can't lower Object.keys on a non-object yet"
 	case "coverage_regexp_call.a", "coverage_regexp_literal.a", "coverage_regexp_new.a":
 		return "stage 0 can't lower spreading a RegExp or its iterator yet"
 	case "coverage_view_array.a", "coverage_view_boolean.a", "coverage_view_closure.a", "coverage_view_number.a", "coverage_view_string.a":

@@ -583,7 +583,9 @@ func callsBack(expression ir.Expression) bool {
 		return call.Replacement != nil
 	}
 	switch expression.(type) {
-	case ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort, ir.MapForEach, ir.ParallelMap:
+	// Fail closed for encoding: lowering refuses getter-bearing operands;
+	// schema field reads must never introduce an untracked callback.
+	case ir.JSONEncode, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort, ir.MapForEach, ir.ParallelMap:
 		return true
 	}
 	return false

@@ -1,2 +1,3 @@
+// a-check: refused decodeJson cannot prove number | undefined is JSON data; name a data type made of JSON scalars, arrays, tuples and plain fields; give object unions one distinct literal discriminant
 import { decodeJson } from 'adamic';
 decodeJson<{ readonly n?: number | undefined }>('{}');

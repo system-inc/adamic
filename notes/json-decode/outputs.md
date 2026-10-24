@@ -244,7 +244,7 @@ Node stderr:
 Compiler output:
 
 ```text
-adamic: /workspace/adamic/notes/json-decode/number_undefined.a:2:1: Adamic 0.1 refuses decodeJson cannot prove undefined is JSON data; name a data type made of JSON scalars, arrays, tuples and plain fields; give object unions one distinct literal discriminant
+adamic: /workspace/adamic/notes/json-decode/number_undefined.a:3:1: Adamic 0.1 refuses decodeJson cannot prove undefined is JSON data; name a data type made of JSON scalars, arrays, tuples and plain fields; give object unions one distinct literal discriminant
 exit status 1
 ```
 
@@ -257,10 +257,10 @@ Node stdout:
 Node stderr:
 
 ```text
-/workspace/adamic/notes/json-decode/number_undefined.a:2:1: Adamic 0.1 refuses decodeJson cannot prove undefined is JSON data; name a data type made of JSON scalars, arrays, tuples and plain fields; give object unions one distinct literal discriminant
+/workspace/adamic/notes/json-decode/number_undefined.a:3:1: Adamic 0.1 refuses decodeJson cannot prove undefined is JSON data; name a data type made of JSON scalars, arrays, tuples and plain fields; give object unions one distinct literal discriminant
 exit status 1
 adamic: panic: Error: Command failed: go run ./oracle/json_types.go /workspace/adamic/notes/json-decode/number_undefined.a
-/workspace/adamic/notes/json-decode/number_undefined.a:2:1: Adamic 0.1 refuses decodeJson cannot prove undefined is JSON data; name a data type made of JSON scalars, arrays, tuples and plain fields; give object unions one distinct literal discriminant
+/workspace/adamic/notes/json-decode/number_undefined.a:3:1: Adamic 0.1 refuses decodeJson cannot prove undefined is JSON data; name a data type made of JSON scalars, arrays, tuples and plain fields; give object unions one distinct literal discriminant
 exit status 1
 ```
 
@@ -290,7 +290,7 @@ Node stderr:
 Compiler output:
 
 ```text
-adamic: /workspace/adamic/notes/json-decode/optional_undefined.a:2:1: Adamic 0.1 refuses decodeJson cannot prove number | undefined is JSON data; name a data type made of JSON scalars, arrays, tuples and plain fields; give object unions one distinct literal discriminant
+adamic: /workspace/adamic/notes/json-decode/optional_undefined.a:3:1: Adamic 0.1 refuses decodeJson cannot prove number | undefined is JSON data; name a data type made of JSON scalars, arrays, tuples and plain fields; give object unions one distinct literal discriminant
 exit status 1
 ```
 
@@ -303,10 +303,10 @@ Node stdout:
 Node stderr:
 
 ```text
-/workspace/adamic/notes/json-decode/optional_undefined.a:2:1: Adamic 0.1 refuses decodeJson cannot prove number | undefined is JSON data; name a data type made of JSON scalars, arrays, tuples and plain fields; give object unions one distinct literal discriminant
+/workspace/adamic/notes/json-decode/optional_undefined.a:3:1: Adamic 0.1 refuses decodeJson cannot prove number | undefined is JSON data; name a data type made of JSON scalars, arrays, tuples and plain fields; give object unions one distinct literal discriminant
 exit status 1
 adamic: panic: Error: Command failed: go run ./oracle/json_types.go /workspace/adamic/notes/json-decode/optional_undefined.a
-/workspace/adamic/notes/json-decode/optional_undefined.a:2:1: Adamic 0.1 refuses decodeJson cannot prove number | undefined is JSON data; name a data type made of JSON scalars, arrays, tuples and plain fields; give object unions one distinct literal discriminant
+/workspace/adamic/notes/json-decode/optional_undefined.a:3:1: Adamic 0.1 refuses decodeJson cannot prove number | undefined is JSON data; name a data type made of JSON scalars, arrays, tuples and plain fields; give object unions one distinct literal discriminant
 exit status 1
 ```
 
@@ -315,7 +315,7 @@ exit status 1
 Compiler output:
 
 ```text
-adamic: /workspace/adamic/notes/json-decode/required_undefined.a:2:1: Adamic 0.1 refuses decodeJson cannot prove undefined is JSON data; name a data type made of JSON scalars, arrays, tuples and plain fields; give object unions one distinct literal discriminant
+adamic: /workspace/adamic/notes/json-decode/required_undefined.a:3:1: Adamic 0.1 refuses decodeJson cannot prove undefined is JSON data; name a data type made of JSON scalars, arrays, tuples and plain fields; give object unions one distinct literal discriminant
 exit status 1
 ```
 
@@ -328,10 +328,10 @@ Node stdout:
 Node stderr:
 
 ```text
-/workspace/adamic/notes/json-decode/required_undefined.a:2:1: Adamic 0.1 refuses decodeJson cannot prove undefined is JSON data; name a data type made of JSON scalars, arrays, tuples and plain fields; give object unions one distinct literal discriminant
+/workspace/adamic/notes/json-decode/required_undefined.a:3:1: Adamic 0.1 refuses decodeJson cannot prove undefined is JSON data; name a data type made of JSON scalars, arrays, tuples and plain fields; give object unions one distinct literal discriminant
 exit status 1
 adamic: panic: Error: Command failed: go run ./oracle/json_types.go /workspace/adamic/notes/json-decode/required_undefined.a
-/workspace/adamic/notes/json-decode/required_undefined.a:2:1: Adamic 0.1 refuses decodeJson cannot prove undefined is JSON data; name a data type made of JSON scalars, arrays, tuples and plain fields; give object unions one distinct literal discriminant
+/workspace/adamic/notes/json-decode/required_undefined.a:3:1: Adamic 0.1 refuses decodeJson cannot prove undefined is JSON data; name a data type made of JSON scalars, arrays, tuples and plain fields; give object unions one distinct literal discriminant
 exit status 1
 ```
 

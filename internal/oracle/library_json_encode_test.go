@@ -13,7 +13,7 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-var jsonEncodeFixtures = []string{"json_encode_scalars.a", "json_encode_objects.a", "json_encode_unions.a", "json_encode_differences.a", "json_encode_depth.a", "json_schema_names.a"}
+var jsonEncodeFixtures = []string{"json_encode_scalars.a", "json_encode_objects.a", "json_encode_unions.a", "json_encode_differences.a", "json_encode_depth.a", "json_schema_names.a", "json_encode_own_data.a"}
 
 func init() {
 	for _, name := range jsonEncodeFixtures {
@@ -277,5 +277,24 @@ for (const value of [`+key+`]) {
 	}
 	if got := onJavaScriptBackend(t, program); disagreement(truth, got) != "" {
 		t.Fatalf("JavaScript nonfinite pin differs: %q %s", got.stdout, got.stderr)
+	}
+}
+
+// This is red if encodeJson drops the shared descriptor guard: the accessor is
+// hidden by Data, and native serialization would read a nonexistent data slot.
+func TestJSONEncodeAccessorRefusal(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/json_encode_refused/getter.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	source, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lower.Lower(context.Background(), source)
+	var refused *lower.Refused
+	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "Object enumeration with getter or accessor descriptors; use own data properties for this first reflection implementation") {
+		t.Fatalf("want shared accessor descriptor refusal, got %v", err)
 	}
 }
