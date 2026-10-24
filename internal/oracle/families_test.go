@@ -29,6 +29,13 @@ import (
 // most about 10 s alone on one core, half the 20 s each test is allowed, since a loaded box stretches it. A case that
 // is half that alone would make its shard twice the rest, so it is solo: its own test, <name>_<its file's name>.
 var families = []family{
+	// JSON witnesses share JSONTypes and content-keyed native runtime products; only each case's compile/run remains here.
+	{name: "TestJSONDecode", shards: 8, runner: "runJSONDecodeShard", keys: jsonDecodeKeys, planted: "json_decode_scalars.a", caught: "stdout differs", solo: []string{"json_decode_coverage_shapes.a"}},
+	{name: "TestJSONEncode", shards: 4, runner: "runJSONEncodeShard", keys: jsonEncodeKeys, planted: "json_encode_objects.a", caught: "stdout differs"},
+	{name: "TestJSONDecodeValidationMutants", shards: 8, runner: "runJSONDecodeValidationMutantsShard", keys: jsonDecodeValidationKeys, planted: "number_scalar", caught: "mutant changed nothing"},
+	{name: "TestJSONEncodePinnedDifferences", shards: 3, runner: "runJSONEncodePinnedDifferencesShard", keys: jsonPinnedDifferenceKeys, planted: "runtime_order", caught: "pinned encode text"},
+	{name: "TestJSONEncodeNonfinitePinned", shards: 3, runner: "runJSONEncodeNonfinitePinnedShard", keys: jsonNonfiniteKeys, planted: "NaN", caught: "stdout differs"},
+
 	// 730 s over 946 fixtures, the four solo ones 6.7 to 11.9 s each.
 	{name: "TestNativeAgreesWithNode", shards: 128, runner: "runNativeAgreesShard", keys: fixturePaths, planted: "dedication/dedication.a", caught: "stdout differs", solo: []string{
 		"internal/oracle/testdata/stdout_edges/little_streams.a",

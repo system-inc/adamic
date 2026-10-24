@@ -42,14 +42,11 @@ func runDecodeMutant(t *testing.T, code, binary string) run {
 
 // These changes touch the implementation's checks, not the fixture or its oracle descriptor.
 // Each validation mutant must compile, exit zero and leak nothing before Node can kill it.
-func TestJSONDecodeValidationMutants(t *testing.T) {
-	t.Parallel()
-	original, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
-	if err != nil {
-		t.Fatal(err)
-	}
+type jsonDecodeValidationCase struct{ name, source, from, to string }
+
+func jsonDecodeValidationCases() []jsonDecodeValidationCase {
 	const mismatch = `if (!match) { mismatch(error,path,type->expected,value->kind); return false; }`
-	cases := []struct{ name, source, from, to string }{
+	return []jsonDecodeValidationCase{
 		{"number_scalar", `console.log(decodeJson<number>('"wrong"').kind);`, mismatch, `if (!match && strcmp(kind,"number")==0) { out->number=0; return true; } ` + mismatch},
 		{"string_scalar", `console.log(decodeJson<string>('42').kind);`, mismatch, `if (!match && strcmp(kind,"string")==0) { out->reference=text_of(""); return true; } ` + mismatch},
 		{"boolean_scalar", `console.log(decodeJson<boolean>('42').kind);`, mismatch, `if (!match && strcmp(kind,"boolean")==0) { out->boolean=false; return true; } ` + mismatch},
@@ -65,9 +62,29 @@ func TestJSONDecodeValidationMutants(t *testing.T) {
 		{"missing_discriminant", `type S={readonly kind:'A';readonly n:number}|{readonly kind:'B';readonly n:number}; console.log(decodeJson<S>('{}').kind);`, `if (tag==NULL) { missing(error,path,type->discriminant); return false; }`, `if (tag==NULL) { out->reference=make_object(0); return true; }`},
 		{"discriminant", `type S={readonly kind:'A';readonly n:number}|{readonly kind:'B';readonly n:number}; console.log(decodeJson<S>('{"kind":"Bad","n":1}').kind);`, `if (strcmp(member->fields[f].name,type->discriminant)==0) { match=literal(tag,&schema->nodes[member->fields[f].node]); break; }`, `if (strcmp(member->fields[f].name,type->discriminant)==0) { match=literal(tag,&schema->nodes[member->fields[f].node]) || tag->kind==json_string; break; }`},
 	}
-	for _, c := range cases {
+}
+
+func jsonDecodeValidationKeys() []string {
+	var keys []string
+	for _, c := range jsonDecodeValidationCases() {
+		keys = append(keys, c.name)
+	}
+	return keys
+}
+
+func runJSONDecodeValidationMutantsShard(t *testing.T, shard int) {
+	original, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	cases := jsonDecodeValidationCases()
+	for _, index := range familyCases(t, "TestJSONDecodeValidationMutants", shard, jsonDecodeValidationKeys()) {
+		c := cases[index]
 		t.Run(c.name, func(t *testing.T) {
 			mutated := strings.Replace(string(original), c.from, c.to, 1)
+			if _, probing := familyProbe("TestJSONDecodeValidationMutants"); probing {
+				mutated = string(original)
+			}
 			if mutated == string(original) {
 				t.Fatal("mutant changed nothing")
 			}
