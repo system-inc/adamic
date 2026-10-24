@@ -1,0 +1,10 @@
+// Spec: a record holds own enumerable string keys only, in JavaScript's order
+// Expect: lowers
+const bag: Record<string, number> = {};
+bag['b'] = 1;
+bag['10'] = 2;
+bag['a'] = 3;
+bag['2'] = 4;
+for (const key in bag) {
+	console.log(`${key}=${bag[key] ?? -1}`);
+}

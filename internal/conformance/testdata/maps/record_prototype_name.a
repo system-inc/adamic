@@ -1,0 +1,5 @@
+// Spec: a key that names an `Object.prototype` member is refused at compile time
+// Expect: refused names an Object.prototype member
+const bag: Record<string, number> = {};
+bag['b'] = 1;
+console.log(`${bag['toString'] === undefined}`);
