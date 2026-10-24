@@ -1,0 +1,8 @@
+// Spec: | Unsound function overloads |
+// Expect: refused cannot be served by implementation
+function make(kind: 'Text'): string;
+function make(kind: 'Count'): number;
+function make(kind: 'Text' | 'Count'): string | number {
+	return kind === 'Text' ? 'ahra' : 'one';
+}
+console.log(`${make('Count') + 1}`);

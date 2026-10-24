@@ -1,0 +1,8 @@
+// Spec: Sound overload signatures are erased; only the implementation runs
+// Expect: lowers
+function describe(value: string): string;
+function describe(value: number): string;
+function describe(value: string | number): string {
+	return typeof value === 'string' ? value.toUpperCase() : `${value}`;
+}
+console.log(describe(42));
