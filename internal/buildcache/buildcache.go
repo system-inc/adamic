@@ -474,9 +474,11 @@ func keyAt(version, root string, inputs Inputs) (string, error) {
 
 // portable is a name, a flag or a tool report as every machine holding the same tree spells it, so a product Workshop built
 // is the key a runner asks for (#t37sw0f: runners missed every product because keys named Workshop's machine). The
-// repository's absolute path becomes <repository> and the home directory ~, wherever either appears as a whole path,
-// so a value keeps what it names inside the tree and loses where the tree was checked out. Go's parallel share
-// (-p=N, or -p N, which Workshop's GOFLAGS carries as the core count it computed) is dropped: it changes how many
+// repository's absolute path becomes <repository>, the tools root <tools> and the home directory ~, wherever one
+// appears as a whole path, so a value keeps what it names inside the tree and loses where the tree was checked out and
+// whose home it was built under (#zxq3k08: a unit whose home moved spelled its sysroot flag absolute, where ahra's spelled
+// it ~). Go's parallel share (-p=N, or -p N, which Workshop's GOFLAGS carries as the core count it computed) is
+// dropped: it changes how many
 // packages build at once, never what they build. Everything else stays verbatim, so a flag that changes the output
 // still changes the key.
 func portable(root, value string) string {
@@ -488,8 +490,9 @@ func portable(root, value string) string {
 
 // places are the directories portable rewrites, longest first, so a checkout inside the home directory becomes
 // <repository> rather than ~/....: the repository, the build cache (a key that names another product by its path,
-// such as estree's main=<build cache>/<key>/main.ts, names it by its key), the home directory, and each as its symbolic
-// links resolve (macOS spells /tmp as /private/tmp). A product this process holds anywhere else is <build cache>/<name
+// such as estree's main=<build cache>/<key>/main.ts, names it by its key), the tools root (toolsPlaces), the home
+// directory, and each as its symbolic links resolve (macOS spells /tmp as /private/tmp). A product this process holds
+// anywhere else is <build cache>/<name
 // key> too, as Relative names it: one built outside the cache (uncached, or its scratch directory while it builds), and the
 // copy Resolved made of one, whose name holds a hash of this machine's roots (#sgemgmn: estree's misc port, keyed by
 // its resolved main.ts, missed on every checkout but the one that built it).
@@ -519,7 +522,11 @@ func places(root string) []place {
 	if output, err := outputLocation(); err == nil && (cacheErr != nil || output != cache) {
 		add(output, "<build cache>", resolvedOnce)
 	}
-	if home, err := os.UserHomeDir(); err == nil {
+	home, homeErr := os.UserHomeDir()
+	for _, tools := range toolsPlaces(home) {
+		add(tools, "<tools>", resolvedOnce)
+	}
+	if homeErr == nil {
 		add(home, "~", resolvedOnce)
 	}
 	for _, products := range []*sync.Map{&productDirectories, &resolvedCopies} {
@@ -529,6 +536,48 @@ func places(root string) []place {
 		})
 	}
 	sort.SliceStable(found, func(i, j int) bool { return len(found[i].path) > len(found[j].path) })
+	return found
+}
+
+// toolsPlaces are the spellings of the tools root portable writes as <tools> (#zxq3k08, Node's ruling): ADAMIC_TOOLS,
+// the root Loom hands every product test and unit, and each place a toolchain is looked for in (Loom's
+// launch.AdamicToolsPlaces: home's adamic-tools and .adamic-tools, and /opt/adamic-tools) that resolves to the same
+// directory, since on the house's boxes ~/.adamic-tools is a link to ~/adamic-tools and a flag can spell either. The
+// two beside ADAMIC_TOOLS's own directory are asked too, whatever this process's home: a unit whose home moved still
+// reads a flag env.sh spelled under the box user's (#y4kty3d's /home/ahra/.adamic-tools/...). Longest
+// first, ahead of ~, as places sorts them, so a tool under the home is <tools> under every home. With ADAMIC_TOOLS
+// unset, or naming nowhere that resolves, there are none, and a tool under the home is ~ as before. Each answer is kept
+// by the two values it read (toolsPlacesFound), a candidate that isn't there included: places runs for every name, flag
+// and tool of every key, and a place resolved again on each would be a stat per call under the trace.
+func toolsPlaces(home string) []string {
+	tools := os.Getenv("ADAMIC_TOOLS")
+	if tools == "" {
+		return nil
+	}
+	if found, ok := toolsPlacesFound.Load(tools + "\x00" + home); ok {
+		return found.([]string)
+	}
+	found := toolsPlacesOf(tools, home)
+	toolsPlacesFound.Store(tools+"\x00"+home, found)
+	return found
+}
+
+// toolsPlacesFound holds toolsPlaces' answer by ADAMIC_TOOLS and the home it was read under.
+var toolsPlacesFound sync.Map
+
+// toolsPlacesOf is toolsPlaces for tools, ADAMIC_TOOLS's value, under home.
+func toolsPlacesOf(tools, home string) []string {
+	root := resolved(tools)
+	if root == "" {
+		return nil
+	}
+	found := []string{tools}
+	for _, candidate := range []string{filepath.Join(filepath.Dir(tools), "adamic-tools"), filepath.Join(filepath.Dir(tools), ".adamic-tools"),
+		filepath.Join(home, "adamic-tools"), filepath.Join(home, ".adamic-tools"), "/opt/adamic-tools"} {
+		if !slices.Contains(found, candidate) && filepath.IsAbs(candidate) && resolved(candidate) == root {
+			found = append(found, candidate)
+		}
+	}
 	return found
 }
 
