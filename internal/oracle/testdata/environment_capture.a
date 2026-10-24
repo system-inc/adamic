@@ -1,0 +1,11 @@
+function make(start: number): (suffix: number) => string {
+ const scratch = 'scratch' + String(start);
+ function read(): string { return scratch; }
+ if (start >= 0) {
+  const alias = read;
+  return (suffix: number): string => alias() + String(suffix);
+ }
+ return (suffix: number): string => String(suffix);
+}
+const read = make(3);
+console.log(read(4));

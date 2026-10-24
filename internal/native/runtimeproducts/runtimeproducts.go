@@ -55,7 +55,7 @@ var Sets = []Set{
 	{[]string{"ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"}, "internal/oracle/testdata/closure_convention_host24.a"},
 	{[]string{"ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_NODE_HOST"}, "stage3/fixtures/host/13_createDirectory.a"},
 	{[]string{"ADAMIC_CLOSURE_DISCARDS"}, "internal/oracle/testdata/void_discards_value.a"},
-	{[]string{"ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_DISCARDS"}, "internal/oracle/testdata/nested_captures.a"},
+	{[]string{"ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_DISCARDS"}, "internal/oracle/testdata/void_discards_canonical.a"},
 	{[]string{"ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_CLOSURE_DISCARDS"}, "internal/oracle/testdata/census_optional_values_system.a"},
 	{[]string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CLOSURE_DISCARDS"}, "internal/oracle/testdata/program_region/parse.a"},
 }
