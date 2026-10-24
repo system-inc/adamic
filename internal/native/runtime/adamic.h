@@ -88,8 +88,9 @@ _Static_assert((intptr_t)ADAMIC_SHARED == INTPTR_MIN, "native count tags require
 _Static_assert((ADAMIC_SHARED_HEADER & ADAMIC_REGION_VALUE) == 0 && (ADAMIC_SHARED_HEADER & ADAMIC_GRAPH_FLAG) == 0 &&
 	(ADAMIC_REGION_VALUE & ADAMIC_GRAPH_FLAG) == 0 && ADAMIC_GRAPH_FLAG < ADAMIC_REGION_VALUE, "slab flags overlap");
 // Values whose counts the inline paths below must not touch: shared ones count atomically, and a
-// graph member counts on its region too (graph_regions.c).
-#define ADAMIC_SLOW_COUNT (ADAMIC_SHARED_HEADER | ADAMIC_GRAPH_FLAG)
+// graph member counts on its region too (graph_regions.c). Program members stay
+// on the ownership dispatch path even though their slow operation is a no-op.
+#define ADAMIC_SLOW_COUNT (ADAMIC_SHARED_HEADER | ADAMIC_GRAPH_FLAG | ADAMIC_PROGRAM_FLAG)
 // Slab bits 31 and 30 are shared and statement-region flags. Bit 29 stays
 // reserved for graph storage; opt-in Program members use bit 28. With Program
 // regions on, chunk number + 1 must fit below bit 28 (heap_parallel.h).
@@ -136,20 +137,22 @@ void adamic_release_slow(void *value);
 #if defined(__SANITIZE_ADDRESS__) || defined(ADAMIC_OWNERSHIP_NOINLINE)
 #define ADAMIC_OWNERSHIP static __attribute__((noinline, unused))
 #else
-#define ADAMIC_OWNERSHIP static inline
+#define ADAMIC_OWNERSHIP __attribute__((always_inline)) static inline
 #endif
 
 // Sharing is published before any other worker can reach a value and never cleared. Test that
 // separate bit first: a plain read of a shared count would race with its atomic updates. A graph
 // member's header bit sends it the same way, to count on its region; an environment's interior cell
-// has count zero, so it too reaches the slow path, which counts its environment.
+// has count zero, so it too reaches the slow path, which counts its environment or async frame.
+// Other zero-count values are immortal. Non-sanitized callers keep their no-op cases inline.
 ADAMIC_OWNERSHIP void *adamic_retain(void *value) {
 	ADAMIC_COUNT_RETAIN();
 	adamic_heap *heap = value;
-	if (adamic_program_is(heap)) { return value; }
-	if (heap != NULL && (heap->slab & ADAMIC_SLOW_COUNT) == 0) {
+	if (heap == NULL) { return value; }
+	if ((heap->slab & ADAMIC_SLOW_COUNT) == 0) {
 		size_t count = heap->references;
 		if (count > 0) { ADAMIC_TSAN_PAUSE(adamic_tsan_plain_count); heap->references = count + 1; return value; }
+		if (heap->kind != adamic_kind_cell) { return value; }
 	}
 	return adamic_retain_slow(value);
 }
@@ -157,10 +160,11 @@ ADAMIC_OWNERSHIP void *adamic_retain(void *value) {
 ADAMIC_OWNERSHIP void adamic_release(void *value) {
 	ADAMIC_COUNT_RELEASE();
 	adamic_heap *heap = value;
-	if (adamic_program_is(heap)) { return; }
-	if (heap != NULL && (heap->slab & ADAMIC_SLOW_COUNT) == 0) {
+	if (heap == NULL) { return; }
+	if ((heap->slab & ADAMIC_SLOW_COUNT) == 0) {
 		size_t count = heap->references;
 		if (count > 1) { heap->references = count - 1; return; }
+		if (count == 0 && heap->kind != adamic_kind_cell) { return; }
 	}
 	adamic_release_slow(value);
 }
