@@ -1,0 +1,16 @@
+import { decodeJson as decode } from 'adamic';
+function text(value: string): string { console.log(`input ${value}`); return value; }
+function read(value: string): number {
+ const r = decode<number>((text(value)), /* comment */);
+ return r.kind === 'Ok' ? r.value : -1;
+}
+console.log(`${read('2') + read('wrong')}`);
+const callback = (value: string): string => {
+ const r = decode<{ readonly value: string }>(value);
+ return r.kind === 'Ok' ? r.value.value : r.message;
+};
+console.log(['{"value":"first"}', '{"value":1}'].map(callback).join('|'));
+console.log((decode<number>('3')).kind);
+function decodeJson<T>(value: T): T { return value; }
+console.log(decodeJson<string>('local'));
+console.log((decode)<number>('4').kind);

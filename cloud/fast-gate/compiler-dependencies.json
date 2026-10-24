@@ -1,6 +1,7 @@
 {
   "version": 1,
   "packages": {
+    "oracle": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "internal/native": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "internal/boundedrun": ["cmd/adamic"],
     "internal/leakcheck": ["internal/native"],

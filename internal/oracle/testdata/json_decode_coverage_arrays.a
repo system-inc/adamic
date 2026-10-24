@@ -1,0 +1,18 @@
+import { decodeJson } from 'adamic';
+// A static shape sharing value with decoder results must not fix their slot offset.
+const ordinary = { value: 7 };
+console.log(`${ordinary.value}`);
+type Item = { readonly kind: 'Text'; readonly note?: string; readonly value: string } | { readonly kind: 'Count'; readonly value: number };
+for (const text of ['[{"kind":"Text","value":"one"},{"kind":"Text","note":"yes","value":"two"},{"kind":"Count","value":2}]', '[{"kind":"Text","value":"allocated"},{"kind":"Count","value":"bad"}]', '[{}]', '[{"kind":"bad"}]', '[{"kind":"Text"}]', '{}']) {
+ const result = decodeJson<readonly Item[]>(text);
+ if (result.kind === 'Error') console.log(result.message);
+ else for (const item of result.value) {
+  if (item.kind === 'Text') console.log(`${item.value} ${item.note ?? '-'}`);
+  else console.log(`count ${item.value + 1}`);
+ }
+}
+// Mixed arrays can validate without asking the lowerer to read their mixed elements.
+for (const text of ['[]', '[1,"two",false]', '["allocated",null]', '[{}]', '42']) {
+ const result = decodeJson<readonly (number | string | boolean)[]>(text);
+ console.log(result.kind === 'Error' ? result.message : result.kind);
+}

@@ -1,0 +1,6 @@
+import { encodeJson } from 'adamic';
+interface Data { value: number }
+let calls = 0;
+const data: Data = { value: 7 };
+console.log(encodeJson<Data>(data));
+console.log(String(calls));

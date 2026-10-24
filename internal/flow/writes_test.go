@@ -31,6 +31,7 @@ var writeExamples = []ir.Expression{
 var callBackExamples = []ir.Expression{
 	ir.ArrayMap{}, ir.ArrayVisit{}, ir.ArrayReduce{}, ir.ArrayFrom{}, ir.ArraySort{}, ir.MapForEach{}, ir.ParallelMap{},
 	ir.RegExpCall{Replacement: &ir.RegExpReplacement{}},
+	ir.JSONEncode{}, // Fail closed: lowering refuses getter-bearing operands before JSON encoding.
 }
 
 // valueCases write into what they're handed, or call, through a case of value's own, which makes
@@ -79,6 +80,7 @@ var writesNothing = []struct {
 	{ir.InstanceOf{}, "tests a class chain"},
 	{ir.IsNull{}, "tests a reference"},
 	{ir.IsUndefined{}, "tests a reference"},
+	{ir.JSONDecode{}, "parses a string into a new value without calling user code"},
 	{ir.JSONNull{}, "a constant inside stringify's input"},
 	{ir.JSONStringify{}, "reads a value into a new string; lowering refuses a replacer function"},
 	{ir.Length{}, "reads an array's length"},
