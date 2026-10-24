@@ -383,6 +383,7 @@ const staticsShapeTypesContended = `#include "harness.h"
 // This covers both concurrent list pushes and the registered double check.
 static const char *const names[] = {"x"};
 static const bool references[] = {false};
+static const adamic_field_kind kinds[] = {adamic_field_number};
 static adamic_shape shapes[320];
 static const int types[] = {1};
 static adamic_shape_types metadata[320];
@@ -394,7 +395,7 @@ static _Thread_local size_t worker;
 static _Thread_local size_t visits;
 static void prepare(void) {
  for (size_t index = 0; index < 320; index++) {
-  shapes[index] = (adamic_shape){1, names, references, NULL};
+  shapes[index] = (adamic_shape){1, names, references, NULL, kinds};
   metadata[index] = (adamic_shape_types){&shapes[index], types, NULL, false};
  }
  if (pthread_barrier_init(&registrations, NULL, 4) != 0 || pthread_barrier_init(&fast_paths, NULL, 4) != 0) { abort(); }
