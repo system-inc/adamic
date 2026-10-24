@@ -1,0 +1,19 @@
+{
+  "variants": [
+    { "name": "fast", "directory": "fast" },
+    { "name": "cpu", "directory": "cpu" },
+    { "name": "allocate", "directory": "allocate" }
+  ],
+  "coldPath": "/health",
+  "checks": [
+    { "method": "GET", "url": "/check?q=one&q=two" },
+    { "method": "POST", "url": "/echo", "body": "hello 🌍" }
+  ],
+  "workloads": [
+    { "name": "echo", "method": "POST", "url": "/echo", "body": "hello 🌍" },
+    { "name": "mixed", "requests": [
+      { "weight": 3, "method": "GET", "url": "/check?q=one" },
+      { "weight": 1, "method": "POST", "url": "/echo", "body": "hello 🌍" }
+    ] }
+  ]
+}

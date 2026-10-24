@@ -20,7 +20,15 @@ func programRegionRequested() bool {
 	return os.Getenv("ADAMIC_PROGRAM_REGION") == "1"
 }
 
+func buildWithExports(path, output string, arguments []string, entryFunctions bool) int {
+	return buildWithNativeExports(path, output, arguments, native.Build, entryFunctions)
+}
+
 func buildWithNative(path, output string, arguments []string, buildNative func(string, string, native.Options) error) int {
+	return buildWithNativeExports(path, output, arguments, buildNative, false)
+}
+
+func buildWithNativeExports(path, output string, arguments []string, buildNative func(string, string, native.Options) error, entryFunctions bool) int {
 	options := native.Options{Release: true, ProgramRegion: programRegionRequested()}
 	archive := ""
 	explain := false
@@ -86,7 +94,7 @@ func buildWithNative(path, output string, arguments []string, buildNative func(s
 	handler := -1
 	var exports []native.ABIExport
 	if options.Target == "wasm32-wasi" {
-		program, exports, code = compileExports(path, names)
+		program, exports, code = compileExportsWith(path, names, entryFunctions)
 		if program != nil && len(exports) == 0 && !reactor {
 			// An export alias is outside the per-function crossing set (docs/wasm-abi.md), but an
 			// aliased handleRequest still selects the request ABI, as it did before those exports.

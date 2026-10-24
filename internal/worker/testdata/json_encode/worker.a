@@ -1,0 +1,4 @@
+import type { HttpRequest, HttpResponse } from 'adamic/http';
+import { evaluate as encodeValue } from './cases.a';
+export function evaluate(which: number, text: string): string { return encodeValue(which, text); }
+export function handle(request: HttpRequest): HttpResponse { return {status:200,headers:[],body:request.body}; }

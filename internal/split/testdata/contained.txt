@@ -1,0 +1,9 @@
+containedWrite javascript writes parameter 1
+containedRead wasm
+copyNested javascript writes parameter 1
+globalAliasWrite javascript impure: writes global globalValue
+globalRead javascript impure: mutable global globalValue
+returnedWrite javascript writes parameter 1
+returnItems javascript too small to cross
+reduceReturnsGlobal javascript impure: writes global globalValue
+closure javascript impure: mutable global globalValue
