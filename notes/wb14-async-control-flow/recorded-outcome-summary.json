@@ -1,5 +1,6 @@
 {
   "baseline": "6d9133d9c7365464b0ad59fde2bc2ed5b055a680",
+  "main_base": "65375429ec0bc6cf69ba485154970b4936997a75",
   "checked": 786,
   "admissions": [
     {
@@ -11,21 +12,122 @@
       "after": {
         "exit": 0,
         "diagnostic": ""
-      }
+      },
+      "owner": "batch 14"
+    },
+    {
+      "path": "stage3/drivers/parser/native-generic-empty-array.a",
+      "before": {
+        "exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/stage3/drivers/parser/native-generic-empty-array.a:5:22: Adamic 0.1 refuses a value of type never seen as U, a type parameter whose constraint {} can be written, so it can write what never can't hold; take it as never, or constrain U to something readonly, which can't write (adamic/invariant-mutable)\n"
+      },
+      "after": {
+        "exit": 0,
+        "diagnostic": ""
+      },
+      "owner": "inherited main"
+    },
+    {
+      "path": "stage3/fixtures/cycles/04_directory_callback/main.a",
+      "before": {
+        "exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/cycles/04_directory_callback/main.a:9:71: stage 0 can't lower a generic function as a value yet\n"
+      },
+      "after": {
+        "exit": 0,
+        "diagnostic": ""
+      },
+      "owner": "inherited main"
+    },
+    {
+      "path": "stage3/fixtures/cycles/05_safe_load_read/main.a",
+      "before": {
+        "exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/cycles/05_safe_load_read/core.a:4:36: stage 0 can't lower an array of never yet\n"
+      },
+      "after": {
+        "exit": 0,
+        "diagnostic": ""
+      },
+      "owner": "inherited main"
+    },
+    {
+      "path": "stage3/fixtures/cycles/06_import_order_mutant/main.a",
+      "before": {
+        "exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/cycles/06_import_order_mutant/core.a:4:36: stage 0 can't lower an array of never yet\n"
+      },
+      "after": {
+        "exit": 0,
+        "diagnostic": ""
+      },
+      "owner": "inherited main"
+    },
+    {
+      "path": "stage3/fixtures/namespaces/02_jsx_names.a",
+      "before": {
+        "exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/namespaces/02_jsx_names.a:7:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+      },
+      "after": {
+        "exit": 0,
+        "diagnostic": ""
+      },
+      "owner": "inherited main"
+    },
+    {
+      "path": "stage3/fixtures/namespaces/03_react_names.a",
+      "before": {
+        "exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/namespaces/03_react_names.a:7:29: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+      },
+      "after": {
+        "exit": 0,
+        "diagnostic": ""
+      },
+      "owner": "inherited main"
     }
   ],
   "regressions": [],
+  "reason_changes": [
+    {
+      "path": "internal/oracle/testdata/notyet_element_access/paths.a",
+      "before": {
+        "exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/notyet_element_access/paths.a:3:10: stage 0 can't lower a function returning Path | undefined yet\n"
+      },
+      "after": {
+        "exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/notyet_element_access/paths.a:3:15: stage 0 can't lower a value of type Readonly<PathPathComponents> yet\n"
+      }
+    },
+    {
+      "path": "stage3/fixtures/assertions/16_unknown_chain.a",
+      "before": {
+        "exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/assertions/16_unknown_chain.a:6:50: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+      },
+      "after": {
+        "exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/assertions/16_unknown_chain.a:5:22: Adamic 0.1 refuses a primitive brand member __watchFileKind whose type is not void; make __watchFileKind void (or optional and typed undefined) so the brand is phantom\n"
+      }
+    },
+    {
+      "path": "stage3/fixtures/assertions/17_brand_upcast.a",
+      "before": {
+        "exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/assertions/17_brand_upcast.a:14:70: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+      },
+      "after": {
+        "exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/assertions/17_brand_upcast.a:5:17: Adamic 0.1 refuses a primitive brand member __escapedIdentifier whose type is not void; make __escapedIdentifier void (or optional and typed undefined) so the brand is phantom\n"
+      }
+    }
+  ],
   "renamed_fixture": {
     "before": "internal/oracle/testdata/async_refused/async_refuse_loop_body_capture.a",
     "after": "internal/oracle/testdata/async_loop_body_capture.a",
     "proof": "TestAsyncLoopsLoopBodyCapture"
   },
-  "reason_changes": [],
-  "raw_diagnostic_differences": [
-    {
-      "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a",
-      "before_first_line": "adamic: compiler bug: compiler bug: incomplete checked field contract",
-      "after_first_line": "adamic: compiler bug: compiler bug: incomplete checked field contract"
-    }
-  ]
+  "raw_diagnostic_note": "The existing incomplete checked field contract panic keeps the same first line; raw stack addresses and offsets differ."
 }

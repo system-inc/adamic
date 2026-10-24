@@ -653,10 +653,10 @@ func TestAsyncLiveReleaseSetReturn(t *testing.T) {
 
 func TestAsyncLiveUserIteratorFunctionRemainsUnproven(t *testing.T) {
 	t.Parallel()
-	asyncLoopsRefusal(t, "async_refuse_user_iterator_function", "async for-of over a user iterator", "")
+	asyncLoopsRefusal(t, "async_refuse_user_iterator_function", ":2:37: stage 0 can't lower async for-of over a user iterator yet", "")
 }
 
 func TestAsyncLiveUserIteratorModuleRemainsUnproven(t *testing.T) {
 	t.Parallel()
-	asyncLoopsRefusal(t, "async_refuse_user_iterator_module", "async for-of over a user iterator", "")
+	asyncLoopsRefusal(t, "async_refuse_user_iterator_module", ":2:1: stage 0 can't lower async for-of over a user iterator yet", "")
 }

@@ -1,0 +1,26 @@
+{
+  "main": "926e19f4967c0f13a2b9a58560dc1eb61601d9c3",
+  "only_test_refinements": [
+    "internal/flow/corpus_coverage_test.go",
+    "internal/oracle/async_iterables_test.go",
+    "internal/oracle/async_test.go"
+  ],
+  "all_three_generators_current": true,
+  "checks": [
+    {
+      "log": "post-recut-compiler-census.jsonl",
+      "result": "pass",
+      "seconds": 0.629
+    },
+    {
+      "log": "post-recut-families.jsonl",
+      "result": "pass",
+      "seconds": 0.013
+    },
+    {
+      "log": "post-recut-gate.jsonl",
+      "result": "pass",
+      "seconds": 0.86
+    }
+  ]
+}

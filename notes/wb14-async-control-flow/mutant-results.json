@@ -1,0 +1,65 @@
+[
+  {
+    "name": "final-mutant-early-live-collection-release",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/scratch/wb14/mutants/early-live-collection-release/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestAsyncLoopsForOfMutation$",
+      "-count=1",
+      "-json",
+      "-timeout=60s"
+    ],
+    "exit": 1,
+    "wall_seconds": 12.841,
+    "log": "final-mutant-early-live-collection-release.jsonl",
+    "test": "TestAsyncLoopsForOfMutation",
+    "named_red": true,
+    "compile_failure": false,
+    "evidence": "heap-use-after-free"
+  },
+  {
+    "name": "final-mutant-skip-iterator-cleanup-on-break",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/scratch/wb14/mutants/skip-iterator-cleanup-on-break/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestAsyncLiveIterableMapBreakFunction$",
+      "-count=1",
+      "-json",
+      "-timeout=60s"
+    ],
+    "exit": 1,
+    "wall_seconds": 12.668,
+    "log": "final-mutant-skip-iterator-cleanup-on-break.jsonl",
+    "test": "TestAsyncLiveIterableMapBreakFunction",
+    "named_red": true,
+    "compile_failure": false,
+    "evidence": "LeakSanitizer"
+  },
+  {
+    "name": "final-mutant-labeled-break-skips-finally",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/scratch/wb14/mutants/labeled-break-skips-finally/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestAsyncLabelsAsyncLabelsFinally$",
+      "-count=1",
+      "-json",
+      "-timeout=60s"
+    ],
+    "exit": 1,
+    "wall_seconds": 11.997,
+    "log": "final-mutant-labeled-break-skips-finally.jsonl",
+    "test": "TestAsyncLabelsAsyncLabelsFinally",
+    "named_red": true,
+    "compile_failure": false,
+    "evidence": "JavaScript: stdout differs"
+  }
+]

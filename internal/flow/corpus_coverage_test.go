@@ -115,10 +115,26 @@ func TestFlowCorpusSetupIsShared(t *testing.T) {
 	}
 }
 
-// A long remainder is the signal to regenerate the selectable corpus units.
-// Until then it keeps new programs covered without requiring regeneration.
-func TestFlowCorpusRemainder(t *testing.T) {
+// Keep new programs covered in bounded units until the selectable corpus is regenerated.
+func TestFlowCorpusRemainder0(t *testing.T) {
 	t.Parallel()
+	checkFlowCorpusRemainder(t, 0)
+}
+func TestFlowCorpusRemainder1(t *testing.T) {
+	t.Parallel()
+	checkFlowCorpusRemainder(t, 1)
+}
+func TestFlowCorpusRemainder2(t *testing.T) {
+	t.Parallel()
+	checkFlowCorpusRemainder(t, 2)
+}
+func TestFlowCorpusRemainder3(t *testing.T) {
+	t.Parallel()
+	checkFlowCorpusRemainder(t, 3)
+}
+
+func checkFlowCorpusRemainder(t *testing.T, shard byte) {
+	t.Helper()
 	beginFlowUnit(t)
 	generated := map[string]bool{}
 	for _, path := range flowCorpusPaths {
@@ -129,7 +145,8 @@ func TestFlowCorpusRemainder(t *testing.T) {
 	}
 	count := 0
 	for _, path := range programs(t) {
-		if generated[filepath.ToSlash(path)] {
+		canonical := filepath.ToSlash(path)
+		if generated[canonical] || sha256.Sum256([]byte(canonical))[0]%4 != shard {
 			continue
 		}
 		count++

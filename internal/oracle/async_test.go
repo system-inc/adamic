@@ -384,14 +384,15 @@ func asyncLoopsRefusal(t *testing.T, name, want, output string) {
 		t.Fatalf("Node: %+v", truth)
 	}
 	_, err = lowered(t, path)
-	if err == nil || !strings.Contains(err.Error(), want) {
-		t.Fatalf("want %s: %v", want, err)
+	want = path + want
+	if err == nil || err.Error() != want {
+		t.Fatalf("want exact refusal %q: %v", want, err)
 	}
 	t.Logf("Node %q; compiler %v", truth.stdout, err)
 }
 func TestAsyncLoopsCallableReturnRemainsRefused(t *testing.T) {
 	t.Parallel()
-	asyncLoopsRefusal(t, "async_refuse_loop_cells_return", "hidden thenable", "2\n")
+	asyncLoopsRefusal(t, "async_refuse_loop_cells_return", ":7:12: stage 0 can't lower async return of a non-primitive structurally typed value (hidden thenable) yet", "2\n")
 }
 func init() {
 	fixtures = append(fixtures, struct {

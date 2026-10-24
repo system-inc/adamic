@@ -1,0 +1,1041 @@
+{
+  "validated_snapshot": "935545154d9561235069be8fbf43371b10a2a6e6",
+  "main_base": "926e19f4967c0f13a2b9a58560dc1eb61601d9c3",
+  "pre_batch_main_base": "65375429ec0bc6cf69ba485154970b4936997a75",
+  "main_already_contains_async_batch": true,
+  "whole_compiler_base": "ee0b897e0299bfc27d91aaa2d6d49293b9c83fd7",
+  "documentation_only_recut": true,
+  "final_recut_note": "Main landed the identical async implementation during validation. The final branch commit contains the flow budget split, exact refusal assertions, and evidence only.",
+  "results": {
+    "flow": {
+      "log": "final-flow-split-corrected.log",
+      "package": [
+        {
+          "Action": "pass",
+          "Elapsed": 79.417
+        }
+      ],
+      "passed": 1121,
+      "skipped": [],
+      "failed": [],
+      "over_30_seconds": []
+    },
+    "fresh": {
+      "log": "recut-fresh.log",
+      "package": [
+        {
+          "Action": "pass",
+          "Elapsed": 22.497
+        }
+      ],
+      "passed": 1040,
+      "skipped": [],
+      "failed": [],
+      "over_30_seconds": []
+    },
+    "lower": {
+      "log": "recut-lower.log",
+      "package": [
+        {
+          "Action": "pass",
+          "Elapsed": 55.177
+        }
+      ],
+      "passed": 566,
+      "skipped": [],
+      "failed": [],
+      "over_30_seconds": []
+    },
+    "native": {
+      "log": "recut-native.log",
+      "package": [
+        {
+          "Action": "pass",
+          "Elapsed": 239.788
+        }
+      ],
+      "passed": 796,
+      "skipped": [
+        "TestNormalizeLongMeasurements",
+        "TestRecordBenchmark",
+        "TestMeasureClangUnits",
+        "TestWASIService",
+        "TestWASIServiceCounted",
+        "TestWASIUnit00",
+        "TestWASIUnit01",
+        "TestWASIUnit02",
+        "TestWASIUnit03",
+        "TestWASIUnit04",
+        "TestWASIUnit05",
+        "TestWASIUnit06",
+        "TestWASIUnit07",
+        "TestWASIUnit08",
+        "TestWASIUnit09",
+        "TestWASIUnit10",
+        "TestWASIUnit11",
+        "TestWASIUnit12",
+        "TestWASIUnit13",
+        "TestWASIUnit14",
+        "TestWASIUnit15",
+        "TestWASIUnit16",
+        "TestWASIUnit17",
+        "TestWASIUnit18",
+        "TestWASIUnit19",
+        "TestWASIUnit20",
+        "TestWASIUnit21",
+        "TestWASIUnit22",
+        "TestWASIUnit23",
+        "TestWASIUnit24",
+        "TestWASIUnit25",
+        "TestWASIUnit26",
+        "TestWASIUnit27",
+        "TestWASIUnit28",
+        "TestWASIUnit29",
+        "TestWASIUnit30",
+        "TestWASIUnit31",
+        "TestWASIUnit32",
+        "TestWASIUnit33",
+        "TestWASIUnit34",
+        "TestWASIUnit35",
+        "TestProduct_StrictWASIRuntime",
+        "TestProduct_WASIServiceNative",
+        "TestProduct_WASIServiceModules",
+        "TestWASIServiceMutantShrunkCount",
+        "TestWASIServiceMutantUnicodeEscape",
+        "TestWASIServiceMutantRetainedObject",
+        "TestWASIServiceMutantResponseByte",
+        "TestWASIServiceNativeAgrees_7",
+        "TestWASIServiceNativeAgrees_6",
+        "TestWASIServiceNativeAgrees_5",
+        "TestWASIServiceNativeAgrees_4",
+        "TestWASIServiceNativeAgrees_3",
+        "TestWASIServiceNativeAgrees_2",
+        "TestWASIServiceNativeAgrees_1",
+        "TestWASIServiceNativeAgrees_0",
+        "TestWasiAsyncHostPromises",
+        "TestDecodeASCIIWASIUnit44",
+        "TestDecodeASCIIWASIUnit42",
+        "TestDecodeASCIIWASIUnit43",
+        "TestDecodeASCIIWASIUnit41",
+        "TestDecodeASCIIWASIUnit40",
+        "TestDecodeASCIIWASIUnit39",
+        "TestDecodeASCIIWASIUnit38",
+        "TestDecodeASCIIWASIUnit37",
+        "TestDecodeASCIIWASIUnit36",
+        "TestDecodeASCIIWASIUnit35",
+        "TestDecodeASCIIWASIUnit34",
+        "TestDecodeASCIIWASIUnit33",
+        "TestDecodeASCIIWASIUnit32",
+        "TestDecodeASCIIWASIUnit31",
+        "TestDecodeASCIIWASIUnit30",
+        "TestDecodeASCIIWASIUnit29",
+        "TestDecodeASCIIWASIUnit28",
+        "TestDecodeASCIIWASIUnit27",
+        "TestDecodeASCIIWASIUnit26",
+        "TestDecodeASCIIWASIUnit25",
+        "TestDecodeASCIIWASIUnit24",
+        "TestDecodeASCIIWASIUnit23",
+        "TestDecodeASCIIWASIUnit22",
+        "TestDecodeASCIIWASIUnit21",
+        "TestDecodeASCIIWASIUnit20",
+        "TestDecodeASCIIWASIUnit19",
+        "TestDecodeASCIIWASIUnit18",
+        "TestDecodeASCIIWASIUnit17",
+        "TestDecodeASCIIWASIUnit16",
+        "TestDecodeASCIIWASIUnit15",
+        "TestDecodeASCIIWASIUnit14",
+        "TestDecodeASCIIWASIUnit13",
+        "TestDecodeASCIIWASIUnit12",
+        "TestDecodeASCIIWASIUnit11",
+        "TestDecodeASCIIWASIUnit10",
+        "TestDecodeASCIIWASIUnit09",
+        "TestDecodeASCIIWASIUnit08",
+        "TestDecodeASCIIWASIUnit07",
+        "TestDecodeASCIIWASIUnit06",
+        "TestDecodeASCIIWASIUnit05",
+        "TestDecodeASCIIWASIUnit04",
+        "TestDecodeASCIIWASIUnit03",
+        "TestDecodeASCIIWASIUnit02",
+        "TestDecodeASCIIWASIUnit01",
+        "TestDecodeASCIIWASIUnit00",
+        "TestProduct_DecodeASCIIWASI"
+      ],
+      "failed": [],
+      "over_30_seconds": []
+    },
+    "oracle": {
+      "log": "recut-oracle.log",
+      "package": [
+        {
+          "Action": "pass",
+          "Elapsed": 758.656
+        }
+      ],
+      "passed": 2073,
+      "skipped": [
+        "TestStage3FixtureHook"
+      ],
+      "failed": [],
+      "over_30_seconds": []
+    },
+    "oracle jobserver": {
+      "log": "recut-oracle-jobserver.log",
+      "package": [
+        {
+          "Action": "pass",
+          "Elapsed": 11.855
+        }
+      ],
+      "passed": 1,
+      "skipped": [],
+      "failed": [],
+      "over_30_seconds": []
+    },
+    "count regeneration": {
+      "log": "final-counts.log",
+      "package": [
+        {
+          "Action": "pass",
+          "Elapsed": 72.656
+        }
+      ],
+      "passed": 160,
+      "skipped": [],
+      "failed": [],
+      "over_30_seconds": []
+    },
+    "acheck": {
+      "log": "final-acheck.log",
+      "package": [
+        {
+          "Action": "pass",
+          "Elapsed": 6.384
+        }
+      ],
+      "passed": 4,
+      "skipped": [],
+      "failed": [],
+      "over_30_seconds": []
+    },
+    "stage3 fixtures": {
+      "log": "final-stage3-fixtures.log",
+      "package": [
+        {
+          "Action": "pass",
+          "Elapsed": 74.542
+        }
+      ],
+      "passed": 34,
+      "skipped": [
+        "TestTransformedNodeRunnerGuardHook"
+      ],
+      "failed": [],
+      "over_30_seconds": []
+    },
+    "gate": {
+      "log": "final-gate.log",
+      "package": [
+        {
+          "Action": "pass",
+          "Elapsed": 0.749
+        }
+      ],
+      "passed": 14,
+      "skipped": [],
+      "failed": [],
+      "over_30_seconds": []
+    },
+    "meter": {
+      "log": "final-meter.log",
+      "package": [
+        {
+          "Action": "pass",
+          "Elapsed": 1.499
+        }
+      ],
+      "passed": 18,
+      "skipped": [],
+      "failed": [],
+      "over_30_seconds": []
+    },
+    "compiler census": {
+      "log": "final-compiler-census.log",
+      "package": [
+        {
+          "Action": "pass",
+          "Elapsed": 0.814
+        }
+      ],
+      "passed": 4,
+      "skipped": [],
+      "failed": [],
+      "over_30_seconds": []
+    },
+    "exact refusals": {
+      "log": "exact-refusals.jsonl",
+      "package": [
+        {
+          "Action": "pass",
+          "Elapsed": 3.636
+        }
+      ],
+      "passed": 3,
+      "skipped": [],
+      "failed": [],
+      "over_30_seconds": []
+    },
+    "read only": {
+      "log": "final-read-only-async.jsonl",
+      "package": [
+        {
+          "Action": "pass",
+          "Elapsed": 59.989
+        }
+      ],
+      "passed": 353,
+      "skipped": [],
+      "failed": [],
+      "over_30_seconds": []
+    },
+    "async TSan": {
+      "log": "final-async-tsan.jsonl",
+      "package": [
+        {
+          "Action": "pass",
+          "Elapsed": 6.089
+        }
+      ],
+      "passed": 4,
+      "skipped": [],
+      "failed": [],
+      "over_30_seconds": []
+    },
+    "host promise TSan": {
+      "log": "final-async-host-tsan.jsonl",
+      "package": [
+        {
+          "Action": "pass",
+          "Elapsed": 9.103
+        }
+      ],
+      "passed": 1,
+      "skipped": [],
+      "failed": [],
+      "over_30_seconds": []
+    }
+  },
+  "serial_commands": [
+    {
+      "name": "flow",
+      "command": [
+        "go",
+        "test",
+        "./internal/flow",
+        "-count=1",
+        "-json",
+        "-timeout=780s"
+      ],
+      "exit": 0,
+      "wall_seconds": 93.005,
+      "log": "recut-flow.log"
+    },
+    {
+      "name": "fresh",
+      "command": [
+        "go",
+        "test",
+        "./internal/fresh",
+        "-count=1",
+        "-json",
+        "-timeout=780s"
+      ],
+      "exit": 0,
+      "wall_seconds": 32.921,
+      "log": "recut-fresh.log"
+    },
+    {
+      "name": "lower-products",
+      "command": [
+        "python3",
+        "/workspace/scratch/wb14/products.py",
+        "internal/lower"
+      ],
+      "exit": 0,
+      "wall_seconds": 57.022,
+      "log": "recut-lower-products.log"
+    },
+    {
+      "name": "lower",
+      "command": [
+        "go",
+        "test",
+        "./internal/lower",
+        "-count=1",
+        "-json",
+        "-timeout=780s"
+      ],
+      "exit": 0,
+      "wall_seconds": 56.646,
+      "log": "recut-lower.log"
+    },
+    {
+      "name": "native-products",
+      "command": [
+        "python3",
+        "/workspace/scratch/wb14/products.py",
+        "internal/native"
+      ],
+      "exit": 0,
+      "wall_seconds": 69.061,
+      "log": "recut-native-products.log"
+    },
+    {
+      "name": "native",
+      "command": [
+        "go",
+        "test",
+        "./internal/native",
+        "-count=1",
+        "-json",
+        "-timeout=780s"
+      ],
+      "exit": 0,
+      "wall_seconds": 241.323,
+      "log": "recut-native.log"
+    },
+    {
+      "name": "oracle-products",
+      "command": [
+        "python3",
+        "/workspace/scratch/wb14/products.py",
+        "internal/oracle",
+        "--resume"
+      ],
+      "exit": 124,
+      "wall_seconds": 840.051,
+      "log": "recut-oracle-products.log"
+    },
+    {
+      "name": "oracle-products-resume",
+      "command": [
+        "python3",
+        "/workspace/scratch/wb14/products.py",
+        "internal/oracle",
+        "--resume"
+      ],
+      "exit": 0,
+      "wall_seconds": 149.721,
+      "log": "recut-oracle-products-resume.log"
+    },
+    {
+      "name": "oracle",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-skip",
+        "^(TestProduct_|TestTheJobserverNeverReachesTheEmittedCOrClang$)",
+        "-count=1",
+        "-parallel=4",
+        "-json",
+        "-timeout=780s"
+      ],
+      "exit": 0,
+      "wall_seconds": 760.196,
+      "log": "recut-oracle.log"
+    },
+    {
+      "name": "oracle-jobserver",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "^TestTheJobserverNeverReachesTheEmittedCOrClang$",
+        "-count=1",
+        "-json",
+        "-timeout=60s"
+      ],
+      "exit": 0,
+      "wall_seconds": 13.929,
+      "log": "recut-oracle-jobserver.log"
+    },
+    {
+      "name": "flow-split",
+      "command": [
+        "go",
+        "test",
+        "./internal/flow",
+        "-count=1",
+        "-json",
+        "-timeout=180s"
+      ],
+      "exit": 0,
+      "wall_seconds": 85.622,
+      "log": "recut-flow-split.log"
+    },
+    {
+      "name": "counts",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "^TestCountsAreRecorded",
+        "-skip",
+        "catches_planted",
+        "-count=1",
+        "-json",
+        "-timeout=220s",
+        "-args",
+        "-update-counts"
+      ],
+      "exit": 0,
+      "wall_seconds": 74.287,
+      "log": "final-counts.log"
+    },
+    {
+      "name": "count-comparison",
+      "command": [
+        "python3",
+        "/workspace/scratch/wb14/compare-counts.py"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.164,
+      "log": "final-count-comparison.log"
+    },
+    {
+      "name": "stage1-gaps",
+      "command": [
+        "python3",
+        "/workspace/scratch/wb14/gaps.py"
+      ],
+      "exit": 0,
+      "wall_seconds": 152.305,
+      "log": "final-stage1-gaps.log"
+    },
+    {
+      "name": "census-build",
+      "command": [
+        "go",
+        "build",
+        "-o",
+        "/workspace/scratch/wb14/adamic-batch14",
+        "./cmd/adamic"
+      ],
+      "exit": 0,
+      "wall_seconds": 4.944,
+      "log": "final-census-build.log"
+    },
+    {
+      "name": "recorded-outcomes",
+      "command": [
+        "python3",
+        "/workspace/scratch/wb14/census.py",
+        "--before",
+        "/workspace/scratch/wb14/adamic-batch13",
+        "--after",
+        "/workspace/scratch/wb14/adamic-batch14",
+        "--records-ref",
+        "6d9133d9c7365464b0ad59fde2bc2ed5b055a680",
+        "--output",
+        "/workspace/scratch/wb14/final-recorded-outcomes.jsonl"
+      ],
+      "exit": 0,
+      "wall_seconds": 43.169,
+      "log": "final-recorded-outcomes.log"
+    },
+    {
+      "name": "acheck-products",
+      "command": [
+        "python3",
+        "/workspace/scratch/wb14/products.py",
+        "internal/acheck"
+      ],
+      "exit": 0,
+      "wall_seconds": 12.174,
+      "log": "final-acheck-products.log"
+    },
+    {
+      "name": "acheck",
+      "command": [
+        "go",
+        "test",
+        "./internal/acheck",
+        "-count=1",
+        "-json",
+        "-timeout=300s"
+      ],
+      "exit": 0,
+      "wall_seconds": 6.706,
+      "log": "final-acheck.log"
+    },
+    {
+      "name": "stage3-fixtures-products",
+      "command": [
+        "python3",
+        "/workspace/scratch/wb14/products.py",
+        "stage3/fixtures"
+      ],
+      "exit": 0,
+      "wall_seconds": 56.305,
+      "log": "final-stage3-fixtures-products.log"
+    },
+    {
+      "name": "stage3-fixtures",
+      "command": [
+        "go",
+        "test",
+        "./stage3/fixtures",
+        "-count=1",
+        "-json",
+        "-timeout=300s"
+      ],
+      "exit": 0,
+      "wall_seconds": 75.973,
+      "log": "final-stage3-fixtures.log"
+    },
+    {
+      "name": "gate-products",
+      "command": [
+        "python3",
+        "/workspace/scratch/wb14/products.py",
+        "cmd/adamic-gate"
+      ],
+      "exit": 0,
+      "wall_seconds": 1.069,
+      "log": "final-gate-products.log"
+    },
+    {
+      "name": "gate",
+      "command": [
+        "go",
+        "test",
+        "./cmd/adamic-gate",
+        "-count=1",
+        "-json",
+        "-timeout=300s"
+      ],
+      "exit": 1,
+      "wall_seconds": 1.12,
+      "log": "final-gate-initial.log"
+    },
+    {
+      "name": "flow-split-corrected",
+      "command": [
+        "go",
+        "test",
+        "./internal/flow",
+        "-count=1",
+        "-json",
+        "-timeout=180s"
+      ],
+      "exit": 0,
+      "wall_seconds": 93.77,
+      "log": "final-flow-split-corrected.log"
+    },
+    {
+      "name": "gate",
+      "command": [
+        "go",
+        "test",
+        "./cmd/adamic-gate",
+        "-count=1",
+        "-json",
+        "-timeout=60s"
+      ],
+      "exit": 0,
+      "wall_seconds": 1.078,
+      "log": "final-gate.log"
+    },
+    {
+      "name": "meter-products",
+      "command": [
+        "python3",
+        "/workspace/scratch/wb14/products.py",
+        "cmd/adamic-meter"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.032,
+      "log": "final-meter-products.log"
+    },
+    {
+      "name": "meter",
+      "command": [
+        "go",
+        "test",
+        "./cmd/adamic-meter",
+        "-count=1",
+        "-json",
+        "-timeout=120s"
+      ],
+      "exit": 0,
+      "wall_seconds": 5.907,
+      "log": "final-meter.log"
+    },
+    {
+      "name": "compiler-census-products",
+      "command": [
+        "python3",
+        "/workspace/scratch/wb14/products.py",
+        "internal/compilercensus"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.064,
+      "log": "final-compiler-census-products.log"
+    },
+    {
+      "name": "compiler-census",
+      "command": [
+        "go",
+        "test",
+        "./internal/compilercensus",
+        "-count=1",
+        "-json",
+        "-timeout=120s"
+      ],
+      "exit": 0,
+      "wall_seconds": 1.175,
+      "log": "final-compiler-census.log"
+    },
+    {
+      "name": "meter-python",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "stage3/meter",
+        "-p",
+        "*_test.py"
+      ],
+      "exit": 0,
+      "wall_seconds": 7.706,
+      "log": "final-meter-python.log"
+    },
+    {
+      "name": "final-read-only-async",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "^(TestAsyncLiveIterableStringAsciiFunction|TestAsyncLiveIterableStringAsciiModule|TestAsyncLiveIterableStringEmojiFunction|TestAsyncLiveIterableStringEmojiModule|TestAsyncLiveIterableStringSurrogatesFunction|TestAsyncLiveIterableStringSurrogatesModule|TestAsyncLiveIterableMapEntriesFunction|TestAsyncLiveIterableMapEntriesModule|TestAsyncLiveIterableMapKeysFunction|TestAsyncLiveIterableMapKeysModule|TestAsyncLiveIterableMapValuesFunction|TestAsyncLiveIterableMapValuesModule|TestAsyncLiveIterableSetValuesFunction|TestAsyncLiveIterableSetValuesModule|TestAsyncLiveIterableSetEntriesFunction|TestAsyncLiveIterableSetEntriesModule|TestAsyncLiveIterableMapClearFunction|TestAsyncLiveIterableMapClearModule|TestAsyncLiveIterableMapReaddFunction|TestAsyncLiveIterableMapReaddModule|TestAsyncLiveIterableMapRehashFunction|TestAsyncLiveIterableMapRehashModule|TestAsyncLiveIterableNestedMapsFunction|TestAsyncLiveIterableNestedMapsModule|TestAsyncLiveIterableMapBreakFunction|TestAsyncLiveIterableMapBreakModule|TestAsyncLiveIterableMapReturnFunction|TestAsyncLiveIterableMapReturnModule|TestAsyncLiveIterableStringBreakFunction|TestAsyncLiveIterableStringBreakModule|TestAsyncLiveIterableSetReturnFunction|TestAsyncLiveIterableSetReturnModule|TestAsyncLiveForOfStringAdmission|TestAsyncLiveMutantIterableMapBreakFunction|TestAsyncLiveMutantIterableMapBreakModule|TestAsyncLiveMutantIterableMapClearFunction|TestAsyncLiveMutantIterableMapClearModule|TestAsyncLiveMutantIterableMapEntriesFunction|TestAsyncLiveMutantIterableMapEntriesModule|TestAsyncLiveMutantIterableMapKeysFunction|TestAsyncLiveMutantIterableMapKeysModule|TestAsyncLiveMutantIterableMapReaddFunction|TestAsyncLiveMutantIterableMapReaddModule|TestAsyncLiveMutantIterableMapRehashFunction|TestAsyncLiveMutantIterableMapRehashModule|TestAsyncLiveMutantIterableMapReturnFunction|TestAsyncLiveMutantIterableMapReturnModule|TestAsyncLiveMutantIterableMapValuesFunction|TestAsyncLiveMutantIterableMapValuesModule|TestAsyncLiveMutantIterableNestedMapsFunction|TestAsyncLiveMutantIterableNestedMapsModule|TestAsyncLiveMutantIterableSetEntriesFunction|TestAsyncLiveMutantIterableSetEntriesModule|TestAsyncLiveMutantIterableSetReturnFunction|TestAsyncLiveMutantIterableSetReturnModule|TestAsyncLiveMutantIterableSetValuesFunction|TestAsyncLiveMutantIterableSetValuesModule|TestAsyncLiveMutantIterableStringAsciiFunction|TestAsyncLiveMutantIterableStringAsciiModule|TestAsyncLiveMutantIterableStringBreakFunction|TestAsyncLiveMutantIterableStringBreakModule|TestAsyncLiveMutantIterableStringEmojiFunction|TestAsyncLiveMutantIterableStringEmojiModule|TestAsyncLiveMutantIterableStringSurrogatesFunction|TestAsyncLiveMutantIterableStringSurrogatesModule|TestAsyncLiveSourceForOfString|TestAsyncLiveSourceForOfMap|TestAsyncLiveSourceForOfCollectionsMutation|TestAsyncLiveReleaseMapBreak|TestAsyncLiveReleaseMapReturn|TestAsyncLiveReleaseStringBreak|TestAsyncLiveReleaseSetReturn|TestAsyncLiveUserIteratorFunctionRemainsUnproven|TestAsyncLiveUserIteratorModuleRemainsUnproven|TestAsyncLabelsAsyncFinallyCompletion|TestAsyncLabelsAsyncLabels|TestAsyncLabelsAsyncLabelsFinally|TestAsyncLabelsAsyncLabelsBlockFinally|TestAsyncLabelsLabelBlockEdges|TestAsyncLabelsAsyncIterablesCellsLabels|TestAsyncLabelsLabelBlockBreakSync|TestAsyncLabelsLabelBlockContinueSync|TestAsyncLabelsLabelBlockSwitchBreakSync|TestAsyncLabelsLabelBlockOuterContinueSync|TestAsyncLabelsLabelBlockBreakAsync|TestAsyncLabelsLabelBlockContinueAsync|TestAsyncLabelsLabelBlockSwitchBreakAsync|TestAsyncLabelsLabelBlockOuterContinueAsync|TestAsyncLabelsAsyncFinallyReturn|TestAsyncLabelsAsyncFinallyThrow|TestAsyncLabelsAsyncFinallyBreak|TestAsyncLabelsAsyncFinallyContinue|TestAsyncLabelsAsyncFinallyVoidReturn|TestAsyncLabelsAsyncFinallySnapshot|TestAsyncLabelsAsyncGapLabelAdmission|TestAsyncLabelsAsyncGapCatchAdmission|TestAsyncLabelsAsyncGapFinallyAdmission|TestAsyncLabelsAsyncGapFinallyReturnAdmission|TestAsyncLabelsFinallyReturnMutant|TestAsyncLabelsFinallyThrowMutant|TestAsyncLabelsFinallyBreakMutant|TestAsyncLabelsFinallyContinueMutant|TestAsyncLabelsReturnSnapshotMutant|TestAsyncLabelsNameResolutionMutant|TestAsyncLabelsBlockWrapperBreakSyncMutant|TestAsyncLabelsBlockWrapperBreakAsyncMutant|TestAsyncLoopsTopCatchBinding|TestAsyncLoopsTopCatchAfterAwait|TestAsyncLoopsTopLoop|TestAsyncLoopsForOfBody|TestAsyncLoopsForOfMutation|TestAsyncLoopsForOfReturn|TestAsyncLoopsSwitchBody|TestAsyncLoopsLoopCells|TestAsyncLoopsLoopBodyCapture|TestAsyncLoopsForOfCapture|TestAsyncLoopsForOfCells|TestAsyncLoopsForOfBodyCells|TestAsyncLoopsForOfBreakCells|TestAsyncLoopsMethodsSplit|TestAsyncLoopsCallableReturnRemainsRefused|TestAsyncLoopsTopCatchBindingMutant|TestAsyncLoopsTopCatchAfterAwaitMutant|TestAsyncLoopsTopLoopMutant|TestAsyncLoopsForOfBodyMutant|TestAsyncLoopsForOfMutationMutant|TestAsyncLoopsForOfReturnMutant|TestAsyncLoopsSwitchBodyMutant|TestAsyncLoopsLoopCellsMutant|TestAsyncLoopsLoopBodyCaptureMutant|TestAsyncLoopsForOfCaptureMutant|TestAsyncLoopsForOfCellsMutant|TestAsyncLoopsForOfBodyCellsMutant|TestAsyncLoopsForOfBreakCellsMutant|TestNativeAgreesWithNode_async_loop_body_capture|TestNativeAgreesWithNode_async_finally_completion|TestNativeAgreesWithNode_async_labels|TestNativeAgreesWithNode_async_labels_finally|TestNativeAgreesWithNode_async_labels_block_finally|TestNativeAgreesWithNode_label_block_edges|TestNativeAgreesWithNode_async_iterables_cells_labels|TestNativeAgreesWithNode_label_block_break_sync|TestNativeAgreesWithNode_label_block_continue_sync|TestNativeAgreesWithNode_label_block_switch_break_sync|TestNativeAgreesWithNode_label_block_outer_continue_sync|TestNativeAgreesWithNode_label_block_break_async|TestNativeAgreesWithNode_label_block_continue_async|TestNativeAgreesWithNode_label_block_switch_break_async|TestNativeAgreesWithNode_label_block_outer_continue_async|TestNativeAgreesWithNode_async_finally_return|TestNativeAgreesWithNode_async_finally_throw|TestNativeAgreesWithNode_async_finally_break|TestNativeAgreesWithNode_async_finally_continue|TestNativeAgreesWithNode_async_finally_void_return|TestNativeAgreesWithNode_async_finally_snapshot|TestNativeAgreesWithNode_async_gap_label_admission|TestNativeAgreesWithNode_async_gap_catch_admission|TestNativeAgreesWithNode_async_gap_finally_admission|TestNativeAgreesWithNode_async_gap_finally_return_admission|TestNativeAgreesWithNode_async_iterable_string_ascii_function|TestNativeAgreesWithNode_async_for_of_string|TestNativeAgreesWithNode_async_for_of_map|TestNativeAgreesWithNode_async_for_of_collections_mutation|TestNativeAgreesWithNode_async_iterable_string_ascii_module|TestNativeAgreesWithNode_async_iterable_string_emoji_function|TestNativeAgreesWithNode_async_iterable_string_emoji_module|TestNativeAgreesWithNode_async_iterable_string_surrogates_function|TestNativeAgreesWithNode_async_iterable_string_surrogates_module|TestNativeAgreesWithNode_async_iterable_map_entries_function|TestNativeAgreesWithNode_async_iterable_map_entries_module|TestNativeAgreesWithNode_async_iterable_map_keys_function|TestNativeAgreesWithNode_async_iterable_map_keys_module|TestNativeAgreesWithNode_async_iterable_map_values_function|TestNativeAgreesWithNode_async_iterable_map_values_module|TestNativeAgreesWithNode_async_iterable_set_values_function|TestNativeAgreesWithNode_async_iterable_set_values_module|TestNativeAgreesWithNode_async_iterable_set_entries_function|TestNativeAgreesWithNode_async_iterable_set_entries_module|TestNativeAgreesWithNode_async_iterable_map_clear_function|TestNativeAgreesWithNode_async_iterable_map_clear_module|TestNativeAgreesWithNode_async_iterable_map_readd_function|TestNativeAgreesWithNode_async_iterable_map_readd_module|TestNativeAgreesWithNode_async_iterable_map_rehash_function|TestNativeAgreesWithNode_async_iterable_map_rehash_module|TestNativeAgreesWithNode_async_iterable_nested_maps_function|TestNativeAgreesWithNode_async_iterable_nested_maps_module|TestNativeAgreesWithNode_async_iterable_map_break_function|TestNativeAgreesWithNode_async_iterable_map_break_module|TestNativeAgreesWithNode_async_iterable_map_return_function|TestNativeAgreesWithNode_async_iterable_map_return_module|TestNativeAgreesWithNode_async_iterable_string_break_function|TestNativeAgreesWithNode_async_iterable_string_break_module|TestNativeAgreesWithNode_async_iterable_set_return_function|TestNativeAgreesWithNode_async_iterable_set_return_module|TestNativeAgreesWithNode_async_for_of_string_admission|TestNativeAgreesWithNode_async_top_catch_binding|TestNativeAgreesWithNode_async_top_catch_after_await|TestNativeAgreesWithNode_async_top_loop|TestNativeAgreesWithNode_async_for_of_body|TestNativeAgreesWithNode_async_for_of_mutation|TestNativeAgreesWithNode_async_for_of_return|TestNativeAgreesWithNode_async_switch_body|TestNativeAgreesWithNode_async_loop_cells|TestNativeAgreesWithNode_async_for_of_capture|TestNativeAgreesWithNode_async_for_of_cells|TestNativeAgreesWithNode_async_for_of_body_cells|TestNativeAgreesWithNode_async_for_of_break_cells|TestWASIAgreesWithNode_async_loop_body_capture|TestWASIAgreesWithNode_async_finally_completion|TestWASIAgreesWithNode_async_labels|TestWASIAgreesWithNode_async_labels_finally|TestWASIAgreesWithNode_async_labels_block_finally|TestWASIAgreesWithNode_label_block_edges|TestWASIAgreesWithNode_async_iterables_cells_labels|TestWASIAgreesWithNode_label_block_break_sync|TestWASIAgreesWithNode_label_block_continue_sync|TestWASIAgreesWithNode_label_block_switch_break_sync|TestWASIAgreesWithNode_label_block_outer_continue_sync|TestWASIAgreesWithNode_label_block_break_async|TestWASIAgreesWithNode_label_block_continue_async|TestWASIAgreesWithNode_label_block_switch_break_async|TestWASIAgreesWithNode_label_block_outer_continue_async|TestWASIAgreesWithNode_async_finally_return|TestWASIAgreesWithNode_async_finally_throw|TestWASIAgreesWithNode_async_finally_break|TestWASIAgreesWithNode_async_finally_continue|TestWASIAgreesWithNode_async_finally_void_return|TestWASIAgreesWithNode_async_finally_snapshot|TestWASIAgreesWithNode_async_gap_label_admission|TestWASIAgreesWithNode_async_gap_catch_admission|TestWASIAgreesWithNode_async_gap_finally_admission|TestWASIAgreesWithNode_async_gap_finally_return_admission|TestWASIAgreesWithNode_async_iterable_string_ascii_function|TestWASIAgreesWithNode_async_for_of_string|TestWASIAgreesWithNode_async_for_of_map|TestWASIAgreesWithNode_async_for_of_collections_mutation|TestWASIAgreesWithNode_async_iterable_string_ascii_module|TestWASIAgreesWithNode_async_iterable_string_emoji_function|TestWASIAgreesWithNode_async_iterable_string_emoji_module|TestWASIAgreesWithNode_async_iterable_string_surrogates_function|TestWASIAgreesWithNode_async_iterable_string_surrogates_module|TestWASIAgreesWithNode_async_iterable_map_entries_function|TestWASIAgreesWithNode_async_iterable_map_entries_module|TestWASIAgreesWithNode_async_iterable_map_keys_function|TestWASIAgreesWithNode_async_iterable_map_keys_module|TestWASIAgreesWithNode_async_iterable_map_values_function|TestWASIAgreesWithNode_async_iterable_map_values_module|TestWASIAgreesWithNode_async_iterable_set_values_function|TestWASIAgreesWithNode_async_iterable_set_values_module|TestWASIAgreesWithNode_async_iterable_set_entries_function|TestWASIAgreesWithNode_async_iterable_set_entries_module|TestWASIAgreesWithNode_async_iterable_map_clear_function|TestWASIAgreesWithNode_async_iterable_map_clear_module|TestWASIAgreesWithNode_async_iterable_map_readd_function|TestWASIAgreesWithNode_async_iterable_map_readd_module|TestWASIAgreesWithNode_async_iterable_map_rehash_function|TestWASIAgreesWithNode_async_iterable_map_rehash_module|TestWASIAgreesWithNode_async_iterable_nested_maps_function|TestWASIAgreesWithNode_async_iterable_nested_maps_module|TestWASIAgreesWithNode_async_iterable_map_break_function|TestWASIAgreesWithNode_async_iterable_map_break_module|TestWASIAgreesWithNode_async_iterable_map_return_function|TestWASIAgreesWithNode_async_iterable_map_return_module|TestWASIAgreesWithNode_async_iterable_string_break_function|TestWASIAgreesWithNode_async_iterable_string_break_module|TestWASIAgreesWithNode_async_iterable_set_return_function|TestWASIAgreesWithNode_async_iterable_set_return_module|TestWASIAgreesWithNode_async_for_of_string_admission|TestWASIAgreesWithNode_async_top_catch_binding|TestWASIAgreesWithNode_async_top_catch_after_await|TestWASIAgreesWithNode_async_top_loop|TestWASIAgreesWithNode_async_for_of_body|TestWASIAgreesWithNode_async_for_of_mutation|TestWASIAgreesWithNode_async_for_of_return|TestWASIAgreesWithNode_async_switch_body|TestWASIAgreesWithNode_async_loop_cells|TestWASIAgreesWithNode_async_for_of_capture|TestWASIAgreesWithNode_async_for_of_cells|TestWASIAgreesWithNode_async_for_of_body_cells|TestWASIAgreesWithNode_async_for_of_break_cells|TestCountsAreRecorded_async_loop_body_capture|TestCountsAreRecorded_async_finally_completion|TestCountsAreRecorded_async_labels|TestCountsAreRecorded_async_labels_finally|TestCountsAreRecorded_async_labels_block_finally|TestCountsAreRecorded_label_block_edges|TestCountsAreRecorded_async_iterables_cells_labels|TestCountsAreRecorded_label_block_break_sync|TestCountsAreRecorded_label_block_continue_sync|TestCountsAreRecorded_label_block_switch_break_sync|TestCountsAreRecorded_label_block_outer_continue_sync|TestCountsAreRecorded_label_block_break_async|TestCountsAreRecorded_label_block_continue_async|TestCountsAreRecorded_label_block_switch_break_async|TestCountsAreRecorded_label_block_outer_continue_async|TestCountsAreRecorded_async_finally_return|TestCountsAreRecorded_async_finally_throw|TestCountsAreRecorded_async_finally_break|TestCountsAreRecorded_async_finally_continue|TestCountsAreRecorded_async_finally_void_return|TestCountsAreRecorded_async_finally_snapshot|TestCountsAreRecorded_async_gap_label_admission|TestCountsAreRecorded_async_gap_catch_admission|TestCountsAreRecorded_async_gap_finally_admission|TestCountsAreRecorded_async_gap_finally_return_admission|TestCountsAreRecorded_async_iterable_string_ascii_function|TestCountsAreRecorded_async_for_of_string|TestCountsAreRecorded_async_for_of_map|TestCountsAreRecorded_async_for_of_collections_mutation|TestCountsAreRecorded_async_iterable_string_ascii_module|TestCountsAreRecorded_async_iterable_string_emoji_function|TestCountsAreRecorded_async_iterable_string_emoji_module|TestCountsAreRecorded_async_iterable_string_surrogates_function|TestCountsAreRecorded_async_iterable_string_surrogates_module|TestCountsAreRecorded_async_iterable_map_entries_function|TestCountsAreRecorded_async_iterable_map_entries_module|TestCountsAreRecorded_async_iterable_map_keys_function|TestCountsAreRecorded_async_iterable_map_keys_module|TestCountsAreRecorded_async_iterable_map_values_function|TestCountsAreRecorded_async_iterable_map_values_module|TestCountsAreRecorded_async_iterable_set_values_function|TestCountsAreRecorded_async_iterable_set_values_module|TestCountsAreRecorded_async_iterable_set_entries_function|TestCountsAreRecorded_async_iterable_set_entries_module|TestCountsAreRecorded_async_iterable_map_clear_function|TestCountsAreRecorded_async_iterable_map_clear_module|TestCountsAreRecorded_async_iterable_map_readd_function|TestCountsAreRecorded_async_iterable_map_readd_module|TestCountsAreRecorded_async_iterable_map_rehash_function|TestCountsAreRecorded_async_iterable_map_rehash_module|TestCountsAreRecorded_async_iterable_nested_maps_function|TestCountsAreRecorded_async_iterable_nested_maps_module|TestCountsAreRecorded_async_iterable_map_break_function|TestCountsAreRecorded_async_iterable_map_break_module|TestCountsAreRecorded_async_iterable_map_return_function|TestCountsAreRecorded_async_iterable_map_return_module|TestCountsAreRecorded_async_iterable_string_break_function|TestCountsAreRecorded_async_iterable_string_break_module|TestCountsAreRecorded_async_iterable_set_return_function|TestCountsAreRecorded_async_iterable_set_return_module|TestCountsAreRecorded_async_for_of_string_admission|TestCountsAreRecorded_async_top_catch_binding|TestCountsAreRecorded_async_top_catch_after_await|TestCountsAreRecorded_async_top_loop|TestCountsAreRecorded_async_for_of_body|TestCountsAreRecorded_async_for_of_mutation|TestCountsAreRecorded_async_for_of_return|TestCountsAreRecorded_async_switch_body|TestCountsAreRecorded_async_loop_cells|TestCountsAreRecorded_async_for_of_capture|TestCountsAreRecorded_async_for_of_cells|TestCountsAreRecorded_async_for_of_body_cells|TestCountsAreRecorded_async_for_of_break_cells)$",
+        "-parallel=4",
+        "-count=1",
+        "-json",
+        "-timeout=780s"
+      ],
+      "exit": 0,
+      "wall_seconds": 61.511,
+      "log": "final-read-only-async.jsonl",
+      "passed_tests": 353
+    },
+    {
+      "name": "final-mutant-early-live-collection-release",
+      "command": [
+        "go",
+        "test",
+        "-overlay=/workspace/scratch/wb14/mutants/early-live-collection-release/overlay.json",
+        "./internal/oracle",
+        "-run",
+        "^TestAsyncLoopsForOfMutation$",
+        "-count=1",
+        "-json",
+        "-timeout=60s"
+      ],
+      "exit": 1,
+      "wall_seconds": 12.841,
+      "log": "final-mutant-early-live-collection-release.jsonl",
+      "test": "TestAsyncLoopsForOfMutation",
+      "named_red": true,
+      "compile_failure": false,
+      "evidence": "heap-use-after-free"
+    },
+    {
+      "name": "final-mutant-skip-iterator-cleanup-on-break",
+      "command": [
+        "go",
+        "test",
+        "-overlay=/workspace/scratch/wb14/mutants/skip-iterator-cleanup-on-break/overlay.json",
+        "./internal/oracle",
+        "-run",
+        "^TestAsyncLiveIterableMapBreakFunction$",
+        "-count=1",
+        "-json",
+        "-timeout=60s"
+      ],
+      "exit": 1,
+      "wall_seconds": 12.668,
+      "log": "final-mutant-skip-iterator-cleanup-on-break.jsonl",
+      "test": "TestAsyncLiveIterableMapBreakFunction",
+      "named_red": true,
+      "compile_failure": false,
+      "evidence": "LeakSanitizer"
+    },
+    {
+      "name": "final-mutant-labeled-break-skips-finally",
+      "command": [
+        "go",
+        "test",
+        "-overlay=/workspace/scratch/wb14/mutants/labeled-break-skips-finally/overlay.json",
+        "./internal/oracle",
+        "-run",
+        "^TestAsyncLabelsAsyncLabelsFinally$",
+        "-count=1",
+        "-json",
+        "-timeout=60s"
+      ],
+      "exit": 1,
+      "wall_seconds": 11.997,
+      "log": "final-mutant-labeled-break-skips-finally.jsonl",
+      "test": "TestAsyncLabelsAsyncLabelsFinally",
+      "named_red": true,
+      "compile_failure": false,
+      "evidence": "JavaScript: stdout differs"
+    },
+    {
+      "name": "final-async-tsan",
+      "command": [
+        "go",
+        "test",
+        "-overlay=/workspace/scratch/wb14/tsan-overlay.json",
+        "./internal/oracle",
+        "-run",
+        "^TestWB14Async",
+        "-count=1",
+        "-json",
+        "-timeout=180s"
+      ],
+      "exit": 0,
+      "wall_seconds": 12.88,
+      "log": "final-async-tsan.jsonl"
+    },
+    {
+      "name": "final-async-host-tsan",
+      "command": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestAsyncHostPromisesThread$",
+        "-count=1",
+        "-json",
+        "-timeout=60s"
+      ],
+      "exit": 0,
+      "wall_seconds": 10.704,
+      "log": "final-async-host-tsan.jsonl"
+    }
+  ],
+  "stage1_gaps": {
+    "files": [
+      "stage1/cohere/css/gaps_test.go",
+      "stage1/cohere/cssstrings/gaps_test.go",
+      "stage1/cohere/estree/gaps_test.go",
+      "stage1/cohere/gitignore/gaps_test.go",
+      "stage1/cohere/graphql/gaps_test.go",
+      "stage1/cohere/graphql/printer/gaps_test.go",
+      "stage1/cohere/json/gaps_test.go",
+      "stage1/cohere/lint/gaps_test.go",
+      "stage1/cohere/markdownblocks/gaps_test.go",
+      "stage1/cohere/markdowninline/gaps_test.go",
+      "stage1/cohere/mediaquery/gaps_test.go",
+      "stage1/cohere/selector/gaps_test.go",
+      "stage1/cohere/static_single_assignment/gaps_test.go",
+      "stage1/cohere/suppression/gaps_test.go",
+      "stage1/cohere/tsprinter/gaps_test.go",
+      "stage1/cohere/values/gaps_test.go",
+      "stage1/cohere/yaml/gaps_test.go",
+      "stage1/typescript/parser/gaps_test.go",
+      "stage1/typescript/scanner/gaps_test.go"
+    ],
+    "failed": []
+  },
+  "static_audit": {
+    "exec literals": [],
+    "os/exec imports": [],
+    "compiler invocation": [],
+    "new skip": []
+  },
+  "known_setup_and_attempts": [
+    "The first lower read-mode attempt preceded traced product preparation and correctly refused missing settled products.",
+    "GCC sanitizer headers were absent; a task-owned launcher includes the installed Clang sanitizer headers. The native whole suite then passed.",
+    "Whole oracle on the earlier JSON base hit its aggregate deadline; all 2068 reading units subsequently completed individually or in bounded batches.",
+    "Product preparation windows stopped at their hard limits with exit 124 and resumed only unfinished checkpoint-stamped owners.",
+    "The initial 40.34-second flow remainder was split into four top-level shards. Gate caught indirect Parallel calls; direct first calls fixed the gate. Corrected whole flow and gate both passed.",
+    "A first traced WASI compiler preparation needed TZ=UTC to avoid reading /etc/localtime. Count measurement tracing then followed the missing declared WASI compiler prerequisite.",
+    "Main product builders sanitized0 and WASIRequest2 previously took 79.44 and 61.99 seconds. These builders run on Workshop outside the unit budget.",
+    "The strict read-only attempt correctly refused the untraced existing JSONTypes product. Tracing its owner completed the 41-owner closure; all 353 readers then passed.",
+    "Two scratch verifier assertions were corrected after valid test results: current JavaScript diagnostic punctuation and counting only top-level TSan proofs. No production change was needed.",
+    "The task Go build cache was cleared at 12.17 GiB free, restoring 19.85 GiB. Toolchains were retained."
+  ],
+  "iterator_cleanup_boundary": "The break mutant suppresses owned builtin iterator cleanup and is killed by LeakSanitizer. User-defined iterator return() dispatch remains refused; this is not a claim to prove that unsupported dispatch.",
+  "traced_product_owners": [
+    {
+      "owner": "internal/native TestProduct_WASICompiler",
+      "trace": "traced: 1 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T185402Z-3978355064"
+    },
+    {
+      "owner": "internal/oracle TestProduct_Adamic",
+      "trace": "traced: 0 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T185419Z-3570023622"
+    },
+    {
+      "owner": "internal/oracle TestProduct_JSONTypes",
+      "trace": "traced: 1 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T192235Z-3015375896"
+    },
+    {
+      "owner": "internal/oracle TestProduct_NativeRuntimesCounted0",
+      "trace": "traced: 6 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T185431Z-788118162"
+    },
+    {
+      "owner": "internal/oracle TestProduct_NativeRuntimesCounted1",
+      "trace": "traced: 5 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T185510Z-1825037842"
+    },
+    {
+      "owner": "internal/oracle TestProduct_NativeRuntimesCounted2",
+      "trace": "traced: 5 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T185543Z-4032373744"
+    },
+    {
+      "owner": "internal/oracle TestProduct_NativeRuntimesSanitized0",
+      "trace": "traced: 6 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T185617Z-2459614224"
+    },
+    {
+      "owner": "internal/oracle TestProduct_NativeRuntimesSanitized1",
+      "trace": "traced: 5 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T185701Z-1274558012"
+    },
+    {
+      "owner": "internal/oracle TestProduct_NativeRuntimesSanitized2",
+      "trace": "traced: 5 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T185738Z-2167978678"
+    },
+    {
+      "owner": "internal/oracle TestProduct_NativeRuntimesRelease0",
+      "trace": "traced: 6 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T185817Z-1641530524"
+    },
+    {
+      "owner": "internal/oracle TestProduct_NativeRuntimesRelease1",
+      "trace": "traced: 5 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T185854Z-2198406466"
+    },
+    {
+      "owner": "internal/oracle TestProduct_NativeRuntimesRelease2",
+      "trace": "traced: 5 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T185928Z-1497657135"
+    },
+    {
+      "owner": "internal/oracle TestProduct_NativeRuntimesWASI0",
+      "trace": "traced: 6 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T190002Z-2247831026"
+    },
+    {
+      "owner": "internal/oracle TestProduct_NativeRuntimesWASI1",
+      "trace": "traced: 5 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T190030Z-3567750549"
+    },
+    {
+      "owner": "internal/oracle TestProduct_NativeRuntimesWASI2",
+      "trace": "traced: 5 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T190053Z-4017240588"
+    },
+    {
+      "owner": "internal/oracle TestProduct_NativeRuntimesWASIRequest0",
+      "trace": "traced: 6 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T190117Z-1425661178"
+    },
+    {
+      "owner": "internal/oracle TestProduct_NativeRuntimesWASIRequest1",
+      "trace": "traced: 5 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T190145Z-861674314"
+    },
+    {
+      "owner": "internal/oracle TestProduct_NativeRuntimesWASIRequest2",
+      "trace": "traced: 5 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T190209Z-1800055831"
+    },
+    {
+      "owner": "internal/oracle TestProduct_ProgramParseLowerOn",
+      "trace": "traced: 1 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T190233Z-1565482932"
+    },
+    {
+      "owner": "internal/oracle TestProduct_ProgramRuntimesCounted0",
+      "trace": "traced: 6 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T190249Z-3840864634"
+    },
+    {
+      "owner": "internal/oracle TestProduct_ProgramRuntimesCounted1",
+      "trace": "traced: 5 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T190339Z-746832977"
+    },
+    {
+      "owner": "internal/oracle TestProduct_ProgramRuntimesCounted2",
+      "trace": "traced: 5 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T190422Z-389008415"
+    },
+    {
+      "owner": "internal/oracle TestProduct_ProgramParseOn",
+      "trace": "traced: 1 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T190517Z-1152113083"
+    },
+    {
+      "owner": "internal/oracle TestProduct_ProgramParseLowerOff",
+      "trace": "traced: 1 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T190538Z-1200081441"
+    },
+    {
+      "owner": "internal/oracle TestProduct_ProgramParseOff",
+      "trace": "traced: 1 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T190555Z-2806852341"
+    },
+    {
+      "owner": "internal/oracle TestProduct_CountMeasurements00",
+      "trace": "traced: 1 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T190615Z-2210182334"
+    },
+    {
+      "owner": "internal/oracle TestProduct_CountMeasurements01",
+      "trace": "traced: 1 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T190711Z-4020380318"
+    },
+    {
+      "owner": "internal/oracle TestProduct_CountMeasurements02",
+      "trace": "traced: 1 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T190803Z-487630010"
+    },
+    {
+      "owner": "internal/oracle TestProduct_CountMeasurements03",
+      "trace": "traced: 1 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T190854Z-2381908734"
+    },
+    {
+      "owner": "internal/oracle TestProduct_CountMeasurements04",
+      "trace": "traced: 1 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T190948Z-2780908165"
+    },
+    {
+      "owner": "internal/oracle TestProduct_CountMeasurements05",
+      "trace": "traced: 1 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T191035Z-77257055"
+    },
+    {
+      "owner": "internal/oracle TestProduct_CountMeasurements06",
+      "trace": "traced: 1 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T191121Z-2451436814"
+    },
+    {
+      "owner": "internal/oracle TestProduct_CountMeasurements07",
+      "trace": "traced: 2 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T191219Z-2364069437"
+    },
+    {
+      "owner": "internal/oracle TestProduct_CountMeasurements08",
+      "trace": "traced: 1 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T191335Z-2559734994"
+    },
+    {
+      "owner": "internal/oracle TestProduct_CountMeasurements09",
+      "trace": "traced: 1 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T191427Z-2303018543"
+    },
+    {
+      "owner": "internal/oracle TestProduct_CountMeasurements10",
+      "trace": "traced: 1 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T191523Z-1557155712"
+    },
+    {
+      "owner": "internal/oracle TestProduct_CountMeasurements11",
+      "trace": "traced: 1 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T191638Z-3255563007"
+    },
+    {
+      "owner": "internal/oracle TestProduct_CountMeasurements12",
+      "trace": "traced: 1 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T191734Z-545503126"
+    },
+    {
+      "owner": "internal/oracle TestProduct_CountMeasurements13",
+      "trace": "traced: 1 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T191831Z-3834514417"
+    },
+    {
+      "owner": "internal/oracle TestProduct_CountMeasurements14",
+      "trace": "traced: 1 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T191928Z-2282982976"
+    },
+    {
+      "owner": "internal/oracle TestProduct_CountMeasurements15",
+      "trace": "traced: 1 settled, 0 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261024T192018Z-3973689473"
+    }
+  ]
+}
