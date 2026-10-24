@@ -575,7 +575,7 @@ func TestExecuteGivesChildrenTheToolchainsCompiler(t *testing.T) {
 
 // Both streams exceed a pipe buffer; the final bytes and nonzero exit must survive the drain.
 // Mutant: drop the last captured stdout byte before returning from execute.
-func TestExecuteCapturesWholeOutput(t *testing.T) {
+func TestFixtureExecuteCapturesWholeOutput(t *testing.T) {
 	t.Parallel()
 	const size = 1 << 20
 	result := execute(t, t.TempDir(), nil, "node", "-e", `
