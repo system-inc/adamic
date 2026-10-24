@@ -2,6 +2,7 @@
 #include "graph_regions.h"
 #include "count.h"
 #include <stddef.h>
+#include <stdio.h>
 
 #ifdef ADAMIC_PROGRAM_REGION
 static adamic_heap *members;
@@ -12,6 +13,13 @@ void *adamic_program_adopt_owned(void *value, size_t size) {
  if (heap == NULL || heap->references != 1 || adamic_weak_held(heap) ||
      (heap->slab & (ADAMIC_REGION_VALUE | ADAMIC_SHARED_HEADER | ADAMIC_GRAPH_FLAG)) != 0) {
   adamic_panic("compiler bug: Program adoption needs a fresh counted allocation", sizeof "compiler bug: Program adoption needs a fresh counted allocation" - 1);
+ }
+ // Adoption moves the allocation, so only the kinds it can re-aim may join (graph_regions.c).
+ const char *unmovable = adamic_region_unmovable(heap);
+ if (unmovable != NULL) {
+  char message[96];
+  int length = snprintf(message, sizeof message, "compiler bug: %s can't be adopted into the Program region", unmovable);
+  adamic_panic(message, (size_t)length);
  }
 #ifdef ADAMIC_CANONICAL_CLOSURES
  if (heap->kind == adamic_kind_environment) {
