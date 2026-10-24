@@ -1,0 +1,11 @@
+// Spec: Labels on loops, switches and blocks can be targets of a labeled `break`
+// Expect: lowers
+let reached = 'start';
+check: {
+	if (reached === 'start') {
+		reached = 'inside';
+		break check;
+	}
+	reached = 'after';
+}
+console.log(reached);

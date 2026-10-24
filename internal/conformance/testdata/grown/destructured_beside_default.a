@@ -1,0 +1,6 @@
+// Spec: beside a parameter with a default too
+// Expect: lowers
+function describe({ x, y }: { readonly x: number; readonly y: number }, label: string = 'point'): string {
+	return `${label} ${x + y}`;
+}
+console.log(describe({ x: 1, y: 2 }));
