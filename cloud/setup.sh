@@ -17,12 +17,14 @@ loadBefore=$(cat /proc/loadavg)
 warmTests=false
 wasiSDK=false
 wasmtime=false
+workerd=false
 for argument in "$@"; do
 	case "$argument" in
 		--warm-tests) warmTests=true ;;
 		--wasi-sdk) wasiSDK=true ;;
 		--wasmtime) wasmtime=true ;;
-		*) echo "usage: bash cloud/setup.sh [--warm-tests] [--wasi-sdk] [--wasmtime]" >&2; exit 2 ;;
+		--workerd) workerd=true ;;
+		*) echo "usage: bash cloud/setup.sh [--warm-tests] [--wasi-sdk] [--wasmtime] [--workerd]" >&2; exit 2 ;;
 	esac
 done
 step() {
@@ -214,6 +216,35 @@ if "$wasmtime"; then
  "$wasmtimeDirectory/wasmtime" --version
  ln -sf "$wasmtimeDirectory/wasmtime" "$tools/bin/wasmtime"
  step "wasmtime ready ($wasmtimeDirectory, archive sha256 $wasmtimeSHA256)"
+fi
+
+# Optional Workers engine, pinned with archive checksums.
+if "$workerd"; then
+ workerdVersion=1.20261007.1
+ case $(uname -m) in
+  x86_64)
+   workerdArchitecture=64
+   workerdSHA256=7b5fc5ba52c0db4b39d70cef061b2eea6b3d05ce590765e11d953516dec4a83f ;;
+  *)
+   workerdArchitecture=arm64
+   workerdSHA256=7306969ef569b45d171ea7ddb24210f12fad1a34fda3d6b740ee8472ae092e03 ;;
+ esac
+ workerdDirectory="$tools/workerd-$workerdVersion"
+ # Loom's runner reads archive-sha256 in the directory of the workerd a unit's PATH resolves to, and voids a unit
+ # whose key names another digest, so a pass is never recorded under bytes that didn't run. An install counts only
+ # when its record is the pin; anything else (an older install with no record, an interrupted lay) is laid again.
+ if [ ! -x "$workerdDirectory/workerd" ] || [ "$(cat "$workerdDirectory/archive-sha256" 2> /dev/null)" != "$workerdSHA256" ]; then
+  workerdArchive="$tools/workerd-$workerdVersion-$workerdArchitecture.tgz"
+  curl -fsSL "https://registry.npmjs.org/@cloudflare/workerd-linux-$workerdArchitecture/-/workerd-linux-$workerdArchitecture-$workerdVersion.tgz" -o "$workerdArchive"
+  printf '%s  %s\n' "$workerdSHA256" "$workerdArchive" | sha256sum -c -
+  mkdir -p "$workerdDirectory"
+  rm -f "$workerdDirectory/archive-sha256"
+  tar --no-same-owner -xzf "$workerdArchive" -C "$workerdDirectory" --strip-components 2 package/bin/workerd
+  printf '%s\n' "$workerdSHA256" > "$workerdDirectory/archive-sha256"
+ fi
+ "$workerdDirectory/workerd" --version
+ ln -sf "$workerdDirectory/workerd" "$tools/bin/workerd"
+ step "workerd ready ($workerdDirectory, archive sha256 $workerdSHA256)"
 fi
 
 # Bootstrap without the hook: the cache program cannot cache its own build. Older branches and
