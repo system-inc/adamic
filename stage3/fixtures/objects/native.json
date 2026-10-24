@@ -9,6 +9,15 @@
     "matches_node": true
   },
   {
+    "file": "14_comment_pending.a",
+    "native": {
+      "stdout": "0:8:2:true;9:19:3:true;\n\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "matches_node": true
+  },
+  {
     "file": "23_factory_getters.a",
     "native": {
       "stdout": "28:a:b\n57:x:y\ntrue\n",
@@ -21,6 +30,24 @@
     "file": "24_transformation_accessors.a",
     "native": {
       "stdout": "sub:identifier\nemit:source\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "matches_node": true
+  },
+  {
+    "file": "28_debugger.a",
+    "native": {
+      "stdout": "Debug Failure. Invalid version\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "matches_node": true
+  },
+  {
+    "file": "29_parameter_default.a",
+    "native": {
+      "stdout": "true\nfalse\nfalse\n",
       "stderr": "",
       "exit": 0
     },

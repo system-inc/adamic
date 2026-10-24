@@ -10,6 +10,7 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	GraphTypes        SortedMap[int, bool]
 	ViewOrigins       []Expression
 	ViewContracts     []ViewContract
 	ViewContractTypes SortedMap[int, ViewContractID]
@@ -101,6 +102,7 @@ type NonNullCheck struct {
 
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
 type Class struct {
+	Graph bool
 	// Definition is the erased source identity, shared by distinct native layouts.
 	Definition   int
 	Name         string
@@ -126,6 +128,7 @@ type Accessor struct {
 type Function struct {
 	// SourceLength is ECMAScript length: parameters before the first default or rest.
 	SourceLength int
+	GraphClosure bool
 	// CheckedUnionNarrow marks a synthetic checked load so non-null assertions can use its stored input.
 	CheckedUnionNarrow bool
 	Name               string
@@ -266,6 +269,7 @@ func (t Type) IsReference() bool {
 
 // Local is a variable: its name as written, for reading the output, and its type.
 type Local struct {
+	GraphCell bool
 	// Uninitialized uses the temporal-dead-zone readiness state until the first assignment.
 	Uninitialized         bool
 	InitializerExpression string
@@ -678,6 +682,7 @@ type (
 	// ArraySplice is array.splice(Start, Count, ...Items): Count perhaps left out (everything after
 	// Start), and what's removed, a new array.
 	ArraySplice struct {
+		GraphTypes          []int
 		Array, Start, Count Expression
 		Items               []Expression
 		Element             Type
@@ -689,6 +694,7 @@ type (
 	// ArrayFill is array.fill(Value, Start, End), Start and End perhaps nil (left out); in place, and
 	// the array. With Array nil, it's new Array(Length).fill(Value): a new array, every element Value.
 	ArrayFill struct {
+		GraphTypes                       []int
 		Array, Length, Value, Start, End Expression
 		Element                          Type
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
@@ -701,6 +707,7 @@ type (
 	// undefined and its index, in order. First is the type of the callback's first parameter, which
 	// undefined is passed as (0 when it has none).
 	ArrayFrom struct {
+		GraphTypes       []int
 		CallbackType     int
 		Length, Callback Expression
 		Element, First   Type
@@ -712,8 +719,9 @@ type (
 	// ArrayConcat is array.concat(Others...): a new array of every one's elements, in order. Each of
 	// Others is an array of the same elements.
 	ArrayConcat struct {
-		Array  Expression
-		Others []Expression
+		GraphTypes []int
+		Array      Expression
+		Others     []Expression
 	}
 
 	// ArrayReduce is array.reduce(Callback, Initial): the callback called per element with what it
@@ -753,6 +761,7 @@ type (
 	// ArrayMap is array.map(callback): a new array of the callback's results, each called with the
 	// element, its index and the array.
 	ArrayMap struct {
+		GraphTypes   []int
 		CallbackType int
 		Array        Expression
 		Callback     Expression
@@ -766,6 +775,7 @@ type (
 	// Returns is what the callback returns, 0 for nothing; every
 	// method but forEach requires a boolean.
 	ArrayVisit struct {
+		GraphTypes []int
 		// SearchFirst and SearchUndefined preserve the callback's declared value contract.
 		// SearchElementName names the checker type in a failed search call.
 		// SearchNull preserves a present null when boxing nullable-reference storage.
@@ -784,14 +794,16 @@ type (
 	// MapEntries is [...map]: an array of [key, value] pairs, each a tuple, an object whose fields
 	// are named "0" and "1".
 	MapEntries struct {
+		GraphTypes         []int
 		Map                Expression
 		KeyType, ValueType Type
 	}
 
 	// ArraySlice is array.slice(start, end), either argument perhaps left out.
 	ArraySlice struct {
-		Array     Expression
-		Arguments []Expression
+		GraphTypes []int
+		Array      Expression
+		Arguments  []Expression
 	}
 
 	// ArraySort is array.sort(comparator): one of the module's functions (Comparator), or a function
@@ -806,6 +818,7 @@ type (
 
 	// MapNew is new Map(), or new Map([[key, value], ...]) with the pairs written out.
 	MapNew struct {
+		GraphTypes []int
 		Key, Value Type
 		Entries    [][2]Expression
 
@@ -816,12 +829,14 @@ type (
 
 	// MapKeys and MapValues are [...map.keys()] and [...map.values()]: new arrays, in insertion order.
 	MapKeys struct {
-		Map Expression
-		Key Type
+		GraphTypes []int
+		Map        Expression
+		Key        Type
 	}
 	MapValues struct {
-		Map   Expression
-		Value Type
+		GraphTypes []int
+		Map        Expression
+		Value      Type
 	}
 
 	// MapClear is map.clear() and set.clear(), which is void.
@@ -867,8 +882,9 @@ type (
 
 	// SetNew is new Set(), or new Set(Values), an array of the elements, each added in order.
 	SetNew struct {
-		Element Type
-		Values  Expression
+		GraphTypes []int
+		Element    Type
+		Values     Expression
 	}
 
 	// SetAdd is set.add(Value), which is the set. An element it already has keeps its place. has,
@@ -883,8 +899,9 @@ type (
 
 	// SetValues is [...set]: a new array of its elements, in order.
 	SetValues struct {
-		Set     Expression
-		Element Type
+		GraphTypes []int
+		Set        Expression
+		Element    Type
 	}
 
 	// MapSize is map.size.

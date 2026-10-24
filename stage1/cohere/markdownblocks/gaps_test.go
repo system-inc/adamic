@@ -80,10 +80,10 @@ func (probe representationProbe) closed() bool {
 // representationProbes are the gaps TestParserRepresentationProbes runs, in order.
 var representationProbes = []representationProbe{
 	{path: "gaps/1_recursive_state.ts", stdout: "35\n35\n"},
-	{path: "gaps/2_state_arrow_cycle.ts", stdout: "35\n35\n", refused: "a cycle reference counting can't free"},
+	{path: "gaps/2_state_arrow_cycle.ts", stdout: "35\n35\n"},
 	{path: "gaps/3_recursive_callable.ts", stdout: "1\n0\n"},
 	{path: "gaps/14_missing_path_key.ts", stdout: "key=\"\" present=false\n"},
-	{path: "gaps/4_structural_ranges.ts", stdout: "1\n", refused: "a cycle reference counting can't free"},
+	{path: "gaps/4_structural_ranges.ts", stdout: "1\n"},
 	{path: "gaps/5_conditional_panic.ts", stdout: "T\n"},
 	{path: "gaps/7_postfix_property.ts", stdout: "0\n1\n", notYet: "a PostfixUnaryExpression"},
 	{path: "gaps/8_generic_callback_result.ts", stdout: "value\n", notYet: "a function returning Result"},

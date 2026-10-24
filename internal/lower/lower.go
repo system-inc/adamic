@@ -114,6 +114,8 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 }
 
 type lowering struct {
+	// Source-only sites for graph adoption diagnostics; never stored in emitted IR.
+	graphViewSite, graphDynamicSite *ast.Node
 	// impliedTargets memoizes inferred parent targets only within this checker.
 	impliedTargets map[*ast.Node]*checker.Type
 	// A per-lowering query seam lets tests count actual checker calls without globals.

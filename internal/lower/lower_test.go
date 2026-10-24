@@ -141,6 +141,10 @@ func TestWhatZeroOneRefusesIsRefusedWithAFix(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
+			if strings.Contains(probe.want, "can reach back") || strings.Contains(probe.want, "a variable a function value captures") {
+				graphAccepted(t, probe.source)
+				return
+			}
 			_, err := lowerSource(t, probe.source)
 			var refused *Refused
 			if !errors.As(err, &refused) || !strings.Contains(refused.Error(), probe.want) {
