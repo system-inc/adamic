@@ -52,7 +52,7 @@ func TestCounterSquareJumpDoubleProductMutant(t *testing.T) {
 	// Mutate only the integer path's double product, leaving the entry guard
 	// and ordinary double fallback intact.
 	code := native.C(program)
-	local := fmt.Sprintf("adamic_local_%d_i", counter)
+	local := emittedLocalSymbol(t, code, "adamic_local_", "i")
 	product := fmt.Sprintf("((double)%s) * ((double)%s)", local, local)
 	if strings.Count(code, product) != 1 {
 		t.Fatal("expected one square product with double counter reads")

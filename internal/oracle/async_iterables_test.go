@@ -609,8 +609,32 @@ func asyncLiveReleaseMutant(t *testing.T, name string) {
 		t.Fatal("iterator not owned by frame")
 	}
 	code := native.C(p)
-	begin := strings.Index(code, fmt.Sprintf("static void adamic_async_finish_%d(", function))
-	end := strings.Index(code[begin:], fmt.Sprintf("static void adamic_async_abandon_%d(", function)) + begin
+	readable := strings.Join(p.Functions[function].Source.Declaration, "_")
+	begin, end := -1, -1
+	offset := 0
+	for {
+		at := strings.Index(code[offset:], "static void adamic_async_finish_")
+		if at < 0 {
+			break
+		}
+		at += offset
+		lineEnd := strings.IndexByte(code[at:], '\n')
+		if lineEnd < 0 {
+			break
+		}
+		if strings.Contains(code[at:at+lineEnd], "_"+readable+"_") {
+			begin = at
+			tail := strings.Index(code[begin:], "static void adamic_async_abandon_")
+			if tail >= 0 {
+				end = begin + tail
+			}
+			break
+		}
+		offset = at + lineEnd
+	}
+	if begin < 0 || end < begin {
+		t.Fatal("missing stable iterator frame cleanup")
+	}
 	cleanup := fmt.Sprintf("adamic_release(adamic_slot_%d);", slot)
 	part := code[begin:end]
 	if strings.Count(part, cleanup) != 1 {
