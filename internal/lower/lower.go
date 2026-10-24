@@ -92,6 +92,7 @@ func lowerChecked(program *load.Program, typeChecker *checker.Checker, entry *as
 	if err := lowering.declareModule(declarations); err != nil {
 		return nil, err
 	}
+	lowering.recordExports(entry)
 	for _, module := range modules {
 		body, err := lowering.statements(module.Statements.Nodes)
 		if err != nil {
