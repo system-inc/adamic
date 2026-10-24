@@ -45,6 +45,8 @@ func TestLatentStatecopyCoversEveryLoweringStateField(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	// Reads: internal/lower/*.go
+	// Reads: internal/ir/*.go
 	g := loadGenerator(root, filepath.Join(root, "internal/lower/lower.go"))
 	done := map[string]bool{}
 	for {
