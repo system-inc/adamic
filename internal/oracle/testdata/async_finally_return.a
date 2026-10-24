@@ -1,0 +1,2 @@
+async function work(): Promise<string> { try { await Promise.resolve(); return `held${7}`; } finally { await Promise.resolve(); console.log("cleanup return"); } }
+console.log(await work());

@@ -1359,6 +1359,8 @@ func (a *analysis) value(expression ir.Expression) value {
 		made := a.fresh(elementKey, elements)
 		a.tagOwnershipGraph(made, expression.GraphTypes, expression.ProgramRegion)
 		return made
+	case ir.StringIterator:
+		return a.fresh(anyField, a.value(expression.Value))
 	case ir.CollectionIterator:
 		return a.fresh(anyField, a.value(expression.Collection))
 	case ir.MapNew:

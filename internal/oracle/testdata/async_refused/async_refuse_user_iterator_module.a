@@ -1,0 +1,2 @@
+const source = { [Symbol.iterator]() { return { next() { return { value: 1, done: false }; } }; } };
+for (const item of source) { await Promise.resolve(); break; }

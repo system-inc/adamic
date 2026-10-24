@@ -1,0 +1,17 @@
+async function asyncSwitchBreak(): Promise<void> {
+    for (let i = 0; i < 2; i++) {
+        box: {
+            switch (i) {
+                case 0:
+                    await Promise.resolve(); console.log('async switch break');
+                    break box;
+                default:
+                    await Promise.resolve(); console.log('async default break');
+                    break box;
+            }
+            console.log('async wrong switch break');
+        }
+        console.log(`async switch tail${i}`);
+    }
+}
+await asyncSwitchBreak();

@@ -1,0 +1,10 @@
+async function escapedReader(): Promise<() => number> {
+    let read = () => -1;
+    for (let i = 0; i < 3; i++) {
+        read = () => i;
+        await Promise.resolve();
+    }
+    return read;
+}
+const read = await escapedReader();
+console.log(`${read()}`);

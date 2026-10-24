@@ -1,0 +1,31 @@
+{
+  "baseline": "6d9133d9c7365464b0ad59fde2bc2ed5b055a680",
+  "checked": 786,
+  "admissions": [
+    {
+      "path": "internal/oracle/testdata/async_loop_body_capture.a",
+      "before": {
+        "exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/async_loop_body_capture.a:7:9: stage 0 can't lower async per-iteration captured cells in a repeatedly executed body are not yet represented yet\n"
+      },
+      "after": {
+        "exit": 0,
+        "diagnostic": ""
+      }
+    }
+  ],
+  "regressions": [],
+  "renamed_fixture": {
+    "before": "internal/oracle/testdata/async_refused/async_refuse_loop_body_capture.a",
+    "after": "internal/oracle/testdata/async_loop_body_capture.a",
+    "proof": "TestAsyncLoopsLoopBodyCapture"
+  },
+  "reason_changes": [],
+  "raw_diagnostic_differences": [
+    {
+      "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a",
+      "before_first_line": "adamic: compiler bug: compiler bug: incomplete checked field contract",
+      "after_first_line": "adamic: compiler bug: compiler bug: incomplete checked field contract"
+    }
+  ]
+}
