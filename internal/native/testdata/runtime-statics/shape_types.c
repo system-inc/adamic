@@ -4,6 +4,7 @@
 // the push, hiding a missing registry lock from ThreadSanitizer.
 static const char *const names[] = {"x"};
 static const bool references[] = {false};
+static const adamic_field_kind kinds[] = {adamic_field_number};
 static adamic_shape shapes[256];
 static const int types[] = {1};
 static adamic_shape_types metadata[256];
@@ -13,7 +14,7 @@ static _Thread_local size_t worker;
 static _Thread_local size_t visits;
 static void prepare(void) {
  for (size_t index = 0; index < 256; index++) {
-  shapes[index] = (adamic_shape){1, names, references, NULL};
+  shapes[index] = (adamic_shape){1, names, references, NULL, kinds};
   metadata[index] = (adamic_shape_types){&shapes[index], types, NULL, false};
  }
  if (pthread_barrier_init(&registrations, NULL, 4) != 0) { abort(); }

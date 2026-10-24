@@ -28,7 +28,8 @@ const prototypeOwnershipModel = `#include "adamic.h"
 const char *__lsan_default_options(void) { return "use_stacks=0:use_registers=0"; }
 static const char *const names[] = {"a", "[[Prototype]]"};
 static const bool references[] = {true, true};
-static const adamic_shape shape = {2, names, references, NULL};
+static const adamic_field_kind kinds[] = {adamic_field_reference,adamic_field_reference};
+static const adamic_shape shape = {2, names, references, NULL, kinds};
 __attribute__((noinline)) static void run(void) {
     adamic_object *prototype = adamic_object_new(&shape);
     adamic_object *object = adamic_object_new(&shape);
