@@ -17,6 +17,7 @@ import (
 
 // The removed function body was the only use of errors, like Lower's async pass.
 func TestProduct_RemovedImportBuilds(t *testing.T) {
+	t.Parallel()
 	source := []byte(`package fixture
 import ("errors"; f "fmt"; _ "net/http")
 func lower() error { return errors.New(f.Sprint("production")) }
