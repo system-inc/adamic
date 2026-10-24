@@ -361,6 +361,9 @@ func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 		for _, proven := range f.l.localAlso[node.cell-1] {
 			links = append(links, cycleNode{proven: proven})
 		}
+		if f.l.result.Locals[node.cell-1].IterationCell {
+			return links
+		}
 		// A capture into one interior slot owns the entire environment allocation.
 		for _, function := range f.l.result.Functions {
 			found := false

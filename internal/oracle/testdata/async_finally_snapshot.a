@@ -1,0 +1,2 @@
+async function work(): Promise<number> { let value=41; try { await Promise.resolve(); return value; } finally { value=99; await Promise.resolve(); console.log(`${value}`); } }
+console.log(`${await work()}`);

@@ -1,0 +1,2 @@
+async function work(): Promise<void> { try { await Promise.resolve(); throw new Error(`held${8}`); } finally { await Promise.resolve(); console.log("cleanup throw"); } }
+try { await work(); } catch (e) { if(e instanceof Error) console.log(e.message); }

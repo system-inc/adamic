@@ -1,0 +1,12 @@
+async function asyncContinue(): Promise<void> {
+    for (let i = 0; i < 3; i++) {
+        box: {
+            await Promise.resolve(); console.log(`async continue${i}`);
+            continue;
+            console.log('async missed continue');
+        }
+        console.log('async wrong block continue');
+    }
+    console.log('async continue done');
+}
+await asyncContinue();

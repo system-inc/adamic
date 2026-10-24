@@ -1,0 +1,17 @@
+function syncSwitchBreak(): void {
+    for (let i = 0; i < 2; i++) {
+        box: {
+            switch (i) {
+                case 0:
+                    console.log('sync switch break');
+                    break box;
+                default:
+                    console.log('sync default break');
+                    break box;
+            }
+            console.log('sync wrong switch break');
+        }
+        console.log(`sync switch tail${i}`);
+    }
+}
+syncSwitchBreak();
