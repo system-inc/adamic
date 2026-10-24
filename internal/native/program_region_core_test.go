@@ -273,6 +273,10 @@ func TestProgramCanonicalAdoptionRefusalMutant(t *testing.T) {
 	t.Parallel()
 	programRefusalMutant(t, "cached-adoption-allowed", "cached-adoption", "must precede canonical caching")
 }
+func TestProgramUnmovableAdoptionRefusalMutant(t *testing.T) {
+	t.Parallel()
+	programRefusalMutant(t, "unmovable-adoption-allowed", "unmovable-adoption", "a number box can't be adopted into the Program region")
+}
 func TestProgramWeakAdoptionRefusalMutant(t *testing.T) {
 	t.Parallel()
 	programRefusalMutant(t, "weak-adoption-allowed", "weak-before-adoption", "fresh counted allocation")
