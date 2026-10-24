@@ -25,6 +25,7 @@ var programCoreMutations = []programCoreMutation{
 	{"aliased-adoption-allowed", "program_region.c", "heap->references != 1", "false"},
 	{"sharing-allowed", "share.c", `adamic_panic("Program region members cannot cross into parallel work", sizeof "Program region members cannot cross into parallel work" - 1);`, `(void)heap;`},
 	{"cached-adoption-allowed", "program_region.c", `adamic_panic("compiler bug: Program adoption must precede canonical caching", sizeof "compiler bug: Program adoption must precede canonical caching" - 1);`, `(void)heap;`},
+	{"unmovable-adoption-allowed", "program_region.c", "if (unmovable != NULL) {", "if (false) {"},
 	{"weak-adoption-allowed", "program_region.c", "adamic_weak_held(heap)", "false"},
 	{"weak-cell-adoption-allowed", "program_region.c", "adamic_weak_held(&environment->cells[i])", "false"},
 	{"member-release-frees", "heap.c", "if (heap == NULL || adamic_program_is(heap)) { return NULL; }", "if (heap == NULL) { return NULL; }\n if (adamic_program_is(heap)) { return heap; }"},
