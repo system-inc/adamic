@@ -39,3 +39,9 @@ and the complete four generator packages passed. Setup timing lines: Node 0.066s
 Go 0.076s, clang 0.499s, Markdown dependencies 1.064s, submodules 272.330s,
 Go build 426.920s, build cache 427.032s, done 427.076s. nproc: 5;
 cgroup CPU quota: 400000/100000. Node v24.19.0, Go 1.27.1, clang 20.1.8.
+
+Oct 23, after Loom's refusal: the import test ran `go build`, and a test may run go only for a read-only query, so
+it's now TestImportCleanDropsOnlyTheImportsARewriteLeftUnused. It type-checks the fixture with go/types and a stub
+importer, which reports "imported and not used" without running go, and it first proves the uncleaned file leaves
+errors unused. The skip-cleaning mutant (`if false && !astutil.UsesImport`) fails it with
+`"errors" imported and not used`. Run on a Mac with `GOWORK=off`: green in 0.24 s, and the mutant red.

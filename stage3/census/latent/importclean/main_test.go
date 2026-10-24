@@ -2,21 +2,17 @@ package main
 
 import (
 	"bytes"
-	"context"
 	"go/ast"
 	"go/format"
 	"go/parser"
 	"go/token"
-	"os"
-	"os/exec"
-	"path/filepath"
+	"go/types"
 	"strings"
 	"testing"
-	"time"
 )
 
 // The removed function body was the only use of errors, like Lower's async pass.
-func TestProduct_RemovedImportBuilds(t *testing.T) {
+func TestImportCleanDropsOnlyTheImportsARewriteLeftUnused(t *testing.T) {
 	t.Parallel()
 	source := []byte(`package fixture
 import ("errors"; f "fmt"; _ "net/http")
@@ -38,6 +34,10 @@ func lower() error { return errors.New(f.Sprint("production")) }
 	if err := format.Node(&rewritten, fs, file); err != nil {
 		t.Fatal(err)
 	}
+	// The check can fail: before cleaning, the rewritten file leaves errors unused.
+	if unused := unusedImports(t, rewritten.Bytes()); len(unused) != 1 || !strings.Contains(unused[0], `"errors"`) {
+		t.Fatalf("the rewritten fixture's unused imports are %q, want errors alone", unused)
+	}
 	output, err := clean(rewritten.Bytes())
 	if err != nil {
 		t.Fatal(err)
@@ -45,22 +45,38 @@ func lower() error { return errors.New(f.Sprint("production")) }
 	if !strings.Contains(string(output), `f "fmt"`) || !strings.Contains(string(output), `_ "net/http"`) {
 		t.Fatal("used or side-effect import lost")
 	}
-	directory := t.TempDir()
-	if err := os.WriteFile(filepath.Join(directory, "fixture.go"), output, 0600); err != nil {
-		t.Fatal(err)
+	if unused := unusedImports(t, output); len(unused) != 0 {
+		t.Fatalf("the cleaned fixture still leaves imports unused: %q\n%s", unused, output)
 	}
-	log, err := os.Create(filepath.Join(directory, "build.log"))
+}
+
+// unusedImports type-checks source the way the compiler judges imports, without running go: each import resolves to
+// an empty package, so a use reads as undefined, which is ignored, and only "imported and not used" is collected.
+func unusedImports(t *testing.T, source []byte) []string {
+	t.Helper()
+	fs := token.NewFileSet()
+	file, err := parser.ParseFile(fs, "fixture.go", source, 0)
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer log.Close()
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-	defer cancel()
-	command := exec.CommandContext(ctx, "go", "build", "-o", filepath.Join(directory, "fixture.a"), filepath.Join(directory, "fixture.go"))
-	command.Stdout = log
-	command.Stderr = log
-	if err := command.Run(); err != nil {
-		data, _ := os.ReadFile(log.Name())
-		t.Fatalf("build: %v\n%s", err, data)
+	var unused []string
+	config := types.Config{
+		Importer: stubImporter{},
+		Error: func(err error) {
+			if strings.Contains(err.Error(), "imported and not used") {
+				unused = append(unused, err.Error())
+			}
+		},
 	}
+	_, _ = config.Check("fixture", fs, []*ast.File{file}, nil)
+	return unused
+}
+
+type stubImporter struct{}
+
+func (stubImporter) Import(path string) (*types.Package, error) {
+	name := path[strings.LastIndex(path, "/")+1:]
+	pkg := types.NewPackage(path, name)
+	pkg.MarkComplete()
+	return pkg, nil
 }

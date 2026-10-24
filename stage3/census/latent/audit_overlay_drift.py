@@ -27,4 +27,4 @@ def names(source):
 run('name-list', 'stage3/census/latent/refusalrewrite/rewrite.go', names,
     ['go','test','./stage3/census/latent/refusalrewrite','-run','^TestCompilerSlice3Shape$','-count=1'], 'unsupported outer refusal returns')
 run('skip-imports', 'stage3/census/latent/importclean/main.go', lambda s: s.replace('return output.Bytes(), nil','return source, nil'),
-    ['go','test','./stage3/census/latent/importclean','-run','^TestProduct_RemovedImportBuilds$','-count=1'], '"errors" imported and not used')
+    ['go','test','./stage3/census/latent/importclean','-run','^TestImportCleanDropsOnlyTheImportsARewriteLeftUnused$','-count=1'], '"errors" imported and not used')
