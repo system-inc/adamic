@@ -292,6 +292,9 @@ static void deallocate(adamic_heap *heap) {
 // one logical allocation, and must happen before aliases or owned slots exist.
 void *adamic_heap_graph_storage(void *value, size_t size) {
 	adamic_heap *old = value;
+	if (size > SIZE_MAX - sizeof(adamic_graph_header)) {
+		adamic_panic("region allocation too large", sizeof "region allocation too large" - 1);
+	}
 	adamic_heap *storage = allocate_storage(size + sizeof(adamic_graph_header), old->kind);
 	uint32_t slab = storage->slab;
 	adamic_graph_header *prefix = (adamic_graph_header *)storage;
@@ -306,6 +309,12 @@ void *adamic_heap_graph_storage(void *value, size_t size) {
 	return heap;
 }
 
+void *adamic_heap_program_storage(void *value, size_t size) {
+    adamic_heap *heap = adamic_heap_graph_storage(value, size);
+    heap->slab = (heap->slab & ~ADAMIC_GRAPH_FLAG) | ADAMIC_PROGRAM_FLAG;
+    heap->references = 0;
+    return heap;
+}
 
 void *adamic_retain_slow(void *value) {
 	adamic_heap *heap = value;
@@ -315,6 +324,7 @@ void *adamic_retain_slow(void *value) {
 		heap = ((adamic_cell *)heap)->owner;
 	}
 #endif
+	if (adamic_program_is(heap)) { return value; }
 	if (adamic_graph_is(heap)) {
 		adamic_graph_retain(heap);
 	} else if (heap != NULL) {
@@ -358,7 +368,7 @@ static adamic_heap *drop_reference(void *value) {
 		heap = ((adamic_cell *)heap)->owner;
 	}
 #endif
-	if (heap == NULL) { return NULL; }
+	if (heap == NULL || adamic_program_is(heap)) { return NULL; }
 	if (adamic_graph_is(heap)) { return adamic_graph_release_last(heap) ? heap : NULL; }
 	size_t count = __atomic_load_n(&heap->references, __ATOMIC_RELAXED);
 	if ((intptr_t)count > 0) {
@@ -469,12 +479,13 @@ void adamic_heap_free_children(void *value, void (*let_go)(void *)) {
 
 void adamic_heap_free_storage(void *value, uint32_t slab) {
 	adamic_heap *heap = value;
-	if (adamic_graph_is(heap)) {
+	bool program = adamic_program_is(heap);
+	if (program || adamic_graph_is(heap)) {
 		heap = (adamic_heap *)adamic_graph_header_of(heap);
 	}
-	heap->slab = slab & ~ADAMIC_GRAPH_FLAG;
+	heap->slab = slab & ~(ADAMIC_GRAPH_FLAG | ADAMIC_PROGRAM_FLAG);
 	deallocate(heap);
-	ADAMIC_COUNT_FREE();
+	if (program) { ADAMIC_COUNT_REGION(1); } else { ADAMIC_COUNT_FREE(); }
 }
 
 static void free_one(void *value) {
@@ -518,6 +529,7 @@ void adamic_heap_thread_end(void) {
 
 // Called only after all workers join. No owner can allocate or publish remote frees now.
 void adamic_heap_end(void) {
+	adamic_program_region_end();
 	adamic_heap_thread_end();
 	size_t count = atomic_load_explicit(&chunk_count, memory_order_relaxed);
 	for (size_t index = 0; index < count; index++) {
