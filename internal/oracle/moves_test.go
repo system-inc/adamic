@@ -10,10 +10,10 @@ import (
 	"path/filepath"
 	"runtime"
 	"slices"
-	"syscall"
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"strings"
@@ -349,16 +349,12 @@ func moveEmissionContext(t *testing.T) (context.Context, context.CancelFunc) {
 }
 
 // emitWithin is emit under ctx, and says whether ctx's deadline killed the process group,
-// so the caller reports a kill as a kill.
+// so the caller reports a kill as a kill. childguard.Capture runs it in a group of its own and
+// kills the group when ctx is done.
 func emitWithin(ctx context.Context, binary, path string) (emitted, bool) {
 	command := exec.CommandContext(ctx, binary, "c", path)
 	command.Dir = repository
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-	command.WaitDelay = 5 * time.Second
-	var output bytes.Buffer
-	command.Stdout = &output
-	err := command.Run()
+	output, _, err := childguard.Capture(ctx, command)
 	if ctx.Err() != nil {
 		return emitted{code: -1}, true
 	}
@@ -366,7 +362,7 @@ func emitWithin(ctx context.Context, binary, path string) (emitted, bool) {
 	if err != nil && !errors.As(err, &exit) {
 		return emitted{code: -1}, false
 	}
-	return emitted{code: command.ProcessState.ExitCode(), output: output.Bytes()}, false
+	return emitted{code: command.ProcessState.ExitCode(), output: output}, false
 }
 
 func TestProduct_MovesDeterminism(t *testing.T)    { t.Parallel(); moveDeterminism(t) }
