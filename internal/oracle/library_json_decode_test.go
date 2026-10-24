@@ -35,9 +35,11 @@ func init() {
 		}{"internal/oracle/testdata/" + name, !jsonDecodeEnumerationRefused(name), false})
 	}
 }
-func TestJSONDecode(t *testing.T) {
-	t.Parallel()
-	for _, name := range jsonDecodeFixtures {
+func jsonDecodeKeys() []string { return jsonDecodeFixtures }
+
+func runJSONDecodeShard(t *testing.T, shard int) {
+	for _, index := range familyCases(t, "TestJSONDecode", shard, jsonDecodeKeys()) {
+		name := jsonDecodeFixtures[index]
 		t.Run(name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name))
 			if err != nil {
@@ -52,6 +54,9 @@ func TestJSONDecode(t *testing.T) {
 				t.Fatal(err)
 			}
 			truth := onNode(t, path)
+			if _, probing := familyProbe("TestJSONDecode"); probing {
+				truth.stdout = append(truth.stdout, '!')
+			}
 			got, binary := natively(t, p)
 			if difference := disagreement(truth, got); difference != "" {
 				t.Fatalf("native: %s; Node %q; native %q; stderr %q", difference, truth.stdout, got.stdout, got.stderr)

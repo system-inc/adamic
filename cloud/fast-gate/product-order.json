@@ -1860,6 +1860,11 @@
     "internal/lower TestProduct_LowerAgreementNative": [
       "internal/oracle TestProduct_NativeRuntimesRelease0",
       "internal/lower TestProduct_LowerAgreementC"
+    ],
+    "internal/oracle TestProduct_JSONOracleRuntimes": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized0",
+      "internal/oracle TestProduct_NativeRuntimesRelease0",
+      "internal/oracle TestProduct_NativeRuntimesCounted0"
     ]
   }
 }

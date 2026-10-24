@@ -24,9 +24,11 @@ func init() {
 		}{"internal/oracle/testdata/" + name, true, false})
 	}
 }
-func TestJSONEncode(t *testing.T) {
-	t.Parallel()
-	for _, name := range jsonEncodeFixtures {
+func jsonEncodeKeys() []string { return jsonEncodeFixtures }
+
+func runJSONEncodeShard(t *testing.T, shard int) {
+	for _, index := range familyCases(t, "TestJSONEncode", shard, jsonEncodeKeys()) {
+		name := jsonEncodeFixtures[index]
 		t.Run(name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name))
 			if err != nil {
@@ -37,6 +39,9 @@ func TestJSONEncode(t *testing.T) {
 				t.Fatal(err)
 			}
 			truth := onNode(t, path)
+			if _, probing := familyProbe("TestJSONEncode"); probing {
+				truth.stdout = append(truth.stdout, '!')
+			}
 			if truth.exitCode != 0 {
 				t.Fatalf("source failed: %s", truth.stderr)
 			}
@@ -104,7 +109,7 @@ func TestJSONEncodeRefusals(t *testing.T) {
 
 // Node executes the fixture values and checks its own JSON.stringify, outside both
 // implementations of JSON writing. The source descriptors contain types only.
-func encodeWitnessSource(t *testing.T, name string, witness string) string {
+func encodeWitnessSource(t *testing.T, name string, witness string, selectSource ...func(string) string) string {
 	t.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name))
 	if err != nil {
@@ -118,7 +123,11 @@ func encodeWitnessSource(t *testing.T, name string, witness string) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	source := strings.ReplaceAll(sources[path], "encodeJson<", "witnessEncodeJson<")
+	selected := sources[path]
+	for _, selectOne := range selectSource {
+		selected = selectOne(selected)
+	}
+	source := strings.ReplaceAll(selected, "encodeJson<", "witnessEncodeJson<")
 	source = strings.ReplaceAll(source, "encodeJson(", "witnessEncodeJson(")
 	source = "import assert from 'node:assert/strict';\nimport {encodeJson as actualEncodeJson, decodeJson as actualDecodeJson} from 'adamic';\n" + witness + "\n" + source
 	encoded, err := json.Marshal(source)
@@ -162,8 +171,16 @@ function witnessEncodeJson(value,schema) {
 		})
 	}
 }
-func TestJSONEncodePinnedDifferences(t *testing.T) {
-	t.Parallel()
+func jsonPinnedDifferenceKeys() []string {
+	return []string{"runtime_order", "hidden_field", "integer_keys"}
+}
+func runJSONEncodePinnedDifferencesShard(t *testing.T, shard int) {
+	for _, index := range familyCases(t, "TestJSONEncodePinnedDifferences", shard, jsonPinnedDifferenceKeys()) {
+		key := jsonPinnedDifferenceKeys()[index]
+		t.Run(key, func(t *testing.T) { jsonEncodePinnedDifferences(t, key) })
+	}
+}
+func jsonEncodePinnedDifferences(t *testing.T, key string) {
 	path := encodeWitnessSource(t, "json_encode_differences.a", `let reorderedSeen=false,hiddenSeen=false;
 function witnessEncodeJson(value,schema) {
  const encoded=actualEncodeJson(value,schema);
@@ -178,33 +195,61 @@ function witnessEncodeJson(value,schema) {
  }
  return encoded;
 }
-process.on('beforeExit',()=>{assert.ok(reorderedSeen);assert.ok(hiddenSeen)});`)
+process.on('beforeExit',()=>{const key='`+key+`';if(key==='runtime_order') assert.ok(reorderedSeen);if(key==='hidden_field') assert.ok(hiddenSeen)});`, func(source string) string {
+		start := strings.Index(source, "for (const value of [reordered, hidden])")
+		numeric := strings.Index(source, "// Numeric keys")
+		if start < 0 || numeric < start {
+			t.Fatal("pinned fixture split targets changed")
+		}
+		if key == "integer_keys" {
+			return source[:start] + source[numeric:]
+		}
+		source = source[:numeric]
+		value := "reordered"
+		if key == "hidden_field" {
+			value = "hidden"
+		}
+		return strings.Replace(source, "[reordered, hidden]", "["+value+"]", 1)
+	})
 	got := onNode(t, path)
 	if got.exitCode != 0 || len(got.stderr) != 0 {
 		t.Fatalf("pinned differences failed: %s", got.stderr)
 	}
-	want := "{\"first\":\"one\",\"second\":2}\n{\"first\":\"one\",\"second\":2}\n{\"2\":2,\"1\":1,\"z\":3}\n"
+	want := "{\"first\":\"one\",\"second\":2}\n"
+	if key == "integer_keys" {
+		want = "{\"2\":2,\"1\":1,\"z\":3}\n"
+	}
+	if _, probing := familyProbe("TestJSONEncodePinnedDifferences"); probing {
+		want += "!"
+	}
 	if string(got.stdout) != want {
 		t.Fatalf("pinned encode text: want %q got %q", want, got.stdout)
 	}
+
 }
 
 // Pin all three nonfinite spellings against V8, independently of our schema runtime.
 // They encode as null, which deliberately cannot round-trip through decodeJson<number>.
-func TestJSONEncodeNonfinitePinned(t *testing.T) {
-	t.Parallel()
+func jsonNonfiniteKeys() []string { return []string{"NaN", "Infinity", "-Infinity"} }
+func runJSONEncodeNonfinitePinnedShard(t *testing.T, shard int) {
+	for _, index := range familyCases(t, "TestJSONEncodeNonfinitePinned", shard, jsonNonfiniteKeys()) {
+		key := jsonNonfiniteKeys()[index]
+		t.Run(key, func(t *testing.T) { jsonEncodeNonfinitePinned(t, key) })
+	}
+}
+func jsonEncodeNonfinitePinned(t *testing.T, key string) {
 	dir := t.TempDir()
 	witness := filepath.Join(dir, "witness.mjs")
-	if err := os.WriteFile(witness, []byte(`for (const value of [NaN, Infinity, -Infinity]) console.log(JSON.stringify(value));`), 0600); err != nil {
+	if err := os.WriteFile(witness, []byte(`console.log(JSON.stringify(`+key+`));`), 0600); err != nil {
 		t.Fatal(err)
 	}
 	truth := onNode(t, witness)
-	if truth.exitCode != 0 || string(truth.stdout) != "null\nnull\nnull\n" {
+	if truth.exitCode != 0 || string(truth.stdout) != "null\n" {
 		t.Fatalf("Node nonfinite pin differs: %d %q %s", truth.exitCode, truth.stdout, truth.stderr)
 	}
 	path := filepath.Join(dir, "nonfinite.a")
 	if err := os.WriteFile(path, []byte(`import {encodeJson,decodeJson,panic} from 'adamic';
-for (const value of [NaN, Infinity, -Infinity]) {
+for (const value of [`+key+`]) {
  const text=encodeJson<number>(value);
  if (text !== 'null') panic('nonfinite encoding must be null');
  if (decodeJson<number>(text).kind !== 'Error') panic('numeric decode must reject null');
@@ -217,6 +262,9 @@ for (const value of [NaN, Infinity, -Infinity]) {
 		t.Fatal(err)
 	}
 	source := onNode(t, path)
+	if _, probing := familyProbe("TestJSONEncodeNonfinitePinned"); probing {
+		source.stdout = append(source.stdout, '!')
+	}
 	if diff := disagreement(truth, source); diff != "" {
 		t.Fatalf("source nonfinite pin: %s %s", diff, source.stderr)
 	}
