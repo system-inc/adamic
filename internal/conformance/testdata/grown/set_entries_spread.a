@@ -1,0 +1,7 @@
+// Spec: A Set's `entries()` spread into an array gives each element paired with itself
+// Expect: lowers
+const names = new Set<string>(['a', 'b']);
+const pairs = [...names.entries()];
+for (const [left, right] of pairs) {
+	console.log(`${left}=${right}`);
+}
