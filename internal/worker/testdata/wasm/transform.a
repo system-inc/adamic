@@ -1,0 +1,14 @@
+import type { HttpRequest, HttpResponse } from 'adamic/http';
+
+export function transform(text: string, marker: string): string {
+    let result = marker;
+    for(let index = text.length - 1; index >= 0; index -= 1) {
+        result += String.fromCharCode(text.charCodeAt(index));
+    }
+    return result;
+}
+
+export function handle(request: HttpRequest): HttpResponse {
+    const result = transform(`${request.body}\ud800🌍`, `${request.body}END\udfff`);
+    return { status: 200, headers: [], body: JSON.stringify(result) ?? '' };
+}

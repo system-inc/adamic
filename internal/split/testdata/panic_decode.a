@@ -1,0 +1,30 @@
+import { decodeJson, panic } from 'adamic';
+interface Summary { readonly count: number; readonly sum: number }
+function numberAt(values: readonly number[], index: number): number {
+ return values[index] ?? panic('stats index out of bounds');
+}
+function summarize(values: readonly number[]): Summary {
+ let sum = 0;
+ for (let index = 0; index < values.length; index++) { sum += numberAt(values, index); }
+ return { count: values.length, sum };
+}
+function checked(value: number): number {
+ for (let index = 0; index < 1; index++) {
+  if (value < 0) panic('negative value');
+ }
+ return value;
+}
+function decodeSummary(text: string): Summary {
+ const parsed = decodeJson<readonly number[]>(text);
+ if (parsed.kind === 'Error') panic('invalid values');
+ return summarize(parsed.value);
+}
+function decodeResult(text: string) {
+ for (let index = 0; index < 1; index++) { checked(index); }
+ return decodeJson<number>(text);
+}
+function handler(text: string): Summary {
+ console.log('summary');
+ return decodeSummary(text);
+}
+console.log(`${handler('[1,2,3]').sum} ${summarize([4,5]).count} ${checked(2)} ${decodeResult('1').kind}`);

@@ -1,0 +1,60 @@
+interface Value {
+	items: number[];
+}
+function containedWrite(value: Value): number {
+	const values: Value[] = [];
+	values.push(value);
+	for (const item of values) {
+		item.items.push(1);
+	}
+	return value.items.length;
+}
+function containedRead(value: Value): number {
+	const values: Value[] = [];
+	values.push(value);
+	let result = 0;
+	for (const item of values) {
+		result += item.items.length;
+	}
+	return result;
+}
+function copyNested(value: Value): number {
+	const values = [value].slice();
+	for (const item of values) {
+		item.items.push(1);
+	}
+	return value.items.length;
+}
+const globalValue: Value = { items: [] };
+function globalAliasWrite(): number {
+	const alias = globalValue;
+	alias.items.push(1);
+	return alias.items.length;
+}
+function globalRead(): number {
+	let result = 0;
+	for (const item of globalValue.items) {
+		result += item;
+	}
+	return result;
+}
+function returnedWrite(value: Value): number {
+	const items = returnItems(value);
+	for (let i = 0; i < 1; i++) {
+		items.push(1);
+	}
+	return items.length;
+}
+function returnItems(value: Value): number[] {
+	return value.items;
+}
+function reduceReturnsGlobal(values: readonly number[]): number {
+	const picked = values.reduce((_previous: Value, _item: number): Value => globalValue, { items: [] });
+	for (let i = 0; i < 1; i++) {
+		picked.items.push(2);
+	}
+	return picked.items.length;
+}
+console.log(`${containedWrite({ items: [] })} ${containedRead({ items: [1, 2] })} ${copyNested({ items: [] })}`);
+console.log(`${globalAliasWrite()} ${globalRead()} ${returnedWrite({ items: [] })}`);
+console.log(`${reduceReturnsGlobal([1])}`);

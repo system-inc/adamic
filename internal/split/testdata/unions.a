@@ -1,0 +1,20 @@
+function objectUnion(value: { readonly x: number; readonly label: "boundary-only" } | { readonly y: number }): number {
+ let total = 0;
+ for (let i = 0; i < 2; i++) { total += i; }
+ return total;
+}
+function broadUnion(value: number | string | boolean): number {
+ let total = 0;
+ for (let i = 0; i < 2; i++) { total += i; }
+ return total;
+}
+class Parent {
+ readonly value: number;
+ constructor(value: number) { this.value = value; }
+}
+class Child extends Parent {
+ constructor(value: number) { super(value); }
+}
+console.log(`${objectUnion({ y: 2 })}`);
+console.log(`${broadUnion(1)} ${broadUnion('x')} ${broadUnion(true)}`);
+console.log(`${new Child(3).value}`);
