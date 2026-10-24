@@ -216,20 +216,28 @@ static bool literal(const json_node *value,const adamic_decode_node *type) {
  if (type->representation==2) { return value->kind==json_boolean && value->boolean==type->boolean; }
  return value->kind==json_string && adamic_string_equal(value->string,type->literal);
 }
-static bool reference(int representation) { return representation!=1 && representation!=2 && representation!=7; }
+static bool reference(int representation) {
+ return representation>=adamic_ir_String && representation<=adamic_ir_Uint16Array &&
+  representation!=adamic_ir_MaybeNumber && representation!=adamic_ir_MaybeBoolean &&
+  representation!=adamic_ir_NullRepresentation && representation!=adamic_ir_UndefinedRepresentation;
+}
+static adamic_field_kind storage_kind(int representation) {
+ return reference(representation)?adamic_field_reference:representation==adamic_ir_Boolean?adamic_field_boolean:adamic_field_number;
+}
 // A decoded object's shape lives in the object's own allocation, after the slots. It has no
 // separate owner and needs no new heap kind, and absent optional fields take no slot at all.
 static adamic_object *make_object(size_t count) {
  size_t object_size=adamic_object_size(count);
  // Align the embedded shape after main's initialization, representation and order tails.
  size_t shape_offset=(object_size+_Alignof(adamic_shape)-1)&~(_Alignof(adamic_shape)-1);
- size_t size=shape_offset+sizeof(adamic_shape)+count*sizeof(char *)+count*sizeof(bool);
+ size_t size=shape_offset+sizeof(adamic_shape)+count*(sizeof(char *)+sizeof(bool)+sizeof(adamic_field_kind));
  adamic_object *o=adamic_allocate(size,adamic_kind_object);
  memset((char *)o+sizeof(adamic_heap),0,size-sizeof(adamic_heap));
  adamic_shape *shape=(adamic_shape *)((char *)o+shape_offset);
  shape->count=count;
  shape->names=(const char *const *)(shape+1);
  shape->references=(const bool *)(shape->names+count);
+ shape->kinds=(const adamic_field_kind *)(shape->references+count);
  o->shape=shape;
  memset(adamic_object_initialized(o),1,count);
  return o;
@@ -242,21 +250,24 @@ typedef struct decode_shape_entry {
 } decode_shape_entry;
 static decode_shape_entry *decode_shapes;
 static adamic_shape *canonical_shape(const adamic_shape *shape) {
+ adamic_shape_check(shape);
  for (decode_shape_entry *entry=decode_shapes;entry!=NULL;entry=entry->next) {
   if (entry->shape.count!=shape->count) { continue; }
   bool same=true;
   for (size_t i=0;i<shape->count;i++) {
-   if (entry->shape.references[i]!=shape->references[i] || strcmp(entry->shape.names[i],shape->names[i])!=0) { same=false; break; }
+   if (entry->shape.references[i]!=shape->references[i] || entry->shape.kinds[i]!=shape->kinds[i] || strcmp(entry->shape.names[i],shape->names[i])!=0) { same=false; break; }
   }
   if (same) { return &entry->shape; }
  }
- decode_shape_entry *entry=memory(sizeof *entry+shape->count*(sizeof(char *)+sizeof(bool)));
+ decode_shape_entry *entry=memory(sizeof *entry+shape->count*(sizeof(char *)+sizeof(bool)+sizeof(adamic_field_kind)));
  entry->next=decode_shapes;entry->shape=*shape;
  entry->shape.names=(const char *const *)(entry+1);
  entry->shape.references=(const bool *)(entry->shape.names+shape->count);
+ entry->shape.kinds=(const adamic_field_kind *)(entry->shape.references+shape->count);
  if (shape->count!=0) {
   memcpy((void *)entry->shape.names,shape->names,shape->count*sizeof(char *));
   memcpy((void *)entry->shape.references,shape->references,shape->count*sizeof(bool));
+  memcpy((void *)entry->shape.kinds,shape->kinds,shape->count*sizeof(adamic_field_kind));
  }
  decode_shapes=entry;return &entry->shape;
 }
@@ -331,6 +342,7 @@ static bool validate(const adamic_decode_schema *schema,size_t index,const json_
   if (!ok) { adamic_release(o); return false; }
   ((const char **)o->shape->names)[written]=f->name;
   ((bool *)o->shape->references)[written]=reference(schema->nodes[f->node].representation);
+  ((adamic_field_kind *)o->shape->kinds)[written]=storage_kind(schema->nodes[f->node].representation);
   adamic_object_field_types(o)[written]=(unsigned char)schema->nodes[f->node].representation;
   o->slots[written++]=child;
  }
@@ -340,10 +352,15 @@ static bool validate(const adamic_decode_schema *schema,size_t index,const json_
 static adamic_string ok_kind=ADAMIC_STRING("Ok"), error_kind=ADAMIC_STRING("Error");
 static const char *const ok_names[] = {"kind", "value"};
 static const char *const error_names[] = {"kind", "message"};
-static const bool references[]={true,true},number_references[]={true,false};
-static const adamic_shape ok_shape = {2, ok_names, references, NULL};
-static const adamic_shape number_shape = {2, ok_names, number_references, NULL};
-static const adamic_shape error_shape = {2, error_names, references, NULL};
+static const bool references[]={true,true};
+static const bool number_references[]={true,false};
+static const adamic_field_kind reference_kinds[]={adamic_field_reference,adamic_field_reference};
+static const adamic_field_kind number_kinds[]={adamic_field_reference,adamic_field_number};
+static const adamic_field_kind boolean_kinds[]={adamic_field_reference,adamic_field_boolean};
+static const adamic_shape ok_shape = {2, ok_names, references, NULL, reference_kinds};
+static const adamic_shape number_shape = {2, ok_names, number_references, NULL, number_kinds};
+static const adamic_shape boolean_shape = {2, ok_names, number_references, NULL, boolean_kinds};
+static const adamic_shape error_shape = {2, error_names, references, NULL, reference_kinds};
 adamic_object *adamic_json_decode(const adamic_string *text,const adamic_decode_schema *schema) {
  json_reader reader={text,0,(size_t)adamic_string_length(text),NULL};
  json_node *tree=read_value(&reader,0);
@@ -362,7 +379,7 @@ adamic_object *adamic_json_decode(const adamic_string *text,const adamic_decode_
   result->slots[0].reference=&error_kind; result->slots[1].reference=error; return result;
  }
  int of=schema->nodes[schema->root].representation;
- adamic_object *result=adamic_object_new(reference(of)?&ok_shape:&number_shape);
+ adamic_object *result=adamic_object_new(reference(of)?&ok_shape:of==2?&boolean_shape:&number_shape);
  adamic_object_field_types(result)[0]=3; adamic_object_field_types(result)[1]=(unsigned char)of;
  result->slots[0].reference=&ok_kind; result->slots[1]=value; return result;
 }

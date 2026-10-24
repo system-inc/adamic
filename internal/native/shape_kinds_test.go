@@ -39,6 +39,7 @@ func TestShapeKindsDistinguishScalarLayouts(t *testing.T) {
 // a second metadata table nor a mutant rejected by the C compiler proves this guard.
 var shapeProducers = []struct{ name, path string }{
 	{"CompiledRegExpOwner", "runtime/regexp_compile_ownership.c"},
+	{"JSONDecoder", "runtime/json_decode.c"},
 	{"PrototypeProbe", "prototype_contract_probe_test.go"},
 	{"ConcurrentShapeRegistry", "runtime_statics_parallel_test.go"},
 	{"JSONRecordProbe", "testdata/json-record-runtime/harness.c"},
@@ -541,3 +542,4 @@ func TestShapeKindsEnvironmentMixed(t *testing.T) {
 	t.Parallel()
 	checkShapeProducer(t, "EnvironmentMixed")
 }
+func TestShapeKindsJSONDecoder(t *testing.T) { t.Parallel(); checkShapeProducer(t, "JSONDecoder") }
