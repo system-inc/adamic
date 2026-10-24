@@ -1,0 +1,4 @@
+// a-check: refused adamic/cycle-capable
+interface Node {next: Node | undefined; slot?: number;}
+const node:Node={next:undefined};node.next=node;
+console.log(String('slot' in node));node.slot=7;console.log(String(node.slot));delete node.slot;console.log(String('slot' in node));
