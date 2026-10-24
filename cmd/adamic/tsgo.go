@@ -14,8 +14,14 @@ func build(path, output string, arguments []string) int {
 	return buildWithNative(path, output, arguments, native.Build)
 }
 
+// programRegionRequested is the Program region's opt-in. It reads the environment, not the arguments,
+// so it lives outside buildWithNative and isn't a word the command matches.
+func programRegionRequested() bool {
+	return os.Getenv("ADAMIC_PROGRAM_REGION") == "1"
+}
+
 func buildWithNative(path, output string, arguments []string, buildNative func(string, string, native.Options) error) int {
-	options := native.Options{Release: true}
+	options := native.Options{Release: true, ProgramRegion: programRegionRequested()}
 	archive := ""
 	explain := false
 	reactor := false
