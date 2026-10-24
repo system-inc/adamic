@@ -1,0 +1,11 @@
+let saved: (() => string) | undefined = undefined;
+class User { use(read: () => string): void { console.log(read()); } }
+class Keeper extends User { use(read: () => string): void { saved = read; } }
+function check(user: User, start: number): void {
+ const scratch = 'scratch' + String(start);
+ function read(): string { return scratch; }
+ user.use(read);
+}
+check(new Keeper(), 3);
+function show(): void { if (saved !== undefined) { console.log(saved()); } }
+show();
