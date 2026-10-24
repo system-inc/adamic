@@ -30,10 +30,13 @@ func (e *emitter) unionCallableExpected(property ir.Property) string {
 }
 
 func (e *emitter) unionCallableSignature(parameters []ir.Type, result ir.Type, name string, members ...[]uint16) string {
-	signature := e.temporary()
+	signature, exists := e.sharedDeclaration("adamic_callable", fmt.Sprintf("%v/%d/%q/%v", parameters, result, name, members))
+	if exists {
+		return "&" + signature
+	}
 	parameterName := "NULL"
 	if len(parameters) != 0 {
-		parameterName = e.temporary()
+		parameterName = signature + "_parameters"
 		values := make([]string, len(parameters))
 		for i, of := range parameters {
 			values[i] = fmt.Sprint(of)
@@ -45,7 +48,7 @@ func (e *emitter) unionCallableSignature(parameters []ir.Type, result ir.Type, n
 	if len(members) != 0 && len(members[0]) == len(parameters)+1 {
 		resultMask = members[0][len(parameters)]
 		if len(parameters) != 0 {
-			maskName = e.temporary()
+			maskName = signature + "_masks"
 			values := make([]string, len(parameters))
 			for i, mask := range members[0][:len(parameters)] {
 				values[i] = fmt.Sprint(mask)

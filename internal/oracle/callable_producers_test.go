@@ -56,8 +56,12 @@ func TestCallableProducerRegistryFiltersDirectFunctions(t *testing.T) {
 		if function.Closure && !function.Receiver {
 			continue
 		}
+		declaration := strings.Join(function.Source.Declaration, "_")
+		if declaration == "" {
+			declaration = function.Name
+		}
 		for _, field := range []string{"code", "counted_code"} {
-			if strings.Contains(code, fmt.Sprintf("->%s == adamic_function_%d_", field, index)) {
+			if strings.Contains(code, fmt.Sprintf("->%s == %s", field, emittedFunctionSymbol(t, code, declaration))) {
 				t.Fatalf("direct function %d compared as closure code", index)
 			}
 		}

@@ -93,11 +93,14 @@ func WASIExports(program *ir.Program, exports []ABIExport) (string, error) {
 	e := &emitter{program: program, reuse: planReuse(program, lending)}
 	var declarations, bodies strings.Builder
 	bodies.WriteString(abiSupport)
-	serial := 0
+	codecs := map[string]bool{}
 	var codec func(ABIType) string
 	codec = func(t ABIType) string {
-		serial++
-		name := fmt.Sprintf("adamic_abi_type_%d", serial)
+		name := stableName("adamic_abi_type", t.Kind, fmt.Sprintf("%#v", t))
+		if codecs[name] {
+			return name
+		}
+		codecs[name] = true
 		children := []string{}
 		for _, field := range t.Fields {
 			children = append(children, codec(field.Type))
@@ -198,7 +201,7 @@ func WASIExports(program *ir.Program, exports []ABIExport) (string, error) {
 		return name
 	}
 	var wrappers strings.Builder
-	for exportIndex, export := range exports {
+	for _, export := range exports {
 		f := program.Functions[export.Function]
 		args, params := []string{}, []string{}
 		var body strings.Builder
@@ -240,7 +243,7 @@ func WASIExports(program *ir.Program, exports []ABIExport) (string, error) {
 		if len(params) == 0 {
 			params = append(params, "void")
 		}
-		fmt.Fprintf(&wrappers, "__attribute__((export_name(%s))) %s adamic_abi_export_%d(%s) {\n", cString("adamic_export_"+export.Name), ret, exportIndex, strings.Join(params, ", "))
+		fmt.Fprintf(&wrappers, "__attribute__((export_name(%s))) %s %s(%s) {\n", cString("adamic_export_"+export.Name), ret, stableName("adamic_abi_export", export.Name, export.Name+"/"+e.functionName(export.Function)), strings.Join(params, ", "))
 		wrappers.WriteString(body.String())
 		call := fmt.Sprintf("%s(%s)", e.functionName(export.Function), strings.Join(args, ", "))
 		if export.Returns.Kind == "void" {

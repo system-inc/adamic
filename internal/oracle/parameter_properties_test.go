@@ -1,7 +1,6 @@
 package oracle
 
 import (
-	"fmt"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -96,9 +95,9 @@ func TestParameterPropertyOwnershipMutant(t *testing.T) {
 	}
 	code := native.C(program)
 	retain := ""
-	for index, local := range program.Locals {
+	for _, local := range program.Locals {
 		if local.Name == "render" && program.Functions[local.Function].Name == "Child_new" {
-			retain = fmt.Sprintf("adamic_retain(adamic_local_%d_render)", index)
+			retain = "adamic_retain(" + emittedLocalSymbol(t, code, "adamic_local_", "render") + ")"
 		}
 	}
 	if retain == "" || !strings.Contains(code, retain) {
