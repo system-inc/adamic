@@ -5,6 +5,166 @@ package oracle
 
 import "testing"
 
+func TestJSONDecode_000(t *testing.T) {
+	t.Parallel()
+	runJSONDecodeShard(t, 0)
+}
+
+func TestJSONDecode_001(t *testing.T) {
+	t.Parallel()
+	runJSONDecodeShard(t, 1)
+}
+
+func TestJSONDecode_002(t *testing.T) {
+	t.Parallel()
+	runJSONDecodeShard(t, 2)
+}
+
+func TestJSONDecode_003(t *testing.T) {
+	t.Parallel()
+	runJSONDecodeShard(t, 3)
+}
+
+func TestJSONDecode_004(t *testing.T) {
+	t.Parallel()
+	runJSONDecodeShard(t, 4)
+}
+
+func TestJSONDecode_005(t *testing.T) {
+	t.Parallel()
+	runJSONDecodeShard(t, 5)
+}
+
+func TestJSONDecode_006(t *testing.T) {
+	t.Parallel()
+	runJSONDecodeShard(t, 6)
+}
+
+func TestJSONDecode_007(t *testing.T) {
+	t.Parallel()
+	runJSONDecodeShard(t, 7)
+}
+
+func TestJSONDecode_json_decode_coverage_shapes(t *testing.T) {
+	t.Parallel()
+	runJSONDecodeShard(t, -1)
+}
+
+func TestFamiliesCatchAPlantedCase_JSONDecode(t *testing.T) {
+	t.Parallel()
+	catchPlantedCase(t, "TestJSONDecode")
+}
+
+func TestJSONEncode_000(t *testing.T) {
+	t.Parallel()
+	runJSONEncodeShard(t, 0)
+}
+
+func TestJSONEncode_001(t *testing.T) {
+	t.Parallel()
+	runJSONEncodeShard(t, 1)
+}
+
+func TestJSONEncode_002(t *testing.T) {
+	t.Parallel()
+	runJSONEncodeShard(t, 2)
+}
+
+func TestJSONEncode_003(t *testing.T) {
+	t.Parallel()
+	runJSONEncodeShard(t, 3)
+}
+
+func TestFamiliesCatchAPlantedCase_JSONEncode(t *testing.T) {
+	t.Parallel()
+	catchPlantedCase(t, "TestJSONEncode")
+}
+
+func TestJSONDecodeValidationMutants_000(t *testing.T) {
+	t.Parallel()
+	runJSONDecodeValidationMutantsShard(t, 0)
+}
+
+func TestJSONDecodeValidationMutants_001(t *testing.T) {
+	t.Parallel()
+	runJSONDecodeValidationMutantsShard(t, 1)
+}
+
+func TestJSONDecodeValidationMutants_002(t *testing.T) {
+	t.Parallel()
+	runJSONDecodeValidationMutantsShard(t, 2)
+}
+
+func TestJSONDecodeValidationMutants_003(t *testing.T) {
+	t.Parallel()
+	runJSONDecodeValidationMutantsShard(t, 3)
+}
+
+func TestJSONDecodeValidationMutants_004(t *testing.T) {
+	t.Parallel()
+	runJSONDecodeValidationMutantsShard(t, 4)
+}
+
+func TestJSONDecodeValidationMutants_005(t *testing.T) {
+	t.Parallel()
+	runJSONDecodeValidationMutantsShard(t, 5)
+}
+
+func TestJSONDecodeValidationMutants_006(t *testing.T) {
+	t.Parallel()
+	runJSONDecodeValidationMutantsShard(t, 6)
+}
+
+func TestJSONDecodeValidationMutants_007(t *testing.T) {
+	t.Parallel()
+	runJSONDecodeValidationMutantsShard(t, 7)
+}
+
+func TestFamiliesCatchAPlantedCase_JSONDecodeValidationMutants(t *testing.T) {
+	t.Parallel()
+	catchPlantedCase(t, "TestJSONDecodeValidationMutants")
+}
+
+func TestJSONEncodePinnedDifferences_000(t *testing.T) {
+	t.Parallel()
+	runJSONEncodePinnedDifferencesShard(t, 0)
+}
+
+func TestJSONEncodePinnedDifferences_001(t *testing.T) {
+	t.Parallel()
+	runJSONEncodePinnedDifferencesShard(t, 1)
+}
+
+func TestJSONEncodePinnedDifferences_002(t *testing.T) {
+	t.Parallel()
+	runJSONEncodePinnedDifferencesShard(t, 2)
+}
+
+func TestFamiliesCatchAPlantedCase_JSONEncodePinnedDifferences(t *testing.T) {
+	t.Parallel()
+	catchPlantedCase(t, "TestJSONEncodePinnedDifferences")
+}
+
+func TestJSONEncodeNonfinitePinned_000(t *testing.T) {
+	t.Parallel()
+	runJSONEncodeNonfinitePinnedShard(t, 0)
+}
+
+func TestJSONEncodeNonfinitePinned_001(t *testing.T) {
+	t.Parallel()
+	runJSONEncodeNonfinitePinnedShard(t, 1)
+}
+
+func TestJSONEncodeNonfinitePinned_002(t *testing.T) {
+	t.Parallel()
+	runJSONEncodeNonfinitePinnedShard(t, 2)
+}
+
+func TestFamiliesCatchAPlantedCase_JSONEncodeNonfinitePinned(t *testing.T) {
+	t.Parallel()
+	catchPlantedCase(t, "TestJSONEncodeNonfinitePinned")
+}
+
 func TestNativeAgreesWithNode_000(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, 0)

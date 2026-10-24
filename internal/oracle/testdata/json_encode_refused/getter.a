@@ -1,0 +1,7 @@
+// a-check: refused Object enumeration with getter or accessor descriptors; use own data properties for this first reflection implementation
+import { encodeJson } from 'adamic';
+interface Data { value: number }
+let calls = 0;
+const data: Data = { get value(): number { calls++; return 7; } };
+console.log(encodeJson<Data>(data));
+console.log(String(calls));

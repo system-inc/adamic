@@ -1,0 +1,9 @@
+import { encodeJson } from 'adamic';
+class JsonWriter {
+    readonly prefix: string;
+    constructor(prefix: string) { this.prefix = prefix; }
+    emit(value: number): string { return this.prefix + encodeJson<number>(value); }
+}
+class DerivedWriter extends JsonWriter {}
+function render(writer: JsonWriter): string { return writer.emit(7); }
+console.log(render(new DerivedWriter('value:')));

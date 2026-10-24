@@ -1,0 +1,9 @@
+import { encodeJson, decodeJson, panic } from 'adamic';
+type Nest = readonly Nest[];
+const decoded = decodeJson<Nest>('['.repeat(128) + ']'.repeat(128));
+if (decoded.kind !== 'Ok') panic('depth 128 decode failed');
+const text = encodeJson<Nest>(decoded.value);
+console.log(text);
+const again = decodeJson<Nest>(text);
+if (again.kind !== 'Ok') panic('depth round trip failed');
+if (encodeJson<Nest>(again.value) !== text) panic('depth re-encode differs');

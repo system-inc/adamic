@@ -1,0 +1,6 @@
+import { decodeJson } from 'adamic';
+for (const text of ['{}', '{"extra":1}', '[]', 'null', '1', '"bad"', '{']) {
+ const decoded = decodeJson<{}>(text);
+ if (decoded.kind === 'Ok') console.log(`empty object keys: ${Object.keys(decoded.value).join(',')}`);
+ else console.log(decoded.message);
+}

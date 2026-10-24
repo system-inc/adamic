@@ -1,0 +1,2 @@
+import { decodeJson } from 'adamic';
+const r = decodeJson<{ readonly flag?: boolean }>('{}'); if (r.kind === 'Ok') console.log(`${r.value.flag ?? false}`);
