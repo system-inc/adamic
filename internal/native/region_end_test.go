@@ -89,7 +89,8 @@ func TestRegionEndThrowInitialization(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	program, err := lower.Lower(context.Background(), checked)
+	// This witness targets batch 8 ownership even when the process opts into Program mode.
+	program, err := lower.LowerWithOptions(context.Background(), checked, lower.Options{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -114,7 +115,15 @@ func TestRegionEndThrowInitialization(t *testing.T) {
 // Emission controls distinguish filled literals, outside children, and transitive writes.
 func TestRegionEndEmission(t *testing.T) {
 	t.Parallel()
-	program := loopProgram(t, "../oracle/testdata/region_end.a")
+	checked, err := load.Load([]string{"../oracle/testdata/region_end.a"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	// Inspect the statement-region plan independently of the process opt-in.
+	program, err := lower.LowerWithOptions(context.Background(), checked, lower.Options{})
+	if err != nil {
+		t.Fatal(err)
+	}
 	plan := planRegions(program)
 	seen := 0
 	for index, function := range program.Functions {

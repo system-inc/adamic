@@ -12,6 +12,9 @@ import (
 	"testing"
 )
 
+// Variant records name an explicit source; unknown labels still fail the ordinary file census.
+var countFixtureSources = map[string]string{}
+
 // Keep the full source extension: foo.a and foo.ts are distinct fixtures.
 func countFile(kind, key string) string {
 	return filepath.Join(countsDirectory, kind, filepath.FromSlash(key)+".counts")
@@ -119,7 +122,11 @@ func countsFileCensus(root string) error {
 				return fmt.Errorf("duplicate counts file %s", path)
 			}
 			expected[path] = true
-			if info, err := os.Stat(filepath.Join(repository, filepath.FromSlash(key))); err != nil || !info.Mode().IsRegular() {
+			fixture := key
+			if source, ok := countFixtureSources[key]; ok {
+				fixture = source
+			}
+			if info, err := os.Stat(filepath.Join(repository, filepath.FromSlash(fixture))); err != nil || !info.Mode().IsRegular() {
 				return fmt.Errorf("%s has no fixture %s: %v", path, key, err)
 			}
 			if _, err := readCountRow(root, kind, key); err != nil {

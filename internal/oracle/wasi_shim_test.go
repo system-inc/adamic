@@ -18,6 +18,8 @@ import (
 // left out by name rather than skipped, and their imports are still asserted, so the list cannot drift:
 // TestWASIAgreesWithNode runs these fixtures under node:wasi.
 var shimFileFixtures = map[string]bool{
+	"stage3/fixtures/host/14_getCurrentDirectory.a":            true,
+	"internal/oracle/testdata/program_region/parse.a":          true,
 	"internal/oracle/testdata/closure_convention_host24.a":     true,
 	"internal/oracle/testdata/unknown_narrowing_host.a":        true,
 	"internal/oracle/testdata/write_stdout_order.a":            true,

@@ -1,0 +1,16 @@
+import type { Weak } from 'adamic';
+interface Sym { id: string; declarations: Decl[]; }
+interface Decl { id: string; symbol: Weak<Sym>; }
+function run(): void {
+ const table = new Map<string, Sym>();
+ const symbol: Sym = { id: '7', declarations: [] };
+ table.set('name', symbol);
+ for (let i=0; i<1000; i++) {
+  const declaration: Decl = { id: `${i}`, symbol: undefined };
+  symbol.declarations.push(declaration); declaration.symbol = symbol;
+ }
+ const declaration = symbol.declarations[999];
+ if (declaration !== undefined) { console.log(`${declaration.symbol?.id}`); }
+ console.log(`${table.get('name')?.id}`);
+}
+run();
