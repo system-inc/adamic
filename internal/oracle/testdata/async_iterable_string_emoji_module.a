@@ -1,0 +1,1 @@
+for (const x of "a😀𝄞b") { await Promise.resolve(); console.log(`${x}:${x.length}`); }

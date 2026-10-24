@@ -1,0 +1,1 @@
+const m = new Map<string, number>([["a",1],["b",2]]); for (const k of m.keys()) { await Promise.resolve(); console.log(k); }

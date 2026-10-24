@@ -1,0 +1,2 @@
+async function work(): Promise<void> { for(let i=0;i<2;i++) { try { await Promise.resolve(); continue; } finally { await Promise.resolve(); console.log(`cleanup continue${i}`); } } console.log("done"); }
+await work();

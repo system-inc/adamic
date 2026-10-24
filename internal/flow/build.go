@@ -241,11 +241,24 @@ func (b *builder) statement(at *ir.Statement) {
 	case ir.Switch:
 		b.switchStatement(at, statement)
 	case ir.Break:
-		depth := len(b.jumps) - 1 - statement.Depth
-		if statement.Label != "" {
-			for depth >= 0 && b.jumps[depth].name != statement.Label {
-				depth--
+		depth := len(b.jumps) - 1
+		remaining := statement.Depth
+		for depth >= 0 {
+			target := b.jumps[depth]
+			if statement.Label != "" {
+				if target.name == statement.Label {
+					break
+				}
+			} else if target.name == "" {
+				if remaining == 0 {
+					break
+				}
+				remaining--
 			}
+			depth--
+		}
+		if depth < 0 {
+			panic("flow: unknown break target")
 		}
 		b.terminate(&Goto{Block: b.route(b.jumps[depth].breakTo, b.leaving(depth))})
 	case ir.Continue:

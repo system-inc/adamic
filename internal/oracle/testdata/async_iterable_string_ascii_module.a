@@ -1,0 +1,1 @@
+for (const x of "abc") { await Promise.resolve(); console.log(x); }

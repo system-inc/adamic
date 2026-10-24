@@ -1,0 +1,14 @@
+function syncOuterContinue(): void {
+    outer: for (let i = 0; i < 2; i++) {
+        box: {
+            for (let j = 0; j < 2; j++) {
+                console.log(`sync outer${i}:${j}`);
+                continue outer;
+            }
+            console.log('sync wrong inner continue');
+        }
+        console.log('sync wrong outer continue');
+    }
+    console.log('sync outer done');
+}
+syncOuterContinue();

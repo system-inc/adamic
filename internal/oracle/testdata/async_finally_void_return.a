@@ -1,0 +1,2 @@
+async function work(): Promise<void> { try { await Promise.resolve(); return undefined; } finally { await Promise.resolve(); console.log("cleanup void"); } }
+await work(); console.log("done");
