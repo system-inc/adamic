@@ -780,10 +780,15 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return e.value(expression.Object) + operator + quote(expression.Name) + "]"
 	case ir.RegExpProperty:
+		read := e.value(expression.Array) + "[" + quote(expression.Name) + "]"
 		if expression.Optional {
-			return e.value(expression.Array) + "?.[" + quote(expression.Name) + "]"
+			read = e.value(expression.Array) + "?.[" + quote(expression.Name) + "]"
 		}
-		return e.value(expression.Array) + "[" + quote(expression.Name) + "]"
+		if expression.Name == "indices" {
+			// Node makes each [start, end] pair, which RegExpIndicesArray types as a tuple; groups holds the same pairs.
+			return "((indices) => { indices?.forEach((pair) => pair !== undefined && adamicTuple(pair)); return indices; })(" + read + ")"
+		}
+		return read
 	case ir.HasProperty:
 		return "(" + quote(expression.Name) + " in " + e.value(expression.Object) + ")"
 	case ir.DynamicProperty:
@@ -1021,6 +1026,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.ObjectCall:
 		if expression.Checked {
 			return e.checkedObjectEnumeration(expression)
+		}
+		if expression.Method == "entries" {
+			return "Object.entries(" + e.values(expression.Arguments) + ").map(adamicTuple)"
 		}
 		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
 	case ir.NumberCall:
@@ -1268,7 +1276,7 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.WriteTextFile:
 		return "writeTextFile(" + e.value(expression.Path) + ", " + e.value(expression.Text) + ")"
 	case ir.MapEntries:
-		return "[..." + e.value(expression.Map) + "]"
+		return "[..." + e.value(expression.Map) + "].map(adamicTuple)"
 	case ir.ArraySlice:
 		return e.value(expression.Array) + ".slice(" + e.values(expression.Arguments) + ")"
 	case ir.ArraySort:

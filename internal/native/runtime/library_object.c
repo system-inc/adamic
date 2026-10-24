@@ -129,6 +129,7 @@ adamic_array *adamic_object_values(const adamic_object *object, bool references,
   if (references) adamic_retain(value.reference);
   if (entries) {
    adamic_object *pair = adamic_object_new(references ? &string_pair : object->shape->kinds[index] == adamic_field_boolean ? &boolean_pair : &number_pair);
+   pair->tuple = true;
    pair->slots[0].reference = key_string(name);
    pair->slots[1] = value;
    value.reference = pair;
@@ -213,6 +214,7 @@ adamic_array *adamic_object_values_checked(adamic_object *object, int expected, 
   if (!references) adamic_release(observed);
   if (entries) {
    adamic_object *pair = adamic_object_new(references ? &string_pair : expected == 2 ? &boolean_pair : &number_pair);
+   pair->tuple = true;
    pair->slots[0].reference = adamic_retain(key);
    pair->slots[1] = value;
    value.reference = pair;

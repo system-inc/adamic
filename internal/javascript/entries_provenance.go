@@ -18,5 +18,5 @@ func (e *emitter) checkedObjectEnumeration(call ir.ObjectCall) string {
 	if len(call.Allowed) > 0 {
 		restriction = " || ![" + e.values(call.Allowed) + "].includes(value)"
 	}
-	return fmt.Sprintf("((object) => { const pairs = []; for (const key of Object.keys(object)) { if (!Object.getOwnPropertyDescriptor(object, key)?.enumerable) continue; const value = adamicFieldReadiness.get(object)?.has(key) ? undefined : object[key]; if (adamicTypeOf(value) !== %s%s) panic(\"Object enumeration key '\" + key + \"': actual \" + adamicTypeOf(value) + \", declared \" + %s); pairs.push([key, value]); } return %s; })(%s)", quote(primitive), restriction, quote(call.ElementName), result, e.value(call.Arguments[0]))
+	return fmt.Sprintf("((object) => { const pairs = []; for (const key of Object.keys(object)) { if (!Object.getOwnPropertyDescriptor(object, key)?.enumerable) continue; const value = adamicFieldReadiness.get(object)?.has(key) ? undefined : object[key]; if (adamicTypeOf(value) !== %s%s) panic(\"Object enumeration key '\" + key + \"': actual \" + adamicTypeOf(value) + \", declared \" + %s); pairs.push(adamicTuple([key, value])); } return %s; })(%s)", quote(primitive), restriction, quote(call.ElementName), result, e.value(call.Arguments[0]))
 }
