@@ -1,0 +1,5 @@
+// The library Function interface has no call or construct signature. Reading
+// arguments.length still discovers IArguments.callee, whose type is Function.
+function reader(): number { return arguments.length; }
+const counted: (value: number) => number = reader;
+console.log(`${counted(9)}`);
