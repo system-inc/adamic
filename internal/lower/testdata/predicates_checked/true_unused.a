@@ -1,0 +1,3 @@
+function isNumber(value: number | string): value is number { return true; }
+isNumber("text");
+console.log("continued");

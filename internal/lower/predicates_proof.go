@@ -732,112 +732,6 @@ func (l *lowering) predicateOverloadProven(implementation, overload *ast.Node) b
 	return proof.proveBody(overload.Type()) == nil
 }
 
-// The existing overload-result seam supplies the call. A small IR wrapper keeps
-// argument evaluation and the implementation call single, then checks both
-// predicate directions against those arguments before the caller can narrow.
-func (l *lowering) predicateOverloadResult(call *ast.CallExpression, value ir.Expression, implementation, overload *ast.Node) (ir.Expression, error) {
-	// Until .a refusal mode exists, .a and .ts share the ruled call-site checks.
-	directions := l.predicateUseDirections(call)
-	proven := l.predicateOverloadProven(implementation, overload)
-	l.recordPredicateChecks(call, implementation, overload, directions, proven)
-	if proven {
-		return value, nil
-	}
-	if directions == 0 {
-		return value, nil
-	}
-	invoked, ok := value.(ir.Call)
-	if !ok {
-		return nil, l.notYet(call.AsNode(), "a checked predicate overload on an indirect call")
-	}
-	resolved := l.checker.GetResolvedSignature(call.AsNode())
-	claim := predicateOfSignature(l.checker, resolved)
-	if claim == nil {
-		return nil, l.notYet(overload, "a predicate overload without a reifiable target")
-	}
-	assertion := claim.Kind() == checker.TypePredicateKindAssertsIdentifier
-	if claim.Type() == nil && !assertion {
-		return nil, l.notYet(overload, "a predicate overload without a reifiable target")
-	}
-	index := int(claim.ParameterIndex())
-	if index < 0 || index >= len(invoked.Arguments) {
-		return nil, l.notYet(overload, "a predicate overload on a missing argument")
-	}
-	if (!assertion && invoked.Type() != ir.Boolean) || (assertion && invoked.Type() != 0) {
-		return nil, l.notYet(overload, "a checked predicate overload with a non-boolean result")
-	}
-	ordinal := l.predicateOverloadOrdinal(implementation, overload)
-	message := fmt.Sprintf("overload %d of %s result: predicate %s is false", ordinal, implementation.Name().Text(), claim.ParameterName())
-	wrapper := len(l.result.Functions)
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: fmt.Sprintf("%s_overload_%d_check_%d", implementation.Name().Text(), ordinal, wrapper), Returns: invoked.Type()})
-	local := func(name string, of ir.Type) int {
-		index := len(l.result.Locals)
-		l.result.Locals = append(l.result.Locals, ir.Local{Name: name, Type: of, Function: wrapper})
-		return index
-	}
-	arguments := []ir.Expression{}
-	for index, argument := range invoked.Arguments {
-		// Direct emission contextualizes undefined at the callee parameter.
-		// Preserve that representation when passing through wrapper locals.
-		if undefined, ok := argument.(ir.Undefined); ok && index < len(l.result.Functions[l.result.CallTargets(invoked)[0]].Parameters) {
-			parameter := l.result.Functions[l.result.CallTargets(invoked)[0]].Parameters[index]
-			undefined.Of = l.result.Locals[parameter].Type
-			argument = undefined
-			invoked.Arguments[index] = argument
-		}
-		parameter := local(fmt.Sprintf("argument_%d", index), argument.Type())
-		l.result.Functions[wrapper].Parameters = append(l.result.Functions[wrapper].Parameters, parameter)
-		arguments = append(arguments, ir.Read{Local: parameter, Of: argument.Type()})
-	}
-	checked := invoked
-	checked.Arguments = arguments
-
-	result := -1
-	body := []ir.Statement{}
-	if assertion {
-		body = append(body, ir.Evaluate{Value: checked})
-	} else {
-		result = local("result", ir.Boolean)
-		body = append(body, ir.Declare{Local: result, Value: checked})
-	}
-	source := l.checker.GetTypeOfSymbol(resolved.Parameters()[index])
-	if _, undefined := invoked.Arguments[index].(ir.Undefined); undefined {
-		source = l.checker.GetTypeAtLocation(call.Arguments.Nodes[index])
-	}
-	var setup []ir.Statement
-	var membership ir.Expression
-	var err error
-	if claim.Type() == nil {
-		membership = censusCondition(arguments[index])
-	} else {
-		setup, membership, err = l.predicateMembership(overload, arguments[index], source, claim.Type(), local, 0)
-	}
-	if err != nil {
-		return nil, err
-	}
-	invalid := ir.Expression(ir.Unary{Operator: ir.Not, Operand: membership})
-	var returned ir.Expression
-	if !assertion {
-		returned = ir.Read{Local: result, Of: ir.Boolean}
-		invalid = predicateDirectionMismatch(returned, membership, directions)
-	}
-	checks := append(setup, ir.If{Condition: invalid, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
-	if !assertion && directions != predicateEither {
-		observed := returned
-		if directions == predicateFalse {
-			observed = ir.Unary{Operator: ir.Not, Operand: returned}
-		}
-		// An erased direction must not execute target field or element reads.
-		body = append(body, ir.If{Condition: observed, Then: checks})
-	} else {
-		body = append(body, checks...)
-	}
-	body = append(body, ir.Return{Value: returned})
-	l.result.Functions[wrapper].Body = body
-
-	return ir.Call{Function: wrapper, Arguments: invoked.Arguments, Returns: invoked.Type()}, nil
-}
-
 // Reification is limited to independently checkable contracts. Tagged interfaces
 // continue through the shared view checker; untagged/callable contracts are not
 // silently equated with a primitive typeof test.
@@ -1073,6 +967,9 @@ func (l *lowering) predicateFlowDirections(flow *ast.FlowNode, call, reference *
 		truth := flow.Flags&ast.FlowFlagsTrueCondition != 0
 		result |= l.predicateConditionDirection(flow.Node, call, truth, 0)
 	}
+	if flow.Flags&ast.FlowFlagsSwitchClause != 0 {
+		result |= l.predicateSwitchDirection(flow.Node.AsFlowSwitchClauseData(), call)
+	}
 	if flow.Flags&ast.FlowFlagsCall != 0 && flow.Node == call {
 		result |= predicateTrue
 	}
@@ -1111,8 +1008,19 @@ func (l *lowering) predicateConditionDirection(node, call *ast.Node, truth bool,
 				return l.predicateConditionDirection(binary.Left, call, truth, depth+1) | l.predicateConditionDirection(binary.Right, call, truth, depth+1)
 			}
 			return l.predicateConditionDirection(binary.Left, call, true, depth+1) | l.predicateConditionDirection(binary.Left, call, false, depth+1) | l.predicateConditionDirection(binary.Right, call, true, depth+1) | l.predicateConditionDirection(binary.Right, call, false, depth+1)
-		case ast.KindEqualsToken:
+		case ast.KindEqualsToken, ast.KindBarBarEqualsToken, ast.KindAmpersandAmpersandEqualsToken, ast.KindQuestionQuestionEqualsToken, ast.KindCommaToken:
 			return l.predicateConditionDirection(binary.Right, call, truth, depth+1)
+		case ast.KindEqualsEqualsToken, ast.KindExclamationEqualsToken, ast.KindEqualsEqualsEqualsToken, ast.KindExclamationEqualsEqualsToken:
+			// As the checker's narrowTypeByBooleanComparison: compared with a boolean literal, either
+			// way round, the other operand narrows as itself or its negation.
+			operand, literal := binary.Left, ast.SkipParentheses(binary.Right)
+			if !ast.IsBooleanLiteral(literal) {
+				operand, literal = binary.Right, ast.SkipParentheses(binary.Left)
+			}
+			if ast.IsBooleanLiteral(literal) && !ast.IsAccessExpression(ast.SkipParentheses(operand)) {
+				equal := binary.OperatorToken.Kind == ast.KindEqualsEqualsToken || binary.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken
+				return l.predicateConditionDirection(operand, call, (truth == (literal.Kind == ast.KindTrueKeyword)) == equal, depth+1)
+			}
 		}
 	}
 	if node.Kind == ast.KindNonNullExpression || node.Kind == ast.KindSatisfiesExpression {
@@ -1130,30 +1038,35 @@ func (l *lowering) predicateConditionDirection(node, call *ast.Node, truth bool,
 	return 0
 }
 
-func (l *lowering) predicateDirectionCount(call *ast.CallExpression, directions predicateTruth) int {
-	claim := predicateOfSignature(l.checker, l.checker.GetResolvedSignature(call.AsNode()))
-	if claim != nil && claim.Kind() == checker.TypePredicateKindAssertsIdentifier {
-		directions &= predicateTrue
+// As the checker's narrowTypeBySwitchOnTrue: under switch (true), the case clauses before this
+// clause set, and after it when the set holds the default, narrow by their false branch; the set's
+// own case clauses by their true branch.
+func (l *lowering) predicateSwitchDirection(data *ast.FlowSwitchClauseData, call *ast.Node) predicateTruth {
+	statement := data.SwitchStatement.AsSwitchStatement()
+	if ast.SkipParentheses(statement.Expression).Kind != ast.KindTrueKeyword {
+		return 0
 	}
-	count := 0
-	if directions&predicateTrue != 0 {
-		count++
+	clauses := statement.CaseBlock.AsCaseBlock().Clauses.Nodes
+	start, end := int(data.ClauseStart), int(data.ClauseEnd)
+	holdsDefault := start == end
+	for index := start; index < end; index++ {
+		if clauses[index].Kind == ast.KindDefaultClause {
+			holdsDefault = true
+		}
 	}
-	if directions&predicateFalse != 0 {
-		count++
+	var result predicateTruth
+	for index, clause := range clauses {
+		if clause.Kind != ast.KindCaseClause {
+			continue
+		}
+		switch {
+		case index < start || (holdsDefault && index >= end):
+			result |= l.predicateConditionDirection(clause.Expression(), call, false, 0)
+		case index < end && !holdsDefault:
+			result |= l.predicateConditionDirection(clause.Expression(), call, true, 0)
+		}
 	}
-	return count
-}
-
-func predicateDirectionMismatch(returned, membership ir.Expression, directions predicateTruth) ir.Expression {
-	mismatch := ir.Expression(ir.Binary{Operator: ir.NotEqual, Left: returned, Right: membership})
-	if directions == predicateTrue {
-		return ir.Binary{Operator: ir.And, Left: returned, Right: mismatch}
-	}
-	if directions == predicateFalse {
-		return ir.Binary{Operator: ir.And, Left: ir.Unary{Operator: ir.Not, Operand: returned}, Right: mismatch}
-	}
-	return mismatch
+	return result
 }
 
 func predicateWriteOnly(node *ast.Node) bool {
@@ -1195,6 +1108,11 @@ func (l *lowering) predicateFlowWithout(root *ast.FlowNode, call, reference *ast
 			truth := original.Flags&ast.FlowFlagsTrueCondition != 0
 			remove = l.predicateConditionDirection(original.Node, call, truth, 0)&direction != 0
 		}
+		// Dropping a whole clause set also drops its other clauses' narrowing, which can only widen
+		// the unclaimed type and so report the direction, never hide it.
+		if original.Flags&ast.FlowFlagsSwitchClause != 0 {
+			remove = l.predicateSwitchDirection(original.Node.AsFlowSwitchClauseData(), call)&direction != 0
+		}
 		if remove {
 			copy.Flags, copy.Node = ast.FlowFlagsBranchLabel, nil
 			copy.Antecedents = &ast.FlowList{Flow: clone(original.Antecedent)}
@@ -1229,35 +1147,6 @@ func (l *lowering) predicateOverloadOrdinal(implementation, overload *ast.Node) 
 		}
 	}
 	return ordinal
-}
-
-func (l *lowering) recordPredicateChecks(call *ast.CallExpression, implementation, overload *ast.Node, observed predicateTruth, proven bool) {
-	counts := &l.result.PredicateChecks
-	site := ir.PredicateCallCheck{Where: l.program.Where(call.AsNode()), Function: implementation.Name().Text(), Overload: l.predicateOverloadOrdinal(implementation, overload)}
-	for _, direction := range []predicateTruth{predicateTrue, predicateFalse} {
-		if l.predicateDirectionCount(call, direction) == 0 {
-			continue
-		}
-		name := "true"
-		if direction == predicateFalse {
-			name = "false"
-		}
-		report := ir.PredicateDirectionCheck{Direction: name}
-		switch {
-		case proven:
-			report.Status, report.Reason = "proven", "implementation body proves this direction"
-			counts.Proven++
-		case observed&direction != 0:
-			report.Status, report.Reason = "checked", "a narrowed read consumes this direction"
-			counts.Checked++
-		default:
-			report.Status, report.Reason = "unobservable", "no narrowed read in the "+name+" region"
-			counts.Proven++
-			counts.Unobservable++
-		}
-		site.Directions = append(site.Directions, report)
-	}
-	counts.Sites = append(counts.Sites, site)
 }
 
 // Inferred callback predicates are claims too. Independently prove the resolved

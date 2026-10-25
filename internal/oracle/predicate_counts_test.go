@@ -2,6 +2,7 @@ package oracle
 
 import (
 	"fmt"
+	"os"
 	"path/filepath"
 	"sort"
 	"testing"
@@ -40,7 +41,15 @@ func predicateCountsTable(t *testing.T) map[string]string {
 	for _, relative := range keys {
 		path := filepath.Join(repository, relative)
 
-		program, err := lowered(t, path)
+		source, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		checkedPath := filepath.Join(t.TempDir(), "main.ts")
+		if err = os.WriteFile(checkedPath, source, 0644); err != nil {
+			t.Fatal(err)
+		}
+		program, err := lowered(t, checkedPath)
 		if err != nil {
 			t.Fatalf("%s: %v", path, err)
 		}
@@ -52,7 +61,7 @@ func predicateCountsTable(t *testing.T) map[string]string {
 			}
 			seen := map[string]bool{}
 			for _, direction := range site.Directions {
-				if (direction.Direction != "true" && direction.Direction != "false") || seen[direction.Direction] || direction.Reason == "" {
+				if (direction.Direction != "true" && direction.Direction != "false" && direction.Direction != "asserts") || seen[direction.Direction] || direction.Reason == "" {
 					t.Fatalf("invalid direction: %+v", direction)
 				}
 				seen[direction.Direction] = true
@@ -62,7 +71,6 @@ func predicateCountsTable(t *testing.T) map[string]string {
 				case "checked":
 					checked++
 				case "unobservable":
-					proven++
 					unobservable++
 				default:
 					t.Fatalf("unknown predicate status: %+v", direction)

@@ -143,7 +143,7 @@ func TestEveryNeedsCallbackEffects(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	path := filepath.Join(t.TempDir(), "every.ts")
+	path := filepath.Join(t.TempDir(), "every.a")
 	if err = os.WriteFile(path, source, 0644); err != nil {
 		t.Fatal(err)
 	}
@@ -156,7 +156,7 @@ func TestEveryNeedsCallbackEffects(t *testing.T) {
 	defer release()
 	l := &lowering{program: program, checker: checked, result: &ir.Program{}}
 	err = l.refuse(file)
-	if err == nil || !strings.Contains(err.Error(), "return is not proven") {
+	if err == nil || !strings.Contains(err.Error(), "type predicate") {
 		t.Fatalf("want array proof refusal without callback effects, got %v", err)
 	}
 }
@@ -188,6 +188,12 @@ function some<T>(xs: readonly T[] | undefined): boolean { return xs !== undefine
 		{"loop read", `function use(xs: readonly number[] | undefined): void { while (some(xs)) { console.log(xs.length.toString()); break; } }`, predicateTrue},
 		{"later read", `function use(xs: readonly number[] | undefined): void { if (!some(xs)) return; console.log("later"); console.log(xs.length.toString()); }`, predicateTrue},
 		{"replacement", `function use(xs: readonly number[] | undefined): void { if (!some(xs)) return; xs = [1]; console.log(xs.length.toString()); }`, 0},
+		{"false comparison", `function use(xs: readonly number[] | undefined): void { if (some(xs) === false) console.log(xs === undefined ? "no" : "yes"); }`, predicateFalse},
+		{"loose false comparison", `function use(xs: readonly number[] | undefined): void { if (some(xs) == false) console.log(xs === undefined ? "no" : "yes"); }`, predicateFalse},
+		{"true inequality", `function use(xs: readonly number[] | undefined): void { if (some(xs) !== true) console.log(xs === undefined ? "no" : "yes"); }`, predicateFalse},
+		{"reversed false comparison", `function use(xs: readonly number[] | undefined): void { if (false === some(xs)) console.log(xs === undefined ? "no" : "yes"); }`, predicateFalse},
+		{"switch true default", `function use(xs: readonly number[] | undefined): void { switch (true) { case some(xs): return; default: console.log(xs === undefined ? "no" : "yes"); } }`, predicateFalse},
+		{"comma continuation", `function use(xs: readonly number[] | undefined): void { if ((console.log("tick"), some(xs))) return; console.log(xs === undefined ? "no" : "yes"); }`, predicateFalse},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()

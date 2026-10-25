@@ -210,8 +210,8 @@ only after widening the preceding overload callback contracts.
 | 10 | src/compiler/core.ts:28:37 | [native-nonnull.a](native-nonnull.a) | codex/non-null-check a02613ef, absent from main |
 | 11 | src/compiler/core.ts:42:30 | [native-nonnull.a](native-nonnull.a) | codex/non-null-check a02613ef, absent from main |
 | 12 | src/compiler/core.ts:54:101 | [native-predicate-overload.a](native-predicate-overload.a) | codex/notyet-predicates c191f97b, attempted merge conflicted and aborted |
-| 13 | src/compiler/core.ts:54:116 | [native-some-predicate-overload.a](native-some-predicate-overload.a) | codex/notyet-predicates c191f97b, attempted merge conflicted and aborted |
-| 14 | src/compiler/core.ts:56:128 | [native-some-predicate-overload.a](native-some-predicate-overload.a) | codex/notyet-predicates c191f97b, attempted merge conflicted and aborted |
+| 13 | src/compiler/core.ts:54:116 | [native-some-predicate-overload.a](native-some-predicate-overload.a) | R-T80 (#7v4rjr7): the .a witness is a permanent refusal (its overload doesn't prove both directions), and the .ts site in core.ts is a checked predicate |
+| 14 | src/compiler/core.ts:56:128 | [native-some-predicate-overload.a](native-some-predicate-overload.a) | R-T80 (#7v4rjr7): the .a witness is a permanent refusal (its overload doesn't prove both directions), and the .ts site in core.ts is a checked predicate |
 | 15 | src/compiler/core.ts:76:113 | [native-predicate-overload.a](native-predicate-overload.a) | codex/notyet-predicates c191f97b, attempted merge conflicted and aborted |
 
 The discovery helpers replace function bodies with throw, preserve inferred
