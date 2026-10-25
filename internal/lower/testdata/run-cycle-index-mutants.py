@@ -22,6 +22,7 @@ accessor_start = source.index("\t\t// A paired setter")
 accessor_end = source.index("\t\ttrie :=", accessor_start)
 mutants.append(("erased-accessor-layout", source[accessor_start:accessor_end], "", "TestCycleLiteralLayoutsKeepAccessorsDistinct"))
 mutants.append(("dropped-candidate-equality", "return candidates", "if len(candidates) != 0 { candidates = candidates[1:] }; return candidates", "TestCycleIndexCandidateEdgeEquality"))
+mutants.append(("function-interface-self-edge", 'return f.l.isLibraryType(proven, "Function") ||', "return", "TestCycleIndexArgumentsFunctionEquality"))
 selected = os.environ.get("ADAMIC_CYCLE_MUTANTS", "").split(",")
 with tempfile.TemporaryDirectory(prefix="cycle-index-mutants-") as temporary:
     for name, before, after, test in mutants:
@@ -36,7 +37,7 @@ with tempfile.TemporaryDirectory(prefix="cycle-index-mutants-") as temporary:
         mutation.write_text(changed)
         overlay = Path(temporary) / "overlay.json"
         overlay.write_text(json.dumps({"Replace": {str(path): str(mutation)}}))
-        log = Path("/tmp/cycle-index-mutant-" + name + ".log")
+        log = Path(os.environ.get("ADAMIC_CYCLE_MUTANT_LOG_DIR", tempfile.gettempdir())) / ("cycle-index-mutant-" + name + ".log")
         with log.open("w") as output:
             result = subprocess.run(["go", "test", "-overlay=" + str(overlay), "./internal/lower", "-run", "^" + test + "$", "-count=1", "-timeout=55s", "-v"], cwd=root, stdout=output, stderr=subprocess.STDOUT, timeout=58)
         text = log.read_text()

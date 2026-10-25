@@ -279,3 +279,74 @@ func TestCycleIndexCandidateEdgeEquality(t *testing.T) {
 		t.Fatalf("candidate-edge equality: scanning=%t indexed=%t", before, after)
 	}
 }
+
+func TestCycleIndexArgumentsFunctionEquality(t *testing.T) {
+	t.Parallel()
+	cycleCompareProgram(t, "internal/lower/testdata/cycle_index_arguments_function.a")
+}
+
+func TestCycleIndexLibraryFunctionLinks(t *testing.T) {
+	t.Parallel()
+	absolute, err := filepath.Abs("testdata/cycle_index_arguments_function.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	loaded, err := load.Load([]string{absolute})
+	if err != nil {
+		t.Fatal(err)
+	}
+	checked, release := loaded.Checker(context.Background(), loaded.Files()[0])
+	defer release()
+	built, err := scanLowerChecked(loaded, checked, loaded.Files()[0], nil, true)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var arguments *ast.Node
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if ast.IsIdentifier(node) && node.Text() == "arguments" {
+			arguments = node
+		}
+		return node.ForEachChild(visit)
+	}
+	loaded.Files()[0].AsNode().ForEachChild(visit)
+	if arguments == nil {
+		t.Fatal("missing arguments reference")
+	}
+	holder := checked.GetTypeAtLocation(arguments)
+	callee := checked.GetPropertyOfType(holder, "callee")
+	if callee == nil {
+		t.Fatal("IArguments.callee is missing")
+	}
+	function := checked.GetTypeOfSymbol(callee)
+	indexed := &cycleFinder{l: built, where: map[*checker.Type]*ast.Node{}}
+	scanning := &scanCycleFinder{l: built, where: map[*checker.Type]*ast.Node{}}
+	indexed.use(holder, arguments)
+	scanning.use(holder, arguments)
+	t.Logf("Function shape candidate: scanning=%t indexed=%t; cached function classification=%t", slices.Contains(scanning.shapes, function), slices.Contains(indexed.shapes, function), indexed.functionCache[function])
+	calls := len(checked.GetSignaturesOfType(function, checker.SignatureKindCall))
+	constructs := len(checked.GetSignaturesOfType(function, checker.SignatureKindConstruct))
+	t.Logf("arguments at %s -> %s.callee -> %s; call signatures=%d construct signatures=%d", loaded.Where(arguments), checked.TypeToString(holder), checked.TypeToString(function), calls, constructs)
+	if calls != 0 || constructs != 0 || !built.isLibraryType(function, "Function") {
+		t.Fatal("fixture lost its signature-free library Function")
+	}
+	if _, ok := indexed.where[function]; !ok {
+		t.Fatal("indexed discovery omitted IArguments.callee")
+	}
+	if _, ok := scanning.where[function]; !ok {
+		t.Fatal("scanning discovery omitted IArguments.callee")
+	}
+	for _, field := range indexed.fields(function) {
+		t.Logf("Function field %s -> %s", field.Name, checked.TypeToString(checked.GetTypeOfSymbol(field)))
+	}
+	before, after := scanning.programOwningLinks(cycleNode{proven: function}), indexed.programOwningLinks(cycleNode{proven: function})
+	t.Logf("Function classified callable: scanning=%t indexed=%t; owning links: scanning=%d indexed=%d", scanning.isFunction(function), indexed.isFunction(function), len(before), len(after))
+	for _, link := range after {
+		if link.proven != nil {
+			t.Logf("indexed Function owns %s", checked.TypeToString(link.proven))
+		}
+	}
+	if !scanning.isFunction(function) || indexed.isFunction(function) != scanning.isFunction(function) || len(before) != 0 || !slices.Equal(before, after) {
+		t.Fatal("library Function must use the scanning finder's closure-only ownership path")
+	}
+}

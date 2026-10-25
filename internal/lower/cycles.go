@@ -560,7 +560,9 @@ func (f *cycleFinder) deriveFields(proven *checker.Type) []*ast.Symbol {
 }
 
 func (f *cycleFinder) deriveIsFunction(proven *checker.Type) bool {
-	return len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0 || (len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 && (!f.l.isStaticType(proven) || len(f.l.staticGlobals) == 0))
+	// The library Function interface has no call or construct signatures. Keep
+	// the scanner's explicit classification so its caller field is not an owned edge.
+	return f.l.isLibraryType(proven, "Function") || len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0 || (len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 && (!f.l.isStaticType(proven) || len(f.l.staticGlobals) == 0))
 }
 
 func (f *cycleFinder) deriveWeak(proven *checker.Type) bool {
