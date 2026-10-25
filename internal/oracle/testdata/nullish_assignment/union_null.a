@@ -1,0 +1,16 @@
+// ??= over a union holding null, in a local and in a field: null is its own box in a union, so the write
+// is taken, as ?? would take its fallback. A union holding a value is left alone.
+function nothing(): string | number | null { return null; }
+function something(): string | number | null { return 'kept'; }
+function describe(value: string | number | null): string {
+	return value === null ? 'null' : typeof value === 'number' ? `number ${value + 1}` : `string ${value}`;
+}
+let local: string | number | null = nothing();
+const written = (local ??= 7);
+console.log(`${describe(local)} ${describe(written)}`);
+const holder: { count: string | number | null } = { count: nothing() };
+holder.count ??= 7;
+console.log(describe(holder.count));
+let present: string | number | null = something();
+present ??= 7;
+console.log(describe(present));
