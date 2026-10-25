@@ -1,0 +1,11 @@
+{
+  "Name": "null-pointer-store",
+  "Test": "TestRecordUnionSlotsNull",
+  "Mutation": "In a throwaway copy of emitted C, replace the single initializer = &adamic_null; with = NULL; before the record_set call. Keep null comparisons unchanged.",
+  "Product": "TestProduct_RecordUnionSlots",
+  "Runner": "TestRecordUnionSlotsNullPointerMutant",
+  "Diagnostic": "sanitized versus Node: stdout differs",
+  "ExpectedStdout": "true\nfalse\nobject\n",
+  "MutantStdout": "false\ntrue\nundefined\n",
+  "ObservedOutput": "sanitized versus Node: stdout differs; got stdout \"false\\ntrue\\nundefined\\n\" stderr \"\" exit 0; want stdout \"true\\nfalse\\nobject\\n\""
+}

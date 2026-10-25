@@ -1,0 +1,10 @@
+const present: Record<string, number | undefined> = {a: undefined};
+const absent: Record<string, number | undefined> = {};
+console.log(String(Object.keys(present).join(",")));
+console.log(String(Object.keys(absent).join(",")));
+console.log(String("a" in present));
+console.log(String("a" in absent));
+console.log(String(JSON.stringify(present)));
+console.log(String(JSON.stringify(absent)));
+console.log(String(delete present["a"]));
+console.log(String("a" in present));
