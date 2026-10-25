@@ -1,5 +1,6 @@
 // Frozen scanning reference from 212b8d1de1e387c2a3e5764ff8a9b333e0728f3b.
-// Methods are copied verbatim with only receiver/type and entry-point names renamed.
+// Decision logic is copied verbatim. Receiver/type and entry-point names are
+// renamed; optional type capture only retains the original checker identities.
 // Graph, Program, closure, async-frame, iteration-cell and ownership-query rules
 // remain those of the base. Do not replace them with the indexed implementations.
 package lower
