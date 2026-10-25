@@ -1,0 +1,15 @@
+// The open enum tag rule's control (#9xam9ds): each member's kind is its own member of Kind, so
+// kind tells them apart and isA is proven, through filter, find and an if.
+enum Kind { A = 1, B = 2 }
+interface A { readonly kind: Kind.A; readonly value: number }
+interface B { readonly kind: Kind.B; readonly value: string }
+type Node = A | B;
+function isA(n: Node): n is A { return n.kind === Kind.A; }
+function isB(n: Node): n is B { return n.kind === 2; }
+const nodes: Node[] = [{ kind: Kind.A, value: 41 }, { kind: Kind.B, value: 'text' }];
+for (const a of nodes.filter(isA)) { console.log(`${a.value + 1}`); }
+const found = nodes.find(isB);
+if (found !== undefined) { console.log(`${found.value}!`); }
+for (const n of nodes) {
+	if (isA(n)) { console.log(`a ${n.value + 2}`); } else { console.log(`b ${n.value}`); }
+}
