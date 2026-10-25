@@ -2352,6 +2352,12 @@
     ],
     "internal/lower TestProduct_CycleScanningCensus": [
       "internal/oracle TestProduct_ProgramTscSource"
+    ],
+    "stage1/cohere/parse TestProduct_ParseDriverNative": [
+      "stage1/cohere/parse TestProduct_ParseDriverLower"
+    ],
+    "stage1/cohere/parse TestProduct_ParseLintNative": [
+      "stage1/cohere/parse TestProduct_ParseLintLower"
     ]
   }
 }
