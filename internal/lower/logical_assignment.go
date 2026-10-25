@@ -53,7 +53,8 @@ func (l *lowering) logicalAssignment(node *ast.Node) (ir.Expression, error) {
 			return nil, l.notYet(target, "a logical assignment to an accessor")
 		}
 		assignment.Write = store
-		assignment.Read = ir.Property{Object: store.Object, Name: store.Name, Of: store.Value.Type(), Class: store.Class, Absent: field != nil && field.Flags&ast.SymbolFlagsOptional != 0}
+		// Through a checked view, the field is read as a plain read through it is.
+		assignment.Read = l.viewedField(target, ir.Property{Object: store.Object, Name: store.Name, Of: store.Value.Type(), Class: store.Class, Absent: field != nil && field.Flags&ast.SymbolFlagsOptional != 0})
 	case ast.KindElementAccessExpression:
 		right, err = l.expression(binary.Right)
 		if err != nil {

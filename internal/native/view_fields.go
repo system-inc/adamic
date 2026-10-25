@@ -8,17 +8,25 @@ import (
 
 // The runtime returns a borrowed slot snapshot only after validating its physical storage.
 // Lowering must supply a complete runtime contract before using this for an admitted cast.
-type checkedViewReadHook func(*emitter, ir.Property) (string, bool)
+type checkedViewReadHook func(*emitter, ir.Property, string) (string, bool)
 
 var checkedViewReadAdapter checkedViewReadHook
 
 func (e *emitter) viewField(property ir.Property) string {
+	return e.viewFieldAt(property, "")
+}
+
+// viewFieldAt is viewField from object, the receiver already evaluated, or from property.Object when
+// object is empty.
+func (e *emitter) viewFieldAt(property ir.Property, object string) string {
 	if checkedViewReadAdapter != nil {
-		if value, handled := checkedViewReadAdapter(e, property); handled {
+		if value, handled := checkedViewReadAdapter(e, property, object); handled {
 			return value
 		}
 	}
-	object := e.value(property.Object)
+	if object == "" {
+		object = e.value(property.Object)
+	}
 	slot := e.temporary()
 	names := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map"}
 	name, supported := names[property.Of]

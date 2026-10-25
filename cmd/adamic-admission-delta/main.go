@@ -57,6 +57,7 @@ type entry struct {
 	Agree             *bool        `json:"agree"`
 	NegativeRelated   bool         `json:"negative_related"`
 	NegativeWitness   bool         `json:"negative_witness"`
+	RepairAgree       *bool        `json:"repair_agree,omitempty"`
 	Sampled           bool         `json:"sampled"`
 	VoidReason        string       `json:"void_reason,omitempty"`
 }
@@ -464,30 +465,43 @@ func run(args []string) error {
 		result.Verdict = "sampled"
 	}
 	started := time.Now()
-	for _, index := range selected {
-		record := &result.Programs[index]
-		record.Sampled = true
-		source := filepath.Join(headTree, record.Path)
-		node := execute(headTree, *limit, "node", "--disable-warning=ExperimentalWarning", filepath.Join(headTree, "oracle/node.mjs"), source)
-		record.Node = &node
-		jsCompile := execute(headTree, *limit, h, "js", record.Path)
-		jsPath := filepath.Join(scratch, fmt.Sprintf("program-%d.mjs", index))
-		javascript := observation{Exit: -1, Error: "JavaScript compilation failed"}
+	// observe runs one program, a path in head or an absolute one, on Node and both backends, its outputs
+	// named by name in scratch.
+	observe := func(name, path string) (node, jsCompile, javascript, nativeCompile, native observation, err error) {
+		source := path
+		if !filepath.IsAbs(source) {
+			source = filepath.Join(headTree, path)
+		}
+		node = execute(headTree, *limit, "node", "--disable-warning=ExperimentalWarning", filepath.Join(headTree, "oracle/node.mjs"), source)
+		jsCompile = execute(headTree, *limit, h, "js", path)
+		jsPath := filepath.Join(scratch, name+".mjs")
+		javascript = observation{Exit: -1, Error: "JavaScript compilation failed"}
 		if jsCompile.Exit == 0 && jsCompile.Error == "" {
-			if e := os.WriteFile(jsPath, []byte(jsCompile.Stdout), 0600); e != nil {
-				return e
+			if err = os.WriteFile(jsPath, []byte(jsCompile.Stdout), 0600); err != nil {
+				return
 			}
 			javascript = execute(headTree, *limit, "node", "--disable-warning=ExperimentalWarning", filepath.Join(headTree, "oracle/node.mjs"), jsPath)
 		}
 		jsCompile.Stdout = ""
-		record.JavaScriptCompile = &jsCompile
-		record.JavaScript = &javascript
-		nativePath := filepath.Join(scratch, fmt.Sprintf("program-%d", index))
-		nativeCompile := execute(headTree, *limit, h, "build", record.Path, "-o", nativePath)
-		native := observation{Exit: -1, Error: "native compilation failed"}
+		nativePath := filepath.Join(scratch, name)
+		nativeCompile = execute(headTree, *limit, h, "build", path, "-o", nativePath)
+		native = observation{Exit: -1, Error: "native compilation failed"}
 		if nativeCompile.Exit == 0 && nativeCompile.Error == "" {
 			native = execute(headTree, *limit, nativePath)
 		}
+		return
+	}
+	for _, index := range selected {
+		record := &result.Programs[index]
+		record.Sampled = true
+		source := filepath.Join(headTree, record.Path)
+		node, jsCompile, javascript, nativeCompile, native, e := observe(fmt.Sprintf("program-%d", index), record.Path)
+		if e != nil {
+			return e
+		}
+		record.Node = &node
+		record.JavaScriptCompile = &jsCompile
+		record.JavaScript = &javascript
 		record.NativeCompile = &nativeCompile
 		record.Native = &native
 		data, e := os.ReadFile(source)
@@ -504,6 +518,20 @@ func run(args []string) error {
 				return fmt.Errorf("%s: %w", record.Path, e)
 			}
 			record.NegativeWitness = !agree && acceptsNegativeWitness(witness, headTree, node, javascript, native)
+			if record.NegativeWitness && witness.Form == checkedBoundaryForm {
+				// The repair is the stop's mutant: storing a value of the declared type, it agrees with Node.
+				repairPath := filepath.Join(scratch, fmt.Sprintf("repair-%d.a", index))
+				if e := os.WriteFile(repairPath, repairedSource(data, witness), 0600); e != nil {
+					return e
+				}
+				repairNode, _, repairJavaScript, _, repairNative, e := observe(fmt.Sprintf("repair-%d", index), repairPath)
+				if e != nil {
+					return e
+				}
+				repairAgree := outputsAgree(repairNode, repairJavaScript, repairNative)
+				record.RepairAgree = &repairAgree
+				record.NegativeWitness = repairAgree
+			}
 			if record.NegativeWitness {
 				result.AcceptedWitnesses++
 			}
