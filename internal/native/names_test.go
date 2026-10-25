@@ -81,16 +81,35 @@ func TestSourceNamesDoNotMove(t *testing.T) {
 		changed := namedProgram(t, entry, map[string]string{module: edit})
 		code := C(changed)
 		moduleBody := func(code, module string) string {
-			code = code[strings.Index(code, "int main("):]
-			start := strings.Index(code, "// adamic-module "+strconv.Quote(module))
-			if start < 0 {
-				t.Fatalf("missing main module %s", module)
+			declarations, err := splitDeclarations(code)
+			if err != nil {
+				t.Fatal(err)
 			}
-			code = code[start:]
-			if end := strings.Index(code[1:], "// adamic-module "); end >= 0 {
-				code = code[:end+1]
+			var body strings.Builder
+			previous := 0
+			for _, declaration := range declarations {
+				begin := declaration.tokens[0].start
+				marker := "// adamic-module "
+				owner, marked := "", false
+				var err error
+				if at := strings.LastIndex(code[previous:begin], marker); at >= 0 {
+					text := strings.TrimSpace(code[previous:begin][at+len(marker):])
+					owner, err = strconv.Unquote(text)
+					marked = true
+				}
+				if err != nil {
+					t.Fatal(err)
+				}
+				end := declaration.tokens[len(declaration.tokens)-1].end
+				if declaration.function && marked && owner == module && strings.HasPrefix(declaration.name, "adamic_initialize_") {
+					body.WriteString(code[begin:end])
+				}
+				previous = end
 			}
-			return code
+			if body.Len() == 0 {
+				t.Fatalf("missing initializer %s", module)
+			}
+			return body.String()
 		}
 		if moduleBody(original, "a_b.a") != moduleBody(code, "a_b.a") {
 			t.Fatal("edit moved unrelated module-level code")
