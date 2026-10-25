@@ -583,11 +583,15 @@ func TestAToolsFlagKeysAlikeUnderEveryHomeAndSpelling(t *testing.T) {
 // directory, the build cache and Go's -p share are spelled the same on every machine, and every flag that changes the
 // output still moves the key. Each pair below is one machine against another; drop a rule from portable and its pair
 // fails.
-// Not parallel: points the home directory and the build cache at each machine's through t.Setenv.
+// Not parallel: points the home directory, the build cache and ADAMIC_TOOLS at each machine's through t.Setenv.
 func TestAKeyNamesNoMachine(t *testing.T) {
 	asMachine := func(home, root, value string) string {
 		t.Setenv("HOME", home)
 		t.Setenv("ADAMIC_BUILD_CACHE_DIR", filepath.Join("/srv", filepath.Base(home), "products"))
+		// Each machine's toolchain is the one under its home here, never the ADAMIC_TOOLS of the process running the
+		// test: a runner's unit carries the box's, which names one machine's home and not the other's
+		// (TestAToolsFlagKeysAlikeUnderEveryHomeAndSpelling holds the <tools> spelling).
+		t.Setenv("ADAMIC_TOOLS", "")
 		return portable(root, value)
 	}
 	for _, same := range []struct{ name, workshop, runner string }{
