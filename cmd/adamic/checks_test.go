@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -22,7 +23,15 @@ func TestExplainChecksOutput(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			path := "internal/lower/testdata/predicates/" + fixture + ".a"
+			witness := "internal/lower/testdata/predicates/" + fixture + ".a"
+			source, err := os.ReadFile(filepath.Join(repository, witness))
+			if err != nil {
+				t.Fatal(err)
+			}
+			path := filepath.Join(t.TempDir(), "main.ts")
+			if err = os.WriteFile(path, source, 0644); err != nil {
+				t.Fatal(err)
+			}
 			for _, backend := range []string{"c", "js", "build"} {
 				t.Run(backend, func(t *testing.T) {
 					t.Parallel()
@@ -38,7 +47,7 @@ func TestExplainChecksOutput(t *testing.T) {
 					if err := command.Run(); err != nil {
 						t.Fatalf("%s: %v, %s", backend, err, diagnostic.Bytes())
 					}
-					if !bytes.Equal(diagnostic.Bytes(), want) {
+					if diagnosticString := strings.ReplaceAll(diagnostic.String(), path, witness); diagnosticString != string(want) {
 						t.Fatalf("%s explanation:\n%s\nwant:\n%s", backend, diagnostic.Bytes(), want)
 					}
 					if backend != "build" && output.Len() == 0 {

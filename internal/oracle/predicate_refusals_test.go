@@ -10,21 +10,25 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
+// position, where given, is the refusal's line:column in the fixture.
 var predicateMiscompileCases = []struct {
-	name, output, diagnostic string
-	pending                  bool
+	name, output, diagnostic, position string
+	pending                            bool
 }{
-	{"p05_helper_second_parameter", "number NaN\nnumber 42\n", "type predicate whose return is not proven", false},
-	{"p06_helper_second_parameter_undefined", "undefined? abc\nno\nundefined? undefined\nyes\n", "type predicate whose return is not proven", false},
-	{"p12_find_undefined_target", "found undefined\n", "find predicate result representation", true},
-	{"p13_filter_wrong_parameter_helper", "3\nitem a\nitem undefined\nitem bc\n", "unproven predicate argument", false},
-	{"p14_overload_optional_chain_container", "claimed box: box a\ndirect: box\nclaimed box: undefined\ndirect: undefined\n", "", false},
-	{"p21_find_inferred_number", "found 2\na|bc\n", "find predicate result representation", true},
-	{"p22_filter_inferred_narrowing", "a|bc\n1,2\ntotal 6\n", "filter predicate element representation", true},
-	{"p23_find_declared_predicate", "found 2\n", "find predicate result representation", true},
-	{"p24_filter_proven_number", "2\n2\n2,4\n", "filter predicate element representation", true},
-	{"p26_assert_nested_if_without_else", "value abc\nvalue undefined\n", "type predicate whose return is not proven", false},
-	{"p27_overload_parameter_rebound", "text a\ntext 41\n", "", false},
+	{"p05_helper_second_parameter", "number NaN\nnumber 42\n", "type predicate whose return is not proven", "", false},
+	{"p06_helper_second_parameter_undefined", "undefined? abc\nno\nundefined? undefined\nyes\n", "type predicate whose return is not proven", "", false},
+	{"p12_find_undefined_target", "found undefined\n", "find predicate result representation", "", true},
+	{"p13_filter_wrong_parameter_helper", "3\nitem a\nitem undefined\nitem bc\n", "unproven predicate argument", "", false},
+	// Its implementation answers true for undefined and false for "", so it over-promises both ways and .a refuses
+	// the overload at its declaration.
+	{"p14_overload_optional_chain_container", "claimed box: box a\ndirect: box\nclaimed box: undefined\ndirect: undefined\n", "an unproven type predicate; the overload implementation does not prove both directions", "2:41", false},
+	{"p21_find_inferred_number", "found 2\na|bc\n", "find predicate result representation", "", true},
+	{"p22_filter_inferred_narrowing", "a|bc\n1,2\ntotal 6\n", "filter predicate element representation", "", true},
+	{"p23_find_declared_predicate", "found 2\n", "find predicate result representation", "", true},
+	{"p24_filter_proven_number", "2\n2\n2,4\n", "filter predicate element representation", "", true},
+	{"p26_assert_nested_if_without_else", "value abc\nvalue undefined\n", "type predicate whose return is not proven", "", false},
+	// Its implementation rebinds the parameter before testing it, so it always answers true.
+	{"p27_overload_parameter_rebound", "text a\ntext 41\n", "an unproven type predicate; the overload implementation does not prove both directions", "1:38", false},
 }
 
 func TestPredicateMiscompileRefusals(t *testing.T) {
@@ -48,7 +52,7 @@ func TestPredicateMiscompileRefusals(t *testing.T) {
 			} else if probe.diagnostic != "" {
 				var refused *lower.Refused
 				var pending *lower.NotYet
-				if (probe.pending && !errors.As(err, &pending)) || (!probe.pending && !errors.As(err, &refused)) || err == nil || !strings.Contains(err.Error(), probe.diagnostic) || !strings.Contains(err.Error(), filepath.Base(path)+":") {
+				if (probe.pending && !errors.As(err, &pending)) || (!probe.pending && !errors.As(err, &refused)) || err == nil || !strings.Contains(err.Error(), probe.diagnostic) || !strings.Contains(err.Error(), filepath.Base(path)+":"+probe.position) {
 					t.Fatalf("want path-bearing %q refusal/pending, got %v", probe.diagnostic, err)
 				}
 				t.Log(err)
@@ -69,34 +73,12 @@ func TestPredicateMiscompileRefusals(t *testing.T) {
 			if baseline {
 				return
 			}
-			prefix := "text a\n"
-			message := "overload 1 of isText result: predicate x is false"
-			if probe.name == "p14_overload_optional_chain_container" {
-				prefix = "claimed box: box a\ndirect: box\n"
-			}
-			for name, got := range map[string]run{"javascript": js, "release": release, "sanitized": sanitized} {
-				if got.exitCode != 70 || string(got.stdout) != prefix || string(got.stderr) != "adamic: panic: "+message+"\n" {
-					t.Errorf("%s: want named predicate check, exit=%d stdout=%q stderr=%q", name, got.exitCode, got.stdout, got.stderr)
-				}
-			}
-			checked, unobservable := 2, 0
-			if probe.name == "p14_overload_optional_chain_container" {
-				checked, unobservable = 1, 1
-			}
-			if program.PredicateChecks.Checked != checked || program.PredicateChecks.Unobservable != unobservable {
-				t.Errorf("direction report: %+v", program.PredicateChecks)
-			}
+			t.Fatal("lowered: every case pins its refusal or pending reason")
 		})
 	}
 }
 
 func init() {
-	for _, name := range []string{"p14_overload_optional_chain_container", "p27_overload_parameter_rebound"} {
-		fixtures = append(fixtures, struct {
-			path            string
-			lowers, checked bool
-		}{"internal/oracle/testdata/predicate_refusals/oct8_predicates_" + name + ".a", true, true})
-	}
 	fixtures = append(fixtures, struct {
 		path            string
 		lowers, checked bool

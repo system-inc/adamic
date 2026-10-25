@@ -1,0 +1,5 @@
+function decide(value: number | string, answer: boolean): value is number { console.log("called"); return answer; }
+function argument(value: number | string): number | string { console.log("argument"); return value; }
+function use(value: number | string, answer: boolean): void { if (decide(argument(value), answer)) console.log("number"); else console.log("string"); }
+use(7,true);
+use("text",false);
