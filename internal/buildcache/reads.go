@@ -562,7 +562,7 @@ func treeEntryValue(root, cache string, entry readEntry) (string, error) {
 		if !filepath.IsAbs(entry.Path) {
 			return "", fmt.Errorf("a system entry %q isn't an absolute path", entry.Path)
 		}
-		return systemValue(entry.Path), nil
+		return systemEntryValue(entry.Path)
 	case "system directory":
 		if !filepath.IsAbs(entry.Path) {
 			return "", fmt.Errorf("a system directory entry %q isn't an absolute path", entry.Path)
