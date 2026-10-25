@@ -136,7 +136,17 @@ func cycleLowerForComparison(program *load.Program, options Options, indexed boo
 	for id, proven := range types {
 		identity := checked.TypeToStringEx(proven, nil, checker.TypeFormatFlagsNoTruncation, nil)
 		if symbol := proven.Symbol(); symbol != nil {
-			identity += " symbol=" + ast.SymbolName(symbol)
+			name := ast.SymbolName(symbol)
+			// Computed names carry checker-local unique-symbol numbers. Their
+			// source spelling and declaration spans identify the same symbol across checkers.
+			if len(symbol.Declarations) != 0 {
+				if declared := symbol.Declarations[0].Name(); declared != nil {
+					if source := ast.GetSourceFileOfNode(declared); source != nil {
+						name = strings.TrimSpace(source.Text()[declared.Pos():declared.End()])
+					}
+				}
+			}
+			identity += " symbol=" + name
 			for _, declaration := range symbol.Declarations {
 				identity += fmt.Sprintf(" %s:%d:%d", program.Where(declaration), declaration.Pos(), declaration.End())
 			}
@@ -373,4 +383,9 @@ func TestCycleIndexResolvedTargetsKeepAnswers(t *testing.T) {
 	if compare() == "" {
 		t.Fatal("resolving type keys hid a changed function target set")
 	}
+}
+
+func TestCycleIndexIteratorTargetsEquality(t *testing.T) {
+	t.Parallel()
+	cycleCompareProgram(t, "internal/oracle/testdata/user_iterators.a")
 }
