@@ -109,7 +109,8 @@ func cycleCompareProgram(t *testing.T, path string) {
 }
 
 // Checker IDs are assigned lazily, and indexing changes query order. Compare
-// GraphTypes and ProgramTypes by resolved type and declaration identity, never ID.
+// GraphTypes, ProgramTypes and the checker-keyed function target table by
+// resolved type and declaration identity, never ID.
 func cycleLowerForComparison(program *load.Program, options Options, indexed bool) (*ir.Program, map[int]string, error) {
 	entry := program.Files()[0]
 	checked, release := program.Checker(context.Background(), entry)
@@ -152,7 +153,7 @@ func cycleFirstDifferenceResolved(a, b reflect.Value, path string, scanTypes, in
 	if a.Type() != b.Type() {
 		return fmt.Sprintf("%s: types %v/%v", path, a.Type(), b.Type())
 	}
-	if strings.HasSuffix(path, ".GraphTypes") || strings.HasSuffix(path, ".ProgramTypes") {
+	if strings.HasSuffix(path, ".GraphTypes") || strings.HasSuffix(path, ".ProgramTypes") || strings.HasSuffix(path, ".FunctionTypeTargets") {
 		resolve := func(value reflect.Value, types map[int]string) ([]string, error) {
 			var result []string
 			add := func(id int, suffix string) error {
@@ -171,7 +172,7 @@ func cycleFirstDifferenceResolved(a, b reflect.Value, path string, scanTypes, in
 			}
 			if value.Kind() == reflect.Map {
 				for _, key := range value.MapKeys() {
-					if err := add(int(key.Int()), fmt.Sprint("=", value.MapIndex(key).Bool())); err != nil {
+					if err := add(int(key.Int()), fmt.Sprintf("=%#v", value.MapIndex(key).Interface())); err != nil {
 						return nil, err
 					}
 				}
@@ -348,5 +349,28 @@ func TestCycleIndexLibraryFunctionLinks(t *testing.T) {
 	}
 	if !scanning.isFunction(function) || indexed.isFunction(function) != scanning.isFunction(function) || len(before) != 0 || !slices.Equal(before, after) {
 		t.Fatal("library Function must use the scanning finder's closure-only ownership path")
+	}
+}
+
+func TestCycleIndexCountTargetsEquality(t *testing.T) {
+	t.Parallel()
+	cycleCompareProgram(t, "internal/oracle/testdata/miscompile_2a/controls.a")
+}
+
+func TestCycleIndexResolvedTargetsKeepAnswers(t *testing.T) {
+	t.Parallel()
+	type program struct{ FunctionTypeTargets map[int][]int }
+	scanning := program{map[int][]int{1: {0, 1}}}
+	indexed := program{map[int][]int{2: {0, 1}}}
+	before, after := map[int]string{1: "resolved function declaration"}, map[int]string{2: "resolved function declaration"}
+	compare := func() string {
+		return cycleFirstDifferenceResolved(reflect.ValueOf(scanning), reflect.ValueOf(indexed), "program", before, after)
+	}
+	if difference := compare(); difference != "" {
+		t.Fatal(difference)
+	}
+	indexed.FunctionTypeTargets[2] = []int{0}
+	if compare() == "" {
+		t.Fatal("resolving type keys hid a changed function target set")
 	}
 }
