@@ -5,7 +5,9 @@ import (
 	"crypto/md5"
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -49,6 +51,10 @@ type packageIndex struct {
 
 var packageIndexes sync.Map
 
+// openPackageFile opens a file of dpkg's database: os.Open, a var so a test can see each one, and whether it ran as
+// keying.
+var openPackageFile = os.Open
+
 func packages() *packageIndex {
 	found, _ := packageIndexes.LoadOrStore(dpkgDirectory, &packageIndex{})
 	return found.(*packageIndex)
@@ -61,7 +67,7 @@ func (index *packageIndex) owner(path string) (string, bool) {
 		sort.Strings(lists)
 		for _, list := range lists {
 			name := strings.TrimSuffix(filepath.Base(list), ".list")
-			file, err := os.Open(list)
+			file, err := openPackageFile(list)
 			if err != nil {
 				continue
 			}
@@ -79,7 +85,7 @@ func (index *packageIndex) owner(path string) (string, bool) {
 func (index *packageIndex) version(name string) (string, bool) {
 	index.versionsOnce.Do(func() {
 		index.versions, index.conffiles = map[string]string{}, map[string]string{}
-		file, err := os.Open(filepath.Join(dpkgDirectory, "status"))
+		file, err := openPackageFile(filepath.Join(dpkgDirectory, "status"))
 		if err != nil {
 			return
 		}
@@ -127,7 +133,9 @@ func (index *packageIndex) installed(owner, path string) string {
 	found, ok := index.sums.Load(owner)
 	if !ok {
 		sums := map[string]string{}
-		if content, err := os.ReadFile(filepath.Join(dpkgDirectory, "info", owner+".md5sums")); err == nil {
+		if file, err := openPackageFile(filepath.Join(dpkgDirectory, "info", owner+".md5sums")); err == nil {
+			content, _ := io.ReadAll(file)
+			file.Close()
 			for _, line := range strings.Split(string(content), "\n") {
 				// "<md5>  <path without its leading slash>"
 				if sum, name, ok := strings.Cut(line, "  "); ok {
@@ -277,6 +285,115 @@ func inLoaderDirectory(library string) bool {
 	return slices.Contains(loaderDirectories, directory)
 }
 
+// houseValuesVariable is ADAMIC_HOUSE_VALUES: the house's own values for the machine's files, handed by Loom to every
+// key maker on a house box (#shadow): a unit, build-tree's traced runs, Settle, the key check and the lean check, all
+// alike. Handed, a machine file is valued as the house stamped it, and a file the stamp doesn't name by its content, so
+// no key reads dpkg's database: under a unit that read reached the test's own set, and a traced run reading it can't
+// be narrowed, since the database is in no stamp. Unhanded (a developer's machine, a box outside the house), a machine
+// file is valued through dpkg as before, and those keys are that machine's alone.
+const houseValuesVariable = "ADAMIC_HOUSE_VALUES"
+
+// houseValuesBound is the most a handed file may hold: the stamp is about 80 KB.
+const houseValuesBound = 16 << 20
+
+// A handedHouse is one handed file's values, read once a process: paths, or why the file is refused.
+type handedHouse struct {
+	once  sync.Once
+	paths map[string]string
+	err   error
+}
+
+var handedHouses sync.Map
+
+// houseValues is the handed file's values by path, nil when none is handed, or why it's refused.
+func houseValues() (map[string]string, error) {
+	path := os.Getenv(houseValuesVariable)
+	if path == "" {
+		return nil, nil
+	}
+	found, _ := handedHouses.LoadOrStore(path, &handedHouse{})
+	house := found.(*handedHouse)
+	house.once.Do(func() {
+		keying(func() { house.paths, house.err = readHouseValues(path) })
+	})
+	return house.paths, house.err
+}
+
+// readHouseValues reads the file the house handed by its handle: opened never through a link, and refused unless it's a
+// regular file the code under test can't have written (houseOwned). A stamp naming no path is refused too, never read
+// as one that values everything by content.
+func readHouseValues(path string) (map[string]string, error) {
+	descriptor, err := syscall.Open(path, syscall.O_RDONLY|syscall.O_NOFOLLOW|syscall.O_CLOEXEC, 0)
+	if err != nil {
+		return nil, fmt.Errorf("house values %s: %w", path, err)
+	}
+	file := os.NewFile(uintptr(descriptor), path)
+	defer file.Close()
+	info, err := file.Stat()
+	if err != nil {
+		return nil, fmt.Errorf("house values %s: %w", path, err)
+	}
+	if !info.Mode().IsRegular() {
+		return nil, fmt.Errorf("house values %s: not a regular file (%s)", path, info.Mode().Type())
+	}
+	if why := houseOwned(info); why != "" {
+		return nil, fmt.Errorf("house values %s: %s", path, why)
+	}
+	content, err := io.ReadAll(io.LimitReader(file, houseValuesBound+1))
+	if err != nil {
+		return nil, fmt.Errorf("house values %s: %w", path, err)
+	}
+	if len(content) > houseValuesBound {
+		return nil, fmt.Errorf("house values %s: over %d bytes", path, houseValuesBound)
+	}
+	// The stamp's box and moment are never read: the values are the house's, alike on every box its check passed.
+	var stamp struct {
+		Paths map[string]string `json:"paths"`
+	}
+	if err := json.Unmarshal(content, &stamp); err != nil {
+		return nil, fmt.Errorf("house values %s: %w", path, err)
+	}
+	if len(stamp.Paths) == 0 {
+		return nil, fmt.Errorf("house values %s: names no path", path)
+	}
+	return stamp.Paths, nil
+}
+
+// houseOwners are the owners a handed file may have: root alone (Node's ruling on #shadow), since build-tree's product
+// tests run as the builder's own user, and a file the code under test can write must never value a key. A var, so a
+// test can hand a file of its own.
+var houseOwners = []uint32{0}
+
+// houseOwned is why a handed file's owner or mode refuses it, "" when neither does.
+func houseOwned(info os.FileInfo) string {
+	if info.Mode().Perm()&0o022 != 0 {
+		return fmt.Sprintf("writable by group or other (%s)", info.Mode().Perm())
+	}
+	system, ok := info.Sys().(*syscall.Stat_t)
+	if !ok {
+		return "its owner can't be read"
+	}
+	if !slices.Contains(houseOwners, system.Uid) {
+		return fmt.Sprintf("owned by uid %d, not root", system.Uid)
+	}
+	return ""
+}
+
+// systemEntryValue is a system entry's value: as the handed house values give it (houseValues), else systemValue's.
+func systemEntryValue(path string) (string, error) {
+	values, err := houseValues()
+	if err != nil {
+		return "", err
+	}
+	if values == nil {
+		return systemValue(path), nil
+	}
+	if value, ok := values[path]; ok {
+		return "house " + value, nil
+	}
+	return machineValue(path, false), nil
+}
+
 type contentStamp struct {
 	path, kind        string
 	inode, size, time int64
@@ -287,6 +404,12 @@ var systemContents sync.Map
 // systemValue is a machine file as a build reads it: absent, a link by where it points, a directory by its names, a
 // file a package installed and nobody changed since by the package and its version, any other file by its content.
 func systemValue(path string) string {
+	return machineValue(path, true)
+}
+
+// machineValue is systemValue, through dpkg's database only when packaged: unpackaged, every file is valued by its
+// content, the way a file the handed house values don't name is (systemEntryValue).
+func machineValue(path string, packaged bool) string {
 	info, err := os.Lstat(path)
 	switch {
 	case err != nil:
@@ -367,9 +490,11 @@ func systemValue(path string) string {
 		}
 		return value
 	}
-	if owner, recorded := packageOwner(path); owner != "" {
-		if sum := packages().installed(owner, recorded); sum != "" && hashed("md5") == sum {
-			return "package " + owner + " " + packageVersion(owner)
+	if packaged {
+		if owner, recorded := packageOwner(path); owner != "" {
+			if sum := packages().installed(owner, recorded); sum != "" && hashed("md5") == sum {
+				return "package " + owner + " " + packageVersion(owner)
+			}
 		}
 	}
 	return fmt.Sprintf("file %t %s", info.Mode()&0o111 != 0, hashed("sha256"))
