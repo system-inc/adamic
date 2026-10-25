@@ -1,0 +1,3 @@
+function isNumber(value: number | string): value is number { return false; }
+function use(value: number | string, flag: boolean): void { if (isNumber(value) && flag) {} else {} console.log("continued"); }
+use(7,false);

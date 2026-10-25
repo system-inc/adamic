@@ -1,3 +1,4 @@
+// a-check: refused an unproven type predicate; the overload implementation does not prove both directions
 class Box {
   constructor(readonly label: string) {}
   name(): string {

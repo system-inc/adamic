@@ -1,0 +1,8 @@
+enum Kind { Identifier = 1, Keyword = 1 }
+interface Identifier { readonly kind: Kind.Identifier; readonly text: string }
+interface Keyword { readonly kind: Kind.Keyword; readonly width: number }
+type Node = Identifier | Keyword;
+function isIdentifier(node: Node): node is Identifier { return node.kind === Kind.Identifier; }
+function show(text: string): boolean { console.log(text); return true; }
+function use(node: Node): void { const shown = isIdentifier(node) && show(node.text); console.log(shown ? "shown" : "hidden"); }
+use({ kind: Kind.Keyword, width: 3 });

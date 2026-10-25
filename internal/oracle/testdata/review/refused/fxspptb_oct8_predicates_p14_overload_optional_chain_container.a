@@ -1,3 +1,4 @@
+// a-check: refused an unproven type predicate; the overload implementation does not prove both directions
 interface Box { readonly name: string }
 function isText(x: string | undefined): x is string;
 function isText(x: string | undefined): boolean {
