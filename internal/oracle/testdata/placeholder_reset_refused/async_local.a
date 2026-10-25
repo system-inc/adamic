@@ -1,0 +1,10 @@
+// a-check: refused a placeholder reset of a local of an async function
+// The local's readiness flag is declared in the resume block before the await, out of reach of the reset after it.
+async function clear(): Promise<void> {
+	let text: string = 'before';
+	await Promise.resolve();
+	console.log(text);
+	text = undefined!;
+	console.log('after');
+}
+await clear();
