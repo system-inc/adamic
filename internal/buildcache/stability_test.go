@@ -278,3 +278,54 @@ func TestALookupThatClimbsToHomeOrPastItIsKeyedWhereItLands(t *testing.T) {
 		t.Fatalf("classed\n%q at Workshop's depth and\n%q at a runner's, want\n%q", workshop, runner, want)
 	}
 }
+
+// A read of a path under the tools root, through any spelling that resolves to it, classes as the root's read whatever
+// home the run had (#zxq3k08, Node's ruling on shape 4): the wasm products' sysroot header probes missed through the
+// ~/.adamic-tools link and keyed `home ~/.adamic-tools/...` under the box user's home and `absolute
+// /home/ahra/.adamic-tools/...` under a unit's, so every set key moved with the home (the scoped pair on Golem, Oct 25).
+// Here the box's root is a directory with a .adamic-tools link beside it, ADAMIC_TOOLS names the directory, and one
+// header probe through the root and through the link, under the box user's home and an empty unit home, is the one
+// toolset entry all four ways. With ADAMIC_TOOLS unset, the probe through the link under the home is the home's, as
+// before. Mutant that fails it: the spellings not mapped onto the root, red on the link rows.
+// Not parallel: points the home directory and ADAMIC_TOOLS at each layout's through t.Setenv.
+func TestAReadThroughEveryToolsSpellingIsTheRootsRead(t *testing.T) {
+	box := quietHome(t)
+	unit, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	tools := filepath.Join(box, "adamic-tools")
+	if err := os.MkdirAll(filepath.Join(tools, "wasi-sdk", "share", "wasi-sysroot", "include"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink("adamic-tools", filepath.Join(box, ".adamic-tools")); err != nil {
+		t.Fatal(err)
+	}
+	header := filepath.Join("wasi-sdk", "share", "wasi-sysroot", "include", "stdatomic.h")
+	cache := filepath.Join(t.TempDir(), "cache")
+	if err := os.MkdirAll(cache, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("ADAMIC_TOOLS", tools)
+	for _, home := range []string{box, unit} {
+		t.Setenv("HOME", home)
+		facts, err := settleFacts(filepath.Join(t.TempDir(), "adamic"), cache, filepath.Join(cache, "trace-1"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, spelling := range []string{tools, filepath.Join(box, ".adamic-tools")} {
+			if got := facts.classifyPath(filepath.Join(spelling, header), readAbsent); got != (classed{"toolset", "wasi-sdk"}) {
+				t.Errorf("under home %s, the header's probe through %s classed %q, want the root's toolset", home, spelling, got)
+			}
+		}
+	}
+	t.Setenv("ADAMIC_TOOLS", "")
+	t.Setenv("HOME", box)
+	facts, err := settleFacts(filepath.Join(t.TempDir(), "adamic"), cache, filepath.Join(cache, "trace-1"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got := facts.classifyPath(filepath.Join(box, ".adamic-tools", header), readAbsent); got.kind != "home" {
+		t.Errorf("with ADAMIC_TOOLS unset, the probe through the link classed %q, want the home's as before", got)
+	}
+}
