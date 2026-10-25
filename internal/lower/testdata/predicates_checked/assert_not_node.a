@@ -1,0 +1,12 @@
+interface Identifier { readonly kind: 'Identifier'; readonly text: string }
+interface Keyword { readonly kind: 'Keyword'; readonly width: number }
+type Node = Identifier | Keyword;
+function level(): number { return 0; }
+function isKeyword(node: Node): node is Keyword { return node.kind === 'Keyword'; }
+function assertNotNode<T extends Node, U extends T>(node: T | undefined, test: (node: Node) => node is U): asserts node is Exclude<T, U>;
+function assertNotNode(node: Node | undefined, test: (node: Node) => boolean): void {
+	console.log("asserting");
+	if (level() > 0 && node !== undefined && test(node)) console.log("unexpected node");
+}
+function use(node: Node): void { assertNotNode(node, isKeyword); console.log("narrowed"); }
+use({ kind: 'Keyword', width: 3 });

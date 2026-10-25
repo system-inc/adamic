@@ -143,7 +143,7 @@ func TestEveryNeedsCallbackEffects(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	path := filepath.Join(t.TempDir(), "every.ts")
+	path := filepath.Join(t.TempDir(), "every.a")
 	if err = os.WriteFile(path, source, 0644); err != nil {
 		t.Fatal(err)
 	}
@@ -156,7 +156,7 @@ func TestEveryNeedsCallbackEffects(t *testing.T) {
 	defer release()
 	l := &lowering{program: program, checker: checked, result: &ir.Program{}}
 	err = l.refuse(file)
-	if err == nil || !strings.Contains(err.Error(), "return is not proven") {
+	if err == nil || !strings.Contains(err.Error(), "type predicate") {
 		t.Fatalf("want array proof refusal without callback effects, got %v", err)
 	}
 }

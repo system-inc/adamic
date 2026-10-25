@@ -1,0 +1,190 @@
+package oracle
+
+import (
+	"context"
+	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/leakcheck"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
+)
+
+var checkedPredicateFixtures = []struct {
+	name, nodeOut, checkedOut, branch, source, target string
+	checked, unobservable                             int
+}{
+	{"true", "claimed\n", "", "true", "string | number", "number", 2, 0},
+	{"true_unused", "continued\n", "", "true", "\"text\"", "number", 1, 1},
+	{"false", "continued\n", "", "false", "string | number", "number", 2, 0},
+	{"false_alias", "continued\n", "", "false", "string | number", "number", 2, 0},
+	{"false_compound_unchanged", "continued\n", "", "", "", "", 1, 1},
+	{"asserts", "called\nasserted\n", "called\n", "asserts", "string | number", "number", 1, 0},
+	{"valid", "argument\ncalled\nnumber\nargument\ncalled\nstring\n", "", "", "", "", 1, 1},
+	{"asserts_valid", "called\n7\n", "", "", "", "", 1, 0},
+	{"false_unchanged", "continued\n", "", "", "", "", 1, 1},
+	// tsc's Debug.assertNotNode (debug.ts:307): the bodyless overload claims Exclude<T, U> from the
+	// call's resolved signature, and the implementation, gated by an assertion level as tsc's is,
+	// never runs the test. Its own claim is checked at the call, so a Keyword stops it there.
+	{"assert_not_node", "asserting\nnarrowed\n", "asserting\n", "asserts", "Node", "Identifier", 1, 0},
+}
+
+func predicateCheckedInput(t *testing.T, name string) (string, string) {
+	t.Helper()
+	witness, err := filepath.Abs(filepath.Join(repository, "internal/lower/testdata/predicates_checked", name+".a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	source, err := os.ReadFile(witness)
+	if err != nil {
+		t.Fatal(err)
+	}
+	checked := filepath.Join(t.TempDir(), name+".ts")
+	if err = os.WriteFile(checked, source, 0644); err != nil {
+		t.Fatal(err)
+	}
+	return witness, checked
+}
+
+func TestCheckedPredicateOracle(t *testing.T) {
+	t.Parallel()
+	for _, probe := range checkedPredicateFixtures {
+		t.Run(probe.name, func(t *testing.T) {
+			witness, path := predicateCheckedInput(t, probe.name)
+			node := onNode(t, witness)
+			expectedNode := run{stdout: []byte(probe.nodeOut)}
+			if difference := disagreement(expectedNode, node); difference != "" {
+				t.Fatal("source Node: " + difference)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			counts := program.PredicateChecks
+			if counts.Checked != probe.checked || counts.Unobservable != probe.unobservable || counts.Proven != 0 || len(counts.Sites) != 1 {
+				t.Fatalf("direction counts %+v", counts)
+			}
+			want := node
+			if probe.branch != "" {
+				site := counts.Sites[0]
+				// The expected source and target strings are pins, not emitted diagnostics.
+				message := fmt.Sprintf("adamic: panic: predicate %s at %s %s branch: source %s, target %s\n", site.Function, site.Where, probe.branch, probe.source, probe.target)
+				want = run{stdout: []byte(probe.checkedOut), stderr: []byte(message), exitCode: 70}
+			}
+			sanitized, binary := nativelyUncached(t, program)
+			for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if difference := disagreement(want, got); difference != "" {
+					t.Fatal(difference)
+				}
+			}
+			if want.exitCode == 0 {
+				if report := leaksUncached(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+				countedBinary := filepath.Join(t.TempDir(), "counted")
+				if err = native.Build(native.C(program), countedBinary, native.Options{Count: true}); err != nil {
+					t.Fatal(err)
+				}
+				if report := leakcheck.Unbalanced(leakRun(execute(t, countedBinary))); report != "" {
+					t.Fatal(report)
+				}
+			}
+			if probe.branch != "" {
+				changes := 0
+				for i := range program.Functions {
+					if strings.Contains(program.Functions[i].Name, "_predicate_check_") {
+						program.Functions[i].Body = mutateReadiness(program.Functions[i].Body, func(node any) any {
+							if panic, ok := node.(ir.Panic); ok {
+								constant, ok := panic.Message.(ir.StringConstant)
+								if ok && strings.Contains(program.Strings[constant.Index], " "+probe.branch+" branch:") {
+									changes++
+									return ir.Evaluate{Value: ir.NumberConstant{Value: 0}}
+								}
+							}
+							return node
+						})
+					}
+				}
+				if changes != 1 {
+					t.Fatalf("check mutant removed %d guards", changes)
+				}
+				mutant, _ := nativelyUncached(t, program)
+				for _, got := range []run{mutant, onJavaScriptBackend(t, program)} {
+					if disagreement(want, got) == "" {
+						t.Fatal("removed-check mutant escaped exit-70 contract")
+					}
+					if difference := disagreement(node, got); difference != "" {
+						t.Fatal("mutant failed to execute source semantics: " + difference)
+					}
+				}
+				t.Logf("%s lying body exits 70; removed-%s-check mutant executes Node result %q and is caught", probe.name, probe.branch, node.stdout)
+			}
+		})
+	}
+}
+
+// Each row is keyed as its .ts checked mode copy, read from the stored .a witness.
+func checkedPredicateCountKey(name string) string {
+	return "internal/lower/testdata/predicates_checked/" + name + ".a (.ts checked mode)"
+}
+
+func init() {
+	for _, probe := range checkedPredicateFixtures {
+		key := checkedPredicateCountKey(probe.name)
+		countFixtureSources[key] = "internal/lower/testdata/predicates_checked/" + probe.name + ".a"
+		additionalFixtureCounts = append(additionalFixtureCounts, countCase{key, func(t *testing.T) (string, func() string) {
+			return checkedPredicateCounted(t, key, probe.name)
+		}})
+	}
+}
+
+// Give the .ts copy its logical name before lowering: a check's panic message carries its
+// path, so replacing a scratch path in the emitted C afterward leaves that path's string lengths behind.
+func checkedPredicateCounted(t *testing.T, key, name string) (string, func() string) {
+	t.Helper()
+	_, typed := predicateCheckedInput(t, name)
+	logical := "<repository>/internal/lower/testdata/predicates_checked/" + name + ".ts"
+	checked, err := load.LoadDisplayed([]string{typed}, func(path string) string {
+		if path == typed {
+			return logical
+		}
+		return path
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lower.Lower(context.Background(), checked)
+	if err != nil {
+		t.Fatal(err)
+	}
+	source := native.C(program)
+	return countPortable(t, source, ""), func() string {
+		return countedRun(t, key, typed, source, false, nil, false, false)
+	}
+}
+
+// TestCountsAreRecorded's shards hold these rows with every other; this focused verifier
+// measures only the checked predicate rows against their committed records.
+func TestCheckedPredicateCountsAreRecorded(t *testing.T) {
+	t.Parallel()
+	// TestMain owns committed writes during -update-counts.
+	if *updateCounts {
+		return
+	}
+	for _, probe := range checkedPredicateFixtures {
+		key := checkedPredicateCountKey(probe.name)
+		_, measure := checkedPredicateCounted(t, key, probe.name)
+		want, err := readCountRow(countsDirectory, "runtime", key)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if got := measure(); got != want {
+			t.Errorf("checked predicate counts changed in %s; update with -update-counts:\nrecorded: %s\nmeasured: %s", countFile("runtime", key), want, got)
+		}
+	}
+}
