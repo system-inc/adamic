@@ -554,7 +554,7 @@ func (e *emitter) statement(at *ir.Statement) {
 		e.line("panic(%s);", e.value(statement.Message))
 	case ir.SetProperty:
 		if e.program.CheckedField(statement.ViewReceiverTypeID, statement.Name) && !statement.Define && !statement.Uninitialized {
-			e.line("adamicViewWrite(%s, %s, %s, %d, %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), viewFieldRepresentation(statement.Value), quote(statement.DeclaredType))
+			e.line("%s;", e.checkedViewWrite(statement, e.value(statement.Object), e.value(statement.Value)))
 			break
 		}
 		if statement.Define || statement.Uninitialized {

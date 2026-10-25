@@ -216,93 +216,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		}
 		object := e.value(statement.Object)
 		value := e.value(statement.Value)
-		// The object may be undefined where the checker narrowed it away and a call since put it back
-		// (ir.Defined): JavaScript throws at the write, after the value, and so does this.
-		e.line("if (%s == NULL) {", object)
-		e.line("\tstatic const char message[] = %s;", cArray("TypeError: Cannot set properties of undefined (setting '"+statement.Name+"')"))
-		e.line("\tadamic_panic(message, sizeof message - 1);")
-		e.line("}")
-		e.line("adamic_object_check_data_write(%s, %s);", object, cString(statement.Name))
-		records := e.hasRecordStorage()
-		keptValue := value
-		if statement.Value.Type().IsReference() {
-			keptValue = e.keptIn(object, value)
-		}
-		if records {
-			e.line("if (adamic_record_is(%s)) {", object)
-			boxed := keptValue
-			if statement.Value.Type() == ir.Number {
-				boxed = fmt.Sprintf("adamic_box_number(%s)", value)
-			}
-			if statement.Value.Type() == ir.Boolean {
-				boxed = fmt.Sprintf("(%s ? &adamic_box_true : &adamic_box_false)", value)
-			}
-			if statement.Value.Type() == ir.MaybeNumber {
-				boxed = fmt.Sprintf("((%s).present ? adamic_box_number((%s).number) : NULL)", value, value)
-			}
-			if statement.Value.Type() == ir.MaybeBoolean {
-				boxed = fmt.Sprintf("((%s).present ? ((%s).boolean ? &adamic_box_true : &adamic_box_false) : NULL)", value, value)
-			}
-			e.line("adamic_record_set(%s, %s, (adamic_value){.reference = %s});", object, e.recordKey(statement.Name), boxed)
-			e.line("} else {")
-		}
-		slot := e.temporary()
-		cache := ""
-		if e.fieldTypesNeeded() {
-			cache = e.cache()
-		}
-		if e.program.CheckedField(statement.ViewReceiverTypeID, statement.Name) {
-			expected := statement.DeclaredType
-			if expected == "" {
-				expected = map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map", ir.Closure: "function", ir.Union: "unknown"}[statement.Value.Type()]
-				if expected == "" {
-					expected = "unknown"
-				}
-			}
-			e.line("adamic_object_view_write(%s, %s, &%s, %d, %s, %s);", object, cString(statement.Name), cache, fieldRepresentation(statement.Value), cString(expected), cString("<write>."+statement.Name))
-		}
-		if e.fieldTypesNeeded() {
-			e.line("adamic_value *%s = adamic_object_write_field(%s, %s, &%s);", slot, object, cString(statement.Name), cache)
-		} else {
-			e.line("adamic_value *%s = %s;", slot, e.writeFieldSlot(object, statement.Name, statement.Class))
-		}
-		converted := e.program.CheckedField(statement.ViewReceiverTypeID, statement.Name) && statement.Value.Type() <= ir.Boolean
-		if converted {
-			e.line("if (adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] == 10) {", object, object, slot)
-			boxed := fmt.Sprintf("adamic_box_number(%s)", value)
-			if statement.Value.Type() == ir.Boolean {
-				boxed = fmt.Sprintf("(%s ? &adamic_box_true : &adamic_box_false)", value)
-			}
-			e.line("adamic_heap *view_new_value = (adamic_heap *)%s;", boxed)
-			e.line("adamic_release(%s->reference);", slot)
-			e.line("%s->reference = view_new_value;", slot)
-			e.line("} else {")
-		}
-		if statement.Value.Type().IsReference() {
-			// The new reference is taken before the old is let go: they may be the same.
-			old := e.temporary()
-			e.line("void *%s = %s->reference;", old, slot)
-			e.line("%s->reference = %s;", slot, keptValue)
-			if len(e.program.GraphTypes) != 0 {
-				e.dropIn(object, old)
-			} else {
-				e.line("if (%s != NULL) adamic_release(%s);", old, old)
-			}
-		} else {
-			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
-		}
-		if e.fieldTypesNeeded() {
-			e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, fieldRepresentation(statement.Value))
-		}
-		if converted {
-			e.line("}")
-		}
-		if e.fieldReadinessNeeded(statement.Name) {
-			e.line("adamic_object_set_initialized(%s, %s, %t);", object, cString(statement.Name), !statement.Uninitialized)
-		}
-		if records {
-			e.line("}")
-		}
+		e.writeProperty(statement, object, value)
 		e.end()
 	case ir.Panic:
 		// The program ends here, so nothing it holds needs letting go.
@@ -373,6 +287,98 @@ func (e *emitter) statement(statement ir.Statement) {
 	default:
 		// Lowering only produces statements this switch knows. Reaching this is a compiler bug.
 		panic(fmt.Sprintf("native: no C for %T", statement))
+	}
+}
+
+// writeProperty writes value into object's field, both already evaluated, as object.name = value does:
+// through a checked view, the write is checked and a scalar going into a union slot is boxed.
+func (e *emitter) writeProperty(statement ir.SetProperty, object, value string) {
+	// The object may be undefined where the checker narrowed it away and a call since put it back
+	// (ir.Defined): JavaScript throws at the write, after the value, and so does this.
+	e.line("if (%s == NULL) {", object)
+	e.line("\tstatic const char message[] = %s;", cArray("TypeError: Cannot set properties of undefined (setting '"+statement.Name+"')"))
+	e.line("\tadamic_panic(message, sizeof message - 1);")
+	e.line("}")
+	e.line("adamic_object_check_data_write(%s, %s);", object, cString(statement.Name))
+	records := e.hasRecordStorage()
+	keptValue := value
+	if statement.Value.Type().IsReference() {
+		keptValue = e.keptIn(object, value)
+	}
+	if records {
+		e.line("if (adamic_record_is(%s)) {", object)
+		boxed := keptValue
+		if statement.Value.Type() == ir.Number {
+			boxed = fmt.Sprintf("adamic_box_number(%s)", value)
+		}
+		if statement.Value.Type() == ir.Boolean {
+			boxed = fmt.Sprintf("(%s ? &adamic_box_true : &adamic_box_false)", value)
+		}
+		if statement.Value.Type() == ir.MaybeNumber {
+			boxed = fmt.Sprintf("((%s).present ? adamic_box_number((%s).number) : NULL)", value, value)
+		}
+		if statement.Value.Type() == ir.MaybeBoolean {
+			boxed = fmt.Sprintf("((%s).present ? ((%s).boolean ? &adamic_box_true : &adamic_box_false) : NULL)", value, value)
+		}
+		e.line("adamic_record_set(%s, %s, (adamic_value){.reference = %s});", object, e.recordKey(statement.Name), boxed)
+		e.line("} else {")
+	}
+	slot := e.temporary()
+	cache := ""
+	if e.fieldTypesNeeded() {
+		cache = e.cache()
+	}
+	if e.program.CheckedField(statement.ViewReceiverTypeID, statement.Name) {
+		expected := statement.DeclaredType
+		if expected == "" {
+			expected = map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map", ir.Closure: "function", ir.Union: "unknown"}[statement.Value.Type()]
+			if expected == "" {
+				expected = "unknown"
+			}
+		}
+		e.line("adamic_object_view_write(%s, %s, &%s, %d, %s, %s);", object, cString(statement.Name), cache, fieldRepresentation(statement.Value), cString(expected), cString("<write>."+statement.Name))
+	}
+	if e.fieldTypesNeeded() {
+		e.line("adamic_value *%s = adamic_object_write_field(%s, %s, &%s);", slot, object, cString(statement.Name), cache)
+	} else {
+		e.line("adamic_value *%s = %s;", slot, e.writeFieldSlot(object, statement.Name, statement.Class))
+	}
+	converted := e.program.CheckedField(statement.ViewReceiverTypeID, statement.Name) && statement.Value.Type() <= ir.Boolean
+	if converted {
+		e.line("if (adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] == 10) {", object, object, slot)
+		boxed := fmt.Sprintf("adamic_box_number(%s)", value)
+		if statement.Value.Type() == ir.Boolean {
+			boxed = fmt.Sprintf("(%s ? &adamic_box_true : &adamic_box_false)", value)
+		}
+		e.line("adamic_heap *view_new_value = (adamic_heap *)%s;", boxed)
+		e.line("adamic_release(%s->reference);", slot)
+		e.line("%s->reference = view_new_value;", slot)
+		e.line("} else {")
+	}
+	if statement.Value.Type().IsReference() {
+		// The new reference is taken before the old is let go: they may be the same.
+		old := e.temporary()
+		e.line("void *%s = %s->reference;", old, slot)
+		e.line("%s->reference = %s;", slot, keptValue)
+		if len(e.program.GraphTypes) != 0 {
+			e.dropIn(object, old)
+		} else {
+			e.line("if (%s != NULL) adamic_release(%s);", old, old)
+		}
+	} else {
+		e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
+	}
+	if e.fieldTypesNeeded() {
+		e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, fieldRepresentation(statement.Value))
+	}
+	if converted {
+		e.line("}")
+	}
+	if e.fieldReadinessNeeded(statement.Name) {
+		e.line("adamic_object_set_initialized(%s, %s, %t);", object, cString(statement.Name), !statement.Uninitialized)
+	}
+	if records {
+		e.line("}")
 	}
 }
 

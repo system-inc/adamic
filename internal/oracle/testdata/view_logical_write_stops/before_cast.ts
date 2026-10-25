@@ -1,6 +1,7 @@
-// a-check: refused a logical assignment through a checked view
-// The assignment's function is lowered before the cast that makes count checked, so the refusal
-// waits for lowering to finish rather than ask at the assignment.
+// The assignment's function is lowered before the cast that makes count checked, and its read stops all
+// the same, as before_cast_read.ts's plain read does, where Node prints "number 8".
+// A ruled negative witness (#995z2fa): before_cast_repaired.ts returns 5 in place of 'abc' and agrees with
+// Node.
 interface Root { readonly kind: 'Holder'; }
 interface View extends Root { count: number; }
 function bump(view: View): void {
