@@ -737,7 +737,7 @@ func (f *scanCycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	f.l.result.GraphTypes = map[int]bool{}
 	for node := range graph {
 		if node.proven != nil && !f.weak(node.proven) {
-			f.l.result.GraphTypes[int(node.proven.Id())] = true
+			f.l.result.GraphTypes[f.l.cycleTypeID(node.proven)] = true
 		}
 		if node.cell != 0 {
 			f.l.result.Locals[node.cell-1].GraphCell = true
@@ -1537,7 +1537,7 @@ func (l *lowering) scanSelectProgramMembership(f *scanCycleFinder, modules []*as
 	program.ProgramTypes = ir.SortedMap[int, bool]{}
 	for node := range selected {
 		if node.proven != nil && !f.weak(node.proven) && !f.l.isLibraryType(node.proven, "Promise") {
-			program.ProgramTypes[int(node.proven.Id())] = true
+			program.ProgramTypes[f.l.cycleTypeID(node.proven)] = true
 		}
 		if node.cell != 0 {
 			program.Locals[node.cell-1].ProgramRegion = true
@@ -1661,7 +1661,11 @@ func scanLowerWithOptions(ctx context.Context, program *load.Program, options Op
 }
 
 func scanLowerChecked(program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery bool, ownershipQuery ...bool) (*lowering, error) {
-	lowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1, entry: entry, programPlan: plan, programDiscovery: discovery}
+	return scanLowerCheckedWithCycleTypes(program, typeChecker, entry, plan, discovery, nil, ownershipQuery...)
+}
+
+func scanLowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery bool, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (*lowering, error) {
+	lowering := &lowering{cycleTypes: cycleTypes, program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1, entry: entry, programPlan: plan, programDiscovery: discovery}
 	lowering.result.ProgramRegion = discovery || plan != nil
 	if plan != nil {
 		lowering.result.ProgramTypes = plan.types

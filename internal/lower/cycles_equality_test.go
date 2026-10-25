@@ -4,8 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/microsoft/TypeScript/tsc/shim/ast"
-	"github.com/system-inc/adamic/internal/native"
 	"hash/fnv"
 	"io/fs"
 	"math"
@@ -15,10 +13,12 @@ import (
 	"strings"
 	"sync"
 	"testing"
-	"unsafe"
 
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 var cycleComparisonInputs = sync.OnceValues(func() ([]string, error) {
@@ -83,8 +83,8 @@ func cycleCompareProgram(t *testing.T, path string) {
 			t.Fatal(err)
 		}
 		options := Options{ProgramRegion: region, OwnershipQuery: true}
-		before, scanErr := scanLowerWithOptions(context.Background(), loaded, options)
-		after, indexErr := LowerWithOptions(context.Background(), indexedInput, options)
+		before, scanTypes, scanErr := cycleLowerForComparison(loaded, options, false)
+		after, indexTypes, indexErr := cycleLowerForComparison(indexedInput, options, true)
 		text := func(err error) string {
 			if err == nil {
 				return ""
@@ -98,8 +98,6 @@ func cycleCompareProgram(t *testing.T, path string) {
 		if text(scanErr) != text(indexErr) || cycle(scanRefused) != cycle(indexRefused) {
 			t.Fatalf("cycle equality difference: %s ProgramRegion=%t\nscanning: %s (cycle=%t)\nindexed: %s (cycle=%t)", path, region, text(scanErr), cycle(scanRefused), text(indexErr), cycle(indexRefused))
 		}
-		scanTypes := cycleResolvedTypes(t, loaded, reflect.ValueOf(before))
-		indexTypes := cycleResolvedTypes(t, indexedInput, reflect.ValueOf(after))
 		if difference := cycleFirstDifferenceResolved(reflect.ValueOf(before), reflect.ValueOf(after), "program", scanTypes, indexTypes); difference != "" {
 			t.Fatalf("cycle equality difference: %s ProgramRegion=%t: %s", path, region, difference)
 		}
@@ -112,109 +110,29 @@ func cycleCompareProgram(t *testing.T, path string) {
 
 // Checker IDs are assigned lazily, and indexing changes query order. Compare
 // GraphTypes and ProgramTypes by resolved type and declaration identity, never ID.
-// Inspect existing checker caches without issuing queries that allocate new IDs.
-func cycleResolvedTypes(t *testing.T, program *load.Program, result reflect.Value) map[int]string {
-	t.Helper()
-	checked, release := program.Checker(context.Background(), program.Files()[0])
+func cycleLowerForComparison(program *load.Program, options Options, indexed bool) (*ir.Program, map[int]string, error) {
+	entry := program.Files()[0]
+	checked, release := program.Checker(context.Background(), entry)
 	defer release()
-	wanted := map[int]bool{}
-	var collect func(reflect.Value)
-	collect = func(v reflect.Value) {
-		if !v.IsValid() {
-			return
-		}
-		switch v.Kind() {
-		case reflect.Pointer, reflect.Interface:
-			if !v.IsNil() {
-				collect(v.Elem())
-			}
-		case reflect.Struct:
-			for i := 0; i < v.NumField(); i++ {
-				field := v.Field(i)
-				if !field.CanInterface() {
-					continue
-				}
-				name := v.Type().Field(i).Name
-				if name == "GraphTypes" || name == "ProgramTypes" {
-					if field.Kind() == reflect.Map {
-						for _, key := range field.MapKeys() {
-							wanted[int(key.Int())] = true
-						}
-					} else {
-						for j := 0; j < field.Len(); j++ {
-							wanted[int(field.Index(j).Int())] = true
-						}
-					}
-				} else {
-					collect(field)
-				}
-			}
-		case reflect.Slice, reflect.Array:
-			for i := 0; i < v.Len(); i++ {
-				collect(v.Index(i))
-			}
-		case reflect.Map:
-			for _, key := range v.MapKeys() {
-				collect(v.MapIndex(key))
-			}
-		}
-	}
-	collect(result)
 	types := map[int]*checker.Type{}
-	seen := map[unsafe.Pointer]bool{}
-	typePointer := reflect.TypeOf((*checker.Type)(nil))
-	var visit func(reflect.Value)
-	visit = func(v reflect.Value) {
-		if !v.IsValid() {
-			return
-		}
-		switch v.Kind() {
-		case reflect.Interface:
-			if !v.IsNil() {
-				visit(v.Elem())
-			}
-		case reflect.Pointer:
-			if v.IsNil() {
-				return
-			}
-			// Source nodes and compiler hosts contain no checker-owned type caches.
-			pkg := v.Type().Elem().PkgPath()
-			if pkg != "" && !strings.Contains(pkg, "/internal/checker") && !strings.Contains(pkg, "/internal/core") && !strings.Contains(pkg, "/internal/collections") {
-				return
-			}
-			pointer := v.UnsafePointer()
-			if seen[pointer] {
-				return
-			}
-			seen[pointer] = true
-			if v.Type() == typePointer {
-				proven := (*checker.Type)(pointer)
-				types[int(proven.Id())] = proven
-			}
-			visit(v.Elem())
-		case reflect.Struct:
-			for i := 0; i < v.NumField(); i++ {
-				visit(v.Field(i))
-			}
-		case reflect.Slice, reflect.Array:
-			for i := 0; i < v.Len(); i++ {
-				visit(v.Index(i))
-			}
-		case reflect.Map:
-			iterator := v.MapRange()
-			for iterator.Next() {
-				visit(iterator.Key())
-				visit(iterator.Value())
-			}
-		}
+	lower := scanLowerCheckedWithCycleTypes
+	if indexed {
+		lower = lowerCheckedWithCycleTypes
 	}
-	visit(reflect.ValueOf(checked))
-	resolved := map[int]string{}
-	for id := range wanted {
-		proven, ok := types[id]
-		if !ok {
-			continue
+	var plan *programMembership
+	if options.ProgramRegion {
+		discovery, err := lower(program, checked, entry, nil, true, types)
+		if err != nil {
+			return nil, nil, err
 		}
+		plan = discovery.programPlan
+	}
+	built, err := lower(program, checked, entry, plan, false, types, options.OwnershipQuery)
+	if err != nil {
+		return nil, nil, err
+	}
+	resolved := map[int]string{}
+	for id, proven := range types {
 		identity := checked.TypeToStringEx(proven, nil, checker.TypeFormatFlagsNoTruncation, nil)
 		if symbol := proven.Symbol(); symbol != nil {
 			identity += " symbol=" + ast.SymbolName(symbol)
@@ -224,7 +142,7 @@ func cycleResolvedTypes(t *testing.T, program *load.Program, result reflect.Valu
 		}
 		resolved[id] = identity
 	}
-	return resolved
+	return built.result, resolved, nil
 }
 
 func cycleFirstDifferenceResolved(a, b reflect.Value, path string, scanTypes, indexTypes map[int]string) string {
