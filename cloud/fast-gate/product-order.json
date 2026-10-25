@@ -2030,6 +2030,9 @@
     "internal/worker TestProduct_WorkerWasmTransform": [
       "internal/worker TestProduct_WorkerCompiler"
     ],
+    "internal/worker TestProduct_WorkerJSONTypes": [],
+    "internal/worker TestProduct_WorkerDecodeJSONCorpus": [],
+    "internal/worker TestProduct_WorkerEncodeJSONCorpus": [],
     "internal/worker TestProduct_WorkerComputeCorpus": [
       "internal/worker TestProduct_WorkerCompiler"
     ],
