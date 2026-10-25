@@ -179,7 +179,7 @@ func initializerLocals(source string) []initializerLocal {
 }
 func initializerType(token string) bool {
 	switch token {
-	case "const", "adamic_accessor", "adamic_method_entry", "adamic_environment", "adamic_view_union_value", "adamic_callable_signature", "double", "bool", "void", "size_t", "int64_t", "adamic_value", "adamic_heap", "adamic_string", "adamic_object", "adamic_array", "adamic_typed_array", "adamic_async_promise", "adamic_map", "adamic_closure", "adamic_cell", "adamic_weak", "adamic_region", "adamic_map_iterator", "adamic_maybe_number", "adamic_maybe_boolean", "adamic_method":
+	case "const", "adamic_accessor", "adamic_method_entry", "adamic_environment", "adamic_view_union_value", "adamic_callable_signature", "double", "bool", "void", "size_t", "int64_t", "adamic_value", "adamic_heap", "adamic_string", "adamic_object", "adamic_record", "adamic_record_iterator", "adamic_array", "adamic_typed_array", "adamic_async_promise", "adamic_map", "adamic_closure", "adamic_cell", "adamic_weak", "adamic_region", "adamic_map_iterator", "adamic_maybe_number", "adamic_maybe_boolean", "adamic_method":
 		return true
 	}
 	return false
