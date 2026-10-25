@@ -54,6 +54,10 @@ func (e *emitter) logicalAssignment(expression ir.LogicalAssignment) string {
 	condition := ""
 	if expression.Operator == "??=" {
 		condition = left + " == NULL"
+		if leftType == ir.Union {
+			// A union holds null as its own box, as ?? tests it.
+			condition += " || " + left + " == &adamic_null"
+		}
 		if leftType.IsMaybe() {
 			condition = "!" + left + ".present"
 		} else if !leftType.IsReference() {
