@@ -1,0 +1,9 @@
+// The control for placeholder_reset_refused/parameter.a: the same reset on a let local, whose
+// declaration holds its readiness flag, agrees with Node natively and through JavaScript.
+function clear(given: () => number): void {
+	let callback: () => number = given;
+	console.log(String(callback()));
+	callback = undefined!;
+	console.log('after');
+}
+clear(() => 42);

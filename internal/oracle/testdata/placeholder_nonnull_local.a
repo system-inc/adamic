@@ -1,0 +1,22 @@
+function run(flag: boolean): void {
+    let value: string = undefined!;
+    if (flag) { value = "set" + " first"; } else { value = "other" + " path"; }
+    console.log(value);
+    let fromNull: number = null!;
+    fromNull = 7;
+    console.log(`${fromNull}`);
+}
+run(true);
+run(false);
+
+function resetLocal(): void {
+    let value: string = "initial";
+    value = undefined!;
+    value = "reset" + " local";
+    console.log(value);
+    const reset = (): void => { value = null!; };
+    reset();
+    value = "reset" + " captured";
+    console.log(value);
+}
+resetLocal();
