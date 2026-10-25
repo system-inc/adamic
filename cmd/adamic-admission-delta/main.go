@@ -72,6 +72,7 @@ type report struct {
 	Classification        string             `json:"classification"`
 	Diff                  []program          `json:"diff"`
 	DiffCount             int                `json:"diff_count"`
+	DiffTSUnmatched       []string           `json:"diff_ts_unmatched"`
 	CompileTimeoutSeconds float64            `json:"compile_timeout_seconds"`
 	RuntimeTimeoutSeconds float64            `json:"runtime_timeout_seconds"`
 	Base                  string             `json:"base"`
@@ -100,6 +101,9 @@ func execute(dir string, limit time.Duration, name string, args ...string) obser
 	command.Dir = dir
 	if name == "git" {
 		command.Env = toolchain.GitEnv("TZ=UTC")
+	}
+	if filepath.Base(name) == "npm" {
+		command.Env = toolchain.Env()
 	}
 	if len(args) > 0 && args[0] == "admission-lower" {
 		command.Env = append(os.Environ(), "GOMAXPROCS=1")
@@ -377,7 +381,16 @@ func run(args []string) error {
 			return fmt.Errorf("manifest corpus name diff is reserved for computed revision coverage")
 		}
 	}
-	result.Diff, err = changedPrograms(root, result.Base, result.Head)
+	// Without --manifest no path is a listed program, so every changed .ts is reported as unmatched.
+	listed := map[string]bool{}
+	if *manifestPath != "" {
+		for _, c := range m.Corpora {
+			for _, p := range c.Programs {
+				listed[p.Path] = true
+			}
+		}
+	}
+	result.Diff, result.DiffTSUnmatched, err = changedPrograms(root, result.Base, result.Head, listed)
 	if err != nil {
 		return err
 	}

@@ -6,6 +6,8 @@ import (
 	"os"
 	"path/filepath"
 	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Tools come from cloud/setup.sh's environment. Checkout-local declarations
@@ -17,7 +19,13 @@ func prepareCheckout(tree string) error {
 	} else if err != nil {
 		return err
 	}
-	install := execute(api, 90*time.Second, "npm", "ci", "--ignore-scripts")
+	// npm is the gates' own, found as a build's tools are (ADAMIC_TOOLS, then PATH), since a house box's default PATH
+	// has none (Pupa, #sa5ptyj); execute runs it under toolchain.Env, whose PATH also finds the node it needs.
+	npm, err := toolchain.Path("npm")
+	if err != nil {
+		return fmt.Errorf("provision stage3/api: %w", err)
+	}
+	install := execute(api, 90*time.Second, npm, "ci", "--ignore-scripts")
 	if install.Exit != 0 || install.Error != "" {
 		return fmt.Errorf("provision stage3/api: %s %s", install.Error, install.Stderr)
 	}
