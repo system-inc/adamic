@@ -154,3 +154,33 @@ func TestInitializerChunkOrder(t *testing.T) {
 		t.Fatalf("chunk order output %q Node %q", got, truth)
 	}
 }
+
+func TestInitializerBraceLiteralsCrossChunks(t *testing.T) {
+	t.Parallel()
+	for _, shape := range []struct{ name, declaration, consumer, of string }{
+		{"method-entry", "adamic_method_entry adamic_temporary_brace = {0};", `printf("%d\n", !adamic_temporary_brace.counted && adamic_temporary_brace.code == NULL);`, "adamic_method_entry"},
+		{"value", "adamic_value adamic_temporary_brace = {.number = 7};", `printf("%.0f\n", adamic_temporary_brace.number);`, "adamic_value"},
+	} {
+		t.Run(shape.name, func(t *testing.T) {
+			e := &emitter{indent: 1}
+			var statements []string
+			for range initializerChunkStatements - 1 {
+				statements = append(statements, "(void)0;")
+			}
+			statements = append(statements, shape.declaration, shape.consumer)
+			definitions := e.outlineInitializers([]initializerPart{{module: "brace.a", statements: statements}}, "")
+			source := "#define ADAMIC_CLOSURE_CONVENTION 1\n#include \"adamic.h\"\n#include <stdio.h>\n" + definitions + "int main(void){\n" + e.out.String() + "return 0;\n}\n"
+			binary := filepath.Join(t.TempDir(), "brace")
+			if err := Build(source, binary, Options{Split: true, Sanitize: true}); err != nil {
+				t.Fatal(err)
+			}
+			want := "1\n"
+			if shape.of == "adamic_value" {
+				want = "7\n"
+			}
+			if got := runWithInput(t, "", binary); got != want {
+				t.Fatalf("output %q want %q", got, want)
+			}
+		})
+	}
+}

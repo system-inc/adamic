@@ -23,6 +23,7 @@ type initializerLocal struct {
 	name, of    string
 	start, end  int
 	initialized bool
+	braced      bool
 }
 
 // moduleMain emits the original scopes and statements first. Outlining only moves
@@ -145,6 +146,7 @@ func initializerLocals(source string) []initializerLocal {
 				switch tokens[j+1].text {
 				case "=":
 					local.initialized = true
+					local.braced = j+2 < len(tokens) && tokens[j+2].text == "{"
 					local.end = tokens[j+1].end
 				case ";":
 					local.end = tokens[j+1].end
@@ -177,6 +179,10 @@ func initializerLocals(source string) []initializerLocal {
 	}
 	return locals
 }
+
+// This list recognizes the emitter's local C types. A missing type is not lifted:
+// a cross-chunk use then fails closed as an undeclared name at C compilation.
+// The whole-oracle cap-1 run keeps this hand-maintained list honest.
 func initializerType(token string) bool {
 	switch token {
 	case "const", "adamic_accessor", "adamic_method_entry", "adamic_environment", "adamic_view_union_value", "adamic_callable_signature", "double", "bool", "void", "size_t", "int64_t", "adamic_value", "adamic_heap", "adamic_string", "adamic_object", "adamic_record", "adamic_record_iterator", "adamic_array", "adamic_typed_array", "adamic_async_promise", "adamic_map", "adamic_closure", "adamic_cell", "adamic_weak", "adamic_region", "adamic_map_iterator", "adamic_maybe_number", "adamic_maybe_boolean", "adamic_method":
@@ -293,6 +299,10 @@ func (e *emitter) outlineInitializers(parts []initializerPart, cleanup string) s
 			if local, found := removed[token.start]; found {
 				if local.initialized {
 					body.WriteString("(*" + local.name + ") =")
+					if local.braced {
+						// A brace initializer is valid in a declaration; assignment needs a typed compound literal.
+						body.WriteString(" (" + local.of + ")")
+					}
 				}
 				position = local.end
 				continue
