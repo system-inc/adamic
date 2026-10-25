@@ -2,10 +2,12 @@ package lower
 
 import "github.com/system-inc/adamic/internal/ir"
 
-// checkViewLogicalWrites refuses &&=, ||= and ??= through a checked view. Both emitters read and write a
-// logical assignment's field as its static type says, without the view's check or the boxing a union slot
-// needs, so a number written through a view into a string | number slot is stored as a raw double. It runs
-// once lowering is done, since a cast lowered after the assignment can still make its field checked.
+// checkViewLogicalWrites refuses &&=, ||= and ??= through a checked view where a computed key names the
+// field, or the field is optional. Both emitters read and write a named required field through the view
+// as a plain read and = through it do. A computed key has no checked form to share, since a plain read
+// through the view by one is refused and a plain = isn't lowered, and the checked read has none for an
+// optional field. It runs once lowering is done, since a cast lowered after the assignment can still
+// make its field checked.
 func (l *lowering) checkViewLogicalWrites() error {
 	var refused error
 	visit := func(node any) bool {
@@ -20,6 +22,10 @@ func (l *lowering) checkViewLogicalWrites() error {
 		if !ok {
 			return true
 		}
+		read, isProperty := assignment.Read.(ir.Property)
+		if assignment.Key == nil && isProperty && !read.Absent {
+			return true
+		}
 		names := []string{write.Name}
 		if assignment.Key != nil {
 			names = assignment.KeyNames
@@ -28,7 +34,7 @@ func (l *lowering) checkViewLogicalWrites() error {
 			if l.result.CheckedField(write.ViewReceiverTypeID, name) {
 				// A write without a recorded site is refused all the same, at its read's place or the program's.
 				where := l.result.Source
-				if read, ok := assignment.Read.(ir.Property); ok && read.ViewWhere != "" {
+				if isProperty && read.ViewWhere != "" {
 					where = read.ViewWhere
 				}
 				if write.Site != 0 {

@@ -610,18 +610,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 // the shape that was actually made. A narrowed number checks the declared optional representation.
 func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expression {
 	property.Readiness = sourceExpression(node)
-	property.View = sourceExpression(node)
-	property.ViewWhere = l.program.Where(node)
-	if node.Kind == ast.KindPropertyAccessExpression {
-		property.ViewReceiverTypeID = l.viewReceiverTypeID(l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression))
-	}
-	if symbol := l.checker.GetSymbolAtLocation(node.Name()); symbol != nil {
-		declared := l.checker.GetTypeOfSymbol(symbol)
-		property.ViewTypeID = int(declared.Id())
-		property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
-		property.ViewType = l.checker.TypeToString(declared)
-		property.ViewAllowed = l.viewLiterals(declared)
-	}
+	property = l.viewedField(node, property)
 	field := l.checker.GetSymbolAtLocation(node.Name())
 	if field != nil {
 		for _, declaration := range field.Declarations {
@@ -640,6 +629,24 @@ func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expr
 	if declared, _ := l.representation(l.checker.GetTypeOfSymbol(field)); declared.IsMaybe() && property.Of == declared.Present() {
 		property.Of = declared
 		return fit(property, declared.Present())
+	}
+	return property
+}
+
+// viewedField gives a field read what a checked view of its receiver checks it by. Readiness drops
+// all of it again unless lowering ends with the field checked.
+func (l *lowering) viewedField(node *ast.Node, property ir.Property) ir.Property {
+	property.View = sourceExpression(node)
+	property.ViewWhere = l.program.Where(node)
+	if node.Kind == ast.KindPropertyAccessExpression {
+		property.ViewReceiverTypeID = l.viewReceiverTypeID(l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression))
+	}
+	if symbol := l.checker.GetSymbolAtLocation(node.Name()); symbol != nil {
+		declared := l.checker.GetTypeOfSymbol(symbol)
+		property.ViewTypeID = int(declared.Id())
+		property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
+		property.ViewType = l.checker.TypeToString(declared)
+		property.ViewAllowed = l.viewLiterals(declared)
 	}
 	return property
 }

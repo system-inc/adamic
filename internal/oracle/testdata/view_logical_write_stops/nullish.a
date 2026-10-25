@@ -1,5 +1,5 @@
-// a-check: refused a logical assignment through a checked view
-// ??= through the same view: refused by its form, whether or not this run writes.
+// ??= through the same view reads count whether or not it writes, so it stops at the read as and.a
+// does, where Node prints "string abc".
 interface Root { readonly kind: 'Holder'; }
 interface View extends Root { count: number; }
 function initial(): string | number { return 'abc'; }

@@ -1,11 +1,13 @@
-// a-check: refused a logical assignment through a checked view
-// &&= through a view whose count is a number, over an object that stores count as string | number.
+// The assignment's function is lowered before the cast that makes count checked, and its read stops all
+// the same, as before_cast_read.a's plain read does, where Node prints "number 8".
 interface Root { readonly kind: 'Holder'; }
 interface View extends Root { count: number; }
+function bump(view: View): void {
+	view.count &&= 7;
+}
 function initial(): string | number { return 'abc'; }
 const raw = { kind: 'Holder' as const, count: initial() };
 const base: Root = raw;
-const viewed = base as View;
-viewed.count &&= 7;
+bump(base as View);
 const read: string | number = raw.count;
 console.log(typeof read === 'number' ? `number ${read + 1}` : `string ${read}`);
