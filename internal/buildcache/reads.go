@@ -409,6 +409,12 @@ func entryValue(root, cache string, entry readEntry, depth int, known productMem
 // the entry names the bytes (a test set's, the key) its reader's key stands on, so an upstream settled under several
 // keys with different bytes in one tree still values as its reader recorded. A set the lookup refuses (refusedSet) is
 // never one, and the product is wherever the lookup would find it (existingPlace). Newest stays the fallback.
+//
+// The pass's memo (known) holds each entry's answer, so a pass walks an upstream's sets once for each value its readers
+// recorded, however many readers and their upstreams ask: unheld, each level asked twice (evaluate, then setUpstreams), and a cold
+// tree's settle held the cache's graph lock for minutes with 36 settlers behind it (fafa8955, #xjqwsad). And a pass
+// evaluates at most fallbackBound sets for every fallback in it; past that, each takes the newest, a miss and never
+// another value.
 func entryProduct(root, cache string, entry readEntry, depth int, known productMemo) (found, error) {
 	newest, err := productFor(root, cache, entry.Path, depth, known)
 	if err != nil || newest.key == "" || entry.Value == "" {
@@ -417,14 +423,40 @@ func entryProduct(root, cache string, entry readEntry, depth int, known productM
 	if value, err := productEntryValue(entry.Kind, newest); err != nil || shortValue(value) == entry.Value {
 		return newest, nil
 	}
+	held := entryLookups + entry.Kind + "\x00" + entry.Path + "\x00" + entry.Value
+	if lookup, seen := known[held]; seen {
+		if !lookup.done {
+			// The walk under way met itself, which only a ring does, and refusedSet keeps a ring's sets out: the newest.
+			return newest, nil
+		}
+		return lookup.result, nil
+	}
+	lookup := &productLookup{}
+	known[held] = lookup
+	lookup.result, lookup.done = entryFallback(root, cache, entry, depth, known, newest), true
+	return lookup.result, nil
+}
+
+// entryFallback is entryProduct's walk of entry's upstream's sets for the one that gives the value entry recorded, newest
+// when none does or the pass's fallbackBound is spent.
+func entryFallback(root, cache string, entry readEntry, depth int, known productMemo, newest found) found {
+	fallbacksWalked.Add(1)
 	file, err := loadReads(cache, entry.Path)
 	if err != nil {
-		return newest, nil
+		return newest
+	}
+	walks, ok := known[fallbackWalks]
+	if !ok {
+		walks = &productLookup{}
+		known[fallbackWalks] = walks
 	}
 	components := componentsFor(cache, entry.Path, known)
 	for _, set := range file.Sets {
 		if refusedSet(set, entry.Path, components) != "" {
 			continue
+		}
+		if !spendFallback(entry.Path, walks) {
+			return newest
 		}
 		evaluated, err := evaluate(root, cache, entry.Path, set, depth, known)
 		if err != nil || evaluated.key == newest.key {
@@ -437,10 +469,25 @@ func entryProduct(root, cache string, entry readEntry, depth int, known productM
 		candidate := found{key: evaluated.key, directory: directory}
 		if value, err := productEntryValue(entry.Kind, candidate); err == nil && shortValue(value) == entry.Value {
 			candidate.upstreams = setUpstreams(root, cache, set, depth, known)
-			return candidate, nil
+			return candidate
 		}
 	}
-	return newest, nil
+	return newest
+}
+
+// spendFallback counts one set evaluation of a fallback against the pass's fallbackBound (walks), and says false once
+// the bound is spent, which the build log hears once.
+func spendFallback(nameKey string, walks *productLookup) bool {
+	if walks.walked >= fallbackBound {
+		if !walks.done {
+			walks.done = true
+			note("reads %s: the pass's fallbacks evaluated %d sets, its bound, so every further one takes its upstream's newest", nameKey[:min(12, len(nameKey))], fallbackBound)
+		}
+		return false
+	}
+	walks.walked++
+	fallbackEvaluations.Add(1)
+	return true
 }
 
 // productEntryValue is what a product entry of kind values product by: its bytes, or a test set's, its key.
@@ -982,13 +1029,31 @@ var readProducts sync.Map
 var productsLookedUp atomic.Int64
 
 // A productLookup is one product's answer in a pass; done is false while it is still being looked up, so meeting it
-// again then is a cycle. The pass's entry under readComponents holds its components instead of an answer.
+// again then is a cycle. The pass's entry under readComponents holds its components instead of an answer, and the one
+// under fallbackWalks how many sets the pass's fallbacks evaluated (walked) and whether the bound was said (done).
 type productLookup struct {
 	done       bool
 	result     found
 	err        error
 	components map[string]string
+	walked     int
 }
+
+// entryLookups, a key prefix in a productMemo, holds each product entry's answer in the pass by kind, name key and the
+// value it recorded, and fallbackWalks, a key, the pass's count against fallbackBound. No name key starts with either.
+const (
+	entryLookups  = "\x01"
+	fallbackWalks = "\x02"
+)
+
+// fallbackBound is how many sets one pass's fallbacks evaluate (entryProduct) before every further one takes its
+// upstream's newest, as a reader with no match does. A cold tree settles many readers at once, each valued under the
+// cache's graph lock (recordUnion), so the walk's time is every waiting settler's. A var, so a test can spend it.
+var fallbackBound = 256
+
+// fallbackEvaluations and fallbacksWalked count the sets entryProduct's fallbacks have evaluated in this process and the
+// walks they made: a test asks them.
+var fallbackEvaluations, fallbacksWalked atomic.Int64
 
 // freshLookups, a key in a productMemo, makes its pass look up every product afresh, never through readProducts or into
 // it: what Settle values as it records is valued against the sets it has just recorded, where a product held earlier in
