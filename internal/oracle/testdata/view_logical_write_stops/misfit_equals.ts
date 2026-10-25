@@ -1,4 +1,4 @@
-// misfit.a's write as a plain =, which stops at the checked write.
+// misfit.ts's write as a plain =, which stops at the checked write.
 interface Root { readonly kind: 'Holder'; }
 interface View extends Root { count: number | string; }
 function initial(): number { return 0; }

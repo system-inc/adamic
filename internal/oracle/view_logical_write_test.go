@@ -25,7 +25,9 @@ func init() {
 // operator, a number, a string and a boolean written into a union slot, an assignment lowered before the
 // cast that makes its field checked, and a receiver evaluated once. Mutants: skipping the checked read
 // (viewFieldAt's or checkedViewFieldAt's call) or the checked write (writeProperty's or
-// checkedViewWrite's) in either backend.
+// checkedViewWrite's) in either backend. Each casts through an interface that extends its source with no
+// tag of its own, the downcast .a refuses (#995z2fa), so each is .ts: over a tagged union, the view's
+// checks would be proven away and the checked path never run.
 func TestViewLogicalWritesAgreeWithNode(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/view_logical_write"
@@ -35,7 +37,7 @@ func TestViewLogicalWritesAgreeWithNode(t *testing.T) {
 	}
 	programs := 0
 	for _, entry := range entries {
-		if !strings.HasSuffix(entry.Name(), ".a") {
+		if !strings.HasSuffix(entry.Name(), ".ts") {
 			continue
 		}
 		programs++
@@ -54,15 +56,15 @@ func TestViewLogicalWritesAgreeWithNode(t *testing.T) {
 // twin does, with the same output and exit 70 in both backends: at the checked read, which the ??= that
 // writes nothing makes all the same, or at the checked write of a value that misfits the slot. Node,
 // without the checks, prints. Mutants: skipping the checked read or the checked write in either backend,
-// which runs on past the stop.
+// which runs on past the stop. The lie is the cast's, a downcast .a refuses, so these are .ts.
 func TestViewLogicalWritesStopAsTheirPlainTwinsDo(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/view_logical_write_stops/"
 	for _, pair := range []struct{ logical, plain, stop string }{
-		{"and.a", "read.a", "field read failed: viewed.count is not a number"},
-		{"nullish.a", "read.a", "field read failed: viewed.count is not a number"},
-		{"before_cast.a", "before_cast_read.a", "field read failed: view.count is not a number"},
-		{"misfit.a", "misfit_equals.a", "field read failed: <write>.count is not a string | number"},
+		{"and.ts", "read.ts", "field read failed: viewed.count is not a number"},
+		{"nullish.ts", "read.ts", "field read failed: viewed.count is not a number"},
+		{"before_cast.ts", "before_cast_read.ts", "field read failed: view.count is not a number"},
+		{"misfit.ts", "misfit_equals.ts", "field read failed: <write>.count is not a string | number"},
 	} {
 		t.Run(pair.logical, func(t *testing.T) {
 			t.Parallel()
@@ -100,7 +102,7 @@ func TestViewLogicalWriteWitnessRepairsAgreeWithNode(t *testing.T) {
 	for _, name := range []string{"and", "nullish", "before_cast", "misfit"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			loomViewsDAgrees(t, "internal/oracle/testdata/view_logical_write_stops/"+name+"_repaired.a")
+			loomViewsDAgrees(t, "internal/oracle/testdata/view_logical_write_stops/"+name+"_repaired.ts")
 		})
 	}
 }

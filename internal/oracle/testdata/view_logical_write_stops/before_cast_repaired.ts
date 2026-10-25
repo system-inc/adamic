@@ -1,6 +1,6 @@
 // The assignment's function is lowered before the cast that makes count checked, and its read stops all
-// the same, as before_cast_read.a's plain read does, where Node prints "number 8".
-// A ruled negative witness (#995z2fa): before_cast_repaired.a returns 5 in place of 'abc' and agrees with
+// the same, as before_cast_read.ts's plain read does, where Node prints "number 8".
+// A ruled negative witness (#995z2fa): before_cast_repaired.ts returns 5 in place of 'abc' and agrees with
 // Node.
 interface Root { readonly kind: 'Holder'; }
 interface View extends Root { count: number; }
