@@ -21,11 +21,11 @@ import subprocess
 import sys
 
 corpora = [
-    ("witnesses", ["review/admission-corpus/witnesses/*.a"], []),
-    ("fixtures", ["internal/oracle/testdata/*.a", "internal/load/testdata/0.1/compile/*.ts", "internal/load/testdata/0.1/compile/*/main.ts", "internal/flow/testdata/*.a", "internal/lower/testdata/*.a", "internal/lower/testdata/*/*.a"], []),
+    ("witnesses", ["review/admission-corpus/witnesses/*.a", "review/admission-corpus/witnesses/*.ts"], []),
+    ("fixtures", ["internal/oracle/testdata/*.a", "internal/oracle/testdata/*.ts", "internal/load/testdata/0.1/compile/*.ts", "internal/load/testdata/0.1/compile/*/main.ts", "internal/flow/testdata/*.a", "internal/flow/testdata/*.ts", "internal/lower/testdata/*.a", "internal/lower/testdata/*.ts", "internal/lower/testdata/*/*.a", "internal/lower/testdata/*/*.ts"], []),
     ("gaps", ["stage1/*/gaps/*.ts", "stage1/*/*/gaps/*.ts", "stage1/*/*/gaps/*.a", "stage1/*/gaps/*.a"], []),
-    ("review", ["review/*/*.a", "review/*/*/*.a"], ["review/test-audit/*", "review/admission-corpus/*"]),
-    ("fuzz", ["internal/fuzz/corpus/*.a"], []),
+    ("review", ["review/*/*.a", "review/*/*.ts", "review/*/*/*.a", "review/*/*/*.ts"], ["review/test-audit/*", "review/admission-corpus/*"]),
+    ("fuzz", ["internal/fuzz/corpus/*.a", "internal/fuzz/corpus/*.ts"], []),
 ]
 
 
