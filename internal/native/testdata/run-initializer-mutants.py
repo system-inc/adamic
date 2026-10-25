@@ -12,7 +12,7 @@ mutants = [
  ('inline-helpers','outline.go','const initializerAttribute = " __attribute__((noinline))"','const initializerAttribute = ""','TestInitializerStorageSplit'),
  ('reverse-modules','outline.go','for partIndex, indexes := range modules {','for reverse := range modules {\n partIndex := len(modules)-1-reverse\n indexes := modules[partIndex]','TestInitializerStorageSplit'),
  ('unowned-global','units.go','{{"state.c", state.String()}}','{{"wrong.c", state.String()}}','TestInitializerUnitOwnership'),
- ('reverse-chunks','outline.go','for _, index := range indexes {\n\t\t\tvar arguments []string','for reverse := range indexes {\n index := indexes[len(indexes)-1-reverse]\n var arguments []string','TestInitializerChunkOrder'),
+ ('swap-chunks','outline.go','for _, index := range indexes {\n\t\t\tvar arguments []string','for chunkPosition := range indexes {\n index := indexes[chunkPosition]\n if chunkPosition == 0 && len(indexes)>1 { index=indexes[1] } else if chunkPosition == 1 { index=indexes[0] }\n var arguments []string','TestInitializerChunkOrder'),
  ('early-root-release','outline.go','definitions.WriteString("}\\n\\n")','for _, parameter := range parameters { if types[parameter] == "adamic_array *" { fmt.Fprintf(&definitions, "adamic_release(*%s);\\n", parameter) } }; definitions.WriteString("}\\n\\n")','TestInitializerCrossModuleRoot'),
 ]
 # Global readiness writes are the placement proof; erase only that proof.

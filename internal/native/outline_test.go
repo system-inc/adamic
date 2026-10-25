@@ -135,22 +135,21 @@ func TestInitializerAggregateBuffers(t *testing.T) {
 	}
 }
 
-// Each chunk observes the writes made by the preceding chunk.
+// Every chunk prints its position, so exchanging two chunks changes observable output.
 func TestInitializerChunkOrder(t *testing.T) {
 	t.Parallel()
 	e := &emitter{indent: 1}
-	statements := []string{"double adamic_local_order = 0;"}
+	var statements []string
 	for i := 0; i < 300; i++ {
-		statements = append(statements, fmt.Sprintf("adamic_local_order = adamic_local_order * 0.5 + %d;", i))
+		statements = append(statements, fmt.Sprintf("printf(\"%d\\n\");", i))
 	}
-	statements = append(statements, `printf("%.9f\n", adamic_local_order);`)
 	definitions := e.outlineInitializers([]initializerPart{{module: "order.a", statements: statements}}, "")
 	source := "#include \"adamic.h\"\n#include <stdio.h>\n" + definitions + "int main(void){\n" + e.out.String() + "return 0;\n}\n"
 	binary := filepath.Join(t.TempDir(), "order")
 	if err := Build(source, binary, Options{Split: true, Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
-	truth := runWithInput(t, "", "node", "-e", "let n=0;for(let i=0;i<300;i++)n=n*0.5+i;console.log(n.toFixed(9))")
+	truth := runWithInput(t, "", "node", "-e", "for(let i=0;i<300;i++)console.log(i)")
 	if got := runWithInput(t, "", binary); got != truth {
 		t.Fatalf("chunk order output %q Node %q", got, truth)
 	}
