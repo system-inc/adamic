@@ -232,14 +232,14 @@ func TestAPlaceValuesEveryPathItCoversFirst(t *testing.T) {
 	}
 	content := func(text string) string { return fmt.Sprintf("file false %x", sha256.Sum256([]byte(text))) }
 	for path, want := range map[string]string{
-		member:                             "house place:c-toolchain e6f54567",
-		include:                            "house place:c-toolchain e6f54567",
-		filepath.Join(include, "stdio.h"):  "house place:c-toolchain e6f54567",
-		filepath.Join(include, "x/y.h"):    "house place:c-toolchain e6f54567",
-		both:                               "house place:c-toolchain e6f54567",
-		filepath.Join(aside, "stdio.h"):    "house file bbbb false",
-		filepath.Join(sibling, "x.h"):      content("a sibling's header"),
-		loose:                              "house file cccc false",
+		member:                            "house place:c-toolchain e6f54567",
+		include:                           "house place:c-toolchain e6f54567",
+		filepath.Join(include, "stdio.h"): "house place:c-toolchain e6f54567",
+		filepath.Join(include, "x/y.h"):   "house place:c-toolchain e6f54567",
+		both:                              "house place:c-toolchain e6f54567",
+		filepath.Join(aside, "stdio.h"):   "house file bbbb false",
+		filepath.Join(sibling, "x.h"):     content("a sibling's header"),
+		loose:                             "house file cccc false",
 	} {
 		if got := value(path); got != want {
 			t.Errorf("%s valued %q, want %q", path, got, want)
