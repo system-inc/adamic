@@ -325,6 +325,8 @@ func TestAReadThroughEveryToolsSpellingIsTheRootsRead(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	// A home in no temporary directory, as a builder's isn't: this one is under the test's.
+	facts.temporary = nil
 	if got := facts.classifyPath(filepath.Join(box, ".adamic-tools", header), readAbsent); got.kind != "home" {
 		t.Errorf("with ADAMIC_TOOLS unset, the probe through the link classed %q, want the home's as before", got)
 	}
