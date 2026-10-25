@@ -150,6 +150,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.PhantomMember:
 		return e.phantomMember(expression)
 	case ir.Property:
+		if expression.Object.Type() == ir.Array {
+			return e.nodeArrayProperty(expression)
+		}
 		if expression.View != "" {
 			return e.viewField(expression)
 		}
@@ -231,6 +234,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		return fmt.Sprintf("(%s == NULL)", e.value(expression.Value))
 	case ir.Unwrap:
+		if expression.Proven {
+			return fmt.Sprintf("(%s).%s", e.value(expression.Value), member(expression.Type()))
+		}
 		// The checker narrowed undefined away, but a call since may have put it back (ir.Unwrap).
 		value := e.snapshot(expression.Value.Type(), e.value(expression.Value))
 		e.line("if (!%s.present) {", value)
@@ -652,6 +658,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		separator := e.value(expression.Separator)
 		return e.own(ir.String, fmt.Sprintf("adamic_array_join(%s, %s, %s)", array, separator, joinKind(expression.Element)))
 	case ir.ArrayLiteral:
+		if len(expression.Metadata) != 0 {
+			return e.nodeArrayLiteral(expression)
+		}
 		if spread, ok := e.spreadArray(expression); ok {
 			return spread
 		}

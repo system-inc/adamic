@@ -162,7 +162,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		// while the statement still reads the value, so what the statement owns, the variable takes.
 		e.store(statement.Local, value, e.taken(value))
 		if e.program.Locals[statement.Local].Uninitialized {
-			e.line("%s = true;", e.localReady(statement.Local))
+			e.line("%s = %t;", e.localReady(statement.Local), !statement.Uninitialized)
 		} else if e.program.Locals[statement.Local].NamespaceState {
 			e.line("%s = true;", readyName(statement.Local))
 		}
@@ -293,6 +293,9 @@ func (e *emitter) statement(statement ir.Statement) {
 // writeProperty writes value into object's field, both already evaluated, as object.name = value does:
 // through a checked view, the write is checked and a scalar going into a union slot is boxed.
 func (e *emitter) writeProperty(statement ir.SetProperty, object, value string) {
+	if statement.Object.Type() == ir.Array {
+		object = e.snapshot(ir.Object, "("+object+")->metadata")
+	}
 	// The object may be undefined where the checker narrowed it away and a call since put it back
 	// (ir.Defined): JavaScript throws at the write, after the value, and so does this.
 	e.line("if (%s == NULL) {", object)
@@ -374,8 +377,8 @@ func (e *emitter) writeProperty(statement ir.SetProperty, object, value string) 
 	if converted {
 		e.line("}")
 	}
-	if e.fieldReadinessNeeded(statement.Name) {
-		e.line("adamic_object_set_initialized(%s, %s, %t);", object, cString(statement.Name), !statement.Uninitialized)
+	if e.fieldReadinessNeeded(statement.Name) || e.constructionNeeded() {
+		e.line("adamic_object_set_initialized(%s, %s, %t);", object, cString(statement.Name), !statement.Uninitialized || statement.Unset)
 	}
 	if records {
 		e.line("}")
