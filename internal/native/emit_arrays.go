@@ -238,8 +238,10 @@ func joinKind(element ir.Type) string {
 // comparator declares, once per sort, an adapter from the runtime's comparison to the program's
 // comparator: JavaScript reads its result's sign, and NaN as 0.
 func (e *emitter) comparator(sort ir.ArraySort) string {
-	e.temporaries++
-	name := fmt.Sprintf("adamic_compare_%d", e.temporaries)
+	name, exists := e.sharedDeclaration("adamic_compare", e.functionName(sort.Comparator)+fmt.Sprint(sort.Element))
+	if exists {
+		return name
+	}
 	argument := unslotted(sort.Element, "left."+member(sort.Element)) + ", " + unslotted(sort.Element, "right."+member(sort.Element))
 	if e.program.Functions[sort.Comparator].ArgumentsCount != 0 {
 		argument += ", 2"
@@ -304,13 +306,14 @@ func (e *emitter) constantArray(literal ir.ArrayLiteral) (string, bool) {
 	if len(numbers) < constantNumbers {
 		return "", false
 	}
-	e.temporaries++
-	table := fmt.Sprintf("adamic_numbers_%d", e.temporaries)
 	values := make([]string, len(numbers))
 	for index, number := range numbers {
 		values[index] = cNumber(number)
 	}
-	e.declarations = append(e.declarations, fmt.Sprintf("static const double %s[%d] = {%s};", table, len(numbers), constantList(values)))
+	table, exists := e.sharedDeclaration("adamic_numbers", constantList(values))
+	if !exists {
+		e.declarations = append(e.declarations, fmt.Sprintf("static const double %s[%d] = {%s};", table, len(numbers), constantList(values)))
+	}
 	if flat {
 		array := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%d, false)", len(numbers)))
 		index := e.temporary()
@@ -323,9 +326,10 @@ func (e *emitter) constantArray(literal ir.ArrayLiteral) (string, bool) {
 	for index, length := range lengths {
 		counts[index] = strconv.Itoa(length)
 	}
-	e.temporaries++
-	rows := fmt.Sprintf("adamic_lengths_%d", e.temporaries)
-	e.declarations = append(e.declarations, fmt.Sprintf("static const size_t %s[%d] = {%s};", rows, len(lengths), constantList(counts)))
+	rows, exists := e.sharedDeclaration("adamic_lengths", constantList(counts))
+	if !exists {
+		e.declarations = append(e.declarations, fmt.Sprintf("static const size_t %s[%d] = {%s};", rows, len(lengths), constantList(counts)))
+	}
 	array := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%d, true)", len(lengths)))
 	row, at, column, inner := e.temporary(), e.temporary(), e.temporary(), e.temporary()
 	e.line("for (size_t %s = 0, %s = 0; %s < %d; %s++) {", row, at, row, len(lengths), row)

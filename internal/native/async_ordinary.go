@@ -12,6 +12,7 @@ import (
 // keep the same expression, statement, store and exception emitters as synchronous functions.
 func (e *emitter) asyncFunction(index int) string {
 	function := &e.program.Functions[index]
+	identity := stableName("fn", e.sourceReadable(index), e.functionKey(index, map[int]bool{}))
 	graph := flow.Build(e.program, index)
 	regions := flow.CutAsync(graph)
 	cells := slices.Clone(function.FrameEnvironment)
@@ -27,9 +28,9 @@ func (e *emitter) asyncFunction(index int) string {
 	e.indent = 1
 	e.scopes = [][]string{nil}
 	var out strings.Builder
-	fmt.Fprintf(&out, "typedef struct { adamic_async_frame base; adamic_closure *self; adamic_object *error; size_t count; adamic_cell cells[%d]; } adamic_generated_frame_%d;\n", max(1, len(cells)), index)
-	fmt.Fprintf(&out, "static void adamic_async_children_%d(adamic_async_frame *base, void (*drop)(void *)) {\n adamic_generated_frame_%d *frame = (void *)base; if (frame->self != NULL) drop(frame->self); if (frame->error != NULL) drop(frame->error); adamic_environment_drop_cells(frame->cells, frame->count, drop);\n}\n", index, index)
-	fmt.Fprintf(&out, "static void adamic_async_finish_%d(adamic_generated_frame_%d *frame) {\n adamic_async_forget_cleanup(&frame->base);\n", index, index)
+	fmt.Fprintf(&out, "typedef struct { adamic_async_frame base; adamic_closure *self; adamic_object *error; size_t count; adamic_cell cells[%d]; } adamic_generated_frame_%s;\n", max(1, len(cells)), identity)
+	fmt.Fprintf(&out, "static void adamic_async_children_%s(adamic_async_frame *base, void (*drop)(void *)) {\n adamic_generated_frame_%s *frame = (void *)base; if (frame->self != NULL) drop(frame->self); if (frame->error != NULL) drop(frame->error); adamic_environment_drop_cells(frame->cells, frame->count, drop);\n}\n", identity, identity)
+	fmt.Fprintf(&out, "static void adamic_async_finish_%s(adamic_generated_frame_%s *frame) {\n adamic_async_forget_cleanup(&frame->base);\n", identity, identity)
 	for position, local := range cells {
 		if e.program.Locals[local].IterationCell || (e.program.Locals[local].Type.IsReference() && !e.program.Locals[local].Captured) {
 			if e.asyncBorrows[local] && !e.program.Locals[local].IterationCell {
@@ -41,8 +42,8 @@ func (e *emitter) asyncFunction(index int) string {
 		}
 	}
 	out.WriteString(" void *self = frame->self; frame->self = NULL; if (self != NULL) adamic_release(self); void *error = frame->error; frame->error = NULL; if (error != NULL) adamic_release(error); void *output = frame->base.output; frame->base.output = NULL; adamic_release(output);\n}\n")
-	fmt.Fprintf(&out, "static void adamic_async_abandon_%d(adamic_async_frame *base) { adamic_async_finish_%d((void *)base); }\n", index, index)
-	fmt.Fprintf(&out, "static void adamic_async_resume_%d(adamic_async_frame *base, adamic_value resumed, bool rejected) {\n adamic_generated_frame_%d *frame = (void *)base; adamic_closure *self = frame->self; (void)self; (void)resumed; (void)rejected;\n switch (base->state) {\n", index, index)
+	fmt.Fprintf(&out, "static void adamic_async_abandon_%s(adamic_async_frame *base) { adamic_async_finish_%s((void *)base); }\n", identity, identity)
+	fmt.Fprintf(&out, "static void adamic_async_resume_%s(adamic_async_frame *base, adamic_value resumed, bool rejected) {\n adamic_generated_frame_%s *frame = (void *)base; adamic_closure *self = frame->self; (void)self; (void)resumed; (void)rejected;\n switch (base->state) {\n", identity, identity)
 	// One state names each region entry. Fulfillment and rejection bind before jumping.
 	waits := map[flow.BlockId]*flow.Suspend{}
 	for _, block := range graph.Blocks {
@@ -147,10 +148,10 @@ func (e *emitter) asyncFunction(index int) string {
 				}
 				e.line("adamic_async_settle(base->output, %s, %t, false);", value, refs)
 				e.end()
-				e.line("adamic_async_finish_%d(frame); return;", index)
+				e.line("adamic_async_finish_%s(frame); return;", identity)
 			case *flow.Throw:
 				e.line("adamic_async_settle(base->output, (adamic_value){.reference = frame->error}, true, true);")
-				e.line("adamic_async_finish_%d(frame); return;", index)
+				e.line("adamic_async_finish_%s(frame); return;", identity)
 			case *flow.Unreachable:
 				e.line("adamic_unreachable();")
 			default:
@@ -164,8 +165,8 @@ func (e *emitter) asyncFunction(index int) string {
 	out.WriteString(e.out.String())
 	e.out.Reset()
 	out.WriteString("}\n")
-	fmt.Fprintf(&out, "static %s {\n ADAMIC_CHECK_STACK();\n adamic_generated_frame_%d *frame = adamic_allocate(sizeof *frame, adamic_kind_async_frame);\n memset((char *)frame + sizeof(adamic_heap), 0, sizeof *frame - sizeof(adamic_heap));\n frame->count = %d; adamic_environment_initialize_cells(&frame->base.heap, frame->cells, frame->count);\n adamic_async_promise *output = adamic_async_new(); frame->base.output = adamic_retain(output);\n frame->base.resume = adamic_async_resume_%d; frame->base.children = adamic_async_children_%d;\n", e.signature(index), index, len(cells), index, index)
-	fmt.Fprintf(&out, " adamic_async_register_cleanup(&frame->base, adamic_async_abandon_%d);\n", index)
+	fmt.Fprintf(&out, "static %s {\n ADAMIC_CHECK_STACK();\n adamic_generated_frame_%s *frame = adamic_allocate(sizeof *frame, adamic_kind_async_frame);\n memset((char *)frame + sizeof(adamic_heap), 0, sizeof *frame - sizeof(adamic_heap));\n frame->count = %d; adamic_environment_initialize_cells(&frame->base.heap, frame->cells, frame->count);\n adamic_async_promise *output = adamic_async_new(); frame->base.output = adamic_retain(output);\n frame->base.resume = adamic_async_resume_%s; frame->base.children = adamic_async_children_%s;\n", e.signature(index), identity, len(cells), identity, identity)
+	fmt.Fprintf(&out, " adamic_async_register_cleanup(&frame->base, adamic_async_abandon_%s);\n", identity)
 	if function.Closure {
 		out.WriteString(" frame->self = adamic_retain(self); (void)arguments;\n")
 	}
@@ -203,7 +204,7 @@ func (e *emitter) asyncFunction(index int) string {
 		}
 		fmt.Fprintf(&out, " frame->cells[%d].value.%s = %s; frame->cells[%d].ready = true;\n", e.asyncSlots[local], member(e.program.Locals[local].Type), slotted(e.program.Locals[local].Type, value), e.asyncSlots[local])
 	}
-	fmt.Fprintf(&out, " adamic_async_resume_%d(&frame->base, (adamic_value){.number = 0}, false); adamic_release(frame);\n", index)
+	fmt.Fprintf(&out, " adamic_async_resume_%s(&frame->base, (adamic_value){.number = 0}, false); adamic_release(frame);\n", identity)
 	if function.Closure {
 		out.WriteString(" return (adamic_value){.reference = output};\n}\n")
 	} else {
