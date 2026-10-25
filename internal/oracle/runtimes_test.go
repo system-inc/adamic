@@ -2,11 +2,13 @@ package oracle
 
 import (
 	"fmt"
+	"maps"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"slices"
 	"strings"
+	"sync"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
@@ -104,9 +106,11 @@ func TestRuntimeSetsAreEachUsed(t *testing.T) {
 	}
 }
 
-// An archive's product key holds every part of its runtime cache key, as every machine spells it, and the features and
-// options it was asked with: each moves the key alone (native's TestRuntimeKeyIncludesEveryInput moves the parts with
-// each input), and the compiler and archiver are keyed by their reports. Mutant: a part dropped from runtimeInputs.
+// An archive's product key holds every part of its runtime cache key, as every machine spells it: each moves the key
+// alone (native's TestRuntimeKeyIncludesEveryInput moves the parts with each input), and the compiler and archiver are
+// keyed by their reports. The features and options it was asked with are a test of their own (the next), since each
+// request runs clang over the runtime to list the headers its compile reads, and the two in one test were 39.9 s alone
+// (#8k8yzn0). Mutant: a part dropped from runtimeInputs.
 func TestRuntimeProductKeyHoldsEveryPart(t *testing.T) {
 	t.Parallel()
 	root, err := filepath.Abs(repository)
@@ -134,24 +138,54 @@ func TestRuntimeProductKeyHoldsEveryPart(t *testing.T) {
 	if len(request.Portable) != len(request.Parts)-3 {
 		t.Errorf("the portable parts are %d of the key's %d, want all but the compiler, its version and the archiver", len(request.Portable), len(request.Parts))
 	}
-	// Each feature alone and each option apart from the release build's, against the plain release archive: a set's
-	// key is its features' flags, so these move every set's.
-	keys := map[string]string{buildcache.NameKey(root, runtimeproducts.Inputs(plain(t, native.Options{}))): "the plain release archive"}
-	asks := map[string]native.RuntimeRequest{}
+}
+
+// An archive's product key holds the features and options it was asked with: each feature alone and each option apart
+// from the release build's keys apart from the plain release archive and from every other, and a set's key is its
+// features' flags, so these move every set's. Each request runs clang over the runtime to list the headers its compile
+// reads, so the requests are asked at once and their keys compared once all are in, where one after another they were
+// most of 39.9 s (#8k8yzn0). Mutant: a part dropped from runtimeInputs.
+func TestRuntimeProductKeyHoldsEveryFeatureAndOption(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	asks := map[string]func(t *testing.T) native.RuntimeRequest{
+		"the plain release archive": func(t *testing.T) native.RuntimeRequest { return plain(t, native.Options{}) },
+	}
 	for _, feature := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST", "ADAMIC_CLOSURE_DISCARDS"} {
-		asks["the feature "+feature] = plain(t, native.Options{}, feature)
+		asks["the feature "+feature] = func(t *testing.T) native.RuntimeRequest { return plain(t, native.Options{}, feature) }
 	}
 	for _, option := range runtimeproducts.Variants {
 		if option.Name != "release" && (option.Requires == "" || os.Getenv("WASI_SYSROOT") != "") {
-			asks["the "+option.Name+" options"] = plain(t, option.Options)
+			asks["the "+option.Name+" options"] = func(t *testing.T) native.RuntimeRequest { return plain(t, option.Options) }
 		}
 	}
-	for name, asked := range asks {
-		key := buildcache.NameKey(root, runtimeproducts.Inputs(asked))
-		if other, found := keys[key]; found {
-			t.Errorf("%s and %s share a product key", name, other)
+	var mutex sync.Mutex
+	keys := map[string]string{}
+	// Serial: a group, which returns only once its parallel requests have ended, so the comparison below reads them all.
+	t.Run("requests", func(t *testing.T) {
+		for name, ask := range asks {
+			t.Run(name, func(t *testing.T) {
+				t.Parallel()
+				key := buildcache.NameKey(root, runtimeproducts.Inputs(ask(t)))
+				mutex.Lock()
+				defer mutex.Unlock()
+				keys[name] = key
+			})
 		}
-		keys[key] = name
+	})
+	if t.Failed() {
+		return
+	}
+	names := slices.Sorted(maps.Keys(keys))
+	for index, name := range names {
+		for _, other := range names[index+1:] {
+			if keys[name] == keys[other] {
+				t.Errorf("%s and %s share a product key", name, other)
+			}
+		}
 	}
 }
 
