@@ -1,0 +1,4 @@
+import { make } from './library.a';
+const read = make(4);
+console.log(read().toString());
+console.log((await Promise.resolve(5)).toString());

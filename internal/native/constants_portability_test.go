@@ -24,7 +24,7 @@ func TestConstantPortabilityGCC(t *testing.T) {
 
 func TestLongStringBytesMutant(t *testing.T) {
 	t.Parallel()
-	constantPortabilityMutant(t, "static const unsigned char adamic_bytes_", "static const char adamic_bytes_", "[-Woverflow]", 4200)
+	constantPortabilityMutant(t, "static const unsigned char adamic_string_", "static const char adamic_string_", "[-Woverflow]", 4200)
 }
 
 func TestStaticNumberInitializerMutant(t *testing.T) {
