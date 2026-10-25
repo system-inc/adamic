@@ -218,6 +218,10 @@ type traceFacts struct {
 	root, cache, trace, goRoot, goCache, goModules, goTelemetry, nativeRuntimes, tools, home string
 	roots, caches, temporary, kernel, system, buildLogs                                      []string
 	searched, executables                                                                    map[string]bool
+	// toolsSpellings are the tools root's other spellings (toolsPlaces less the root itself, longest first): a read
+	// through one is the root's read, so a probe under ~/.adamic-tools keys as one under the root whatever home the run
+	// had (#zxq3k08, Node's ruling on shape 4).
+	toolsSpellings []string
 	// ran is every program a process of the run executed, as the trace names it; opened every file a process of it read the
 	// content of, which a case probe may ask about too (caseProbe).
 	ran, opened map[string]bool
@@ -274,6 +278,12 @@ func settleFacts(root, cache, trace string) (*traceFacts, error) {
 		facts.nativeRuntimes = filepath.Join(user, "adamic", "runtime")
 	}
 	facts.home, _ = os.UserHomeDir()
+	for _, spelling := range toolsPlaces(facts.home) {
+		if spelling != facts.tools {
+			facts.toolsSpellings = append(facts.toolsSpellings, spelling)
+		}
+	}
+	sort.Slice(facts.toolsSpellings, func(i, j int) bool { return len(facts.toolsSpellings[i]) > len(facts.toolsSpellings[j]) })
 	// The census log buildcache appends a line to for every product it builds or finds (ADAMIC_BUILD_LOG): its own
 	// bookkeeping, as the trace's journal is, never a product's input (Planner's shape B proof on Cloud, Oct 11: a build
 	// tree's log under the home directory refused two estree products).
@@ -482,6 +492,16 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 			return classed{refusal + "local product", name}
 		}
 		return classed{}
+	}
+	// A path through another spelling of the tools root (the ~/.adamic-tools link) is the root's, read as if named under
+	// it: a probe that missed can't be resolved through the link below, and the home it sits under is the run's, so it
+	// keyed ~/.adamic-tools/... under ahra's home and /home/ahra/.adamic-tools/... absolute under a unit's (the scoped
+	// pair on Golem, Oct 25: the wasm products' sysroot header probes, every set key moved with the home).
+	for _, spelling := range facts.toolsSpellings {
+		if under(name, spelling) {
+			name = facts.tools + strings.TrimPrefix(name, spelling)
+			break
+		}
 	}
 	switch {
 	case under(name, facts.trace) || facts.executables[name] || under(name, traceMarker[:len(traceMarker)-1]) || slices.Contains(facts.buildLogs, name):
