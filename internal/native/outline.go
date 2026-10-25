@@ -146,7 +146,8 @@ func initializerLocals(source string) []initializerLocal {
 				switch tokens[j+1].text {
 				case "=":
 					local.initialized = true
-					local.braced = j+2 < len(tokens) && tokens[j+2].text == "{"
+					// ADAMIC_REGION is also a brace initializer after macro expansion.
+					local.braced = j+2 < len(tokens) && (tokens[j+2].text == "{" || tokens[j+2].text == "ADAMIC_REGION")
 					local.end = tokens[j+1].end
 				case ";":
 					local.end = tokens[j+1].end

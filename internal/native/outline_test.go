@@ -158,6 +158,7 @@ func TestInitializerChunkOrder(t *testing.T) {
 func TestInitializerBraceLiteralsCrossChunks(t *testing.T) {
 	t.Parallel()
 	for _, shape := range []struct{ name, declaration, consumer, of string }{
+		{"region", "adamic_region adamic_temporary_brace = ADAMIC_REGION;", `printf("%d\n", adamic_temporary_brace.blocks == NULL && adamic_temporary_brace.count == 0 && !adamic_temporary_brace.holds_outside);`, "adamic_region"},
 		{"method-entry", "adamic_method_entry adamic_temporary_brace = {0};", `printf("%d\n", !adamic_temporary_brace.counted && adamic_temporary_brace.code == NULL);`, "adamic_method_entry"},
 		{"value", "adamic_value adamic_temporary_brace = {.number = 7};", `printf("%.0f\n", adamic_temporary_brace.number);`, "adamic_value"},
 	} {
