@@ -60,6 +60,9 @@ func workerJSONProduct(t *testing.T, key string, build bool) string {
 		inputs.Files = append(inputs.Files, "internal/worker/testdata/json_"+mode+"/worker.a")
 	}
 	inputs.Files = append(inputs.Files, fixture)
+	if name == "corpus" {
+		inputs.Files = append(inputs.Files, "internal/worker/testdata/json_"+mode+"/cases.a")
+	}
 	request, err := native.RuntimeRequestFor(native.Options{Release: true})
 	if err != nil {
 		t.Fatal(err)

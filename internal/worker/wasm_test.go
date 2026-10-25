@@ -3,6 +3,7 @@ package worker
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"github.com/system-inc/adamic/internal/native"
 	"os"
 	"os/exec"
@@ -167,6 +168,19 @@ func TestWasmPurity(t *testing.T) {
 			entry := filepath.Join(t.TempDir(), "entry.a")
 			write(t, entry, prefix+fixture.source+handler)
 			directory := filepath.Join(t.TempDir(), "refused")
+			if fixture.name == "console" {
+				// Refusal is before the build seam, not a verdict obtained by
+				// compiling C. In particular the accept-console mutant must
+				// fail here without warming an unshipped runtime archive.
+				builds := 0
+				err := BuildWith(entry, directory, Options{Wasm: []string{fixture.selected}, BuildWasm: func(string, string, string, []string) error {
+					builds++
+					return fmt.Errorf("unexpected native build")
+				}})
+				if builds != 0 || err == nil || !strings.Contains(err.Error(), fixture.witness) || !strings.Contains(err.Error(), "fix:") {
+					t.Fatalf("expected refusal before native build: builds=%d err=%v", builds, err)
+				}
+			}
 			command := exec.Command(binary, "worker", entry, "--out", directory, "--wasm", fixture.selected)
 			output, err := command.CombinedOutput()
 			if err == nil || !strings.Contains(string(output), fixture.witness) || !strings.Contains(string(output), "fix:") {

@@ -5,6 +5,263 @@ package worker
 
 import "testing"
 
+func TestWorkerDecodeJSON_000(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 0)
+}
+func TestWorkerDecodeJSON_001(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 1)
+}
+func TestWorkerDecodeJSON_002(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 2)
+}
+func TestWorkerDecodeJSON_003(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 3)
+}
+func TestWorkerDecodeJSON_004(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 4)
+}
+func TestWorkerDecodeJSON_005(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 5)
+}
+func TestWorkerDecodeJSON_006(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 6)
+}
+func TestWorkerDecodeJSON_007(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 7)
+}
+func TestWorkerDecodeJSON_008(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 8)
+}
+func TestWorkerDecodeJSON_009(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 9)
+}
+func TestWorkerDecodeJSON_010(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 10)
+}
+func TestWorkerDecodeJSON_011(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 11)
+}
+func TestWorkerDecodeJSON_012(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 12)
+}
+func TestWorkerDecodeJSON_013(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 13)
+}
+func TestWorkerDecodeJSON_014(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 14)
+}
+func TestWorkerDecodeJSON_015(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 15)
+}
+func TestWorkerDecodeJSON_016(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 16)
+}
+func TestWorkerDecodeJSON_017(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 17)
+}
+func TestWorkerDecodeJSON_018(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 18)
+}
+func TestWorkerDecodeJSON_019(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 19)
+}
+func TestWorkerDecodeJSON_020(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 20)
+}
+func TestWorkerDecodeJSON_021(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 21)
+}
+func TestWorkerDecodeJSON_022(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 22)
+}
+func TestWorkerDecodeJSON_023(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 23)
+}
+func TestWorkerDecodeJSON_024(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 24)
+}
+func TestWorkerDecodeJSON_025(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 25)
+}
+func TestWorkerDecodeJSON_026(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 26)
+}
+func TestWorkerDecodeJSON_027(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 27)
+}
+func TestWorkerDecodeJSON_028(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 28)
+}
+func TestWorkerDecodeJSON_029(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 29)
+}
+func TestWorkerDecodeJSON_030(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 30)
+}
+func TestWorkerDecodeJSON_031(t *testing.T) {
+	t.Parallel()
+	runWorkerDecodeJSONShard(t, 31)
+}
+func TestWorkerEncodeJSON_000(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 0)
+}
+func TestWorkerEncodeJSON_001(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 1)
+}
+func TestWorkerEncodeJSON_002(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 2)
+}
+func TestWorkerEncodeJSON_003(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 3)
+}
+func TestWorkerEncodeJSON_004(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 4)
+}
+func TestWorkerEncodeJSON_005(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 5)
+}
+func TestWorkerEncodeJSON_006(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 6)
+}
+func TestWorkerEncodeJSON_007(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 7)
+}
+func TestWorkerEncodeJSON_008(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 8)
+}
+func TestWorkerEncodeJSON_009(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 9)
+}
+func TestWorkerEncodeJSON_010(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 10)
+}
+func TestWorkerEncodeJSON_011(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 11)
+}
+func TestWorkerEncodeJSON_012(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 12)
+}
+func TestWorkerEncodeJSON_013(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 13)
+}
+func TestWorkerEncodeJSON_014(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 14)
+}
+func TestWorkerEncodeJSON_015(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 15)
+}
+func TestWorkerEncodeJSON_016(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 16)
+}
+func TestWorkerEncodeJSON_017(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 17)
+}
+func TestWorkerEncodeJSON_018(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 18)
+}
+func TestWorkerEncodeJSON_019(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 19)
+}
+func TestWorkerEncodeJSON_020(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 20)
+}
+func TestWorkerEncodeJSON_021(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 21)
+}
+func TestWorkerEncodeJSON_022(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 22)
+}
+func TestWorkerEncodeJSON_023(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 23)
+}
+func TestWorkerEncodeJSON_024(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 24)
+}
+func TestWorkerEncodeJSON_025(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 25)
+}
+func TestWorkerEncodeJSON_026(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 26)
+}
+func TestWorkerEncodeJSON_027(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 27)
+}
+func TestWorkerEncodeJSON_028(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 28)
+}
+func TestWorkerEncodeJSON_029(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 29)
+}
+func TestWorkerEncodeJSON_030(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 30)
+}
+func TestWorkerEncodeJSON_031(t *testing.T) {
+	t.Parallel()
+	runWorkerEncodeJSONShard(t, 31)
+}
+
 // Not parallel: build products share compiler and runtime inputs.
 func TestProduct_WorkerJSON_000(t *testing.T) {
 	runWorkerJSONProductsShard(t, 0)
@@ -211,6 +468,54 @@ func TestWasmWorkerMutants_002(t *testing.T) {
 func TestWasmWorkerMutants_003(t *testing.T) {
 	t.Parallel()
 	runWasmWorkerMutantsShard(t, 3)
+}
+func TestWasmWorkerMutants_004(t *testing.T) {
+	t.Parallel()
+	runWasmWorkerMutantsShard(t, 4)
+}
+func TestWasmWorkerMutants_005(t *testing.T) {
+	t.Parallel()
+	runWasmWorkerMutantsShard(t, 5)
+}
+func TestWasmWorkerMutants_006(t *testing.T) {
+	t.Parallel()
+	runWasmWorkerMutantsShard(t, 6)
+}
+func TestWasmWorkerMutants_007(t *testing.T) {
+	t.Parallel()
+	runWasmWorkerMutantsShard(t, 7)
+}
+func TestWasmWorkerMutants_008(t *testing.T) {
+	t.Parallel()
+	runWasmWorkerMutantsShard(t, 8)
+}
+func TestWasmWorkerMutants_009(t *testing.T) {
+	t.Parallel()
+	runWasmWorkerMutantsShard(t, 9)
+}
+func TestWasmWorkerMutants_010(t *testing.T) {
+	t.Parallel()
+	runWasmWorkerMutantsShard(t, 10)
+}
+func TestWasmWorkerMutants_011(t *testing.T) {
+	t.Parallel()
+	runWasmWorkerMutantsShard(t, 11)
+}
+func TestWasmWorkerMutants_012(t *testing.T) {
+	t.Parallel()
+	runWasmWorkerMutantsShard(t, 12)
+}
+func TestWasmWorkerMutants_013(t *testing.T) {
+	t.Parallel()
+	runWasmWorkerMutantsShard(t, 13)
+}
+func TestWasmWorkerMutants_014(t *testing.T) {
+	t.Parallel()
+	runWasmWorkerMutantsShard(t, 14)
+}
+func TestWasmWorkerMutants_015(t *testing.T) {
+	t.Parallel()
+	runWasmWorkerMutantsShard(t, 15)
 }
 func TestWasmWorkers_000(t *testing.T) {
 	t.Parallel()

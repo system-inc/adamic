@@ -21,8 +21,8 @@ var compilerNames = []string{"clang", "clang++", "cc", "gcc"}
 // (landable-15's markdown list layout, landable-18's malformed events). A version query, buildcache.Tool(name,
 // "--version" or "-v"), passes without a reason.
 var compilerSites = map[string]string{
-	"internal/worker/json_decode_test.go:TestWorkerDecodeJSON": "checks clang is installed; reads native and Worker fixture inputs built ahead by the JSON products",
-	"internal/worker/json_encode_test.go:TestWorkerEncodeJSON": "checks clang is installed; reads native and Worker fixture inputs built ahead by the JSON products",
+	"internal/worker/json_decode_test.go:runWorkerDecodeJSONShard": "checks clang is installed; reads native and Worker fixture inputs built ahead by the JSON products",
+	"internal/worker/json_encode_test.go:runWorkerEncodeJSONShard": "checks clang is installed; reads native and Worker fixture inputs built ahead by the JSON products",
 
 	"internal/oracle/release_stack_test.go:reservationProbe":                                          "compiles the isolated stack constructor probe in a scratch directory, never a product",
 	"internal/fuzz/confirm_test.go:TestFindingReproducesAlone":                                        "names clang as a fixture failure stage; compiles nothing",

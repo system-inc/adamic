@@ -3,16 +3,22 @@ package worker
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
 )
 
-// Not parallel: native corpus and fixture builds share the CLI and are bounded integration work.
-func TestWorkerEncodeJSON(t *testing.T) {
+// Only find prepared products here; every owned case makes fresh backend observations.
+func runWorkerEncodeJSONShard(t *testing.T, shard int) {
+	family := "TestWorkerEncodeJSON"
+	if !workerJSONShardHasCases(family, shard) {
+		return
+	}
 	for _, tool := range []string{"go", "clang", "node"} {
 		if _, err := exec.LookPath(tool); err != nil {
 			t.Fatalf("missing %s: %v", tool, err)
@@ -25,7 +31,7 @@ func TestWorkerEncodeJSON(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	scratch := t.TempDir()
+	jsonTypesPath := ""
 	run := func(name string, args ...string) []byte {
 		t.Helper()
 		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
@@ -35,11 +41,10 @@ func TestWorkerEncodeJSON(t *testing.T) {
 		if name == "node" {
 			for index, arg := range args {
 				if arg == "oracle/node.mjs" && index+1 < len(args) {
-					source := args[index+1]
-					if !filepath.IsAbs(source) {
-						source = filepath.Join(root, source)
+					if jsonTypesPath == "" {
+						jsonTypesPath = jsonTypes(t)
 					}
-					cmd.Env = append(os.Environ(), jsonTypesEnvironment(t, source)...)
+					cmd.Env = append(os.Environ(), "ADAMIC_JSON_TYPES="+jsonTypesPath)
 				}
 			}
 		}
@@ -51,7 +56,6 @@ func TestWorkerEncodeJSON(t *testing.T) {
 		}
 		return stdout.Bytes()
 	}
-	compiler := workerCompilerProduct(t, nil, false)
 	fixtures, err := filepath.Glob(filepath.Join(root, "internal/oracle/testdata/json_encode_*.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -60,6 +64,9 @@ func TestWorkerEncodeJSON(t *testing.T) {
 		t.Fatal("no encodeJson fixtures selected")
 	}
 	for _, fixture := range fixtures {
+		if !workerJSONCaseOwns(family, shard, "fixture/"+filepath.Base(fixture)) {
+			continue
+		}
 		t.Run(filepath.Base(fixture), func(t *testing.T) {
 			directory := t.TempDir()
 			source, err := os.ReadFile(fixture)
@@ -71,6 +78,7 @@ func TestWorkerEncodeJSON(t *testing.T) {
 			generated := filepath.Join(directory, "worker")
 			if strings.HasSuffix(fixture, "_notyet.a") {
 				// The merged encoder includes a refusal fixture alongside successes.
+				compiler := workerCompilerProduct(t, nil, false)
 				for _, args := range [][]string{{"worker", entry, "--out", generated}, {"build", fixture, "-o", filepath.Join(directory, "native")}} {
 					cmd := exec.Command(compiler, args...)
 					cmd.Dir = root
@@ -97,56 +105,107 @@ func TestWorkerEncodeJSON(t *testing.T) {
 			t.Log("native, Node source and generated Worker output identical")
 		})
 	}
-	corpus := filepath.Join(scratch, "corpus.json")
-	witness := filepath.Join(scratch, "stringify.txt")
-	run("node", "internal/worker/json_encode_corpus.mjs", corpus, witness)
+
+	inputs := workerJSONCorpusProduct(t, "encode", false)
 	product := workerJSONProduct(t, "encode/corpus", false)
 	native := filepath.Join(product, "native")
-	expected := run(native, corpus)
-	stringify, err := os.ReadFile(witness)
-	if err != nil {
-		t.Fatal(err)
+	for start := 0; start < 40000; start += 1000 {
+		key := fmt.Sprintf("corpus/%05d", start)
+		if !workerJSONCaseOwns(family, shard, key) {
+			continue
+		}
+		t.Run(key, func(t *testing.T) {
+			corpus := filepath.Join(inputs, fmt.Sprintf("%05d.json", start))
+			offsets := workerJSONBlockOffsets(start)
+			offset := workerJSONOffsetsArgument(offsets)
+			var expected, oracle []byte
+			for _, original := range offsets {
+				part := filepath.Join(inputs, fmt.Sprintf("part-%05d.json", original))
+				position := strconv.Itoa(original)
+				expected = append(expected, run(native, part, position)...)
+				oracle = append(oracle, run("node", "--disable-warning=ExperimentalWarning", "oracle/node.mjs", "internal/worker/testdata/json_encode/native.a", part, position)...)
+			}
+			if !bytes.Equal(expected, oracle) {
+				t.Fatal("native corpus output differs from Node source")
+			}
+			stringify, err := os.ReadFile(filepath.Join(inputs, fmt.Sprintf("%05d.txt", start)))
+			if err != nil || !bytes.Equal(expected, stringify) {
+				t.Fatalf("native encoding differs from JSON.stringify: %v", err)
+			}
+
+			if workerJSONProbe(family, key) {
+				expected = append([]byte("planted wrong case\n"), expected...)
+			}
+			observations := filepath.Join(t.TempDir(), "expected.txt")
+			if err := os.WriteFile(observations, expected, 0600); err != nil {
+				t.Fatal(err)
+			}
+			t.Log(string(run("node", "internal/worker/json_decode_run.mjs", filepath.Join(product, "worker/handler.mjs"), corpus, observations, offset)))
+		})
 	}
-	if !bytes.Equal(expected, stringify) {
-		t.Fatal("native encoding differs from Node JSON.stringify on declared-order values")
-	}
-	oracle := run("node", "--disable-warning=ExperimentalWarning", "oracle/node.mjs", "internal/worker/testdata/json_encode/native.a", corpus)
-	if !bytes.Equal(expected, oracle) {
-		t.Fatal("native corpus output differs from Node source")
-	}
-	observations := filepath.Join(scratch, "expected.txt")
-	if err := os.WriteFile(observations, expected, 0644); err != nil {
-		t.Fatal(err)
-	}
-	generated := filepath.Join(scratch, "worker")
-	if err := os.CopyFS(generated, os.DirFS(filepath.Join(product, "worker"))); err != nil {
-		t.Fatal(err)
-	}
-	t.Log(string(run("node", "internal/worker/json_decode_run.mjs", filepath.Join(generated, "handler.mjs"), corpus, observations)))
-	runtimePath := filepath.Join(generated, "adamic.mjs")
-	original, err := os.ReadFile(runtimePath)
-	if err != nil {
-		t.Fatal(err)
-	}
-	mutants := []struct{ name, before, after string }{
-		{"omit-falsy-optional", "field.optional && value[name] === undefined", "field.optional && !value[name]"},
-		{"reverse-fields", "const entries = [];\n\t\t\t\t\tfor (const field of fields) {", "const entries = [];\n\t\t\t\t\tfor (const field of [...fields].reverse()) {"},
-		{"replace-lone-surrogate", "return JSON.stringify(value);", "return JSON.stringify(typeof value === 'string' ? value.replace(/[\\uD800-\\uDFFF]/g, '\\uFFFD') : value);"},
-		{"write-infinity", "return JSON.stringify(value);", "return typeof value === 'number' && !Number.isFinite(value) ? String(value) : JSON.stringify(value);"},
-	}
-	for _, mutant := range mutants {
+	// Mutants retain all 40,000 potential witnesses and fresh native observations.
+
+	for _, mutant := range workerJSONEncodeMutants {
+		if !workerJSONCaseOwns(family, shard, "mutant/"+mutant.name) {
+			continue
+		}
 		t.Run(mutant.name, func(t *testing.T) {
+			generated := filepath.Join(t.TempDir(), "worker")
+			if err := os.CopyFS(generated, os.DirFS(filepath.Join(product, "worker"))); err != nil {
+				t.Fatal(err)
+			}
+			runtimePath := filepath.Join(generated, "adamic.mjs")
+			original, err := os.ReadFile(runtimePath)
+			if err != nil {
+				t.Fatal(err)
+			}
+
 			if !strings.Contains(string(original), mutant.before) {
 				t.Fatal("mutant target missing")
 			}
 			write(t, runtimePath, strings.ReplaceAll(string(original), mutant.before, mutant.after))
 			t.Cleanup(func() { write(t, runtimePath, string(original)) })
-			command := exec.Command("node", filepath.Join(root, "internal/worker/json_decode_run.mjs"), filepath.Join(generated, "handler.mjs"), corpus, observations)
-			output, err := command.CombinedOutput()
-			if err == nil || !bytes.Contains(output, []byte("native disagreement")) {
-				t.Fatalf("mutant escaped native comparison: %v\n%s", err, output)
+			var output []byte
+			var caught bool
+			// The old comparison also stopped at its first disagreement. Use
+			// bounded blocks so parsing the outer 40,000-text array is not an
+			// expensive shared prelude. An escaped mutant visits every text.
+			starts := workerJSONMutantBlocks()
+			for _, start := range starts {
+				corpus := filepath.Join(inputs, fmt.Sprintf("%05d.json", start))
+				offsets := workerJSONBlockOffsets(start)
+				offset := workerJSONOffsetsArgument(offsets)
+				var expected []byte
+				for _, original := range offsets {
+					part := filepath.Join(inputs, fmt.Sprintf("part-%05d.json", original))
+					expected = append(expected, run(native, part, strconv.Itoa(original))...)
+				}
+				observations := filepath.Join(t.TempDir(), "expected.txt")
+				if err := os.WriteFile(observations, expected, 0600); err != nil {
+					t.Fatal(err)
+				}
+				command := exec.CommandContext(t.Context(), "node", filepath.Join(root, "internal/worker/json_decode_run.mjs"), filepath.Join(generated, "handler.mjs"), corpus, observations, offset)
+				var err error
+				output, err = command.CombinedOutput()
+				if err != nil {
+					if !bytes.Contains(output, []byte("native disagreement")) {
+						t.Fatalf("mutant failed outside its native comparison: %v\n%s", err, output)
+					}
+					caught = true
+					break
+				}
+			}
+			if !caught {
+				t.Fatal("mutant escaped native comparison of all 40,000 texts")
 			}
 			t.Logf("caught %s by native and JSON.stringify corpus comparison", mutant.name)
 		})
 	}
+}
+
+var workerJSONEncodeMutants = []struct{ name, before, after string }{
+	{"omit-falsy-optional", "field.optional && value[name] === undefined", "field.optional && !value[name]"},
+	{"reverse-fields", "const entries = [];\n\t\t\t\t\tfor (const field of fields) {", "const entries = [];\n\t\t\t\t\tfor (const field of [...fields].reverse()) {"},
+	{"replace-lone-surrogate", "return JSON.stringify(value);", "return JSON.stringify(typeof value === 'string' ? value.replace(/[\\uD800-\\uDFFF]/g, '\\uFFFD') : value);"},
+	{"write-infinity", "return JSON.stringify(value);", "return typeof value === 'number' && !Number.isFinite(value) ? String(value) : JSON.stringify(value);"},
 }

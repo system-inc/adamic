@@ -15,7 +15,7 @@ import (
 
 // Products cache builds, never test verdicts. Behavior tests can only find them:
 // even a cold runner must not compile a CLI or runtime inside its unit's clock.
-func findWorkerProduct(t *testing.T, inputs buildcache.Inputs) string {
+func findWorkerProduct(t testing.TB, inputs buildcache.Inputs) string {
 	t.Helper()
 	directory, err := buildcache.Get(inputs, func(string) error {
 		return fmt.Errorf("Worker product %s not built ahead; run TestProduct_Worker tests first", inputs.Name)
