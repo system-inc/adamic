@@ -189,7 +189,7 @@ func TestEnvironmentEscapeStackMutant(t *testing.T) {
 		t.Fatal(err)
 	}
 	source := native.C(program)
-	allocation := regexp.MustCompile(`adamic_environment \*(adamic_temporary_[0-9]+) = adamic_environment_new\(1\);`)
+	allocation := regexp.MustCompile(`adamic_environment \*(adamic_temporary_[A-Za-z0-9_]+) = adamic_environment_new\(1\);`)
 	match := allocation.FindStringSubmatch(source)
 	if len(match) != 2 {
 		t.Fatal("escaping fixture lost its heap allocation")
@@ -199,7 +199,7 @@ func TestEnvironmentEscapeStackMutant(t *testing.T) {
 	source = strings.ReplaceAll(source, "adamic_release("+environment+");", "adamic_environment_end("+environment+");")
 	// Prevent inlining from converting the intended use after return into a
 	// use after scope. This changes no allocation or output in the healthy build.
-	source = strings.ReplaceAll(source, "static adamic_closure * adamic_function_0_make", "static __attribute__((noinline)) adamic_closure * adamic_function_0_make")
+	source = strings.ReplaceAll(source, "static adamic_closure * "+emittedFunctionSymbol(t, source, "make"), "static __attribute__((noinline)) adamic_closure * "+emittedFunctionSymbol(t, source, "make"))
 	binary := filepath.Join(t.TempDir(), "mutant")
 	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
@@ -222,7 +222,7 @@ func TestEnvironmentUnknownCallStackMutant(t *testing.T) {
 		t.Fatal(err)
 	}
 	source := native.C(program)
-	allocation := regexp.MustCompile(`adamic_environment \*(adamic_temporary_[0-9]+) = adamic_environment_new\(1\);`)
+	allocation := regexp.MustCompile(`adamic_environment \*(adamic_temporary_[A-Za-z0-9_]+) = adamic_environment_new\(1\);`)
 	match := allocation.FindStringSubmatch(source)
 	if len(match) != 2 {
 		t.Fatal("escaping fixture lost its heap allocation")
@@ -232,7 +232,7 @@ func TestEnvironmentUnknownCallStackMutant(t *testing.T) {
 	source = strings.ReplaceAll(source, "adamic_release("+environment+");", "adamic_environment_end("+environment+");")
 	// Prevent inlining from converting the intended use after return into a
 	// use after scope. This changes no allocation or output in the healthy build.
-	source = strings.ReplaceAll(source, "static void adamic_function_0_fill", "static __attribute__((noinline)) void adamic_function_0_fill")
+	source = strings.ReplaceAll(source, "static void "+emittedFunctionSymbol(t, source, "fill"), "static __attribute__((noinline)) void "+emittedFunctionSymbol(t, source, "fill"))
 	binary := filepath.Join(t.TempDir(), "mutant")
 	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
@@ -256,7 +256,7 @@ func TestEnvironmentThrowReleaseMutant(t *testing.T) {
 	}
 	source := native.C(program)
 	// Only the exceptional exits lose destruction. Ordinary returns keep it.
-	cleanup := regexp.MustCompile(`adamic_environment_end\(adamic_temporary_[0-9]+\);(\s+return &adamic_string_empty;)`)
+	cleanup := regexp.MustCompile(`adamic_environment_end\(adamic_temporary_[A-Za-z0-9_]+\);(\s+return &adamic_string_empty;)`)
 	if !cleanup.MatchString(source) {
 		t.Fatal("throw fixture has no frame cleanup")
 	}
@@ -383,7 +383,7 @@ func TestEnvironmentRegionThrowReleaseMutant(t *testing.T) {
 		t.Fatal(err)
 	}
 	code := native.C(program)
-	cleanup := regexp.MustCompile(`adamic_region_end\(&adamic_temporary_[0-9]+\);(\s+return &adamic_string_empty;)`)
+	cleanup := regexp.MustCompile(`adamic_region_end\(&adamic_temporary_[A-Za-z0-9_]+\);(\s+return &adamic_string_empty;)`)
 	if !cleanup.MatchString(code) {
 		t.Fatal("region fixture has no exceptional region cleanup")
 	}
