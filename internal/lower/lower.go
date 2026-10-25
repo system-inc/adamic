@@ -94,7 +94,7 @@ func lowerChecked(program *load.Program, typeChecker *checker.Checker, entry *as
 	}
 	lowering.recordExports(entry)
 	for _, module := range modules {
-		body, err := lowering.statements(module.Statements.Nodes)
+		body, err := lowering.moduleStatements(module)
 		if err != nil {
 			return nil, err
 		}
@@ -124,6 +124,13 @@ func lowerChecked(program *load.Program, typeChecker *checker.Checker, entry *as
 			where = lowering.asyncSites[located.Site-1]
 		}
 		return nil, &NotYet{Where: lowering.program.Where(where), What: err.Error()}
+	}
+	if lowering.result.AsyncEntry > 0 {
+		// NormalizeAsync moved module bodies into one scheduler entry. Main now
+		// holds only its generated invocation; retain boundaries of the actual Main.
+		source := ir.SourceIdentity{Module: lowering.modulePath(entry), Declaration: []string{"module"}, Role: "async_module"}
+		lowering.result.Functions[lowering.result.AsyncEntry-1].Source = source
+		lowering.result.MainModules = []ir.MainModule{{Module: source.Module, Statements: len(lowering.result.Main)}}
 	}
 	if err := lowering.findCycles(modules); err != nil {
 		return nil, err
@@ -190,9 +197,10 @@ type lowering struct {
 	// V2 retains exact logical producer types for union member certification.
 	untaggedCallableTargets map[ir.ViewContractID]*checker.Type
 
-	program *load.Program
-	checker *checker.Checker
-	result  *ir.Program
+	program          *load.Program
+	checker          *checker.Checker
+	result           *ir.Program
+	sourceIdentities map[*ast.Node]ir.SourceIdentity
 
 	// cyclicModules keeps unresolved reads checked throughout a cyclic graph.
 	cyclicModules     bool
@@ -284,7 +292,7 @@ type lowering struct {
 	localNodes     map[int]*ast.Node
 	closureRecords []closureRecord
 	classType      *checker.Type
-	classNode      *ast.Node
+	classNode      *ast.Node // The name identifier, declaration.Name(); Parent is the class declaration.
 
 	// typeMapper is what the type parameters of the instantiation being lowered, and of those it's
 	// inside, stand for; instantiated is every class type an instantiation was made for (instantiate.go).

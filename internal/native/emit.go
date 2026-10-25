@@ -81,21 +81,31 @@ func cProgram(program *ir.Program, handler, lines int) string {
 	if program.HasPromises() {
 		builder.WriteString("#include \"async.h\"\n#include <string.h>\n")
 	}
-	for index, value := range program.Strings {
+	seenStrings := map[string]bool{}
+	for _, value := range program.Strings {
+		if seenStrings[value] {
+			continue
+		}
+		seenStrings[value] = true
 		if len(value) <= longestLiteral {
-			fmt.Fprintf(&builder, "static adamic_string adamic_string_%d = ADAMIC_STRING_UNITS(%s, %d);\n", index, cLiteral(value), utf16Units(value))
+			fmt.Fprintf(&builder, "static adamic_string %s = ADAMIC_STRING_UNITS(%s, %d);\n", stringName(value), cLiteral(value), utf16Units(value))
 			continue
 		}
 		// Longer than a C string literal may be under -pedantic: its bytes as an array instead.
-		fmt.Fprintf(&builder, "static const unsigned char adamic_bytes_%d[%d] = {%s};\n", index, len(value), cBytes(value))
-		fmt.Fprintf(&builder, "static adamic_string adamic_string_%d = ADAMIC_STRING_BYTES_UNITS(adamic_bytes_%d, %d, %d);\n", index, index, len(value), utf16Units(value))
+		fmt.Fprintf(&builder, "static const unsigned char %s_bytes[%d] = {%s};\n", stringName(value), len(value), cBytes(value))
+		fmt.Fprintf(&builder, "static adamic_string %s = ADAMIC_STRING_BYTES_UNITS(%s_bytes, %d, %d);\n", stringName(value), stringName(value), len(value), utf16Units(value))
 	}
 	if len(program.Strings) > 0 {
 		builder.WriteString("\n")
 	}
 
-	for _, regex := range program.Regexps {
-		builder.WriteString(regex.Declarations)
+	seenRegexps := map[string]bool{}
+	for index := range program.Regexps {
+		name := emitter.regexName(index)
+		if !seenRegexps[name] {
+			builder.WriteString(emitter.regexDeclarations(index))
+			seenRegexps[name] = true
+		}
 	}
 	globals := false
 	for index, local := range program.Locals {
@@ -104,9 +114,9 @@ func cProgram(program *ir.Program, handler, lines int) string {
 		}
 		globals = true
 		fmt.Fprintf(&builder, "static %s %s = %s;\n", cType(local.Type), emitter.localName(index), zeroInitializer(local.Type))
-		fmt.Fprintf(&builder, "static bool %s = false;\n", readyName(index))
+		fmt.Fprintf(&builder, "static bool %s = false;\n", emitter.readyName(index))
 		if local.Uninitialized {
-			fmt.Fprintf(&builder, "static bool %s_declared = false;\n", readyName(index))
+			fmt.Fprintf(&builder, "static bool %s_declared = false;\n", emitter.readyName(index))
 		}
 	}
 	if globals {
@@ -115,60 +125,68 @@ func cProgram(program *ir.Program, handler, lines int) string {
 
 	// Bodies first: the shapes and field caches they use are found while they're emitted.
 	bodies := strings.Builder{}
+	emittedBodies := map[string]string{}
 	for index, function := range program.Functions {
 		if function.Async {
+			emitter.resetCounters()
 			bodies.WriteString(emitter.asyncFunction(index))
 			continue
 		}
 		for _, inRegion := range emitter.regionVariants(index) {
 			emitter.inRegion = inRegion
-			fmt.Fprintf(&bodies, "static %s {\n", emitter.signature(index))
+			emitter.resetCounters()
+			signature := emitter.signature(index)
 			emitter.indent = 1
 			emitter.functionIndex = index
 			emitter.functionBody(function)
-			bodies.WriteString(emitter.out.String())
+			body := emitter.out.String()
 			emitter.out.Reset()
-			bodies.WriteString("}\n\n")
+			name := emitter.functionName(index)
+			if inRegion {
+				name = emitter.regionFunctionName(index)
+			}
+			definition := "static " + signature + " {\n" + body + "}\n\n"
+			if previous, found := emittedBodies[name]; found {
+				if previous != definition {
+					panic("native: conflicting definitions for stable symbol " + name)
+				}
+			} else {
+				emittedBodies[name] = definition
+				fmt.Fprintf(&bodies, "// adamic-module %q\n", function.Source.Module)
+				bodies.WriteString(definition)
+			}
 		}
 	}
 	emitter.inRegion = false
+	emitter.resetCounters()
+	emitter.indent = 1
+	emitter.asyncMain()
+	statements := emitter.moduleMain()
 	var parts []string
 	if program.HasPromises() {
-		// Promise modules stay in one part because a cut could cross the module frame's suspension.
-		emitter.indent = 1
-		emitter.asyncMain()
-		emitter.block(program.Main, nil)
 		if program.AsyncEntry == 0 {
-			emitter.line("adamic_async_run();")
+			statements = append(statements, "\tadamic_async_run();\n")
 		}
-		parts = []string{emitter.out.String()}
-		emitter.out.Reset()
+		parts = []string{strings.Join(statements, "")}
 	} else {
-		// main's top-level code, one statement at a time, as block emits it, so it can be cut into parts.
-		emitter.indent = 1
-		emitter.scopes = append(emitter.scopes, nil)
-		statements := make([]string, 0, len(program.Main)+1)
-		for index := range program.Main {
-			emitter.statementAt(&program.Main[index])
-			statements = append(statements, emitter.out.String())
-			emitter.out.Reset()
-		}
-		emitter.releaseScopes(len(emitter.scopes) - 1)
-		emitter.scopes = emitter.scopes[:len(emitter.scopes)-1]
-		statements = append(statements, emitter.out.String())
-		emitter.out.Reset()
 		parts = mainParts(statements, lines)
 	}
+	partNames := make([]string, len(parts))
+	definedParts := map[string]bool{}
 	if len(parts) > 1 {
 		for index, part := range parts {
-			fmt.Fprintf(&bodies, "static void adamic_main_%d(void) {\n%s}\n\n", index, part)
+			partNames[index] = stableName("adamic_main", program.Source, program.Source+"/"+part)
+			if !definedParts[partNames[index]] {
+				fmt.Fprintf(&bodies, "static void %s(void) {\n%s}\n\n", partNames[index], part)
+				definedParts[partNames[index]] = true
+			}
 		}
 	}
 	bodies.WriteString("int main(int argc, char **argv) {\n")
 	bodies.WriteString("\tadamic_start(argc, argv);\n")
 	if len(parts) > 1 {
-		for index := range parts {
-			fmt.Fprintf(&bodies, "\tadamic_main_%d();\n", index)
+		for _, name := range partNames {
+			fmt.Fprintf(&bodies, "\t%s();\n", name)
 		}
 	} else {
 		bodies.WriteString(parts[0])
@@ -414,6 +432,8 @@ type emitter struct {
 
 	// temporaries counts the C temporaries made so far, for unique names.
 	temporaries int
+	caches      int
+	mainModule  string
 
 	// owned is the string temporaries the statement being emitted releases when it ends.
 	owned []string
@@ -429,12 +449,15 @@ type emitter struct {
 	breakables []*breakable
 
 	// declarations are file-scope lines the bodies need: object shapes and field caches.
-	declarations []string
+	declarations          []string
+	generatedDeclarations map[string]bool
+	functionNames         map[int]string
+	localNames            map[int]string
 
 	// shapes names each object layout already declared, by its fields.
 	shapes map[string]string
 	// thunks are the methods whose adamic_method is declared (methodThunk).
-	thunks map[int]bool
+	thunks map[string]bool
 
 	// fieldOffsets proves uniform named slots across the program (fields.go).
 	fieldOffsets map[string]int
@@ -464,6 +487,16 @@ func (e *emitter) line(format string, arguments ...any) {
 
 func (e *emitter) temporary() string {
 	e.temporaries++
+	if e.function != nil {
+		owner := e.functionName(e.functionIndex)
+		if e.inRegion {
+			owner = e.regionFunctionName(e.functionIndex)
+		}
+		return fmt.Sprintf("adamic_temporary_%s_%d", stableName("body", "", owner), e.temporaries)
+	}
+	if e.mainModule != "" {
+		return fmt.Sprintf("adamic_temporary_%s_%d", e.mainModule, e.temporaries)
+	}
 	return fmt.Sprintf("adamic_temporary_%d", e.temporaries)
 }
 
@@ -506,4 +539,54 @@ func (e *emitter) shapeChecks() string {
 	}
 	checks.WriteString("#endif\n")
 	return checks.String()
+}
+
+// moduleMain retains one scope and the original initialization order. Module
+// boundaries only change the source of printed names, never cleanup behavior.
+func (e *emitter) moduleMain() []string {
+	var statements []string
+	prefix := len(e.program.Main)
+	for _, module := range e.program.MainModules {
+		prefix -= module.Statements
+	}
+	starts := map[int]string{}
+	if len(e.program.MainModules) > 0 {
+		starts[0] = ""
+	}
+	offset := prefix
+	for _, module := range e.program.MainModules {
+		if module.Statements > 0 {
+			starts[offset] = module.Module
+		}
+		offset += module.Statements
+	}
+	e.scopes = append(e.scopes, nil)
+	for index := range e.program.Main {
+		if module, ok := starts[index]; ok {
+			e.resetCounters()
+			readable := module
+			if len(readable) > 40 {
+				readable = readable[:40]
+			}
+			e.mainModule = stableName("module", readable, module)
+			e.line("// adamic-module %q", module)
+		}
+		e.statementAt(&e.program.Main[index])
+		statements = append(statements, e.out.String())
+		e.out.Reset()
+	}
+	e.releaseScopes(len(e.scopes) - 1)
+	e.scopes = e.scopes[:len(e.scopes)-1]
+	e.mainModule = ""
+	statements = append(statements, e.out.String())
+	e.out.Reset()
+	return statements
+}
+
+// Printed temporary names belong to one emitted body, including region variants.
+// Region facts use those names, so they must end with the same body.
+func (e *emitter) resetCounters() {
+	e.temporaries = 0
+	e.caches = 0
+	e.regionValues = map[string]bool{}
 }
