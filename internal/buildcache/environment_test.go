@@ -172,7 +172,7 @@ func TestASandboxDeclaresWhereToolsAndProductsLive(t *testing.T) {
 	if tools, err := toolsRoot(); err == nil || !strings.Contains(err.Error(), "ADAMIC_TOOLS is unset") {
 		t.Errorf("in a sandbox with no ADAMIC_TOOLS, toolsRoot = %q, %v", tools, err)
 	}
-	if value, err := entryValue(t.TempDir(), t.TempDir(), readEntry{Kind: "tool", Path: "bin/adamic-fake-tool"}, 0, nil); err == nil {
+	if value, err := treeEntryValue(t.TempDir(), t.TempDir(), readEntry{Kind: "tool", Path: "bin/adamic-fake-tool"}); err == nil {
 		t.Errorf("in a sandbox with no ADAMIC_TOOLS, a tool entry valued %q", value)
 	}
 	if cache, err := cacheLocation(); err == nil || !strings.Contains(err.Error(), "ADAMIC_BUILD_CACHE_DIR is unset") {

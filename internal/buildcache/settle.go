@@ -1698,6 +1698,9 @@ var reachBackChecked = func(nameKey string) {}
 // product's component (readComponents), so only what no lookup would use is refused. A set naming a product is checked
 // and written under the cache's graph lock (lockReadsGraph), so two recorded at once never each pass the check before
 // the other's write; one naming none adds no edge, since the union adds only entries nameKey's file already holds.
+//
+// A set pinned to this tree (Pinned) never gives way: a set settled after it reads its product, by its bytes. Each
+// product the recorded set reads is pinned in turn, at the key it was found under (pinReads, #xjqwsad).
 func recordUnion(root, cache, nameKey, name string, set readSet, placing func(key string) string) (readSet, evaluation, string, error) {
 	var evaluated evaluation
 	var product string
@@ -1709,9 +1712,14 @@ func recordUnion(root, cache, nameKey, name string, set readSet, placing func(ke
 		defer unlock()
 	}
 	known := freshMemo(nameKey)
+	tree := pinTree(cache)
 	err := withReads(cache, nameKey, func(file *readsFile) error {
 		var kept []readSet
 		for _, other := range file.Sets {
+			if other.Pinned == tree {
+				kept = append(kept, other)
+				continue
+			}
 			if before, err := evaluate(root, cache, nameKey, other, 0, known); err == nil && len(differing(other, before)) == 0 {
 				set.Entries, set.Lean = sortedEntries(set.Entries, other.Entries), set.Lean && other.Lean
 				continue
@@ -1739,6 +1747,9 @@ func recordUnion(root, cache, nameKey, name string, set readSet, placing func(ke
 		file.Name, file.Sets = name, append([]readSet{set}, kept...)
 		return nil
 	})
+	if err == nil {
+		pinReads(cache, evaluated.products)
+	}
 	return set, evaluated, product, err
 }
 
