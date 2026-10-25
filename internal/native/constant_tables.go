@@ -11,9 +11,14 @@ import (
 // code. Each evaluation still makes an ordinary, independently mutable array with
 // the same capacity and ownership. Reads, calls, spreads and conversions stay on
 // the normal evaluation path; no runtime expression is treated as a constant.
-// Single-element literals keep small edits such as [14].length in their source unit.
+// Functions keep literals smaller than constantNumbers inline, avoiding a call and
+// copy loop on hot paths. Module initialization can use tables from two elements;
+// single-element literals keep edits such as [14].length in their source unit.
 func (e *emitter) constantNumericArray(literal ir.ArrayLiteral) (string, bool) {
 	if literal.Element != ir.Number || literal.Spread != nil || len(literal.Elements) < 2 {
+		return "", false
+	}
+	if e.function != nil && len(literal.Elements) < constantNumbers {
 		return "", false
 	}
 	values := make([]string, len(literal.Elements))

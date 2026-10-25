@@ -284,33 +284,24 @@ func (e *emitter) constantArray(literal ir.ArrayLiteral) (string, bool) {
 	if array, ok := e.constantNumericArray(literal); ok {
 		return array, true
 	}
-	numbers, flat := constantNumbersOf(literal)
-	if literal.ProgramRegion || e.graphTypes(literal.GraphTypes) {
+	// Flat literals rejected above are small function literals or spreads;
+	// the ordinary emitter owns those. This path only packs rows.
+	if literal.ProgramRegion || e.graphTypes(literal.GraphTypes) || !literal.Element.IsReference() || len(literal.Elements) == 0 || slices.Contains(literal.Spread, true) {
 		return "", false
 	}
-	lengths := []int{}
-	if !flat {
-		// A spread of rows would make an array of their elements, which a table of rows can't say. The
-		// checker refuses spreading numbers into an array of arrays; this doesn't lean on that.
-		if !literal.Element.IsReference() || len(literal.Elements) == 0 || slices.Contains(literal.Spread, true) {
+	var numbers []float64
+	var lengths []int
+	for _, element := range literal.Elements {
+		row, ok := element.(ir.ArrayLiteral)
+		if !ok || row.ProgramRegion || e.graphTypes(row.GraphTypes) {
 			return "", false
 		}
-		for _, element := range literal.Elements {
-			row, isLiteral := element.(ir.ArrayLiteral)
-			if !isLiteral {
-				return "", false
-			}
-			// Per-row placement stays with ordinary literal emission.
-			if row.ProgramRegion || e.graphTypes(row.GraphTypes) {
-				return "", false
-			}
-			values, constant := constantNumbersOf(row)
-			if !constant {
-				return "", false
-			}
-			numbers = append(numbers, values...)
-			lengths = append(lengths, len(values))
+		values, ok := constantNumbersOf(row)
+		if !ok {
+			return "", false
 		}
+		numbers = append(numbers, values...)
+		lengths = append(lengths, len(values))
 	}
 	if len(numbers) < constantNumbers {
 		return "", false
@@ -320,14 +311,6 @@ func (e *emitter) constantArray(literal ir.ArrayLiteral) (string, bool) {
 		values[index] = cNumber(number)
 	}
 	table := e.numberTable(values)
-	if flat {
-		array := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%d, false)", len(numbers)))
-		index := e.temporary()
-		e.line("for (size_t %s = 0; %s < %d; %s++) {", index, index, len(numbers), index)
-		e.line("\tadamic_array_push(%s, (adamic_value){.number = %s[%s]});", array, table, index)
-		e.line("}")
-		return array, true
-	}
 	counts := make([]string, len(lengths))
 	for index, length := range lengths {
 		counts[index] = strconv.Itoa(length)

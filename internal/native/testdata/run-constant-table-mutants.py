@@ -4,6 +4,7 @@ import json, os, subprocess, tempfile
 from pathlib import Path
 root=Path(__file__).resolve().parents[3]
 mutants=[
+ ('small-function-table','if e.function != nil && len(literal.Elements) < constantNumbers {','if false && e.function != nil && len(literal.Elements) < constantNumbers {','TestConstantNumbersSmallFunctionsInline'),
  ('shared-template-not-copy','adamic_array *array = adamic_array_new(count, false);\n for (size_t index = 0; index < count; index++) {\n  adamic_array_push(array, (adamic_value){.number = values[index]});\n }\n return array;','static adamic_array template; template.heap.kind = adamic_kind_array; template.length = count; template.capacity = count; template.elements = (adamic_value *)(void *)values; return &template;','TestConstantTablesLoopFreshness'),
  ('number-table-identity','e.sharedDeclaration("adamic_numbers", data)','e.sharedDeclaration("adamic_numbers", "constant")','TestConstantTablesSplitSanitized'),
  ('record-table-identity','e.sharedDeclaration("adamic_record_table", data)','e.sharedDeclaration("adamic_record_table", "constant")','TestConstantTablesSplitSanitized'),

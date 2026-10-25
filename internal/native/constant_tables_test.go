@@ -109,7 +109,8 @@ func TestConstantTablesWholeCounted(t *testing.T) {
 }
 func TestConstantNumbersFreshAndSignedZero(t *testing.T) {
 	t.Parallel()
-	constantTableWitness(t, `function values():number[]{return [1,-0,-2,3];}const a=values();const b=values();a[0]=99;console.log(a.join(',')+':'+b.join(',')+':'+(a===b).toString());console.log((1/(b[1]??1)).toString());console.log([1e400,-1e400,5e-324,1.7976931348623157e308].join(','));`, "static const double adamic_numbers_", true, true)
+	padding := strings.Repeat(",0", constantNumbers-4)
+	constantTableWitness(t, `function values():number[]{return [1,-0,-2,3`+padding+`];}const a=values();const b=values();a[0]=99;console.log(a.join(',')+':'+b.join(',')+':'+(a===b).toString());console.log((1/(b[1]??1)).toString());console.log([1e400,-1e400,5e-324,1.7976931348623157e308].join(','));`, "static const double adamic_numbers_", true, true)
 }
 func TestConstantRecordConstructorsStayBounded(t *testing.T) {
 	t.Parallel()
@@ -252,5 +253,43 @@ func TestConstantDataSharedAcrossPaths(t *testing.T) {
 	declarations := strings.Join(e.declarations, "\n")
 	if strings.Count(declarations, "static const double adamic_numbers_") != 1 || strings.Count(declarations, "static const size_t adamic_lengths_") != 1 {
 		t.Fatal("identical immutable data has multiple names")
+	}
+}
+
+func TestConstantNumbersSmallFunctionsInline(t *testing.T) {
+	t.Parallel()
+	zeros := func(n int) string { return strings.TrimSuffix(strings.Repeat("0,", n), ",") }
+	source := fmt.Sprintf(`function pair():number[]{return [0,0];}function below():number[]{return [%s];}function boundary():number[]{return [%s];}const moduleValues=[7,8];console.log(pair().length.toString()+':'+below().length.toString()+':'+boundary().length.toString()+':'+moduleValues.join(','));`, zeros(constantNumbers-1), zeros(constantNumbers))
+	var program *ir.Program
+	code := constantTableConfiguredWitness(t, source, "adamic_numbers_", true, true, func(p *ir.Program) { program = p })
+	declarations, err := splitDeclarations(code)
+	if err != nil {
+		t.Fatal(err)
+	}
+	names := &emitter{program: program}
+	seen := 0
+	for i, f := range program.Functions {
+		count, check := map[string]int{"pair": 2, "below": constantNumbers - 1, "boundary": constantNumbers}[f.Name]
+		if !check {
+			continue
+		}
+		for _, d := range declarations {
+			if !d.function || d.name != names.functionName(i) {
+				continue
+			}
+			body := code[d.tokens[d.body].end:d.tokens[len(d.tokens)-1].start]
+			templated := strings.Contains(body, "adamic_initialize_number_table_copy_")
+			if count < constantNumbers {
+				if templated || strings.Count(body, "adamic_array_push(") != count {
+					t.Fatalf("%s must use %d inline pushes", f.Name, count)
+				}
+			} else if !templated {
+				t.Fatal("threshold literal lost its template")
+			}
+			seen++
+		}
+	}
+	if seen != 3 {
+		t.Fatalf("checked %d functions, want 3", seen)
 	}
 }
