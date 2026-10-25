@@ -156,6 +156,12 @@ func cycleFirstDifferenceResolved(a, b reflect.Value, path string, scanTypes, in
 		resolve := func(value reflect.Value, types map[int]string) ([]string, error) {
 			var result []string
 			add := func(id int, suffix string) error {
+				// Negative values are deterministic IR allocation-site identities,
+				// not lazily numbered checker types; preserve them exactly.
+				if id < 0 {
+					result = append(result, fmt.Sprintf("allocation-site:%d%s", id, suffix))
+					return nil
+				}
 				identity, ok := types[id]
 				if !ok {
 					return fmt.Errorf("unresolved checker type %d", id)
@@ -255,7 +261,9 @@ func runCycleFinderEqualityShard(t *testing.T, shard uint64) {
 	}
 	for _, path := range paths {
 		if cycleComparisonShard(path) == shard {
-			t.Run(path, func(t *testing.T) { cycleCompareProgram(t, path) })
+			if !t.Run(path, func(t *testing.T) { cycleCompareProgram(t, path) }) {
+				return
+			}
 		}
 	}
 }
