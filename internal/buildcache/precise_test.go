@@ -3938,6 +3938,87 @@ func TestAnOlderSetIsTakenAtTheKeyItEvaluatesToHere(t *testing.T) {
 	}
 }
 
+// pinnedChain settles a chain of products in r's cache, a cold tree's shape (fafa8955, #xjqwsad): each of depth+1
+// levels L0..Ld settles first reading the level below it, at that one's first build, then a top reader T reads Ld's
+// first build, and then every level settles once more, reading include/x.h alone, with other bytes. So every older set
+// is pinned and every product entry above L0 takes the fallback. It returns T's name key and the key T is found under.
+func pinnedChain(t *testing.T, r *rig, depth int) (string, string) {
+	t.Helper()
+	settle := func(nameKey string, entries []readEntry, content string) string {
+		t.Helper()
+		_, evaluated, _, err := recordUnion(r.root, r.cache, nameKey, nameKey[:1], readSet{Entries: entries}, func(key string) string {
+			directory := filepath.Join(r.cache, key)
+			os.MkdirAll(directory, 0o755)
+			os.WriteFile(filepath.Join(directory, "out"), []byte(content), 0o644)
+			return directory
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+		return evaluated.key
+	}
+	level := func(index int) string { return fmt.Sprintf("%064x", index+1) }
+	for index := 0; index <= depth; index++ {
+		entries := []readEntry{{Kind: "content", Path: "source/a.c"}}
+		if index > 0 {
+			entries = append(entries, readEntry{Kind: "product", Path: level(index - 1)})
+		}
+		settle(level(index), entries, fmt.Sprintf("first %d", index))
+	}
+	top := strings.Repeat("e", 64)
+	read := settle(top, []readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: level(depth)}}, "top")
+	for index := 0; index <= depth; index++ {
+		settle(level(index), []readEntry{{Kind: "content", Path: "include/x.h"}}, fmt.Sprintf("later %d", index))
+	}
+	return top, read
+}
+
+// A pass walks each upstream's sets once, however many readers ask (#xjqwsad, Node's must on fafa8955): tree fafa8955's
+// settle held the cache's graph lock for minutes with 36 settlers behind it, since each level of a chain of pinned
+// upstreams was walked twice, once by evaluate and again by setUpstreams, so 2^depth set evaluations. Here a chain ten
+// deep is found under its own key by a lookup evaluating at most two sets a level. Mutant that fails it: entryProduct
+// not holding its answer in the pass (the memo bypassed).
+// Not parallel: newRig, and it sets ADAMIC_BUILD_TRACE.
+func TestAPassWalksEachUpstreamsSetsOnce(t *testing.T) {
+	r := newRig(t)
+	const depth = 10
+	top, read := pinnedChain(t, r, depth)
+	t.Setenv("ADAMIC_BUILD_TRACE", "")
+	forgetHeldForLife()
+	evaluatedBefore, walkedBefore := fallbackEvaluations.Load(), fallbacksWalked.Load()
+	found, err := productFor(r.root, r.cache, top, 0, nil)
+	if err != nil || found.key != read {
+		t.Fatalf("the top reader is found under %q (%v, %s), want %s by every level's first build", found.key, err, found.why, read)
+	}
+	if walked := fallbacksWalked.Load() - walkedBefore; walked > depth+1 {
+		t.Fatalf("one lookup made %d fallback walks over %d levels, want at most one a level", walked, depth+1)
+	}
+	if evaluated := fallbackEvaluations.Load() - evaluatedBefore; evaluated > 2*(depth+1) {
+		t.Fatalf("one lookup's fallbacks evaluated %d sets over %d levels, want at most %d, two a level", evaluated, depth+1, 2*(depth+1))
+	}
+}
+
+// A pass's fallbacks evaluate at most fallbackBound sets, then every further one takes its upstream's newest, a miss and
+// never another value (#xjqwsad, Node's ruling on fafa8955). Mutant that fails it: the bound never spent.
+// Not parallel: newRig, it sets ADAMIC_BUILD_TRACE, and it lowers fallbackBound.
+func TestAPassesFallbacksStopAtTheirBound(t *testing.T) {
+	r := newRig(t)
+	top, read := pinnedChain(t, r, 3)
+	t.Setenv("ADAMIC_BUILD_TRACE", "")
+	original := fallbackBound
+	fallbackBound = 2
+	t.Cleanup(func() { fallbackBound = original })
+	forgetHeldForLife()
+	before := fallbackEvaluations.Load()
+	found, err := productFor(r.root, r.cache, top, 0, nil)
+	if err != nil || found.key == read {
+		t.Fatalf("with the bound spent the top reader is found under %q (%v), valued past the bound", found.key, err)
+	}
+	if evaluated := fallbackEvaluations.Load() - before; evaluated > int64(fallbackBound) {
+		t.Fatalf("one lookup's fallbacks evaluated %d sets, past their bound of %d", evaluated, fallbackBound)
+	}
+}
+
 // Pins are capped (keptPinned): a cache that lives past one tree under one path, adamic's own default one on a
 // developer's machine, keeps the newest keptPinned pinned sets past keptSets, never every pin a reader ever made. The
 // oldest ones go first, and their readers miss and build again, failing closed. Mutant that fails it: the cap dropped.
