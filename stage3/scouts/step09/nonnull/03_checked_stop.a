@@ -1,4 +1,4 @@
-// a-check: refused the non-null assertion !
+// a-check: refused a placeholder reset of a parameter
 // TypeScript 6.0.3 src/compiler/core.ts:1896, the memoize callback reset.
 // Driver isolates the reset without consuming the invalidated callback.
 function clear(callback: () => number): void {

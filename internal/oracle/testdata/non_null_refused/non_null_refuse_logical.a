@@ -1,0 +1,2 @@
+// a-check: refused the non-null assertion !
+let value: number = 1 || undefined!;
