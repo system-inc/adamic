@@ -16,7 +16,11 @@ func (e *emitter) viewUntaggedObjectUnion(property ir.Property, object string) {
 	}
 
 	e.declarations = append(e.declarations, "#include \"view_callables_contract.h\"")
-	name := e.temporary()
+	key := fmt.Sprintf("%#v", e.program.ViewContracts)
+	for _, producer := range e.unionCallableProducers() {
+		key += "/" + e.functionName(producer.Function) + "/" + producer.Signature
+	}
+	name, exists := e.sharedDeclaration("adamic_view_union", key)
 	var declarations strings.Builder
 	declarations.WriteString("#include \"view_unions_untagged.h\"\n")
 	producers := name + "_producers"
@@ -97,7 +101,9 @@ func (e *emitter) viewUntaggedObjectUnion(property ir.Property, object string) {
 		rows = append(rows, fmt.Sprintf("{%d,%d,%t,%s,%d,%s,%d,%s,%d,%d,%s,%s,%d,%t,%d}", kind, contract.Of, contract.Undefined, allowed, len(contract.Allowed), fields, len(contract.Fields), members, len(contract.Members), contract.Element, callable, contractProducers, contractProducerCount, contract.FixedTuple, len(contract.Tuple)))
 	}
 	fmt.Fprintf(&declarations, "static const adamic_view_untagged_contract %s[] = {%s};\n", name, strings.Join(rows, ","))
-	e.declarations = append(e.declarations, declarations.String())
+	if !exists {
+		e.declarations = append(e.declarations, declarations.String())
+	}
 	e.line("(void)adamic_view_untagged_plain_select((const adamic_object *)%s, %s, %d, %d, %s, %s);", object, name, len(rows), property.ViewContract, cString(property.View), cString(property.ViewType))
 }
 

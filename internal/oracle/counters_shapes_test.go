@@ -1,7 +1,6 @@
 package oracle
 
 import (
-	"fmt"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -74,9 +73,9 @@ func TestCounterShapesProofAndFallbacks(t *testing.T) {
 	// Trace actual integer declarations: fractional/nonfinite bounds, bad steps,
 	// and updates crossing 2^53 must execute the original double version.
 	code := native.C(program)
-	for id, local := range program.Locals {
+	for _, local := range program.Locals {
 		if local.Name == "independentInnerCounter" {
-			declaration := fmt.Sprintf("int64_t adamic_local_%d_independentInnerCounter =", id)
+			declaration := "int64_t " + emittedLocalSymbol(t, code, "adamic_local_", "independentInnerCounter") + " ="
 			if strings.Count(code, declaration) != 1 {
 				t.Fatal("independent nested guards duplicated the integer path")
 			}
