@@ -2349,6 +2349,9 @@
       "internal/worker TestProduct_WorkerWasm_006",
       "internal/worker TestProduct_WorkerWasm_007",
       "internal/worker TestProduct_WorkerWasmMutants_004"
+    ],
+    "internal/lower TestProduct_CycleScanningCensus": [
+      "internal/oracle TestProduct_ProgramTscSource"
     ]
   }
 }
