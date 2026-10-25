@@ -198,6 +198,9 @@ type lowering struct {
 	cyclicModules     bool
 	provenModuleReads map[*ast.Node]bool
 
+	// predicateFalse is the false-direction walk's switch and memo (predicate_false_flow.go).
+	predicateFalse *predicateFalseFlow
+
 	// strings indexes result.Strings, so a constant used twice is stored once.
 	strings map[string]int
 
