@@ -279,6 +279,9 @@ func cycleFirstDifferenceResolved(a, b reflect.Value, path string, scanTypes, in
 	}
 	switch a.Kind() {
 	case reflect.Pointer, reflect.Interface:
+		if a.IsNil() && b.IsNil() {
+			return ""
+		}
 		if a.IsNil() || b.IsNil() {
 			return fmt.Sprintf("%s: nil scanning=%t indexed=%t", path, a.IsNil(), b.IsNil())
 		}
@@ -346,7 +349,7 @@ func TestCycleIndexCandidateEdgeEquality(t *testing.T) {
 	scanning := &scanCycleFinder{l: indexed.l, where: indexed.where, shapes: indexed.shapes}
 	target := cycleNode{proven: types["target"]}
 	before, after := scanning.reaches(types["view"], target), indexed.reaches(types["view"], target)
-	if !before || before != after {
+	if !before || cycleFirstDifferenceResolved(reflect.ValueOf(before), reflect.ValueOf(after), "candidate edge", nil, nil) != "" {
 		t.Fatalf("candidate-edge equality: scanning=%t indexed=%t", before, after)
 	}
 }
