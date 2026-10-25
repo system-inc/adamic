@@ -39,7 +39,11 @@ and every program blob. `--manifest-generator-revision <sha>` records an
 explicit generator revision when the generator has not landed at head yet.
 The default still verifies the generator at head. The tool also computes a `diff` corpus from every `.a`
 added or changed between base and head, in any directory, including rename
-destinations. Deleted programs are excluded. JSON always lists `diff` paths and
+destinations, and every changed `.ts` the manifest lists (most `.ts` files are
+modules a program imports, so a `.ts` is a program only where the manifest says
+so). A changed `.ts` it doesn't list, or every one in a `--corpus` run, goes to
+`diff_ts_unmatched` instead, by path, so a new program in an unglobbed directory
+is seen rather than silently skipped. Deleted programs are excluded. JSON always lists `diff` paths and
 blobs and `diff_count`, including an empty list and zero for equal revisions.
 The diff corpus is first; duplicate paths are classified once, while every
 manifest blob is still verified. The name `diff` is reserved for this coverage.

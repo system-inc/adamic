@@ -31,3 +31,24 @@ func TestNodeDeclarationsArePinned(t *testing.T) {
 		t.Fatal("wrong declarations accepted", err)
 	}
 }
+
+// stage3/api is provisioned by the gates' own npm, found as a build's tools are, and a box without one is told so
+// by name. Mutant: execute runs plain "npm" from the caller's PATH again (the sandbox's refusal never appears).
+//
+// Not parallel: t.Setenv sets the process-wide ADAMIC_SANDBOX and ADAMIC_TOOLS.
+func TestProvisioningFindsNpmAsBuildsFindTools(t *testing.T) {
+	tree := t.TempDir()
+	api := filepath.Join(tree, "stage3", "api")
+	if err := os.MkdirAll(api, 0755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(api, "package-lock.json"), []byte("{}\n"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("ADAMIC_SANDBOX", "1")
+	t.Setenv("ADAMIC_TOOLS", t.TempDir())
+	err := prepareCheckout(tree)
+	if err == nil || !strings.Contains(err.Error(), "provision stage3/api: npm: ADAMIC_SANDBOX=1 runs only tools under ADAMIC_TOOLS") {
+		t.Fatalf("provisioning without the gates' npm: %v, want the missing npm named", err)
+	}
+}
