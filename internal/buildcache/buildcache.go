@@ -541,8 +541,12 @@ func places(root string) []place {
 
 // toolsPlaces are the spellings of the tools root portable writes as <tools> (#zxq3k08, Node's ruling): ADAMIC_TOOLS,
 // the root Loom hands every product test and unit, and each place a toolchain is looked for in (Loom's
-// launch.AdamicToolsPlaces: home's adamic-tools and .adamic-tools, and /opt/adamic-tools) that resolves to the same
-// directory, since on the house's boxes ~/.adamic-tools is a link to ~/adamic-tools and a flag can spell either. The
+// launch.AdamicToolsPlaces: home's adamic-tools and .adamic-tools) that resolves to the same directory, since on the
+// house's boxes ~/.adamic-tools is a link to ~/adamic-tools and a flag can spell either. Never /opt/adamic-tools, the
+// last of Loom's places: under a trace a stat of it is a read of a path outside the home and the tree, keyed absolute
+// by whether it's there (classifyPath), so it would move every key that keys a place and split them on a box whose /opt
+// differs (the scoped pair on Golem, Oct 25: 7 read sets gained /opt and /opt/adamic-tools); a box whose root is
+// there names it in ADAMIC_TOOLS itself. The
 // two beside ADAMIC_TOOLS's own directory are asked too, whatever this process's home: a unit whose home moved still
 // reads a flag env.sh spelled under the box user's (#y4kty3d's /home/ahra/.adamic-tools/...). Longest
 // first, ahead of ~, as places sorts them, so a tool under the home is <tools> under every home. With ADAMIC_TOOLS
@@ -573,7 +577,7 @@ func toolsPlacesOf(tools, home string) []string {
 	}
 	found := []string{tools}
 	for _, candidate := range []string{filepath.Join(filepath.Dir(tools), "adamic-tools"), filepath.Join(filepath.Dir(tools), ".adamic-tools"),
-		filepath.Join(home, "adamic-tools"), filepath.Join(home, ".adamic-tools"), "/opt/adamic-tools"} {
+		filepath.Join(home, "adamic-tools"), filepath.Join(home, ".adamic-tools")} {
 		if !slices.Contains(found, candidate) && filepath.IsAbs(candidate) && resolved(candidate) == root {
 			found = append(found, candidate)
 		}
