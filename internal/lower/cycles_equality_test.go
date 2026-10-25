@@ -4,6 +4,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/native"
 	"hash/fnv"
 	"io/fs"
 	"math"
@@ -13,6 +15,7 @@ import (
 	"strings"
 	"sync"
 	"testing"
+	"unsafe"
 
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/load"
@@ -95,21 +98,183 @@ func cycleCompareProgram(t *testing.T, path string) {
 		if text(scanErr) != text(indexErr) || cycle(scanRefused) != cycle(indexRefused) {
 			t.Fatalf("cycle equality difference: %s ProgramRegion=%t\nscanning: %s (cycle=%t)\nindexed: %s (cycle=%t)", path, region, text(scanErr), cycle(scanRefused), text(indexErr), cycle(indexRefused))
 		}
-		if difference := cycleFirstDifference(reflect.ValueOf(before), reflect.ValueOf(after), "program"); difference != "" {
+		scanTypes := cycleResolvedTypes(t, loaded, reflect.ValueOf(before))
+		indexTypes := cycleResolvedTypes(t, indexedInput, reflect.ValueOf(after))
+		if difference := cycleFirstDifferenceResolved(reflect.ValueOf(before), reflect.ValueOf(after), "program", scanTypes, indexTypes); difference != "" {
 			t.Fatalf("cycle equality difference: %s ProgramRegion=%t: %s", path, region, difference)
+		}
+		if scanErr == nil && native.C(before) != native.C(after) {
+			t.Fatalf("cycle equality difference: %s ProgramRegion=%t: emitted C differs", path, region)
 		}
 	}
 	t.Logf("%s: equal scanning/indexed outcomes in ordinary and Program modes", path)
 }
 
-func cycleFirstDifference(a, b reflect.Value, path string) string {
+// Checker IDs are assigned lazily, and indexing changes query order. Compare
+// GraphTypes and ProgramTypes by resolved type and declaration identity, never ID.
+// Inspect existing checker caches without issuing queries that allocate new IDs.
+func cycleResolvedTypes(t *testing.T, program *load.Program, result reflect.Value) map[int]string {
+	t.Helper()
+	checked, release := program.Checker(context.Background(), program.Files()[0])
+	defer release()
+	wanted := map[int]bool{}
+	var collect func(reflect.Value)
+	collect = func(v reflect.Value) {
+		if !v.IsValid() {
+			return
+		}
+		switch v.Kind() {
+		case reflect.Pointer, reflect.Interface:
+			if !v.IsNil() {
+				collect(v.Elem())
+			}
+		case reflect.Struct:
+			for i := 0; i < v.NumField(); i++ {
+				field := v.Field(i)
+				if !field.CanInterface() {
+					continue
+				}
+				name := v.Type().Field(i).Name
+				if name == "GraphTypes" || name == "ProgramTypes" {
+					if field.Kind() == reflect.Map {
+						for _, key := range field.MapKeys() {
+							wanted[int(key.Int())] = true
+						}
+					} else {
+						for j := 0; j < field.Len(); j++ {
+							wanted[int(field.Index(j).Int())] = true
+						}
+					}
+				} else {
+					collect(field)
+				}
+			}
+		case reflect.Slice, reflect.Array:
+			for i := 0; i < v.Len(); i++ {
+				collect(v.Index(i))
+			}
+		case reflect.Map:
+			for _, key := range v.MapKeys() {
+				collect(v.MapIndex(key))
+			}
+		}
+	}
+	collect(result)
+	types := map[int]*checker.Type{}
+	seen := map[unsafe.Pointer]bool{}
+	typePointer := reflect.TypeOf((*checker.Type)(nil))
+	var visit func(reflect.Value)
+	visit = func(v reflect.Value) {
+		if !v.IsValid() {
+			return
+		}
+		switch v.Kind() {
+		case reflect.Interface:
+			if !v.IsNil() {
+				visit(v.Elem())
+			}
+		case reflect.Pointer:
+			if v.IsNil() {
+				return
+			}
+			// Source nodes and compiler hosts contain no checker-owned type caches.
+			pkg := v.Type().Elem().PkgPath()
+			if pkg != "" && !strings.Contains(pkg, "/internal/checker") && !strings.Contains(pkg, "/internal/core") && !strings.Contains(pkg, "/internal/collections") {
+				return
+			}
+			pointer := v.UnsafePointer()
+			if seen[pointer] {
+				return
+			}
+			seen[pointer] = true
+			if v.Type() == typePointer {
+				proven := (*checker.Type)(pointer)
+				types[int(proven.Id())] = proven
+			}
+			visit(v.Elem())
+		case reflect.Struct:
+			for i := 0; i < v.NumField(); i++ {
+				visit(v.Field(i))
+			}
+		case reflect.Slice, reflect.Array:
+			for i := 0; i < v.Len(); i++ {
+				visit(v.Index(i))
+			}
+		case reflect.Map:
+			iterator := v.MapRange()
+			for iterator.Next() {
+				visit(iterator.Key())
+				visit(iterator.Value())
+			}
+		}
+	}
+	visit(reflect.ValueOf(checked))
+	resolved := map[int]string{}
+	for id := range wanted {
+		proven, ok := types[id]
+		if !ok {
+			continue
+		}
+		identity := checked.TypeToStringEx(proven, nil, checker.TypeFormatFlagsNoTruncation, nil)
+		if symbol := proven.Symbol(); symbol != nil {
+			identity += " symbol=" + ast.SymbolName(symbol)
+			for _, declaration := range symbol.Declarations {
+				identity += fmt.Sprintf(" %s:%d:%d", program.Where(declaration), declaration.Pos(), declaration.End())
+			}
+		}
+		resolved[id] = identity
+	}
+	return resolved
+}
+
+func cycleFirstDifferenceResolved(a, b reflect.Value, path string, scanTypes, indexTypes map[int]string) string {
 	if !a.IsValid() || !b.IsValid() {
 		return fmt.Sprintf("%s: validity %t/%t", path, a.IsValid(), b.IsValid())
 	}
 	if a.Type() != b.Type() {
 		return fmt.Sprintf("%s: types %v/%v", path, a.Type(), b.Type())
 	}
-	if a.CanInterface() && b.CanInterface() && reflect.DeepEqual(a.Interface(), b.Interface()) {
+	if strings.HasSuffix(path, ".GraphTypes") || strings.HasSuffix(path, ".ProgramTypes") {
+		resolve := func(value reflect.Value, types map[int]string) ([]string, error) {
+			var result []string
+			add := func(id int, suffix string) error {
+				identity, ok := types[id]
+				if !ok {
+					return fmt.Errorf("unresolved checker type %d", id)
+				}
+				result = append(result, identity+suffix)
+				return nil
+			}
+			if value.Kind() == reflect.Map {
+				for _, key := range value.MapKeys() {
+					if err := add(int(key.Int()), fmt.Sprint("=", value.MapIndex(key).Bool())); err != nil {
+						return nil, err
+					}
+				}
+			} else {
+				for i := 0; i < value.Len(); i++ {
+					if err := add(int(value.Index(i).Int()), ""); err != nil {
+						return nil, err
+					}
+				}
+			}
+			slices.Sort(result)
+			return result, nil
+		}
+		left, err := resolve(a, scanTypes)
+		if err != nil {
+			return path + ": scanning " + err.Error()
+		}
+		right, err := resolve(b, indexTypes)
+		if err != nil {
+			return path + ": indexed " + err.Error()
+		}
+		if !slices.Equal(left, right) {
+			return fmt.Sprintf("%s: scanning=%v indexed=%v", path, left, right)
+		}
+		return ""
+	}
+	if a.Kind() != reflect.Pointer && a.Kind() != reflect.Interface && a.Kind() != reflect.Struct && a.Kind() != reflect.Slice && a.Kind() != reflect.Array && a.Kind() != reflect.Map && a.CanInterface() && b.CanInterface() && reflect.DeepEqual(a.Interface(), b.Interface()) {
 		return ""
 	}
 	switch a.Kind() {
@@ -117,13 +282,13 @@ func cycleFirstDifference(a, b reflect.Value, path string) string {
 		if a.IsNil() || b.IsNil() {
 			return fmt.Sprintf("%s: nil scanning=%t indexed=%t", path, a.IsNil(), b.IsNil())
 		}
-		return cycleFirstDifference(a.Elem(), b.Elem(), path)
+		return cycleFirstDifferenceResolved(a.Elem(), b.Elem(), path, scanTypes, indexTypes)
 	case reflect.Struct:
 		for i := 0; i < a.NumField(); i++ {
 			if !a.Field(i).CanInterface() {
 				continue
 			}
-			if d := cycleFirstDifference(a.Field(i), b.Field(i), path+"."+a.Type().Field(i).Name); d != "" {
+			if d := cycleFirstDifferenceResolved(a.Field(i), b.Field(i), path+"."+a.Type().Field(i).Name, scanTypes, indexTypes); d != "" {
 				return d
 			}
 		}
@@ -132,7 +297,7 @@ func cycleFirstDifference(a, b reflect.Value, path string) string {
 			return fmt.Sprintf("%s: scanning length=%d indexed length=%d", path, a.Len(), b.Len())
 		}
 		for i := 0; i < a.Len(); i++ {
-			if d := cycleFirstDifference(a.Index(i), b.Index(i), fmt.Sprintf("%s[%d]", path, i)); d != "" {
+			if d := cycleFirstDifferenceResolved(a.Index(i), b.Index(i), fmt.Sprintf("%s[%d]", path, i), scanTypes, indexTypes); d != "" {
 				return d
 			}
 		}
@@ -141,7 +306,7 @@ func cycleFirstDifference(a, b reflect.Value, path string) string {
 			return fmt.Sprintf("%s: scanning=%v indexed=%v", path, a.Interface(), b.Interface())
 		}
 		for _, key := range a.MapKeys() {
-			if d := cycleFirstDifference(a.MapIndex(key), b.MapIndex(key), fmt.Sprintf("%s[%v]", path, key)); d != "" {
+			if d := cycleFirstDifferenceResolved(a.MapIndex(key), b.MapIndex(key), fmt.Sprintf("%s[%v]", path, key), scanTypes, indexTypes); d != "" {
 				return d
 			}
 		}
