@@ -24,7 +24,7 @@ func changedPrograms(root, base, head string, programs map[string]bool) ([]progr
 		if path == "" {
 			continue
 		}
-		if strings.HasSuffix(path, ".ts") && !programs[path] {
+		if strings.HasSuffix(path, ".ts") {
 			unmatched = append(unmatched, path)
 			continue
 		}
