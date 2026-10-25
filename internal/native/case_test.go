@@ -3,6 +3,8 @@ package native
 import (
 	"bufio"
 	"context"
+	"crypto/sha256"
+	"fmt"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -12,6 +14,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -223,20 +226,33 @@ var caseAlphabet = []string{
 }
 
 // The code points the points sweep is cut into, by their bounds (first to last, in hexadecimal, both
-// included), three or four planes each. Every code point is one line, and the whole sweep is more
-// than one test should carry alone, so each range is its own top-level test below, and
-// TestCaseMappingPointRangesTile holds the ranges to every code point once and to their tests.
+// included), a plane each where the planes are full of characters and three or four where they are
+// mostly unassigned. Every code point is one line, and the whole sweep is more than one test should
+// carry alone, so each range is its own top-level test below, and TestCaseMappingPointRangesTile
+// holds the ranges to every code point once and to their tests.
 var caseMappingPointRanges = map[string]testUnitRange{
-	"0 to 2FFFF":      {0, 0x30000},
+	"0 to FFFF":       {0, 0x10000},
+	"10000 to 1FFFF":  {0x10000, 0x20000},
+	"20000 to 2FFFF":  {0x20000, 0x30000},
 	"30000 to 5FFFF":  {0x30000, 0x60000},
 	"60000 to 8FFFF":  {0x60000, 0x90000},
 	"90000 to CFFFF":  {0x90000, 0xd0000},
 	"D0000 to 10FFFF": {0xd0000, 0x110000},
 }
 
-func TestCaseMappingMatchesNodePoints0To2FFFF(t *testing.T) {
+func TestCaseMappingMatchesNodePoints0ToFFFF(t *testing.T) {
 	t.Parallel()
-	runCaseMappingPoints(t, "0 to 2FFFF")
+	runCaseMappingPoints(t, "0 to FFFF")
+}
+
+func TestCaseMappingMatchesNodePoints10000To1FFFF(t *testing.T) {
+	t.Parallel()
+	runCaseMappingPoints(t, "10000 to 1FFFF")
+}
+
+func TestCaseMappingMatchesNodePoints20000To2FFFF(t *testing.T) {
+	t.Parallel()
+	runCaseMappingPoints(t, "20000 to 2FFFF")
 }
 
 func TestCaseMappingMatchesNodePoints30000To5FFFF(t *testing.T) {
@@ -280,20 +296,38 @@ func runCaseMappingPoints(t *testing.T, name string) {
 		t.Fatalf("no code point range %q", name)
 	}
 	binary, oracle := caseMappingHarness(t)
+	// The unit's clock starts after the fetch, as a product's build is its own unit's.
+	defer checkGrainBudget(t)()
 	first, last := strconv.Itoa(points.first), strconv.Itoa(points.last)
 	compareStreams(t, points.last-points.first, []string{binary, "points", first, last}, []string{"node", "--eval", oracle, "points", first, last})
 }
 
-// caseMappingHarness builds the harness, which each test of the sweep does for itself, and gives the
-// oracle that enumerates the same strings.
+// caseMappingHarness is the harness every test of the sweep runs, Build's sanitized binary of
+// caseHarness over the alphabet, a product built ahead by TestProduct_CaseMappingProbe, and the oracle
+// that enumerates the same strings. Every test used to build it for itself, a second or more each
+// before its sweep began.
 func caseMappingHarness(t *testing.T) (binary, oracle string) {
 	t.Helper()
 	alphabet := strings.Join(caseAlphabet, ", ")
-	binary = filepath.Join(t.TempDir(), "harness")
-	if err := Build(strings.Replace(caseHarness, "ALPHABET", alphabet, 1), binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
-	return binary, strings.Replace(caseOracle, "ALPHABET", alphabet, 1)
+	source := strings.Replace(caseHarness, "ALPHABET", alphabet, 1)
+	options := Options{Sanitize: true}
+	// Build reads ADAMIC_NATIVE_SPLIT, and the source's bytes, alphabet and all, key it beside the flags.
+	directory := buildcache.Product(t, buildcache.Inputs{
+		Name:      "case-mapping-probe",
+		Files:     []string{"internal/native"},
+		Flags:     append(Flags(options), fmt.Sprintf("source=%x", sha256.Sum256([]byte(source))), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
+		Toolchain: []string{buildcache.Tool("clang", "--version")},
+	}, func(directory string) error {
+		return Build(source, filepath.Join(directory, "harness"), options)
+	})
+	return filepath.Join(directory, "harness"), strings.Replace(caseOracle, "ALPHABET", alphabet, 1)
+}
+
+// TestProduct_CaseMappingProbe builds the harness every case mapping sweep runs, so the tree build
+// builds it ahead.
+func TestProduct_CaseMappingProbe(t *testing.T) {
+	t.Parallel()
+	caseMappingHarness(t)
 }
 
 // compareStreams runs two programs and compares what they write, line by line, as it comes, so a
