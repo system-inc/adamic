@@ -3896,6 +3896,48 @@ func TestAReaderIsNeverValuedThroughASetTheLookupRefuses(t *testing.T) {
 	}
 }
 
+// An older set is taken at the key it evaluates to on this tree, never at the one it stored (#xjqwsad, Node's must on
+// 82d6702c): U's first build reads source/a.c and D reads it; U settles once more, reading include/x.h alone, with
+// other bytes. Then a.c changes. U's newest set still finds the later build, whose bytes aren't D's, and U's first set
+// now evaluates to a key with no product under it, so D misses: its upstream changed. Taken at its stored key, the first
+// set would hand D its old bytes. Mutant that fails it: entryProduct taking the set at set.Key.
+// Not parallel: newRig, and it sets ADAMIC_BUILD_TRACE.
+func TestAnOlderSetIsTakenAtTheKeyItEvaluatesToHere(t *testing.T) {
+	r := newRig(t)
+	built, reader := strings.Repeat("a", 64), strings.Repeat("d", 64)
+	settle := func(nameKey string, entries []readEntry, content string) string {
+		t.Helper()
+		_, evaluated, _, err := recordUnion(r.root, r.cache, nameKey, nameKey[:1], readSet{Entries: entries}, func(key string) string {
+			directory := filepath.Join(r.cache, key)
+			os.MkdirAll(directory, 0o755)
+			os.WriteFile(filepath.Join(directory, "out"), []byte(content), 0o644)
+			return directory
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+		return evaluated.key
+	}
+	first := settle(built, []readEntry{{Kind: "content", Path: "source/a.c"}}, "first")
+	read := settle(reader, []readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: built}}, "reader")
+	later := settle(built, []readEntry{{Kind: "content", Path: "include/x.h"}}, "later")
+	t.Setenv("ADAMIC_BUILD_TRACE", "")
+	forgetHeldForLife()
+	if found, err := productFor(r.root, r.cache, reader, 0, nil); err != nil || found.key != read {
+		t.Fatalf("before a.c changes the reader is found under %q (%v, %s), want %s by U's first build", found.key, err, found.why, read)
+	}
+	write(t, r.root, "source/a.c", "int a = 2;\n")
+	gitIn(t, r.root, "commit", "-q", "-am", "a.c changes")
+	forgetTracked()
+	forgetHeldForLife()
+	if found, err := productFor(r.root, r.cache, built, 0, nil); err != nil || found.key != later {
+		t.Fatalf("after a.c changes U is found under %q (%v, %s), want its later build %s", found.key, err, found.why, later)
+	}
+	if found, err := productFor(r.root, r.cache, reader, 0, nil); err != nil || found.key == read {
+		t.Fatalf("after a.c changes the reader is found under %q (%v), valued by U's first build %s at its stored key", found.key, err, first)
+	}
+}
+
 // Pins are capped (keptPinned): a cache that lives past one tree under one path, adamic's own default one on a
 // developer's machine, keeps the newest keptPinned pinned sets past keptSets, never every pin a reader ever made. The
 // oldest ones go first, and their readers miss and build again, failing closed. Mutant that fails it: the cap dropped.
