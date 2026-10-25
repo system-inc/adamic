@@ -89,6 +89,16 @@ func (l *lowering) checkedPredicateDirections(call *ast.CallExpression, claim *c
 			if binary.OperatorToken.Kind == ast.KindBarBarToken && conditionNarrows(binary.Left, false) {
 				directions |= predicateFalse
 			}
+		case ast.KindSwitchStatement:
+			// Under switch (true), every case clause's false branch reaches the clauses after it.
+			statement := node.AsSwitchStatement()
+			if ast.SkipParentheses(statement.Expression).Kind == ast.KindTrueKeyword {
+				for _, clause := range statement.CaseBlock.AsCaseBlock().Clauses.Nodes {
+					if clause.Kind == ast.KindCaseClause && conditionNarrows(clause.Expression(), false) {
+						directions |= predicateFalse
+					}
+				}
+			}
 		}
 		if conditionNarrows(condition, true) || conditionNarrows(condition, false) {
 			directions |= predicateFalse
@@ -98,6 +108,98 @@ func (l *lowering) checkedPredicateDirections(call *ast.CallExpression, claim *c
 	}
 	ast.GetSourceFileOfNode(call.AsNode()).AsNode().ForEachChild(visit)
 	return directions
+}
+
+// checkedPredicateUnclassifiedUse names where the call's result goes when the direction walk
+// can't say what the checker narrows there, "" when it can. Climbing through what the checker's
+// narrowType reads through (parentheses, !, && and ||, a comparison with a boolean literal, an
+// assignment's or a comma's right side), it stops at the first other parent. A condition the walk
+// reads, a const alias, or a discarded value is read. Any other parent is a value the walk reads
+// no direction from, so it must not stand in a condition or an alias, and must be one the checker
+// narrows nothing by; anything else is named, so an unread narrowing stops as NotYet instead of
+// going unchecked.
+func (l *lowering) checkedPredicateUnclassifiedUse(call *ast.CallExpression) string {
+	// A function whose returns the checker infers a predicate from narrows its callers by this
+	// result, and a call of an inferred predicate is never checked.
+	if function := ast.GetContainingFunction(call.AsNode()); function != nil && function.Type() == nil {
+		if signature := l.checker.GetSignatureFromDeclaration(function); signature != nil && predicateOfSignature(l.checker, signature) != nil {
+			return "returned from a function the checker infers a type predicate for"
+		}
+	}
+	node, parent := call.AsNode(), call.AsNode().Parent
+	for ; parent != nil && checkedPredicateTransparent(parent, node); node, parent = parent, parent.Parent {
+	}
+	if parent == nil || checkedPredicateCondition(parent, node) || checkedPredicateAlias(parent, node) || parent.Kind == ast.KindExpressionStatement || parent.Kind == ast.KindVoidExpression {
+		return ""
+	}
+	for child, holder := parent, parent.Parent; holder != nil && !ast.IsFunctionLike(holder); child, holder = holder, holder.Parent {
+		if checkedPredicateCondition(holder, child) || checkedPredicateAlias(holder, child) {
+			return "read by " + describe(parent) + " inside a condition"
+		}
+	}
+	switch parent.Kind {
+	case ast.KindBinaryExpression, ast.KindPrefixUnaryExpression, ast.KindConditionalExpression, ast.KindSwitchStatement, ast.KindCaseClause, ast.KindVariableDeclaration,
+		ast.KindTypeOfExpression, ast.KindAwaitExpression, ast.KindAsExpression, ast.KindCallExpression, ast.KindNewExpression, ast.KindTemplateSpan, ast.KindArrayLiteralExpression,
+		ast.KindPropertyAssignment, ast.KindSpreadElement, ast.KindReturnStatement, ast.KindArrowFunction, ast.KindThrowStatement, ast.KindPropertyDeclaration, ast.KindParameter,
+		ast.KindElementAccessExpression, ast.KindForStatement:
+		return ""
+	}
+	return "read by " + describe(parent)
+}
+
+// checkedPredicateTransparent is whether the checker's narrowType reads through parent to child.
+func checkedPredicateTransparent(parent, child *ast.Node) bool {
+	switch parent.Kind {
+	case ast.KindParenthesizedExpression, ast.KindNonNullExpression, ast.KindSatisfiesExpression:
+		return true
+	case ast.KindPrefixUnaryExpression:
+		return parent.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken
+	case ast.KindBinaryExpression:
+		binary := parent.AsBinaryExpression()
+		switch binary.OperatorToken.Kind {
+		case ast.KindAmpersandAmpersandToken, ast.KindBarBarToken:
+			return true
+		case ast.KindEqualsToken, ast.KindBarBarEqualsToken, ast.KindAmpersandAmpersandEqualsToken, ast.KindQuestionQuestionEqualsToken, ast.KindCommaToken:
+			return child == binary.Right
+		case ast.KindEqualsEqualsToken, ast.KindExclamationEqualsToken, ast.KindEqualsEqualsEqualsToken, ast.KindExclamationEqualsEqualsToken:
+			other := binary.Left
+			if child == binary.Left {
+				other = binary.Right
+			}
+			return ast.IsBooleanLiteral(ast.SkipParentheses(other)) && !ast.IsAccessExpression(ast.SkipParentheses(child))
+		}
+	}
+	return false
+}
+
+// checkedPredicateCondition is whether child is a condition the binder gives flow conditions to:
+// a statement's or a conditional's test, an operand of && or ||, or a switch (true) case.
+func checkedPredicateCondition(holder, child *ast.Node) bool {
+	switch holder.Kind {
+	case ast.KindIfStatement:
+		return holder.AsIfStatement().Expression == child
+	case ast.KindWhileStatement:
+		return holder.AsWhileStatement().Expression == child
+	case ast.KindDoStatement:
+		return holder.AsDoStatement().Expression == child
+	case ast.KindForStatement:
+		return holder.AsForStatement().Condition == child
+	case ast.KindConditionalExpression:
+		return holder.AsConditionalExpression().Condition == child
+	case ast.KindBinaryExpression:
+		operator := holder.AsBinaryExpression().OperatorToken.Kind
+		return operator == ast.KindAmpersandAmpersandToken || operator == ast.KindBarBarToken
+	case ast.KindCaseClause:
+		statement := holder.Parent.Parent
+		return holder.Expression() == child && statement.Kind == ast.KindSwitchStatement && ast.SkipParentheses(statement.AsSwitchStatement().Expression).Kind == ast.KindTrueKeyword
+	}
+	return false
+}
+
+// checkedPredicateAlias is whether child initializes a const, which the checker narrows through
+// wherever the const stands in a condition.
+func checkedPredicateAlias(holder, child *ast.Node) bool {
+	return holder.Kind == ast.KindVariableDeclaration && holder.AsVariableDeclaration().Initializer == child && holder.Parent.Flags&ast.NodeFlagsConst != 0
 }
 
 // A tag is a full membership test only when the admitted source has a
@@ -258,6 +360,11 @@ func (l *lowering) checkedPredicateResult(call *ast.CallExpression, value ir.Exp
 	l.result.PredicateChecks.Sites = append(l.result.PredicateChecks.Sites, site)
 	if proven {
 		return value, nil
+	}
+	if !assertion {
+		if use := l.checkedPredicateUnclassifiedUse(call); use != "" {
+			return nil, l.notYet(call.AsNode(), "a checked predicate result "+use+", which its direction walk doesn't read")
+		}
 	}
 	invoked, ok := value.(ir.Call)
 	if !ok {

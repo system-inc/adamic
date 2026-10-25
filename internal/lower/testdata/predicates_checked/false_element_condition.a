@@ -1,0 +1,8 @@
+interface Expression { readonly kind: 'E'; readonly e: number }
+interface Statement { readonly kind: 'S'; readonly s: string }
+type Node = Expression | Statement
+let calls = 0
+function isS(n: Node): n is Statement { calls = calls + 1; return calls > 1000 }
+function f(n: Node): number { if ([isS(n)][0]) return 0; return n.kind === 'E' ? n.e : 1 }
+const s: Node = { kind: 'S', s: 'x' }
+console.log(String(f(s)))

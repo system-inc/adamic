@@ -99,6 +99,8 @@ func TestCheckedPredicatePendingContracts(t *testing.T) {
 		{"indirect", `function claim(value:number|string):value is number{return true;} const alias=claim; alias("text");`, "an indirect call of a checked predicate"},
 		{"overload in .a", `function claim(value:number|string):value is number;function claim(value:number|string):boolean{return true;} claim("text");`, "the overload implementation does not prove both directions"},
 		{"unproven test argument", `interface Identifier { readonly kind: 'Identifier'; readonly text: string } interface Keyword { readonly kind: 'Keyword'; readonly width: number } type Node = Identifier | Keyword; function isKeyword(node: Node): node is Keyword { return false; } function assertNotNode<T extends Node, U extends T>(node: T | undefined, test: (node: Node) => node is U): asserts node is Exclude<T, U>; function assertNotNode(node: Node | undefined, test: (node: Node) => boolean): void { if (node !== undefined && test(node)) console.log("unexpected node"); } function use(node: Node): void { assertNotNode(node, isKeyword); } use({ kind: 'Keyword', width: 3 });`, "an unproven predicate argument for parameter test"},
+		// 0.1 refuses == outright, so a loose comparison with false never reaches the direction walk.
+		{"loose false comparison", `interface Expression { readonly kind: 'E'; readonly e: number } interface Statement { readonly kind: 'S'; readonly s: string } type Node = Expression | Statement; function isS(n: Node): n is Statement { return false; } function f(n: Node): number { if (isS(n) == false) return n.e; return 0; } console.log(String(f({ kind: 'S', s: 'x' })));`, "refuses ==; use ===, which doesn't coerce"},
 		{"open enum kind", `enum SyntaxKind { Identifier, Block } interface Node { readonly kind: SyntaxKind } interface Identifier extends Node { readonly kind: SyntaxKind.Identifier; readonly text: string } function isIdentifier(node: Node): node is Identifier { return node.kind === SyntaxKind.Identifier; } function show(text: string): boolean { console.log(text); return true; } const node: Node = { kind: SyntaxKind.Identifier }; const shown = isIdentifier(node) && show(node.text);`, "checked predicate membership by an enum tag another member can hold"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
@@ -114,32 +116,45 @@ func TestCheckedPredicatePendingContracts(t *testing.T) {
 	}
 }
 
-// Kind.Identifier and Kind.Keyword share 1, so the checker reads them as one type and a
-// Keyword passes the true branch's tag check for Identifier (tsc's open SyntaxKind shape). Node
-// reads the missing field; the checked .ts copy must not be admitted on that tag.
-func TestCheckedPredicateSharedKindIsPending(t *testing.T) {
+// Checked .ts copies that must stop as NotYet at the call, each beside the Node output of its
+// stored .a witness.
+func TestCheckedPredicateUnreadShapesArePending(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs("testdata/predicates_checked/shared_kind.a")
-	if err != nil {
-		t.Fatal(err)
-	}
-	runner, err := filepath.Abs("../../oracle/node.mjs")
-	if err != nil {
-		t.Fatal(err)
-	}
-	var out, diagnostic bytes.Buffer
-	command := exec.Command("node", "--disable-warning=ExperimentalWarning", runner, path)
-	command.Stdout, command.Stderr = &out, &diagnostic
-	if err := command.Run(); err != nil || out.String() != "undefined\nshown\n" || diagnostic.Len() != 0 {
-		t.Fatalf("source Node: %v stdout %q stderr %q", err, out.String(), diagnostic.String())
-	}
-	source, err := os.ReadFile(path)
-	if err != nil {
-		t.Fatal(err)
-	}
-	_, err = lowerTypeScriptAssertionSource(t, string(source))
-	var notYet *NotYet
-	if !errors.As(err, &notYet) || notYet.What != "checked predicate membership by an enum tag another member can hold" || !strings.HasSuffix(notYet.Where, "main.ts:7:48") {
-		t.Fatalf("want the shared tag pending at the call, got %v", err)
+	for _, probe := range []struct{ name, nodeOut, what, where string }{
+		// Kind.Identifier and Kind.Keyword share 1, so the checker reads them as one type and a
+		// Keyword passes the true branch's tag check for Identifier (tsc's open SyntaxKind shape).
+		// Node reads the missing field; the copy must not be admitted on that tag.
+		{"shared_kind", "undefined\nshown\n", "checked predicate membership by an enum tag another member can hold", "7:48"},
+		// Neither the direction walk nor the checker's narrowType reads through an array literal or
+		// an element access, so the walk can't say which branch of this condition rests on the call:
+		// a condition shape it doesn't read stops here, never as a call with no false check.
+		{"false_element_condition", "1\n", "a checked predicate result read by an ArrayLiteralExpression inside a condition, which its direction walk doesn't read", "6:36"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			path, err := filepath.Abs("testdata/predicates_checked/" + probe.name + ".a")
+			if err != nil {
+				t.Fatal(err)
+			}
+			runner, err := filepath.Abs("../../oracle/node.mjs")
+			if err != nil {
+				t.Fatal(err)
+			}
+			var out, diagnostic bytes.Buffer
+			command := exec.Command("node", "--disable-warning=ExperimentalWarning", runner, path)
+			command.Stdout, command.Stderr = &out, &diagnostic
+			if err := command.Run(); err != nil || out.String() != probe.nodeOut || diagnostic.Len() != 0 {
+				t.Fatalf("source Node: %v stdout %q stderr %q", err, out.String(), diagnostic.String())
+			}
+			source, err := os.ReadFile(path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			_, err = lowerTypeScriptAssertionSource(t, string(source))
+			var notYet *NotYet
+			if !errors.As(err, &notYet) || notYet.What != probe.what || !strings.HasSuffix(notYet.Where, "main.ts:"+probe.where) {
+				t.Fatalf("want %q pending at the call, got %v", probe.what, err)
+			}
+		})
 	}
 }

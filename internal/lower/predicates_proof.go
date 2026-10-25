@@ -950,6 +950,9 @@ func (l *lowering) predicateFlowDirections(flow *ast.FlowNode, call, reference *
 		truth := flow.Flags&ast.FlowFlagsTrueCondition != 0
 		result |= l.predicateConditionDirection(flow.Node, call, truth, 0)
 	}
+	if flow.Flags&ast.FlowFlagsSwitchClause != 0 {
+		result |= l.predicateSwitchDirection(flow.Node.AsFlowSwitchClauseData(), call)
+	}
 	if flow.Flags&ast.FlowFlagsCall != 0 && flow.Node == call {
 		result |= predicateTrue
 	}
@@ -988,8 +991,19 @@ func (l *lowering) predicateConditionDirection(node, call *ast.Node, truth bool,
 				return l.predicateConditionDirection(binary.Left, call, truth, depth+1) | l.predicateConditionDirection(binary.Right, call, truth, depth+1)
 			}
 			return l.predicateConditionDirection(binary.Left, call, true, depth+1) | l.predicateConditionDirection(binary.Left, call, false, depth+1) | l.predicateConditionDirection(binary.Right, call, true, depth+1) | l.predicateConditionDirection(binary.Right, call, false, depth+1)
-		case ast.KindEqualsToken:
+		case ast.KindEqualsToken, ast.KindBarBarEqualsToken, ast.KindAmpersandAmpersandEqualsToken, ast.KindQuestionQuestionEqualsToken, ast.KindCommaToken:
 			return l.predicateConditionDirection(binary.Right, call, truth, depth+1)
+		case ast.KindEqualsEqualsToken, ast.KindExclamationEqualsToken, ast.KindEqualsEqualsEqualsToken, ast.KindExclamationEqualsEqualsToken:
+			// As the checker's narrowTypeByBooleanComparison: compared with a boolean literal, either
+			// way round, the other operand narrows as itself or its negation.
+			operand, literal := binary.Left, ast.SkipParentheses(binary.Right)
+			if !ast.IsBooleanLiteral(literal) {
+				operand, literal = binary.Right, ast.SkipParentheses(binary.Left)
+			}
+			if ast.IsBooleanLiteral(literal) && !ast.IsAccessExpression(ast.SkipParentheses(operand)) {
+				equal := binary.OperatorToken.Kind == ast.KindEqualsEqualsToken || binary.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken
+				return l.predicateConditionDirection(operand, call, (truth == (literal.Kind == ast.KindTrueKeyword)) == equal, depth+1)
+			}
 		}
 	}
 	if node.Kind == ast.KindNonNullExpression || node.Kind == ast.KindSatisfiesExpression {
@@ -1005,6 +1019,37 @@ func (l *lowering) predicateConditionDirection(node, call *ast.Node, truth bool,
 		}
 	}
 	return 0
+}
+
+// As the checker's narrowTypeBySwitchOnTrue: under switch (true), the case clauses before this
+// clause set, and after it when the set holds the default, narrow by their false branch; the set's
+// own case clauses by their true branch.
+func (l *lowering) predicateSwitchDirection(data *ast.FlowSwitchClauseData, call *ast.Node) predicateTruth {
+	statement := data.SwitchStatement.AsSwitchStatement()
+	if ast.SkipParentheses(statement.Expression).Kind != ast.KindTrueKeyword {
+		return 0
+	}
+	clauses := statement.CaseBlock.AsCaseBlock().Clauses.Nodes
+	start, end := int(data.ClauseStart), int(data.ClauseEnd)
+	holdsDefault := start == end
+	for index := start; index < end; index++ {
+		if clauses[index].Kind == ast.KindDefaultClause {
+			holdsDefault = true
+		}
+	}
+	var result predicateTruth
+	for index, clause := range clauses {
+		if clause.Kind != ast.KindCaseClause {
+			continue
+		}
+		switch {
+		case index < start || (holdsDefault && index >= end):
+			result |= l.predicateConditionDirection(clause.Expression(), call, false, 0)
+		case index < end && !holdsDefault:
+			result |= l.predicateConditionDirection(clause.Expression(), call, true, 0)
+		}
+	}
+	return result
 }
 
 func predicateWriteOnly(node *ast.Node) bool {
@@ -1045,6 +1090,11 @@ func (l *lowering) predicateFlowWithout(root *ast.FlowNode, call, reference *ast
 		if original.Flags&ast.FlowFlagsCondition != 0 {
 			truth := original.Flags&ast.FlowFlagsTrueCondition != 0
 			remove = l.predicateConditionDirection(original.Node, call, truth, 0)&direction != 0
+		}
+		// Dropping a whole clause set also drops its other clauses' narrowing, which can only widen
+		// the unclaimed type and so report the direction, never hide it.
+		if original.Flags&ast.FlowFlagsSwitchClause != 0 {
+			remove = l.predicateSwitchDirection(original.Node.AsFlowSwitchClauseData(), call)&direction != 0
 		}
 		if remove {
 			copy.Flags, copy.Node = ast.FlowFlagsBranchLabel, nil

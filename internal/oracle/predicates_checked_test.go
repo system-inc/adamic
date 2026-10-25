@@ -15,23 +15,33 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
+// guard, where given, is the native stderr of the removed-check mutant: it reads a field the false
+// side's claim says is there, and native stops at that read's own guard where Node, and the
+// JavaScript backend, read undefined.
 var checkedPredicateFixtures = []struct {
-	name, nodeOut, checkedOut, branch, source, target string
-	checked, unobservable                             int
+	name, nodeOut, checkedOut, branch, source, target, guard string
+	checked, unobservable                                    int
 }{
-	{"true", "claimed\n", "", "true", "string | number", "number", 2, 0},
-	{"true_unused", "continued\n", "", "true", "\"text\"", "number", 1, 1},
-	{"false", "continued\n", "", "false", "string | number", "number", 2, 0},
-	{"false_alias", "continued\n", "", "false", "string | number", "number", 2, 0},
-	{"false_compound_unchanged", "continued\n", "", "", "", "", 1, 1},
-	{"asserts", "called\nasserted\n", "called\n", "asserts", "string | number", "number", 1, 0},
-	{"valid", "argument\ncalled\nnumber\nargument\ncalled\nstring\n", "", "", "", "", 1, 1},
-	{"asserts_valid", "called\n7\n", "", "", "", "", 1, 0},
-	{"false_unchanged", "continued\n", "", "", "", "", 1, 1},
+	{"true", "claimed\n", "", "true", "string | number", "number", "", 2, 0},
+	{"true_unused", "continued\n", "", "true", "\"text\"", "number", "", 1, 1},
+	{"false", "continued\n", "", "false", "string | number", "number", "", 2, 0},
+	{"false_alias", "continued\n", "", "false", "string | number", "number", "", 2, 0},
+	{"false_compound_unchanged", "continued\n", "", "", "", "", "", 1, 1},
+	{"asserts", "called\nasserted\n", "called\n", "asserts", "string | number", "number", "", 1, 0},
+	{"valid", "argument\ncalled\nnumber\nargument\ncalled\nstring\n", "", "", "", "", "", 1, 1},
+	{"asserts_valid", "called\n7\n", "", "", "", "", "", 1, 0},
+	{"false_unchanged", "continued\n", "", "", "", "", "", 1, 1},
 	// tsc's Debug.assertNotNode (debug.ts:307): the bodyless overload claims Exclude<T, U> from the
 	// call's resolved signature, and the implementation, gated by an assertion level as tsc's is,
 	// never runs the test. Its own claim is checked at the call, so a Keyword stops it there.
-	{"assert_not_node", "asserting\nnarrowed\n", "asserting\n", "asserts", "Node", "Identifier", 1, 0},
+	{"assert_not_node", "asserting\nnarrowed\n", "asserting\n", "asserts", "Node", "Identifier", "", 1, 0},
+	// Language's false-branch forms (#7v4rjr7): the checker narrows each one's false side, and isS
+	// says false to a Statement, so the false check must stop it before n.e is read.
+	{"false_switch_true", "undefined\n", "", "false", "Node", "Statement", "adamic: panic: compiler bug: a field the checker proved is there is missing\n", 2, 0},
+	{"false_eq_false", "undefined\n", "", "false", "Node", "Statement", "adamic: panic: compiler bug: a field the checker proved is there is missing\n", 2, 0},
+	{"false_ne_true", "undefined\n", "", "false", "Node", "Statement", "adamic: panic: compiler bug: a field the checker proved is there is missing\n", 2, 0},
+	{"false_false_eq", "undefined\n", "", "false", "Node", "Statement", "adamic: panic: compiler bug: a field the checker proved is there is missing\n", 2, 0},
+	{"false_comma", "undefined\n", "", "false", "Node", "Statement", "adamic: panic: compiler bug: a field the checker proved is there is missing\n", 2, 0},
 }
 
 func predicateCheckedInput(t *testing.T, name string) (string, string) {
@@ -114,11 +124,15 @@ func TestCheckedPredicateOracle(t *testing.T) {
 					t.Fatalf("check mutant removed %d guards", changes)
 				}
 				mutant, _ := nativelyUncached(t, program)
-				for _, got := range []run{mutant, onJavaScriptBackend(t, program)} {
+				for index, got := range []run{mutant, onJavaScriptBackend(t, program)} {
 					if disagreement(want, got) == "" {
 						t.Fatal("removed-check mutant escaped exit-70 contract")
 					}
-					if difference := disagreement(node, got); difference != "" {
+					expected := node
+					if index == 0 && probe.guard != "" {
+						expected = run{stderr: []byte(probe.guard), exitCode: 70}
+					}
+					if difference := disagreement(expected, got); difference != "" {
 						t.Fatal("mutant failed to execute source semantics: " + difference)
 					}
 				}
