@@ -74,14 +74,16 @@ func (e *emitter) closureComparator(sort ir.ArraySort) string {
 	if !layout.Count && len(layout.Rest) == 0 && len(layout.Fixed) <= 2 {
 		return "adamic_compare_closure"
 	}
-	e.temporaries++
-	name := fmt.Sprintf("adamic_compare_%d", e.temporaries)
 	adapter := emitter{program: e.program, reuse: e.reuse, indent: 1, scopes: [][]string{{}}}
 	packed := adapter.closureSlots(call, []string{"left", "right"}, "", "2")
 	adapter.line("adamic_closure *compare = context;")
 	adapter.line("double result = %s.number;", adapter.packedClosureCall(call, "compare", packed, "2"))
 	adapter.releaseScopes(0)
 	adapter.line("return result < 0 ? -1 : result > 0 ? 1 : 0;")
+	name, exists := e.sharedDeclaration("adamic_compare", adapter.out.String())
+	if exists {
+		return name
+	}
 	e.declarations = append(e.declarations, "static int "+name+"(adamic_value left, adamic_value right, void *context) {\n"+adapter.out.String()+"}")
 	return name
 }

@@ -501,7 +501,7 @@ func asyncLoopMutation(t *testing.T, name, kind string) {
 				if binding.Type.IsReference() {
 					member, refs = "reference", "true"
 				}
-				pattern := regexp.MustCompile(fmt.Sprintf(`adamic_cell \*(adamic_temporary_[0-9]+) = adamic_cell_new\(\(adamic_value\)\{\.%s = ([^\n]+)\}, %s\);\n\s*adamic_release\(frame->cells\[%d\]\.value\.reference\);\n\s*frame->cells\[%d\]\.value\.reference = [^;]+;`, member, refs, slot, slot))
+				pattern := regexp.MustCompile(fmt.Sprintf(`adamic_cell \*(adamic_temporary_[A-Za-z0-9_]+) = adamic_cell_new\(\(adamic_value\)\{\.%s = ([^\n]+)\}, %s\);\n\s*adamic_release\(frame->cells\[%d\]\.value\.reference\);\n\s*frame->cells\[%d\]\.value\.reference = [^;]+;`, member, refs, slot, slot))
 				match := pattern.FindStringSubmatch(code)
 				if match == nil {
 					continue

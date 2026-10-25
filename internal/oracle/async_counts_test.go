@@ -53,7 +53,7 @@ func asyncCountDropRetain(source, needle string) string {
 }
 func asyncCountMutant(t *testing.T, name, source string, p *ir.Program) string {
 	t.Helper()
-	slot, local := -1, -1
+	slot := -1
 	binding := "held"
 	if name == "reassigned" {
 		binding = "saved"
@@ -65,14 +65,14 @@ func asyncCountMutant(t *testing.T, name, source string, p *ir.Program) string {
 		if fn.Name == "keep" {
 			for position, index := range fn.FrameEnvironment {
 				if p.Locals[index].Name == binding {
-					slot, local = position, index
+					slot = position
 				}
 			}
 		}
 	}
 	switch name {
 	case "stable", "parameter", "payload":
-		return asyncCountDropRetain(source, fmt.Sprintf("frame->cells[%d].value.reference = adamic_retain(adamic_local_%d_seed)", slot, local))
+		return asyncCountDropRetain(source, fmt.Sprintf("frame->cells[%d].value.reference = adamic_retain(%s)", slot, emittedLocalSymbol(t, source, "adamic_local_", "seed")))
 	case "reassigned":
 		return asyncCountDropRetain(source, fmt.Sprintf("(&frame->cells[%d])->value.reference = adamic_retain(", slot))
 	case "captured", "expression_write":
@@ -82,7 +82,7 @@ func asyncCountMutant(t *testing.T, name, source string, p *ir.Program) string {
 			t.Fatal("no owned mutable read")
 		}
 		line := source[strings.LastIndex(source[:at], "\n")+1 : at]
-		match := regexp.MustCompile(`(adamic_temporary_[0-9]+) = $`).FindStringSubmatch(line)
+		match := regexp.MustCompile(`(adamic_temporary_[A-Za-z0-9_]+) = $`).FindStringSubmatch(line)
 		if match == nil {
 			t.Fatal("missing read temporary:", line)
 		}
