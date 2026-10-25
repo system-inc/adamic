@@ -22,9 +22,12 @@ func (n *NotYet) Error() string {
 type Refused struct {
 	// cycle identifies the slot-cycle proof, independently of diagnostic wording.
 	cycle bool
-	Where string
-	What  string
-	Fix   string
+	// lyingTag is why a type predicate was refused for a comparison on a tag that can lie, for a
+	// caller passing that predicate to name too.
+	lyingTag string
+	Where    string
+	What     string
+	Fix      string
 }
 
 func (r *Refused) Error() string {

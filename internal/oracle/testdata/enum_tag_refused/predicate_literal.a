@@ -1,0 +1,13 @@
+// a-check: refused an unproven predicate argument for parameter predicate (argument "isB"): the comparison of tag proves nothing about the layout
+// A plain literal leaves the narrowing to the checker, which excludes A from tag === 1, though A's
+// tag is the open AKind and a's is 1 at run time. Node prints text1.
+enum AKind { A }
+enum BKind { B = 1, C = 2 }
+interface A { readonly tag: AKind; readonly value: string }
+interface B { readonly tag: BKind.B; readonly value: number }
+type Pair = A | B;
+function isB(v: Pair): v is B { return v.tag === 1; }
+function numeric(): number { return 1; }
+const a: A = { tag: numeric(), value: 'text' };
+const pairs: Pair[] = [a];
+for (const b of pairs.filter(isB)) { console.log(`${b.value + 1}`); }

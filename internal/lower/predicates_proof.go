@@ -33,12 +33,21 @@ type predicatePath struct {
 	locals map[*ast.Symbol]predicateTruth
 }
 
-func predicateFailure(l *lowering, node *ast.Node, path string) error {
+func predicateFailure(l *lowering, node *ast.Node, path string) *Refused {
 	where := ""
 	if node != nil {
 		where = l.program.Where(node)
 	}
 	return &Refused{Where: where, What: "an unproven type predicate", Fix: path + "; return a boolean and narrow at the caller (adamic/no-type-predicate)"}
+}
+
+// A comparison on a tag that can lie proves nothing about the layout (#drwm5pj), so neither prover
+// takes it as proof of a member type.
+func predicateTagHazardReason(field string, hazard enumTagHazard) string {
+	if hazard == enumTagSharedValueHazard {
+		return "the comparison of " + field + " proves nothing about the layout, since tags from different numeric enums share a value"
+	}
+	return "the comparison of " + field + " proves nothing about the layout, since a member whose " + field + " is an open numeric enum can hold that value"
 }
 
 // provePredicate starts with no helper facts. Only independently verified bodies
@@ -366,6 +375,14 @@ func (v *predicateVerifier) expression(n *ast.Node, parameter *ast.Symbol, path 
 					yes = v.cells[path.cell] == constant.Text()
 				}
 				if v.field != "" && test.Kind == ast.KindPropertyAccessExpression && test.Name().Text() == v.field && v.sameParameter(test.AsPropertyAccessExpression().Expression, parameter) {
+					// A cell holds every member with that tag value, so a tag that can lie in the
+					// parameter's union doesn't partition it by member.
+					if hazard := v.l.enumTagHazardOf(v.l.checker.GetTypeOfSymbol(parameter), v.field); hazard != enumTagNoHazard {
+						reason := predicateTagHazardReason(v.field, hazard)
+						refused := predicateFailure(v.l, n, reason)
+						refused.lyingTag = reason
+						return 0, refused
+					}
 					key, ok := predicateLiteral(v.l.checker.GetTypeAtLocation(constant))
 					if ok && v.constant(constant) {
 						matched = true

@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"errors"
 	"fmt"
 	_ "unsafe"
 
@@ -26,6 +27,8 @@ type predicateFlowProof struct {
 	assertion  bool
 	trueTypes  []*checker.Type
 	lastReturn *ast.Node
+	// lyingTag is why check refused a comparison on a tag that can lie, for the refusal to name.
+	lyingTag string
 }
 
 type predicateFlowPath struct {
@@ -33,7 +36,7 @@ type predicateFlowPath struct {
 	checked bool
 }
 
-func (p *predicateFlowProof) refused(node *ast.Node, reason string) error {
+func (p *predicateFlowProof) refused(node *ast.Node, reason string) *Refused {
 	return &Refused{Where: p.l.program.Where(node), What: "a type predicate whose return is not proven (" + reason + ")", Fix: "inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"}
 }
 
@@ -163,7 +166,7 @@ func (p *predicateFlowProof) returned(node, expression *ast.Node, paths []predic
 	expression = ast.SkipParentheses(expression)
 	literal := expression.Kind == ast.KindTrueKeyword || expression.Kind == ast.KindFalseKeyword
 	if !literal && !p.check(expression) {
-		return p.refused(node, "return expression is not a trusted check on "+p.parameter.Name().Text())
+		return p.untrusted(node, "return expression is not a trusted check on "+p.parameter.Name().Text())
 	}
 	for _, path := range paths {
 		for _, truth := range []bool{true, false} {
@@ -211,7 +214,7 @@ func (p *predicateFlowProof) statement(node *ast.Node, paths []predicateFlowPath
 	case ast.KindIfStatement:
 		statement := node.AsIfStatement()
 		if !p.check(statement.Expression) {
-			return nil, p.refused(node, "branch is not a trusted parameter check")
+			return nil, p.untrusted(node, "branch is not a trusted parameter check")
 		}
 		var then, otherwise []predicateFlowPath
 		for _, path := range paths {
@@ -282,9 +285,43 @@ func (p *predicateFlowProof) check(node *ast.Node) bool {
 		}
 		return symbol != nil && symbol.Flags&ast.SymbolFlagsClass != 0
 	case ast.KindEqualsEqualsEqualsToken, ast.KindExclamationEqualsEqualsToken:
+		if p.tagCanLie(binary.Left) || p.tagCanLie(binary.Right) {
+			return false
+		}
 		return p.checkedValue(binary.Left) && p.literal(binary.Right) || p.checkedValue(binary.Right) && p.literal(binary.Left)
 	}
 	return false
+}
+
+// tagCanLie reports whether value reads a field off the parameter whose tags can lie in the union
+// that reaches the body: a comparison on it proves no layout, whatever it's compared with
+// (#drwm5pj). The checker would still narrow by it, so it's refused before the checker is asked.
+func (p *predicateFlowProof) tagCanLie(value *ast.Node) bool {
+	value = ast.SkipParentheses(value)
+	if value.Kind != ast.KindPropertyAccessExpression || !p.checkedValue(value) {
+		return false
+	}
+	incoming := p.declared
+	if p.admitted != nil {
+		incoming = p.admitted
+	}
+	field := value.AsPropertyAccessExpression().Name().Text()
+	hazard := p.l.enumTagHazardOf(incoming, field)
+	if hazard == enumTagNoHazard {
+		return false
+	}
+	p.lyingTag = predicateTagHazardReason(field, hazard)
+	return true
+}
+
+// untrusted refuses a check, naming the tag that can lie when that was why, and reason otherwise.
+func (p *predicateFlowProof) untrusted(node *ast.Node, reason string) error {
+	if p.lyingTag == "" {
+		return p.refused(node, reason)
+	}
+	refused := p.refused(node, p.lyingTag)
+	refused.lyingTag = p.lyingTag
+	return refused
 }
 
 func (p *predicateFlowProof) reference(node *ast.Node) bool {
@@ -359,6 +396,11 @@ func (l *lowering) predicateRefusal(node *ast.Node) error {
 	}
 	proof, err := l.provePredicate(node)
 	if err != nil {
+		// A tag that can lie is the reason worth naming, whichever prover met it.
+		var flow, body *Refused
+		if errors.As(err, &body) && body.lyingTag != "" && (!errors.As(original, &flow) || flow.lyingTag == "") {
+			return body
+		}
 		return original
 	}
 	if proof.TaggedView {
@@ -511,7 +553,7 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 				}
 			}
 		}
-		failure := func() error {
+		failure := func() *Refused {
 			file := ast.GetSourceFileOfNode(argument)
 			text := file.Text()[scanner.GetTokenPosOfNode(argument, file, false):argument.End()]
 			return &Refused{Where: l.program.Where(argument), What: "an unproven predicate argument for parameter " + parameter.Name + " (argument " + fmt.Sprintf("%q", text) + ")", Fix: "pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)"}
@@ -558,7 +600,12 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 				return failure()
 			}
 			if err := l.predicateRefusal(implementation.Type()); err != nil {
-				return failure()
+				refused := failure()
+				var proof *Refused
+				if errors.As(err, &proof) && proof.lyingTag != "" {
+					refused.What += ": " + proof.lyingTag
+				}
+				return refused
 			}
 		}
 	}
