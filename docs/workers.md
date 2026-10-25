@@ -96,8 +96,26 @@ Both the immutable Wasm products and mutant binaries travel with the build cache
 a missing product fails with a build-ahead diagnostic rather than rebuilding inside
 a behavior unit's clock. All 10,000 memory requests and mutant failure witnesses remain.
 
-Worker tests run without opt-in variables. Build `TestProduct_` inputs ahead, as
-ordered in `cloud/fast-gate/product-order.json`. Node 24 runs the generated
-module and WASI shim; Go tests require neither workerd nor wrangler. Tests find
+The Node and WASI-shim Worker tests run without opt-in variables. Build
+`TestProduct_` inputs ahead, as ordered in `cloud/fast-gate/product-order.json`.
+Node 24 runs the generated module and WASI shim. Tests find
 setup.sh's WASI SDK beside the tools directory on PATH (or under ADAMIC_TOOLS);
 an explicit WASI_SYSROOT still wins. Missing required tools fail by name.
+
+The separate workerd lane uses the binary `exec.LookPath("workerd")` resolves on
+PATH, including the install's archive record checked by Loom. It runs against
+whatever `cloud/setup.sh --workerd` pins. Workers maintainers run this lane by hand:
+
+```sh
+export ADAMIC_WORKER_WORKERD=1
+go test ./internal/worker -run '^TestProduct_Workerd' -count=1
+go test ./internal/worker -run '^TestWorkerd' -count=1
+```
+
+The two products compile the compute handler once as JavaScript and once with
+`--wasm primes,summarize`. Eight FNV family units per backend replay all 600
+requests against the TypeScript twin and real HTTP server, using the existing
+replay's HEAD and contract-header rules. Each unit starts a fresh loopback-only
+server; cleanup kills its process group and waits. With the switch unset the
+workerd units report a named skip; with it set a missing binary fails. Wrangler
+is never needed. This lane does not replace the default-on Node and WASI proofs.
