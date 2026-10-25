@@ -1,7 +1,6 @@
 package oracle
 
 import (
-	"fmt"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -125,9 +124,9 @@ func TestEnumCleanupMutant(t *testing.T) {
 	}
 	code := native.C(program)
 	release := ""
-	for index, local := range program.Locals {
+	for _, local := range program.Locals {
 		if local.Global && local.Name == "Kind" {
-			release = fmt.Sprintf("adamic_release(adamic_global_%d_Kind);", index)
+			release = "adamic_release(" + emittedLocalSymbol(t, code, "adamic_global_", "Kind") + ");"
 		}
 	}
 	if release == "" || strings.Count(code, release) != 1 {

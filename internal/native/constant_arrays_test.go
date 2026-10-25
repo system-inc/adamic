@@ -70,16 +70,18 @@ func TestConstantArraysAgreeWithNode(t *testing.T) {
 	}
 	want := runWithInput(t, "", "node", script)
 	code := C(loopProgram(t, path))
-	if strings.Count(code, "static const double adamic_numbers_") != 3 || strings.Count(code, "static const size_t adamic_lengths_") != 2 {
+	// Identical row literals share their immutable data, while each evaluation
+	// still allocates fresh array shells, as the mutation below proves.
+	if strings.Count(code, "static const double adamic_numbers_") != 2 || strings.Count(code, "static const size_t adamic_lengths_") != 1 {
 		t.Fatalf("the tables weren't emitted as data:\n%s", code)
 	}
 	if got, failed := runConstantArrays(t, code); failed != "" || got != want {
 		t.Fatalf("native %q (%s); Node %q", got, failed, want)
 	}
-	flatBound := regexp.MustCompile(`(for \(size_t adamic_temporary_\d+ = 0; adamic_temporary_\d+ < )(\d+)(;)`)
-	rowRead := regexp.MustCompile(`(\.number = adamic_numbers_\d+\[)(adamic_temporary_\d+)(\]\})`)
-	tableEntry := regexp.MustCompile(`(static const double adamic_numbers_\d+\[\d+\] = \{)(\([^)]*\)|NAN)`)
-	rowTaken := regexp.MustCompile(`(\(adamic_value\)\{\.reference = )(adamic_temporary_\d+)(\}\);\n\t*\})`)
+	flatBound := regexp.MustCompile(`(for \(size_t adamic_temporary_[A-Za-z0-9_]+ = 0; adamic_temporary_[A-Za-z0-9_]+ < )(\d+)(;)`)
+	rowRead := regexp.MustCompile(`(\.number = adamic_numbers_[A-Za-z0-9_]+\[)(adamic_temporary_[A-Za-z0-9_]+)(\]\})`)
+	tableEntry := regexp.MustCompile(`(static const double adamic_numbers_[A-Za-z0-9_]+\[\d+\] = \{)(\([^)]*\)|NAN)`)
+	rowTaken := regexp.MustCompile(`(\(adamic_value\)\{\.reference = )(adamic_temporary_[A-Za-z0-9_]+)(\}\);\n\t*\})`)
 	for _, mutant := range []struct {
 		name    string
 		pattern *regexp.Regexp
