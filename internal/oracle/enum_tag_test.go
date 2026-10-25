@@ -56,6 +56,12 @@ func init() {
 // intersection_member, shared_beside_intersection and both cross_enum programs; a label walking
 // only its first path lowers join, which then prints 1. assignment narrows the union to what
 // was assigned, a step the walk doesn't recognize; a narrowing assignment counted as proof lowers it.
+// predicate and predicate_literal are type predicates whose bodies compare an open enum tag, and
+// filter and find believe them, so no refinement at the caller is there to refuse (#9xam9ds). Each
+// prints text1 on Node. Mutants: the tag verifier taking the comparison without asking the
+// parameter's union lowers predicate, a comparison with Kind.A, and main's native build stopped at
+// a.value, a string where A promised a number; the flow proof doing so lowers predicate_literal, a
+// comparison with 1 the checker narrows by, which then prints 1 natively.
 func TestEnumTagRefinementsAreRefused(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/enum_tag_refused"
@@ -92,7 +98,7 @@ func TestEnumTagRefinementsAreRefused(t *testing.T) {
 			}
 		})
 	}
-	if programs != 15 {
-		t.Fatalf("%d programs in %s, want 15: a program added or removed needs this count changed with it", programs, directory)
+	if programs != 17 {
+		t.Fatalf("%d programs in %s, want 17: a program added or removed needs this count changed with it", programs, directory)
 	}
 }

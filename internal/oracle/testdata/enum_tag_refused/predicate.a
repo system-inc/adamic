@@ -1,0 +1,15 @@
+// a-check: refused an unproven predicate argument for parameter predicate (argument "isA"): the comparison of kind proves nothing about the layout
+// tsc's shape: isA's body compares kind with Kind.A, but B's kind is the whole open enum, so a B can
+// hold 1 too. filter and find believe the predicate: Node prints text1 and text2, and main's native
+// build stopped at a.value, a string where the narrowed A promised a number.
+enum Kind { A = 1, B = 2 }
+interface A { readonly kind: Kind.A; readonly value: number }
+interface B { readonly kind: Kind; readonly value: string }
+type Node = A | B;
+function isA(n: Node): n is A { return n.kind === Kind.A; }
+function numeric(): number { return 1; }
+const b: B = { kind: numeric(), value: 'text' };
+const nodes: Node[] = [b];
+for (const a of nodes.filter(isA)) { console.log(`${a.value + 1}`); }
+const found = nodes.find(isA);
+if (found !== undefined) { console.log(`${found.value + 2}`); }
