@@ -48,6 +48,13 @@ import (
 // whose values differ from the ones its newest set recorded.
 const keptSets = 4
 
+// keptPinned is how many sets pinned to a tree a file keeps past keptSets, the newest first (keptSetsOf). A tree's own
+// cache is gone or carried as a seed, under another path, by the next tree, so its pins end with it. A cache that lives
+// past one tree under one path, adamic's own default one on a developer's machine, would hold every pin a reader ever
+// made, so pins are capped there too. A set dropped past the cap fails closed: its reader misses and builds again.
+// A tree builds one name key at most once for each test that settles it, and block 165 had 46 such lint shards.
+const keptPinned = 64
+
 // readsVersion versions the read set file and every key derived from it. v4: a product read is valued by its bytes
 // (productDigest), where v3 valued it by its key.
 const readsVersion = "buildcache reads v4"
@@ -67,6 +74,10 @@ type readSet struct {
 	// Lean is a set keyed by the lean recipe (leanRecipeOf, #earlycut), so a lookup under Loom's switch refuses it
 	// (leanKeysOff): while a lean hole is open, no lean key is matched, built or found.
 	Lean bool `json:"lean,omitempty"`
+	// Pinned names the tree, by its cache (pinTree), in which a set settled after this one read its product: the file
+	// keeps it there however many sets settle after it, and the union never folds it away, so that reader's product
+	// entry still finds these bytes (#xjqwsad). In another tree it's an ordinary set.
+	Pinned string `json:"pinned,omitempty"`
 }
 
 // A readEntry is one thing the build read, by kind: content, listing, exists or link (paths in the tree), above (paths
@@ -171,11 +182,16 @@ func unionReads(newer, older readsFile) readsFile {
 	return union
 }
 
-// recordReads puts set first among nameKey's sets, replacing one that reads the same entries.
+// recordReads puts set first among nameKey's sets, replacing one that reads the same entries, unless that one is pinned
+// to this tree: a set settled after it reads its product by its bytes, which a set of the same entries valued otherwise
+// doesn't give (#xjqwsad, Adam's shape: rerecord's write in the tree's own build stranded the reader it named).
 func recordReads(cache, nameKey, name string, set readSet) error {
+	tree := pinTree(cache)
 	return withReads(cache, nameKey, func(file *readsFile) error {
 		file.Name = name
-		file.Sets = append([]readSet{set}, slices.DeleteFunc(file.Sets, func(kept readSet) bool { return sameEntries(kept.Entries, set.Entries) })...)
+		file.Sets = append([]readSet{set}, slices.DeleteFunc(file.Sets, func(kept readSet) bool {
+			return kept.Pinned != tree && sameEntries(kept.Entries, set.Entries)
+		})...)
 		return nil
 	})
 }
@@ -202,7 +218,7 @@ func withReads(cache, nameKey string, change func(file *readsFile) error) error 
 		return err
 	}
 	file.Version = readsVersion
-	file.Sets = file.Sets[:min(len(file.Sets), keptSets)]
+	file.Sets = keptSetsOf(file.Sets, pinTree(cache))
 	encoded, err := json.MarshalIndent(file, "", "\t")
 	if err != nil {
 		return err
@@ -241,6 +257,54 @@ func lockReadsGraph(cache string) (func(), error) {
 	}, nil
 }
 
+// keptSetsOf is sets trimmed to the newest keptSets, and the newest keptPinned older ones pinned to tree, which leave
+// only once the file is carried to another tree or the cap passes them (#xjqwsad: block 165's lint void, the oracle's
+// upstream build pushed out of lint-decoded-options-native-setup-v2's file by the builds settled after it in the same
+// tree).
+func keptSetsOf(sets []readSet, tree string) []readSet {
+	var kept []readSet
+	pinned := 0
+	for index, set := range sets {
+		switch {
+		case index < keptSets:
+			kept = append(kept, set)
+		case set.Pinned == tree && pinned < keptPinned:
+			kept = append(kept, set)
+			pinned++
+		}
+	}
+	return kept
+}
+
+// pinTree names the tree a cache serves, for a pin: the cache's own directory, which a tree's build has to itself and a
+// seed carried to another tree doesn't share.
+func pinTree(cache string) string {
+	if absolute, err := filepath.Abs(cache); err == nil {
+		return absolute
+	}
+	return cache
+}
+
+// pinReads pins, in each upstream's file, the set a set just recorded found that upstream by (products: name key to the
+// key it was found under), so the file keeps it for this tree (#xjqwsad).
+func pinReads(cache string, products map[string]string) {
+	tree := pinTree(cache)
+	for nameKey, key := range products {
+		file, err := loadReads(cache, nameKey)
+		if err != nil || !slices.ContainsFunc(file.Sets, func(set readSet) bool { return set.Key == key && set.Pinned != tree }) {
+			continue
+		}
+		withReads(cache, nameKey, func(file *readsFile) error {
+			for index := range file.Sets {
+				if file.Sets[index].Key == key {
+					file.Sets[index].Pinned = tree
+				}
+			}
+			return nil
+		})
+	}
+}
+
 // sortedEntries is entries without repeats, in the order every machine reads them: by path, then kind.
 func sortedEntries(lists ...[]readEntry) []readEntry {
 	seen := map[readEntry]bool{}
@@ -271,6 +335,8 @@ func sameEntries(one, other []readEntry) bool {
 type evaluation struct {
 	key    string
 	values []string
+	// products is each product the set reads, by name key, at the key it was found under.
+	products map[string]string
 }
 
 // evaluate values every entry of set on the tree at root and hashes them under nameKey. A product entry is valued
@@ -289,20 +355,104 @@ func evaluate(root, cache, nameKey string, set readSet, depth int, known product
 	}
 	field("buildcache", readsVersion)
 	field("name key", nameKey)
-	result := evaluation{values: make([]string, len(set.Entries))}
+	result := evaluation{values: make([]string, len(set.Entries)), products: map[string]string{}}
 	for index, entry := range set.Entries {
-		value, err := entryValue(root, cache, entry, depth, known)
+		value, product, err := entryValue(root, cache, entry, depth, known)
 		if err != nil {
 			return evaluation{}, err
 		}
 		result.values[index] = value
+		if product != "" {
+			result.products[entry.Path] = product
+		}
 		field(entry.Kind+" "+entry.Path, value)
 	}
 	result.key = hex.EncodeToString(hash.Sum(nil))
 	return result, nil
 }
 
-func entryValue(root, cache string, entry readEntry, depth int, known productMemo) (string, error) {
+// entryValue is entry's value on the tree at root and, for a product it reads, the key that product was found under.
+func entryValue(root, cache string, entry readEntry, depth int, known productMemo) (string, string, error) {
+	switch entry.Kind {
+	case "product":
+		found, err := entryProduct(root, cache, entry, depth+1, known)
+		if err != nil {
+			return "", "", err
+		}
+		if found.key == "" {
+			return "", "", fmt.Errorf("it reads product %s, which has no product for this tree (%s)", entry.Path[:12], found.why)
+		}
+		// By the bytes it read, not by the key they're under: another trace settling the same product records the union
+		// of both read sets, which moves its key and not its bytes, and a reader keyed by the key went stale with it
+		// (home-7's dry run, Oct 11: 6 products, typeaware volume and the two that read it among them).
+		digest, err := productDigest(found.directory)
+		return digest, found.key, err
+	case productKeyKind:
+		// A test read set's product, by the key it's found under: its set holds every read of the window the test's set
+		// leaves out, so the key is what moves with them (#mmpt615).
+		found, err := entryProduct(root, cache, entry, depth+1, known)
+		if err != nil {
+			return "", "", err
+		}
+		if found.key == "" {
+			return "", "", fmt.Errorf("it used product %s, which has no product for this tree (%s)", entry.Path[:12], found.why)
+		}
+		return found.key, found.key, nil
+	}
+	value, err := treeEntryValue(root, cache, entry)
+	return value, "", err
+}
+
+// entryProduct is the product a product entry reads on the tree at root: the newest its name key's sets find, unless
+// the entry recorded a value that one doesn't give, when it's the one of those sets, valid on this tree with its
+// product here, that gives it (#xjqwsad). Every set valid on this tree is a correct build of the product here, and
+// the entry names the bytes (a test set's, the key) its reader's key stands on, so an upstream settled under several
+// keys with different bytes in one tree still values as its reader recorded. A set the lookup refuses (refusedSet) is
+// never one, and the product is wherever the lookup would find it (existingPlace). Newest stays the fallback.
+func entryProduct(root, cache string, entry readEntry, depth int, known productMemo) (found, error) {
+	newest, err := productFor(root, cache, entry.Path, depth, known)
+	if err != nil || newest.key == "" || entry.Value == "" {
+		return newest, err
+	}
+	if value, err := productEntryValue(entry.Kind, newest); err != nil || shortValue(value) == entry.Value {
+		return newest, nil
+	}
+	file, err := loadReads(cache, entry.Path)
+	if err != nil {
+		return newest, nil
+	}
+	components := componentsFor(cache, entry.Path, known)
+	for _, set := range file.Sets {
+		if refusedSet(set, entry.Path, components) != "" {
+			continue
+		}
+		evaluated, err := evaluate(root, cache, entry.Path, set, depth, known)
+		if err != nil || evaluated.key == newest.key {
+			continue
+		}
+		directory, ok := existingPlace(filepath.Join(cache, evaluated.key))
+		if !ok {
+			continue
+		}
+		candidate := found{key: evaluated.key, directory: directory}
+		if value, err := productEntryValue(entry.Kind, candidate); err == nil && shortValue(value) == entry.Value {
+			candidate.upstreams = setUpstreams(root, cache, set, depth, known)
+			return candidate, nil
+		}
+	}
+	return newest, nil
+}
+
+// productEntryValue is what a product entry of kind values product by: its bytes, or a test set's, its key.
+func productEntryValue(kind string, product found) (string, error) {
+	if kind == productKeyKind {
+		return product.key, nil
+	}
+	return productDigest(product.directory)
+}
+
+// treeEntryValue is the value of an entry that isn't a product's.
+func treeEntryValue(root, cache string, entry readEntry) (string, error) {
 	switch entry.Kind {
 	case "content", "listing", "exists":
 		if !local(entry.Path) {
@@ -343,29 +493,6 @@ func entryValue(root, cache string, entry readEntry, depth int, known productMem
 			return "no home: " + err.Error(), nil
 		}
 		return existence(filepath.Join(home, filepath.FromSlash(strings.TrimPrefix(entry.Path, "~/")))), nil
-	case "product":
-		found, err := productFor(root, cache, entry.Path, depth+1, known)
-		if err != nil {
-			return "", err
-		}
-		if found.key == "" {
-			return "", fmt.Errorf("it reads product %s, which has no product for this tree (%s)", entry.Path[:12], found.why)
-		}
-		// By the bytes it read, not by the key they're under: another trace settling the same product records the union
-		// of both read sets, which moves its key and not its bytes, and a reader keyed by the key went stale with it
-		// (home-7's dry run, Oct 11: 6 products, typeaware volume and the two that read it among them).
-		return productDigest(found.directory)
-	case productKeyKind:
-		// A test read set's product, by the key it's found under: its set holds every read of the window the test's set
-		// leaves out, so the key is what moves with them (#mmpt615).
-		found, err := productFor(root, cache, entry.Path, depth+1, known)
-		if err != nil {
-			return "", err
-		}
-		if found.key == "" {
-			return "", fmt.Errorf("it used product %s, which has no product for this tree (%s)", entry.Path[:12], found.why)
-		}
-		return found.key, nil
 	case "tool":
 		tools, err := toolsRoot()
 		if err != nil {
@@ -815,7 +942,7 @@ func setUpstreams(root, cache string, set readSet, depth int, known productMemo)
 		if entry.Kind != "product" && entry.Kind != productKeyKind {
 			continue
 		}
-		read, err := productFor(root, cache, entry.Path, depth+1, known)
+		read, err := entryProduct(root, cache, entry, depth+1, known)
 		if err != nil || read.directory == "" {
 			continue
 		}
@@ -1073,16 +1200,9 @@ func lookupProduct(root, cache, nameKey string, depth int, known productMemo) (f
 	var result found
 	var newest evaluation
 	for index, set := range file.Sets {
-		if set.Lean && leanKeysOff() {
+		if why := refusedSet(set, nameKey, components); why != "" {
 			if index == 0 {
-				result.why = "lean keys are off (ADAMIC_BUILD_LEAN=off), so its newest read set, keyed by the lean recipe, isn't matched"
-			}
-			continue
-		}
-		// Never used, as a set whose evaluation fails isn't, whatever the pass looked up first (readComponents).
-		if back := readBack(set, nameKey, components); back != "" {
-			if index == 0 {
-				result.why = fmt.Sprintf("it reads product %s, which reads it back through recorded sets, a cycle no key can value", back[:min(12, len(back))])
+				result.why = why
 			}
 			continue
 		}
@@ -1110,6 +1230,20 @@ func lookupProduct(root, cache, nameKey string, depth int, known productMemo) (f
 		result.why = changed(file.Sets[0], newest)
 	}
 	return result, nil
+}
+
+// refusedSet is why no lookup uses set, one of nameKey's, "" when one may: a lean set while lean keys are off, or one
+// reading a product in nameKey's own component, which is never used, as a set whose evaluation fails isn't, whatever
+// the pass looked up first (readComponents). entryProduct asks it as lookupProduct does, so a reader is never valued
+// through a set the lookup refuses (#xjqwsad).
+func refusedSet(set readSet, nameKey string, components map[string]string) string {
+	if set.Lean && leanKeysOff() {
+		return "lean keys are off (ADAMIC_BUILD_LEAN=off), so its newest read set, keyed by the lean recipe, isn't matched"
+	}
+	if back := readBack(set, nameKey, components); back != "" {
+		return fmt.Sprintf("it reads product %s, which reads it back through recorded sets, a cycle no key can value", back[:min(12, len(back))])
+	}
+	return ""
 }
 
 // revalued is set as it values on this tree (evaluated), under the key it gave, when that isn't the key it stored: the
