@@ -21,6 +21,8 @@ type workerFamily struct {
 }
 
 var workerFamilies = []workerFamily{
+	{"TestWorkerdJavaScriptCorpus", "runWorkerdJavaScriptCorpusShard", 8, workerdCorpusKeys, false},
+	{"TestWorkerdWebAssemblyCorpus", "runWorkerdWebAssemblyCorpusShard", 8, workerdCorpusKeys, false},
 	{"TestProduct_WorkerJSON", "runWorkerJSONProductsShard", 32, workerJSONKeys, true},
 	{"TestWorkerMutants", "runWorkerMutantsShard", 8, workerMutantKeys, false},
 	{"TestWasmWorkerMutants", "runWasmWorkerMutantsShard", 4, wasmMutantKeys, false},

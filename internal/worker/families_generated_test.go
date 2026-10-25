@@ -5,6 +5,71 @@ package worker
 
 import "testing"
 
+func TestWorkerdJavaScriptCorpus_000(t *testing.T) {
+	t.Parallel()
+	runWorkerdJavaScriptCorpusShard(t, 0)
+}
+func TestWorkerdJavaScriptCorpus_001(t *testing.T) {
+	t.Parallel()
+	runWorkerdJavaScriptCorpusShard(t, 1)
+}
+func TestWorkerdJavaScriptCorpus_002(t *testing.T) {
+	t.Parallel()
+	runWorkerdJavaScriptCorpusShard(t, 2)
+}
+func TestWorkerdJavaScriptCorpus_003(t *testing.T) {
+	t.Parallel()
+	runWorkerdJavaScriptCorpusShard(t, 3)
+}
+func TestWorkerdJavaScriptCorpus_004(t *testing.T) {
+	t.Parallel()
+	runWorkerdJavaScriptCorpusShard(t, 4)
+}
+func TestWorkerdJavaScriptCorpus_005(t *testing.T) {
+	t.Parallel()
+	runWorkerdJavaScriptCorpusShard(t, 5)
+}
+func TestWorkerdJavaScriptCorpus_006(t *testing.T) {
+	t.Parallel()
+	runWorkerdJavaScriptCorpusShard(t, 6)
+}
+func TestWorkerdJavaScriptCorpus_007(t *testing.T) {
+	t.Parallel()
+	runWorkerdJavaScriptCorpusShard(t, 7)
+}
+func TestWorkerdWebAssemblyCorpus_000(t *testing.T) {
+	t.Parallel()
+	runWorkerdWebAssemblyCorpusShard(t, 0)
+}
+func TestWorkerdWebAssemblyCorpus_001(t *testing.T) {
+	t.Parallel()
+	runWorkerdWebAssemblyCorpusShard(t, 1)
+}
+func TestWorkerdWebAssemblyCorpus_002(t *testing.T) {
+	t.Parallel()
+	runWorkerdWebAssemblyCorpusShard(t, 2)
+}
+func TestWorkerdWebAssemblyCorpus_003(t *testing.T) {
+	t.Parallel()
+	runWorkerdWebAssemblyCorpusShard(t, 3)
+}
+func TestWorkerdWebAssemblyCorpus_004(t *testing.T) {
+	t.Parallel()
+	runWorkerdWebAssemblyCorpusShard(t, 4)
+}
+func TestWorkerdWebAssemblyCorpus_005(t *testing.T) {
+	t.Parallel()
+	runWorkerdWebAssemblyCorpusShard(t, 5)
+}
+func TestWorkerdWebAssemblyCorpus_006(t *testing.T) {
+	t.Parallel()
+	runWorkerdWebAssemblyCorpusShard(t, 6)
+}
+func TestWorkerdWebAssemblyCorpus_007(t *testing.T) {
+	t.Parallel()
+	runWorkerdWebAssemblyCorpusShard(t, 7)
+}
+
 // Not parallel: build products share compiler and runtime inputs.
 func TestProduct_WorkerJSON_000(t *testing.T) {
 	runWorkerJSONProductsShard(t, 0)

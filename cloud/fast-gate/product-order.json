@@ -2031,6 +2031,12 @@
     "internal/worker TestProduct_WorkerComputeSieveMutant": [
       "internal/worker TestProduct_WorkerCompiler"
     ],
+    "internal/worker TestProduct_WorkerdJavaScript": [
+      "internal/worker TestProduct_WorkerCompiler"
+    ],
+    "internal/worker TestProduct_WorkerdWebAssembly": [
+      "internal/worker TestProduct_WorkerCompiler"
+    ],
     "internal/worker TestProduct_WorkerWasm_000": [
       "internal/worker TestProduct_WorkerWasmTransform",
       "internal/worker TestProduct_WorkerCompiler"
