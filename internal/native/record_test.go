@@ -14,6 +14,7 @@ import (
 	"slices"
 	"strconv"
 	"strings"
+	"sync"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
@@ -117,35 +118,90 @@ func recordCheckPin(t *testing.T, name, stderr string) {
 	}
 }
 
-// Every successful fixture is counted and run with ASan, UBSan and Linux LeakSanitizer enabled.
-// The oracle uses Node's own Object operations and for...in, never the runtime's sort algorithm.
-func TestRecordsAgainstNode(t *testing.T) {
-	t.Parallel()
-	binary := filepath.Join(t.TempDir(), "records")
-	if err := Build(recordHarness(t), binary, Options{Sanitize: true, Count: true}); err != nil {
+// recordHarnessBinary is the counted, sanitized harness every record comparison runs, built once for
+// all of them in this process, in a directory of its own, since a test's own would go when that test ends.
+var recordHarnessBinary = sync.OnceValues(func() (string, error) {
+	source, err := os.ReadFile(filepath.Join(recordFixtures, "harness.c"))
+	if err != nil {
+		return "", err
+	}
+	directory, err := os.MkdirTemp("", "adamic-records-")
+	if err != nil {
+		return "", err
+	}
+	binary := filepath.Join(directory, "records")
+	return binary, Build(string(source), binary, Options{Sanitize: true, Count: true})
+})
+
+func recordBinary(t *testing.T) string {
+	t.Helper()
+	binary, err := recordHarnessBinary()
+	if err != nil {
 		t.Fatal(err)
 	}
-	for _, arguments := range [][]string{{"semantics"}, {"prototypes"}, {"reads"}, {"references"}, {"iteration"}, {"numeric"}, {"two-indices"}, {"workload", "1000000"}, {"bench", "1000"}} {
+	return binary
+}
+
+// recordAgainstNode runs one fixture natively and holds it to the oracle. Node runs beside the native
+// binary rather than after it, so the million-key workload costs the slower of the two, not their sum.
+func recordAgainstNode(t *testing.T, arguments ...string) {
+	t.Helper()
+	binary := recordBinary(t)
+	var oracle struct {
+		stdout, stderr string
+		err            error
+	}
+	oracleDone := make(chan struct{})
+	go func() {
+		defer close(oracleDone)
+		oracle.stdout, oracle.stderr, oracle.err = recordNodeRun(append([]string{filepath.Join(recordFixtures, "oracle.js")}, arguments...)...)
+	}()
+	// A native failure still waits for Node, so no oracle outlives its test.
+	defer func() { <-oracleDone }()
+	stdout, stderr, err := recordRun(binary, arguments...)
+	if err != nil {
+		t.Fatalf("native: %v\n%s", err, stderr)
+	}
+	recordCheckCounts(t, stderr)
+	recordCheckPin(t, strings.Join(arguments, "-"), stderr)
+	<-oracleDone
+	if oracle.err != nil || oracle.stderr != "" {
+		t.Fatalf("Node: %v\n%s", oracle.err, oracle.stderr)
+	}
+	want := oracle.stdout
+	if arguments[0] == "bench" {
+		// Timing is observational. Only workload results are held byte for byte.
+		stdout = strings.Split(stdout, "\n")[0]
+		want = strings.Split(want, "\n")[0]
+	}
+	if stdout != want {
+		t.Fatalf("Node comparison differs: native %d bytes, Node %d bytes; first difference at %d", len(stdout), len(want), recordDifference(stdout, want))
+	}
+}
+
+// Every successful fixture is counted and run with ASan, UBSan and Linux LeakSanitizer enabled.
+// The oracle uses Node's own Object operations and for...in, never the runtime's sort algorithm.
+// The million-key workload is TestRecordWorkloadAgainstNode's, a test of its own for its time.
+func TestRecordFixturesAgainstNode(t *testing.T) {
+	t.Parallel()
+	for _, arguments := range [][]string{{"semantics"}, {"prototypes"}, {"reads"}, {"references"}, {"iteration"}, {"numeric"}, {"two-indices"}, {"bench", "1000"}} {
 		t.Run(strings.Join(arguments, "-"), func(t *testing.T) {
-			stdout, stderr, err := recordRun(binary, arguments...)
-			if err != nil {
-				t.Fatalf("native: %v\n%s", err, stderr)
-			}
-			recordCheckCounts(t, stderr)
-			recordCheckPin(t, strings.Join(arguments, "-"), stderr)
-			want := recordNode(t, arguments...)
-			if arguments[0] == "bench" {
-				// Timing is observational. Only workload results are held byte for byte.
-				stdout = strings.Split(stdout, "\n")[0]
-				want = strings.Split(want, "\n")[0]
-			}
-			if stdout != want {
-				t.Fatalf("Node comparison differs: native %d bytes, Node %d bytes; first difference at %d", len(stdout), len(want), recordDifference(stdout, want))
-			}
+			recordAgainstNode(t, arguments...)
 		})
 	}
-	// The authoritative member list is read from Node rather than copied into this check.
-	// Each operation must stop for every missing member, naming exactly the requested key.
+}
+
+// The million-key workload, counted, sanitized, pinned on Linux and held to Node byte for byte.
+func TestRecordWorkloadAgainstNode(t *testing.T) {
+	t.Parallel()
+	recordAgainstNode(t, "workload", "1000000")
+}
+
+// The authoritative member list is read from Node rather than copied into this check.
+// Each operation must stop for every missing member, naming exactly the requested key.
+func TestRecordMissingMembersStop(t *testing.T) {
+	t.Parallel()
+	binary := recordBinary(t)
 	for _, name := range recordPrototypeNames(t) {
 		for _, operation := range []string{"missing-get", "missing-has"} {
 			t.Run(operation+"/"+name, func(t *testing.T) {
@@ -156,15 +212,17 @@ func TestRecordsAgainstNode(t *testing.T) {
 			})
 		}
 	}
-	// A deliberate NotYet ends at a panic, like other runtime panics: leak checking at normal
-	// exit does not apply. Check its exact message and exit, and reject sanitizer diagnostics.
-	t.Run("proto-assignment", func(t *testing.T) {
-		stdout, stderr, err := recordRun(binary, "proto-assignment")
-		exit, ok := err.(*exec.ExitError)
-		if !ok || exit.ExitCode() != 70 || stdout != "" || !strings.HasPrefix(stderr, "adamic: panic: NotYet: record assignment to __proto__ requires the Object.prototype setter; use an own data property\n") || strings.Contains(stderr, "Sanitizer") {
-			t.Fatalf("want explicit NotYet and exit 70: %v\n%s\n%s", err, stdout, stderr)
-		}
-	})
+}
+
+// A deliberate NotYet ends at a panic, like other runtime panics: leak checking at normal
+// exit does not apply. Check its exact message and exit, and reject sanitizer diagnostics.
+func TestRecordProtoAssignmentStops(t *testing.T) {
+	t.Parallel()
+	stdout, stderr, err := recordRun(recordBinary(t), "proto-assignment")
+	exit, ok := err.(*exec.ExitError)
+	if !ok || exit.ExitCode() != 70 || stdout != "" || !strings.HasPrefix(stderr, "adamic: panic: NotYet: record assignment to __proto__ requires the Object.prototype setter; use an own data property\n") || strings.Contains(stderr, "Sanitizer") {
+		t.Fatalf("want explicit NotYet and exit 70: %v\n%s\n%s", err, stdout, stderr)
+	}
 }
 
 func recordPrototypeNames(t *testing.T) []string {
