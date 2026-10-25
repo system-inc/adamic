@@ -63,6 +63,24 @@ type cycleFinder struct {
 	writes []fresh.Write
 
 	libraryIterators []libraryIteratorCapture
+	// A type's slots and strong links do not change during a walk. Keep their checker
+	// queries and compatible views once, rather than deriving them for every slot.
+	fieldCache     map[*checker.Type][]*ast.Symbol
+	functionCache  map[*checker.Type]bool
+	templateCache  map[*checker.Type]bool
+	weakCache      map[*checker.Type]bool
+	relationCache  map[[2]*checker.Type]bool
+	reachCache     map[cycleReach]bool
+	reachEdges     map[cycleNode][]cycleNode
+	reachShapes    int
+	shapeIndex     map[string][]*checker.Type
+	shapeIndexSize int
+	literalTypes   map[*checker.Type]*checker.Type
+	literalSlots   cycleSlotTrie
+	shapeChoices   []*checker.Type
+	writeIndex     map[cycleWriteKey][]int
+	writeCache     map[cycleWriteSlot]*fresh.Write
+	unknownWrite   int
 }
 
 // findCycles refuses the first cycle-capable slot that isn't declared Weak and has a write that isn't
@@ -276,29 +294,28 @@ func declaredAt(field *ast.Symbol, otherwise *ast.Node) *ast.Node {
 // class seen from its own declaration): no value has it, and any relates to everything, so it would
 // make every slot look cycle-capable.
 func (f *cycleFinder) template(proven *checker.Type) bool {
-	if proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsTypeParameter) != 0 {
-		return true
+	if value, ok := f.templateCache[proven]; ok {
+		return value
 	}
-	if proven.Flags()&checker.TypeFlagsObject == 0 || proven.ObjectFlags()&checker.ObjectFlagsReference == 0 {
-		return false
+	value := f.deriveTemplate(proven)
+	if f.templateCache == nil {
+		f.templateCache = map[*checker.Type]bool{}
 	}
-	for _, argument := range f.l.checker.GetTypeArguments(proven) {
-		if argument.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsTypeParameter) != 0 {
-			return true
-		}
-	}
-	return false
+	f.templateCache[proven] = value
+	return value
 }
 
 // fields includes literal methods, which own closures. Class prototype methods hold no instance data.
 func (f *cycleFinder) fields(proven *checker.Type) []*ast.Symbol {
-	fields := []*ast.Symbol{}
-	for _, property := range f.l.checker.GetPropertiesOfType(proven) {
-		if (property.Flags&ast.SymbolFlagsMethod == 0 || literalMethod(property)) && !accessorSymbol(property) && !(f.l.isStaticType(proven) && property.Name == "prototype") {
-			fields = append(fields, property)
-		}
+	if value, ok := f.fieldCache[proven]; ok {
+		return value
 	}
-	return fields
+	value := f.deriveFields(proven)
+	if f.fieldCache == nil {
+		f.fieldCache = map[*checker.Type][]*ast.Symbol{}
+	}
+	f.fieldCache[proven] = value
+	return value
 }
 
 // isFunction reports whether a type is a function's, or a class's own (typeof Tag, which new calls).
@@ -306,13 +323,28 @@ func (f *cycleFinder) fields(proven *checker.Type) []*ast.Symbol {
 // as a field of the instance type and isn't one a program can set; seen as an object, that prototype
 // read as a mutable field reaching back, and every class made with new was refused.
 func (f *cycleFinder) isFunction(proven *checker.Type) bool {
-	return f.l.isLibraryType(proven, "Function") || len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0 || (len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 && (!f.l.isStaticType(proven) || len(f.l.staticGlobals) == 0))
+	if value, ok := f.functionCache[proven]; ok {
+		return value
+	}
+	value := f.deriveIsFunction(proven)
+	if f.functionCache == nil {
+		f.functionCache = map[*checker.Type]bool{}
+	}
+	f.functionCache[proven] = value
+	return value
 }
 
 // weak reports whether a slot's type is a Weak<Target>, which holds nothing.
 func (f *cycleFinder) weak(proven *checker.Type) bool {
-	representation, _ := f.l.representation(proven)
-	return representation == ir.Weak
+	if value, ok := f.weakCache[proven]; ok {
+		return value
+	}
+	value := f.deriveWeak(proven)
+	if f.weakCache == nil {
+		f.weakCache = map[*checker.Type]bool{}
+	}
+	f.weakCache[proven] = value
+	return value
 }
 
 // slotsOf refuses the first of a type's mutable slots that can close a cycle, unless every write
@@ -332,7 +364,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 			if f.weak(element) || !f.reaches(element, cycleNode{proven: holder}) {
 				continue
 			}
-			write := f.unproven(fresh.WriteElement, holder, "")
+			write := f.cycleUnproven(fresh.WriteElement, holder, "")
 			if write == nil {
 				continue
 			}
@@ -347,7 +379,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 	case l.recordElement(holder) != nil:
 		element := l.recordElement(holder)
 		if !f.weak(element) && f.reaches(element, cycleNode{proven: holder}) {
-			if write := f.unproven(fresh.WriteMapEntry, holder, ""); write != nil {
+			if write := f.cycleUnproven(fresh.WriteMapEntry, holder, ""); write != nil {
 				return &Refused{cycle: true, Where: l.program.Where(f.where[holder]), What: name + ", a record whose values can reach back to its holder: a cycle reference counting cannot free, and " + f.writtenAt(write) + " may close one", Fix: "use weak links or write only values proven unable to reach the record (adamic/cycle-capable)"}
 			}
 		}
@@ -355,7 +387,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 	case l.isLibraryType(holder, "Set"):
 		arguments := l.checker.GetTypeArguments(holder)
 		if len(arguments) == 1 && f.reaches(arguments[0], cycleNode{proven: holder}) {
-			if write := f.unproven(fresh.WriteSetElement, holder, ""); write != nil {
+			if write := f.cycleUnproven(fresh.WriteSetElement, holder, ""); write != nil {
 				return &Refused{
 					cycle: true,
 					Where: l.program.Where(f.where[holder]),
@@ -367,7 +399,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 	case l.isLibraryType(holder, "Map"):
 		arguments := l.checker.GetTypeArguments(holder)
 		if len(arguments) == 2 && f.reaches(arguments[0], cycleNode{proven: holder}) {
-			if write := f.unproven(fresh.WriteMapEntry, holder, ""); write != nil {
+			if write := f.cycleUnproven(fresh.WriteMapEntry, holder, ""); write != nil {
 				return &Refused{
 					cycle: true,
 					Where: l.program.Where(f.where[holder]),
@@ -377,7 +409,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 			}
 		}
 		if len(arguments) == 2 && !f.weak(arguments[1]) && f.reaches(arguments[1], cycleNode{proven: holder}) {
-			if write := f.unproven(fresh.WriteMapEntry, holder, ""); write != nil {
+			if write := f.cycleUnproven(fresh.WriteMapEntry, holder, ""); write != nil {
 				return &Refused{
 					cycle: true,
 					Where: l.program.Where(f.where[holder]),
@@ -397,7 +429,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 			if f.weak(proven) || !f.reaches(proven, cycleNode{proven: holder}) {
 				continue
 			}
-			write := f.unproven(fresh.WriteField, holder, field.Name)
+			write := f.cycleUnproven(fresh.WriteField, holder, field.Name)
 			if write == nil {
 				continue
 			}
@@ -424,114 +456,41 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 // reaches reports whether a value of type from can reach target: a value seen as target's type
 // (either way round, since either may be what the value really is), or target's cell.
 func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
+	// graphTypes adds allocation views after selecting seeds. Rebuild links for that
+	// second graph, since a newly discovered shape may add a strong path.
+	if f.reachEdges == nil || f.reachShapes != len(f.shapes) {
+		f.reachEdges = map[cycleNode][]cycleNode{}
+		f.reachCache = map[cycleReach]bool{}
+		f.reachShapes = len(f.shapes)
+	}
+	key := cycleReach{from, target}
+	if value, ok := f.reachCache[key]; ok {
+		return value
+	}
 	visited := map[cycleNode]bool{}
 	queue := []cycleNode{{proven: from}}
-	for len(queue) > 0 {
-		node := queue[0]
-		queue = queue[1:]
+	for len(queue) != 0 {
+		node := queue[len(queue)-1]
+		if node.proven != nil {
+			node.proven = f.literalType(node.proven)
+		}
+		queue = queue[:len(queue)-1]
 		if visited[node] {
 			continue
 		}
 		visited[node] = true
-		if node.cell != 0 {
-			if node == target {
-				return true
-			}
-			// An interior async cell retains its owner, not just its declared value.
-			// Completion drops private slots; captured slots remain reachable through
-			// any escaped cell. Follow every such slot irrespective of signature.
-			local := f.l.result.Locals[node.cell-1]
-			if local.EnvironmentCell && local.Function >= 0 {
-				owner := f.l.result.Functions[local.Function]
-				if owner.Async {
-					for _, held := range owner.FrameEnvironment {
-						if f.l.result.Locals[held].Captured {
-							queue = append(queue, cycleNode{cell: held + 1})
-						}
-					}
-				}
-			}
-			if proven := f.l.localTypes[node.cell-1]; proven != nil {
-				queue = append(queue, cycleNode{proven: proven})
-			}
-			// A this shared by every instantiation of a class held the same way is each of them.
-			for _, proven := range f.l.localAlso[node.cell-1] {
-				queue = append(queue, cycleNode{proven: proven})
-			}
-			continue
-		}
-		proven := node.proven
-		flags := proven.Flags()
-		if f.weak(proven) || f.template(proven) {
-			// A Weak holds nothing.
-			continue
-		}
-		if flags&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
-			for _, member := range proven.Types() {
-				queue = append(queue, cycleNode{proven: member})
-			}
-			continue
-		}
-		if flags&checker.TypeFlagsObject == 0 {
-			continue
-		}
-		if target.proven != nil && f.related(proven, target.proven) {
+		if (node.cell != 0 && node == target) || (node.proven != nil && !f.weak(node.proven) && !f.template(node.proven) && node.proven.Flags()&checker.TypeFlagsObject != 0 && target.proven != nil && f.related(node.proven, target.proven)) {
+			f.reachCache[key] = true
 			return true
 		}
-		switch {
-		case f.l.isLibraryType(proven, "MapIterator", "SetIterator"):
-			queue = append(queue, f.libraryIteratorCaptures(proven)...)
-		case f.isFunction(proven):
-			// Construct signatures can hide constructor objects behind an interface.
-			if f.l.isLibraryType(proven, "Function") || len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
-				for symbol := range f.l.statics {
-					actual := f.l.checker.GetTypeOfSymbol(symbol)
-					if f.l.checker.IsTypeAssignableTo(actual, proven) {
-						queue = append(queue, cycleNode{proven: actual})
-					}
-				}
-			}
-			// What a function value holds is what it captured: the cells of every function value the
-			// program makes that can be seen as this type.
-			for _, closure := range f.l.closureRecords {
-				if !f.l.checker.IsTypeAssignableTo(closure.proven, proven) {
-					continue
-				}
-				for _, local := range f.l.result.Functions[closure.function].Environment {
-					queue = append(queue, cycleNode{cell: local + 1})
-				}
-			}
-		case f.l.recordElement(proven) != nil:
-			queue = append(queue, cycleNode{proven: f.l.recordElement(proven)})
-		case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
-			for _, argument := range f.l.checker.GetTypeArguments(proven) {
-				queue = append(queue, cycleNode{proven: argument})
-			}
-		default:
-			if f.l.isStaticType(proven) {
-				if parent := f.l.staticBase(f.l.staticClass(proven, nil)); parent != nil {
-					queue = append(queue, cycleNode{proven: f.l.checker.GetTypeOfSymbol(f.l.symbol(parent.Name()))})
-				}
-			}
-			for _, accessor := range f.l.accessorCaptures {
-				if f.l.checker.IsTypeAssignableTo(accessor.holder, proven) {
-					for _, local := range f.l.result.Functions[accessor.function].Environment {
-						queue = append(queue, cycleNode{cell: local + 1})
-					}
-				}
-			}
-			for _, field := range f.fields(proven) {
-				queue = append(queue, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)})
-			}
-			// A value seen as this type may be any object type the program has that can be seen as
-			// it, with fields this type doesn't show.
-			for _, shape := range f.shapes {
-				if shape != proven && f.l.checker.IsTypeAssignableTo(shape, proven) {
-					queue = append(queue, cycleNode{proven: shape})
-				}
-			}
+		links, ok := f.reachEdges[node]
+		if !ok {
+			links = f.reachLinks(node)
+			f.reachEdges[node] = links
 		}
+		queue = append(queue, links...)
 	}
+	f.reachCache[key] = false
 	return false
 }
 
@@ -551,13 +510,19 @@ func (f *cycleFinder) present(proven *checker.Type) string {
 
 // related reports whether one value could be seen as both types: one is assignable to the other.
 func (f *cycleFinder) related(one *checker.Type, other *checker.Type) bool {
-	if one == other {
-		return true
+	if one.Id() > other.Id() {
+		one, other = other, one
 	}
-	if f.isFunction(one) || f.isFunction(other) {
-		return false
+	key := [2]*checker.Type{one, other}
+	if value, ok := f.relationCache[key]; ok {
+		return value
 	}
-	return f.l.checker.IsTypeAssignableTo(one, other) || f.l.checker.IsTypeAssignableTo(other, one)
+	value := f.deriveRelated(one, other)
+	if f.relationCache == nil {
+		f.relationCache = map[[2]*checker.Type]bool{}
+	}
+	f.relationCache[key] = value
+	return value
 }
 
 func literalMethod(property *ast.Symbol) bool {
@@ -567,4 +532,324 @@ func literalMethod(property *ast.Symbol) bool {
 		}
 	}
 	return false
+}
+
+func (f *cycleFinder) deriveTemplate(proven *checker.Type) bool {
+	if proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsTypeParameter) != 0 {
+		return true
+	}
+	if proven.Flags()&checker.TypeFlagsObject == 0 || proven.ObjectFlags()&checker.ObjectFlagsReference == 0 {
+		return false
+	}
+	for _, argument := range f.l.checker.GetTypeArguments(proven) {
+		if argument.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsTypeParameter) != 0 {
+			return true
+		}
+	}
+	return false
+}
+
+func (f *cycleFinder) deriveFields(proven *checker.Type) []*ast.Symbol {
+	fields := []*ast.Symbol{}
+	for _, property := range f.l.checker.GetPropertiesOfType(proven) {
+		if (property.Flags&ast.SymbolFlagsMethod == 0 || literalMethod(property)) && !accessorSymbol(property) && !(f.l.isStaticType(proven) && property.Name == "prototype") {
+			fields = append(fields, property)
+		}
+	}
+	return fields
+}
+
+func (f *cycleFinder) deriveIsFunction(proven *checker.Type) bool {
+	return len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0 || (len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 && (!f.l.isStaticType(proven) || len(f.l.staticGlobals) == 0))
+}
+
+func (f *cycleFinder) deriveWeak(proven *checker.Type) bool {
+	representation, _ := f.l.representation(proven)
+	return representation == ir.Weak
+}
+
+func (f *cycleFinder) reachLinks(node cycleNode) []cycleNode {
+	links := []cycleNode{}
+	if node.cell != 0 {
+		// An interior async cell retains its owner, not just its declared value.
+		// Completion drops private slots; captured slots remain reachable through
+		// any escaped cell. Follow every such slot irrespective of signature.
+		local := f.l.result.Locals[node.cell-1]
+		if local.EnvironmentCell && local.Function >= 0 {
+			owner := f.l.result.Functions[local.Function]
+			if owner.Async {
+				for _, held := range owner.FrameEnvironment {
+					if f.l.result.Locals[held].Captured {
+						links = append(links, cycleNode{cell: held + 1})
+					}
+				}
+			}
+		}
+		if proven := f.l.localTypes[node.cell-1]; proven != nil {
+			links = append(links, cycleNode{proven: proven})
+		}
+		// A this shared by every instantiation of a class held the same way is each of them.
+		for _, proven := range f.l.localAlso[node.cell-1] {
+			links = append(links, cycleNode{proven: proven})
+		}
+
+		return links
+	}
+	proven := node.proven
+	flags := proven.Flags()
+	if f.weak(proven) || f.template(proven) {
+		// A Weak holds nothing.
+		return nil
+	}
+	if flags&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		for _, member := range proven.Types() {
+			links = append(links, cycleNode{proven: member})
+		}
+		return links
+	}
+	if flags&checker.TypeFlagsObject == 0 {
+		return nil
+	}
+	switch {
+	case f.l.isLibraryType(proven, "MapIterator", "SetIterator"):
+		links = append(links, f.libraryIteratorCaptures(proven)...)
+	case f.isFunction(proven):
+		// Construct signatures can hide constructor objects behind an interface.
+		if f.l.isLibraryType(proven, "Function") || len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
+			for symbol := range f.l.statics {
+				actual := f.l.checker.GetTypeOfSymbol(symbol)
+				if f.l.checker.IsTypeAssignableTo(actual, proven) {
+					links = append(links, cycleNode{proven: actual})
+				}
+			}
+		}
+		// What a function value holds is what it captured: the cells of every function value the
+		// program makes that can be seen as this type.
+		for _, closure := range f.l.closureRecords {
+			if !f.l.checker.IsTypeAssignableTo(closure.proven, proven) {
+				continue
+			}
+			for _, local := range f.l.result.Functions[closure.function].Environment {
+				links = append(links, cycleNode{cell: local + 1})
+			}
+		}
+	case f.l.recordElement(proven) != nil:
+		links = append(links, cycleNode{proven: f.l.recordElement(proven)})
+	case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
+		for _, argument := range f.l.checker.GetTypeArguments(proven) {
+			links = append(links, cycleNode{proven: argument})
+		}
+	default:
+		if f.l.isStaticType(proven) {
+			if parent := f.l.staticBase(f.l.staticClass(proven, nil)); parent != nil {
+				links = append(links, cycleNode{proven: f.l.checker.GetTypeOfSymbol(f.l.symbol(parent.Name()))})
+			}
+		}
+		for _, accessor := range f.l.accessorCaptures {
+			if f.l.checker.IsTypeAssignableTo(accessor.holder, proven) {
+				for _, local := range f.l.result.Functions[accessor.function].Environment {
+					links = append(links, cycleNode{cell: local + 1})
+				}
+			}
+		}
+		for _, field := range f.fields(proven) {
+			links = append(links, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)})
+		}
+		// A value seen as this type may be any object type the program has that can be seen as
+		// it, with fields this type doesn't show.
+		for _, shape := range f.shapeCandidates(proven) {
+			if shape != proven && f.l.checker.IsTypeAssignableTo(shape, proven) {
+				links = append(links, cycleNode{proven: shape})
+			}
+		}
+	}
+	return links
+}
+
+func (f *cycleFinder) deriveRelated(one *checker.Type, other *checker.Type) bool {
+	if one == other {
+		return true
+	}
+	if f.isFunction(one) || f.isFunction(other) {
+		return false
+	}
+	return f.l.checker.IsTypeAssignableTo(one, other) || f.l.checker.IsTypeAssignableTo(other, one)
+}
+
+func (f *cycleFinder) shapeCandidates(proven *checker.Type) []*checker.Type {
+	if f.shapeIndex == nil || f.shapeIndexSize != len(f.shapes) {
+		f.shapeIndex = map[string][]*checker.Type{}
+		f.shapeChoices = nil
+		included := map[*checker.Type]bool{}
+		for _, shape := range f.shapes {
+			shape = f.literalType(shape)
+			if included[shape] {
+				continue
+			}
+			included[shape] = true
+			f.shapeChoices = append(f.shapeChoices, shape)
+			for _, property := range f.l.checker.GetPropertiesOfType(shape) {
+				f.shapeIndex[property.Name] = append(f.shapeIndex[property.Name], shape)
+			}
+		}
+		f.shapeIndexSize = len(f.shapes)
+	}
+	candidates := f.shapeChoices
+	for _, property := range f.l.checker.GetPropertiesOfType(proven) {
+		if property.Flags&ast.SymbolFlagsOptional == 0 && len(f.shapeIndex[property.Name]) < len(candidates) {
+			candidates = f.shapeIndex[property.Name]
+		}
+	}
+	return candidates
+}
+
+func (f *cycleFinder) literalType(proven *checker.Type) *checker.Type {
+	if prior := f.literalTypes[proven]; prior != nil {
+		return prior
+	}
+	if f.literalTypes == nil {
+		f.literalTypes = map[*checker.Type]*checker.Type{}
+	}
+	actual := proven
+	if proven.Flags()&checker.TypeFlagsObject != 0 && proven.ObjectFlags()&checker.ObjectFlagsObjectLiteral != 0 && !f.isFunction(proven) && len(f.l.checker.GetIndexInfosOfType(proven)) == 0 {
+		properties := f.l.checker.GetPropertiesOfType(proven)
+		// A paired setter can have a write type different from its getter's read
+		// type. Keep accessor identities rather than reducing them to read slots.
+		for _, property := range properties {
+			if accessorSymbol(property) {
+				f.literalTypes[proven] = proven
+				return proven
+			}
+		}
+		trie := &f.literalSlots
+		for _, property := range properties {
+			key := cycleSlotKey{
+				flags:    property.Flags,
+				held:     (property.Flags&ast.SymbolFlagsMethod == 0 || literalMethod(property)) && !accessorSymbol(property),
+				name:     property.Name,
+				proven:   f.l.checker.GetTypeOfSymbol(property),
+				optional: property.Flags&ast.SymbolFlagsOptional != 0,
+				readonly: f.l.checker.IsReadonlySymbol(property),
+			}
+			if trie.next == nil {
+				trie.next = map[cycleSlotKey]*cycleSlotTrie{}
+			}
+			next := trie.next[key]
+			if next == nil {
+				next = &cycleSlotTrie{}
+				trie.next[key] = next
+			}
+			trie = next
+		}
+		flags := proven.ObjectFlags()
+		if trie.proven == nil {
+			trie.proven = map[checker.ObjectFlags]*checker.Type{}
+		}
+		if prior := trie.proven[flags]; prior != nil {
+			actual = prior
+		} else {
+			trie.proven[flags] = proven
+		}
+	}
+	f.literalTypes[proven] = actual
+	return actual
+}
+
+func (f *cycleFinder) cycleUnproven(kind fresh.WriteKind, holder *checker.Type, name string) *fresh.Write {
+	if f.writes == nil {
+		f.writes = fresh.ProveWrites(f.l.result)
+	}
+	if f.writeIndex == nil {
+		f.writeIndex = map[cycleWriteKey][]int{}
+		f.writeCache = map[cycleWriteSlot]*fresh.Write{}
+		f.unknownWrite = -1
+		for index, write := range f.writes {
+			if write.Proven {
+				continue
+			}
+			if write.Kind == fresh.WriteUnknown {
+				if f.unknownWrite < 0 {
+					f.unknownWrite = index
+				}
+				continue
+			}
+			key := cycleWriteKey{write.Kind, write.Name}
+			if write.Kind != fresh.WriteField {
+				key.name = ""
+			}
+			f.writeIndex[key] = append(f.writeIndex[key], index)
+		}
+	}
+	slot := cycleWriteSlot{holder, kind, name}
+	if write, ok := f.writeCache[slot]; ok {
+		return write
+	}
+	candidates := f.writeIndex[cycleWriteKey{kind, name}]
+	// A private field has one source symbol and a written name for each native
+	// instantiation. Match those names once, preserving the old write order.
+	if kind == fresh.WriteField {
+		property := f.l.checker.GetPropertyOfType(holder, name)
+		if property != nil && len(property.Declarations) == 1 {
+			declared := property.Declarations[0].Name()
+			if declared != nil && declared.Kind == ast.KindPrivateIdentifier {
+				candidates = append([]int(nil), candidates...)
+				for key, indices := range f.writeIndex {
+					if key.kind == kind && key.name != name && f.l.cycleFieldMatches(holder, name, key.name) {
+						candidates = append(candidates, indices...)
+					}
+				}
+			}
+		}
+	}
+	first := f.unknownWrite
+	for _, index := range candidates {
+		if first >= 0 && index >= first {
+			continue
+		}
+		write := &f.writes[index]
+		if write.Site == 0 {
+			first = index
+			continue
+		}
+		written := f.l.writeSites[write.Site-1].holder
+		if written == nil || f.template(written) || f.related(holder, written) {
+			first = index
+		}
+	}
+	var write *fresh.Write
+	if first >= 0 {
+		write = &f.writes[first]
+	}
+	f.writeCache[slot] = write
+	return write
+}
+
+type cycleReach struct {
+	from   *checker.Type
+	target cycleNode
+}
+
+type cycleSlotKey struct {
+	flags    ast.SymbolFlags
+	held     bool
+	name     string
+	proven   *checker.Type
+	optional bool
+	readonly bool
+}
+
+type cycleSlotTrie struct {
+	next   map[cycleSlotKey]*cycleSlotTrie
+	proven map[checker.ObjectFlags]*checker.Type
+}
+
+type cycleWriteKey struct {
+	kind fresh.WriteKind
+	name string
+}
+
+type cycleWriteSlot struct {
+	holder *checker.Type
+	kind   fresh.WriteKind
+	name   string
 }

@@ -2350,6 +2350,13 @@
     ],
     "internal/native TestStableIdentityEntriesRecordAliasSplit": [
       "internal/native TestProduct_StableIdentityEntriesRecordAlias"
+    ],
+    "internal/lower TestProduct_CycleScanningCensus": [
+      "internal/oracle TestProduct_ProgramTscSource"
+    ],
+    "internal/lower TestCycleFinderCensusEquality": [
+      "internal/lower TestProduct_ProgramRegionCensusIndexed",
+      "internal/lower TestProduct_CycleScanningCensus"
     ]
   }
 }
