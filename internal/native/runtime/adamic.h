@@ -620,8 +620,9 @@ static inline adamic_value *adamic_object_field(const adamic_object *object, con
 void adamic_refuse_record_fixed_read(const adamic_object *object, const char *name);
 // A uniform field slot (fields.go) is loaded with no shape check. In release builds that rests on
 // lowering: records.go's recordStorageView refuses a dictionary seen as a fixed object, so no record
-// reaches one. Sanitized and counted builds, which every oracle run uses, check it anyway, so the
-// day that refusal stops being the guard a run stops loudly instead of reading past a record's slot.
+// reaches one. Address-sanitized and counted builds, which every oracle run uses, check it anyway,
+// so the day that refusal stops being the guard a run stops loudly instead of reading past a
+// record's slot. Release, UBSan-only and ThreadSanitizer builds keep the bare load.
 #if defined(__SANITIZE_ADDRESS__) || defined(ADAMIC_OWNERSHIP_NOINLINE) || defined(ADAMIC_COUNT)
 #define ADAMIC_UNIFORM_OBJECT(object, name) (adamic_refuse_record_fixed_read((object), (name)), (object))
 #else

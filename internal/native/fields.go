@@ -18,7 +18,7 @@ func (e *emitter) uniformFieldSlot(object, name string) string {
 	}
 	if index, found := e.fieldOffsets[name]; found && index >= 0 {
 		// ADAMIC_UNIFORM_OBJECT is the object itself in release builds and a record check in the
-		// sanitized and counted ones (adamic.h).
+		// address-sanitized and counted ones (adamic.h).
 		return fmt.Sprintf("(&ADAMIC_UNIFORM_OBJECT(%s, %s)->slots[%d])", object, cString(name), index)
 	}
 	return ""
