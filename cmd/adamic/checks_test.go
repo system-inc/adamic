@@ -68,7 +68,8 @@ func explainDriverEnvironment(t *testing.T, environment []string) []string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	return append(slices.Clone(environment), "ADAMIC_EXPLAIN_TEST_DRIVER=1", "ADAMIC_BUILD_CACHE_DIR="+cache)
+	_ = cache
+	return append(slices.Clone(environment), "ADAMIC_EXPLAIN_TEST_DRIVER=1", "XDG_CACHE_HOME="+t.TempDir())
 }
 
 // A driver reads the build cache this process does, whatever the box sets. Mutant: the fresh XDG_CACHE_HOME back in
