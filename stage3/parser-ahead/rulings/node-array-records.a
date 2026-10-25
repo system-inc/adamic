@@ -1,0 +1,9 @@
+interface Node {kind:number;pos:number;}
+interface NodeArray<T extends Node> extends Array<T> {pos:number;end:number;hasTrailingComma:boolean;transformFlags:number;}
+const nodes=[{kind:1,pos:0},{kind:2,pos:1},{kind:3,pos:2},{kind:4,pos:3},{kind:5,pos:4},{kind:6,pos:5},{kind:7,pos:6},{kind:8,pos:7},{kind:9,pos:8},{kind:10,pos:9},{kind:11,pos:10},{kind:12,pos:11},{kind:13,pos:12},{kind:14,pos:13},{kind:15,pos:14},{kind:16,pos:15}] as NodeArray<Node>;
+nodes.pos=-1;
+nodes.end=16;
+nodes.hasTrailingComma=false;
+nodes.transformFlags=1;
+console.log(`${nodes.pos}|${nodes.end}|${nodes.hasTrailingComma}|${nodes.transformFlags}|${nodes.length}`);
+console.log(nodes.map(node => `${node.kind}:${node.pos}`).join(','));

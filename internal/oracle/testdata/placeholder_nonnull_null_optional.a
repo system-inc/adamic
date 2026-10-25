@@ -1,0 +1,16 @@
+function observe(value: string | null | undefined): void {
+    console.log(`${value === null}|${value === undefined}|${typeof value}|${value ?? "fallback"}`);
+}
+let value: string = null!;
+let optional: string | null | undefined = value;
+observe(optional);
+value = undefined!;
+optional = value;
+observe(optional);
+value = "written" + " value";
+optional = value;
+observe(optional);
+const box: {value?: string | undefined} = {value: undefined};
+value = null!;
+box.value = value;
+observe(box.value);

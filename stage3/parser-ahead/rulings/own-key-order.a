@@ -1,0 +1,16 @@
+interface FactoryNode {kind:number;alpha:number;beta:number;'2':number;'10':number;}
+function createBaseNode():FactoryNode {return {kind:1} as FactoryNode;}
+const node=createBaseNode();
+console.log(Object.keys(node).join(','));
+console.log(String('beta' in node));
+node.beta=20;
+node['10']=10;
+node.alpha=3;
+node['2']=2;
+node.beta=21;
+console.log(Object.keys(node).join(','));
+let keys='';
+for(const key in node){keys+=`${keys.length ? ',' : ''}${key}`;}
+console.log(keys);
+console.log(String(node.hasOwnProperty('beta')));
+console.log(String(JSON.stringify(node)));

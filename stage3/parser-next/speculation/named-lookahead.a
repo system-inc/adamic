@@ -1,0 +1,15 @@
+// parser.ts:2774, named lookAhead predicate; speculationHelper at 2256.
+let position=0;
+let currentToken=0;
+function nextToken():number {position++;return ++currentToken;}
+function speculationHelper<T>(callback:()=>T, lookahead:boolean):T {
+ const saveToken=currentToken;
+ const savePosition=position;
+ const result=callback();
+ if(!result || lookahead){currentToken=saveToken;position=savePosition;}
+ return result;
+}
+function lookAhead<T>(callback:()=>T):T {return speculationHelper(callback,true);}
+function nextTokenCanFollowDefaultKeyword():boolean {return nextToken()===1;}
+console.log(String(lookAhead(nextTokenCanFollowDefaultKeyword)));
+console.log(`${position}|${currentToken}`);
