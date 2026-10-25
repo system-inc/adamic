@@ -1,0 +1,7 @@
+{
+  "old": "internal/oracle/testdata/review/refused/non_null.a",
+  "new": "internal/oracle/testdata/review/agree/non_null.a",
+  "body_sha256": "16ce4d76ccd8fd8b52df13383fb601d9b7378a1b4ab10de00473424ad404e1f6",
+  "unchanged": true,
+  "assumption": "The source placeholder-use contract supersedes the old compile-time refusal. Preserve its sound checked-use stop, and use the existing intended-difference review mechanism, with actual Node separately recorded."
+}

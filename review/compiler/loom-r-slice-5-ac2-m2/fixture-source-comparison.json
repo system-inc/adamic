@@ -1,0 +1,238 @@
+[
+  {
+    "path": "internal/lower/testdata/placeholders/nonliteral.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/4ddd17f_weak_single_narrowed.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/backend_stop_catches.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/d96d304_try_stack.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/non_null_refused/non_null_possible_read.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/non_null_refused/non_null_possible_typeerror.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/non_null_refused/non_null_refuse_argument.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/non_null_refused/non_null_refuse_checked.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/non_null_refused/non_null_refuse_comparison.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/non_null_refused/non_null_refuse_conditional.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/non_null_refused/non_null_refuse_element.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/non_null_refused/non_null_refuse_expression.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/non_null_refused/non_null_refuse_logical.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/non_null_refused/non_null_refuse_null.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/non_null_refused/non_null_refuse_return.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/non_null_refused/non_null_refuse_spread.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/non_null_refused/non_null_refuse_undefined.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_alias_reset.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_assignment_result.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_before_use.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_field.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_local.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_null_before_use.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_null_coalesce.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_null_copy.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_null_equality.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_null_json.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_null_loose.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_null_optional.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_null_truthiness.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_null_typeof.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_observe.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_return_assignment.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_saved_leak.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_scanner.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/review/agree/non_null.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "stage3/parser-ahead/factories/already-complete.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "stage3/parser-ahead/factories/complete.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "stage3/parser-ahead/factories/escaped.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "stage3/parser-ahead/factories/scout.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "stage3/parser-ahead/node-array/fields.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "stage3/parser-ahead/node-array/presence.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "stage3/parser-ahead/rulings/factory-unset.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "stage3/parser-ahead/rulings/factory-use.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "stage3/parser-ahead/rulings/node-array-json.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "stage3/parser-ahead/rulings/node-array-keys.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "stage3/parser-ahead/rulings/node-array-length.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "stage3/parser-ahead/rulings/node-array-unset.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "stage3/parser-ahead/rulings/null-placeholder-pending.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "stage3/parser-ahead/rulings/own-key-order.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "stage3/parser-next/speculation/arrow-tryparse.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "stage3/parser-next/speculation/misfit.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "stage3/parser-next/speculation/named-lookahead.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "stage3/parser-next/speculation/named-tryparse.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "stage3/parser-next/speculation/truthiness-rewind.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "stage3/parser-next/stack/benchmark.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "stage3/parser-next/stack/legal.a",
+    "identical_to_source": true
+  },
+  {
+    "path": "stage3/parser-next/stack/pathological.a",
+    "identical_to_source": true
+  }
+]

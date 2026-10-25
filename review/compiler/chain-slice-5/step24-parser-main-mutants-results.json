@@ -1,0 +1,189 @@
+[
+  {
+    "mutant": "branch-union",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/chain-slice-5/branch-union.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactory(Completion.*|ReadBeforeCompletion)$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 15.642205370000056
+  },
+  {
+    "mutant": "omit-escape-missing",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/chain-slice-5/omit-escape-missing.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactory(Completion.*|ReadBeforeCompletion)$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 21.249153523999894
+  },
+  {
+    "mutant": "erase-earlier-read",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/chain-slice-5/erase-earlier-read.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactory(Completion.*|ReadBeforeCompletion)$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 23.891905367999925
+  },
+  {
+    "mutant": "trust-assertion",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/chain-slice-5/trust-assertion.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactory(Completion.*|ReadBeforeCompletion)$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 32.86097022800004
+  },
+  {
+    "mutant": "slot-pos",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/chain-slice-5/slot-pos.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserNodeArrayLayout$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 46.397874387
+  },
+  {
+    "mutant": "slot-end",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/chain-slice-5/slot-end.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserNodeArrayLayout$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 41.50208308800006
+  },
+  {
+    "mutant": "slot-hasTrailingComma",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/chain-slice-5/slot-hasTrailingComma.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserNodeArrayLayout$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 39.050683901000184
+  },
+  {
+    "mutant": "slot-transformFlags",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/chain-slice-5/slot-transformFlags.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserNodeArrayLayout$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 39.39985096800001
+  },
+  {
+    "mutant": "drop-unset-use",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/chain-slice-5/drop-unset-use.json",
+      "./internal/oracle",
+      "-run",
+      "^TestParserConstructionUnsetUse$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 30.56827390300009
+  },
+  {
+    "mutant": "drop-speculation-check",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/chain-slice-5/drop-speculation-check.json",
+      "./internal/oracle",
+      "-run",
+      "^TestParserSpeculationMisfit$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 21.35340095100014
+  },
+  {
+    "mutant": "disable-tiny-stack",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/chain-slice-5/disable-tiny-stack.json",
+      "./internal/oracle",
+      "-run",
+      "^TestParserStackTinyLimit$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 28.224323530999982
+  }
+]

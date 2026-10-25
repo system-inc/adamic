@@ -1,0 +1,21 @@
+{
+  "base": "dbdf977f5b8b0979d414ebe6f20e7aadd312e309",
+  "source": "505835b74876b61595864dcc5ddac6d40ba3767a",
+  "files": 58,
+  "counts": {
+    "checked": 42,
+    "NotYet": 0,
+    "refused": 16,
+    "type error": 0
+  },
+  "headers_added": 13,
+  "predicate_exit": 0,
+  "header_mutants_caught": 2,
+  "header_sensitive_tests": "pass",
+  "reader_guard": "pass",
+  "vet": "pass",
+  "counts_unchanged": true,
+  "program_bodies_unchanged": true,
+  "inherited_freshness_failures": 14,
+  "full_branch_green": false
+}

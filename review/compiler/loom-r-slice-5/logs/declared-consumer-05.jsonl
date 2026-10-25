@@ -1,0 +1,12 @@
+{"Time":"2026-10-18T00:26:23.012884127Z","Action":"start","Package":"github.com/system-inc/adamic/internal/buildcache/cmd/traced"}
+{"Time":"2026-10-18T00:26:23.015465539Z","Action":"run","Package":"github.com/system-inc/adamic/internal/buildcache/cmd/traced","Test":"TestSettleParsesOnlyAskedCalls"}
+{"Time":"2026-10-18T00:26:23.015511869Z","Action":"output","Package":"github.com/system-inc/adamic/internal/buildcache/cmd/traced","Test":"TestSettleParsesOnlyAskedCalls","Output":"=== RUN   TestSettleParsesOnlyAskedCalls\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:26:23.01552595Z","Action":"output","Package":"github.com/system-inc/adamic/internal/buildcache/cmd/traced","Test":"TestSettleParsesOnlyAskedCalls","Output":"=== PAUSE TestSettleParsesOnlyAskedCalls\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:26:23.015528053Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/buildcache/cmd/traced","Test":"TestSettleParsesOnlyAskedCalls"}
+{"Time":"2026-10-18T00:26:23.015533171Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/buildcache/cmd/traced","Test":"TestSettleParsesOnlyAskedCalls"}
+{"Time":"2026-10-18T00:26:23.015534863Z","Action":"output","Package":"github.com/system-inc/adamic/internal/buildcache/cmd/traced","Test":"TestSettleParsesOnlyAskedCalls","Output":"=== CONT  TestSettleParsesOnlyAskedCalls\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:26:23.015810398Z","Action":"output","Package":"github.com/system-inc/adamic/internal/buildcache/cmd/traced","Test":"TestSettleParsesOnlyAskedCalls","Output":"--- PASS: TestSettleParsesOnlyAskedCalls (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:26:23.015815625Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/buildcache/cmd/traced","Test":"TestSettleParsesOnlyAskedCalls","Elapsed":0}
+{"Time":"2026-10-18T00:26:23.015826151Z","Action":"output","Package":"github.com/system-inc/adamic/internal/buildcache/cmd/traced","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:26:23.015864264Z","Action":"output","Package":"github.com/system-inc/adamic/internal/buildcache/cmd/traced","Output":"ok  \tgithub.com/system-inc/adamic/internal/buildcache/cmd/traced\t0.003s\n"}
+{"Time":"2026-10-18T00:26:23.015878675Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/buildcache/cmd/traced","Elapsed":0.003}

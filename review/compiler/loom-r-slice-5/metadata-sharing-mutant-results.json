@@ -1,0 +1,19 @@
+{
+  "mutant": "skip-metadata-sharing",
+  "command": [
+    "go",
+    "test",
+    "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/skip-metadata-sharing.json",
+    "./internal/native",
+    "-run",
+    "^TestParserNodeArrayMetadataSharing$",
+    "-count=1",
+    "-v",
+    "-timeout",
+    "90s"
+  ],
+  "exit": 1,
+  "caught": true,
+  "seconds": 10.27870042099994,
+  "catcher": "TestParserNodeArrayMetadataSharing: metadata child not shared"
+}

@@ -1,0 +1,8 @@
+=== RUN   TestParserSpeculationProductsUseDisplayedPaths
+=== PAUSE TestParserSpeculationProductsUseDisplayedPaths
+=== CONT  TestParserSpeculationProductsUseDisplayedPaths
+    parser_ahead_test.go:180: parser product changed with its source directory
+--- FAIL: TestParserSpeculationProductsUseDisplayedPaths (0.12s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.128s
+FAIL

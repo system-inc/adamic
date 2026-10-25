@@ -1,0 +1,36 @@
+{"Time":"2026-10-14T01:30:09.055650326Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-14T01:30:09.063370572Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckNullBeforeUse"}
+{"Time":"2026-10-14T01:30:09.063443743Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckNullBeforeUse","Output":"=== RUN   TestPlaceholderUseCheckNullBeforeUse\n","OutputType":"frame"}
+{"Time":"2026-10-14T01:30:09.063530083Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckNullBeforeUse","Output":"=== PAUSE TestPlaceholderUseCheckNullBeforeUse\n","OutputType":"frame"}
+{"Time":"2026-10-14T01:30:09.063533147Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckNullBeforeUse"}
+{"Time":"2026-10-14T01:30:09.063536062Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckNullSavedLeak"}
+{"Time":"2026-10-14T01:30:09.063537774Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckNullSavedLeak","Output":"=== RUN   TestPlaceholderUseCheckNullSavedLeak\n","OutputType":"frame"}
+{"Time":"2026-10-14T01:30:09.063540068Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckNullSavedLeak","Output":"=== PAUSE TestPlaceholderUseCheckNullSavedLeak\n","OutputType":"frame"}
+{"Time":"2026-10-14T01:30:09.06354162Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckNullSavedLeak"}
+{"Time":"2026-10-14T01:30:09.063544484Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckAssignmentResult"}
+{"Time":"2026-10-14T01:30:09.063546217Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckAssignmentResult","Output":"=== RUN   TestPlaceholderUseCheckAssignmentResult\n","OutputType":"frame"}
+{"Time":"2026-10-14T01:30:09.063549442Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckAssignmentResult","Output":"=== PAUSE TestPlaceholderUseCheckAssignmentResult\n","OutputType":"frame"}
+{"Time":"2026-10-14T01:30:09.063551064Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckAssignmentResult"}
+{"Time":"2026-10-14T01:30:09.063553518Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckReturnAssignment"}
+{"Time":"2026-10-14T01:30:09.063555301Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckReturnAssignment","Output":"=== RUN   TestPlaceholderUseCheckReturnAssignment\n","OutputType":"frame"}
+{"Time":"2026-10-14T01:30:09.063557754Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckReturnAssignment","Output":"=== PAUSE TestPlaceholderUseCheckReturnAssignment\n","OutputType":"frame"}
+{"Time":"2026-10-14T01:30:09.063559267Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckReturnAssignment"}
+{"Time":"2026-10-14T01:30:09.063632397Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckNullBeforeUse"}
+{"Time":"2026-10-14T01:30:09.06363483Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckNullBeforeUse","Output":"=== CONT  TestPlaceholderUseCheckNullBeforeUse\n","OutputType":"frame"}
+{"Time":"2026-10-14T01:30:09.064428826Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckAssignmentResult"}
+{"Time":"2026-10-14T01:30:09.064441946Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckAssignmentResult","Output":"=== CONT  TestPlaceholderUseCheckAssignmentResult\n","OutputType":"frame"}
+{"Time":"2026-10-14T01:30:09.064450879Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckReturnAssignment"}
+{"Time":"2026-10-14T01:30:09.064452842Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckReturnAssignment","Output":"=== CONT  TestPlaceholderUseCheckReturnAssignment\n","OutputType":"frame"}
+{"Time":"2026-10-14T01:30:09.064454946Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckNullSavedLeak"}
+{"Time":"2026-10-14T01:30:09.06447115Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckNullSavedLeak","Output":"=== CONT  TestPlaceholderUseCheckNullSavedLeak\n","OutputType":"frame"}
+{"Time":"2026-10-14T01:30:10.302275044Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckNullSavedLeak","Output":"--- PASS: TestPlaceholderUseCheckNullSavedLeak (1.24s)\n","OutputType":"frame"}
+{"Time":"2026-10-14T01:30:10.305723417Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckNullSavedLeak","Elapsed":1.24}
+{"Time":"2026-10-14T01:30:10.305757048Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckAssignmentResult","Output":"--- PASS: TestPlaceholderUseCheckAssignmentResult (1.24s)\n","OutputType":"frame"}
+{"Time":"2026-10-14T01:30:10.331788211Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckAssignmentResult","Elapsed":1.24}
+{"Time":"2026-10-14T01:30:10.331828121Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckNullBeforeUse","Output":"--- PASS: TestPlaceholderUseCheckNullBeforeUse (1.27s)\n","OutputType":"frame"}
+{"Time":"2026-10-14T01:30:10.33503484Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckNullBeforeUse","Elapsed":1.27}
+{"Time":"2026-10-14T01:30:10.335051144Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckReturnAssignment","Output":"--- PASS: TestPlaceholderUseCheckReturnAssignment (1.27s)\n","OutputType":"frame"}
+{"Time":"2026-10-14T01:30:10.335055841Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckReturnAssignment","Elapsed":1.27}
+{"Time":"2026-10-14T01:30:10.335058766Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-14T01:30:10.338916701Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t1.283s\n"}
+{"Time":"2026-10-14T01:30:10.338942149Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":1.283}

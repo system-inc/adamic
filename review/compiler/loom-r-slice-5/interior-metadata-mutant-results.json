@@ -1,0 +1,19 @@
+{
+  "mutant": "retain-interior-metadata",
+  "command": [
+    "go",
+    "test",
+    "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/retain-interior-metadata.json",
+    "./internal/native",
+    "-run",
+    "^TestParserNodeArrayMetadataSharing$",
+    "-count=1",
+    "-v",
+    "-timeout",
+    "90s"
+  ],
+  "exit": 1,
+  "caught": true,
+  "seconds": 16.384606753999833,
+  "catcher": "TestParserNodeArrayMetadataSharing: interior metadata retained"
+}

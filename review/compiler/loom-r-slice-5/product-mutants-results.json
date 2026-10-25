@@ -1,0 +1,78 @@
+[
+  {
+    "mutant": "plain-placeholder-map",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/plain-placeholder-map.json",
+      "./internal/ir",
+      "-run",
+      "^TestEveryMapAProgramHoldsIsSorted$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 13.822514728999977,
+    "catcher": "is a plain"
+  },
+  {
+    "mutant": "placeholder-physical-path",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/placeholder-physical-path.json",
+      "./internal/oracle",
+      "-run",
+      "^TestParserPlaceholderProductsUseDisplayedPaths$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 14.255766698999992,
+    "catcher": "parser product changed"
+  },
+  {
+    "mutant": "factory-physical-path",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/factory-physical-path.json",
+      "./internal/oracle",
+      "-run",
+      "^TestParserFactoryProductsUseDisplayedPaths$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 18.087858606999987,
+    "catcher": "parser product changed"
+  },
+  {
+    "mutant": "speculation-physical-path",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/speculation-physical-path.json",
+      "./internal/oracle",
+      "-run",
+      "^TestParserSpeculationProductsUseDisplayedPaths$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 29.045569591999993,
+    "catcher": "parser product changed"
+  }
+]

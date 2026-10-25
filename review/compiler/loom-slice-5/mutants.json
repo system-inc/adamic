@@ -1,0 +1,1161 @@
+[
+  {
+    "mutant": "branch-union",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-slice-5/branch-union.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactory(Completion.*|ReadBeforeCompletion)$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 10.517475848999993,
+    "evidence": "step24-parser-main-mutants-results.json"
+  },
+  {
+    "mutant": "omit-escape-missing",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-slice-5/omit-escape-missing.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactory(Completion.*|ReadBeforeCompletion)$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 9.849748450999869,
+    "evidence": "step24-parser-main-mutants-results.json"
+  },
+  {
+    "mutant": "erase-earlier-read",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-slice-5/erase-earlier-read.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactory(Completion.*|ReadBeforeCompletion)$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 9.19651976199998,
+    "evidence": "step24-parser-main-mutants-results.json"
+  },
+  {
+    "mutant": "trust-assertion",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-slice-5/trust-assertion.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactory(Completion.*|ReadBeforeCompletion)$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 11.14580418699984,
+    "evidence": "step24-parser-main-mutants-results.json"
+  },
+  {
+    "mutant": "slot-pos",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-slice-5/slot-pos.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserNodeArrayLayout$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 21.765022616000124,
+    "evidence": "step24-parser-main-mutants-results.json"
+  },
+  {
+    "mutant": "slot-end",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-slice-5/slot-end.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserNodeArrayLayout$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 10.143525467000018,
+    "evidence": "step24-parser-main-mutants-results.json"
+  },
+  {
+    "mutant": "slot-hasTrailingComma",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-slice-5/slot-hasTrailingComma.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserNodeArrayLayout$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 9.765654671999982,
+    "evidence": "step24-parser-main-mutants-results.json"
+  },
+  {
+    "mutant": "slot-transformFlags",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-slice-5/slot-transformFlags.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserNodeArrayLayout$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 9.398472274999904,
+    "evidence": "step24-parser-main-mutants-results.json"
+  },
+  {
+    "mutant": "drop-unset-use",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-slice-5/drop-unset-use.json",
+      "./internal/oracle",
+      "-run",
+      "^TestParserConstructionUnsetUse$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 14.977832546999934,
+    "evidence": "step24-parser-main-mutants-results.json"
+  },
+  {
+    "mutant": "drop-speculation-check",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-slice-5/drop-speculation-check.json",
+      "./internal/oracle",
+      "-run",
+      "^TestParserSpeculationMisfit$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 12.862383721000015,
+    "evidence": "step24-parser-main-mutants-results.json"
+  },
+  {
+    "mutant": "disable-tiny-stack",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-slice-5/disable-tiny-stack.json",
+      "./internal/oracle",
+      "-run",
+      "^TestParserStackTinyLimit$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 17.804774944999963,
+    "evidence": "step24-parser-main-mutants-results.json"
+  },
+  {
+    "name": "drop-flow-check",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-slice-5/drop-flow-check.json",
+      "./internal/oracle",
+      "-run",
+      "^TestPlaceholderUseCheckSavedLeak$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 26.043541313000105,
+    "mutant": "drop-flow-check",
+    "evidence": "placeholder-nonnull-main-mutants-results.json"
+  },
+  {
+    "name": "retain-alias-proof",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-slice-5/retain-alias-proof.json",
+      "./internal/oracle",
+      "-run",
+      "^TestPlaceholderUseCheckAliasReset$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 20.911225805000186,
+    "mutant": "retain-alias-proof",
+    "evidence": "placeholder-nonnull-main-mutants-results.json"
+  },
+  {
+    "name": "nullish-receiver-twice",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-slice-5/nullish-receiver-twice.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/placeholder_nonnull_null_loose[.]a$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 30.779809518000093,
+    "mutant": "nullish-receiver-twice",
+    "evidence": "placeholder-nonnull-main-mutants-results.json"
+  },
+  {
+    "name": "json-ordinary-assertion",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-slice-5/json-ordinary-assertion.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/placeholder_nonnull_null_json[.]a$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 28.703054620999865,
+    "mutant": "json-ordinary-assertion",
+    "evidence": "placeholder-nonnull-main-mutants-results.json"
+  },
+  {
+    "name": "admit-weak-slot",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-slice-5/admit-weak-slot.json",
+      "./internal/lower",
+      "-run",
+      "^TestPlaceholderWeakSlotStaysNotYet$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 9.269268887999942,
+    "mutant": "admit-weak-slot",
+    "evidence": "placeholder-nonnull-main-mutants-results.json"
+  },
+  {
+    "name": "omit-refusal-state",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-slice-5/omit-refusal-state.json",
+      "./internal/lower",
+      "-run",
+      "^TestOptionalWideningSpreadOverwrite$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 11.673657469999853,
+    "mutant": "omit-refusal-state",
+    "evidence": "placeholder-nonnull-main-mutants-results.json",
+    "limitation": "Nil-result Go panic demonstrates the initialization guard, not a backend behavioral kill."
+  },
+  {
+    "name": "drop-native-nullish-tags",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-slice-5/drop-native-nullish-tags.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/placeholder_nonnull_null_copy[.]a$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 14.662634328999957,
+    "mutant": "drop-native-nullish-tags",
+    "evidence": "placeholder-nonnull-main-mutants-results.json"
+  },
+  {
+    "name": "drop-javascript-union-tag",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-slice-5/drop-javascript-union-tag.json",
+      "./internal/oracle",
+      "-run",
+      "^TestDefaultTaggedSourceViewsDefaultBoxedWrite$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 12.372163141000101,
+    "mutant": "drop-javascript-union-tag",
+    "evidence": "placeholder-nonnull-main-mutants-results.json"
+  },
+  {
+    "mutant": "plain-placeholder-map",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-slice-5/plain-placeholder-map.json",
+      "./internal/ir",
+      "-run",
+      "^TestEveryMapAProgramHoldsIsSorted$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 10.968204484000125,
+    "catcher": "is a plain",
+    "evidence": "product-mutants-results.json"
+  },
+  {
+    "mutant": "placeholder-physical-path",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-slice-5/placeholder-physical-path.json",
+      "./internal/oracle",
+      "-run",
+      "^TestParserPlaceholderProductsUseDisplayedPaths$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 11.601019478999888,
+    "catcher": "parser product changed",
+    "evidence": "product-mutants-results.json"
+  },
+  {
+    "mutant": "factory-physical-path",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-slice-5/factory-physical-path.json",
+      "./internal/oracle",
+      "-run",
+      "^TestParserFactoryProductsUseDisplayedPaths$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 14.028639209000175,
+    "catcher": "parser product changed",
+    "evidence": "product-mutants-results.json"
+  },
+  {
+    "mutant": "speculation-physical-path",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-slice-5/speculation-physical-path.json",
+      "./internal/oracle",
+      "-run",
+      "^TestParserSpeculationProductsUseDisplayedPaths$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 19.575347039999997,
+    "catcher": "parser product changed",
+    "evidence": "product-mutants-results.json"
+  },
+  {
+    "mutant": "unlisted-output",
+    "caught": true,
+    "exit": 1,
+    "catcher": "unlisted backend divergence: stdout differs",
+    "test": "TestUnlistedBackendSourceJavaScriptAgreement",
+    "leaves": [
+      {
+        "test": "TestUnlistedBackendSourceJavaScriptAgreement",
+        "result": "fail",
+        "seconds": 0.3
+      }
+    ],
+    "evidence": "logs/backend-stop-mutants/unlisted-output.log"
+  },
+  {
+    "mutant": "drop-terminal-guard",
+    "caught": true,
+    "exit": 1,
+    "catcher": "exit codes differ",
+    "test": "TestTerminalStackStopJavaScript",
+    "leaves": [
+      {
+        "test": "TestTerminalStackStopJavaScript",
+        "result": "fail",
+        "seconds": 0.15
+      }
+    ],
+    "evidence": "logs/backend-stop-mutants/drop-terminal-guard.log"
+  },
+  {
+    "mutant": "drop-range-error-kind",
+    "caught": true,
+    "exit": 1,
+    "catcher": "exit codes differ",
+    "test": "TestNativeAgreesWithNode",
+    "leaves": [
+      {
+        "test": "TestNativeAgreesWithNode_116",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_user_iterators",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_100",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_normalize_coverage_long",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_124",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_normalize_coverage_limit",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_bitwise_sweep",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_127",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_000",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_126",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_125",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_098",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_099",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_096",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_095",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_050",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_097",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_093",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_091",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_092",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_088",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_089",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_086",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_085",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_084",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_083",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_082",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_081",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_080",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_079",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_090",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_087",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_076",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_078",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_094",
+        "result": "pass",
+        "seconds": 0.01
+      },
+      {
+        "test": "TestNativeAgreesWithNode_074",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_073",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_075",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_072",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_070",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_069",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_068",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_067",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_066",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_071",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_065",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_062",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_061",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_059",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_064",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_060",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_057",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_056",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_055",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_053",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_063",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_054",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_058",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_051",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_052",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_025",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_049",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_046",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_045",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_048",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_043",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_047",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_044",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_042",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_038",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_040",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_041",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_037",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_035",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_039",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_033",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_034",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_036",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_032",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_029",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_028",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_026",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_030",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_013",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_031",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_027",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_022",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_021",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_023",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_018",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_020",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_024",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_017",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_015",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_014",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_120",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_019",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_123",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_016",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_122",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_012",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_121",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_011",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_009",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_007",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_008",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_010",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_115",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_108",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_113",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_119",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_111",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_114",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_112",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_109",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_107",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_106",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_105",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_004",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_006",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_005",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_110",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_003",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_118",
+        "result": "pass",
+        "seconds": 0.01
+      },
+      {
+        "test": "TestNativeAgreesWithNode_103",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_104",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_001",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_002",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_101",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_102",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_117",
+        "result": "pass",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_077",
+        "result": "fail",
+        "seconds": 0.0
+      },
+      {
+        "test": "TestNativeAgreesWithNode_077/internal/oracle/testdata/backend_stop_catches.a",
+        "result": "fail",
+        "seconds": 3.2
+      }
+    ],
+    "evidence": "logs/backend-stop-mutants/drop-range-error-kind.log"
+  },
+  {
+    "mutant": "drop-overflow-message",
+    "caught": true,
+    "exit": 1,
+    "catcher": "non-overflow RangeError was terminal: exit codes differ",
+    "test": "TestNonOverflowRangeErrorCatch",
+    "leaves": [
+      {
+        "test": "TestNonOverflowRangeErrorCatch",
+        "result": "fail",
+        "seconds": 0.13
+      }
+    ],
+    "evidence": "logs/backend-stop-mutants/drop-overflow-message.log"
+  }
+]

@@ -1,0 +1,10 @@
+Add a-check headers to slice 5 refusal fixtures
+
+Apply 505835b7 on pinned main dbdf977f5b as one commit. Add 13 matching
+first-line refusal headers while keeping every program body and counts
+unchanged. The pinned a-check predicate accepts all 58 changed programs
+and rejects real removed-header and wrong-reason mutants.
+
+Conservative scope: keep compiler code and generated tests unchanged.
+Report the inherited freshness reader paths left stale by the prior
+fixture relocation instead of weakening another package coverage.

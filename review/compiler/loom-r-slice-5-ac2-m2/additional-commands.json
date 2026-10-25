@@ -1,0 +1,240 @@
+[
+  {
+    "name": "tsgo-product-prepare",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestProduct_(TSGoArchive|SplitTSGoSource|SplitTSGoBaseline)$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "150s",
+      "-json"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "tsgo-behavior-retry",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestSplitTSGoAgreesUnit0[01]$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "stale-reader",
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-5-ac2-m2/stale-reader-overlay.json",
+      "-run",
+      "^TestFreshCorpusUnitsCoverEveryProgram$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 1
+  },
+  {
+    "name": "missing-tsgo-product",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-5-ac2-m2/missing-tsgo-product-overlay.json",
+      "-run",
+      "^TestSplitTSGoAgreesUnit00$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 1
+  },
+  {
+    "name": "borrowed-record-guard",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-5-ac2-m2/borrowed-record-guard-overlay.json",
+      "-run",
+      "^TestJSONEncoderRecordView_000$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 1
+  },
+  {
+    "name": "wrong-outcome-pin",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestReviewProgramsAgreeWithNode_001$/^non_null[.]a$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 1
+  },
+  {
+    "name": "parallel-guard",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-gate",
+      "-run",
+      "TestEveryTestIsParallelOrSaysWhy|Test.*Product",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "ir-readers",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^TestCallTargetReaders",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./cmd/adamic/...",
+      "./internal/flow/...",
+      "./internal/fresh/...",
+      "./internal/ir/...",
+      "./internal/javascript/...",
+      "./internal/lower/...",
+      "./internal/native/...",
+      "./internal/oracle/..."
+    ],
+    "exit": 0
+  },
+  {
+    "name": "gofmt",
+    "command": [
+      "gofmt",
+      "-l",
+      "cmd/adamic/checks.go",
+      "cmd/adamic/checks_test.go",
+      "internal/flow/infer.go",
+      "internal/fresh/corpus_units_test.go",
+      "internal/fresh/fresh.go",
+      "internal/fresh/fresh_test.go",
+      "internal/ir/ir.go",
+      "internal/javascript/construction.go",
+      "internal/javascript/javascript.go",
+      "internal/javascript/readiness.go",
+      "internal/lower/assignment_value.go",
+      "internal/lower/assignments.go",
+      "internal/lower/cast.go",
+      "internal/lower/cast_proof.go",
+      "internal/lower/class.go",
+      "internal/lower/class_features.go",
+      "internal/lower/class_inheritance.go",
+      "internal/lower/class_static.go",
+      "internal/lower/construction.go",
+      "internal/lower/expression.go",
+      "internal/lower/factory_completion.go",
+      "internal/lower/factory_completion_test.go",
+      "internal/lower/factory_unset.go",
+      "internal/lower/functions.go",
+      "internal/lower/library_array_predicate.go",
+      "internal/lower/library_for_in.go",
+      "internal/lower/library_json_stringify.go",
+      "internal/lower/library_object.go",
+      "internal/lower/locals.go",
+      "internal/lower/node_array.go",
+      "internal/lower/node_array_layout.go",
+      "internal/lower/node_array_layout_test.go",
+      "internal/lower/non_null_impossible_test.go",
+      "internal/lower/object.go",
+      "internal/lower/placeholder.go",
+      "internal/lower/placeholder_test.go",
+      "internal/lower/readiness.go",
+      "internal/lower/readiness_test.go",
+      "internal/lower/refusals.go",
+      "internal/lower/speculation.go",
+      "internal/lower/statements.go",
+      "internal/native/construction.go",
+      "internal/native/emit_branches.go",
+      "internal/native/emit_expressions.go",
+      "internal/native/emit_functions.go",
+      "internal/native/emit_locals.go",
+      "internal/native/emit_objects.go",
+      "internal/native/emit_statements.go",
+      "internal/native/library_object.go",
+      "internal/native/parser_construction_test.go",
+      "internal/native/parser_sharing_test.go",
+      "internal/native/placeholder.go",
+      "internal/native/regexp_test.go",
+      "internal/native/reuse.go",
+      "internal/native/tsgo.go",
+      "internal/native/union.go",
+      "internal/native/units.go",
+      "internal/native/units_tsgo_test.go",
+      "internal/native/view_fields.go",
+      "internal/oracle/backend_divergences_test.go",
+      "internal/oracle/backend_stops_test.go",
+      "internal/oracle/element_access_boundaries_test.go",
+      "internal/oracle/moves_test.go",
+      "internal/oracle/non_null_checked_test.go",
+      "internal/oracle/non_null_impossible_test.go",
+      "internal/oracle/non_null_migration_test.go",
+      "internal/oracle/non_null_refusal_test.go",
+      "internal/oracle/oracle_test.go",
+      "internal/oracle/parser_ahead_counts_test.go",
+      "internal/oracle/parser_ahead_test.go",
+      "internal/oracle/parser_construction_test.go",
+      "internal/oracle/parser_speculation_test.go",
+      "internal/oracle/parser_stack_test.go",
+      "internal/oracle/placeholder_nonnull_test.go",
+      "internal/oracle/readiness_test.go",
+      "internal/oracle/stack_test.go",
+      "internal/oracle/view_fields_test.go"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "consumers",
+    "command": [
+      "python3",
+      "/workspace/adamic/review/compiler/loom-r-slice-5-ac2-m2/consumers.py"
+    ],
+    "exit": 0
+  }
+]

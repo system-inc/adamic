@@ -1,0 +1,14 @@
+{"Time":"2026-10-18T00:19:21.409115339Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex"}
+{"Time":"2026-10-18T00:19:21.41306481Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestShapeFixtures_000"}
+{"Time":"2026-10-18T00:19:21.413156237Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestShapeFixtures_000","Output":"=== RUN   TestShapeFixtures_000\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:21.413183648Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestShapeFixtures_000","Output":"=== PAUSE TestShapeFixtures_000\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:21.413186162Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestShapeFixtures_000"}
+{"Time":"2026-10-18T00:19:21.413188686Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestShapeFixtures_000"}
+{"Time":"2026-10-18T00:19:21.413190519Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestShapeFixtures_000","Output":"=== CONT  TestShapeFixtures_000\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:26.457197258Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestShapeFixtures_000","Output":"    shapes_test.go:279: build go_build_./stage1/cohere/lint/regex/testdata/shapes/gate.go_shapes-gate adc13cd9030d miss 4.90\n"}
+{"Time":"2026-10-18T00:19:27.922497862Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestShapeFixtures_000","Output":"    shapes_test.go:193: PASS fixtures=89 shard=0/16 ran=6 shapes=map[(?i):2 (?m):1 (?s):1 dynamic:7 plain:78] source Node and area constant-string JS; runtime Node=6 library runtime JS=0 native=0 awaits codex/regex-runtime-compiler=6\n"}
+{"Time":"2026-10-18T00:19:27.922607587Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestShapeFixtures_000","Output":"--- PASS: TestShapeFixtures_000 (6.51s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:27.922668248Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestShapeFixtures_000","Elapsed":6.51}
+{"Time":"2026-10-18T00:19:27.92268932Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:27.926937708Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/regex\t6.518s\n"}
+{"Time":"2026-10-18T00:19:27.926969365Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Elapsed":6.518}

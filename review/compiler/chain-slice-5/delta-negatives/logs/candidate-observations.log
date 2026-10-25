@@ -1,0 +1,9 @@
+internal/oracle/testdata/placeholder_nonnull_alias_reset.a ruled witness
+internal/oracle/testdata/placeholder_nonnull_assignment_result.a ruled witness
+internal/oracle/testdata/placeholder_nonnull_before_use.a ruled witness
+internal/oracle/testdata/placeholder_nonnull_null_before_use.a ruled witness
+internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a ruled witness
+internal/oracle/testdata/placeholder_nonnull_return_assignment.a ruled witness
+internal/oracle/testdata/placeholder_nonnull_saved_leak.a ruled witness
+stage3/parser-ahead/rulings/factory-use.a agreement
+stage3/parser-next/speculation/misfit.a ruled witness

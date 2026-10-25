@@ -1,0 +1,18 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./internal/oracle",
+    "-run",
+    "^TestReviewProgramsAgreeWithNode_001$/^non_null[.]a$",
+    "-count=1",
+    "-json",
+    "-timeout",
+    "90s"
+  ],
+  "mutated": {
+    "stdout": "",
+    "stderr": "adamic: panic: placeholder 'value' is unset at argument via value\n",
+    "exit": 71
+  }
+}

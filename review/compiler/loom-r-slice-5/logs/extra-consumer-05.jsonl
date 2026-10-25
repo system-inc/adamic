@@ -1,0 +1,12 @@
+{"Time":"2026-10-18T00:12:16.388048619Z","Action":"start","Package":"github.com/system-inc/adamic/internal/compilerinputs"}
+{"Time":"2026-10-18T00:12:16.3922228Z","Action":"run","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestCheckKeyTellsTheCompilerFromTscWhole"}
+{"Time":"2026-10-18T00:12:16.392294608Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestCheckKeyTellsTheCompilerFromTscWhole","Output":"=== RUN   TestCheckKeyTellsTheCompilerFromTscWhole\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:16.392317131Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestCheckKeyTellsTheCompilerFromTscWhole","Output":"=== PAUSE TestCheckKeyTellsTheCompilerFromTscWhole\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:16.392319705Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestCheckKeyTellsTheCompilerFromTscWhole"}
+{"Time":"2026-10-18T00:12:16.392322249Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestCheckKeyTellsTheCompilerFromTscWhole"}
+{"Time":"2026-10-18T00:12:16.392324092Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestCheckKeyTellsTheCompilerFromTscWhole","Output":"=== CONT  TestCheckKeyTellsTheCompilerFromTscWhole\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:16.400275597Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestCheckKeyTellsTheCompilerFromTscWhole","Output":"--- PASS: TestCheckKeyTellsTheCompilerFromTscWhole (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:16.400308827Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestCheckKeyTellsTheCompilerFromTscWhole","Elapsed":0.01}
+{"Time":"2026-10-18T00:12:16.400330129Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:16.40042684Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Output":"ok  \tgithub.com/system-inc/adamic/internal/compilerinputs\t0.012s\n"}
+{"Time":"2026-10-18T00:12:16.400448923Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/compilerinputs","Elapsed":0.012}

@@ -1,0 +1,11 @@
+{"Time":"2026-10-18T19:51:18.799121939Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-18T19:51:18.804029667Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitTSGoAgreesUnit00"}
+{"Time":"2026-10-18T19:51:18.80409181Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitTSGoAgreesUnit00","Output":"=== RUN   TestSplitTSGoAgreesUnit00\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:51:19.222282556Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitTSGoAgreesUnit00","Output":"    units_tsgo_test.go:170: build go_build_./bridge/tsgo/archive_tsgo.a f19f444a0b57 hit 0.30\n"}
+{"Time":"2026-10-18T19:51:19.373061613Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitTSGoAgreesUnit00","Output":"    units_tsgo_test.go:170: build split-tsgo-source 9f4888740ba7 hit 0.01\n"}
+{"Time":"2026-10-18T19:51:19.436513162Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitTSGoAgreesUnit00","Output":"    units_tsgo_test.go:170: build split-tsgo-baseline-missing-product-mutant: split-tsgo-baseline must be built ahead by TestProduct_SplitTSGoBaseline\n","OutputType":"error"}
+{"Time":"2026-10-18T19:51:19.436582106Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitTSGoAgreesUnit00","Output":"--- FAIL: TestSplitTSGoAgreesUnit00 (0.63s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:51:19.436586713Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitTSGoAgreesUnit00","Elapsed":0.63}
+{"Time":"2026-10-18T19:51:19.436605581Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:51:19.441910656Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native\t0.642s\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:51:19.44193297Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.643}

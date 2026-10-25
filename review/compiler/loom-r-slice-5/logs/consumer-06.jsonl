@@ -1,0 +1,37 @@
+{"Time":"2026-10-18T00:10:41.698473438Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-18T00:10:41.704589634Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs"}
+{"Time":"2026-10-18T00:10:41.704643725Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs","Output":"=== RUN   TestParallelSlotPairs\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:10:41.704802164Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs","Output":"=== PAUSE TestParallelSlotPairs\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:10:41.704807942Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs"}
+{"Time":"2026-10-18T00:10:41.704843746Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs"}
+{"Time":"2026-10-18T00:10:41.704845889Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs","Output":"=== CONT  TestParallelSlotPairs\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:10:41.70488624Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/asan"}
+{"Time":"2026-10-18T00:10:41.704888604Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/asan","Output":"=== RUN   TestParallelSlotPairs/asan\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:10:44.408535734Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/asan","Output":"    scaling_test.go:138: harness threads=4 arguments=[] runs=1 elapsed=56.403269ms\n"}
+{"Time":"2026-10-18T00:10:44.408928104Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/asan","Output":"--- PASS: TestParallelSlotPairs/asan (2.70s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:10:44.408940322Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/asan","Elapsed":2.7}
+{"Time":"2026-10-18T00:10:44.408989226Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/asan_slabs"}
+{"Time":"2026-10-18T00:10:44.4089925Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/asan_slabs","Output":"=== RUN   TestParallelSlotPairs/asan_slabs\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:01.179662778Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/asan_slabs","Output":"    scaling_test.go:138: harness threads=4 arguments=[] runs=1 elapsed=42.879873ms\n"}
+{"Time":"2026-10-18T00:11:01.180320257Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/asan_slabs","Output":"--- PASS: TestParallelSlotPairs/asan_slabs (16.77s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:01.180330843Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/asan_slabs","Elapsed":16.77}
+{"Time":"2026-10-18T00:11:01.18034219Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/count"}
+{"Time":"2026-10-18T00:11:01.180345174Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/count","Output":"=== RUN   TestParallelSlotPairs/count\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:10.973838415Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/count","Output":"    scaling_test.go:138: harness threads=4 arguments=[] runs=1 elapsed=10.897179ms\n"}
+{"Time":"2026-10-18T00:11:10.973912596Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/count","Output":"--- PASS: TestParallelSlotPairs/count (9.79s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:10.973924374Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/count","Elapsed":9.79}
+{"Time":"2026-10-18T00:11:10.973931785Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/release"}
+{"Time":"2026-10-18T00:11:10.973936632Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/release","Output":"=== RUN   TestParallelSlotPairs/release\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:20.762793821Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/release","Output":"    scaling_test.go:138: harness threads=4 arguments=[] runs=1 elapsed=22.103439ms\n"}
+{"Time":"2026-10-18T00:11:20.762833481Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/release","Output":"--- PASS: TestParallelSlotPairs/release (9.78s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:20.762838388Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/release","Elapsed":9.78}
+{"Time":"2026-10-18T00:11:20.762843646Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/tsan"}
+{"Time":"2026-10-18T00:11:20.762845759Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/tsan","Output":"=== RUN   TestParallelSlotPairs/tsan\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:30.101576079Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/tsan","Output":"    scaling_test.go:138: harness threads=4 arguments=[] runs=3 elapsed=513.657546ms\n"}
+{"Time":"2026-10-18T00:11:30.101629229Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/tsan","Output":"--- PASS: TestParallelSlotPairs/tsan (9.34s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:30.101633806Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/tsan","Elapsed":9.34}
+{"Time":"2026-10-18T00:11:30.101639885Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs","Output":"--- PASS: TestParallelSlotPairs (48.40s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:30.101642609Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs","Elapsed":48.4}
+{"Time":"2026-10-18T00:11:30.101648709Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:30.103470698Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t48.403s\n"}
+{"Time":"2026-10-18T00:11:30.103517358Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":48.405}

@@ -1,0 +1,36 @@
+{"Time":"2026-10-18T00:09:11.242641885Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-18T00:09:11.248301855Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRuledWeakBackendOutcomes"}
+{"Time":"2026-10-18T00:09:11.248386883Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRuledWeakBackendOutcomes","Output":"=== RUN   TestRuledWeakBackendOutcomes\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:09:11.248409397Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRuledWeakBackendOutcomes","Output":"=== PAUSE TestRuledWeakBackendOutcomes\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:09:11.2484117Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRuledWeakBackendOutcomes"}
+{"Time":"2026-10-18T00:09:11.248414945Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUnlistedBackendSourceJavaScriptAgreement"}
+{"Time":"2026-10-18T00:09:11.248417429Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUnlistedBackendSourceJavaScriptAgreement","Output":"=== RUN   TestUnlistedBackendSourceJavaScriptAgreement\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:09:11.248422877Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUnlistedBackendSourceJavaScriptAgreement","Output":"=== PAUSE TestUnlistedBackendSourceJavaScriptAgreement\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:09:11.24842488Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUnlistedBackendSourceJavaScriptAgreement"}
+{"Time":"2026-10-18T00:09:11.248427484Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUnlistedBackendSourceNativeAgreement"}
+{"Time":"2026-10-18T00:09:11.248429066Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUnlistedBackendSourceNativeAgreement","Output":"=== RUN   TestUnlistedBackendSourceNativeAgreement\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:09:11.2484317Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUnlistedBackendSourceNativeAgreement","Output":"=== PAUSE TestUnlistedBackendSourceNativeAgreement\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:09:11.248433413Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUnlistedBackendSourceNativeAgreement"}
+{"Time":"2026-10-18T00:09:11.248435476Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestTerminalStackStopJavaScript"}
+{"Time":"2026-10-18T00:09:11.248437078Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestTerminalStackStopJavaScript","Output":"=== RUN   TestTerminalStackStopJavaScript\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:09:11.248439041Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestTerminalStackStopJavaScript","Output":"=== PAUSE TestTerminalStackStopJavaScript\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:09:11.248440634Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestTerminalStackStopJavaScript"}
+{"Time":"2026-10-18T00:09:11.248446492Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRuledWeakBackendOutcomes"}
+{"Time":"2026-10-18T00:09:11.248448225Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRuledWeakBackendOutcomes","Output":"=== CONT  TestRuledWeakBackendOutcomes\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:09:11.248452131Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUnlistedBackendSourceNativeAgreement"}
+{"Time":"2026-10-18T00:09:11.248453783Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUnlistedBackendSourceNativeAgreement","Output":"=== CONT  TestUnlistedBackendSourceNativeAgreement\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:09:11.250257866Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUnlistedBackendSourceJavaScriptAgreement"}
+{"Time":"2026-10-18T00:09:11.250279729Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUnlistedBackendSourceJavaScriptAgreement","Output":"=== CONT  TestUnlistedBackendSourceJavaScriptAgreement\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:09:11.250287771Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestTerminalStackStopJavaScript"}
+{"Time":"2026-10-18T00:09:11.250295943Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestTerminalStackStopJavaScript","Output":"=== CONT  TestTerminalStackStopJavaScript\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:09:11.660125301Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestTerminalStackStopJavaScript","Output":"--- PASS: TestTerminalStackStopJavaScript (0.41s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:09:11.739002144Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestTerminalStackStopJavaScript","Elapsed":0.41}
+{"Time":"2026-10-18T00:09:11.7390592Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUnlistedBackendSourceJavaScriptAgreement","Output":"--- PASS: TestUnlistedBackendSourceJavaScriptAgreement (0.49s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:09:13.846636782Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUnlistedBackendSourceJavaScriptAgreement","Elapsed":0.49}
+{"Time":"2026-10-18T00:09:13.846683302Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUnlistedBackendSourceNativeAgreement","Output":"--- PASS: TestUnlistedBackendSourceNativeAgreement (2.60s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:09:13.88889859Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUnlistedBackendSourceNativeAgreement","Elapsed":2.6}
+{"Time":"2026-10-18T00:09:13.890352747Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRuledWeakBackendOutcomes","Output":"--- PASS: TestRuledWeakBackendOutcomes (2.64s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:09:13.890365766Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRuledWeakBackendOutcomes","Elapsed":2.64}
+{"Time":"2026-10-18T00:09:13.890368811Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:09:13.894223216Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t2.651s\n"}
+{"Time":"2026-10-18T00:09:13.894255815Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":2.652}
