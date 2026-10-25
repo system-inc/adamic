@@ -156,6 +156,17 @@ func TestRecordsAgainstNode(t *testing.T) {
 			})
 		}
 	}
+	// A record reaching a fixed-object read is a lowering bug, and must stop loudly rather than read
+	// undefined or its own table: through an optional field, and through a field named like its slot.
+	for _, mode := range []struct{ name, field string }{{"fixed-optional-read", "total"}, {"fixed-read", "0"}} {
+		t.Run(mode.name, func(t *testing.T) {
+			stdout, stderr, err := recordRun(binary, mode.name)
+			exit, ok := err.(*exec.ExitError)
+			if !ok || exit.ExitCode() != 70 || stdout != "" || !strings.HasPrefix(stderr, "adamic: panic: compiler bug: a record reached a fixed-object read of "+mode.field+"\n") || strings.Contains(stderr, "Sanitizer") {
+				t.Fatalf("want a loud stop and exit 70: %v\nstdout %q\nstderr %s", err, stdout, stderr)
+			}
+		})
+	}
 	// A deliberate NotYet ends at a panic, like other runtime panics: leak checking at normal
 	// exit does not apply. Check its exact message and exit, and reject sanitizer diagnostics.
 	t.Run("proto-assignment", func(t *testing.T) {
