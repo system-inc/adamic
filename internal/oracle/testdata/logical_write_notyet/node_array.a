@@ -1,0 +1,22 @@
+// stage3/parser-ahead/node-array/fields.a's NodeArray shape, its fields written by ||=, &&= and ??=.
+interface Node {kind:number;}
+interface TextRange {pos:number;end:number;}
+enum TransformFlags {None=0,ContainsTypeScript=1}
+interface MutableNodeArray<T extends Node> extends Array<T>,TextRange {
+ hasTrailingComma:boolean;
+ transformFlags:TransformFlags;
+}
+function createNodeArray():MutableNodeArray<Node> {
+ const nodes=[{kind:1}] as MutableNodeArray<Node>;
+ nodes.pos=-1;
+ nodes.end=7;
+ nodes.hasTrailingComma=false;
+ nodes.transformFlags=TransformFlags.None;
+ return nodes;
+}
+const nodes=createNodeArray();
+nodes.hasTrailingComma||=true;
+nodes.end&&=9;
+nodes.pos??=3;
+nodes.transformFlags||=TransformFlags.ContainsTypeScript;
+console.log(`${nodes.pos}|${nodes.end}|${nodes.hasTrailingComma}|${nodes.transformFlags}|${nodes.length}|${nodes[0]?.kind}`);
