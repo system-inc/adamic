@@ -1,0 +1,6 @@
+const r: Record<string, unknown> = {};
+r["a"] = null;
+const v = r["a"];
+console.log(String(v === null));
+console.log(String(v === undefined));
+console.log(String(typeof v));
