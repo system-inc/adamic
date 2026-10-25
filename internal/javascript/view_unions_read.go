@@ -5,11 +5,8 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func init() { checkedViewReadAdapter = readUnionView }
+func init() { checkedViewReadAdapter = readUnionViewAt }
 
-func readUnionView(e *emitter, property ir.Property) (string, bool) {
-	return readUnionViewAt(e, property, "")
-}
 func readUnionViewAt(e *emitter, property ir.Property, object string) (string, bool) {
 	id := property.ViewContract
 	if id <= 0 || int(id) > len(e.program.ViewContracts) {

@@ -9,6 +9,8 @@ func (e *emitter) logicalAssignment(expression ir.LogicalAssignment) string {
 	var left, receiver, key, index string
 	var storage ir.Type
 	var right ir.Expression
+	// Through a checked view, the field is read and written as a plain read and = through it are.
+	viewed := false
 	switch write := expression.Write.(type) {
 	case ir.Assign:
 		left = e.value(expression.Read)
@@ -20,7 +22,14 @@ func (e *emitter) logicalAssignment(expression ir.LogicalAssignment) string {
 			key = e.snapshot(ir.String, e.value(expression.Key)) + "->bytes"
 		}
 		storage, right = write.Value.Type(), write.Value
-		if storage == ir.MaybeNumber {
+		viewed = expression.Key == nil && e.program.CheckedField(write.ViewReceiverTypeID, write.Name)
+		if viewed {
+			read, isProperty := expression.Read.(ir.Property)
+			if !isProperty || read.View == "" {
+				panic("compiler bug: a logical assignment through a checked view without its checked read")
+			}
+			left = e.viewFieldAt(read, receiver)
+		} else if storage == ir.MaybeNumber {
 			left = e.snapshot(storage, fmt.Sprintf("adamic_object_maybe_number(%s, %s, &%s)", receiver, key, e.cache()))
 		} else {
 			slot := e.temporary()
@@ -84,6 +93,10 @@ func (e *emitter) logicalAssignment(expression ir.LogicalAssignment) string {
 		}
 		e.store(write.Local, value, false)
 	case ir.SetProperty:
+		if viewed {
+			e.writeProperty(write, receiver, value)
+			break
+		}
 		e.line("adamic_object_check_write(%s, %s);", receiver, key)
 		slot := e.temporary()
 		e.line("adamic_value *%s = adamic_object_write_field(%s, %s, &%s);", slot, receiver, key, e.cache())

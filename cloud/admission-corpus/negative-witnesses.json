@@ -1,4 +1,53 @@
 {
-  "_comment": "Adding an entry is a ruling routed to @system_adamic. Valid, type-correct programs must never be listed. Schema: witnesses maps SHA-256 of exact source bytes to ruling_task, declaration (file:line), declared_type, repair_from, repair_to, type_correct_sha256, exit (70), stderr (exact bytes; {root} expands to the head checkout). Repair replaces every repair_from with repair_to; its hash can never be listed. Supported literal type lies are string = undefined!/null! and number asserted from a callback returning the string literal wrong. No name lookup; an edit requires Node agreement or a new ruling.",
-  "witnesses": {}
+  "_comment": "Adding an entry is a ruling routed to @system_adamic. Valid, type-correct programs must never be listed. Schema: witnesses maps SHA-256 of exact source bytes to form (empty for literal type lies), ruling_task, ruling, declaration (file:line), declared_type, repair_from, repair_to, type_correct_sha256, exit (70), stderr (exact bytes; {root} expands to the head checkout). Repair replaces every repair_from with repair_to; its hash can never be listed. Supported literal type lies are string = undefined!/null! and number asserted from a callback returning the string literal wrong. The checked_boundary form (form, ruling; #995z2fa, Adamic, Oct 25) is a type lie a checked view's own read or write stops with its located message, adamic: panic: field read failed: ..., whose expected or found type is declared_type; its repair replaces one place and must agree with Node. No name lookup; an edit requires Node agreement or a new ruling.",
+  "witnesses": {
+    "21bf9028f0f55dcac9e8f54a877ae8ed2d71fb8bab82182d5602ff8caf8ba400": {
+      "form": "checked_boundary",
+      "ruling_task": "#995z2fa",
+      "ruling": "Adamic, Oct 25",
+      "declaration": "internal/oracle/testdata/view_logical_write_stops/nullish.ts:5",
+      "declared_type": "number",
+      "repair_from": "return 'abc';",
+      "repair_to": "return 5;",
+      "type_correct_sha256": "7e0c23defdf5ca745f697e384654135c0a096a296a87f60f7ef538ca2bf1c6e0",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: viewed.count is not a number; expected number, found string\n"
+    },
+    "7b219f7865ab7f7203850d80f78115cc8b52bc95176748f20d3b864d7b8fcab7": {
+      "form": "checked_boundary",
+      "ruling_task": "#995z2fa",
+      "ruling": "Adamic, Oct 25",
+      "declaration": "internal/oracle/testdata/view_logical_write_stops/misfit.ts:7",
+      "declared_type": "number",
+      "repair_from": "function initial(): number {",
+      "repair_to": "function initial(): string | number {",
+      "type_correct_sha256": "81bd4a213b2b1d65c03145c669b90a56ed465e73e799af118d699d37ff831910",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: <write>.count is not a string | number; expected string | number, found number\n"
+    },
+    "b952b7017aad279d3685806793c6fdb80a739ce1b873690d6a6636301bd65388": {
+      "form": "checked_boundary",
+      "ruling_task": "#995z2fa",
+      "ruling": "Adamic, Oct 25",
+      "declaration": "internal/oracle/testdata/view_logical_write_stops/and.ts:5",
+      "declared_type": "number",
+      "repair_from": "return 'abc';",
+      "repair_to": "return 5;",
+      "type_correct_sha256": "c911e16e6ad3ab447795dca7ccd72a0a47851169db9968adbbc00e3dcc135049",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: viewed.count is not a number; expected number, found string\n"
+    },
+    "c2742f4a72a33d7f494519c971238ba3c6171a2d130c96e6f1289525841054c1": {
+      "form": "checked_boundary",
+      "ruling_task": "#995z2fa",
+      "ruling": "Adamic, Oct 25",
+      "declaration": "internal/oracle/testdata/view_logical_write_stops/before_cast.ts:6",
+      "declared_type": "number",
+      "repair_from": "return 'abc';",
+      "repair_to": "return 5;",
+      "type_correct_sha256": "af07a4f67aa90cac27f8cb22451456b875df57ea5cf543294c701c57b67eb770",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: view.count is not a number; expected number, found string\n"
+    }
+  }
 }

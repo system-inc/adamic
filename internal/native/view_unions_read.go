@@ -5,14 +5,10 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func init() { checkedViewReadAdapter = readUnionView }
+func init() { checkedViewReadAdapter = readUnionViewAt }
 
 // Registration alone is not admission. Each handled read carries a complete
 // contract and runs the selector before returning any payload to its caller.
-func readUnionView(e *emitter, property ir.Property) (string, bool) {
-	return readUnionViewAt(e, property, "")
-}
-
 func readUnionViewAt(e *emitter, property ir.Property, object string) (string, bool) {
 	id := property.ViewContract
 	if id <= 0 || int(id) > len(e.program.ViewContracts) {
