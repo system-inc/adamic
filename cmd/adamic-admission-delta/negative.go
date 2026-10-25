@@ -14,7 +14,10 @@ import (
 )
 
 type negativeWitness struct {
+	// Form is empty for the literal type lies, or checkedBoundaryForm.
+	Form              string `json:"form,omitempty"`
 	RulingTask        string `json:"ruling_task"`
+	Ruling            string `json:"ruling,omitempty"`
 	Declaration       string `json:"declaration"`
 	DeclaredType      string `json:"declared_type"`
 	RepairFrom        string `json:"repair_from"`
@@ -67,11 +70,48 @@ func readNegativeWitnesses(path string) (negativeWitnessList, error) {
 		if _, err := declarationLine(witness.Declaration); err != nil {
 			return list, err
 		}
-		if !supportedLiteralLie(witness) {
+		if !supportedLie(witness) {
 			return list, fmt.Errorf("unsupported type lie or repair: %s", hash)
 		}
 	}
 	return list, nil
+}
+
+// checkedBoundaryForm is a type lie a checked boundary catches (#995z2fa, Adamic, Oct 25): a value a
+// checked cast let in, stopped at a checked view's own read or write with that check's located message.
+// Its repair is arbitrary text, so the run holds the repaired copy to Node as well.
+const checkedBoundaryForm = "checked_boundary"
+
+// checkedBoundaryStop is the view check's message, and only it: a compiler-bug panic or any other guard
+// never qualifies. Its expected and found types are what the declaration is tied to.
+var checkedBoundaryStop = regexp.MustCompile(`^adamic: panic: field read failed: [^\n]* expected ([^,\n]+), found ([^\n]+)\n$`)
+
+func supportedLie(witness negativeWitness) bool {
+	switch witness.Form {
+	case "":
+		return supportedLiteralLie(witness)
+	case checkedBoundaryForm:
+		return supportedCheckedBoundary(witness)
+	}
+	return false
+}
+
+// A checked boundary's entry names its ruling, and the declared type it states is the one the stop
+// expected, for a read, or found in the slot, for a write.
+func supportedCheckedBoundary(witness negativeWitness) bool {
+	stop := checkedBoundaryStop.FindStringSubmatch(witness.Stderr)
+	if witness.Ruling == "" || stop == nil || strings.Contains(witness.Stderr, "compiler bug") || witness.DeclaredType == "" {
+		return false
+	}
+	if witness.DeclaredType != stop[1] && witness.DeclaredType != stop[2] {
+		return false
+	}
+	return witness.RepairFrom != "" && witness.RepairTo != "" && witness.RepairFrom != witness.RepairTo
+}
+
+// repairedSource is the type-correct copy: every RepairFrom replaced with RepairTo.
+func repairedSource(source []byte, witness negativeWitness) []byte {
+	return bytes.ReplaceAll(source, []byte(witness.RepairFrom), []byte(witness.RepairTo))
 }
 func declarationLine(declaration string) (int, error) {
 	at := strings.LastIndex(declaration, ":")
@@ -100,7 +140,7 @@ func validateWitnessSource(source []byte, witness negativeWitness) error {
 	if regexp.MustCompile(`\b(import|export)\b`).Match(source) {
 		return fmt.Errorf("negative witnesses must be self-contained")
 	}
-	if !supportedLiteralLie(witness) {
+	if !supportedLie(witness) {
 		return fmt.Errorf("unsupported type lie or repair")
 	}
 	line, err := declarationLine(witness.Declaration)
@@ -112,7 +152,14 @@ func validateWitnessSource(source []byte, witness negativeWitness) error {
 		return fmt.Errorf("violated declaration is outside the source")
 	}
 	declaration := lines[line-1]
-	if witness.DeclaredType == "string" {
+	if witness.Form == checkedBoundaryForm {
+		if !regexp.MustCompile(`: ` + regexp.QuoteMeta(witness.DeclaredType) + `[ ;]`).MatchString(declaration) {
+			return fmt.Errorf("violated declaration does not declare its ruled type")
+		}
+		if bytes.Count(source, []byte(witness.RepairFrom)) != 1 {
+			return fmt.Errorf("a checked boundary's repair must replace exactly one place")
+		}
+	} else if witness.DeclaredType == "string" {
 		pattern := `^(let [A-Za-z_$][A-Za-z0-9_$]*: string = ` + regexp.QuoteMeta(witness.RepairFrom) + `;|class [A-Za-z_$][A-Za-z0-9_$]* \{ [A-Za-z_$][A-Za-z0-9_$]*: string = ` + regexp.QuoteMeta(witness.RepairFrom) + `; \})$`
 		if !regexp.MustCompile(pattern).MatchString(declaration) {
 			return fmt.Errorf("declared string does not contain its ruled literal type lie")
@@ -120,7 +167,7 @@ func validateWitnessSource(source []byte, witness negativeWitness) error {
 	} else if string(source) != "function lookAhead(callback:()=>unknown):unknown {return callback();}\nfunction misfit():unknown {return 'wrong';}\nconst result=lookAhead(misfit) as number;\nconsole.log(String(result));\n" || line != 3 {
 		return fmt.Errorf("declared number does not contain its ruled literal callback type lie")
 	}
-	repaired := bytes.ReplaceAll(source, []byte(witness.RepairFrom), []byte(witness.RepairTo))
+	repaired := repairedSource(source, witness)
 	if bytes.Equal(source, repaired) || contentHash(repaired) != witness.TypeCorrectSHA256 {
 		return fmt.Errorf("type-correct repair hash differs")
 	}

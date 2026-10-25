@@ -92,6 +92,19 @@ func TestViewLogicalWritesStopAsTheirPlainTwinsDo(t *testing.T) {
 	}
 }
 
+// The four stops are ruled negative witnesses (#995z2fa, Adamic, Oct 25), listed in
+// cloud/admission-corpus/negative-witnesses.json, and each one's repair, which stores a value of the
+// declared type, agrees with Node natively, sanitized and on JavaScript.
+func TestViewLogicalWriteWitnessRepairsAgreeWithNode(t *testing.T) {
+	t.Parallel()
+	for _, name := range []string{"and", "nullish", "before_cast", "misfit"} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			loomViewsDAgrees(t, "internal/oracle/testdata/view_logical_write_stops/"+name+"_repaired.a")
+		})
+	}
+}
+
 // &&=, ||= and ??= through a checked view by a computed key are refused, by the names its key can be: a
 // plain read through the view by a computed key is refused and a plain = isn't lowered, so there is no
 // checked form to share. The program's whole diagnostic is pinned in its .refused file, and its first
