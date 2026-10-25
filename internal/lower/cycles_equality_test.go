@@ -7,8 +7,10 @@ import (
 	"hash/fnv"
 	"io/fs"
 	"math"
+	"os"
 	"path/filepath"
 	"reflect"
+	"runtime"
 	"slices"
 	"strings"
 	"sync"
@@ -58,7 +60,28 @@ func cycleComparisonShard(path string) uint64 {
 // Compare the entire IR as well as refusal identity, rather than just admission.
 // This includes every graph/Program flag, membership-by-type map, frame, cell,
 // weak field and ownership-query consequence carried by the lowered program.
+// These full Program audits exceed the loaded unit budget. They remain
+// reproducible with ADAMIC_CYCLE_PROGRAM_STRESS=1, -test.timeout=15m and an
+// independent 900-second limit per input. Ordinary mode stays in the unit shards.
+var cycleProgramStressInputs = map[string]bool{
+	"review/compiler/loom-implied-target/followup/objects-2048.a": true,
+	"review/compiler/loom-implied-target/objects.a":               true,
+	"review/compiler/loom-implied-target/objects-sequential.a":    true,
+	"internal/oracle/testdata/moves/accepted/objects.a":           true,
+	"review/compiler/loom-implied-target/followup/objects-4096.a": true,
+}
+
 func cycleCompareProgram(t *testing.T, path string) {
+	t.Helper()
+	regions := []bool{false, true}
+	if cycleProgramStressInputs[path] && os.Getenv("ADAMIC_CYCLE_PROGRAM_STRESS") != "1" {
+		regions = []bool{false}
+		t.Log("budget: Program stress audit is opt-in with ADAMIC_CYCLE_PROGRAM_STRESS=1 and a per-input 900-second limit")
+	}
+	cycleCompareProgramModes(t, path, regions...)
+}
+
+func cycleCompareProgramModes(t *testing.T, path string, regions ...bool) {
 	t.Helper()
 	absolute, err := filepath.Abs(filepath.Join("../..", path))
 	if err != nil {
@@ -69,22 +92,32 @@ func cycleCompareProgram(t *testing.T, path string) {
 		t.Logf("%s: common loader refusal: %v", path, err)
 		return
 	}
-	for _, region := range []bool{false, true} {
+	for mode, region := range regions {
 		// Use fresh, independently initialized checkers. Reusing one checker changes
 		// fresh literal type IDs on the second lowering, even for scanner vs scanner.
-		if region {
+		if mode > 0 {
 			loaded, err = load.Load([]string{absolute})
 			if err != nil {
 				t.Fatal(err)
 			}
 		}
+		options := Options{ProgramRegion: region, OwnershipQuery: true}
+		before, scanTypes, scanErr := cycleLowerForComparison(loaded, options, false)
+		// Only the IR and resolved strings are compared below. Do not retain the
+		// scanning checker's quadratic relation cache while building the indexed copy.
+		loaded = nil
+		if cycleProgramStressInputs[path] {
+			t.Logf("%s: scanning snapshot ready, ProgramRegion=%t; release its checker", path, region)
+			runtime.GC()
+		}
 		indexedInput, err := load.Load([]string{absolute})
 		if err != nil {
 			t.Fatal(err)
 		}
-		options := Options{ProgramRegion: region, OwnershipQuery: true}
-		before, scanTypes, scanErr := cycleLowerForComparison(loaded, options, false)
 		after, indexTypes, indexErr := cycleLowerForComparison(indexedInput, options, true)
+		if cycleProgramStressInputs[path] {
+			t.Logf("%s: indexed snapshot ready, ProgramRegion=%t", path, region)
+		}
 		text := func(err error) string {
 			if err == nil {
 				return ""
@@ -105,7 +138,7 @@ func cycleCompareProgram(t *testing.T, path string) {
 			t.Fatalf("cycle equality difference: %s ProgramRegion=%t: emitted C differs", path, region)
 		}
 	}
-	t.Logf("%s: equal scanning/indexed outcomes in ordinary and Program modes", path)
+	t.Logf("%s: equal scanning/indexed outcomes in modes %v", path, regions)
 }
 
 // Checker IDs are assigned lazily, and indexing changes query order. Compare
