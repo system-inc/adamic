@@ -324,7 +324,7 @@ var families = []family{
 	// the worst holds two.
 	{name: "TestWASIInputAgreesWithNode", shards: 8, runner: "runWASIInputShard", keys: inputFixturePaths, planted: "internal/oracle/testdata/read_files.a", caught: "read_files.a: stdout differs", requires: "ADAMIC_ORACLE_WASI"},
 	// 56 s over 208 review programs, run one at a time within a shard as they always were; at 8 the worst was 15 s.
-	{name: "TestReviewProgramsAgreeWithNode", shards: 12, runner: "runReviewAgreeShard", keys: reviewAgreePrograms, planted: "smoke.a", caught: "native: stdout differs"},
+	{name: "TestReviewProgramsAgreeWithNode", shards: 24, runner: "runReviewAgreeShard", keys: reviewAgreePrograms, planted: "smoke.a", caught: "native: stdout differs"},
 	// 236 s over about 1,030 committed fixture records, each a counted build and run.
 	{name: "TestCountsAreRecorded", shards: 32, runner: "runCountsShard", keys: countKeys, planted: "dedication/dedication.a", caught: "the counts changed", solo: []string{
 		"internal/oracle/testdata/stdout_edges/little_streams.a",
