@@ -197,7 +197,7 @@ func checkSearchShrinkMutant(t *testing.T, mutant string) {
 	source := native.C(program)
 	script := javascript.JavaScript(program)
 	if mutant == "skip-check" {
-		pattern := regexp.MustCompile(`if \(!\((adamic_temporary_[0-9]+)\)\)`)
+		pattern := regexp.MustCompile(`if \(!\((adamic_temporary_[A-Za-z0-9_]+)\)\)`)
 		source = pattern.ReplaceAllString(source, `if (false && !($1))`)
 		script = strings.Replace(script, "index >= array.length && !admitsUndefined", "index >= array.length && false", 1)
 	} else {

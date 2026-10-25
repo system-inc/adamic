@@ -752,7 +752,7 @@ func (l *lowering) predicateOverloadResult(call *ast.CallExpression, value ir.Ex
 	ordinal := l.predicateOverloadOrdinal(implementation, overload)
 	message := fmt.Sprintf("overload %d of %s result: predicate %s is false", ordinal, implementation.Name().Text(), claim.ParameterName())
 	wrapper := len(l.result.Functions)
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: fmt.Sprintf("%s_overload_%d_check_%d", implementation.Name().Text(), ordinal, wrapper), Returns: invoked.Type()})
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: fmt.Sprintf("%s_overload_%d_check", implementation.Name().Text(), ordinal), Returns: invoked.Type()})
 	local := func(name string, of ir.Type) int {
 		index := len(l.result.Locals)
 		l.result.Locals = append(l.result.Locals, ir.Local{Name: name, Type: of, Function: wrapper})
