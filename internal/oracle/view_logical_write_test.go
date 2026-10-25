@@ -158,3 +158,25 @@ func TestViewLogicalWritesAreRefused(t *testing.T) {
 		t.Fatalf("%d programs in %s, want 1: a program added or removed needs this count changed with it", programs, directory)
 	}
 }
+
+// &&=, ||= and ??= on a node array's field are not yet: lowered, native C took the array as the object
+// its metadata is, and clang refused it ("incompatible pointer types initializing 'adamic_object *' with
+// an expression of type 'adamic_array *'"), though JavaScript agreed with Node. Mutant: dropping the
+// node array guard in lower's logicalAssignment, which lowers it.
+func TestNodeArrayLogicalWritesAreNotYet(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/logical_write_notyet/node_array.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	if truth.exitCode != 0 || len(truth.stderr) != 0 || string(truth.stdout) != "-1|9|true|1|1|1\n" {
+		t.Fatalf("Node: %+v", truth)
+	}
+	_, err = lowered(t, path)
+	var notYet *lower.NotYet
+	want := path + ":18:1: stage 0 can't lower a logical assignment to a node array's field yet"
+	if !errors.As(err, &notYet) || err.Error() != want {
+		t.Fatalf("got %v; want %s", err, want)
+	}
+}
