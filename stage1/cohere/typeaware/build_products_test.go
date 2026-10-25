@@ -107,7 +107,7 @@ func TestProduct_six_declaration_source_native(t *testing.T) {
 func TestProduct_typeaware_wrong_node_native(t *testing.T) {
 	t.Parallel()
 	h := typeAwareProductHarness(t)
-	h.mutantNative("wrong-node", typeAwareWrongNodeEntry(h), h.archive(false), true)
+	typeAwareWrongNodeNative(h, h.archive(false), true)
 }
 func TestProduct_six_oracle(t *testing.T) {
 	t.Parallel()

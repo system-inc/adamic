@@ -152,8 +152,14 @@ func unchangedArchive(archive string) bool {
 
 // lowerToC is entry's emitted C, by the same load, lowering and TSGo emission pipeline as stage zero.
 func (h *harness) lowerToC(entry, name string) (string, error) {
+	return h.lowerOverlayToC(entry, nil, name)
+}
+
+// lowerOverlayToC is lowerToC over entry with the overlay's files replaced by its source, read in place
+// (load.LoadOverlay; a nil overlay loads the files as they are).
+func (h *harness) lowerOverlayToC(entry string, overlay map[string]string, name string) (string, error) {
 	started := time.Now()
-	loaded, err := load.Load([]string{entry})
+	loaded, err := load.LoadOverlay([]string{entry}, overlay)
 	h.t.Logf("phase load %s %.6fs", name, time.Since(started).Seconds())
 	if err != nil {
 		return "", err
@@ -367,30 +373,65 @@ func TestTypeAwareKeysCarryNoMachinePath(t *testing.T) {
 	}
 }
 
-// typeAwareWrongNodeEntry writes the wrong-node mutant into h's directory and returns its entry: main.ts asking the
-// unary expression's type rather than its operand's. It still compiles and finishes; the independent production-rule
-// findings must disagree. Both mutant sources sit next to one another, their relative dependencies made absolute.
-func typeAwareWrongNodeEntry(h *harness) string {
+// typeAwareWrongNodeNative is the wrong-node mutant's native over archive: main.ts asking the unary expression's type
+// rather than its operand's. It still compiles and finishes; the independent production-rule findings must disagree.
+// The mutant is main.ts as the repository has it, with unary_minus.ts overlaid in place (load.LoadOverlay), so every
+// import keeps its relative path. Written to a scratch directory with its imports made absolute, its C named the
+// checkout, so typeAwareNativeKey moved with every checkout and Loom's key check refused each tree (#nwczaa5). The C is
+// a product keyed by name, as a six mutant's is (loweredMutant), and refuses to be one if it names the checkout.
+func typeAwareWrongNodeNative(h *harness, archive string, sanitize bool) string {
 	h.t.Helper()
-	text, err := os.ReadFile(filepath.Join(h.repository, "stage1/cohere/typeaware/unary_minus.ts"))
+	source, err := cachedTypeAwareProduct("C typeaware mutant wrong-node", func(_ string) (string, error) {
+		mutant, err := typeAwareWrongNodeSource(h.repository)
+		if err != nil {
+			return "", err
+		}
+		unary := filepath.Join(h.repository, "stage1/cohere/typeaware/unary_minus.ts")
+		source, err := h.lowerOverlayToC(filepath.Join(h.repository, "stage1/cohere/typeaware/main.ts"), map[string]string{unary: mutant}, "wrong-node")
+		if err != nil {
+			return "", err
+		}
+		return source, typeAwareCNamesNoCheckout(source, h.repository)
+	})
 	if err != nil {
 		h.t.Fatal(err)
+	}
+	return h.mutantNativeOf("wrong-node", source, archive, sanitize)
+}
+
+// typeAwareWrongNodeSource is unary_minus.ts with the wrong-node mutation: the type asked of the whole expression.
+func typeAwareWrongNodeSource(repository string) (string, error) {
+	text, err := os.ReadFile(filepath.Join(repository, "stage1/cohere/typeaware/unary_minus.ts"))
+	if err != nil {
+		return "", err
 	}
 	anchor := "this.parser.node(node.children[0] ?? panic('minus without operand'))"
 	if strings.Count(string(text), anchor) != 1 {
-		h.t.Fatal("wrong-node anchor changed")
+		return "", fmt.Errorf("wrong-node anchor changed")
 	}
-	mutant := strings.Replace(string(text), anchor, "this.parser.node(index)", 1)
-	mutant = strings.ReplaceAll(mutant, "../../typescript", filepath.Join(h.repository, "stage1/typescript"))
-	mutant = strings.ReplaceAll(mutant, "../lint", filepath.Join(h.repository, "stage1/cohere/lint"))
-	h.write("wrong-node.ts", mutant)
-	mainText, err := os.ReadFile(filepath.Join(h.repository, "stage1/cohere/typeaware/main.ts"))
-	if err != nil {
-		h.t.Fatal(err)
+	return strings.Replace(string(text), anchor, "this.parser.node(index)", 1), nil
+}
+
+// typeAwareCNamesNoCheckout refuses emitted C that names the checkout it was lowered in: a product keyed by its bytes
+// would then key differently in every checkout.
+func typeAwareCNamesNoCheckout(source, repository string) error {
+	if strings.Contains(source, filepath.ToSlash(repository)) || strings.Contains(source, repository) {
+		return fmt.Errorf("emitted C names the checkout %s, so its key would move with the checkout", repository)
 	}
-	mainSource := strings.ReplaceAll(string(mainText), "../../typescript", filepath.Join(h.repository, "stage1/typescript"))
-	mainSource = strings.Replace(mainSource, "./unary_minus.ts", "./wrong-node.ts", 1)
-	return h.write("wrong-main.ts", mainSource)
+	return nil
+}
+
+// The guard on wrong-node's C can fail: C naming the checkout is refused, C naming only relative paths isn't.
+func TestTypeAwareCNamesNoCheckoutCanFail(t *testing.T) {
+	t.Parallel()
+	repository := filepath.Join(t.TempDir(), "adamic")
+	named := "#include \"" + filepath.ToSlash(filepath.Join(repository, "stage1/typescript/scanner.ts")) + "\"\n"
+	if typeAwareCNamesNoCheckout(named, repository) == nil {
+		t.Fatal("C naming the checkout passed")
+	}
+	if err := typeAwareCNamesNoCheckout("/* ../../typescript/scanner.ts */\n", repository); err != nil {
+		t.Fatal(err)
+	}
 }
 
 func firstDifference(a, b []byte) int {
@@ -568,11 +609,10 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 
 	// Asking the unary expression's type rather than its operand still compiles
 	// and finishes; the independent production-rule findings must disagree.
-	mutantEntry := typeAwareWrongNodeEntry(h)
 	expected = append(expected, sixIDs("mutant/wrong-node", generatedPaths)...)
 	add("mutant/wrong-node", sixIDs("mutant/wrong-node", generatedPaths), func(h *harness) {
 		t := h.t
-		wrong := typeAwareSetup(h, "wrong-node", func() string { return h.mutantNative("wrong-node", mutantEntry, normal(h), true) })
+		wrong := typeAwareSetup(h, "wrong-node", func() string { return typeAwareWrongNodeNative(h, normal(h), true) })
 		observed := h.must("wrong-node-run", exec.Command(wrong, config, manifest))
 		if len(observed.stderr) != 0 || bytes.Equal(observed.stdout, truth.stdout) {
 			t.Fatal("wrong-node mutant was not caught by findings alone")
