@@ -2,6 +2,7 @@ package worker
 
 import (
 	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 
@@ -13,9 +14,16 @@ import (
 // Each package declares the same input-keyed tool product; no TestMain build.
 func jsonTypes(t testing.TB) string {
 	t.Helper()
-	return buildcache.GoBuild(t, "json-types", "./oracle/json_types.go", nil)
+	inputs, err := buildcache.GoBuildInInputs("", "json-types", "./oracle/json_types.go", nil, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return filepath.Join(findWorkerProduct(t, inputs), "json-types")
 }
-func TestProduct_JSONTypes(t *testing.T) { t.Parallel(); jsonTypes(t) }
+func TestProduct_WorkerJSONTypes(t *testing.T) {
+	t.Parallel()
+	buildcache.GoBuild(t, "json-types", "./oracle/json_types.go", nil)
+}
 
 func jsonTypesEnvironment(t testing.TB, path string) []string {
 	t.Helper()
