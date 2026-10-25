@@ -1,0 +1,8 @@
+// a-check: refused a placeholder reset of a for-of loop variable
+// A for-of variable has no declaration to hold its readiness flag, so a reset would write an undeclared one.
+const words: string[] = ['a', 'b'];
+for (let word of words) {
+	console.log(word);
+	word = undefined!;
+	console.log('after');
+}
