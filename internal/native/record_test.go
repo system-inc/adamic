@@ -157,8 +157,10 @@ func TestRecordsAgainstNode(t *testing.T) {
 		}
 	}
 	// A record reaching a fixed-object read is a lowering bug, and must stop loudly rather than read
-	// undefined or its own table: through an optional field, and through a field named like its slot.
-	for _, mode := range []struct{ name, field string }{{"fixed-optional-read", "total"}, {"fixed-read", "0"}} {
+	// undefined or its own table: through an optional field, through a field named like its slot, and
+	// through a uniform field slot's unchecked load.
+	// The uniform slot load is checked because this harness builds sanitized and counted.
+	for _, mode := range []struct{ name, field string }{{"fixed-optional-read", "total"}, {"fixed-read", "0"}, {"uniform-read", "total"}} {
 		t.Run(mode.name, func(t *testing.T) {
 			stdout, stderr, err := recordRun(binary, mode.name)
 			exit, ok := err.(*exec.ExitError)
