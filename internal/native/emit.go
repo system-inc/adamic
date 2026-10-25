@@ -161,7 +161,14 @@ func cProgram(program *ir.Program, handler, lines int) string {
 	emitter.resetCounters()
 	emitter.indent = 1
 	emitter.asyncMain()
-	statements := emitter.moduleMain()
+	var statements []string
+	if program.HasPromises() || lines != mainLines {
+		statements = emitter.unoutlinedModuleMain()
+	} else {
+		bodies.WriteString(emitter.moduleMain())
+		statements = []string{emitter.out.String()}
+		emitter.out.Reset()
+	}
 	var parts []string
 	if program.HasPromises() {
 		if program.AsyncEntry == 0 {
@@ -543,7 +550,7 @@ func (e *emitter) shapeChecks() string {
 
 // moduleMain retains one scope and the original initialization order. Module
 // boundaries only change the source of printed names, never cleanup behavior.
-func (e *emitter) moduleMain() []string {
+func (e *emitter) unoutlinedModuleMain() []string {
 	var statements []string
 	prefix := len(e.program.Main)
 	for _, module := range e.program.MainModules {
