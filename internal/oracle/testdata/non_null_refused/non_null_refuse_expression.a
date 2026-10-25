@@ -1,0 +1,4 @@
+// a-check: refused the non-null assertion !
+let value = 1;
+value = undefined! + 1;
+console.log(`${value}`);

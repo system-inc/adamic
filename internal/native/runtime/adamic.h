@@ -447,6 +447,8 @@ typedef struct adamic_object {
 	const adamic_class *class;
 	bool frozen;
 	bool tuple;
+	// NULL for a complete shape; SIZE_MAX means reserved but not own.
+	size_t *write_order;
 	adamic_value slots[];
 } adamic_object;
 
@@ -472,6 +474,12 @@ static inline unsigned char *adamic_object_field_types(const adamic_object *obje
 static inline size_t adamic_slot_index(const adamic_object *object, const adamic_value *slot) {
 	return (size_t)(slot - object->slots);
 }
+
+// Construction storage is reserved at allocation, independently of property presence.
+bool adamic_object_present(const adamic_object *object, size_t index);
+void adamic_object_publish(adamic_object *object, size_t index);
+size_t *adamic_object_ordered(const adamic_object *object);
+adamic_object *adamic_object_construct(const adamic_shape *shape);
 
 bool adamic_instanceof(const void *value, const adamic_class *wanted);
 size_t adamic_virtual(const adamic_object *object, size_t slot);
@@ -586,6 +594,7 @@ adamic_heap *adamic_dynamic_property(adamic_heap *object, const char *name);
 // the program last saw the same shape, the field is where it was then, which is inline, since it's
 // what nearly every read is; anything else is adamic_object_find, which searches the shape's names.
 adamic_value *adamic_object_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+adamic_value *adamic_object_field_owned(const adamic_object *object, const char *name, adamic_slot_cache *cache, const adamic_object **owner);
 adamic_value *adamic_static_field(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 adamic_value *adamic_object_write_field(adamic_object *object, const char *name, adamic_slot_cache *cache);
 // A readonly numeric view may see a field made with the undefined-only reference representation.
@@ -599,7 +608,7 @@ static inline adamic_value *adamic_object_optional_field(const adamic_object *ob
 		return adamic_object_optional_find(object, name, cache);
 	}
 	size_t slot = packed >> 48;
-	if (slot == object->shape->count) { return NULL; }
+	if (slot == object->shape->count || !adamic_object_present(object, slot)) { return NULL; }
 	return &((adamic_object *)object)->slots[slot];
 }
 // Whole-program data accesses exclude inherited constructor storage, so a cache
@@ -642,7 +651,12 @@ typedef struct adamic_array {
 	adamic_value *elements;
 	// Extra fields of RegExp result arrays, owned and released with the array.
 	adamic_object *properties;
+	// An interior fixed layout, owned by this allocation, never a wrapper.
+	adamic_object *metadata; // Never retained, never escapes as a value; retaining then releasing its zero-count header frees interior array storage.
 } adamic_array;
+adamic_array *adamic_node_array_new(size_t capacity, bool references, const adamic_shape *extras);
+adamic_array *adamic_node_array_keys(const adamic_array *array);
+
 
 // Fixed-width typed arrays (typed_array.c, docs/typed-arrays.md). Constructors and
 // subarray return one owned reference. Arguments are borrowed; fill and sort return borrowed self.
@@ -1437,23 +1451,27 @@ _Noreturn void adamic_stack_overflow(void);
 // Even a function using only Wasm locals must advance the linear stack. Otherwise
 // its engine call stack can trap before this check sees any movement. The volatile
 // endpoints preserve a 64-byte frame, including in optimized recursive functions.
-#define ADAMIC_CHECK_STACK() \
+#define ADAMIC_CHECK_STACK_MESSAGE(message) \
 	do { \
 		volatile unsigned char adamic_stack_frame[64]; \
 		adamic_stack_frame[0] = 0; \
 		adamic_stack_frame[63] = 0; \
 		if ((uintptr_t)adamic_stack_frame < adamic_stack_limit) { \
-			adamic_stack_overflow(); \
+			adamic_panic(message, sizeof(message) - 1); \
 		} \
 	} while (0)
 #else
-#define ADAMIC_CHECK_STACK() \
+#define ADAMIC_CHECK_STACK_MESSAGE(message) \
 	do { \
 		if ((uintptr_t)__builtin_frame_address(0) < adamic_stack_limit) { \
-			adamic_stack_overflow(); \
+			adamic_panic(message, sizeof(message) - 1); \
 		} \
 	} while (0)
 #endif
+
+// Names are compile-time string literals; the guard allocates nothing.
+#define ADAMIC_CHECK_STACK() ADAMIC_CHECK_STACK_MESSAGE("RangeError: Maximum call stack size exceeded")
+#define ADAMIC_CHECK_STACK_NAMED(name) ADAMIC_CHECK_STACK_MESSAGE("RangeError: Maximum call stack size exceeded in " name)
 
 // adamic_unreachable ends a function the checker proved always returns. Reaching it is a compiler
 // bug, and it says so rather than returning garbage.
