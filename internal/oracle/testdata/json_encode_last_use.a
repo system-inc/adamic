@@ -1,0 +1,37 @@
+import { encodeJson } from 'adamic';
+
+interface Item { readonly name: string; readonly count: number; }
+function build(count: number): Item {
+ return {name: 'item-' + count.toString(), count};
+}
+
+// Fresh operands must survive until the encoder has read their fields.
+console.log(encodeJson<Item>({name: 'inline-' + (1).toString(), count: 1}));
+console.log(encodeJson<Item>(build(2)));
+const xs: readonly number[] = [3, 4];
+console.log(encodeJson<readonly Item[]>(xs.map(count => build(count))));
+
+function lastUse(): string {
+ const v = build(5);
+ return encodeJson<Item>(v);
+}
+console.log(lastUse());
+
+function shared(): void {
+ const v = build(6);
+ console.log(encodeJson<Item>(v));
+ console.log(encodeJson<Item>(v));
+ // Both encodes borrow the operand; its fields remain available afterwards.
+ console.log(v.name + '/' + v.count.toString());
+}
+shared();
+
+console.log(encodeJson<readonly (readonly Item[])[]>([
+ [build(7), build(8)], [], [build(9)]
+]));
+
+// A runtime allocation, unlike an immortal string literal, exercises releases.
+function text(count: number): string {
+ return 'runtime-"' + count.toString() + '\nend';
+}
+console.log(encodeJson<string>(text(xs.length)));
