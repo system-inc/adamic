@@ -3,6 +3,8 @@ package fresh_test
 import (
 	"context"
 	"path/filepath"
+	"slices"
+	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/fresh"
@@ -22,6 +24,7 @@ func freshPrograms(t *testing.T) []string {
 		"../load/testdata/0.1/compile/*.ts",
 		"../load/testdata/0.1/compile/07_modules/main.ts",
 		"../oracle/testdata/*.a",
+		"../oracle/testdata/*.ts",
 		"../oracle/testdata/modules/main.a",
 		"../flow/testdata/*.a",
 	} {
@@ -31,6 +34,10 @@ func freshPrograms(t *testing.T) []string {
 		}
 		paths = append(paths, matches...)
 	}
+	// The oracle's .ts twins are its .a programs checked, so they stay in; its non-null .ts programs were never here.
+	paths = slices.DeleteFunc(paths, func(path string) bool {
+		return filepath.Ext(path) == ".ts" && strings.HasPrefix(filepath.Base(path), "non_null")
+	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
 	}

@@ -13,11 +13,11 @@ func init() {
 	fixtures = append(fixtures, struct {
 		path            string
 		lowers, checked bool
-	}{"internal/oracle/testdata/loom_views_d/checked-cast.a", true, false})
+	}{"internal/oracle/testdata/loom_views_d/checked-cast.ts", true, false})
 }
 func TestLoomViewsDOriginal(t *testing.T) {
 	t.Parallel()
-	path := filepath.Join(repository, "internal/oracle/testdata/loom_views_d/checked-cast.a")
+	path := filepath.Join(repository, "internal/oracle/testdata/loom_views_d/checked-cast.ts")
 	path, err := filepath.Abs(path)
 	if err != nil {
 		t.Fatal(err)

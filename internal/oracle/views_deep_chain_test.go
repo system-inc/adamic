@@ -11,8 +11,8 @@ import (
 
 func TestViewsDeepChain(t *testing.T) {
 	t.Parallel()
-	loomViewsDAgrees(t, "internal/oracle/testdata/views_deep_chain.a")
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/views_deep_chain.a"))
+	loomViewsDAgrees(t, "internal/oracle/testdata/views_deep_chain.ts")
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/views_deep_chain.ts"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -36,7 +36,7 @@ func TestViewsDeepChainRecursiveWalkMutant(t *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/views_deep_chain.a"))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/views_deep_chain.ts"))
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -116,20 +116,20 @@ var freshCorpusPaths = []string{
 	"../oracle/testdata/cast_class_fails.a",
 	"../oracle/testdata/cast_class_generic_fails.a",
 	"../oracle/testdata/cast_class_union_fails.a",
-	"../oracle/testdata/cast_enum_const.a",
-	"../oracle/testdata/cast_enum_const_numeric_fails.a",
-	"../oracle/testdata/cast_enum_const_string_fails.a",
-	"../oracle/testdata/cast_enum_numeric.a",
-	"../oracle/testdata/cast_enum_numeric_fails.a",
-	"../oracle/testdata/cast_enum_string.a",
-	"../oracle/testdata/cast_enum_string_fails.a",
-	"../oracle/testdata/cast_fails.a",
-	"../oracle/testdata/cast_operand_once.a",
-	"../oracle/testdata/cast_subunion_const_numeric_fails.a",
-	"../oracle/testdata/cast_subunion_const_string_fails.a",
-	"../oracle/testdata/cast_subunion_fails.a",
-	"../oracle/testdata/cast_subunion_string_fails.a",
-	"../oracle/testdata/casts.a",
+	"../oracle/testdata/cast_enum_const.ts",
+	"../oracle/testdata/cast_enum_const_numeric_fails.ts",
+	"../oracle/testdata/cast_enum_const_string_fails.ts",
+	"../oracle/testdata/cast_enum_numeric.ts",
+	"../oracle/testdata/cast_enum_numeric_fails.ts",
+	"../oracle/testdata/cast_enum_string.ts",
+	"../oracle/testdata/cast_enum_string_fails.ts",
+	"../oracle/testdata/cast_fails.ts",
+	"../oracle/testdata/cast_operand_once.ts",
+	"../oracle/testdata/cast_subunion_const_numeric_fails.ts",
+	"../oracle/testdata/cast_subunion_const_string_fails.ts",
+	"../oracle/testdata/cast_subunion_fails.ts",
+	"../oracle/testdata/cast_subunion_string_fails.ts",
+	"../oracle/testdata/casts.ts",
 	"../oracle/testdata/census_append_overload.a",
 	"../oracle/testdata/census_boolean_dead_branch.a",
 	"../oracle/testdata/census_boolean_negation.a",
@@ -1041,20 +1041,20 @@ var freshCorpusTests = [][]func(*testing.T){
 		TestFreshWrites____oracle_testdata_cast_class_fails_a_c59010ffbc56,
 		TestFreshWrites____oracle_testdata_cast_class_generic_fails_a_cc4d63aeef36,
 		TestFreshWrites____oracle_testdata_cast_class_union_fails_a_b678b17c379d,
-		TestFreshWrites____oracle_testdata_cast_enum_const_a_4960b21b6fac,
-		TestFreshWrites____oracle_testdata_cast_enum_const_numeric_fails_a_17e46c39730b,
-		TestFreshWrites____oracle_testdata_cast_enum_const_string_fails_a_be039fea8b66,
-		TestFreshWrites____oracle_testdata_cast_enum_numeric_a_6ea96339a685,
-		TestFreshWrites____oracle_testdata_cast_enum_numeric_fails_a_5378566dcbc6,
-		TestFreshWrites____oracle_testdata_cast_enum_string_a_e4a46d0d01f4,
-		TestFreshWrites____oracle_testdata_cast_enum_string_fails_a_87ca06e749b6,
-		TestFreshWrites____oracle_testdata_cast_fails_a_d056539cc6d3,
-		TestFreshWrites____oracle_testdata_cast_operand_once_a_bc7faa8b256d,
-		TestFreshWrites____oracle_testdata_cast_subunion_const_numeric_fails_a_80df6194d19a,
-		TestFreshWrites____oracle_testdata_cast_subunion_const_string_fails_a_c6febb11045d,
-		TestFreshWrites____oracle_testdata_cast_subunion_fails_a_5efcb386f7d3,
-		TestFreshWrites____oracle_testdata_cast_subunion_string_fails_a_950fbce9996d,
-		TestFreshWrites____oracle_testdata_casts_a_dec7fdb88a0f,
+		TestFreshWrites____oracle_testdata_cast_enum_const_ts_f21b255efcb4,
+		TestFreshWrites____oracle_testdata_cast_enum_const_numeric_fails_ts_d891e09ff86f,
+		TestFreshWrites____oracle_testdata_cast_enum_const_string_fails_ts_d29b6f8a08d5,
+		TestFreshWrites____oracle_testdata_cast_enum_numeric_ts_4bba610b79b6,
+		TestFreshWrites____oracle_testdata_cast_enum_numeric_fails_ts_ea0b488044e2,
+		TestFreshWrites____oracle_testdata_cast_enum_string_ts_79d9c3150dd0,
+		TestFreshWrites____oracle_testdata_cast_enum_string_fails_ts_ab34e8ed94be,
+		TestFreshWrites____oracle_testdata_cast_fails_ts_e68f865b5ba6,
+		TestFreshWrites____oracle_testdata_cast_operand_once_ts_e8b25ab2b93b,
+		TestFreshWrites____oracle_testdata_cast_subunion_const_numeric_fails_ts_23d7fb08cdb7,
+		TestFreshWrites____oracle_testdata_cast_subunion_const_string_fails_ts_66039250033f,
+		TestFreshWrites____oracle_testdata_cast_subunion_fails_ts_b1d3e98327b0,
+		TestFreshWrites____oracle_testdata_cast_subunion_string_fails_ts_74975974f98a,
+		TestFreshWrites____oracle_testdata_casts_ts_a0461ab146a0,
 		TestFreshWrites____oracle_testdata_census_append_overload_a_784908a1410a,
 		TestFreshWrites____oracle_testdata_census_boolean_dead_branch_a_d8c6a1ca6613,
 		TestFreshWrites____oracle_testdata_census_boolean_negation_a_f135f99f7d14,
@@ -2525,85 +2525,85 @@ func TestFreshWrites____oracle_testdata_cast_class_union_fails_a_b678b17c379d(t 
 	checkFreshProgram(t, freshCorpusPaths[111])
 }
 
-func TestFreshWrites____oracle_testdata_cast_enum_const_a_4960b21b6fac(t *testing.T) {
+func TestFreshWrites____oracle_testdata_cast_enum_const_ts_f21b255efcb4(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[112])
 }
 
-func TestFreshWrites____oracle_testdata_cast_enum_const_numeric_fails_a_17e46c39730b(t *testing.T) {
+func TestFreshWrites____oracle_testdata_cast_enum_const_numeric_fails_ts_d891e09ff86f(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[113])
 }
 
-func TestFreshWrites____oracle_testdata_cast_enum_const_string_fails_a_be039fea8b66(t *testing.T) {
+func TestFreshWrites____oracle_testdata_cast_enum_const_string_fails_ts_d29b6f8a08d5(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[114])
 }
 
-func TestFreshWrites____oracle_testdata_cast_enum_numeric_a_6ea96339a685(t *testing.T) {
+func TestFreshWrites____oracle_testdata_cast_enum_numeric_ts_4bba610b79b6(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[115])
 }
 
-func TestFreshWrites____oracle_testdata_cast_enum_numeric_fails_a_5378566dcbc6(t *testing.T) {
+func TestFreshWrites____oracle_testdata_cast_enum_numeric_fails_ts_ea0b488044e2(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[116])
 }
 
-func TestFreshWrites____oracle_testdata_cast_enum_string_a_e4a46d0d01f4(t *testing.T) {
+func TestFreshWrites____oracle_testdata_cast_enum_string_ts_79d9c3150dd0(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[117])
 }
 
-func TestFreshWrites____oracle_testdata_cast_enum_string_fails_a_87ca06e749b6(t *testing.T) {
+func TestFreshWrites____oracle_testdata_cast_enum_string_fails_ts_ab34e8ed94be(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[118])
 }
 
-func TestFreshWrites____oracle_testdata_cast_fails_a_d056539cc6d3(t *testing.T) {
+func TestFreshWrites____oracle_testdata_cast_fails_ts_e68f865b5ba6(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[119])
 }
 
-func TestFreshWrites____oracle_testdata_cast_operand_once_a_bc7faa8b256d(t *testing.T) {
+func TestFreshWrites____oracle_testdata_cast_operand_once_ts_e8b25ab2b93b(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[120])
 }
 
-func TestFreshWrites____oracle_testdata_cast_subunion_const_numeric_fails_a_80df6194d19a(t *testing.T) {
+func TestFreshWrites____oracle_testdata_cast_subunion_const_numeric_fails_ts_23d7fb08cdb7(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[121])
 }
 
-func TestFreshWrites____oracle_testdata_cast_subunion_const_string_fails_a_c6febb11045d(t *testing.T) {
+func TestFreshWrites____oracle_testdata_cast_subunion_const_string_fails_ts_66039250033f(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[122])
 }
 
-func TestFreshWrites____oracle_testdata_cast_subunion_fails_a_5efcb386f7d3(t *testing.T) {
+func TestFreshWrites____oracle_testdata_cast_subunion_fails_ts_b1d3e98327b0(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[123])
 }
 
-func TestFreshWrites____oracle_testdata_cast_subunion_string_fails_a_950fbce9996d(t *testing.T) {
+func TestFreshWrites____oracle_testdata_cast_subunion_string_fails_ts_74975974f98a(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[124])
 }
 
-func TestFreshWrites____oracle_testdata_casts_a_dec7fdb88a0f(t *testing.T) {
+func TestFreshWrites____oracle_testdata_casts_ts_a0461ab146a0(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[125])

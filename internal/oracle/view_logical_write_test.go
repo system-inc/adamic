@@ -17,7 +17,7 @@ func init() {
 		path    string
 		lowers  bool
 		checked bool
-	}{"internal/oracle/testdata/view_logical_write_own_type.a", true, false})
+	}{"internal/oracle/testdata/view_logical_write_own_type.ts", true, false})
 }
 
 // &&=, ||= and ??= through a checked view read and write the field as a plain read and = through it do
