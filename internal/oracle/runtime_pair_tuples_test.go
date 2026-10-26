@@ -4,13 +4,14 @@ import "testing"
 
 // A [key, value] pair the runtime makes is a tuple to a view, as a literal's is (item 150). An object view with
 // index-named fields reads a Map's entry as Node does, and a tuple view reads a Set's [value, value] entry, natively,
-// sanitized and on the JavaScript backend.
+// sanitized and on the JavaScript backend. Each casts through a view that extends its source with no tag of its own,
+// a downcast whose checks no proof erases, which .a refuses (item 8), so each is .ts.
 func TestRuntimePairTuples(t *testing.T) {
 	t.Parallel()
 	for _, name := range []string{"map_entries_object_view", "set_entries_tuple_view"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			loomViewsDAgrees(t, "internal/oracle/testdata/runtime_pair_tuples/"+name+".a")
+			loomViewsDAgrees(t, "internal/oracle/testdata/runtime_pair_tuples/"+name+".ts")
 		})
 	}
 }
