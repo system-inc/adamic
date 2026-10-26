@@ -101,7 +101,6 @@ func TestCheckedPredicatePendingContracts(t *testing.T) {
 		{"unproven test argument", `interface Identifier { readonly kind: 'Identifier'; readonly text: string } interface Keyword { readonly kind: 'Keyword'; readonly width: number } type Node = Identifier | Keyword; function isKeyword(node: Node): node is Keyword { return false; } function assertNotNode<T extends Node, U extends T>(node: T | undefined, test: (node: Node) => node is U): asserts node is Exclude<T, U>; function assertNotNode(node: Node | undefined, test: (node: Node) => boolean): void { if (node !== undefined && test(node)) console.log("unexpected node"); } function use(node: Node): void { assertNotNode(node, isKeyword); } use({ kind: 'Keyword', width: 3 });`, "an unproven predicate argument for parameter test"},
 		// 0.1 refuses == outright, so a loose comparison with false never reaches the direction walk.
 		{"loose false comparison", `interface Expression { readonly kind: 'E'; readonly e: number } interface Statement { readonly kind: 'S'; readonly s: string } type Node = Expression | Statement; function isS(n: Node): n is Statement { return false; } function f(n: Node): number { if (isS(n) == false) return n.e; return 0; } console.log(String(f({ kind: 'S', s: 'x' })));`, "refuses ==; use ===, which doesn't coerce"},
-		{"open enum kind", `enum SyntaxKind { Identifier, Block } interface Node { readonly kind: SyntaxKind } interface Identifier extends Node { readonly kind: SyntaxKind.Identifier; readonly text: string } function isIdentifier(node: Node): node is Identifier { return node.kind === SyntaxKind.Identifier; } function show(text: string): boolean { console.log(text); return true; } const node: Node = { kind: SyntaxKind.Identifier }; const shown = isIdentifier(node) && show(node.text);`, "checked predicate membership by an enum tag another member can hold"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			lowerInput := lowerTypeScriptAssertionSource
@@ -121,10 +120,6 @@ func TestCheckedPredicatePendingContracts(t *testing.T) {
 func TestCheckedPredicateUnreadShapesArePending(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, nodeOut, what, where string }{
-		// Kind.Identifier and Kind.Keyword share 1, so the checker reads them as one type and a
-		// Keyword passes the true branch's tag check for Identifier (tsc's open SyntaxKind shape).
-		// Node reads the missing field; the copy must not be admitted on that tag.
-		{"shared_kind", "undefined\nshown\n", "checked predicate membership by an enum tag another member can hold", "7:48"},
 		// Neither the direction walk nor the checker's narrowType reads through an array literal or
 		// an element access, so the walk can't say which branch of this condition rests on the call:
 		// a condition shape it doesn't read stops here, never as a call with no false check.

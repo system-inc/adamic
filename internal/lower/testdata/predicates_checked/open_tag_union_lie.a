@@ -1,0 +1,9 @@
+enum Kind { A = 1, B = 2 }
+interface A { readonly kind: Kind.A; readonly value: number }
+interface B { readonly kind: Kind; readonly value: string }
+type Node = A | B;
+function isA(n: Node): n is A { return n.kind === Kind.A; }
+function numeric(): number { return 1; }
+const b: B = { kind: numeric(), value: 'text' };
+function use(n: Node): void { if (isA(n)) { console.log(String(n.value + 1)); } }
+use(b);
