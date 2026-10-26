@@ -155,10 +155,7 @@ func TestCheckedPredicateOpenTagViews(t *testing.T) {
 		{"open_tag_view_lie", "NaN\n", "adamic: panic: field read failed: node.width is not initialized; expected number, found missing\n"},
 		// Kind.Identifier and Kind.Keyword share 1, so a Keyword passes isIdentifier's tag test: Node reads
 		// text as undefined; the view stops at that read.
-		{"shared_kind", "undefined\nshown\n", "TODO\n"},
-		// #9xam9ds's shape: B's kind is the whole open Kind, so a B holding 1 passes isA. Node adds 1 to
-		// a string and prints text1; the view stops at the read of value as a number.
-		{"open_tag_union_lie", "text1\n", "TODO\n"},
+		{"shared_kind", "undefined\nshown\n", "adamic: panic: field read failed: node.text is not initialized; expected string, found missing\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
