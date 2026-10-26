@@ -339,3 +339,22 @@ func asyncGenerator(node *ast.Node) bool {
 	}
 	return false
 }
+
+// dynamicImportGap runs before declaration lowering: the checker can already
+// expose types from a dynamically imported module, which has no static route.
+func (l *lowering) dynamicImportGap(module *ast.SourceFile) error {
+	if module.AsNode().Flags&ast.NodeFlagsPossiblyContainsDynamicImport == 0 {
+		return nil
+	}
+	var found error
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindCallExpression && node.AsCallExpression().Expression.Kind == ast.KindImportKeyword {
+			found = l.notYet(node, "a dynamic import()")
+			return true
+		}
+		return node.ForEachChild(visit)
+	}
+	module.AsNode().ForEachChild(visit)
+	return found
+}

@@ -15,6 +15,13 @@ import (
 // has no body to run. A module already in progress is the cycle back edge and is skipped.
 func (l *lowering) moduleOrder(entry *ast.SourceFile) ([]*ast.SourceFile, error) {
 	order, cyclic := ESMModuleOrder(l.checker, entry)
+	// Dynamic imports are not lowered. Refuse them before imported types can
+	// request source identities during declaration or initializer lowering.
+	for _, module := range order {
+		if err := l.dynamicImportGap(module); err != nil {
+			return nil, err
+		}
+	}
 	l.cyclicModules = cyclic
 	if cyclic {
 		l.proveModuleReads(order)
