@@ -153,6 +153,9 @@ func TestCheckedPredicateOpenTagViews(t *testing.T) {
 		// Identifier and Keyword share SyntaxKind.Identifier with different layouts, and isIdentifier
 		// says yes to a Keyword: Node reads width as undefined and prints NaN.
 		{"open_tag_view_lie", "NaN\n", "adamic: panic: field read failed: node.width is not initialized; expected number, found missing\n"},
+		// The same lie with the field present at another representation: nothing but the view sees it.
+		// Without the view, native reads a string's slot as a number where Node prints wide1.
+		{"open_tag_view_retype", "wide1\n", "TODO\n"},
 		// Kind.Identifier and Kind.Keyword share 1, so a Keyword passes isIdentifier's tag test: Node reads
 		// text as undefined; the view stops at that read.
 		{"shared_kind", "undefined\nshown\n", "adamic: panic: field read failed: node.text is not initialized; expected string, found missing\n"},
