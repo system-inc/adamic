@@ -110,8 +110,16 @@ func allocatorSlabProduct(t *testing.T) string {
 			return err
 		}
 		object := filepath.Join(changed, "heap.o")
-		flags := append(native.SourceFlags(code, options), "-I", changed, "-c", filepath.Join(changed, "heap.c"), "-o", object)
-		if data, err := toolchain.Command(request.Compiler, flags...).CombinedOutput(); err != nil {
+		// The scratch directory's name carries the build and a random suffix, so as native compiles its own runtime
+		// (library.go) it's mapped out of everything the compile records of a path, under each spelling of it, and heap.c
+		// is compiled from inside it by its bare name, which is what the sanitizers' source locations record: either one
+		// left out made two builds of one key differ (#d32jbpx).
+		flags := append(native.SourceFlags(code, options), "-ffile-prefix-map="+changed+"=/adamic-runtime")
+		if real, err := filepath.EvalSymlinks(changed); err == nil && real != changed {
+			flags = append(flags, "-ffile-prefix-map="+real+"=/adamic-runtime")
+		}
+		flags = append(flags, "-I", changed, "-c", "heap.c", "-o", object)
+		if data, err := toolchain.CommandIn(changed, request.Compiler, flags...).CombinedOutput(); err != nil {
 			return fmt.Errorf("mutant must compile: %w: %s", err, data)
 		}
 		archive, err := os.ReadFile(library)
