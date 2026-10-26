@@ -276,6 +276,9 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	if len(emitter.jsonDescriptors) != 0 {
 		code = code[:jsonDescriptorPosition] + strings.Join(emitter.jsonDescriptors, "") + code[jsonDescriptorPosition:]
 	}
+	if strings.Contains(code, "adamicHostEnvironment(") {
+		code = nodeEnvironmentRuntime() + code
+	}
 	if strings.Contains(code, "adamicNodeFSFile.") {
 		code = "import * as adamicNodeFSFile from 'node:fs';\n" + code
 	}

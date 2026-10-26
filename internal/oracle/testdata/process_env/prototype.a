@@ -1,0 +1,4 @@
+import process from "node:process";
+function environment(name: string): string | undefined { return process.env[name]; }
+console.log(process.env["toString"]);
+console.log(environment("toString"));

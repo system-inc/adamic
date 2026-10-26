@@ -260,7 +260,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Compiles","what":""}
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
   },
   {
     "file": "15_getExecutingFilePath.a",
@@ -292,7 +295,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/16_getEnvironmentVariable.a:13:12: stage 0 can't lower node:process.Process.env yet"
+      "what": "stage3/fixtures/host/16_getEnvironmentVariable.a:19:5: stage 0 can't lower node:process.Process.env written yet"
     }
   },
   {
