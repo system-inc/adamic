@@ -68,8 +68,8 @@ func TestJSONCheckedIRGobRoundTrip(t *testing.T) {
 		}
 		paths = append(paths, matches...)
 	}
-	if len(paths) != 29 {
-		t.Fatalf("want all 29 JSON fixtures, got %d", len(paths))
+	if len(paths) != 30 {
+		t.Fatalf("want all 30 JSON fixtures, got %d", len(paths))
 	}
 	for _, path := range paths {
 		t.Run(filepath.Base(path), func(t *testing.T) {
