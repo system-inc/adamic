@@ -1,0 +1,5 @@
+// From Adamic, internal/lower/source_identity_imports_test.go
+const pending = import("./model.a");
+function identity<T>(value: T): T { return value; }
+function read(value: ReturnType<Awaited<typeof pending>["make"]>): number { return identity(value).value; }
+console.log(read({value: 7}).toString());

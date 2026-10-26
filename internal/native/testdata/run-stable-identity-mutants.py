@@ -10,6 +10,7 @@ import tempfile
 
 root = Path(__file__).resolve().parents[3]
 mutants = [
+ ("import-equals-route", "../lower/source_identity.go", "specifier = reference.AsExternalModuleReference().Expression", "specifier = nil", "TestStableImportEqualsRefusal", "./internal/lower"),
  ("module-basename-collapse", "../lower/source_identity.go", "return l.sourceModules[module]", "return filepath.Base(filename)", "TestStableCFromDifferentCheckoutsAndWorkingDirectories"),
  ("module-entry-directory", "../lower/source_identity.go", "return l.sourceModules[module]", 'relative, _ := filepath.Rel(filepath.Dir(l.program.FileName(l.program.Files()[0])), filename); return filepath.ToSlash(relative)', "TestStableCFromDifferentCheckoutsAndWorkingDirectories"),
  ("checked-predicate-semantic-key", "names.go", 'key += e.semanticKey(reflect.ValueOf(function.Body), visiting)', 'if !strings.Contains(function.Name, "_predicate_check") { key += e.semanticKey(reflect.ValueOf(function.Body), visiting) }', "TestStableSameNamedCheckedPredicates"),
@@ -40,7 +41,8 @@ mutants = [
 
  ("local-ordinal", "names.go", 'key := owner + "/" + local.Name + "/" + strconv.Itoa(occurrence)', 'key := owner + "/" + local.Name + "/" + strconv.Itoa(occurrence) + "/" + strconv.Itoa(i)', "TestSourceNamesDoNotMove"),
  ("global-ordinal", "names.go", 'key = sourceKey(local.Source) + "/" + local.Name', 'key = strconv.Itoa(i)', "TestSourceNamesDoNotMove"),
- ("module-counter", "emit.go", 'if module, ok := starts[index]; ok {\n\t\t\te.resetCounters()', 'if module, ok := starts[index]; ok {', "TestSourceNamesDoNotMove"),
+ # Synchronous mains use outlined initializers; hold their shipping module reset.
+ ("module-counter", "outline.go", 'if module, ok := starts[index]; ok {\n\t\t\te.resetCounters()', 'if module, ok := starts[index]; ok {', "TestSourceNamesDoNotMove"),
 
  ("declaration-ancestry", "names.go", 'fmt.Sprintf("%q", source.Declaration)', 'fmt.Sprintf("%q", []string{})', "TestStableDeclarationAncestry"),
  ("async-helper-ordinal", "async_ordinary.go", 'identity := stableName("fn", e.sourceReadable(index), e.functionKey(index, map[int]bool{}))', 'identity := fmt.Sprint(index)', "TestStableUnitsSurviveMiddleDeclaration"),

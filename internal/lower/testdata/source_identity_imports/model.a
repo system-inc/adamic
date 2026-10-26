@@ -1,0 +1,3 @@
+// From Adamic, internal/lower/source_identity_imports_test.go
+export interface Model { value: number; }
+export function make(): Model { return {value: 7}; }

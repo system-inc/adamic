@@ -72,6 +72,12 @@ func (l *lowering) indexSourceModules() {
 				if clause := node.AsImportDeclaration().ImportClause; clause != nil {
 					label += fmt.Sprintf(":%t:%s", clause.IsTypeOnly(), strings.TrimSpace(current.module.Text()[clause.Pos():clause.End()]))
 				}
+			case ast.KindImportEqualsDeclaration:
+				imported := node.AsImportEqualsDeclaration()
+				if reference := imported.ModuleReference; reference.Kind == ast.KindExternalModuleReference {
+					specifier = reference.AsExternalModuleReference().Expression
+					label = fmt.Sprintf("import-equals:%t:%s", imported.IsTypeOnly, node.Name().Text())
+				}
 			case ast.KindExportDeclaration:
 				specifier = node.ModuleSpecifier()
 				exported := node.AsExportDeclaration()
