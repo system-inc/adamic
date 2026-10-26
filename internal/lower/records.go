@@ -58,6 +58,10 @@ func (l *lowering) recordSlot(node *ast.Node) (ir.Type, error) {
 }
 func (l *lowering) recordTarget(node *ast.Node) bool {
 	n := ast.SkipParentheses(node)
+	// The host owns environment entries; their reads use the host slice, not record storage.
+	if _, environment := l.nodeEnvironmentAccess(n); environment {
+		return false
+	}
 	if n.Kind == ast.KindElementAccessExpression {
 		return l.recordElement(l.checker.GetTypeAtLocation(n.AsElementAccessExpression().Expression)) != nil
 	}

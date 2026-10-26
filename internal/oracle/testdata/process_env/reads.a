@@ -1,0 +1,21 @@
+// Exercise the global Process binding alongside the aliased import.
+import { default as host } from "node:process";
+function environment(name: string): string | undefined { return process.env[name]; }
+function getEnvironmentVariable(name: string): string { return process.env[name] || ""; }
+function key(): string { console.log("key evaluated once"); return "ADAMIC_ENV_READ_SET"; }
+console.log(process.env.ADAMIC_ENV_READ_SET);
+console.log(process.env.ADAMIC_ENV_READ_MISSING);
+console.log(process.env.ADAMIC_ENV_READ_EMPTY);
+console.log(host.env.ADAMIC_ENV_READ_UNICODE);
+console.log(environment("ADAMIC_ENV_READ_SET"));
+console.log(environment("ADAMIC_ENV_READ_SET"));
+console.log(getEnvironmentVariable("ADAMIC_ENV_READ_MISSING"));
+console.log(getEnvironmentVariable("ADAMIC_ENV_READ_EMPTY"));
+console.log(getEnvironmentVariable("ADAMIC_ENV_READ_SET"));
+console.log(String(!!process.env.ADAMIC_ENV_READ_MISSING || !!host.env.ADAMIC_ENV_READ_SET));
+const settings = { value: process.env.ADAMIC_ENV_READ_SET, missing: process.env.ADAMIC_ENV_READ_MISSING };
+console.log(settings.value);
+console.log(settings.missing);
+console.log(process.env[key()]);
+function localRead(): string { const process = {env: {X: "local"}}; return process.env.X; }
+console.log(localRead());

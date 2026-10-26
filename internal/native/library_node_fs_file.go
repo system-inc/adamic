@@ -20,6 +20,9 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 		}
 		code = fmt.Sprintf("adamic_fs_file_host_join(%d, %s)", len(args), array)
 	}
+	if call.Operation == "host_env" {
+		code = e.nodeEnvironmentRead(args[0])
+	}
 	result := ""
 	if call.Of.IsReference() {
 		result = e.own(call.Of, code)

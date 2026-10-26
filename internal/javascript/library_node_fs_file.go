@@ -11,6 +11,8 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 		args[i] = e.value(arg)
 	}
 	switch call.Operation {
+	case "host_env":
+		return "adamicHostEnvironment(" + args[0] + ")"
 	case "host_join":
 		return "adamicNodePath.join(" + strings.Join(args, ", ") + ")"
 	case "host_tmpdir":
