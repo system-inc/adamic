@@ -29,7 +29,7 @@ func programs(t *testing.T) []string {
 		"../load/testdata/0.1/compile/*.ts",
 		"../load/testdata/0.1/compile/07_modules/main.ts",
 		"../oracle/testdata/*.a",
-		"../oracle/testdata/non_null*.ts",
+		"../oracle/testdata/*.ts",
 		"../oracle/testdata/modules/main.a",
 		"testdata/*.a",
 	} {

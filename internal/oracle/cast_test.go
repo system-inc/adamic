@@ -14,25 +14,27 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
+// Each fixture is named by its file. One that casts by a tag is .ts, since its tag test is a check no proof erases (item
+// 8); one that casts only between classes stays .a.
 var checkedCastFixtures = []struct {
-	name, source, target string
+	file, source, target string
 }{
-	{"cast_enum_numeric_fails", "A | B", "A"},
-	{"cast_enum_string_fails", "A | B", "A"},
-	{"cast_enum_const_numeric_fails", "A | B", "A"},
-	{"cast_enum_const_string_fails", "A | B", "A"},
-	{"cast_subunion_fails", "A | B | C", "A | C"},
-	{"cast_subunion_string_fails", "A | B | C", "A | C"},
-	{"cast_subunion_const_numeric_fails", "A | B | C", "A | C"},
-	{"cast_subunion_const_string_fails", "A | B | C", "A | C"},
-	{"cast_class_fails", "Animal", "Dog"},
-	{"cast_class_union_fails", "Bird | Cat | Dog", "Cat | Dog"},
-	{"cast_class_generic_fails", "Base<number>", "Box<number>"},
+	{"cast_enum_numeric_fails.ts", "A | B", "A"},
+	{"cast_enum_string_fails.ts", "A | B", "A"},
+	{"cast_enum_const_numeric_fails.ts", "A | B", "A"},
+	{"cast_enum_const_string_fails.ts", "A | B", "A"},
+	{"cast_subunion_fails.ts", "A | B | C", "A | C"},
+	{"cast_subunion_string_fails.ts", "A | B | C", "A | C"},
+	{"cast_subunion_const_numeric_fails.ts", "A | B | C", "A | C"},
+	{"cast_subunion_const_string_fails.ts", "A | B | C", "A | C"},
+	{"cast_class_fails.a", "Animal", "Dog"},
+	{"cast_class_union_fails.a", "Bird | Cat | Dog", "Cat | Dog"},
+	{"cast_class_generic_fails.a", "Base<number>", "Box<number>"},
 }
 
 func TestCheckedCastFlushesOutput(t *testing.T) {
 	t.Parallel()
-	program, _ := castFixture(t, "cast_enum_string_fails")
+	program, _ := castFixture(t, "cast_enum_string_fails.ts")
 	text := strings.Repeat("preceding stdout\n", 20000)
 	index := len(program.Strings)
 	program.Strings = append(program.Strings, text)
@@ -74,7 +76,7 @@ console.log(String(cast({ kind: Kind.B, n: 'wrong'.repeat(2) }).n + 1));
 
 func TestCheckedCastRunsNoCatchOrFinally(t *testing.T) {
 	t.Parallel()
-	for _, fixture := range []string{"cast_enum_numeric_fails", "cast_class_fails"} {
+	for _, fixture := range []string{"cast_enum_numeric_fails.ts", "cast_class_fails.a"} {
 		t.Run(fixture, func(t *testing.T) {
 			t.Parallel()
 			program, _ := castFixture(t, fixture)
@@ -104,25 +106,25 @@ func TestCheckedCastRunsNoCatchOrFinally(t *testing.T) {
 }
 
 func init() {
-	for _, name := range []string{"cast_enum_numeric", "cast_enum_string", "cast_enum_const", "cast_class", "cast_operand_once"} {
+	for _, file := range []string{"cast_enum_numeric.ts", "cast_enum_string.ts", "cast_enum_const.ts", "cast_class.a", "cast_operand_once.ts"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
 			checked bool
-		}{"internal/oracle/testdata/" + name + ".a", true, false})
+		}{"internal/oracle/testdata/" + file, true, false})
 	}
 	for _, fixture := range checkedCastFixtures {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
 			checked bool
-		}{"internal/oracle/testdata/" + fixture.name + ".a", true, true})
+		}{"internal/oracle/testdata/" + fixture.file, true, true})
 	}
 }
 
-func castFixture(t *testing.T, name string) (*ir.Program, string) {
+func castFixture(t *testing.T, file string) (*ir.Program, string) {
 	t.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name+".a"))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", file))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -138,9 +140,9 @@ func castFixture(t *testing.T, name string) (*ir.Program, string) {
 func TestCheckedCastFailureContract(t *testing.T) {
 	t.Parallel()
 	for _, fixture := range checkedCastFixtures {
-		t.Run(fixture.name, func(t *testing.T) {
+		t.Run(fixture.file, func(t *testing.T) {
 			t.Parallel()
-			program, path := castFixture(t, fixture.name)
+			program, path := castFixture(t, fixture.file)
 			want := "adamic: panic: cast failed: this " + fixture.source + " is not a " + fixture.target + "\n"
 			native, _ := natively(t, program)
 			for backend, result := range map[string]run{"native": native, "JavaScript": onJavaScriptBackend(t, program)} {
@@ -160,22 +162,22 @@ func TestCheckedCastFailureContract(t *testing.T) {
 func TestCheckedCastMutants(t *testing.T) {
 	t.Parallel()
 	for _, test := range []struct{ name, fixture string }{
-		{"skip numeric", "cast_enum_numeric_fails"},
-		{"skip string", "cast_enum_string_fails"},
-		{"skip const numeric", "cast_enum_const_numeric_fails"},
-		{"skip const string", "cast_enum_const_string_fails"},
-		{"skip sub-union", "cast_subunion_fails"},
-		{"skip string sub-union", "cast_subunion_string_fails"},
-		{"skip const numeric sub-union", "cast_subunion_const_numeric_fails"},
-		{"skip const string sub-union", "cast_subunion_const_string_fails"},
-		{"skip class", "cast_class_fails"},
-		{"skip class union", "cast_class_union_fails"},
-		{"skip generic class", "cast_class_generic_fails"},
-		{"wrong numeric tag", "cast_enum_numeric"},
-		{"wrong string tag", "cast_enum_string"},
-		{"wrong class identity", "cast_class_fails"},
-		{"twice tag operand", "cast_operand_once"},
-		{"twice class operand", "cast_operand_once"},
+		{"skip numeric", "cast_enum_numeric_fails.ts"},
+		{"skip string", "cast_enum_string_fails.ts"},
+		{"skip const numeric", "cast_enum_const_numeric_fails.ts"},
+		{"skip const string", "cast_enum_const_string_fails.ts"},
+		{"skip sub-union", "cast_subunion_fails.ts"},
+		{"skip string sub-union", "cast_subunion_string_fails.ts"},
+		{"skip const numeric sub-union", "cast_subunion_const_numeric_fails.ts"},
+		{"skip const string sub-union", "cast_subunion_const_string_fails.ts"},
+		{"skip class", "cast_class_fails.a"},
+		{"skip class union", "cast_class_union_fails.a"},
+		{"skip generic class", "cast_class_generic_fails.a"},
+		{"wrong numeric tag", "cast_enum_numeric.ts"},
+		{"wrong string tag", "cast_enum_string.ts"},
+		{"wrong class identity", "cast_class_fails.a"},
+		{"twice tag operand", "cast_operand_once.ts"},
+		{"twice class operand", "cast_operand_once.ts"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			t.Parallel()

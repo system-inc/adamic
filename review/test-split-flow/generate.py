@@ -11,7 +11,7 @@ import subprocess
 root = Path(__file__).resolve().parents[2]
 patterns = ['dedication/dedication.a', 'internal/load/testdata/0.1/compile/*.ts',
             'internal/load/testdata/0.1/compile/07_modules/main.ts', 'internal/oracle/testdata/*.a',
-            'internal/oracle/testdata/non_null*.ts', 'internal/oracle/testdata/modules/main.a', 'internal/flow/testdata/*.a']
+            'internal/oracle/testdata/*.ts', 'internal/oracle/testdata/modules/main.a', 'internal/flow/testdata/*.a']
 excluded = {'killed_after_output.a', 'size_class_churn.a', 'bitwise_sweep.a',
             'typed_arrays_primes_large.a', 'normalize_coverage_long.a'}
 # Read the explicit lists from the corpus owner so generation follows main's exclusions.
@@ -37,11 +37,11 @@ manifest = []
 for package in ['flow', 'fresh']:
     paths = []
     for pattern in patterns:
-        # flow's programs() globs the non-null .ts controls too; fresh's doesn't.
-        if package == 'fresh' and pattern.endswith('non_null*.ts'):
-            continue
         for path in sorted(glob.glob(str(root / pattern))):
             source = Path(path)
+            # flow's programs() globs the non-null .ts controls too; fresh's doesn't.
+            if package == 'fresh' and source.suffix == '.ts' and source.name.startswith('non_null'):
+                continue
             if package == 'flow' and (source.name in excluded or refused(source.name)):
                 continue
             relative = Path(os.path.relpath(source, root / 'internal' / package)).as_posix()

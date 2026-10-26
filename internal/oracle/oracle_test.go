@@ -61,7 +61,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/async_refused/async_refuse_frame_capture_cycle.a", false, false},
 	{"internal/oracle/testdata/async_loop_body_capture.a", true, false},
 	{"internal/oracle/testdata/async_refused/async_refuse_return_thenable.a", false, false},
-	{"internal/oracle/testdata/views_deep_chain.a", true, false},
+	{"internal/oracle/testdata/views_deep_chain.ts", true, false},
 	{"internal/oracle/testdata/moves/accepted/objects.a", true, false},
 	{"internal/oracle/testdata/moves/accepted/cleanup.a", true, false},
 	{"internal/oracle/testdata/string_views_lifetime.a", true, false},
@@ -232,8 +232,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/indexing.a", true, false},
 	{"internal/oracle/testdata/writes.a", true, false},
 	{"internal/oracle/testdata/writes_past_end.a", true, true},
-	{"internal/oracle/testdata/casts.a", true, false},
-	{"internal/oracle/testdata/cast_fails.a", true, true},
+	{"internal/oracle/testdata/casts.ts", true, false},
+	{"internal/oracle/testdata/cast_fails.ts", true, true},
 	{"internal/oracle/testdata/updates.a", true, false},
 	{"internal/oracle/testdata/read_order.a", true, false},
 	{"internal/oracle/testdata/string_index.a", true, false},
@@ -563,11 +563,11 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/regexp_split_pair_pattern.a", true, false},
 	// A write through a checked view is checked and boxed under its receiver's key, as its read is
 	// (#a3y38ng): into a union slot it reads back, and into a slot whose type can't take it it stops.
-	{"internal/oracle/testdata/view_write_union_value.a", true, false},
-	{"internal/oracle/testdata/view_write_union_declared.a", true, false},
-	{"internal/oracle/testdata/view_write_union_boolean.a", true, false},
-	{"internal/oracle/testdata/view_write_union_slot.a", true, true},
-	{"internal/oracle/testdata/view_write_misfit.a", true, true},
+	{"internal/oracle/testdata/view_write_union_value.ts", true, false},
+	{"internal/oracle/testdata/view_write_union_declared.ts", true, false},
+	{"internal/oracle/testdata/view_write_union_boolean.ts", true, false},
+	{"internal/oracle/testdata/view_write_union_slot.ts", true, true},
+	{"internal/oracle/testdata/view_write_misfit.ts", true, true},
 }
 
 // run is one execution's observable behavior: what the oracle compares.
