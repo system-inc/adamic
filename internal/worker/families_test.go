@@ -35,7 +35,7 @@ var workerFamilies = []workerFamily{
 	// These sizes leave at most one compiler mutation per product unit. Behavior
 	// units group only already-built checks; they never group compiler rebuilds.
 	{"TestProduct_WorkerMutants", "runWorkerMutantProductsShard", 24, workerMutantKeys, true},
-	{"TestProduct_WorkerWasmMutants", "runWasmWorkerMutantProductsShard", 6, wasmMutantKeys, true},
+	{"TestProduct_WorkerWasmMutants", "runWasmWorkerMutantProductsShard", 9, wasmMutantKeys, true},
 }
 
 func workerMutantKeys() []string {
