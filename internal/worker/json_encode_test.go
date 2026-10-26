@@ -27,6 +27,7 @@ func runWorkerEncodeJSONShard(t *testing.T, shard int) {
 	if err := exec.Command("node", "--input-type=module", "-e", "import {stripTypeScriptTypes,registerHooks} from 'node:module'; if(typeof stripTypeScriptTypes !== 'function'||typeof registerHooks !== 'function') process.exit(1)").Run(); err != nil {
 		t.Fatalf("missing Node 24 type stripping and module hooks: %v", err)
 	}
+	// Reads: internal/oracle/testdata/json_*.a
 	root, err := filepath.Abs("../..")
 	if err != nil {
 		t.Fatal(err)

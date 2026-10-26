@@ -26,6 +26,7 @@ func TestGraphAllocationSiteContainers(t *testing.T) {
 	for _, allocation := range allocations {
 		covered[reflect.TypeOf(allocation).Name()] = true
 	}
+	// Reads: internal/ir/*.go
 	files, err := filepath.Glob("../ir/*.go")
 	if err != nil {
 		t.Fatal(err)
