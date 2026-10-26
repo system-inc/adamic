@@ -12,14 +12,14 @@ func init() {
 			lowers  bool
 			checked bool
 		}{
-			"internal/lower/testdata/scalar_union_views/" + name + ".a", true, name == "misfit_number" || name == "misfit_boolean",
+			"internal/lower/testdata/scalar_union_views/" + name + ".ts", true, name == "misfit_number" || name == "misfit_boolean",
 		})
 	}
 }
 
 func scalarUnionViewMisfit(t *testing.T, name, declared, backend string) {
 	t.Helper()
-	path, err := filepath.Abs("../lower/testdata/scalar_union_views/" + name + ".a")
+	path, err := filepath.Abs("../lower/testdata/scalar_union_views/" + name + ".ts")
 	if err != nil {
 		t.Fatal(err)
 	}

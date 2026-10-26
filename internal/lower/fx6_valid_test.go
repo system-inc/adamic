@@ -2,51 +2,60 @@ package lower
 
 import (
 	"os"
+	"path/filepath"
 	"testing"
 )
 
-func fx6Source(t *testing.T, name string) string {
+// fx6Source returns the fixture file's source and its extension, the mode it lowers in.
+func fx6Source(t *testing.T, file string) (string, string) {
 	t.Helper()
-	source, err := os.ReadFile("testdata/fx6/" + name + ".a")
+	source, err := os.ReadFile("testdata/fx6/" + file)
 	if err != nil {
 		t.Fatal(err)
 	}
-	return string(source)
+	return string(source), filepath.Ext(file)
 }
 
 func TestLowerViewsViewedProducerMutation(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, fx6Source(t, "p35"))
+	source, extension := fx6Source(t, "p35.ts")
+	lowersAndAgreesWithNodeAs(t, source, extension)
 }
 
 func TestLowerViewsUnrelatedMutableField(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, fx6Source(t, "p36"))
+	source, extension := fx6Source(t, "p36.ts")
+	lowersAndAgreesWithNodeAs(t, source, extension)
 }
 
 func TestLowerViewsUnrelatedUnionField(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, fx6Source(t, "p37"))
+	source, extension := fx6Source(t, "p37.ts")
+	lowersAndAgreesWithNodeAs(t, source, extension)
 }
 
 func TestLowerViewsUnrelatedOptionalStringField(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, fx6Source(t, "p38"))
+	source, extension := fx6Source(t, "p38.ts")
+	lowersAndAgreesWithNodeAs(t, source, extension)
 }
 
 func TestLowerViewsDestructuredScalarUnion(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, fx6Source(t, "p51"))
+	source, extension := fx6Source(t, "p51.ts")
+	lowersAndAgreesWithNodeAs(t, source, extension)
 }
 
 func TestLowerViewsDestructuredCallableUnion(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, fx6Source(t, "p53"))
+	source, extension := fx6Source(t, "p53.ts")
+	lowersAndAgreesWithNodeAs(t, source, extension)
 }
 
 func TestLowerViewsUnrelatedOptionalNumberField(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, fx6Source(t, "p38_number"))
+	source, extension := fx6Source(t, "p38_number.ts")
+	lowersAndAgreesWithNodeAs(t, source, extension)
 }
 
 func TestLowerViewsDestructuredObjectUnionLiteral(t *testing.T) {

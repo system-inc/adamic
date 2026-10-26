@@ -2,36 +2,42 @@ package lower
 
 import (
 	"os"
+	"path/filepath"
 	"testing"
 )
 
-func callableProducerSource(t *testing.T, name string) string {
+// callableProducerSource returns the fixture file's source and its extension, the mode it lowers in.
+func callableProducerSource(t *testing.T, file string) (string, string) {
 	t.Helper()
-	source, err := os.ReadFile("testdata/callable_producers/" + name + ".a")
+	source, err := os.ReadFile("testdata/callable_producers/" + file)
 	if err != nil {
 		t.Fatal(err)
 	}
-	return string(source)
+	return string(source), filepath.Ext(file)
 }
 
 func TestCallableProducerP21(t *testing.T) {
 	t.Parallel()
 	// Native shows that a named producer's code identity uses its closure thunk.
-	lowersAndAgreesWithNode(t, callableProducerSource(t, "p21"))
+	source, extension := callableProducerSource(t, "p21.ts")
+	lowersAndAgreesWithNodeAs(t, source, extension)
 }
 func TestCallableProducerP60(t *testing.T) {
 	t.Parallel()
 	// Native checks the named function ABI, which JavaScript cannot expose.
-	lowersAndAgreesWithNode(t, callableProducerSource(t, "p60"))
+	source, extension := callableProducerSource(t, "p60.ts")
+	lowersAndAgreesWithNodeAs(t, source, extension)
 }
 func TestCallableProducerP61(t *testing.T) {
 	t.Parallel()
 	// Native must not compare the captured class method's direct-call ABI.
-	lowersAndAgreesWithNode(t, callableProducerSource(t, "p61"))
+	source, extension := callableProducerSource(t, "p61.ts")
+	lowersAndAgreesWithNodeAs(t, source, extension)
 }
 func TestCallableProducerCertificatesUseClosureThunks(t *testing.T) {
 	t.Parallel()
-	program := lowersAndAgreesWithNode(t, callableProducerSource(t, "p21"))
+	source, extension := callableProducerSource(t, "p21.ts")
+	program := lowersAndAgreesWithNodeAs(t, source, extension)
 	// The native defensive filter masks stale certificates at runtime; inspect
 	// this lowering invariant so that guard cannot hide an invalid certificate.
 	for _, contract := range program.ViewContracts {
