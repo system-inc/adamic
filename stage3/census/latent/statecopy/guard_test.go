@@ -41,12 +41,12 @@ func TestLatentStatecopySortedMapProgramMembership(t *testing.T) {
 // All production state follows the same root and recursive struct decisions as generation.
 func TestLatentStatecopyCoversEveryLoweringStateField(t *testing.T) {
 	t.Parallel()
+	// Reads: internal/lower/*.go
+	// Reads: internal/ir/*.go
 	root, err := filepath.Abs("../../../..")
 	if err != nil {
 		t.Fatal(err)
 	}
-	// Reads: internal/lower/*.go
-	// Reads: internal/ir/*.go
 	g := loadGenerator(root, filepath.Join(root, "internal/lower/lower.go"))
 	done := map[string]bool{}
 	for {

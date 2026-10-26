@@ -20,6 +20,7 @@ import (
 // while forty disjoint cases cover all 40,000 original indices exactly once.
 // FNV assigns these case names, fixture names and mutant names.
 func workerJSONBehaviorKeys(mode string) []string {
+	// Reads: internal/oracle/testdata/json_*.a
 	paths, err := filepath.Glob("../oracle/testdata/json_" + mode + "_*.a")
 	if err != nil {
 		panic(err)

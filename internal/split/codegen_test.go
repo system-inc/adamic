@@ -91,6 +91,7 @@ func snapshotOracleFixture(t *testing.T, directory, path string) {
 // Shard by fixture path so each unit lowers only its share of the corpus.
 func runAnalyzeOracleFixtures(t *testing.T, shard int) {
 	count := 0
+	// Reads: internal/oracle/testdata/*
 	err := filepath.WalkDir("../oracle/testdata", func(path string, entry os.DirEntry, err error) error {
 		if err != nil {
 			return err

@@ -20,6 +20,7 @@ func workerJSONRefused(key string) bool {
 func workerJSONKeys() []string {
 	keys := []string{"decode/corpus", "encode/corpus", "decode/fast_risks.a"}
 	for _, mode := range []string{"decode", "encode"} {
+		// Reads: internal/oracle/testdata/json_*.a
 		paths, err := filepath.Glob("../oracle/testdata/json_" + mode + "_*.a")
 		if err != nil {
 			panic(err)
