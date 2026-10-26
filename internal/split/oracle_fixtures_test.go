@@ -34,12 +34,13 @@ func compilingOracleFixtures(t *testing.T) []string {
 	for _, path := range paths {
 		// Keep the snapshot family's original corpus directory. Supporting modules
 		// and unregistered review witnesses aren't compiling oracle entry points.
-		if strings.HasPrefix(path, "internal/oracle/testdata/") && filepath.Ext(path) == ".a" {
+		// A .ts entry is a program as an .a is, its downcasts checked rather than proven.
+		if strings.HasPrefix(path, "internal/oracle/testdata/") && (filepath.Ext(path) == ".a" || filepath.Ext(path) == ".ts") {
 			selected = append(selected, filepath.Join("../oracle/testdata", strings.TrimPrefix(path, "internal/oracle/testdata/")))
 		}
 	}
 	if len(selected) == 0 {
-		t.Fatal("oracle registered no compiling .a fixtures")
+		t.Fatal("oracle registered no compiling .a or .ts fixtures")
 	}
 	return selected
 }
