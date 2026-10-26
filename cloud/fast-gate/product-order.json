@@ -2358,6 +2358,8 @@
       "internal/worker TestProduct_WorkerWasm_006",
       "internal/worker TestProduct_WorkerWasm_007",
       "internal/worker TestProduct_WorkerWasmMutants_004"
-    ]
+    ],
+    "internal/oracle TestProduct_AllocatorSlabSizes": [],
+    "internal/oracle TestProduct_AllocatorFreshHandoverCompiler": []
   }
 }
