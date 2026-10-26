@@ -1,0 +1,187 @@
+package native
+
+import (
+	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+func TestInitializerFlatBoundaries(t *testing.T) {
+	t.Parallel()
+	flat := `adamic_array *adamic_temporary_1 = adamic_array_new(1, false); adamic_array_push(adamic_temporary_1, (adamic_value){.number = 1});`
+	if got := len(initializerStatements(flat)); got != 2 {
+		t.Fatalf("compound literal boundaries: %d", got)
+	}
+	for _, control := range []string{`if (true) { adamic_release(NULL); }`, `adamic_temporary_1_landing:; goto adamic_temporary_1_landing;`, `for (;;) { break; }`} {
+		if pieces := initializerStatements(control); len(pieces) != 1 || pieces[0] != control {
+			t.Fatal("split structured control flow")
+		}
+	}
+	locals := initializerLocals(`adamic_array *adamic_temporary_1 = NULL; if (true) { double adamic_temporary_2 = 1; } double adamic_local_3_count = 2;`)
+	if len(locals) != 2 || locals[0].of != "adamic_array *" || locals[1].name != "adamic_local_3_count" {
+		t.Fatalf("root locals: %+v", locals)
+	}
+}
+
+func TestInitializerUnitOwnership(t *testing.T) {
+	t.Parallel()
+	directory := t.TempDir()
+	entry := filepath.Join(directory, "main.a")
+	var values []string
+	for i := 0; i < 400; i++ {
+		values = append(values, fmt.Sprintf("{value:%d}", i))
+	}
+	if err := os.WriteFile(filepath.Join(directory, "table.a"), []byte("export const table = ["+strings.Join(values, ",")+"];"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(entry, []byte("import { table } from './table.a'; console.log(table.length.toString());"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	program := namedProgram(t, entry, nil)
+	_, units, err := splitC(C(program))
+	if err != nil {
+		t.Fatal(err)
+	}
+	chunks := 0
+	for _, unit := range units {
+		if strings.HasPrefix(unit.name, "functions_") {
+			chunks += strings.Count(unit.source, "void adamic_unit_adamic_initialize_chunk_")
+		}
+	}
+	if chunks < 2 {
+		t.Fatal("large initializer was not outlined into bounded chunks")
+	}
+	names := &emitter{program: program}
+	globalCount := 0
+	for index, local := range program.Locals {
+		if !local.Global || local.Source.Module == "" {
+			continue
+		}
+		globalCount++
+		definition := "\n" + cType(local.Type) + " adamic_unit_" + names.localName(index) + " = "
+		found := false
+		for _, unit := range units {
+			if strings.Contains(unit.source, definition) {
+				found = true
+				if unit.name != "state.c" {
+					t.Fatalf("initializer global %s owned by %s, want %s", local.Name, unit.name, "state.c")
+				}
+
+			}
+		}
+		if !found {
+			t.Fatalf("missing initializer global definition %s", local.Name)
+		}
+	}
+	if globalCount == 0 {
+		t.Fatal("fixture has no source-owned globals")
+	}
+}
+
+func TestInitializerCrossModuleRoot(t *testing.T) {
+	t.Parallel()
+	e := &emitter{indent: 1}
+	parts := []initializerPart{{module: "first.a", statements: []string{"adamic_array *adamic_local_root = adamic_array_new(1, false);"}}, {module: "second.a", statements: []string{`adamic_array_push(adamic_local_root, (adamic_value){.number=7}); printf("%zu\n", adamic_local_root->length);`}}}
+	definitions := e.outlineInitializers(parts, "adamic_release(adamic_local_root);\n")
+	source := "#include \"adamic.h\"\n#include <stdio.h>\n" + definitions + "int main(void){\n" + e.out.String() + "return 0;\n}\n"
+	binary := filepath.Join(t.TempDir(), "root")
+	if err := Build(source, binary, Options{Split: true, Sanitize: true, Count: true, Jobs: 1}); err != nil {
+		t.Fatal(err)
+	}
+	truth := runWithInput(t, "", "node", "-e", "const root=[];root.push(7);console.log(root.length)")
+	if got := runWithInput(t, "", binary); got != truth {
+		t.Fatalf("root output %q Node %q", got, truth)
+	}
+}
+
+func TestInitializerEveryValueType(t *testing.T) {
+	t.Parallel()
+	for _, of := range []ir.Type{ir.Number, ir.Boolean, ir.String, ir.Record, ir.Array, ir.Object, ir.Uint8Array, ir.Uint16Array, ir.Int32Array, ir.Float64Array, ir.Promise, ir.Map, ir.Closure, ir.MaybeNumber, ir.MaybeBoolean, ir.Union, ir.Weak} {
+		source := cType(of) + " adamic_temporary_value = 0;"
+		locals := initializerLocals(source)
+		if len(locals) != 1 || locals[0].name != "adamic_temporary_value" {
+			t.Fatalf("initializer missed %s", cType(of))
+		}
+	}
+}
+
+func TestInitializerAuxiliaryValueTypes(t *testing.T) {
+	t.Parallel()
+	for _, of := range []string{"const adamic_accessor *", "adamic_method_entry", "adamic_environment *", "adamic_view_union_value", "const adamic_callable_signature *", "const adamic_value", "adamic_record_iterator *"} {
+		locals := initializerLocals(of + " adamic_temporary_aux = {0};")
+		expected := of
+		if !strings.Contains(of, "*") {
+			expected = strings.TrimPrefix(of, "const ")
+		}
+		if len(locals) != 1 || locals[0].of != expected {
+			t.Fatalf("initializer missed %s", of)
+		}
+	}
+}
+
+func TestInitializerAggregateBuffers(t *testing.T) {
+	t.Parallel()
+	source := "const adamic_value adamic_temporary_allowed[] = {{.number=1}}; adamic_array *adamic_temporary_result = adamic_object_values_checked(NULL, 1, NULL, false, adamic_temporary_allowed, 1);"
+	if pieces := initializerStatements(source); len(pieces) != 1 || pieces[0] != source {
+		t.Fatal("split a statement-local argument buffer")
+	}
+	locals := initializerLocals(source)
+	if len(locals) != 1 || locals[0].name != "adamic_temporary_result" {
+		t.Fatalf("buffer locals: %+v", locals)
+	}
+}
+
+// Every chunk prints its position, so exchanging two chunks changes observable output.
+func TestInitializerChunkOrder(t *testing.T) {
+	t.Parallel()
+	e := &emitter{indent: 1}
+	var statements []string
+	for i := 0; i < 300; i++ {
+		statements = append(statements, fmt.Sprintf("printf(\"%d\\n\");", i))
+	}
+	definitions := e.outlineInitializers([]initializerPart{{module: "order.a", statements: statements}}, "")
+	source := "#include \"adamic.h\"\n#include <stdio.h>\n" + definitions + "int main(void){\n" + e.out.String() + "return 0;\n}\n"
+	binary := filepath.Join(t.TempDir(), "order")
+	if err := Build(source, binary, Options{Split: true, Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	truth := runWithInput(t, "", "node", "-e", "for(let i=0;i<300;i++)console.log(i)")
+	if got := runWithInput(t, "", binary); got != truth {
+		t.Fatalf("chunk order output %q Node %q", got, truth)
+	}
+}
+
+func TestInitializerBraceLiteralsCrossChunks(t *testing.T) {
+	t.Parallel()
+	for _, shape := range []struct{ name, declaration, consumer, of string }{
+		{"region", "adamic_region adamic_temporary_brace = ADAMIC_REGION;", `printf("%d\n", adamic_temporary_brace.blocks == NULL && adamic_temporary_brace.count == 0 && !adamic_temporary_brace.holds_outside);`, "adamic_region"},
+		{"method-entry", "adamic_method_entry adamic_temporary_brace = {0};", `printf("%d\n", !adamic_temporary_brace.counted && adamic_temporary_brace.code == NULL);`, "adamic_method_entry"},
+		{"value", "adamic_value adamic_temporary_brace = {.number = 7};", `printf("%.0f\n", adamic_temporary_brace.number);`, "adamic_value"},
+	} {
+		t.Run(shape.name, func(t *testing.T) {
+			e := &emitter{indent: 1}
+			var statements []string
+			for range initializerChunkStatements - 1 {
+				statements = append(statements, "(void)0;")
+			}
+			statements = append(statements, shape.declaration, shape.consumer)
+			definitions := e.outlineInitializers([]initializerPart{{module: "brace.a", statements: statements}}, "")
+			source := "#define ADAMIC_CLOSURE_CONVENTION 1\n#include \"adamic.h\"\n#include <stdio.h>\n" + definitions + "int main(void){\n" + e.out.String() + "return 0;\n}\n"
+			binary := filepath.Join(t.TempDir(), "brace")
+			if err := Build(source, binary, Options{Split: true, Sanitize: true}); err != nil {
+				t.Fatal(err)
+			}
+			want := "1\n"
+			if shape.of == "adamic_value" {
+				want = "7\n"
+			}
+			if got := runWithInput(t, "", binary); got != want {
+				t.Fatalf("output %q want %q", got, want)
+			}
+		})
+	}
+}
