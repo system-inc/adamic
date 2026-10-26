@@ -2434,6 +2434,12 @@
       "internal/worker TestProduct_WorkerWasm_006",
       "internal/worker TestProduct_WorkerWasm_007",
       "internal/worker TestProduct_WorkerWasmMutants_007"
+    ],
+    "stage1/cohere/parse TestProduct_ParseDriverNative": [
+      "stage1/cohere/parse TestProduct_ParseDriverLower"
+    ],
+    "stage1/cohere/parse TestProduct_ParseLintNative": [
+      "stage1/cohere/parse TestProduct_ParseLintLower"
     ]
   }
 }
