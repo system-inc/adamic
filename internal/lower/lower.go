@@ -58,7 +58,12 @@ func LowerWithOptions(ctx context.Context, program *load.Program, options Option
 }
 
 func lowerChecked(program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery bool, ownershipQuery ...bool) (*lowering, error) {
-	lowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1, entry: entry, programPlan: plan, programDiscovery: discovery}
+	return lowerCheckedWithCycleTypes(program, typeChecker, entry, plan, discovery, nil, ownershipQuery...)
+}
+
+// Tests retain transient checker types before lazy queries replace them.
+func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery bool, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (*lowering, error) {
+	lowering := &lowering{cycleTypes: cycleTypes, program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1, entry: entry, programPlan: plan, programDiscovery: discovery}
 	lowering.result.ProgramRegion = discovery || plan != nil
 	if plan != nil {
 		lowering.result.ProgramTypes = plan.types
@@ -174,6 +179,8 @@ func lowerChecked(program *load.Program, typeChecker *checker.Checker, entry *as
 }
 
 type lowering struct {
+	cycleTypes map[int]*checker.Type // Optional differential-test capture; nil in normal builds.
+
 	// Source-only sites for graph adoption diagnostics; never stored in emitted IR.
 	graphViewSite, graphDynamicSite *ast.Node
 	// impliedTargets memoizes inferred parent targets only within this checker.
