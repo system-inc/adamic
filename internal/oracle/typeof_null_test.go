@@ -120,7 +120,7 @@ func TestTypeOfNullSlotPresenceMutant(t *testing.T) {
 	}
 	want := onNode(t, path)
 	source := native.C(program)
-	presence := regexp.MustCompile(`(adamic_union_typeof\([^\n]+, )adamic_temporary_[0-9]+ != NULL\)`)
+	presence := regexp.MustCompile(`(adamic_union_typeof\([^\n]+, )adamic_temporary_[A-Za-z0-9_]+ != NULL\)`)
 	mutant := presence.ReplaceAllString(source, "${1}true)")
 	if mutant == source {
 		t.Fatal("mutant changed no slot-presence tests")
