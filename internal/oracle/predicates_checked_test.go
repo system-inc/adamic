@@ -107,7 +107,7 @@ func TestCheckedPredicateOracle(t *testing.T) {
 			if probe.branch != "" {
 				changes := 0
 				for i := range program.Functions {
-					if strings.Contains(program.Functions[i].Name, "_predicate_check_") {
+					if strings.HasSuffix(program.Functions[i].Name, "_predicate_check") {
 						program.Functions[i].Body = mutateReadiness(program.Functions[i].Body, func(node any) any {
 							if panic, ok := node.(ir.Panic); ok {
 								constant, ok := panic.Message.(ir.StringConstant)

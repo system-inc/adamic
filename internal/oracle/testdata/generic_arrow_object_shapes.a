@@ -1,0 +1,7 @@
+// The runtime parameter uses enclosing T; reading the arrow's own U is currently refused.
+function hold<T extends { value: number }>(item: T): number {
+ const read = <U>(value: T): number => value.value;
+ return read(item);
+}
+console.log(hold({ padding: 7, value: 11 }).toString());
+console.log(hold({ value: 22 }).toString());
