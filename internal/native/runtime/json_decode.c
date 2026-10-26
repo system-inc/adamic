@@ -217,9 +217,31 @@ static bool literal(const json_node *value,const adamic_decode_node *type) {
  return value->kind==json_string && adamic_string_equal(value->string,type->literal);
 }
 static bool reference(int representation) {
- return representation>=adamic_ir_String && representation<=adamic_ir_Uint16Array &&
-  representation!=adamic_ir_MaybeNumber && representation!=adamic_ir_MaybeBoolean &&
-  representation!=adamic_ir_NullRepresentation && representation!=adamic_ir_UndefinedRepresentation;
+ // Keep every tag explicit: -Wswitch must reject new representations until classified.
+ switch ((enum adamic_ir_type)representation) {
+ case adamic_ir_Number:
+ case adamic_ir_Boolean:
+ case adamic_ir_MaybeNumber:
+ case adamic_ir_MaybeBoolean:
+ case adamic_ir_NullRepresentation:
+ case adamic_ir_UndefinedRepresentation:
+  return false;
+ case adamic_ir_String:
+ case adamic_ir_Object:
+ case adamic_ir_Array:
+ case adamic_ir_Map:
+ case adamic_ir_Closure:
+ case adamic_ir_Union:
+ case adamic_ir_Weak:
+ case adamic_ir_Record:
+ case adamic_ir_Uint8Array:
+ case adamic_ir_Int32Array:
+ case adamic_ir_Float64Array:
+ case adamic_ir_Promise:
+ case adamic_ir_Uint16Array:
+  return true;
+ }
+ return false;
 }
 static adamic_field_kind storage_kind(int representation) {
  return reference(representation)?adamic_field_reference:representation==adamic_ir_Boolean?adamic_field_boolean:adamic_field_number;
