@@ -20,7 +20,9 @@ func CheckPure(program *ir.Program, function int) error {
 		}
 		visited[index] = true
 		if err := walk(reflect.ValueOf(program.Functions[index].Body)); err != nil {
-			return fmt.Errorf("%s: %w", program.Functions[index].Name, err)
+			function := program.Functions[index]
+			position := function.Position
+			return fmt.Errorf("%s:%d:%d: %s: %w", position.File, position.Line, position.Column, function.Name, err)
 		}
 		return nil
 	}
@@ -40,6 +42,8 @@ func CheckPure(program *ir.Program, function int) error {
 				return fmt.Errorf("calls console")
 			case ir.ReadTextFile, ir.WriteTextFile, ir.ReadDirectory, ir.FileStatus, ir.ProgramArguments:
 				return fmt.Errorf("calls adamic I/O (%T)", node)
+			case ir.NodeFSFile:
+				return fmt.Errorf("impure: host operation %s", node.Operation)
 			case ir.Read:
 				return global(node.Local)
 			case ir.Assign:
