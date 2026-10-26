@@ -33,9 +33,9 @@ func TestInitializerUnitOwnership(t *testing.T) {
 	entry := filepath.Join(directory, "main.a")
 	var values []string
 	for i := 0; i < 400; i++ {
-		values = append(values, fmt.Sprintf("{value:%d}", i))
+		values = append(values, fmt.Sprintf("{value:next(%d)}", i))
 	}
-	if err := os.WriteFile(filepath.Join(directory, "table.a"), []byte("export const table = ["+strings.Join(values, ",")+"];"), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(directory, "table.a"), []byte("function next(n: number): number { return n; } export const table = ["+strings.Join(values, ",")+"];"), 0644); err != nil {
 		t.Fatal(err)
 	}
 	if err := os.WriteFile(entry, []byte("import { table } from './table.a'; console.log(table.length.toString());"), 0644); err != nil {

@@ -277,31 +277,31 @@ func (e *emitter) spliceArguments(splice ir.ArraySplice) string {
 // (docs/tsc-generated-c.md).
 const constantNumbers = 64
 
-// constantArray emits an array literal of constant numbers, or of array literals of them, from a
-// static table, when it holds at least constantNumbers numbers. Every array is fresh and the
-// constants run nothing, so making them in a loop is what one push a line does. It's false for any
-// other literal.
+// constantArray uses a bounded fresh-copy helper for flat numeric literals. The
+// existing table-of-rows path still requires constantNumbers numbers, and leaves
+// placement-bearing rows to ordinary emission. Immutable data shares content names.
 func (e *emitter) constantArray(literal ir.ArrayLiteral) (string, bool) {
-	numbers, flat := constantNumbersOf(literal)
-	lengths := []int{}
-	if !flat {
-		// A spread of rows would make an array of their elements, which a table of rows can't say. The
-		// checker refuses spreading numbers into an array of arrays; this doesn't lean on that.
-		if !literal.Element.IsReference() || len(literal.Elements) == 0 || slices.Contains(literal.Spread, true) {
+	if array, ok := e.constantNumericArray(literal); ok {
+		return array, true
+	}
+	// Flat literals not selected above use ordinary emission. This remaining
+	// path only packs rows.
+	if literal.ProgramRegion || e.graphTypes(literal.GraphTypes) || !literal.Element.IsReference() || len(literal.Elements) == 0 || slices.Contains(literal.Spread, true) {
+		return "", false
+	}
+	var numbers []float64
+	var lengths []int
+	for _, element := range literal.Elements {
+		row, ok := element.(ir.ArrayLiteral)
+		if !ok || row.ProgramRegion || e.graphTypes(row.GraphTypes) {
 			return "", false
 		}
-		for _, element := range literal.Elements {
-			row, isLiteral := element.(ir.ArrayLiteral)
-			if !isLiteral {
-				return "", false
-			}
-			values, constant := constantNumbersOf(row)
-			if !constant {
-				return "", false
-			}
-			numbers = append(numbers, values...)
-			lengths = append(lengths, len(values))
+		values, ok := constantNumbersOf(row)
+		if !ok {
+			return "", false
 		}
+		numbers = append(numbers, values...)
+		lengths = append(lengths, len(values))
 	}
 	if len(numbers) < constantNumbers {
 		return "", false
@@ -310,26 +310,12 @@ func (e *emitter) constantArray(literal ir.ArrayLiteral) (string, bool) {
 	for index, number := range numbers {
 		values[index] = cNumber(number)
 	}
-	table, exists := e.sharedDeclaration("adamic_numbers", constantList(values))
-	if !exists {
-		e.declarations = append(e.declarations, fmt.Sprintf("static const double %s[%d] = {%s};", table, len(numbers), constantList(values)))
-	}
-	if flat {
-		array := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%d, false)", len(numbers)))
-		index := e.temporary()
-		e.line("for (size_t %s = 0; %s < %d; %s++) {", index, index, len(numbers), index)
-		e.line("\tadamic_array_push(%s, (adamic_value){.number = %s[%s]});", array, table, index)
-		e.line("}")
-		return array, true
-	}
+	table := e.numberTable(values)
 	counts := make([]string, len(lengths))
 	for index, length := range lengths {
 		counts[index] = strconv.Itoa(length)
 	}
-	rows, exists := e.sharedDeclaration("adamic_lengths", constantList(counts))
-	if !exists {
-		e.declarations = append(e.declarations, fmt.Sprintf("static const size_t %s[%d] = {%s};", rows, len(lengths), constantList(counts)))
-	}
+	rows := e.lengthTable(counts)
 	array := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%d, true)", len(lengths)))
 	row, at, column, inner := e.temporary(), e.temporary(), e.temporary(), e.temporary()
 	e.line("for (size_t %s = 0, %s = 0; %s < %d; %s++) {", row, at, row, len(lengths), row)
@@ -379,4 +365,22 @@ func constantList(values []string) string {
 		builder.WriteString(value)
 	}
 	return builder.String()
+}
+
+// All literal paths use the same content keys and formatting for immutable data.
+func (e *emitter) numberTable(values []string) string {
+	data := constantList(values)
+	name, exists := e.sharedDeclaration("adamic_numbers", data)
+	if !exists {
+		e.declarations = append(e.declarations, fmt.Sprintf("static const double %s[%d] = {%s};", name, len(values), data))
+	}
+	return name
+}
+func (e *emitter) lengthTable(values []string) string {
+	data := constantList(values)
+	name, exists := e.sharedDeclaration("adamic_lengths", data)
+	if !exists {
+		e.declarations = append(e.declarations, fmt.Sprintf("static const size_t %s[%d] = {%s};", name, len(values), data))
+	}
+	return name
 }
