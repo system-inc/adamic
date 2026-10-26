@@ -799,3 +799,18 @@ func TestProduct_WorkerWasmMutants_004(t *testing.T) {
 func TestProduct_WorkerWasmMutants_005(t *testing.T) {
 	runWasmWorkerMutantProductsShard(t, 5)
 }
+
+// Not parallel: build products share compiler and runtime inputs.
+func TestProduct_WorkerWasmMutants_006(t *testing.T) {
+	runWasmWorkerMutantProductsShard(t, 6)
+}
+
+// Not parallel: build products share compiler and runtime inputs.
+func TestProduct_WorkerWasmMutants_007(t *testing.T) {
+	runWasmWorkerMutantProductsShard(t, 7)
+}
+
+// Not parallel: build products share compiler and runtime inputs.
+func TestProduct_WorkerWasmMutants_008(t *testing.T) {
+	runWasmWorkerMutantProductsShard(t, 8)
+}
