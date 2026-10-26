@@ -2392,6 +2392,15 @@
     "internal/flow TestProduct_FlowCorpusRemainder_028": [],
     "internal/flow TestProduct_FlowCorpusRemainder_029": [],
     "internal/flow TestProduct_FlowCorpusRemainder_030": [],
-    "internal/flow TestProduct_FlowCorpusRemainder_031": []
+    "internal/flow TestProduct_FlowCorpusRemainder_031": [],
+    "internal/lower TestProduct_CycleScanningCensus": [
+      "internal/oracle TestProduct_ProgramTscSource"
+    ],
+    "internal/lower TestProduct_CycleEqualityObjects512": [],
+    "internal/lower TestProduct_CycleEqualityObjects1024": [],
+    "internal/lower TestProduct_CycleEqualityObjects2048": [],
+    "internal/lower TestProduct_CycleEqualityObjects": [],
+    "internal/lower TestProduct_CycleEqualityObjectsSequential": [],
+    "internal/lower TestProduct_CycleEqualityMovesObjects": []
   }
 }
