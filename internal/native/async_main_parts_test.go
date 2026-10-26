@@ -24,8 +24,8 @@ func TestAsyncMainPastPartLimitStaysWhole(t *testing.T) {
 	// The same independent statements without a promise really do cross a cut.
 	control := *program
 	control.Main = program.Main[1:]
-	if !strings.Contains(C(&control), "static void adamic_main_") {
-		t.Fatal("synchronous control did not cross the main-parts limit")
+	if !strings.Contains(C(&control), "void adamic_initialize_chunk_") {
+		t.Fatal("synchronous control was not outlined into initializer chunks")
 	}
 	code := C(program)
 	if strings.Contains(code, "static void adamic_main_") {
