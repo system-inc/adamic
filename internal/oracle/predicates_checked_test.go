@@ -159,7 +159,7 @@ func TestCheckedPredicateOpenTagViews(t *testing.T) {
 		// The lie one level down: Keyword's name is a Width where Identifier's is a Name. Both name fields
 		// hold an object, so only the view's nested contract checks the read of text; Node prints
 		// "name undefined" and stops nowhere.
-		{"open_tag_view_nested", "name undefined\nname x\n", "TODO\n"},
+		{"open_tag_view_nested", "name undefined\nname x\n", "adamic: panic: field read failed: node.name.text is not initialized; expected string, found missing\n"},
 		// Kind.Identifier and Kind.Keyword share 1, so a Keyword passes isIdentifier's tag test: Node reads
 		// text as undefined; the view stops at that read.
 		{"shared_kind", "undefined\nshown\n", "adamic: panic: field read failed: node.text is not initialized; expected string, found missing\n"},
