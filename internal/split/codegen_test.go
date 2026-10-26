@@ -10,13 +10,14 @@ import (
 	"github.com/system-inc/adamic/internal/split"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
-// Snapshots cover the oracle/testdata .a fixtures main registers as compiling.
+// Snapshots cover the oracle/testdata .a and .ts fixtures main registers as compiling.
 // The directory also holds support modules and unregistered compiler witnesses
 // (including known emitter bugs); they are not compiling oracle entry points.
-// The analysis family below still sweeps every .a. The optional snapshot
+// The analysis family below still sweeps every .a and .ts. The optional snapshot
 // directory exports artifacts and never controls whether tests run.
 func runCodegenSnapshot(t *testing.T, shard int) {
 	directory := os.Getenv("ADAMIC_SPLIT_SNAPSHOT")
@@ -84,7 +85,9 @@ func snapshotOracleFixture(t *testing.T, directory, path string) {
 	}
 }
 
-// Exercise the analysis over the same varied IR that backs the source oracle.
+// Exercise the analysis over the same varied IR that backs the source oracle: every .a and .ts program, the ones
+// that don't load or lower skipped as they come. A .d.ts is no program, only declarations another file names
+// (ambient_refused/reference_target.d.ts, reference_path.a's), so it isn't walked.
 // Shard by fixture path so each unit lowers only its share of the corpus.
 func runAnalyzeOracleFixtures(t *testing.T, shard int) {
 	count := 0
@@ -92,7 +95,8 @@ func runAnalyzeOracleFixtures(t *testing.T, shard int) {
 		if err != nil {
 			return err
 		}
-		if entry.IsDir() || filepath.Ext(path) != ".a" || oracleFixtureShard(path) != shard {
+		source := filepath.Ext(path) == ".a" || (filepath.Ext(path) == ".ts" && !strings.HasSuffix(path, ".d.ts"))
+		if entry.IsDir() || !source || oracleFixtureShard(path) != shard {
 			return nil
 		}
 		loaded, err := load.Load([]string{path})
