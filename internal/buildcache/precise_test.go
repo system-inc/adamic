@@ -1792,6 +1792,7 @@ func TestATreeThatChangedDuringTheRunRefusesIt(t *testing.T) {
 // a directory and a file no package owns by themselves; an upgrade or a changed file misses.
 // Not parallel: newRig, and it points the machine's places and dpkg's database at the test.
 func TestWhatABuildReadsOfTheMachineIsKeyed(t *testing.T) {
+	unhanded(t)
 	r := newRig(t)
 	machine, err := filepath.EvalSymlinks(t.TempDir())
 	if err != nil {
