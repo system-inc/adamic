@@ -10,14 +10,14 @@ import (
 // graphAllocation preserves both the allocation's concrete type and its contextual
 // view. Ownership is selected only after the whole program's cycle proof runs.
 func (l *lowering) graphAllocation(value ir.Expression, node *ast.Node) ir.Expression {
-	ids := []int{int(l.concrete(l.checker.GetTypeAtLocation(node)).Id())}
+	ids := []int{l.cycleTypeID(l.concrete(l.checker.GetTypeAtLocation(node)))}
 	// Fresh literal identities may change across checker queries. The variable's
 	// widened allocation view is stable and is the type the cycle finder visits.
 	if node.Parent != nil && node.Parent.Kind == ast.KindVariableDeclaration && node.Parent.Name() != nil {
-		ids = append(ids, int(l.concrete(l.checker.GetTypeAtLocation(node.Parent.Name())).Id()))
+		ids = append(ids, l.cycleTypeID(l.concrete(l.checker.GetTypeAtLocation(node.Parent.Name()))))
 	}
 	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
-		ids = append(ids, int(l.concrete(contextual).Id()))
+		ids = append(ids, l.cycleTypeID(l.concrete(contextual)))
 	}
 	switch value := value.(type) {
 	case ir.ObjectLiteral:
@@ -277,7 +277,7 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	f.l.result.GraphTypes = map[int]bool{}
 	for node := range graph {
 		if node.proven != nil && !f.weak(node.proven) {
-			f.l.result.GraphTypes[int(node.proven.Id())] = true
+			f.l.result.GraphTypes[f.l.cycleTypeID(node.proven)] = true
 		}
 		if node.cell != 0 {
 			f.l.result.Locals[node.cell-1].GraphCell = true
@@ -488,4 +488,14 @@ func (f *cycleFinder) graphAdoptionBoundary() error {
 		return &Refused{Where: f.l.program.Where(site), What: reason, Fix: "keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)"}
 	}
 	return nil
+}
+
+// cycleTypeID keeps the checker's allocation identity unchanged. The optional
+// capture lets differential tests resolve even transient allocation types.
+func (l *lowering) cycleTypeID(proven *checker.Type) int {
+	id := int(proven.Id())
+	if l.cycleTypes != nil {
+		l.cycleTypes[id] = proven
+	}
+	return id
 }
