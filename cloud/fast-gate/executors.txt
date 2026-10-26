@@ -1745,3 +1745,79 @@ reads cmd/adamic internal/native/runtime/*
 # writes_test.go parses ../ir/*.go: Adamic Operations' repowalk over main e50e502c and 876cdd2e.
 reads internal/oracle internal/native/runtime/*
 reads internal/flow internal/ir/*.go
+# Walks that landed on main since Oct 23 with no line, from Adamic Operations' repowalk over main 977c3b9f (#7pmja7p):
+# internal/lower's graph_flow_walk_test.go:29 globs ../ir/*.go; statecopy's guard_test.go:44 roots at the repository and
+# its loadGenerator (main.go:110, :132) globs internal/ir/*.go and internal/lower/*.go; internal/split's codegen_test.go:94
+# walks all of ../oracle/testdata; internal/worker's json tests glob ../oracle/testdata/json_*.a and run node
+# oracle/node.mjs from the repository, which loads oracle/adamic.mjs.
+reads internal/lower internal/ir/*.go
+reads stage3/census/latent/statecopy internal/ir/*.go
+reads stage3/census/latent/statecopy internal/lower/*.go
+reads internal/split internal/oracle/testdata/*
+reads internal/worker internal/oracle/testdata/json_*.a
+reads internal/worker oracle/node.mjs
+reads internal/worker oracle/adamic.mjs
+# oracle/adamic.mjs re-exports oracle/json_decode.mjs and oracle/json_encode.mjs (adamic.mjs:5-6, since 11d89132 on
+# Oct 24), so every run that loads it reads both, and a package that reads adamic.mjs reads them too.
+reads internal/flow oracle/json_decode.mjs
+reads internal/flow oracle/json_encode.mjs
+reads internal/fuzz oracle/json_decode.mjs
+reads internal/fuzz oracle/json_encode.mjs
+reads internal/lower oracle/json_decode.mjs
+reads internal/lower oracle/json_encode.mjs
+reads internal/native oracle/json_decode.mjs
+reads internal/native oracle/json_encode.mjs
+reads internal/oracle oracle/json_decode.mjs
+reads internal/oracle oracle/json_encode.mjs
+reads stage1/cohere/css oracle/json_decode.mjs
+reads stage1/cohere/css oracle/json_encode.mjs
+reads stage1/cohere/cssnumbers oracle/json_decode.mjs
+reads stage1/cohere/cssnumbers oracle/json_encode.mjs
+reads stage1/cohere/cssstrings oracle/json_decode.mjs
+reads stage1/cohere/cssstrings oracle/json_encode.mjs
+reads stage1/cohere/estree oracle/json_decode.mjs
+reads stage1/cohere/estree oracle/json_encode.mjs
+reads stage1/cohere/formatfiles oracle/json_decode.mjs
+reads stage1/cohere/formatfiles oracle/json_encode.mjs
+reads stage1/cohere/gitignore oracle/json_decode.mjs
+reads stage1/cohere/gitignore oracle/json_encode.mjs
+reads stage1/cohere/graphql oracle/json_decode.mjs
+reads stage1/cohere/graphql oracle/json_encode.mjs
+reads stage1/cohere/graphql/printer oracle/json_decode.mjs
+reads stage1/cohere/graphql/printer oracle/json_encode.mjs
+reads stage1/cohere/json oracle/json_decode.mjs
+reads stage1/cohere/json oracle/json_encode.mjs
+reads stage1/cohere/lint oracle/json_decode.mjs
+reads stage1/cohere/lint oracle/json_encode.mjs
+reads stage1/cohere/lint/helpers oracle/json_decode.mjs
+reads stage1/cohere/lint/helpers oracle/json_encode.mjs
+reads stage1/cohere/lint/helpers/comments oracle/json_decode.mjs
+reads stage1/cohere/lint/helpers/comments oracle/json_encode.mjs
+reads stage1/cohere/lint/regex oracle/json_decode.mjs
+reads stage1/cohere/lint/regex oracle/json_encode.mjs
+reads stage1/cohere/markdownblocks oracle/json_decode.mjs
+reads stage1/cohere/markdownblocks oracle/json_encode.mjs
+reads stage1/cohere/markdowninline oracle/json_decode.mjs
+reads stage1/cohere/markdowninline oracle/json_encode.mjs
+reads stage1/cohere/mediaquery oracle/json_decode.mjs
+reads stage1/cohere/mediaquery oracle/json_encode.mjs
+reads stage1/cohere/selector oracle/json_decode.mjs
+reads stage1/cohere/selector oracle/json_encode.mjs
+reads stage1/cohere/static_single_assignment oracle/json_decode.mjs
+reads stage1/cohere/static_single_assignment oracle/json_encode.mjs
+reads stage1/cohere/suppression oracle/json_decode.mjs
+reads stage1/cohere/suppression oracle/json_encode.mjs
+reads stage1/cohere/tsprinter oracle/json_decode.mjs
+reads stage1/cohere/tsprinter oracle/json_encode.mjs
+reads stage1/cohere/values oracle/json_decode.mjs
+reads stage1/cohere/values oracle/json_encode.mjs
+reads stage1/cohere/yaml oracle/json_decode.mjs
+reads stage1/cohere/yaml oracle/json_encode.mjs
+reads stage1/typescript/parser oracle/json_decode.mjs
+reads stage1/typescript/parser oracle/json_encode.mjs
+reads stage1/typescript/scanner oracle/json_decode.mjs
+reads stage1/typescript/scanner oracle/json_encode.mjs
+reads stage3/fixtures oracle/json_decode.mjs
+reads stage3/fixtures oracle/json_encode.mjs
+reads internal/worker oracle/json_decode.mjs
+reads internal/worker oracle/json_encode.mjs
