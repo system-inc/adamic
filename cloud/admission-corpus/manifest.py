@@ -19,10 +19,10 @@ The corpora, in the order a deterministic sample draws them:
 
 Every corpus collects `.ts` beside `.a` (#nc3k59z): a fixture moved to its `.ts` twin stays in the corpus, so a delta
 of 0 means nothing was newly refused, never that the programs left. A `**` segment matches any number of
-directories, so a nested directory is never silently outside its corpus.
+directories, so a nested directory is never silently outside its corpus. Includes and excludes read through the one
+matcher, so a pattern means the same on either side.
 """
 import argparse
-import fnmatch
 import json
 import re
 import subprocess
@@ -32,9 +32,9 @@ corpora = [
     ("witnesses", ["review/admission-corpus/witnesses/*.a", "review/admission-corpus/witnesses/*.ts"], []),
     ("fixtures", ["internal/oracle/testdata/**/*.a", "internal/oracle/testdata/**/*.ts", "internal/load/testdata/0.1/compile/*.ts", "internal/load/testdata/0.1/compile/*/main.ts", "internal/flow/testdata/**/*.a", "internal/flow/testdata/**/*.ts", "internal/lower/testdata/**/*.a", "internal/lower/testdata/**/*.ts", "internal/conformance/testdata/**/*.a", "internal/conformance/testdata/**/*.ts"], []),
     ("gaps", ["stage1/*/gaps/*.ts", "stage1/*/*/gaps/*.ts", "stage1/*/*/gaps/*.a", "stage1/*/gaps/*.a"], []),
-    ("review", ["review/*/*.a", "review/*/*.ts", "review/*/*/*.a", "review/*/*/*.ts"], ["review/test-audit/*", "review/admission-corpus/*"]),
+    ("review", ["review/*/*.a", "review/*/*.ts", "review/*/*/*.a", "review/*/*/*.ts"], ["review/test-audit/**/*", "review/admission-corpus/**/*"]),
     ("fuzz", ["internal/fuzz/corpus/*.a", "internal/fuzz/corpus/*.ts"], []),
-    ("stage3", ["stage3/**/*.a", "stage3/**/*.ts"], ["stage3/drivers/tsc/corpus/*"]),
+    ("stage3", ["stage3/**/*.a", "stage3/**/*.ts"], ["stage3/drivers/tsc/corpus/**/*"]),
 ]
 
 
@@ -73,7 +73,7 @@ def main():
             blobs[path] = blob
     manifest = {"sha": sha, "generator": "cloud/admission-corpus/manifest.py", "corpora": []}
     for name, include, exclude in corpora:
-        programs = [{"path": path, "blob": blobs[path]} for path in sorted(blobs) if matches(path, include) and not any(fnmatch.fnmatchcase(path, pattern) for pattern in exclude)]
+        programs = [{"path": path, "blob": blobs[path]} for path in sorted(blobs) if matches(path, include) and not matches(path, exclude)]
         manifest["corpora"].append({"name": name, "patterns": include, "programs": programs})
     json.dump(manifest, sys.stdout, indent=1)
     sys.stdout.write("\n")
