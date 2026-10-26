@@ -12,9 +12,12 @@ import (
 )
 
 // machineFixture is a machine of the test's own: a file dpkg installed and nobody changed (owned), another no package
-// owns (loose), and a dpkg database naming owned, with the machine's places and dpkg's database pointed at them.
+// owns (loose), and a dpkg database naming owned, with the machine's places and dpkg's database pointed at them. No
+// house's values are handed until the test hands its own (unhanded), since a unit on the line hands the house's to
+// every test it runs.
 func machineFixture(t *testing.T) (owned, loose, dpkg string) {
 	t.Helper()
+	unhanded(t)
 	machine, err := filepath.EvalSymlinks(t.TempDir())
 	if err != nil {
 		t.Fatal(err)
@@ -32,6 +35,13 @@ func machineFixture(t *testing.T) (owned, loose, dpkg string) {
 	packageIndexes.Delete(dpkg)
 	t.Cleanup(func() { systemPlaces, dpkgDirectory = originalPlaces, originalDpkg; packageIndexes.Delete(dpkg) })
 	return owned, loose, dpkg
+}
+
+// unhanded clears ADAMIC_HOUSE_VALUES for the test: a unit on the line hands every process it starts the house's own
+// values (recipe 6), so a test asserting how a machine file values with none handed has to clear it itself.
+func unhanded(t *testing.T) {
+	t.Helper()
+	t.Setenv(houseValuesVariable, "")
 }
 
 // handHouse writes a stamp naming paths, at mode, hands it as ADAMIC_HOUSE_VALUES and returns its path. As root does on
