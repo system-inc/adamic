@@ -78,7 +78,7 @@ func TestConstantArraysAgreeWithNode(t *testing.T) {
 	if got, failed := runConstantArrays(t, code); failed != "" || got != want {
 		t.Fatalf("native %q (%s); Node %q", got, failed, want)
 	}
-	flatBound := regexp.MustCompile(`(for \(size_t adamic_temporary_[A-Za-z0-9_]+ = 0; adamic_temporary_[A-Za-z0-9_]+ < )(\d+)(;)`)
+	flatBound := regexp.MustCompile(`(for \(size_t index = 0; index < )(count)(;)`)
 	rowRead := regexp.MustCompile(`(\.number = adamic_numbers_[A-Za-z0-9_]+\[)(adamic_temporary_[A-Za-z0-9_]+)(\]\})`)
 	tableEntry := regexp.MustCompile(`(static const double adamic_numbers_[A-Za-z0-9_]+\[\d+\] = \{)(\([^)]*\)|NAN)`)
 	rowTaken := regexp.MustCompile(`(\(adamic_value\)\{\.reference = )(adamic_temporary_[A-Za-z0-9_]+)(\}\);\n\t*\})`)
