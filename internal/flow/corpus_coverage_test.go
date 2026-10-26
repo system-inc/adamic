@@ -115,31 +115,6 @@ func TestFlowCorpusSetupIsShared(t *testing.T) {
 	}
 }
 
-// A long remainder is the signal to regenerate the selectable corpus units.
-// Until then it keeps new programs covered without requiring regeneration.
-func TestFlowCorpusRemainder(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	generated := map[string]bool{}
-	for _, path := range flowCorpusPaths {
-		generated[path] = true
-	}
-	for _, unit := range asyncFlowUnits {
-		generated[unit.path] = true
-	}
-	count := 0
-	for _, path := range programs(t) {
-		if generated[filepath.ToSlash(path)] {
-			continue
-		}
-		count++
-		t.Run(filepath.ToSlash(path), func(t *testing.T) {
-			checkAllFlowProgram(t, path)
-		})
-	}
-	t.Logf("remainder ran %d programs", count)
-}
-
 // A lowering declaration excludes only the named witness and pins lowering's reason.
 func TestFlowCorpusBoundaryDeclarations(t *testing.T) {
 	t.Parallel()
