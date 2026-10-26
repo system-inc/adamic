@@ -7,9 +7,9 @@ import (
 	"testing"
 )
 
-func loomViewFixture(t *testing.T, name string) string {
+func loomViewFixture(t *testing.T, file string) string {
 	t.Helper()
-	source, err := os.ReadFile(filepath.Join("testdata", "loom_views_a", name+".a"))
+	source, err := os.ReadFile(filepath.Join("testdata", "loom_views_a", file))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -18,7 +18,7 @@ func loomViewFixture(t *testing.T, name string) string {
 
 func requireLoomViewRefusal(t *testing.T, name, output, diagnostic, fix string) {
 	t.Helper()
-	source := loomViewFixture(t, name)
+	source := loomViewFixture(t, name+".a")
 	truth := runAgreementNode(t, writeAgreementSource(t, source))
 	if truth.code != 0 || string(truth.stdout) != output || len(truth.stderr) != 0 {
 		t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.code, truth.stdout, truth.stderr)
@@ -42,19 +42,19 @@ func TestLoomViewUnsupportedRead(t *testing.T) {
 // Views D checks this read against its contract, so it compiles and prints what Node prints.
 func TestLoomViewUnsupportedCallableRead(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, loomViewFixture(t, "callable"))
+	lowersAndAgreesWithNodeChecked(t, loomViewFixture(t, "callable.ts"))
 }
 
 func TestLoomViewKeyFix(t *testing.T) {
 	t.Parallel()
-	source := strings.ReplaceAll(loomViewFixture(t, "key"), "view['count']", "view.count")
+	source := strings.ReplaceAll(loomViewFixture(t, "key.a"), "view['count']", "view.count")
 	source = strings.Replace(source, "count: 'seven'", "count: 7", 1)
 	lowersAndAgreesWithNode(t, source)
 }
 
 func TestLoomViewUnsupportedUnreadControl(t *testing.T) {
 	t.Parallel()
-	source := loomViewFixture(t, "unsupported")
+	source := loomViewFixture(t, "unsupported.a")
 	source = strings.Replace(source, "console.log(`${view.label} / ${view.count}`);", "console.log('created');", 1)
 	lowersAndAgreesWithNode(t, source)
 }
@@ -87,7 +87,7 @@ func TestLoomViewOriginalViewsP72(t *testing.T) {
 // Views D checks this read against its contract, so it compiles and prints what Node prints.
 func TestLoomViewOriginalNativeP21(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, loomViewFixture(t, "native_p21"))
+	lowersAndAgreesWithNodeChecked(t, loomViewFixture(t, "native_p21.ts"))
 }
 
 func TestLoomViewOriginalNativeP37(t *testing.T) {

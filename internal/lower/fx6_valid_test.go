@@ -7,7 +7,7 @@ import (
 
 func fx6Source(t *testing.T, name string) string {
 	t.Helper()
-	source, err := os.ReadFile("testdata/fx6/" + name + ".a")
+	source, err := os.ReadFile("testdata/fx6/" + name + ".ts")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -16,37 +16,37 @@ func fx6Source(t *testing.T, name string) string {
 
 func TestLowerViewsViewedProducerMutation(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, fx6Source(t, "p35"))
+	lowersAndAgreesWithNodeChecked(t, fx6Source(t, "p35"))
 }
 
 func TestLowerViewsUnrelatedMutableField(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, fx6Source(t, "p36"))
+	lowersAndAgreesWithNodeChecked(t, fx6Source(t, "p36"))
 }
 
 func TestLowerViewsUnrelatedUnionField(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, fx6Source(t, "p37"))
+	lowersAndAgreesWithNodeChecked(t, fx6Source(t, "p37"))
 }
 
 func TestLowerViewsUnrelatedOptionalStringField(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, fx6Source(t, "p38"))
+	lowersAndAgreesWithNodeChecked(t, fx6Source(t, "p38"))
 }
 
 func TestLowerViewsDestructuredScalarUnion(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, fx6Source(t, "p51"))
+	lowersAndAgreesWithNodeChecked(t, fx6Source(t, "p51"))
 }
 
 func TestLowerViewsDestructuredCallableUnion(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, fx6Source(t, "p53"))
+	lowersAndAgreesWithNodeChecked(t, fx6Source(t, "p53"))
 }
 
 func TestLowerViewsUnrelatedOptionalNumberField(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, fx6Source(t, "p38_number"))
+	lowersAndAgreesWithNodeChecked(t, fx6Source(t, "p38_number"))
 }
 
 func TestLowerViewsDestructuredObjectUnionLiteral(t *testing.T) {

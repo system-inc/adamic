@@ -52,6 +52,17 @@ func lowersAndAgreesWithNodeExit(t *testing.T, source string, exit int) *ir.Prog
 	return agreeSource(t, source, exit, nil)
 }
 
+// lowersAndAgreesWithNodeChecked is lowersAndAgreesWithNode for a .ts twin: the
+// source is lowered as main.ts, so a downcast keeps the run-time checks .a refuses.
+func lowersAndAgreesWithNodeChecked(t *testing.T, source string) *ir.Program {
+	t.Helper()
+	path := filepath.Join(t.TempDir(), "main.ts")
+	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	return agreeEntry(t, path, nil, 0, nil, nil)
+}
+
 // lowersAndAgreesWithNodeNative adds an unsanitized native observation to the
 // source and JavaScript agreement. Each opting-in row names what only native shows,
 // and runs a program from agreementproducts' programs by its name.

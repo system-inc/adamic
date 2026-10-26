@@ -8,7 +8,7 @@ import (
 
 func callableContractSource(t *testing.T, name string) string {
 	t.Helper()
-	source, err := os.ReadFile("testdata/fx7_wrong_aborts/" + name + ".a")
+	source, err := os.ReadFile("testdata/fx7_wrong_aborts/" + name + ".ts")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -18,7 +18,7 @@ func callableContractSource(t *testing.T, name string) string {
 func TestCallableContractP18(t *testing.T) {
 	t.Parallel()
 	source := callableContractSource(t, "p18")
-	lowersAndAgreesWithNode(t, source)
+	lowersAndAgreesWithNodeChecked(t, source)
 	// Native must check the stored callable before packing its argument.
 
 }
@@ -26,7 +26,7 @@ func TestCallableContractP18(t *testing.T) {
 func TestCallableContractP20(t *testing.T) {
 	t.Parallel()
 	source := callableContractSource(t, "p20")
-	lowersAndAgreesWithNode(t, source)
+	lowersAndAgreesWithNodeChecked(t, source)
 	// Native combines the checked union field and the checked callable read.
 
 }
@@ -34,7 +34,7 @@ func TestCallableContractP20(t *testing.T) {
 func TestCallableContractWideProducer(t *testing.T) {
 	t.Parallel()
 	source := callableContractSource(t, "wide")
-	lowersAndAgreesWithNode(t, source)
+	lowersAndAgreesWithNodeChecked(t, source)
 	// The implementation's argument is boxed even though the union signature takes a number.
 
 }
@@ -54,7 +54,7 @@ func TestCallableContractReceiverEvaluatedOnce(t *testing.T) {
 	source := strings.Replace(callableContractSource(t, "p18"), "console.log(`${view.value(4)}`);", `function receiver(): Receiver { console.log('receiver'); return view; }
 function argument(): number { console.log('argument'); return 4; }
 console.log(String(receiver().value(argument())));`, 1)
-	lowersAndAgreesWithNode(t, source)
+	lowersAndAgreesWithNodeChecked(t, source)
 	// Native's checked member lookup must reuse the evaluated receiver.
 
 }
@@ -62,8 +62,8 @@ console.log(String(receiver().value(argument())));`, 1)
 func TestCallableContractSpreadRefused(t *testing.T) {
 	t.Parallel()
 	source := strings.Replace(callableContractSource(t, "p18"), "view.value(4)", "view.value(...[4])", 1)
-	_, err := lowerSource(t, source)
-	if err == nil || !strings.Contains(err.Error(), "main.a:") || !strings.Contains(err.Error(), "spread arguments through a checked callable view") {
+	_, err := lowerTypeScriptAssertionSource(t, source)
+	if err == nil || !strings.Contains(err.Error(), "main.ts:") || !strings.Contains(err.Error(), "spread arguments through a checked callable view") {
 		t.Fatalf("want located checked-callable spread refusal, got %v", err)
 	}
 }

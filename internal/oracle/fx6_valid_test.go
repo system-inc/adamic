@@ -13,43 +13,43 @@ func init() {
 		path    string
 		lowers  bool
 		checked bool
-	}{"internal/lower/testdata/fx6/p38_number.a", true, false})
+	}{"internal/lower/testdata/fx6/p38_number.ts", true, false})
 	fixtures = append(fixtures, struct {
 		path    string
 		lowers  bool
 		checked bool
-	}{"internal/lower/testdata/fx6/p35.a", true, false})
+	}{"internal/lower/testdata/fx6/p35.ts", true, false})
 	fixtures = append(fixtures, struct {
 		path    string
 		lowers  bool
 		checked bool
-	}{"internal/lower/testdata/fx6/p36.a", true, false})
+	}{"internal/lower/testdata/fx6/p36.ts", true, false})
 	fixtures = append(fixtures, struct {
 		path    string
 		lowers  bool
 		checked bool
-	}{"internal/lower/testdata/fx6/p37.a", true, false})
+	}{"internal/lower/testdata/fx6/p37.ts", true, false})
 	fixtures = append(fixtures, struct {
 		path    string
 		lowers  bool
 		checked bool
-	}{"internal/lower/testdata/fx6/p38.a", true, false})
+	}{"internal/lower/testdata/fx6/p38.ts", true, false})
 	fixtures = append(fixtures, struct {
 		path    string
 		lowers  bool
 		checked bool
-	}{"internal/lower/testdata/fx6/p51.a", true, false})
+	}{"internal/lower/testdata/fx6/p51.ts", true, false})
 	fixtures = append(fixtures, struct {
 		path    string
 		lowers  bool
 		checked bool
-	}{"internal/lower/testdata/fx6/p53.a", true, false})
+	}{"internal/lower/testdata/fx6/p53.ts", true, false})
 
 }
 
 func TestOracleViewsViewedProducerMutation(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p35.a")
+	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p35.ts")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -69,7 +69,7 @@ func TestOracleViewsViewedProducerMutation(t *testing.T) {
 
 func TestOracleViewsUnrelatedMutableField(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p36.a")
+	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p36.ts")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -89,7 +89,7 @@ func TestOracleViewsUnrelatedMutableField(t *testing.T) {
 
 func TestOracleViewsUnrelatedUnionField(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p37.a")
+	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p37.ts")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -109,7 +109,7 @@ func TestOracleViewsUnrelatedUnionField(t *testing.T) {
 
 func TestOracleViewsUnrelatedOptionalStringField(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p38.a")
+	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p38.ts")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -129,7 +129,7 @@ func TestOracleViewsUnrelatedOptionalStringField(t *testing.T) {
 
 func TestOracleViewsDestructuredScalarUnion(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p51.a")
+	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p51.ts")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -149,7 +149,7 @@ func TestOracleViewsDestructuredScalarUnion(t *testing.T) {
 
 func TestOracleViewsDestructuredCallableUnion(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p53.a")
+	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p53.ts")
 	if err != nil {
 		t.Fatal(err)
 	}

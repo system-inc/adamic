@@ -9,7 +9,7 @@ import (
 func TestCallableProducerLiteralReturn(t *testing.T) {
 	t.Parallel()
 	// Native confirms that the narrower logical result retains the scalar ABI.
-	lowersAndAgreesWithNode(t, callableProducerSource(t, "p23"))
+	lowersAndAgreesWithNodeChecked(t, callableProducerSource(t, "p23.ts"))
 }
 
 func callableProducerAdapterRefusal(t *testing.T, name string) {
@@ -22,7 +22,7 @@ func callableProducerAdapterRefusal(t *testing.T, name string) {
 	if want.code != 0 || string(want.stdout) != "true\n" {
 		t.Fatalf("Node control: %+v", want)
 	}
-	_, err = lowerSource(t, callableProducerSource(t, name))
+	_, err = lowerSource(t, callableProducerSource(t, name+".a"))
 	if err == nil || !strings.Contains(err.Error(), "main.a:") || !strings.Contains(err.Error(), "wrap the producer in an arrow") {
 		t.Fatalf("want located producer adapter refusal, got %v", err)
 	}
@@ -43,15 +43,15 @@ func TestCallableProducerExtraOptionalRefused(t *testing.T) {
 
 func TestCallableProducerFewerParametersAdapted(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, callableProducerSource(t, "p22_adapted"))
+	lowersAndAgreesWithNodeChecked(t, callableProducerSource(t, "p22_adapted.ts"))
 }
 func TestCallableProducerMethodShorthandAdapted(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, callableProducerSource(t, "p59_adapted"))
+	lowersAndAgreesWithNodeChecked(t, callableProducerSource(t, "p59_adapted.ts"))
 }
 func TestCallableProducerExtraOptionalAdapted(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, callableProducerSource(t, "p62_adapted"))
+	lowersAndAgreesWithNodeChecked(t, callableProducerSource(t, "p62_adapted.ts"))
 }
 
 func TestCallableProducerDiscardedObjectResultRefused(t *testing.T) {
@@ -63,7 +63,7 @@ func TestCallableProducerDiscardedObjectResultRefused(t *testing.T) {
 func TestCallableProducerTaggedUnreadMethod(t *testing.T) {
 	t.Parallel()
 	// Native must defer the receiver-method obligation behind a tagged selector.
-	lowersAndAgreesWithNode(t, callableProducerSource(t, "p135_tagged_unread"))
+	lowersAndAgreesWithNodeChecked(t, callableProducerSource(t, "p135_tagged_unread.ts"))
 }
 
 func TestCallableProducerAmbiguousRefused(t *testing.T) {
@@ -83,11 +83,11 @@ func TestCallableProducerAmbiguousRefused(t *testing.T) {
 }
 
 // A producer whose type is identical to one member is carried by that member,
-// even when it is also assignable to another (wide.a is the same with the
+// even when it is also assignable to another (wide.ts is the same with the
 // identical member second).
 func TestCallableProducerExactMemberCarries(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, callableProducerSource(t, "p135_exact_member"))
+	lowersAndAgreesWithNodeChecked(t, callableProducerSource(t, "p135_exact_member.ts"))
 }
 
 func TestCallableProducerUniqueObjectResultRefused(t *testing.T) {
