@@ -13,7 +13,7 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-var jsonEncodeFixtures = []string{"json_encode_scalars.a", "json_encode_objects.a", "json_encode_unions.a", "json_encode_differences.a", "json_encode_depth.a", "json_schema_names.a", "json_encode_own_data.a", "json_encode_method.a"}
+var jsonEncodeFixtures = []string{"json_encode_scalars.a", "json_encode_objects.a", "json_encode_unions.a", "json_encode_differences.a", "json_encode_depth.a", "json_schema_names.a", "json_encode_own_data.a", "json_encode_method.a", "json_encode_last_use.a"}
 
 func init() {
 	for _, name := range jsonEncodeFixtures {
