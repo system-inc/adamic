@@ -1,0 +1,15 @@
+import { panic } from 'adamic';
+interface Row { value: number; items: number[]; }
+const arrays: number[][] = [];
+const tables: Row[][] = [];
+for (let i=0;i<2;i++) {
+ arrays.push([1,2,3]);
+ tables.push([{value:0,items:[1,2]},{value:1,items:[1,2]},{value:2,items:[1,2]},{value:3,items:[1,2]},{value:4,items:[1,2]},{value:5,items:[1,2]},{value:6,items:[1,2]},{value:7,items:[1,2]},{value:8,items:[1,2]},{value:9,items:[1,2]},{value:10,items:[1,2]},{value:11,items:[1,2]},{value:12,items:[1,2]},{value:13,items:[1,2]},{value:14,items:[1,2]},{value:15,items:[1,2]}]);
+}
+const a=arrays[0]??panic('a');const b=arrays[1]??panic('b');
+const left=tables[0]??panic('left');const right=tables[1]??panic('right');
+const one=left[0]??panic('one');const two=right[0]??panic('two');
+a[0]=99;a.push(8);one.value=44;one.items[0]=55;
+console.log(a.join(',')+':'+b.join(','));
+console.log(one.value.toString()+':'+two.value.toString()+':'+one.items.join(',')+':'+two.items.join(','));
+console.log((a===b).toString()+':'+(one===two).toString()+':'+(one.items===two.items).toString());
