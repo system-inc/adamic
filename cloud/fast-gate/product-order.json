@@ -2392,6 +2392,9 @@
     "internal/flow TestProduct_FlowCorpusRemainder_028": [],
     "internal/flow TestProduct_FlowCorpusRemainder_029": [],
     "internal/flow TestProduct_FlowCorpusRemainder_030": [],
-    "internal/flow TestProduct_FlowCorpusRemainder_031": []
+    "internal/flow TestProduct_FlowCorpusRemainder_031": [],
+    "internal/lower TestProduct_CycleScanningCensus": [
+      "internal/oracle TestProduct_ProgramTscSource"
+    ]
   }
 }
