@@ -143,7 +143,7 @@ func TestLoopArrayHoldC(t *testing.T) {
 				t.Fatalf("%s: missing function definition", function.Name)
 			}
 			body := strings.SplitN(generated[at[1]:], "\n}\n", 2)[0]
-			iterator := regexp.MustCompile(`< (adamic_temporary_[0-9]+)->length`).FindStringSubmatch(body)
+			iterator := regexp.MustCompile(`< (adamic_temporary_[A-Za-z0-9_]+)->length`).FindStringSubmatch(body)
 			if iterator == nil {
 				t.Fatalf("%s: missing array iterator", function.Name)
 			}
@@ -257,7 +257,7 @@ func TestLoopCallCoverage(t *testing.T) {
 			t.Fatalf("%s: missing function definition", function.Name)
 		}
 		body := strings.SplitN(generated[at[1]:], "\n}\n", 2)[0]
-		iterator := regexp.MustCompile(`< (adamic_temporary_[0-9]+)->length`).FindStringSubmatch(body)
+		iterator := regexp.MustCompile(`< (adamic_temporary_[A-Za-z0-9_]+)->length`).FindStringSubmatch(body)
 		if iterator == nil {
 			t.Fatalf("%s: missing array iterator", function.Name)
 		}

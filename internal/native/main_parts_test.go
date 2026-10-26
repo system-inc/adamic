@@ -4,10 +4,10 @@ import (
 	"bytes"
 	"context"
 	"errors"
-	"fmt"
 	"os/exec"
 	"path/filepath"
 	"reflect"
+	"regexp"
 	goruntime "runtime"
 	"slices"
 	"strings"
@@ -77,10 +77,10 @@ func TestMainPartsRunAsMain(t *testing.T) {
 			t.Parallel()
 			program := loopProgram(t, fixture.path)
 			whole, parted := cProgram(program, -1, mainLines), cProgram(program, -1, 1)
-			if strings.Contains(whole, "adamic_main_0") {
+			if strings.Contains(whole, "static void adamic_main_") {
 				t.Fatal("a fixture under mainLines was cut")
 			}
-			if !strings.Contains(parted, "\tadamic_main_1();\n") {
+			if len(regexp.MustCompile(`(?m)^\tadamic_main_[A-Za-z0-9_]+\(\);\n`).FindAllString(parted, -1)) < 2 {
 				t.Fatalf("not cut into parts:\n%s", parted)
 			}
 			want := runMainParts(t, whole)
@@ -91,10 +91,7 @@ func TestMainPartsRunAsMain(t *testing.T) {
 				return
 			}
 			// The mutant: main calls its parts last to first.
-			calls := []string{}
-			for index := 0; strings.Contains(parted, fmt.Sprintf("\tadamic_main_%d();\n", index)); index++ {
-				calls = append(calls, fmt.Sprintf("\tadamic_main_%d();\n", index))
-			}
+			calls := regexp.MustCompile(`(?m)^\tadamic_main_[A-Za-z0-9_]+\(\);\n`).FindAllString(parted, -1)
 			reversed := slices.Clone(calls)
 			slices.Reverse(reversed)
 			if strings.Count(parted, strings.Join(calls, "")) != 1 {

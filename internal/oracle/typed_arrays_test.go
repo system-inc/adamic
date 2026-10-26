@@ -169,7 +169,7 @@ func TestTypedArrayIterationOwnerMutant(t *testing.T) {
 	if strings.Contains(control, "adamic_typed_array_iterate(") {
 		t.Fatal("typed-array for-of still allocates an iterator")
 	}
-	holder := regexp.MustCompile(`(?m)^(\s*adamic_typed_array \*(adamic_temporary_[0-9]+) = [^;]+;\n)(\s*for \(size_t )`)
+	holder := regexp.MustCompile(`(?m)^(\s*adamic_typed_array \*(adamic_temporary_[A-Za-z0-9_]+) = [^;]+;\n)(\s*for \(size_t )`)
 	if len(holder.FindAllStringIndex(control, -1)) < 2 {
 		t.Fatal("missing live and reassigned array holders")
 	}

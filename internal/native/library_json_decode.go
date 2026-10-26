@@ -23,7 +23,10 @@ func (e *emitter) jsonDataSchema(schema ir.JSONDecodeSchema, encode bool) string
 	if encode {
 		prefix, fieldConst = "adamic_encode", ""
 	}
-	name := e.temporary() + "_decode"
+	name, exists := e.sharedDeclaration(prefix+"_schema", fmt.Sprintf("%#v", schema))
+	if exists {
+		return name
+	}
 	nodes := []string{}
 	for i, n := range schema.Nodes {
 		fields := "NULL"
