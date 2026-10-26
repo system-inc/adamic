@@ -355,6 +355,7 @@ func TestFlowProgram____oracle_testdata_environment_virtual_call_a_4ee3b36e7269(
 
 func TestEnvironmentFlowUnitsCoverFixtures(t *testing.T) {
 	t.Parallel()
+	// Reads: internal/oracle/testdata/*.a
 	paths, err := filepath.Glob("../oracle/testdata/environment_*.a")
 	if err != nil {
 		t.Fatal(err)
