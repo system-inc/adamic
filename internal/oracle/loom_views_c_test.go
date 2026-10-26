@@ -38,5 +38,5 @@ func TestLoomViewsCOriginal(t *testing.T) {
 // second, is carried by the first, natively and on the JavaScript backend.
 func TestLoomViewsCExactCallableMember(t *testing.T) {
 	t.Parallel()
-	loomViewsDAgrees(t, "internal/lower/testdata/callable_producers/p135_exact_member.a")
+	loomViewsDAgrees(t, "internal/lower/testdata/callable_producers/p135_exact_member.ts")
 }
