@@ -23,7 +23,7 @@ func TestRuntimePairTuplesJavaScript(t *testing.T) {
 	for _, name := range []string{"map_spread", "plain_object_entries", "checked_object_entries", "regexp_indices"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			loomViewsDAgreesBackend(t, "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p150_tuple_from_"+name+".a", "javascript")
+			loomViewsDAgreesBackend(t, "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p150_tuple_from_"+name+".ts", "javascript")
 		})
 	}
 }
