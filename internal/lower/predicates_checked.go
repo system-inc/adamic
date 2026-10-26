@@ -412,8 +412,11 @@ func (l *lowering) checkedPredicateResult(call *ast.CallExpression, value ir.Exp
 	if directions&predicateFalse != 0 && !l.checkedPredicateTagDomain(source, claim.Type()) {
 		return nil, l.notYet(call.AsNode(), "checked predicate membership over an open tag domain")
 	}
-	// enum_tag_flow.go's hazards hold here too: a singleton open enum tag reads as a literal.
-	if l.enumTagHazardOf(source, "kind") != enumTagNoHazard || !l.checkedPredicateTagProvesLayout(source, claim.Type()) {
+	// enum_tag_flow.go's hazards hold here too: a singleton open enum tag reads as a literal. A tag
+	// another member can hold proves no layout, so on the true branch the target is a checked view:
+	// predicateMembership registers its fields, as a .ts cast does, and a lying tag stops at the first
+	// field read (#k1t2wp9). A false branch has no view to read through, so it stays pending.
+	if (l.enumTagHazardOf(source, "kind") != enumTagNoHazard || !l.checkedPredicateTagProvesLayout(source, claim.Type())) && directions&predicateFalse != 0 {
 		return nil, l.notYet(call.AsNode(), "checked predicate membership by an enum tag another member can hold")
 	}
 	setup, membership, err := l.predicateMembership(declaration, arguments[index], source, claim.Type(), local, 0)
