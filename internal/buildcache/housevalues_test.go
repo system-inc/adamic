@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 	"testing"
 )
@@ -33,22 +34,41 @@ func machineFixture(t *testing.T) (owned, loose, dpkg string) {
 	return owned, loose, dpkg
 }
 
-// handHouse writes a stamp naming paths, at mode, hands it as ADAMIC_HOUSE_VALUES and returns its path. The test's own
-// uid is an owner a handed file may have, as root is on a house box.
+// handHouse writes a stamp naming paths, at mode, hands it as ADAMIC_HOUSE_VALUES and returns its path. As root does on
+// a house box, it names the copy by its bytes' sha256 in a directory nobody can write. The test's own uid is an owner a
+// handed file may have, as root is on a house box.
 func handHouse(t *testing.T, stamp string, mode os.FileMode) string {
 	t.Helper()
-	path := filepath.Join(t.TempDir(), "house-system.json")
+	path := houseCopy(t, stamp, mode)
+	originalOwners := houseOwners
+	houseOwners = append([]uint32{0}, uint32(os.Getuid()))
+	t.Setenv(houseValuesVariable, path)
+	t.Cleanup(func() { houseOwners = originalOwners; handedHouses.Delete(path) })
+	return path
+}
+
+// houseCopy writes stamp at mode as <sha256>.json in a directory of its own, then makes the directory unwritable.
+func houseCopy(t *testing.T, stamp string, mode os.FileMode) string {
+	t.Helper()
+	directory := t.TempDir()
+	path := filepath.Join(directory, fmt.Sprintf("%x.json", sha256.Sum256([]byte(stamp))))
 	if err := os.WriteFile(path, []byte(stamp), 0o600); err != nil {
 		t.Fatal(err)
 	}
 	if err := os.Chmod(path, mode); err != nil {
 		t.Fatal(err)
 	}
-	originalOwners := houseOwners
-	houseOwners = append([]uint32{0}, uint32(os.Getuid()))
-	t.Setenv(houseValuesVariable, path)
-	t.Cleanup(func() { houseOwners = originalOwners; handedHouses.Delete(path) })
+	readOnly(t, directory)
 	return path
+}
+
+// readOnly makes directory unwritable until the test ends, when its removal needs it writable again.
+func readOnly(t *testing.T, directory string) {
+	t.Helper()
+	if err := os.Chmod(directory, 0o555); err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { os.Chmod(directory, 0o755) })
 }
 
 // countPackageOpens counts every open of dpkg's database from here on, and those outside keying.
@@ -97,7 +117,7 @@ func TestAHandedHouseValuesMachineFilesWithoutDpkg(t *testing.T) {
 // A handed file the code under test could have written, or one that isn't the house's stamp, never values a key: each is
 // refused, and a lookup through it misses saying why, never valuing through dpkg or by content instead: so is a place
 // that isn't whole. Mutants: the owner check dropped, the mode check dropped, the link refusal dropped, a place's
-// paths unchecked.
+// paths unchecked, the directory check dropped, the digest compare dropped.
 // Not parallel: it sets the house's owners and ADAMIC_HOUSE_VALUES.
 func TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefused(t *testing.T) {
 	_, loose, _ := machineFixture(t)
@@ -117,13 +137,45 @@ func TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefused(t *testing.T) {
 			return path
 		}},
 		{name: "a link", stamp: good, mode: 0o444, want: "house values", hand: func(t *testing.T, path string) string {
-			link := filepath.Join(t.TempDir(), "link.json")
+			directory := t.TempDir()
+			link := filepath.Join(directory, filepath.Base(path))
 			if err := os.Symlink(path, link); err != nil {
 				t.Fatal(err)
 			}
+			readOnly(t, directory)
 			t.Setenv(houseValuesVariable, link)
 			t.Cleanup(func() { handedHouses.Delete(link) })
 			return link
+		}},
+		{name: "in a writable directory", stamp: good, mode: 0o444, want: "can be written by this process", hand: func(t *testing.T, path string) string {
+			if os.Getuid() == 0 {
+				t.Skip("run as root, every directory is writable")
+			}
+			os.Chmod(filepath.Dir(path), 0o755)
+			return path
+		}},
+		{name: "bytes that differ from its name", stamp: good, mode: 0o444, want: "not the sha256 its name carries", hand: func(t *testing.T, path string) string {
+			forged := houseCopy(t, good+" ", 0o444)
+			named := filepath.Join(filepath.Dir(forged), filepath.Base(path))
+			os.Chmod(filepath.Dir(forged), 0o755)
+			if err := os.Rename(forged, named); err != nil {
+				t.Fatal(err)
+			}
+			readOnly(t, filepath.Dir(forged))
+			t.Setenv(houseValuesVariable, named)
+			t.Cleanup(func() { handedHouses.Delete(named) })
+			return named
+		}},
+		{name: "a name that isn't a digest", stamp: good, mode: 0o444, want: "not the sha256 its name carries", hand: func(t *testing.T, path string) string {
+			named := filepath.Join(filepath.Dir(path), "house-system.json")
+			os.Chmod(filepath.Dir(path), 0o755)
+			if err := os.Rename(path, named); err != nil {
+				t.Fatal(err)
+			}
+			readOnly(t, filepath.Dir(path))
+			t.Setenv(houseValuesVariable, named)
+			t.Cleanup(func() { handedHouses.Delete(named) })
+			return named
 		}},
 		{name: "a directory", stamp: good, mode: 0o444, want: "not a regular file", hand: func(t *testing.T, path string) string {
 			directory := t.TempDir()
@@ -152,6 +204,43 @@ func TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefused(t *testing.T) {
 				t.Fatalf("handed %s, a lookup valued its system entry", test.name)
 			}
 		})
+	}
+}
+
+// A handed file's owner is read as this process's user namespace shows the host's root (Node's ruling on #4wh8ybq): as
+// itself in the host's namespace; as the overflow uid in a unit's, which maps only the serving user; and never as a uid
+// a namespace maps its own root from, so a unit that is root inside can't pass a file of its own. With no map at all
+// (not Linux), root alone. Mutants: the overflow uid taken while root is mapped, an unmapped owner dropped silently.
+// Not parallel: it points the namespace's map at the test's own.
+func TestAHandedFilesOwnerIsReadAsThisNamespaceShowsRoot(t *testing.T) {
+	directory := t.TempDir()
+	write(t, directory, "overflowuid", "65534\n")
+	originalMap, originalOverflow := uidMapFile, overflowUidFile
+	overflowUidFile = filepath.Join(directory, "overflowuid")
+	t.Cleanup(func() { uidMapFile, overflowUidFile = originalMap, originalOverflow })
+	for name, test := range map[string]struct {
+		uidMap string
+		want   []uint32
+	}{
+		"the host's":                         {uidMap: "         0          0 4294967295\n", want: []uint32{0}},
+		"a unit's, mapping its user alone":   {uidMap: "      1000       1000          1\n", want: []uint32{65534}},
+		"one whose root is the unit's user":  {uidMap: "         0       1000          1\n", want: []uint32{65534}},
+		"one mapping root to another inside": {uidMap: "      5000          0          1\n      1000       1000          1\n", want: []uint32{5000}},
+		"no map, not Linux":                  {want: []uint32{0}},
+	} {
+		uidMapFile = filepath.Join(directory, "uid_map-"+strings.ReplaceAll(name, " ", "-"))
+		if test.uidMap != "" {
+			write(t, directory, filepath.Base(uidMapFile), test.uidMap)
+		}
+		owners, err := ownersHere()
+		if err != nil || !slices.Equal(owners, test.want) {
+			t.Errorf("%s: owners %v, %v, want %v", name, owners, err, test.want)
+		}
+	}
+	uidMapFile = filepath.Join(directory, "uid_map-garbled")
+	write(t, directory, "uid_map-garbled", "zero zero all\n")
+	if owners, err := ownersHere(); err == nil {
+		t.Errorf("a garbled map gave owners %v, never refused", owners)
 	}
 }
 

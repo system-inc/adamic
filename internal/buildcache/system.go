@@ -6,8 +6,10 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
+	"io/fs"
 	"maps"
 	"os"
 	"path/filepath"
@@ -349,9 +351,11 @@ func houseValues() (*houseStamp, error) {
 }
 
 // readHouseValues reads the file the house handed by its handle: opened never through a link, and refused unless it's a
-// regular file the code under test can't have written (houseOwned). A stamp naming no path is refused too, never read
-// as one that values everything by content, and so is a place that isn't whole: a name not "place:", no digest, or a
-// path that isn't absolute and clean.
+// regular file the code under test can't have written (houseOwned), in a directory this process can't write, whose
+// bytes hash to the sha256 its name carries (root names each copy <sha256>.json by the digest a signed manifest names,
+// launch.HouseValuesDirectory), so nothing the reader trusts rests on how a user namespace shows the file's owner. A
+// stamp naming no path is refused too, never read as one that values everything by content, and so is a place that
+// isn't whole: a name not "place:", no digest, or a path that isn't absolute and clean.
 func readHouseValues(path string) (*houseStamp, error) {
 	descriptor, err := syscall.Open(path, syscall.O_RDONLY|syscall.O_NOFOLLOW|syscall.O_CLOEXEC, 0)
 	if err != nil {
@@ -369,12 +373,19 @@ func readHouseValues(path string) (*houseStamp, error) {
 	if why := houseOwned(info); why != "" {
 		return nil, fmt.Errorf("house values %s: %s", path, why)
 	}
+	if why := houseDirectoryWritable(filepath.Dir(path)); why != "" {
+		return nil, fmt.Errorf("house values %s: %s", path, why)
+	}
 	content, err := io.ReadAll(io.LimitReader(file, houseValuesBound+1))
 	if err != nil {
 		return nil, fmt.Errorf("house values %s: %w", path, err)
 	}
 	if len(content) > houseValuesBound {
 		return nil, fmt.Errorf("house values %s: over %d bytes", path, houseValuesBound)
+	}
+	named, digest := strings.TrimSuffix(filepath.Base(path), ".json"), sha256.Sum256(content)
+	if named != hex.EncodeToString(digest[:]) {
+		return nil, fmt.Errorf("house values %s: its bytes hash to %x, not the sha256 its name carries", path, digest)
 	}
 	// The stamp's box and moment are never read: the values are the house's, alike on every box its check passed.
 	var stamp struct {
@@ -412,10 +423,57 @@ func readHouseValues(path string) (*houseStamp, error) {
 	return handed, nil
 }
 
-// houseOwners are the owners a handed file may have: root alone (Node's ruling on #shadow), since build-tree's product
-// tests run as the builder's own user, and a file the code under test can write must never value a key. A var, so a
-// test can hand a file of its own.
+// houseOwners are the host's owners a handed file may have: root alone (Node's ruling on #shadow), since build-tree's
+// product tests run as the builder's own user, and a file the code under test can write must never value a key. A var,
+// so a test can hand a file of its own.
 var houseOwners = []uint32{0}
+
+// uidMapFile and overflowUidFile say how the host's owners show in this process's user namespace: a unit's test
+// commands run in one mapping only the serving user (runner/modulecache_linux.go), where host root shows as the
+// kernel's overflow uid. Vars, so a test can hand a namespace of its own.
+var uidMapFile, overflowUidFile = "/proc/self/uid_map", "/proc/sys/kernel/overflowuid"
+
+// ownersHere are the owners a handed file may show here: each of houseOwners as this namespace maps it, and the overflow
+// uid when one of them isn't mapped (Node's ruling on #4wh8ybq). With no map to read (not Linux) the namespace is the
+// host's. A namespace mapping its root to another host uid shows root's files as the overflow uid, never as 0, so a
+// unit that is root inside can't pass a file of its own.
+func ownersHere() ([]uint32, error) {
+	content, err := os.ReadFile(uidMapFile)
+	if errors.Is(err, fs.ErrNotExist) {
+		return houseOwners, nil
+	}
+	if err != nil {
+		return nil, err
+	}
+	var owners []uint32
+	unmapped := false
+	for _, owner := range houseOwners {
+		mapped := false
+		for _, line := range strings.Split(strings.TrimSpace(string(content)), "\n") {
+			var inside, outside, count uint64
+			if _, err := fmt.Sscan(line, &inside, &outside, &count); err != nil {
+				return nil, fmt.Errorf("%s: %q: %w", uidMapFile, line, err)
+			}
+			if uint64(owner) >= outside && uint64(owner)-outside < count {
+				owners, mapped = append(owners, uint32(inside+uint64(owner)-outside)), true
+				break
+			}
+		}
+		unmapped = unmapped || !mapped
+	}
+	if unmapped {
+		overflow, err := os.ReadFile(overflowUidFile)
+		if err != nil {
+			return nil, err
+		}
+		var uid uint32
+		if _, err := fmt.Sscan(string(overflow), &uid); err != nil {
+			return nil, fmt.Errorf("%s: %w", overflowUidFile, err)
+		}
+		owners = append(owners, uid)
+	}
+	return owners, nil
+}
 
 // houseOwned is why a handed file's owner or mode refuses it, "" when neither does.
 func houseOwned(info os.FileInfo) string {
@@ -426,10 +484,30 @@ func houseOwned(info os.FileInfo) string {
 	if !ok {
 		return "its owner can't be read"
 	}
-	if !slices.Contains(houseOwners, system.Uid) {
+	owners, err := ownersHere()
+	if err != nil {
+		return fmt.Sprintf("its namespace's owners can't be read: %v", err)
+	}
+	if !slices.Contains(owners, system.Uid) {
 		return fmt.Sprintf("owned by uid %d, not root", system.Uid)
 	}
 	return ""
+}
+
+// writeAccess is access(2)'s `W_OK`.
+const writeAccess = 0x2
+
+// houseDirectoryWritable is why a handed file's directory refuses it: one this process can write, where the code under
+// test could have put the file, or one it can't ask about. "" when it can't write it.
+func houseDirectoryWritable(directory string) string {
+	switch err := syscall.Access(directory, writeAccess); {
+	case err == nil:
+		return fmt.Sprintf("its directory %s can be written by this process", directory)
+	case errors.Is(err, syscall.EACCES), errors.Is(err, syscall.EROFS), errors.Is(err, syscall.EPERM):
+		return ""
+	default:
+		return fmt.Sprintf("its directory %s can't be asked about: %v", directory, err)
+	}
 }
 
 // systemEntryValue is a system entry's value: as the handed house values give it (houseValues), else systemValue's.
