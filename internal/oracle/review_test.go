@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"slices"
 	"strings"
 	"testing"
 	"time"
@@ -30,7 +31,7 @@ var reviewIntended = regexp.MustCompile(`^intended: [^:\r\n]+: [^\r\n]+$`)
 
 func reviewPinned(t *testing.T, path string) *run {
 	t.Helper()
-	base := strings.TrimSuffix(path, ".a")
+	base := strings.TrimSuffix(path, filepath.Ext(path))
 	data, err := os.ReadFile(base + ".intended")
 	if errors.Is(err, os.ErrNotExist) {
 		return nil
@@ -58,7 +59,7 @@ func reviewPinned(t *testing.T, path string) *run {
 
 func reviewSkip(t *testing.T, path string) {
 	t.Helper()
-	data, err := os.ReadFile(strings.TrimSuffix(path, ".a") + ".pending")
+	data, err := os.ReadFile(strings.TrimSuffix(path, filepath.Ext(path)) + ".pending")
 	if errors.Is(err, os.ErrNotExist) {
 		return
 	}
@@ -72,9 +73,24 @@ func reviewSkip(t *testing.T, path string) {
 	t.Skip(message)
 }
 
+// reviewProgramPaths is every review program in directory, .a and .ts alike, in name order. Each finds its sidecars
+// by its own name with its extension taken off, so a .ts program's pending sidecar is found as an .a program's is.
+func reviewProgramPaths(directory string) ([]string, error) {
+	var paths []string
+	for _, pattern := range []string{"*.a", "*.ts"} {
+		matches, err := filepath.Glob(filepath.Join(directory, pattern))
+		if err != nil {
+			return nil, err
+		}
+		paths = append(paths, matches...)
+	}
+	slices.Sort(paths)
+	return paths, nil
+}
+
 func reviewPrograms(t *testing.T, category string, check func(*testing.T, string)) {
 	t.Helper()
-	paths, err := filepath.Glob(filepath.Join(reviewRoot, category, "*.a"))
+	paths, err := reviewProgramPaths(filepath.Join(reviewRoot, category))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -142,7 +158,7 @@ func reviewRefusal(t *testing.T, path string) error {
 	t.Helper()
 	_, err := lowered(t, path)
 	// reviewEach passes an absolute path to load.Load without a display mapper.
-	// Program.Where restores the .a extension and prints that full path unchanged.
+	// Program.Where restores an .a program's extension and prints that full path unchanged, as it prints a .ts program's.
 	return reviewRefusalDiagnostic(path, err)
 }
 
@@ -171,7 +187,7 @@ func reviewRefusalDiagnostic(path string, err error) error {
 // reviewAgreePrograms is every agree program's file name, the key TestReviewProgramsAgreeWithNode's family
 // (families_test.go) owns it by.
 func reviewAgreePrograms() []string {
-	paths, _ := filepath.Glob(filepath.Join(reviewRoot, "agree", "*.a"))
+	paths, _ := reviewProgramPaths(filepath.Join(reviewRoot, "agree"))
 	names := make([]string, len(paths))
 	for index, path := range paths {
 		names[index] = filepath.Base(path)
@@ -215,12 +231,15 @@ func TestReviewProgramsRefuse(t *testing.T) {
 	})
 }
 
+// reviewLayout refuses a program outside agree/ and refused/, and an .a and a .ts of one name, which would share
+// their sidecars.
 func reviewLayout(root string) error {
+	stems := map[string]bool{}
 	return filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
-		if entry.IsDir() || filepath.Ext(path) != ".a" {
+		if entry.IsDir() || !slices.Contains([]string{".a", ".ts"}, filepath.Ext(path)) {
 			return nil
 		}
 		relative, err := filepath.Rel(root, path)
@@ -231,6 +250,11 @@ func reviewLayout(root string) error {
 		if len(parts) != 2 || (parts[0] != "agree" && parts[0] != "refused") {
 			return fmt.Errorf("loose review program: %s", relative)
 		}
+		stem := strings.TrimSuffix(relative, filepath.Ext(relative))
+		if stems[stem] {
+			return fmt.Errorf("review program %s is both .a and .ts, which would share its sidecars", stem)
+		}
+		stems[stem] = true
 		return nil
 	})
 }
@@ -321,12 +345,28 @@ func TestReviewProgramsSelfTest(t *testing.T) {
 		}
 	})
 	t.Run("loose_file", func(t *testing.T) {
+		for _, name := range []string{"loose.a", "loose.ts"} {
+			root := t.TempDir()
+			if err := os.WriteFile(filepath.Join(root, name), []byte("console.log(\"accepted\");\n"), 0644); err != nil {
+				t.Fatal(err)
+			}
+			if err := reviewLayout(root); err == nil {
+				t.Errorf("loose program %s passed", name)
+			}
+		}
+	})
+	t.Run("one_name_twice", func(t *testing.T) {
 		root := t.TempDir()
-		if err := os.WriteFile(filepath.Join(root, "loose.a"), []byte("console.log(\"accepted\");\n"), 0644); err != nil {
+		if err := os.Mkdir(filepath.Join(root, "agree"), 0755); err != nil {
 			t.Fatal(err)
 		}
-		if err := reviewLayout(root); err == nil {
-			t.Fatal("loose program passed")
+		for _, name := range []string{"twin.a", "twin.ts"} {
+			if err := os.WriteFile(filepath.Join(root, "agree", name), []byte("console.log(\"accepted\");\n"), 0644); err != nil {
+				t.Fatal(err)
+			}
+		}
+		if err := reviewLayout(root); err == nil || !strings.Contains(err.Error(), "both .a and .ts") {
+			t.Fatalf("an .a and a .ts of one name passed: %v", err)
 		}
 	})
 }

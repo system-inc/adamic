@@ -1,6 +1,7 @@
 # Integration review programs
 
-Add a complete `.a` program directly to `agree/` or `refused/`; no test table needs editing.
+Add a complete `.a` program, or a `.ts` one where its run-time checks are the point, directly to
+`agree/` or `refused/`; no test table needs editing.
 `TestReviewProgramsAgreeWithNode` lowers through stage 0 and compares the sanitized native,
 JavaScript, and release backends with source execution on Node, including stdout, stderr,
 and exit status. Successful programs also undergo the oracle's usual leak check.
@@ -8,8 +9,8 @@ and exit status. Successful programs also undergo the oracle's usual leak check.
 an accepted program. Each fixture is one subtest named by its filename and must take less
 than 30 seconds. `TestReviewProgramsNoLooseFiles` rejects programs outside these directories.
 
-A known miscompile may have a same-stem sidecar, e.g. `agree/example.pending`, containing
-exactly one line in this form:
+A known miscompile may have a same-stem sidecar, e.g. `agree/example.pending` for `agree/example.a`
+or `agree/example.ts`, containing exactly one line in this form:
 
 ```
 awaits compiler/fix-branch: explanation of the miscompile
@@ -31,8 +32,9 @@ build are held to the pin instead of Node. A pin that Node now matches is stale 
 
 `TestReviewProgramsSelfTest` plants a wrong expected stdout for `agree/smoke.a` and requires
 every backend comparison to reject it. It also plants an accepted program in a temporary
-`refused/` directory and a loose program in a temporary review root, and requires the same
-checks the lane uses to reject each.
+`refused/` directory, a loose program in a temporary review root, and an `.a` and a `.ts` of
+one name, which would share their sidecars, and requires the same checks the lane uses to
+reject each.
 
 ## Initial validation (2026-10-08)
 
