@@ -140,6 +140,7 @@ func flowFamilyWrappers(t *testing.T) []byte {
 	// products. Enumerate the IR's Expression and Statement implementations, as
 	// irExpressions already does for writes coverage, rather than keep a manual list.
 	names := irExpressions(t)
+	// Reads: internal/ir/*.go
 	paths, err := filepath.Glob("../ir/*.go")
 	if err != nil {
 		t.Fatal(err)

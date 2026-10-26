@@ -52,6 +52,7 @@ func allocatorSlabProduct(t *testing.T) string {
 			return err
 		}
 		snapshot := t.TempDir()
+		// Reads: internal/native/runtime/*
 		files, err := os.ReadDir(filepath.Join(repository, "internal/native/runtime"))
 		if err != nil {
 			return err
