@@ -1,0 +1,10 @@
+// a-check: checked
+import { panic, programArguments, readTextFile } from 'adamic';
+const result = readTextFile(programArguments()[0] ?? panic('missing input'));
+if (result.kind === 'Error') { panic(result.message); }
+const text = result.text;
+let output = `${text.length}`;
+for (let index = 0; index < text.length; index++) {
+    output += ` ${text.charCodeAt(index)}`;
+}
+console.log(output);
