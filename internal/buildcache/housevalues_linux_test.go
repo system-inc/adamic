@@ -19,6 +19,7 @@ const houseNamespaceChild = "ADAMIC_TEST_HOUSE_NAMESPACE_CHILD"
 // of house-values-7's run missed on it). Inside that namespace a copy of the test's own refuses, as does one in a
 // directory it can write and one whose bytes aren't its name. Skipped on a box root hasn't given a copy. Mutants: the
 // overflow uid never taken, the directory check dropped, the digest compare dropped.
+// Not parallel: inside the namespace it sets the house's owners.
 func TestTheHousesCopyIsReadInsideAUnitsNamespace(t *testing.T) {
 	copies, _ := filepath.Glob("/var/lib/loom/house/*.json")
 	if len(copies) == 0 {
