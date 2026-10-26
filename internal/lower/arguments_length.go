@@ -150,6 +150,7 @@ func (l *lowering) resolveCountTypes(modules []*ast.SourceFile) {
 	l.resolveStructuralMethodThunks(modules)
 	l.result.FunctionTypeTargets = map[int][]int{}
 	for id, proven := range types {
+		l.cycleTypeID(proven) // Retain transient count-target types for differential tests.
 		l.result.FunctionTypeTargets[id] = []int{}
 		for _, record := range l.closureRecords {
 			if l.checker.IsTypeAssignableTo(record.proven, proven) {

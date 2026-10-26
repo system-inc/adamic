@@ -2440,6 +2440,15 @@
     ],
     "stage1/cohere/parse TestProduct_ParseLintNative": [
       "stage1/cohere/parse TestProduct_ParseLintLower"
-    ]
+    ],
+    "internal/lower TestProduct_CycleScanningCensus": [
+      "internal/oracle TestProduct_ProgramTscSource"
+    ],
+    "internal/lower TestProduct_CycleEqualityObjects512": [],
+    "internal/lower TestProduct_CycleEqualityObjects1024": [],
+    "internal/lower TestProduct_CycleEqualityObjects2048": [],
+    "internal/lower TestProduct_CycleEqualityObjects": [],
+    "internal/lower TestProduct_CycleEqualityObjectsSequential": [],
+    "internal/lower TestProduct_CycleEqualityMovesObjects": []
   }
 }
