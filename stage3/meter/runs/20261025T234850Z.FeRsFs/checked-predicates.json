@@ -1,0 +1,32 @@
+{
+  "main/latent.jsonl.gz": {
+    "enum_tag_sites_by_file": {
+      "src/compiler/binder.ts": 2,
+      "src/compiler/checker.ts": 2,
+      "src/compiler/emitter.ts": 1,
+      "src/compiler/factory/emitHelpers.ts": 1,
+      "src/compiler/factory/utilities.ts": 17,
+      "src/compiler/parser.ts": 2,
+      "src/compiler/program.ts": 2,
+      "src/compiler/transformers/classFields.ts": 4,
+      "src/compiler/transformers/classThis.ts": 1,
+      "src/compiler/transformers/declarations/diagnostics.ts": 1,
+      "src/compiler/transformers/destructuring.ts": 2,
+      "src/compiler/transformers/esnext.ts": 2,
+      "src/compiler/transformers/module/impliedNodeFormatDependent.ts": 1,
+      "src/compiler/transformers/namedEvaluation.ts": 1,
+      "src/compiler/transformers/utilities.ts": 11,
+      "src/compiler/utilities.ts": 123,
+      "src/compiler/utilitiesPublic.ts": 41
+    },
+    "enum_tag_sites": 214,
+    "checked_predicate_sites": 353,
+    "checked_predicate_unique_findings": 353
+  },
+  "main/tsc/latent.jsonl.gz": {
+    "enum_tag_sites_by_file": {},
+    "enum_tag_sites": 0,
+    "checked_predicate_sites": 0,
+    "checked_predicate_unique_findings": 0
+  }
+}
