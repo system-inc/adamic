@@ -77,43 +77,43 @@ func loomViewsDAgreesBackend(t *testing.T, relative, backend string) {
 }
 func TestLoomViewsDTupleObject(t *testing.T) {
 	t.Parallel()
-	loomViewsDAgreesBackend(t, "internal/lower/testdata/fx7_tuple_recognition/p68.a", "native")
+	loomViewsDAgreesBackend(t, "internal/lower/testdata/fx7_tuple_recognition/p68.ts", "native")
 }
 func TestLoomViewsDTupleUnion(t *testing.T) {
 	t.Parallel()
-	loomViewsDAgreesBackend(t, "internal/lower/testdata/fx7_tuple_recognition/p69.a", "native")
+	loomViewsDAgreesBackend(t, "internal/lower/testdata/fx7_tuple_recognition/p69.ts", "native")
 }
 func TestLoomViewsDWideCallable(t *testing.T) {
 	t.Parallel()
-	loomViewsDAgreesBackend(t, "internal/lower/testdata/fx7_wrong_aborts/wide.a", "native")
+	loomViewsDAgreesBackend(t, "internal/lower/testdata/fx7_wrong_aborts/wide.ts", "native")
 }
 func TestLoomViewsDTupleObjectSanitized(t *testing.T) {
 	t.Parallel()
-	loomViewsDAgreesBackend(t, "internal/lower/testdata/fx7_tuple_recognition/p68.a", "sanitized")
+	loomViewsDAgreesBackend(t, "internal/lower/testdata/fx7_tuple_recognition/p68.ts", "sanitized")
 }
 func TestLoomViewsDTupleObjectJavaScript(t *testing.T) {
 	t.Parallel()
-	loomViewsDAgreesBackend(t, "internal/lower/testdata/fx7_tuple_recognition/p68.a", "javascript")
+	loomViewsDAgreesBackend(t, "internal/lower/testdata/fx7_tuple_recognition/p68.ts", "javascript")
 }
 func TestLoomViewsDTupleUnionSanitized(t *testing.T) {
 	t.Parallel()
-	loomViewsDAgreesBackend(t, "internal/lower/testdata/fx7_tuple_recognition/p69.a", "sanitized")
+	loomViewsDAgreesBackend(t, "internal/lower/testdata/fx7_tuple_recognition/p69.ts", "sanitized")
 }
 func TestLoomViewsDTupleUnionJavaScript(t *testing.T) {
 	t.Parallel()
-	loomViewsDAgreesBackend(t, "internal/lower/testdata/fx7_tuple_recognition/p69.a", "javascript")
+	loomViewsDAgreesBackend(t, "internal/lower/testdata/fx7_tuple_recognition/p69.ts", "javascript")
 }
 func TestLoomViewsDWideCallableSanitized(t *testing.T) {
 	t.Parallel()
-	loomViewsDAgreesBackend(t, "internal/lower/testdata/fx7_wrong_aborts/wide.a", "sanitized")
+	loomViewsDAgreesBackend(t, "internal/lower/testdata/fx7_wrong_aborts/wide.ts", "sanitized")
 }
 func TestLoomViewsDWideCallableJavaScript(t *testing.T) {
 	t.Parallel()
-	loomViewsDAgreesBackend(t, "internal/lower/testdata/fx7_wrong_aborts/wide.a", "javascript")
+	loomViewsDAgreesBackend(t, "internal/lower/testdata/fx7_wrong_aborts/wide.ts", "javascript")
 }
 func TestLoomViewsDCallableUnion(t *testing.T) {
 	t.Parallel()
-	loomViewsDAgrees(t, "internal/lower/testdata/fx7_wrong_aborts/p20.a")
+	loomViewsDAgrees(t, "internal/lower/testdata/fx7_wrong_aborts/p20.ts")
 }
 
 // A stored function that fits no member of the view's callable target is a cast the checker was told to believe, so

@@ -52,6 +52,14 @@ func lowersAndAgreesWithNodeExit(t *testing.T, source string, exit int) *ir.Prog
 	return agreeSource(t, source, exit, nil)
 }
 
+// lowersAndAgreesWithNodeAs is lowersAndAgreesWithNode for a fixture's source,
+// lowered as a file with the fixture's own extension: a .ts twin is lowered as
+// main.ts, so a downcast keeps the run-time checks .a refuses.
+func lowersAndAgreesWithNodeAs(t *testing.T, source, extension string) *ir.Program {
+	t.Helper()
+	return agreeEntry(t, writeAgreementSource(t, source, extension), nil, 0, nil, nil)
+}
+
 // lowersAndAgreesWithNodeNative adds an unsanitized native observation to the
 // source and JavaScript agreement. Each opting-in row names what only native shows,
 // and runs a program from agreementproducts' programs by its name.
@@ -127,7 +135,7 @@ func TestNativeAgreementLeanBuildIsBuildsBytes(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		lowered, err := agreementproducts.Plant(name, native.C(lowerAgreementEntry(t, writeAgreementSource(t, string(program)))))
+		lowered, err := agreementproducts.Plant(name, native.C(lowerAgreementEntry(t, writeAgreementSource(t, string(program), ".a"))))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -221,7 +229,7 @@ func agreeSourceNative(t testing.TB, name string) *ir.Program {
 	if err != nil {
 		t.Fatal(err)
 	}
-	path := writeAgreementSource(t, string(source))
+	path := writeAgreementSource(t, string(source), ".a")
 	program := agreeEntry(t, path, lowerAgreementEntry(t, path), 0, nil, nil)
 	want := runAgreementNode(t, path)
 	got := runAgreementNative(t, product, name)
@@ -304,12 +312,14 @@ func compareNativeAgreement(t agreementTesting, got, want nodeObservation) {
 // changing global state, so acceptance rows remain safe under t.Parallel.
 func agreeSource(t agreementTesting, source string, exit int, mutate func(*ir.Program)) *ir.Program {
 	t.Helper()
-	return agreeEntry(t, writeAgreementSource(t, source), nil, exit, nil, mutate)
+	return agreeEntry(t, writeAgreementSource(t, source, ".a"), nil, exit, nil, mutate)
 }
 
-func writeAgreementSource(t agreementTesting, source string) string {
+// writeAgreementSource writes source as main with extension, .a or .ts, the
+// mode it lowers in.
+func writeAgreementSource(t agreementTesting, source, extension string) string {
 	t.Helper()
-	path := filepath.Join(t.TempDir(), "main.a")
+	path := filepath.Join(t.TempDir(), "main"+extension)
 	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
 		t.Fatal(err)
 	}

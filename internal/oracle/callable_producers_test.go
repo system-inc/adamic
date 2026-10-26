@@ -14,7 +14,7 @@ func init() {
 			path    string
 			lowers  bool
 			checked bool
-		}{"internal/lower/testdata/callable_producers/" + name + ".a", true, false})
+		}{"internal/lower/testdata/callable_producers/" + name + ".ts", true, false})
 	}
 	// Ambiguous p22 and p135_object_result are Refused, not NotYet. Their
 	// located diagnostics and Node controls are held by the lower tests.
@@ -31,7 +31,7 @@ func init() {
 // Inspect before clang so incompatible-pointer warnings are not a mutant kill.
 func TestCallableProducerRegistryFiltersDirectFunctions(t *testing.T) {
 	t.Parallel()
-	path := filepath.Join(repository, "internal/lower/testdata/callable_producers/p21.a")
+	path := filepath.Join(repository, "internal/lower/testdata/callable_producers/p21.ts")
 	program, err := lowered(t, path)
 	if err != nil {
 		t.Fatal(err)

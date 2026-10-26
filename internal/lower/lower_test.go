@@ -3,8 +3,6 @@ package lower
 import (
 	"context"
 	"errors"
-	"os"
-	"path/filepath"
 	"strings"
 	"testing"
 
@@ -14,11 +12,14 @@ import (
 
 func lowerSource(t *testing.T, source string) (*ir.Program, error) {
 	t.Helper()
-	path := filepath.Join(t.TempDir(), "main.a")
-	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		t.Fatal(err)
-	}
-	program, err := load.Load([]string{path})
+	return lowerSourceAs(t, source, ".a")
+}
+
+// lowerSourceAs is lowerSource for a fixture's source, lowered as a file with the
+// fixture's own extension.
+func lowerSourceAs(t *testing.T, source, extension string) (*ir.Program, error) {
+	t.Helper()
+	program, err := load.Load([]string{writeAgreementSource(t, source, extension)})
 	if err != nil {
 		t.Fatalf("Load: %v", err)
 	}
