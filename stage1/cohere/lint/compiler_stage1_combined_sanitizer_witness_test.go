@@ -11,6 +11,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/testguard"
 )
@@ -21,9 +22,25 @@ import (
 // one group that holds no-bitwise against it. That group must fail on AddressSanitizer's report (#5ggwf8c).
 const compilerAgreementHeapWitnessRule = "no-bitwise"
 
-// The emitted C numbers its functions, so the plant finds bitwiseOperator's definition by pattern, never by a number
-// that moves when the port does.
-var compilerAgreementHeapWitnessDefinition = regexp.MustCompile(`(?m)^(static adamic_string \* adamic_function_[0-9]+_bitwiseOperator\([^)]*\) \{)$`)
+// Match the declaration spelling and stable digest, including any readable module prefix.
+// The definition anchor excludes its prototype and calls.
+var compilerAgreementHeapWitnessDefinition = regexp.MustCompile(`(?m)^(static adamic_string \* adamic_function_[A-Za-z0-9_]*bitwiseOperator_[a-f0-9]{32}\([^)]*\) \{)$`)
+
+func TestStableCompilerAgreementHeapWitnessReader(t *testing.T) {
+	t.Parallel()
+	program := &ir.Program{Strings: []string{"ok"}, Functions: []ir.Function{
+		{Name: "bitwiseOperator", Source: ir.SourceIdentity{Module: "test-module.a", Declaration: []string{"bitwiseOperator"}}, Returns: ir.String, Body: []ir.Statement{ir.Return{Value: ir.StringConstant{Index: 0}}}},
+		{Name: "bitwiseOperatorOther", Source: ir.SourceIdentity{Module: "test-module.a", Declaration: []string{"bitwiseOperatorOther"}}, Returns: ir.String, Body: []ir.Statement{ir.Return{Value: ir.StringConstant{Index: 0}}}},
+	}}
+	source := []byte(native.C(program))
+	if found := len(compilerAgreementHeapWitnessDefinition.FindAllIndex(source, -1)); found != 1 {
+		t.Fatalf("stable bitwiseOperator definition matches: %d, want 1", found)
+	}
+	planted := compilerAgreementHeapWitnessDefinition.ReplaceAll(source, []byte("${1}"+compilerAgreementHeapWitnessPlant))
+	if strings.Count(string(planted), compilerAgreementHeapWitnessPlant) != 1 {
+		t.Fatal("heap witness must be planted once")
+	}
+}
 
 // Clang's builtins need no header, and the volatile pointer keeps the write past the optimizer.
 const compilerAgreementHeapWitnessPlant = "\n\t{ volatile unsigned char *adamic_witness = (volatile unsigned char *)__builtin_malloc(8); adamic_witness[8] = 1; __builtin_free((void *)adamic_witness); }"

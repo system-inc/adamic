@@ -7,18 +7,14 @@ import (
 	"regexp"
 )
 
-// localName is a local's C name: its index, which is unique, and its name as written, for reading.
+// localName uses the owning declaration and the local's spelling.
 func (e *emitter) localName(local int) string {
-	prefix := "adamic_local"
-	if e.program.Locals[local].Global {
-		prefix = "adamic_global"
-	}
-	return fmt.Sprintf("%s_%d_%s", prefix, local, cIdentifier.ReplaceAllString(e.program.Locals[local].Name, ""))
+	return e.namedLocal(local)
 }
 
 // readyName is the flag that says a global's declaration has run.
-func readyName(local int) string {
-	return fmt.Sprintf("adamic_ready_%d", local)
+func (e *emitter) readyName(local int) string {
+	return e.localName(local) + "_ready"
 }
 
 var cIdentifier = regexp.MustCompile(`[^A-Za-z0-9_]`)
@@ -91,7 +87,7 @@ func (e *emitter) localReady(local int) string {
 	if e.program.Locals[local].Captured && !e.program.Locals[local].Global {
 		return e.cellReference(local) + "->ready"
 	}
-	return readyName(local)
+	return e.readyName(local)
 }
 
 func (e *emitter) checkReadyRead(local int, expression string) {

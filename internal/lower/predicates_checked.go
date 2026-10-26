@@ -377,7 +377,9 @@ func (l *lowering) checkedPredicateResult(call *ast.CallExpression, value ir.Exp
 		return nil, l.notYet(call.AsNode(), "a checked predicate with a non-boolean result")
 	}
 	wrapper := len(l.result.Functions)
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: fmt.Sprintf("%s_predicate_check_%d", name, wrapper), Returns: invoked.Type()})
+	// Same-named predicates may share this IR label: native keys include the
+	// semantic body and resolved callee, so the label must not encode encounter order.
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: fmt.Sprintf("%s_predicate_check", name), Returns: invoked.Type()})
 	local := func(name string, of ir.Type) int {
 		index := len(l.result.Locals)
 		l.result.Locals = append(l.result.Locals, ir.Local{Name: name, Type: of, Function: wrapper})
