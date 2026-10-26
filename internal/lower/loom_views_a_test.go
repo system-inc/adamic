@@ -7,23 +7,24 @@ import (
 	"testing"
 )
 
-func loomViewFixture(t *testing.T, name string) string {
+// loomViewFixture returns the fixture file's source and its extension, the mode it lowers in.
+func loomViewFixture(t *testing.T, file string) (string, string) {
 	t.Helper()
-	source, err := os.ReadFile(filepath.Join("testdata", "loom_views_a", name+".a"))
+	source, err := os.ReadFile(filepath.Join("testdata", "loom_views_a", file))
 	if err != nil {
 		t.Fatal(err)
 	}
-	return string(source)
+	return string(source), filepath.Ext(file)
 }
 
 func requireLoomViewRefusal(t *testing.T, name, output, diagnostic, fix string) {
 	t.Helper()
-	source := loomViewFixture(t, name)
-	truth := runAgreementNode(t, writeAgreementSource(t, source))
+	source, extension := loomViewFixture(t, name+".a")
+	truth := runAgreementNode(t, writeAgreementSource(t, "main"+extension, source))
 	if truth.code != 0 || string(truth.stdout) != output || len(truth.stderr) != 0 {
 		t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.code, truth.stdout, truth.stderr)
 	}
-	_, err := lowerSource(t, source)
+	_, err := lowerSourceAs(t, source, extension)
 	if err == nil || !strings.Contains(err.Error(), diagnostic) || !strings.Contains(err.Error(), fix) || !strings.Contains(err.Error(), ".a:") {
 		t.Fatalf("want located refusal %q and fix %q, got %v", diagnostic, fix, err)
 	}
@@ -42,21 +43,23 @@ func TestLoomViewUnsupportedRead(t *testing.T) {
 // Views D checks this read against its contract, so it compiles and prints what Node prints.
 func TestLoomViewUnsupportedCallableRead(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, loomViewFixture(t, "callable"))
+	source, extension := loomViewFixture(t, "callable.ts")
+	lowersAndAgreesWithNodeAs(t, source, extension)
 }
 
 func TestLoomViewKeyFix(t *testing.T) {
 	t.Parallel()
-	source := strings.ReplaceAll(loomViewFixture(t, "key"), "view['count']", "view.count")
+	source, extension := loomViewFixture(t, "key.a")
+	source = strings.ReplaceAll(source, "view['count']", "view.count")
 	source = strings.Replace(source, "count: 'seven'", "count: 7", 1)
-	lowersAndAgreesWithNode(t, source)
+	lowersAndAgreesWithNodeAs(t, source, extension)
 }
 
 func TestLoomViewUnsupportedUnreadControl(t *testing.T) {
 	t.Parallel()
-	source := loomViewFixture(t, "unsupported")
+	source, extension := loomViewFixture(t, "unsupported.a")
 	source = strings.Replace(source, "console.log(`${view.label} / ${view.count}`);", "console.log('created');", 1)
-	lowersAndAgreesWithNode(t, source)
+	lowersAndAgreesWithNodeAs(t, source, extension)
 }
 
 func TestLoomViewOriginalViewsP01(t *testing.T) {
@@ -87,7 +90,8 @@ func TestLoomViewOriginalViewsP72(t *testing.T) {
 // Views D checks this read against its contract, so it compiles and prints what Node prints.
 func TestLoomViewOriginalNativeP21(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, loomViewFixture(t, "native_p21"))
+	source, extension := loomViewFixture(t, "native_p21.ts")
+	lowersAndAgreesWithNodeAs(t, source, extension)
 }
 
 func TestLoomViewOriginalNativeP37(t *testing.T) {

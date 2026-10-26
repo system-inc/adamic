@@ -21,7 +21,7 @@ import (
 // with no heap values left. Empty output is valid for ownership-only programs.
 func graphAccepted(t *testing.T, source string) *ir.Program {
 	t.Helper()
-	path := writeAgreementSource(t, source)
+	path := writeAgreementSource(t, "main.a", source)
 	truth := runAgreementNode(t, path)
 	if truth.code != 0 {
 		t.Fatalf("graph acceptance source must finish: %d %s", truth.code, truth.stderr)

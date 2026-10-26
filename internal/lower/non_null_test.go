@@ -2,8 +2,6 @@ package lower
 
 import (
 	"context"
-	"os"
-	"path/filepath"
 	"strings"
 	"testing"
 
@@ -52,11 +50,7 @@ func TestNonNullAssertionOnPresentTypeIsErased(t *testing.T) {
 
 func lowerTypeScriptAssertionSource(t *testing.T, source string) (*ir.Program, error) {
 	t.Helper()
-	path := filepath.Join(t.TempDir(), "main.ts")
-	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		t.Fatal(err)
-	}
-	program, err := load.Load([]string{path})
+	program, err := load.Load([]string{writeAgreementSource(t, "main.ts", source)})
 	if err != nil {
 		t.Fatal(err)
 	}
