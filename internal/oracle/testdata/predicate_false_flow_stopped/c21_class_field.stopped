@@ -1,0 +1,1 @@
+internal/oracle/testdata/predicate_false_flow_stopped/c21_class_field.ts:22:20: stage 0 can't lower a read of n narrowed on the false side of this.test(n) at internal/oracle/testdata/predicate_false_flow_stopped/c21_class_field.ts:21:14, a call through a predicate value whose false answer isn't checked yet

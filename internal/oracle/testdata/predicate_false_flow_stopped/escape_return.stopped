@@ -1,0 +1,1 @@
+internal/oracle/testdata/predicate_false_flow_stopped/escape_return.ts:23:16: stage 0 can't lower a read of n narrowed on the false side of get()(n) at internal/oracle/testdata/predicate_false_flow_stopped/escape_return.ts:22:10, a call through a predicate value whose false answer isn't checked yet

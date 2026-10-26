@@ -66,6 +66,11 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 	if err := l.functionAnnotations(module); err != nil {
 		return err
 	}
+	// Before any call's own contract: a read narrowed on the false side of a call through a
+	// predicate value is stopped at the read, naming the call (#vdt9f1q).
+	if err := l.predicateFalseReads(module); err != nil {
+		return err
+	}
 	// Validate arguments before visiting their annotations, so a failed contract
 	// names the actual argument and parameter even for an inline arrow.
 	var contractError error

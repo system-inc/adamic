@@ -1,0 +1,1 @@
+internal/oracle/testdata/predicate_false_flow_stopped/library_pick.ts:11:23: stage 0 can't lower a read of x narrowed on the false side of fake.isArray(x) at internal/oracle/testdata/predicate_false_flow_stopped/library_pick.ts:10:10, a call through a predicate value whose false answer isn't checked yet

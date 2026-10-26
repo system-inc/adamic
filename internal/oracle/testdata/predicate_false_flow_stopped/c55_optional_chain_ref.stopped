@@ -1,0 +1,1 @@
+internal/oracle/testdata/predicate_false_flow_stopped/c55_optional_chain_ref.ts:20:16: stage 0 can't lower a read of b?.n narrowed on the false side of test(b.n) at internal/oracle/testdata/predicate_false_flow_stopped/c55_optional_chain_ref.ts:19:15, a call through a predicate value whose false answer isn't checked yet
