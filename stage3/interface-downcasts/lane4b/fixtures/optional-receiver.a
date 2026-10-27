@@ -1,4 +1,3 @@
-// NotYet: a checked field alias requiring an optional, accessor, or representation conversion
 interface Chain { readonly text: string; }
 interface Base { readonly kind: string; }
 interface Box extends Base { readonly kind: 'Box'; readonly value: string | Chain; }
