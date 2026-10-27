@@ -3,6 +3,7 @@ package lower
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/microsoft/TypeScript/tsc/shim/scanner"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
@@ -53,7 +54,18 @@ func (l *lowering) recordReadType(node *ast.Node, read ir.Expression, here *chec
 	if l.includesUndefined(here) {
 		matches = ir.Binary{Operator: ir.Or, Left: matches, Right: ir.IsUndefined{Value: value}}
 	}
-	b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant("dictionary member does not have its declared type")}}}})
+	// A write through the index signature, by a computed key or through a wider alias, can leave any
+	// member of the slot's union under a declared key. The stop names the read and what it found.
+	file := ast.GetSourceFileOfNode(node)
+	expression := file.Text()[scanner.GetTokenPosOfNode(node, file, false):node.End()]
+	declared := l.checker.TypeToString(l.checker.GetNonNullableType(here))
+	found := ir.Conditional{Condition: ir.IsNull{Value: value}, WhenTrue: ir.StringConstant{Index: l.constant("null")}, WhenNot: ir.TypeOf{Value: value}, Of: ir.String}
+	message := ir.Concat{Parts: []ir.Expression{
+		ir.StringConstant{Index: l.constant("field read failed: " + expression + " is not a " + declared + "; expected " + declared + ", found ")},
+		found,
+		ir.StringConstant{Index: l.constant(", which a computed-key or index-signature write may have stored")},
+	}}
+	b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: message}}})
 	return b.finish("record_declared_member", ir.Narrow{Value: value, To: to}), nil
 }
 
