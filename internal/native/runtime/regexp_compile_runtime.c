@@ -15,19 +15,25 @@ static adamic_string *regex_runtime_source(adamic_string *pattern,unsigned flags
     for(size_t i=0;i<pattern->length;i++){
         unsigned char byte=(unsigned char)pattern->bytes[i];const char *escape=NULL;
         if(byte=='\n')escape="n";else if(byte=='\r')escape="r";
-        else if(byte==0xe2&&i+2<pattern->length&&(unsigned char)pattern->bytes[i+1]==0x80){if((unsigned char)pattern->bytes[i+2]==0xa8)escape="u2028";else if((unsigned char)pattern->bytes[i+2]==0xa9)escape="u2029";if(escape!=NULL)i+=2;}
-        if(escape!=NULL){if(!escaped)out[count++]='\\';size_t n=strlen(escape);memcpy(out+count,escape,n);count+=n;escaped=false;continue;}
-        if(!escaped){if(byte=='['&&((flags&REGEX_FLAG_V)||depth==0))depth++;if(byte==']'&&depth>0)depth--;}
-        if(byte=='/'&&!escaped&&depth==0)out[count++]='\\';out[count++]=(char)byte;escaped=byte=='\\'?!escaped:false;
+        else if(byte==0xe2&&i+2<pattern->length&&(unsigned char)pattern->bytes[i+1]==0x80){if((unsigned char)pattern->bytes[i+2]==0xa8)escape="u2028";else if((unsigned char)pattern->bytes[i+2]==0xa9)escape="u2029";
+            if(escape!=NULL)i+=2;}
+        if(escape!=NULL){if(!escaped)out[count++]='\\';
+            size_t n=strlen(escape);memcpy(out+count,escape,n);count+=n;escaped=false;continue;}
+        if(!escaped){if(byte=='['&&((flags&REGEX_FLAG_V)||depth==0))depth++;
+            if(byte==']'&&depth>0)depth--;}
+        if(byte=='/'&&!escaped&&depth==0)out[count++]='\\';
+        out[count++]=(char)byte;escaped=byte=='\\'?!escaped:false;
     }
     source->length=count;return source;
 }
 adamic_object *adamic_regex_compile_new(adamic_string *pattern,adamic_string *flags) {
-    if(pattern==NULL)pattern=&adamic_string_empty;if(flags==NULL)flags=&adamic_string_empty;
+    if(pattern==NULL)pattern=&adamic_string_empty;
+    if(flags==NULL)flags=&adamic_string_empty;
     adamic_regex_parse_result result;adamic_regex_parse_native((const unsigned char *)pattern->bytes,pattern->length,(const unsigned char *)flags->bytes,flags->length,&result);
     adamic_regex_program *program=result.status==0?adamic_regex_compile_checked(&result):NULL;
     if(program==NULL){
-        const char *message=result.message;if(message==NULL)message=result.reference_reason;if(message==NULL)message="RegExp runtime compiler: out of memory";
+        const char *message=result.message;if(message==NULL)message=result.reference_reason;
+        if(message==NULL)message="RegExp runtime compiler: out of memory";
         size_t length=result.message!=NULL?result.message_length:strlen(message);
         /* Only status 1 is Node's SyntaxError. Resource failures, missing
          * native features and V8 divergences must escape tsc's catch path. */
