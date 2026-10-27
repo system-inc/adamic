@@ -8,23 +8,10 @@ import (
 
 // Dictionary entries have one storage kind. Heterogeneous values use the existing
 // counted union boxes. Two-word optional booleans retain their existing boundary.
+// A nullable value is kept as representation boxes it: a Union slot keeps null
+// (adamic_null) apart from undefined (a null pointer), and the entry keeps presence
+// apart from both. Reads off it unbox through recordReadType's checked tag.
 func (l *lowering) recordStorageType(t *checker.Type) (ir.Type, bool) {
-	// Preserve the records lane's nullable-slot boundary even when the chain
-	// can box additional nullable unions for its other representations.
-	if l.includesNull(t) && !dynamicObjectType(t) {
-		if l.includesUndefined(t) {
-			return 0, false
-		}
-		for _, member := range t.Types() {
-			if member.Flags()&checker.TypeFlagsNull != 0 {
-				continue
-			}
-			of, known := l.representation(member)
-			if !known || !of.IsReference() || of == ir.Record || of == ir.String || of == ir.Union {
-				return 0, false
-			}
-		}
-	}
 	of, known := l.kept(t)
 	return of, known && of != 0 && of != ir.Weak && of != ir.MaybeBoolean
 }
