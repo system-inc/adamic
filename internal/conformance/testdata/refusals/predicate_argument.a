@@ -1,0 +1,19 @@
+// Spec: In `.a` a predicate value stays refused
+// Expect: refused an unproven predicate argument
+type Pet = { readonly kind: 'Cat'; readonly meow: string } | { readonly kind: 'Dog'; readonly bark: string };
+
+let calls = 0;
+function isCat(pet: Pet): pet is Extract<Pet, { kind: 'Cat' }> {
+	calls = calls + 1;
+	return calls > 0;
+}
+
+function visit(pet: Pet, test: (pet: Pet) => pet is Extract<Pet, { kind: 'Cat' }>): string {
+	if (test(pet)) {
+		return pet.meow;
+	}
+	return 'not a cat';
+}
+
+console.log(visit({ kind: 'Cat', meow: 'mew' }, isCat));
+console.log(visit({ kind: 'Dog', bark: 'woof' }, isCat));
