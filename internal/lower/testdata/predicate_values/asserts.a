@@ -1,0 +1,27 @@
+interface Expression {
+    readonly kind: "E";
+    readonly e: number;
+}
+interface Statement {
+    readonly kind: "S";
+    readonly s: string;
+}
+type Node = Expression | Statement;
+let calls = 0;
+// Unproven, and it lies: it returns for an Expression.
+function assertS(n: Node): asserts n is Statement {
+    calls = calls + 1;
+    if (calls < 0) {
+        throw new Error("not a statement");
+    }
+}
+// Made by a function, so the checker doesn't narrow it to Expression by its assignment.
+function make(): Node {
+    return { kind: "E", e: 1 };
+}
+const expression = make();
+function run(node: Node, check: (node: Node) => asserts node is Statement): void {
+    check(node);
+    console.log(node.s);
+}
+run(expression, assertS);

@@ -36,17 +36,20 @@ func init() {
 // isS, unproven and lying on false, escapes as a value and reaches the shape: the read the checker
 // narrowed on the false side is NotYet, naming the call, before any other diagnostic. escape_*
 // reach one shape by one road each, the only escape in their program: a field store, a shorthand
-// field, a return, an array element, a function expression and an arrow. control_* are the seven
-// shapes the checker narrows nothing by, written to read kind, which every Node has; the walk
-// leaves them, so each keeps main's diagnostic. library_* are the calls of a library predicate the
+// field, a return, an array element, a function expression, an arrow, and a computed member of the
+// module's own namespace, self["isS"], which never spells the name as a value, so only the switch's
+// read of types finds it. Three controls the checker narrows nothing by still stop, short of the
+// walk: control_c33_call at its unbound-method refusal, and control_c24_optional and
+// control_c45_nullish at lowering's optional call. The other four lower since a predicate's value
+// carries its check (predicate_values_test.go). library_* are the calls of a library predicate the
 // exemption still counts: every, whose `this is S[]` answer is isS's; a value typed `typeof
 // Array.isArray`; and a mapped Pick<ArrayConstructor, 'isArray'> field. Each program runs on Node,
 // and its whole first diagnostic is pinned in its .stopped file. Mutants: the walk believing a
-// false step through a value returns all 55 attack and escape programs to main's diagnostic (52 to
-// "an indirect call of a checked predicate", c30 to its overload twin, c29 and c47 to a refusal),
-// and none lowers; the switch seeing only an alias or a call's argument misses the 11 whose escape
-// is a field, a return, an element or a default: the four escape_ programs, c19, c20, c25, c27,
-// c36, c47 and c48; the exemption without its argument condition lets library_every through.
+// false step through a value leaves every attack and escape program to a later diagnostic, or to
+// lowering, so none keeps its pin; the switch seeing only an alias or a call's argument misses the 11
+// whose escape is a field, a return, an element or a default: the four escape_ programs, c19, c20,
+// c25, c27, c36, c47 and c48; the switch without its read of types misses escape_computed_member;
+// the exemption without its argument condition lets library_every through.
 func TestPredicateFalseDirectionReadsAreNotYet(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/predicate_false_flow_stopped"
@@ -92,8 +95,8 @@ func TestPredicateFalseDirectionReadsAreNotYet(t *testing.T) {
 			}
 		})
 	}
-	if programs != 65 {
-		t.Fatalf("%d programs in %s, want 65: a program added or removed needs this count changed with it", programs, directory)
+	if programs != 62 {
+		t.Fatalf("%d programs in %s, want 62: a program added or removed needs this count changed with it", programs, directory)
 	}
 }
 

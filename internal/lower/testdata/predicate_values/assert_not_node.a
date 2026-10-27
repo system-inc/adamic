@@ -1,0 +1,27 @@
+interface Identifier {
+    readonly kind: "Identifier";
+    readonly text: string;
+}
+interface Keyword {
+    readonly kind: "Keyword";
+    readonly width: number;
+}
+type Node = Identifier | Keyword;
+let calls = 0;
+// Unproven, and it lies on false: it says no to a Keyword.
+function isKeyword(node: Node): node is Keyword {
+    calls = calls + 1;
+    return calls < 0;
+}
+// tsc's Debug.assertNotNode (debug.ts:307): the overload believes the test's false answer.
+function assertNotNode<T extends Node, U extends T>(node: T | undefined, test: (node: Node) => node is U): asserts node is Exclude<T, U>;
+function assertNotNode(node: Node | undefined, test: (node: Node) => boolean): void {
+    if (node !== undefined && test(node)) {
+        console.log("unexpected node");
+    }
+}
+function use(node: Node): void {
+    assertNotNode(node, isKeyword);
+    console.log(node.text);
+}
+use({ kind: "Keyword", width: 3 });

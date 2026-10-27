@@ -89,8 +89,14 @@ func (l *lowering) predicateFalseReads(module *ast.SourceFile) error {
 // anywhere in the program. That's a reference to a predicate declaration R-T80 checks that isn't
 // the callee of a direct call, wherever it goes (an alias, a field, an argument, a return, an
 // element, bind), or a function expression or arrow claiming a predicate it doesn't prove, which is
-// a value by construction. A program with neither keeps its admission exactly.
+// a value by construction. A program with neither keeps its admission exactly. The value is found by
+// its type as well as by its name (Compiler's must on #vdt9f1q): any expression whose type carries a
+// checked predicate's call signature, other than a direct call's callee, is one, so a road that
+// doesn't spell the name, ns["isS"], is found too.
 func (f *predicateFalseFlow) escapes() bool {
+	if !f.anyChecked() {
+		return false
+	}
 	escaped := false
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
@@ -98,8 +104,10 @@ func (f *predicateFalseFlow) escapes() bool {
 		case escaped:
 		case ast.IsFunctionExpressionOrArrowFunction(node):
 			escaped = node.Type() != nil && node.Type().Kind == ast.KindTypePredicate && f.l.checkedAssertionSource(node) && !f.l.checkedPredicateBodyProven(node.Type())
-		case node.Kind == ast.KindIdentifier:
-			escaped = f.escapingReference(node)
+		case node.Kind == ast.KindIdentifier && f.escapingReference(node):
+			escaped = true
+		case f.carrier(node):
+			escaped = f.carries(f.l.checker.GetTypeAtLocation(node), map[*checker.Type]bool{})
 		}
 		if !escaped {
 			node.ForEachChild(visit)
@@ -155,11 +163,74 @@ func (f *predicateFalseFlow) escapingReference(identifier *ast.Node) bool {
 	return parent.Kind == ast.KindShorthandPropertyAssignment || !direct
 }
 
-// checkedDeclaration is predicates.go's own test for a predicate R-T80 checks at a direct call.
+// anyChecked is whether the program declares a predicate R-T80 checks, so a program with none never
+// pays for reading its expressions' types.
+func (f *predicateFalseFlow) anyChecked() bool {
+	found := false
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		found = found || (node.Kind == ast.KindFunctionDeclaration && f.checkedDeclaration(node))
+		if !found {
+			node.ForEachChild(visit)
+		}
+		return found
+	}
+	for _, file := range f.l.program.Files() {
+		if file.AsNode().ForEachChild(visit) {
+			return true
+		}
+	}
+	return false
+}
+
+// carrier is whether node is an expression that can carry a function value onward, so its type is
+// worth reading: a name, a property or element access, or a call's result (Lower's bound, for cost:
+// the walk is live in every tsc file). A name a call calls directly is R-T80's, checked both ways at
+// that call, so it's no value.
+func (f *predicateFalseFlow) carrier(node *ast.Node) bool {
+	switch node.Kind {
+	case ast.KindIdentifier:
+		if ast.IsPartOfTypeNode(node) || ast.IsDeclarationName(node) || !ast.IsExpressionNode(node) {
+			return false
+		}
+		callee := node
+		for callee.Parent != nil && callee.Parent.Kind == ast.KindParenthesizedExpression {
+			callee = callee.Parent
+		}
+		return callee.Parent == nil || callee.Parent.Kind != ast.KindCallExpression || callee.Parent.AsCallExpression().Expression != callee
+	case ast.KindPropertyAccessExpression, ast.KindElementAccessExpression, ast.KindCallExpression:
+		return !ast.IsPartOfTypeNode(node)
+	}
+	return false
+}
+
+// carries is whether a value of type t can be a checked predicate: one of its call signatures, or a
+// union or intersection member's, is declared by one.
+func (f *predicateFalseFlow) carries(t *checker.Type, seen map[*checker.Type]bool) bool {
+	if t == nil || seen[t] {
+		return false
+	}
+	seen[t] = true
+	if t.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		for _, member := range t.Types() {
+			if f.carries(member, seen) {
+				return true
+			}
+		}
+	}
+	for _, signature := range f.l.checker.GetSignaturesOfType(t, checker.SignatureKindCall) {
+		if f.checkedDeclaration(signature.Declaration()) {
+			return true
+		}
+	}
+	return false
+}
+
+// checkedDeclaration is checkedPredicateDeclaration, remembered per declaration.
 func (f *predicateFalseFlow) checkedDeclaration(declaration *ast.Node) bool {
 	checked, seen := f.checked[declaration]
 	if !seen {
-		checked = declaration.Kind == ast.KindFunctionDeclaration && declaration.Type() != nil && declaration.Type().Kind == ast.KindTypePredicate && (declaration.Body() != nil || f.l.censusImplementation(declaration) != nil) && f.l.checkedAssertionSource(declaration) && !f.l.checkedPredicateBodyProven(declaration.Type())
+		checked = f.l.checkedPredicateDeclaration(declaration)
 		f.checked[declaration] = checked
 	}
 	return checked

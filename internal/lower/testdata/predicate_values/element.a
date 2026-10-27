@@ -1,0 +1,26 @@
+interface Expression {
+    readonly kind: "E";
+    readonly e: number;
+}
+interface Statement {
+    readonly kind: "S";
+    readonly s: string;
+}
+type Node = Expression | Statement;
+let calls = 0;
+// Unproven, and it lies on true: it says yes to an Expression.
+function isS(n: Node): n is Statement {
+    calls = calls + 1;
+    return calls > 0;
+}
+// Made by a function, so the checker doesn't narrow it to Expression by its assignment.
+function make(): Node {
+    return { kind: "E", e: 1 };
+}
+const expression = make();
+// The element type is inferred: an annotated predicate-typed element is refused outright.
+const tests = [isS];
+const first = tests[0];
+if (first !== undefined && first(expression)) {
+    console.log(expression.s);
+}
