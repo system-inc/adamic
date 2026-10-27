@@ -205,5 +205,104 @@ def main():
     (HERE / 'COMPARISON.md').write_text('\n'.join(sections) + '\n')
     print(table(['Reason', 'Before', 'After', 'Difference'], changed or [('None; all distinct-site counts match', '—', '—', 0)]))
 
+def k1t2wp9():
+    before_sha = '4ac3f04d767ec7d2d4e9b41ae9cdc9c4c9f4f288'
+    after_sha = '8502a46e9289d6abb673f1359aa12d66be659b55'
+    evidence = HERE / 'k1t2wp9'
+    runs = [(before_sha, HERE.parent / '20261027T025412Z.HCmJYO'),
+            (after_sha, HERE.parent / Path((evidence / 'run-path.txt').read_text().strip()).name)]
+    aa = [analyze(run) for sha, run in runs]
+    target = 'checked predicate membership by an enum tag another member can hold'
+    named = [target, 'checked predicate membership over an open tag domain']
+    b, a = aa[0][1], aa[1][1]
+    changed = sorted([(r, len(b[r]), len(a[r]), len(a[r])-len(b[r]))
+                      for r in b.keys() | a.keys() if len(b[r]) != len(a[r])], key=lambda x: (-abs(x[3]), x[0]))
+    sections = ['# K1T2WP9: 4ac3f04d → 8502a46e', '',
+        'One foreground meter invocation at 8502a46e, compared with the committed 4ac3f04d run. Main only is counted; area repeats the same pin. First-error findings are floors, and latent lowering on a checker-rejected program does not establish native output.', '',
+        '## Headline', '', table(['SHA', 'Whole program', 'Own file', 'Lowering', 'tsc entry diagnostics', 'NotYet findings', 'Refused findings', 'Panic findings', 'Error findings'], [[sha[:8], *x[0]] for (sha, run), x in zip(runs, aa)]), '',
+        'Gate columns come from census; finding columns count unique (kind, where, reason, text), as in COMPARISON.md.', '',
+        '## Named reasons', '', table(['Reason', 'Before distinct sites', 'After distinct sites', 'Difference'], [(r,len(b[r]),len(a[r]),len(a[r])-len(b[r])) for r in named]), '',
+        '## Changed lowering reasons', '', table(['Reason', 'Before', 'After', 'Difference'], changed), '',
+        'Counts use distinct normalized file:line:column sites, not finding events.', '']
+    rows = [read(run / 'main/latent.jsonl.gz') for sha,run in runs]
+    dropped = b[target] - a[target]
+    old = collections.defaultdict(set)
+    new = collections.defaultdict(list)
+    for f in findings(rows[0]):
+        if f.get('reason') == target and site(f.get('where','')) in dropped:
+            old[site(f['where'])].add(site(f['unit']))
+    for f in findings(rows[1]):
+        if f.get('phase') == 'lowering':
+            new[site(f.get('unit',''))].append(f)
+    after_units={site(u['where']) for row in rows[1] for u in row.get('units', [])}
+    assert all(u in after_units for units in old.values() for u in units)
+    details=[]
+    moved=collections.Counter()
+    no_finding=0
+    for s in sorted(dropped):
+        later = {(f['kind'], f.get('reason',''), site(f.get('where',''))) for u in old[s] for f in new[u]}
+        if later:
+            for reason in {reason for kind,reason,where in later}: moved[reason]+=1
+            result='; '.join(f'{kind}: {reason} at {where}' for kind,reason,where in sorted(later))
+        else:
+            no_finding+=1
+            result='no lowering finding in owning unit(s)'
+        details.append((s, ', '.join(sorted(old[s])),result))
+    sections += ['## Split of removed enum-tag sites', '',
+        f'{len(dropped)} removed sites: {no_finding} reach no lowering finding in their owning units; {len(dropped)-no_finding} move to a later finding. {len(a[target]-b[target])} newly appearing sites for the original reason. A no-finding unit is not proof of native output. Later findings are matched by normalized owning unit, using the lowering phase; refusal-scan findings are not substituted for unit stops. A site with multiple owning units is classified as moved if any has a later finding. Reason totals can overlap if such units differ. Multiple removed sites can reach the same later callee site, so these attribution counts differ from the distinct-site reason changes above; the getter reason has no net distinct-site change.', '',
+        table(['Later reason', 'Removed sites reaching it'], sorted(moved.items(),key=lambda x:(-x[1],x[0]))), '',
+        '<details><summary>Every removed site and its owning units</summary>', '', table(['Before site','Owning unit(s)','After'],details), '', '</details>', '',
+        '## Files with a changed first stop', '',
+        'First recorded file finding, including the file refusal scan; this is distinct from independent unit stops.', '',
+        table(['File','Before','After'],[(f,aa[0][2].get(f,'absent'),aa[1][2].get(f,'absent')) for f in sorted(aa[0][2].keys()|aa[1][2].keys()) if aa[0][2].get(f)!=aa[1][2].get(f)]) or 'No changed first stops.', '', '## Panics', '']
+    panic=collections.defaultdict(set)
+    for sha,run in runs:
+        for label in ('main','area'):
+            for stream in ('latent.jsonl.gz','tsc/latent.jsonl.gz'):
+                for f in findings(read(run/label/stream)):
+                    if f['kind']=='panic': panic[(site(f.get('where','')),f.get('text') or f.get('reason',''))].add(sha[:8]+'/'+label+'/'+stream)
+    for (where,msg),labels in sorted(panic.items()): sections += [f'### {where}', '', ', '.join(sorted(labels)), '', '```text',msg,'```','']
+    sections += ['## Timing on this box', '', 'GNU time -v; checker.ts is the sole root, with LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1. These are end-to-end latent driver measurements, including checker work and JSON/fsync, not isolated production lowering. Samples alternate before/after, sequentially.', '']
+    samples=[]
+    for i in range(1,4):
+        for sha,run in runs:
+            p=evidence/'timing'/f'{sha}-checker-{i}.time'
+            if not p.exists(): continue
+            txt=p.read_text()
+            def field(label): return re.search(r'^\s*'+re.escape(label)+r':\s*(.+)$',txt,re.M).group(1)
+            assert field('Exit status')=='0',p
+            sample=read(p.with_suffix('.jsonl.gz'))
+            assert len(sample)==2 and sample[0]['latent_mode']=='first-error'
+            assert site(sample[1]['file'])=='src/compiler/checker.ts'
+            samples.append([sha[:8],i,seconds(field('Elapsed (wall clock) time (h:mm:ss or m:ss)')),round(float(field('User time (seconds)'))+float(field('System time (seconds)')),2),field('Maximum resident set size (kbytes)')])
+    sections += [table(['SHA','Sample','Wall (s)','User+system (s)','Max RSS (KiB)'],samples) if samples else 'Timing pending or skipped; see timing status.', '', '## Box', '', '```text',(evidence/'box.txt').read_text().strip(),'```','', '## Reproduction and checks', '',
+        'Run `python3 stage3/meter/runs/walk-4ac3f04d/compare.py --k1t2wp9`. The original comparison mode remains available. Build, measurement and timing commands and raw logs are retained under k1t2wp9/.', '']
+    for sha,run in runs:
+        pin=json.loads((run/'compiler-mode.json').read_text())
+        assert pin['commits']=={'main':sha,'area':sha} and pin['mode']=='per-ref' and pin['latent_mode']=='first-error'
+        sections += [f'- {sha[:8]}: per-ref pin and first-error metadata verified.']
+        for stream in ('latent.jsonl.gz','census.jsonl.gz','tsc/latent.jsonl.gz','tsc/census.jsonl.gz'):
+            pair=[canonical(read(run/label/stream)) for label in ('main','area')]
+            for records in pair:
+                for record in records: record.pop('seconds',None)
+            assert pair[0]==pair[1],(sha,stream,'label mismatch')
+        sections += [f'- {sha[:8]}: main/area streams agree after source-path and census-seconds normalization.']
+    if len(samples)==6:
+        hashes=[line.split()[0] for line in (evidence/'timing/binaries.sha256').read_text().splitlines()]
+        expected_after=next(line.split()[0] for line in (runs[1][1]/'main/binaries.sha256').read_text().splitlines() if line.endswith('/latent-census'))
+        expected_before=next(line.split()[0] for line in (evidence/'before-build/binaries.sha256').read_text().splitlines() if line.endswith('/latent-census'))
+        original_before=next(line.split()[0] for line in (runs[0][1]/'main/binaries.sha256').read_text().splitlines() if line.endswith('/latent-census'))
+        assert expected_before==original_before
+        assert hashes==[expected_before,expected_after]*3
+        sections += ['- All six timing streams contain checker.ts alone; exit statuses are zero. Binary hashes match the retained after meter binary and the separately rebuilt before binary. The rebuilt before latent binary also exactly matches the SHA-256 of the committed baseline run (9ed61cdc7c4d8f0a60d4805f10f0d32ca8a2f18e643b14144ee5075496e05169).', '', '### Timing tool', '', '```text',(evidence/'timing/tool.txt').read_text().strip(),'```']
+    sections += ['', '### Run and build status', '', '```text', (evidence/'run-status.txt').read_text().strip()]
+    if (evidence/'before-build-status.txt').exists(): sections += [(evidence/'before-build-status.txt').read_text().strip()]
+    sections += ['```', '', 'All 746 adapted src files are byte-identical between the independently generated timing trees (input-check.txt). /usr/bin/time was absent; GNU time was extracted from the official Debian time_1.9-0.2_amd64.deb package, as in the prior run. Tool and package hashes are retained in timing/. The cgroup memory limit is 17179869184 bytes (16 GiB). The 8502a46e meter artifacts were committed and pushed immediately on exit as c4ea5bdd7, before comparison or rebuilding the before binary. The run took 4286 seconds. Both completed compiler source worktrees were removed during the latent pass to free tmpfs at the memory limit, matching the prior run cleanup. Binaries, overlays, adapted trees and logs were retained. No OOM occurred. Only test fixtures and a meter report change intervene between the pins; stage3 adaptation, census drivers, overlay generators and twice-daily.sh are unchanged; report.py and its tests/evidence changed.']
+    (HERE/'K1T2WP9.md').write_text('\n'.join(sections)+'\n')
+    print('\n'.join(sections[:14]))
+
 if __name__ == '__main__':
-    main()
+    if '--k1t2wp9' in sys.argv:
+        k1t2wp9()
+    else:
+        main()
