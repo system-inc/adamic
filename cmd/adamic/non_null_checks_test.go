@@ -42,7 +42,7 @@ func TestNonNullExplainChecks(t *testing.T) {
 					}
 					command := exec.Command(os.Args[0], append([]string{"-test.run=^TestExplainChecksDriver$", "--"}, args...)...)
 					command.Dir = repository
-					command.Env = append(os.Environ(), "ADAMIC_EXPLAIN_TEST_DRIVER=1", "XDG_CACHE_HOME="+t.TempDir())
+					command.Env = explainDriverEnvironment(t, os.Environ())
 					var output, diagnostic bytes.Buffer
 					command.Stdout = &output
 					command.Stderr = &diagnostic
