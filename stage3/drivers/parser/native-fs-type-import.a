@@ -1,4 +1,4 @@
-// a-check: type error TS2591
+// parser driver evidence (Oct 8): type error TS2591 then; the Node type loader accepts it now
 // Reduced from TypeScript 6.0.3, tracing.ts:24.
 let fs: typeof import("fs");
 console.log("filesystem declaration loaded");

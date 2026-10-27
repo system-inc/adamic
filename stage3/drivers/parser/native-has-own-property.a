@@ -1,4 +1,4 @@
-// a-check: refused a method read as a value (hasOwnProperty would lose its object, and this with it)
+// parser driver evidence (Oct 8): refused a method read as a value (hasOwnProperty would lose its object, and this with it) then; the language accepts it now
 // From TypeScript 6.0.3, src/compiler/core.ts:1256,1266-1268
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 function hasProperty(map: object, key: string): boolean {

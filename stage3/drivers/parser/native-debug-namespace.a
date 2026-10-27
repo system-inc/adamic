@@ -1,4 +1,4 @@
-// a-check: refused a namespace
+// parser driver evidence (Oct 8): refused a namespace then; the language accepts it now
 // From TypeScript 6.0.3, src/compiler/debug.ts:26
 namespace Debug {
     export let isDebugging = false;
