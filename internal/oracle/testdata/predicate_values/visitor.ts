@@ -53,10 +53,15 @@ console.log(visitNodes(nodes, isS).map(statement => statement.s).join(","));
 const visitor = { test: isS };
 const tests = [isS, pick(), visitor.test];
 let count = 0;
+// A predicate passed as an argument is named (a value held in a variable is refused there); one
+// called through an element, a field or a return is read here only by its answer.
 for (const node of nodes) {
     for (const test of tests) {
-        count = count + length(node, test);
+        if (test(node)) {
+            count = count + 1;
+        }
     }
+    count = count + length(node, isS);
 }
 console.log(String(count));
 const alias = isS;
