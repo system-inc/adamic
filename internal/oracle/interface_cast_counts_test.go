@@ -37,7 +37,7 @@ func interfaceCastCountCases() []countCase {
 		"interfaces-good", "interfaces-missing-inherited", "interfaces-uninitialized-object", "interfaces-wrong-inherited",
 		"objects-good", "objects-missing-nested", "objects-uninitialized-nested", "objects-untagged-good", "objects-untagged-wrong", "objects-wrong-nested", "optional-read-control", "flag-downcast-wrong",
 	} {
-		paths = append(paths, "stage3/interface-downcasts/lane1/"+name+".a")
+		paths = append(paths, interfaceFixturePath("lane1/"+name))
 	}
 	for _, path := range paths {
 		cases = append(cases, countCase{path, func(t *testing.T) (string, func() string) { return counted(t, path, false, nil, false, false) }})
