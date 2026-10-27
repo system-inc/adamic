@@ -49,6 +49,18 @@ preopened implicitly.
 
 Held by: the `WASI` oracle including every input fixture, `empty-path.a`, and the wasmtime witness.
 
+## The host's platform
+
+A module can't see the platform its host runs on: WASI libc's `uname` says `wasi`, where Node on the same
+host says `linux` or `darwin`. So `process.platform` in a wasm32-wasi build stops with a panic, "process.platform:
+a wasm32-wasi module can't see its host's platform", rather than answer `wasi` or a name chosen at build
+time. A platform the host passes in its environment would be a contract neither Node's WASI nor workerd
+offers, so Adamic doesn't invent one. Workers' Wasm functions never reach it: they must be pure, and a host
+read isn't.
+
+Held by: `wasiHostPlatformFixtures` in the `WASI` and shim oracles, asserted both ways, so a fixture that reads
+the platform is listed and a listed one reads it.
+
 ## The engine's own stack
 
 A Wasm engine keeps a call stack the program can't see, separate from the linear-memory stack Adamic's
