@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Times `adamic c <file>` for each tsc file under three compilers, interleaved per file, two rounds.
+set -u
+compiler=/tmp/lt/adapted/src/compiler
+out=/tmp/lt/out
+mkdir -p "$out"
+cd "$compiler"
+find . -name '*.ts' | sed 's|^\./||' | LC_ALL=C sort > "$out/files.txt"
+cat /proc/loadavg > "$out/loadavg-start.txt"
+for round in 1 2; do
+  while read -r file; do
+    name=${file//\//_}
+    for tree in main A B; do
+      directory="$out/$tree/r$round"
+      mkdir -p "$directory"
+      (cd "$compiler/$(dirname "$file")" && /usr/bin/time -v -o "$directory/$name.time" \
+        timeout 600 "/tmp/lt/$tree/adamic" c "$(basename "$file")" \
+        > "$directory/$name.stdout" 2> "$directory/$name.stderr")
+      echo "round $round $tree $file $(grep 'Elapsed' "$directory/$name.time")"
+    done
+  done < "$out/files.txt"
+done
+cat /proc/loadavg > "$out/loadavg-end.txt"
+echo done

@@ -1,0 +1,269 @@
+checker.ts:12034:30: error TS18048: 'file' is possibly 'undefined'.
+checker.ts:1683:9: error TS2322: Type '(signature: Signature, kind: SignatureDeclaration["kind"], enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker, maximumLength?: number, verbosityLevel?: number, out?: WriterContextOut) => SignatureDeclaration | undefined' is not assignable to type '{ (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined): (SignatureDeclaration & ...) | undefined; (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined, internalFlags?: InternalNodeBuilderF...'.
+  Type 'SignatureDeclaration | undefined' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.
+    Type 'ArrowFunction' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.
+      Type 'ArrowFunction' is not assignable to type 'ArrowFunction & { typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+        Type 'ArrowFunction' is not assignable to type '{ typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+          Types of property 'typeArguments' are incompatible.
+            Type 'NodeArray<TypeNode> | undefined' is not assignable to type 'NodeArray<TypeNode>'.
+              Type 'undefined' is not assignable to type 'NodeArray<TypeNode>'.
+checker.ts:17890:21: error TS2412: Type 'NamedTupleMember | ParameterDeclaration | undefined' is not assignable to type 'NamedTupleMember | ParameterDeclaration' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type 'NamedTupleMember | ParameterDeclaration'.
+checker.ts:17946:29: error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+      Type 'undefined' is not assignable to type 'Type'.
+checker.ts:19044:25: error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+      Type 'undefined' is not assignable to type 'Type'.
+checker.ts:20595:32: error TS2722: Cannot invoke an object which is possibly 'undefined'.
+checker.ts:22498:29: error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
+checker.ts:22498:32: error TS2488: Type '[message: DiagnosticMessage, ...args: (string | number | boolean | readonly string[] | SourceFile | undefined)[]] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.
+checker.ts:38430:64: error TS2345: Argument of type 'ElementFlags | undefined' is not assignable to parameter of type 'ElementFlags'.
+  Type 'undefined' is not assignable to type 'ElementFlags'.
+checker.ts:42849:65: error TS2345: Argument of type 'TypeParameter | undefined' is not assignable to parameter of type 'TypeParameter'.
+  Type 'undefined' is not assignable to type 'TypeParameter'.
+checker.ts:43517:20: error TS2412: Type 'Type | undefined' is not assignable to type 'Type' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type 'Type'.
+checker.ts:46114:128: error TS2345: Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+  Type 'undefined' is not assignable to type 'Type'.
+checker.ts:46114:208: error TS2345: Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+  Type 'undefined' is not assignable to type 'Type'.
+checker.ts:46128:128: error TS2345: Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+  Type 'undefined' is not assignable to type 'Type'.
+checker.ts:50153:121: error TS2532: Object is possibly 'undefined'.
+checker.ts:52426:13: error TS18048: 'parameter' is possibly 'undefined'.
+checker.ts:52427:39: error TS18048: 'parameter' is possibly 'undefined'.
+checker.ts:52429:35: error TS2345: Argument of type 'ParameterDeclaration | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.
+checker.ts:52430:39: error TS18048: 'parameter' is possibly 'undefined'.
+checker.ts:52432:13: error TS18048: 'parameter' is possibly 'undefined'.
+checker.ts:52433:39: error TS18048: 'parameter' is possibly 'undefined'.
+checker.ts:52435:13: error TS18048: 'parameter' is possibly 'undefined'.
+checker.ts:52436:39: error TS18048: 'parameter' is possibly 'undefined'.
+checker.ts:52438:14: error TS18048: 'parameter' is possibly 'undefined'.
+checker.ts:52439:39: error TS18048: 'parameter' is possibly 'undefined'.
+checker.ts:52441:42: error TS18048: 'parameter' is possibly 'undefined'.
+checker.ts:52443:39: error TS18048: 'parameter' is possibly 'undefined'.
+checker.ts:52446:39: error TS18048: 'parameter' is possibly 'undefined'.
+checker.ts:5311:45: error TS2322: Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+checker.ts:54261:5: error TS2375: Type '{ getCommonSourceDirectory: () => string; getCurrentDirectory: () => string; getSymlinkCache: (() => SymlinkCache) | undefined; getPackageJsonInfoCache: () => PackageJsonInfoCache | undefined; ... 9 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'ModuleSpecifierResolutionHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'readFile' are incompatible.
+    Type '((fileName: string) => string | undefined) | undefined' is not assignable to type '(path: string) => string | undefined'.
+      Type 'undefined' is not assignable to type '(path: string) => string | undefined'.
+commandLineParser.ts:2077:79: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+commandLineParser.ts:2301:91: error TS18046: 'e' is of type 'unknown'.
+commandLineParser.ts:2668:9: error TS2375: Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'build' are incompatible.
+    Type 'undefined' is not assignable to type 'boolean'.
+commandLineParser.ts:2682:9: error TS2322: Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }[] | undefined' is not assignable to type 'readonly ProjectReference[] | undefined'.
+  Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }[]' is not assignable to type 'readonly ProjectReference[]'.
+    Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }' is not assignable to type 'ProjectReference' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'originalPath' are incompatible.
+        Type 'undefined' is not assignable to type 'string'.
+commandLineParser.ts:2957:13: error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+core.ts:1637:11: error TS2740: Type '{ has(element: TElement): boolean; add(element: TElement): Set<TElement>; delete(element: TElement): boolean; clear(): void; ... 6 more ...; [Symbol.toStringTag]: string; }' is missing the following properties from type 'Set<TElement>': union, intersection, difference, symmetricDifference, and 3 more.
+moduleNameResolver.ts:286:9: error TS2322: Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.
+  Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'originalPath' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+moduleNameResolver.ts:474:36: error TS2322: Type 'MapLike<string[]> | undefined' is not assignable to type 'MapLike<string[]>'.
+  Type 'undefined' is not assignable to type 'MapLike<string[]>'.
+moduleNameResolver.ts:627:9: error TS2375: Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'originalPath' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+program.ts:1876:11: error TS2375: Type '{ getRootFileNames: () => readonly string[]; getSourceFile: (fileName: string) => SourceFile | undefined; getSourceFileByPath: (path: Path) => SourceFile | undefined; getSourceFiles: () => SourceFile[]; ... 75 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'Program' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'directoryExists' are incompatible.
+    Type '((path: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean'.
+      Type 'undefined' is not assignable to type '(path: string) => boolean'.
+program.ts:2599:9: error TS2375: Type '{ getCanonicalFileName: (fileName: string) => string; getCommonSourceDirectory: () => string; getCompilerOptions: () => CompilerOptions; getCurrentDirectory: () => string; ... 24 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'EmitHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'createHash' are incompatible.
+    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.
+      Type 'undefined' is not assignable to type '(data: string) => string'.
+program.ts:406:25: error TS18046: 'e' is of type 'unknown'.
+program.ts:4157:64: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+program.ts:4160:69: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+program.ts:4160:95: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+program.ts:441:25: error TS18046: 'e' is of type 'unknown'.
+program.ts:472:11: error TS2375: Type '{ getSourceFile: (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined; ... 16 more ...; createHash: ... | undefined; }' is not assignable to type 'CompilerHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'createHash' are incompatible.
+    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.
+      Type 'undefined' is not assignable to type '(data: string) => string'.
+program.ts:4956:9: error TS2412: Type '((directoryName: string) => boolean) | undefined' is not assignable to type '(directoryName: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(directoryName: string) => boolean'.
+program.ts:4957:9: error TS2412: Type '((path: string) => string[]) | undefined' is not assignable to type '(path: string) => string[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(path: string) => string[]'.
+program.ts:5107:5: error TS2375: Type '{ fileExists: (f: string) => boolean; readDirectory(root: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth: number | undefined): string[]; readFile: ...; ... 6 more ...; trace: ... | undefined; }' is not assignable to type 'ParseConfigFileHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'trace' are incompatible.
+    Type '((s: string) => void) | undefined' is not assignable to type '(s: string) => void'.
+      Type 'undefined' is not assignable to type '(s: string) => void'.
+resolutionCache.ts:1386:9: error TS2412: Type 'undefined' is not assignable to type 'Set<Path>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+sourcemap.ts:216:58: error TS2345: Argument of type 'string | null | undefined' is not assignable to parameter of type 'string | null'.
+  Type 'undefined' is not assignable to type 'string | null'.
+sys.ts:1281:43: error TS18046: 'e' is of type 'unknown'.
+sys.ts:1598:69: error TS2307: Cannot find module 'source-map-support' or its corresponding type declarations.
+sys.ts:1617:13: error TS2322: Type '(baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type '(baseDir: string, moduleName: string) => ModuleImportResult'.
+  Type '{ module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+    Type '{ module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+      Type '{ module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type '{ module: undefined; modulePath?: undefined; error: { stack?: string; message?: string; }; }'.
+        Types of property 'error' are incompatible.
+          Type 'unknown' is not assignable to type '{ stack?: string; message?: string; }'.
+sys.ts:1708:56: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string | ArrayBufferView<ArrayBufferLike>'.
+  Type 'undefined' is not assignable to type 'string | ArrayBufferView<ArrayBufferLike>'.
+transformer.ts:367:9: error TS2532: Object is possibly 'undefined'.
+transformer.ts:395:9: error TS2532: Object is possibly 'undefined'.
+transformer.ts:563:9: error TS2322: Type 'VariableDeclaration[] | undefined' is not assignable to type 'VariableDeclaration[]'.
+  Type 'undefined' is not assignable to type 'VariableDeclaration[]'.
+transformer.ts:564:9: error TS2322: Type 'FunctionDeclaration[] | undefined' is not assignable to type 'FunctionDeclaration[]'.
+  Type 'undefined' is not assignable to type 'FunctionDeclaration[]'.
+transformer.ts:565:9: error TS2322: Type 'Statement[] | undefined' is not assignable to type 'Statement[]'.
+  Type 'undefined' is not assignable to type 'Statement[]'.
+transformer.ts:614:9: error TS2322: Type 'Identifier[] | undefined' is not assignable to type 'Identifier[]'.
+  Type 'undefined' is not assignable to type 'Identifier[]'.
+transformers/classFields.ts:1835:21: error TS2532: Object is possibly 'undefined'.
+transformers/classFields.ts:2251:45: error TS2538: Type 'undefined' cannot be used as an index type.
+transformers/classFields.ts:2252:97: error TS18048: 'superStatementIndex' is possibly 'undefined'.
+transformers/classFields.ts:2253:27: error TS18048: 'superStatementIndex' is possibly 'undefined'.
+transformers/classFields.ts:2297:52: error TS2345: Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.
+transformers/classFields.ts:2376:56: error TS2345: Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.
+transformers/declarations.ts:1678:110: error TS2345: Argument of type 'ExpressionWithTypeArguments | undefined' is not assignable to parameter of type 'DeclarationDiagnosticProducing'.
+  Type 'undefined' is not assignable to type 'DeclarationDiagnosticProducing'.
+transformers/es2015.ts:2803:38: error TS2532: Object is possibly 'undefined'.
+transformers/es2015.ts:3046:64: error TS2532: Object is possibly 'undefined'.
+transformers/es2015.ts:4437:29: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.
+transformers/es2015.ts:4691:34: error TS2532: Object is possibly 'undefined'.
+transformers/es2015.ts:4693:13: error TS2532: Object is possibly 'undefined'.
+transformers/es2017.ts:599:86: error TS2532: Object is possibly 'undefined'.
+transformers/es2017.ts:764:38: error TS18048: 'outerParameter' is possibly 'undefined'.
+transformers/es2017.ts:765:25: error TS18048: 'originalParameter' is possibly 'undefined'.
+transformers/es2017.ts:765:58: error TS18048: 'originalParameter' is possibly 'undefined'.
+transformers/es2017.ts:767:76: error TS18048: 'outerParameter' is possibly 'undefined'.
+transformers/es2017.ts:770:44: error TS18048: 'outerParameter' is possibly 'undefined'.
+transformers/esDecorators.ts:1164:45: error TS2538: Type 'undefined' cannot be used as an index type.
+transformers/esDecorators.ts:1165:97: error TS18048: 'superStatementIndex' is possibly 'undefined'.
+transformers/esDecorators.ts:1192:80: error TS18048: 'superStatementIndex' is possibly 'undefined'.
+transformers/esnext.ts:183:34: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.
+transformers/esnext.ts:344:44: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.
+transformers/esnext.ts:384:36: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.
+transformers/esnext.ts:767:34: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.
+transformers/esnext.ts:767:70: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.
+transformers/generators.ts:1283:39: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.
+transformers/generators.ts:1370:35: error TS18048: 'variable' is possibly 'undefined'.
+transformers/generators.ts:1374:70: error TS2345: Argument of type 'InitializedVariableDeclaration | undefined' is not assignable to parameter of type 'InitializedVariableDeclaration'.
+  Type 'undefined' is not assignable to type 'InitializedVariableDeclaration'.
+    Type 'undefined' is not assignable to type 'VariableDeclaration'.
+transformers/generators.ts:1684:46: error TS2532: Object is possibly 'undefined'.
+transformers/generators.ts:1729:55: error TS2532: Object is possibly 'undefined'.
+transformers/generators.ts:1866:21: error TS18048: 'clause' is possibly 'undefined'.
+transformers/generators.ts:1880:25: error TS18048: 'clause' is possibly 'undefined'.
+transformers/generators.ts:1881:43: error TS18048: 'clause' is possibly 'undefined'.
+transformers/generators.ts:1881:50: error TS2339: Property 'expression' does not exist on type 'CaseOrDefaultClause'.
+  Property 'expression' does not exist on type 'DefaultClause'.
+transformers/generators.ts:1887:62: error TS18048: 'clause' is possibly 'undefined'.
+transformers/generators.ts:1887:69: error TS2339: Property 'expression' does not exist on type 'CaseOrDefaultClause'.
+  Property 'expression' does not exist on type 'DefaultClause'.
+transformers/generators.ts:1889:55: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+transformers/generators.ts:1889:85: error TS18048: 'clause' is possibly 'undefined'.
+transformers/generators.ts:1889:92: error TS2339: Property 'expression' does not exist on type 'CaseOrDefaultClause'.
+  Property 'expression' does not exist on type 'DefaultClause'.
+transformers/generators.ts:1911:27: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+transformers/generators.ts:1918:27: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+transformers/generators.ts:1919:44: error TS2532: Object is possibly 'undefined'.
+transformers/generators.ts:2446:48: error TS2345: Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.
+transformers/generators.ts:2469:56: error TS2345: Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.
+transformers/generators.ts:2472:53: error TS2345: Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.
+transformers/generators.ts:2480:48: error TS2345: Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.
+transformers/generators.ts:2499:51: error TS2345: Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.
+transformers/generators.ts:2507:51: error TS2345: Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.
+transformers/generators.ts:2880:63: error TS18048: 'withBlock' is possibly 'undefined'.
+transformers/generators.ts:2951:21: error TS2532: Object is possibly 'undefined'.
+transformers/generators.ts:2983:57: error TS2532: Object is possibly 'undefined'.
+transformers/generators.ts:2984:23: error TS2322: Type 'CodeBlock | undefined' is not assignable to type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.
+transformers/jsx.ts:309:58: error TS2345: Argument of type 'JsxChild | undefined' is not assignable to parameter of type 'JsxChild'.
+  Type 'undefined' is not assignable to type 'JsxChild'.
+transformers/jsx.ts:502:62: error TS2345: Argument of type 'Expression | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.
+transformers/module/esnextAnd2015.ts:100:46: error TS2345: Argument of type 'Expression | undefined' is not assignable to parameter of type 'FileReference | Node'.
+  Type 'undefined' is not assignable to type 'FileReference | Node'.
+transformers/module/esnextAnd2015.ts:163:91: error TS2345: Argument of type 'CallExpression | undefined' is not assignable to parameter of type 'Readonly<TextRange>'.
+  Type 'undefined' is not assignable to type 'Readonly<TextRange>'.
+transformers/module/esnextAnd2015.ts:194:37: error TS2345: Argument of type 'Expression | undefined' is not assignable to parameter of type 'FileReference | Node'.
+  Type 'undefined' is not assignable to type 'FileReference | Node'.
+transformers/module/esnextAnd2015.ts:196:81: error TS2345: Argument of type 'Expression | undefined' is not assignable to parameter of type 'Expression'.
+  Type 'undefined' is not assignable to type 'Expression'.
+transformers/module/esnextAnd2015.ts:251:22: error TS2532: Object is possibly 'undefined'.
+tsbuildPublic.ts:302:5: error TS2412: Type '(() => Date) | undefined' is not assignable to type '() => Date' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '() => Date'.
+tsbuildPublic.ts:438:5: error TS2412: Type '((moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...'.
+tsbuildPublic.ts:439:5: error TS2412: Type '((typeDirectiveReferences: readonly (string | FileReference)[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...'.
+tsbuildPublic.ts:440:5: error TS2412: Type '((libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations) | undefined' is not assignable to type '(libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations'.
+tsbuildPublic.ts:441:5: error TS2412: Type '((moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...) | undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...'.
+tsbuildPublic.ts:442:5: error TS2412: Type '((typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...) | undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...'.
+tsbuildPublic.ts:443:5: error TS2412: Type '(() => ModuleResolutionCache | undefined) | undefined' is not assignable to type '() => ModuleResolutionCache | undefined' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '() => ModuleResolutionCache | undefined'.
+tsbuildPublic.ts:785:5: error TS2412: Type '((directoryName: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(path: string) => boolean'.
+tsbuildPublic.ts:786:5: error TS2412: Type '((directory: string) => void) | undefined' is not assignable to type '(path: string) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(path: string) => void'.
+tsbuildPublic.ts:787:5: error TS2412: Type 'WriteFileCallback | undefined' is not assignable to type '(path: string, data: string, writeByteOrderMark?: boolean | undefined) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(path: string, data: string, writeByteOrderMark?: boolean | undefined) => void'.
+watch.ts:756:11: error TS2375: Type '{ getSourceFile: (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined; ... 17 more ...; jsDocParsingMode: JSDocParsingMode | undefined; }' is not assignable to type 'CompilerHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'getDefaultLibLocation' are incompatible.
+    Type '(() => string) | undefined' is not assignable to type '() => string'.
+      Type 'undefined' is not assignable to type '() => string'.
+watch.ts:845:5: error TS2375: Type '{ useCaseSensitiveFileNames: () => boolean; getNewLine: () => string; getCurrentDirectory: () => string; getDefaultLibLocation: () => string; getDefaultLibFileName: (options: CompilerOptions) => string; ... 13 more ...; now: ... | undefined; }' is not assignable to type 'ProgramHost<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'createHash' are incompatible.
+    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.
+      Type 'undefined' is not assignable to type '(data: string) => string'.
+watchPublic.ts:125:5: error TS2412: Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(data: string) => string'.
+watchPublic.ts:506:5: error TS2412: Type '(() => boolean) | undefined' is not assignable to type '() => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '() => boolean'.
+watchPublic.ts:529:5: error TS2412: Type '((moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...'.
+watchPublic.ts:530:5: error TS2412: Type '((moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...) | undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...'.
+watchPublic.ts:534:5: error TS2412: Type '((typeDirectiveReferences: readonly (string | FileReference)[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...'.
+watchPublic.ts:535:5: error TS2412: Type '((typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...) | undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...'.
+watchPublic.ts:542:5: error TS2412: Type '(() => ModuleResolutionCache | undefined) | undefined' is not assignable to type '() => ModuleResolutionCache | undefined' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '() => ModuleResolutionCache | undefined'.
+watchPublic.ts:568:17: error TS2412: Type 'undefined' is not assignable to type 'FileWatcher' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+watchPublic.ts:661:9: error TS2412: Type '((directory: string) => boolean) | undefined' is not assignable to type '(directoryName: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(directoryName: string) => boolean'.
+watchPublic.ts:662:9: error TS2412: Type '((directory: string) => void) | undefined' is not assignable to type '(directory: string) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(directory: string) => void'.

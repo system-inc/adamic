@@ -1,0 +1,554 @@
+File: lower.test
+Build ID: 0f91fd98cffd6d244c4c62207d8ecb2ca39fd5aa
+Type: cpu
+Time: 2026-10-27 23:38:06 UTC
+Duration: 3.95s, Total samples = 4.56s (115.58%)
+Showing nodes accounting for 2.95s, 64.69% of 4.56s total
+Dropped 611 nodes (cum <= 0.02s)
+      flat  flat%   sum%        cum   cum%
+     0.01s  0.22%  0.22%      2.72s 59.65%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElementWorker
+     0.01s  0.22%  0.44%      2.71s 59.43%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElement
+     0.02s  0.44%  0.88%      2.68s 58.77%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElements
+         0     0%  0.88%      2.44s 53.51%  github.com/microsoft/TypeScript/tsc/internal/core.(*singleThreadedWorkGroup).RunAndWait
+         0     0%  0.88%      2.31s 50.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkBlock
+         0     0%  0.88%      2.17s 47.59%  github.com/system-inc/adamic/internal/load.load
+     0.02s  0.44%  1.32%      2.15s 47.15%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkExpressionWorker
+     0.01s  0.22%  1.54%      2.14s 46.93%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkExpressionEx
+         0     0%  1.54%      2.09s 45.83%  github.com/system-inc/adamic/internal/load.Load (inline)
+         0     0%  1.54%      2.09s 45.83%  github.com/system-inc/adamic/internal/lower.TestLoweringProfileThrowaway
+         0     0%  1.54%      2.08s 45.61%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceFile
+         0     0%  1.54%      2.03s 44.52%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkFunctionOrMethodDeclaration
+         0     0%  1.54%      2.03s 44.52%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getDiagnostics
+         0     0%  1.54%      1.96s 42.98%  testing.tRunner
+         0     0%  1.54%      1.95s 42.76%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkFunctionDeclaration
+         0     0%  1.54%      1.93s 42.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).GetDiagnostics (inline)
+         0     0%  1.54%      1.93s 42.32%  github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).getBindAndCheckDiagnosticsWithChecker
+         0     0%  1.54%      1.90s 41.67%  github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).getSemanticDiagnosticsWithChecker
+         0     0%  1.54%      1.84s 40.35%  github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).collectCheckerDiagnosticsFromFiles.func1
+     0.01s  0.22%  1.75%      1.79s 39.25%  github.com/microsoft/TypeScript/tsc/internal/compiler.(*checkerPool).forEachCheckerGroupDo.func1
+         0     0%  1.75%      1.72s 37.72%  github.com/microsoft/TypeScript/tsc/internal/compiler.(*checkerPool).forEachCheckerGroupDo
+         0     0%  1.75%      1.69s 37.06%  github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).collectCheckerDiagnosticsFromFiles
+         0     0%  1.75%      1.66s 36.40%  github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).collectCheckerDiagnostics
+         0     0%  1.75%      1.66s 36.40%  github.com/system-inc/adamic/internal/load.(*Program).diagnostics
+         0     0%  1.75%      1.63s 35.75%  github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).GetSemanticDiagnostics
+         0     0%  1.75%      1.44s 31.58%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkCallExpression
+         0     0%  1.75%      1.42s 31.14%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).resolveSignature
+         0     0%  1.75%      1.41s 30.92%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getResolvedSignature
+         0     0%  1.75%      1.37s 30.04%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).resolveCallExpression
+     0.01s  0.22%  1.97%      1.27s 27.85%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).resolveCall
+     0.01s  0.22%  2.19%      1.25s 27.41%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).chooseOverload
+         0     0%  2.19%      1.13s 24.78%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkExpressionCachedEx
+         0     0%  2.19%      1.09s 23.90%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkIfStatement
+         0     0%  2.19%      1.05s 23.03%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkExpression (inline)
+         0     0%  2.19%      0.95s 20.83%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isSignatureApplicable
+     0.01s  0.22%  2.41%      0.89s 19.52%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkIdentifier
+         0     0%  2.41%      0.86s 18.86%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkExpressionWithContextualType
+         0     0%  2.41%      0.84s 18.42%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkBinaryExpression (inline)
+         0     0%  2.41%      0.84s 18.42%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkBinaryLikeExpression
+         0     0%  2.41%      0.76s 16.67%  runtime.systemstack
+         0     0%  2.41%      0.74s 16.23%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkVariableLikeDeclaration
+     0.03s  0.66%  3.07%      0.70s 15.35%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeAtFlowNode
+         0     0%  3.07%      0.69s 15.13%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getFlowTypeOfReferenceEx
+         0     0%  3.07%      0.68s 14.91%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkExpressionCached (inline)
+         0     0%  3.07%      0.67s 14.69%  runtime.gcBgMarkWorker
+         0     0%  3.07%      0.67s 14.69%  runtime.gcBgMarkWorker.func2
+         0     0%  3.07%      0.67s 14.69%  runtime.gcDrain
+         0     0%  3.07%      0.66s 14.47%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkTypeRelatedToEx
+     0.01s  0.22%  3.29%      0.66s 14.47%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseListIndex
+         0     0%  3.29%      0.66s 14.47%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseStatement
+     0.01s  0.22%  3.51%      0.64s 14.04%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relater).isRelatedToEx
+         0     0%  3.51%      0.63s 13.82%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkPropertyAccessExpression
+         0     0%  3.51%      0.63s 13.82%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isTypeRelatedTo
+         0     0%  3.51%      0.63s 13.82%  github.com/microsoft/TypeScript/tsc/internal/compiler.(*compilerHost).GetSourceFile
+         0     0%  3.51%      0.63s 13.82%  github.com/microsoft/TypeScript/tsc/internal/compiler.(*fileLoader).parseSourceFile
+         0     0%  3.51%      0.62s 13.60%  github.com/microsoft/TypeScript/tsc/internal/compiler.(*filesParser).start.func1
+         0     0%  3.51%      0.62s 13.60%  github.com/microsoft/TypeScript/tsc/internal/compiler.(*parseTask).load
+         0     0%  3.51%      0.61s 13.38%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkVariableDeclaration
+         0     0%  3.51%      0.60s 13.16%  github.com/microsoft/TypeScript/tsc/internal/compiler.(*filesParser).parse
+         0     0%  3.51%      0.60s 13.16%  github.com/microsoft/TypeScript/tsc/internal/compiler.processAllProgramFiles
+         0     0%  3.51%      0.60s 13.16%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseSourceFileWorker
+         0     0%  3.51%      0.60s 13.16%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseToplevelStatement
+         0     0%  3.51%      0.60s 13.16%  github.com/microsoft/TypeScript/tsc/internal/parser.ParseSourceFile
+         0     0%  3.51%      0.59s 12.94%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkVariableDeclarationList
+     0.01s  0.22%  3.73%      0.59s 12.94%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkVariableStatement
+         0     0%  3.73%      0.59s 12.94%  github.com/microsoft/TypeScript/tsc/internal/compiler.NewProgram
+         0     0%  3.73%      0.58s 12.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseDeclaration
+         0     0%  3.73%      0.58s 12.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseList
+         0     0%  3.73%      0.58s 12.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseList.func1
+         0     0%  3.73%      0.57s 12.50%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseDeclarationWorker
+     0.15s  3.29%  7.02%      0.57s 12.50%  runtime.scanObject
+         0     0%  7.02%      0.56s 12.28%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfSymbol
+         0     0%  7.02%      0.55s 12.06%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+         0     0%  7.02%      0.52s 11.40%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkTypeRelatedTo (inline)
+         0     0%  7.02%      0.51s 11.18%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relater).recursiveTypeRelatedTo
+     0.01s  0.22%  7.24%      0.50s 10.96%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkReturnStatement
+     0.01s  0.22%  7.46%      0.49s 10.75%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeAtFlowCondition
+         0     0%  7.46%      0.49s 10.75%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseBlock
+         0     0%  7.46%      0.49s 10.75%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseFunctionDeclaration
+         0     0%  7.46%      0.48s 10.53%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseFunctionBlock
+         0     0%  7.46%      0.47s 10.31%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkExpressionStatement
+         0     0%  7.46%      0.47s 10.31%  runtime.gcDrainMarkWorkerIdle (inline)
+         0     0%  7.46%      0.46s 10.09%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList (inline)
+         0     0%  7.46%      0.46s 10.09%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes (inline)
+         0     0%  7.46%      0.46s 10.09%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).inferTypeArguments
+         0     0%  7.46%      0.46s 10.09%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseFunctionBlockOrSemicolon
+         0     0%  7.46%      0.44s  9.65%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkTruthinessExpression
+         0     0%  7.46%      0.44s  9.65%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeForVariableLikeDeclaration
+         0     0%  7.46%      0.43s  9.43%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfVariableOrParameterOrProperty
+         0     0%  7.46%      0.43s  9.43%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfVariableOrParameterOrPropertyWorker
+         0     0%  7.46%      0.43s  9.43%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getWidenedTypeForVariableLikeDeclaration
+         0     0%  7.46%      0.43s  9.43%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relater).structuredTypeRelatedTo
+     0.02s  0.44%  7.89%      0.42s  9.21%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relater).structuredTypeRelatedToWorker
+         0     0%  7.89%      0.38s  8.33%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkNonNullExpression
+         0     0%  7.89%      0.37s  8.11%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Block).ForEachChild (inline)
+         0     0%  7.89%      0.36s  7.89%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkModuleDeclaration
+     0.03s  0.66%  8.55%      0.36s  7.89%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeAtFlowBranchLabel
+         0     0%  8.55%      0.34s  7.46%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkDeclarationInitializer
+     0.01s  0.22%  8.77%      0.34s  7.46%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSignatureDeclaration
+         0     0%  8.77%      0.34s  7.46%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getReturnTypeFromBody
+         0     0%  8.77%      0.32s  7.02%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkTypeRelatedToAndOptionallyElaborate
+     0.01s  0.22%  8.99%      0.31s  6.80%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeFromTypeNode
+     0.01s  0.22%  9.21%      0.30s  6.58%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).resolveStructuredTypeMembers
+         0     0%  9.21%      0.30s  6.58%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseDelimitedList
+         0     0%  9.21%      0.29s  6.36%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkAndAggregateReturnExpressionTypes
+         0     0%  9.21%      0.29s  6.36%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkPropertyAccessExpressionOrQualifiedName
+     0.02s  0.44%  9.65%      0.29s  6.36%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeFromTypeNodeWorker
+     0.01s  0.22%  9.87%      0.29s  6.36%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).narrowType
+         0     0%  9.87%      0.29s  6.36%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseAssignmentExpressionOrHigher (inline)
+         0     0%  9.87%      0.29s  6.36%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseAssignmentExpressionOrHigherWorker
+     0.01s  0.22% 10.09%      0.28s  6.14%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSwitchStatement
+         0     0% 10.09%      0.28s  6.14%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).inferTypes
+         0     0% 10.09%      0.28s  6.14%  github.com/microsoft/TypeScript/tsc/internal/parser..doInContext[go.shape.*uint8] (inline)
+         0     0% 10.09%      0.27s  5.92%  github.com/microsoft/TypeScript/tsc/internal/ast.ForEachReturnStatement
+     0.01s  0.22% 10.31%      0.27s  5.92%  github.com/microsoft/TypeScript/tsc/internal/ast.ForEachReturnStatement.func1
+     0.01s  0.22% 10.53%      0.27s  5.92%  github.com/microsoft/TypeScript/tsc/internal/ast.visit (inline)
+         0     0% 10.53%      0.27s  5.92%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkAndAggregateReturnExpressionTypes.func1
+     0.01s  0.22% 10.75%      0.27s  5.92%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).inferFromTypes
+         0     0% 10.75%      0.27s  5.92%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseBinaryExpressionOrHigher
+     0.04s  0.88% 11.62%      0.27s  5.92%  runtime.mapaccess2_fast64
+         0     0% 11.62%      0.26s  5.70%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkTypeReferenceNode
+         0     0% 11.62%      0.26s  5.70%  runtime.mallocgc
+         0     0% 11.62%      0.25s  5.48%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseLeftHandSideExpressionOrHigher
+         0     0% 11.62%      0.25s  5.48%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseUnaryExpressionOrHigher
+         0     0% 11.62%      0.25s  5.48%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseUpdateExpression
+         0     0% 11.62%      0.24s  5.26%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getReturnTypeOfSignature
+         0     0% 11.62%      0.24s  5.26%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relater).signaturesRelatedTo
+         0     0% 11.62%      0.24s  5.26%  runtime.mapaccess1_fast64
+     0.01s  0.22% 11.84%      0.23s  5.04%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkConditionalExpression
+         0     0% 11.84%      0.23s  5.04%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkTypeReferenceOrImport
+     0.01s  0.22% 12.06%      0.23s  5.04%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).invokeOnce
+         0     0% 12.06%      0.23s  5.04%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relater).propertiesRelatedTo
+     0.23s  5.04% 17.11%      0.23s  5.04%  internal/runtime/maps.ctrlGroup.matchH2 (inline)
+         0     0% 17.11%      0.22s  4.82%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkExpressionForMutableLocation
+         0     0% 17.11%      0.22s  4.82%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).compareSignaturesRelated
+     0.01s  0.22% 17.32%      0.22s  4.82%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeFromTypeReference
+         0     0% 17.32%      0.22s  4.82%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relater).signatureRelatedTo
+     0.06s  1.32% 18.64%      0.22s  4.82%  runtime.mapaccess2_faststr
+     0.04s  0.88% 19.52%      0.21s  4.61%  github.com/microsoft/TypeScript/tsc/internal/binder.(*NameResolver).Resolve
+     0.01s  0.22% 19.74%      0.20s  4.39%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkObjectLiteral
+         0     0% 19.74%      0.20s  4.39%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getFlowTypeOfAccessExpression
+     0.03s  0.66% 20.39%      0.20s  4.39%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getResolvedSymbol
+         0     0% 20.39%      0.20s  4.39%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).inferFromObjectTypes
+         0     0% 20.39%      0.20s  4.39%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relater).isPropertySymbolTypeRelated
+         0     0% 20.39%      0.20s  4.39%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relater).propertyRelatedTo
+         0     0% 20.39%      0.20s  4.39%  runtime.gcDrainMarkWorkerDedicated (inline)
+         0     0% 20.39%      0.20s  4.39%  runtime.mapaccess1_faststr
+         0     0% 20.39%      0.19s  4.17%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkParenthesizedExpression
+     0.09s  1.97% 22.37%      0.19s  4.17%  github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).Scan
+         0     0% 22.37%      0.18s  3.95%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkPropertyAssignment
+         0     0% 22.37%      0.18s  3.95%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).inferFromProperties
+     0.01s  0.22% 22.59%      0.18s  3.95%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseCallExpressionRest
+     0.01s  0.22% 22.81%      0.18s  3.95%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseExpression
+     0.02s  0.44% 23.25%      0.17s  3.73%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getPropertyOfTypeEx
+         0     0% 23.25%      0.17s  3.73%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).resolveObjectTypeMembers
+         0     0% 23.25%      0.17s  3.73%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).resolveTypeReferenceMembers
+         0     0% 23.25%      0.17s  3.73%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relater).unionOrIntersectionRelatedTo
+         0     0% 23.25%      0.17s  3.73%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).nextToken
+         0     0% 23.25%      0.17s  3.73%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseExpressionAllowIn (inline)
+         0     0% 23.25%      0.17s  3.73%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseIfStatement
+         0     0% 23.25%      0.17s  3.73%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseVariableStatement
+     0.06s  1.32% 24.56%      0.17s  3.73%  runtime.mapaccess2
+     0.09s  1.97% 26.54%      0.17s  3.73%  runtime.tryDeferToSpanScan
+     0.01s  0.22% 26.75%      0.16s  3.51%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).inferToMultipleTypes
+     0.02s  0.44% 27.19%      0.16s  3.51%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).mapTypeEx
+     0.09s  1.97% 29.17%      0.16s  3.51%  runtime.findObject
+     0.01s  0.22% 29.39%      0.16s  3.51%  runtime.growslice
+         0     0% 29.39%      0.16s  3.51%  runtime.mapaccess1
+         0     0% 29.39%      0.15s  3.29%  github.com/microsoft/TypeScript/tsc/internal/ast.(*FunctionDeclaration).ForEachChild
+         0     0% 29.39%      0.15s  3.29%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkFunctionExpressionOrObjectLiteralMethod
+         0     0% 29.39%      0.15s  3.29%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).contextuallyCheckFunctionExpressionOrObjectLiteralMethod
+         0     0% 29.39%      0.15s  3.29%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).filterType
+         0     0% 29.39%      0.15s  3.29%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).mapType (inline)
+         0     0% 29.39%      0.15s  3.29%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseArgumentList
+         0     0% 29.39%      0.15s  3.29%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseVariableDeclarationAllowExclamation
+         0     0% 29.39%      0.15s  3.29%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseVariableDeclarationList
+         0     0% 29.39%      0.15s  3.29%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseVariableDeclarationWorker
+         0     0% 29.39%      0.15s  3.29%  runtime.mallocgcSmallScanHeader
+         0     0% 29.39%      0.14s  3.07%  github.com/microsoft/TypeScript/tsc/internal/ast.(*IfStatement).ForEachChild
+         0     0% 29.39%      0.14s  3.07%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkForOfStatement
+         0     0% 29.39%      0.14s  3.07%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).narrowTypeByCallExpression
+     0.01s  0.22% 29.61%      0.14s  3.07%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).tryGetTypeAtPosition
+     0.01s  0.22% 29.82%      0.14s  3.07%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseMemberExpressionOrHigher
+         0     0% 29.82%      0.14s  3.07%  sync.(*Once).Do (partial-inline)
+         0     0% 29.82%      0.14s  3.07%  sync.(*Once).doSlow
+         0     0% 29.82%      0.13s  2.85%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkDeferredNode
+         0     0% 29.82%      0.13s  2.85%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkDeferredNodes
+         0     0% 29.82%      0.13s  2.85%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkDeferredNodes-range1 (inline)
+         0     0% 29.82%      0.13s  2.85%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getPropertiesOfObjectType (inline)
+     0.01s  0.22% 30.04%      0.13s  2.85%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeAtFlowAssignment
+         0     0% 30.04%      0.13s  2.85%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isTypeSubsetOf (inline)
+         0     0% 30.04%      0.13s  2.85%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isTypeSubsetOfUnion
+     0.05s  1.10% 31.14%      0.13s  2.85%  github.com/microsoft/TypeScript/tsc/internal/checker.CompareTypes
+         0     0% 31.14%      0.13s  2.85%  github.com/microsoft/TypeScript/tsc/internal/checker.containsType (inline)
+         0     0% 31.14%      0.13s  2.85%  github.com/microsoft/TypeScript/tsc/internal/collections.(*OrderedMap[go.shape.*github.com/microsoft/TypeScript/tsc/internal/ast.Node,go.shape.struct {}]).Keys.func1 (inline)
+         0     0% 31.14%      0.13s  2.85%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseArgumentExpression
+         0     0% 31.14%      0.13s  2.85%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseArgumentOrArrayLiteralElement
+     0.13s  2.85% 33.99%      0.13s  2.85%  internal/runtime/maps.memHashAES
+     0.01s  0.22% 34.21%      0.13s  2.85%  slices.BinarySearchFunc[go.shape.[]*github.com/microsoft/TypeScript/tsc/internal/checker.Type,go.shape.*uint8,go.shape.*uint8]
+         0     0% 34.21%      0.12s  2.63%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkAssertion
+         0     0% 34.21%      0.12s  2.63%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkInterfaceDeclaration
+         0     0% 34.21%      0.12s  2.63%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkPrefixUnaryExpression
+     0.01s  0.22% 34.43%      0.12s  2.63%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkTestingKnownTruthyCallableOrAwaitableOrEnumMemberType (inline)
+         0     0% 34.43%      0.12s  2.63%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkTypeAssignableTo (inline)
+         0     0% 34.43%      0.12s  2.63%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getNarrowedTypeOfSymbol
+         0     0% 34.43%      0.12s  2.63%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getPropertiesOfType
+     0.01s  0.22% 34.65%      0.12s  2.63%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfParameter
+         0     0% 34.65%      0.12s  2.63%  github.com/microsoft/TypeScript/tsc/internal/core.Filter[go.shape.*uint8]
+         0     0% 34.65%      0.12s  2.63%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseInitializer
+         0     0% 34.65%      0.12s  2.63%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parsePrimaryExpression
+         0     0% 34.65%      0.11s  2.41%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).applyToParameterTypes
+         0     0% 34.65%      0.11s  2.41%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkTestingKnownTruthyType
+         0     0% 34.65%      0.11s  2.41%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkTestingKnownTruthyTypes
+         0     0% 34.65%      0.11s  2.41%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkTypeAssignableToAndOptionallyElaborate (inline)
+     0.02s  0.44% 35.09%      0.11s  2.41%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).compareSymbolsWorker
+         0     0% 35.09%      0.11s  2.41%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getNamedMembers
+         0     0% 35.09%      0.11s  2.41%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getNarrowedType
+         0     0% 35.09%      0.11s  2.41%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getNarrowedTypeWorker
+         0     0% 35.09%      0.11s  2.41%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getNarrowedTypeWorker.func3
+     0.01s  0.22% 35.31%      0.11s  2.41%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).instantiateTypeWithAlias
+         0     0% 35.31%      0.11s  2.41%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isTypeComparableTo (inline)
+         0     0% 35.31%      0.11s  2.41%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).narrowTypeByTypePredicate
+         0     0% 35.31%      0.11s  2.41%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).setStructuredTypeMembers
+         0     0% 35.31%      0.11s  2.41%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relater).typeRelatedToSomeType
+     0.01s  0.22% 35.53%      0.11s  2.41%  runtime.scanSpan
+         0     0% 35.53%      0.10s  2.19%  github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclaration).ForEachChild
+         0     0% 35.53%      0.10s  2.19%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkFunctionExpressionOrObjectLiteralMethodDeferred
+         0     0% 35.53%      0.10s  2.19%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkParameter
+     0.01s  0.22% 35.75%      0.10s  2.19%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).createUnionOrIntersectionProperty
+         0     0% 35.75%      0.10s  2.19%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getNarrowedTypeWorker.func3.2
+         0     0% 35.75%      0.10s  2.19%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getPropertyOfType (inline)
+         0     0% 35.75%      0.10s  2.19%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getUnionOrIntersectionProperty
+     0.01s  0.22% 35.96%      0.10s  2.19%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getUnionTypeEx
+         0     0% 35.96%      0.10s  2.19%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).inferFromSignature
+     0.01s  0.22% 36.18%      0.10s  2.19%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).inferFromSignatures
+         0     0% 36.18%      0.10s  2.19%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).instantiateTypeWorker
+         0     0% 36.18%      0.10s  2.19%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relation).get (inline)
+         0     0% 36.18%      0.10s  2.19%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseReturnStatement
+         0     0% 36.18%      0.09s  1.97%  github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclarationList).ForEachChild (inline)
+         0     0% 36.18%      0.09s  1.97%  github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableStatement).ForEachChild
+     0.02s  0.44% 36.62%      0.09s  1.97%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).compareNodes
+         0     0% 36.62%      0.09s  1.97%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getSymbolFromTypeReference
+         0     0% 36.62%      0.09s  1.97%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).instantiateType (inline)
+     0.02s  0.44% 37.06%      0.09s  1.97%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isMatchingReference
+         0     0% 37.06%      0.09s  1.97%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isWeakType
+         0     0% 37.06%      0.09s  1.97%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).resolveEntityName
+         0     0% 37.06%      0.09s  1.97%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).tryGetTypeFromTypeNode
+         0     0% 37.06%      0.09s  1.97%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).createIdentifierWithDiagnostic
+         0     0% 37.06%      0.09s  1.97%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseJSDocComment
+     0.01s  0.22% 37.28%      0.09s  1.97%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseJSDocCommentWorker
+         0     0% 37.28%      0.09s  1.97%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseObjectTypeMembers
+         0     0% 37.28%      0.09s  1.97%  runtime.(*mcache).nextFree
+     0.01s  0.22% 37.50%      0.09s  1.97%  runtime.(*mcache).refill
+         0     0% 37.50%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).JSDoc
+         0     0% 37.50%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).BindOnce
+         0     0% 37.50%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).BindOnce.func1
+         0     0% 37.50%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).resolveJSDoc
+     0.02s  0.44% 37.94%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/binder.(*Binder).bind
+         0     0% 37.94%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/binder.(*Binder).bindChildren
+         0     0% 37.94%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/binder.(*Binder).bindContainer
+         0     0% 37.94%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/binder.(*Binder).bindEachChild (inline)
+     0.01s  0.22% 38.16%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/binder.(*Binder).bindEachStatementFunctionsFirst
+         0     0% 38.16%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/binder.BindSourceFile
+         0     0% 38.16%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/binder.bindSourceFile (inline)
+         0     0% 38.16%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/binder.bindSourceFile.func1
+         0     0% 38.16%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkForStatement
+         0     0% 38.16%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkTypeArgumentConstraints
+         0     0% 38.16%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkUnmatchedJSDocParameters
+         0     0% 38.16%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getQuickTypeOfExpression
+         0     0% 38.16%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeAtPosition (inline)
+         0     0% 38.16%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getUnionTypeWorker
+         0     0% 38.16%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).inferFromContravariantTypes (inline)
+         0     0% 38.16%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).inferFromContravariantTypesIfStrictFunctionTypes
+         0     0% 38.16%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).inferFromSignature.func1
+         0     0% 38.16%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).narrowTypeByBinaryExpression
+         0     0% 38.16%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).resolveAnonymousTypeMembers
+         0     0% 38.16%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).resolveNewExpression
+         0     0% 38.16%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/checker.NewChecker
+         0     0% 38.16%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/checker.getAllJSDocTags
+         0     0% 38.16%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).BindSourceFiles
+         0     0% 38.16%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).BindSourceFiles.func1
+         0     0% 38.16%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/core.Map[go.shape.*uint8,go.shape.*uint8] (inline)
+         0     0% 38.16%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseBinaryExpressionRest
+         0     0% 38.16%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseModuleBlock
+         0     0% 38.16%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseModuleDeclaration
+         0     0% 38.16%      0.08s  1.75%  github.com/microsoft/TypeScript/tsc/internal/parser.parseJSDocForNode
+     0.01s  0.22% 38.38%      0.08s  1.75%  internal/runtime/maps.MemHash
+         0     0% 38.38%      0.08s  1.75%  runtime.memhash (partial-inline)
+         0     0% 38.38%      0.07s  1.54%  github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild
+         0     0% 38.38%      0.07s  1.54%  github.com/microsoft/TypeScript/tsc/internal/ast.(*TryStatement).ForEachChild
+         0     0% 38.38%      0.07s  1.54%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).areTypesComparable
+         0     0% 38.38%      0.07s  1.54%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkClassDeclaration
+         0     0% 38.38%      0.07s  1.54%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeAtSwitchClause
+     0.01s  0.22% 38.60%      0.07s  1.54%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeReferenceType
+         0     0% 38.60%      0.07s  1.54%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isReachableFlowNode
+         0     0% 38.60%      0.07s  1.54%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isReachableFlowNodeWorker
+     0.07s  1.54% 40.13%      0.07s  1.54%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isSimpleTypeRelatedTo
+         0     0% 40.13%      0.07s  1.54%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).resolveTypeReferenceName
+         0     0% 40.13%      0.07s  1.54%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).sortSymbols
+         0     0% 40.13%      0.07s  1.54%  github.com/microsoft/TypeScript/tsc/internal/compiler.(*checkerPool).createCheckers.func1.1
+     0.01s  0.22% 40.35%      0.07s  1.54%  github.com/microsoft/TypeScript/tsc/internal/core.(*LinkStore[go.shape.*github.com/microsoft/TypeScript/tsc/internal/ast.Node,go.shape.struct { github.com/microsoft/TypeScript/tsc/internal/checker.resolvedSignature *github.com/microsoft/TypeScript/tsc/internal/checker.Signature; github.com/microsoft/TypeScript/tsc/internal/checker.effectsSignature *github.com/microsoft/TypeScript/tsc/internal/checker.Signature; github.com/microsoft/TypeScript/tsc/internal/checker.decoratorSignature *github.com/microsoft/TypeScript/tsc/internal/checker.Signature }]).Get
+         0     0% 40.35%      0.07s  1.54%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).finishNode (inline)
+         0     0% 40.35%      0.07s  1.54%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).finishNodeWithEnd
+     0.01s  0.22% 40.57%      0.07s  1.54%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).overrideParentInImmediateChildren (inline)
+         0     0% 40.57%      0.07s  1.54%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseInterfaceDeclaration
+         0     0% 40.57%      0.07s  1.54%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseType
+         0     0% 40.57%      0.07s  1.54%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseTypeMember
+         0     0% 40.57%      0.07s  1.54%  github.com/system-inc/adamic/internal/load.usesNodeModules.func1
+         0     0% 40.57%      0.07s  1.54%  runtime.memhash128
+         0     0% 40.57%      0.07s  1.54%  runtime.newobject
+         0     0% 40.57%      0.07s  1.54%  slices.SortFunc[go.shape.[]*github.com/microsoft/TypeScript/tsc/internal/ast.Symbol,go.shape.*uint8] (inline)
+         0     0% 40.57%      0.07s  1.54%  slices.pdqsortCmpFunc[go.shape.*uint8]
+         0     0% 40.57%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/ast.(*AsExpression).ForEachChild (inline)
+     0.06s  1.32% 41.89%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/ast.GetSourceFileOfNode (inline)
+     0.02s  0.44% 42.32%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/binder.(*NameResolver).lookup
+         0     0% 42.32%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkArrayLiteral
+         0     0% 42.32%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkMethodDeclaration
+         0     0% 42.32%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getAdjustedTypeWithFacts
+         0     0% 42.32%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getPropertyOfUnionOrIntersectionType
+         0     0% 42.32%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getSignaturesOfType
+         0     0% 42.32%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTargetOfAliasDeclaration
+         0     0% 42.32%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeAtFlowCall
+         0     0% 42.32%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeFromUnionTypeNode
+         0     0% 42.32%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeWithFacts (inline)
+         0     0% 42.32%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getUnionTypeFromSortedList
+         0     0% 42.32%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).inferFromMatchingTypes
+         0     0% 42.32%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isTypeStrictSubtypeOf (inline)
+         0     0% 42.32%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).narrowTypeByDiscriminant
+         0     0% 42.32%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relater).signatureRelatedTo.func1
+         0     0% 42.32%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*nodeLinkStore[go.shape.struct { github.com/microsoft/TypeScript/tsc/internal/checker.resolvedSymbol *github.com/microsoft/TypeScript/tsc/internal/ast.Symbol }]).Get
+         0     0% 42.32%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).GetGlobalDiagnostics
+         0     0% 42.32%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/compiler.(*checkerPool).GetGlobalDiagnostics
+         0     0% 42.32%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/compiler.(*checkerPool).createCheckers
+         0     0% 42.32%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/compiler.(*checkerPool).createCheckers.func1
+         0     0% 42.32%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/core.(*LinkStore[go.shape.*github.com/microsoft/TypeScript/tsc/internal/ast.Node,go.shape.struct { github.com/microsoft/TypeScript/tsc/internal/checker.resolvedType *github.com/microsoft/TypeScript/tsc/internal/checker.Type; github.com/microsoft/TypeScript/tsc/internal/checker.outerTypeParameters []*github.com/microsoft/TypeScript/tsc/internal/checker.Type }]).Get
+         0     0% 42.32%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parsePropertyOrMethodSignature
+         0     0% 42.32%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseUnionOrIntersectionType
+         0     0% 42.32%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseUnionTypeOrHigher (inline)
+     0.02s  0.44% 42.76%      0.06s  1.32%  github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).scanIdentifier
+         0     0% 42.76%      0.06s  1.32%  github.com/system-inc/adamic/internal/load.init.func1
+         0     0% 42.76%      0.06s  1.32%  github.com/system-inc/adamic/internal/load.init.func1.1
+         0     0% 42.76%      0.06s  1.32%  io/fs.WalkDir
+         0     0% 42.76%      0.06s  1.32%  io/fs.walkDir
+         0     0% 42.76%      0.06s  1.32%  regexp.(*Regexp).FindAllSubmatch
+         0     0% 42.76%      0.06s  1.32%  regexp.(*Regexp).allSubmatch.func1 (inline)
+         0     0% 42.76%      0.06s  1.32%  regexp.(*Regexp).find
+         0     0% 42.76%      0.06s  1.32%  regexp.(*Regexp).matches.func1 (inline)
+         0     0% 42.76%      0.06s  1.32%  regexp.(*machine).match
+         0     0% 42.76%      0.06s  1.32%  runtime.mallocgcSmallScanNoHeader
+         0     0% 42.76%      0.06s  1.32%  slices.AppendSeq[go.shape.[]go.shape.[][]uint8,go.shape.[][]uint8] (inline)
+         0     0% 42.76%      0.06s  1.32%  slices.Collect[go.shape.[][]uint8] (inline)
+         0     0% 42.76%      0.06s  1.32%  sync.OnceValue[go.shape.map[string]bool].func1
+         0     0% 42.76%      0.06s  1.32%  sync.OnceValue[go.shape.map[string]bool].func1.1
+     0.01s  0.22% 42.98%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/ast.(*NodeFactory).NewIdentifier
+         0     0% 42.98%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkIndexedAccess
+         0     0% 42.98%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkNonNullAssertion
+         0     0% 42.98%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElementUnreachable
+         0     0% 42.98%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkTypeParameter
+         0     0% 42.98%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkTypeParameters
+         0     0% 42.98%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkUnionOrIntersectionType
+         0     0% 42.98%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkWhileStatement
+         0     0% 42.98%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getEffectsSignature
+         0     0% 42.98%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getExternalModuleMember
+         0     0% 42.98%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getNormalizedType
+         0     0% 42.98%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getReturnTypeFromAnnotation
+         0     0% 42.98%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getReturnTypeOfSingleNonGenericSignature
+     0.01s  0.22% 43.20%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getSignaturesOfStructuredType
+         0     0% 43.20%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTargetOfImportSpecifier
+         0     0% 43.20%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeFacts (inline)
+         0     0% 43.20%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeFactsWorker
+         0     0% 43.20%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfExpression
+         0     0% 43.20%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfInstantiatedSymbol
+         0     0% 43.20%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeWithFacts.func1
+         0     0% 43.20%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getUnmatchedPropertiesWorker
+         0     0% 43.20%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getUnmatchedProperty (inline)
+         0     0% 43.20%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).hasTypeFacts
+         0     0% 43.20%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).instantiateSymbolTable
+         0     0% 43.20%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isDeprecatedSymbol
+         0     0% 43.20%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isSourceElementUnreachable
+     0.01s  0.22% 43.42%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isTypeIdenticalTo (partial-inline)
+         0     0% 43.42%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).narrowTypeByTruthiness
+         0     0% 43.42%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).lookAhead
+         0     0% 43.42%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).newIdentifier (inline)
+         0     0% 43.42%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseConditionalExpressionRest
+         0     0% 43.42%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseIntersectionTypeOrHigher
+         0     0% 43.42%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseMemberExpressionRest
+         0     0% 43.42%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseModuleOrNamespaceDeclaration
+         0     0% 43.42%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseNonArrayType
+         0     0% 43.42%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseOptional (inline)
+         0     0% 43.42%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseParameterEx
+         0     0% 43.42%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseParameters
+         0     0% 43.42%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseParametersWorker
+         0     0% 43.42%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseParametersWorker.func1
+         0     0% 43.42%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parsePostfixTypeOrHigher
+     0.01s  0.22% 43.64%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseTypeAnnotation
+         0     0% 43.64%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseTypeOperatorOrHigher
+         0     0% 43.64%      0.05s  1.10%  github.com/microsoft/TypeScript/tsc/internal/scanner.GetIdentifierToken (inline)
+     0.05s  1.10% 44.74%      0.05s  1.10%  internal/runtime/maps.h1 (inline)
+     0.04s  0.88% 45.61%      0.05s  1.10%  regexp.(*machine).add
+         0     0% 45.61%      0.05s  1.10%  runtime.(*mcentral).cacheSpan
+         0     0% 45.61%      0.05s  1.10%  runtime.(*mcentral).grow
+     0.03s  0.66% 46.27%      0.05s  1.10%  runtime.greyobject
+     0.05s  1.10% 47.37%      0.05s  1.10%  runtime.heapSetTypeSmallHeader (inline)
+     0.01s  0.22% 47.59%      0.05s  1.10%  runtime.mProf_Malloc
+     0.01s  0.22% 47.81%      0.05s  1.10%  runtime.mapassign
+     0.05s  1.10% 48.90%      0.05s  1.10%  runtime.memclrNoHeapPointers
+         0     0% 48.90%      0.05s  1.10%  runtime.profilealloc
+     0.05s  1.10% 50.00%      0.05s  1.10%  runtime.typePointers.next
+     0.01s  0.22% 50.22%      0.05s  1.10%  slices.insertionSortCmpFunc[go.shape.*uint8] (inline)
+         0     0% 50.22%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/ast.GetNodeId (inline)
+         0     0% 50.22%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).GetNonNullableType (inline)
+         0     0% 50.22%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).IsDeprecatedDeclaration
+         0     0% 50.22%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkElementAccessExpression
+         0     0% 50.22%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkPropertyDeclaration
+         0     0% 50.22%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkPropertySignature
+         0     0% 50.22%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getAssignedType
+         0     0% 50.22%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getAssignedTypeOfBinaryExpression
+     0.02s  0.44% 50.66%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getCombinedNodeFlagsCached
+         0     0% 50.66%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getContextualType
+         0     0% 50.66%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getInitialOrAssignedType
+         0     0% 50.66%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getMergedSymbol (inline)
+         0     0% 50.66%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getNonCircularReturnTypeOfSignature
+     0.01s  0.22% 50.88%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getObjectTypeInstantiation
+         0     0% 50.88%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getSymbol
+         0     0% 50.88%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeAtFlowLoopLabel
+         0     0% 50.88%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfAlias
+         0     0% 50.88%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isDiscriminantProperty
+         0     0% 50.88%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isTypeAssignableTo (inline)
+         0     0% 50.88%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isTypeOrBaseIdenticalTo
+         0     0% 50.88%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isTypeSubtypeOf (inline)
+         0     0% 50.88%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).narrowTypeBySwitchOnDiscriminant
+         0     0% 50.88%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).narrowTypeBySwitchOnDiscriminant.func1
+         0     0% 50.88%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).narrowTypeBySwitchOnDiscriminantProperty
+         0     0% 50.88%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).resolveMappedTypeMembers
+         0     0% 50.88%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relater).eachTypeRelatedToType
+     0.01s  0.22% 51.10%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relater).resetMaybeStack
+         0     0% 51.10%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relater).structuredTypeRelatedToWorker.func1
+         0     0% 51.10%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relater).typeArgumentsRelatedTo
+         0     0% 51.10%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/collections.(*OrderedMap[go.shape.*github.com/microsoft/TypeScript/tsc/internal/ast.Symbol,go.shape.struct {}]).Set (inline)
+         0     0% 51.10%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/collections.(*OrderedSet[go.shape.*github.com/microsoft/TypeScript/tsc/internal/ast.Symbol]).Add (inline)
+         0     0% 51.10%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseAmbientExternalModuleDeclaration
+         0     0% 51.10%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseArrowFunctionExpressionBody
+         0     0% 51.10%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseForOrForInOrForOfStatement
+         0     0% 51.10%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseIdentifierWithDiagnostic
+         0     0% 51.10%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseParenthesizedExpression
+         0     0% 51.10%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseTag
+     0.02s  0.44% 51.54%      0.04s  0.88%  github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).scanASCIIWhile (inline)
+         0     0% 51.54%      0.04s  0.88%  internal/runtime/gc/scan.ScanSpanPacked (inline)
+     0.01s  0.22% 51.75%      0.04s  0.88%  internal/runtime/gc/scan.ScanSpanPackedAVX512
+         0     0% 51.75%      0.04s  0.88%  internal/runtime/maps.(*table).rehash
+         0     0% 51.75%      0.04s  0.88%  internal/runtime/maps.(*table).reset
+         0     0% 51.75%      0.04s  0.88%  internal/runtime/maps.newTable
+     0.04s  0.88% 52.63%      0.04s  0.88%  memeqbody
+     0.01s  0.22% 52.85%      0.04s  0.88%  runtime.(*mspan).initHeapBits
+         0     0% 52.85%      0.04s  0.88%  runtime.callers
+         0     0% 52.85%      0.04s  0.88%  runtime.callers.func1
+     0.01s  0.22% 53.07%      0.04s  0.88%  runtime.heapArenaOf (inline)
+         0     0% 53.07%      0.04s  0.88%  runtime.mapassign_fast64ptr
+         0     0% 53.07%      0.04s  0.88%  runtime.tracebackPCs
+     0.04s  0.88% 53.95%      0.04s  0.88%  runtime.typePointers.nextFast (inline)
+         0     0% 53.95%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ArrowFunction).ForEachChild
+     0.02s  0.44% 54.39%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Expression
+     0.01s  0.22% 54.61%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Locals (inline)
+         0     0% 54.61%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.(*UnionTypeNode).ForEachChild (inline)
+     0.02s  0.44% 55.04%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.FindAncestor (inline)
+     0.01s  0.22% 55.26%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.IsLeftHandSideExpression
+     0.01s  0.22% 55.48%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.SkipOuterExpressions
+         0     0% 55.48%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/binder.(*Binder).bindIfStatement
+     0.02s  0.44% 55.92%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/binder.getIsDeferredContext
+         0     0% 55.92%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/bundled.(*wrappedFS).ReadFile
+         0     0% 55.92%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).addTypesToUnion
+         0     0% 55.92%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkAssertionDeferred
+         0     0% 55.92%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkClassLikeDeclaration
+         0     0% 55.92%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkIndexConstraints
+         0     0% 55.92%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkMappedType
+         0     0% 55.92%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkReturnExpression
+         0     0% 55.92%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkTypeAliasDeclaration
+         0     0% 55.92%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).compareTypesAssignableWorker
+         0     0% 55.92%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).forEachMappedTypePropertyKeyTypeAndIndexSignatureKeyType
+         0     0% 55.92%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getControlFlowContainer (inline)
+         0     0% 55.92%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getDiscriminantPropertyAccess
+     0.01s  0.22% 56.14%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getIndexInfosOfStructuredType (inline)
+         0     0% 56.14%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getIndexInfosOfType
+         0     0% 56.14%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getInferredType
+         0     0% 56.14%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getIntersectionType (inline)
+         0     0% 56.14%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getIntersectionTypeEx
+         0     0% 56.14%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getNormalizedUnionOrIntersectionType
+     0.01s  0.22% 56.36%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getReducedType
+         0     0% 56.36%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeForBindingElementParent
+         0     0% 56.36%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeFromTypeAliasReference
+         0     0% 56.36%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getUnionType (inline)
+         0     0% 56.36%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).instantiateSignatures (inline)
+         0     0% 56.36%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).instantiateSymbol
+         0     0% 56.36%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isEmptyObjectType
+         0     0% 56.36%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).narrowTypeByAssertion
+         0     0% 56.36%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).narrowTypeByEquality
+     0.01s  0.22% 56.58%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).newUnionType (inline)
+     0.01s  0.22% 56.80%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).removeType
+     0.01s  0.22% 57.02%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).resolveExternalModule
+         0     0% 57.02%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).resolveExternalModuleName
+         0     0% 57.02%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).resolveExternalModuleNameWorker
+     0.01s  0.22% 57.24%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*symbolArenaLinkStore[go.shape.589b9887a0480d3642b2bb062e8af53427544c79db9d1f6a8349e93a8ce74449]).Get
+     0.01s  0.22% 57.46%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker..instantiateList[go.shape.*github.com/microsoft/TypeScript/tsc/internal/checker.Signature]
+     0.01s  0.22% 57.68%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.getRelationKey
+         0     0% 57.68%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/collections.(*Set[go.shape.struct { Hi uint64; Lo uint64 }]).Delete (inline)
+         0     0% 57.68%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/core.(*Arena[go.shape.struct { github.com/microsoft/TypeScript/tsc/internal/ast.PrimaryExpressionBase; github.com/microsoft/TypeScript/tsc/internal/ast.FlowNodeBase; Text string }]).New
+         0     0% 57.68%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/core.Every[go.shape.*uint8] (inline)
+     0.03s  0.66% 58.33%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/core.Some[go.shape.*uint8] (inline)
+     0.02s  0.44% 58.77%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).initializeClosures.1
+     0.03s  0.66% 59.43%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).mark (inline)
+     0.01s  0.22% 59.65%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseBindingIdentifierWithDiagnostic
+         0     0% 59.65%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseExpectedMatchingBrackets
+         0     0% 59.65%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseExpressionOrLabeledStatement
+         0     0% 59.65%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseIdentifierName (inline)
+         0     0% 59.65%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseIdentifierNameWithDiagnostic (inline)
+         0     0% 59.65%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseSimpleArrowFunctionExpression
+         0     0% 59.65%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseTypeAliasDeclaration
+         0     0% 59.65%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseTypeLiteral
+         0     0% 59.65%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).tryParseSemicolon
+         0     0% 59.65%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/vfs/cachedvfs.(*FS).ReadFile
+         0     0% 59.65%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/vfs/internal.(*Common).ReadFile
+         0     0% 59.65%      0.03s  0.66%  github.com/microsoft/TypeScript/tsc/internal/vfs/osvfs.(*osFS).ReadFile
+         0     0% 59.65%      0.03s  0.66%  github.com/system-inc/adamic/internal/load.(*nodeLibraryFS).ReadFile
+         0     0% 59.65%      0.03s  0.66%  github.com/system-inc/adamic/internal/load.(*regexpLibraryFS).ReadFile
+         0     0% 59.65%      0.03s  0.66%  github.com/system-inc/adamic/internal/load.(*sourceFS).ReadFile
+         0     0% 59.65%      0.03s  0.66%  internal/runtime/maps.(*Map).Delete
+     0.03s  0.66% 60.31%      0.03s  0.66%  internal/runtime/maps.(*Map).directoryAt (inline)
+     0.01s  0.22% 60.53%      0.03s  0.66%  internal/runtime/maps.(*Map).getWithoutKeySmallFastStr
+         0     0% 60.53%      0.03s  0.66%  internal/runtime/maps.(*table).split
+         0     0% 60.53%      0.03s  0.66%  internal/runtime/maps.newGroups (inline)
+         0     0% 60.53%      0.03s  0.66%  internal/runtime/maps.newarray
+     0.03s  0.66% 61.18%      0.03s  0.66%  internal/runtime/syscall/linux.Syscall6
+         0     0% 61.18%      0.03s  0.66%  io/fs.ReadFile
+         0     0% 61.18%      0.03s  0.66%  os.ReadFile
+         0     0% 61.18%      0.03s  0.66%  os.dirFS.ReadFile
+     0.01s  0.22% 61.40%      0.03s  0.66%  runtime.(*mcentral).uncacheSpan
+         0     0% 61.40%      0.03s  0.66%  runtime.(*unwinder).next
+     0.03s  0.66% 62.06%      0.03s  0.66%  runtime.arenaIndex (inline)
+         0     0% 62.06%      0.03s  0.66%  runtime.mapdelete
+     0.03s  0.66% 62.72%      0.03s  0.66%  runtime.memmove
+         0     0% 62.72%      0.03s  0.66%  runtime.newarray
+     0.03s  0.66% 63.38%      0.03s  0.66%  runtime.spanClass.sizeclass (inline)
+     0.03s  0.66% 64.04%      0.03s  0.66%  runtime.spanOf (inline)
+         0     0% 64.04%      0.03s  0.66%  slices.Grow[go.shape.[]go.shape.struct { github.com/microsoft/TypeScript/tsc/internal/ast.PrimaryExpressionBase; github.com/microsoft/TypeScript/tsc/internal/ast.FlowNodeBase; Text string },go.shape.struct { github.com/microsoft/TypeScript/tsc/internal/ast.PrimaryExpressionBase; github.com/microsoft/TypeScript/tsc/internal/ast.FlowNodeBase; Text string }] (inline)
+         0     0% 64.04%      0.03s  0.66%  slices.partitionCmpFunc[go.shape.*uint8]
+     0.03s  0.66% 64.69%      0.03s  0.66%  sync/atomic.(*Uint64).Add (inline)

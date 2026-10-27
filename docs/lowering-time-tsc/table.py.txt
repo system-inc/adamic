@@ -1,0 +1,29 @@
+import os,re,sys
+out='/tmp/lt/out'
+files=open(f'{out}/files.txt').read().split()
+def parse(p):
+    t=open(p).read()
+    g=lambda k:re.search(re.escape(k)+r': (.*)',t).group(1).strip()
+    w=g('Elapsed (wall clock) time (h:mm:ss or m:ss)').split(':')
+    wall=sum(float(x)*60**i for i,x in enumerate(reversed(w)))
+    return dict(wall=wall,user=float(g('User time (seconds)')),rss=int(g('Maximum resident set size (kbytes)')),exit=int(g('Exit status')))
+rows=[]
+for f in files:
+    n=f.replace('/','_'); r={'file':f}
+    for t in ('main','A','B'):
+        s=[parse(f'{out}/{t}/r{k}/{n}.time') for k in (1,2)]
+        best=min(s,key=lambda x:x['wall']); r[t]=best; r[t+'_both']=[x['wall'] for x in s]
+        e=open(f'{out}/{t}/r1/{n}.stderr').read().strip().split('\n')[0]
+        r[t+'_first']=e.replace('/tmp/lt/adapted/src/compiler/','')[:110]
+    rows.append(r)
+rows.sort(key=lambda r:-r['main']['wall'])
+print('| file | main s | A s | B s | main/A | main/B | main user s | main RSS MB | exit m/A/B | first line (main) |')
+print('|---|--:|--:|--:|--:|--:|--:|--:|:-:|---|')
+tot={t:0 for t in ('main','A','B')}
+for r in rows:
+    for t in tot: tot[t]+=r[t]['wall']
+    print(f"| {r['file']} | {r['main']['wall']:.2f} | {r['A']['wall']:.2f} | {r['B']['wall']:.2f} | {r['main']['wall']/r['A']['wall']:.2f} | {r['main']['wall']/r['B']['wall']:.2f} | {r['main']['user']:.2f} | {r['main']['rss']/1024:.0f} | {r['main']['exit']}/{r['A']['exit']}/{r['B']['exit']} | `{r['main_first'] or '(none)'}` |")
+print(f"| **total** | **{tot['main']:.1f}** | **{tot['A']:.1f}** | **{tot['B']:.1f}** | **{tot['main']/tot['A']:.3f}** | **{tot['main']/tot['B']:.3f}** | | | | |")
+# spread between rounds
+sp=max(abs(a-b) for r in rows for t in ('main','A','B') for a,b in [r[t+'_both']])
+print(f"\nlargest round-to-round difference on any file and tree: {sp:.2f} s",file=sys.stderr)
