@@ -77,6 +77,22 @@ func TestRulesRefuseMistakes(t *testing.T) {
 		{"tipFirst null", `{"blocks": {"on": true, "budget": 2, "tipFirst": null}, "restack": {"on": false}}`, "true or false"},
 		{"tipFirst a string", `{"blocks": {"on": true, "budget": 2, "tipFirst": "true"}, "restack": {"on": false}}`, "cannot unmarshal string"},
 		{"tipFirst a number", `{"blocks": {"on": true, "budget": 2, "tipFirst": 1}, "restack": {"on": false}}`, "cannot unmarshal number"},
+		{"witness null", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": null}`, "an object {every, hours, machines}"},
+		{"witness empty", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {}}`, "whole number from 1 to"},
+		{"witness unknown field", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Home-f3279c"], "on": true}}`, `unknown field "on"`},
+		{"witness every zero", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 0, "hours": 4, "machines": ["Home-f3279c"]}}`, "witness's every is 0"},
+		{"witness every past the queue's", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 1001, "hours": 4, "machines": ["Home-f3279c"]}}`, "witness's every is 1001"},
+		{"witness every fraction", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 2.5, "hours": 4, "machines": ["Home-f3279c"]}}`, "cannot unmarshal number 2.5"},
+		{"witness hours missing", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "machines": ["Home-f3279c"]}}`, "witness's hours is"},
+		{"witness hours past a week", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 169, "machines": ["Home-f3279c"]}}`, "witness's hours is 169"},
+		{"witness hours null", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": null, "machines": ["Home-f3279c"]}}`, "witness's hours is null"},
+		{"witness machines missing", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4}}`, "a list of 1 to 8 box names"},
+		{"witness machines empty", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": []}}`, "a list of 1 to 8 box names"},
+		{"witness machines null", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": null}}`, "a list of 1 to 8 box names"},
+		{"witness machines past the queue's", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["a", "b", "c", "d", "e", "f", "g", "h", "i"]}}`, "a list of 1 to 8 box names"},
+		{"witness machines twice", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Home", "Home"]}}`, `each once, not "Home"`},
+		{"witness machines a path", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Home/0"]}}`, `not "Home/0"`},
+		{"witness a list", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": [10]}`, "cannot unmarshal array"},
 	}
 	for _, testCase := range cases {
 		t.Run(testCase.name, func(t *testing.T) {
@@ -178,5 +194,24 @@ func TestRulesTakeATipFirst(t *testing.T) {
 	rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
 	if err != nil || rules.Blocks.TipFirst != nil {
 		t.Fatalf("%+v, %v", rules.Blocks, err)
+	}
+}
+
+// A witness the lander takes reads here too (Loom 0.8.589, #6ayc2q8, before any rules.json names one, Node's order on
+// #rjnac1n): every, hours and machines, each in the queue's range, and absent as absent, which turns it off. Mutant: the
+// witness check dropped from ParseRules (TestRulesRefuseMistakes' "witness every zero" and the rest).
+func TestRulesTakeAWitness(t *testing.T) {
+	t.Parallel()
+	rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Home-f3279c"]}}`))
+	if err != nil || rules.Witness == nil || rules.Witness.Every != 10 || rules.Witness.Hours != 4 || len(rules.Witness.Machines) != 1 || rules.Witness.Machines[0] != "Home-f3279c" {
+		t.Fatalf("%+v, %v", rules.Witness, err)
+	}
+	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}, "witness": {"every": 1000, "hours": 168, "machines": ["a", "b", "c", "d", "e", "f", "g", "h"]}}`))
+	if err != nil || rules.Witness.Every != 1000 || rules.Witness.Hours != 168 || len(rules.Witness.Machines) != 8 {
+		t.Fatalf("%+v, %v", rules.Witness, err)
+	}
+	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
+	if err != nil || rules.Witness != nil {
+		t.Fatalf("%+v, %v", rules.Witness, err)
 	}
 }
