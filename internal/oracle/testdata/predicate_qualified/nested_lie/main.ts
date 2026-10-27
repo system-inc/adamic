@@ -1,0 +1,4 @@
+type Value = number | string;
+namespace a { export namespace b { export function isX(value: Value): value is number { console.log("called"); return true; } } }
+function use(value: Value): void { if (a.b.isX(value)) console.log("after"); }
+use("text");

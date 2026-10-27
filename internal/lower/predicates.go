@@ -527,19 +527,18 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 		return nil
 	}
 	if overload := signature.Declaration(); overload != nil && overload.Kind == ast.KindFunctionDeclaration && overload.Body() == nil && overload.Type() != nil && overload.Type().Kind == ast.KindTypePredicate {
-		callee := ast.SkipParentheses(node.AsCallExpression().Expression)
-		if callee.Kind != ast.KindIdentifier || l.symbol(callee) != l.symbol(overload.Name()) {
+		if !l.directPredicateCallee(node.AsCallExpression().Expression, overload) {
 			return l.notYet(node, "an indirect call of a checked predicate overload")
 		}
 	}
 	if declaration := signature.Declaration(); declaration != nil && declaration.Type() != nil && declaration.Type().Kind == ast.KindTypePredicate && (declaration.Body() != nil || l.censusImplementation(declaration) != nil) && l.checkedAssertionSource(declaration) && !l.checkedPredicateBodyProven(declaration.Type()) {
 		callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 		// A call through a value calls the checked forwarder functionValue made, which checks the
-		// claim's true side (#vdt9f1q); the walk owns its false side. A callee that names the
-		// declaration some other way, ns.isS(x), may lower as a static call that skips both.
-		named := l.symbol(callee) == l.symbol(declaration.Name())
-		direct := ast.IsIdentifier(callee) && named
-		if declaration.Kind != ast.KindFunctionDeclaration || (!direct && named) {
+		// claim's true side (#vdt9f1q); the walk owns its false side. Direct names, including
+		// namespace and module qualifications, check both directions at the static call.
+		named := declaration.Name() != nil && l.symbol(callee) == l.symbol(declaration.Name())
+		direct := l.directPredicateCallee(callee, declaration)
+		if declaration.Kind != ast.KindFunctionDeclaration || (!direct && (named || callee.Kind == ast.KindPropertyAccessExpression && l.namespaceMember(callee))) {
 			return l.notYet(node, "an indirect call of a checked predicate")
 		}
 	}
