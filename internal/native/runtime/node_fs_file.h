@@ -34,6 +34,7 @@ int adamic_fs_file_read_bytes(int, unsigned char **, size_t *);
 adamic_string *adamic_fs_file_host_join(size_t, adamic_string *const[]);
 adamic_string *adamic_fs_file_host_cwd(void);
 adamic_string *adamic_fs_file_host_tmpdir(void);
+adamic_string *adamic_fs_file_host_platform(void);
 double adamic_fs_file_host_chdir(const adamic_string *);
 #endif
 
