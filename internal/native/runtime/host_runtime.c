@@ -1,5 +1,6 @@
 // host_runtime.c: process observations and clocks behind library's checked Node imports.
 #define _POSIX_C_SOURCE 200809L
+#define _XOPEN_SOURCE 700
 #define _DARWIN_C_SOURCE
 #include "host_runtime.h"
 #include "parallel.h"
@@ -108,7 +109,7 @@ double adamic_host_date_now(void) {
 	return (double)now.tv_sec * 1000.0 + (double)(now.tv_nsec / 1000000);
 }
 
-adamic_string *adamic_host_environment(const adamic_string *name) {
+static char *host_text(const adamic_string *name) {
 	// Node's C environment lookup truncates a name at NUL; encode lone surrogates as U+FFFD.
 	char *bytes = malloc(name->length + 1);
 	if (bytes == NULL) { adamic_panic("out of memory", sizeof "out of memory" - 1); }
@@ -119,9 +120,26 @@ adamic_string *adamic_host_environment(const adamic_string *name) {
 		}
 	}
 	bytes[name->length] = 0;
+	return bytes;
+}
+
+adamic_string *adamic_host_environment(const adamic_string *name) {
+	char *bytes = host_text(name);
 	const char *value = getenv(bytes);
 	free(bytes);
 	return value == NULL ? NULL : adamic_decode_utf8((const unsigned char *)value, strlen(value));
+}
+
+adamic_string *adamic_host_realpath(const adamic_string *path) {
+	if (memchr(path->bytes, 0, path->length) != NULL) { errno = EINVAL; return NULL; }
+	char *bytes = host_text(path);
+	char *resolved = realpath(bytes, NULL);
+	int error = errno;
+	free(bytes);
+	if (resolved == NULL) { errno = error; return NULL; }
+	adamic_string *result = adamic_decode_utf8((const unsigned char *)resolved, strlen(resolved));
+	free(resolved);
+	return result;
 }
 
 adamic_string *adamic_host_cwd(void) {

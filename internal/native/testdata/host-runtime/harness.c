@@ -1,5 +1,6 @@
 #define _POSIX_C_SOURCE 200809L
 #include "host_runtime.h"
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -116,6 +117,30 @@ int main(int argc, char **argv) {
   adamic_string *before = adamic_host_environment(&key); print_text(before);
   if (setenv("HOST_VALUE","changed",1)!=0) abort(); // Host-side change; no Adamic env-write API.
   value = adamic_host_environment(&key); print_text(value); print_text(before); adamic_release(value); adamic_release(before);
+ } else if (strcmp(mode,"realpath") == 0) {
+  if (chdir(getenv("HOST_CHILD")) != 0) abort();
+  static adamic_string link = ADAMIC_STRING("link"), missing = ADAMIC_STRING("missing"), dangling = ADAMIC_STRING("dangling"), slash = ADAMIC_STRING("file/");
+  adamic_string *value = adamic_host_realpath(&link);
+  log_bool(value != NULL && value->length > 5 && memcmp(value->bytes + value->length - 5, "/file", 5) == 0); adamic_release(value);
+  errno = 0; value = adamic_host_realpath(&missing); log_bool(value == NULL && errno == ENOENT); adamic_release(value);
+  errno = 0; value = adamic_host_realpath(&dangling); log_bool(value == NULL && errno == ENOENT); adamic_release(value);
+  errno = 0; value = adamic_host_realpath(&slash); log_bool(value == NULL && errno == ENOTDIR); adamic_release(value);
+ } else if (strcmp(mode,"realpath-error") == 0) {
+  if (chdir(getenv("HOST_CHILD")) != 0) abort();
+  static adamic_string missing = ADAMIC_STRING("missing"), lone = ADAMIC_STRING("\xed\xa0\x80");
+  adamic_string *paths[] = {&missing, &lone};
+  for (size_t i = 0; i < 2; i++) {
+   adamic_string *value = adamic_host_realpath(paths[i]);
+   if (value != NULL) abort();
+   adamic_fs_file_realpath_error(paths[i]);
+   if (adamic_thrown == NULL || adamic_thrown->shape->count != 6) abort();
+   print_text(adamic_thrown->slots[2].reference);
+   print_text(adamic_thrown->slots[3].reference);
+   print_text(adamic_thrown->slots[4].reference);
+   print_text(adamic_thrown->slots[1].reference);
+   printf("%.0f\n", adamic_thrown->slots[5].number);
+   adamic_release(adamic_thrown); adamic_thrown = NULL;
+  }
  } else if (strcmp(mode,"eol") == 0) {
   adamic_string *eol = adamic_host_eol();
   if (equal(eol,"\n")) puts("\"\\n\""); else puts("wrong EOL");

@@ -2023,6 +2023,21 @@
     ],
     "internal/oracle TestProduct_AllocatorSlabSizes": [],
     "internal/oracle TestProduct_AllocatorFreshHandoverCompiler": [],
+    "stage1/cohere/parse TestProduct_ParseDriverNative": [
+      "stage1/cohere/parse TestProduct_ParseDriverLower"
+    ],
+    "stage1/cohere/parse TestProduct_ParseLintNative": [
+      "stage1/cohere/parse TestProduct_ParseLintLower"
+    ],
+    "internal/lower TestProduct_CycleScanningCensus": [
+      "internal/oracle TestProduct_ProgramTscSource"
+    ],
+    "internal/lower TestProduct_CycleEqualityObjects512": [],
+    "internal/lower TestProduct_CycleEqualityObjects1024": [],
+    "internal/lower TestProduct_CycleEqualityObjects2048": [],
+    "internal/lower TestProduct_CycleEqualityObjects": [],
+    "internal/lower TestProduct_CycleEqualityObjectsSequential": [],
+    "internal/lower TestProduct_CycleEqualityMovesObjects": [],
     "internal/flow TestProduct_FlowCorpusRemainder_000": [],
     "internal/flow TestProduct_FlowCorpusRemainder_001": [],
     "internal/flow TestProduct_FlowCorpusRemainder_002": [],
@@ -2434,21 +2449,6 @@
       "internal/worker TestProduct_WorkerWasm_006",
       "internal/worker TestProduct_WorkerWasm_007",
       "internal/worker TestProduct_WorkerWasmMutants_007"
-    ],
-    "stage1/cohere/parse TestProduct_ParseDriverNative": [
-      "stage1/cohere/parse TestProduct_ParseDriverLower"
-    ],
-    "stage1/cohere/parse TestProduct_ParseLintNative": [
-      "stage1/cohere/parse TestProduct_ParseLintLower"
-    ],
-    "internal/lower TestProduct_CycleScanningCensus": [
-      "internal/oracle TestProduct_ProgramTscSource"
-    ],
-    "internal/lower TestProduct_CycleEqualityObjects512": [],
-    "internal/lower TestProduct_CycleEqualityObjects1024": [],
-    "internal/lower TestProduct_CycleEqualityObjects2048": [],
-    "internal/lower TestProduct_CycleEqualityObjects": [],
-    "internal/lower TestProduct_CycleEqualityObjectsSequential": [],
-    "internal/lower TestProduct_CycleEqualityMovesObjects": []
+    ]
   }
 }
