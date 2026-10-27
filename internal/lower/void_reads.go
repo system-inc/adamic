@@ -52,7 +52,8 @@ func (l *lowering) voidReadRole(node *ast.Node) string {
 			return ""
 		}
 		return "a loop condition"
-	case ast.KindAwaitExpression:
+	case ast.KindAwaitExpression, ast.KindAsExpression, ast.KindSatisfiesExpression, ast.KindNonNullExpression:
+		// Each hands on the value it wraps: it stands where the whole expression stands (#chmg7wr).
 		return l.voidReadRole(parent)
 	case ast.KindConditionalExpression:
 		if parent.AsConditionalExpression().Condition == site {

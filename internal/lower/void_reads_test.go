@@ -24,6 +24,9 @@ func TestVoidReadsAreRefused(t *testing.T) {
 		{"bound wider", `const kept: unknown = make(); console.log(typeof kept);`, "as a binding's initializer"},
 		{"array element", `const all = [make()]; console.log(` + "`${all.length}`" + `);`, "as a value"},
 		{"conditional branch", `const pick = (go: boolean): unknown => go ? make() : 1; console.log(typeof pick(true));`, "as a returned value"},
+		// tsc folds void | undefined to void, so an optional call of a void function is a void read too.
+		{"optional call", `const maybe: (() => void) | undefined = make; const got = maybe?.(); console.log(` + "`${got === undefined}`" + `);`, "as an operand of ==="},
+		{"cast and read", `const seen = make() as unknown; console.log(typeof seen);`, "as a binding's initializer"},
 		{"async awaited", `async function later(): Promise<void> { return make(); } const got = await later(); console.log(typeof got);`, "as typeof's operand"},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
@@ -53,6 +56,8 @@ func TestVoidDiscardsStayLegal(t *testing.T) {
 		{"return in void", `function run(): void { return make(); } run(); console.log("done");`},
 		{"concise arrow in void", `const go = (): void => make(); go(); console.log("done");`},
 		{"async return in void", `async function later(): Promise<void> { return make(); } await later(); console.log("done");`},
+		{"cast statement", `make() as unknown; console.log("done");`},
+		{"satisfies statement", `make() satisfies void; console.log("done");`},
 		{"unread binding", `const value = make(); console.log("done");`},
 		// The relation H2 keeps: push returns a number, and forEach's callback type returns void.
 		{"callback relation", "const kept: number[] = []; [1, 2].forEach((x) => kept.push(x)); console.log(`${kept.length}`);"},
@@ -77,4 +82,13 @@ func lowerVoidProbe(t *testing.T, extension, source string) (any, error) {
 		return lowerTypeScriptAssertionSource(t, source)
 	}
 	return lowerSource(t, source)
+}
+
+// In .ts `x!` is a checked unwrap that hands its value on, so a void call under it as a statement is
+// still a discard (#chmg7wr). In .a the non-null assertion is refused on its own.
+func TestVoidNonNullStatementStaysLegal(t *testing.T) {
+	t.Parallel()
+	if _, err := lowerTypeScriptAssertionSource(t, voidReadMake+"\nmake()!;\nconsole.log(\"done\");"); err != nil {
+		t.Fatal(err)
+	}
 }
