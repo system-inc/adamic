@@ -112,7 +112,7 @@ console.log(String(isEmptyArrayLiteral({ kind: 210, elements: [] })));
 console.log(String(isEmptyArrayLiteral({ kind: 210, elements: [1] })));
 console.log(String(isEmptyArrayLiteral({ kind: 211, properties: [] })));
 `);
-add('11_parenthesized_kind.a','utilities.ts','unwrapParenthesizedExpression',cast,nodeSupport,`
+add('11_parenthesized_kind.ts','utilities.ts','unwrapParenthesizedExpression',cast,nodeSupport,`
 const leaf: Node = { kind: 110 };
 const inner: ParenthesizedExpression = { kind: 218, expression: leaf };
 const outer: ParenthesizedExpression = { kind: 218, expression: inner };
@@ -129,7 +129,7 @@ console.log(String(isThisProperty(property)));
 console.log(String(isThisProperty(element)));
 console.log(String(isThisProperty({ kind: 110 })));
 `);
-add('13_flag_downcast.a','utilities.ts','getCheckFlags',cast,`
+add('13_flag_downcast.ts','utilities.ts','getCheckFlags',cast,`
 type CheckFlags = number;
 const SymbolFlags = { Transient: 33554432 } as const;
 interface Symbol { readonly flags: number; }
@@ -197,7 +197,7 @@ console.log(getIdentifierFromEntityNameExpression(id)?.escapedText ?? "missing")
 console.log(getIdentifierFromEntityNameExpression(access)?.escapedText ?? "missing");
 console.log(getIdentifierFromEntityNameExpression({ kind: 110 })?.escapedText ?? "missing");
 `);
-add('20_type_flag_mask.a','utilities.ts','getObjectFlags',cast,`
+add('20_type_flag_mask.ts','utilities.ts','getObjectFlags',cast,`
 type ObjectFlags = number;
 const TypeFlags = { ObjectFlagsType: 403963917 } as const;
 interface Type { readonly flags: number; }
