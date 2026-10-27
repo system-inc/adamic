@@ -604,6 +604,10 @@ recompute:
     }
   }
 
+  // fdlibm __kernel_rem_pio2: recomputation leaves a nonzero iq term
+  // at or above jk. Chopping zeros cannot remove every term.
+  if (jz < 0) { adamic_invariant("argument reduction left no terms"); }
+
   /* convert integer "bit" chunk to floating-point value */
   fw = scalbn(one, q0);
   for (i = jz; i >= 0; i--) {
