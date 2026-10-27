@@ -1,0 +1,17 @@
+// Spec: In `.a` a predicate value stays refused
+// Expect: refused a type predicate whose return is not proven
+type Pet = { readonly kind: 'Cat'; readonly meow: string } | { readonly kind: 'Dog'; readonly bark: string };
+
+let calls = 0;
+function isCat(pet: Pet): pet is Extract<Pet, { kind: 'Cat' }> {
+	calls = calls + 1;
+	return calls > 0;
+}
+
+const test = isCat;
+const pets: readonly Pet[] = [{ kind: 'Cat', meow: 'mew' }, { kind: 'Dog', bark: 'woof' }];
+for (const pet of pets) {
+	if (test(pet)) {
+		console.log(pet.meow);
+	}
+}
