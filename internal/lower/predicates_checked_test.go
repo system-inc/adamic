@@ -101,13 +101,18 @@ func TestCheckedPredicatePendingContracts(t *testing.T) {
 		{"unproven test argument", `interface Identifier { readonly kind: 'Identifier'; readonly text: string } interface Keyword { readonly kind: 'Keyword'; readonly width: number } type Node = Identifier | Keyword; function isKeyword(node: Node): node is Keyword { return false; } function assertNotNode<T extends Node, U extends T>(node: T | undefined, test: (node: Node) => node is U): asserts node is Exclude<T, U>; function assertNotNode(node: Node | undefined, test: (node: Node) => boolean): void { if (node !== undefined && test(node)) console.log("unexpected node"); } function use(node: Node): void { assertNotNode(node, isKeyword); } use({ kind: 'Keyword', width: 3 });`, "an unproven predicate argument for parameter test"},
 		// 0.1 refuses == outright, so a loose comparison with false never reaches the direction walk.
 		{"loose false comparison", `interface Expression { readonly kind: 'E'; readonly e: number } interface Statement { readonly kind: 'S'; readonly s: string } type Node = Expression | Statement; function isS(n: Node): n is Statement { return false; } function f(n: Node): number { if (isS(n) == false) return n.e; return 0; } console.log(String(f({ kind: 'S', s: 'x' })));`, "refuses ==; use ===, which doesn't coerce"},
-		{"open enum kind", `enum SyntaxKind { Identifier, Block } interface Node { readonly kind: SyntaxKind } interface Identifier extends Node { readonly kind: SyntaxKind.Identifier; readonly text: string } function isIdentifier(node: Node): node is Identifier { return node.kind === SyntaxKind.Identifier; } function show(text: string): boolean { console.log(text); return true; } const node: Node = { kind: SyntaxKind.Identifier }; const shown = isIdentifier(node) && show(node.text);`, "checked predicate membership by an enum tag another member can hold"},
 		// #9xam9ds's shape in .ts: B's kind is the whole open Kind, so a B can hold Kind.A's 1 and pass isA's
 		// comparison. .a refuses the body; in .ts the predicate is checked, and the read it would narrow is
 		// refused as an open enum refinement, so the lie never reaches a field read (Node prints text1).
 		{"open enum union tag", `enum Kind { A = 1, B = 2 } interface A { readonly kind: Kind.A; readonly value: number } interface B { readonly kind: Kind; readonly value: string } type Node = A | B; function isA(n: Node): n is A { return n.kind === Kind.A; } function numeric(): number { return 1; } const b: B = { kind: numeric(), value: 'text' }; function use(n: Node): void { if (isA(n)) { console.log(` + "`${n.value + 1}`" + `); } } use(b);`, "an object refinement using an open numeric enum as a literal tag"},
 		// The same predicate passed to filter: its body proves nothing, so it's refused as an argument.
 		{"open enum union tag argument", `enum Kind { A = 1, B = 2 } interface A { readonly kind: Kind.A; readonly value: number } interface B { readonly kind: Kind; readonly value: string } type Node = A | B; function isA(n: Node): n is A { return n.kind === Kind.A; } function numeric(): number { return 1; } const b: B = { kind: numeric(), value: 'text' }; const nodes: Node[] = [b]; for (const a of nodes.filter(isA)) { console.log(` + "`${a.value + 1}`" + `); }`, "an unproven predicate argument for parameter predicate"},
+		// A false branch over a tag that can lie has no view to read through (#k1t2wp9). Its uses never reach the
+		// call's own false-direction NotYet: a refined use is refused as an open enum refinement, and an open
+		// member's domain stops at the call first. These pin that no false-side use is admitted.
+		{"open tag false read", `enum Lone { A = 1 } enum Pair { B = 2, C = 3 } interface A { readonly kind: Lone.A; readonly a: number } interface B { readonly kind: Pair.B; readonly b: string } type N = A | B; function isA(n: N): n is A { return n.kind === Lone.A; } function f(n: N): void { if (!isA(n)) console.log(n.b); } f({ kind: Pair.B, b: 'text' });`, "an object refinement using an open numeric enum as a literal tag"},
+		{"open tag false pass", `enum Lone { A = 1 } enum Pair { B = 2, C = 3 } interface A { readonly kind: Lone.A; readonly a: number } interface B { readonly kind: Pair.B; readonly b: string } type N = A | B; function isA(n: N): n is A { return n.kind === Lone.A; } function g(b: B): void { console.log(b.b); } function f(n: N): void { if (!isA(n)) g(n); } f({ kind: Pair.B, b: 'text' });`, "an object refinement using an open numeric enum as a literal tag"},
+		{"open tag false domain", `enum Kind { A = 1, B = 2, C = 3 } interface A { readonly kind: Kind.A; readonly a: number } interface B { readonly kind: Kind.B | Kind.C; readonly b: string } type N = A | B; function isA(n: N): n is A { return n.kind === Kind.A; } function f(n: N): void { if (!isA(n)) console.log(n.b); } f({ kind: Kind.B, b: 'text' });`, "checked predicate membership over an open tag domain"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			lowerInput := lowerTypeScriptAssertionSource
@@ -127,10 +132,6 @@ func TestCheckedPredicatePendingContracts(t *testing.T) {
 func TestCheckedPredicateUnreadShapesArePending(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, nodeOut, what, where string }{
-		// Kind.Identifier and Kind.Keyword share 1, so the checker reads them as one type and a
-		// Keyword passes the true branch's tag check for Identifier (tsc's open SyntaxKind shape).
-		// Node reads the missing field; the copy must not be admitted on that tag.
-		{"shared_kind", "undefined\nshown\n", "checked predicate membership by an enum tag another member can hold", "7:48"},
 		// Neither the direction walk nor the checker's narrowType reads through an array literal or
 		// an element access, so the walk can't say which branch of this condition rests on the call:
 		// a condition shape it doesn't read stops here, never as a call with no false check.

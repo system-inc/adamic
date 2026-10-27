@@ -419,6 +419,9 @@ func (l *lowering) predicateRefusal(node *ast.Node) error {
 					return original
 				}
 			}
+			// A body proven by its tag alone leaves the layout to the view: this registration serves
+			// a tag-proven predicate wherever no checked call wraps it. A checked call registers the
+			// same view in predicateMembership, so neither alone is guarded by a test (#k1t2wp9).
 			if _, err := l.view(node, nil, member); err != nil {
 				return err
 			}

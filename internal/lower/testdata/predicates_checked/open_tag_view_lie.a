@@ -1,0 +1,10 @@
+enum SyntaxKind { Identifier, Block }
+interface Node { readonly kind: SyntaxKind }
+interface Identifier extends Node { readonly kind: SyntaxKind.Identifier; readonly width: number }
+interface Keyword extends Node { readonly kind: SyntaxKind.Identifier; readonly text: string }
+function isIdentifier(node: Node): node is Identifier { return node.kind === SyntaxKind.Identifier; }
+function measure(node: Node): void {
+	if (isIdentifier(node)) console.log(String(node.width + 1));
+}
+const keyword: Keyword = { kind: SyntaxKind.Identifier, text: 'yield' };
+measure(keyword);
