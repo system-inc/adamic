@@ -34,9 +34,9 @@ conditions('src/compiler/utilities.ts', 'getDiagnosticFilePath', '03_diagnostic_
 conditions('src/compiler/utilities.ts', 'getJSXRuntimeImport', '04_jsx_runtime.a', 1);
 conditions('src/compiler/core.ts', 'compact', '07_compact.a', 2);
 conditions('src/compiler/core.ts', 'forEach', '08_for_each.a', 1);
-conditions('src/compiler/utilities.ts', 'getAncestor', '21_truthy_loops.a', 1);
-conditions('src/compiler/binder.ts', 'findActiveLabel', '21_truthy_loops.a', 1);
-conditions('src/compiler/checker.ts', 'getRecursionIdentity', '21_truthy_loops.a', 2, ['type.flags & TypeFlags.IndexedAccess']);
+conditions('src/compiler/utilities.ts', 'getAncestor', 'refused/21_truthy_loops.ts', 1);
+conditions('src/compiler/binder.ts', 'findActiveLabel', 'refused/21_truthy_loops.ts', 1);
+conditions('src/compiler/checker.ts', 'getRecursionIdentity', 'refused/21_truthy_loops.ts', 2, ['type.flags & TypeFlags.IndexedAccess']);
 for (const name of ['getCachedType', 'setCachedType', 'getTypeOfPropertyOfType', 'getTypeForDeclarationFromJSDocComment', 'combineTypeMappers', 'getTypeArgumentsForAliasSymbol', 'getExtractStringType', 'checkIntrinsicName']) conditions('src/compiler/checker.ts', name, '24_proportional_conditions.a', 1);
 for (const name of ['write', 'writeComment']) conditions('src/compiler/utilities.ts', name, '24_proportional_conditions.a', 1);
 function one(file, line, form, fixture, predicate) {

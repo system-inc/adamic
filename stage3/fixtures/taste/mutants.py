@@ -28,7 +28,7 @@ rewrites = [
     ('named_export', '18_named_export.a', None, None),
     ('assignment_once', '22_assignment_once.a', None, None),
     ('finally_jumps', '23_labels_finally.a', None, None),
-    ('truthy_loops', '21_truthy_loops.a', None, None),
+    ('truthy_loops', 'refused/21_truthy_loops.ts', None, None),
     ('star_export', '15_barrel.a', 'export * from "./support/core.a";', ''),
 ]
 results = []
