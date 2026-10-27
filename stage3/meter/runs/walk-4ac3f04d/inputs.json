@@ -1,0 +1,16 @@
+{
+  "runs": [
+    [
+      "76ea8b17ea0ed467ecb86f355c06f738fd262983",
+      "20261027T014837Z.mugwl6"
+    ],
+    [
+      "4ac3f04d767ec7d2d4e9b41ae9cdc9c4c9f4f288",
+      "20261027T025412Z.HCmJYO"
+    ]
+  ],
+  "timing_scopes": [
+    "checker"
+  ],
+  "timing_note": "Whole-program timing repeats were omitted under the requested 60-minute fallback. The before whole-program latent process was observed running for more than 57 minutes; three repeats of that scope alone, before adding after and checker samples, would exceed the budget. Only checker.ts is timed, three sequential invocations per pin."
+}
