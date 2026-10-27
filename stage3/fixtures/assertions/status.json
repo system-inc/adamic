@@ -285,7 +285,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/assertions/19_identifier_kind.a:25:13: stage 0 can't lower a checked field alias requiring an optional, accessor, or representation conversion yet"
+      "what": "stage3/fixtures/assertions/19_identifier_kind.a:25:13: stage 0 can't lower a checked field alias of an optional field or through ?. yet"
     }
   },
   {
