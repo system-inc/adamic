@@ -1,4 +1,4 @@
-// a-check: refused a type predicate whose return is not proven (there is no body proving this parameter)
+// parser driver evidence (Oct 8): refused a type predicate whose return is not proven (there is no body proving this parameter) then; checked now (Lower, Oct 27)
 // From TypeScript 6.0.3, src/compiler/core.ts:140
 // Reduced every overload callback; the implementation accepts boolean results.
 function apply(callback: (value: number) => value is number): boolean;
