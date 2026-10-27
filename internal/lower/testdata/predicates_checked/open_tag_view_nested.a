@@ -1,0 +1,16 @@
+enum SyntaxKind { Identifier, Block }
+interface Node { readonly kind: SyntaxKind }
+interface Name { readonly text: string }
+interface Width { readonly width: number }
+interface Identifier extends Node { readonly kind: SyntaxKind.Identifier; readonly name: Name }
+interface Keyword extends Node { readonly kind: SyntaxKind.Identifier; readonly name: Width }
+function isIdentifier(node: Node): node is Identifier { return node.kind === SyntaxKind.Identifier; }
+function spell(node: Node): void {
+	if (isIdentifier(node)) console.log('name ' + node.name.text);
+}
+const width: Width = { width: 3 };
+const keyword: Keyword = { kind: SyntaxKind.Identifier, name: width };
+spell(keyword);
+const text: Name = { text: 'x' };
+const identifier: Identifier = { kind: SyntaxKind.Identifier, name: text };
+spell(identifier);

@@ -852,6 +852,11 @@ func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, sour
 	if target.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(target) && value.Type() == ir.Object {
 		tag := l.fieldLiteral(target, "kind")
 		if tag != nil {
+			// The tag chooses the member, and the view checks its layout at every read. A checked
+			// predicate's call registers it here, which is what makes an open enum tag safe on the
+			// true branch (#k1t2wp9). predicateRefusal registers the same view for a body proven by
+			// tag alone, so either covers the other on these programs and no test guards one alone:
+			// keep both.
 			if _, err := l.view(node, nil, target); err != nil {
 				return nil, nil, err
 			}

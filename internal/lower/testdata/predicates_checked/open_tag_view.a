@@ -1,0 +1,21 @@
+enum SyntaxKind { Identifier, CallExpression, NewExpression, Decorator, Block }
+interface Node { readonly kind: SyntaxKind }
+interface CallExpression extends Node { readonly kind: SyntaxKind.CallExpression; readonly callee: string }
+interface NewExpression extends Node { readonly kind: SyntaxKind.NewExpression; readonly callee: string }
+interface Decorator extends Node { readonly kind: SyntaxKind.Decorator; readonly callee: string }
+type CallLikeExpression = CallExpression | NewExpression | Decorator;
+function isCallLikeExpression(node: Node): node is CallLikeExpression {
+	return node.kind === SyntaxKind.CallExpression || node.kind === SyntaxKind.NewExpression || node.kind === SyntaxKind.Decorator;
+}
+function isCallExpression(node: Node): node is CallExpression { return node.kind === SyntaxKind.CallExpression; }
+function show(node: Node): void {
+	if (isCallExpression(node)) console.log('call ' + node.callee);
+	if (isCallLikeExpression(node)) console.log('like ' + node.callee);
+	else console.log('other');
+}
+const call: CallExpression = { kind: SyntaxKind.CallExpression, callee: 'f' };
+const created: NewExpression = { kind: SyntaxKind.NewExpression, callee: 'G' };
+const block: Node = { kind: SyntaxKind.Block };
+show(call);
+show(created);
+show(block);

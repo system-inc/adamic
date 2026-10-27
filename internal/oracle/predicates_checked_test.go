@@ -142,6 +142,58 @@ func TestCheckedPredicateOracle(t *testing.T) {
 	}
 }
 
+// tsc's Node hierarchy tags on an open SyntaxKind over a non-union base, so a kind proves no layout:
+// another member can hold the same value. The true branch reads the target as a checked view, as a
+// .ts cast does, so an honest program agrees with Node and a lying tag stops at its first field read
+// with the view's own located message, never a compiler-bug panic or another guard (#k1t2wp9).
+func TestCheckedPredicateOpenTagViews(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, nodeOut, stderr string }{
+		{"open_tag_view", "call f\nlike f\nlike G\nother\n", ""},
+		// Identifier and Keyword share SyntaxKind.Identifier with different layouts, and isIdentifier
+		// says yes to a Keyword: Node reads width as undefined and prints NaN.
+		{"open_tag_view_lie", "NaN\n", "adamic: panic: field read failed: node.width is not initialized; expected number, found missing\n"},
+		// The same lie with the field present at another representation: nothing but the view sees it.
+		// Without the view, native reads a string's slot as a number where Node prints wide1.
+		{"open_tag_view_retype", "wide1\n", "adamic: panic: field read failed: node.width is not a number; expected number, found string\n"},
+		// The lie one level down: Keyword's name is a Width where Identifier's is a Name. Both name fields
+		// hold an object, so only the view's nested contract checks the read of text; Node prints
+		// "name undefined" and stops nowhere.
+		{"open_tag_view_nested", "name undefined\nname x\n", "adamic: panic: field read failed: node.name.text is not initialized; expected string, found missing\n"},
+		// Kind.Identifier and Kind.Keyword share 1, so a Keyword passes isIdentifier's tag test: Node reads
+		// text as undefined; the view stops at that read.
+		{"shared_kind", "undefined\nshown\n", "adamic: panic: field read failed: node.text is not initialized; expected string, found missing\n"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			witness, path := predicateCheckedInput(t, probe.name)
+			node := onNode(t, witness)
+			if difference := disagreement(run{stdout: []byte(probe.nodeOut)}, node); difference != "" {
+				t.Fatal("source Node: " + difference)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			want := node
+			if probe.stderr != "" {
+				want = run{stderr: []byte(probe.stderr), exitCode: 70}
+			}
+			sanitized, binary := nativelyUncached(t, program)
+			for index, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if difference := disagreement(want, got); difference != "" {
+					t.Fatalf("%s on %s: exit %d, stdout %q, stderr %q", difference, []string{"sanitized native", "release native", "the JavaScript backend"}[index], got.exitCode, got.stdout, got.stderr)
+				}
+			}
+			if want.exitCode == 0 {
+				if report := leaksUncached(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+			}
+		})
+	}
+}
+
 // Each row is keyed as its .ts checked mode copy, read from the stored .a witness.
 func checkedPredicateCountKey(name string) string {
 	return "internal/lower/testdata/predicates_checked/" + name + ".a (.ts checked mode)"
