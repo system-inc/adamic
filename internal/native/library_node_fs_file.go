@@ -23,6 +23,10 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 	if call.Operation == "host_env" {
 		code = e.nodeEnvironmentRead(args[0])
 	}
+	if call.Operation == "host_realpath" {
+		code = e.snapshot(ir.String, fmt.Sprintf("adamic_host_realpath(%s)", args[0]))
+		e.line("if (%s == NULL) { adamic_fs_file_realpath_error(%s); }", code, args[0])
+	}
 	result := ""
 	if call.Of.IsReference() {
 		result = e.own(call.Of, code)

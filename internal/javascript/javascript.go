@@ -1216,6 +1216,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.LibraryGlobal:
 		return expression.Name
 	case ir.MakeClosure:
+		if e.program.Functions[expression.Function].Source.Role == "host_realpath" {
+			return "Object.assign(adamicNodeFSFile.realpathSync.native, {code: (self, values) => adamicNodeFSFile.realpathSync.native(...values)})"
+		}
 		cells := []string{}
 		for _, local := range e.program.Functions[expression.Function].Environment {
 			cells = append(cells, e.cell(local))

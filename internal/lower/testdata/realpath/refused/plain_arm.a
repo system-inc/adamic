@@ -1,0 +1,8 @@
+import * as _fs from 'node:fs';
+function probe(path: string, win32: boolean): string {
+    const process = {platform: win32 ? "win32" : "linux"};
+    function fsRealPathHandlingLongPath(path: string): string { return path; }
+    const fsRealpath = !!_fs.realpathSync.native ? (process.platform === "win32" ? fsRealPathHandlingLongPath : _fs.realpathSync.native) : _fs.realpathSync;
+    console.log(`${fsRealpath === _fs.realpathSync.native}`);
+    try { return fsRealpath(path); } catch { return path; }
+}

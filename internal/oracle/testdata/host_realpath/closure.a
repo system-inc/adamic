@@ -1,0 +1,26 @@
+import * as _fs from 'node:fs';
+import process from 'node:process';
+function resolveOnce(p: string, win32: boolean): string {
+    const process = {platform: win32 ? "win32" : "linux"};
+    function fsRealPathHandlingLongPath(path: string): string { return path; }
+    // The native-only neighbor of sys.ts:1491. Its plain-walk arm remains refused.
+    const fsRealpath = !!_fs.realpathSync.native ? (process.platform === "win32" ? fsRealPathHandlingLongPath : _fs.realpathSync.native) : fsRealPathHandlingLongPath;
+    console.log(`${fsRealpath === _fs.realpathSync.native}`);
+    function realpath(path: string): string {
+        try { return fsRealpath(path); } catch { return path; }
+    }
+    return realpath(p);
+}
+console.log(resolveOnce('missing', false));
+console.log(resolveOnce('chain/file', false).replace(process.cwd(), '<root>'));
+console.log(resolveOnce('chain/file', true));
+
+function resolveArrow(p: string): string {
+    const resolve = _fs.realpathSync.native;
+    const realpath = (path: string): string => {
+        try { return resolve(path); } catch { return path; }
+    };
+    return realpath(p);
+}
+console.log(resolveArrow('missing'));
+console.log(resolveArrow('chain/file').replace(process.cwd(), '<root>'));
