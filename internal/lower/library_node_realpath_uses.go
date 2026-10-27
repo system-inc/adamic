@@ -171,10 +171,6 @@ func (l *lowering) nodeRealpathReferenceRefusal(node *ast.Node) error {
 				target = l.checker.GetShorthandAssignmentValueSymbol(reference.Parent)
 			}
 			if target == symbol {
-				if ast.GetContainingFunction(reference) != scope {
-					found = l.realpathUseError(reference, "is captured by a nested function")
-					return true
-				}
 				if err := l.realpathConstUse(reference); err != nil {
 					found = err
 					return true

@@ -97,7 +97,7 @@ func TestNodeRealpathNativeClosedUses(t *testing.T) {
 		"map.a": "passed as an argument", "for_each.a": "passed as an argument", "user_argument.a": "passed as an argument",
 		"return.a": "returned", "object.a": "stored in an object", "array.a": "stored in an array", "another_binding.a": "stored in another binding",
 		"call.a": "reads .call", "apply.a": "reads .apply", "bind.a": "reads .bind", "two_arguments.a": "zero or multiple arguments", "zero_arguments.a": "zero or multiple arguments", "non_string.a": "non-string path",
-		"capture.a": "captured by a nested function", "arrow_capture.a": "captured by a nested function", "export.a": "exported", "export_specifier.a": "exported", "let.a": "let or var", "var.a": "let or var", "spread.a": "spread arguments", "unknown_kind.a": "KindTypeOfExpression",
+		"capture_escape.a": "passed as an argument", "export.a": "exported", "export_specifier.a": "exported", "let.a": "let or var", "var.a": "let or var", "spread.a": "spread arguments", "unknown_kind.a": "KindTypeOfExpression",
 	}
 	for name, reason := range cases {
 		t.Run(name, func(t *testing.T) {

@@ -17,7 +17,7 @@ func realpathUseCountMutant(t *testing.T) string {
 	return buildcache.GoTestMutated(t, "", "realpath-use-mutant.test", "./internal/lower", nil, []buildcache.Mutation{{
 		File:   "internal/lower/library_node_realpath_uses.go",
 		Before: "if len(arguments) != 1 {",
-		After:  "if len(arguments) == 0 {",
+		After:  "if false {",
 	}})
 }
 

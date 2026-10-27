@@ -1,3 +1,0 @@
-import fs from 'node:fs';
-import {Buffer} from 'node:buffer';
-function outer(): string { const resolve = fs.realpathSync.native; function inner(): string { return resolve('.'); } return inner(); }
