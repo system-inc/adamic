@@ -282,27 +282,35 @@ func TestNegativeCheckedBoundaryExactStop(t *testing.T) {
 	}
 }
 
-// checkedBoundaryCommand runs the command on the fixture with a compiler that stops whatever holds 'abc',
-// or, when the repair misfits too, everything.
-func checkedBoundaryCommand(t *testing.T, repairAgrees bool) (observation, report) {
+// checkedBoundaryCommand runs the command on the fixture, held at corpus/<name>, with a compiler that stops
+// whatever holds 'abc', or, when the repair misfits too, everything, and refuses a program whose extension
+// isn't name's, as stage 1 refuses in .a the tagless cast a .ts witness makes.
+func checkedBoundaryCommand(t *testing.T, repairAgrees bool, name string) (observation, report) {
 	t.Helper()
 	dir, _, base, head := commandFixture(t)
-	source, _, list := checkedBoundaryFixture(t)
+	source, witness, list := checkedBoundaryFixture(t)
+	witness.Declaration = "corpus/" + name + ":1"
+	list.Witnesses[contentHash(source)] = witness
 	stops := `grep -q "'abc'" "$2"`
 	if !repairAgrees {
 		stops = "true"
 	}
-	writeExecutable(t, head, "#!/bin/sh\ncase \"$1\" in\nadmission-lower) exit 0;;\njs) if "+stops+"; then echo '// STOP'; else echo '// GO'; fi;;\nbuild) if "+stops+"; then printf '#!/bin/sh\\necho 42\\necho \"adamic: panic: field read failed: viewed.count is not a number; expected number, found string\" >&2\\nexit 70\\n' > \"$4.tmp\"; else printf '#!/bin/sh\\necho 42\\n' > \"$4.tmp\"; fi && chmod +x \"$4.tmp\" && mv \"$4.tmp\" \"$4\";;\nesac\n")
+	writeExecutable(t, head, "#!/bin/sh\ncase \"$1\" in\nadmission-lower) exit 0;;\nesac\ncase \"$2\" in\n*"+filepath.Ext(name)+") ;;\n*) echo \"adamic: $2: Adamic 0.1 refuses a downcast\" >&2; exit 1;;\nesac\ncase \"$1\" in\njs) if "+stops+"; then echo '// STOP'; else echo '// GO'; fi;;\nbuild) if "+stops+"; then printf '#!/bin/sh\\necho 42\\necho \"adamic: panic: field read failed: viewed.count is not a number; expected number, found string\" >&2\\nexit 70\\n' > \"$4.tmp\"; else printf '#!/bin/sh\\necho 42\\n' > \"$4.tmp\"; fi && chmod +x \"$4.tmp\" && mv \"$4.tmp\" \"$4\";;\nesac\n")
 	for path, data := range map[string]string{
-		"corpus/input.a":  string(source),
+		"corpus/" + name:  string(source),
 		"oracle/node.mjs": "import {readFileSync} from 'node:fs';const s=readFileSync(process.argv[2],'utf8');console.log('42');if(s.includes('STOP')){console.error('adamic: panic: field read failed: viewed.count is not a number; expected number, found string');process.exit(70);}\n",
 	} {
 		if err := os.WriteFile(filepath.Join(dir, path), []byte(data), 0755); err != nil {
 			t.Fatal(err)
 		}
 	}
+	if name != "input.a" {
+		if _, err := git(dir, "rm", "-q", "corpus/input.a"); err != nil {
+			t.Fatal(err)
+		}
+	}
 	writeNegativeList(t, filepath.Join(dir, "cloud/admission-corpus/negative-witnesses.json"), list)
-	if _, err := git(dir, "add", "corpus/input.a", "oracle/node.mjs", "cloud/admission-corpus/negative-witnesses.json"); err != nil {
+	if _, err := git(dir, "add", "corpus/"+name, "oracle/node.mjs", "cloud/admission-corpus/negative-witnesses.json"); err != nil {
 		t.Fatal(err)
 	}
 	if _, err := git(dir, "commit", "-qm", "checked boundary witness"); err != nil {
@@ -323,9 +331,21 @@ func checkedBoundaryCommand(t *testing.T, repairAgrees bool) (observation, repor
 // A ruled checked-boundary stop whose repair agrees with Node is a witness, not an agreement.
 func TestNegativeCheckedBoundaryCommandAccepted(t *testing.T) {
 	t.Parallel()
-	o, r := checkedBoundaryCommand(t, true)
+	o, r := checkedBoundaryCommand(t, true, "input.a")
 	if o.Exit != 0 || r.Verdict != "pass" || r.AcceptedWitnesses != 1 || !r.Programs[0].NegativeWitness || *r.Programs[0].Agree || r.Programs[0].RepairAgree == nil || !*r.Programs[0].RepairAgree {
 		t.Fatal("ruled checked boundary not accepted", o, r)
+	}
+}
+
+// A .ts witness's repair is written and compiled as .ts, as the witness is: stage 1 (#q97a1rr) refuses in
+// .a the tagless cast view_logical_write_stops' four .ts witnesses make, so a repair copied as .a never
+// compiled and the run failed. Mutant: writing the repair as repair-N.a again refuses it, and the run
+// fails.
+func TestNegativeCheckedBoundaryRepairKeepsItsExtension(t *testing.T) {
+	t.Parallel()
+	o, r := checkedBoundaryCommand(t, true, "input.ts")
+	if o.Exit != 0 || r.Verdict != "pass" || r.AcceptedWitnesses != 1 || len(r.Programs) != 1 || r.Programs[0].Path != "corpus/input.ts" || !r.Programs[0].NegativeWitness || r.Programs[0].RepairAgree == nil || !*r.Programs[0].RepairAgree {
+		t.Fatal("a .ts witness's repair did not compile as .ts", o, r)
 	}
 }
 
@@ -333,7 +353,7 @@ func TestNegativeCheckedBoundaryCommandAccepted(t *testing.T) {
 // running the repair, or not requiring its agreement, accepts it.
 func TestNegativeCheckedBoundaryRepairMustAgree(t *testing.T) {
 	t.Parallel()
-	o, r := checkedBoundaryCommand(t, false)
+	o, r := checkedBoundaryCommand(t, false, "input.a")
 	if o.Exit == 0 || r.Verdict != "fail" || r.AcceptedWitnesses != 0 || r.Programs[0].NegativeWitness || r.Programs[0].RepairAgree == nil || *r.Programs[0].RepairAgree {
 		t.Fatal("a repair that disagrees with Node was accepted", o, r)
 	}
