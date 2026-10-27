@@ -160,12 +160,13 @@ const result = await f(false);`,
 // formerly refused unused binding and the observable registered fixture covered.
 func TestAsyncVoidAwaitValuesLower(t *testing.T) {
 	t.Parallel()
-	for _, probe := range []struct{ name, source string }{
-		{"unused", "async function f(): Promise<void> { const value = await Promise.resolve(); }\nawait f();"},
-		{"observed", "async function f(): Promise<void> { const value = await Promise.resolve(); console.log(typeof value); } await f();"},
-	} {
-		if _, err := lowerSource(t, probe.source); err != nil {
-			t.Fatal(err)
-		}
+	if _, err := lowerSource(t, "async function f(): Promise<void> { const value = await Promise.resolve(); }\nawait f();"); err != nil {
+		t.Fatal(err)
+	}
+	// Reading the void binding is H2's refusal (#x2gt39p): a Promise<void> can resolve to anything a
+	// value-returning function hands it.
+	_, err := lowerSource(t, "async function f(): Promise<void> { const value = await Promise.resolve(); console.log(typeof value); } await f();")
+	if err == nil || !strings.Contains(err.Error(), "a read of a void value") {
+		t.Fatalf("want the observed void binding refused, got %v", err)
 	}
 }
