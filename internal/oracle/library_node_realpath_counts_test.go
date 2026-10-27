@@ -13,7 +13,7 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"paths.a", "errors.a", "closure.a"} {
+	for _, name := range []string{"paths.a", "errors.a", "closure.a", "nul.a"} {
 		key := "internal/oracle/testdata/host_realpath/" + name
 		additionalFixtureCounts = append(additionalFixtureCounts, countCase{key, func(t *testing.T) (string, func() string) {
 			path, err := filepath.Abs(filepath.Join(repository, key))

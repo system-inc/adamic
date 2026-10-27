@@ -25,6 +25,10 @@ func realpathDirectory(t *testing.T) string {
 			t.Fatal(err)
 		}
 	}
+	// The NUL mutant must resolve the truncated path, rather than fail ENOENT.
+	if err := os.WriteFile(filepath.Join(root, "a"), []byte("data"), 0600); err != nil {
+		t.Fatal(err)
+	}
 	for name, target := range map[string]string{"link": "dir", "chain": "link", "dangling": "absent-target"} {
 		if err := os.Symlink(target, filepath.Join(root, name)); err != nil {
 			t.Fatal(err)
@@ -58,6 +62,9 @@ func realpathAgreement(t *testing.T, name string) {
 	if truth.exitCode != 0 || len(truth.stderr) != 0 {
 		t.Fatalf("Node fixture: %+v", truth)
 	}
+	if name == "nul.a" {
+		t.Logf("Node stdout: %s", truth.stdout)
+	}
 	program, err := lowered(t, path)
 	if err != nil {
 		t.Fatal(err)
@@ -71,6 +78,9 @@ func realpathAgreement(t *testing.T, name string) {
 		t.Fatal(err)
 	}
 	for backend, got := range map[string]run{"native": realpathRun(t, cwd, binary), "javascript": realpathRun(t, cwd, "node", "--disable-warning=ExperimentalWarning", loader, script)} {
+		if name == "nul.a" {
+			t.Logf("%s stdout: %s", backend, got.stdout)
+		}
 		if difference := disagreement(truth, got); difference != "" {
 			t.Fatalf("%s: %s; Node stdout %q stderr %q exit %d; got stdout %q stderr %q exit %d", backend, difference, truth.stdout, truth.stderr, truth.exitCode, got.stdout, got.stderr, got.exitCode)
 		}
@@ -84,4 +94,9 @@ func TestHostRealpathErrorsMatchNode(t *testing.T) { t.Parallel(); realpathAgree
 func TestHostRealpathClosureMatchesNode(t *testing.T) {
 	t.Parallel()
 	realpathAgreement(t, "closure.a")
+}
+
+func TestHostRealpathNULMatchesNode(t *testing.T) {
+	t.Parallel()
+	realpathAgreement(t, "nul.a")
 }
