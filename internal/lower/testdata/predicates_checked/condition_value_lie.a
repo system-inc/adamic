@@ -1,0 +1,10 @@
+let currentAssertionLevel = 0;
+function assert(expression: unknown, message?: string): asserts expression {
+    if (currentAssertionLevel > 0 && !expression) throw new Error(message);
+}
+function argument(): number { console.log("argument"); return 0; }
+function run(check: (expression: unknown, message?: string) => void): void {
+    check(argument());
+    console.log("continued");
+}
+run(assert);
