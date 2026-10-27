@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"errors"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -14,8 +15,9 @@ func TestCallableProducerLiteralReturn(t *testing.T) {
 }
 
 // In .a each of these casts tests a tag every source value has, so the cast is refused (#q97a1rr)
-// before the producer is reached.
-func callableProducerAdapterRefusal(t *testing.T, name string) {
+// before the producer is reached. Its .ts twin, where the cast stays a checked view, reaches the
+// producer and stops there as .a did before: NotYet when pending, else Refused.
+func callableProducerAdapterRefusal(t *testing.T, name string, pending bool) {
 	t.Helper()
 	path, err := filepath.Abs("testdata/callable_producers/" + name + ".a")
 	if err != nil {
@@ -31,18 +33,25 @@ func callableProducerAdapterRefusal(t *testing.T, name string) {
 		t.Fatalf("want located vacuous downcast refusal, got %v", err)
 	}
 	t.Log(err)
+	_, err = lowerSourceAs(t, source, ".ts")
+	var notYet *NotYet
+	var refused *Refused
+	if err == nil || !strings.Contains(err.Error(), "main.ts:") || !strings.Contains(err.Error(), "wrap the producer in an arrow") || pending && !errors.As(err, &notYet) || !pending && !errors.As(err, &refused) {
+		t.Fatalf("twin: want located producer adapter refusal (pending %v), got %v", pending, err)
+	}
+	t.Log(err)
 }
 func TestCallableProducerFewerParametersRefused(t *testing.T) {
 	t.Parallel()
-	callableProducerAdapterRefusal(t, "p22")
+	callableProducerAdapterRefusal(t, "p22", false)
 }
 func TestCallableProducerMethodShorthandRefused(t *testing.T) {
 	t.Parallel()
-	callableProducerAdapterRefusal(t, "p59")
+	callableProducerAdapterRefusal(t, "p59", true)
 }
 func TestCallableProducerExtraOptionalRefused(t *testing.T) {
 	t.Parallel()
-	callableProducerAdapterRefusal(t, "p62")
+	callableProducerAdapterRefusal(t, "p62", true)
 }
 
 func TestCallableProducerFewerParametersAdapted(t *testing.T) {
@@ -64,7 +73,7 @@ func TestCallableProducerExtraOptionalAdapted(t *testing.T) {
 func TestCallableProducerDiscardedObjectResultRefused(t *testing.T) {
 	t.Parallel()
 	// Assignability to void alone cannot supply a registry result certificate.
-	callableProducerAdapterRefusal(t, "p135_object_result")
+	callableProducerAdapterRefusal(t, "p135_object_result", false)
 }
 
 func TestCallableProducerTaggedUnreadMethod(t *testing.T) {
@@ -90,6 +99,11 @@ func TestCallableProducerAmbiguousRefused(t *testing.T) {
 	if err == nil || !strings.Contains(err.Error(), "a downcast to View whose tag test is vacuous") || !strings.Contains(err.Error(), "give View a tag of its own") || !strings.Contains(err.Error(), "main.a:") {
 		t.Fatalf("want located vacuous downcast refusal, got %v", err)
 	}
+	// The .ts twin keeps the cast a checked view, so the ambiguous producer is reached and refused.
+	_, err = lowerSourceAs(t, source, ".ts")
+	if err == nil || !strings.Contains(err.Error(), "assignable to more than one union member") || !strings.Contains(err.Error(), "wrap the producer in an arrow") || !strings.Contains(err.Error(), "main.ts:") {
+		t.Fatalf("twin: want located ambiguous-producer refusal, got %v", err)
+	}
 }
 
 // A producer whose type is identical to one member is carried by that member,
@@ -103,7 +117,7 @@ func TestCallableProducerExactMemberCarries(t *testing.T) {
 
 func TestCallableProducerUniqueObjectResultRefused(t *testing.T) {
 	t.Parallel()
-	callableProducerAdapterRefusal(t, "p135_unique_object_result")
+	callableProducerAdapterRefusal(t, "p135_unique_object_result", true)
 }
 
 func TestCallableProducerAmbiguousCertificate(t *testing.T) {

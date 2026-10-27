@@ -119,7 +119,8 @@ func TestLoomViewsDCallableUnion(t *testing.T) {
 // A stored function that fits no member of the view's callable target is a cast the checker was told to believe, so
 // the read through the view is refused where it stands, as it was before views D, never admitted to abort at run time
 // where Node prints 99 (Compiler's ruling (b) on #aecx10a). In .a the cast before it is refused first: its tag test,
-// kind === 'Receiver', is one every Root passes (#q97a1rr).
+// kind === 'Receiver', is one every Root passes (#q97a1rr); its .ts twin keeps the cast a checked view and is refused
+// at the read.
 func TestLoomViewsDBadCallable(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/lower/testdata/fx7_wrong_aborts/bad_callable.a"))
@@ -134,5 +135,9 @@ func TestLoomViewsDBadCallable(t *testing.T) {
 	var refused *lower.Refused
 	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "bad_callable.a:6:14:") || !strings.Contains(err.Error(), "a downcast to Receiver whose tag test is vacuous") || !strings.Contains(err.Error(), "give Receiver a tag of its own") {
 		t.Fatalf("want the located vacuous downcast refusal at 6:14, got %v", err)
+	}
+	_, err = lowered(t, typeScriptTwin(t, path))
+	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "bad_callable.ts:9:16:") || !strings.Contains(err.Error(), "checked view read of field value with unsupported representation conversion contract") || !strings.Contains(err.Error(), "prove or implement the representation conversion contract before reading this field") {
+		t.Fatalf("twin: want the located representation conversion refusal at 9:16, got %v", err)
 	}
 }

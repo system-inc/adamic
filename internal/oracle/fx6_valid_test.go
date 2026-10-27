@@ -168,7 +168,7 @@ func TestOracleViewsDestructuredCallableUnion(t *testing.T) {
 }
 
 // In .a the cast before the destructuring is refused first: its tag test, kind === 'Holder', is one every source
-// value passes (#q97a1rr).
+// value passes (#q97a1rr). Its .ts twin keeps the cast a checked view and is refused at the destructuring.
 func TestOracleViewsDestructuredInvalidObjectUnionRefuses(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs("../lower/testdata/fx6_refused/p49.a")
@@ -184,12 +184,16 @@ func TestOracleViewsDestructuredInvalidObjectUnionRefuses(t *testing.T) {
 	if !errors.As(err, &refused) || refused.What != `a downcast to Holder whose tag test is vacuous: every { readonly kind: "Holder"; } has kind "Holder"` || refused.Fix != "give Holder a tag of its own in a discriminated union, or build the value as a Holder so the compiler can prove it" || !strings.Contains(refused.Where, "p49.a:9:14") {
 		t.Fatalf("want the located vacuous downcast refusal with fix at 9:14, got %v", err)
 	}
+	_, err = lowered(t, typeScriptTwin(t, path))
+	if !errors.As(err, &refused) || refused.What != "a destructured object-union view with an incompatible literal producer" || refused.Fix != "build a member of Target before destructuring field value" || !strings.Contains(refused.Where, "p49.ts:") {
+		t.Fatalf("twin: want located incompatible-producer refusal with fix, got %v", err)
+	}
 }
 
 // The stored function takes a string and no member of Target does, so the destructured read is refused where it
 // stands, as p49's incompatible literal producer is, rather than compiled to stop at run time where Node prints 5
 // (Compiler's ruling (b) on #aecx10a). In .a the cast before it is refused first: its tag test, kind === 'Receiver',
-// is one every source value passes (#q97a1rr).
+// is one every source value passes (#q97a1rr); its .ts twin keeps the cast a checked view and is refused at the read.
 func TestOracleViewsDestructuredInvalidCallableRefuses(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p51_wrong.a")
@@ -203,5 +207,9 @@ func TestOracleViewsDestructuredInvalidCallableRefuses(t *testing.T) {
 	var refused *lower.Refused
 	if !errors.As(err, &refused) || refused.What != `a downcast to Receiver whose tag test is vacuous: every { readonly kind: "Receiver"; } has kind "Receiver"` || refused.Fix != "give Receiver a tag of its own in a discriminated union, or build the value as a Receiver so the compiler can prove it" || !strings.Contains(refused.Where, "p51_wrong.a:6:14") {
 		t.Fatalf("want the located vacuous downcast refusal at 6:14, got %v", err)
+	}
+	_, err = lowered(t, typeScriptTwin(t, path))
+	if !errors.As(err, &refused) || refused.What != "checked view read of field value with unsupported representation conversion contract" || refused.Fix != "prove or implement the representation conversion contract before reading this field" || !strings.Contains(refused.Where, "p51_wrong.ts:7:9") {
+		t.Fatalf("twin: want the located representation conversion refusal at 7:9, got %v", err)
 	}
 }

@@ -112,7 +112,7 @@ func TestViewLogicalWriteWitnessRepairsAgreeWithNode(t *testing.T) {
 // checked form to share. The program's whole diagnostic is pinned in its .refused file, and its first
 // line names the refusal. In .a computed.a's cast is refused first, since its tag test, kind ===
 // 'Holder', is one every Root passes (#q97a1rr), so that is the refusal pinned here, and the computed
-// key's is held by internal/lower's TestViewLogicalWriteWithoutASiteIsRefused.
+// key's is pinned by its .ts twin, TestViewLogicalWriteTwinIsRefused.
 func TestViewLogicalWritesAreRefused(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/view_logical_write_refused"
@@ -158,5 +158,22 @@ func TestViewLogicalWritesAreRefused(t *testing.T) {
 	}
 	if programs != 1 {
 		t.Fatalf("%d programs in %s, want 1: a program added or removed needs this count changed with it", programs, directory)
+	}
+}
+
+// computed.a as .ts, where its cast stays a checked view, so its &&= by a computed key is reached and
+// refused, its whole diagnostic as computed.refused pinned it before #q97a1rr. Mutant:
+// checkViewLogicalWrites returning nil, which lowers it.
+func TestViewLogicalWriteTwinIsRefused(t *testing.T) {
+	t.Parallel()
+	twin := typeScriptTwin(t, filepath.Join(repository, "internal/oracle/testdata/view_logical_write_refused/computed.a"))
+	_, err := lowered(t, twin)
+	var refused *lower.Refused
+	if !errors.As(err, &refused) {
+		t.Fatalf("want a refusal, got %v", err)
+	}
+	want := "computed.ts:10:1: Adamic 0.1 refuses a logical assignment through a checked view; write the field through the object's own type, or read it, decide, then assign with ="
+	if got := strings.ReplaceAll(refused.Error(), filepath.Dir(twin)+string(filepath.Separator), ""); got != want {
+		t.Fatalf("diagnostic: got %q, want %q", got, want)
 	}
 }

@@ -37,6 +37,22 @@ func init() {
 	}{"internal/oracle/testdata/vacuous_downcast/language.ts", true, true})
 }
 
+// typeScriptTwin copies an .a program to a temporary .ts of the same name, where its cast stays a checked
+// view, so a row whose .a program now stops at its vacuous cast (#q97a1rr) still pins the refusal it was
+// written about.
+func typeScriptTwin(t *testing.T, path string) string {
+	t.Helper()
+	source, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	twin := filepath.Join(t.TempDir(), strings.TrimSuffix(filepath.Base(path), ".a")+".ts")
+	if err := os.WriteFile(twin, source, 0o600); err != nil {
+		t.Fatal(err)
+	}
+	return twin
+}
+
 // A downcast in .a whose tag test every source value passes is refused, naming the fix: the target
 // declares no tag that tells it from the source, so the test proves nothing and the cast would be a
 // type the compiler trusts. language is Language's case, View extends Root with no kind of its own;

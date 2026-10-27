@@ -26,14 +26,7 @@ func TestViewFieldHeldAsUnionStopsAtTheRead(t *testing.T) {
 	if !errors.As(err, &refused) || refused.Where != reviewed+":8:16" || refused.What != `a downcast to View whose tag test is vacuous: every Root has kind "Holder"` {
 		t.Fatalf("want the cast's vacuous downcast refusal at %s:8:16, got %v", reviewed, err)
 	}
-	reviewedSource, err := os.ReadFile(reviewed)
-	if err != nil {
-		t.Fatal(err)
-	}
-	twin := filepath.Join(t.TempDir(), "reviewed.ts")
-	if err := os.WriteFile(twin, reviewedSource, 0o644); err != nil {
-		t.Fatal(err)
-	}
+	twin := typeScriptTwin(t, reviewed)
 	direct := filepath.Join(t.TempDir(), "direct.ts")
 	source := `interface Sized { readonly length: number; }
 interface Root { readonly kind: 'Holder'; }
