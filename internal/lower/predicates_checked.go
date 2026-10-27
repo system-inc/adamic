@@ -409,40 +409,120 @@ func (l *lowering) checkedPredicateResult(call *ast.CallExpression, value ir.Exp
 		returned = ir.Read{Local: result, Of: ir.Boolean}
 	}
 	source := l.checker.GetTypeOfSymbol(resolved.Parameters()[index])
-	if directions&predicateFalse != 0 && !l.checkedPredicateTagDomain(source, claim.Type()) {
-		return nil, l.notYet(call.AsNode(), "checked predicate membership over an open tag domain")
+	check, err := l.checkedPredicateCheck(call.AsNode(), declaration, arguments[index], source, claim.Type(), returned, directions&predicateFalse != 0, local, func(branch string) string {
+		return fmt.Sprintf("predicate %s at %s %s branch: source %s, target %s", name, site.Where, branch, sourceName, targetName)
+	})
+	if err != nil {
+		return nil, err
+	}
+	body = append(body, check...)
+	body = append(body, ir.Return{Value: returned})
+	l.result.Functions[wrapper].Body = body
+	return ir.Call{Function: wrapper, Arguments: invoked.Arguments, Returns: invoked.Type()}, nil
+}
+
+// checkedPredicateCheck is the one check a checked predicate's claim gets, wherever it's checked: at
+// a direct call (checkedPredicateResult) and in the value a predicate becomes (functionValue). result
+// is the predicate's boolean, or nil for an asserts predicate, whose claim holds once it returns.
+// argument is the value the claim names. The true side is always checked, and the false side only
+// where falseToo says a caller narrows on it.
+func (l *lowering) checkedPredicateCheck(node, declaration *ast.Node, argument ir.Expression, source, target *checker.Type, result ir.Expression, falseToo bool, local func(string, ir.Type) int, message func(branch string) string) ([]ir.Statement, error) {
+	if falseToo && !l.checkedPredicateTagDomain(source, target) {
+		return nil, l.notYet(node, "checked predicate membership over an open tag domain")
 	}
 	// enum_tag_flow.go's hazards hold here too: a singleton open enum tag reads as a literal. A tag
 	// another member can hold proves no layout, so on the true branch the target is a checked view:
 	// predicateMembership registers its fields, as a .ts cast does, and a lying tag stops at the first
-	// field read (#k1t2wp9). A false branch has no view to read through, so it stays pending.
-	if (l.enumTagHazardOf(source, "kind") != enumTagNoHazard || !l.checkedPredicateTagProvesLayout(source, claim.Type())) && directions&predicateFalse != 0 {
-		return nil, l.notYet(call.AsNode(), "checked predicate membership by an enum tag another member can hold")
+	// field read (#k1t2wp9). A false branch has no view to read through, so it stays pending. The view
+	// is keyed by the target's type across the program, so a read narrowed by a call through a
+	// predicate's value reads through it too.
+	if (l.enumTagHazardOf(source, "kind") != enumTagNoHazard || !l.checkedPredicateTagProvesLayout(source, target)) && falseToo {
+		return nil, l.notYet(node, "checked predicate membership by an enum tag another member can hold")
 	}
-	setup, membership, err := l.predicateMembership(declaration, arguments[index], source, claim.Type(), local, 0)
+	setup, membership, err := l.predicateMembership(declaration, argument, source, target, local, 0)
 	if err != nil {
 		return nil, err
 	}
 	failure := func(branch string, condition ir.Expression) ir.Statement {
-		message := fmt.Sprintf("predicate %s at %s %s branch: source %s, target %s", name, site.Where, branch, sourceName, targetName)
-		return ir.If{Condition: condition, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}}
+		return ir.If{Condition: condition, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message(branch))}}}}
 	}
-	positive := append([]ir.Statement{}, setup...)
-	branch := "true"
-	if assertion {
-		branch = "asserts"
+	if result == nil {
+		return append(append([]ir.Statement{}, setup...), failure("asserts", ir.Unary{Operator: ir.Not, Operand: membership})), nil
 	}
-	positive = append(positive, failure(branch, ir.Unary{Operator: ir.Not, Operand: membership}))
-	if assertion {
-		body = append(body, positive...)
-	} else {
-		check := ir.If{Condition: returned, Then: positive}
-		if directions&predicateFalse != 0 {
-			check.Else = append(append([]ir.Statement{}, setup...), failure("false", membership))
+	check := ir.If{Condition: result, Then: append(append([]ir.Statement{}, setup...), failure("true", ir.Unary{Operator: ir.Not, Operand: membership}))}
+	if falseToo {
+		check.Else = append(append([]ir.Statement{}, setup...), failure("false", membership))
+	}
+	return []ir.Statement{check}, nil
+}
+
+// checkedPredicateDeclaration is whether declaration is a predicate R-T80 checks at a direct call: a
+// named .ts function claiming a predicate its body doesn't prove, with a body or an implementation.
+// The direct call checks it, the value it becomes checks it (functionValue), and a program where it
+// escapes as a value walks its false side (predicate_false_flow.go).
+func (l *lowering) checkedPredicateDeclaration(declaration *ast.Node) bool {
+	return declaration != nil && declaration.Kind == ast.KindFunctionDeclaration && declaration.Type() != nil && declaration.Type().Kind == ast.KindTypePredicate && (declaration.Body() != nil || l.censusImplementation(declaration) != nil) && l.checkedAssertionSource(declaration) && !l.checkedPredicateBodyProven(declaration.Type())
+}
+
+// checkedPredicateForwarder is the body of the value a checked predicate becomes (#vdt9f1q, ruled
+// Oct 25): functionValue's one forwarder, which every road to the value goes through, so the check
+// travels with it into an argument, a field, an alias or a return. It checks the predicate's own
+// claim, its true side or an asserts on return, at every call through the value; the false side is
+// the walk's (predicate_false_flow.go). forwarder is the forwarder's index, already in the result,
+// and call is its call of the predicate. A target that isn't a checked predicate gets no body here.
+// It's no call site, so PredicateChecks, which counts the calls R-T80 checks, doesn't count it.
+func (l *lowering) checkedPredicateForwarder(node *ast.Node, symbol *ast.Symbol, forwarder int, call ir.Call) ([]ir.Statement, bool, error) {
+	var declaration *ast.Node
+	if symbol != nil {
+		for _, candidate := range symbol.Declarations {
+			if candidate.Body() != nil && l.checkedPredicateDeclaration(candidate) {
+				declaration = candidate
+			}
 		}
-		body = append(body, check)
 	}
-	body = append(body, ir.Return{Value: returned})
-	l.result.Functions[wrapper].Body = body
-	return ir.Call{Function: wrapper, Arguments: invoked.Arguments, Returns: invoked.Type()}, nil
+	if declaration == nil {
+		return nil, false, nil
+	}
+	if len(declaration.TypeParameters()) != 0 {
+		return nil, false, l.notYet(node, "a checked generic predicate used as a value")
+	}
+	signature := l.checker.GetSignatureFromDeclaration(declaration)
+	claim := predicateOfSignature(l.checker, signature)
+	if claim == nil || claim.Type() == nil {
+		return nil, false, l.notYet(node, "a checked predicate without a reifiable target")
+	}
+	assertion := claim.Kind() == checker.TypePredicateKindAssertsIdentifier
+	index := int(claim.ParameterIndex())
+	if index < 0 || index >= len(call.Arguments) || index >= len(signature.Parameters()) {
+		return nil, false, l.notYet(node, "a checked predicate on a missing argument")
+	}
+	if (!assertion && call.Returns != ir.Boolean) || (assertion && call.Returns != 0) {
+		return nil, false, l.notYet(node, "a checked predicate with a non-boolean result")
+	}
+	name := declaration.Name().Text()
+	where := l.program.Where(declaration)
+	source := l.checker.GetTypeOfSymbol(signature.Parameters()[index])
+	sourceName, targetName := l.checker.TypeToString(source), l.checker.TypeToString(claim.Type())
+	local := func(name string, of ir.Type) int {
+		index := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: name, Type: of, Function: forwarder})
+		return index
+	}
+	body := []ir.Statement{}
+	var result ir.Expression
+	if assertion {
+		body = append(body, ir.Evaluate{Value: call})
+	} else {
+		held := local("result", ir.Boolean)
+		body = append(body, ir.Declare{Local: held, Value: call})
+		result = ir.Read{Local: held, Of: ir.Boolean}
+	}
+	check, err := l.checkedPredicateCheck(node, declaration, call.Arguments[index], source, claim.Type(), result, false, local, func(branch string) string {
+		return fmt.Sprintf("predicate %s used as a value, declared at %s, %s branch: source %s, target %s", name, where, branch, sourceName, targetName)
+	})
+	if err != nil {
+		return nil, false, err
+	}
+	body = append(body, check...)
+	return append(body, ir.Return{Value: result}), true, nil
 }
