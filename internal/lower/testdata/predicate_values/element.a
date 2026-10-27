@@ -18,7 +18,8 @@ function make(): Node {
     return { kind: "E", e: 1 };
 }
 const expression = make();
-const tests: ((node: Node) => node is Statement)[] = [isS];
+// The element type is inferred: an annotated predicate-typed element is refused outright.
+const tests = [isS];
 const first = tests[0];
 if (first !== undefined && first(expression)) {
     console.log(expression.s);

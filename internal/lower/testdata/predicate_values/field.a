@@ -18,10 +18,8 @@ function make(): Node {
     return { kind: "E", e: 1 };
 }
 const expression = make();
-interface Visitor {
-    readonly test: (node: Node) => node is Statement;
-}
-const visitor: Visitor = { test: isS };
+// The field's type is inferred: an annotated predicate-typed field is refused outright.
+const visitor = { test: isS };
 if (visitor.test(expression)) {
     console.log(expression.s);
 }

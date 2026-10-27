@@ -18,7 +18,8 @@ function make(): Node {
     return { kind: "E", e: 1 };
 }
 const expression = make();
-function pick(): (node: Node) => node is Statement {
+// The return type is inferred: an annotated predicate-typed return is refused outright.
+function pick() {
     return isS;
 }
 if (pick()(expression)) {

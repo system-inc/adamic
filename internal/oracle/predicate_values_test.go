@@ -37,8 +37,9 @@ func init() {
 
 // Each program lies on its predicate's true side (an asserts one returns for an Expression), and
 // reaches the lie by one road: an argument in tsc's visitor shape, a field, a let alias, a returned
-// function, an array element, a bound function, an asserts value passed in, and a claim on the
-// second parameter (an optional call through a value isn't lowered yet). Node reads the missing
+// function, an array element, an asserts value passed in, and a claim on the second parameter. Two
+// roads stop short of a value: an optional call through one isn't lowered yet, and bind is refused
+// as an unbound method. Node reads the missing
 // field as undefined. As .ts, every road stops at the forwarder's check, its message located at the
 // predicate's declaration (12:1 in each), on sanitized and released native and the JavaScript
 // backend; as .a, the unproven predicate stays refused. Mutant: the forwarder without its check
@@ -51,7 +52,6 @@ var predicateValueFixtures = []struct {
 	{"alias", "isS", "undefined\n", "", "true", "Node"},
 	{"returned", "isS", "undefined\n", "", "true", "Node"},
 	{"element", "isS", "undefined\n", "", "true", "Node"},
-	{"bound", "isS", "undefined\n", "", "true", "Node"},
 	{"asserts", "assertS", "undefined\n", "", "asserts", "Node"},
 	{"second_parameter", "isS", "undefined\n", "", "true", "Node"},
 }

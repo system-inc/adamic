@@ -30,11 +30,18 @@ function visitNodes<T extends Node>(nodes: Node[], test: (node: Node) => node is
     }
     return kept;
 }
-interface Visitor {
-    readonly test: (node: Node) => node is Statement;
-}
-function pick(): (node: Node) => node is Statement {
+// The field, element and return types below are inferred: annotated, a predicate-typed one is
+// refused outright.
+function pick() {
     return isS;
+}
+// One call, read only on its true side: a loop around a false side would carry that side's
+// narrowing to the next iteration's read, which the walk stops.
+function length(node: Node, test: (node: Node) => node is Statement): number {
+    if (test(node)) {
+        return node.s.length;
+    }
+    return 0;
 }
 const nodes: Node[] = [{ kind: "E", e: 1 }, { kind: "S", s: "first" }, { kind: "S", s: "second" }];
 const identity = (node: Node): Node => node;
@@ -43,14 +50,12 @@ for (const node of nodes) {
     console.log(visited === undefined ? "none" : visited.s);
 }
 console.log(visitNodes(nodes, isS).map(statement => statement.s).join(","));
-const visitor: Visitor = { test: isS };
-const tests: ((node: Node) => node is Statement)[] = [isS, pick()];
+const visitor = { test: isS };
+const tests = [isS, pick(), visitor.test];
 let count = 0;
 for (const node of nodes) {
     for (const test of tests) {
-        if (visitor.test(node) && test(node)) {
-            count = count + node.s.length;
-        }
+        count = count + length(node, test);
     }
 }
 console.log(String(count));
