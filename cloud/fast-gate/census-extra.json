@@ -1966,5 +1966,24 @@
     "opt_in_on": [
       "ADAMIC_ORACLE_WASI"
     ]
+  },
+  {
+    "file": "internal/oracle/parser_stack_test.go",
+    "test": "TestParserStackGuardCost",
+    "id": "TestParserStackGuardCost:41e207d41edea2257b021bccb77bede24f03cf95e755bb1f4002eb4bd34b044f",
+    "line": 128,
+    "condition": "os.Getenv(\"ADAMIC_MEASURE_STACK_GUARD\") == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_MEASURE_STACK_GUARD\")"
+    ],
+    "callers": [
+      "TestParserStackGuardCost"
+    ],
+    "message": "\"set ADAMIC_MEASURE_STACK_GUARD=1 for the local cost record\"",
+    "class": "measurement",
+    "provides": "Opt-in timing of the parser's stack guard, guarded against unguarded release builds over five stage3/parser-next programs; does not replace correctness verification, which TestParserStackLegal, TestParserStackPathological, TestParserStackTinyLimit and TestParserStackGuardMutant's sanitized stack overflow carry.",
+    "opt_in_off": [
+      "ADAMIC_MEASURE_STACK_GUARD"
+    ]
   }
 ]
