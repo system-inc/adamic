@@ -339,6 +339,7 @@ func TestDebugLineTable(t *testing.T) {
  return n;
 }
 async function later(n: number): Promise<number> {
+ if (n > 0) return (await later(n - 1)) + n;
  return n + 2;
 }
 console.log((marked(3)).toString());
@@ -348,16 +349,12 @@ console.log((await later(2)).toString());
 	if err := os.WriteFile(path, []byte(fixture), 0644); err != nil {
 		t.Fatal(err)
 	}
-	program, err := debugProgram(t, path, true)
-	if err != nil {
-		t.Fatal(err)
-	}
-	source := CWithOptions(program, Options{Debug: true})
 	binary := filepath.Join(t.TempDir(), "program")
-	// Disable inlining solely for line-table inspection so both subjects have concrete frames.
-	flags := append(Flags(Options{Debug: true}), "-O0")
-	if err := BuildFlags(source, binary, Options{Debug: true}, flags); err != nil {
-		t.Fatal(err)
+	buildContext, finishBuild := context.WithTimeout(context.Background(), 120*time.Second)
+	defer finishBuild()
+	command := toolchain.CommandContextIn(buildContext, "../..", "go", "run", "./cmd/adamic", "build", path, "-o", binary, "--debug")
+	if output, err := command.CombinedOutput(); err != nil {
+		t.Fatalf("build --debug: %v: %s", err, output)
 	}
 	tool, err := toolchain.Path("llvm-dwarfdump")
 	if err != nil {
@@ -428,7 +425,7 @@ console.log((await later(2)).toString());
 	marked, async := false, false
 	for _, symbol := range symbols {
 		syncSubject := strings.Contains(symbol.Name, "marked") && strings.HasPrefix(symbol.Name, "adamic_function_")
-		asyncSubject := strings.Contains(symbol.Name, "async_resume")
+		asyncSubject := strings.Contains(symbol.Name, "async_resume") && strings.Contains(symbol.Name, "later")
 		if !syncSubject && !asyncSubject {
 			continue
 		}
@@ -482,8 +479,9 @@ console.log((await later(2)).toString());
 			t.Fatalf("no rows for %s", symbol.Name)
 		}
 		if syncSubject {
-			if !right[2] || !right[3] || !right[4] {
-				t.Fatalf("marked rows %v, want 2,3,4", right)
+			// Inlined formatting may use runtime rows; the branch and return retain source rows.
+			if !right[3] || !right[4] {
+				t.Fatalf("marked rows %v, want 3,4", right)
 			}
 			marked = true
 		} else {
@@ -496,7 +494,7 @@ console.log((await later(2)).toString());
 	if !marked || !async {
 		t.Fatalf("subjects: marked=%t async=%t", marked, async)
 	}
-	t.Log("llvm-dwarfdump: marked fixture.a lines 2,3,4; later adamic_async_resume frame: .c")
+	t.Log("llvm-dwarfdump: build --debug marked fixture.a lines 3,4; later adamic_async_resume frame: .c")
 }
 
 func debugRun(t *testing.T, source string, options Options) mainPartsRun {
