@@ -184,14 +184,37 @@ done
 # Optional WASI SDK 27: native clang remains the default in PATH.
 if "$wasiSDK"; then
  wasiVersion=27
+ case $(uname -m) in
+  x86_64)
+   wasiArchitecture=x86_64
+   wasiSHA256=b7d4d944c88503e4f21d84af07ac293e3440b1b6210bfd7fe78e0afd92c23bc2 ;;
+  *)
+   wasiArchitecture=arm64
+   wasiSHA256=4cf4c553c4640e63e780442146f87d83fdff5737f988c06a6e3b2f0228e37665 ;;
+ esac
  wasiDirectory="$tools/wasi-sdk"
- if [ ! -x "$wasiDirectory/bin/clang" ]; then
-  case $(uname -m) in
-   x86_64) wasiArchitecture=x86_64 ;;
-   *) wasiArchitecture=arm64 ;;
-  esac
-  mkdir -p "$wasiDirectory"
-  curl -fsSL "https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-$wasiVersion/wasi-sdk-$wasiVersion.0-$wasiArchitecture-linux.tar.gz" | tar --no-same-owner -xz -C "$wasiDirectory" --strip-components 1
+ # Loom keys products and units built with the SDK by its archive's sha256, read from archive-sha256 beside it, as
+ # wasmtime's is: an install counts only when its record is the pin, and anything else (an older install with no
+ # record, another release, an interrupted lay) is laid again. The archive is checked whole before anything unpacks,
+ # and unpacked beside the SDK and renamed in whole, since units on a live box compile against it and an extract in
+ # place could hand one a half-written file.
+ if [ ! -x "$wasiDirectory/bin/clang" ] || [ "$(cat "$wasiDirectory/archive-sha256" 2> /dev/null)" != "$wasiSHA256" ]; then
+  wasiArchive="$run/wasi-sdk-$wasiVersion.0-$wasiArchitecture-linux.tar.gz"
+  curl -fsSL "https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-$wasiVersion/wasi-sdk-$wasiVersion.0-$wasiArchitecture-linux.tar.gz" -o "$wasiArchive"
+  printf '%s  %s\n' "$wasiSHA256" "$wasiArchive" | sha256sum -c - ||
+   { echo "setup: the wasi-sdk $wasiVersion archive isn't its pin, $wasiSHA256; the installed SDK is left as it was" >&2 && exit 1; }
+  wasiStaged="$tools/.wasi-sdk.partial"
+  rm -rf "$wasiStaged"
+  mkdir -p "$wasiStaged"
+  tar --no-same-owner -xzf "$wasiArchive" -C "$wasiStaged" --strip-components 1
+  rm -f "$wasiArchive"
+  printf '%s\n' "$wasiSHA256" > "$wasiStaged/archive-sha256"
+  rm -rf "$tools/.wasi-sdk.replaced"
+  if [ -e "$wasiDirectory" ]; then
+   mv "$wasiDirectory" "$tools/.wasi-sdk.replaced"
+  fi
+  mv "$wasiStaged" "$wasiDirectory"
+  rm -rf "$tools/.wasi-sdk.replaced"
  fi
  "$wasiDirectory/bin/clang" --version | head -n 1
  # The WASI tests link with the clang on PATH ($tools/bin/clang), whose resource directory holds builtins for the
@@ -208,7 +231,7 @@ if "$wasiSDK"; then
  printf '#include <stdlib.h>\nint main(void) { void *p = malloc(16); free(p); return 0; }\n' > "$run/wasi.c"
  "$tools/bin/clang" --target=wasm32-wasi --sysroot="$wasiDirectory/share/wasi-sysroot" -O2 "$run/wasi.c" -o "$run/wasi.wasm" ||
   { echo "setup: $tools/bin/clang can't link for wasm32-wasi with wasi-sdk $wasiVersion" >&2 && exit 1; }
- step "wasi sdk ready ($wasiDirectory, linking with $tools/bin/clang)"
+ step "wasi sdk ready ($wasiDirectory, archive sha256 $wasiSHA256, linking with $tools/bin/clang)"
 fi
 
 # Optional independent WASI engine, pinned with archive checksums.
