@@ -1,0 +1,8 @@
+// Every Root has version 1, so a test on version proves nothing, but kind can be any string and View
+// declares 'Viewed': .a passes over version and tests kind, which tells a View from another Root.
+interface Root { readonly version: 1; readonly kind: string; }
+interface View extends Root { readonly version: 1; readonly kind: 'Viewed'; count: number; }
+const raw = { version: 1 as const, kind: 'Viewed', count: 4 };
+const base: Root = raw;
+const viewed = base as View;
+console.log(`viewed ${viewed.count + 1}`);

@@ -13,6 +13,8 @@ func TestCallableProducerLiteralReturn(t *testing.T) {
 	lowersAndAgreesWithNodeAs(t, source, extension)
 }
 
+// In .a each of these casts tests a tag every source value has, so the cast is refused (#q97a1rr)
+// before the producer is reached.
 func callableProducerAdapterRefusal(t *testing.T, name string) {
 	t.Helper()
 	path, err := filepath.Abs("testdata/callable_producers/" + name + ".a")
@@ -25,8 +27,8 @@ func callableProducerAdapterRefusal(t *testing.T, name string) {
 	}
 	source, extension := callableProducerSource(t, name+".a")
 	_, err = lowerSourceAs(t, source, extension)
-	if err == nil || !strings.Contains(err.Error(), "main.a:") || !strings.Contains(err.Error(), "wrap the producer in an arrow") {
-		t.Fatalf("want located producer adapter refusal, got %v", err)
+	if err == nil || !strings.Contains(err.Error(), "main.a:") || !strings.Contains(err.Error(), "whose tag test is vacuous") || !strings.Contains(err.Error(), "a tag of its own") {
+		t.Fatalf("want located vacuous downcast refusal, got %v", err)
 	}
 	t.Log(err)
 }
@@ -82,9 +84,11 @@ func TestCallableProducerAmbiguousRefused(t *testing.T) {
  const view = base as View;
  console.log("" + (view.value !== undefined));
  `
+	// In .a the cast's tag test, kind === "Holder", is one every Root passes, so the cast is refused
+	// (#q97a1rr) before the producer is reached.
 	_, err := lowerSource(t, source)
-	if err == nil || !strings.Contains(err.Error(), "assignable to more than one union member") || !strings.Contains(err.Error(), "wrap the producer in an arrow") || !strings.Contains(err.Error(), "main.a:") {
-		t.Fatalf("want located ambiguous-producer refusal, got %v", err)
+	if err == nil || !strings.Contains(err.Error(), "a downcast to View whose tag test is vacuous") || !strings.Contains(err.Error(), "give View a tag of its own") || !strings.Contains(err.Error(), "main.a:") {
+		t.Fatalf("want located vacuous downcast refusal, got %v", err)
 	}
 }
 
@@ -104,12 +108,13 @@ func TestCallableProducerUniqueObjectResultRefused(t *testing.T) {
 
 func TestCallableProducerAmbiguousCertificate(t *testing.T) {
 	t.Parallel()
-	program := lowersAndAgreesWithNode(t, `interface Root {readonly kind:'Holder'}
+	// .ts, where the cast stays a checked view: in .a its tag test every Root passes is refused (#q97a1rr).
+	program := lowersAndAgreesWithNodeAs(t, `interface Root {readonly kind:'Holder'}
  interface View extends Root {readonly value:((v:1)=>number)|((v:2)=>number)}
  const raw={kind:'Holder' as const,value:(v:number):number=>1};
  const base:Root=raw;
  const view=base as View;
- console.log(view.kind);`)
+ console.log(view.kind);`, ".ts")
 	seen := false
 	for _, contract := range program.ViewContracts {
 		if !contract.ProducerCertified {

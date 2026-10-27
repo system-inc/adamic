@@ -1,4 +1,4 @@
-// a-check: refused view member read by element access is not yet checked
+// a-check: refused a downcast to View whose tag test is vacuous
 // A wrong mixed union view (string or number) read by a string-literal key: the slot holds a boolean.
 interface Root { readonly kind: 'Holder'; }
 interface View extends Root { readonly value: string | number; }

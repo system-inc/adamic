@@ -12,14 +12,29 @@ import (
 // A view field whose interface has a length is held as a union, since a string, an array and an object all satisfy
 // it, and its contract is an object's, so neither the union adapter nor the in-place check can emit the read. Lowering
 // stops at the read, on a cast-reached object and on one the cast never sees, where emission used to panic with an
-// incomplete checked field contract and the JavaScript backend aborted where Node prints the length.
+// incomplete checked field contract and the JavaScript backend aborted where Node prints the length. The probes are
+// .ts, the reviewed program's text among them, where the cast stays a checked view; the reviewed program itself is .a,
+// where the cast is refused first, since its tag test, kind === 'Holder', is one every Root passes (#q97a1rr).
 func TestViewFieldHeldAsUnionStopsAtTheRead(t *testing.T) {
 	t.Parallel()
 	reviewed, err := filepath.Abs(filepath.Join(reviewRoot, "refused", "fxspptb_oct9_views_p70_length_view_over_tuple.a"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	direct := filepath.Join(t.TempDir(), "direct.a")
+	_, err = lowered(t, reviewed)
+	var refused *lower.Refused
+	if !errors.As(err, &refused) || refused.Where != reviewed+":8:16" || refused.What != `a downcast to View whose tag test is vacuous: every Root has kind "Holder"` {
+		t.Fatalf("want the cast's vacuous downcast refusal at %s:8:16, got %v", reviewed, err)
+	}
+	reviewedSource, err := os.ReadFile(reviewed)
+	if err != nil {
+		t.Fatal(err)
+	}
+	twin := filepath.Join(t.TempDir(), "reviewed.ts")
+	if err := os.WriteFile(twin, reviewedSource, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	direct := filepath.Join(t.TempDir(), "direct.ts")
 	source := `interface Sized { readonly length: number; }
 interface Root { readonly kind: 'Holder'; }
 interface View extends Root { readonly value: Sized; }
@@ -36,7 +51,7 @@ console.log(` + "`${viewed.kind}`" + `);
 		t.Fatal(err)
 	}
 	for _, probe := range []struct{ path, stdout, where string }{
-		{reviewed, "2\n", reviewed + ":9:15"},
+		{twin, "2\n", twin + ":9:15"},
 		{direct, "3\nHolder\n", direct + ":9:15"},
 	} {
 		node := onNode(t, probe.path)

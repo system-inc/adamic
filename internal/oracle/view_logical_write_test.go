@@ -110,7 +110,9 @@ func TestViewLogicalWriteWitnessRepairsAgreeWithNode(t *testing.T) {
 // &&=, ||= and ??= through a checked view by a computed key are refused, by the names its key can be: a
 // plain read through the view by a computed key is refused and a plain = isn't lowered, so there is no
 // checked form to share. The program's whole diagnostic is pinned in its .refused file, and its first
-// line names the refusal. Mutant: checkViewLogicalWrites returning nil, which lowers it.
+// line names the refusal. In .a computed.a's cast is refused first, since its tag test, kind ===
+// 'Holder', is one every Root passes (#q97a1rr), so that is the refusal pinned here, and the computed
+// key's is held by internal/lower's TestViewLogicalWriteWithoutASiteIsRefused.
 func TestViewLogicalWritesAreRefused(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/view_logical_write_refused"

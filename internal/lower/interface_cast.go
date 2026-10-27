@@ -1,16 +1,21 @@
 package lower
 
 import (
+	"reflect"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// A tag chooses the interface; its fields remain checked at every read.
+// A tag chooses the interface; its fields remain checked at every read. In .a the tag must tell the
+// target from the source: a test every source value passes proves nothing, so .a takes the first test
+// a source value can fail and refuses the cast when there is none. .ts keeps the first tag, checked.
 func (l *lowering) interfaceCast(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
 	if source.Flags()&checker.TypeFlagsObject == 0 || target.Flags()&checker.TypeFlagsObject == 0 || value.Type() != ir.Object || isClassInstance(target) {
 		return nil, nil
 	}
+	var vacuous *Refused
 	for _, property := range l.checker.GetPropertiesOfType(source) {
 		field := property.Name
 		literal := l.fieldLiteral(target, field)
@@ -21,12 +26,58 @@ func (l *lowering) interfaceCast(node *ast.Node, value ir.Expression, source, ta
 		if !constant {
 			continue
 		}
+		if !l.checkedAssertionSource(node) && l.withinLiterals(l.checker.GetTypeOfSymbol(property), []*checker.Type{literal}) {
+			if vacuous == nil {
+				vacuous = &Refused{Where: l.program.Where(node), What: "a downcast to " + l.checker.TypeToString(target) + " whose tag test is vacuous: every " + l.checker.TypeToString(source) + " has " + field + " " + l.checker.TypeToString(literal), Fix: "give " + l.checker.TypeToString(target) + " a tag of its own in a discriminated union, or build the value as a " + l.checker.TypeToString(target) + " so the compiler can prove it"}
+			}
+			continue
+		}
 		if _, err := l.view(node, value, target); err != nil {
 			return nil, err
 		}
 		return ir.CheckedCast{Value: value, Field: field, FieldType: fieldType, Allowed: []ir.Expression{allowed}, CheckedFields: true, Message: "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)}, nil
 	}
+	if vacuous != nil {
+		return nil, vacuous
+	}
 	return nil, nil
+}
+
+// withinLiterals is whether every value declared's type admits is one of the allowed literals,
+// compared by runtime value as a cast's tag test compares, so the test passes for every one of them: a
+// union whose members all are, a literal equal to one (two enums' members sharing a value are equal
+// here), an intersection with a member that is, or a type parameter whose constraint is. Any other
+// type (string, undefined, an object, unknown, a template) admits a value the test can fail.
+func (l *lowering) withinLiterals(declared *checker.Type, allowed []*checker.Type) bool {
+	switch {
+	case declared.Flags()&checker.TypeFlagsUnion != 0:
+		for _, member := range declared.Types() {
+			if !l.withinLiterals(member, allowed) {
+				return false
+			}
+		}
+		return true
+	case declared.Flags()&checker.TypeFlagsIntersection != 0:
+		for _, member := range declared.Types() {
+			if l.withinLiterals(member, allowed) {
+				return true
+			}
+		}
+		return false
+	case declared.Flags()&checker.TypeFlagsTypeParameter != 0:
+		constraint := l.checker.GetBaseConstraintOfType(declared)
+		return constraint != nil && constraint != declared && l.withinLiterals(constraint, allowed)
+	}
+	mask := checker.TypeFlagsStringLiteral | checker.TypeFlagsNumberLiteral | checker.TypeFlagsBooleanLiteral
+	if declared.Flags()&mask == 0 {
+		return false
+	}
+	for _, literal := range allowed {
+		if literal.Flags()&mask == declared.Flags()&mask && reflect.DeepEqual(literal.AsLiteralType().Value(), declared.AsLiteralType().Value()) {
+			return true
+		}
+	}
+	return false
 }
 
 // view registers checks by receiver type and member, including nested contracts.

@@ -47,10 +47,11 @@ func TestViewSnapshotMaybeNumber(t *testing.T) {
 	checkViewSnapshot(t, "number")
 }
 
-// Typed arrays retain their current mixed-union refusal while snapshots preserve their reference.
+// Typed arrays retain their current mixed-union refusal while snapshots preserve their reference. The program is .ts,
+// where the cast stays a checked view: in .a its tag test every Root passes is refused (#q97a1rr).
 func TestViewSnapshotTypedArrayReference(t *testing.T) {
 	t.Parallel()
-	path := filepath.Join(t.TempDir(), "typed-array-view.a")
+	path := filepath.Join(t.TempDir(), "typed-array-view.ts")
 	source := `interface Root { readonly kind: "Holder" }
 interface View extends Root { readonly value: string | number }
 const raw = { kind: "Holder" as const, value: new Uint8Array(1) };

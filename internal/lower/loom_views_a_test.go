@@ -30,9 +30,11 @@ func requireLoomViewRefusal(t *testing.T, name, output, diagnostic, fix string) 
 	}
 }
 
+// In .a the cast of key, views_p01, p05, p06, p19, p72, native_p37 and union_key tests a tag every
+// source value passes, so the cast is refused (#q97a1rr) before the read is reached.
 func TestLoomViewKeyRead(t *testing.T) {
 	t.Parallel()
-	requireLoomViewRefusal(t, "key", "NaN\nfalse\n", "view member read by element access is not yet checked", "use view.count")
+	requireLoomViewRefusal(t, "key", "NaN\nfalse\n", "a downcast to Holder whose tag test is vacuous", "give Holder a tag of its own")
 }
 
 func TestLoomViewUnsupportedRead(t *testing.T) {
@@ -47,12 +49,14 @@ func TestLoomViewUnsupportedCallableRead(t *testing.T) {
 	lowersAndAgreesWithNodeAs(t, source, extension)
 }
 
+// key.a's fix lowers as .ts, where the cast stays a checked view: in .a its tag test every source
+// value passes is refused (#q97a1rr).
 func TestLoomViewKeyFix(t *testing.T) {
 	t.Parallel()
-	source, extension := loomViewFixture(t, "key.a")
+	source, _ := loomViewFixture(t, "key.a")
 	source = strings.ReplaceAll(source, "view['count']", "view.count")
 	source = strings.Replace(source, "count: 'seven'", "count: 7", 1)
-	lowersAndAgreesWithNodeAs(t, source, extension)
+	lowersAndAgreesWithNodeAs(t, source, ".ts")
 }
 
 func TestLoomViewUnsupportedUnreadControl(t *testing.T) {
@@ -64,27 +68,27 @@ func TestLoomViewUnsupportedUnreadControl(t *testing.T) {
 
 func TestLoomViewOriginalViewsP01(t *testing.T) {
 	t.Parallel()
-	requireLoomViewRefusal(t, "views_p01", "undefined\n", "view member read by element access is not yet checked", "use view.")
+	requireLoomViewRefusal(t, "views_p01", "undefined\n", "a downcast to Holder whose tag test is vacuous", "give Holder a tag of its own")
 }
 
 func TestLoomViewOriginalViewsP05(t *testing.T) {
 	t.Parallel()
-	requireLoomViewRefusal(t, "views_p05", "NaN\nfalse\n", "view member read by element access is not yet checked", "use view.")
+	requireLoomViewRefusal(t, "views_p05", "NaN\nfalse\n", "a downcast to Holder whose tag test is vacuous", "give Holder a tag of its own")
 }
 
 func TestLoomViewOriginalViewsP06(t *testing.T) {
 	t.Parallel()
-	requireLoomViewRefusal(t, "views_p06", "2\n", "view member read by element access is not yet checked", "use view.")
+	requireLoomViewRefusal(t, "views_p06", "2\n", "a downcast to Holder whose tag test is vacuous", "give Holder a tag of its own")
 }
 
 func TestLoomViewOriginalViewsP19(t *testing.T) {
 	t.Parallel()
-	requireLoomViewRefusal(t, "views_p19", "undefined\n", "view member read by element access is not yet checked", "use view.")
+	requireLoomViewRefusal(t, "views_p19", "undefined\n", "a downcast to Receiver whose tag test is vacuous", "give Receiver a tag of its own")
 }
 
 func TestLoomViewOriginalViewsP72(t *testing.T) {
 	t.Parallel()
-	requireLoomViewRefusal(t, "views_p72", "number 2\n", "view member read by element access is not yet checked", "use view.")
+	requireLoomViewRefusal(t, "views_p72", "number 2\n", "a downcast to View whose tag test is vacuous", "give View a tag of its own")
 }
 
 // Views D checks this read against its contract, so it compiles and prints what Node prints.
@@ -96,10 +100,10 @@ func TestLoomViewOriginalNativeP21(t *testing.T) {
 
 func TestLoomViewOriginalNativeP37(t *testing.T) {
 	t.Parallel()
-	requireLoomViewRefusal(t, "native_p37", "xx\n0\n", "checked view read of field", "contract before reading this field")
+	requireLoomViewRefusal(t, "native_p37", "xx\n0\n", "a downcast to OtherView whose tag test is vacuous", "give OtherView a tag of its own")
 }
 
 func TestLoomViewUnionKeyRead(t *testing.T) {
 	t.Parallel()
-	requireLoomViewRefusal(t, "union_key", "true\n", "view member read by element access is not yet checked", "use view.value")
+	requireLoomViewRefusal(t, "union_key", "true\n", "a downcast to Holder whose tag test is vacuous", "give Holder a tag of its own")
 }

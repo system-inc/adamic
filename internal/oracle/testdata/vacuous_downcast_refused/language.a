@@ -1,0 +1,9 @@
+// a-check: refused a downcast to View whose tag test is vacuous
+// View extends Root and declares no kind of its own, so the cast's test is kind === 'Holder', which
+// every Root passes. This Root was never a View: Node prints count NaN.
+interface Root { readonly kind: 'Holder'; }
+interface View extends Root { count: number; }
+const base: Root = { kind: 'Holder' };
+console.log('viewing');
+const viewed = base as View;
+console.log(`count ${viewed.count + 1}`);

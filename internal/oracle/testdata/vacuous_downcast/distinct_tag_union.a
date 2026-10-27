@@ -1,0 +1,15 @@
+// The sound sibling of a vacuous downcast: View has a kind of its own, so Root | View is a
+// discriminated union and === on kind narrows to View with nothing left to check.
+interface Root { readonly kind: 'Holder'; }
+interface View { readonly kind: 'Viewed'; count: number; }
+type Item = Root | View;
+function describe(item: Item): string {
+	if (item.kind === 'Viewed') {
+		return `viewed ${item.count + 1}`;
+	}
+	return 'holder';
+}
+const items: Item[] = [{ kind: 'Holder' }, { kind: 'Viewed', count: 4 }];
+for (const item of items) {
+	console.log(describe(item));
+}

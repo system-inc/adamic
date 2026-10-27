@@ -16,15 +16,10 @@ func init() {
 			checked bool
 		}{"internal/lower/testdata/callable_producers/" + name + ".ts", true, false})
 	}
-	// Ambiguous p22 and p135_object_result are Refused, not NotYet. Their
-	// located diagnostics and Node controls are held by the lower tests.
-	for _, name := range []string{"p59", "p62", "p135_unique_object_result"} {
-		fixtures = append(fixtures, struct {
-			path            string
-			lowers, checked bool
-		}{"internal/lower/testdata/callable_producers/" + name + ".a", false, false})
-	}
-
+	// p22, p59, p62, p135_object_result and p135_unique_object_result are
+	// Refused, not NotYet: in .a each cast tests a tag every source value has
+	// (#q97a1rr). Their located diagnostics and Node controls are held by the
+	// lower tests.
 }
 
 // Stale direct-function certificates must never emit a closure-code comparison.

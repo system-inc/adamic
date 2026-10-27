@@ -1,0 +1,11 @@
+// a-check: refused a downcast to View whose tag test is vacuous
+// Every Root's kind is Shape.Holder or Alias.Holder, and both are 'Holder' at run time, so the cast's
+// test kind === Shape.Holder passes for every Root. This one was never a View: Node prints count NaN.
+enum Shape { Holder = 'Holder', Viewed = 'Viewed' }
+enum Alias { Holder = 'Holder' }
+interface Root { readonly kind: Shape.Holder | Alias.Holder; }
+interface View extends Root { readonly kind: Shape.Holder; count: number; }
+const base: Root = { kind: Alias.Holder };
+console.log('viewing');
+const viewed = base as View;
+console.log(`count ${viewed.count + 1}`);
