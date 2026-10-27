@@ -63,7 +63,7 @@ usage error.
 
 | Flag | Applies to | Effect | Code |
 | --- | --- | --- | --- |
-| `-o <out>` | `build`, required | the binary's path | `cmd/adamic/main.go:run` |
+| `-o <out>` | `build`, required | the binary's path; a relative one is under the working directory | `cmd/adamic/main.go:run`, `cmd/adamic/tsgo.go:buildWithNativeExports` |
 | `--target wasm32-wasi` | `build` | a WebAssembly module for WASI instead of a host binary. The only value accepted; any other, a second `--target`, or a missing value is a usage error | `cmd/adamic/tsgo.go:buildWithNative` |
 | `--count` | `build` | the binary counts allocations, frees, retains, releases, peak and regions and writes `adamic: counts: ...` to stderr as it exits (`-DADAMIC_COUNT`) | `cmd/adamic/tsgo.go:buildWithNative`, `internal/native/native.go:Flags`, `internal/native/runtime/count.c:18-34` |
 | `--sanitize` | `build`, native only | `-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all` in place of the release flags | `cmd/adamic/tsgo.go:buildWithNative`, `internal/native/native.go:Flags` |

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
 
 	_ "github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/ir"
@@ -29,6 +30,13 @@ func buildWithNative(path, output string, arguments []string, buildNative func(s
 }
 
 func buildWithNativeExports(path, output string, arguments []string, buildNative func(string, string, native.Options) error, entryFunctions bool) int {
+	// native links from inside its own temporary build directory and removes it, so a relative -o would name a path
+	// in there and the binary would go with it: the command exited 0 and left nothing (Language, Oct 26).
+	output, err := filepath.Abs(output)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "adamic: -o %s: %v\n", output, err)
+		return 1
+	}
 	options := native.Options{Release: true, ProgramRegion: programRegionRequested()}
 	archive := ""
 	explain := false
