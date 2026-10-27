@@ -103,8 +103,6 @@ func TestCheckedPredicatePendingContracts(t *testing.T) {
 		// comparison. .a refuses the body; in .ts the predicate is checked, and the read it would narrow is
 		// refused as an open enum refinement, so the lie never reaches a field read (Node prints text1).
 		{"open enum union tag", `enum Kind { A = 1, B = 2 } interface A { readonly kind: Kind.A; readonly value: number } interface B { readonly kind: Kind; readonly value: string } type Node = A | B; function isA(n: Node): n is A { return n.kind === Kind.A; } function numeric(): number { return 1; } const b: B = { kind: numeric(), value: 'text' }; function use(n: Node): void { if (isA(n)) { console.log(` + "`${n.value + 1}`" + `); } } use(b);`, "an object refinement using an open numeric enum as a literal tag"},
-		// The same predicate passed to filter: its body proves nothing, so it's refused as an argument.
-		{"open enum union tag argument", `enum Kind { A = 1, B = 2 } interface A { readonly kind: Kind.A; readonly value: number } interface B { readonly kind: Kind; readonly value: string } type Node = A | B; function isA(n: Node): n is A { return n.kind === Kind.A; } function numeric(): number { return 1; } const b: B = { kind: numeric(), value: 'text' }; const nodes: Node[] = [b]; for (const a of nodes.filter(isA)) { console.log(` + "`${a.value + 1}`" + `); }`, "an unproven predicate argument for parameter predicate"},
 		// A false branch over a tag that can lie has no view to read through (#k1t2wp9). Its uses never reach the
 		// call's own false-direction NotYet: a refined use is refused as an open enum refinement, and an open
 		// member's domain stops at the call first. These pin that no false-side use is admitted.

@@ -180,6 +180,10 @@ func TestPredicateValuesOverAnOpenTag(t *testing.T) {
 	for _, probe := range []struct{ name, nodeOut, stderr string }{
 		{"open_tag", "x\nother\n", ""},
 		{"open_tag_lie", "undefined\n", "adamic: panic: field read failed: node.text is not initialized; expected string, found missing\n"},
+		// #k1t2wp9's open enum union, isA passed to filter: nothing narrows on it in the program, so it
+		// was refused as an unproven argument; as a value it's admitted, and A's view stops the lie at
+		// a.value's read where Node prints text1.
+		{"open_enum_filter", "text1\n", "adamic: panic: field read failed: a.value is not a number; expected number, found string\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
