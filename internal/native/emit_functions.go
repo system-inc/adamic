@@ -69,8 +69,13 @@ func (e *emitter) functionBody(function ir.Function) {
 	e.function = &function
 	e.functionDepth = len(e.scopes)
 	e.scopes = append(e.scopes, nil)
-	// Recursion that runs out of stack panics, as Node's does, rather than crashing (stack.c).
+	// Recursion that runs out of stack panics, as Node's does, rather than crashing (stack.c). The
+	// panic names the source declaration, not the instance, so instances sharing a stable symbol
+	// emit one body (emit.go).
 	name := function.Name
+	if len(function.Source.Declaration) != 0 {
+		name = function.Source.Declaration[len(function.Source.Declaration)-1]
+	}
 	if name == "" {
 		name = "<anonymous>"
 	}
