@@ -1,0 +1,5 @@
+import fs from 'node:fs';
+import {Buffer} from 'node:buffer';
+const resolve = fs.realpathSync.native;
+const args: [string] = ['.'];
+resolve(...args);

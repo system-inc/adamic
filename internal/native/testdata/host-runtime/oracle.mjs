@@ -86,6 +86,18 @@ if (mode === 'output') {
     process.env.HOST_VALUE = 'changed'; // External host mutation, not admitted Adamic code.
     log(getEnvironmentVariable('HOST_VALUE'));
     log(before);
+} else if (mode === 'realpath') {
+    process.chdir(process.env.HOST_CHILD);
+    log(fs.realpathSync.native('link').endsWith('/file'));
+    for (const [name, code] of [['missing','ENOENT'], ['dangling','ENOENT'], ['file/','ENOTDIR']]) {
+        try { fs.realpathSync.native(name); log(false); } catch (error) { log(error.code === code); }
+    }
+} else if (mode === 'realpath-error') {
+    process.chdir(process.env.HOST_CHILD);
+    for (const path of ['missing', '\ud800']) {
+        try { fs.realpathSync.native(path); throw new Error('expected ENOENT'); }
+        catch (error) { for (const field of ['code', 'syscall', 'path', 'message', 'errno']) log(error[field]); }
+    }
 } else if (mode === 'eol') {
     log(JSON.stringify(os.EOL));
     process.stdout.write('Version 6.0.3' + os.EOL + 'diagnostic' + os.EOL);

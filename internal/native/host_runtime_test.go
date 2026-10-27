@@ -121,6 +121,14 @@ func hostFixture(t *testing.T) (source, dir, oracle string, env []string) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	if err := os.WriteFile(filepath.Join(child, "file"), []byte("data"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	for name, target := range map[string]string{"link": "file", "dangling": "missing"} {
+		if err := os.Symlink(target, filepath.Join(child, name)); err != nil {
+			t.Fatal(err)
+		}
+	}
 	env = []string{"HOST_EXPECT_CWD=" + cwd, "HOST_CHILD=" + child}
 	return source, dir, oracle, env
 }
@@ -128,7 +136,7 @@ func hostFixture(t *testing.T) (source, dir, oracle string, env []string) {
 func runHostRuntimeContracts(t *testing.T, options native.Options) {
 	t.Helper()
 	source, dir, oracle, env := hostFixture(t)
-	modes := []string{"output", "exit", "status", "clocks", "memory", "identity", "cwd", "environment", "eol"}
+	modes := []string{"output", "exit", "status", "clocks", "memory", "identity", "cwd", "environment", "realpath", "realpath-error", "eol"}
 	binary := filepath.Join(dir, fmt.Sprintf("host-%t", options.Sanitize))
 	hostBuild(t, source, binary, "", options)
 	for _, mode := range modes {

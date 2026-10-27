@@ -2,12 +2,16 @@ package lower
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
 // This host slice recognizes library declarations, including import aliases.
 // It borrows only strings and does not expose a mutable process object.
 func (l *lowering) nodeHost(node *ast.Node) (ir.Expression, bool, error) {
+	if value, found, err := l.nodeRealpathCall(node); found {
+		return value, true, err
+	}
 	name := l.nodeLibraryMember(node)
 	operation, of := "", ir.String
 	switch name {
@@ -171,4 +175,101 @@ func (l *lowering) nodeEnvironmentUseRefusal(node *ast.Node) (bool, error) {
 		return true, l.notYet(access, "node:process.Process.env written")
 	}
 	return true, l.notYet(access, "node:process.Process.env used as a value")
+}
+
+const nodeRealpathWalkNotYet = "node:fs.realpathSync's JS walk isn't bound yet; use realpathSync.native"
+
+// The namespace's native declaration is identified by the Node library symbol;
+// the receiver disambiguates it from any other namespace's native member.
+func (l *lowering) nodeRealpathNative(node *ast.Node) bool {
+	node = ast.SkipParentheses(node)
+	return node.Kind == ast.KindPropertyAccessExpression && l.nodeLibraryMember(node) == "node:fs.native" && l.nodeLibraryMember(node.AsPropertyAccessExpression().Expression) == "node:fs.realpathSync"
+}
+
+func (l *lowering) nodeRealpathUseRefusal(node *ast.Node) (bool, error) {
+	if node.Kind == ast.KindCallExpression {
+		node = ast.SkipParentheses(node.AsCallExpression().Expression)
+	}
+	if node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.Name() == node {
+		node = node.Parent
+	}
+	if l.nodeRealpathNative(node) {
+		if node.Flags&ast.NodeFlagsOptionalChain != 0 || ast.IsAssignmentTarget(node) {
+			return true, l.notYet(node, "node:fs.realpathSync.native outside a read or call")
+		}
+		return true, l.nodeRealpathReferenceRefusal(node)
+	}
+	if l.nodeLibraryMember(node) == "node:fs.realpathSync" {
+		if node.Parent != nil && l.nodeRealpathNative(node.Parent) {
+			return true, nil
+		}
+		return true, l.notYet(node, nodeRealpathWalkNotYet)
+	}
+	return false, nil
+}
+
+func (l *lowering) nodeRealpathCall(node *ast.Node) (ir.Expression, bool, error) {
+	if node.Kind != ast.KindCallExpression || !l.nodeRealpathNative(node.AsCallExpression().Expression) {
+		return nil, false, nil
+	}
+	call := node.AsCallExpression()
+	if len(call.Arguments.Nodes) != 1 {
+		return nil, true, l.notYet(node, "node:fs.realpathSync.native with encoding, options, or callback arguments; need exactly one string path")
+	}
+	argument := call.Arguments.Nodes[0]
+	if argument.Kind == ast.KindSpreadElement {
+		return nil, true, l.notYet(argument, "node:fs.realpathSync.native with spread arguments")
+	}
+	if l.checker.GetTypeAtLocation(argument).Flags()&checker.TypeFlagsStringLike == 0 {
+		return nil, true, l.notYet(argument, "node:fs.realpathSync.native with a non-string path (Buffer and URL paths aren't bound yet)")
+	}
+	value, err := l.expression(argument)
+	if err != nil {
+		return nil, true, err
+	}
+	if value.Type() != ir.String {
+		return nil, true, l.notYet(argument, "node:fs.realpathSync.native with a non-string path (Buffer and URL paths aren't bound yet)")
+	}
+	return ir.NodeFSFile{Operation: "host_realpath", Arguments: []ir.Expression{value}, Of: ir.String}, true, nil
+}
+
+// Use the ordinary global forwarder initialization: one owned closure per program,
+// with a real throwing IR body rather than an opaque intrinsic alias token.
+func (l *lowering) nodeRealpathValue(node *ast.Node) (ir.Expression, bool, error) {
+	if !l.nodeRealpathNative(node) {
+		return nil, false, nil
+	}
+	if expected := l.checker.GetContextualType(node, checker.ContextFlagsNone); expected != nil {
+		signatures := l.checker.GetSignaturesOfType(expected, checker.SignatureKindCall)
+		valid := len(signatures) == 1
+		if valid {
+			signature := signatures[0]
+			parameters := signature.Parameters()
+			valid = signature.ThisParameter() == nil && len(parameters) == 1 && signature.MinArgumentCount() == 1 && signature.Flags()&checker.SignatureFlagsHasRestParameter == 0 && len(signature.TypeParameters()) == 0
+			if valid {
+				valid = l.concrete(l.checker.GetTypeOfSymbol(parameters[0])).Flags() == checker.TypeFlagsString && l.concrete(l.checker.GetReturnTypeOfSignature(signature)).Flags() == checker.TypeFlagsString
+			}
+		}
+		if !valid {
+			return nil, true, l.notYet(node, "node:fs.realpathSync.native value needs exactly (path: string) => string, not "+l.checker.TypeToString(expected))
+		}
+	}
+	for index, function := range l.result.Functions {
+		if function.Source.Role == "host_realpath" {
+			return ir.Read{Local: l.forwarders[index], Of: ir.Closure}, true, nil
+		}
+	}
+	index, parameter := len(l.result.Functions), len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "path", Type: ir.String, Function: index})
+	function := ir.Function{Name: "host_realpath_value", SourceLength: 1, Closure: true, Parameters: []int{parameter}, Returns: ir.String, Body: []ir.Statement{ir.Return{Value: ir.NodeFSFile{Operation: "host_realpath", Arguments: []ir.Expression{ir.Read{Local: parameter, Of: ir.String}}, Of: ir.String}}}}
+	function.Source.Role = "host_realpath"
+	l.result.Functions = append(l.result.Functions, function)
+	held := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "host_realpath_value", Type: ir.Closure, Global: true, Function: -1})
+	l.forwarderValues = append(l.forwarderValues, ir.Declare{Local: held, Value: ir.MakeClosure{Function: index}})
+	if l.forwarders == nil {
+		l.forwarders = map[int]int{}
+	}
+	l.forwarders[index] = held
+	return ir.Read{Local: held, Of: ir.Closure}, true, nil
 }
