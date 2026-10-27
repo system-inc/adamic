@@ -1458,6 +1458,8 @@ _Noreturn void adamic_stack_overflow(void);
 // adamic_unreachable ends a function the checker proved always returns. Reaching it is a compiler
 // bug, and it says so rather than returning garbage.
 _Noreturn void adamic_unreachable(void);
+// Stop on a broken runtime precondition, with its specific invariant.
+_Noreturn void adamic_invariant(const char *what);
 
 #include "regexp.h"
 #include "node_fs_file.h"
