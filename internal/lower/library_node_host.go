@@ -59,7 +59,7 @@ func (l *lowering) nodeHost(node *ast.Node) (ir.Expression, bool, error) {
 }
 
 func init() {
-	RegisterNodeLibraryMembers("node:path.join", "node:os.tmpdir", "node:process.Process.cwd", "node:process.Process.chdir", "node:process.cwd", "node:process.chdir", "node:process.process", "node:globals.process", "node:process.Process.platform")
+	RegisterNodeLibraryMembers("node:path.join", "node:os.tmpdir", "node:process.Process.cwd", "node:process.Process.chdir", "node:process.cwd", "node:process.chdir", "node:process.process", "node:globals.process")
 }
 
 // nodePlatformRead lowers process.platform, recognized by its library member, never its spelling,
@@ -99,7 +99,8 @@ func (l *lowering) nodePlatformReadRefusal(node *ast.Node) error {
 
 // nodePlatformUseRefusal is the refusal visitor's view of process.platform: its property name is
 // part of the admitted read, the read itself is judged by nodePlatformReadRefusal, and the member
-// anywhere else is NotYet.
+// anywhere else is NotYet. It answers for every position of the member, so, as with process.env,
+// the member isn't registered: unregistered, a position this misses falls to the generic NotYet.
 func (l *lowering) nodePlatformUseRefusal(node *ast.Node) (bool, error) {
 	if node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.Name() == node && l.nodeLibraryMember(node.Parent) == "node:process.Process.platform" {
 		return true, l.nodePlatformReadRefusal(node.Parent)

@@ -172,7 +172,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/09_realpath.a:17:17: stage 0 can't lower node:process.Process.platform yet"
+      "what": "stage3/fixtures/host/09_realpath.a:18:134: stage 0 can't lower node:fs.realpathSync's JS walk isn't bound yet; use realpathSync.native yet"
     }
   },
   {
