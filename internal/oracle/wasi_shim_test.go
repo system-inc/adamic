@@ -89,8 +89,12 @@ func runWASIShimShard(t *testing.T, shard int) {
 			if err != nil {
 				t.Fatal(err)
 			}
+			platform, readsPlatform := wasiHostPlatform(t, fixture.path, program)
 			// The witness comes from the program as lowered, before the probe's mutant can reach it.
 			witness := func() run {
+				if readsPlatform {
+					return platform
+				}
 				if fixture.checked {
 					return onJavaScriptBackend(t, program)
 				}
