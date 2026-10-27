@@ -77,7 +77,7 @@ func TestInterfaceCastOracle(t *testing.T) {
 // This legal Node construction fails only when a required field is read through the cast.
 func TestInterfaceCastChecksMalformedRead(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/missing-name.a"))
+	path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/missing-name.ts"))
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -21,7 +21,8 @@ func TestProduct_Adamic(t *testing.T) {
 // Default cast fixtures use the same counted runtime and table as ordinary fixtures, each in its own committed count file.
 func interfaceCastCountCases() []countCase {
 	var cases []countCase
-	for _, path := range []string{"stage3/interface-downcasts/visitor.a", "stage3/interface-downcasts/wrong-kind.a"} {
+	for _, name := range []string{"visitor", "wrong-kind"} {
+		path := interfaceFixturePath(name)
 		cases = append(cases, countCase{path, func(t *testing.T) (string, func() string) { return interfaceCastCounted(t, path) }})
 	}
 	var paths []string
@@ -71,7 +72,7 @@ func interfaceCastRun(t *testing.T, path string, source string) string {
 	name, arguments := pinnedStack(binary)
 	result := execute(t, name, arguments...)
 	wantedExit := 0
-	if strings.HasSuffix(path, "wrong-kind.a") {
+	if strings.HasSuffix(path, "wrong-kind.ts") {
 		wantedExit = 70
 	}
 	if result.exitCode != wantedExit {
