@@ -181,6 +181,9 @@ func TestDebugTwoDirectories(t *testing.T) {
 			t.Fatal(err)
 		}
 		source := CWithOptions(program, Options{Debug: true})
+		if err := Build(source, filepath.Join(filepath.Dir(path), "program"), Options{Debug: true}); err != nil {
+			t.Fatal(err)
+		}
 		if !strings.Contains(source, `#line 1 "lib/value.a"`) {
 			t.Fatal("missing entry-relative imported marker")
 		}
@@ -521,6 +524,7 @@ func debugRun(t *testing.T, source string, options Options) mainPartsRun {
 
 func TestDebugReviewOutputAndOwnership(t *testing.T) {
 	t.Parallel()
+	exercised, pending := 0, 0
 	paths, err := filepath.Glob("../oracle/testdata/review/agree/*.a")
 	if err != nil {
 		t.Fatal(err)
@@ -528,6 +532,7 @@ func TestDebugReviewOutputAndOwnership(t *testing.T) {
 	for _, path := range paths {
 		t.Run(filepath.Base(path), func(t *testing.T) {
 			if _, err := os.Stat(strings.TrimSuffix(path, ".a") + ".pending"); err == nil {
+				pending++
 				t.Skip("review pending sidecar")
 			}
 			release, err := debugProgram(t, path, false)
@@ -547,9 +552,10 @@ func TestDebugReviewOutputAndOwnership(t *testing.T) {
 			if sanitized != want {
 				t.Fatalf("debug ASan/UBSan/LSan=%+v release=%+v", sanitized, want)
 			}
+			exercised++
 		})
 	}
-	t.Logf("%d agree programs: identical output/status, ASan, UBSan and LeakSanitizer", len(paths))
+	t.Logf("%d agree programs exercised; %d pending: identical output/status, ASan, UBSan and LeakSanitizer", exercised, pending)
 }
 
 // DeepEqual considers NaN unequal to itself. IR constants compare by their IEEE bits.
