@@ -135,3 +135,31 @@ func TestNodeRealpathNativePlainArmIsTheRemainingSite(t *testing.T) {
 		t.Fatalf("want only plain arm at %s, got %v", want, err)
 	}
 }
+
+func TestNodeRealpathNativeExportAndOptionsRefusals(t *testing.T) {
+	t.Parallel()
+	const exported = "node:fs.realpathSync.native as a value is admitted only as a const called with one path; this use is exported could pass it extra arguments Node reads as options"
+	const options = "node:fs.realpathSync.native with encoding, options, or callback arguments; need exactly one string path"
+	for name, reason := range map[string]string{
+		"export_renamed.a": exported,
+		"export_default.a": exported,
+		"options_call.a":   options,
+		"options_string.a": options,
+	} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			path, err := filepath.Abs(filepath.Join("testdata/realpath/refused", name))
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := load.Load([]string{path})
+			if err == nil {
+				_, err = Lower(context.Background(), program)
+			}
+			var gap *NotYet
+			if !errors.As(err, &gap) || gap.What != reason {
+				t.Fatalf("want native refusal %q, got %v", reason, err)
+			}
+		})
+	}
+}
