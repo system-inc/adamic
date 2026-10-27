@@ -3,6 +3,7 @@
 #define _POSIX_C_SOURCE 200809L
 #define _DARWIN_C_SOURCE
 #include "adamic.h"
+#include "host_platform.h"
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
@@ -216,4 +217,17 @@ adamic_string *adamic_fs_file_host_tmpdir(void) {
     size_t length = strlen(value);
     if (length > 1 && value[length - 1] == '/') { length--; }
     return adamic_decode_utf8((const unsigned char *)value, length);
+}
+
+// process.platform (#t90fcv5): the target this runtime was built for, as Node's is the platform Node
+// was built for (host_platform.h). A wasm32-wasi module can't see its host's platform: wasi-libc's
+// uname says "wasi" where Node on the same host says "linux", so it stops there, named (Platforms'
+// ruling, docs/wasm-limits.md).
+adamic_string *adamic_fs_file_host_platform(void) {
+#ifdef ADAMIC_HOST_PLATFORM
+    return text(ADAMIC_HOST_PLATFORM, sizeof ADAMIC_HOST_PLATFORM - 1);
+#else
+    static const char message[] = "process.platform: a wasm32-wasi module can't see its host's platform";
+    adamic_panic(message, sizeof message - 1);
+#endif
 }
