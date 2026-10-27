@@ -534,7 +534,12 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 	}
 	if declaration := signature.Declaration(); declaration != nil && declaration.Type() != nil && declaration.Type().Kind == ast.KindTypePredicate && (declaration.Body() != nil || l.censusImplementation(declaration) != nil) && l.checkedAssertionSource(declaration) && !l.checkedPredicateBodyProven(declaration.Type()) {
 		callee := ast.SkipParentheses(node.AsCallExpression().Expression)
-		if declaration.Kind != ast.KindFunctionDeclaration || !ast.IsIdentifier(callee) || l.symbol(callee) != l.symbol(declaration.Name()) {
+		// A call through a value calls the checked forwarder functionValue made, which checks the
+		// claim's true side (#vdt9f1q); the walk owns its false side. A callee that names the
+		// declaration some other way, ns.isS(x), may lower as a static call that skips both.
+		named := l.symbol(callee) == l.symbol(declaration.Name())
+		direct := ast.IsIdentifier(callee) && named
+		if declaration.Kind != ast.KindFunctionDeclaration || (!direct && named) {
 			return l.notYet(node, "an indirect call of a checked predicate")
 		}
 	}
@@ -612,7 +617,9 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 			if annotation.Type == nil || !checker.Checker_isTypeIdenticalTo(l.checker, l.checker.GetTypeAtLocation(annotation.Type), target) {
 				return failure()
 			}
-			if !l.checkedPredicateArgumentProven(implementation.Type()) {
+			// A checked predicate passed by name is its checked forwarder (functionValue), which
+			// checks this claim's true side at every call through it (#vdt9f1q).
+			if !l.checkedPredicateArgumentProven(implementation.Type()) && !(argument.Kind == ast.KindIdentifier && l.checkedPredicateDeclaration(implementation)) {
 				refused := failure()
 				var proof *Refused
 				if err := l.predicateRefusal(implementation.Type()); errors.As(err, &proof) && proof.lyingTag != "" {
