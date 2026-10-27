@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+function errorCode(error: unknown): string | undefined {
+    return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
+try {
+    fs.realpathSync.native('a\0b');
+    console.log('unexpected success');
+} catch (error) {
+    if (error instanceof Error) {
+        console.log(`${error.name} ${errorCode(error)} ${error.message}`);
+    }
+}

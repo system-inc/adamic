@@ -1,0 +1,4 @@
+import fs from 'node:fs';
+import {Buffer} from 'node:buffer';
+const resolve: (path: string) => string = fs.realpathSync.native;
+try { console.log(['.'].map(resolve).join('|')); } catch { console.log('caught'); }

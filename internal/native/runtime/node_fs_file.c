@@ -412,6 +412,29 @@ double adamic_fs_file_date_time(const adamic_object *date) {
     return adamic_object_field(date, "_fsFileTime", &cache)->number;
 }
 
+// Only realpath.native exposes these additional system-error fields. Existing
+// filesystem operations keep their original three-field error shape.
+void adamic_fs_file_realpath_error(const adamic_string *path) {
+    int error = errno;
+    char *name = path_bytes(path, true);
+    if (name == NULL) { return; }
+    system_error(error, "realpath", name);
+    static const char *const names[] = {"name", "message", "code", "syscall", "path", "errno"};
+    static const bool references[] = {true, true, true, true, true, false};
+    static const adamic_field_kind kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_reference, adamic_field_reference, adamic_field_reference, adamic_field_number};
+    static const adamic_shape shape = {6, names, references, NULL, kinds};
+    adamic_object *original = adamic_thrown;
+    adamic_object *result = adamic_object_new(&shape);
+    for (size_t i = 0; i < 3; i++) { result->slots[i].reference = adamic_retain(original->slots[i].reference); }
+    result->slots[3].reference = text("realpath");
+    // Node records the encoded path, including lone-surrogate replacement.
+    result->slots[4].reference = memcmp(path->bytes, name, path->length) == 0 ? adamic_retain((adamic_string *)path) : adamic_decode_utf8((const unsigned char *)name, strlen(name));
+    result->slots[5].number = -(double)error;
+    free(name);
+    adamic_release(original);
+    adamic_thrown = result;
+}
+
 static const char *const stat_fields[] = {"size", "mtimeMs", "mtime", "_fsFileMode", "atime"};
 static const bool stat_refs[] = {false, false, true, false, true};
 static const adamic_field_kind stat_kinds[] = {adamic_field_number, adamic_field_number, adamic_field_reference, adamic_field_number, adamic_field_reference};

@@ -20,3 +20,17 @@ func TestWasmPurityRefusesHostOperations(t *testing.T) {
 		}
 	}
 }
+
+func TestWasmPurityRefusesRealpathOperations(t *testing.T) {
+	t.Parallel()
+	builds := 0
+	err := BuildWith("testdata/wasm/host_realpath.a", filepath.Join(t.TempDir(), "worker"), Options{
+		Wasm:      []string{"hostPath"},
+		BuildWasm: func(string, string, string, []string) error { builds++; return fmt.Errorf("unexpected Wasm build") },
+	})
+	for _, want := range []string{"host_realpath.a:3:", "hostPath", "impure: host operation host_realpath", "fix:"} {
+		if err == nil || !strings.Contains(err.Error(), want) || builds != 0 {
+			t.Fatalf("expected located host refusal before Wasm build (%s), builds=%d: %v", want, builds, err)
+		}
+	}
+}

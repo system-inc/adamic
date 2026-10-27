@@ -1,0 +1,16 @@
+import fs from 'node:fs';
+function errorCode(error: unknown): string | undefined {
+    return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
+function show(path: string): void {
+    try { console.log(fs.realpathSync.native(path)); }
+    catch (error) {
+        if (error instanceof Error) {
+            console.log(errorCode(error) ?? 'missing code');
+            console.log(error.message);
+        }
+    }
+}
+show('dangling');
+show('missing');
+show('dir/file/');

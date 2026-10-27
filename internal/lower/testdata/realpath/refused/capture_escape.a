@@ -1,0 +1,6 @@
+import fs from 'node:fs';
+function outer(p: string): string[] {
+    const resolve: (path: string) => string = fs.realpathSync.native;
+    function inner(): string[] { return [p].map(resolve); }
+    return inner();
+}

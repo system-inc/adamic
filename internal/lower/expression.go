@@ -559,6 +559,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	if value, handled, err := l.typedArrayExpression(node); handled {
 		return value, err
 	}
+	if value, known, err := l.nodeRealpathValue(node); known {
+		return value, err
+	}
 	if value, known, err := l.namespaceExpression(node); known {
 		return value, err
 	}
