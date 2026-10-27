@@ -2,6 +2,7 @@ package oracle
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -30,6 +31,10 @@ var checkedPredicateFixtures = []struct {
 	{"asserts", "called\nasserted\n", "called\n", "asserts", "string | number", "number", "", 1, 0},
 	{"valid", "argument\ncalled\nnumber\nargument\ncalled\nstring\n", "", "", "", "", "", 1, 1},
 	{"asserts_valid", "called\n7\n", "", "", "", "", "", 1, 0},
+	{"condition_valid", "continued\n", "", "", "\"truthy\"", "truthy", "", 1, 0},
+	{"condition_lie", "continued\n", "", "asserts", "0", "truthy", "", 1, 0},
+	{"condition_once", "argument\ncontinued\n", "", "", "number", "truthy", "", 1, 0},
+	{"condition_once_lie", "argument\ncontinued\n", "argument\n", "asserts", "number", "truthy", "", 1, 0},
 	{"false_unchanged", "continued\n", "", "", "", "", "", 1, 1},
 	// tsc's Debug.assertNotNode (debug.ts:307): the bodyless overload claims Exclude<T, U> from the
 	// call's resolved signature, and the implementation, gated by an assertion level as tsc's is,
@@ -77,6 +82,12 @@ func TestCheckedPredicateOracle(t *testing.T) {
 			if difference := disagreement(expectedNode, node); difference != "" {
 				t.Fatal("source Node: " + difference)
 			}
+			if strings.HasPrefix(probe.name, "condition_") {
+				var refused *lower.Refused
+				if _, err := lowered(t, witness); !errors.As(err, &refused) {
+					t.Fatalf(".a condition assertion: want refusal, got %v", err)
+				}
+			}
 			program, err := lowered(t, path)
 			if err != nil {
 				t.Fatal(err)
@@ -84,6 +95,12 @@ func TestCheckedPredicateOracle(t *testing.T) {
 			counts := program.PredicateChecks
 			if counts.Checked != probe.checked || counts.Unobservable != probe.unobservable || counts.Proven != 0 || len(counts.Sites) != 1 {
 				t.Fatalf("direction counts %+v", counts)
+			}
+			if probe.target == "truthy" {
+				directions := counts.Sites[0].Directions
+				if len(directions) != 1 || directions[0].Direction != "asserts" || directions[0].Status != "checked" || directions[0].Reason != probe.source+" -> truthy" {
+					t.Fatalf("condition assertion counts: %+v", directions)
+				}
 			}
 			want := node
 			if probe.branch != "" {
@@ -258,5 +275,50 @@ func TestCheckedPredicateCountsAreRecorded(t *testing.T) {
 		if got := measure(); got != want {
 			t.Errorf("checked predicate counts changed in %s; update with -update-counts:\nrecorded: %s\nmeasured: %s", countFile("runtime", key), want, got)
 		}
+	}
+}
+
+// The forwarder checks its saved parameter too, with its declaration's location.
+func TestCheckedPredicateConditionForwarderOracle(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct {
+		name  string
+		lying bool
+	}{
+		{"condition_value_valid", false}, {"condition_value_lie", true},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			witness, path := predicateCheckedInput(t, probe.name)
+			node := onNode(t, witness)
+			if difference := disagreement(run{stdout: []byte("argument\ncontinued\n")}, node); difference != "" {
+				t.Fatal("source Node: " + difference)
+			}
+			var refused *lower.Refused
+			if _, err := lowered(t, witness); !errors.As(err, &refused) {
+				t.Fatalf(".a condition assertion: want refusal, got %v", err)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if len(program.PredicateChecks.Sites) != 0 {
+				t.Fatalf("forwarder counted as direct call: %+v", program.PredicateChecks)
+			}
+			want := node
+			if probe.lying {
+				want = run{stdout: []byte("argument\n"), stderr: []byte(fmt.Sprintf("adamic: panic: predicate assert used as a value, declared at %s:2:1, asserts branch: source unknown, target truthy\n", path)), exitCode: 70}
+			}
+			sanitized, binary := nativelyUncached(t, program)
+			for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if difference := disagreement(want, got); difference != "" {
+					t.Fatal(difference)
+				}
+			}
+			if !probe.lying {
+				if report := leaksUncached(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+			}
+		})
 	}
 }
