@@ -2,7 +2,7 @@
   "a checked numeric enum object view with an incompatible structured or optional payload field": "01a1183d-8e09",
   "an object refinement using an open numeric enum as a literal tag": "#drwm5pj (Lower)",
   "reading Debug": "01a113e7-bfed",
-  "a type predicate": "01a1143b-d691",
+  "a type predicate": "#1w5bve2 (Optimizer)",
   "the non-null assertion !": "01a1130a",
   "a NonNullExpression": "01a1130a",
   "reading SyntaxKind": "compiler/stage3-front",
@@ -182,5 +182,11 @@
   "reading WatchDirectoryKind": "compiler/stage3-front",
   "reading WatchFileKind": "compiler/stage3-front",
   "reading WatchLogLevel": "compiler/stage3-front",
-  "reading WideningKind": "compiler/stage3-front"
+  "reading WideningKind": "compiler/stage3-front",
+  "an unproven predicate argument": "#1w5bve2 (Optimizer)",
+  "checked predicate membership over an open tag domain": "#k1t2wp9 (Optimizer)",
+  "an indirect call of a checked predicate": "#3hxh5jm (Workers)",
+  "checked predicate overload target": "#3hxh5jm (Workers)",
+  "a checked predicate without a reifiable target": "#1ge1bv8 (Diagnostics)",
+  "a checked predicate result": "#1761dah (Lower)"
 }
