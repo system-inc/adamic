@@ -13,6 +13,7 @@ uname	all	command -v uname
 python3	all	command -v python3
 node	all	node --version | grep -qx 'v24.19.0'
 clang	all	command -v clang
+gcc	linux	gcc --version | grep -q 'Free Software Foundation'
 tsc	all	tsc --version | grep -qx 'Version 6.0.3' && test -f "$(dirname "$(readlink -f "$(command -v tsc)")")/../lib/typescript.js"
 wasi-sdk	linux	test -d "${WASI_SYSROOT:-/nonexistent}"
 sysctl	darwin	command -v sysctl
