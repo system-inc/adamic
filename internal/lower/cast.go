@@ -31,7 +31,13 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 		return l.structuralViewCast(node, value, source, target)
 	}
 	if proof.interfaceView {
-		return l.interfaceCast(node, value, l.concrete(l.checker.GetTypeAtLocation(as.Expression)), l.concrete(l.checker.GetTypeAtLocation(node)))
+		checked, err := l.interfaceCast(node, value, source, target)
+		// castProof found the tag on an object placeholder. A value held otherwise, an array cast to a
+		// tuple whose length is the tag (never[] as []), gets no checked cast back, and nil is no value.
+		if err == nil && checked == nil {
+			return nil, l.notYet(node, "a checked cast from "+l.checker.TypeToString(source)+" to "+l.checker.TypeToString(target)+" whose value isn't a plain object")
+		}
+		return checked, err
 	}
 	if len(proof.allowed) == 0 && len(proof.classes) == 0 {
 		return value, nil
