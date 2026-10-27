@@ -98,6 +98,16 @@ func longUnicodePortability(t *testing.T, compiler string) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	if strings.Contains(string(version), "Free Software Foundation") {
+		// GCC 14 recognizes __has_feature(address_sanitizer), but does not ship
+		// allocator_interface.h. Use the installed sanitizer ABI declarations
+		// after GCC's own headers, so its standard and intrinsic headers still win.
+		resource, err := exec.Command("clang", "-print-resource-dir").Output()
+		if err != nil {
+			t.Fatal(err)
+		}
+		flags = append(flags, "-idirafter", filepath.Join(strings.TrimSpace(string(resource)), "include"))
+	}
 	files, err := readRuntime(runtime, "runtime")
 	if err != nil {
 		t.Fatal(err)
