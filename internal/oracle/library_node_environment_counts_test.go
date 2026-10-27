@@ -13,6 +13,9 @@ import (
 )
 
 func processEnvironmentFixtureEnvironment(name string) []string {
+	if name == "nul.a" {
+		return []string{"A=set", "ADAMIC_ENV_NUL_CODE=0"}
+	}
 	if name == "prototype.a" {
 		return []string{"toString=own environment string"}
 	}
@@ -20,7 +23,7 @@ func processEnvironmentFixtureEnvironment(name string) []string {
 }
 
 func init() {
-	for _, name := range []string{"reads.a", "prototype.a"} {
+	for _, name := range []string{"reads.a", "prototype.a", "nul.a"} {
 		key := "internal/oracle/testdata/process_env/" + name
 		additionalFixtureCounts = append(additionalFixtureCounts, countCase{key, func(t *testing.T) (string, func() string) {
 			path, err := filepath.Abs(filepath.Join(repository, key))
