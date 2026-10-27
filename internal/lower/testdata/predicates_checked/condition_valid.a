@@ -1,0 +1,6 @@
+let currentAssertionLevel = 0;
+function assert(expression: unknown, message?: string): asserts expression {
+    if (currentAssertionLevel > 0 && !expression) throw new Error(message);
+}
+assert("truthy");
+console.log("continued");

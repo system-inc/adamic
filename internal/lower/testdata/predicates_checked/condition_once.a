@@ -1,0 +1,7 @@
+let currentAssertionLevel = 0;
+function assert(expression: unknown, message?: string): asserts expression {
+    if (currentAssertionLevel > 0 && !expression) throw new Error(message);
+}
+function argument(): number { console.log("argument"); return 7; }
+assert(argument());
+console.log("continued");

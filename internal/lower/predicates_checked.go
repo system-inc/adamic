@@ -336,7 +336,7 @@ func (l *lowering) checkedPredicateResult(call *ast.CallExpression, value ir.Exp
 		return value, nil
 	}
 	claim := predicateOfSignature(l.checker, resolved)
-	if claim == nil || claim.Type() == nil {
+	if claim == nil || (claim.Type() == nil && (claim.Kind() != checker.TypePredicateKindAssertsIdentifier || len(declaration.TypeParameters()) != 0)) {
 		return nil, l.notYet(call.AsNode(), "a checked predicate without a reifiable target")
 	}
 	assertion := claim.Kind() == checker.TypePredicateKindAssertsIdentifier
@@ -355,7 +355,10 @@ func (l *lowering) checkedPredicateResult(call *ast.CallExpression, value ir.Exp
 	if index >= 0 && index < len(call.Arguments.Nodes) {
 		sourceName = l.checker.TypeToString(l.checker.GetTypeAtLocation(call.Arguments.Nodes[index]))
 	}
-	targetName := l.checker.TypeToString(claim.Type())
+	targetName := "truthy"
+	if claim.Type() != nil {
+		targetName = l.checker.TypeToString(claim.Type())
+	}
 	for _, direction := range []predicateTruth{predicateTrue, predicateFalse} {
 		if assertion && direction == predicateFalse {
 			continue
@@ -451,6 +454,11 @@ func (l *lowering) checkedPredicateResult(call *ast.CallExpression, value ir.Exp
 // argument is the value the claim names. The true side is always checked, and the false side only
 // where falseToo says a caller narrows on it.
 func (l *lowering) checkedPredicateCheck(node, declaration *ast.Node, argument ir.Expression, source, target *checker.Type, result ir.Expression, falseToo bool, local func(string, ir.Type) int, message func(branch string) string) ([]ir.Statement, error) {
+	// A condition assertion checks the saved argument, not a structural target.
+	if target == nil {
+		membership := ir.Truthy{Value: argument}
+		return []ir.Statement{ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: membership}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message("asserts"))}}}}}, nil
+	}
 	if falseToo && !l.checkedPredicateTagDomain(source, target) {
 		return nil, l.notYet(node, "checked predicate membership over an open tag domain")
 	}
@@ -512,7 +520,7 @@ func (l *lowering) checkedPredicateForwarder(node *ast.Node, symbol *ast.Symbol,
 	}
 	signature := l.checker.GetSignatureFromDeclaration(declaration)
 	claim := predicateOfSignature(l.checker, signature)
-	if claim == nil || claim.Type() == nil {
+	if claim == nil || (claim.Type() == nil && claim.Kind() != checker.TypePredicateKindAssertsIdentifier) {
 		return nil, false, l.notYet(node, "a checked predicate without a reifiable target")
 	}
 	assertion := claim.Kind() == checker.TypePredicateKindAssertsIdentifier
@@ -526,7 +534,10 @@ func (l *lowering) checkedPredicateForwarder(node *ast.Node, symbol *ast.Symbol,
 	name := declaration.Name().Text()
 	where := l.program.Where(declaration)
 	source := l.checker.GetTypeOfSymbol(signature.Parameters()[index])
-	sourceName, targetName := l.checker.TypeToString(source), l.checker.TypeToString(claim.Type())
+	sourceName, targetName := l.checker.TypeToString(source), "truthy"
+	if claim.Type() != nil {
+		targetName = l.checker.TypeToString(claim.Type())
+	}
 	local := func(name string, of ir.Type) int {
 		index := len(l.result.Locals)
 		l.result.Locals = append(l.result.Locals, ir.Local{Name: name, Type: of, Function: forwarder})
