@@ -465,6 +465,7 @@ func (l *lowering) checkedPredicateDeclaration(declaration *ast.Node) bool {
 // claim, its true side or an asserts on return, at every call through the value; the false side is
 // the walk's (predicate_false_flow.go). forwarder is the forwarder's index, already in the result,
 // and call is its call of the predicate. A target that isn't a checked predicate gets no body here.
+// It's no call site, so PredicateChecks, which counts the calls R-T80 checks, doesn't count it.
 func (l *lowering) checkedPredicateForwarder(node *ast.Node, symbol *ast.Symbol, forwarder int, call ir.Call) ([]ir.Statement, bool, error) {
 	var declaration *ast.Node
 	if symbol != nil {
@@ -517,18 +518,6 @@ func (l *lowering) checkedPredicateForwarder(node *ast.Node, symbol *ast.Symbol,
 	if err != nil {
 		return nil, false, err
 	}
-	site := ir.PredicateCallCheck{Where: where, Function: name}
-	branch := "true"
-	if assertion {
-		branch = "asserts"
-	}
-	site.Directions = append(site.Directions, ir.PredicateDirectionCheck{Direction: branch, Status: "checked", Reason: sourceName + " -> " + targetName})
-	l.result.PredicateChecks.Checked++
-	if !assertion {
-		site.Directions = append(site.Directions, ir.PredicateDirectionCheck{Direction: "false", Status: "unobservable", Reason: sourceName + " -> " + targetName})
-		l.result.PredicateChecks.Unobservable++
-	}
-	l.result.PredicateChecks.Sites = append(l.result.PredicateChecks.Sites, site)
 	body = append(body, check...)
 	return append(body, ir.Return{Value: result}), true, nil
 }

@@ -15,7 +15,11 @@ function assertS(n: Node): asserts n is Statement {
         throw new Error("not a statement");
     }
 }
-const expression: Node = { kind: "E", e: 1 };
+// Made by a function, so the checker doesn't narrow it to Expression by its assignment.
+function make(): Node {
+    return { kind: "E", e: 1 };
+}
+const expression = make();
 function run(node: Node, check: (node: Node) => asserts node is Statement): void {
     check(node);
     console.log(node.s);

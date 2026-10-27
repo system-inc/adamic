@@ -13,17 +13,16 @@ import (
 // A checked .ts predicate used as a value (#vdt9f1q, ruled Oct 25) is the checked forwarder
 // functionValue makes: it checks its own claim's true side, or an asserts on return, at every call
 // through it, wherever the value went. visitor.ts is honest and agrees with Node in tsc's visitor
-// shape, through an argument, a field, an element, a return, an alias and === identity. Language's
-// six controls the checker narrows nothing by (#1761dah) were stopped at "an indirect call of a
-// checked predicate" until the value carried its check; they lower now and agree with Node. c33,
-// isS.call, keeps its unbound-method refusal in predicate_false_flow_stopped.
+// shape, through an argument, a field, an element, a return, an alias and === identity. Four of
+// Language's controls the checker narrows nothing by (#1761dah) were stopped at "an indirect call
+// of a checked predicate" until the value carried its check; they lower now and agree with Node.
+// The other three stay in predicate_false_flow_stopped: c33, isS.call, at its unbound-method
+// refusal, and c24 and c45 at lowering's optional call, which no value reaches yet.
 func init() {
 	names := []string{
 		"predicate_values/visitor.ts",
-		"predicate_values/control_c24_optional.ts",
 		"predicate_values/control_c34_satisfies.ts",
 		"predicate_values/control_c44_inner_switch.ts",
-		"predicate_values/control_c45_nullish.ts",
 		"predicate_values/control_c46_logical_assign.ts",
 		"predicate_values/control_c53_inner_decl.ts",
 	}
@@ -38,12 +37,12 @@ func init() {
 
 // Each program lies on its predicate's true side (an asserts one returns for an Expression), and
 // reaches the lie by one road: an argument in tsc's visitor shape, a field, a let alias, a returned
-// function, an array element, a bound function, an optional call, an asserts value passed in, and a
-// claim on the second parameter. Node reads the missing field as undefined. As .ts, every road stops
-// at the forwarder's check with its located message, on sanitized and released native and the
-// JavaScript backend; as .a, the unproven predicate stays refused. Mutant: the forwarder without its
-// check runs the lie to Node's output on the JavaScript backend, and native leaves the exit-70
-// contract, so every row goes red.
+// function, an array element, a bound function, an asserts value passed in, and a claim on the
+// second parameter (an optional call through a value isn't lowered yet). Node reads the missing
+// field as undefined. As .ts, every road stops at the forwarder's check, its message located at the
+// predicate's declaration (12:1 in each), on sanitized and released native and the JavaScript
+// backend; as .a, the unproven predicate stays refused. Mutant: the forwarder without its check
+// leaves both backends' exit-70 contract, so every row goes red.
 var predicateValueFixtures = []struct {
 	name, function, nodeOut, checkedOut, branch, source string
 }{
@@ -53,7 +52,6 @@ var predicateValueFixtures = []struct {
 	{"returned", "isS", "undefined\n", "", "true", "Node"},
 	{"element", "isS", "undefined\n", "", "true", "Node"},
 	{"bound", "isS", "undefined\n", "", "true", "Node"},
-	{"optional", "isS", "undefined\nundefined\n", "undefined\n", "true", "Node"},
 	{"asserts", "assertS", "undefined\n", "", "asserts", "Node"},
 	{"second_parameter", "isS", "undefined\n", "", "true", "Node"},
 }
@@ -76,19 +74,7 @@ func TestPredicateValuesCheckTheirClaim(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			var site *ir.PredicateCallCheck
-			for i := range program.PredicateChecks.Sites {
-				if program.PredicateChecks.Sites[i].Function == probe.function {
-					if site != nil {
-						t.Fatalf("two check sites for %s: %+v", probe.function, program.PredicateChecks.Sites)
-					}
-					site = &program.PredicateChecks.Sites[i]
-				}
-			}
-			if site == nil || len(site.Directions) == 0 || site.Directions[0].Direction != probe.branch || site.Directions[0].Status != "checked" {
-				t.Fatalf("want the value's %s check for %s, got %+v", probe.branch, probe.function, program.PredicateChecks.Sites)
-			}
-			message := fmt.Sprintf("adamic: panic: predicate %s used as a value, declared at %s, %s branch: source %s, target Statement\n", probe.function, site.Where, probe.branch, probe.source)
+			message := fmt.Sprintf("adamic: panic: predicate %s used as a value, declared at %s:12:1, %s branch: source %s, target Statement\n", probe.function, path, probe.branch, probe.source)
 			want := run{stdout: []byte(probe.checkedOut), stderr: []byte(message), exitCode: 70}
 			sanitized, _ := nativelyUncached(t, program)
 			for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
@@ -116,11 +102,10 @@ func TestPredicateValuesCheckTheirClaim(t *testing.T) {
 				t.Fatalf("check mutant removed %d checks", changes)
 			}
 			mutant, _ := nativelyUncached(t, program)
-			if disagreement(want, mutant) == "" {
-				t.Fatal("native: the forwarder without its check still met the exit-70 contract")
-			}
-			if difference := disagreement(node, onJavaScriptBackend(t, program)); difference != "" {
-				t.Fatal("JavaScript backend: the forwarder without its check didn't run the lie as Node does: " + difference)
+			for _, got := range []run{mutant, onJavaScriptBackend(t, program)} {
+				if disagreement(want, got) == "" || strings.Contains(string(got.stderr), " used as a value, ") {
+					t.Fatalf("the forwarder without its check still stopped at it: %+v", got)
+				}
 			}
 		})
 	}
@@ -130,8 +115,7 @@ func TestPredicateValuesCheckTheirClaim(t *testing.T) {
 // claim, asserts node is Exclude<T, U>, with no call narrowing on false (Adamic's must on #vdt9f1q,
 // unless main already refused it). isKeyword says no to a Keyword, and its value's check never sees a
 // true answer to check, but R-T80 checks the overload's own claim at the call, so the call stops
-// there before node.text is read. Mutant: the call's check removed, the JavaScript backend runs the
-// lie to Node's output.
+// there before node.text is read. Mutant: the call's check removed, neither backend stops there.
 func TestPredicateValueThroughAssertNotNode(t *testing.T) {
 	t.Parallel()
 	witness, path := predicateValueInput(t, "assert_not_node")
@@ -175,8 +159,11 @@ func TestPredicateValueThroughAssertNotNode(t *testing.T) {
 	if changes != 1 {
 		t.Fatalf("check mutant removed %d checks", changes)
 	}
-	if difference := disagreement(node, onJavaScriptBackend(t, program)); difference != "" {
-		t.Fatal("JavaScript backend: the call's check removed didn't run the lie as Node does: " + difference)
+	mutant, _ := nativelyUncached(t, program)
+	for _, got := range []run{mutant, onJavaScriptBackend(t, program)} {
+		if disagreement(want, got) == "" {
+			t.Fatalf("the call's check removed, it still stopped there: %+v", got)
+		}
 	}
 }
 

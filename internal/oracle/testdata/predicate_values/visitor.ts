@@ -47,10 +47,13 @@ const visitor: Visitor = { test: isS };
 const tests: ((node: Node) => node is Statement)[] = [isS, pick()];
 let count = 0;
 for (const node of nodes) {
-    if (visitor.test(node) && tests[0](node) && tests[1](node)) {
-        count = count + node.s.length;
+    for (const test of tests) {
+        if (visitor.test(node) && test(node)) {
+            count = count + node.s.length;
+        }
     }
 }
 console.log(String(count));
 const alias = isS;
-console.log(String(alias === isS), String(pick() === visitor.test));
+console.log(String(alias === isS));
+console.log(String(pick() === visitor.test));

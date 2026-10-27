@@ -13,7 +13,11 @@ function isS(label: string, n: Node): n is Statement {
     calls = calls + label.length;
     return calls > 0;
 }
-const expression: Node = { kind: "E", e: 1 };
+// Made by a function, so the checker doesn't narrow it to Expression by its assignment.
+function make(): Node {
+    return { kind: "E", e: 1 };
+}
+const expression = make();
 function visit(node: Node, test: (label: string, node: Node) => node is Statement): string {
     if (test("label", node)) {
         return node.s;

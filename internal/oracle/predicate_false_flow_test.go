@@ -8,7 +8,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/lower"
 )
 
@@ -39,9 +38,10 @@ func init() {
 // reach one shape by one road each, the only escape in their program: a field store, a shorthand
 // field, a return, an array element, a function expression, an arrow, and a computed member of the
 // module's own namespace, self["isS"], which never spells the name as a value, so only the switch's
-// read of types finds it. control_c33_call is the one control the checker narrows nothing by that
-// still stops, at its unbound-method refusal; the other six lower since a predicate's value carries
-// its check (predicate_values_test.go). library_* are the calls of a library predicate the
+// read of types finds it. Three controls the checker narrows nothing by still stop, short of the
+// walk: control_c33_call at its unbound-method refusal, and control_c24_optional and
+// control_c45_nullish at lowering's optional call. The other four lower since a predicate's value
+// carries its check (predicate_values_test.go). library_* are the calls of a library predicate the
 // exemption still counts: every, whose `this is S[]` answer is isS's; a value typed `typeof
 // Array.isArray`; and a mapped Pick<ArrayConstructor, 'isArray'> field. Each program runs on Node,
 // and its whole first diagnostic is pinned in its .stopped file. Mutants: the walk believing a
@@ -95,17 +95,15 @@ func TestPredicateFalseDirectionReadsAreNotYet(t *testing.T) {
 			}
 		})
 	}
-	if programs != 60 {
-		t.Fatalf("%d programs in %s, want 60: a program added or removed needs this count changed with it", programs, directory)
+	if programs != 62 {
+		t.Fatalf("%d programs in %s, want 62: a program added or removed needs this count changed with it", programs, directory)
 	}
 }
 
 // A direct call is R-T80's, never the walk's, even where the walk is live: Language's direct false
 // forms (`!`, a const alias, switch (true), === false, !== true, false ===, a comma), each in a
 // program where isS escapes as a value, stop at the call's own false check on both backends, as
-// on main. The value isS became has a check site of its own, its true side only, so the call's site
-// is the one whose false side is checked. Mutant: the walk taking a direct call stops each at the
-// read instead.
+// on main. Mutant: the walk taking a direct call stops each at the read instead.
 func TestPredicateFalseDirectionLeavesDirectCalls(t *testing.T) {
 	t.Parallel()
 	for _, name := range []string{"d01_not", "d10_alias_cond", "d11_switch_true", "d12_eq_false", "d14_ne_true", "d15_false_eq", "d17_comma"} {
@@ -123,16 +121,10 @@ func TestPredicateFalseDirectionLeavesDirectCalls(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			var sites []ir.PredicateCallCheck
-			for _, candidate := range program.PredicateChecks.Sites {
-				if len(candidate.Directions) == 2 && candidate.Directions[1].Direction == "false" && candidate.Directions[1].Status == "checked" {
-					sites = append(sites, candidate)
-				}
+			if len(program.PredicateChecks.Sites) != 1 {
+				t.Fatalf("predicate check sites %+v", program.PredicateChecks.Sites)
 			}
-			if len(sites) != 1 {
-				t.Fatalf("want one call checked on its false side, got %+v", program.PredicateChecks.Sites)
-			}
-			site := sites[0]
+			site := program.PredicateChecks.Sites[0]
 			want := run{stderr: []byte(fmt.Sprintf("adamic: panic: predicate isS at %s false branch: source Node, target Statement\n", site.Where)), exitCode: 70}
 			sanitized, _ := nativelyUncached(t, program)
 			for _, got := range []run{sanitized, onJavaScriptBackend(t, program)} {
