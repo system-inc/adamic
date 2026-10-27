@@ -10,10 +10,11 @@ import (
 // a function that returns a value stand as one that returns void, so a void value can hold anything:
 // `const make: () => void = () => 42; make() === undefined` is false on Node. Adamic releases what a
 // void call returns (#f418fbz), so a read of it would see undefined where Node sees 42. A void value is
-// unobservable instead: binding it, comparing it, returning it from a function whose return type isn't
-// exactly void, and passing it are refused, in .a and .ts alike. Relating a value-returning function
-// to a void function type stays legal, and so do #se1zcgr's discards: `return f()` and a concise arrow
-// body inside a function whose own return type is exactly void.
+// unobservable instead: reading a binding of one, comparing it, returning it from a function whose
+// return type isn't exactly void, passing it, and binding it to a wider type are refused, in .a and .ts
+// alike. Relating a value-returning function to a void function type stays legal, and so do
+// #se1zcgr's discards: `return f()` and a concise arrow body inside a function whose own return type is
+// exactly void, or for an async function one that resolves to exactly void.
 func (l *lowering) refuseVoidRead(node *ast.Node) error {
 	if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) || ast.IsDeclarationName(node) || ast.IsAssignmentTarget(node) {
 		return nil
@@ -21,7 +22,7 @@ func (l *lowering) refuseVoidRead(node *ast.Node) error {
 	if node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.AsPropertyAccessExpression().Name() == node {
 		return nil // The access is the read, never the name it reads.
 	}
-	if l.checker.GetTypeAtLocation(node).Flags() != checker.TypeFlagsVoid {
+	if l.checker.GetTypeAtLocation(node).Flags() != checker.TypeFlagsVoid || l.brandRead(node) {
 		return nil
 	}
 	read := l.voidReadRole(node)
@@ -88,6 +89,11 @@ func (l *lowering) voidReadRole(node *ast.Node) string {
 			return "a returned value"
 		}
 	case ast.KindVariableDeclaration, ast.KindPropertyDeclaration, ast.KindParameter, ast.KindBindingElement:
+		// A binding that stays void keeps nothing anyone can see: a read of its name is refused there.
+		// One typed wider would hand the value on.
+		if name := parent.Name(); name != nil && name.Kind == ast.KindIdentifier && l.checker.GetTypeAtLocation(name).Flags() == checker.TypeFlagsVoid {
+			return ""
+		}
 		return "a binding's initializer"
 	case ast.KindCallExpression, ast.KindNewExpression:
 		if parent.Kind != ast.KindCallExpression || parent.AsCallExpression().Expression != site {
@@ -101,12 +107,46 @@ func (l *lowering) voidReadRole(node *ast.Node) string {
 	return "a value"
 }
 
-// returnsExactlyVoid is whether function's own return type is void, not void | X, not unknown and not a
-// promise: only there is a returned void value nobody can read.
+// returnsExactlyVoid is whether function's own return type is void, not void | X and not unknown, or for
+// an async function whether what it resolves to is: only there is a returned void value nobody can read.
 func (l *lowering) returnsExactlyVoid(function *ast.Node) bool {
-	if function == nil || !ast.IsFunctionLike(function) || ast.HasSyntacticModifier(function, ast.ModifierFlagsAsync) {
+	if function == nil || !ast.IsFunctionLike(function) {
 		return false
 	}
 	signature := l.checker.GetSignatureFromDeclaration(function)
-	return signature != nil && l.checker.GetReturnTypeOfSignature(signature).Flags() == checker.TypeFlagsVoid
+	if signature == nil {
+		return false
+	}
+	returns := l.checker.GetReturnTypeOfSignature(signature)
+	if ast.HasSyntacticModifier(function, ast.ModifierFlagsAsync) {
+		returns = checker.Checker_getAwaitedType(l.checker, returns)
+	}
+	return returns != nil && returns.Flags() == checker.TypeFlagsVoid
+}
+
+// brandRead is whether node reads a property off a value that is a primitive in every member of its
+// type, as tsc's __String brand `string & { __escapedIdentifier: void }` is. A primitive carries no own
+// property, so the read is undefined on Node as it is here: the void it names was never a value.
+func (l *lowering) brandRead(node *ast.Node) bool {
+	if node.Kind != ast.KindPropertyAccessExpression {
+		return false
+	}
+	receiver := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression))
+	members := []*checker.Type{receiver}
+	if receiver.Flags()&checker.TypeFlagsUnion != 0 {
+		members = receiver.Types()
+	}
+	for _, member := range members {
+		if member.Flags()&checker.TypeFlagsIntersection == 0 {
+			return false
+		}
+		primitive := false
+		for _, part := range member.Types() {
+			primitive = primitive || part.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsBigIntLike|checker.TypeFlagsESSymbolLike|checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0
+		}
+		if !primitive {
+			return false
+		}
+	}
+	return true
 }

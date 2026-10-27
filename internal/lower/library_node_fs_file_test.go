@@ -41,7 +41,8 @@ func TestNodeFSFileRefusesOptionEffects(t *testing.T) {
 func TestNodeFSFileRefusesVoidValues(t *testing.T) {
 	t.Parallel()
 	_, err := lowerSource(t, `import {closeSync} from 'node:fs'; const result=closeSync(0)===undefined;`)
-	if err == nil || !strings.Contains(err.Error(), "fs void calls used as values") {
+	// H2's refusal of a void read (#x2gt39p) meets it first, before the fs-specific one.
+	if err == nil || !strings.Contains(err.Error(), "a read of a void value") {
 		t.Fatalf("want void value refusal, got %v", err)
 	}
 }
