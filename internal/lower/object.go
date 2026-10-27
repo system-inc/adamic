@@ -365,6 +365,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	if value, found, err := l.nodeEnvironmentRead(node); found {
 		return value, err
 	}
+	if value, found, err := l.nodePlatformRead(node); found {
+		return value, err
+	}
 	if err := l.eepPropertyPresence(node); err != nil {
 		return nil, err
 	}
@@ -1886,6 +1889,9 @@ func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Typ
 // tuple's field of that name.
 func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	if value, found, err := l.nodeEnvironmentRead(node); found {
+		return value, err
+	}
+	if value, found, err := l.nodePlatformRead(node); found {
 		return value, err
 	}
 	access := node.AsElementAccessExpression()
