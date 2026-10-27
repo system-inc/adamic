@@ -100,7 +100,7 @@ void adamic_slot_cache_store(adamic_slot_cache *cache, const adamic_shape *shape
 // field and say undefined, or read the table as a value. Lowering admits a plain read only where no
 // record can reach it; this makes a path it missed stop loudly. Both lookups below are the miss
 // paths of their inline caches, and a record's shape is never cached, so hits pay nothing.
-static void refuse_record_fixed_read(const adamic_object *object, const char *name) {
+void adamic_refuse_record_fixed_read(const adamic_object *object, const char *name) {
 	if (!adamic_record_is(object)) { return; }
 	size_t capacity = strlen(name) + 64;
 	char *message = malloc(capacity);
@@ -113,7 +113,7 @@ static void refuse_record_fixed_read(const adamic_object *object, const char *na
 }
 
 adamic_value *adamic_object_find(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
-	refuse_record_fixed_read(object, name);
+	adamic_refuse_record_fixed_read(object, name);
 	name = adamic_error_field_name(object, name);
 	adamic_object *mutable = (adamic_object *)object;
 	for (size_t index = 0; index < object->shape->count; index++) {
@@ -179,7 +179,7 @@ adamic_value *adamic_object_optional_find(const adamic_object *object, const cha
 	uint64_t packed = __atomic_load_n(&cache->packed, __ATOMIC_RELAXED);
 	size_t slot = packed >> 48;
 	if ((packed & ADAMIC_SLOT_SHAPE_MASK) != (uintptr_t)object->shape) {
-		refuse_record_fixed_read(object, name);
+		adamic_refuse_record_fixed_read(object, name);
 		slot = object->shape->count;
 		for (size_t index = 0; index < object->shape->count; index++) {
 			if (strcmp(object->shape->names[index], name) == 0) {
