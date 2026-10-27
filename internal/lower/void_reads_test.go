@@ -56,8 +56,6 @@ func TestVoidDiscardsStayLegal(t *testing.T) {
 		{"return in void", `function run(): void { return make(); } run(); console.log("done");`},
 		{"concise arrow in void", `const go = (): void => make(); go(); console.log("done");`},
 		{"async return in void", `async function later(): Promise<void> { return make(); } await later(); console.log("done");`},
-		{"cast statement", `make() as unknown; console.log("done");`},
-		{"satisfies statement", `make() satisfies void; console.log("done");`},
 		{"unread binding", `const value = make(); console.log("done");`},
 		// The relation H2 keeps: push returns a number, and forEach's callback type returns void.
 		{"callback relation", "const kept: number[] = []; [1, 2].forEach((x) => kept.push(x)); console.log(`${kept.length}`);"},
@@ -84,11 +82,19 @@ func lowerVoidProbe(t *testing.T, extension, source string) (any, error) {
 	return lowerSource(t, source)
 }
 
-// In .ts `x!` is a checked unwrap that hands its value on, so a void call under it as a statement is
-// still a discard (#chmg7wr). In .a the non-null assertion is refused on its own.
-func TestVoidNonNullStatementStaysLegal(t *testing.T) {
+// A cast, a satisfies and a .ts non-null hand on the value they wrap, so a void call under one as a
+// statement is a discard, never H2's refusal (#chmg7wr). Each still waits on its own stage-0 gap (a
+// cast as a statement, void! as never), which is a NotYet, a promise H2's Refused would have broken.
+func TestVoidUnderAWrapperStatementIsNoRead(t *testing.T) {
 	t.Parallel()
-	if _, err := lowerTypeScriptAssertionSource(t, voidReadMake+"\nmake()!;\nconsole.log(\"done\");"); err != nil {
-		t.Fatal(err)
+	for _, statement := range []string{`make() as unknown;`, `make() satisfies void;`, `make()!;`} {
+		t.Run(statement, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerTypeScriptAssertionSource(t, voidReadMake+"\n"+statement+"\nconsole.log(\"done\");")
+			var refused *Refused
+			if errors.As(err, &refused) {
+				t.Fatalf("want no refusal for a discarded void value, got %v", err)
+			}
+		})
 	}
 }
