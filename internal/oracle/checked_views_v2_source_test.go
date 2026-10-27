@@ -14,7 +14,7 @@ import (
 
 func TestCheckedViewUntaggedSourceDispatch(t *testing.T) {
 	t.Parallel()
-	path, _ := filepath.Abs("../../stage3/interface-downcasts/untagged/fixtures/binding-name-source-good.a")
+	path, _ := filepath.Abs("../../stage3/interface-downcasts/untagged/fixtures/binding-name-source-good.ts")
 	loaded, err := load.Load([]string{path})
 	if err != nil {
 		t.Fatal(err)
