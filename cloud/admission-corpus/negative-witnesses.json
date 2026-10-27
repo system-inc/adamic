@@ -48,6 +48,54 @@
       "type_correct_sha256": "af07a4f67aa90cac27f8cb22451456b875df57ea5cf543294c701c57b67eb770",
       "exit": 70,
       "stderr": "adamic: panic: field read failed: view.count is not a number; expected number, found string\n"
+    },
+    "f0a77dc8c8adcfecd7ad1f5b3238276327b55e837b96e380bf0d23ba3b0bad77": {
+      "form": "checked_boundary",
+      "ruling_task": "#1yr7rdh",
+      "ruling": "pending Adamic",
+      "declaration": "internal/oracle/testdata/view_optional_read_stops/name_number.ts:4",
+      "declared_type": "Identifier | undefined",
+      "repair_from": "const raw = { kind: 262, name: 5 };",
+      "repair_to": "const raw = { kind: 262, name: { kind: 80, escapedText: \"five\" } };",
+      "type_correct_sha256": "565940e9b3847ab6cfa388d279ba1b7d2f409b2ea23f068cba6c83dbd6e8c275",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: declaration.name matches no member of Identifier | undefined; expected Identifier | undefined, found number\n"
+    },
+    "41dbbec96b191a16e4f91c1b7f6287a440437b1603186e1bffb4ea61d1685874": {
+      "form": "checked_boundary",
+      "ruling_task": "#1yr7rdh",
+      "ruling": "pending Adamic",
+      "declaration": "internal/oracle/testdata/view_optional_read_stops/destructured_number.ts:4",
+      "declared_type": "Identifier | undefined",
+      "repair_from": "const raw = { kind: 262, name: 5 };",
+      "repair_to": "const raw = { kind: 262, name: { kind: 80, escapedText: \"five\" } };",
+      "type_correct_sha256": "788234a62c801bcde6513915a3af85307a73c4526ffe93491e1b4847b79a2489",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: name (field name) matches no member of Identifier | undefined; expected Identifier | undefined, found number\n"
+    },
+    "b0dd102a67769478b874854ecbd2db04565eb0a3473ab42142f0a4063d694149": {
+      "form": "checked_boundary",
+      "ruling_task": "#1yr7rdh",
+      "ruling": "pending Adamic",
+      "declaration": "internal/oracle/testdata/view_optional_read_stops/chained_text.ts:3",
+      "declared_type": "string",
+      "repair_from": "escapedText: 7 }",
+      "repair_to": "escapedText: \"seven\" }",
+      "type_correct_sha256": "c440f945376a4b91ec4a3c88c97d1f80b24ffc7a8b246ff22b10900678d30a02",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: (node as FunctionDeclaration).name?.escapedText is not a string; expected string, found number\n"
+    },
+    "47044a297f5ab02d5cacc4a1629db1ee1c8422463c277920fe5ca9cdc9930806": {
+      "form": "checked_boundary",
+      "ruling_task": "#1yr7rdh",
+      "ruling": "pending Adamic",
+      "declaration": "internal/oracle/testdata/view_optional_read_stops/specifier_name.ts:6",
+      "declared_type": "Identifier | StringLiteral",
+      "repair_from": "const raw = { kind: 281, name: true };",
+      "repair_to": "const raw = { kind: 281, name: { kind: 11, text: \"yes\" } };",
+      "type_correct_sha256": "fabaf22ea00dddb1b72e28ff3eda23191a8466c8bd59b2d3de8f7dd95789c929",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: specifier(node)?.name matches no member of Identifier | StringLiteral; expected Identifier | StringLiteral, found boolean\n"
     }
   }
 }
