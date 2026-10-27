@@ -115,3 +115,161 @@ Both exited 0. Before mutants and after restoration, respectively:
 ok  	github.com/system-inc/adamic/internal/acheck	8.815s
 ok  	github.com/system-inc/adamic/internal/acheck	6.016s
 ```
+
+## Final wave: Lower ruling and reader comparisons
+
+October 27, 2026. Branch typescript/acheck-known-last starts at
+6118fbd3b84cca990a76894f0d5f59eb0575e9e3. This section supersedes wave 3's
+live-reader stops under the user's explicit header-only authorization.
+Lower's October 27 ruling admits the four predicate programs: a parameter's
+own predicate type is admitted when every argument passed to it is proven;
+a predicate never called narrows nothing; Array.isArray is the library exact
+predicate. Their first lines are dated history comments without acheck promises.
+
+Nine programs change only their existing first line, keeping line counts and
+every body byte unchanged. No compiler, Go test, acheck logic, or reader changes.
+Exactly nine known.txt entries come off. The single retained entry is
+adapt/75-optional-widening/probes/read-write.a, whose required added header
+would shift the reader's coordinate-bearing output.
+
+Before editing, repeated git grep -n -F <file name> outside the dated header
+records and BLOCKERS.md, saved as /tmp/acheck-wave4/readers-<file name>.log;
+per-file git history is alongside it. The earlier source/notes audit remains
+applicable. Old promises for the five header replacements live in the table,
+not in additional source lines.
+
+| Program relative to stage3/ | History: old first-line promise | Decision and purpose | Today's output on one line |
+| --- | --- | --- | --- |
+| adapt/71-writable-views/language-questions/generic-storage.a | refused the non-null assertion ! | header fixed: Ambient console stops before the diagnostic-storage question. | exit 1; adamic: stage3/adapt/71-writable-views/language-questions/generic-storage.a:2:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values |
+| adapt/71-writable-views/language-questions/node-flags.a | refused a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | header fixed: Ambient console stops before the mutable Node flags question. | exit 1; adamic: stage3/adapt/71-writable-views/language-questions/node-flags.a:2:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values |
+| adapt/71-writable-views/language-questions/text-range.a | refused a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | header fixed: Ambient console stops before the generic position-setter question. | exit 1; adamic: stage3/adapt/71-writable-views/language-questions/text-range.a:2:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values |
+| adapt/75-optional-widening/probes/read-write.a | (none) | Left byte-identical: adding a first line moves every AST site line. | exit 1; stage3/adapt/75-optional-widening/probes/read-write.a:11:13: error TS2345: Argument of type 'number &#124; undefined' is not assignable to parameter of type 'string'. \n   Type 'undefined' is not assignable to type 'string'. |
+| drivers/parser/native-array-is-array-predicate.a | refused a type predicate whose return is not proven (return expression is not a trusted check on value) | history fixed: Lower admits the library exact Array.isArray predicate. | exit 0; stderr empty; checked |
+| drivers/parser/native-function-any-view.a | refused a namespace | header fixed: Current callable-view refusal replaces the namespace refusal. | exit 1; adamic: stage3/drivers/parser/native-function-any-view.a:5:56: Adamic 0.1 refuses a value of type (level: number) => boolean seen as AnyFunction, which can write void where boolean is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable) |
+| drivers/parser/native-predicate-callback.a | refused a type predicate whose return is not proven (there is no body proving this parameter) | history fixed: Lower admits the parameter predicate when passed arguments are proven. | exit 0; stderr empty; checked |
+| drivers/parser/native-predicate-function-view.a | refused a type predicate whose return is not proven (there is no body proving this parameter) | history fixed: The predicate is never called and narrows nothing. | exit 0; stderr empty; checked |
+| drivers/parser/native-predicate-overload.a | refused a type predicate whose return is not proven (there is no body proving this parameter) | history fixed: Lower admits the proven callback arguments through the overload. | exit 0; stderr empty; checked |
+| drivers/parser/native-process-next-tick-read.a | type error TS2591 | header fixed: Current ambient declaration refusal replaces TS2591. | exit 1; adamic: stage3/drivers/parser/native-process-next-tick-read.a:6:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values |
+
+### Reader before/after evidence
+
+Used Node v24.19.0 and stock TypeScript 6.0.3 from
+/workspace/adamic-tools/typescript/lib/typescript.js (CENSUS_TYPESCRIPT and
+TSC_ADAPT_TYPESCRIPT select that module; NODE_PATH names its package directory).
+Every reader run captured stdout, stderr, and exit status separately in
+/tmp/acheck-wave4/before/ and after/. All six witness runs were compared byte
+for byte, including assertion stack traces; no normalization was needed.
+
+| witness.cjs arguments | Before / after exit | Before / after output | Comparison |
+| --- | --- | --- | --- |
+| --generic-storage | 0 / 0 | {"diagnostics":0,"promised_type":"SourceFile","output":["1"],"source_write":"generic-storage.a:12"}; stderr empty | stdout/stderr byte-identical |
+| --generic-storage --mutant | 1 / 1 | stdout empty; ERR_ASSERTION at witness.cjs:33:8, actual ['0'], expected ['1'] | stdout/stderr byte-identical |
+| --node-flags | 0 / 0 | {"diagnostics":0,"promised_type":0,"output":["1"],"source_write":"binder.ts:1113:17"}; stderr empty | stdout/stderr byte-identical |
+| --node-flags --mutant | 1 / 1 | stdout empty; ERR_ASSERTION at witness.cjs:33:8, actual ['0'], expected ['1'] | stdout/stderr byte-identical |
+| (none) | 0 / 0 | {"diagnostics":0,"promised_type":0,"output":["1"],"source_write":"utilities.ts:10645:5"}; stderr empty | stdout/stderr byte-identical |
+|  --mutant | 1 / 1 | stdout empty; ERR_ASSERTION at witness.cjs:33:8, actual ['0'], expected ['1'] | stdout/stderr byte-identical |
+
+The no-argument row above is node witness.cjs. Each mutant preserves the
+reader's existing zero-write mutation and fails the same output assertion.
+
+probe-read-write.cjs ran before and after the trial added header; both exited
+0 with byte-identical stdout and empty stderr. Its stdout on both runs was:
+
+```json
+{
+  "status": "pass",
+  "original": {
+    "total": 8,
+    "read_only": 1,
+    "write": 7
+  },
+  "alias_edge_dropped": {
+    "total": 8,
+    "read_only": 2,
+    "write": 6
+  },
+  "checks": [
+    "direct multi-variable alias reaches c.p = 2",
+    "callback alias reaches alias.p = 3",
+    "unrelated p symbol leaves read-only site unchanged",
+    "dropping alias changes the write count",
+    "write to another missing member is detected",
+    "computed keyof member write is detected",
+    "Object.assign alias write is detected",
+    "untyped alias does not hide a write",
+    "library-returned receiver alias is detected"
+  ]
+}
+```
+
+The printed summary omits coordinates. A temporary Node preload copied the
+reader's actual sites.json writes before its finally block deleted its scratch
+directory; it did not change source or reader logic. The eight Line/Column
+pairs differed as follows:
+
+| Before | After trial added header |
+| --- | --- |
+| 5:19 | 6:19 |
+| 10:18 | 11:18 |
+| 19:22 | 20:22 |
+| 21:27 | 22:27 |
+| 24:22 | 25:22 |
+| 27:20 | 28:20 |
+| 30:21 | 31:21 |
+| 33:22 | 34:22 |
+
+All eight lines increase by one; columns are unchanged. The trial header was
+removed and read-write.a verified byte-identical to parent 6118fbd3. Its known
+entry stays. render-read-write.py does not read the probe's summary or its
+eight-site fixture output: it takes a separate 391-row production report and
+asserts len(rows) == 391. It was therefore not run on this fixture output.
+
+front21/run-probe.py, front22/run-probe.py and front24/minimals.py are dated
+evidence runners, not active tests, as clarified by the user. They were not
+rerun against their historical scratch compilers. For both parser sources,
+verified that only line one changes, the remaining source bytes and line count
+are identical, and stock TypeScript comment-free transpilation is identical.
+This is input/runtime-text parity, not a newly claimed historical native run.
+
+### Final-wave commands and validation
+
+Setup exited 0 in 12.738s, full log /tmp/acheck-wave4-setup.log. Each build/test
+shell sourced /workspace/adamic-tools/env.sh.
+
+```sh
+export GOPROXY='https://proxy.golang.org|direct'
+timeout --kill-after=60s 1800 bash cloud/setup.sh > /tmp/acheck-wave4-setup.log 2>&1
+go build -o /tmp/acheck-wave4-adamic ./cmd/adamic > /tmp/acheck-wave4/build.log 2>&1
+# Each of the ten paths, from the repository root; stdout discarded:
+/tmp/acheck-wave4-adamic c <path>
+go test ./internal/acheck/ > /tmp/acheck-wave4/green.log 2>&1
+```
+
+Front-end exit codes and full stderr: /tmp/acheck-wave4/frontends.json.
+No emitted C is included.
+
+Temporarily restored only native-array-is-array-predicate.a's old first line,
+with its known entry still removed. Ran:
+
+```sh
+go test ./internal/acheck/ -run '^TestEveryProgramOutsideAPackageKeepsItsPromise$' -count=1 > /tmp/acheck-wave4/mutant.log 2>&1
+```
+
+Exit 1, exact red line:
+
+```text
+    acheck_test.go:91: stage3/drivers/parser/native-array-is-array-predicate.a breaks its first line's promise: checked, and its first line promises refused a type predicate whose return is not proven (return expression is not a trusted check on value)
+```
+
+Restored the history comment, then ran the complete package again:
+
+```sh
+go test ./internal/acheck/ -count=1 > /tmp/acheck-wave4/final.log 2>&1
+```
+
+Both full-package runs exited 0, before and after the mutant respectively:
+
+```text
+ok  	github.com/system-inc/adamic/internal/acheck	6.357s
+ok  	github.com/system-inc/adamic/internal/acheck	6.449s
+```
