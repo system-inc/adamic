@@ -14,7 +14,7 @@ const mixed: (string | number)[] = ['a', 1];
 console.log(`${mixed.length}/${mixed[0]}/${mixed[1]}`);
 let contextCalls = 0;
 function context(): void { contextCalls += 1; }
-new Set<number>([1]).forEach((value: number): void => { console.log(`${value}`); }, context());
+new Set<number>([1]).forEach((value: number): void => { console.log(`${value}`); }, (context(), undefined));
 console.log(`${contextCalls}`);
 function caseValue(value: number): number { console.log(`case ${value}`); return value; }
 switch (1) {

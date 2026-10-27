@@ -131,12 +131,16 @@ func (l *lowering) brandRead(node *ast.Node) bool {
 	if node.Kind != ast.KindPropertyAccessExpression {
 		return false
 	}
-	receiver := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression))
+	// Not GetNonNullableType: it drops void as nullish, which would strip `void & { … }` to its object.
+	receiver := l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression)
 	members := []*checker.Type{receiver}
 	if receiver.Flags()&checker.TypeFlagsUnion != 0 {
 		members = receiver.Types()
 	}
 	for _, member := range members {
+		if member.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 && member.Flags()&checker.TypeFlagsIntersection == 0 {
+			continue // An optional chain's missing receiver reads nothing.
+		}
 		if member.Flags()&checker.TypeFlagsIntersection == 0 {
 			return false
 		}
