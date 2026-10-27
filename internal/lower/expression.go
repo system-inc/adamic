@@ -1403,6 +1403,14 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 		forwarder.Body = []ir.Statement{ir.Return{Value: call}}
 	}
 	l.result.Functions = append(l.result.Functions, forwarder)
+	// A checked predicate's value checks its own claim at every call through it (#vdt9f1q).
+	checked, isChecked, err := l.checkedPredicateForwarder(node, symbol, index, call)
+	if err != nil {
+		return nil, err
+	}
+	if isChecked {
+		l.result.Functions[index].Body = checked
+	}
 	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(node)), function: index, node: node})
 	// One function value for the function, made before anything runs and held by a global of its
 	// own, so reading the function twice gives the same value, === as JavaScript's.
