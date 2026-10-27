@@ -9,7 +9,7 @@ const {spawnSync}=require('node:child_process');
 const tree=fs.mkdtempSync(path.join(os.tmpdir(),'optional-read-write-probe-'));
 try {
  const compiler=path.join(tree,'src/compiler');fs.mkdirSync(compiler,{recursive:true});
- const text=fs.readFileSync(path.join(__dirname,'probes/read-write.a'),'utf8');
+ const text=fs.readFileSync(path.join(__dirname,'probes/read-write.ts'),'utf8');
  const file=path.join(compiler,'read-write.a');fs.writeFileSync(file,text);
  fs.writeFileSync(path.join(compiler,'tsconfig.json'),JSON.stringify({files:['read-write.a'],compilerOptions:{target:'ES2020',module:'ESNext'}}));
  const source=ts.createSourceFile(file,text,ts.ScriptTarget.Latest,true,ts.ScriptKind.TS);

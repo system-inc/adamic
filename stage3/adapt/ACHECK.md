@@ -273,3 +273,100 @@ Both full-package runs exited 0, before and after the mutant respectively:
 ok  	github.com/system-inc/adamic/internal/acheck	6.357s
 ok  	github.com/system-inc/adamic/internal/acheck	6.449s
 ```
+
+## TypeScript fixture rename: final known entry
+
+October 27, 2026. Branch typescript/acheck-known-readwrite starts at
+cb9a9dd69544ec06d41a6321de2d4d8fdc74a3bb. This supersedes the preceding
+decision to retain the read-write.a entry: the user identified it as stock
+TypeScript input, not an Adamic program.
+
+Renamed adapt/75-optional-widening/probes/read-write.a to read-write.ts with
+git mv. Contents are byte-identical to the parent blob, with no added header.
+Updated the sole live source-path reader, probe-read-write.cjs:12.
+The reader still writes read-write.a in its temporary tree, uses that name in
+its scratch tsconfig, and reports that name in its site records. Removed the
+fixture's known.txt entry. No stage3 entries remain (known.txt has only its
+existing comment preamble). No compiler, Go test, or acheck logic changed.
+
+Ran git grep -n 'read-write.a' across the repository before editing;
+full results: /tmp/acheck-wave5/readers.log. Other executable-script matches
+refer to evidence/read-write/analysis.json.gz, a separate production analysis,
+or to unrelated stage3/interface-downcasts/v2 fixtures. Historical acheck,
+oracle count and review records are unchanged. render-read-write.py reads a
+separate 391-row production report and does not consume probe-read-write.cjs's
+eight-site fixture summary; no renderer run was required.
+
+### Reader comparison
+
+With /workspace/adamic-tools/env.sh sourced, ran the unchanged reader command
+before and after the rename and path update:
+
+```sh
+TSC_ADAPT_TYPESCRIPT=/workspace/adamic-tools/typescript/lib/typescript.js node stage3/adapt/75-optional-widening/probe-read-write.cjs
+```
+
+Both runs exited 0. Full stdout and stderr are saved separately in
+/tmp/acheck-wave5/before.stdout, before.stderr, after.stdout and after.stderr.
+Compared both streams with cmp: stdout exit 0; stderr exit 0. Stderr is empty
+on both runs. The stdout records have the following SHA256:
+
+| Run | Exit | Stdout bytes | Stdout SHA256 | Stderr |
+| --- | --- | --- | --- | --- |
+| before | 0 | 629 | 2e22e1e7114d0aab6243da9fe96736ab2c744fd63dc039b9cba4bef038673e1f | empty |
+| after | 0 | 629 | 2e22e1e7114d0aab6243da9fe96736ab2c744fd63dc039b9cba4bef038673e1f | empty |
+
+Exact stdout, identical before and after:
+
+```json
+{
+  "status": "pass",
+  "original": {
+    "total": 8,
+    "read_only": 1,
+    "write": 7
+  },
+  "alias_edge_dropped": {
+    "total": 8,
+    "read_only": 2,
+    "write": 6
+  },
+  "checks": [
+    "direct multi-variable alias reaches c.p = 2",
+    "callback alias reaches alias.p = 3",
+    "unrelated p symbol leaves read-only site unchanged",
+    "dropping alias changes the write count",
+    "write to another missing member is detected",
+    "computed keyof member write is detected",
+    "Object.assign alias write is detected",
+    "untyped alias does not hide a write",
+    "library-returned receiver alias is detected"
+  ]
+}
+```
+
+### Full-package and mutant proof
+
+All test output went directly to log files, with no output pipes:
+
+```sh
+go test ./internal/acheck/ > /tmp/acheck-wave5/green.log 2>&1
+# Temporarily rename only probes/read-write.ts back to read-write.a,
+# leaving its known.txt entry removed and the live reader unchanged:
+go test ./internal/acheck/ -run '^TestEveryProgramOutsideAPackageKeepsItsPromise$' -count=1 > /tmp/acheck-wave5/mutant.log 2>&1
+# Restore read-write.ts:
+go test ./internal/acheck/ -count=1 > /tmp/acheck-wave5/final.log 2>&1
+```
+
+The rename-back mutant exited 1; exact red line:
+
+```text
+    acheck_test.go:91: stage3/adapt/75-optional-widening/probes/read-write.a breaks its first line's promise: type error (stage3/adapt/75-optional-widening/probes/read-write.a:11:13: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'string'.)
+```
+
+Both full-package runs exited 0, before and after the mutant:
+
+```text
+ok  	github.com/system-inc/adamic/internal/acheck	6.300s
+ok  	github.com/system-inc/adamic/internal/acheck	6.190s
+```
