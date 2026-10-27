@@ -1,2 +1,2 @@
-// a-check: refused a namespace
+// census repro (Oct 7): refused a namespace then; the language accepts it now
 namespace Values { export const count = 1; } console.log(String(Values.count));

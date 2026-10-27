@@ -10,16 +10,6 @@ stage3/adapt/71-writable-views/language-questions/generic-storage.a: refused, an
 stage3/adapt/71-writable-views/language-questions/node-flags.a: refused, and its first line promises refused a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace (adamic: stage3/adapt/71-writable-views/language-questions/node-flags.a:2:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values)
 stage3/adapt/71-writable-views/language-questions/text-range.a: refused, and its first line promises refused a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace (adamic: stage3/adapt/71-writable-views/language-questions/text-range.a:2:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values)
 stage3/adapt/75-optional-widening/probes/read-write.a: type error (stage3/adapt/75-optional-widening/probes/read-write.a:11:13: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'string'.)
-stage3/census/repro/r04/main.a: checked, and its first line promises refused a number as a condition
-stage3/census/repro/r16/main.a: checked, and its first line promises refused ||=
-stage3/census/repro/r21/main.a: checked, and its first line promises refused the comma operator
-stage3/census/repro/r23/main.a: checked, and its first line promises refused a namespace
-stage3/census/repro/r24/main.a: checked, and its first line promises refused an index signature (adamic: stage3/census/repro/r24/main.a:2:91: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet)
-stage3/census/repro/r32/main.a: checked, and its first line promises refused the void operator
-stage3/census/repro/r33/main.a: checked, and its first line promises refused a definite assignment assertion !
-stage3/census/repro/r34/main.a: checked, and its first line promises refused in
-stage3/census/repro/r38/main.a: checked, and its first line promises refused &&=
-stage3/census/repro/r39/main.a: checked, and its first line promises refused debugger
 stage3/drivers/parser/evidence/front23/call-graph/depth-12-edges-2.a: checked, and its first line promises refused a namespace
 stage3/drivers/parser/evidence/front23/call-graph/depth-16-edges-2.a: checked, and its first line promises refused a namespace
 stage3/drivers/parser/evidence/front23/call-graph/depth-20-edges-2.a: checked, and its first line promises refused a namespace

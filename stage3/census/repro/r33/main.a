@@ -1,2 +1,2 @@
-// a-check: refused a definite assignment assertion !
+// census repro (Oct 7): refused a definite assignment assertion ! then; the language accepts it now
 class Value { count!: number; } console.log(String(new Value().count));

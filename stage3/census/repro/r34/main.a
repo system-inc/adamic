@@ -1,2 +1,2 @@
-// a-check: refused in
+// census repro (Oct 7): refused in then; the language accepts it now
 const value = {count: 1}; console.log(String("count" in value));

@@ -1,2 +1,2 @@
-// a-check: refused a number as a condition
+// census repro (Oct 7): refused a number as a condition then; the language accepts it now
 const value = 1; if (value) { console.log(String(value)); }

@@ -1,2 +1,2 @@
-// a-check: refused the void operator
+// census repro (Oct 7): refused the void operator then; the language accepts it now
 console.log(String(void 0));

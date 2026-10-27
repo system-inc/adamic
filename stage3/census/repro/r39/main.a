@@ -1,2 +1,2 @@
-// a-check: refused debugger
+// census repro (Oct 7): refused debugger then; the language accepts it now
 debugger;

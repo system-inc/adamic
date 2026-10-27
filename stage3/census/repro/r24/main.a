@@ -1,2 +1,2 @@
-// a-check: refused an index signature
+// census repro (Oct 7): refused an index signature then; the language accepts it now
 interface Values { [key: string]: number; } const values: Values = {}; console.log(String(values));

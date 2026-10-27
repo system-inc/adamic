@@ -1,2 +1,2 @@
-// a-check: refused ||=
+// census repro (Oct 7): refused ||= then; the language accepts it now
 let value = false; value ||= true; console.log(String(value));
