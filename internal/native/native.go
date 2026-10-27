@@ -63,6 +63,8 @@ func cLiteral(value string) string {
 
 // Options says how to compile.
 type Options struct {
+	// Debug emits source locations and asks clang for debug information.
+	Debug bool
 	// Release enables ThinLTO only for shipped native, uncounted, unsanitized builds.
 	Release bool
 	// ProgramRegion enables the one-shot CLI Program region.
@@ -117,6 +119,9 @@ func Flags(options Options) []string {
 	// 0.1 * 10 - 1 is then 5.551115123125783e-17 instead of 0. V8's own build doesn't fuse either;
 	// Node's arm64 release does, since GCC contracts by default, and its last bits aren't the
 	// language's answer (#4z1nx1s): what Node gives on x86-64 is.
+	if options.Debug {
+		flags = append(flags, "-g")
+	}
 	if options.contract {
 		flags = append(flags, "-ffp-contract=fast")
 	} else {

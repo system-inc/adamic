@@ -197,6 +197,13 @@ func (p *Program) Where(node *ast.Node) string {
 	return fmt.Sprintf("%s:%d:%d", p.fs.displayName(sourceFile.FileName()), line, column)
 }
 
+// Line is the one-based line where a node's first token starts.
+func (p *Program) Line(node *ast.Node) int {
+	file := ast.GetSourceFileOfNode(node)
+	line, _ := p.lineAndColumn(file, scanner.GetTokenPosOfNode(node, file, false))
+	return line
+}
+
 // IsPrelude reports whether a declaration comes from Adamic's prelude rather than from the program,
 // so a local named console is never mistaken for the real one.
 func IsPrelude(sourceFile *ast.SourceFile) bool {

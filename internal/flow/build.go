@@ -178,6 +178,8 @@ func (b *builder) statements(statements []ir.Statement) {
 
 func (b *builder) statement(at *ir.Statement) {
 	switch statement := (*at).(type) {
+	case ir.SourceLine:
+		// Source metadata emits no instruction and keeps the path.
 	case ir.Debugger:
 		// With no debugger attached, it reads and writes nothing and keeps the path.
 		return
