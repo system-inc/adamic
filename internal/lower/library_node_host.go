@@ -62,6 +62,55 @@ func init() {
 	RegisterNodeLibraryMembers("node:path.join", "node:os.tmpdir", "node:process.Process.cwd", "node:process.Process.chdir", "node:process.cwd", "node:process.chdir", "node:process.process", "node:globals.process")
 }
 
+// nodePlatformRead lowers process.platform, recognized by its library member, never its spelling,
+// to a host read (#t90fcv5): the binary answers the platform it runs on, as Node does, and the answer
+// is never folded into a constant at compile time. Only a plain read is admitted.
+func (l *lowering) nodePlatformRead(node *ast.Node) (ir.Expression, bool, error) {
+	if l.nodeLibraryMember(node) != "node:process.Process.platform" || (node.Kind != ast.KindPropertyAccessExpression && node.Kind != ast.KindElementAccessExpression) {
+		return nil, false, nil
+	}
+	if err := l.nodePlatformReadRefusal(node); err != nil {
+		return nil, true, err
+	}
+	return ir.NodeFSFile{Operation: "host_platform", Of: ir.String}, true, nil
+}
+
+// nodePlatformReadRefusal names every use of process.platform but a plain read: a write, a delete,
+// an optional or element read, and the member anywhere else, such as a destructured binding.
+func (l *lowering) nodePlatformReadRefusal(node *ast.Node) error {
+	const member = "node:process.Process.platform"
+	if node.Kind != ast.KindPropertyAccessExpression {
+		return l.notYet(node, member+" used as a value")
+	}
+	outer := node
+	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
+		outer = outer.Parent
+	}
+	switch {
+	case outer.Parent != nil && outer.Parent.Kind == ast.KindDeleteExpression:
+		return l.notYet(node, member+" deleted")
+	case ast.IsAssignmentTarget(outer):
+		return l.notYet(node, member+" written")
+	case node.Flags&ast.NodeFlagsOptionalChain != 0:
+		return l.notYet(node, member+" read through an optional chain")
+	}
+	return nil
+}
+
+// nodePlatformUseRefusal is the refusal visitor's view of process.platform: its property name is
+// part of the admitted read, the read itself is judged by nodePlatformReadRefusal, and the member
+// anywhere else is NotYet. It answers for every position of the member, so, as with process.env,
+// the member isn't registered: unregistered, a position this misses falls to the generic NotYet.
+func (l *lowering) nodePlatformUseRefusal(node *ast.Node) (bool, error) {
+	if node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.Name() == node && l.nodeLibraryMember(node.Parent) == "node:process.Process.platform" {
+		return true, l.nodePlatformReadRefusal(node.Parent)
+	}
+	if l.nodeLibraryMember(node) != "node:process.Process.platform" {
+		return false, nil
+	}
+	return true, l.nodePlatformReadRefusal(node)
+}
+
 // nodeEnvironmentAccess recognizes the library declaration, never a receiver's spelling.
 func (l *lowering) nodeEnvironmentAccess(node *ast.Node) (*ast.Node, bool) {
 	node = ast.SkipParentheses(node)
