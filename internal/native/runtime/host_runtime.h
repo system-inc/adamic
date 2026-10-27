@@ -24,6 +24,8 @@ double adamic_host_time_origin(void);
 double adamic_host_date_now(void);
 // Owned decoded text; missing env is NULL, empty env is an owned empty string. Reads are live.
 adamic_string *adamic_host_environment(const adamic_string *name);
+// Borrowed Node UTF-8 path; owned decoded canonical path, or NULL with errno (NUL is EINVAL).
+adamic_string *adamic_host_realpath(const adamic_string *path);
 // Owned current cwd (not memoized); NULL with errno on OS failure.
 adamic_string *adamic_host_cwd(void);
 // Owned absolute startup executable path, independent of argv[0] and later renames; NULL with errno if unavailable.

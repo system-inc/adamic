@@ -1,0 +1,3 @@
+import fs from 'node:fs';
+const resolve = fs.realpathSync.native;
+resolve('.', 'utf8');
