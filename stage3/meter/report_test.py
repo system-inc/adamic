@@ -6,7 +6,8 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from report import report, report_pair, latent_summary, MEASUREMENT, reason_owner, unowned_table, write_readme
+from report import (report, report_pair, latent_summary, MEASUREMENT, reason_owner, unowned_table, write_readme,
+                    entry_table, latent_table)
 
 
 class ReportTests(unittest.TestCase):
@@ -228,6 +229,31 @@ class LatentReportTests(unittest.TestCase):
         result = self.render()
         group = next(row for row in result['reason_rows'] if row['reason'] == 'existing')
         self.assertEqual((group['NotYet'], group['Refused'], group['count']), (1, 1, 2))
+
+    def test_panic_and_error_sites_are_named_from_src(self):
+        panic = self.finding('panic', 'runtime error: invalid memory address or nil pointer dereference', 3)
+        panic['text'] = 'lowering a call'
+        error = dict(self.finding('error', 'unreadable', 4), where='generated:4:1')
+        # A site repeated across attempts is still one site.
+        self.records[1]['findings'] += [panic, panic, error]
+        result = self.render()
+        self.assertEqual(result['panic_sites'], [{'where': 'src/compiler/main.a:3:1', 'text': 'lowering a call',
+                                                  'reason': 'runtime error: invalid memory address or nil pointer dereference'}])
+        self.assertEqual(result['error_sites'], [{'where': 'generated:4:1', 'reason': 'unreadable', 'text': 'unreadable'}])
+        lines = ['- panic `src/compiler/main.a:3:1`: runtime error: invalid memory address or nil pointer dereference, lowering a call',
+                 '- error `generated:4:1`: unreadable, unreadable']
+        for table in (latent_table('main', result), entry_table('main', {'lowering_census': result})):
+            errors = next(index for index, line in enumerate(table) if line.startswith('Errors: 1; panics: 1'))
+            self.assertEqual(table[errors + 1:errors + 3], lines)
+            self.assertEqual(table[errors + 3], '')
+
+    def test_no_panic_or_error_names_no_site(self):
+        result = self.render()
+        self.assertEqual((result['panic_sites'], result['error_sites']), ([], []))
+        for table in (latent_table('main', result), entry_table('main', {'lowering_census': result})):
+            errors = next(index for index, line in enumerate(table) if line.startswith('Errors: 0; panics: 0'))
+            self.assertEqual(table[errors + 1], '')
+            self.assertFalse(any(line.startswith('- ') for line in table))
 
     def test_missing_source_is_rejected(self):
         self.records.pop()

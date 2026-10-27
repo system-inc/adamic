@@ -34,6 +34,27 @@ def latent_summary(tree, run):
     return lowering_summary(records, expected, MEASUREMENT)
 
 
+def site_where(where):
+    # The run's scratch tree sits in front of the source path, so a site reads the same on every box from src/ on.
+    # The last src/ is the tree's own: the box's prefix may hold a src directory, the adapted tree nests none.
+    return where[where.rindex('/src/') + 1:] if '/src/' in where else where
+
+
+def kind_sites(sites, kind):
+    return sorted(({'where': site_where(where), 'reason': reason, 'text': text}
+                   for site_kind, where, reason, text in sites if site_kind == kind),
+                  key=lambda site: (site['where'], site['reason'], site['text']))
+
+
+def site_lines(summary):
+    lines = []
+    for kind in ('panic', 'error'):
+        for site in summary[kind + '_sites']:
+            text = (site['reason'] + ', ' + site['text']).replace('\n', ' ')
+            lines.append(f"- {kind} `{site['where']}`: {text}")
+    return lines
+
+
 def lowering_summary(records, expected, measurement):
     if not records or records[0].get('measurement') != measurement or records[0].get('status') != 'measurement':
         raise ValueError('invalid latent measurement header')
@@ -69,6 +90,9 @@ def lowering_summary(records, expected, measurement):
         'count_definition': 'unique (kind, where, reason, text) sites across all attempts',
         'totals': {kind: counts[kind] for kind in ('NotYet', 'Refused', 'SkippedDependency', 'error', 'panic')},
         'per_reason': {kind + ': ' + reason: reasons[kind, reason] for kind, reason in sorted(reasons)},
+        # The per-site records stay out of committed runs, so the report names each site the totals count.
+        'panic_sites': kind_sites(sites, 'panic'),
+        'error_sites': kind_sites(sites, 'error'),
         'reason_rows': reason_rows,
         'unowned_reasons': [row for row in reason_rows if row['owner'] == 'OWNER BLANK'],
         'top_reasons': [{'kind': kind, 'reason': reason, 'count': reasons[kind, reason], 'owner': reason_owner(reason, owners)}
@@ -132,7 +156,7 @@ def entry_table(label, entry):
              f"Resolved source files: {summary['source_files']}; "
              f"NotYet: {summary['totals']['NotYet']}; Refused: {summary['totals']['Refused']}.",
              f"Errors: {summary['totals']['error']}; panics: {summary['totals']['panic']}; "
-             f"skipped dependencies: {summary['totals']['SkippedDependency']}.", '',
+             f"skipped dependencies: {summary['totals']['SkippedDependency']}.", *site_lines(summary), '',
              '| Reason | Owner | NotYet | Refused | Total |', '| --- | --- | ---: | ---: | ---: | ---: |']
     for row in summary['reason_rows'][:10]:
         reason = escape(row['reason']).replace('|', '&#124;').replace('\n', ' ')
@@ -148,7 +172,8 @@ def latent_table(label, summary):
     totals = summary['totals']
     lines = ['', f'Latent lowering, {label}: {MEASUREMENT}.',
              f"NotYet: {totals['NotYet']}; Refused: {totals['Refused']}.",
-             f"Recovery boundaries: {summary['boundaries']}; named nested checker exclusions: {len(summary['excluded_nested_functions'])}.", '',
+             f"Recovery boundaries: {summary['boundaries']}; named nested checker exclusions: {len(summary['excluded_nested_functions'])}.",
+             f"Errors: {totals['error']}; panics: {totals['panic']}.", *site_lines(summary), '',
              '| Reason | Owner | NotYet | Refused | Total |', '| --- | --- | ---: | ---: | ---: |']
     for item in summary['reason_rows'][:10]:
         reason = escape(item['reason']).replace('|', '&#124;').replace('\n', ' ')
