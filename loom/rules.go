@@ -28,7 +28,28 @@ type Rules struct {
 	First []string `json:"first"`
 	// Door: the door's laws, each bound off while absent (Loom 0.8.93, #qvcm8ez). Optional, and never null.
 	Door *DoorRule `json:"door"`
+	// Witness: the witness of main (Loom 0.8.589, #6ayc2q8), a box off the line building main's tip cold and running every
+	// unit. Optional, and never null; absent turns it off.
+	Witness *WitnessRule `json:"witness"`
 }
+
+// WitnessRule is the witness of main: a witness of main's tip every Every landings, or Hours after the last one while a
+// landing a narrow key decided waits for one, on the first of Machines with none running. Every is from 1 to
+// MaximumWitnessEvery, Hours from 1 to MaximumWitnessHours, and Machines 1 to MaximumWitnessMachines box names, each once,
+// all three required. The lander's WitnessRule.
+type WitnessRule struct {
+	Every    int      `json:"every"`
+	Hours    int      `json:"hours"`
+	Machines []string `json:"machines"`
+}
+
+// MaximumWitnessEvery, MaximumWitnessHours and MaximumWitnessMachines are the queue's: a thousand landings, a week, and as
+// many boxes as it leases blocks to (Loom's lander/rules.go).
+const (
+	MaximumWitnessEvery    = 1000
+	MaximumWitnessHours    = 168
+	MaximumWitnessMachines = 8
+)
 
 // DoorRule is the door's bounds, each a whole number from 1 to MaximumDoorBound while present: pacedAfter (an owner whose
 // changes go red waits), waiting (the most an owner has on its way), files and lines (the largest diff), and heavy (the
@@ -95,8 +116,8 @@ func ReadRules() (Rules, error) {
 }
 
 // ParseRules reads a rules file strictly: a rule the queue doesn't know, a field a rule doesn't take, a missing field,
-// a budget that isn't a whole number of 1 or more, a sizing, a depth, builders, a tipFirst or a door the lander would
-// refuse, or anything after the object is refused, so a typo can't land as a rule nobody meant.
+// a budget that isn't a whole number of 1 or more, a sizing, a depth, builders, a tipFirst, a door or a witness the lander
+// would refuse, or anything after the object is refused, so a typo can't land as a rule nobody meant.
 func ParseRules(data []byte) (Rules, error) {
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
@@ -123,8 +144,9 @@ func ParseRules(data []byte) (Rules, error) {
 	}
 	// Present or absent, never null, as the lander reads it: a null decodes as absent, so it's read from the raw object.
 	var raw struct {
-		Blocks map[string]json.RawMessage `json:"blocks"`
-		Door   json.RawMessage            `json:"door"`
+		Blocks  map[string]json.RawMessage `json:"blocks"`
+		Door    json.RawMessage            `json:"door"`
+		Witness json.RawMessage            `json:"witness"`
 	}
 	if err := json.Unmarshal(data, &raw); err != nil {
 		return Rules{}, fmt.Errorf("rules.json: %w", err)
@@ -166,6 +188,11 @@ func ParseRules(data []byte) (Rules, error) {
 			}
 		}
 	}
+	if raw.Witness != nil {
+		if err := checkWitness(raw.Witness); err != nil {
+			return Rules{}, err
+		}
+	}
 	if rules.Restack == nil || rules.Restack.On == nil {
 		return Rules{}, errors.New("rules.json: restack needs on")
 	}
@@ -177,6 +204,35 @@ func ParseRules(data []byte) (Rules, error) {
 		seen[change] = true
 	}
 	return rules, nil
+}
+
+// checkWitness reads the witness as strictly as the lander's parseWitness: an object of exactly every, hours and machines,
+// never null, each present and in its range, and the machines box names, each once.
+func checkWitness(raw json.RawMessage) error {
+	var named map[string]json.RawMessage
+	if bytes.Equal(bytes.TrimSpace(raw), []byte("null")) || json.Unmarshal(raw, &named) != nil {
+		return fmt.Errorf("rules.json: witness is %s, and it's an object {every, hours, machines}", raw)
+	}
+	for name, most := range map[string]int{"every": MaximumWitnessEvery, "hours": MaximumWitnessHours} {
+		value, present := named[name]
+		var number int
+		if !present || bytes.Equal(bytes.TrimSpace(value), []byte("null")) || json.Unmarshal(value, &number) != nil || number < 1 || number > most {
+			return fmt.Errorf("rules.json: witness's %s is %s, and it's a whole number from 1 to %d", name, value, most)
+		}
+	}
+	listed, present := named["machines"]
+	var machines []string
+	if !present || bytes.Equal(bytes.TrimSpace(listed), []byte("null")) || json.Unmarshal(listed, &machines) != nil || len(machines) == 0 || len(machines) > MaximumWitnessMachines {
+		return fmt.Errorf("rules.json: witness's machines is %s, and it's a list of 1 to %d box names", listed, MaximumWitnessMachines)
+	}
+	seen := map[string]bool{}
+	for _, box := range machines {
+		if !builderPattern.MatchString(box) || seen[box] {
+			return fmt.Errorf("rules.json: witness's machines names box names, each once, not %q", box)
+		}
+		seen[box] = true
+	}
+	return nil
 }
 
 // changeIDPattern is a change id as the queue mints it, the lander's own test (Loom's lander/rules.go).
