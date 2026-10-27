@@ -98,7 +98,8 @@ static bool regex_compile_disjunction(regex_compiler *c,const regex_node *node,u
         const regex_node **terms=adamic_regex_parse_allocate(c->result,count*sizeof(*terms));if(terms==NULL)return false;
         size_t k=0;for(const regex_node *term=a->children;term!=NULL;term=term->next)terms[k++]=term;
         for(size_t j=0;j<count;j++)if(!regex_compile_node(c,terms[direction<0 ? count-1-j : j],flags,direction))return false;
-        if(split!=SIZE_MAX) {jumps[jump_count++]=regex_compile_emit(c,regex_compile_instruction(3));if(c->result->status!=0)return false;c->code[split].y=(int)c->count;}
+        if(split!=SIZE_MAX) {jumps[jump_count++]=regex_compile_emit(c,regex_compile_instruction(3));if(c->result->status!=0)return false;
+            c->code[split].y=(int)c->count;}
     }
     for(size_t i=0;i<jump_count;i++)c->code[jumps[i]].x=(int)c->count;
     return c->result->status==0;
@@ -125,7 +126,8 @@ static bool regex_compile_node(regex_compiler *c,const regex_node *node,unsigned
     case REGEX_PARSE_REFERENCE:
         base.op=7;
         if(node->name!=NULL){for(size_t i=0;i<c->program->group_count;i++)if(strcmp(c->program->groups[i].name,node->name)==0){base.ids=c->program->groups[i].captures;base.id_count=c->program->groups[i].count;break;}}
-        else {size_t *id=adamic_regex_parse_allocate(r,sizeof(*id));if(id==NULL)return false;*id=node->index;base.ids=id;base.id_count=1;}
+        else {size_t *id=adamic_regex_parse_allocate(r,sizeof(*id));if(id==NULL)return false;
+            *id=node->index;base.ids=id;base.id_count=1;}
         regex_compile_emit(c,base);break;
     case REGEX_PARSE_GROUP: {
         unsigned modified=regex_compile_modified(flags,node);
@@ -148,11 +150,13 @@ static bool regex_compile_node(regex_compiler *c,const regex_node *node,unsigned
         adamic_regex_instruction initialize=regex_compile_instruction(8);initialize.x=(int)id;regex_compile_emit(c,initialize);
         adamic_regex_instruction repeat=regex_compile_instruction(9);repeat.x=(int)id;repeat.greedy=node->greedy;repeat.unbounded=node->maximum==NULL;
         if(!regex_compile_bound(r,node->minimum,&repeat.minimum)||!regex_compile_bound(r,node->maximum,&repeat.maximum))return false;
-        if(r->captures!=0){size_t *ids=adamic_regex_parse_allocate(r,r->captures*sizeof(*ids));if(ids==NULL)return false;size_t count=0;regex_compile_clear(node->left,ids,&count);repeat.ids=count==0 ? NULL : ids;repeat.id_count=count;}
+        if(r->captures!=0){size_t *ids=adamic_regex_parse_allocate(r,r->captures*sizeof(*ids));if(ids==NULL)return false;
+            size_t count=0;regex_compile_clear(node->left,ids,&count);repeat.ids=count==0 ? NULL : ids;repeat.id_count=count;}
         size_t choice=regex_compile_emit(c,repeat);
         if(!regex_compile_node(c,node->left,flags,direction))return false;
         adamic_regex_instruction end=regex_compile_instruction(10);end.x=(int)id;end.y=(int)choice;end.minimum=repeat.minimum;regex_compile_emit(c,end);
-        if(r->status!=0)return false;c->code[choice].y=(int)c->count;break;
+        if(r->status!=0)return false;
+        c->code[choice].y=(int)c->count;break;
     }
     default:regex_compile_refuse(r,"unsupported regexp syntax");return false;
     }
