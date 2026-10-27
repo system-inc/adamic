@@ -24,11 +24,17 @@ func interfaceFixture(t *testing.T, name string) (*ir.Program, string) {
 }
 
 func interfaceFixturePath(name string) string {
-	extension := ".a"
-	if name == "default-staged" || name == "default-boxed-write" || name == "default-read-before-set" || strings.HasPrefix(name, "readiness-") {
-		extension = ".ts"
+	aPath := "stage3/interface-downcasts/" + name + ".a"
+	tsPath := "stage3/interface-downcasts/" + name + ".ts"
+	_, aErr := os.Stat(filepath.Join(repository, aPath))
+	_, tsErr := os.Stat(filepath.Join(repository, tsPath))
+	if (aErr == nil) == (tsErr == nil) {
+		panic("expected exactly one interface fixture: " + aPath + " or " + tsPath)
 	}
-	return "stage3/interface-downcasts/" + name + extension
+	if aErr == nil {
+		return aPath
+	}
+	return tsPath
 }
 
 // Default tagged admission is compared to Node on successful programs.

@@ -43,15 +43,15 @@ func init() {
 		"stage3/interface-downcasts/untagged/fixtures/structural-source-good.a",
 		"stage3/interface-downcasts/untagged/fixtures/structural-source-nested.a",
 		"stage3/interface-downcasts/untagged/fixtures/structural-source-wrong.a",
-		"stage3/interface-downcasts/v2/callable-producer-wrong.a",
-		"stage3/interface-downcasts/v2/fixed-tuple-good.a",
-		"stage3/interface-downcasts/v2/fixed-tuple-wrong.a",
+		"stage3/interface-downcasts/v2/callable-producer-wrong.ts",
+		"stage3/interface-downcasts/v2/fixed-tuple-good.ts",
+		"stage3/interface-downcasts/v2/fixed-tuple-wrong.ts",
 		"stage3/interface-downcasts/v2/fs-option-boxing.a",
-		"stage3/interface-downcasts/v2/mixed-read-write.a",
-		"stage3/interface-downcasts/v2/null-read-write.a",
-		"stage3/interface-downcasts/v2/representation-read-write.a",
-		"stage3/interface-downcasts/v2/tuple-identity-wrong.a",
-		"stage3/interface-downcasts/v2/undefined-read-write.a",
+		"stage3/interface-downcasts/v2/mixed-read-write.ts",
+		"stage3/interface-downcasts/v2/null-read-write.ts",
+		"stage3/interface-downcasts/v2/representation-read-write.ts",
+		"stage3/interface-downcasts/v2/tuple-identity-wrong.ts",
+		"stage3/interface-downcasts/v2/undefined-read-write.ts",
 	} {
 		additionalFixtureCounts = append(additionalFixtureCounts, countCase{path, func(t *testing.T) (string, func() string) { return counted(t, path, false, nil, false, false) }})
 	}
