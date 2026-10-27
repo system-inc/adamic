@@ -1,0 +1,2 @@
+// a-check: type error TS2540
+import * as N from "./provider.a"; N.f = () => false;
