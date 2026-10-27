@@ -1,4 +1,5 @@
-// a-check: type error TS2591
+// a-check: refused a cast the runtime can't check
+// parser driver evidence (Oct 8): promised type error TS2591 then
 // Reduced from TypeScript 6.0.3, performanceCore.ts:37.
 function loadPerformance(): void { const hooks = require("perf_hooks") as Partial<typeof import("perf_hooks")>; }
 console.log("performance declaration loaded");

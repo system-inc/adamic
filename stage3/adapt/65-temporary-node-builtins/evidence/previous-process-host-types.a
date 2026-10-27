@@ -1,4 +1,5 @@
-// a-check: type error TS2591
+// a-check: refused an ambient value declaration
+// adaptation 65 evidence (Oct 8): promised type error TS2591 then
 // From TypeScript 6.0.3, src/compiler/core.ts:2588-2595
 // Type-only import activates library's pinned Node loader in this isolated probe.
 import type {} from "node:process";

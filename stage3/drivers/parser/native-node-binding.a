@@ -1,3 +1,5 @@
+// a-check: type error TS2591
+// Standalone: require has no Node binding in this probe's loader context.
 // From TypeScript 6.0.3, src/compiler/performanceCore.ts:37
 // Minimal reproduction of the first stage3-front-2 parser checker failure.
 console.log(typeof require);
