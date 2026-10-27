@@ -78,9 +78,13 @@ func runWASIFixtures(t *testing.T, rows []int, mutate func(string, *ir.Program))
 			if err != nil {
 				t.Fatal(err)
 			}
+			platform, readsPlatform := wasiHostPlatform(t, fixture.path, program)
 			expected := onNode(t, path)
 			if fixture.checked {
 				expected = onJavaScriptBackend(t, program)
+			}
+			if readsPlatform {
+				expected = platform
 			}
 			if mutate != nil {
 				mutate(fixture.path, program)

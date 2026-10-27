@@ -1,0 +1,9 @@
+// tsc's getNodeSystem (sys.ts:1484 to 1500) reads process.platform four times, each against a name.
+const isMacOs = process.platform === "darwin";
+const isLinuxOrMacOs = process.platform === "linux" || isMacOs;
+const isWindows = process.platform === "win32";
+const fsSupportsRecursiveFsWatch = process.platform === "win32" || isMacOs;
+console.log("macOS " + String(isMacOs));
+console.log("linux or macOS " + String(isLinuxOrMacOs));
+console.log("windows " + String(isWindows));
+console.log("recursive watch " + String(fsSupportsRecursiveFsWatch));

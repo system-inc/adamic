@@ -1,0 +1,2 @@
+// Only the read: its program holds no platform name, so a constant in its place is seen by shape too.
+console.log(process.platform);
