@@ -139,6 +139,9 @@ func (e *emitter) functionBody(function ir.Function) {
 		// that all paths return; reaching this guard still means an IR exit was lost.
 		e.line("adamic_unreachable();")
 	}
+	if e.debug {
+		e.line(sourceLineReset)
+	}
 	e.scopes = e.scopes[:e.functionDepth]
 	e.function = nil
 }
