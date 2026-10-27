@@ -1,0 +1,24 @@
+interface Expression {
+    readonly kind: "E";
+    readonly e: number;
+}
+interface Statement {
+    readonly kind: "S";
+    readonly s: string;
+}
+type Node = Expression | Statement;
+let calls = 0;
+// Unproven, and it lies on true: it says yes to an Expression.
+function isS(n: Node): n is Statement {
+    calls = calls + 1;
+    return calls > 0;
+}
+const expression: Node = { kind: "E", e: 1 };
+// tsc's visitor shape: visitNode(node, visitor, isExpression).
+function visitNode(node: Node, test: (node: Node) => node is Statement): string {
+    if (test(node)) {
+        return node.s;
+    }
+    return "other";
+}
+console.log(visitNode(expression, isS));

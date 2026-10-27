@@ -8,6 +8,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/lower"
 )
 
@@ -36,17 +37,19 @@ func init() {
 // isS, unproven and lying on false, escapes as a value and reaches the shape: the read the checker
 // narrowed on the false side is NotYet, naming the call, before any other diagnostic. escape_*
 // reach one shape by one road each, the only escape in their program: a field store, a shorthand
-// field, a return, an array element, a function expression and an arrow. control_* are the seven
-// shapes the checker narrows nothing by, written to read kind, which every Node has; the walk
-// leaves them, so each keeps main's diagnostic. library_* are the calls of a library predicate the
+// field, a return, an array element, a function expression, an arrow, and a computed member of the
+// module's own namespace, self["isS"], which never spells the name as a value, so only the switch's
+// read of types finds it. control_c33_call is the one control the checker narrows nothing by that
+// still stops, at its unbound-method refusal; the other six lower since a predicate's value carries
+// its check (predicate_values_test.go). library_* are the calls of a library predicate the
 // exemption still counts: every, whose `this is S[]` answer is isS's; a value typed `typeof
 // Array.isArray`; and a mapped Pick<ArrayConstructor, 'isArray'> field. Each program runs on Node,
 // and its whole first diagnostic is pinned in its .stopped file. Mutants: the walk believing a
-// false step through a value returns all 55 attack and escape programs to main's diagnostic (52 to
-// "an indirect call of a checked predicate", c30 to its overload twin, c29 and c47 to a refusal),
-// and none lowers; the switch seeing only an alias or a call's argument misses the 11 whose escape
-// is a field, a return, an element or a default: the four escape_ programs, c19, c20, c25, c27,
-// c36, c47 and c48; the exemption without its argument condition lets library_every through.
+// false step through a value leaves every attack and escape program to a later diagnostic, or to
+// lowering, so none keeps its pin; the switch seeing only an alias or a call's argument misses the 11
+// whose escape is a field, a return, an element or a default: the four escape_ programs, c19, c20,
+// c25, c27, c36, c47 and c48; the switch without its read of types misses escape_computed_member;
+// the exemption without its argument condition lets library_every through.
 func TestPredicateFalseDirectionReadsAreNotYet(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/predicate_false_flow_stopped"
@@ -92,15 +95,17 @@ func TestPredicateFalseDirectionReadsAreNotYet(t *testing.T) {
 			}
 		})
 	}
-	if programs != 65 {
-		t.Fatalf("%d programs in %s, want 65: a program added or removed needs this count changed with it", programs, directory)
+	if programs != 60 {
+		t.Fatalf("%d programs in %s, want 60: a program added or removed needs this count changed with it", programs, directory)
 	}
 }
 
 // A direct call is R-T80's, never the walk's, even where the walk is live: Language's direct false
 // forms (`!`, a const alias, switch (true), === false, !== true, false ===, a comma), each in a
 // program where isS escapes as a value, stop at the call's own false check on both backends, as
-// on main. Mutant: the walk taking a direct call stops each at the read instead.
+// on main. The value isS became has a check site of its own, its true side only, so the call's site
+// is the one whose false side is checked. Mutant: the walk taking a direct call stops each at the
+// read instead.
 func TestPredicateFalseDirectionLeavesDirectCalls(t *testing.T) {
 	t.Parallel()
 	for _, name := range []string{"d01_not", "d10_alias_cond", "d11_switch_true", "d12_eq_false", "d14_ne_true", "d15_false_eq", "d17_comma"} {
@@ -118,10 +123,16 @@ func TestPredicateFalseDirectionLeavesDirectCalls(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			if len(program.PredicateChecks.Sites) != 1 {
-				t.Fatalf("predicate check sites %+v", program.PredicateChecks.Sites)
+			var sites []ir.PredicateCallCheck
+			for _, candidate := range program.PredicateChecks.Sites {
+				if len(candidate.Directions) == 2 && candidate.Directions[1].Direction == "false" && candidate.Directions[1].Status == "checked" {
+					sites = append(sites, candidate)
+				}
 			}
-			site := program.PredicateChecks.Sites[0]
+			if len(sites) != 1 {
+				t.Fatalf("want one call checked on its false side, got %+v", program.PredicateChecks.Sites)
+			}
+			site := sites[0]
 			want := run{stderr: []byte(fmt.Sprintf("adamic: panic: predicate isS at %s false branch: source Node, target Statement\n", site.Where)), exitCode: 70}
 			sanitized, _ := nativelyUncached(t, program)
 			for _, got := range []run{sanitized, onJavaScriptBackend(t, program)} {

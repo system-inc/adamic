@@ -1,0 +1,23 @@
+interface Expression {
+    readonly kind: "E";
+    readonly e: number;
+}
+interface Statement {
+    readonly kind: "S";
+    readonly s: string;
+}
+type Node = Expression | Statement;
+let calls = 0;
+// Unproven, and it lies on true about its second parameter only.
+function isS(label: string, n: Node): n is Statement {
+    calls = calls + label.length;
+    return calls > 0;
+}
+const expression: Node = { kind: "E", e: 1 };
+function visit(node: Node, test: (label: string, node: Node) => node is Statement): string {
+    if (test("label", node)) {
+        return node.s;
+    }
+    return "other";
+}
+console.log(visit(expression, isS));

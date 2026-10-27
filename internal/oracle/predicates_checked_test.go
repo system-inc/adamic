@@ -46,7 +46,13 @@ var checkedPredicateFixtures = []struct {
 
 func predicateCheckedInput(t *testing.T, name string) (string, string) {
 	t.Helper()
-	witness, err := filepath.Abs(filepath.Join(repository, "internal/lower/testdata/predicates_checked", name+".a"))
+	return predicateInputFrom(t, "internal/lower/testdata/predicates_checked", name)
+}
+
+// predicateInputFrom is a stored .a witness in directory and its .ts copy, which checked mode reads.
+func predicateInputFrom(t *testing.T, directory, name string) (string, string) {
+	t.Helper()
+	witness, err := filepath.Abs(filepath.Join(repository, directory, name+".a"))
 	if err != nil {
 		t.Fatal(err)
 	}
