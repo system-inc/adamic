@@ -8,9 +8,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#ifndef ADAMIC_TARGET_WASI
-#include <sys/utsname.h>
-#endif
 
 static void *allocate(size_t size) {
 	void *result = malloc(size);
@@ -222,30 +219,15 @@ adamic_string *adamic_fs_file_host_tmpdir(void) {
     return adamic_decode_utf8((const unsigned char *)value, length);
 }
 
-// process.platform (#t90fcv5): the platform the binary runs on, read from uname() at each read, so
-// two threads reading it share nothing to race on, and never a constant from the build. A sysname
-// host_platform.h doesn't name stops, named. A wasm32-wasi module can't see its host's platform:
-// wasi-libc's uname says "wasi" where Node on the same host says "linux", so it stops there too
-// (Platforms' ruling, docs/wasm-limits.md).
+// process.platform (#t90fcv5): the target this runtime was built for, as Node's is the platform Node
+// was built for (host_platform.h). A wasm32-wasi module can't see its host's platform: wasi-libc's
+// uname says "wasi" where Node on the same host says "linux", so it stops there, named (Platforms'
+// ruling, docs/wasm-limits.md).
 adamic_string *adamic_fs_file_host_platform(void) {
-#ifdef ADAMIC_TARGET_WASI
+#ifdef ADAMIC_HOST_PLATFORM
+    return text(ADAMIC_HOST_PLATFORM, sizeof ADAMIC_HOST_PLATFORM - 1);
+#else
     static const char message[] = "process.platform: a wasm32-wasi module can't see its host's platform";
     adamic_panic(message, sizeof message - 1);
-#else
-    struct utsname host;
-    if (uname(&host) != 0) {
-        static const char message[] = "process.platform: uname failed";
-        adamic_panic(message, sizeof message - 1);
-    }
-    const char *name = adamic_host_platform_name(host.sysname);
-    if (name == NULL) {
-        static const char prefix[] = "process.platform: a host system Node may name otherwise: ";
-        size_t length = strlen(host.sysname);
-        char *message = allocate(sizeof prefix - 1 + length);
-        memcpy(message, prefix, sizeof prefix - 1);
-        memcpy(message + sizeof prefix - 1, host.sysname, length);
-        adamic_panic(message, sizeof prefix - 1 + length);
-    }
-    return text(name, strlen(name));
 #endif
 }

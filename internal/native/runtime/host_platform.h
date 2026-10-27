@@ -1,21 +1,27 @@
-// host_platform.h: the platform names Node gives process.platform, from uname()'s sysname. Only the
-// names that lowercase to Node's own are here; any other sysname has no answer, because Node maps
-// some (to android or cygwin, say) and a lowercased guess would be a silent wrong one. It has no
-// runtime dependency, so a test compiles it alone (TestHostPlatformNames).
+// host_platform.h: the name Node gives process.platform. Node's is the platform it was built for, so
+// here it's the target this runtime is compiled for, read from the target's predefined macros in
+// Node's order (Runtime's shape, Platforms' ruling on #t90fcv5), never the build host: a Mac
+// building for Linux says linux. A target Node may name otherwise is refused when the runtime is
+// built. wasm32-wasi defines no name: a module can't see its host's platform, so the read panics
+// there (node_host.c). Macros only, so a test preprocesses it alone (TestHostPlatformNames).
 #ifndef ADAMIC_HOST_PLATFORM_H
 #define ADAMIC_HOST_PLATFORM_H
-#include <string.h>
-
-static inline const char *adamic_host_platform_name(const char *sysname) {
-	static const char *const names[][2] = {
-		{"Linux", "linux"}, {"Darwin", "darwin"}, {"FreeBSD", "freebsd"},
-		{"OpenBSD", "openbsd"}, {"SunOS", "sunos"}, {"AIX", "aix"},
-	};
-	for (size_t at = 0; at < sizeof names / sizeof names[0]; at++) {
-		if (strcmp(sysname, names[at][0]) == 0) {
-			return names[at][1];
-		}
-	}
-	return NULL;
-}
+#if defined(__wasi__)
+#elif defined(__ANDROID__)
+#define ADAMIC_HOST_PLATFORM "android"
+#elif defined(__linux__)
+#define ADAMIC_HOST_PLATFORM "linux"
+#elif defined(__APPLE__)
+#define ADAMIC_HOST_PLATFORM "darwin"
+#elif defined(__FreeBSD__)
+#define ADAMIC_HOST_PLATFORM "freebsd"
+#elif defined(__OpenBSD__)
+#define ADAMIC_HOST_PLATFORM "openbsd"
+#elif defined(__sun)
+#define ADAMIC_HOST_PLATFORM "sunos"
+#elif defined(_AIX)
+#define ADAMIC_HOST_PLATFORM "aix"
+#else
+#error "process.platform: a target host_platform.h doesn't name; add it in Node's order"
+#endif
 #endif
