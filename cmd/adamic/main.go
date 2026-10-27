@@ -141,7 +141,7 @@ func compile(path string) (*ir.Program, int) {
 	return compileLibrary(path, false)
 }
 
-func compileLibrary(path string, tsgo bool) (*ir.Program, int) {
+func compileLibrary(path string, tsgo bool, debug ...bool) (*ir.Program, int) {
 	program, code := check([]string{path})
 	if program == nil {
 		return nil, code
@@ -149,7 +149,8 @@ func compileLibrary(path string, tsgo bool) (*ir.Program, int) {
 	if tsgo {
 		program.EnableTSGo()
 	}
-	lowered, err := lower.Lower(context.Background(), program)
+	options := lower.Options{ProgramRegion: programRegionRequested(), OwnershipQuery: os.Getenv("ADAMIC_OWNERSHIP_QUERY") == "1", Debug: len(debug) > 0 && debug[0]}
+	lowered, err := lower.LowerWithOptions(context.Background(), program, options)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, relative("adamic: "+err.Error()))
 		return nil, 1

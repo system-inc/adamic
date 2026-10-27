@@ -22,6 +22,7 @@ import (
 
 // Lower lowers a checked program from one entry, in ESM evaluation order.
 type Options struct {
+	Debug         bool
 	ProgramRegion bool
 	// OwnershipQuery adds validation after the existing move proof. Default off.
 	OwnershipQuery bool
@@ -49,7 +50,7 @@ func LowerWithOptions(ctx context.Context, program *load.Program, options Option
 		}
 		plan = discovery.programPlan
 	}
-	built, err := lowerChecked(program, typeChecker, entry, plan, false, options.OwnershipQuery)
+	built, err := lowerChecked(program, typeChecker, entry, plan, false, options.OwnershipQuery, options.Debug)
 	if err != nil {
 		return nil, err
 	}
@@ -64,6 +65,7 @@ func lowerChecked(program *load.Program, typeChecker *checker.Checker, entry *as
 // Tests retain transient checker types before lazy queries replace them.
 func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery bool, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (*lowering, error) {
 	lowering := &lowering{cycleTypes: cycleTypes, program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1, entry: entry, programPlan: plan, programDiscovery: discovery}
+	lowering.debug = len(ownershipQuery) > 1 && ownershipQuery[1]
 	lowering.result.ProgramRegion = discovery || plan != nil
 	if plan != nil {
 		lowering.result.ProgramTypes = plan.types
@@ -179,6 +181,7 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 }
 
 type lowering struct {
+	debug      bool
 	cycleTypes map[int]*checker.Type // Optional differential-test capture; nil in normal builds.
 
 	// Source-only sites for graph adoption diagnostics; never stored in emitted IR.
