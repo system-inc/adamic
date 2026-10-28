@@ -63,6 +63,10 @@ func (e *emitter) statementAt(at *ir.Statement) {
 
 func (e *emitter) statement(statement ir.Statement) {
 	switch statement := statement.(type) {
+	case ir.SourceLine:
+		if e.debug {
+			e.line("#line %d %s", statement.Line, cLiteral(statement.File))
+		}
 	case ir.Debugger:
 		// No debugger is attached to native builds, so emit no instruction or trap.
 	case ir.WriteLine:
