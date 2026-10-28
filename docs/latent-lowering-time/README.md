@@ -405,6 +405,27 @@ so `f27967ea` paid; `entriesProgramHasRecords` is asked once per lowering and
 serves the whole program and the memo would hold. The same question applies to `761ee21c`'s
 memo of `predicateArguments.func2`; its run, next, shows it.
 
+### The memo merge again: how much the box drifts (push 13, observed)
+
+The memo merge `dab16234`, the same binary as push 9, run again after the three heads' profile:
+22:41.4 wall (1,361.4 s) and 1,467.3 s user, against 20:15.8 and 1,292.2 s the first time; peak RSS
+4.05 GB both. `latent.jsonl` and the decision lines are identical to its first run. Per file the
+rerun is on average 1.12 times the first (0.65 to 1.87) ([memo-rerun/per-file.txt](memo-rerun/per-file.txt)).
+
+So the box moves about 12% within hours with nothing changed, and the three heads' 21:55.3 sits
+between the memo merge's two runs (20:15.8 and 22:41.4). On this box, `992a6f53` adds nothing I can
+tell from noise in the meter, which fits its profile: the walk it memoizes still misses every time.
+
+The four-way pick runs next to `a1ce733b`, back to back. A first attempt at building it ran the
+disk out (the scratch held eight worktrees and 12 GB of Go build cache). I removed the worktrees
+of main, A, B and `95a7b63f`, cleared the Go cache and rebuilt; no measured run was affected (the
+chain that started on the failed build was stopped before any timing counted).
+
+The four-way tree is `a1ce733b` plus `761ee21c` cherry-picked (`4a9c4665`, `git cherry-pick -x`,
+clean), not merged: a merge would also bring `761ee21c`'s base `5f0b2152`, which adds a
+`process.platform` host read to `internal/lower` and `internal/ir`, and tsc's `sys.ts` reads
+`process.platform`. The cherry-pick's diff from `a1ce733b` is exactly `761ee21c`'s own.
+
 ## What hasn't run yet, and why
 
 Dropped at Performance's word after push 8: the same-box rerun of `85c9d783` (stopped at file 10),
