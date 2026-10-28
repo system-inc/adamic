@@ -181,9 +181,39 @@ a returned value ... (adamic/no-void-read)". That rule comes with `95a7b63f`'s
 `internal/lower/void_reads.go`, which `85c9d783` lacks, so I expect it from the base and not from
 the shared map. The run of `95a7b63f` itself (running now) decides it.
 
-The head is about 14% slower per file than the throwaway on the same files (`utilities.ts` 380.8
-against 330.5 s, `visitorPublic.ts` 285.0 against 241.0). Not yet explained: it could be
-`95a7b63f`'s new pass, or box noise; `95a7b63f`'s own run will show which.
+### Against its own base, main `95a7b63f` (push 6, observed)
+
+`95a7b63f` built the same way (its own `make_overlay.py`, `gofmt -w`, `go build -overlay`, plus the
+timing lines), same adapted tree, run right after the head:
+
+| run | wall | user s | system s | peak RSS |
+|---|--:|--:|--:|--:|
+| main `95a7b63f` | 1:15:34 (4,534 s) | 6,126.5 | 78.6 | 4.71 GB |
+| head `f2479703` | 32:47.9 (1,967.9 s) | 2,122.1 | 44.9 | 4.44 GB |
+| head / main | 0.43 | 0.35 | | 0.94 |
+
+Per-file sums: `95a7b63f` 4,528.6 s wall, 6,122.1 s user
+([main-95a7b63f/per-file.txt](main-95a7b63f/per-file.txt)).
+
+**Output: the head's `latent.jsonl` is byte-identical to `95a7b63f`'s** (`cmp`, 20,131,373 bytes,
+sha256 `395d5157...` both), and the 79 stderr decision lines are identical
+([head/diff-against-main-95a7b63f.txt](head/diff-against-main-95a7b63f.txt)). `95a7b63f` gives the
+same two extra void-read refusals against `85c9d783` as the head does, so they come from the base
+(`8d39519a`, "lower: a read of a void value is refused", the one lowering commit between
+`85c9d783` and `95a7b63f`), not from the shared map. The `sys.ts` difference from the Oct 27 meter
+was already absent from every run here; only the meter's `215a0f84` had 182.
+
+Per file, the three compilers side by side: [head/per-file-three-runs.txt](head/per-file-three-runs.txt).
+The head against `95a7b63f`: `types.ts` 584.3 to 44.3 s (0.08), `factory/nodeTests.ts` 190.0 to
+48.3 (0.25), `utilities.ts` 928.3 to 380.8 (0.41). `visitorPublic.ts` (310.1 to 285.0, 0.92) and
+`transformers/ts.ts` (90.1 to 82.1, 0.91) barely move.
+
+Not explained yet: `95a7b63f` is about 1.4 times slower than `85c9d783` on nearly every file
+(`utilities.ts` 928.3 against 649.1, `types.ts` 584.3 against 369.3, total user 6,126 against
+4,316 s). A per-statement cost in `8d39519a`'s void-read refusal would look like this, and so would
+a slower box after the container restart, which came between the two runs; I haven't separated
+them. The head is likewise about 14% slower than the throwaway shared map on `85c9d783`. The
+head's profile, next, shows the void-read pass's share.
 
 ## What hasn't run yet, and why
 
