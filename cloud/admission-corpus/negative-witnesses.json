@@ -37,6 +37,18 @@
       "exit": 70,
       "stderr": "adamic: panic: field read failed: <write>.count is not a string | number; expected string | number, found number\n"
     },
+    "9a51c8391c16d4d7102448157a7512a6a73eec695027790ba8add18431fe3b78": {
+      "form": "checked_boundary",
+      "ruling_task": "#bq3fvdt",
+      "ruling": "Adamic, Oct 27",
+      "declaration": "internal/oracle/testdata/records_union_lying_null.ts:1",
+      "declared_type": "string",
+      "repair_from": "{ [name]: null }",
+      "repair_to": "{ outFile: \"out.js\" }",
+      "type_correct_sha256": "eb146cf31499a13d0826b4c5a18333f8c9380ef4f5c8f7e8ae1a5b22b91f7175",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: options.outFile is not a string; expected string, found null, which a computed-key or index-signature write may have stored\n"
+    },
     "b952b7017aad279d3685806793c6fdb80a739ce1b873690d6a6636301bd65388": {
       "form": "checked_boundary",
       "ruling_task": "#995z2fa",
