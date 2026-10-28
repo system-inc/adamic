@@ -32,14 +32,19 @@ var oracleProducer bool
 
 // EnableProductProduction enables recipes in the owner test binary's TestMain.
 func EnableProductProduction() { oracleProducer = true }
+
+// oracleProduct builds an oracle in the owner test binary and finds it everywhere else, naming the owner package as
+// buildcache.BuiltElsewhere does in every other oracles package, so ahra loom check's products step, which settles the
+// owner packages a "<directory> owners" literal names, settles these too. With the gate inside the recipe instead, the
+// check settled no markdownblocks/oracles owner and every check reaching markdownblocks went red (Operations, Oct 28).
 func oracleProduct(t *testing.T, inputs buildcache.Inputs, build func(string) error) string {
 	t.Helper()
 	inputs.Name += " oracle-owner-v1"
-	return buildcache.Product(t, inputs, func(directory string) error {
-		if !oracleProducer {
-			return fmt.Errorf("oracle %s is missing: settle the markdownblocks/oracles owners first", inputs.Name)
-		}
-		return build(directory)
+	if oracleProducer {
+		return buildcache.Product(t, inputs, build)
+	}
+	return buildcache.BuiltElsewhere(t, inputs.Name, inputs, "stage1/cohere/markdownblocks/oracles owners", func(string) error {
+		return fmt.Errorf("oracle %s is missing: settle the stage1/cohere/markdownblocks/oracles owners first", inputs.Name)
 	})
 }
 
