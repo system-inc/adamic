@@ -202,7 +202,7 @@ func (l *lowering) voidElementRead(read *ast.Node, what string) string {
 		return ""
 	}
 	for _, member := range element.Types() {
-		if member.Flags() == checker.TypeFlagsVoid {
+		if l.isVoidValue(member) {
 			if role := l.voidReadRole(read); role != "" {
 				return "through " + what + " whose value is read as " + role
 			}
@@ -256,7 +256,7 @@ func (l *lowering) voidCallbackParameters(call *ast.Node, method string, callbac
 // holds void itself, or it is a single void value H2 judges.
 func (l *lowering) voidContainerFlows(whole *ast.Node) string {
 	if whole != nil {
-		if flowed := l.checker.GetTypeAtLocation(whole); flowed != nil && (flowed.Flags() == checker.TypeFlagsVoid || l.holdsVoid(flowed)) {
+		if flowed := l.checker.GetTypeAtLocation(whole); flowed != nil && (l.isVoidValue(flowed) || l.holdsVoid(flowed)) {
 			return ""
 		}
 	}
@@ -335,12 +335,17 @@ func (l *lowering) holdsVoidWalk(t *checker.Type, visited map[*checker.Type]bool
 	if t == nil || visited[t] {
 		return false
 	}
+	if exactly, bound := l.voidBound[t]; bound {
+		// Inside a generic instantiated at void (#p7t8tmh, part 2): a parameter bound to a type holding
+		// void holds it, and one bound to void itself is a void value, a position but no holder.
+		return !exactly
+	}
 	if held, known := l.voidHolders[t]; known {
 		return held
 	}
 	visited[t] = true
 	position := func(inside *checker.Type) bool {
-		return inside != nil && (inside.Flags() == checker.TypeFlagsVoid || l.holdsVoidWalk(inside, visited))
+		return inside != nil && (l.isVoidValue(inside) || l.holdsVoidWalk(inside, visited))
 	}
 	switch {
 	case t.Flags()&checker.TypeFlagsUnion != 0:
@@ -488,7 +493,7 @@ func (l *lowering) voidKeeps(source, target *checker.Type, depth int, seen map[[
 
 // holdsPosition is whether a position's type is void or holds void.
 func (l *lowering) holdsPosition(inside *checker.Type) bool {
-	return inside != nil && (inside.Flags() == checker.TypeFlagsVoid || l.holdsVoid(inside))
+	return inside != nil && (l.isVoidValue(inside) || l.holdsVoid(inside))
 }
 
 // voidKeepsPosition is voidKeeps for one position: exactly void stays exactly void.
@@ -496,8 +501,15 @@ func (l *lowering) voidKeepsPosition(from, to *checker.Type, depth int, seen map
 	if from == nil || !l.holdsPosition(from) {
 		return true
 	}
-	if from.Flags() == checker.TypeFlagsVoid {
-		return to != nil && to.Flags() == checker.TypeFlagsVoid
+	if l.isVoidValue(from) {
+		// A void value keeps only an exactly void slot, and a type parameter bound to void only its own.
+		return to != nil && (to == from || from.Flags() == checker.TypeFlagsVoid && to.Flags() == checker.TypeFlagsVoid)
 	}
 	return l.voidKeeps(from, to, depth, seen)
+}
+
+// isVoidValue is whether a value of type t is a void value: void itself, or inside a generic
+// instantiated at void, a type parameter bound to exactly void.
+func (l *lowering) isVoidValue(t *checker.Type) bool {
+	return t != nil && (t.Flags() == checker.TypeFlagsVoid || l.voidBound[t])
 }
