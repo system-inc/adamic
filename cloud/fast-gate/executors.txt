@@ -1564,6 +1564,55 @@ reads internal/flow internal/oracle/testdata/non_null_weak_freed.ts
 # testdata, so its key names them by glob rather than file by file: seven view_*.ts files on the list (Oct 27) had no
 # line, and Adam's trace pass read them undeclared.
 reads internal/flow internal/oracle/testdata/*.ts
+# internal/fuzz's Prepare runs `go build ./cmd/adamic` in the source (internal/fuzz/run.go), and go's package loader reads
+# every .go file in each package it loads, test files and ignored ones too, whose headers decide what it builds; and it
+# reads the worker's .mjs files, a seed program and the cohere gitlink. Adam's trace pass read these undeclared on Oct 27
+# (#fbf3zhk class 1, Node's ruling: name them whole, and the reruns are the price, until the loader's own view is keyed).
+reads internal/fuzz bridge/tsgo/*.go
+reads internal/fuzz cmd/adamic/*.go
+reads internal/fuzz internal/buildcache/*.go
+reads internal/fuzz internal/flow/*.go
+reads internal/fuzz internal/fresh/*.go
+reads internal/fuzz internal/ir/*.go
+reads internal/fuzz internal/javascript/*.go
+reads internal/fuzz internal/load/*.go
+reads internal/fuzz internal/lower/*.go
+reads internal/fuzz internal/native/*.go
+reads internal/fuzz internal/regexp/*.go
+reads internal/fuzz internal/toolchain/*.go
+reads internal/fuzz internal/unicodeproperties/*.go
+reads internal/fuzz internal/worker/*.go
+reads internal/fuzz internal/worker/*.mjs
+reads internal/fuzz internal/oracle/testdata/arguments_length_value_count.a
+reads internal/fuzz cohere
+# Each cohere and typescript test's buildcache loads the compiler's packages with go, whose loader reads their ignored
+# generators and other platforms' files (internal/native's case_generate.go and normalize_generate.go,
+# internal/unicodeproperties/generate.go, internal/buildcache/changed_*.go), and the sibling oracles package's tests;
+# Adam's trace pass read them undeclared on Oct 27 (#fbf3zhk classes 1 and 4, Node's ruling).
+reads stage1/cohere/css internal/native/*_generate.go
+reads stage1/cohere/css internal/unicodeproperties/generate.go
+reads stage1/cohere/css stage1/cohere/css/oracles/*_test.go
+reads stage1/cohere/graphql/printer internal/native/*_generate.go
+reads stage1/cohere/graphql/printer internal/unicodeproperties/generate.go
+reads stage1/cohere/graphql/printer internal/buildcache/changed_*.go
+reads stage1/cohere/graphql/printer stage1/cohere/graphql/printer/oracles/*_test.go
+reads stage1/cohere/lint/rules/no-unsafe-negation internal/native/*_generate.go
+reads stage1/cohere/lint/rules/no-unsafe-negation internal/unicodeproperties/generate.go
+reads stage1/cohere/lint/rules/no-unsafe-negation cohere
+reads stage1/cohere/values internal/native/*_generate.go
+reads stage1/cohere/values internal/unicodeproperties/generate.go
+reads stage1/cohere/values internal/buildcache/changed_*.go
+reads stage1/cohere/yaml internal/native/*_generate.go
+reads stage1/cohere/yaml internal/unicodeproperties/generate.go
+reads stage1/cohere/yaml internal/buildcache/changed_*.go
+reads stage1/cohere/yaml stage1/cohere/yaml/oracles/*_test.go
+reads stage1/typescript/parser internal/native/*_generate.go
+reads stage1/typescript/parser internal/unicodeproperties/generate.go
+reads stage1/typescript/parser stage1/typescript/parser/oracles/*_test.go
+reads stage1/typescript/scanner internal/native/*_generate.go
+reads stage1/typescript/scanner internal/unicodeproperties/generate.go
+reads stage1/typescript/scanner stage1/typescript/scanner/oracles/*_test.go
+reads stage3/lane cohere
 reads internal/lower internal/oracle/testdata/arguments_length_refused/*
 reads internal/lower internal/oracle/testdata/census_boolean_dead_branch.a
 reads internal/lower internal/oracle/testdata/class_wrong_output_refused/iterators_override_this.a
