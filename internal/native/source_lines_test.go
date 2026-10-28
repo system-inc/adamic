@@ -270,7 +270,10 @@ func TestDebugTwoDirectories(t *testing.T) {
 					t.Fatal(err)
 				}
 				common = append(common, runtimeFile{name: "units.h", contents: []byte(header)})
-				keying := testUnitKeying(t, unitFirst, common, append(SourceFlags(source, options), programDebugFlags(options)...), unitKeyCompiler(t), unitKeyEnvironment())
+				keying, err := newUnitKeying(unitFirst, common, append(SourceFlags(source, options), programDebugFlags(options)...), unitKeyCompiler(t), unitKeyEnvironment(), options.Sanitize || options.ThreadSanitize)
+				if err != nil {
+					t.Fatal(err)
+				}
 				var keys []string
 				for _, unit := range units {
 					keys = append(keys, keying.key(unit))

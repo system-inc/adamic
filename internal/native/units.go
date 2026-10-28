@@ -456,15 +456,15 @@ func markUnitCacheOff(cache string, mismatch unitMismatch) error {
 // under directory holding common beside it, and kept in cache. A nil keying, or a unit whose source the key can't take
 // (unitSourceRefusal), compiles uncached. A sampled hit is compiled again, and a mismatch marks the cache off, prints
 // UnitMismatchPrefix's line naming the unit, the key and both digests, and is the cold object, never an error.
-func compileUnit(unit compilationUnit, common []runtimeFile, flags []string, compiler string, keying *unitKeying, cache, directory string, jobserver *Jobserver) (string, error) {
-	return compileUnitAs(unit, common, flags, compiler, keying, cache, directory, jobserver, "off")
+func compileUnit(unit compilationUnit, common []runtimeFile, flags []string, compiler string, keying *unitKeying, cache, directory string, jobserver *Jobserver, sanitized bool) (string, error) {
+	return compileUnitAs(unit, common, flags, compiler, keying, cache, directory, jobserver, "off", sanitized)
 }
 
 // compileUnitAs is compileUnit with uncached, the outcome its build log line says when the unit compiles uncached: off
 // for a build that read no cache, repass for compileUnits' second pass after a mismatch (Performance on #m62spx0), so
 // a reader counting units or a hit rate leaves the pass out from the line alone, in a log several processes append to,
 // whose order no reader can trust.
-func compileUnitAs(unit compilationUnit, common []runtimeFile, flags []string, compiler string, keying *unitKeying, cache, directory string, jobserver *Jobserver, uncached string) (string, error) {
+func compileUnitAs(unit compilationUnit, common []runtimeFile, flags []string, compiler string, keying *unitKeying, cache, directory string, jobserver *Jobserver, uncached string, sanitized bool) (string, error) {
 	environment := toolchain.Env()
 	if keying != nil {
 		environment = keying.environment
@@ -474,7 +474,7 @@ func compileUnitAs(unit compilationUnit, common []runtimeFile, flags []string, c
 		}
 	}
 	if keying == nil {
-		object, clang, err := compileUnitObject(unit, common, flags, compiler, environment, directory, jobserver)
+		object, clang, err := compileUnitObject(unit, common, flags, compiler, environment, directory, jobserver, sanitized)
 		if err != nil {
 			return "", err
 		}
@@ -504,7 +504,7 @@ func compileUnitAs(unit compilationUnit, common []runtimeFile, flags []string, c
 		if err != nil {
 			return "", err
 		}
-		cold, clang, err := compileUnitObject(unit, common, flags, compiler, environment, directory, jobserver)
+		cold, clang, err := compileUnitObject(unit, common, flags, compiler, environment, directory, jobserver, sanitized)
 		if err != nil {
 			return "", err
 		}
@@ -528,7 +528,7 @@ func compileUnitAs(unit compilationUnit, common []runtimeFile, flags []string, c
 		buildLog("cCompile", unit.name, key, "hit", keyed+clang)
 		return found, nil
 	}
-	contents, clang, err := compileUnitObject(unit, common, flags, compiler, environment, directory, jobserver)
+	contents, clang, err := compileUnitObject(unit, common, flags, compiler, environment, directory, jobserver, sanitized)
 	if err != nil {
 		return "", err
 	}
@@ -558,7 +558,7 @@ func compileUnitAs(unit compilationUnit, common []runtimeFile, flags []string, c
 // compileUnitObject compiles unit from its .c, in a directory of its own under directory holding common beside it,
 // under environment exactly, and is the object's bytes and how long clang ran, timed inside its jobserver.Hold so a
 // token's wait isn't counted (library.go's buildLog).
-func compileUnitObject(unit compilationUnit, common []runtimeFile, flags []string, compiler string, environment []string, directory string, jobserver *Jobserver) ([]byte, time.Duration, error) {
+func compileUnitObject(unit compilationUnit, common []runtimeFile, flags []string, compiler string, environment []string, directory string, jobserver *Jobserver, sanitized bool) ([]byte, time.Duration, error) {
 	temporary, err := os.MkdirTemp(directory, ".unit-")
 	if err != nil {
 		return nil, 0, err
@@ -569,7 +569,7 @@ func compileUnitObject(unit compilationUnit, common []runtimeFile, flags []strin
 			return nil, 0, err
 		}
 	}
-	command := clangIn(temporary, compiler, append(slices.Clone(flags), unitCompileArguments(unit.name, temporary, flags)...)...)
+	command := clangIn(temporary, compiler, append(slices.Clone(flags), unitCompileArguments(unit.name, temporary, flags, sanitized)...)...)
 	// The environment the key read, with the directory CommandIn names as the compile's own.
 	working := []string{}
 	for _, setting := range command.Env {
@@ -592,7 +592,7 @@ func compileUnitObject(unit compilationUnit, common []runtimeFile, flags []strin
 // compileUnits is every unit's object, jobs at once (compileUnit). Once any unit's cold check mismatches, the build's
 // cache is proved incomplete, not that unit's alone: every unit compiles again uncached, the hits already taken
 // included, so nothing is linked from keys this build caught short (Node's M4).
-func compileUnits(units []compilationUnit, common []runtimeFile, flags []string, compiler string, keying *unitKeying, cache, directory string, jobs int, jobserver *Jobserver) ([]string, error) {
+func compileUnits(units []compilationUnit, common []runtimeFile, flags []string, compiler string, keying *unitKeying, cache, directory string, jobs int, jobserver *Jobserver, sanitized bool) ([]string, error) {
 	objects := make([]string, len(units))
 	failures := make([]error, len(units))
 	pass := func(keying *unitKeying, uncached string) error {
@@ -601,7 +601,7 @@ func compileUnits(units []compilationUnit, common []runtimeFile, flags []string,
 		for range jobs {
 			workers.Go(func() {
 				for index := range work {
-					objects[index], failures[index] = compileUnitAs(units[index], common, flags, compiler, keying, cache, directory, jobserver, uncached)
+					objects[index], failures[index] = compileUnitAs(units[index], common, flags, compiler, keying, cache, directory, jobserver, uncached, sanitized)
 				}
 			})
 		}
@@ -689,20 +689,21 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	// A unit includes units.h, and through it adamic.h, before any of the program's own #defines
 	// (the checker build puts tsgo_runtime.h first), so its features come as flags.
 	flags := append(sourceFlags(source, options), programDebugFlags(options)...)
+	sanitized := options.Sanitize || options.ThreadSanitize
 	// The units' key is read once, before any of them compiles: a build the key can't account for, or one the cache is
 	// off for, compiles every unit uncached and says why.
 	var keying *unitKeying
 	if os.Getenv("ADAMIC_GATE_UNCACHED") != "1" {
 		if why, off := unitCacheOff(cache); off {
 			fmt.Fprintf(os.Stderr, "native: units compile uncached: %s\n", why)
-		} else if keying, err = newUnitKeying(unitFirst, common, flags, compiler, toolchain.Env()); errors.Is(err, errUncachedUnit) {
+		} else if keying, err = newUnitKeying(unitFirst, common, flags, compiler, toolchain.Env(), sanitized); errors.Is(err, errUncachedUnit) {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			keying = nil
 		} else if err != nil {
 			return err
 		}
 	}
-	objects, err := compileUnits(units, common, flags, compiler, keying, cache, directory, jobs, jobserver)
+	objects, err := compileUnits(units, common, flags, compiler, keying, cache, directory, jobs, jobserver, sanitized)
 	if err != nil {
 		return err
 	}
