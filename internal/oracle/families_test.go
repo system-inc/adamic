@@ -177,6 +177,8 @@ var families = []family{
 		"internal/oracle/testdata/async_refused/async_refuse_user_iterator_module.a",
 		"internal/oracle/testdata/slab_sizes.a",
 		"internal/oracle/testdata/reuse_handover_fresh.a",
+		"internal/oracle/testdata/async_iterable_map_boolean_function.a",
+		"internal/oracle/testdata/async_iterable_set_boolean_function.a",
 	}},
 	// 505 s: each fixture's wasm32 build, run on Node's WASI; at 64 the worst was 15.5 s.
 	{name: "TestWASIAgreesWithNode", shards: 128, runner: "runWASIAgreesShard", keys: fixturePaths, planted: "dedication/dedication.a", caught: "stdout differs", requires: "ADAMIC_ORACLE_WASI", solo: []string{
@@ -317,6 +319,8 @@ var families = []family{
 		"internal/oracle/testdata/async_refused/async_refuse_user_iterator_module.a",
 		"internal/oracle/testdata/slab_sizes.a",
 		"internal/oracle/testdata/reuse_handover_fresh.a",
+		"internal/oracle/testdata/async_iterable_map_boolean_function.a",
+		"internal/oracle/testdata/async_iterable_set_boolean_function.a",
 	}},
 	// 579.6 s in Loom as one test: each fixture's wasm32 build, its import inventory, and runs on node:wasi, the shim
 	// and Node, so about TestWASIAgreesWithNode's cost and a half, over as many shards and the same solo fixtures.
@@ -460,6 +464,8 @@ var families = []family{
 		"internal/oracle/testdata/async_typeof.a",
 		"internal/oracle/testdata/slab_sizes.a",
 		"internal/oracle/testdata/reuse_handover_fresh.a",
+		"internal/oracle/testdata/async_iterable_map_boolean_function.a",
+		"internal/oracle/testdata/async_iterable_set_boolean_function.a",
 	}},
 	// 92 s as one program of every loop, most of it clang on one huge C file.
 	{name: "TestLoopCountersAgreeWithNode", shards: 8, runner: "runLoopCountersShard", keys: loopCounterKeys, planted: "let NAME = 0; NAME < values.length; NAME++\n", caught: "kept in an integer true, want false", oneProgram: true},
