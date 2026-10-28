@@ -1,0 +1,51 @@
+0.000 L 0.84 2.66 2.02 2/111 10150
+1.017 L 0.85 2.63 2.02 2/119 10185
+1.832 V === RUN   TestSplitTSGoAgreesUnit00
+2.036 L 0.85 2.63 2.02 3/124 10252
+2.456 V     units_tsgo_test.go:165: build go_build_./bridge/tsgo/archive_tsgo.a da9bb6e463a9 hit 0.48
+2.456 B build go_build_./bridge/tsgo/archive_tsgo.a da9bb6e463a9 hit 0.48
+2.661 V     units_tsgo_test.go:165: build split-tsgo-source 3ecee58127c9 hit 0.01
+2.661 B build split-tsgo-source 3ecee58127c9 hit 0.01
+2.742 V     units_tsgo_test.go:165: build split-tsgo-baseline 9f3bcfb37216 hit 0.01
+2.742 V     units_tsgo_test.go:165: product fetch phase 0.906s
+2.742 B build split-tsgo-baseline 9f3bcfb37216 hit 0.01
+2.823 V     units_tsgo_test.go:165: whole checker run phase 0.088s
+2.823 V === RUN   TestSplitTSGoAgreesUnit00/cache_0
+3.047 L 0.85 2.63 2.02 2/125 10432
+3.960 B cArchive runtime.a b78ae25480d4 hit 0.000
+4.062 L 0.85 2.63 2.02 2/123 10494
+4.635 V native: unit main.c compiles uncached: main.c holds a directive past its first line
+4.635 B cCompile functions_0003.c 79337136b01c hit 0.000
+4.635 B cCompile functions_0001.c 37fd7a998eae hit 0.000
+4.635 B cCompile functions_0004.c 8a8ca7b8da77 hit 0.000
+4.635 B cCompile functions_0000.c d4e319015c98 hit 0.000
+4.635 B cCompile functions_0002.c 91555dc75b2e hit 0.000
+4.635 B cCompile functions_0006.c 9f91cb2bddd8 hit 0.000
+4.635 B cCompile functions_0005.c e166f9335afe hit 0.000
+4.635 B cCompile functions_0007.c 4e819d9993b5 hit 0.000
+4.635 B cCompile functions_0010.c 640070887133 hit 0.000
+4.635 B cCompile functions_0009.c c5a7eb364fa1 hit 0.001
+4.635 B cCompile functions_0012.c 006cde7362fe hit 0.001
+4.635 B cCompile functions_0013.c 56c49136affd hit 0.000
+4.635 B cCompile functions_0008.c 4eeffe295def hit 0.001
+4.635 B cCompile functions_0015.c 0e9627d40ebc hit 0.000
+4.635 B cCompile functions_0011.c 7f57bf91edb2 hit 0.001
+4.635 B cCompile functions_0014.c ff6e91e3f986 hit 0.000
+4.635 B cCompile functions_0017.c 7f80a01781a1 hit 0.000
+4.635 B cCompile functions_0020.c e9dd37768b04 hit 0.000
+4.635 B cCompile functions_0019.c e9ea8aae64fa hit 0.000
+4.635 B cCompile functions_0018.c 7926cc13e366 hit 0.000
+4.635 U main.c 3928
+4.635 U units.h 476762
+4.635 U state.c 490252
+4.663 B cCompile functions_0016.c 8d19dc37b3b2 hit 0.003
+4.725 B cCompile main.c - off 0.063
+4.876 B cCompile state.c 7ae75bfbbcdf hit 0.208
+5.083 L 0.85 2.63 2.02 2/125 10503
+5.308 B cLink split - off 0.439
+5.411 V     units_tsgo_test.go:158: checker uncached=0: 92 identical bytes: file	/tmp/adamic-gate/TestSplitTSGoAgreesUnit001540431116/001/sample.a
+5.411 V         findings 0 queries 1
+5.411 V --- PASS: TestSplitTSGoAgreesUnit00 (3.59s)
+5.411 V     --- PASS: TestSplitTSGoAgreesUnit00/cache_0 (2.59s)
+5.411 V PASS
+5.431 V ok  	github.com/system-inc/adamic/internal/native	3.616s

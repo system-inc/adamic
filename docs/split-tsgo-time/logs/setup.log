@@ -1,0 +1,33 @@
+submodule cache: off
+go version go1.27.1 linux/amd64
+setup: go ready (0.050s)
+Cloning into '/home/user/adamic/cohere'...
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/opt/adamic-tools/llvm/bin/clang) (0.581s)
+v24.22.1
+setup: node ready (3.285s)
+setup: tsc ready (TypeScript 6.0.3) (4.004s)
+From https://github.com/system-inc/cohere
+ * branch            06af2e399c6c1fb93fd570b774027942747400b4 -> FETCH_HEAD
+
+added 3 packages in 453ms
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=0.863s
+setup: markdown dependencies ready (4.939s)
+Submodule path 'cohere': checked out '06af2e399c6c1fb93fd570b774027942747400b4'
+Submodule 'TypeScript' (https://github.com/system-inc/TypeScript.git) registered for path 'cohere/TypeScript'
+Cloning into '/home/user/adamic/cohere/TypeScript'...
+From https://github.com/system-inc/TypeScript
+ * branch                  d92d9bfee114c80be2c375d72edae966176e3a4f -> FETCH_HEAD
+Submodule path 'cohere/TypeScript': checked out 'd92d9bfee114c80be2c375d72edae966176e3a4f'
+setup: submodules ready (137.999s)
+/tmp/adamic-gate/setup.wEhh3W/wasi-sdk-27.0-x86_64-linux.tar.gz: OK
+clang version 20.1.8-wasi-sdk (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: wasi sdk ready (/opt/adamic-tools/wasi-sdk, archive sha256 b7d4d944c88503e4f21d84af07ac293e3440b1b6210bfd7fe78e0afd92c23bc2, linking with /opt/adamic-tools/bin/clang) (145.878s)
+setup: shared cache off (opt in with ADAMIC_GOCACHE=1) (145.880s)
+setup: go build ready (319.449s)
+setup: test binaries deferred (use --warm-tests) (319.584s)
+setup: build cache warm (319.587s)
+setup: build-flags commit=95a7b63f12219f756b9bcd10f9aad953781add96 nproc=4 cpu.max=unknown go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.22.1 cached=yes warm-tests=false gocacheprog=off load-before=1.91 0.88 0.35 1/110 394 load-after=8.75 4.35 1.84 1/106 4142
+setup: done on 4 processors (cgroup cpu.max: unknown), 15.7 GB (319.628s)
+setup: source /opt/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.wEhh3W

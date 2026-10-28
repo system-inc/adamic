@@ -1,0 +1,78 @@
+0.000 L 0.86 2.61 2.01 6/111 10544
+1.005 L 0.86 2.61 2.01 2/121 10581
+1.739 V === RUN   TestSplitTSGoAgreesUnit01
+2.009 L 0.86 2.61 2.01 16/150 10707
+2.363 V     units_tsgo_test.go:170: build go_build_./bridge/tsgo/archive_tsgo.a da9bb6e463a9 hit 0.47
+2.363 B build go_build_./bridge/tsgo/archive_tsgo.a da9bb6e463a9 hit 0.47
+2.568 V     units_tsgo_test.go:170: build split-tsgo-source 3ecee58127c9 hit 0.02
+2.568 B build split-tsgo-source 3ecee58127c9 hit 0.02
+2.670 V     units_tsgo_test.go:170: build split-tsgo-baseline 9f3bcfb37216 hit 0.01
+2.670 V     units_tsgo_test.go:170: product fetch phase 0.932s
+2.670 B build split-tsgo-baseline 9f3bcfb37216 hit 0.01
+2.751 V     units_tsgo_test.go:170: whole checker run phase 0.090s
+2.751 V === RUN   TestSplitTSGoAgreesUnit01/cache_1
+3.015 L 0.86 2.61 2.01 3/130 10838
+3.749 B cArchive runtime.a b78ae25480d4 hit 0.000
+3.833 U units.h 476762
+3.833 U functions_0001.c 6037
+3.833 U state.c 490252
+3.833 U functions_0002.c 6004
+3.833 U functions_0003.c 6095
+3.854 U functions_0000.c 6289
+3.896 B cCompile functions_0003.c - off 0.052
+3.896 B cCompile functions_0001.c - off 0.053
+3.896 B cCompile functions_0002.c - off 0.061
+3.896 U functions_0005.c 6308
+3.896 U functions_0006.c 25529
+3.896 U functions_0004.c 5941
+3.941 B cCompile functions_0000.c - off 0.068
+3.941 U functions_0007.c 121808
+3.982 B cCompile functions_0005.c - off 0.073
+3.982 U functions_0008.c 229042
+4.003 B cCompile functions_0004.c - off 0.096
+4.003 U functions_0009.c 340391
+4.024 L 0.86 2.61 2.01 6/135 10908
+4.073 B cCompile functions_0006.c - off 0.154
+4.073 B cCompile state.c - off 0.222
+4.073 U functions_0010.c 168608
+4.093 U functions_0011.c 325287
+4.342 B cCompile functions_0007.c - off 0.383
+4.342 U functions_0012.c 210219
+4.679 B cCompile functions_0011.c - off 0.597
+4.679 U functions_0013.c 209761
+4.826 B cCompile functions_0010.c - off 0.767
+4.826 U functions_0014.c 190651
+4.997 B cCompile functions_0008.c - off 0.996
+4.997 U functions_0015.c 182487
+5.038 L 1.20 2.65 2.03 6/135 10914
+5.227 B cCompile functions_0012.c - off 0.884
+5.227 U functions_0016.c 1026899
+5.315 B cCompile functions_0013.c - off 0.620
+5.315 U functions_0017.c 18910
+5.402 B cCompile functions_0017.c - off 0.093
+5.402 U functions_0018.c 74015
+5.647 B cCompile functions_0014.c - off 0.819
+5.647 U functions_0019.c 150185
+5.812 B cCompile functions_0018.c - off 0.397
+5.812 U functions_0020.c 714
+5.878 B cCompile functions_0020.c - off 0.061
+5.878 U main.c 3928
+5.960 B cCompile main.c - off 0.070
+6.022 B cCompile functions_0009.c - off 2.000
+6.042 L 1.20 2.65 2.03 4/134 10921
+6.124 B cCompile functions_0019.c - off 0.477
+6.453 B cCompile functions_0015.c - off 1.454
+7.045 L 1.20 2.65 2.03 2/132 10921
+8.049 L 1.20 2.65 2.03 2/132 10921
+9.050 L 1.20 2.65 2.03 2/132 10921
+10.052 L 1.18 2.62 2.02 2/131 10921
+11.056 L 1.18 2.62 2.02 2/132 10922
+12.059 L 1.18 2.62 2.02 2/129 10922
+12.243 B cCompile functions_0016.c - off 7.022
+12.652 B cLink split - off 0.391
+12.733 V     units_tsgo_test.go:158: checker uncached=1: 92 identical bytes: file	/tmp/adamic-gate/TestSplitTSGoAgreesUnit011766559406/001/sample.a
+12.733 V         findings 0 queries 1
+12.733 V --- PASS: TestSplitTSGoAgreesUnit01 (11.00s)
+12.733 V     --- PASS: TestSplitTSGoAgreesUnit01/cache_1 (9.98s)
+12.733 V PASS
+12.753 V ok  	github.com/system-inc/adamic/internal/native	11.018s

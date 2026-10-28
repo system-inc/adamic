@@ -1,0 +1,91 @@
+== 01-quiet-u00-a
+total 11.52  fetch 0.904  whole run 0.076  cache subtest 10.54
+timeline (s after subtest start): runtime archive line 1.00, first cCompile line 1.77, last cCompile line 10.10, cLink line 10.45, split checked 10.53
+split build ~10.45 (subtest start to cLink line), split run ~0.08 (cLink line to its check logged)
+load 1m before 0.97, during subtest min 0.97 max 1.30
+  build     hit    n= 3 sum=0.500
+  cArchive  hit    n= 1 sum=0.000
+  cCompile  miss   n=22 sum=17.280
+  cCompile  off    n= 1 sum=0.056
+  cLink     off    n= 1 sum=0.345
+  slowest cCompile: functions_0016.c miss 6.981, functions_0009.c miss 2.266, functions_0008.c miss 1.235, functions_0015.c miss 0.997, functions_0014.c miss 0.938, functions_0013.c miss 0.723, functions_0012.c miss 0.707, functions_0011.c miss 0.703, functions_0010.c miss 0.600, functions_0019.c miss 0.429
+  cLink 0.345
+== 02-quiet-u01-a
+total 10.83  fetch 0.908  whole run 0.077  cache subtest 9.84
+timeline (s after subtest start): runtime archive line 1.10, first cCompile line 1.23, last cCompile line 9.36, cLink line 9.75, split checked 9.85
+split build ~9.75 (subtest start to cLink line), split run ~0.10 (cLink line to its check logged)
+load 1m before 0.99, during subtest min 0.99 max 0.99
+  build     hit    n= 3 sum=0.510
+  cArchive  hit    n= 1 sum=0.000
+  cCompile  off    n=23 sum=17.541
+  cLink     off    n= 1 sum=0.407
+  slowest cCompile: functions_0016.c off 6.750, functions_0009.c off 1.904, functions_0015.c off 1.181, functions_0014.c off 1.062, functions_0008.c off 0.978, functions_0012.c off 0.953, functions_0010.c off 0.818, functions_0011.c off 0.773, functions_0013.c off 0.695, functions_0019.c off 0.524
+  cLink 0.407
+== 03-quiet-u00-b
+total 4.46  fetch 1.010  whole run 0.108  cache subtest 3.34
+timeline (s after subtest start): runtime archive line 1.16, first cCompile line 1.81, last cCompile line 2.81, cLink line 3.22, split checked 3.35
+split build ~3.22 (subtest start to cLink line), split run ~0.12 (cLink line to its check logged)
+load 1m before 0.77, during subtest min 0.79 max 0.81
+  build     hit    n= 3 sum=0.580
+  cArchive  hit    n= 1 sum=0.000
+  cCompile  hit    n=22 sum=1.320
+  cCompile  off    n= 1 sum=0.041
+  cLink     off    n= 1 sum=0.407
+  slowest cCompile: functions_0008.c hit 0.999, functions_0018.c hit 0.315, main.c off 0.041, functions_0016.c hit 0.002, state.c hit 0.001, functions_0015.c hit 0.001, functions_0011.c hit 0.001, functions_0009.c hit 0.001, functions_0020.c hit 0.000, functions_0019.c hit 0.000
+  cLink 0.407
+== 04-quiet-u01-b
+total 11.33  fetch 0.981  whole run 0.084  cache subtest 10.26
+timeline (s after subtest start): runtime archive line 1.10, first cCompile line 1.23, last cCompile line 9.76, cLink line 10.17, split checked 10.25
+split build ~10.17 (subtest start to cLink line), split run ~0.08 (cLink line to its check logged)
+load 1m before 0.81, during subtest min 0.81 max 0.84
+  build     hit    n= 3 sum=0.550
+  cArchive  hit    n= 1 sum=0.000
+  cCompile  off    n=23 sum=18.663
+  cLink     off    n= 1 sum=0.404
+  slowest cCompile: functions_0016.c off 7.305, functions_0009.c off 2.305, functions_0015.c off 1.359, functions_0012.c off 1.001, functions_0011.c off 0.988, functions_0008.c off 0.969, functions_0014.c off 0.889, functions_0019.c off 0.644, functions_0007.c off 0.598, functions_0010.c off 0.570
+  cLink 0.404
+== 05-quiet-u00-c
+total 3.59  fetch 0.906  whole run 0.088  cache subtest 2.59
+timeline (s after subtest start): runtime archive line 1.14, first cCompile line 1.81, last cCompile line 2.05, cLink line 2.48, split checked 2.59
+split build ~2.48 (subtest start to cLink line), split run ~0.10 (cLink line to its check logged)
+load 1m before 0.84, during subtest min 0.85 max 0.85
+  build     hit    n= 3 sum=0.500
+  cArchive  hit    n= 1 sum=0.000
+  cCompile  hit    n=22 sum=0.215
+  cCompile  off    n= 1 sum=0.063
+  cLink     off    n= 1 sum=0.439
+  slowest cCompile: state.c hit 0.208, main.c off 0.063, functions_0016.c hit 0.003, functions_0012.c hit 0.001, functions_0011.c hit 0.001, functions_0009.c hit 0.001, functions_0008.c hit 0.001, functions_0020.c hit 0.000, functions_0019.c hit 0.000, functions_0018.c hit 0.000
+  cLink 0.439
+== 06-quiet-u01-c
+total 11.00  fetch 0.932  whole run 0.090  cache subtest 9.98
+timeline (s after subtest start): runtime archive line 1.00, first cCompile line 1.15, last cCompile line 9.49, cLink line 9.90, split checked 9.98
+split build ~9.90 (subtest start to cLink line), split run ~0.08 (cLink line to its check logged)
+load 1m before 0.86, during subtest min 0.86 max 1.20
+  build     hit    n= 3 sum=0.500
+  cArchive  hit    n= 1 sum=0.000
+  cCompile  off    n=23 sum=17.419
+  cLink     off    n= 1 sum=0.391
+  slowest cCompile: functions_0016.c off 7.022, functions_0009.c off 2.000, functions_0015.c off 1.454, functions_0008.c off 0.996, functions_0012.c off 0.884, functions_0014.c off 0.819, functions_0010.c off 0.767, functions_0013.c off 0.620, functions_0011.c off 0.597, functions_0019.c off 0.477
+  cLink 0.391
+== 07-quiet-u00-cleared
+total 11.11  fetch 0.878  whole run 0.086  cache subtest 10.15
+timeline (s after subtest start): runtime archive line 1.08, first cCompile line 1.81, last cCompile line 9.69, cLink line 10.05, split checked 10.14
+split build ~10.05 (subtest start to cLink line), split run ~0.08 (cLink line to its check logged)
+load 1m before 0.78, during subtest min 0.79 max 1.13
+  build     hit    n= 3 sum=0.480
+  cArchive  hit    n= 1 sum=0.000
+  cCompile  miss   n=22 sum=16.517
+  cCompile  off    n= 1 sum=0.058
+  cLink     off    n= 1 sum=0.377
+  slowest cCompile: functions_0016.c miss 6.663, functions_0009.c miss 2.067, functions_0015.c miss 1.213, functions_0014.c miss 0.994, functions_0008.c miss 0.939, functions_0012.c miss 0.779, functions_0011.c miss 0.739, functions_0013.c miss 0.616, functions_0010.c miss 0.579, functions_0019.c miss 0.347
+  cLink 0.377
+
+| run | total s | fetch s | whole run s | split build s | cCompile sum s over N units | cLink s | split run s | load 1m before | load 1m during |
+|---|---|---|---|---|---|---|---|---|---|
+| 01-quiet-u00-a | 11.52 | 0.904 | 0.076 | 10.45 | 17.34 over 23 (0 hit, 22 miss, 1 off) | 0.345 | 0.08 | 0.97 | 1.0-1.3 |
+| 02-quiet-u01-a | 10.83 | 0.908 | 0.077 | 9.75 | 17.54 over 23 (0 hit, 0 miss, 23 off) | 0.407 | 0.10 | 0.99 | 1.0-1.0 |
+| 03-quiet-u00-b | 4.46 | 1.010 | 0.108 | 3.22 | 1.36 over 23 (22 hit, 0 miss, 1 off) | 0.407 | 0.12 | 0.77 | 0.8-0.8 |
+| 04-quiet-u01-b | 11.33 | 0.981 | 0.084 | 10.17 | 18.66 over 23 (0 hit, 0 miss, 23 off) | 0.404 | 0.08 | 0.81 | 0.8-0.8 |
+| 05-quiet-u00-c | 3.59 | 0.906 | 0.088 | 2.48 | 0.28 over 23 (22 hit, 0 miss, 1 off) | 0.439 | 0.10 | 0.84 | 0.8-0.8 |
+| 06-quiet-u01-c | 11.00 | 0.932 | 0.090 | 9.90 | 17.42 over 23 (0 hit, 0 miss, 23 off) | 0.391 | 0.08 | 0.86 | 0.9-1.2 |
+| 07-quiet-u00-cleared | 11.11 | 0.878 | 0.086 | 10.05 | 16.57 over 23 (0 hit, 22 miss, 1 off) | 0.377 | 0.08 | 0.78 | 0.8-1.1 |
