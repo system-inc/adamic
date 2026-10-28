@@ -16,6 +16,7 @@ func TestRecordForms(t *testing.T) {
 		`interface MapLike<T> { [key:string]:T } const r:MapLike<number>={}; console.log(String(delete r['absent']));`,
 		`const r:Record<string,number>={}; for(const k in r) { console.log(k); }`,
 		`interface Node {links:Record<string,Node>} const r:Record<string,Node>={}; r['fresh']={links:{}};`,
+		`function show(r:Record<string,number>|null):void {console.log(String(r === null));} show(null); show({x:1});`,
 	} {
 		t.Run(source, func(t *testing.T) {
 			_, err := lowerSource(t, source)
@@ -32,7 +33,7 @@ func TestRecordRefusals(t *testing.T) {
 		notYet         bool
 	}{
 		{`import type {Weak} from 'adamic'; interface Item {name:string} const r:Record<string,Weak<Item>>={};`, "slot representation", true},
-		{`function show(r:Record<string,number>|null):void {console.log(String(JSON.stringify(r)));}`, "value of type", true},
+		{`function show(r:Record<string,number>|null):void {console.log(String(JSON.stringify(r)));}`, "JSON.stringify object references", true},
 		{`const r:Record<string,string>={}; console.log(r && 'value');`, "logical record operand", true},
 		{`interface R { readonly [key:string]:number } const r:R={};`, "signature", true},
 		{`interface R { [key:number]:number } const r:R={};`, "signature", true},
