@@ -6,16 +6,16 @@ import (
 	"debug/dwarf"
 	"debug/elf"
 	"debug/macho"
-	"fmt"
 	"io"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"reflect"
 	"strings"
 	"testing"
 	"time"
 
-	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 func debugPathFixture(t *testing.T, root string) string {
@@ -153,35 +153,34 @@ func debugSourcePaths(t *testing.T, binary, entry string) bool {
 	return ok
 }
 
-func TestDebugSourcePaths(t *testing.T) {
-	t.Parallel()
-	for _, split := range []bool{false, true} {
-		t.Run(fmt.Sprintf("split=%t", split), func(t *testing.T) {
-			entry := debugPathFixture(t, t.TempDir())
-			for _, relative := range []string{"main.c", "runtime/adamic.h"} {
-				path := filepath.Join(filepath.Dir(entry), relative)
-				if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
-					t.Fatal(err)
-				}
-				if err := os.WriteFile(path, []byte("decoy, never generated code\n"), 0644); err != nil {
-					t.Fatal(err)
-				}
-			}
-			binary := filepath.Join(t.TempDir(), "program")
-			debugCLI(t, entry, binary, "ADAMIC_NATIVE_SPLIT="+map[bool]string{false: "0", true: "1"}[split])
-			if !debugSourcePaths(t, binary, entry) {
-				t.Fatal("debugger paths do not reach entry and imported source")
-			}
-		})
+func TestDebugSourcePaths(t *testing.T)      { t.Parallel(); checkDebugSourcePaths(t, false) }
+func TestDebugSourcePathsSplit(t *testing.T) { t.Parallel(); checkDebugSourcePaths(t, true) }
+func checkDebugSourcePaths(t *testing.T, split bool) {
+	t.Helper()
+	entry := debugPathFixture(t, t.TempDir())
+	for _, relative := range []string{"main.c", "runtime/adamic.h"} {
+		path := filepath.Join(filepath.Dir(entry), relative)
+		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(path, []byte("decoy, never generated code\n"), 0644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	binary := filepath.Join(t.TempDir(), "program")
+	debugCLI(t, entry, binary, "ADAMIC_NATIVE_SPLIT="+map[bool]string{false: "0", true: "1"}[split])
+	if !debugSourcePaths(t, binary, entry) {
+		t.Fatal("debugger paths do not reach entry and imported source")
 	}
 }
 
 func debugCLI(t *testing.T, entry, binary string, environment ...string) {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 180*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
-	command := toolchain.CommandContextIn(ctx, "../..", "go", "run", "./cmd/adamic", "build", entry, "-o", binary, "--debug")
-	command.Env = append(command.Env, environment...)
+	command := exec.CommandContext(ctx, filepath.Join(debugCommandProduct(t, false), "command.test"), "-test.run=^TestBuildDebugDriver$", "--", "build", entry, "-o", binary, "--debug")
+	command.Dir = buildcache.Absolute("<repository>/cmd/adamic")
+	command.Env = append(append(os.Environ(), "ADAMIC_BUILD_DEBUG_DRIVER=1"), environment...)
 	if output, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("build --debug: %v: %s", err, output)
 	}
@@ -189,15 +188,7 @@ func debugCLI(t *testing.T, entry, binary string, environment ...string) {
 
 func TestDebugRuntimeArchiveShared(t *testing.T) {
 	t.Parallel()
-	root := t.TempDir()
-	cache, log := filepath.Join(root, "cache"), filepath.Join(root, "build.log")
-	for i := 0; i < 2; i++ {
-		entry := debugPathFixture(t, filepath.Join(root, fmt.Sprint(i)))
-		debugCLI(t, entry, filepath.Join(filepath.Dir(entry), "program"),
-			"ADAMIC_BUILD_CACHE_DIR="+cache, "ADAMIC_BUILD_OUTPUT_DIR="+cache,
-			"ADAMIC_BUILD_LOG="+log, "ADAMIC_NATIVE_SPLIT=0")
-	}
-	contents, err := os.ReadFile(log)
+	contents, err := os.ReadFile(filepath.Join(debugSharingProduct(t, false), "build.log"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -220,7 +211,7 @@ func TestDebugSanitizedUnitInputs(t *testing.T) {
 	options := Options{Debug: true, Sanitize: true, Split: true, DebugDirectory: t.TempDir()}
 	source := "#include \"adamic.h\"\nstatic int adamic_value = 1;\nstatic int *adamic_probe(void) { return &adamic_value; }\nint main(int argc, char **argv) { (void)argv; return *adamic_probe() == argc ? 0 : 1; }\n"
 	binary := filepath.Join(t.TempDir(), "program")
-	if err := Build(source, binary, options); err != nil {
+	if err := buildUnitsWithLibrary(source, binary, options, debugArchiveProduct(t, options, false), ""); err != nil {
 		t.Fatal(err)
 	}
 	contents, err := os.ReadFile(binary)
