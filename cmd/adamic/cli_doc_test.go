@@ -15,7 +15,7 @@ import (
 
 // docs/cli.md is the command's inventory, so its usage block is the usage the binary prints, and every word the
 // command matches (a command name, a flag, a target) is a word that usage names. A command or flag added without
-// usage, or usage changed without the page, fails here. Mutants: add `case "--quiet":` to buildWithNative's switch,
+// usage, or usage changed without the page, fails here. Mutants: add `case "--quiet":` to build's flag switch,
 // or change a word of usage, or of the page's block.
 func TestDocumentedUsageIsTheCommands(t *testing.T) {
 	t.Parallel()
@@ -36,30 +36,56 @@ func TestDocumentedUsageIsTheCommands(t *testing.T) {
 	}
 }
 
-// matchedWords are the string literals run compares an argument with and the cases buildWithNative switches on.
+// matchedWords are the string literals the command compares an argument with: anything compared with, or switched
+// on as, `arguments[...]` or a name assigned from it (flag := arguments[index]), in every one of its source files.
+// The census finds them by that shape, not by function name, since build's flags moved from buildWithNative to
+// buildWithNativeExports without it noticing, and --debug was parsed with no usage to name it.
 func matchedWords(t *testing.T) []string {
 	t.Helper()
+	sources, err := filepath.Glob("*.go")
+	if err != nil {
+		t.Fatal(err)
+	}
 	files := token.NewFileSet()
 	var matched []string
-	for _, name := range []string{"main.go", "tsgo.go"} {
+	for _, name := range sources {
+		if strings.HasSuffix(name, "_test.go") {
+			continue
+		}
 		file, err := parser.ParseFile(files, name, nil, 0)
 		if err != nil {
 			t.Fatal(err)
 		}
 		for _, declaration := range file.Decls {
 			function, ok := declaration.(*ast.FuncDecl)
-			if !ok || (function.Name.Name != "run" && function.Name.Name != "buildWithNative") {
+			if !ok || function.Body == nil {
 				continue
 			}
+			// The names a function binds to one argument, so `switch flag` reads as `switch arguments[index]`.
+			taken := map[string]bool{}
+			ast.Inspect(function.Body, func(node ast.Node) bool {
+				if assign, ok := node.(*ast.AssignStmt); ok && len(assign.Lhs) == len(assign.Rhs) {
+					for index, value := range assign.Rhs {
+						if identifier, ok := assign.Lhs[index].(*ast.Ident); ok && isArgument(value, nil) {
+							taken[identifier.Name] = true
+						}
+					}
+				}
+				return true
+			})
 			ast.Inspect(function.Body, func(node ast.Node) bool {
 				var literals []ast.Expr
 				switch node := node.(type) {
 				case *ast.BinaryExpr:
-					if node.Op == token.EQL || node.Op == token.NEQ {
+					if (node.Op == token.EQL || node.Op == token.NEQ) && (isArgument(node.X, taken) || isArgument(node.Y, taken)) {
 						literals = []ast.Expr{node.X, node.Y}
 					}
-				case *ast.CaseClause:
-					literals = node.List
+				case *ast.SwitchStmt:
+					if node.Tag != nil && isArgument(node.Tag, taken) {
+						for _, statement := range node.Body.List {
+							literals = append(literals, statement.(*ast.CaseClause).List...)
+						}
+					}
 				}
 				for _, expression := range literals {
 					if literal, ok := expression.(*ast.BasicLit); ok && literal.Kind == token.STRING {
@@ -67,7 +93,7 @@ func matchedWords(t *testing.T) []string {
 						if err != nil {
 							t.Fatal(err)
 						}
-						// An empty string is a value not yet given (options.Target != ""), never a word typed.
+						// An empty string is a value not yet given, never a word typed.
 						if word != "" {
 							matched = append(matched, word)
 						}
@@ -77,10 +103,25 @@ func matchedWords(t *testing.T) []string {
 			})
 		}
 	}
-	if len(matched) == 0 {
-		t.Fatal("found no words run or buildWithNative match; the census looks at the wrong functions")
+	// A census that finds no command or no build flag passes by matching nothing.
+	for _, word := range []string{"build", "--count"} {
+		if !slices.Contains(matched, word) {
+			t.Fatalf("the census found no %q among the words the command compares an argument with; it reads the wrong shape: %q", word, matched)
+		}
 	}
 	return matched
+}
+
+// isArgument is whether an expression is one of the command's arguments: `arguments[...]`, or a name bound to one.
+func isArgument(expression ast.Expr, taken map[string]bool) bool {
+	switch expression := expression.(type) {
+	case *ast.IndexExpr:
+		identifier, ok := expression.X.(*ast.Ident)
+		return ok && identifier.Name == "arguments"
+	case *ast.Ident:
+		return taken[expression.Name]
+	}
+	return false
 }
 
 // docs/cli.md cites Go by symbol, never by line, so a citation goes stale only when its declaration does, and then
