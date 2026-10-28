@@ -215,13 +215,57 @@ a slower box after the container restart, which came between the two runs; I hav
 them. The head is likewise about 14% slower than the throwaway shared map on `85c9d783`. The
 head's profile, next, shows the void-read pass's share.
 
+## The head's profile (push 7, observed)
+
+The head `f2479703`'s meter-built overlay with the per-file loop profile
+([tools/loop_profile_overlay.py.txt](tools/loop_profile_overlay.py.txt)), all 79 files: 2,137.0 s of
+profile duration, 2,337.1 s of samples (main `85c9d783`'s: 3,538.4 and 4,733.9). Its `latent.jsonl`
+is byte-identical to the head's timed run and its decision lines are identical. Wall 35:42.8 and
+user 2,318.7 s with profiling on ([profile/head/head-profile.time](profile/head/head-profile.time)).
+The first attempt was killed by my own mistake (stopping a shell that was waiting on it) and rerun.
+
+Tops: [profile/head/top-cum-40.txt](profile/head/top-cum-40.txt),
+[profile/head/top-flat-40.txt](profile/head/top-flat-40.txt), every node
+[profile/head/top-cum-all-nodes.txt](profile/head/top-cum-all-nodes.txt).
+
+Cumulative seconds and share, main `85c9d783` against the head (the same stack-depth caveat as above:
+callers far from the leaves are lower bounds):
+
+| function | main `85c9d783` | head `f2479703` |
+|---|--:|--:|
+| `lower.(*lowering).sourceIdentity` | 1,287.9 s, 27.2% | 3.1 s, 0.1% |
+| `lower.(*lowering).latentRegister` (overlay) | 1,153.9 s, 24.4% | 48.0 s, 2.1% |
+| `runtime.gcBgMarkWorker` (GC) | 1,187.8 s, 25.1% | 209.3 s, 9.0% |
+| `lower.(*lowering).provePredicate` | 863.2 s, 18.2% | 1,005.4 s, 43.0% |
+| `lower.(*predicateVerifier).verify` | 711.0 s, 15.0% | 843.9 s, 36.1% |
+| `lower.(*lowering).checkedPredicateBodyProven` | 638.2 s, 13.5% | 737.1 s, 31.5% |
+| `checker.(*Checker).GetSymbolAtLocation` | 486.9 s, 10.3% | 597.1 s, 25.6% |
+| `lower.(*lowering).latentRefuse` (the refusal scan, overlay) | 503.0 s, 10.6% | 590.2 s, 25.3% |
+| `lower.(*lowering).entriesRecordLiteral` | 322.5 s, 6.8% | 369.6 s, 15.8% |
+| `lower.(*lowering).lowerFunction` | 117.2 s, 2.5% | 138.7 s, 5.9% |
+| `lower.(*predicateFalseFlow).escapingReference` | 116.1 s, 2.5% | 131.1 s, 5.6% |
+| `checker.(*Checker).GetTypeAtLocation` | 77.0 s, 1.6% | 97.5 s, 4.2% |
+| `lower.(*lowering).noteInheritance` | 70.6 s, 1.5% | 71.6 s, 3.1% |
+| `lower.(*lowering).refuseVoidWidening` | (absent) | 20.3 s, 0.9% |
+| `lower.(*lowering).refuseVoidRead` | (absent) | 0.06 s, 0.0% |
+
+What's left on the head is the predicate proof: `provePredicate` through `predicateArguments`
+(42.9%), into `predicateVerifier.verify` and `checkedPredicateBodyProven`, plus the refusal scan
+and the checker's symbol resolution under them. `entriesProgramHasRecords` (under
+`entriesRecordLiteral`, 15.7%) walks the program, which by its name is also a candidate for a
+per-lowering memo; I haven't read it.
+
+On the 1.4 times slowdown of `95a7b63f` against `85c9d783`: `8d39519a`'s void passes are under 1%
+of the head's samples, and functions whose code did not change between the two mains
+(`provePredicate`, `latentRefuse`, `GetSymbolAtLocation`, `entriesRecordLiteral`) each take 1.15 to
+1.2 times their seconds on `85c9d783`. That points to a slower box after the second container
+restart rather than to new work, inferred, not measured. A same-box check follows.
+
 ## What hasn't run yet, and why
 
-Order, as Performance asked after push 4: the head `f2479703` (compiler/latent-shared-identities)
-built exactly as the meter builds it, with the timing lines, over the same adapted tree (running
-now), then its parent main `95a7b63f` built the same way, then the diff of their `latent.jsonl` and
-decision lines, then the head's profile, then A's profile, B's timed run, and the one-file
-comparison.
+Still to run: a same-box check of the restart drift (one-file runs of `85c9d783` and
+`95a7b63f`, which also answer the one-file against 79-file question), then A's profile, B's timed
+run, and the A/B decision diffs.
 
 - The timeout is 3,600 s, not 900 s, since one process covers all 79 files and takes 3,230 s on main.
 - Per-file invocations (one process per file) are not the meter's step: the meter loads all 79
