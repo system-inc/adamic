@@ -18,6 +18,7 @@ import (
 // left out by name rather than skipped, and their imports are still asserted, so the list cannot drift:
 // TestWASIAgreesWithNode runs these fixtures under node:wasi.
 var shimFileFixtures = map[string]bool{
+	"stage3/namespace-init-sys/cwd.a":                          true,
 	"stage3/fixtures/host/14_getCurrentDirectory.a":            true,
 	"internal/oracle/testdata/program_region/parse.a":          true,
 	"internal/oracle/testdata/closure_convention_host24.a":     true,
@@ -29,6 +30,38 @@ var shimFileFixtures = map[string]bool{
 	"internal/oracle/testdata/node_fs_rm_options.a":            true,
 	"internal/oracle/testdata/node_options_const_capture.a":    true,
 	"internal/oracle/testdata/node_options_widening.a":         true,
+}
+
+// The cwd adapter reads the supplied initial directory even without opening a file.
+func TestWASIShimCwdImports(t *testing.T) {
+	t.Parallel()
+	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
+		t.Skip("set ADAMIC_ORACLE_WASI=1")
+	}
+	const fixture = "stage3/namespace-init-sys/cwd.a"
+	if !shimFileFixtures[fixture] {
+		t.Fatal("cwd requires the host filesystem")
+	}
+	program, err := lowered(t, filepath.Join(repository, fixture))
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(t.TempDir(), "cwd.wasm")
+	if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
+		t.Fatal(err)
+	}
+	inventory := execute(t, "node", "-e", `const fs=require('node:fs');const m=new WebAssembly.Module(fs.readFileSync(process.argv[1]));console.log(JSON.stringify(WebAssembly.Module.imports(m).filter(i=>i.module==='wasi_snapshot_preview1').map(i=>i.name).sort()));`, binary)
+	if inventory.exitCode != 0 {
+		t.Fatalf("imports: %s", inventory.stderr)
+	}
+	var imports []string
+	if err := json.Unmarshal(inventory.stdout, &imports); err != nil {
+		t.Fatal(err)
+	}
+	const want = "args_get, args_sizes_get, clock_time_get, environ_get, environ_sizes_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_filestat_get, proc_exit"
+	if actual := strings.Join(imports, ", "); actual != want {
+		t.Fatalf("cwd imports %s, want %s", actual, want)
+	}
 }
 
 // TestWASIShimAgreesWithNode runs every fixture's wasm32 build through the shim, as a family (families_test.go):
