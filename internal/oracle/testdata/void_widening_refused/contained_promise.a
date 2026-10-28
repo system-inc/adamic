@@ -1,0 +1,3 @@
+// a-check: refused a void value at the initializer site through <1> seen as unknown
+const make: () => void = () => 42; const all: void[] = [1, 2].map(() => make());
+async function later(): Promise<void> { return make(); } const wide: Promise<unknown> = later(); console.log(typeof wide);
