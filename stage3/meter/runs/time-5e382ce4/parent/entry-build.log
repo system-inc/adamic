@@ -1,0 +1,2 @@
++ cd /workspace/time-5e382ce4/parent-source
++ go build -buildvcs=false -overlay=/workspace/time-5e382ce4/parent-binaries/entry-overlay/overlay.json -o /workspace/time-5e382ce4/parent-binaries/entry-census ./stage3/census/latent/tool

@@ -1,0 +1,2 @@
++ cd /workspace/time-5e382ce4/change-source
++ go build -buildvcs=false -overlay=/workspace/time-5e382ce4/change-binaries/entry-overlay/overlay.json -o /workspace/time-5e382ce4/change-binaries/entry-census ./stage3/census/latent/tool

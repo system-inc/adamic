@@ -1,0 +1,189 @@
++ cp /tmp/setup.log /workspace/adamic/stage3/meter/runs/time-5e382ce4/setup.log
++ date -u +%FT%TZ
++ nproc
++ cat /sys/fs/cgroup/cpu.max
++ cat /sys/fs/cgroup/memory.max
++ free -b
++ go version
++ node --version
++ uname -a
++ git show -s '--format=%H %P %s' HEAD
++ for label in parent change
++ case $label in
++ sha=22026c7392f55556e721b6f425dd369ceafdf14f
++ source=/workspace/time-5e382ce4/parent-source
++ logs=/workspace/adamic/stage3/meter/runs/time-5e382ce4/parent
++ mkdir -p /workspace/adamic/stage3/meter/runs/time-5e382ce4/parent
++ git worktree add --detach /workspace/time-5e382ce4/parent-source 22026c7392f55556e721b6f425dd369ceafdf14f
++ git -C /workspace/time-5e382ce4/parent-source -c protocol.file.allow=always -c url.file:///workspace/adamic/cohere.insteadOf=https://github.com/system-inc/cohere.git -c url.file:///workspace/adamic/cohere/TypeScript.insteadOf=https://github.com/system-inc/TypeScript.git submodule update --init --recursive --depth 1
++ git -C /workspace/time-5e382ce4/parent-source submodule status --recursive
++ build_census /workspace/time-5e382ce4/parent-source /workspace/time-5e382ce4/parent-binaries /workspace/adamic/stage3/meter/runs/time-5e382ce4/parent
++ local source=/workspace/time-5e382ce4/parent-source destination=/workspace/time-5e382ce4/parent-binaries logs=/workspace/adamic/stage3/meter/runs/time-5e382ce4/parent
++ mkdir -p /workspace/time-5e382ce4/parent-binaries
++ python3 /workspace/adamic/stage3/census/latent/make_overlay.py /workspace/time-5e382ce4/parent-source /workspace/time-5e382ce4/parent-binaries/latent-overlay
++ gofmt -w /workspace/time-5e382ce4/parent-binaries/latent-overlay/internal_load_latent_hook.go /workspace/time-5e382ce4/parent-binaries/latent-overlay/internal_load_load.go /workspace/time-5e382ce4/parent-binaries/latent-overlay/internal_lower_expression.go /workspace/time-5e382ce4/parent-binaries/latent-overlay/internal_lower_functions.go /workspace/time-5e382ce4/parent-binaries/latent-overlay/internal_lower_generic.go /workspace/time-5e382ce4/parent-binaries/latent-overlay/internal_lower_latent_full.go /workspace/time-5e382ce4/parent-binaries/latent-overlay/internal_lower_latent_hook.go /workspace/time-5e382ce4/parent-binaries/latent-overlay/internal_lower_latent_piece.go /workspace/time-5e382ce4/parent-binaries/latent-overlay/internal_lower_latent_progress.go /workspace/time-5e382ce4/parent-binaries/latent-overlay/internal_lower_latent_replay.go /workspace/time-5e382ce4/parent-binaries/latent-overlay/internal_lower_latent_speculative.go /workspace/time-5e382ce4/parent-binaries/latent-overlay/internal_lower_latent_state.go /workspace/time-5e382ce4/parent-binaries/latent-overlay/internal_lower_latent_units.go /workspace/time-5e382ce4/parent-binaries/latent-overlay/internal_lower_locals.go /workspace/time-5e382ce4/parent-binaries/latent-overlay/internal_lower_lower.go /workspace/time-5e382ce4/parent-binaries/latent-overlay/internal_lower_refusals.go /workspace/time-5e382ce4/parent-binaries/latent-overlay/internal_lower_statements.go /workspace/time-5e382ce4/parent-binaries/latent-overlay/stage3_census_latent_replay_worker_main.go /workspace/time-5e382ce4/parent-binaries/latent-overlay/stage3_census_latent_tool_main.go
++ python3 /workspace/adamic/stage3/meter/entry_overlay.py /workspace/time-5e382ce4/parent-binaries/latent-overlay /workspace/time-5e382ce4/parent-binaries/entry-overlay
++ gofmt -w /workspace/time-5e382ce4/parent-binaries/entry-overlay/entry_load_hook.go /workspace/time-5e382ce4/parent-binaries/entry-overlay/entry_main.go
++ sha256sum /workspace/time-5e382ce4/parent-binaries/census /workspace/time-5e382ce4/parent-binaries/entry-census /workspace/time-5e382ce4/parent-binaries/latent-census
++ [[ ! -d /workspace/time-5e382ce4/upstream ]]
++ git clone --depth 1 --branch v6.0.3 https://github.com/microsoft/TypeScript.git /workspace/time-5e382ce4/upstream
++ ADAMIC_TYPESCRIPT_SOURCE=/workspace/time-5e382ce4/upstream
++ bash /workspace/time-5e382ce4/parent-source/stage3/apply.sh /workspace/time-5e382ce4/parent-adapted
++ git -C /workspace/time-5e382ce4/parent-source status --porcelain --untracked-files=no
++ test '!' -s /workspace/adamic/stage3/meter/runs/time-5e382ce4/parent/compiler-status.txt
++ for label in parent change
++ case $label in
++ sha=5e382ce4baca2f75cc9a452f9b438c8318f375a5
++ source=/workspace/time-5e382ce4/change-source
++ logs=/workspace/adamic/stage3/meter/runs/time-5e382ce4/change
++ mkdir -p /workspace/adamic/stage3/meter/runs/time-5e382ce4/change
++ git worktree add --detach /workspace/time-5e382ce4/change-source 5e382ce4baca2f75cc9a452f9b438c8318f375a5
++ git -C /workspace/time-5e382ce4/change-source -c protocol.file.allow=always -c url.file:///workspace/adamic/cohere.insteadOf=https://github.com/system-inc/cohere.git -c url.file:///workspace/adamic/cohere/TypeScript.insteadOf=https://github.com/system-inc/TypeScript.git submodule update --init --recursive --depth 1
++ git -C /workspace/time-5e382ce4/change-source submodule status --recursive
++ build_census /workspace/time-5e382ce4/change-source /workspace/time-5e382ce4/change-binaries /workspace/adamic/stage3/meter/runs/time-5e382ce4/change
++ local source=/workspace/time-5e382ce4/change-source destination=/workspace/time-5e382ce4/change-binaries logs=/workspace/adamic/stage3/meter/runs/time-5e382ce4/change
++ mkdir -p /workspace/time-5e382ce4/change-binaries
++ python3 /workspace/adamic/stage3/census/latent/make_overlay.py /workspace/time-5e382ce4/change-source /workspace/time-5e382ce4/change-binaries/latent-overlay
++ gofmt -w /workspace/time-5e382ce4/change-binaries/latent-overlay/internal_load_latent_hook.go /workspace/time-5e382ce4/change-binaries/latent-overlay/internal_load_load.go /workspace/time-5e382ce4/change-binaries/latent-overlay/internal_lower_expression.go /workspace/time-5e382ce4/change-binaries/latent-overlay/internal_lower_functions.go /workspace/time-5e382ce4/change-binaries/latent-overlay/internal_lower_generic.go /workspace/time-5e382ce4/change-binaries/latent-overlay/internal_lower_latent_full.go /workspace/time-5e382ce4/change-binaries/latent-overlay/internal_lower_latent_hook.go /workspace/time-5e382ce4/change-binaries/latent-overlay/internal_lower_latent_piece.go /workspace/time-5e382ce4/change-binaries/latent-overlay/internal_lower_latent_progress.go /workspace/time-5e382ce4/change-binaries/latent-overlay/internal_lower_latent_replay.go /workspace/time-5e382ce4/change-binaries/latent-overlay/internal_lower_latent_speculative.go /workspace/time-5e382ce4/change-binaries/latent-overlay/internal_lower_latent_state.go /workspace/time-5e382ce4/change-binaries/latent-overlay/internal_lower_latent_units.go /workspace/time-5e382ce4/change-binaries/latent-overlay/internal_lower_locals.go /workspace/time-5e382ce4/change-binaries/latent-overlay/internal_lower_lower.go /workspace/time-5e382ce4/change-binaries/latent-overlay/internal_lower_refusals.go /workspace/time-5e382ce4/change-binaries/latent-overlay/internal_lower_statements.go /workspace/time-5e382ce4/change-binaries/latent-overlay/stage3_census_latent_replay_worker_main.go /workspace/time-5e382ce4/change-binaries/latent-overlay/stage3_census_latent_tool_main.go
++ python3 /workspace/adamic/stage3/meter/entry_overlay.py /workspace/time-5e382ce4/change-binaries/latent-overlay /workspace/time-5e382ce4/change-binaries/entry-overlay
++ gofmt -w /workspace/time-5e382ce4/change-binaries/entry-overlay/entry_load_hook.go /workspace/time-5e382ce4/change-binaries/entry-overlay/entry_main.go
++ sha256sum /workspace/time-5e382ce4/change-binaries/census /workspace/time-5e382ce4/change-binaries/entry-census /workspace/time-5e382ce4/change-binaries/latent-census
++ [[ ! -d /workspace/time-5e382ce4/upstream ]]
++ ADAMIC_TYPESCRIPT_SOURCE=/workspace/time-5e382ce4/upstream
++ bash /workspace/time-5e382ce4/change-source/stage3/apply.sh /workspace/time-5e382ce4/change-adapted
++ git -C /workspace/time-5e382ce4/change-source status --porcelain --untracked-files=no
++ test '!' -s /workspace/adamic/stage3/meter/runs/time-5e382ce4/change/compiler-status.txt
++ python3 - /workspace/time-5e382ce4
++ [[ -x /usr/bin/time ]]
++ mkdir -p /workspace/time-5e382ce4/gnu-time
++ curl -fsSL https://deb.debian.org/debian/pool/main/t/time/time_1.9-0.2_amd64.deb -o /workspace/time-5e382ce4/gnu-time/time.deb
++ dpkg-deb -x /workspace/time-5e382ce4/gnu-time/time.deb /workspace/time-5e382ce4/gnu-time/extracted
++ sha256sum /workspace/time-5e382ce4/gnu-time/time.deb
++ timebin=/workspace/time-5e382ce4/gnu-time/extracted/usr/bin/time
++ /workspace/time-5e382ce4/gnu-time/extracted/usr/bin/time --version
++ sha256sum /workspace/time-5e382ce4/gnu-time/extracted/usr/bin/time
++ for index in 1 2 3 4 5
++ for label in parent change
++ output=/workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-1
++ binary=/workspace/time-5e382ce4/parent-binaries/latent-census
++ sourcefile=/workspace/time-5e382ce4/parent-adapted/src/compiler/checker.ts
++ sha256sum /workspace/time-5e382ce4/parent-binaries/latent-census
++ command=(env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 "$timebin" -v -o "$output.time" "$binary" "$sourcefile" "$output.jsonl")
++ printf '%q ' env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 /workspace/time-5e382ce4/gnu-time/extracted/usr/bin/time -v -o /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-1.time /workspace/time-5e382ce4/parent-binaries/latent-census /workspace/time-5e382ce4/parent-adapted/src/compiler/checker.ts /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-1.jsonl
++ printf '> %q 2>&1\n' /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-1.log
++ env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 /workspace/time-5e382ce4/gnu-time/extracted/usr/bin/time -v -o /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-1.time /workspace/time-5e382ce4/parent-binaries/latent-census /workspace/time-5e382ce4/parent-adapted/src/compiler/checker.ts /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-1.jsonl
++ gzip /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-1.jsonl
++ printf '%s sample %s complete\n' parent 1
+parent sample 1 complete
++ for label in parent change
++ output=/workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-1
++ binary=/workspace/time-5e382ce4/change-binaries/latent-census
++ sourcefile=/workspace/time-5e382ce4/change-adapted/src/compiler/checker.ts
++ sha256sum /workspace/time-5e382ce4/change-binaries/latent-census
++ command=(env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 "$timebin" -v -o "$output.time" "$binary" "$sourcefile" "$output.jsonl")
++ printf '%q ' env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 /workspace/time-5e382ce4/gnu-time/extracted/usr/bin/time -v -o /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-1.time /workspace/time-5e382ce4/change-binaries/latent-census /workspace/time-5e382ce4/change-adapted/src/compiler/checker.ts /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-1.jsonl
++ printf '> %q 2>&1\n' /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-1.log
++ env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 /workspace/time-5e382ce4/gnu-time/extracted/usr/bin/time -v -o /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-1.time /workspace/time-5e382ce4/change-binaries/latent-census /workspace/time-5e382ce4/change-adapted/src/compiler/checker.ts /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-1.jsonl
++ gzip /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-1.jsonl
++ printf '%s sample %s complete\n' change 1
+change sample 1 complete
++ for index in 1 2 3 4 5
++ for label in parent change
++ output=/workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-2
++ binary=/workspace/time-5e382ce4/parent-binaries/latent-census
++ sourcefile=/workspace/time-5e382ce4/parent-adapted/src/compiler/checker.ts
++ sha256sum /workspace/time-5e382ce4/parent-binaries/latent-census
++ command=(env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 "$timebin" -v -o "$output.time" "$binary" "$sourcefile" "$output.jsonl")
++ printf '%q ' env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 /workspace/time-5e382ce4/gnu-time/extracted/usr/bin/time -v -o /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-2.time /workspace/time-5e382ce4/parent-binaries/latent-census /workspace/time-5e382ce4/parent-adapted/src/compiler/checker.ts /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-2.jsonl
++ printf '> %q 2>&1\n' /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-2.log
++ env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 /workspace/time-5e382ce4/gnu-time/extracted/usr/bin/time -v -o /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-2.time /workspace/time-5e382ce4/parent-binaries/latent-census /workspace/time-5e382ce4/parent-adapted/src/compiler/checker.ts /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-2.jsonl
++ gzip /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-2.jsonl
++ printf '%s sample %s complete\n' parent 2
+parent sample 2 complete
++ for label in parent change
++ output=/workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-2
++ binary=/workspace/time-5e382ce4/change-binaries/latent-census
++ sourcefile=/workspace/time-5e382ce4/change-adapted/src/compiler/checker.ts
++ sha256sum /workspace/time-5e382ce4/change-binaries/latent-census
++ command=(env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 "$timebin" -v -o "$output.time" "$binary" "$sourcefile" "$output.jsonl")
++ printf '%q ' env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 /workspace/time-5e382ce4/gnu-time/extracted/usr/bin/time -v -o /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-2.time /workspace/time-5e382ce4/change-binaries/latent-census /workspace/time-5e382ce4/change-adapted/src/compiler/checker.ts /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-2.jsonl
++ printf '> %q 2>&1\n' /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-2.log
++ env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 /workspace/time-5e382ce4/gnu-time/extracted/usr/bin/time -v -o /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-2.time /workspace/time-5e382ce4/change-binaries/latent-census /workspace/time-5e382ce4/change-adapted/src/compiler/checker.ts /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-2.jsonl
++ gzip /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-2.jsonl
++ printf '%s sample %s complete\n' change 2
+change sample 2 complete
++ for index in 1 2 3 4 5
++ for label in parent change
++ output=/workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-3
++ binary=/workspace/time-5e382ce4/parent-binaries/latent-census
++ sourcefile=/workspace/time-5e382ce4/parent-adapted/src/compiler/checker.ts
++ sha256sum /workspace/time-5e382ce4/parent-binaries/latent-census
++ command=(env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 "$timebin" -v -o "$output.time" "$binary" "$sourcefile" "$output.jsonl")
++ printf '%q ' env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 /workspace/time-5e382ce4/gnu-time/extracted/usr/bin/time -v -o /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-3.time /workspace/time-5e382ce4/parent-binaries/latent-census /workspace/time-5e382ce4/parent-adapted/src/compiler/checker.ts /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-3.jsonl
++ printf '> %q 2>&1\n' /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-3.log
++ env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 /workspace/time-5e382ce4/gnu-time/extracted/usr/bin/time -v -o /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-3.time /workspace/time-5e382ce4/parent-binaries/latent-census /workspace/time-5e382ce4/parent-adapted/src/compiler/checker.ts /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-3.jsonl
++ gzip /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-3.jsonl
++ printf '%s sample %s complete\n' parent 3
+parent sample 3 complete
++ for label in parent change
++ output=/workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-3
++ binary=/workspace/time-5e382ce4/change-binaries/latent-census
++ sourcefile=/workspace/time-5e382ce4/change-adapted/src/compiler/checker.ts
++ sha256sum /workspace/time-5e382ce4/change-binaries/latent-census
++ command=(env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 "$timebin" -v -o "$output.time" "$binary" "$sourcefile" "$output.jsonl")
++ printf '%q ' env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 /workspace/time-5e382ce4/gnu-time/extracted/usr/bin/time -v -o /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-3.time /workspace/time-5e382ce4/change-binaries/latent-census /workspace/time-5e382ce4/change-adapted/src/compiler/checker.ts /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-3.jsonl
++ printf '> %q 2>&1\n' /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-3.log
++ env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 /workspace/time-5e382ce4/gnu-time/extracted/usr/bin/time -v -o /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-3.time /workspace/time-5e382ce4/change-binaries/latent-census /workspace/time-5e382ce4/change-adapted/src/compiler/checker.ts /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-3.jsonl
++ gzip /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-3.jsonl
++ printf '%s sample %s complete\n' change 3
+change sample 3 complete
++ for index in 1 2 3 4 5
++ for label in parent change
++ output=/workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-4
++ binary=/workspace/time-5e382ce4/parent-binaries/latent-census
++ sourcefile=/workspace/time-5e382ce4/parent-adapted/src/compiler/checker.ts
++ sha256sum /workspace/time-5e382ce4/parent-binaries/latent-census
++ command=(env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 "$timebin" -v -o "$output.time" "$binary" "$sourcefile" "$output.jsonl")
++ printf '%q ' env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 /workspace/time-5e382ce4/gnu-time/extracted/usr/bin/time -v -o /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-4.time /workspace/time-5e382ce4/parent-binaries/latent-census /workspace/time-5e382ce4/parent-adapted/src/compiler/checker.ts /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-4.jsonl
++ printf '> %q 2>&1\n' /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-4.log
++ env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 /workspace/time-5e382ce4/gnu-time/extracted/usr/bin/time -v -o /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-4.time /workspace/time-5e382ce4/parent-binaries/latent-census /workspace/time-5e382ce4/parent-adapted/src/compiler/checker.ts /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-4.jsonl
++ gzip /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-4.jsonl
++ printf '%s sample %s complete\n' parent 4
+parent sample 4 complete
++ for label in parent change
++ output=/workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-4
++ binary=/workspace/time-5e382ce4/change-binaries/latent-census
++ sourcefile=/workspace/time-5e382ce4/change-adapted/src/compiler/checker.ts
++ sha256sum /workspace/time-5e382ce4/change-binaries/latent-census
++ command=(env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 "$timebin" -v -o "$output.time" "$binary" "$sourcefile" "$output.jsonl")
++ printf '%q ' env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 /workspace/time-5e382ce4/gnu-time/extracted/usr/bin/time -v -o /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-4.time /workspace/time-5e382ce4/change-binaries/latent-census /workspace/time-5e382ce4/change-adapted/src/compiler/checker.ts /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-4.jsonl
++ printf '> %q 2>&1\n' /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-4.log
++ env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 /workspace/time-5e382ce4/gnu-time/extracted/usr/bin/time -v -o /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-4.time /workspace/time-5e382ce4/change-binaries/latent-census /workspace/time-5e382ce4/change-adapted/src/compiler/checker.ts /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-4.jsonl
++ gzip /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-4.jsonl
++ printf '%s sample %s complete\n' change 4
+change sample 4 complete
++ for index in 1 2 3 4 5
++ for label in parent change
++ output=/workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-5
++ binary=/workspace/time-5e382ce4/parent-binaries/latent-census
++ sourcefile=/workspace/time-5e382ce4/parent-adapted/src/compiler/checker.ts
++ sha256sum /workspace/time-5e382ce4/parent-binaries/latent-census
++ command=(env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 "$timebin" -v -o "$output.time" "$binary" "$sourcefile" "$output.jsonl")
++ printf '%q ' env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 /workspace/time-5e382ce4/gnu-time/extracted/usr/bin/time -v -o /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-5.time /workspace/time-5e382ce4/parent-binaries/latent-census /workspace/time-5e382ce4/parent-adapted/src/compiler/checker.ts /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-5.jsonl
++ printf '> %q 2>&1\n' /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-5.log
++ env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 /workspace/time-5e382ce4/gnu-time/extracted/usr/bin/time -v -o /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-5.time /workspace/time-5e382ce4/parent-binaries/latent-census /workspace/time-5e382ce4/parent-adapted/src/compiler/checker.ts /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-5.jsonl
++ gzip /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/parent-5.jsonl
++ printf '%s sample %s complete\n' parent 5
+parent sample 5 complete
++ for label in parent change
++ output=/workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-5
++ binary=/workspace/time-5e382ce4/change-binaries/latent-census
++ sourcefile=/workspace/time-5e382ce4/change-adapted/src/compiler/checker.ts
++ sha256sum /workspace/time-5e382ce4/change-binaries/latent-census
++ command=(env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 "$timebin" -v -o "$output.time" "$binary" "$sourcefile" "$output.jsonl")
++ printf '%q ' env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 /workspace/time-5e382ce4/gnu-time/extracted/usr/bin/time -v -o /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-5.time /workspace/time-5e382ce4/change-binaries/latent-census /workspace/time-5e382ce4/change-adapted/src/compiler/checker.ts /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-5.jsonl
++ printf '> %q 2>&1\n' /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-5.log
++ env LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 /workspace/time-5e382ce4/gnu-time/extracted/usr/bin/time -v -o /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-5.time /workspace/time-5e382ce4/change-binaries/latent-census /workspace/time-5e382ce4/change-adapted/src/compiler/checker.ts /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-5.jsonl
++ gzip /workspace/adamic/stage3/meter/runs/time-5e382ce4/timing/change-5.jsonl
++ printf '%s sample %s complete\n' change 5
+change sample 5 complete
