@@ -26,7 +26,16 @@ func (l *lowering) statements(nodes []*ast.Node) ([]ir.Statement, error) {
 }
 
 // statement lowers one statement to none, one or several.
-func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) statement(node *ast.Node) (result []ir.Statement, err error) {
+	if l.debug {
+		defer func() {
+			// Erased and hoisted declarations have no marker at their old location.
+			// A loop marker precedes its lowered block, preserving counter positions.
+			if err == nil && len(result) > 0 {
+				result = append([]ir.Statement{l.debugSourceLine(node)}, result...)
+			}
+		}()
+	}
 	switch node.Kind {
 	case ast.KindModuleDeclaration:
 		return l.namespaceBody(node)

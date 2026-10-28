@@ -27,7 +27,7 @@ func TestProgramRegionHost14MemberSites(t *testing.T) {
 	entry := loaded.Files()[0]
 	typeChecker, release := loaded.Checker(context.Background(), entry)
 	defer release()
-	discovery, err := lowerChecked(loaded, typeChecker, entry, nil, true)
+	discovery, err := lowerChecked(loaded, typeChecker, entry, nil, true, false)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -46,7 +46,7 @@ func TestProgramRegionHost14MemberSites(t *testing.T) {
 	}
 	// Allocation membership also uses contextual types, so the input callback
 	// closure can be adopted even though its function declaration is not a member.
-	built, err := lowerChecked(loaded, typeChecker, entry, discovery.programPlan, false)
+	built, err := lowerChecked(loaded, typeChecker, entry, discovery.programPlan, false, false)
 	if err != nil {
 		t.Fatal(err)
 	}

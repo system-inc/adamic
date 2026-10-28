@@ -24,7 +24,7 @@ func TestProgramRegionTscNodeMemberSites(t *testing.T) {
 	entry := loaded.Files()[0]
 	typeChecker, release := loaded.Checker(context.Background(), entry)
 	defer release()
-	discovery, err := lowerChecked(loaded, typeChecker, entry, nil, true)
+	discovery, err := lowerChecked(loaded, typeChecker, entry, nil, true, false)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -68,7 +68,7 @@ func TestProgramRegionTscNodeMemberSites(t *testing.T) {
 	if allocations != 4 {
 		t.Fatalf("allocation sites %d, want BaseNode factory, empty declarations, populated declarations and NodeArray", allocations)
 	}
-	built, err := lowerChecked(loaded, typeChecker, entry, discovery.programPlan, false)
+	built, err := lowerChecked(loaded, typeChecker, entry, discovery.programPlan, false, false)
 	if err != nil {
 		t.Fatal(err)
 	}

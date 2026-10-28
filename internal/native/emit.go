@@ -22,8 +22,16 @@ import (
 // the memory model's work, measured against this.
 func C(program *ir.Program) string { return cProgram(program, -1, mainLines) }
 
-func cProgram(program *ir.Program, handler, lines int) string {
+// CWithOptions includes source metadata only for a debug build.
+func CWithOptions(program *ir.Program, options Options) string {
+	return cProgram(program, -1, mainLines, options)
+}
+
+func cProgram(program *ir.Program, handler, lines int, options ...Options) string {
 	emitter := &emitter{program: program}
+	if len(options) > 0 {
+		emitter.debug = options[0].Debug
+	}
 	if program.HasPromises() {
 		// Suspension ownership is conservative until the shared analyses prove it.
 		emitter.reuse = &reusePlan{}
@@ -164,7 +172,7 @@ func cProgram(program *ir.Program, handler, lines int) string {
 	var statements []string
 	// Promise mains keep their scheduler and root lifetime in one frame.
 	// An explicit main-parts limit retains the existing unoutlined comparison path.
-	if program.HasPromises() || lines != mainLines {
+	if emitter.debug || program.HasPromises() || lines != mainLines {
 		statements = emitter.unoutlinedModuleMain()
 	} else {
 		bodies.WriteString(emitter.moduleMain())
@@ -179,6 +187,11 @@ func cProgram(program *ir.Program, handler, lines int) string {
 		parts = []string{strings.Join(statements, "")}
 	} else {
 		parts = mainParts(statements, lines)
+	}
+	if emitter.debug {
+		for index := range parts {
+			parts[index] += "\t" + sourceLineReset + "\n"
+		}
 	}
 	partNames := make([]string, len(parts))
 	definedParts := map[string]bool{}
@@ -205,6 +218,9 @@ func cProgram(program *ir.Program, handler, lines int) string {
 	}
 	bodies.WriteString(emitter.out.String())
 	emitter.out.Reset()
+	if emitter.debug {
+		bodies.WriteString(sourceLineReset + "\n")
+	}
 	bodies.WriteString("\treturn adamic_host_exit_status();\n}\n")
 	if handler >= 0 {
 		bodies.WriteString(emitter.requestABI(handler))
@@ -239,7 +255,7 @@ func cProgram(program *ir.Program, handler, lines int) string {
 	}
 	emitter.classDeclarations(&builder)
 	builder.WriteString(strings.Replace(bodies.String(), "\tadamic_start(argc, argv);\n", "\tadamic_start(argc, argv);\n"+emitter.shapeChecks(), 1))
-	return builder.String()
+	return resolveSourceLines(builder.String(), "main.c")
 }
 
 // mainLines is about the most lines of C main's top-level code is given in one function. clang -O2
@@ -393,6 +409,7 @@ func cBytes(value string) string {
 }
 
 type emitter struct {
+	debug             bool
 	counterModes      map[int]bool
 	doubleCounterPath bool
 	// objectMetadata holds program-wide facts for this emission, never another program.
@@ -581,6 +598,11 @@ func (e *emitter) unoutlinedModuleMain() []string {
 			e.line("// adamic-module %q", module)
 		}
 		e.statementAt(&e.program.Main[index])
+		if e.debug {
+			if _, marker := e.program.Main[index].(ir.SourceLine); marker {
+				continue
+			}
+		}
 		statements = append(statements, e.out.String())
 		e.out.Reset()
 	}
