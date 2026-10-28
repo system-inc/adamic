@@ -2,8 +2,10 @@ package lower
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 	"testing"
 
@@ -266,6 +268,76 @@ function use(xs: readonly number[] | undefined): void {
 	for index, want := range []predicateTruth{predicateTrue, predicateFalse} {
 		if got := l.predicateUseDirections(calls[index]); got != want {
 			t.Fatalf("call %d: directions %d, want %d", index+1, got, want)
+		}
+	}
+}
+
+// One lowering proves every predicate it's asked about from one fixed point per mode, and each answer is the one a fresh
+// lowering gives for that predicate alone, whatever was asked before it: tags and typeof cells, proofs reached through a
+// helper declared after them, and refusals (#pv935yw). Mutants: one map for both modes, or a summary missing from the
+// memo, gives a proof where a fresh lowering refuses, or the other way round.
+func TestPredicateProofMemoAnswersAsAFreshLowering(t *testing.T) {
+	t.Parallel()
+	source := `interface Node { readonly kind: number }
+interface Identifier extends Node { readonly kind: 80; readonly escapedText: string }
+interface StringLiteral extends Node { readonly kind: 11; readonly text: string }
+type ModuleName = Identifier | StringLiteral;
+function isModuleName(node: Node): node is ModuleName { return isIdentifier(node) || isStringLiteral(node); }
+function isIdentifier(node: Node): node is Identifier { return node.kind === 80; }
+function isStringLiteral(node: Node): node is StringLiteral { return node.kind === 11; }
+function guard(x: unknown): x is string { return isText(x); }
+function isText(x: unknown): x is string { return typeof x === "string"; }
+function lies(x: unknown): x is number { return typeof x === "string"; }
+function recursive(x: unknown): x is number { return recursive(x); }
+`
+	path := filepath.Join(t.TempDir(), "main.a")
+	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
+		t.Fatal(err)
+	}
+	program, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	file := program.Files()[0]
+	checked, release := program.Checker(context.Background(), file)
+	defer release()
+	var predicates []*ast.Node
+	var visit ast.Visitor
+	visit = func(n *ast.Node) bool {
+		if n.Kind == ast.KindTypePredicate {
+			predicates = append(predicates, n)
+		}
+		n.ForEachChild(visit)
+		return false
+	}
+	file.AsNode().ForEachChild(visit)
+	if len(predicates) != 7 {
+		t.Fatalf("found %d predicates, want 7", len(predicates))
+	}
+	answer := func(proof predicateProof, err error) string {
+		if err != nil {
+			return "refused: " + err.Error()
+		}
+		return fmt.Sprintf("proved, tagged=%v", proof.TaggedView)
+	}
+	fresh := map[*ast.Node]string{}
+	for _, predicate := range predicates {
+		fresh[predicate] = answer((&lowering{program: program, checker: checked}).provePredicate(predicate))
+	}
+	want := map[string]string{"isModuleName": "proved, tagged=true", "isIdentifier": "proved, tagged=true", "isStringLiteral": "proved, tagged=true", "guard": "proved, tagged=false", "isText": "proved, tagged=false", "lies": "true return", "recursive": "unconverged"}
+	for _, predicate := range predicates {
+		name := predicate.Parent.Name().Text()
+		if !strings.Contains(fresh[predicate], want[name]) {
+			t.Fatalf("%s alone: %s, want %s", name, fresh[predicate], want[name])
+		}
+	}
+	shared := &lowering{program: program, checker: checked}
+	reversed := slices.Clone(predicates)
+	slices.Reverse(reversed)
+	asked := append(slices.Clone(predicates), reversed...)
+	for _, predicate := range asked {
+		if got := answer(shared.provePredicate(predicate)); got != fresh[predicate] {
+			t.Fatalf("%s from the memo: %s, want what a fresh lowering gives: %s", predicate.Parent.Name().Text(), got, fresh[predicate])
 		}
 	}
 }
