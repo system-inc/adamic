@@ -79,7 +79,24 @@ func (l *lowering) entriesLiteralOrigin(node *ast.Node, depth int) *ast.Node {
 	return l.entriesLiteralOrigin(declaration.AsVariableDeclaration().Initializer, depth+1)
 }
 
+// entriesRecordLiteral says whether literal is a record: a const's initializer that the program writes through by a
+// string key. Its answer is the program's and the checker's alone, so a lowering keeps it per literal, and every later
+// ask reads that: object.go asks it for every object literal it lowers, and each walk read the whole program (#pv935yw).
+// The walk's moduleOrder of the program's first file sets cyclicModules and provenModuleReads, the same state every
+// ask set before, so an ask that reads the memo leaves standing what it would have set again.
 func (l *lowering) entriesRecordLiteral(literal *ast.Node) bool {
+	if answer, ok := l.entriesRecords[literal]; ok {
+		return answer
+	}
+	answer := l.entriesRecordLiteralWalk(literal)
+	if l.entriesRecords == nil {
+		l.entriesRecords = map[*ast.Node]bool{}
+	}
+	l.entriesRecords[literal] = answer
+	return answer
+}
+
+func (l *lowering) entriesRecordLiteralWalk(literal *ast.Node) bool {
 	parent := literal.Parent
 	for parent != nil && (parent.Kind == ast.KindAsExpression || parent.Kind == ast.KindParenthesizedExpression) {
 		parent = parent.Parent
@@ -169,7 +186,16 @@ func init() {
 	refusalRules.register(700, "enumerationDescriptorRefusal", (*lowering).enumerationDescriptorRefusal)
 }
 
+// entriesProgramHasRecords says whether any object literal in the program is a record. It's one answer per program,
+// kept on the lowering after its first ask (#pv935yw).
 func (l *lowering) entriesProgramHasRecords() bool {
+	if !l.entriesProgramRecordsKnown {
+		l.entriesProgramRecords, l.entriesProgramRecordsKnown = l.entriesProgramRecordsWalk(), true
+	}
+	return l.entriesProgramRecords
+}
+
+func (l *lowering) entriesProgramRecordsWalk() bool {
 	modules, err := l.moduleOrder(l.program.Files()[0])
 	if err != nil {
 		return true
