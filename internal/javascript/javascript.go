@@ -465,13 +465,15 @@ func (e *emitter) declare(local int, value string) {
 
 func (e *emitter) statement(at *ir.Statement) {
 	switch (*at).(type) {
-	case ir.Labeled, ir.Block, ir.Loop, ir.ForOf, ir.Switch, ir.Break, ir.Continue, ir.Try, ir.Debugger:
+	case ir.Labeled, ir.Block, ir.Loop, ir.ForOf, ir.Switch, ir.Break, ir.Continue, ir.Try, ir.Debugger, ir.SourceLine:
 		// Marked inside, where their parts run, or not at all: a block, a break and a continue run
 		// nothing of their own.
 	default:
 		e.markLine(at, 0)
 	}
 	switch statement := (*at).(type) {
+	case ir.SourceLine:
+		// Native source metadata has no JavaScript effect.
 	case ir.Debugger:
 		e.line("debugger;")
 	case ir.WriteLine:
