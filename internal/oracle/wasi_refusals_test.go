@@ -15,6 +15,7 @@ var wasiFileRefusedFixtures = map[string]string{
 }
 
 var wasiRefusedFixtures = map[string]string{
+	programHost14Path: "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
 	"internal/oracle/testdata/closure_convention_host24.a": "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
 	"internal/oracle/testdata/node_fs_rm_options.a":        "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
 }
