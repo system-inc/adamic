@@ -1,0 +1,7 @@
+class Slot { value: string = undefined!; }
+const source = new Slot();
+source.value = "written" + " value";
+const alias = source;
+alias.value = undefined!;
+const typed: string = source.value;
+console.log(typed === undefined ? "missing" : "present");
