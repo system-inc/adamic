@@ -295,7 +295,7 @@ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 					members = declared.Types()
 				}
 				for _, member := range members {
-					if held, known := l.representation(member); known && held != narrowed && (held == ir.Object || held == ir.Array || held == ir.Map) {
+					if held, known := l.representation(member); known && held != narrowed && (held == ir.Object || held == ir.Array || held == ir.Map || held == ir.Record) {
 						return nil, l.notYet(node, "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables")
 					}
 				}
