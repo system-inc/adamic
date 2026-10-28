@@ -1,4 +1,4 @@
-// a-check: refused a destructured object-union view with an incompatible literal producer
+// a-check: refused a downcast to Holder whose tag test is vacuous
 // A wrong untagged union view read by destructuring.
 interface Left { readonly name: string; readonly text: string; }
 interface Right { readonly name: string; readonly count: number; }

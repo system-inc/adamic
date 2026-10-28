@@ -1,4 +1,4 @@
-// a-check: refused a logical assignment through a checked view
+// a-check: refused a downcast to View whose tag test is vacuous: every Root has kind "Holder"
 // &&= through the view with a computed key, refused by the names the key can be.
 interface Root { readonly kind: 'Holder'; }
 interface View extends Root { count: number; }

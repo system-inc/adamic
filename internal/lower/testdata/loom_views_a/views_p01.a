@@ -1,4 +1,4 @@
-// a-check: refused view member read by element access is not yet checked
+// a-check: refused a downcast to Holder whose tag test is vacuous
 // A wrong view read through a string-literal element access instead of a dot.
 interface Holder { readonly kind: 'Holder'; readonly text: string; }
 const raw = { kind: 'Holder' as const, text: 7 };

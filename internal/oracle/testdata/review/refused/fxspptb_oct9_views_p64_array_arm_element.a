@@ -1,4 +1,4 @@
-// a-check: refused view member read by element access is not yet checked
+// a-check: refused a downcast to View whose tag test is vacuous
 // The views-v3 array arm, read by a string-literal key instead of a dot.
 interface Node { readonly ready: boolean; }
 interface Root { readonly kind: 'Holder'; }

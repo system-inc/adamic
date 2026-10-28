@@ -1,4 +1,4 @@
-// a-check: refused checked view read of field value with unsupported representation conversion contract
+// a-check: refused a downcast to View whose tag test is vacuous
 interface Root { readonly kind: 'Holder'; }
 class Point { constructor(readonly x: number) {} }
 interface View extends Root { readonly value: string | Point; }

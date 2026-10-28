@@ -60,7 +60,8 @@ func TestLowerViewsUnrelatedOptionalNumberField(t *testing.T) {
 
 func TestLowerViewsDestructuredObjectUnionLiteral(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, `interface Left { readonly text: string; }
+	// .ts, where the cast stays a checked view: in .a its tag test every Root passes is refused (#q97a1rr).
+	lowersAndAgreesWithNodeAs(t, `interface Left { readonly text: string; }
 interface Right { readonly count: number; }
 interface Root { readonly kind: 'Holder'; }
 interface Holder extends Root { readonly value: Left | Right; }
@@ -68,5 +69,5 @@ const raw = { kind: 'Holder' as const, value: { text: 'valid' } };
 const base: Root = raw;
 const view = base as Holder;
 const { value } = view;
-console.log(String(value !== undefined));`)
+console.log(String(value !== undefined));`, ".ts")
 }
