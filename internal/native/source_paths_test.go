@@ -1,6 +1,7 @@
 package native
 
 import (
+	"bytes"
 	"context"
 	"debug/dwarf"
 	"debug/elf"
@@ -212,4 +213,27 @@ func TestDebugRuntimeArchiveShared(t *testing.T) {
 	if !reflect.DeepEqual(outcomes, []string{"miss", "hit"}) || len(keys) != 2 || keys[0] != keys[1] {
 		t.Fatalf("runtime archives: outcomes=%v keys=%v, want one miss then hit under the same key", outcomes, keys)
 	}
+}
+
+func TestDebugSanitizedUnitInputs(t *testing.T) {
+	t.Parallel()
+	options := Options{Debug: true, Sanitize: true, Split: true, DebugDirectory: t.TempDir()}
+	source := "#include \"adamic.h\"\nstatic int adamic_value = 1;\nstatic int *adamic_probe(void) { return &adamic_value; }\nint main(int argc, char **argv) { (void)argv; return *adamic_probe() == argc ? 0 : 1; }\n"
+	binary := filepath.Join(t.TempDir(), "program")
+	if err := Build(source, binary, options); err != nil {
+		t.Fatal(err)
+	}
+	contents, err := os.ReadFile(binary)
+	if err != nil {
+		t.Fatal(err)
+	}
+	// ASan's global metadata preserves the input spelling even when debug prefix
+	// maps remove the build directory elsewhere in the binary.
+	if bytes.Contains(contents, []byte("adamic-units-")) {
+		t.Fatal("sanitized debug inputs were absolute: ASan recorded a temporary unit directory")
+	}
+	if !bytes.Contains(contents, []byte(options.DebugDirectory)) {
+		t.Fatal("sanitized debug compile lost the entry comp_dir")
+	}
+	t.Log("sanitized debug split binary keeps entry comp_dir and relative generated inputs")
 }

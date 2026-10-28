@@ -345,8 +345,11 @@ func linkOne(directory string, compiler string, source string, output string, op
 }
 
 // programDebugFlags belongs beside the program's prefix maps, never in Flags:
-// the runtime archive must remain shared between entry directories. comp_dir
-// also goes through toolMaps: entries under the compiler install or sysroot
+// the runtime archive must remain shared between entry directories.
+// On a sanitized debug build, only rows before the first #line (the prologue
+// and runtime headers) can resolve against the entry directory, because ASan
+// keeps relative input spellings. The comp_dir still applies to .a markers.
+// comp_dir also goes through toolMaps: entries under the compiler install or sysroot
 // read as /adamic-compiler/... or /adamic-sysroot/....
 func programDebugFlags(options Options) []string {
 	if options.Debug && options.DebugDirectory != "" {
