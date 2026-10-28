@@ -40,6 +40,8 @@ func commandRuntime(request native.RuntimeRequest) (string, error) {
 	// Request selects the link ABI only. Flags and therefore the runtime key are
 	// identical to an ordinary WASI build, whose existing archive we reuse.
 	options.Request = false
+	// A source directory affects only the program, never the runtime identity.
+	options.DebugDirectory = ""
 	// Release does not change these archives, so find their existing products.
 	if options.Count || options.Sanitize || options.ThreadSanitize || options.Target != "" {
 		options.Release = false
