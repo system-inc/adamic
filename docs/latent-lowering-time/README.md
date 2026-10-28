@@ -350,6 +350,31 @@ The predicate proof is no longer the cost. What leads now is `entriesRecordLiter
 `enumNeverValue`, reached through `predicateArguments.func2` (24.9%): the part of
 `predicateArguments` outside the memoized fixed point.
 
+## All three heads together (push 11, observed)
+
+A throwaway local merge of `f2479703`, `f27967ea` and `compiler/entries-record-memo-2` `992a6f53`
+(`a1ce733b`: the memo merge `dab16234` plus `git merge --no-ff 992a6f53`, clean, never pushed; its
+changed lines from `dab16234` are exactly `992a6f53`'s). Built as the meter builds it plus the
+timing lines, same adapted tree, run right after the memo merge's profile:
+
+| run | wall | user s | peak RSS | loop sum wall s (user s) |
+|---|--:|--:|--:|--:|
+| three heads `a1ce733b` | 21:55.3 (1,315.3 s) | 1,405.8 | 4.06 GB | 1,310.4 (1,400.8) |
+| memo merge `dab16234` (push 9) | 20:15.8 (1,215.8 s) | 1,292.2 | 4.05 GB | 1,211.3 (1,287.9) |
+| `f2479703` rerun (push 9) | 37:58.2 (2,278.2 s) | 2,472.1 | 4.41 GB | 2,272.9 (2,466.6) |
+| three heads / `f2479703` rerun | 0.58 | 0.57 | 0.92 | |
+
+**Output against the `f2479703` rerun: identical.** `cmp` finds no difference in `latent.jsonl`
+(20,131,373 bytes, sha256 `395d5157...` for both) and the 79 decision lines are identical
+([all3/diff-against-f2479703-rerun.txt](all3/diff-against-f2479703-rerun.txt)).
+
+Per file: [all3/per-file-three-runs.txt](all3/per-file-three-runs.txt). Not explained yet: the three
+heads run about 1.1 times the memo merge's time on nearly every file (`utilities.ts` 278.8 against
+255.4 s, `transformers/ts.ts` 38.8 against 34.0), with `types.ts` equal. A uniform ratio looks like
+the box drifting, as it did between the two `f2479703` runs (1.16), but these were not back to back.
+The three heads' profile is running now; after it, the memo merge runs again, so the three heads and
+the memo merge form a back-to-back pair.
+
 ## What hasn't run yet, and why
 
 Dropped at Performance's word after push 8: the same-box rerun of `85c9d783` (stopped at file 10),
