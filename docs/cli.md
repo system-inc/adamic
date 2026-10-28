@@ -18,7 +18,7 @@ usage:
   adamic c <file.a|file.ts> [--explain-checks]
   adamic worker <entry.a> --out <directory> [--wasm <name>[,<name>...]]
   adamic js <file.a|file.ts> [--explain-checks]
-  adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--export <name>]... [--abi-json <path>] [--explain-checks]
+  adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [--count] [--debug] [--sanitize] [--tsgo <archive>] [--export <name>]... [--abi-json <path>] [--explain-checks]
 ```
 
 There is no `--help`, `--version`, `run`, `test` or `fix`. Anything the switch doesn't match,
@@ -66,6 +66,7 @@ usage error.
 | `-o <out>` | `build`, required | the binary's path | `cmd/adamic/main.go:run` |
 | `--target wasm32-wasi` | `build` | a WebAssembly module for WASI instead of a host binary. The only value accepted; any other, a second `--target`, or a missing value is a usage error | `cmd/adamic/tsgo.go:buildWithNative` |
 | `--count` | `build` | the binary counts allocations, frees, retains, releases, peak and regions and writes `adamic: counts: ...` to stderr as it exits (`-DADAMIC_COUNT`) | `cmd/adamic/tsgo.go:buildWithNative`, `internal/native/native.go:Flags`, `internal/native/runtime/count.c:18-34` |
+| `--debug` | `build` | writes `#line` directives so the binary's line table names the `.a` lines its frames came from; off the flag the C is byte for byte the same | `cmd/adamic/tsgo.go:buildWithNativeExports` |
 | `--sanitize` | `build`, native only | `-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all` in place of the release flags | `cmd/adamic/tsgo.go:buildWithNative`, `internal/native/native.go:Flags` |
 | `--tsgo <archive>` | `build`, native only | links a prebuilt typescript-go checker archive for programs that use it; a second `--tsgo` or a missing value is a usage error | `cmd/adamic/tsgo.go:buildWithNative` |
 | `--reactor` | `build`, wasm32-wasi only | a reactor module: `_initialize` runs once and the entry module's crossing `export function`s are exported through ABI v1 (`docs/wasm-abi.md`), instead of a command entered at `main`. Without it a module with crossing exports is a reactor anyway | `cmd/adamic/tsgo.go:buildWithNative`, `docs/wasm-abi.md` |
