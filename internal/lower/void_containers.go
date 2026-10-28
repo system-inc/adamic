@@ -549,8 +549,9 @@ func (l *lowering) voidMethodReads(receiver *checker.Type, symbol *ast.Symbol, n
 		}
 	}
 	if len(voidBound) == 0 || l.voidMessageMethods[method] {
-		// A method already being judged for a message (show calling this.show(), or a pair calling
-		// each other) is said without its site: judging it again would never end (Lower, on #p7t8tmh).
+		// A method already being judged for a message (a method reaching itself through a receiver
+		// typed by its own class, or a pair doing so) is said without its site: judging it again would
+		// never end (Lower, on #p7t8tmh).
 		return said
 	}
 	if l.voidMessageMethods == nil {
