@@ -24,6 +24,7 @@ type commandRuntimeSpec struct {
 }
 
 var commandRuntimes = []commandRuntimeSpec{
+	{"debug", native.Options{Release: true, Debug: true}, nil, ""},
 	{"shipped", native.Options{Release: true}, nil, "internal/oracle TestProduct_NativeRuntimesShipped0"},
 	{"counted", native.Options{Count: true}, nil, "internal/oracle TestProduct_NativeRuntimesCounted0"},
 	{"sanitized", native.Options{Sanitize: true}, nil, "internal/oracle TestProduct_NativeRuntimesSanitized0"},
@@ -129,3 +130,5 @@ func TestCommandRuntimeProductKeyHoldsEveryPart(t *testing.T) {
 		}
 	}
 }
+
+func TestProduct_CommandRuntimeDebug(t *testing.T) { t.Parallel(); commandRuntimeProduct(t, "debug") }
