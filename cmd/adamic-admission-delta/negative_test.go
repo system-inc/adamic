@@ -266,6 +266,36 @@ func TestNegativeCheckedBoundarySource(t *testing.T) {
 	}
 }
 
+// An optional field's read expects its declared type plus undefined, so a stop that expected
+// Identifier | undefined is declared by name?: Identifier, written as tsc writes it. A required field
+// declares exactly its type, and an optional field of another type declares nothing here. Mutant:
+// declaresRuledType demanding the bare declared type, which refuses the optional field.
+func TestNegativeCheckedBoundaryOptionalField(t *testing.T) {
+	t.Parallel()
+	witness := negativeWitness{Form: checkedBoundaryForm, RulingTask: "#1yr7rdh", Ruling: "Adamic, Oct 28", Declaration: "corpus/input.ts:1", DeclaredType: "Identifier | undefined", RepairFrom: "name: 5", RepairTo: "name: { escapedText: 'five' }", Exit: 70, Stderr: "adamic: panic: field read failed: declaration.name matches no member of Identifier | undefined; expected Identifier | undefined, found number\n"}
+	for _, test := range []struct {
+		name, declaration string
+		declares          bool
+	}{
+		{"optional", "interface Declaration { readonly name?: Identifier; }", true},
+		{"spelled", "interface Declaration { readonly name?: Identifier | undefined; }", true},
+		{"required", "interface Declaration { readonly name: Identifier; }", false},
+		{"optional of another type", "interface Declaration { readonly name?: StringLiteral; }", false},
+		{"wider", "interface Declaration { readonly name?: Identifier | StringLiteral; }", false},
+	} {
+		source := []byte(test.declaration + "\nconst raw = { name: 5 };\n")
+		witness := witness
+		witness.TypeCorrectSHA256 = contentHash([]byte(strings.ReplaceAll(string(source), witness.RepairFrom, witness.RepairTo)))
+		err := validateWitnessSource(source, witness)
+		if test.declares && err != nil {
+			t.Errorf("%s: refused: %v", test.name, err)
+		}
+		if !test.declares && (err == nil || err.Error() != "violated declaration does not declare its ruled type") {
+			t.Errorf("%s: want the declaration refused, got %v", test.name, err)
+		}
+	}
+}
+
 // A run is the ruled stop only with its exit and its whole message on both backends.
 func TestNegativeCheckedBoundaryExactStop(t *testing.T) {
 	t.Parallel()

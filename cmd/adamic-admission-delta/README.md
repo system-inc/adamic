@@ -121,7 +121,10 @@ own located message, one line of `adamic: panic: field read failed: ...
 expected <type>, found <type>`, whose expected type (a read) or found type (a
 write) is `declared_type`. A `compiler bug:` panic or any other guard never
 qualifies. The declaration's line must declare that type, and the repair must
-replace exactly one place. Its repair is arbitrary text rather than a pinned
+replace exactly one place. An optional field's read expects its declared type
+plus undefined, so `name?: Identifier` declares a stop that expected
+`Identifier | undefined`; a required field declares exactly its type (#1yr7rdh,
+Adamic, Oct 28). Its repair is arbitrary text rather than a pinned
 literal, so a run that sees the stop also runs the repaired copy, written with the
 witness's own extension so a `.ts` witness's repair compiles as `.ts`, and the entry
 is a witness only when that copy agrees with Node (`repair_agree` in JSON).
