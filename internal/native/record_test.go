@@ -225,6 +225,23 @@ func TestRecordProtoAssignmentStops(t *testing.T) {
 	}
 }
 
+// A record reaching a fixed-object read is a lowering bug, and must stop loudly rather than read
+// undefined or its own table: through an optional field, through a field named like its slot, and
+// through a uniform field slot's unchecked load, checked because this harness builds sanitized and counted.
+func TestRecordFixedReadsStop(t *testing.T) {
+	t.Parallel()
+	binary := recordBinary(t)
+	for _, mode := range []struct{ name, field string }{{"fixed-optional-read", "total"}, {"fixed-read", "0"}, {"uniform-read", "total"}} {
+		t.Run(mode.name, func(t *testing.T) {
+			stdout, stderr, err := recordRun(binary, mode.name)
+			exit, ok := err.(*exec.ExitError)
+			if !ok || exit.ExitCode() != 70 || stdout != "" || !strings.HasPrefix(stderr, "adamic: panic: compiler bug: a record reached a fixed-object read of "+mode.field+"\n") || strings.Contains(stderr, "Sanitizer") {
+				t.Fatalf("want a loud stop and exit 70: %v\nstdout %q\nstderr %s", err, stdout, stderr)
+			}
+		})
+	}
+}
+
 func recordPrototypeNames(t *testing.T) []string {
 	t.Helper()
 	stdout, stderr, err := recordNodeRun("-e", `console.log(JSON.stringify({version:process.version,members:Object.getOwnPropertyNames(Object.prototype)}))`)
