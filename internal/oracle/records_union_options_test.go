@@ -121,17 +121,13 @@ func TestRecordUnionDeclaredReadMutant(t *testing.T) {
 	}
 }
 
-// The { [name]: 3 } probe is a ruled negative witness (#bq3fvdt, Adamic, Oct 27), listed in
-// cloud/admission-corpus/negative-witnesses.json by its content hash with the stop the backends print, so the
-// admission delta accepts its stop. Its repair, writing the declared key by name with a string, agrees with Node.
-// Mutant: the entry removed from the list, recorded in testdata/records-union-witness-mutant.json.
+// Both lying programs are ruled negative witnesses (#bq3fvdt, Adamic, Oct 27): the { [name]: 3 } probe and its null twin,
+// the same lie stopped at the same checked read. Each is listed in cloud/admission-corpus/negative-witnesses.json by its
+// content hash with the stop the backends print, so the admission delta accepts it. Its repair, writing the declared
+// key by name with a string, agrees with Node. Mutant: an entry removed from the list, recorded in
+// testdata/records-union-witness-mutant.json.
 func TestRecordUnionWitnessIsRuled(t *testing.T) {
 	t.Parallel()
-	const path = "internal/oracle/testdata/records_union_lying.ts"
-	source, err := os.ReadFile(filepath.Join(repository, path))
-	if err != nil {
-		t.Fatal(err)
-	}
 	listed, err := os.ReadFile(filepath.Join(repository, "cloud/admission-corpus/negative-witnesses.json"))
 	if err != nil {
 		t.Fatal(err)
@@ -157,33 +153,43 @@ func TestRecordUnionWitnessIsRuled(t *testing.T) {
 		hash := sha256.Sum256([]byte(text))
 		return hex.EncodeToString(hash[:])
 	}
-	witness, found := list.Witnesses[contentHash(string(source))]
-	if !found {
-		t.Fatalf("%s is not a listed negative witness", path)
-	}
-	if witness.Form != "checked_boundary" || witness.RulingTask != "#bq3fvdt" || witness.Ruling != "Adamic, Oct 27" || witness.Declaration != path+":1" || witness.DeclaredType != "string" || witness.Exit != 70 || witness.Stderr != recordDeclaredMemberPanic("number") {
-		t.Fatalf("the listed witness doesn't name this ruling and this stop: %+v", witness)
-	}
-	repaired := strings.Replace(string(source), witness.RepairFrom, witness.RepairTo, 1)
-	if strings.Count(string(source), witness.RepairFrom) != 1 || contentHash(repaired) != witness.TypeCorrectSHA256 {
-		t.Fatal("the listed repair isn't one place, or its hash isn't the listed type-correct hash")
-	}
-	repairedPath := filepath.Join(t.TempDir(), "records_union_lying.ts")
-	if err := os.WriteFile(repairedPath, []byte(repaired), 0o644); err != nil {
-		t.Fatal(err)
-	}
-	program, err := lowered(t, repairedPath)
-	if err != nil {
-		t.Fatal(err)
-	}
-	truth := onNode(t, repairedPath)
-	sanitized, _ := natively(t, program)
-	for _, backend := range []struct {
-		name string
-		got  run
-	}{{"sanitized", sanitized}, {"release", released(t, program)}, {"JavaScript", onJavaScriptBackend(t, program)}} {
-		if truth.exitCode != 0 || disagreement(truth, backend.got) != "" {
-			t.Fatalf("the repair on %s: exit %d, stdout %q, stderr %q; Node exit %d, stdout %q", backend.name, backend.got.exitCode, backend.got.stdout, backend.got.stderr, truth.exitCode, truth.stdout)
-		}
+	for _, lying := range recordUnionLying {
+		t.Run(lying.name, func(t *testing.T) {
+			t.Parallel()
+			path := "internal/oracle/testdata/records_union_" + lying.name + ".ts"
+			source, err := os.ReadFile(filepath.Join(repository, path))
+			if err != nil {
+				t.Fatal(err)
+			}
+			witness, found := list.Witnesses[contentHash(string(source))]
+			if !found {
+				t.Fatalf("%s is not a listed negative witness", path)
+			}
+			if witness.Form != "checked_boundary" || witness.RulingTask != "#bq3fvdt" || witness.Ruling != "Adamic, Oct 27" || witness.Declaration != path+":1" || witness.DeclaredType != "string" || witness.Exit != 70 || witness.Stderr != recordDeclaredMemberPanic(lying.found) {
+				t.Fatalf("the listed witness doesn't name this ruling and this stop: %+v", witness)
+			}
+			repaired := strings.Replace(string(source), witness.RepairFrom, witness.RepairTo, 1)
+			if strings.Count(string(source), witness.RepairFrom) != 1 || contentHash(repaired) != witness.TypeCorrectSHA256 {
+				t.Fatal("the listed repair isn't one place, or its hash isn't the listed type-correct hash")
+			}
+			repairedPath := filepath.Join(t.TempDir(), "records_union_"+lying.name+".ts")
+			if err := os.WriteFile(repairedPath, []byte(repaired), 0o644); err != nil {
+				t.Fatal(err)
+			}
+			program, err := lowered(t, repairedPath)
+			if err != nil {
+				t.Fatal(err)
+			}
+			truth := onNode(t, repairedPath)
+			sanitized, _ := natively(t, program)
+			for _, backend := range []struct {
+				name string
+				got  run
+			}{{"sanitized", sanitized}, {"release", released(t, program)}, {"JavaScript", onJavaScriptBackend(t, program)}} {
+				if truth.exitCode != 0 || disagreement(truth, backend.got) != "" {
+					t.Fatalf("the repair on %s: exit %d, stdout %q, stderr %q; Node exit %d, stdout %q", backend.name, backend.got.exitCode, backend.got.stdout, backend.got.stderr, truth.exitCode, truth.stdout)
+				}
+			}
+		})
 	}
 }
