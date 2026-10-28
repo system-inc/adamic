@@ -1,0 +1,49 @@
+File: latent-census-loopprof
+Build ID: ec86c765d336d1e46c4f8db99e8868531eacaccf
+Type: cpu
+Time: 2026-10-28 07:23:28 UTC
+Duration: 1359.88s, Total samples = 1468.91s (108.02%)
+Showing nodes accounting for 558.33s, 38.01% of 1468.91s total
+Dropped 2243 nodes (cum <= 7.34s)
+Showing top 40 nodes out of 273
+      flat  flat%   sum%        cum   cum%
+   127.08s  8.65%  8.65%   1215.43s 82.74%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+    54.52s  3.71% 12.36%   1212.90s 82.57%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList (inline)
+    54.66s  3.72% 16.08%   1212.37s 82.54%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes (inline)
+    49.29s  3.36% 19.44%   1202.15s 81.84%  github.com/microsoft/TypeScript/tsc/internal/ast.visit (inline)
+     0.08s 0.0054% 19.45%   1061.48s 72.26%  github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild
+     0.49s 0.033% 19.48%    995.18s 67.75%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Block).ForEachChild (inline)
+        3s   0.2% 19.68%    917.91s 62.49%  github.com/microsoft/TypeScript/tsc/internal/ast.(*FunctionDeclaration).ForEachChild
+     1.98s  0.13% 19.82%    660.47s 44.96%  github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclaration).ForEachChild
+     0.08s 0.0054% 19.82%    651.24s 44.33%  github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclarationList).ForEachChild (inline)
+     1.48s   0.1% 19.92%    633.57s 43.13%  github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableStatement).ForEachChild
+     5.17s  0.35% 20.28%    593.72s 40.42%  github.com/microsoft/TypeScript/tsc/internal/ast.(*CallExpression).ForEachChild
+     3.09s  0.21% 20.49%    454.74s 30.96%  github.com/microsoft/TypeScript/tsc/internal/ast.(*IfStatement).ForEachChild
+     0.21s 0.014% 20.50%    421.50s 28.69%  github.com/system-inc/adamic/internal/lower.(*lowering).entriesRecordLiteral
+     0.87s 0.059% 20.56%    417.47s 28.42%  github.com/system-inc/adamic/internal/lower.(*lowering).entriesProgramHasRecords.func1
+     0.01s 0.00068% 20.56%    402.02s 27.37%  github.com/system-inc/adamic/internal/lower.latentRun
+     2.40s  0.16% 20.72%    396.61s 27.00%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).GetSymbolAtLocation
+         0     0% 20.72%    392.64s 26.73%  github.com/system-inc/adamic/internal/lower.Latent
+     9.64s  0.66% 21.38%    390.91s 26.61%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getSymbolAtLocation
+         0     0% 21.38%    384.11s 26.15%  main.main
+         0     0% 21.38%    375.38s 25.56%  runtime.main
+    26.89s  1.83% 23.21%    366.06s 24.92%  github.com/system-inc/adamic/internal/lower.(*lowering).predicateArguments.func2
+         0     0% 23.21%    364.85s 24.84%  github.com/system-inc/adamic/internal/lower.latentRun.func3
+     0.01s 0.00068% 23.21%    337.89s 23.00%  github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue
+     8.32s  0.57% 23.78%    330.57s 22.50%  github.com/system-inc/adamic/internal/lower.(*lowering).symbol
+     0.01s 0.00068% 23.78%    329.90s 22.46%  github.com/system-inc/adamic/internal/lower.(*lowering).value
+     0.62s 0.042% 23.82%    328.69s 22.38%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ReturnStatement).ForEachChild (inline)
+    12.46s  0.85% 24.67%    325.81s 22.18%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getSymbolOfNameOrPropertyAccessExpression
+     0.01s 0.00068% 24.67%    317.54s 21.62%  github.com/system-inc/adamic/internal/lower.(*lowering).latentExpressionRaw
+     0.01s 0.00068% 24.67%    304.19s 20.71%  github.com/system-inc/adamic/internal/lower.(*lowering).latentSpecExpression
+   127.31s  8.67% 33.34%    303.50s 20.66%  github.com/system-inc/adamic/internal/lower.(*lowering).entriesRecordLiteral.func1
+         0     0% 33.34%    293.87s 20.01%  github.com/system-inc/adamic/internal/lower.(*lowering).expression (inline)
+     0.15s  0.01% 33.35%       286s 19.47%  github.com/system-inc/adamic/internal/lower.(*lowering).predicateArguments
+     5.74s  0.39% 33.74%    282.72s 19.25%  github.com/microsoft/TypeScript/tsc/internal/ast.(*BinaryExpression).ForEachChild
+     6.08s  0.41% 34.15%    276.16s 18.80%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).resolveEntityName
+    56.33s  3.83% 37.99%    263.80s 17.96%  github.com/microsoft/TypeScript/tsc/internal/binder.(*NameResolver).Resolve
+     0.01s 0.00068% 37.99%    247.61s 16.86%  github.com/system-inc/adamic/internal/lower.(*lowering).property
+     0.07s 0.0048% 37.99%    245.64s 16.72%  github.com/system-inc/adamic/internal/lower.(*lowering).latentRefuse.func2
+         0     0% 37.99%    231.03s 15.73%  github.com/system-inc/adamic/internal/lower.(*lowering).entriesProgramHasRecords
+     0.03s 0.002% 37.99%    230.50s 15.69%  github.com/system-inc/adamic/internal/lower.(*lowering).latentRefuse.func2.2
+     0.23s 0.016% 38.01%    230.13s 15.67%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ExpressionStatement).ForEachChild (inline)

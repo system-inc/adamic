@@ -317,11 +317,44 @@ wall) with byte-identical output, so only same-box pairs compare. This pair ran 
 
 The merge's profile is running now; then the three-way merge with `compiler/entries-record-memo-2`.
 
+### The memo merge's profile (push 10, observed)
+
+The memo merge's meter-built overlay with the per-file loop profile, all 79 files: 1,359.9 s of
+profile duration, 1,468.9 s of samples; `latent.jsonl` byte-identical to its timed run. Tops:
+[profile/memo/top-cum-40.txt](profile/memo/top-cum-40.txt),
+[profile/memo/top-flat-40.txt](profile/memo/top-flat-40.txt), every node
+[profile/memo/top-cum-all-nodes.txt](profile/memo/top-cum-all-nodes.txt).
+
+Cumulative, `f2479703` (push 7, a different hour of the box) against the memo merge:
+
+| function | `f2479703` | memo merge |
+|---|--:|--:|
+| `lower.(*lowering).provePredicate` | 1,005.4 s, 43.0% | 76.8 s, 5.2% |
+| `lower.(*predicateVerifier).verify` | 843.9 s, 36.1% | 65.9 s, 4.5% |
+| `lower.(*lowering).checkedPredicateBodyProven` | 737.1 s, 31.5% | 76.9 s, 5.2% |
+| `lower.(*lowering).predicateArguments` | 1,002.1 s, 42.9% | 286.0 s, 19.5% |
+| `lower.(*lowering).latentRefuse` (refusal scan) | 590.2 s, 25.3% | 50.6 s, 3.4% |
+| `lower.(*lowering).entriesRecordLiteral` | 369.6 s, 15.8% | 421.5 s, 28.7% |
+| `lower.(*lowering).entriesProgramHasRecords` | 202.4 s, 8.7% | 231.0 s, 15.7% |
+| `checker.(*Checker).GetSymbolAtLocation` | 597.1 s, 25.6% | 396.6 s, 27.0% |
+| `lower.(*lowering).enumNeverValue` | 288.5 s, 12.3% | 337.9 s, 23.0% |
+| `lower.(*lowering).lowerFunction` | 138.7 s, 5.9% | 165.3 s, 11.3% |
+| `lower.(*predicateFalseFlow).escapingReference` | 131.1 s, 5.6% | 17.2 s, 1.2% |
+| `lower.(*lowering).noteInheritance` | 71.6 s, 3.1% | 82.7 s, 5.6% |
+| `lower.(*lowering).latentRegister` | 48.0 s, 2.1% | 54.1 s, 3.7% |
+| `checker.(*Checker).GetTypeAtLocation` | 97.5 s, 4.2% | 30.5 s, 2.1% |
+| `runtime.gcBgMarkWorker` (GC) | 209.3 s, 9.0% | 119.9 s, 8.2% |
+
+The predicate proof is no longer the cost. What leads now is `entriesRecordLiteral` and its
+`entriesProgramHasRecords` walk (the target of `992a6f53`), the checker's symbol resolution, and
+`enumNeverValue`, reached through `predicateArguments.func2` (24.9%): the part of
+`predicateArguments` outside the memoized fixed point.
+
 ## What hasn't run yet, and why
 
 Dropped at Performance's word after push 8: the same-box rerun of `85c9d783` (stopped at file 10),
 A's profile, B's timed run and the A/B decision diffs; the predicate passes A and B lack are no
-longer suspects. Still to run: the memo merge's profile, then a three-way merge of `f2479703`,
+longer suspects. Still to run (running now): a three-way merge of `f2479703`,
 `f27967ea` and `992a6f53` (`compiler/entries-record-memo-2`), timed and profiled.
 
 - The timeout is 3,600 s, not 900 s, since one process covers all 79 files and takes 3,230 s on main.
