@@ -548,13 +548,20 @@ func (l *lowering) voidMethodReads(receiver *checker.Type, symbol *ast.Symbol, n
 			voidBound[l.checker.GetTypeAtLocation(parameter.Name())] = false
 		}
 	}
-	if len(voidBound) == 0 {
+	if len(voidBound) == 0 || l.voidMessageMethods[method] {
+		// A method already being judged for a message (show calling this.show(), or a pair calling
+		// each other) is said without its site: judging it again would never end (Lower, on #p7t8tmh).
 		return said
 	}
+	if l.voidMessageMethods == nil {
+		l.voidMessageMethods = map[*ast.Node]bool{}
+	}
+	l.voidMessageMethods[method] = true
 	outerBound, outerHolders := l.voidBound, l.voidHolders
 	l.voidBound, l.voidHolders = voidBound, map[*checker.Type]bool{}
 	read, role := l.genericVoidRead(method)
 	l.voidBound, l.voidHolders = outerBound, outerHolders
+	delete(l.voidMessageMethods, method)
 	if read == nil {
 		return said
 	}

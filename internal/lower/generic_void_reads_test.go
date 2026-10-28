@@ -106,3 +106,26 @@ func TestGenericVoidMethodSaysWhereItReads(t *testing.T) {
 		})
 	}
 }
+
+// A method of a class bound to a void holder that reaches itself through a receiver typed as the class,
+// directly or through a pair, is refused, and judging it for the message ends (Lower, on #p7t8tmh): its
+// message is said without walking a body already being judged. (this has the class's polymorphic this
+// type, a type parameter, so a call on this isn't judged at all, and only a receiver typed Cell<T> loops.)
+func TestGenericVoidMethodThatCallsItselfEnds(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, source string }{
+		{"self", "class Cell<T> { constructor(public items: T) {} show(other: Cell<T>): number { return other.show(other); } }\nconst cell = new Cell(all); console.log(String(cell.show(cell)));"},
+		{"pair", "class Cell<T> { constructor(public items: T) {} show(other: Cell<T>): number { return other.again(other); } again(other: Cell<T>): number { return other.show(other); } }\nconst cell = new Cell(all); console.log(String(cell.show(cell)));"},
+	} {
+		for _, extension := range []string{".a", ".ts"} {
+			t.Run(probe.name+extension, func(t *testing.T) {
+				t.Parallel()
+				_, err := lowerVoidProbe(t, extension, voidContainerMark+"\n"+probe.source)
+				var refused *Refused
+				if !errors.As(err, &refused) || !strings.Contains(refused.What, "holds void in its type argument 1") {
+					t.Fatalf("want the method refused naming what holds the void, got %v", err)
+				}
+			})
+		}
+	}
+}
