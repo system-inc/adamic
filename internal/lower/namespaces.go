@@ -241,6 +241,8 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 	return nil
 }
 
+func init() { refusalRules.register(2100, "namespaceRefusal", (*lowering).namespaceRefusal) }
+
 // Follow statically known callees before executing a module statement. An unresolved
 // edge keeps namespace reads checked at runtime; it is never proof of no effects.
 func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {

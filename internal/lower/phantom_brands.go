@@ -41,6 +41,8 @@ func (l *lowering) phantomRefusal(node *ast.Node) error {
 	return nil
 }
 
+func init() { refusalRules.register(400, "phantomRefusal", (*lowering).phantomRefusal) }
+
 // phantomAssignable compares only primitives, preserving literal constraints. It never grants an
 // object cast or a cast between different primitive kinds merely because both fit in one word.
 func (l *lowering) phantomAssignable(from, to *checker.Type) bool {

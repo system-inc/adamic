@@ -79,3 +79,5 @@ func (l *lowering) nodeLibraryRefusal(node *ast.Node) error {
 	}
 	return nil
 }
+
+func init() { refusalRules.register(800, "nodeLibraryRefusal", (*lowering).nodeLibraryRefusal) }

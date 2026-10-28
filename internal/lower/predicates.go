@@ -379,6 +379,19 @@ func predicateTrueType(c *checker.Checker) *checker.Type {
 	panic("checker boolean type has no true member")
 }
 
+// typePredicateRefusal checks a type predicate and prunes it: the walk's later rules never see one,
+// and never enter it.
+func (l *lowering) typePredicateRefusal(node *ast.Node) (bool, error) {
+	if node.Kind != ast.KindTypePredicate {
+		return false, nil
+	}
+	return true, l.predicateRefusal(node)
+}
+
+func init() {
+	refusalRules.registerPruning(500, "typePredicateRefusal", (*lowering).typePredicateRefusal)
+}
+
 // The flow verifier keeps main's literal and nominal proofs. Body summaries add
 // verified helpers and truthiness assertions; tag-only facts use checked views.
 func (l *lowering) predicateRefusal(node *ast.Node) error {
@@ -519,6 +532,21 @@ func (l *lowering) predicateCallbackCallers(function *ast.Node, callback *ast.Sy
 		file.AsNode().ForEachChild(visit)
 	}
 	return found && safe
+}
+
+// predicateArgumentsRefusal checks a call's predicate contracts again in the walk. refuse's contracts
+// pass already checked every call, so this never refuses; it's kept for order.
+func (l *lowering) predicateArgumentsRefusal(node *ast.Node) error {
+	if node.Kind == ast.KindCallExpression {
+		if err := l.predicateArguments(node); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func init() {
+	refusalRules.register(1700, "predicateArgumentsRefusal", (*lowering).predicateArgumentsRefusal)
 }
 
 func (l *lowering) predicateArguments(node *ast.Node) error {
