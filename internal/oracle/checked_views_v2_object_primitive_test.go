@@ -51,13 +51,6 @@ func TestCheckedViewObjectPrimitiveSource(t *testing.T) {
 				t.Fatal(err)
 			}
 			program, err := lower.Lower(context.Background(), loaded)
-			if sample.name == "optional-absent" || sample.name == "optional-receiver" {
-				if err == nil || !(strings.Contains(err.Error(), "optional field") || strings.Contains(err.Error(), "optional, accessor, or representation conversion")) {
-					t.Fatalf("base optional boundary changed: %v", err)
-				}
-				t.Logf("preserved base boundary: %v", err)
-				return
-			}
 			if err != nil {
 				t.Fatalf("source admission: %v", err)
 			}
