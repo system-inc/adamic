@@ -1,0 +1,2 @@
+// a-check: type error TS2632
+import { f } from "./provider.a"; f = () => false;
