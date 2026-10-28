@@ -1,0 +1,163 @@
+package native
+
+import (
+	"debug/dwarf"
+	"debug/elf"
+	"fmt"
+	"io"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"reflect"
+	"strings"
+	"testing"
+)
+
+// Scratch only. Run from the committed runner, never part of the package gate.
+func TestDebugPathsScratch(t *testing.T) {
+	root := "/tmp/gd4csnt"
+	if err := os.MkdirAll(root, 0755); err != nil {
+		t.Fatal(err)
+	}
+	compiler, err := filepath.EvalSymlinks(unitKeyCompiler(t))
+	if err != nil {
+		t.Fatal(err)
+	}
+	modes := []string{"baseline", "compilation-dir", "absolute-mapped", "absolute-relative", "relative-remapped", "relative-dot", "debugger-source-map"}
+	for _, mode := range modes {
+		t.Run(mode, func(t *testing.T) {
+			var sources []string
+			var keys [][]string
+			for _, copy := range []string{"one", "two"} {
+				entry := debugPathFixture(t, filepath.Join(root, mode, copy))
+				program, err := debugProgram(t, entry, true)
+				if err != nil {
+					t.Fatal(err)
+				}
+				source := CWithOptions(program, Options{Debug: true})
+				directory := filepath.Join(root, mode, copy, "build")
+				if err := os.MkdirAll(directory, 0755); err != nil {
+					t.Fatal(err)
+				}
+				flags := SourceFlags(source, Options{Debug: true})
+				extra := []string{}
+				keyExtra := []string{}
+				switch mode {
+				case "compilation-dir":
+					extra = []string{"-fdebug-compilation-dir=" + filepath.Dir(entry)}
+					keyExtra = extra
+				case "absolute-mapped", "absolute-relative":
+					source = strings.ReplaceAll(source, `"fixture.a"`, fmt.Sprintf("%q", entry))
+					source = strings.ReplaceAll(source, `"../lib/value.a"`, fmt.Sprintf("%q", filepath.Join(filepath.Dir(entry), "../lib/value.a")))
+					extra = []string{"-fdebug-prefix-map=" + filepath.Dir(filepath.Dir(entry)) + "=/adamic-source"}
+					if mode == "absolute-relative" {
+						extra = []string{"-fdebug-prefix-map=" + filepath.Dir(filepath.Dir(entry)) + "/="}
+					}
+					keyExtra = extra
+				case "relative-remapped":
+					extra = []string{"-fdebug-prefix-map=" + directory + "=" + filepath.Dir(entry)}
+					// Match unitCompileArguments' normalization of its ephemeral directory.
+					keyExtra = []string{"-fdebug-prefix-map=<directory>=" + filepath.Dir(entry)}
+				case "relative-dot":
+					extra = []string{"-fdebug-compilation-dir=."}
+					keyExtra = extra
+				}
+				sources = append(sources, source)
+				header, units, err := splitC(source)
+				if err != nil {
+					t.Fatal(err)
+				}
+				common, err := readRuntime(runtime, "runtime")
+				if err != nil {
+					t.Fatal(err)
+				}
+				common = append(common, runtimeFile{name: "units.h", contents: []byte(header)})
+				keying := testUnitKeying(t, unitFirst, common, append(append([]string{}, flags...), keyExtra...), compiler, unitKeyEnvironment())
+				var current []string
+				for _, unit := range units {
+					current = append(current, keying.key(unit))
+					if why := unitSourceRefusal(unit, unitFirst); why != "" {
+						t.Logf("%s cache refusal: %s", unit.name, why)
+					}
+				}
+				keys = append(keys, current)
+				t.Logf("%s %s flags=%q candidate unit keys=%v", mode, copy, extra, current)
+				library, err := RuntimeLibraryForSource("", source, Options{Debug: true})
+				if err != nil {
+					t.Fatal(err)
+				}
+				if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0644); err != nil {
+					t.Fatal(err)
+				}
+				binary := filepath.Join(directory, "program")
+				arguments := append(append([]string{}, flags...), prefixMaps(directory, "/adamic-build")...)
+				arguments = append(arguments, extra...)
+				arguments = append(arguments, "-I", filepath.Dir(library), "main.c", library, "-lm", "-o", binary)
+				command := clangIn(directory, compiler, arguments...)
+				if output, err := command.CombinedOutput(); err != nil {
+					t.Fatalf("clang: %v %s", err, output)
+				}
+				ok := debugSourcePaths(t, binary, entry)
+				t.Logf("%s %s paths=%t", mode, copy, ok)
+				if ok != (mode == "compilation-dir" || mode == "relative-remapped") {
+					t.Fatalf("unexpected path result for %s: %t", mode, ok)
+				}
+				// An actual debugger-side mapping needs no compiler flags or changed keys.
+				if mode == "debugger-source-map" {
+					for _, relative := range []string{"fixture.a", "../lib/value.a"} {
+						resolved := filepath.Clean(filepath.Join(filepath.Dir(entry), relative))
+						_, err := os.Stat(resolved)
+						t.Logf("debugger map /adamic-build -> %s: %s os.Stat=%v", filepath.Dir(entry), resolved, err)
+					}
+				}
+				object, err := elf.Open(binary)
+				if err != nil {
+					t.Fatal(err)
+				}
+				data, err := object.DWARF()
+				if err != nil {
+					t.Fatal(err)
+				}
+				reader := data.Reader()
+				symbolized := map[string]bool{}
+				for {
+					unit, err := reader.Next()
+					if err != nil {
+						t.Fatal(err)
+					}
+					if unit == nil {
+						break
+					}
+					if unit.Tag != dwarf.TagCompileUnit {
+						continue
+					}
+					lines, err := data.LineReader(unit)
+					if err != nil {
+						t.Fatal(err)
+					}
+					if lines == nil {
+						continue
+					}
+					var row dwarf.LineEntry
+					for {
+						err := lines.Next(&row)
+						if err == io.EOF {
+							break
+						}
+						if err != nil {
+							t.Fatal(err)
+						}
+						if row.EndSequence || row.File == nil || row.Line != 3 || !strings.HasSuffix(row.File.Name, ".a") || symbolized[row.File.Name] {
+							continue
+						}
+						symbolized[row.File.Name] = true
+						output, err := exec.Command(filepath.Join(filepath.Dir(compiler), "llvm-symbolizer"), "--obj="+binary, fmt.Sprintf("0x%x", row.Address)).CombinedOutput()
+						t.Logf("llvm-symbolizer 0x%x: %s err=%v", row.Address, output, err)
+					}
+				}
+				object.Close()
+			}
+			t.Logf("%s same C=%t same candidate unit keys=%t", mode, sources[0] == sources[1], reflect.DeepEqual(keys[0], keys[1]))
+		})
+	}
+}

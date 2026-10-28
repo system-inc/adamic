@@ -1,0 +1,245 @@
+=== RUN   TestDebugPathsScratch
+=== RUN   TestDebugPathsScratch/baseline
+    experiment.go.txt:80: functions_0000.c cache refusal: functions_0000.c holds a directive past its first line
+    experiment.go.txt:80: main.c cache refusal: main.c holds a directive past its first line
+    experiment.go.txt:84: baseline one flags=[] candidate unit keys=[3a5b854cdab6b43bb29e96c72190f067db89e140207efbeb59775dda37ff72fc ba4126d59bcdadef0c0eabb8e7154d362ae78dff1eceecb04ec6c4a16a3060a6 7311e7ea0ba9aafe704595def1a0615e2450866ac49349a177ddfd10592f4ecb]
+    experiment.go.txt:100: comp_dir="/adamic-build" row="/adamic-build/fixture.a" resolved="/adamic-build/fixture.a" os.Stat=stat /adamic-build/fixture.a: no such file or directory
+    experiment.go.txt:100: comp_dir="/adamic-build" row="../lib/value.a" resolved="/lib/value.a" os.Stat=stat /lib/value.a: no such file or directory
+    experiment.go.txt:100: real source not reached: /tmp/gd4csnt/baseline/one/entry/fixture.a
+    experiment.go.txt:100: real source not reached: /tmp/gd4csnt/baseline/one/lib/value.a
+    experiment.go.txt:101: baseline one paths=false
+    experiment.go.txt:155: llvm-symbolizer 0x563d: adamic_function_fixture_a_marked_7096d21fc20b09f996fe4db3e279c8ae
+        /adamic-build/fixture.a:3:61
+        
+         err=<nil>
+    experiment.go.txt:155: llvm-symbolizer 0x56c8: adamic_function_imported________impo_lse___imported_____0___value_a_imported_f650c2fd1b819e09a4faf93b277ea61f
+        /adamic-build/../lib/value.a:3:0
+        
+         err=<nil>
+    experiment.go.txt:80: functions_0000.c cache refusal: functions_0000.c holds a directive past its first line
+    experiment.go.txt:80: main.c cache refusal: main.c holds a directive past its first line
+    experiment.go.txt:84: baseline two flags=[] candidate unit keys=[3a5b854cdab6b43bb29e96c72190f067db89e140207efbeb59775dda37ff72fc ba4126d59bcdadef0c0eabb8e7154d362ae78dff1eceecb04ec6c4a16a3060a6 7311e7ea0ba9aafe704595def1a0615e2450866ac49349a177ddfd10592f4ecb]
+    experiment.go.txt:100: comp_dir="/adamic-build" row="/adamic-build/fixture.a" resolved="/adamic-build/fixture.a" os.Stat=stat /adamic-build/fixture.a: no such file or directory
+    experiment.go.txt:100: comp_dir="/adamic-build" row="../lib/value.a" resolved="/lib/value.a" os.Stat=stat /lib/value.a: no such file or directory
+    experiment.go.txt:100: real source not reached: /tmp/gd4csnt/baseline/two/lib/value.a
+    experiment.go.txt:100: real source not reached: /tmp/gd4csnt/baseline/two/entry/fixture.a
+    experiment.go.txt:101: baseline two paths=false
+    experiment.go.txt:155: llvm-symbolizer 0x563d: adamic_function_fixture_a_marked_7096d21fc20b09f996fe4db3e279c8ae
+        /adamic-build/fixture.a:3:61
+        
+         err=<nil>
+    experiment.go.txt:155: llvm-symbolizer 0x56c8: adamic_function_imported________impo_lse___imported_____0___value_a_imported_f650c2fd1b819e09a4faf93b277ea61f
+        /adamic-build/../lib/value.a:3:0
+        
+         err=<nil>
+    experiment.go.txt:160: baseline same C=true same candidate unit keys=true
+=== RUN   TestDebugPathsScratch/compilation-dir
+    experiment.go.txt:80: functions_0000.c cache refusal: functions_0000.c holds a directive past its first line
+    experiment.go.txt:80: main.c cache refusal: main.c holds a directive past its first line
+    experiment.go.txt:84: compilation-dir one flags=["-fdebug-compilation-dir=/tmp/gd4csnt/compilation-dir/one/entry"] candidate unit keys=[e55e55626942d44a81d2697949ae88131a7898d4c7402856f50b3d5ca628e073 f03e662031b3d1fc632bd3cd2b9aba0eb32b45e635291d9a5417187162241a57 3eabb8b1c8beb78be9b965c4f96aba8e00bbda0d76c95a77e557ed58dc85add3]
+    experiment.go.txt:100: comp_dir="/tmp/gd4csnt/compilation-dir/one/entry" row="/tmp/gd4csnt/compilation-dir/one/entry/fixture.a" resolved="/tmp/gd4csnt/compilation-dir/one/entry/fixture.a" os.Stat=<nil>
+    experiment.go.txt:100: comp_dir="/tmp/gd4csnt/compilation-dir/one/entry" row="../lib/value.a" resolved="/tmp/gd4csnt/compilation-dir/one/lib/value.a" os.Stat=<nil>
+    experiment.go.txt:101: compilation-dir one paths=true
+    experiment.go.txt:155: llvm-symbolizer 0x563d: adamic_function_fixture_a_marked_7096d21fc20b09f996fe4db3e279c8ae
+        /tmp/gd4csnt/compilation-dir/one/entry/fixture.a:3:61
+        
+         err=<nil>
+    experiment.go.txt:155: llvm-symbolizer 0x56c8: adamic_function_imported________impo_lse___imported_____0___value_a_imported_f650c2fd1b819e09a4faf93b277ea61f
+        /tmp/gd4csnt/compilation-dir/one/entry/../lib/value.a:3:0
+        
+         err=<nil>
+    experiment.go.txt:80: functions_0000.c cache refusal: functions_0000.c holds a directive past its first line
+    experiment.go.txt:80: main.c cache refusal: main.c holds a directive past its first line
+    experiment.go.txt:84: compilation-dir two flags=["-fdebug-compilation-dir=/tmp/gd4csnt/compilation-dir/two/entry"] candidate unit keys=[ae580f2f8e8854551d1e8dc1603064d18aa5f448f3f7cfcb945f28ab31a53863 28a77b7a20e3307db4ea517f85f04f3b56e67d4c8cf5a5194e5299b65d82a1b8 403c2c699a9bf6dbb394470eccb6810f73d699c14fcd27980e024e2175b41996]
+    experiment.go.txt:100: comp_dir="/tmp/gd4csnt/compilation-dir/two/entry" row="/tmp/gd4csnt/compilation-dir/two/entry/fixture.a" resolved="/tmp/gd4csnt/compilation-dir/two/entry/fixture.a" os.Stat=<nil>
+    experiment.go.txt:100: comp_dir="/tmp/gd4csnt/compilation-dir/two/entry" row="../lib/value.a" resolved="/tmp/gd4csnt/compilation-dir/two/lib/value.a" os.Stat=<nil>
+    experiment.go.txt:101: compilation-dir two paths=true
+    experiment.go.txt:155: llvm-symbolizer 0x563d: adamic_function_fixture_a_marked_7096d21fc20b09f996fe4db3e279c8ae
+        /tmp/gd4csnt/compilation-dir/two/entry/fixture.a:3:61
+        
+         err=<nil>
+    experiment.go.txt:155: llvm-symbolizer 0x56c8: adamic_function_imported________impo_lse___imported_____0___value_a_imported_f650c2fd1b819e09a4faf93b277ea61f
+        /tmp/gd4csnt/compilation-dir/two/entry/../lib/value.a:3:0
+        
+         err=<nil>
+    experiment.go.txt:160: compilation-dir same C=true same candidate unit keys=false
+=== RUN   TestDebugPathsScratch/absolute-mapped
+    experiment.go.txt:80: functions_0000.c cache refusal: functions_0000.c holds a directive past its first line
+    experiment.go.txt:80: main.c cache refusal: main.c holds a directive past its first line
+    experiment.go.txt:84: absolute-mapped one flags=["-fdebug-prefix-map=/tmp/gd4csnt/absolute-mapped/one=/adamic-source"] candidate unit keys=[760ad0eaee29531de5420e4ef4d012da50f24c318ee1270d12e4e28f42abbb90 d5dfd863ea0b43aeb9ab00a298dfe313628b512820f302a1b528ff97add60f03 5c23ce3e781ed10f634b81ce6c29073a1b8fe95a0c94bf17036ce31fdd1dae55]
+    experiment.go.txt:100: comp_dir="/adamic-source/build" row="/adamic-source/entry/fixture.a" resolved="/adamic-source/entry/fixture.a" os.Stat=stat /adamic-source/entry/fixture.a: no such file or directory
+    experiment.go.txt:100: comp_dir="/adamic-source/build" row="/adamic-source/lib/value.a" resolved="/adamic-source/lib/value.a" os.Stat=stat /adamic-source/lib/value.a: no such file or directory
+    experiment.go.txt:100: real source not reached: /tmp/gd4csnt/absolute-mapped/one/entry/fixture.a
+    experiment.go.txt:100: real source not reached: /tmp/gd4csnt/absolute-mapped/one/lib/value.a
+    experiment.go.txt:101: absolute-mapped one paths=false
+    experiment.go.txt:155: llvm-symbolizer 0x563d: adamic_function_fixture_a_marked_7096d21fc20b09f996fe4db3e279c8ae
+        /adamic-source/entry/fixture.a:3:61
+        
+         err=<nil>
+    experiment.go.txt:155: llvm-symbolizer 0x56c8: adamic_function_imported________impo_lse___imported_____0___value_a_imported_f650c2fd1b819e09a4faf93b277ea61f
+        /adamic-source/lib/value.a:3:0
+        
+         err=<nil>
+    experiment.go.txt:80: functions_0000.c cache refusal: functions_0000.c holds a directive past its first line
+    experiment.go.txt:80: main.c cache refusal: main.c holds a directive past its first line
+    experiment.go.txt:84: absolute-mapped two flags=["-fdebug-prefix-map=/tmp/gd4csnt/absolute-mapped/two=/adamic-source"] candidate unit keys=[b9caac4a8745f01a4ea112dd997c895cf226dcb3e9b1114fc45bfcf5314d66a9 85e0ab64f6e5a09a8a22bbe5494b05dc5ad7efd3e36b56c774ef85cbdd151044 77124f84e12bc7d85f51e8f590b3e96b7c7f39e540edbff2e48d215b5c4cf8f5]
+    experiment.go.txt:100: comp_dir="/adamic-source/build" row="/adamic-source/entry/fixture.a" resolved="/adamic-source/entry/fixture.a" os.Stat=stat /adamic-source/entry/fixture.a: no such file or directory
+    experiment.go.txt:100: comp_dir="/adamic-source/build" row="/adamic-source/lib/value.a" resolved="/adamic-source/lib/value.a" os.Stat=stat /adamic-source/lib/value.a: no such file or directory
+    experiment.go.txt:100: real source not reached: /tmp/gd4csnt/absolute-mapped/two/entry/fixture.a
+    experiment.go.txt:100: real source not reached: /tmp/gd4csnt/absolute-mapped/two/lib/value.a
+    experiment.go.txt:101: absolute-mapped two paths=false
+    experiment.go.txt:155: llvm-symbolizer 0x563d: adamic_function_fixture_a_marked_7096d21fc20b09f996fe4db3e279c8ae
+        /adamic-source/entry/fixture.a:3:61
+        
+         err=<nil>
+    experiment.go.txt:155: llvm-symbolizer 0x56c8: adamic_function_imported________impo_lse___imported_____0___value_a_imported_f650c2fd1b819e09a4faf93b277ea61f
+        /adamic-source/lib/value.a:3:0
+        
+         err=<nil>
+    experiment.go.txt:160: absolute-mapped same C=false same candidate unit keys=false
+=== RUN   TestDebugPathsScratch/absolute-relative
+    experiment.go.txt:80: functions_0000.c cache refusal: functions_0000.c holds a directive past its first line
+    experiment.go.txt:80: main.c cache refusal: main.c holds a directive past its first line
+    experiment.go.txt:84: absolute-relative one flags=["-fdebug-prefix-map=/tmp/gd4csnt/absolute-relative/one/="] candidate unit keys=[92d69e951dce04c91bb7f1e38b307d254d3657a3f7b43daf840bedeeba6068d6 6ca64988636ff15b693e8b1f09ede9aaed2503e32d580ac54527c00a8be21a54 578438c000a409c6deac0183498b5b2ecd8be91ebd126a43c92fa20f7479486c]
+    experiment.go.txt:100: comp_dir="build" row="entry/fixture.a" resolved="build/entry/fixture.a" os.Stat=stat build/entry/fixture.a: no such file or directory
+    experiment.go.txt:100: comp_dir="build" row="lib/value.a" resolved="build/lib/value.a" os.Stat=stat build/lib/value.a: no such file or directory
+    experiment.go.txt:100: real source not reached: /tmp/gd4csnt/absolute-relative/one/entry/fixture.a
+    experiment.go.txt:100: real source not reached: /tmp/gd4csnt/absolute-relative/one/lib/value.a
+    experiment.go.txt:101: absolute-relative one paths=false
+    experiment.go.txt:155: llvm-symbolizer 0x563d: adamic_function_fixture_a_marked_7096d21fc20b09f996fe4db3e279c8ae
+        build/entry/fixture.a:3:61
+        
+         err=<nil>
+    experiment.go.txt:155: llvm-symbolizer 0x56c8: adamic_function_imported________impo_lse___imported_____0___value_a_imported_f650c2fd1b819e09a4faf93b277ea61f
+        build/lib/value.a:3:0
+        
+         err=<nil>
+    experiment.go.txt:80: functions_0000.c cache refusal: functions_0000.c holds a directive past its first line
+    experiment.go.txt:80: main.c cache refusal: main.c holds a directive past its first line
+    experiment.go.txt:84: absolute-relative two flags=["-fdebug-prefix-map=/tmp/gd4csnt/absolute-relative/two/="] candidate unit keys=[dee9bd444c80326d5025a7919bcae553febee66a6a34581834207c330c14732c 164c79c84795cec237a8d13cbafae6de66a4d1891659327cf81ec46af2fb2126 8d37a9f40844f04dd50d90701cfb47bf4630a6256400044ec9a24eea322a8fd2]
+    experiment.go.txt:100: comp_dir="build" row="entry/fixture.a" resolved="build/entry/fixture.a" os.Stat=stat build/entry/fixture.a: no such file or directory
+    experiment.go.txt:100: comp_dir="build" row="lib/value.a" resolved="build/lib/value.a" os.Stat=stat build/lib/value.a: no such file or directory
+    experiment.go.txt:100: real source not reached: /tmp/gd4csnt/absolute-relative/two/entry/fixture.a
+    experiment.go.txt:100: real source not reached: /tmp/gd4csnt/absolute-relative/two/lib/value.a
+    experiment.go.txt:101: absolute-relative two paths=false
+    experiment.go.txt:155: llvm-symbolizer 0x563d: adamic_function_fixture_a_marked_7096d21fc20b09f996fe4db3e279c8ae
+        build/entry/fixture.a:3:61
+        
+         err=<nil>
+    experiment.go.txt:155: llvm-symbolizer 0x56c8: adamic_function_imported________impo_lse___imported_____0___value_a_imported_f650c2fd1b819e09a4faf93b277ea61f
+        build/lib/value.a:3:0
+        
+         err=<nil>
+    experiment.go.txt:160: absolute-relative same C=false same candidate unit keys=false
+=== RUN   TestDebugPathsScratch/relative-remapped
+    experiment.go.txt:80: functions_0000.c cache refusal: functions_0000.c holds a directive past its first line
+    experiment.go.txt:80: main.c cache refusal: main.c holds a directive past its first line
+    experiment.go.txt:84: relative-remapped one flags=["-fdebug-prefix-map=/tmp/gd4csnt/relative-remapped/one/build=/tmp/gd4csnt/relative-remapped/one/entry"] candidate unit keys=[a8b470be268cf14dc45694883ba544bf1c82ac330547a0fe0155e53583b41e5a 990b4669cb63b9a8099ef6f268a7bebe6d54a7cdd3ff118a4fc65c2829ce017c 14a9e7b536eb0fc9c7aad6e34f737a88f30941aa477bdb82b20f239915f8b45f]
+    experiment.go.txt:100: comp_dir="/tmp/gd4csnt/relative-remapped/one/entry" row="/tmp/gd4csnt/relative-remapped/one/entry/fixture.a" resolved="/tmp/gd4csnt/relative-remapped/one/entry/fixture.a" os.Stat=<nil>
+    experiment.go.txt:100: comp_dir="/tmp/gd4csnt/relative-remapped/one/entry" row="../lib/value.a" resolved="/tmp/gd4csnt/relative-remapped/one/lib/value.a" os.Stat=<nil>
+    experiment.go.txt:101: relative-remapped one paths=true
+    experiment.go.txt:155: llvm-symbolizer 0x563d: adamic_function_fixture_a_marked_7096d21fc20b09f996fe4db3e279c8ae
+        /tmp/gd4csnt/relative-remapped/one/entry/fixture.a:3:61
+        
+         err=<nil>
+    experiment.go.txt:155: llvm-symbolizer 0x56c8: adamic_function_imported________impo_lse___imported_____0___value_a_imported_f650c2fd1b819e09a4faf93b277ea61f
+        /tmp/gd4csnt/relative-remapped/one/entry/../lib/value.a:3:0
+        
+         err=<nil>
+    experiment.go.txt:80: functions_0000.c cache refusal: functions_0000.c holds a directive past its first line
+    experiment.go.txt:80: main.c cache refusal: main.c holds a directive past its first line
+    experiment.go.txt:84: relative-remapped two flags=["-fdebug-prefix-map=/tmp/gd4csnt/relative-remapped/two/build=/tmp/gd4csnt/relative-remapped/two/entry"] candidate unit keys=[1cacc8a02f7b57ffe743192f2d5426783637a134ef6feeb8a47ccd2b72f38862 fabe5a170af2b9e31c5ca525747af4150a2b8d374e54836ce480843899ea1ad1 93f6f97ed2d4e6e3533ece5c0f6fbedd81c2df114b00dbdc5c9caa19a2b2c7c9]
+    experiment.go.txt:100: comp_dir="/tmp/gd4csnt/relative-remapped/two/entry" row="/tmp/gd4csnt/relative-remapped/two/entry/fixture.a" resolved="/tmp/gd4csnt/relative-remapped/two/entry/fixture.a" os.Stat=<nil>
+    experiment.go.txt:100: comp_dir="/tmp/gd4csnt/relative-remapped/two/entry" row="../lib/value.a" resolved="/tmp/gd4csnt/relative-remapped/two/lib/value.a" os.Stat=<nil>
+    experiment.go.txt:101: relative-remapped two paths=true
+    experiment.go.txt:155: llvm-symbolizer 0x563d: adamic_function_fixture_a_marked_7096d21fc20b09f996fe4db3e279c8ae
+        /tmp/gd4csnt/relative-remapped/two/entry/fixture.a:3:61
+        
+         err=<nil>
+    experiment.go.txt:155: llvm-symbolizer 0x56c8: adamic_function_imported________impo_lse___imported_____0___value_a_imported_f650c2fd1b819e09a4faf93b277ea61f
+        /tmp/gd4csnt/relative-remapped/two/entry/../lib/value.a:3:0
+        
+         err=<nil>
+    experiment.go.txt:160: relative-remapped same C=true same candidate unit keys=false
+=== RUN   TestDebugPathsScratch/relative-dot
+    experiment.go.txt:80: functions_0000.c cache refusal: functions_0000.c holds a directive past its first line
+    experiment.go.txt:80: main.c cache refusal: main.c holds a directive past its first line
+    experiment.go.txt:84: relative-dot one flags=["-fdebug-compilation-dir=."] candidate unit keys=[2e52e8348564dc00906927e0af9ba0b95bfea4a10a8835246d39f838b15598b9 f872bbd983b818c34977aef7a3b9a91dba591a2f721aff8fbf179742cd1c7a60 1664cc42e1c627c8719e5ea4644f8135cf7aaf3c7180899eb6b07fb721aee0d9]
+    experiment.go.txt:100: comp_dir="." row="fixture.a" resolved="fixture.a" os.Stat=stat fixture.a: no such file or directory
+    experiment.go.txt:100: comp_dir="." row="../lib/value.a" resolved="../lib/value.a" os.Stat=stat ../lib/value.a: no such file or directory
+    experiment.go.txt:100: real source not reached: /tmp/gd4csnt/relative-dot/one/entry/fixture.a
+    experiment.go.txt:100: real source not reached: /tmp/gd4csnt/relative-dot/one/lib/value.a
+    experiment.go.txt:101: relative-dot one paths=false
+    experiment.go.txt:155: llvm-symbolizer 0x563d: adamic_function_fixture_a_marked_7096d21fc20b09f996fe4db3e279c8ae
+        ./fixture.a:3:61
+        
+         err=<nil>
+    experiment.go.txt:155: llvm-symbolizer 0x56c8: adamic_function_imported________impo_lse___imported_____0___value_a_imported_f650c2fd1b819e09a4faf93b277ea61f
+        ./../lib/value.a:3:0
+        
+         err=<nil>
+    experiment.go.txt:80: functions_0000.c cache refusal: functions_0000.c holds a directive past its first line
+    experiment.go.txt:80: main.c cache refusal: main.c holds a directive past its first line
+    experiment.go.txt:84: relative-dot two flags=["-fdebug-compilation-dir=."] candidate unit keys=[2e52e8348564dc00906927e0af9ba0b95bfea4a10a8835246d39f838b15598b9 f872bbd983b818c34977aef7a3b9a91dba591a2f721aff8fbf179742cd1c7a60 1664cc42e1c627c8719e5ea4644f8135cf7aaf3c7180899eb6b07fb721aee0d9]
+    experiment.go.txt:100: comp_dir="." row="fixture.a" resolved="fixture.a" os.Stat=stat fixture.a: no such file or directory
+    experiment.go.txt:100: comp_dir="." row="../lib/value.a" resolved="../lib/value.a" os.Stat=stat ../lib/value.a: no such file or directory
+    experiment.go.txt:100: real source not reached: /tmp/gd4csnt/relative-dot/two/entry/fixture.a
+    experiment.go.txt:100: real source not reached: /tmp/gd4csnt/relative-dot/two/lib/value.a
+    experiment.go.txt:101: relative-dot two paths=false
+    experiment.go.txt:155: llvm-symbolizer 0x563d: adamic_function_fixture_a_marked_7096d21fc20b09f996fe4db3e279c8ae
+        ./fixture.a:3:61
+        
+         err=<nil>
+    experiment.go.txt:155: llvm-symbolizer 0x56c8: adamic_function_imported________impo_lse___imported_____0___value_a_imported_f650c2fd1b819e09a4faf93b277ea61f
+        ./../lib/value.a:3:0
+        
+         err=<nil>
+    experiment.go.txt:160: relative-dot same C=true same candidate unit keys=true
+=== RUN   TestDebugPathsScratch/debugger-source-map
+    experiment.go.txt:80: functions_0000.c cache refusal: functions_0000.c holds a directive past its first line
+    experiment.go.txt:80: main.c cache refusal: main.c holds a directive past its first line
+    experiment.go.txt:84: debugger-source-map one flags=[] candidate unit keys=[3a5b854cdab6b43bb29e96c72190f067db89e140207efbeb59775dda37ff72fc ba4126d59bcdadef0c0eabb8e7154d362ae78dff1eceecb04ec6c4a16a3060a6 7311e7ea0ba9aafe704595def1a0615e2450866ac49349a177ddfd10592f4ecb]
+    experiment.go.txt:100: comp_dir="/adamic-build" row="/adamic-build/fixture.a" resolved="/adamic-build/fixture.a" os.Stat=stat /adamic-build/fixture.a: no such file or directory
+    experiment.go.txt:100: comp_dir="/adamic-build" row="../lib/value.a" resolved="/lib/value.a" os.Stat=stat /lib/value.a: no such file or directory
+    experiment.go.txt:100: real source not reached: /tmp/gd4csnt/debugger-source-map/one/entry/fixture.a
+    experiment.go.txt:100: real source not reached: /tmp/gd4csnt/debugger-source-map/one/lib/value.a
+    experiment.go.txt:101: debugger-source-map one paths=false
+    experiment.go.txt:110: debugger map /adamic-build -> /tmp/gd4csnt/debugger-source-map/one/entry: /tmp/gd4csnt/debugger-source-map/one/entry/fixture.a os.Stat=<nil>
+    experiment.go.txt:110: debugger map /adamic-build -> /tmp/gd4csnt/debugger-source-map/one/entry: /tmp/gd4csnt/debugger-source-map/one/lib/value.a os.Stat=<nil>
+    experiment.go.txt:155: llvm-symbolizer 0x563d: adamic_function_fixture_a_marked_7096d21fc20b09f996fe4db3e279c8ae
+        /adamic-build/fixture.a:3:61
+        
+         err=<nil>
+    experiment.go.txt:155: llvm-symbolizer 0x56c8: adamic_function_imported________impo_lse___imported_____0___value_a_imported_f650c2fd1b819e09a4faf93b277ea61f
+        /adamic-build/../lib/value.a:3:0
+        
+         err=<nil>
+    experiment.go.txt:80: functions_0000.c cache refusal: functions_0000.c holds a directive past its first line
+    experiment.go.txt:80: main.c cache refusal: main.c holds a directive past its first line
+    experiment.go.txt:84: debugger-source-map two flags=[] candidate unit keys=[3a5b854cdab6b43bb29e96c72190f067db89e140207efbeb59775dda37ff72fc ba4126d59bcdadef0c0eabb8e7154d362ae78dff1eceecb04ec6c4a16a3060a6 7311e7ea0ba9aafe704595def1a0615e2450866ac49349a177ddfd10592f4ecb]
+    experiment.go.txt:100: comp_dir="/adamic-build" row="/adamic-build/fixture.a" resolved="/adamic-build/fixture.a" os.Stat=stat /adamic-build/fixture.a: no such file or directory
+    experiment.go.txt:100: comp_dir="/adamic-build" row="../lib/value.a" resolved="/lib/value.a" os.Stat=stat /lib/value.a: no such file or directory
+    experiment.go.txt:100: real source not reached: /tmp/gd4csnt/debugger-source-map/two/entry/fixture.a
+    experiment.go.txt:100: real source not reached: /tmp/gd4csnt/debugger-source-map/two/lib/value.a
+    experiment.go.txt:101: debugger-source-map two paths=false
+    experiment.go.txt:110: debugger map /adamic-build -> /tmp/gd4csnt/debugger-source-map/two/entry: /tmp/gd4csnt/debugger-source-map/two/entry/fixture.a os.Stat=<nil>
+    experiment.go.txt:110: debugger map /adamic-build -> /tmp/gd4csnt/debugger-source-map/two/entry: /tmp/gd4csnt/debugger-source-map/two/lib/value.a os.Stat=<nil>
+    experiment.go.txt:155: llvm-symbolizer 0x563d: adamic_function_fixture_a_marked_7096d21fc20b09f996fe4db3e279c8ae
+        /adamic-build/fixture.a:3:61
+        
+         err=<nil>
+    experiment.go.txt:155: llvm-symbolizer 0x56c8: adamic_function_imported________impo_lse___imported_____0___value_a_imported_f650c2fd1b819e09a4faf93b277ea61f
+        /adamic-build/../lib/value.a:3:0
+        
+         err=<nil>
+    experiment.go.txt:160: debugger-source-map same C=true same candidate unit keys=true
+--- PASS: TestDebugPathsScratch (6.06s)
+    --- PASS: TestDebugPathsScratch/baseline (1.72s)
+    --- PASS: TestDebugPathsScratch/compilation-dir (1.04s)
+    --- PASS: TestDebugPathsScratch/absolute-mapped (0.81s)
+    --- PASS: TestDebugPathsScratch/absolute-relative (0.79s)
+    --- PASS: TestDebugPathsScratch/relative-remapped (0.80s)
+    --- PASS: TestDebugPathsScratch/relative-dot (0.56s)
+    --- PASS: TestDebugPathsScratch/debugger-source-map (0.34s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	6.093s

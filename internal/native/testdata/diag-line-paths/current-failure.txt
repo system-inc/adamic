@@ -1,0 +1,12 @@
+=== RUN   TestDebugSourcePaths
+=== PAUSE TestDebugSourcePaths
+=== CONT  TestDebugSourcePaths
+    source_paths_test.go:129: comp_dir="/adamic-build" row="/adamic-build/fixture.a" resolved="/adamic-build/fixture.a" os.Stat=stat /adamic-build/fixture.a: no such file or directory
+    source_paths_test.go:129: comp_dir="/adamic-build" row="../lib/value.a" resolved="/lib/value.a" os.Stat=stat /lib/value.a: no such file or directory
+    source_paths_test.go:129: real source not reached: /tmp/adamic-gate/TestDebugSourcePaths130478961/001/entry/fixture.a
+    source_paths_test.go:129: real source not reached: /tmp/adamic-gate/TestDebugSourcePaths130478961/001/lib/value.a
+    source_paths_test.go:130: debugger paths do not reach entry and imported source
+--- FAIL: TestDebugSourcePaths (1.37s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	1.382s
+FAIL
