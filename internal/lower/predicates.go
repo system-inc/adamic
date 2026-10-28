@@ -579,23 +579,8 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 		if !ast.IsFunctionLike(implementation) || implementation.Body() == nil || (implementation.Type() != nil && implementation.Type().Kind != ast.KindTypePredicate) {
 			return failure()
 		}
-		if argument.Kind == ast.KindIdentifier {
-			symbol := l.symbol(argument)
-			changed := false
-			var writes ast.Visitor
-			writes = func(n *ast.Node) bool {
-				if n.Kind == ast.KindIdentifier && l.symbol(n) == symbol && ast.IsAssignmentTarget(n) {
-					changed = true
-				}
-				n.ForEachChild(writes)
-				return false
-			}
-			for _, file := range l.program.Files() {
-				file.AsNode().ForEachChild(writes)
-			}
-			if changed {
-				return failure()
-			}
+		if argument.Kind == ast.KindIdentifier && l.assignedSymbol(l.symbol(argument)) {
+			return failure()
 		}
 		wanted := contract.AsTypePredicateNode()
 		calls := l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(parameter), checker.SignatureKindCall)
@@ -643,3 +628,26 @@ func predicateOfSignature(receiver *checker.Checker, signature *checker.Signatur
 //
 //go:linkname predicateMatchingReference github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isMatchingReference
 func predicateMatchingReference(receiver *checker.Checker, source, target *ast.Node) bool
+
+// assignedSymbol says whether any identifier in the program that resolves to symbol (nil included) is an assignment
+// target. predicateArguments asked it for every identifier passed as a predicate argument, and each ask walked every
+// file of the program: 24.9% of the meter's latent step on tsc's 79 files once predicate proof was memoized (#pv935yw).
+// The answer is the program's and the checker's alone, so one walk collects every assigned symbol into
+// l.assignedSymbols the first time it's asked, and nothing invalidates it.
+func (l *lowering) assignedSymbol(symbol *ast.Symbol) bool {
+	if l.assignedSymbols == nil {
+		l.assignedSymbols = map[*ast.Symbol]bool{}
+		var writes ast.Visitor
+		writes = func(n *ast.Node) bool {
+			if n.Kind == ast.KindIdentifier && ast.IsAssignmentTarget(n) {
+				l.assignedSymbols[l.symbol(n)] = true
+			}
+			n.ForEachChild(writes)
+			return false
+		}
+		for _, file := range l.program.Files() {
+			file.AsNode().ForEachChild(writes)
+		}
+	}
+	return l.assignedSymbols[symbol]
+}
