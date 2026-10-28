@@ -190,6 +190,13 @@ type lowering struct {
 	impliedTargets map[*ast.Node]*checker.Type
 	// voidHolders memoizes holdsVoid: whether a type holds void at a position (#p7t8tmh).
 	voidHolders map[*checker.Type]bool
+	// voidBound is, while a generic body instantiated at void is judged, each type parameter bound to
+	// void (true) or to a type holding void (false), and genericVoidVerdicts what each judgment found.
+	voidBound           map[*checker.Type]bool
+	genericVoidVerdicts map[string]error
+	// voidMessageMethods are the methods whose bodies voidMethodReads is judging for a message, so a
+	// method that reaches itself through this stops there instead of judging itself again.
+	voidMessageMethods map[*ast.Node]bool
 	// A per-lowering query seam lets tests count actual checker calls without globals.
 	// Nil uses checker.GetTypeAtLocation.
 	impliedTargetQuery func(*ast.Node) *checker.Type

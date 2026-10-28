@@ -6,6 +6,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/microsoft/TypeScript/tsc/shim/scanner"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // refuseVoidContainerRead refuses a use of a value that holds void at a position, unless the use is a
@@ -28,6 +29,9 @@ import (
 func (l *lowering) refuseVoidContainerRead(node *ast.Node) error {
 	if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) || ast.IsDeclarationName(node) || ast.IsAssignmentTarget(node) {
 		return nil
+	}
+	if node.Kind == ast.KindExpressionWithTypeArguments {
+		return nil // A heritage clause names a type, and holds no value.
 	}
 	if node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.AsPropertyAccessExpression().Name() == node {
 		return nil // The access is the use, never the name it reads.
@@ -179,7 +183,7 @@ func (l *lowering) voidContainerMember(access *ast.Node, receiver *checker.Type,
 	}
 	promised := (name == "then" || name == "catch") && l.isLibraryType(receiver, "Promise")
 	if !voidContainerMethods[name] && !promised || !called(access) {
-		return "through " + name
+		return "through " + name + l.voidMethodReads(receiver, symbol, name)
 	}
 	call := access
 	for call.Parent.Kind == ast.KindParenthesizedExpression {
@@ -208,7 +212,7 @@ func (l *lowering) voidElementRead(read *ast.Node, what string) string {
 		return ""
 	}
 	for _, member := range element.Types() {
-		if member.Flags() == checker.TypeFlagsVoid {
+		if l.isVoidValue(member) {
 			if role := l.voidReadRole(read); role != "" {
 				return "through " + what + " whose value is read as " + role
 			}
@@ -262,7 +266,7 @@ func (l *lowering) voidCallbackParameters(call *ast.Node, method string, callbac
 // holds void itself, or it is a single void value H2 judges.
 func (l *lowering) voidContainerFlows(whole *ast.Node) string {
 	if whole != nil {
-		if flowed := l.checker.GetTypeAtLocation(whole); flowed != nil && (flowed.Flags() == checker.TypeFlagsVoid || l.holdsVoid(flowed)) {
+		if flowed := l.checker.GetTypeAtLocation(whole); flowed != nil && (l.isVoidValue(flowed) || l.holdsVoid(flowed)) {
 			return ""
 		}
 	}
@@ -342,12 +346,17 @@ func (l *lowering) holdsVoidWalk(t *checker.Type, visited map[*checker.Type]bool
 	if t == nil || visited[t] {
 		return false
 	}
+	if exactly, bound := l.voidBound[t]; bound {
+		// Inside a generic instantiated at void (#p7t8tmh, part 2): a parameter bound to a type holding
+		// void holds it, and one bound to void itself is a void value, a position but no holder.
+		return !exactly
+	}
 	if held, known := l.voidHolders[t]; known {
 		return held
 	}
 	visited[t] = true
 	position := func(inside *checker.Type) bool {
-		return inside != nil && (inside.Flags() == checker.TypeFlagsVoid || l.holdsVoidWalk(inside, visited))
+		return inside != nil && (l.isVoidValue(inside) || l.holdsVoidWalk(inside, visited))
 	}
 	switch {
 	case t.Flags()&checker.TypeFlagsUnion != 0:
@@ -503,7 +512,7 @@ func (l *lowering) voidKeeps(source, target *checker.Type, depth int, seen map[[
 
 // holdsPosition is whether a position's type is void or holds void.
 func (l *lowering) holdsPosition(inside *checker.Type) bool {
-	return inside != nil && (inside.Flags() == checker.TypeFlagsVoid || l.holdsVoid(inside))
+	return inside != nil && (l.isVoidValue(inside) || l.holdsVoid(inside))
 }
 
 // voidKeepsPosition is voidKeeps for one position: exactly void stays exactly void.
@@ -511,8 +520,95 @@ func (l *lowering) voidKeepsPosition(from, to *checker.Type, depth int, seen map
 	if from == nil || !l.holdsPosition(from) {
 		return true
 	}
-	if from.Flags() == checker.TypeFlagsVoid {
-		return to != nil && to.Flags() == checker.TypeFlagsVoid
+	if l.isVoidValue(from) {
+		// A void value keeps only an exactly void slot, and a type parameter bound to void only its own.
+		return to != nil && (to == from || from.Flags() == checker.TypeFlagsVoid && to.Flags() == checker.TypeFlagsVoid)
 	}
 	return l.voidKeeps(from, to, depth, seen)
+}
+
+// isVoidValue is whether a value of type t is a void value: void itself, or inside a generic
+// instantiated at void, a type parameter bound to exactly void.
+func (l *lowering) isVoidValue(t *checker.Type) bool {
+	return t != nil && (t.Flags() == checker.TypeFlagsVoid || l.voidBound[t])
+}
+
+// voidMethodReads says, for a method written in the program with a body, what holds the void and what
+// the method does with it (Adamic, on #p7t8tmh): `Cell<void>` holds it in its type argument, and show
+// reads it in its body. The call stays refused, since a method is no move: dispatch can reach an
+// override, and a body is judged where it is. When the receiver is a generic class, the method's own
+// body is judged with the class's type parameters bound, which finds the read cheaply.
+func (l *lowering) voidMethodReads(receiver *checker.Type, symbol *ast.Symbol, name string) string {
+	if symbol == nil || len(symbol.Declarations) != 1 {
+		return ""
+	}
+	method := symbol.Declarations[0]
+	if method.Kind != ast.KindMethodDeclaration || method.Body() == nil || load.IsLibrary(ast.GetSourceFileOfNode(method)) {
+		return ""
+	}
+	said := ": " + l.checker.TypeToString(receiver) + " holds void in " + l.voidHolding(receiver) + ", and " + name + " reads it"
+	class := method.Parent
+	if class == nil || len(class.TypeParameters()) == 0 || receiver.ObjectFlags()&checker.ObjectFlagsReference == 0 {
+		return said
+	}
+	arguments := l.checker.GetTypeArguments(receiver)
+	voidBound := map[*checker.Type]bool{}
+	for index, parameter := range class.TypeParameters() {
+		if index >= len(arguments) {
+			break
+		}
+		if arguments[index].Flags() == checker.TypeFlagsVoid {
+			voidBound[l.checker.GetTypeAtLocation(parameter.Name())] = true
+		} else if l.holdsVoid(arguments[index]) {
+			voidBound[l.checker.GetTypeAtLocation(parameter.Name())] = false
+		}
+	}
+	if len(voidBound) == 0 || l.voidMessageMethods[method] {
+		// A method already being judged for a message (a method reaching itself through a receiver
+		// typed by its own class, or a pair doing so) is said without its site: judging it again would
+		// never end (Lower, on #p7t8tmh).
+		return said
+	}
+	if l.voidMessageMethods == nil {
+		l.voidMessageMethods = map[*ast.Node]bool{}
+	}
+	l.voidMessageMethods[method] = true
+	outerBound, outerHolders := l.voidBound, l.voidHolders
+	l.voidBound, l.voidHolders = voidBound, map[*checker.Type]bool{}
+	read, role := l.genericVoidRead(method)
+	l.voidBound, l.voidHolders = outerBound, outerHolders
+	delete(l.voidMessageMethods, method)
+	if read == nil {
+		return said
+	}
+	return said + " at " + l.program.Where(read) + " " + role
+}
+
+// voidHolding names the first place type holds void: an element, a type argument, a field or an index
+// signature.
+func (l *lowering) voidHolding(t *checker.Type) string {
+	holds := func(inside *checker.Type) bool { return l.isVoidValue(inside) || l.holdsVoid(inside) }
+	if t.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range t.Types() {
+			if l.holdsVoid(member) {
+				return l.voidHolding(member)
+			}
+		}
+	}
+	if checker.Checker_isArrayOrTupleType(l.checker, t) {
+		return "its elements"
+	}
+	if t.ObjectFlags()&checker.ObjectFlagsReference != 0 && t.Target() != nil {
+		for index, argument := range l.checker.GetTypeArguments(t) {
+			if holds(argument) {
+				return "its type argument " + strconv.Itoa(index+1) + " (" + l.checker.TypeToString(argument) + ")"
+			}
+		}
+	}
+	for _, property := range l.checker.GetPropertiesOfType(t) {
+		if property.Flags&ast.SymbolFlagsMethod == 0 && holds(l.checker.GetTypeOfSymbol(property)) {
+			return "field " + property.Name
+		}
+	}
+	return "an index signature"
 }
