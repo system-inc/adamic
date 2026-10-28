@@ -97,6 +97,14 @@ func buildWithNativeExports(path, output string, arguments []string, buildNative
 		fmt.Fprintln(os.Stderr, "adamic: --tsgo is not supported for wasm32-wasi")
 		return 1
 	}
+	if options.Debug {
+		entry, err := filepath.Abs(path)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "adamic: %v\n", err)
+			return 1
+		}
+		options.DebugDirectory = filepath.Dir(entry)
+	}
 	if err := native.ValidateOptions(options); err != nil {
 		fmt.Fprintf(os.Stderr, "adamic: %v\n", err)
 		return 1

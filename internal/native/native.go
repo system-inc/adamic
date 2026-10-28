@@ -65,6 +65,8 @@ func cLiteral(value string) string {
 type Options struct {
 	// Debug emits source locations and asks clang for debug information.
 	Debug bool
+	// DebugDirectory is the entry program's absolute directory, used only by its own compile.
+	DebugDirectory string
 	// Release enables ThinLTO only for shipped native, uncounted, unsanitized builds.
 	Release bool
 	// ProgramRegion enables the one-shot CLI Program region.
@@ -257,23 +259,28 @@ func linkOne(directory string, compiler string, source string, output string, op
 		return fmt.Errorf("native: %w", err)
 	}
 	// Neither the build directory nor this machine's runtime cache may reach the binary, so its bytes are a
-	// function of its inputs wherever it's built (see cachedRuntime). clang is never given an absolute path to read: it
-	// compiles main.c from inside the build directory, and finds the runtime's headers and archive through runtime, a link
+	// function of its inputs wherever it's built (see cachedRuntime), except opt-in source debug paths.
+	// Normally clang compiles main.c by its relative name inside the build directory, and finds headers through runtime, a link
 	// there to the cache. The prefix maps cover debug info and __FILE__, but ASan's metadata for globals keeps each source
 	// file as clang was given it (Workshop, Oct 11: <tmp>/adamic-build-<random>/main.c and <cache>/.../adamic.h in .rodata).
 	if err := os.Symlink(filepath.Dir(library), filepath.Join(directory, "runtime")); err != nil {
 		return fmt.Errorf("native: %w", err)
 	}
 	runtimeArchive := filepath.Join("runtime", filepath.Base(library))
-	compileFlags := append(append(append(slices.Clone(flags), prefixMaps(directory, "/adamic-build")...), prefixMaps(filepath.Dir(library), "/adamic-runtime")...), "-I", "runtime")
+	include, program := "runtime", "main.c"
+	// Absolute debug inputs keep C/header rows independent of the source comp_dir.
+	if options.Debug && !options.Sanitize && !options.ThreadSanitize {
+		include, program = filepath.Join(directory, include), filepath.Join(directory, program)
+	}
+	compileFlags := append(append(append(slices.Clone(flags), prefixMaps(directory, "/adamic-build")...), prefixMaps(filepath.Dir(library), "/adamic-runtime")...), "-I", include)
+	compileFlags = append(compileFlags, programDebugFlags(options)...)
 	// On macOS ld's debug map records every object it links that carries debug info (a sanitized build's do) by its path,
 	// and a compile and link in one call links main.c's object from clang's own temporary file, <TMPDIR>/main-<random>.o,
 	// random per build (Tests, from Compiler, Oct 12: a whole sanitized build's binary named it). There main.c is
 	// compiled to main.o in the build directory first and linked by that name, -oso_prefix taking the directory off, so
 	// the debug map names it main.o alone, as a split build's names its units. An ELF linker records no input's path.
-	program := "main.c"
 	if goruntime.GOOS == "darwin" && options.Target != "wasm32-wasi" {
-		compile := clangIn(directory, compiler, append(slices.Clone(compileFlags), "-c", "main.c", "-o", "main.o")...)
+		compile := clangIn(directory, compiler, append(slices.Clone(compileFlags), "-c", program, "-o", "main.o")...)
 		var combined []byte
 		var compiling time.Duration
 		if err := jobserver.Hold(func() error {
@@ -334,5 +341,16 @@ func linkOne(directory string, compiler string, source string, output string, op
 		kind = "cLink"
 	}
 	buildLog(kind, filepath.Base(output), "", "off", building)
+	return nil
+}
+
+// programDebugFlags belongs beside the program's prefix maps, never in Flags:
+// the runtime archive must remain shared between entry directories. comp_dir
+// also goes through toolMaps: entries under the compiler install or sysroot
+// read as /adamic-compiler/... or /adamic-sysroot/....
+func programDebugFlags(options Options) []string {
+	if options.Debug && options.DebugDirectory != "" {
+		return []string{"-fdebug-compilation-dir=" + options.DebugDirectory}
+	}
 	return nil
 }
