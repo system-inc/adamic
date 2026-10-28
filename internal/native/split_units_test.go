@@ -186,7 +186,6 @@ func checkGrainBudget(t *testing.T) func() {
 const randomRegexCases = 10000
 const randomRegexUnitSize = 250
 
-var splitCacheModes = []string{"0", "1"}
 var decodeTargets = []string{"native", "wasi"}
 
 type testShard struct{ index, count int }
@@ -284,11 +283,6 @@ func TestRetainedSplitCoverage(t *testing.T) {
 			t.Fatalf("WASI fixture membership changed: %s", got)
 		}
 	})
-	t.Run("split_cache", func(t *testing.T) {
-		if strings.Join(splitCacheModes, ",") != "0,1" {
-			t.Fatal("cached and bypass builds must both run")
-		}
-	})
 	t.Run("record_mutants", func(t *testing.T) {
 		if len(recordMutationCases) != 6 {
 			t.Fatalf("got %d record mutants, want 6", len(recordMutationCases))
@@ -311,7 +305,6 @@ func TestRetainedTopLevelCoverage(t *testing.T) {
 	}{
 		{"regexp_test.go", "TestRegExpBytecodeRandomNodeShard", "runRegExpBytecodeRandomNodeShard", 40},
 		{"record_test.go", "TestRecordMutantsUnit", "runRecordMutantUnit", 6},
-		{"units_tsgo_test.go", "TestSplitTSGoAgreesUnit", "runSplitTSGoAgreesUnit", 2},
 		{"wasm_test.go", "TestWASIUnit", "runWASIUnit", 36},
 	} {
 		file, err := parser.ParseFile(token.NewFileSet(), plan.file, nil, 0)

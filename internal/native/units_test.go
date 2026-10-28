@@ -3,9 +3,11 @@ package native
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -302,5 +304,81 @@ int main(void) { return adamic_probe(); }
 	}
 	if output, err := exec.Command(binary).CombinedOutput(); err != nil || len(output) != 0 {
 		t.Fatalf("split runtime prototype: %v %s", err, output)
+	}
+}
+
+// One cached build mixes hits and misses, and its binary is the uncached one: a program of three function units built
+// cached, then one function in its last unit changed and built cached again, so that unit misses and the others hit.
+// The mixed build's binary runs the changed body and is the same bytes as the changed program built uncached. This holds
+// at a few units what TestSplitTSGoAgrees's cached build of the 4 MB checker held at 23 (#dgcy49s). Mutant: a unit's
+// key without its own bytes, so the changed unit hits the old object, and the binary prints the old sum.
+// Not parallel: t.Setenv changes ADAMIC_BUILD_LOG and ADAMIC_GATE_UNCACHED for the process.
+func TestSplitMixesHitsAndMisses(t *testing.T) {
+	// The names are this run's own, so the first cached build compiles every unit whatever a shared cache holds.
+	nonce := strconv.FormatInt(time.Now().UnixNano(), 36)
+	program := func(last int) string {
+		var source strings.Builder
+		source.WriteString("#include \"adamic.h\"\n#include <stdio.h>\n")
+		for index := range 40 {
+			value := index
+			if index == 39 {
+				value = last
+			}
+			fmt.Fprintf(&source, "static int adamic_%s_%d(void) { return %d; }\n", nonce, index, value)
+		}
+		source.WriteString("int main(void) { int sum = 0;")
+		for index := range 40 {
+			fmt.Fprintf(&source, " sum += adamic_%s_%d();", nonce, index)
+		}
+		source.WriteString(" printf(\"%d\\n\", sum); return 0; }\n")
+		return source.String()
+	}
+	directory := t.TempDir()
+	build := func(name, source, uncached string) ([]byte, map[string]string) {
+		t.Helper()
+		log := filepath.Join(directory, name+".log")
+		t.Setenv("ADAMIC_BUILD_LOG", log)
+		t.Setenv("ADAMIC_GATE_UNCACHED", uncached)
+		binary := filepath.Join(directory, name, "program")
+		if err := os.MkdirAll(filepath.Dir(binary), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := Build(source, binary, Options{Split: true, Jobs: 2}); err != nil {
+			t.Fatal(err)
+		}
+		output, err := exec.Command(binary).CombinedOutput()
+		if err != nil {
+			t.Fatalf("%s: %v\n%s", name, err, output)
+		}
+		written, err := os.ReadFile(log)
+		if err != nil {
+			t.Fatal(err)
+		}
+		outcomes := map[string]string{}
+		for _, line := range strings.Split(strings.TrimSuffix(string(written), "\n"), "\n") {
+			if match := buildLogLine.FindStringSubmatch(line); match != nil && match[1] == "cCompile" && strings.HasPrefix(match[2], "functions_") {
+				outcomes[match[2]] = match[4]
+			}
+		}
+		contents, err := os.ReadFile(binary)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return append(output, contents...), outcomes
+	}
+	_, first := build("first", program(39), "0")
+	if len(first) != 3 || first["functions_0000.c"] != "miss" || first["functions_0001.c"] != "miss" || first["functions_0002.c"] != "miss" {
+		t.Fatalf("the first cached build's units: %v, want three misses", first)
+	}
+	mixed, outcomes := build("mixed", program(1000), "0")
+	if outcomes["functions_0000.c"] != "hit" || outcomes["functions_0001.c"] != "hit" || outcomes["functions_0002.c"] != "miss" {
+		t.Fatalf("the changed build's units: %v, want two hits and the changed unit's miss", outcomes)
+	}
+	uncached, _ := build("uncached", program(1000), "1")
+	if want := "1741\n"; !bytes.HasPrefix(mixed, []byte(want)) {
+		t.Fatalf("the mixed build printed %q, want %q", mixed[:bytes.IndexByte(mixed, '\n')+1], want)
+	}
+	if !bytes.Equal(mixed, uncached) {
+		t.Fatal("the mixed build's binary differs from the changed program built uncached")
 	}
 }

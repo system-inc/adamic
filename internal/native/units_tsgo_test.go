@@ -111,17 +111,52 @@ func TestProduct_SplitTSGoBaseline(t *testing.T) {
 	splitTSGoBaseline(t, splitTSGoSource(t), tsgoArchive(t))
 }
 
-// Not parallel: this test explicitly compares the object cache with its bypass on the same input. Each unit's own
-// work is its cache mode's split build and the comparison; the source, the archive and the whole baseline are
-// products built ahead.
-func runSplitTSGoAgreesUnit(t *testing.T, unit int) {
+// splitTSGoSplit is the split sanitized checker built from the source product against the archive product with the
+// units cache bypassed, a product built ahead by TestProduct_SplitTSGoSplit. Its compile is the whole of the agreement
+// test's cost: 23 units and about 17 s of clang quiet, 24 s at twice the box's load, one 1 MB unit the long pole
+// (#dgcy49s). Bypassed, its build reads no units cache, so nothing outside its inputs reaches it; a build mixing hits and
+// misses is TestSplitMixesHitsAndMisses's. Keyed as the baseline is, by its inputs' bytes.
+func splitTSGoSplit(t *testing.T, source, archive string) string {
 	t.Helper()
+	t.Setenv("ADAMIC_GATE_UNCACHED", "1")
+	archiveBytes, err := os.ReadFile(archive)
+	if err != nil {
+		t.Fatal(err)
+	}
+	optionBytes, err := json.Marshal(splitTSGoOptions)
+	if err != nil {
+		t.Fatal(err)
+	}
+	directory := buildcache.Product(t, buildcache.Inputs{
+		Name:      "split-tsgo-split",
+		Files:     []string{"internal/native", "bridge/tsgo"},
+		Flags:     []string{fmt.Sprintf("source=%x", sha256.Sum256([]byte(source))), fmt.Sprintf("archive=%x", sha256.Sum256(archiveBytes)), "options=" + string(optionBytes), "uncached=1"},
+		Toolchain: []string{buildcache.Tool("clang", "--version")},
+	}, func(directory string) error {
+		return BuildSplitTSGo(source, filepath.Join(directory, "split"), archive, splitTSGoOptions)
+	})
+	return filepath.Join(directory, "split")
+}
+
+// TestProduct_SplitTSGoSplit builds the split checker the agreement test runs, so the tree build builds it ahead.
+// Not parallel: splitTSGoSplit sets ADAMIC_GATE_UNCACHED for the process.
+func TestProduct_SplitTSGoSplit(t *testing.T) {
+	archive := tsgoArchive(t)
+	splitTSGoSplit(t, splitTSGoSource(t), archive)
+}
+
+// The split checker, built ahead, prints what the whole one prints. Each was compiled by a product test, so this test
+// is a fetch, two runs and a compare. It used to compile the split checker itself, once per cache mode: a cached build
+// on a box with an empty units cache was the bypass's compile plus writes, about 27 s at twice the box's load and 60.73
+// s at load 82, which reddened a change that touched nothing here (#dgcy49s). Not parallel: splitTSGoSplit sets
+// ADAMIC_GATE_UNCACHED for the process.
+func TestSplitTSGoAgrees(t *testing.T) {
 	phase := time.Now()
 	archive := tsgoArchive(t)
 	source := splitTSGoSource(t)
 	whole := splitTSGoBaseline(t, source, archive)
+	split := splitTSGoSplit(t, source, archive)
 	t.Logf("product fetch phase %.3fs", time.Since(phase).Seconds())
-	phase = time.Now()
 	directory := t.TempDir()
 	input := filepath.Join(directory, "sample.a")
 	config := filepath.Join(directory, "tsconfig.json")
@@ -139,33 +174,9 @@ func runSplitTSGoAgreesUnit(t *testing.T, unit int) {
 	if err != nil {
 		t.Fatalf("whole checker: %v\n%s", err, want)
 	}
-	t.Logf("whole checker run phase %.3fs", time.Since(phase).Seconds())
-	shard := testShard{unit, 2}
-	for index, uncached := range splitCacheModes {
-		if !shard.owns(index) {
-			continue
-		}
-		t.Run("cache_"+uncached, func(t *testing.T) {
-			t.Setenv("ADAMIC_GATE_UNCACHED", uncached)
-			split := filepath.Join(directory, "split")
-			if err := BuildSplitTSGo(source, split, archive, splitTSGoOptions); err != nil {
-				t.Fatal(err)
-			}
-			got, err := exec.Command(split, config, manifest).CombinedOutput()
-			if err != nil || !bytes.Equal(got, want) {
-				t.Fatalf("checker uncached=%s: %v\nwhole=%s\nsplit=%s", uncached, err, want, got)
-			}
-			t.Logf("checker uncached=%s: %d identical bytes: %s", uncached, len(got), got)
-		})
+	got, err := exec.Command(split, config, manifest).CombinedOutput()
+	if err != nil || !bytes.Equal(got, want) {
+		t.Fatalf("split checker: %v\nwhole=%s\nsplit=%s", err, want, got)
 	}
-}
-
-// Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestSplitTSGoAgreesUnit00(t *testing.T) {
-	runSplitTSGoAgreesUnit(t, 0)
-}
-
-// Not parallel: this unit changes process environment or uses the WASI toolchain.
-func TestSplitTSGoAgreesUnit01(t *testing.T) {
-	runSplitTSGoAgreesUnit(t, 1)
+	t.Logf("split checker: %d identical bytes: %s", len(got), got)
 }
