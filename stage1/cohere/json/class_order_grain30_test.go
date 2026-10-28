@@ -5,6 +5,7 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
+	"maps"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -146,7 +147,22 @@ func TestJSONClassOrderAnswerKey(t *testing.T) {
 	}
 }
 
-func jsonPortClassOrderRun(t *testing.T, mode int) {
+// jsonClassOrderSide is the one side a class-order test runs over the fixture, each held to the stored Go answer.
+type jsonClassOrderSide int
+
+const (
+	jsonClassOrderGo jsonClassOrderSide = iota
+	jsonClassOrderSanitized
+	jsonClassOrderRelease
+	jsonClassOrderNode
+	jsonClassOrderJavaScript
+)
+
+// jsonClassOrderSides are every side, each owned by one TestPortMatchesGoCohereClassOrder_ test
+// (TestJSONDedicatedShardOwnership reads which).
+var jsonClassOrderSides = []jsonClassOrderSide{jsonClassOrderGo, jsonClassOrderSanitized, jsonClassOrderRelease, jsonClassOrderNode, jsonClassOrderJavaScript}
+
+func jsonPortClassOrderRun(t *testing.T, side jsonClassOrderSide) {
 	t.Helper()
 	setup := time.Now()
 	portMatchesPrepare(t)
@@ -169,27 +185,29 @@ func jsonPortClassOrderRun(t *testing.T, mode int) {
 	if err := os.WriteFile(path, []byte(input), 0644); err != nil {
 		t.Fatal(err)
 	}
-	// _000 runs the Go oracle live and holds the stored answer to it, so the sanitizer passes, which compare against
-	// the stored answer, compare against the oracle. Release, Node and the JavaScript backend run here alone: the
-	// sanitizer passes ran release against the same answer too, the same comparison twice more (#f42kzjr).
-	expected := stored
-	if mode == 0 {
+	// _000 runs the Go oracle live and holds the stored answer to it, so every other side, which compares against the
+	// stored answer, compares against the oracle. Each side is a test of its own: _000 ran the oracle, release, Node
+	// and the JavaScript backend one after another, 53.1 s of its 60.5 s on Adam at load 52 (Oct 27), and went red.
+	switch side {
+	case jsonClassOrderGo:
 		reference := execute(t, nil, portMatchesShared.oracle, "--cases", path)
 		if reference.exitCode != 0 || len(reference.stderr) != 0 {
 			t.Fatalf("Go oracle: exit %d stderr %s", reference.exitCode, reference.stderr)
 		}
-		expected = string(reference.stdout)
-		if _, err := jsonPortAnswers(expected, len(items)); err != nil {
+		live := string(reference.stdout)
+		if _, err := jsonPortAnswers(live, len(items)); err != nil {
 			t.Fatal(err)
 		}
-		if stored != expected {
+		if stored != live {
 			t.Fatal("the stored class-order Go answer differs from the Go oracle's live answer")
 		}
-		compare(t, "release", execute(t, nil, portMatchesShared.release, "--cases", path), expected, items)
-		compare(t, "Node", onNode(t, portMatchesShared.entry, "--cases", path), expected, items)
-		compare(t, "JavaScript backend", onNode(t, portMatchesShared.script, "--cases", path), expected, items)
-	}
-	if mode != 0 {
+	case jsonClassOrderRelease:
+		compare(t, "release", execute(t, nil, portMatchesShared.release, "--cases", path), stored, items)
+	case jsonClassOrderNode:
+		compare(t, "Node", onNode(t, portMatchesShared.entry, "--cases", path), stored, items)
+	case jsonClassOrderJavaScript:
+		compare(t, "JavaScript backend", onNode(t, portMatchesShared.script, "--cases", path), stored, items)
+	case jsonClassOrderSanitized:
 		// One sanitized run: with LeakSanitizer on (Linux), it reports every ASan/UBSan error a detect_leaks=0 run does,
 		// plus leaks, so the separate ASan/UBSan test that ran the case again is gone (#fqvxk72). Off Linux, ASan/UBSan
 		// runs without leak detection and macOS's leaks --atExit checks release.
@@ -202,8 +220,10 @@ func jsonPortClassOrderRun(t *testing.T, mode int) {
 			}
 		}
 		began := time.Now()
-		compare(t, label, execute(t, []string{options}, portMatchesShared.sanitized, "--cases", path), expected, items)
+		compare(t, label, execute(t, []string{options}, portMatchesShared.sanitized, "--cases", path), stored, items)
 		t.Logf("%s: %.3fs", label, time.Since(began).Seconds())
+	default:
+		t.Fatalf("class-order side %d is no side", side)
 	}
 	t.Logf("%s: own work %.3fs", jsonPortClassOrderKey, time.Since(start).Seconds())
 }
@@ -220,15 +240,31 @@ func jsonPortClassOrderRun(t *testing.T, mode int) {
 
 // Not parallel: runs alone in the unit, before the parallel shards resume, so the indivisible fixture has its CPUs.
 func TestPortMatchesGoCohereClassOrder_000(t *testing.T) {
-	jsonPortClassOrderRun(t, 0)
+	jsonPortClassOrderRun(t, jsonClassOrderGo)
 }
 
 // Not parallel: runs alone in the unit, before the parallel shards resume, so the indivisible fixture has its CPUs.
 func TestPortMatchesGoCohereClassOrder_001(t *testing.T) {
-	jsonPortClassOrderRun(t, 1)
+	jsonPortClassOrderRun(t, jsonClassOrderSanitized)
 }
 
-// Every dedicated case leaves the hash buckets and is owned exactly once: class order by _000 and _001, inventory.json
+// Not parallel: runs alone in the unit, before the parallel shards resume, so the indivisible fixture has its CPUs.
+func TestPortMatchesGoCohereClassOrder_002(t *testing.T) {
+	jsonPortClassOrderRun(t, jsonClassOrderRelease)
+}
+
+// Not parallel: runs alone in the unit, before the parallel shards resume, so the indivisible fixture has its CPUs.
+func TestPortMatchesGoCohereClassOrder_003(t *testing.T) {
+	jsonPortClassOrderRun(t, jsonClassOrderNode)
+}
+
+// Not parallel: runs alone in the unit, before the parallel shards resume, so the indivisible fixture has its CPUs.
+func TestPortMatchesGoCohereClassOrder_004(t *testing.T) {
+	jsonPortClassOrderRun(t, jsonClassOrderJavaScript)
+}
+
+// Every dedicated case leaves the hash buckets and is owned exactly once: class order by _000 to _004, one side each,
+// inventory.json
 // by TestPortMatchesGoCohereInventory, and each heavy case by its three parts, _000 to _002, which are the whole's sides
 // between them (TestJSONPortPartsAreTheWhole). A planted disagreement in any is caught by exactly one owner.
 func TestJSONDedicatedShardOwnership(t *testing.T) {
@@ -310,6 +346,7 @@ func TestJSONDedicatedShardOwnership(t *testing.T) {
 	constants := map[string]string{}
 	declared := map[string]bool{}
 	owned := map[string][]string{}
+	sides := map[string]string{}
 	for _, file := range []string{"class_order_grain30_test.go", "dedicated_test.go"} {
 		tree, err := parser.ParseFile(token.NewFileSet(), file, nil, 0)
 		if err != nil {
@@ -333,6 +370,25 @@ func TestJSONDedicatedShardOwnership(t *testing.T) {
 				continue
 			}
 			declared[f.Name.Name] = true
+			if strings.HasPrefix(f.Name.Name, "TestPortMatchesGoCohereClassOrder_") {
+				statement, _ := f.Body.List[len(f.Body.List)-1].(*ast.ExprStmt)
+				var call *ast.CallExpr
+				if statement != nil {
+					call, _ = statement.X.(*ast.CallExpr)
+				}
+				if call == nil || len(call.Args) != 2 {
+					t.Fatalf("%s: not a class-order side", f.Name.Name)
+				}
+				helper, _ := call.Fun.(*ast.Ident)
+				side, _ := call.Args[1].(*ast.Ident)
+				if helper == nil || helper.Name != "jsonPortClassOrderRun" || side == nil {
+					t.Fatalf("%s: not a class-order side", f.Name.Name)
+				}
+				if owner, taken := sides[side.Name]; taken {
+					t.Fatalf("%s and %s both run %s", owner, f.Name.Name, side.Name)
+				}
+				sides[side.Name] = f.Name.Name
+			}
 			if file != "dedicated_test.go" {
 				continue
 			}
@@ -353,8 +409,10 @@ func TestJSONDedicatedShardOwnership(t *testing.T) {
 			owned[key.Name] = append(owned[key.Name], part.Name)
 		}
 	}
-	if !declared["TestPortMatchesGoCohereClassOrder_000"] || !declared["TestPortMatchesGoCohereClassOrder_001"] {
-		t.Fatalf("dedicated shard declarations: %v", declared)
+	// Class order's tests are its sides between them, each run by one test: _000 the Go oracle against the stored
+	// answer, and every other side against that answer.
+	if !slices.Equal(slices.Sorted(maps.Keys(sides)), []string{"jsonClassOrderGo", "jsonClassOrderJavaScript", "jsonClassOrderNode", "jsonClassOrderRelease", "jsonClassOrderSanitized"}) || len(sides) != len(jsonClassOrderSides) {
+		t.Fatalf("class-order sides run: %v, want each of the %d once", sides, len(jsonClassOrderSides))
 	}
 	keys := map[string]bool{}
 	for name, parts := range owned {
