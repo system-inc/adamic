@@ -1,0 +1,10 @@
+=== RUN   TestLatentSharedFactsKeyedByProgramAndChecker
+    latent_shared_facts_test.go:40: a lowering of another checker was seeded with the first checker's facts
+--- FAIL: TestLatentSharedFactsKeyedByProgramAndChecker (0.00s)
+=== RUN   TestLatentSharedFactsTakeOnlyCleanUnits
+--- PASS: TestLatentSharedFactsTakeOnlyCleanUnits (0.00s)
+=== RUN   TestLatentSwallowMarksTheUnit
+--- PASS: TestLatentSwallowMarksTheUnit (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.012s
+FAIL

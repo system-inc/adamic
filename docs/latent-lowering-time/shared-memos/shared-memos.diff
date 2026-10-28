@@ -1,0 +1,331 @@
+diff --git a/stage3/census/latent/audit_shared_facts.py b/stage3/census/latent/audit_shared_facts.py
+new file mode 100644
+index 00000000..84ba2fe3
+--- /dev/null
++++ b/stage3/census/latent/audit_shared_facts.py
+@@ -0,0 +1,55 @@
++"""Run the shared-facts overlay test, then each mutant, which must turn it red with its own message.
++
++Usage: audit_shared_facts.py REPOSITORY LATENT_OVERLAY OUTPUT. LATENT_OVERLAY is make_overlay.py's output directory,
++gofmt'd as the meter leaves it, so the mutants' needles are the gofmt'd hook's text.
++"""
++import json, os, subprocess, sys
++from pathlib import Path
++
++repo, overlay, out = map(lambda x: Path(x).resolve(), sys.argv[1:4])
++out.mkdir(parents=True, exist_ok=True)
++config = json.loads((overlay / 'overlay.json').read_text())
++config['Replace'][str(repo / 'internal/lower/latent_shared_facts_test.go')] = str(repo / 'stage3/census/latent/shared_facts_test.go.txt')
++# The overlay cuts production Lower's body, and with it helpers lower's own tests call (lowerChecked and others), so
++# those tests no longer build under it. An empty replacement deletes a file from the build: only this test compiles.
++for production_test in sorted((repo / 'internal/lower').glob('*_test.go')):
++    config['Replace'][str(production_test)] = ''
++hook_key = str(repo / 'internal/lower/latent_hook.go')
++hook = Path(config['Replace'][hook_key]).read_text()
++tests = '^(TestLatentSharedFactsKeyedByProgramAndChecker|TestLatentSharedFactsTakeOnlyCleanUnits|TestLatentSwallowMarksTheUnit)$'
++
++
++def run(name, settings):
++    path = out / (name + '.json')
++    path.write_text(json.dumps(settings))
++    with (out / (name + '.log')).open('w') as log:
++        result = subprocess.run(['go', 'test', '-overlay=' + str(path), './internal/lower', '-timeout', '300s', '-run', tests, '-count=1', '-v'],
++                                cwd=repo, env=dict(os.environ), stdout=log, stderr=subprocess.STDOUT)
++    return result.returncode, (out / (name + '.log')).read_text()
++
++
++code, text = run('baseline', config)
++assert code == 0, text
++print('baseline: PASS')
++for name, needle, replacement, message in [
++    # Shares across a changed checker: the store is keyed by the program alone.
++    ('shares-across-checker-mutant',
++     'if shared.program != l.program || shared.checker != l.checker {\n\t\t*shared = latentSharedFacts{program: l.program, checker: l.checker}',
++     'if shared.program != l.program {\n\t\t*shared = latentSharedFacts{program: l.program, checker: l.checker}',
++     'a lowering of another checker was seeded with the first checker'),
++    # Takes from every unit, the panic path included.
++    ('takes-unclean-mutant', 'if !clean || shared.program != l.program', 'if shared.program != l.program', "an unclean unit's facts reached the store"),
++    # Seeds the store's own mode table, so a failed unit's mode reaches it.
++    ('shares-mode-table-mutant', 'l.predicateProofs = &predicateProofs{declarations: shared.proofs.declarations, modes: modes}',
++     'l.predicateProofs = shared.proofs', 'a mode an unclean unit added reached the store'),
++    # A swallowed registration panic leaves the unit clean.
++    ('swallow-unmarked-mutant', '\tif recover() != nil {\n\t\tlatentUnitRecovered = true\n\t}', '\t_ = recover()', 'a swallowed panic left its unit clean'),
++]:
++    assert hook.count(needle) == 1, (name, needle)
++    mutated = json.loads(json.dumps(config))
++    destination = out / (name + '.go')
++    destination.write_text(hook.replace(needle, replacement, 1))
++    mutated['Replace'][hook_key] = str(destination)
++    code, text = run(name, mutated)
++    assert code != 0 and message in text, (name, text[-2000:])
++    print(name + ': caught (' + message + ')')
+diff --git a/stage3/census/latent/lower.go.txt b/stage3/census/latent/lower.go.txt
+index 8adf68a1..62c299c4 100644
+--- a/stage3/census/latent/lower.go.txt
++++ b/stage3/census/latent/lower.go.txt
+@@ -6,6 +6,7 @@ import (
+ 	"errors"
+ 	"fmt"
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
++	"github.com/microsoft/TypeScript/tsc/shim/checker"
+ 	"github.com/system-inc/adamic/internal/ir"
+ 	"github.com/system-inc/adamic/internal/load"
+ 	"os"
+@@ -164,7 +165,7 @@ func (l *lowering) latentRegister(files []*ast.SourceFile) {
+ 			if node.Name() != nil {
+ 				l.classes[l.symbol(node.Name())] = node
+ 				func() {
+-					defer func() { _ = recover() }()
++					defer latentSwallow()
+ 					if l.needsStatics(node) {
+ 						if l.staticGlobals == nil {
+ 							l.staticGlobals = map[*ast.Symbol]int{}
+@@ -191,7 +192,7 @@ func (l *lowering) latentRegister(files []*ast.SourceFile) {
+ 					if ast.IsIdentifier(name) {
+ 						// Registration errors are contextual, not a finding in every unrelated unit.
+ 						func() {
+-							defer func() { _ = recover() }()
++							defer latentSwallow()
+ 							if local, err := l.declareLocal(name); err == nil {
+ 								l.result.Locals[local].Global = true
+ 							}
+@@ -230,6 +231,70 @@ func Latent(ctx context.Context, program *load.Program, emit func(LatentFile)) {
+     }
+ }
+ 
++// latentSharedFacts is one (program, checker) pair's predicate proofs (predicates_proof.go's predicateProofs) and
++// assigned symbols (predicates.go's assignedSymbols), shared by every lowering latentRun's first-error loop makes for
++// that pair (#pv935yw). Both are answers of the program's files and the checker alone: the proof's verifier reads the
++// checker, fieldLiteral, symbol, isPanicCall and enumTagHazardOf, and assignedSymbol reads l.symbol, which reads only
++// the checker. Of fresh()'s inputs, the program and its files hold still across statements: nothing in first-error
++// mode edits or excises source between them (statementrewrite and refusalrewrite rewrite the compiler's Go, not the
++// program; the overlay's Lower, which normalizes async code, never runs; lowering writes IR, never an ast.Node). The
++// checker can change per file, since latentRun takes it from program.Checker per file, so the store is keyed by both
++// pointers and starts empty when either differs: assignedSymbols' keys are the checker's own symbols, and a different
++// checker would miss silently. The entries memo stays per lowering, since its miss runs moduleOrder, which sets
++// cyclicModules on that lowering.
++//
++// A lowering's facts reach the store only when its unit returned normally and recovered no panic anywhere, the
++// registration's swallowed ones included (latentSwallow): assignedSymbol fills its map during its walk, so a walk a
++// panic cut short leaves a partial map that must never serve a later lowering. predicateFixedPoint stores the walk's
++// declarations and each mode only once they are complete, but takes the same rule. A seeded lowering gets the stored
++// assigned symbols as they are (assignedSymbol writes only into a nil map) and its own copy of the proofs' mode table,
++// so a mode a failed unit adds never reaches the store.
++type latentSharedFacts struct {
++	program  *load.Program
++	checker  *checker.Checker
++	proofs   *predicateProofs
++	assigned map[*ast.Symbol]bool
++}
++
++// latentUnitRecovered says the current unit recovered a panic, a swallowed one included.
++var latentUnitRecovered bool
++
++// latentSwallow is registration's recover: a registration error is no finding, but its unit is no longer clean.
++func latentSwallow() {
++	if recover() != nil {
++		latentUnitRecovered = true
++	}
++}
++
++// seed gives l the store's facts when l's program and checker are the store's, and empties the store when not.
++func (shared *latentSharedFacts) seed(l *lowering) {
++	if shared.program != l.program || shared.checker != l.checker {
++		*shared = latentSharedFacts{program: l.program, checker: l.checker}
++		return
++	}
++	if shared.proofs != nil {
++		modes := make(map[string]*predicateFixedPoint, len(shared.proofs.modes))
++		for field, point := range shared.proofs.modes {
++			modes[field] = point
++		}
++		l.predicateProofs = &predicateProofs{declarations: shared.proofs.declarations, modes: modes}
++	}
++	l.assignedSymbols = shared.assigned
++}
++
++// take keeps l's facts when its unit was clean and l's program and checker are still the store's.
++func (shared *latentSharedFacts) take(l *lowering, clean bool) {
++	if !clean || shared.program != l.program || shared.checker != l.checker {
++		return
++	}
++	if l.predicateProofs != nil {
++		shared.proofs = l.predicateProofs
++	}
++	if l.assignedSymbols != nil {
++		shared.assigned = l.assignedSymbols
++	}
++}
++
+ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)) {
+ 	if latentSpeculativeEnabled() {
+ 		latentSpeculative(ctx, program, emit)
+@@ -244,21 +309,30 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
+ 	// and a fresh lowering per statement, each registering every file's locals, re-walked all of the program's modules
+ 	// once a statement: 35% of the latent step's CPU on tsc's 79 files (#pv935yw).
+ 	identities := map[*ast.Node]ir.SourceIdentity{}
++	// One store of predicate proofs and assigned symbols serves every lowering of one (program, checker) pair, taken
++	// back only from a clean unit (latentSharedFacts).
++	shared := &latentSharedFacts{}
+ 	for _, file := range program.Files() {
+ 		latentFindings = nil
+ 		latentFindingOwner, latentFindingPhase = program.Where(file.AsNode()), "refusal_scan"
+ 		record := LatentFile{Measurement: LatentMeasurementLabel, File: program.FileName(file), Declarations: latentDeclarations(program, file), Units: []LatentUnit{}}
+ 		checker, release := program.Checker(ctx, file)
+ 		fresh := func() *lowering {
+-			return &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1, sourceIdentities: identities}
++			l := &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1, sourceIdentities: identities}
++			shared.seed(l)
++			return l
+ 		}
+ 		func() {
++			latentUnitRecovered = false
++			l := fresh()
+ 			defer func() {
+-				if failure := recover(); failure != nil {
++				failure := recover()
++				if failure != nil {
+ 					latentFindings = append(latentFindings, LatentFinding{Measurement: LatentMeasurementLabel, Unit: latentFindingOwner, Phase: latentFindingPhase, Kind: "panic", Where: program.Where(file.AsNode()), Reason: fmt.Sprint(failure), Text: fmt.Sprint(failure)})
+ 				}
++				shared.take(l, failure == nil && !latentUnitRecovered)
+ 			}()
+-			latentRecord(fresh().latentRefuse(file))
++			latentRecord(l.latentRefuse(file))
+ 		}()
+ 		for _, node := range file.Statements.Nodes {
+ 			latentFindingOwner, latentFindingPhase = program.Where(node), "lowering"
+@@ -287,13 +361,16 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
+ 				continue
+ 			}
+ 			func() {
++				latentUnitRecovered = false
++				l := fresh()
+ 				defer func() {
+-					if failure := recover(); failure != nil {
++					failure := recover()
++					if failure != nil {
+ 						unit.Status = "panic"
+ 						latentFindings = append(latentFindings, LatentFinding{Measurement: LatentMeasurementLabel, Unit: latentFindingOwner, Phase: latentFindingPhase, Kind: "panic", Where: program.Where(node), Reason: fmt.Sprint(failure), Text: fmt.Sprint(failure)})
+ 					}
++					shared.take(l, failure == nil && !latentUnitRecovered)
+ 				}()
+-				l := fresh()
+ 				l.noteInheritance(program.Files())
+ 				l.noteAccessorNames(program.Files())
+ 				l.latentRegister(program.Files())
+diff --git a/stage3/census/latent/make_overlay.py b/stage3/census/latent/make_overlay.py
+index 01b24abc..1c8b04ae 100644
+--- a/stage3/census/latent/make_overlay.py
++++ b/stage3/census/latent/make_overlay.py
+@@ -106,7 +106,7 @@ if (repository / 'internal/lower/enums.go').exists():
+     hook = hook.replace('// LATENT_ENUM_REGISTRATION', """case ast.KindEnumDeclaration:
+         if !ast.HasSyntacticModifier(node, ast.ModifierFlagsConst) {
+             func() {
+-                defer func() { _ = recover() }()
++                defer latentSwallow()
+                 if local, err := l.enumLocal(node); err == nil { l.result.Locals[local].Global = true }
+             }()
+         }""")
+diff --git a/stage3/census/latent/shared_facts_test.go.txt b/stage3/census/latent/shared_facts_test.go.txt
+new file mode 100644
+index 00000000..43057708
+--- /dev/null
++++ b/stage3/census/latent/shared_facts_test.go.txt
+@@ -0,0 +1,97 @@
++package lower
++
++import (
++	"github.com/microsoft/TypeScript/tsc/shim/ast"
++	"github.com/microsoft/TypeScript/tsc/shim/checker"
++	"github.com/system-inc/adamic/internal/load"
++	"testing"
++)
++
++// latentSharedFactsWitness is one lowering's facts: an assigned symbol and one proof mode.
++func latentSharedFactsWitness(program *load.Program, checker *checker.Checker) (*lowering, *ast.Symbol, *predicateFixedPoint) {
++	symbol := &ast.Symbol{}
++	point := &predicateFixedPoint{}
++	l := &lowering{program: program, checker: checker}
++	l.assignedSymbols = map[*ast.Symbol]bool{symbol: true}
++	l.predicateProofs = &predicateProofs{modes: map[string]*predicateFixedPoint{"": point}}
++	return l, symbol, point
++}
++
++// The store serves a lowering only under the (program, checker) pair its facts came from, and empties when either
++// pointer changes, so a later lowering under the first pair again recomputes instead of reading facts a different
++// checker's lowering could have left.
++func TestLatentSharedFactsKeyedByProgramAndChecker(t *testing.T) {
++	program, other := new(load.Program), new(load.Program)
++	first, second := new(checker.Checker), new(checker.Checker)
++	shared := &latentSharedFacts{}
++	shared.seed(&lowering{program: program, checker: first})
++	source, symbol, point := latentSharedFactsWitness(program, first)
++	shared.take(source, true)
++
++	same := &lowering{program: program, checker: first}
++	shared.seed(same)
++	if !same.assignedSymbols[symbol] || same.predicateProofs == nil || same.predicateProofs.modes[""] != point {
++		t.Fatal("a lowering of the same program and checker was not seeded")
++	}
++
++	changed := &lowering{program: program, checker: second}
++	shared.seed(changed)
++	if changed.assignedSymbols != nil || changed.predicateProofs != nil {
++		t.Fatal("a lowering of another checker was seeded with the first checker's facts")
++	}
++	back := &lowering{program: program, checker: first}
++	shared.seed(back)
++	if back.assignedSymbols != nil || back.predicateProofs != nil {
++		t.Fatal("the store kept facts across a checker change")
++	}
++
++	shared.take(source, true)
++	elsewhere := &lowering{program: other, checker: first}
++	shared.seed(elsewhere)
++	if elsewhere.assignedSymbols != nil || elsewhere.predicateProofs != nil {
++		t.Fatal("a lowering of another program was seeded")
++	}
++}
++
++// Only a clean unit's facts reach the store: a unit that recovered a panic may hold a partial assigned-symbol map, and a
++// proof mode a seeded lowering adds stays its own until its unit is clean.
++func TestLatentSharedFactsTakeOnlyCleanUnits(t *testing.T) {
++	program := new(load.Program)
++	first := new(checker.Checker)
++	shared := &latentSharedFacts{}
++	shared.seed(&lowering{program: program, checker: first})
++	partial, _, _ := latentSharedFactsWitness(program, first)
++	shared.take(partial, false)
++	if shared.assigned != nil || shared.proofs != nil {
++		t.Fatal("an unclean unit's facts reached the store")
++	}
++
++	source, _, _ := latentSharedFactsWitness(program, first)
++	shared.take(source, true)
++	seeded := &lowering{program: program, checker: first}
++	shared.seed(seeded)
++	seeded.predicateProofs.modes["kind"] = &predicateFixedPoint{}
++	shared.take(seeded, false)
++	if _, found := shared.proofs.modes["kind"]; found {
++		t.Fatal("a mode an unclean unit added reached the store")
++	}
++}
++
++// Registration swallows its panics, but the unit they happen in is no longer clean.
++func TestLatentSwallowMarksTheUnit(t *testing.T) {
++	latentUnitRecovered = false
++	func() {
++		defer latentSwallow()
++		panic("registration")
++	}()
++	if !latentUnitRecovered {
++		t.Fatal("a swallowed panic left its unit clean")
++	}
++	latentUnitRecovered = false
++	func() {
++		defer latentSwallow()
++	}()
++	if latentUnitRecovered {
++		t.Fatal("a unit with no panic was marked")
++	}
++}

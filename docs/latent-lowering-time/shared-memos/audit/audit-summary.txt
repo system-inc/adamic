@@ -1,0 +1,5 @@
+baseline: PASS
+shares-across-checker-mutant: caught (a lowering of another checker was seeded with the first checker)
+takes-unclean-mutant: caught (an unclean unit's facts reached the store)
+shares-mode-table-mutant: caught (a mode an unclean unit added reached the store)
+swallow-unmarked-mutant: caught (a swallowed panic left its unit clean)
