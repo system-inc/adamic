@@ -28,6 +28,12 @@ func TestGenericVoidReadsAreRefused(t *testing.T) {
 		{"nested", "function inner<U>(ys: U[]): string { return ys.join(','); }\nfunction outer<T>(xs: T[]): string { return inner(xs); }\nconsole.log(outer(all));", "through join"},
 		// Lower's condition 2: T reaches the signature only through an object, which inferTypes doesn't walk.
 		{"unmapped", "function showItems<T>(box: { items: T[] }): string { return box.items.join(','); }\nconsole.log(showItems({ items: all }));", "through join"},
+		// Lower's review: ??= reads its target, and Node never calls fail, since each x holds 1 or 2.
+		{"logical assignment target", "function fail(): never { throw new Error('read'); }\nfunction fill<T>(xs: T[]): number { let n = 0; for (let x of xs) { x ??= (n++, fail()); } return n; }\nconsole.log(`${fill(all)}`);", "as the target of ??="},
+		// Lower's review: T reaches the signature only through a callback's result.
+		{"unmapped through a result", "const make: () => void = () => 42;\nfunction called<T>(box: { make: () => T }): boolean { return box.make() === undefined; }\nconsole.log(`${called({ make })}`);", "as an operand of ==="},
+		// Lower's review: a base class's body is judged at its own instantiation.
+		{"base class", "class Bag<T> { constructor(readonly items: T[]) {} joined(): string { return this.items.join(','); } }\nclass Sub<T> extends Bag<T> {}\nconst sub = new Sub(all); console.log(`${sub.items.length}`);", "through join"},
 		// Lower's condition 4, and Compiler's: a generic class at void whose body reads T refuses at new.
 		{"generic class", "class Bag<T> { constructor(readonly items: T[]) { console.log(this.items.join(',')); } }\nconst bag = new Bag(all); console.log(`${bag.items.length}`);", "through join"},
 	} {
@@ -81,5 +87,22 @@ func TestGenericVoidAsValueStops(t *testing.T) {
 				}
 			})
 		}
+	}
+}
+
+// A method of a generic class at void stays refused at its call (Adamic, on #p7t8tmh), and the message
+// says what holds the void and where the method reads it, so no reader goes looking for a container.
+func TestGenericVoidMethodSaysWhereItReads(t *testing.T) {
+	t.Parallel()
+	source := voidContainerMark + "\nconst tick: () => void = () => 1;\nclass Cell<T> { constructor(private readonly f: () => T) {} show(): string { return `${this.f()}`; } }\nconsole.log(new Cell(tick).show());"
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerVoidProbe(t, extension, source)
+			var refused *Refused
+			if !errors.As(err, &refused) || !strings.Contains(refused.What, "through show: Cell<void> holds void in its type argument 1 (void), and show reads it at ") || !strings.HasSuffix(refused.What, "as a template literal part") {
+				t.Fatalf("want show refused naming what holds the void and where show reads it, got %v", err)
+			}
+		})
 	}
 }

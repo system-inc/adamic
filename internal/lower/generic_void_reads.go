@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"fmt"
 	"sort"
 	"strings"
 
@@ -24,6 +25,9 @@ import (
 func (l *lowering) refuseGenericVoidReads(where, declaration *ast.Node, bound map[*checker.Type]*checker.Type, target, resolved *checker.Signature) error {
 	voidBound := map[*checker.Type]bool{}
 	names := []string{}
+	// The memo keys on each binding's type itself, never its rendering: two types that print alike
+	// (a local Box in each of two modules) are judged apart.
+	identities := []string{}
 	unmapped := false
 	for _, parameter := range declaration.TypeParameters() {
 		parameterType := l.checker.GetTypeAtLocation(parameter.Name())
@@ -41,6 +45,7 @@ func (l *lowering) refuseGenericVoidReads(where, declaration *ast.Node, bound ma
 			continue
 		}
 		names = append(names, parameter.Name().Text()+" = "+l.checker.TypeToString(concrete))
+		identities = append(identities, parameter.Name().Text()+"="+fmt.Sprintf("%p", concrete))
 	}
 	if unmapped && l.signatureReachesVoid(target, resolved) {
 		// A type parameter not read back (it stands only inside an object, { items: T[] }) is taken to
@@ -51,6 +56,7 @@ func (l *lowering) refuseGenericVoidReads(where, declaration *ast.Node, bound ma
 			if concrete, known := bound[parameterType]; !known || concrete == nil {
 				voidBound[parameterType] = true
 				names = append(names, parameter.Name().Text()+" = void (read from the signature)")
+				identities = append(identities, parameter.Name().Text()+"=unmapped")
 			}
 		}
 	}
@@ -58,7 +64,8 @@ func (l *lowering) refuseGenericVoidReads(where, declaration *ast.Node, bound ma
 		return nil
 	}
 	sort.Strings(names)
-	key := l.program.Where(declaration) + ";" + strings.Join(names, ";")
+	sort.Strings(identities)
+	key := l.program.Where(declaration) + ";" + strings.Join(identities, ";")
 	if verdict, judged := l.genericVoidVerdicts[key]; judged {
 		return verdict
 	}
@@ -88,7 +95,7 @@ func (l *lowering) signatureReachesVoid(target, resolved *checker.Signature) boo
 		return true // Nothing to read back: fail closed.
 	}
 	reaches := func(declared, given *checker.Type) bool {
-		return declared != given && given != nil && (given.Flags() == checker.TypeFlagsVoid || l.holdsVoid(l.concrete(given)))
+		return declared != given && given != nil && l.voidAnywhere(l.concrete(given), 0, map[*checker.Type]bool{})
 	}
 	declared, given := target.Parameters(), resolved.Parameters()
 	for index := range declared {
@@ -122,7 +129,21 @@ func (l *lowering) genericVoidRead(declaration *ast.Node) (*ast.Node, string) {
 // genericVoidUse judges one node in a body where type parameters are bound to void: a void value by
 // voidValueUse, a container holding void by the classifier's own rule.
 func (l *lowering) genericVoidUse(node *ast.Node) string {
-	if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) || ast.IsDeclarationName(node) || ast.IsAssignmentTarget(node) {
+	if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) || ast.IsDeclarationName(node) {
+		return ""
+	}
+	if node.Kind == ast.KindExpressionWithTypeArguments {
+		return "" // A heritage clause names a type, and holds no value.
+	}
+	if ast.IsAssignmentTarget(node) {
+		// ??=, ||= and &&= read their target before they decide to write it (Lower, on #p7t8tmh).
+		site := node
+		for site.Parent != nil && site.Parent.Kind == ast.KindParenthesizedExpression {
+			site = site.Parent
+		}
+		if parent := site.Parent; parent != nil && parent.Kind == ast.KindBinaryExpression && parent.AsBinaryExpression().Left == site && logicalAssignment(parent.AsBinaryExpression().OperatorToken.Kind) && l.isVoidValue(l.checker.GetTypeAtLocation(node)) {
+			return "as the target of " + scanner.TokenToString(parent.AsBinaryExpression().OperatorToken.Kind)
+		}
 		return ""
 	}
 	if node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.AsPropertyAccessExpression().Name() == node {
@@ -253,4 +274,57 @@ func (l *lowering) genericVoidBinding(declaration *ast.Node, typeArguments []*ch
 		}
 	}
 	return bound
+}
+
+// voidAnywhere is whether void appears anywhere in t: at a position holdsVoid walks, and also in a
+// signature's parameters and result, where holdsVoid doesn't look. Only the unmapped fallback asks:
+// `{ make: () => T }` resolved to `{ make: () => void }` hands the body a T through a call (Lower, on
+// #p7t8tmh), and a parameter that can't be read back is judged as void when this says so.
+func (l *lowering) voidAnywhere(t *checker.Type, depth int, seen map[*checker.Type]bool) bool {
+	if t == nil || seen[t] {
+		return false
+	}
+	if t.Flags() == checker.TypeFlagsVoid || depth >= 32 {
+		return true // Past the depth bound it fails closed.
+	}
+	seen[t] = true
+	if t.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		for _, member := range t.Types() {
+			if l.voidAnywhere(member, depth+1, seen) {
+				return true
+			}
+		}
+		return false
+	}
+	if t.Flags()&checker.TypeFlagsObject == 0 {
+		return false
+	}
+	if l.holdsVoid(t) {
+		return true
+	}
+	if t.ObjectFlags()&checker.ObjectFlagsReference != 0 && t.Target() != nil {
+		for _, argument := range l.checker.GetTypeArguments(t) {
+			if l.voidAnywhere(argument, depth+1, seen) {
+				return true
+			}
+		}
+	}
+	for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
+		for _, signature := range l.checker.GetSignaturesOfType(t, kind) {
+			if l.voidAnywhere(l.checker.GetReturnTypeOfSignature(signature), depth+1, seen) {
+				return true
+			}
+			for _, parameter := range signature.Parameters() {
+				if l.voidAnywhere(l.checker.GetTypeOfSymbol(parameter), depth+1, seen) {
+					return true
+				}
+			}
+		}
+	}
+	for _, property := range l.checker.GetPropertiesOfType(t) {
+		if l.voidAnywhere(l.checker.GetTypeOfSymbol(property), depth+1, seen) {
+			return true
+		}
+	}
+	return false
 }
