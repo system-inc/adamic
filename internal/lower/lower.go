@@ -227,6 +227,8 @@ type lowering struct {
 	// cyclicModules keeps unresolved reads checked throughout a cyclic graph.
 	cyclicModules     bool
 	provenModuleReads map[*ast.Node]bool
+	// assignedSymbols is every symbol an identifier in the program assigns to (predicates.go's assignedSymbol).
+	assignedSymbols map[*ast.Symbol]bool
 
 	// predicateFalse is the false-direction walk's switch and memo (predicate_false_flow.go).
 	predicateFalse *predicateFalseFlow
