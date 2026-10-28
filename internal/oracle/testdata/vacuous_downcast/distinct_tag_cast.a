@@ -1,0 +1,8 @@
+// A downcast whose tag test a source value can fail: every Base has kind 'Holder' or 'Viewed', and
+// Viewed declares 'Viewed' alone, so the cast's test tells them apart and .a admits it.
+interface Base { readonly kind: 'Holder' | 'Viewed'; }
+interface Viewed extends Base { readonly kind: 'Viewed'; count: number; }
+const raw = { kind: 'Viewed' as const, count: 4 };
+const base: Base = raw;
+const viewed = base as Viewed;
+console.log(`viewed ${viewed.count + 1}`);

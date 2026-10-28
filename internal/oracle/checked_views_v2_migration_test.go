@@ -32,16 +32,18 @@ func TestCheckedViewV2ReadsAfterWrites(t *testing.T) {
 	}
 }
 
+// In .a the cast is refused first, since its tag test, kind === 'Holder', is one every Root passes (#q97a1rr); its .ts
+// twin keeps the cast a checked view and stops at the V3 arm.
 func TestCheckedViewV2ArrayArmBoundary(t *testing.T) {
 	t.Parallel()
 	path, _ := filepath.Abs("../../stage3/interface-downcasts/v2/array-arm.a")
-	loaded, err := load.Load([]string{path})
-	if err != nil {
-		t.Fatal(err)
+	_, err := lowered(t, path)
+	if refused, ok := err.(*lower.Refused); !ok || !strings.Contains(refused.What, "a downcast to View whose tag test is vacuous") {
+		t.Fatalf("expected the vacuous downcast refusal, got %v", err)
 	}
-	_, err = lower.Lower(context.Background(), loaded)
+	_, err = lowered(t, typeScriptTwin(t, path))
 	if unsupported, ok := err.(*lower.NotYet); !ok || !strings.Contains(unsupported.What, "views-v3: array element kind") {
-		t.Fatalf("expected named V3 arm, got %v", err)
+		t.Fatalf("twin: expected named V3 arm, got %v", err)
 	}
 	if got := onNode(t, path); got.exitCode != 0 {
 		t.Fatalf("Node: %#v", got)

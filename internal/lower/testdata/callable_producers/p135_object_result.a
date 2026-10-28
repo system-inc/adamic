@@ -1,4 +1,4 @@
-// a-check: refused a checked callable producer assignable to more than one union member
+// a-check: refused a downcast to Receiver whose tag test is vacuous
 type Target = (() => void) | ((value: number) => void);
 interface Receiver { readonly kind: 'Receiver'; readonly value: Target; }
 const raw = { kind: 'Receiver' as const, value: () => ({ value: 1 }) };
