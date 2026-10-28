@@ -60,7 +60,7 @@ func TestCheckedViewOptionalReadBoundary(t *testing.T) {
 			if !errors.As(err, &notYet) {
 				t.Fatalf("want optional checked-read NotYet, got %v", err)
 			}
-			expected := checked + ":9:13: stage 0 can't lower a checked field alias requiring an optional, accessor, or representation conversion yet"
+			expected := checked + ":9:13: stage 0 can't lower a checked field alias of an optional field or through ?. yet"
 			if strings.TrimSpace(err.Error()) != expected {
 				t.Fatalf("boundary diagnostic: got %q, want %q", err, expected)
 			}
