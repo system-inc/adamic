@@ -4,7 +4,6 @@ import (
 	"context"
 	"debug/elf"
 	"debug/macho"
-	"os"
 	"os/exec"
 	"path/filepath"
 	"slices"
@@ -26,6 +25,17 @@ func TestBuildDebugFlag(t *testing.T) {
 			debug := slices.Contains(arguments, "--debug")
 			if options.Debug != debug || strings.Contains(source, "#line") != debug {
 				t.Fatalf("%v: options=%+v markers=%t", arguments, options, strings.Contains(source, "#line"))
+			}
+			wantDirectory := ""
+			if debug {
+				entry, err := filepath.Abs(path)
+				if err != nil {
+					t.Fatal(err)
+				}
+				wantDirectory = filepath.Dir(entry)
+			}
+			if options.DebugDirectory != wantDirectory {
+				t.Fatalf("debug directory=%q, want %q", options.DebugDirectory, wantDirectory)
 			}
 			if debug && !slices.Contains(native.Flags(options), "-g") {
 				t.Fatal("--debug lost -g")
