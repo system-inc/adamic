@@ -1,0 +1,11 @@
+{
+  "Name": "narrowed-object-kinds",
+  "Test": "TestNarrowedUnionTypedArrayTag",
+  "Mutation": "In internal/lower/locals.go's localRead, put back the old list: stop only for a member held as Object, Array, Map or Record unlike the narrowed member, which is chg_zh1qagtg's line again.",
+  "Command": "go test -p 1 -count=1 -timeout 30m ./internal/oracle -run '^TestNarrowedUnionTypedArrayTag$' -v",
+  "Runner": "ADAMIC_NARROWED_OBJECT_KINDS_MUTANT=1 go test -p 1 -count=1 -timeout 30m ./internal/oracle -run '^TestNarrowedUnionTypedArrayTag$' -v",
+  "Diagnostic": "narrowed_union_object_kinds_test.go:48: want the object-tag NotYet at the narrowing, got <nil>",
+  "ExpectedStdout": "undefined\n",
+  "MutantStdout": "0\n",
+  "ObservedOutput": "mutant admits it: native exit 0, stdout \"0\\n\", stderr \"\" where Node prints \"undefined\\n\"; mutant admits it: release exit 0, stdout \"0\\n\", stderr \"\" where Node prints \"undefined\\n\""
+}
