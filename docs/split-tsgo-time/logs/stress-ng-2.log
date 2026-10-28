@@ -1,0 +1,3 @@
+stress-ng: info:  [13349] setting to a 10 mins, 0 secs run per stressor
+stress-ng: info:  [13349] dispatching hogs: 8 cpu
+stress-ng: info:  [13349] note: /proc/sys/kernel/sched_autogroup_enabled is 1 and this can impact scheduling throughput for processes not attached to a tty. Setting this to 0 may improve performance metrics
