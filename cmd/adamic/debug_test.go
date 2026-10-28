@@ -4,7 +4,6 @@ import (
 	"context"
 	"debug/elf"
 	"debug/macho"
-	"os"
 	"os/exec"
 	"path/filepath"
 	"slices"
@@ -13,6 +12,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 func TestBuildDebugFlag(t *testing.T) {
@@ -26,6 +26,17 @@ func TestBuildDebugFlag(t *testing.T) {
 			if options.Debug != debug || strings.Contains(source, "#line") != debug {
 				t.Fatalf("%v: options=%+v markers=%t", arguments, options, strings.Contains(source, "#line"))
 			}
+			wantDirectory := ""
+			if debug {
+				entry, err := filepath.Abs(path)
+				if err != nil {
+					t.Fatal(err)
+				}
+				wantDirectory = filepath.Dir(entry)
+			}
+			if options.DebugDirectory != wantDirectory {
+				t.Fatalf("debug directory=%q, want %q", options.DebugDirectory, wantDirectory)
+			}
 			if debug && !slices.Contains(native.Flags(options), "-g") {
 				t.Fatal("--debug lost -g")
 			}
@@ -37,16 +48,14 @@ func TestBuildDebugFlag(t *testing.T) {
 	}
 }
 
-// Re-exec the linked command, as the compiler-bug driver does. Its runtime
-// supplier finds the archive built ahead; this unit never starts the Go compiler.
+// The subprocess is the shipped command, without the test binary's runtime supplier.
 func TestBuildDebugBinary(t *testing.T) {
 	t.Parallel()
 	path := requestSource(t, "function f(n: number): number { return n + 1; }\nconsole.log((f(3)).toString());\n")
 	binary := filepath.Join(t.TempDir(), "program")
-	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 120*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestBuildDebugDriver$", "--", "build", path, "-o", binary, "--debug")
-	command.Env = append(os.Environ(), "ADAMIC_BUILD_DEBUG_DRIVER=1")
+	command := toolchain.CommandContextIn(ctx, ".", "go", "run", ".", "build", path, "-o", binary, "--debug")
 	if output, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("build --debug: %v: %s", err, output)
 	}
@@ -69,17 +78,4 @@ func TestBuildDebugBinary(t *testing.T) {
 	if err != nil || string(output) != "4\n" {
 		t.Fatalf("run: %v: %q", err, output)
 	}
-}
-
-// Not parallel: the driver exits its own process through the real command.
-func TestBuildDebugDriver(t *testing.T) {
-	if os.Getenv("ADAMIC_BUILD_DEBUG_DRIVER") != "1" {
-		return
-	}
-	for index, argument := range os.Args {
-		if argument == "--" {
-			os.Exit(run(os.Args[index+1:]))
-		}
-	}
-	t.Fatal("missing driver arguments")
 }

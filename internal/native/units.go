@@ -341,7 +341,7 @@ func splitC(source string) (string, []compilationUnit, error) {
 	}
 	units = append([]compilationUnit{{"state.c", state.String()}}, groups...)
 	for i := range units {
-		units[i].source = resolveSourceLines("#include \"units.h\"\n"+units[i].source, units[i].name)
+		units[i].source = resolveSourceLines("#include \"units.h\"\n"+units[i].source, "/adamic-units/"+units[i].name)
 	}
 	return header.String(), units, nil
 }
@@ -569,7 +569,7 @@ func compileUnitObject(unit compilationUnit, common []runtimeFile, flags []strin
 			return nil, 0, err
 		}
 	}
-	command := clangIn(temporary, compiler, append(slices.Clone(flags), unitCompileArguments(unit.name, temporary)...)...)
+	command := clangIn(temporary, compiler, append(slices.Clone(flags), unitCompileArguments(unit.name, temporary, flags)...)...)
 	// The environment the key read, with the directory CommandIn names as the compile's own.
 	working := []string{}
 	for _, setting := range command.Env {
@@ -688,7 +688,7 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	}
 	// A unit includes units.h, and through it adamic.h, before any of the program's own #defines
 	// (the checker build puts tsgo_runtime.h first), so its features come as flags.
-	flags := sourceFlags(source, options)
+	flags := append(sourceFlags(source, options), programDebugFlags(options)...)
 	// The units' key is read once, before any of them compiles: a build the key can't account for, or one the cache is
 	// off for, compiles every unit uncached and says why.
 	var keying *unitKeying
