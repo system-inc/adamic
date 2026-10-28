@@ -287,6 +287,30 @@ func (l *lowering) checkedPredicateTagDomainSeen(source, target *checker.Type, p
 	return true
 }
 
+// A direct predicate call names the declaration itself, through a bare name or a
+// namespace/module binding. A structural value with the same member is not that
+// binding; its predicate keeps the check carried by functionValue's forwarder.
+func (l *lowering) directPredicateCallee(callee, declaration *ast.Node) bool {
+	if declaration == nil || declaration.Kind != ast.KindFunctionDeclaration || declaration.Name() == nil {
+		return false
+	}
+	callee = ast.SkipParentheses(callee)
+	switch callee.Kind {
+	case ast.KindIdentifier:
+	case ast.KindPropertyAccessExpression:
+		object := l.symbol(ast.SkipParentheses(callee.Expression()))
+		if object == nil || object.Flags&ast.SymbolFlagsModule == 0 || object.Flags&(ast.SymbolFlagsValue & ^ast.SymbolFlagsModule) != 0 {
+			return false
+		}
+	default:
+		return false
+	}
+	// symbol follows import and re-export aliases with GetAliasedSymbol and maps
+	// the local declaration to its export symbol, on both sides of the comparison.
+	symbol := l.symbol(callee)
+	return symbol != nil && symbol == l.symbol(declaration.Name())
+}
+
 func (l *lowering) checkedPredicateResult(call *ast.CallExpression, value ir.Expression, implementation, declaration *ast.Node) (ir.Expression, error) {
 	resolved := l.checker.GetResolvedSignature(call.AsNode())
 	if resolved == nil {
@@ -367,7 +391,7 @@ func (l *lowering) checkedPredicateResult(call *ast.CallExpression, value ir.Exp
 		}
 	}
 	invoked, ok := value.(ir.Call)
-	if !ok {
+	if !ok || !l.directPredicateCallee(call.Expression, declaration) {
 		return nil, l.notYet(call.AsNode(), "an indirect call of a checked predicate")
 	}
 	if index < 0 || index >= len(invoked.Arguments) {

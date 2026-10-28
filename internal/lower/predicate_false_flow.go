@@ -123,8 +123,8 @@ func (f *predicateFalseFlow) escapes() bool {
 }
 
 // escapingReference is whether identifier names a checked predicate declaration as a value. A
-// shorthand property `{ isS }` stores it; a name read off a namespace, `ns.isS`, is a reference
-// whose callee isn't an identifier, so it's no direct call either.
+// shorthand property `{ isS }` stores it; a qualified namespace/module call names the
+// declaration directly, but a reference stored or passed onward is still a value.
 func (f *predicateFalseFlow) escapingReference(identifier *ast.Node) bool {
 	parent := identifier.Parent
 	var symbol *ast.Symbol
@@ -159,7 +159,12 @@ func (f *predicateFalseFlow) escapingReference(identifier *ast.Node) bool {
 	for callee.Parent != nil && callee.Parent.Kind == ast.KindParenthesizedExpression {
 		callee = callee.Parent
 	}
-	direct := reference.Kind == ast.KindIdentifier && callee.Parent != nil && callee.Parent.Kind == ast.KindCallExpression && callee.Parent.AsCallExpression().Expression == callee
+	direct := false
+	if callee.Parent != nil && callee.Parent.Kind == ast.KindCallExpression && callee.Parent.AsCallExpression().Expression == callee {
+		for _, declaration := range symbol.Declarations {
+			direct = direct || f.l.directPredicateCallee(reference, declaration)
+		}
+	}
 	return parent.Kind == ast.KindShorthandPropertyAssignment || !direct
 }
 
@@ -193,15 +198,28 @@ func (f *predicateFalseFlow) carrier(node *ast.Node) bool {
 		if ast.IsPartOfTypeNode(node) || ast.IsDeclarationName(node) || !ast.IsExpressionNode(node) {
 			return false
 		}
-		callee := node
-		for callee.Parent != nil && callee.Parent.Kind == ast.KindParenthesizedExpression {
-			callee = callee.Parent
+		// The whole property expression owns this reference's type. Visiting its
+		// name again would count even a direct namespace call as a value escape.
+		if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.Name() == node {
+			return false
 		}
-		return callee.Parent == nil || callee.Parent.Kind != ast.KindCallExpression || callee.Parent.AsCallExpression().Expression != callee
 	case ast.KindPropertyAccessExpression, ast.KindElementAccessExpression, ast.KindCallExpression:
-		return !ast.IsPartOfTypeNode(node)
+		if ast.IsPartOfTypeNode(node) {
+			return false
+		}
+	default:
+		return false
 	}
-	return false
+	callee := node
+	for callee.Parent != nil && callee.Parent.Kind == ast.KindParenthesizedExpression {
+		callee = callee.Parent
+	}
+	if call := callee.Parent; call != nil && call.Kind == ast.KindCallExpression && call.Expression() == callee {
+		if signature := f.l.checker.GetResolvedSignature(call); signature != nil && f.l.directPredicateCallee(node, signature.Declaration()) {
+			return false
+		}
+	}
+	return true
 }
 
 // carries is whether a value of type t can be a checked predicate: one of its call signatures, or a
@@ -533,7 +551,7 @@ func (f *predicateFalseFlow) valueCall(call *ast.Node, truth predicateTruth) *as
 	if call.Kind == ast.KindCallExpression {
 		declaration := signature.Declaration()
 		callee := ast.SkipParentheses(call.AsCallExpression().Expression)
-		if declaration != nil && declaration.Kind == ast.KindFunctionDeclaration && declaration.Name() != nil && ast.IsIdentifier(callee) && f.l.symbol(callee) == f.l.symbol(declaration.Name()) {
+		if f.l.directPredicateCallee(callee, declaration) {
 			return nil
 		}
 		if f.libraryCall(call, callee, declaration) {

@@ -1,0 +1,2 @@
+namespace N { export function f(): boolean { return true; } }
+N.f = () => false;
