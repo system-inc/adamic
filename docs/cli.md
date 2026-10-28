@@ -131,14 +131,14 @@ panics inside `native.Build`, and sees 4 (`cmd/adamic/compiler_bug_test.go`).
 | SIGABRT | an internal async-loop failure | `internal/native/runtime/async.c:171`, `internal/native/runtime/async_host_impl.h` |
 | the sanitizers' own | under `--sanitize`, ASan and UBSan exit with their defaults; nothing sets `ASAN_OPTIONS` for a user build | `internal/native/native.go:Flags` |
 
-70 is EX_SOFTWARE (`internal/native/runtime/adamic.h:1438`). `process.exit` isn't lowered: any Node
-member not registered is `NotYet` (`internal/lower/library_node.go:implementedNodeMembers,lowering.nodeLibraryRefusal`), so a program
-calling it doesn't build. A `--count` imbalance never changes the exit code; the counts line is for
+70 is EX_SOFTWARE (`internal/native/runtime/adamic.h:1438`). `process.exit` and `process.exitCode`
+use Node-compatible status validation (`internal/lower/process.go:lowering.processValue`,
+`internal/native/runtime/process.c:59-70`). A `--count` imbalance never changes the exit code; the counts line is for
 the test harness to judge (`internal/leakcheck/leakcheck.go:Unbalanced`).
 
 `adamic js` output panics the same way, `adamic: panic: <message>` and 70, but only where its
 `'adamic'` import resolves to `oracle/adamic.mjs` (`internal/javascript/javascript.go:JavaScriptWith`,
-`oracle/adamic.mjs:10-34`), which only the oracle's loader arranges (`oracle/node.mjs`). Under plain
+`oracle/adamic.mjs:34-55`), which only the oracle's loader arranges (`oracle/node.mjs`). Under plain
 `node` the import doesn't resolve.
 
 A wasm32-wasi panic leaves through the same `_exit(70)` (`internal/native/runtime/adamic.c:334-343`);
