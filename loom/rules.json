@@ -1,6 +1,7 @@
 {
   "blocks": { "on": true, "budget": 1, "depth": 2, "builders": ["Adam", "Eve"] },
   "restack": { "on": true },
-  "first": ["chg_eqmvp7ahnp3vr9s1je9p68jnz4"],
-  "door": { "heavy": 1000, "pacedAfter": 2, "waiting": 10, "files": 400, "censusWithin": 15 }
+  "first": [],
+  "door": { "heavy": 1000, "pacedAfter": 2, "waiting": 10, "files": 400, "censusWithin": 15 },
+  "witness": { "every": 10, "hours": 168, "machines": ["Home-f3279c"] }
 }
