@@ -144,8 +144,10 @@ func (l *lowering) voidContainerUse(node *ast.Node, source *checker.Type) string
 		}
 		return "as a for...of source bound to an existing name or a pattern"
 	case ast.KindCallExpression, ast.KindNewExpression:
-		if parent.Kind == ast.KindCallExpression && parent.AsCallExpression().Expression == site {
-			break
+		if parent.Kind == ast.KindCallExpression && parent.AsCallExpression().Expression == site || parent.Kind == ast.KindNewExpression && parent.AsNewExpression().Expression == site {
+			// Calling or constructing reads none of the callee's own fields; its body is judged
+			// where it's written.
+			return ""
 		}
 		return l.voidContainerSlot(source, l.argumentSlot(parent, site), "an argument")
 	case ast.KindSpreadElement, ast.KindSpreadAssignment:
@@ -293,8 +295,9 @@ func (l *lowering) argumentSlot(call, argument *ast.Node) *checker.Type {
 }
 
 // holdsVoid is whether a value of type holds void at a position: an element, a type argument, a
-// property or an index signature, at any depth. A function's return isn't a position (calling one is
-// H2's), and neither is a member of a union: void | X is the union ruling's. A primitive brand
+// property or an index signature, at any depth, and a type parameter holds what its constraint
+// holds. A function's return isn't a position (calling one is H2's), and neither is a member of a
+// union: void | X is the union ruling's. A primitive brand
 // (`string & { __escapedIdentifier: void }`) holds nothing, since a primitive has no own property.
 func (l *lowering) holdsVoid(t *checker.Type) bool {
 	if held, known := l.voidHolders[t]; known {
@@ -347,6 +350,12 @@ func (l *lowering) holdsVoidWalk(t *checker.Type, visited map[*checker.Type]bool
 			}
 		}
 		return false
+	case t.Flags()&checker.TypeFlagsTypeParameter != 0:
+		// A type parameter holds what its constraint holds. this is one, the class's polymorphic this
+		// type, constrained by the instance type: in a class whose field holds void, this holds it
+		// too, so JSON.stringify(this) in a constructor is judged as the instance would be (Lower, on
+		// #p7t8tmh). A T extends void[] really is a holder at every instantiation.
+		return l.holdsVoidWalk(l.checker.GetBaseConstraintOfType(t), visited)
 	case t.Flags()&checker.TypeFlagsObject == 0:
 		return false
 	}
@@ -362,9 +371,11 @@ func (l *lowering) holdsVoidWalk(t *checker.Type, visited map[*checker.Type]bool
 			return true
 		}
 	}
+	constructs := len(l.checker.GetSignaturesOfType(t, checker.SignatureKindConstruct)) > 0
 	for _, property := range l.checker.GetPropertiesOfType(t) {
-		// A method's type is a function, and a function's return isn't a position.
-		if property.Flags&ast.SymbolFlagsMethod == 0 && position(l.checker.GetTypeOfSymbol(property)) {
+		// A method's type is a function, and a function's return isn't a position. A class's
+		// prototype is typed as an instance but holds no field's value: fields live on instances.
+		if property.Flags&ast.SymbolFlagsMethod == 0 && !(constructs && property.Name == "prototype") && position(l.checker.GetTypeOfSymbol(property)) {
 			return true
 		}
 	}

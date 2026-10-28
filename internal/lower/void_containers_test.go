@@ -94,12 +94,73 @@ func TestVoidContainerMovesStayLegal(t *testing.T) {
 		{"field length", "console.log(`${box.items.length}`);"},
 		{"loop without a read", "let n = 0; for (const x of all) { n += 1; } console.log(`${n}`);"},
 		{"forEach without a read", "let n = 0; all.forEach((x) => { n += 1; }); console.log(`${n}`);"},
+		{"constructed", "class Box { constructor(public items: void[]) {} }\nconst made = new Box(all); console.log(`${made.items.length}`);"},
+		{"constructed with a static holder", "class Box { static spare: void[] = []; constructor(public items: void[]) {} }\nconst made = new Box(all); console.log(`${made.items.length}`);"},
 		{"pop discarded", "const copy: void[] = all.slice(); copy.pop(); console.log(`${copy.length}`);"},
 		{"push undefined", "const more: void[] = []; more.push(undefined); console.log(`${more.length}`);"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			lowersAndAgreesWithNode(t, voidContainerMark+"\n"+probe.source)
+		})
+	}
+}
+
+// this is a type parameter, the class's polymorphic this type, and it holds what the instance holds
+// (Lower, on #p7t8tmh). A constructor isn't a method call, so its body is where a whole read of this
+// would otherwise go unjudged: Node prints {"items":[1,2]}, and a native that released the elements
+// would not.
+func TestVoidContainerThisIsJudged(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, source, role string }{
+		{"stringified", "class Box { constructor(public items: void[]) { console.log(String(JSON.stringify(this))); } }\nconst made = new Box(all); console.log(`${made.items.length}`);", "as an argument"},
+		{"passed wider", "function take(x: unknown): void { console.log(typeof x); }\nclass Box { constructor(public items: void[]) { take(this); } }\nconst made = new Box(all); console.log(`${made.items.length}`);", "as an argument"},
+		{"in a wider array", "class Box { constructor(public items: void[]) { const seen: unknown[] = [this]; console.log(`${seen.length}`); } }\nconst made = new Box(all); console.log(`${made.items.length}`);", "as a binding's initializer"},
+		{"template", "class Box { constructor(public items: void[]) { console.log(`${this}`); } }\nconst made = new Box(all); console.log(`${made.items.length}`);", "as a template literal part"},
+		{"a type parameter constrained to a holder", "function joinAll<T extends void[]>(xs: T): string { return xs.join(','); }\nconsole.log(joinAll(all));", "through join"},
+	} {
+		for _, extension := range []string{".a", ".ts"} {
+			t.Run(probe.name+extension, func(t *testing.T) {
+				t.Parallel()
+				_, err := lowerVoidProbe(t, extension, voidContainerMark+"\n"+probe.source)
+				var refused *Refused
+				if !errors.As(err, &refused) || !strings.HasPrefix(refused.What, "a read of a void container's elements") || !strings.Contains(refused.What, probe.role) {
+					t.Fatalf("want this judged and refused %s, got %v", probe.role, err)
+				}
+			})
+		}
+	}
+}
+
+// A class's prototype is typed as an instance but holds no field's value, so the class itself, handed
+// on as a value, holds no void: register(Box) isn't a read of Box's void field.
+func TestVoidContainerClassValueIsNoHolder(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerVoidProbe(t, extension, voidContainerMark+"\nfunction register(c: unknown): void { console.log(typeof c); }\nclass Box { constructor(public items: void[]) {} }\nregister(Box);")
+			var refused *Refused
+			if errors.As(err, &refused) && strings.HasPrefix(refused.What, "a read of a void container's elements") {
+				t.Fatalf("want the class value kept, got %v", err)
+			}
+		})
+	}
+}
+
+// A class's static fields live on the constructor itself, and Node prints them with the class (Lower,
+// on #p7t8tmh), so a class value whose static field holds void is a holder: excluding prototype keeps
+// the statics.
+func TestVoidContainerClassWithStaticHolderIsRead(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerVoidProbe(t, extension, voidContainerMark+"\nfunction register(c: unknown): void { console.log(typeof c); }\nclass Box { static spare: void[] = all; constructor(public items: void[]) {} }\nregister(Box);")
+			var refused *Refused
+			if !errors.As(err, &refused) || !strings.HasPrefix(refused.What, "a read of a void container's elements") || !strings.Contains(refused.What, "as an argument") {
+				t.Fatalf("want the class value refused as an argument, got %v", err)
+			}
 		})
 	}
 }
