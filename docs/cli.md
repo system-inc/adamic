@@ -63,7 +63,7 @@ usage error.
 
 | Flag | Applies to | Effect | Code |
 | --- | --- | --- | --- |
-| `-o <out>` | `build`, required | the binary's path | `cmd/adamic/main.go:run` |
+| `-o <out>` | `build`, required | the binary's path; a relative one is under the working directory | `cmd/adamic/main.go:run`, `cmd/adamic/tsgo.go:buildWithNativeExports` |
 | `--target wasm32-wasi` | `build` | a WebAssembly module for WASI instead of a host binary. The only value accepted; any other, a second `--target`, or a missing value is a usage error | `cmd/adamic/tsgo.go:buildWithNative` |
 | `--count` | `build` | the binary counts allocations, frees, retains, releases, peak and regions and writes `adamic: counts: ...` to stderr as it exits (`-DADAMIC_COUNT`) | `cmd/adamic/tsgo.go:buildWithNative`, `internal/native/native.go:Flags`, `internal/native/runtime/count.c:18-34` |
 | `--sanitize` | `build`, native only | `-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all` in place of the release flags | `cmd/adamic/tsgo.go:buildWithNative`, `internal/native/native.go:Flags` |
@@ -106,11 +106,13 @@ Repeating `--count`, `--sanitize`, `--reactor` or `--explain-checks` is harmless
 | 0 | the command did what it says | `cmd/adamic/main.go:run`, `cmd/adamic/tsgo.go:buildWithNative` |
 | 1 | the program doesn't check, is refused (`Refused`) or not yet compiled (`NotYet`), a target refuses an option, a tool is missing, or clang failed | `cmd/adamic/main.go:check,compileLibrary`, `cmd/adamic/tsgo.go:buildWithNative`, `cmd/adamic/request.go:compileWASI` |
 | 2 | usage error | `cmd/adamic/main.go:run`, `cmd/adamic/tsgo.go:buildWithNative` |
+| 3 | the machine: the working directory can't be read, so a relative `-o` has nowhere to go. A missing or failing toolchain still exits 1 (#z1ba56x) | `cmd/adamic/tsgo.go:buildWithNativeExports` |
 | 4 | the compiler itself panicked on `run`'s goroutine: stderr gets `adamic: compiler bug: <value>` and the stack. A panic on another goroutine, such as `internal/native`'s compiles (`internal/native/library.go:compileRuntime`, `internal/native/units.go:compileUnits`) or typescript-go's own, still ends the process with Go's 2 (#4mwb9et) | `cmd/adamic/main.go:run,reportCompilerBug` |
 
 Exit 1 covers both "your program" and "your machine": a script can't tell a refusal from a missing
 clang without reading stderr. Compiler has ruled the split (#z1ba56x): 1 the program, 2 usage
-including an option the target refuses, 3 the machine, 4 a compiler bug; only 4 is in the code yet.
+including an option the target refuses, 3 the machine, 4 a compiler bug. In the code so far: 4, and 3 for a
+working directory that can't be read.
 
 `TestUsageExitStatus` pins 2 and the exact usage text (`cmd/adamic/command_guards_test.go:TestUsageExitStatus`);
 `TestBuildWASISanitizeTarget{Before,After}Source` pin a target refusal at 1 with its text, on a file
@@ -118,7 +120,9 @@ that loads (`cmd/adamic/command_guards_test.go:TestBuildWASISanitizeTargetBefore
 `--target`s at 2 (`cmd/adamic/target_test.go:TestBuildTargetParsing`); `TestCompilerBugExitsFour` and
 `TestRunRecoversCompilerBugs` pin 4, its text, and that `run` defers the recovery, and
 `TestCompilerPanicExitsFourThroughTheCommand` runs `adamic build` in a driver whose runtime supplier
-panics inside `native.Build`, and sees 4 (`cmd/adamic/compiler_bug_test.go`).
+panics inside `native.Build`, and sees 4 (`cmd/adamic/compiler_bug_test.go`). `TestBuildExitsThreeWhenTheWorkingDirectoryIsGone`
+pins 3 and that the message keeps `-o` as typed, on Linux, where a removed working directory can't be read
+(`cmd/adamic/output_path_test.go:TestBuildExitsThreeWhenTheWorkingDirectoryIsGone`).
 
 ### A program it built
 
