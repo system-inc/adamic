@@ -286,10 +286,43 @@ inside the program it measured 190.0 against 130.6 s, the two runs hours and a c
 apart. That supports a slower box for the second, not new work. A same-box rerun of `85c9d783` over
 all 79 files is running now to settle it.
 
+## The predicate proof memo, f27967ea, with the shared identities (push 9, observed)
+
+`compiler/predicate-proof-memo` at `f27967ea` (one commit on main `b7b5ac9e`), merged locally into
+`f2479703` as a throwaway (`dab16234`, `git merge --no-ff`, clean, never pushed). Its diff from
+`f2479703` under `internal/lower`, `internal/load`, `internal/ir` and `stage3/census` is exactly
+`f27967ea`'s own diff (`95a7b63f..b7b5ac9e` changes nothing there); the merge also brings three
+conformance test files. Built as the meter builds it plus the timing lines, same adapted tree,
+then `f2479703` run again right after it on the same box:
+
+| run | wall | user s | peak RSS | loop sum wall s (user s) |
+|---|--:|--:|--:|--:|
+| memo merge `dab16234` | 20:15.8 (1,215.8 s) | 1,292.2 | 4.05 GB | 1,211.3 (1,287.9) |
+| `f2479703`, rerun right after | 37:58.2 (2,278.2 s) | 2,472.1 | 4.41 GB | 2,272.9 (2,466.6) |
+| memo / `f2479703` | 0.53 | 0.52 | 0.92 | |
+
+**Output: identical.** `cmp` finds no difference in `latent.jsonl` (20,131,373 bytes; sha256
+`395d5157...` for both, the same as every earlier run of `f2479703` and `95a7b63f`), and the 79
+stderr decision lines are identical ([memo/diff-against-f2479703-rerun.txt](memo/diff-against-f2479703-rerun.txt)).
+
+Per file ([memo/per-file-against-f2479703-rerun.txt](memo/per-file-against-f2479703-rerun.txt),
+[memo/per-file.txt](memo/per-file.txt), [head-rerun/per-file.txt](head-rerun/per-file.txt)):
+`utilities.ts` 457.9 to 255.4 s, `visitorPublic.ts` 305.0 to 150.0, `utilitiesPublic.ts` 124.4 to
+49.1, `transformers/ts.ts` 89.6 to 34.0, `factory/nodeTests.ts` 54.6 to 14.5, `binder.ts` 57.6 to
+15.5. A few barely move: `moduleNameResolver.ts` (0.98), `types.ts` (0.95), `commandLineParser.ts`
+and `builder.ts` (0.89).
+
+The box drifts: this `f2479703` rerun is 1.16 times its earlier run (2,272.9 against 1,956.8 s of loop
+wall) with byte-identical output, so only same-box pairs compare. This pair ran back to back.
+
+The merge's profile is running now; then the three-way merge with `compiler/entries-record-memo-2`.
+
 ## What hasn't run yet, and why
 
-Still to run, queued in this order: a same-box rerun of main `85c9d783` over all 79 files, A's
-profile, B's timed run, then the A/B decision diffs.
+Dropped at Performance's word after push 8: the same-box rerun of `85c9d783` (stopped at file 10),
+A's profile, B's timed run and the A/B decision diffs; the predicate passes A and B lack are no
+longer suspects. Still to run: the memo merge's profile, then a three-way merge of `f2479703`,
+`f27967ea` and `992a6f53` (`compiler/entries-record-memo-2`), timed and profiled.
 
 - The timeout is 3,600 s, not 900 s, since one process covers all 79 files and takes 3,230 s on main.
 - Per-file invocations (one process per file) are not the meter's step: the meter loads all 79
