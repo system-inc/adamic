@@ -47,7 +47,11 @@ func CheckPure(program *ir.Program, function int) error {
 			case ir.NodeHostCall:
 				return fmt.Errorf("impure: host operation %s.%s", node.Module, node.Member)
 			case ir.ProcessCall:
-				return fmt.Errorf("impure: host operation process.%s", node.Operation)
+				operation := "process." + node.Operation
+				if node.Operation == "cwd" {
+					operation = "host_cwd"
+				}
+				return fmt.Errorf("impure: host operation %s", operation)
 			case ir.Read:
 				return global(node.Local)
 			case ir.Assign:
