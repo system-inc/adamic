@@ -86,3 +86,5 @@ func (l *lowering) ambientRefusal(node *ast.Node) error {
 	}
 	return &Refused{Where: l.program.Where(node), What: what, Fix: "define the values in a module and import them; use Adamic-generated platform bindings for host values"}
 }
+
+func init() { refusalRules.register(2200, "ambientRefusal", (*lowering).ambientRefusal) }

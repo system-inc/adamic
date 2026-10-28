@@ -165,6 +165,10 @@ func (l *lowering) enumerationDescriptorRefusal(node *ast.Node) error {
 	return &Refused{Where: l.program.Where(node), What: "Object enumeration with a getter or accessor", Fix: "use own data properties"}
 }
 
+func init() {
+	refusalRules.register(700, "enumerationDescriptorRefusal", (*lowering).enumerationDescriptorRefusal)
+}
+
 func (l *lowering) entriesProgramHasRecords() bool {
 	modules, err := l.moduleOrder(l.program.Files()[0])
 	if err != nil {
@@ -214,4 +218,8 @@ func (l *lowering) enumerationIndexedWriteRefusal(node *ast.Node) error {
 		return nil
 	}
 	return l.notYet(node, "an indexed mutation without a closed const literal origin")
+}
+
+func init() {
+	refusalRules.register(600, "enumerationIndexedWriteRefusal", (*lowering).enumerationIndexedWriteRefusal)
 }

@@ -71,6 +71,8 @@ func (l *lowering) typedArrayUnsupported(node *ast.Node) error {
 	return nil
 }
 
+func init() { refusalRules.register(1600, "typedArrayUnsupported", (*lowering).typedArrayUnsupported) }
+
 func (l *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, error) {
 	if err := l.typedArrayUnsupported(node); err != nil {
 		return nil, true, err

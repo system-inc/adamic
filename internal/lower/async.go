@@ -160,8 +160,8 @@ func (l *lowering) asyncPayload(node *ast.Node) bool {
 		}
 		// A class with an index signature, its own or a base's, can write this[key] with key
 		// "then", which hasThen can't see: the checker's properties never list index keys. Today
-		// such a class stops earlier, at the index signature's own NotYet (refusals.go), so this
-		// holds the boundary for the day classes may carry one.
+		// such a class stops earlier, at the index signature's own NotYet (indexSignatureStorageGap), so
+		// this holds the boundary for the day classes may carry one.
 		symbol := l.symbol(callee)
 		return symbol != nil && len(symbol.Declarations) == 1 && symbol.Declarations[0].Kind == ast.KindClassDeclaration && len(l.checker.GetIndexInfosOfType(proven)) == 0
 	case ast.KindAwaitExpression:

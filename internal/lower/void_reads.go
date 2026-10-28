@@ -32,6 +32,8 @@ func (l *lowering) refuseVoidRead(node *ast.Node) error {
 	return &Refused{Where: l.program.Where(node), What: "a read of a void value, as " + read, Fix: "call it as a statement, or give the function a return type (adamic/no-void-read)"}
 }
 
+func init() { refusalRules.register(3250, "refuseVoidRead", (*lowering).refuseVoidRead) }
+
 // voidReadRole is what the place a void value stands in does with it, or "" where it's discarded. A
 // conditional's branch, and the right of &&, || and ??, stand where the whole expression stands.
 func (l *lowering) voidReadRole(node *ast.Node) string {

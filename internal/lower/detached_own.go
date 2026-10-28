@@ -141,6 +141,8 @@ func (l *lowering) detachedOwnRefusal(node *ast.Node) error {
 	return refused()
 }
 
+func init() { refusalRules.register(900, "detachedOwnRefusal", (*lowering).detachedOwnRefusal) }
+
 func (l *lowering) detachedOwnCall(node *ast.Node) (ir.Expression, bool, error) {
 	receiver := l.detachedOwnCallReceiver(node)
 	if receiver == nil {

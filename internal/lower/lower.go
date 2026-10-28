@@ -217,6 +217,9 @@ type lowering struct {
 	// predicateFalse is the false-direction walk's switch and memo (predicate_false_flow.go).
 	predicateFalse *predicateFalseFlow
 
+	// refusal is what refuse's per-node rules leave for one another (refusal_rules.go).
+	refusal refusalPass
+
 	// strings indexes result.Strings, so a constant used twice is stored once.
 	strings map[string]int
 

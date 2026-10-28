@@ -200,6 +200,10 @@ func (l *lowering) refuseOptionalWidening(node *ast.Node) error {
 		Fix:  "declare " + found.property + " on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"}
 }
 
+func init() {
+	refusalRules.register(3300, "refuseOptionalWidening", (*lowering).refuseOptionalWidening)
+}
+
 // Resolve the import binding rather than trusting the callee's spelling.
 func (l *lowering) optionalNodeHostCall(call *ast.Node) bool {
 	callee := ast.SkipParentheses(call.AsCallExpression().Expression)

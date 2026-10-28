@@ -43,6 +43,9 @@ func (l *lowering) unionSlotWriteRefusal(node *ast.Node) error {
 	return nil
 }
 
+// A write through a union is refused before any gap says not yet: it's never a lowering.
+func init() { refusalRules.register(100, "unionSlotWriteRefusal", (*lowering).unionSlotWriteRefusal) }
+
 // A destructuring assignment's targets each take a part of the right side. Without that part's
 // type in hand, a target through a union is held to its own read type: it fits only when every
 // member's slot holds the same values.

@@ -95,6 +95,26 @@ func castMembers(proven *checker.Type) []*checker.Type {
 	return []*checker.Type{proven}
 }
 
+// castRefusal refuses a cast the runtime can't check, and records a checked one in
+// l.refusal.checkedCasts for stringWideningRefusal (3100).
+func (l *lowering) castRefusal(node *ast.Node) error {
+	if node.Kind == ast.KindAsExpression {
+		proof, err := l.castProof(node)
+		if err != nil {
+			return err
+		}
+		if proof.interfaceView || len(proof.allowed) > 0 || len(proof.classes) > 0 {
+			if l.refusal.checkedCasts == nil {
+				l.refusal.checkedCasts = map[*ast.Node]bool{}
+			}
+			l.refusal.checkedCasts[node] = true
+		}
+	}
+	return nil
+}
+
+func init() { refusalRules.register(1900, "castRefusal", (*lowering).castRefusal) }
+
 func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	as := node.AsAsExpression()
 	if as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {

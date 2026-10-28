@@ -439,6 +439,8 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 	return nil
 }
 
+func init() { refusalRules.register(1800, "enumRefusal", (*lowering).enumRefusal) }
+
 // An open enum field is a hazard only as a tag: two members could hold the same number while the
 // checker excludes one of them. A field of one type in every member, like tsc's flags: NodeFlags,
 // can't tell members apart, so no refinement rests on it. Only primitive members are passed over;

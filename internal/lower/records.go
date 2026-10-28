@@ -70,6 +70,32 @@ func (l *lowering) recordTarget(node *ast.Node) bool {
 	}
 	return false
 }
+
+// indexSignatureStorageGap stops an index signature that is neither an enumeration's nor a record's
+// storage.
+func (l *lowering) indexSignatureStorageGap(node *ast.Node) error {
+	if node.Kind == ast.KindIndexSignature && !l.enumerationIndexSignature(node) {
+		if l.recordElement(l.checker.GetTypeAtLocation(node.Parent)) == nil {
+			return l.notYet(node, "a non-mutable unrestricted string signature, or numeric, symbol, patterned or callable dictionary storage")
+		}
+	}
+	return nil
+}
+
+func init() {
+	refusalRules.register(1200, "indexSignatureStorageGap", (*lowering).indexSignatureStorageGap)
+}
+
+// deleteRefusal refuses delete on anything but a record entry.
+func (l *lowering) deleteRefusal(node *ast.Node) error {
+	if node.Kind == ast.KindDeleteExpression && !l.recordTarget(node.AsDeleteExpression().Expression) {
+		return &Refused{Where: l.program.Where(node), What: "delete", Fix: "fixed objects cannot lose fields; use a record or Map"}
+	}
+	return nil
+}
+
+func init() { refusalRules.register(1300, "deleteRefusal", (*lowering).deleteRefusal) }
+
 func recordPrototypeName(name string) bool {
 	switch name {
 	case "constructor", "__defineGetter__", "__defineSetter__", "hasOwnProperty", "__lookupGetter__", "__lookupSetter__", "isPrototypeOf", "propertyIsEnumerable", "toString", "valueOf", "__proto__", "toLocaleString":
@@ -378,6 +404,8 @@ func (l *lowering) recordStorageView(node *ast.Node) error {
 	return nil
 }
 
+func init() { refusalRules.register(2000, "recordStorageView", (*lowering).recordStorageView) }
+
 // Structural views must preserve dictionary storage at every depth, including callbacks.
 func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
 	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] {
@@ -502,3 +530,5 @@ func (l *lowering) recordLiteralRead(node *ast.Node) error {
 	}
 	return nil
 }
+
+func init() { refusalRules.register(1100, "recordLiteralRead", (*lowering).recordLiteralRead) }

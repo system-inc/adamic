@@ -43,6 +43,20 @@ func (l *lowering) nodeBufferType(proven *checker.Type, name string) bool {
 	return symbol != nil && symbol.Name == name && nodeBufferModule(symbol) != ""
 }
 
+// nodeBufferAccessRefusal checks a member read that isn't called.
+func (l *lowering) nodeBufferAccessRefusal(node *ast.Node) error {
+	if (node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression) && !called(node) {
+		if err := l.nodeBufferUnsupportedUse(node); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func init() {
+	refusalRules.register(2700, "nodeBufferAccessRefusal", (*lowering).nodeBufferAccessRefusal)
+}
+
 // Reading a host member as a value must not fall through to ordinary object
 // slots. Hash's private runtime layout is not its inherited stream layout.
 func (l *lowering) nodeBufferUnsupportedUse(node *ast.Node) error {

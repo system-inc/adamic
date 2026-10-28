@@ -113,6 +113,8 @@ func (l *lowering) refuseVoidWidening(node *ast.Node) error {
 		Fix: "declare the function's real return type (adamic/no-void-widening)"}
 }
 
+func init() { refusalRules.register(3200, "refuseVoidWidening", (*lowering).refuseVoidWidening) }
+
 func (l *lowering) onlyVoidCalls(source *checker.Type) bool {
 	signatures := l.checker.GetSignaturesOfType(source, checker.SignatureKindCall)
 	if len(signatures) == 0 {
