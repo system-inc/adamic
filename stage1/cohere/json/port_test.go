@@ -208,24 +208,30 @@ type jsonPortBinaries struct {
 }
 
 // jsonPortPart is which of a port agreement's sides one test runs. A top shard and the inventory owner run the whole.
-// A heavy case's owner is two tests, its unsanitized part and its sanitized part, which go test runs in parallel, so the
-// case's work isn't one test running five sides one after another. Each part runs the Go oracle, so each holds its own
-// sides to it.
+// A heavy case's owner is three tests, its unsanitized, sanitized and JavaScript backend parts, which go test runs in
+// parallel, so the case's work isn't one test running five sides one after another. Each part runs the Go oracle, so
+// each holds its own sides to it.
 type jsonPortPart int
 
 const (
 	jsonPortWhole jsonPortPart = iota
 	jsonPortUnsanitized
 	jsonPortSanitized
+	jsonPortJavaScript
 )
 
 // jsonPortPartSides are the sides each part runs, by jsonPortAgree's numbering: 0 the Go oracle, 1 Node, 2 release, 3
-// the sanitized port, 4 the JavaScript backend. The two parts are the whole between them (TestJSONPortPartsAreTheWhole).
+// the sanitized port, 4 the JavaScript backend. The three parts are the whole between them
+// (TestJSONPortPartsAreTheWhole).
 var jsonPortPartSides = map[jsonPortPart][]int{
 	jsonPortWhole:       {0, 1, 2, 3, 4},
-	jsonPortUnsanitized: {0, 1, 2, 4},
+	jsonPortUnsanitized: {0, 1, 2},
 	jsonPortSanitized:   {0, 3},
+	jsonPortJavaScript:  {0, 4},
 }
+
+// jsonPortParts are a heavy case's parts, one owner test each.
+var jsonPortParts = []jsonPortPart{jsonPortUnsanitized, jsonPortSanitized, jsonPortJavaScript}
 
 // jsonPortAgree holds the port to the Go oracle over items, as a top shard and a dedicated owner both check them, with
 // the sides part names, and returns the Go oracle's answers. With ADAMIC_JSON_ARTIFACTS set, the cases and each side's

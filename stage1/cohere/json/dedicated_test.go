@@ -20,18 +20,28 @@ func TestPortMatchesGoCohereInventory(t *testing.T) {
 	jsonPortDedicatedAgree(t, jsonPortInventoryKey, jsonPortWhole)
 }
 
-// Three more heavy cases each held a hash bucket nearly alone, and json#14/23 at 8 CPUs on Eve (Oct 19) ran their five
-// sides one after another, one child at a time as a parallel test does (testguard.Share): _1643 27.9 s for
+// More heavy cases each held a hash bucket nearly alone, and their test ran its five sides one after another, one child
+// at a time as a parallel test does (testguard.Share). json#14/23 at 8 CPUs on Eve (Oct 19): _1643 27.9 s for
 // default-contracts.json, 8.9 MB (Go 4.7 s, Node 3.8 s, release 4.1 s, the sanitized run 12.7 s, the JavaScript backend
 // 2.3 s), _1649 14.7 s for selection.json, 4.9 MB (sanitized 7.0 s), and _1549 13.1 s for inspection.json, 2.7 MB
-// (sanitized 4.8 s). They were the unit's three slowest tests in each of six runs over two days, _1643 17 to 41 s, at
-// load 3 as at 63: the work, not the load. One case doesn't split, but its sides do: each case is owned by two parallel
-// tests, _000 its unsanitized part (the Go oracle, Node, release and the JavaScript backend) and _001 its sanitized part
-// (the Go oracle and the sanitized run), so the case's sides run on two CPUs at once.
+// (sanitized 4.8 s), the unit's three slowest tests in each of six runs over two days: the work, not the load. Then
+// json#19/32 on Eve at load 63 (Oct 27): _1345 61.75 s over the 60 s law for sites.json, 8.6 MB (Go 8.0 s, Node 8.3 s,
+// release 7.0 s, sanitized 20.1 s, the JavaScript backend 16.3 s), which turned another owner's change red; and in
+// four runs at load 45 to 51 (Oct 23) _0713 38.4 s for discriminant-writes.json, 3.3 MB, _1396 36.2 s for the
+// predicates REPORT.json, 14.2 MB, _1226 35.3 s for cases-reference.json, 10.2 MB, and _1246 27.8 s for
+// cache-local-roots.json, 27.1 MB. One case doesn't split, but its sides do: each case is owned by three parallel tests,
+// _000 its unsanitized part (the Go oracle, Node and release), _001 its sanitized part (the Go oracle and the sanitized
+// run) and _002 its JavaScript backend part (the Go oracle and the JavaScript backend), so its sides run on three CPUs
+// at once. sites.json's parts come to about 23, 28 and 24 s at load 63, where one test was 60.
 const (
 	jsonPortDefaultContractsKey     = "stage3/interface-downcasts/default-contracts.json"
 	jsonPortVerdictSelectionKey     = "stage3/verdict/selection.json"
 	jsonPortAnyReturnsInspectionKey = "stage3/census/any-returns/evidence/inspection.json"
+	jsonPortCensusSitesKey          = "stage3/census/data/sites.json"
+	jsonPortDiscriminantWritesKey   = "stage3/fixtures/assertions/discriminant-writes.json"
+	jsonPortPredicatesReportKey     = "stage3/census/predicates/REPORT.json"
+	jsonPortParserCasesKey          = "stage3/drivers/parser/cases-reference.json"
+	jsonPortCacheLocalRootsKey      = "stage3/notyet-new-expression/evidence/cache-local-roots.json"
 )
 
 func TestPortMatchesGoCohereAnyReturnsInspection_000(t *testing.T) {
@@ -44,6 +54,41 @@ func TestPortMatchesGoCohereAnyReturnsInspection_001(t *testing.T) {
 	jsonPortDedicatedAgree(t, jsonPortAnyReturnsInspectionKey, jsonPortSanitized)
 }
 
+func TestPortMatchesGoCohereAnyReturnsInspection_002(t *testing.T) {
+	t.Parallel()
+	jsonPortDedicatedAgree(t, jsonPortAnyReturnsInspectionKey, jsonPortJavaScript)
+}
+
+func TestPortMatchesGoCohereCacheLocalRoots_000(t *testing.T) {
+	t.Parallel()
+	jsonPortDedicatedAgree(t, jsonPortCacheLocalRootsKey, jsonPortUnsanitized)
+}
+
+func TestPortMatchesGoCohereCacheLocalRoots_001(t *testing.T) {
+	t.Parallel()
+	jsonPortDedicatedAgree(t, jsonPortCacheLocalRootsKey, jsonPortSanitized)
+}
+
+func TestPortMatchesGoCohereCacheLocalRoots_002(t *testing.T) {
+	t.Parallel()
+	jsonPortDedicatedAgree(t, jsonPortCacheLocalRootsKey, jsonPortJavaScript)
+}
+
+func TestPortMatchesGoCohereCensusSites_000(t *testing.T) {
+	t.Parallel()
+	jsonPortDedicatedAgree(t, jsonPortCensusSitesKey, jsonPortUnsanitized)
+}
+
+func TestPortMatchesGoCohereCensusSites_001(t *testing.T) {
+	t.Parallel()
+	jsonPortDedicatedAgree(t, jsonPortCensusSitesKey, jsonPortSanitized)
+}
+
+func TestPortMatchesGoCohereCensusSites_002(t *testing.T) {
+	t.Parallel()
+	jsonPortDedicatedAgree(t, jsonPortCensusSitesKey, jsonPortJavaScript)
+}
+
 func TestPortMatchesGoCohereDefaultContracts_000(t *testing.T) {
 	t.Parallel()
 	jsonPortDedicatedAgree(t, jsonPortDefaultContractsKey, jsonPortUnsanitized)
@@ -54,6 +99,56 @@ func TestPortMatchesGoCohereDefaultContracts_001(t *testing.T) {
 	jsonPortDedicatedAgree(t, jsonPortDefaultContractsKey, jsonPortSanitized)
 }
 
+func TestPortMatchesGoCohereDefaultContracts_002(t *testing.T) {
+	t.Parallel()
+	jsonPortDedicatedAgree(t, jsonPortDefaultContractsKey, jsonPortJavaScript)
+}
+
+func TestPortMatchesGoCohereDiscriminantWrites_000(t *testing.T) {
+	t.Parallel()
+	jsonPortDedicatedAgree(t, jsonPortDiscriminantWritesKey, jsonPortUnsanitized)
+}
+
+func TestPortMatchesGoCohereDiscriminantWrites_001(t *testing.T) {
+	t.Parallel()
+	jsonPortDedicatedAgree(t, jsonPortDiscriminantWritesKey, jsonPortSanitized)
+}
+
+func TestPortMatchesGoCohereDiscriminantWrites_002(t *testing.T) {
+	t.Parallel()
+	jsonPortDedicatedAgree(t, jsonPortDiscriminantWritesKey, jsonPortJavaScript)
+}
+
+func TestPortMatchesGoCohereParserCases_000(t *testing.T) {
+	t.Parallel()
+	jsonPortDedicatedAgree(t, jsonPortParserCasesKey, jsonPortUnsanitized)
+}
+
+func TestPortMatchesGoCohereParserCases_001(t *testing.T) {
+	t.Parallel()
+	jsonPortDedicatedAgree(t, jsonPortParserCasesKey, jsonPortSanitized)
+}
+
+func TestPortMatchesGoCohereParserCases_002(t *testing.T) {
+	t.Parallel()
+	jsonPortDedicatedAgree(t, jsonPortParserCasesKey, jsonPortJavaScript)
+}
+
+func TestPortMatchesGoCoherePredicatesReport_000(t *testing.T) {
+	t.Parallel()
+	jsonPortDedicatedAgree(t, jsonPortPredicatesReportKey, jsonPortUnsanitized)
+}
+
+func TestPortMatchesGoCoherePredicatesReport_001(t *testing.T) {
+	t.Parallel()
+	jsonPortDedicatedAgree(t, jsonPortPredicatesReportKey, jsonPortSanitized)
+}
+
+func TestPortMatchesGoCoherePredicatesReport_002(t *testing.T) {
+	t.Parallel()
+	jsonPortDedicatedAgree(t, jsonPortPredicatesReportKey, jsonPortJavaScript)
+}
+
 func TestPortMatchesGoCohereVerdictSelection_000(t *testing.T) {
 	t.Parallel()
 	jsonPortDedicatedAgree(t, jsonPortVerdictSelectionKey, jsonPortUnsanitized)
@@ -62,6 +157,11 @@ func TestPortMatchesGoCohereVerdictSelection_000(t *testing.T) {
 func TestPortMatchesGoCohereVerdictSelection_001(t *testing.T) {
 	t.Parallel()
 	jsonPortDedicatedAgree(t, jsonPortVerdictSelectionKey, jsonPortSanitized)
+}
+
+func TestPortMatchesGoCohereVerdictSelection_002(t *testing.T) {
+	t.Parallel()
+	jsonPortDedicatedAgree(t, jsonPortVerdictSelectionKey, jsonPortJavaScript)
 }
 
 // jsonPortDedicatedAgree is a dedicated owner's agreement: the corpus's one case named key, out of the hash buckets,
@@ -99,11 +199,11 @@ func jsonPortDedicatedAgree(t *testing.T, key string, part jsonPortPart) {
 	t.Logf("%s: own work %.3fs", key, time.Since(start).Seconds())
 }
 
-// jsonPortPartsUnion is nil when the unsanitized and sanitized parts are the whole's sides between them, each side in
-// exactly one part but the Go oracle, which every part runs.
+// jsonPortPartsUnion is nil when the unsanitized, sanitized and JavaScript backend parts are the whole's sides between
+// them, each side in exactly one part but the Go oracle, which every part runs.
 func jsonPortPartsUnion(parts map[jsonPortPart][]int) error {
 	owners := map[int]int{}
-	for _, part := range []jsonPortPart{jsonPortUnsanitized, jsonPortSanitized} {
+	for _, part := range jsonPortParts {
 		if !slices.Contains(parts[part], 0) {
 			return fmt.Errorf("part %d runs no Go oracle", part)
 		}
@@ -117,7 +217,7 @@ func jsonPortPartsUnion(parts map[jsonPortPart][]int) error {
 	for _, side := range parts[jsonPortWhole] {
 		want := 1
 		if side == 0 {
-			want = 2
+			want = len(jsonPortParts)
 		}
 		if owners[side] != want {
 			return fmt.Errorf("side %d runs in %d parts, want %d", side, owners[side], want)
@@ -140,10 +240,10 @@ func TestJSONPortPartsAreTheWhole(t *testing.T) {
 		name  string
 		parts map[jsonPortPart][]int
 	}{
-		{"JavaScript backend dropped", map[jsonPortPart][]int{jsonPortWhole: {0, 1, 2, 3, 4}, jsonPortUnsanitized: {0, 1, 2}, jsonPortSanitized: {0, 3}}},
-		{"sanitized run dropped", map[jsonPortPart][]int{jsonPortWhole: {0, 1, 2, 3, 4}, jsonPortUnsanitized: {0, 1, 2, 4}, jsonPortSanitized: {0}}},
-		{"release in both", map[jsonPortPart][]int{jsonPortWhole: {0, 1, 2, 3, 4}, jsonPortUnsanitized: {0, 1, 2, 4}, jsonPortSanitized: {0, 2, 3}}},
-		{"no Go oracle in the sanitized part", map[jsonPortPart][]int{jsonPortWhole: {0, 1, 2, 3, 4}, jsonPortUnsanitized: {0, 1, 2, 4}, jsonPortSanitized: {3}}},
+		{"JavaScript backend dropped", map[jsonPortPart][]int{jsonPortWhole: {0, 1, 2, 3, 4}, jsonPortUnsanitized: {0, 1, 2}, jsonPortSanitized: {0, 3}, jsonPortJavaScript: {0}}},
+		{"sanitized run dropped", map[jsonPortPart][]int{jsonPortWhole: {0, 1, 2, 3, 4}, jsonPortUnsanitized: {0, 1, 2}, jsonPortSanitized: {0}, jsonPortJavaScript: {0, 4}}},
+		{"release in two parts", map[jsonPortPart][]int{jsonPortWhole: {0, 1, 2, 3, 4}, jsonPortUnsanitized: {0, 1, 2}, jsonPortSanitized: {0, 2, 3}, jsonPortJavaScript: {0, 4}}},
+		{"no Go oracle in the JavaScript backend part", map[jsonPortPart][]int{jsonPortWhole: {0, 1, 2, 3, 4}, jsonPortUnsanitized: {0, 1, 2}, jsonPortSanitized: {0, 3}, jsonPortJavaScript: {4}}},
 	} {
 		t.Run(mutant.name, func(t *testing.T) {
 			if jsonPortPartsUnion(mutant.parts) == nil {
