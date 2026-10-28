@@ -138,8 +138,10 @@ func runWASIShimShard(t *testing.T, shard int) {
 				program.Strings[0] += "!"
 			}
 			binary := filepath.Join(t.TempDir(), "program.wasm")
-			if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-				t.Fatal(err)
+			reason := buildWASI(t, native.C(program), binary)
+			if assertWASIRefusal(t, fixture.path, reason, wasiRefusedFixtures) {
+				refused.Add(1)
+				return
 			}
 			inventory := execute(t, "node", "-e", `const fs=require('node:fs'); const m=new WebAssembly.Module(fs.readFileSync(process.argv[1])); console.log(JSON.stringify(WebAssembly.Module.imports(m).filter(i=>i.module==='wasi_snapshot_preview1').map(i=>i.name).sort()));`, binary)
 			if inventory.exitCode != 0 {
