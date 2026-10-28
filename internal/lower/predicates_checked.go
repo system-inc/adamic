@@ -430,6 +430,10 @@ func (l *lowering) checkedPredicateResult(call *ast.CallExpression, value ir.Exp
 // argument is the value the claim names. The true side is always checked, and the false side only
 // where falseToo says a caller narrows on it.
 func (l *lowering) checkedPredicateCheck(node, declaration *ast.Node, argument ir.Expression, source, target *checker.Type, result ir.Expression, falseToo bool, local func(string, ir.Type) int, message func(branch string) string) ([]ir.Statement, error) {
+	// The truthiness check is only an asserts claim, so a typeless non-asserts caller stops instead of silently getting an asserts check.
+	if target == nil && (result != nil || falseToo) {
+		return nil, l.notYet(node, "a checked predicate without a reifiable target")
+	}
 	// A condition assertion checks the saved argument, not a structural target.
 	if target == nil {
 		membership := ir.Truthy{Value: argument}
