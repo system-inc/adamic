@@ -180,7 +180,7 @@ func debugCLI(t *testing.T, entry, binary string, environment ...string) {
 	defer cancel()
 	command := exec.CommandContext(ctx, filepath.Join(debugCommandProduct(t, false), "command.test"), "-test.run=^TestBuildDebugDriver$", "--", "build", entry, "-o", binary, "--debug")
 	command.Dir = buildcache.Absolute("<repository>/cmd/adamic")
-	command.Env = append(append(os.Environ(), "ADAMIC_BUILD_DEBUG_DRIVER=1"), environment...)
+	command.Env = debugCacheEnvironment(t, append(append(os.Environ(), "ADAMIC_BUILD_DEBUG_DRIVER=1"), environment...))
 	if output, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("build --debug: %v: %s", err, output)
 	}
