@@ -1248,6 +1248,12 @@ const (
 )
 
 type (
+	// SourceLine names the next source statement in an entry-relative file.
+	SourceLine struct {
+		File string
+		Line int
+	}
+
 	// WriteLine writes a string and a newline: console.log and console.error with one string.
 	WriteLine struct {
 		Stream Stream
@@ -1404,6 +1410,7 @@ type Case struct {
 	Body  []Statement
 }
 
+func (SourceLine) statement()          {}
 func (WriteLine) statement()           {}
 func (AllocateEnvironment) statement() {}
 func (Declare) statement()             {}
