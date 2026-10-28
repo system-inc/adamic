@@ -239,13 +239,18 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 		latentFull(ctx, program, emit)
 		return
 	}
+	// One map of source identities serves every lowering of the program. An identity is a function of its module and the
+	// program alone (sourceIdentity: the module's walk and modulePath's import routes, never the lowering's own state),
+	// and a fresh lowering per statement, each registering every file's locals, re-walked all of the program's modules
+	// once a statement: 35% of the latent step's CPU on tsc's 79 files (#pv935yw).
+	identities := map[*ast.Node]ir.SourceIdentity{}
 	for _, file := range program.Files() {
 		latentFindings = nil
 		latentFindingOwner, latentFindingPhase = program.Where(file.AsNode()), "refusal_scan"
 		record := LatentFile{Measurement: LatentMeasurementLabel, File: program.FileName(file), Declarations: latentDeclarations(program, file), Units: []LatentUnit{}}
 		checker, release := program.Checker(ctx, file)
 		fresh := func() *lowering {
-			return &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
+			return &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1, sourceIdentities: identities}
 		}
 		func() {
 			defer func() {

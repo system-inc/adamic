@@ -189,6 +189,10 @@ func generate(repository, lowerInput string) []byte {
 						// Production leaves this test query nil. A closure needs an audited copier.
 						fmt.Fprint(&body, "if value.impliedTargetQuery != nil {panic(\"latent state copy: populated impliedTargetQuery is unsupported\")};")
 						expr = "value." + id.Name
+					} else if name == "lowering" && id.Name == "sourceIdentities" && printed(field.Type) == "map[*ast.Node]ir.SourceIdentity" {
+						// Shared on purpose: a cache of identities that are functions of the program alone, one map for
+						// every lowering of a latent run (lower.go.txt's latentRun), so a copy reads and fills the same one.
+						expr = "value." + id.Name
 					} else {
 						expr = g.copyField(name, id, field)
 					}
