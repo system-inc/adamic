@@ -1,0 +1,9 @@
+// Spec: a union with a distinct tag
+// Expect: lowers
+type Holder = { readonly kind: 'Holder' } | { readonly kind: 'Viewed'; readonly count: number };
+const holders: readonly Holder[] = [{ kind: 'Viewed', count: 7 }, { kind: 'Holder' }];
+for (const holder of holders) {
+	if (holder.kind === 'Viewed') {
+		console.log(`${holder.count}`);
+	}
+}
