@@ -44,11 +44,13 @@ var gccRuntimeUnits = []string{
 	"node_fs_file.c",
 	"node_host.c",
 	"node_path.c",
+	"node_process.c",
 	"normalize.c",
 	"number.c",
 	"object.c",
 	"parallel.c",
 	"parse.c",
+	"process.c",
 	"program_region.c",
 	"radix.c",
 	"record.c",
@@ -492,3 +494,12 @@ func TestGCCRuntimeNodeFSDirectory(t *testing.T) {
 
 func TestProduct_GCCRuntimeNodePath(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "node_path.c") }
 func TestGCCRuntimeNodePath(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "node_path.c") }
+
+func TestProduct_GCCRuntimeNodeProcess(t *testing.T) {
+	t.Parallel()
+	gccRuntimeUnit(t, "node_process.c")
+}
+func TestGCCRuntimeNodeProcess(t *testing.T) { t.Parallel(); checkGCCRuntimeUnit(t, "node_process.c") }
+
+func TestProduct_GCCRuntimeProcess(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "process.c") }
+func TestGCCRuntimeProcess(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "process.c") }

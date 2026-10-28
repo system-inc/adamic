@@ -362,9 +362,10 @@ func TestNodeProcessRawWriteFileModeMutant(t *testing.T) {
 			t.Fatal(err)
 		}
 		defer file.Close()
-		ctx, command := bounded(t, name, arguments...)
+		// CaptureTo drains pipes; redirect inside the child so descriptor 1 is a real file.
+		redirect := []string{"-c", `raw_output=$1; shift; exec "$@" > "$raw_output"`, "raw-file-probe", file.Name(), name}
+		ctx, command := bounded(t, "/bin/sh", append(redirect, arguments...)...)
 		var stderr bytes.Buffer
-		command.Stdout, command.Stderr = file, &stderr
 		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
 		if err := childguard.CaptureTo(ctx, command, file, &stderr); err != nil {
 			t.Fatalf("file observation must finish cleanly: %v\n%s", err, stderr.Bytes())
@@ -388,7 +389,7 @@ func TestNodeProcessRawWriteFileModeMutant(t *testing.T) {
 	}
 	runtimeSource := string(data)
 	prefix := ""
-	for _, name := range []string{"adamic_start", "adamic_write_line", "adamic_write_raw", "adamic_output_flush", "adamic_panic", "adamic_unreachable", "adamic_process_exit_now"} {
+	for _, name := range []string{"adamic_start", "adamic_write_line", "adamic_write_raw", "adamic_output_flush", "adamic_panic", "adamic_invariant", "adamic_unreachable", "adamic_process_exit_now"} {
 		prefix += "#define " + name + " raw_file_probe_" + name + "\n"
 	}
 	harness := `
