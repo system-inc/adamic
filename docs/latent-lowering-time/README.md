@@ -450,6 +450,36 @@ against 79.8, `builder.ts`, `moduleNameResolver.ts` and `types.ts`. So `761ee21c
 where one statement makes many predicate calls, and the profile, next, shows what's left in
 `utilities.ts`.
 
+### The four heads' profile (push 16, observed)
+
+The four-head tree's meter-built overlay with the per-file loop profile, all 79 files: 923.9 s of profile duration,
+1,009.2 s of samples; `latent.jsonl` byte-identical to its timed run. Tops:
+[profile/all4/top-cum-40.txt](profile/all4/top-cum-40.txt), [profile/all4/top-flat-40.txt](profile/all4/top-flat-40.txt),
+every node [profile/all4/top-cum-all-nodes.txt](profile/all4/top-cum-all-nodes.txt).
+
+| function | three heads (push 12) | four heads |
+|---|--:|--:|
+| `lower.(*lowering).predicateArguments` | 296.1 s, 19.3% | 0.9 s, 0.1% |
+| `lower.(*lowering).assignedSymbol` (new) | | 0.7 s, 0.1% |
+| `checker.(*Checker).GetSymbolAtLocation` | 411.8 s, 26.8% | 132.2 s, 13.1% |
+| `lower.(*lowering).entriesRecordLiteralWalk` | 450.4 s, 29.4% | 399.9 s, 39.6% |
+| `lower.(*lowering).entriesProgramRecordsWalk.func1` | | 393.9 s, 39.0% |
+| `lower.(*lowering).entriesProgramHasRecords` | 227.6 s, 14.8% | 203.4 s, 20.2% |
+| `lower.(*lowering).enumNeverValue` | 338.1 s, 22.0% | 298.5 s, 29.6% |
+| `lower.(*lowering).lowerFunction` | 162.6 s, 10.6% | 143.4 s, 14.2% |
+| `lower.(*lowering).noteInheritance` | 88.9 s, 5.8% | 78.4 s, 7.8% |
+| `lower.(*lowering).noteAccessorNames` | 88.9 s, 5.8% | 77.9 s, 7.7% |
+| `lower.(*lowering).provePredicate` | 78.3 s, 5.1% | 68.8 s, 6.8% |
+| `lower.(*lowering).latentRegister` | 47.1 s, 3.1% | 39.2 s, 3.9% |
+| `runtime.gcBgMarkWorker` (GC) | 127.3 s, 8.3% | 105.6 s, 10.5% |
+
+`761ee21c` takes the assignment walk out entirely. What leads now is the entries walk: `entriesRecordLiteralWalk`
+(39.6%), most of it in `entriesProgramRecordsWalk`'s closure (39.0%, overlapping), whose memo misses on every
+fresh lowering in the meter (push 12), then `enumNeverValue` (29.6%) under `value`, then the per-statement walks
+over all files (`noteInheritance`, `noteAccessorNames`, `latentRegister`, 19.4% together). The shared-memos
+build (`shared-memos/`) leaves the entries memo per lowering, as Lower asked, so this profile is also what
+it can't reach.
+
 ## What hasn't run yet, and why
 
 Dropped at Performance's word after push 8: the same-box rerun of `85c9d783` (stopped at file 10),
