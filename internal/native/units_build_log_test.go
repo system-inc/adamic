@@ -175,7 +175,7 @@ func TestARepassAfterAMismatchSaysRepass(t *testing.T) {
 	}
 	never := testUnitKeying(t, unitFirst, common, unitKeyFlags, compiler, environment)
 	never.check = func(compilationUnit) bool { return false }
-	cached, err := compileUnits(units, common, unitKeyFlags, compiler, never, cache, directory, 2, nil)
+	cached, err := compileUnits(units, common, unitKeyFlags, compiler, never, cache, directory, 2, nil, false)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -188,7 +188,7 @@ func TestARepassAfterAMismatchSaysRepass(t *testing.T) {
 	t.Setenv("ADAMIC_BUILD_LOG", log)
 	keying := testUnitKeying(t, unitFirst, common, unitKeyFlags, compiler, environment)
 	keying.check = func(unit compilationUnit) bool { return unit.name == "beta.c" }
-	if _, err := compileUnits(units, common, unitKeyFlags, compiler, keying, cache, directory, 2, nil); err != nil {
+	if _, err := compileUnits(units, common, unitKeyFlags, compiler, keying, cache, directory, 2, nil, false); err != nil {
 		t.Fatalf("a mismatched build failed: %v", err)
 	}
 	written, err := os.ReadFile(log)
