@@ -167,7 +167,7 @@ func debugCommandProduct(t *testing.T, build bool) string {
 		defer cancel()
 		command := exec.CommandContext(ctx, driver, "-test.run=^TestBuildDebugDriver$", "--", "build", entry, "-o", filepath.Join(directory, "witness"), "--debug")
 		command.Dir = buildcache.Absolute("<repository>/cmd/adamic")
-		command.Env = append(os.Environ(), "ADAMIC_BUILD_DEBUG_DRIVER=1")
+		command.Env = debugCacheEnvironment(t, append(os.Environ(), "ADAMIC_BUILD_DEBUG_DRIVER=1"))
 		if output, err := command.CombinedOutput(); err != nil {
 			return fmt.Errorf("command driver: %w: %s", err, output)
 		}
@@ -182,7 +182,10 @@ func debugSharingProduct(t *testing.T, build bool) string {
 	t.Helper()
 	return debugProduct(t, debugProductInputs("debug-runtime-sharing", Options{Debug: true, Release: true}), build, func(directory string) error {
 		compiler := buildcache.Adamic(t)
-		root, cache := t.TempDir(), t.TempDir()
+		root := t.TempDir()
+		// The cold-cache witness stays under the unit's handed output, never HOME.
+		cache := filepath.Join(directory, "raw-cache")
+		defer os.RemoveAll(cache)
 		for _, copy := range []string{"one", "two"} {
 			entry := debugPathFixture(t, filepath.Join(root, copy))
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
