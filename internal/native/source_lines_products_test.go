@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	goruntime "runtime"
 	"strings"
@@ -89,30 +90,90 @@ func debugLineProduct(t *testing.T, build bool) string {
 }
 func TestProduct_DebugLineTable(t *testing.T) { t.Parallel(); debugLineProduct(t, true) }
 
-func debugDirectoriesProduct(t *testing.T, build bool) string {
+// Normalize only archive-irrelevant options. The program still receives its own
+// absolute comp_dir, split setting and sanitizer fact unchanged.
+func debugArchiveProduct(t *testing.T, options Options, build bool) string {
 	t.Helper()
-	return debugProduct(t, debugProductInputs("debug-two-directories", Options{Debug: true}), build, func(directory string) error {
+	options.DebugDirectory = ""
+	options.Split, options.Jobs = false, 0
+	if options.Sanitize || options.ThreadSanitize || options.Count {
+		options.Release = false
+	}
+	request, err := RuntimeRequestFor(options)
+	if err != nil {
+		t.Fatal(err)
+	}
+	inputs := debugProductInputs(fmt.Sprintf("debug-program-runtime:%+v", options), options)
+	inputs.Flags = append(inputs.Flags, request.Portable...)
+	directory := debugProduct(t, inputs, build, func(directory string) error { return request.Build(directory, 4, nil) })
+	return filepath.Join(directory, "runtime.a")
+}
+func TestProduct_DebugRuntimeRelease(t *testing.T) {
+	t.Parallel()
+	debugArchiveProduct(t, Options{Release: true}, true)
+}
+func TestProduct_DebugRuntimeSanitized(t *testing.T) {
+	t.Parallel()
+	debugArchiveProduct(t, Options{Sanitize: true}, true)
+}
+func TestProduct_DebugRuntimeDebug(t *testing.T) {
+	t.Parallel()
+	debugArchiveProduct(t, Options{Debug: true}, true)
+}
+func TestProduct_DebugRuntimeDebugSanitized(t *testing.T) {
+	t.Parallel()
+	debugArchiveProduct(t, Options{Debug: true, Sanitize: true}, true)
+}
+
+func debugCommandProduct(t *testing.T, build bool) string {
+	t.Helper()
+	return debugProduct(t, debugProductInputs("debug-command-driver", Options{Debug: true}), build, func(directory string) error {
+		driver := buildcache.GoTest(t, "", "command.test", "./cmd/adamic", nil)
+		contents, err := os.ReadFile(driver)
+		if err != nil {
+			return err
+		}
+		if err := os.WriteFile(filepath.Join(directory, "command.test"), contents, 0755); err != nil {
+			return err
+		}
+		// Read the runtime dependency in this build's window, so native's test units
+		// fetch it as an upstream, rather than merely depending on producer order.
+		entry := filepath.Join(directory, "driver-witness.a")
+		if err := os.WriteFile(entry, []byte("console.log('driver');\n"), 0644); err != nil {
+			return err
+		}
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
+		defer cancel()
+		command := exec.CommandContext(ctx, driver, "-test.run=^TestBuildDebugDriver$", "--", "build", entry, "-o", filepath.Join(directory, "witness"), "--debug")
+		command.Dir = buildcache.Absolute("<repository>/cmd/adamic")
+		command.Env = append(os.Environ(), "ADAMIC_BUILD_DEBUG_DRIVER=1")
+		if output, err := command.CombinedOutput(); err != nil {
+			return fmt.Errorf("command driver: %w: %s", err, output)
+		}
+		return nil
+	})
+}
+func TestProduct_DebugCommandDriver(t *testing.T) { t.Parallel(); debugCommandProduct(t, true) }
+
+// This proof intentionally starts with an empty raw runtime cache. Its expensive
+// miss belongs to a built-ahead product; the unit rechecks the recorded log.
+func debugSharingProduct(t *testing.T, build bool) string {
+	t.Helper()
+	return debugProduct(t, debugProductInputs("debug-runtime-sharing", Options{Debug: true, Release: true}), build, func(directory string) error {
+		compiler := buildcache.Adamic(t)
+		root, cache := t.TempDir(), t.TempDir()
 		for _, copy := range []string{"one", "two"} {
-			root := filepath.Join(directory, copy)
-			if err := os.MkdirAll(filepath.Join(root, "lib"), 0755); err != nil {
-				return err
-			}
-			path := filepath.Join(root, "fixture.a")
-			if err := os.WriteFile(filepath.Join(root, "lib/value.a"), []byte("export function f(n: number): number { return n + 1; }\n"), 0644); err != nil {
-				return err
-			}
-			if err := os.WriteFile(path, []byte("import { f } from './lib/value.a';\nconsole.log((f(4)).toString());\n"), 0644); err != nil {
-				return err
-			}
-			program, err := debugProgram(t, path, true)
+			entry := debugPathFixture(t, filepath.Join(root, copy))
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
+			command := toolchain.CommandContextIn(ctx, "../..", compiler, "build", entry, "-o", filepath.Join(filepath.Dir(entry), "program"), "--debug")
+			command.Env = append(command.Env, "ADAMIC_BUILD_CACHE_DIR="+cache, "ADAMIC_BUILD_OUTPUT_DIR="+cache, "ADAMIC_BUILD_LOG="+filepath.Join(directory, "build.log"), "ADAMIC_NATIVE_SPLIT=0")
+			output, err := command.CombinedOutput()
+			cancel()
 			if err != nil {
-				return err
-			}
-			if err := Build(CWithOptions(program, Options{Debug: true}), filepath.Join(root, "program"), Options{Debug: true}); err != nil {
-				return err
+				return fmt.Errorf("runtime sharing build: %w: %s", err, output)
 			}
 		}
 		return nil
 	})
 }
-func TestProduct_DebugTwoDirectories(t *testing.T) { t.Parallel(); debugDirectoriesProduct(t, true) }
+func TestProduct_DebugRuntimeSharing(t *testing.T) { t.Parallel(); debugSharingProduct(t, true) }

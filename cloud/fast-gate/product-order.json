@@ -2622,7 +2622,16 @@
     "internal/native TestProduct_DebugLineTable": [
       "internal/native TestProduct_WASICompiler"
     ],
-    "internal/native TestProduct_DebugTwoDirectories": [],
-    "cmd/adamic TestProduct_CommandRuntimeDebug": []
+    "cmd/adamic TestProduct_CommandRuntimeDebug": [],
+    "internal/native TestProduct_DebugRuntimeRelease": [],
+    "internal/native TestProduct_DebugRuntimeSanitized": [],
+    "internal/native TestProduct_DebugRuntimeDebug": [],
+    "internal/native TestProduct_DebugRuntimeDebugSanitized": [],
+    "internal/native TestProduct_DebugCommandDriver": [
+      "cmd/adamic TestProduct_CommandRuntimeDebug"
+    ],
+    "internal/native TestProduct_DebugRuntimeSharing": [
+      "internal/native TestProduct_WASICompiler"
+    ]
   }
 }
