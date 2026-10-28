@@ -24,9 +24,17 @@ func (e *emitter) viewFieldAt(property ir.Property, object string) string {
 			return value
 		}
 	}
+	if property.Unset {
+		return e.placeholderViewField(property, object)
+	}
 	if object == "" {
 		object = e.value(property.Object)
 	}
+	return e.viewFieldObject(property, object)
+}
+
+// viewFieldObject reads property's checked field from object, the receiver already evaluated.
+func (e *emitter) viewFieldObject(property ir.Property, object string) string {
 	slot := e.temporary()
 	names := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map"}
 	name, supported := names[property.Of]

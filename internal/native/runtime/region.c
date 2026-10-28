@@ -75,6 +75,7 @@ static inline adamic_object *object_new(adamic_region *region, const adamic_shap
 	object->class = NULL;
 	object->frozen = false;
 	object->tuple = false;
+	object->write_order = NULL;
 	if (zero) {
 		memset(object->slots, 0, shape->count * sizeof object->slots[0]);
 		// Incremental constructors may throw or later store outside children.
