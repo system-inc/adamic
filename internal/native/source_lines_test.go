@@ -226,7 +226,7 @@ func TestDebugTwoDirectories(t *testing.T) {
 				}
 				source := CWithOptions(program, options)
 				binary := filepath.Join(filepath.Dir(path), "program")
-				if err := Build(source, binary, options); err != nil {
+				if err := BuildWithRuntime(source, binary, options, debugArchiveProduct(t, options, false)); err != nil {
 					t.Fatal(err)
 				}
 				if options.Debug && !strings.Contains(source, `#line 1 "lib/value.a"`) {

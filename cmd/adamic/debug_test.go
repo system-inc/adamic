@@ -140,3 +140,16 @@ func TestBuildDebugDirectoryFailure(t *testing.T) {
 	}
 	t.Log("unreadable cwd reports getwd failure and exits 3")
 }
+
+// Not parallel: the driver exits its own process through the real command.
+func TestBuildDebugDriver(t *testing.T) {
+	if os.Getenv("ADAMIC_BUILD_DEBUG_DRIVER") != "1" {
+		return
+	}
+	for index, argument := range os.Args {
+		if argument == "--" {
+			os.Exit(run(os.Args[index+1:]))
+		}
+	}
+	t.Fatal("missing driver arguments")
+}
