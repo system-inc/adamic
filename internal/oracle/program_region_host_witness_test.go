@@ -116,7 +116,7 @@ func TestProgramRegionHost14DefaultShimPending(t *testing.T) {
 	if err := json.Unmarshal(inventory.stdout, &imports); err != nil {
 		t.Fatal(err)
 	}
-	const want = "args_get, args_sizes_get, clock_time_get, environ_get, environ_sizes_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_readdir, fd_seek, fd_write, path_create_directory, path_filestat_get, path_open, path_remove_directory, path_unlink_file, proc_exit, random_get"
+	const want = "args_get, args_sizes_get, clock_time_get, environ_get, environ_sizes_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_readdir, fd_seek, fd_write, path_create_directory, path_filestat_get, path_open, path_readlink, path_remove_directory, path_unlink_file, proc_exit, random_get"
 	if actual := strings.Join(imports, ", "); actual != want {
 		t.Fatalf("imports %s, want %s", actual, want)
 	}

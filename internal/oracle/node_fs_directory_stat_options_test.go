@@ -73,7 +73,7 @@ func TestNodeFSRealpathClosureOptionsMutant(t *testing.T) {
 	}
 	_, err = lowered(t, path)
 	var missing *lower.NotYet
-	if !errors.As(err, &missing) || !strings.Contains(missing.What, "realpathSync function value") {
+	if !errors.As(err, &missing) || !strings.Contains(missing.What, "is called with zero or multiple arguments") {
 		t.Fatalf("want explicit closure overload refusal, got %v", err)
 	}
 	truth := onNode(t, path)
