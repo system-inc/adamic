@@ -278,16 +278,34 @@ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 				name = "function"
 			}
 			if name == "object" {
-				// typeof cannot distinguish differently held object members.
+				// typeof cannot distinguish object members: null, another class, a typed array
+				// or a promise all say object. Beside the narrowed members, only undefined and
+				// the kinds typeof tells from an object may sit, so any other member, or one
+				// whose holding isn't known, stops here, a kind added to the IR later too.
 				declared := l.concrete(l.checker.GetTypeOfSymbol(l.symbol(node)))
 				members := []*checker.Type{declared}
 				if declared.Flags()&checker.TypeFlagsUnion != 0 {
 					members = declared.Types()
 				}
+				observed := l.concrete(l.arrayPredicateObservedType(node))
+				kept := []*checker.Type{observed}
+				if observed.Flags()&checker.TypeFlagsUnion != 0 {
+					kept = observed.Types()
+				}
 				for _, member := range members {
-					if held, known := l.representation(member); known && held != narrowed && (held == ir.Object || held == ir.Array || held == ir.Map || held == ir.Record) {
-						return nil, l.notYet(node, "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables")
+					held, known := l.representation(member)
+					if known && held == narrowed && (slices.Contains(kept, member) || member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0) {
+						// A narrowed member, or undefined held as a missing object, which typeof says
+						// undefined for.
+						continue
 					}
+					if known {
+						switch held.Present() {
+						case ir.Number, ir.Boolean, ir.String, ir.Closure, ir.UndefinedRepresentation:
+							continue
+						}
+					}
+					return nil, l.notYet(node, "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables")
 				}
 			}
 			b := l.libraryArrayBuilder([]ir.Expression{read})
