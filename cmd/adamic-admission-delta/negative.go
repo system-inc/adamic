@@ -109,6 +109,17 @@ func supportedCheckedBoundary(witness negativeWitness) bool {
 	return witness.RepairFrom != "" && witness.RepairTo != "" && witness.RepairFrom != witness.RepairTo
 }
 
+// declaresRuledType says the declaration line states the stop's expected type: a declaration of exactly
+// that type, or an optional field, whose read expects its declared type plus undefined (#1yr7rdh, Adamic,
+// Oct 28). A required field's read expects exactly its declared type.
+func declaresRuledType(declaration, declared string) bool {
+	if regexp.MustCompile(`: ` + regexp.QuoteMeta(declared) + `[ ;]`).MatchString(declaration) {
+		return true
+	}
+	present, optional := strings.CutSuffix(declared, " | undefined")
+	return optional && regexp.MustCompile(`\?: `+regexp.QuoteMeta(present)+`(;|,| })`).MatchString(declaration)
+}
+
 // repairedSource is the type-correct copy: every RepairFrom replaced with RepairTo.
 func repairedSource(source []byte, witness negativeWitness) []byte {
 	return bytes.ReplaceAll(source, []byte(witness.RepairFrom), []byte(witness.RepairTo))
@@ -153,7 +164,7 @@ func validateWitnessSource(source []byte, witness negativeWitness) error {
 	}
 	declaration := lines[line-1]
 	if witness.Form == checkedBoundaryForm {
-		if !regexp.MustCompile(`: ` + regexp.QuoteMeta(witness.DeclaredType) + `[ ;]`).MatchString(declaration) {
+		if !declaresRuledType(declaration, witness.DeclaredType) {
 			return fmt.Errorf("violated declaration does not declare its ruled type")
 		}
 		if bytes.Count(source, []byte(witness.RepairFrom)) != 1 {
