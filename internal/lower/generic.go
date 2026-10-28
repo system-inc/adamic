@@ -66,6 +66,10 @@ func (l *lowering) instantiateFunctionSignature(call *ast.Node, declaration *ast
 		}
 	}
 
+	if err := l.refuseGenericVoidReads(call, declaration, concreteTypes, target, resolved); err != nil {
+		return 0, err
+	}
+
 	substitution := map[*checker.Type]ir.Type{}
 
 	owner := -1

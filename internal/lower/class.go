@@ -82,6 +82,11 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 	if len(parameters) != len(typeArguments) {
 		return nil, l.notYet(where, "a class whose type arguments aren't known here")
 	}
+	if len(parameters) > 0 {
+		if err := l.refuseGenericVoidReads(where, declaration, l.genericVoidBinding(declaration, typeArguments), nil, nil); err != nil {
+			return nil, err
+		}
+	}
 	for index, parameter := range parameters {
 		representation, isKnown := l.representation(typeArguments[index])
 		if !isKnown {
