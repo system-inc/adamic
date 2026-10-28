@@ -35,7 +35,7 @@ func buildWithNativeExports(path, output string, arguments []string, buildNative
 	// only when the working directory can't be read, which is the machine, so 3 (#z1ba56x's ruling).
 	absoluteOutput, absoluteError := filepath.Abs(output)
 	if absoluteError != nil {
-		fmt.Fprintf(os.Stderr, "adamic: -o %s: %v\n", output, absoluteError)
+		fmt.Fprintf(os.Stderr, "adamic: -o %s: %v\n", absoluteOutput, absoluteError)
 		return 3
 	}
 	output = absoluteOutput
