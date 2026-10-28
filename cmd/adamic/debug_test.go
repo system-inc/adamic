@@ -4,6 +4,7 @@ import (
 	"context"
 	"debug/elf"
 	"debug/macho"
+	"os"
 	"os/exec"
 	"path/filepath"
 	"slices"
@@ -78,4 +79,32 @@ func TestBuildDebugBinary(t *testing.T) {
 	if err != nil || string(output) != "4\n" {
 		t.Fatalf("run: %v: %q", err, output)
 	}
+}
+
+// The child removes its own cwd so filepath.Abs sees a machine failure, without
+// changing the working directory of parallel tests in this process.
+func TestBuildDebugDirectoryFailure(t *testing.T) {
+	t.Parallel()
+	if os.Getenv("ADAMIC_TEST_DEBUG_DIRECTORY_FAILURE") == "1" {
+		directory, err := os.MkdirTemp("", "adamic-debug-cwd-")
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := os.Chdir(directory); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.Remove(directory); err != nil {
+			t.Fatal(err)
+		}
+		os.Exit(buildWithNative("fixture.a", "program", []string{"--debug"}, func(string, string, native.Options) error { panic("compile reached after cwd failure") }))
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestBuildDebugDirectoryFailure$")
+	command.Env = append(command.Environ(), "ADAMIC_TEST_DEBUG_DIRECTORY_FAILURE=1")
+	output, err := command.CombinedOutput()
+	if command.ProcessState == nil || command.ProcessState.ExitCode() != 3 || !strings.Contains(string(output), "getwd") {
+		t.Fatalf("unreadable cwd: error=%v output=%s, want exit 3 and getwd error", err, output)
+	}
+	t.Log("unreadable cwd reports getwd failure and exits 3")
 }

@@ -66,7 +66,7 @@ usage error.
 | `-o <out>` | `build`, required | the binary's path | `cmd/adamic/main.go:run` |
 | `--target wasm32-wasi` | `build` | a WebAssembly module for WASI instead of a host binary. The only value accepted; any other, a second `--target`, or a missing value is a usage error | `cmd/adamic/tsgo.go:buildWithNative` |
 | `--count` | `build` | the binary counts allocations, frees, retains, releases, peak and regions and writes `adamic: counts: ...` to stderr as it exits (`-DADAMIC_COUNT`) | `cmd/adamic/tsgo.go:buildWithNative`, `internal/native/native.go:Flags`, `internal/native/runtime/count.c:18-34` |
-| `--debug` | `build` | writes `#line` directives so the binary's line table names the `.a` lines its frames came from; off the flag the C is byte for byte the same | `cmd/adamic/tsgo.go:buildWithNativeExports` |
+| `--debug` | `build` | writes `#line` directives and sets the compile directory to the entry's, so a debugger stops on and opens the `.a` lines its frames came from (native builds only; with `--sanitize`, rows before the first `#line` keep their generated names); off the flag the C is byte for byte the same; debug paths are proven on Linux; macOS isn't verified yet. | `cmd/adamic/tsgo.go:buildWithNativeExports` |
 | `--sanitize` | `build`, native only | `-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all` in place of the release flags | `cmd/adamic/tsgo.go:buildWithNative`, `internal/native/native.go:Flags` |
 | `--tsgo <archive>` | `build`, native only | links a prebuilt typescript-go checker archive for programs that use it; a second `--tsgo` or a missing value is a usage error | `cmd/adamic/tsgo.go:buildWithNative` |
 | `--reactor` | `build`, wasm32-wasi only | a reactor module: `_initialize` runs once and the entry module's crossing `export function`s are exported through ABI v1 (`docs/wasm-abi.md`), instead of a command entered at `main`. Without it a module with crossing exports is a reactor anyway | `cmd/adamic/tsgo.go:buildWithNative`, `docs/wasm-abi.md` |
@@ -107,11 +107,13 @@ Repeating `--count`, `--sanitize`, `--reactor` or `--explain-checks` is harmless
 | 0 | the command did what it says | `cmd/adamic/main.go:run`, `cmd/adamic/tsgo.go:buildWithNative` |
 | 1 | the program doesn't check, is refused (`Refused`) or not yet compiled (`NotYet`), a target refuses an option, a tool is missing, or clang failed | `cmd/adamic/main.go:check,compileLibrary`, `cmd/adamic/tsgo.go:buildWithNative`, `cmd/adamic/request.go:compileWASI` |
 | 2 | usage error | `cmd/adamic/main.go:run`, `cmd/adamic/tsgo.go:buildWithNative` |
+| 3 | the working directory could not be read while resolving a relative `--debug` entry path | `cmd/adamic/tsgo.go:buildWithNativeExports` |
 | 4 | the compiler itself panicked on `run`'s goroutine: stderr gets `adamic: compiler bug: <value>` and the stack. A panic on another goroutine, such as `internal/native`'s compiles (`internal/native/library.go:compileRuntime`, `internal/native/units.go:compileUnits`) or typescript-go's own, still ends the process with Go's 2 (#4mwb9et) | `cmd/adamic/main.go:run,reportCompilerBug` |
 
 Exit 1 covers both "your program" and "your machine": a script can't tell a refusal from a missing
 clang without reading stderr. Compiler has ruled the split (#z1ba56x): 1 the program, 2 usage
-including an option the target refuses, 3 the machine, 4 a compiler bug; only 4 is in the code yet.
+including an option the target refuses, 3 the machine, 4 a compiler bug. Code 4 and the relative
+`--debug` entry-path machine failure are implemented; the rest of the split remains pending.
 
 `TestUsageExitStatus` pins 2 and the exact usage text (`cmd/adamic/command_guards_test.go:TestUsageExitStatus`);
 `TestBuildWASISanitizeTarget{Before,After}Source` pin a target refusal at 1 with its text, on a file

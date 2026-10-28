@@ -92,7 +92,7 @@ func buildWithNativeExports(path, output string, arguments []string, buildNative
 		entry, err := filepath.Abs(path)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "adamic: %v\n", err)
-			return 1
+			return 3
 		}
 		options.DebugDirectory = filepath.Dir(entry)
 	}
