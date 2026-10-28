@@ -1,0 +1,36 @@
+"""Throwaway: from a timed overlay, profile the whole first-error loop into LATENT_PROFILE_OUTPUT. Never committed."""
+import json, pathlib, shutil, sys
+source, destination = pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2])
+shutil.copytree(source, destination, dirs_exist_ok=True)
+hook = destination / 'internal_lower_latent_hook.go'
+text = hook.read_text()
+loop = '\tfor _, file := range program.Files() {\n\t\tlatentTimingStart := latentTimingNow()\n'
+assert text.count(loop) == 1, 'loop'
+text = text.replace(loop, '\tdefer latentTimingWholeProfile()()\n' + loop)
+hook.write_text(text)
+timing = destination / 'internal_lower_latent_timing.go'
+text = timing.read_text()
+text = text.replace('import (\n', 'import (\n\t"runtime/pprof"\n')
+text += '''
+func latentTimingWholeProfile() func() {
+	path := os.Getenv("LATENT_PROFILE_OUTPUT")
+	if path == "" {
+		return func() {}
+	}
+	output, err := os.Create(path)
+	if err != nil {
+		panic(err)
+	}
+	if err := pprof.StartCPUProfile(output); err != nil {
+		panic(err)
+	}
+	return func() {
+		pprof.StopCPUProfile()
+		_ = output.Close()
+	}
+}
+'''
+timing.write_text(text)
+overlay = json.loads((source / 'overlay.json').read_text())
+replace = {k: (str(destination / pathlib.Path(v).relative_to(source)) if pathlib.Path(v).is_relative_to(source) else v) for k, v in overlay['Replace'].items()}
+(destination / 'overlay.json').write_text(json.dumps({'Replace': replace}, indent=2) + '\n')

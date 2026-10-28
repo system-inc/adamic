@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# One whole-directory latent run: one.sh <tree> <binary-name> <label> [profile]
+set -u
+S=/tmp/claude-0/-home-user-adamic/aab0f5f4-fba0-5ef3-92ab-24a7492d1c84/scratchpad
+tree=$1 binary=$2 label=$3
+mkdir -p "$S/runs"
+out=$S/runs/$label
+cat /proc/loadavg > "$out.loadavg-start"
+profile=
+[ "${4:-}" = profile ] && profile=$out.cpu.pprof
+(cd "$S/trees/$tree" && LATENT_PROFILE_OUTPUT=$profile LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 /usr/bin/time -v -o "$out.time" \
+    timeout 3600 "$S/bin/$tree/$binary" "${TARGET:-$S/adapted/src/compiler}" "$out.jsonl" > "$out.log" 2>&1)
+echo "exit=$?" > "$out.exit"
+cat /proc/loadavg > "$out.loadavg-end"

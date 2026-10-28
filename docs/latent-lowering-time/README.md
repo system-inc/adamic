@@ -36,17 +36,28 @@ with the final push. Nothing here compares the trees yet.
   `program.Files()`. It is never committed into the compiler. A second throwaway
   ([tools/profiled_overlay.py.txt](tools/profiled_overlay.py.txt)) adds a CPU profile around named
   files; built for main and A, not yet run.
-- One trial, main's timed binary only, to learn the scale before the interleaved runs:
-  [trial/main-partial-per-file.txt](trial/main-partial-per-file.txt) holds the first 69 of 79 files
-  (file, wall s, user s), copied while the run was at 1,690 s elapsed.
+- One trial, main's timed binary only, the meter's exact command plus the timing lines, under
+  `/usr/bin/time -v` with `timeout 3600`: [trial/main.time](trial/main.time),
+  [trial/main-per-file.txt](trial/main-per-file.txt) (file, wall s, process user s, all 79 files),
+  and its per-file decision lines [trial/main.stderr-decisions.txt](trial/main.stderr-decisions.txt).
 
 ## What it shows so far (main only, one trial, observed)
 
-- The 69 files took 1,661 s of wall and 2,132 s of process user time in the loop.
-- Slowest: `factory/nodeTests.ts` 130.6 s, `commandLineParser.ts` 119.9 s,
-  `moduleNameResolver.ts` 95.5 s, `factory/utilities.ts` 76.1 s, `transformers/ts.ts` 75.9 s,
-  `builder.ts` 73.4 s, `emitter.ts` 66.2 s, `program.ts` 65.0 s.
+- Whole process: exit 0, wall 53:49.6 (3,229.6 s), user 4,316.0 s, system 27.3 s, peak RSS
+  4.66 GB. The loop over the 79 files is 3,226.2 s of that wall, so loading and the checker are
+  about 3 s.
+- Slowest ten, wall s (user s): `utilities.ts` 649.1 (894.7), `types.ts` 369.3 (584.9),
+  `visitorPublic.ts` 248.0 (273.9), `utilitiesPublic.ts` 190.0 (270.2), `factory/nodeTests.ts`
+  130.6 (184.0), `commandLineParser.ts` 119.9 (149.5), `moduleNameResolver.ts` 95.5 (131.0),
+  `factory/utilities.ts` 76.1 (101.9), `transformers/ts.ts` 75.9 (83.8), `builder.ts` 73.4 (89.3).
+  Those ten are 2,028 s, 63% of the loop.
 - Even the smallest `_namespaces/*.ts` files take about 2 s each.
+- Decisions: the trial's 79 lines match the Oct 27 meter's main (`215a0f84`, which has both
+  4ac3f04d and 5e382ce4) on 78 files; `sys.ts` differs, refused 168 here against 182 there
+  ([trial/main-vs-meter-20261027.diff](trial/main-vs-meter-20261027.diff)). Between the Oct 26 and
+  Oct 27 meter runs, refused counts fell on 33 files; `visitorPublic.ts` fell from 349 to 40.
+  The Oct 26 meter's main, `fa8909ad`, is not in this clone, so I can't say which of the two
+  commits it had.
 
 Inferred, not yet measured: the per-statement unit in the first-error loop calls
 `noteInheritance`, `noteAccessorNames` and `latentRegister` over all of `program.Files()` for every
@@ -55,11 +66,15 @@ that or the predicate checks dominate.
 
 ## What hasn't run yet, and why
 
-- The trial is still finishing. The whole-process `/usr/bin/time -v` runs (timeout 3,600 s, not
-  900 s, since one process covers all 79 files and the trial alone passes 1,690 s), interleaved
-  main, A, B and run twice, are next. At this scale that is about six hours of runs.
+Order, as Performance asked after push 1: a CPU profile of main's whole first-error loop over all
+79 files (running now, [tools/whole_profile_overlay.py.txt](tools/whole_profile_overlay.py.txt)),
+then the same on A, then one timed run of B, then the decision diffs across the three trees, then
+the one-file against 79-file comparison, and only then a second round.
+
+- The timeout is 3,600 s, not 900 s, since one process covers all 79 files and takes 3,230 s on main.
 - Per-file invocations (one process per file) are not the meter's step: the meter loads all 79
   files as one program. Per-file seconds come from the in-process lines instead.
-- CPU profiles of main's 3 slowest files and the same on A, and the decision diffs between trees.
+- The per-file named profiles ([tools/profiled_overlay.py.txt](tools/profiled_overlay.py.txt)) are
+  replaced by the whole-loop profile and won't run.
 
 No question or blocker is open.
