@@ -1,0 +1,14 @@
+diff --git a/internal/lower/predicates.go b/internal/lower/predicates.go
+index fcbba95e..738e04d0 100644
+--- a/internal/lower/predicates.go
++++ b/internal/lower/predicates.go
+@@ -635,6 +635,9 @@ func predicateMatchingReference(receiver *checker.Checker, source, target *ast.N
+ // The answer is the program's and the checker's alone, so one walk collects every assigned symbol into
+ // l.assignedSymbols the first time it's asked, and nothing invalidates it.
+ func (l *lowering) assignedSymbol(symbol *ast.Symbol) bool {
++	if l.assignedSymbols != nil {
++		return false
++	}
+ 	if l.assignedSymbols == nil {
+ 		l.assignedSymbols = map[*ast.Symbol]bool{}
+ 		var writes ast.Visitor

@@ -1,0 +1,46 @@
+=== RUN   TestPredicateCallbackContracts
+=== PAUSE TestPredicateCallbackContracts
+=== RUN   TestAssignedSymbolAnswersAsAFreshLowering
+=== PAUSE TestAssignedSymbolAnswersAsAFreshLowering
+=== CONT  TestPredicateCallbackContracts
+=== RUN   TestPredicateCallbackContracts/inferred_arrow
+=== PAUSE TestPredicateCallbackContracts/inferred_arrow
+=== RUN   TestPredicateCallbackContracts/inferred_opaque
+=== PAUSE TestPredicateCallbackContracts/inferred_opaque
+=== RUN   TestPredicateCallbackContracts/inferred_named
+=== PAUSE TestPredicateCallbackContracts/inferred_named
+=== RUN   TestPredicateCallbackContracts/arrow
+=== PAUSE TestPredicateCallbackContracts/arrow
+=== RUN   TestPredicateCallbackContracts/named
+=== PAUSE TestPredicateCallbackContracts/named
+=== RUN   TestPredicateCallbackContracts/unproven
+=== PAUSE TestPredicateCallbackContracts/unproven
+=== RUN   TestPredicateCallbackContracts/lying
+=== PAUSE TestPredicateCallbackContracts/lying
+=== RUN   TestPredicateCallbackContracts/reassigned
+=== PAUSE TestPredicateCallbackContracts/reassigned
+=== CONT  TestPredicateCallbackContracts/inferred_arrow
+=== CONT  TestPredicateCallbackContracts/unproven
+=== CONT  TestPredicateCallbackContracts/arrow
+=== CONT  TestAssignedSymbolAnswersAsAFreshLowering
+    predicates_proof_test.go:321: assignedThere alone: assigned=false, want true
+--- FAIL: TestAssignedSymbolAnswersAsAFreshLowering (0.12s)
+=== CONT  TestPredicateCallbackContracts/inferred_named
+=== CONT  TestPredicateCallbackContracts/named
+=== CONT  TestPredicateCallbackContracts/reassigned
+=== CONT  TestPredicateCallbackContracts/inferred_opaque
+=== CONT  TestPredicateCallbackContracts/lying
+--- PASS: TestPredicateCallbackContracts (0.00s)
+    --- PASS: TestPredicateCallbackContracts/unproven (0.15s)
+    --- PASS: TestPredicateCallbackContracts/arrow (0.30s)
+    --- PASS: TestPredicateCallbackContracts/inferred_arrow (0.32s)
+    --- PASS: TestPredicateCallbackContracts/reassigned (0.07s)
+    --- PASS: TestPredicateCallbackContracts/inferred_opaque (0.08s)
+    --- PASS: TestPredicateCallbackContracts/inferred_named (0.29s)
+    --- PASS: TestPredicateCallbackContracts/named (0.26s)
+    --- PASS: TestPredicateCallbackContracts/lying (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.436s
+FAIL
+exit=1
+git diff after restore: [0 bytes]

@@ -1,0 +1,34 @@
+sha=5f0b2152b4b54e601bd43232ed4c22efaa708ce4
+=== RUN   TestProduct_CycleScanningCensus
+=== PAUSE TestProduct_CycleScanningCensus
+=== RUN   TestCycleFinderCensusEquality
+=== PAUSE TestCycleFinderCensusEquality
+=== RUN   TestProduct_ProgramRegionCensusIndexed
+=== PAUSE TestProduct_ProgramRegionCensusIndexed
+=== RUN   TestProduct_ProgramRegionCensusPairwise
+=== PAUSE TestProduct_ProgramRegionCensusPairwise
+=== RUN   TestProgramRegionCensusMembership
+=== PAUSE TestProgramRegionCensusMembership
+=== CONT  TestProduct_CycleScanningCensus
+=== CONT  TestProduct_ProgramRegionCensusPairwise
+=== CONT  TestProgramRegionCensusMembership
+=== CONT  TestProduct_ProgramRegionCensusIndexed
+    program_region_census_test.go:369: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProduct_ProgramRegionCensusIndexed (0.34s)
+=== CONT  TestCycleFinderCensusEquality
+=== NAME  TestProgramRegionCensusMembership
+    program_region_census_test.go:369: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProgramRegionCensusMembership (0.34s)
+=== NAME  TestCycleFinderCensusEquality
+    cycles_census_equality_test.go:280: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestCycleFinderCensusEquality (0.01s)
+=== NAME  TestProduct_CycleScanningCensus
+    cycles_census_equality_test.go:280: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProduct_CycleScanningCensus (0.36s)
+=== NAME  TestProduct_ProgramRegionCensusPairwise
+    program_region_census_test.go:369: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProduct_ProgramRegionCensusPairwise (0.37s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.382s
+FAIL
+exit=1

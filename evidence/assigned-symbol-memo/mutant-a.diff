@@ -1,0 +1,13 @@
+diff --git a/internal/lower/predicates.go b/internal/lower/predicates.go
+index fcbba95e..276af502 100644
+--- a/internal/lower/predicates.go
++++ b/internal/lower/predicates.go
+@@ -645,7 +645,7 @@ func (l *lowering) assignedSymbol(symbol *ast.Symbol) bool {
+ 			n.ForEachChild(writes)
+ 			return false
+ 		}
+-		for _, file := range l.program.Files() {
++		for _, file := range l.program.Files()[:1] {
+ 			file.AsNode().ForEachChild(writes)
+ 		}
+ 	}

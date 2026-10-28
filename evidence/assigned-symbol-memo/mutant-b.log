@@ -1,0 +1,47 @@
+=== RUN   TestPredicateCallbackContracts
+=== PAUSE TestPredicateCallbackContracts
+=== RUN   TestAssignedSymbolAnswersAsAFreshLowering
+=== PAUSE TestAssignedSymbolAnswersAsAFreshLowering
+=== CONT  TestPredicateCallbackContracts
+=== RUN   TestPredicateCallbackContracts/inferred_arrow
+=== PAUSE TestPredicateCallbackContracts/inferred_arrow
+=== RUN   TestPredicateCallbackContracts/inferred_opaque
+=== PAUSE TestPredicateCallbackContracts/inferred_opaque
+=== RUN   TestPredicateCallbackContracts/inferred_named
+=== PAUSE TestPredicateCallbackContracts/inferred_named
+=== RUN   TestPredicateCallbackContracts/arrow
+=== PAUSE TestPredicateCallbackContracts/arrow
+=== CONT  TestAssignedSymbolAnswersAsAFreshLowering
+=== RUN   TestPredicateCallbackContracts/named
+=== PAUSE TestPredicateCallbackContracts/named
+=== RUN   TestPredicateCallbackContracts/unproven
+=== PAUSE TestPredicateCallbackContracts/unproven
+=== RUN   TestPredicateCallbackContracts/lying
+=== PAUSE TestPredicateCallbackContracts/lying
+=== RUN   TestPredicateCallbackContracts/reassigned
+=== PAUSE TestPredicateCallbackContracts/reassigned
+=== CONT  TestPredicateCallbackContracts/inferred_arrow
+=== CONT  TestPredicateCallbackContracts/named
+=== CONT  TestPredicateCallbackContracts/inferred_named
+=== NAME  TestAssignedSymbolAnswersAsAFreshLowering
+    predicates_proof_test.go:329: assignedThere from the memo: assigned=false, want true
+--- FAIL: TestAssignedSymbolAnswersAsAFreshLowering (0.09s)
+=== CONT  TestPredicateCallbackContracts/arrow
+=== CONT  TestPredicateCallbackContracts/reassigned
+=== CONT  TestPredicateCallbackContracts/inferred_opaque
+=== CONT  TestPredicateCallbackContracts/unproven
+=== CONT  TestPredicateCallbackContracts/lying
+--- PASS: TestPredicateCallbackContracts (0.00s)
+    --- PASS: TestPredicateCallbackContracts/inferred_arrow (0.25s)
+    --- PASS: TestPredicateCallbackContracts/inferred_named (0.25s)
+    --- PASS: TestPredicateCallbackContracts/named (0.28s)
+    --- PASS: TestPredicateCallbackContracts/arrow (0.20s)
+    --- PASS: TestPredicateCallbackContracts/reassigned (0.06s)
+    --- PASS: TestPredicateCallbackContracts/inferred_opaque (0.06s)
+    --- PASS: TestPredicateCallbackContracts/unproven (0.05s)
+    --- PASS: TestPredicateCallbackContracts/lying (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.346s
+FAIL
+exit=1
+git diff after restore: [0 bytes]

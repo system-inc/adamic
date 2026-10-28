@@ -1,0 +1,21 @@
+submodule cache: off
+go version go1.27.1 linux/amd64
+setup: go ready (0.042s)
+setup: submodules ready (0.156s)
+v24.22.1
+setup: node ready (4.827s)
+setup: tsc ready (TypeScript 6.0.3) (5.780s)
+
+added 3 packages in 485ms
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=0.883s
+setup: markdown dependencies ready (6.763s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/opt/adamic-tools/llvm/bin/clang) (170.298s)
+setup: shared cache off (opt in with ADAMIC_GOCACHE=1) (170.301s)
+setup: go build ready (343.304s)
+setup: test binaries deferred (use --warm-tests) (343.465s)
+setup: build cache warm (343.467s)
+setup: build-flags commit=b65d7026ecebcca80ac12499103a40aa993345d3 nproc=4 cpu.max=unknown go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.22.1 cached=yes warm-tests=false gocacheprog=off load-before=0.50 0.14 0.05 1/112 485 load-after=7.28 3.90 1.62 1/108 4109
+setup: done on 4 processors (cgroup cpu.max: unknown), 15.7 GB (343.512s)
+setup: source /opt/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.PskC2O
