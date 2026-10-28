@@ -31,7 +31,7 @@ cherry-picked). No compiler branch is pushed; the change is [shared-memos.diff](
    source between statements, so I built it. The comment on `latentSharedFacts` says this.
    `l.symbol`, which `assignedSymbol` keys by, reads only the checker (`GetSymbolAtLocation`, `GetAliasedSymbol`,
    `GetExportSymbolOfSymbol`).
-3. **Proof:** the test and mutants below; the byte diff and the back-to-back wall time follow in the next push.
+3. **Proof:** the test and mutants below, and the byte diff and back-to-back wall time in "The run" below.
 
 The trap Performance named, and one more: `assignedSymbol` fills `l.assignedSymbols` during its walk, so a walk
 cut short leaves a partial map. latentRun's own `recover` is one way out, which `take`'s `clean` covers. The other:
@@ -74,3 +74,30 @@ is green ([audit/go-test-stage3-census-latent.log](audit/go-test-stage3-census-l
 What the test doesn't cover: it drives `seed`, `take` and `latentSwallow` directly with distinct pointers. It does
 not run latentRun on a real program with two checkers; whether `program.Checker` hands one file a different checker
 than another is not exercised on tsc either, where the meter's run decides only that the output is unchanged.
+
+## The run (observed)
+
+The shared-memo tree built as the meter builds it (its own `make_overlay.py`, `gofmt -w`, `go build -overlay`),
+plus the timing lines, same adapted tree. The four-head tree `4a9c4665` ran right after it on the same box:
+
+| run | wall | user s | peak RSS | loop sum wall s (user s) |
+|---|--:|--:|--:|--:|
+| shared memos | 14:33.0 (873.0 s) | 961.7 | 4.09 GB | 868.3 (957.0) |
+| four heads `4a9c4665`, right after | 15:32.5 (932.5 s) | 1,027.4 | 4.04 GB | 927.8 (1,022.8) |
+| shared / four heads | 0.94 | 0.94 | 1.01 | |
+
+**Output: identical.** `cmp` finds no difference in `latent.jsonl` (20,131,373 bytes, sha256 `395d5157...` for both),
+and the 79 stderr decision lines are identical ([diff-against-four-heads.txt](diff-against-four-heads.txt)). The
+four-head run here also matches its own earlier run (15:32.2) and output.
+
+Per file ([per-file-against-four-heads.txt](per-file-against-four-heads.txt), [shared/](shared),
+[four-heads/](four-heads)): `utilities.ts` 240.1 to 225.3 s, `commandLineParser.ts` 88.5 to 79.9,
+`utilitiesPublic.ts` 35.9 to 26.5, `factory/utilities.ts` 19.6 to 13.8, and the small files lose most of what they
+had (`builderStatePublic.ts` 0.5 to 0.1). `types.ts` (1.06) and `program.ts` (1.10) come out slower, within the
+box's noise.
+
+A 6% gain, which is what the four-head profile allows: what this shares was already small there,
+`provePredicate` 6.8% of samples and `assignedSymbol` 0.1%. What remains is the per-lowering entries walk
+(39.6%), `enumNeverValue` (29.6%) and the per-statement walks over all files (19.4%), which this change leaves
+alone. The box drifts by up to 12% over hours, but this pair ran back to back; a 6% difference from one pair is
+near the floor of what this box can tell.
