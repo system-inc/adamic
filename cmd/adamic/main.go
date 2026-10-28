@@ -31,7 +31,7 @@ const usage = `usage:
   adamic c <file.a|file.ts> [--explain-checks]
   adamic worker <entry.a> --out <directory> [--wasm <name>[,<name>...]]
   adamic js <file.a|file.ts> [--explain-checks]
-  adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--export <name>]... [--abi-json <path>] [--explain-checks]`
+  adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [--count] [--debug] [--sanitize] [--tsgo <archive>] [--export <name>]... [--abi-json <path>] [--explain-checks]`
 
 func main() {
 	os.Exit(run(os.Args[1:]))
