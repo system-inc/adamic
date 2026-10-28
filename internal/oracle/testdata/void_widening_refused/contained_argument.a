@@ -1,0 +1,3 @@
+// a-check: refused a void value at the argument site through [] seen as unknown
+const make: () => void = () => 42; const all: void[] = [1, 2].map(() => make());
+function count(values: readonly unknown[]): number { return values.length; } console.log(String(count(all)));

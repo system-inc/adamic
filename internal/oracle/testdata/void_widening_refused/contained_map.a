@@ -1,0 +1,3 @@
+// a-check: refused a void value at the initializer site through .forEach(0)(0) seen as unknown
+const make: () => void = () => 42; const all: void[] = [1, 2].map(() => make());
+const m = new Map<string, void>(); const wide: ReadonlyMap<string, unknown> = m; console.log(String(wide.size));

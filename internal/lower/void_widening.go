@@ -98,6 +98,9 @@ func (l *lowering) refuseVoidWidening(node *ast.Node) error {
 			return l.notYet(node, "a structural relation deeper than 64 type pairs while checking void function results")
 		}
 		what = "a void-returning function at the " + name + " site"
+		if found.contained {
+			what = "a void value at the " + name + " site"
+		}
 		if found.path != "" {
 			what += " through " + found.path
 		}
@@ -145,6 +148,8 @@ type voidWidening struct {
 	target     *checker.Type
 	path       string
 	depthLimit bool
+	// contained is a void value at a position (#p7t8tmh), not a void-returning function.
+	contained bool
 }
 
 func (l *lowering) voidWidened(source, target *checker.Type, depth int, seen map[[2]*checker.Type]bool) *voidWidening {
@@ -193,7 +198,7 @@ func (l *lowering) voidWidened(source, target *checker.Type, depth int, seen map
 			sources, targets := l.checker.GetTypeArguments(source), l.checker.GetTypeArguments(target)
 			for index, inside := range sources {
 				if index < len(targets) {
-					if found := l.voidWidened(inside, targets[index], depth+1, seen); found != nil {
+					if found := l.voidContained(inside, targets[index], depth, seen); found != nil {
 						found.path = "[" + strconv.Itoa(index) + "]" + found.path
 						return found
 					}
@@ -201,7 +206,7 @@ func (l *lowering) voidWidened(source, target *checker.Type, depth int, seen map
 			}
 			return nil
 		}
-		if found := l.voidWidened(l.checker.GetNumberIndexType(source), l.checker.GetNumberIndexType(target), depth+1, seen); found != nil {
+		if found := l.voidContained(l.checker.GetNumberIndexType(source), l.checker.GetNumberIndexType(target), depth, seen); found != nil {
 			found.path = "[]" + found.path
 			return found
 		}
@@ -216,7 +221,7 @@ func (l *lowering) voidWidened(source, target *checker.Type, depth int, seen map
 		sources, targets := l.checker.GetTypeArguments(source), l.checker.GetTypeArguments(target)
 		for index, inside := range sources {
 			if index < len(targets) {
-				if found := l.voidWidened(inside, targets[index], depth+1, seen); found != nil {
+				if found := l.voidContained(inside, targets[index], depth, seen); found != nil {
 					found.path = "<" + strconv.Itoa(index+1) + ">" + found.path
 					return found
 				}
@@ -226,7 +231,7 @@ func (l *lowering) voidWidened(source, target *checker.Type, depth int, seen map
 	for _, property := range l.checker.GetPropertiesOfType(target) {
 		from := l.checker.GetTypeOfPropertyOfType(source, property.Name)
 		to := l.checker.GetTypeOfPropertyOfType(target, property.Name)
-		if found := l.voidWidened(from, to, depth+1, seen); found != nil {
+		if found := l.voidContained(from, to, depth, seen); found != nil {
 			step := "." + property.Name
 			if strings.HasPrefix(property.Name, ast.InternalSymbolNamePrefix) {
 				// A well-known symbol's key is internal; name it as the source spells it.
@@ -258,14 +263,14 @@ func (l *lowering) voidWidenedSignatures(source, target *checker.Type, kind chec
 			// parameters, so Set's union<U> would build Set<T | U | U | ...> without
 			// end. The canonical signature restores the original unconstrained ones.
 			to, from := checker.Checker_getCanonicalSignature(l.checker, to), checker.Checker_getCanonicalSignature(l.checker, from)
-			if found := l.voidWidened(l.checker.GetReturnTypeOfSignature(from), l.checker.GetReturnTypeOfSignature(to), depth+1, seen); found != nil {
+			if found := l.voidContained(l.checker.GetReturnTypeOfSignature(from), l.checker.GetReturnTypeOfSignature(to), depth, seen); found != nil {
 				found.path = call + "()" + found.path
 				return found
 			}
 			// Positions past a rest parameter read its element type.
 			positions := max(len(from.Parameters()), len(to.Parameters()))
 			for position := range positions {
-				if found := l.voidWidened(l.checker.GetTypeAtPosition(to, position), l.checker.GetTypeAtPosition(from, position), depth+1, seen); found != nil {
+				if found := l.voidContained(l.checker.GetTypeAtPosition(to, position), l.checker.GetTypeAtPosition(from, position), depth, seen); found != nil {
 					found.path = call + "(" + strconv.Itoa(position) + ")" + found.path
 					return found
 				}
@@ -273,4 +278,17 @@ func (l *lowering) voidWidenedSignatures(source, target *checker.Type, kind chec
 		}
 	}
 	return nil
+}
+
+// voidContained relates one position inside a container: an element, a type argument, a property,
+// a function's return, or (through the walk's swap) a parameter. A discard releases what a void call
+// returns where Node keeps it, so void at a position seen wider there is a read waiting to happen:
+// [1].map(() => make()) holds 42 on Node, and seen as readonly unknown[] an element would read it
+// (#p7t8tmh, ruled Oct 27). A union that holds void isn't this leaf: H2 already keeps every void
+// value out of an X | void slot, so only a position that is exactly void is.
+func (l *lowering) voidContained(inside, wider *checker.Type, depth int, seen map[[2]*checker.Type]bool) *voidWidening {
+	if inside != nil && wider != nil && inside.Flags() == checker.TypeFlagsVoid && wider.Flags() != checker.TypeFlagsVoid {
+		return &voidWidening{target: wider, contained: true}
+	}
+	return l.voidWidened(inside, wider, depth+1, seen)
 }

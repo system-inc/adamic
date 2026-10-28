@@ -1,0 +1,1 @@
+internal/oracle/testdata/void_widening_refused/contained_map.a:3:79: Adamic 0.1 refuses a void value at the initializer site through .forEach(0)(0) seen as unknown; declare the function's real return type (adamic/no-void-widening)
