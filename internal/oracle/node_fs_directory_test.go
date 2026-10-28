@@ -6,6 +6,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 	"os"
 	"path/filepath"
+	"reflect"
 	"regexp"
 	"runtime"
 	"strings"
@@ -54,7 +55,7 @@ func TestNodeFSDirectoryMutants(t *testing.T) {
 		{name: "isDirectory", fixture: "node_fs_directory_entries.a", from: `"isDirectory"`, to: `"isFile"`},
 		{name: "isSymbolicLink", fixture: "node_fs_directory_entries.a", from: `"isSymbolicLink"`, to: `"isFile"`},
 		{name: "realpath walk", fixture: "node_fs_directory_realpath.a", from: ", false)", to: ", true)"},
-		{name: "realpath native", fixture: "node_fs_directory_realpath.a", from: ", true)", to: ", false)"},
+		{name: "realpath native", fixture: "node_fs_directory_realpath.a"},
 		{name: "error code", fixture: "node_fs_directory_entries.a", from: "adamic_node_fs_readdir(", to: "mutant_readdir(", helper: `static adamic_array *mutant_readdir(const adamic_string *path, const adamic_object *options) { adamic_array *result=adamic_node_fs_readdir(path, options); if(adamic_thrown!=NULL) { static adamic_string code=ADAMIC_STRING("WRONG"); adamic_release(adamic_thrown->slots[2].reference); adamic_thrown->slots[2].reference=&code; } return result; }`},
 		{name: "error message", fixture: "node_fs_directory_entries.a", from: "adamic_node_fs_readdir(", to: "mutant_readdir(", helper: `static adamic_array *mutant_readdir(const adamic_string *path, const adamic_object *options) { adamic_array *result=adamic_node_fs_readdir(path, options); if(adamic_thrown!=NULL) { static adamic_string message=ADAMIC_STRING("wrong"); adamic_release(adamic_thrown->slots[1].reference); adamic_thrown->slots[1].reference=&message; } return result; }`},
 	}
@@ -112,10 +113,19 @@ func TestNodeFSDirectoryMutants(t *testing.T) {
 					changed = true
 				}
 			}
+			if one.name == "realpath native" {
+				mutateStringExpressions(reflect.ValueOf(program).Elem(), func(value ir.Expression) ir.Expression {
+					if call, ok := value.(ir.NodeFSFile); ok && call.Operation == "host_realpath" {
+						changed = true
+						return ir.NodeHostCall{Module: "node:fs", Member: "realpathSync", Arguments: call.Arguments, Returns: call.Of, Throws: true}
+					}
+					return value
+				})
+			}
 			source := native.C(program)
 			if one.from != "" {
 				original := source
-				if strings.HasPrefix(one.name, "realpath ") {
+				if one.name == "realpath walk" {
 					pattern := regexp.MustCompile(`adamic_node_fs_realpath\(([^,\n]+)` + regexp.QuoteMeta(one.from))
 					source = pattern.ReplaceAllString(source, "adamic_node_fs_realpath(${1}"+one.to)
 				} else {
