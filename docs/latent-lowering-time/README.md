@@ -426,6 +426,30 @@ clean), not merged: a merge would also bring `761ee21c`'s base `5f0b2152`, which
 `process.platform` host read to `internal/lower` and `internal/ir`, and tsc's `sys.ts` reads
 `process.platform`. The cherry-pick's diff from `a1ce733b` is exactly `761ee21c`'s own.
 
+## Four heads: the assigned symbol memo, 761ee21c (push 14, observed)
+
+`4a9c4665` (`a1ce733b` plus `compiler/assigned-symbol-memo-3` `761ee21c` cherry-picked, see push 13)
+built as the meter builds it plus the timing lines, same adapted tree, then `a1ce733b` run again
+right after it:
+
+| run | wall | user s | peak RSS | loop sum wall s (user s) |
+|---|--:|--:|--:|--:|
+| four heads `4a9c4665` | 15:32.2 (932.2 s) | 1,033.6 | 4.07 GB | 927.9 (1,029.2) |
+| three heads `a1ce733b`, right after | 20:11.4 (1,211.4 s) | 1,299.5 | 4.14 GB | 1,206.7 (1,294.6) |
+| four / three | 0.77 | 0.80 | 0.98 | |
+
+**Output: identical.** `cmp` finds no difference in `latent.jsonl` (20,131,373 bytes, sha256
+`395d5157...` for both, and the `a1ce733b` rerun is identical to its first run), and the 79
+decision lines are identical ([all4/diff-against-a1ce733b.txt](all4/diff-against-a1ce733b.txt)).
+
+Per file ([all4/per-file-against-a1ce733b.txt](all4/per-file-against-a1ce733b.txt)), the gain is
+in a few files: `visitorPublic.ts` 150.6 to 3.6 s, `transformers/ts.ts` 35.5 to 3.8,
+`transformers/module/module.ts` 26.0 to 3.6. Most files are within the box's noise (0.85 to 1.16),
+among them the four slowest left: `utilities.ts` 253.8 against 244.9, `commandLineParser.ts` 92.7
+against 79.8, `builder.ts`, `moduleNameResolver.ts` and `types.ts`. So `761ee21c`'s memo pays
+where one statement makes many predicate calls, and the profile, next, shows what's left in
+`utilities.ts`.
+
 ## What hasn't run yet, and why
 
 Dropped at Performance's word after push 8: the same-box rerun of `85c9d783` (stopped at file 10),
