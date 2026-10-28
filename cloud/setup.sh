@@ -184,14 +184,10 @@ done
 # Optional WASI SDK 27: native clang remains the default in PATH.
 if "$wasiSDK"; then
  wasiVersion=27
- case $(uname -m) in
-  x86_64)
-   wasiArchitecture=x86_64
-   wasiSHA256=b7d4d944c88503e4f21d84af07ac293e3440b1b6210bfd7fe78e0afd92c23bc2 ;;
-  *)
-   wasiArchitecture=arm64
-   wasiSHA256=4cf4c553c4640e63e780442146f87d83fdff5737f988c06a6e3b2f0228e37665 ;;
- esac
+ # The archive follows the toolchain the SDK serves, the clang on PATH, never the kernel: a Mac guest runs the
+ # house's amd64 toolchain on an arm64 kernel (#9nqg4ex).
+ wasiPin=$(bash "$repository/cloud/wasi-sdk-pin.sh" "$tools/bin/clang")
+ read -r wasiArchitecture wasiSHA256 <<< "$wasiPin"
  wasiDirectory="$tools/wasi-sdk"
  # Loom keys products and units built with the SDK by its archive's sha256, read from archive-sha256 beside it, as
  # wasmtime's is: an install counts only when its record is the pin, and anything else (an older install with no
