@@ -125,9 +125,9 @@ panics inside `native.Build`, and sees 4 (`cmd/adamic/compiler_bug_test.go`).
 | Code | Means | Where |
 | --- | --- | --- |
 | 0, or the program's own exit code | the program finished; `main` returns the stored exit code, 0 when none was set | `internal/native/emit.go:cProgram`, `internal/native/runtime/host_runtime.c:102-105` |
-| 70 | a panic: an uncaught throw, a failed inserted check (non-null assertion, checked cast), stack exhaustion, out of memory, an index written out of range, and the runtime's other checked failures. stderr gets `adamic: panic: <message>` after everything the program printed | `internal/native/runtime/adamic.c:324-343`, `internal/native/runtime/exceptions.c:73-90` |
+| 70 | a panic: an uncaught throw, a failed inserted check (non-null assertion, checked cast), stack exhaustion, out of memory, an index written out of range, and the runtime's other checked failures. stderr gets `adamic: panic: <message>` after everything the program printed | `internal/native/runtime/adamic.c:325-344`, `internal/native/runtime/exceptions.c:73-90` |
 | 70, silently | stdout or stderr couldn't be written (a closed pipe), or a closed standard descriptor couldn't be reopened on `/dev/null` at startup | `internal/native/runtime/adamic.c:93-103,250-258` |
-| a signal | a catchable stop signal flushes output and re-raises; SIGPIPE, SIGXFSZ and SIGUSR1 are ignored | `internal/native/runtime/adamic.c:137-173,280-289` |
+| a signal | a catchable stop signal flushes output and re-raises; SIGPIPE, SIGXFSZ and SIGUSR1 are ignored | `internal/native/runtime/adamic.c:137-173,281-290` |
 | SIGABRT | an internal async-loop failure | `internal/native/runtime/async.c:171`, `internal/native/runtime/async_host_impl.h` |
 | the sanitizers' own | under `--sanitize`, ASan and UBSan exit with their defaults; nothing sets `ASAN_OPTIONS` for a user build | `internal/native/native.go:Flags` |
 
@@ -141,7 +141,7 @@ the test harness to judge (`internal/leakcheck/leakcheck.go:Unbalanced`).
 `oracle/adamic.mjs:10-34`), which only the oracle's loader arranges (`oracle/node.mjs`). Under plain
 `node` the import doesn't resolve.
 
-A wasm32-wasi panic leaves through the same `_exit(70)` (`internal/native/runtime/adamic.c:333-342`);
+A wasm32-wasi panic leaves through the same `_exit(70)` (`internal/native/runtime/adamic.c:334-343`);
 `TestWASIRequestThrows` sees 70 and `adamic: panic: Error: boundary` from the request host
 (`cmd/adamic/request_test.go:TestWASIRequestThrows`).
 
@@ -181,9 +181,9 @@ the test harness.
 | Variable | Effect | Code |
 | --- | --- | --- |
 | `ADAMIC_THREADS` | worker threads, an integer from 1 to 4096; anything else panics (70) | `internal/native/runtime/parallel.c:126-132` |
-| `ADAMIC_LEAK_CHECK` | an intentional exit writes `adamic: intentional exit: status N` for the leak harness | `internal/native/runtime/adamic.c:367-372` |
+| `ADAMIC_LEAK_CHECK` | an intentional exit writes `adamic: intentional exit: status N` for the leak harness | `internal/native/runtime/adamic.c:368-373` |
 | `ADAMIC_TSGO_PROFILE`, `ADAMIC_TSGO_TIMING` | tsgo builds only: checker profiling and timing | `internal/native/runtime/tsgo.c:16-17` |
-| `TMPDIR`, `TMP`, `TEMP` | `os.tmpdir()` | `internal/native/runtime/node_host.c:219-221` |
+| `TMPDIR`, `TMP`, `TEMP` | `os.tmpdir()` | `internal/native/runtime/node_process.c:403-410` |
 
 ## Toolchain
 
