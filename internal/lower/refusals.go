@@ -100,210 +100,16 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if branch := l.literalCallableBranch(node); branch != nil {
 			return visit(branch)
 		}
-		// A write through a union is refused before any gap says not yet: it's never a lowering.
-		if err := l.unionSlotWriteRefusal(node); err != nil {
-			found = err
-			return true
-		}
-		if err := l.knownLoweringGap(node); err != nil {
-			found = err
-			return true
-		}
-		if err := l.functionCallRefusal(node); err != nil {
-			found = err
-			return true
-		}
-		if err := l.phantomRefusal(node); err != nil {
-			found = err
-			return true
-		}
-		if node.Kind == ast.KindTypePredicate {
-			found = l.predicateRefusal(node)
-			return found != nil
-		}
-		if err := l.enumerationIndexedWriteRefusal(node); err != nil {
-			found = err
-			return true
-		}
-		if err := l.enumerationDescriptorRefusal(node); err != nil {
-			found = err
-			return true
-		}
-		if err := l.nodeLibraryRefusal(node); err != nil {
-			found = err
-			return true
-		}
-		if err := l.detachedOwnRefusal(node); err != nil {
-			found = err
-			return true
-		}
-		if err := l.recordDivergenceRefusal(node); err != nil {
-			found = err
-			return true
-		}
-		if err := l.recordLiteralRead(node); err != nil {
-			found = err
-			return true
-		}
-		if node.Kind == ast.KindIndexSignature && !l.enumerationIndexSignature(node) {
-			if l.recordElement(l.checker.GetTypeAtLocation(node.Parent)) == nil {
-				found = l.notYet(node, "a non-mutable unrestricted string signature, or numeric, symbol, patterned or callable dictionary storage")
-				return true
-			}
-		}
-		if node.Kind == ast.KindDeleteExpression && !l.recordTarget(node.AsDeleteExpression().Expression) {
-			found = &Refused{Where: l.program.Where(node), What: "delete", Fix: "fixed objects cannot lose fields; use a record or Map"}
-			return true
-		}
-		if refused, isRefused := refusals[node.Kind]; isRefused && !(node.Kind == ast.KindIndexSignature && l.enumerationIndexSignature(node)) && (node.Kind != ast.KindNonNullExpression || !l.checkedAssertionSource(node)) {
-			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
-			return true
-		}
-		if l.isJSONSchemaCall(node) {
-			_, found = l.jsonSchemaCallType(node)
-			if found != nil {
-				return true
-			}
-		}
-		if err := l.typedArrayUnsupported(node); err != nil {
-			found = err
-			return true
-		}
-		if node.Kind == ast.KindCallExpression {
-			if err := l.predicateArguments(node); err != nil {
-				found = err
-				return true
-			}
-		}
-		if err := l.enumRefusal(node); err != nil {
-			found = err
-			return true
-		}
-		checkedCast := false
-		if node.Kind == ast.KindAsExpression {
-			proof, err := l.castProof(node)
+		// Each rule registers from its own file (refusal_rules.go); the first that refuses a node wins.
+		for _, rule := range refusalRules.rules {
+			prune, err := rule.check(l, node)
 			if err != nil {
 				found = err
 				return true
 			}
-			checkedCast = proof.interfaceView || len(proof.allowed) > 0 || len(proof.classes) > 0
-		}
-		if err := l.recordStorageView(node); err != nil {
-			found = err
-			return true
-		}
-		if err := l.namespaceRefusal(node); err != nil {
-			found = err
-			return true
-		}
-		if err := l.ambientRefusal(node); err != nil {
-			found = err
-			return true
-		}
-		if node.Kind == ast.KindBinaryExpression {
-			if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused && !(node.AsBinaryExpression().OperatorToken.Kind == ast.KindInKeyword && l.recordElement(l.checker.GetTypeAtLocation(node.AsBinaryExpression().Right)) != nil) {
-				found = &Refused{Where: l.program.Where(node.AsBinaryExpression().OperatorToken), What: refused.what, Fix: refused.fix}
-				return true
+			if prune {
+				return false
 			}
-		}
-		// Async generators have a separate ruling from synchronous generators.
-		// Keep this refusal when synchronous generator lowering removes its check below.
-		if asyncGenerator(node) {
-			found = &Refused{Where: l.program.Where(node), What: "an async generator function", Fix: "use synchronous iteration; async generators need a separate ownership and cancellation ruling"}
-			return true
-		}
-		generator := false
-		switch node.Kind {
-		case ast.KindFunctionDeclaration:
-			generator = node.AsFunctionDeclaration().AsteriskToken != nil
-		case ast.KindFunctionExpression:
-			generator = node.AsFunctionExpression().AsteriskToken != nil
-		case ast.KindMethodDeclaration:
-			generator = node.AsMethodDeclaration().AsteriskToken != nil
-		}
-		if generator {
-			found = &Refused{Where: l.program.Where(node), What: "a generator function", Fix: "use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"}
-			return true
-		}
-		// Covered async syntax is lowered by async.go. Unsupported lifecycle and Promise
-		// operations get specific NotYet there; permanent refusals above still apply.
-
-		if node.Kind == ast.KindIdentifier && node.Text() == "arguments" {
-			// JavaScript's arguments object, not a variable the program named arguments.
-			if symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && len(symbol.Declarations) == 0 {
-				if err := l.argumentsRefusal(node); err != nil {
-					found = err
-					return true
-				}
-			}
-		}
-		if (node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression) && !called(node) {
-			if err := l.nodeBufferUnsupportedUse(node); err != nil {
-				found = err
-				return true
-			}
-		}
-		if node.Kind == ast.KindShorthandPropertyAssignment {
-			if symbol := l.checker.GetShorthandAssignmentValueSymbol(node); symbol != nil && len(symbol.Declarations) == 1 && symbol.Declarations[0].Kind == ast.KindVariableDeclaration {
-				if initializer := symbol.Declarations[0].AsVariableDeclaration().Initializer; initializer != nil {
-					if _, known := l.libraryMethod(initializer, map[*ast.Symbol]bool{}); known {
-						found = l.notYet(node, "a library method value outside a const alias (an object field erases its receiver and callable ABI); use an arrow")
-						return true
-					}
-				}
-			}
-		}
-		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.libraryMethodReadAllowed(node) && !l.detachedOwnMethod(node) {
-			// A method read as a value loses its object: this is undefined when it's called.
-			access := node.AsPropertyAccessExpression()
-			if access.Name().Text() == "isPrototypeOf" && l.libraryMember(node) {
-				found = l.prototypeRead(node, "isPrototypeOf")
-				return true
-			}
-			// Math.random has its own refusal, called or not.
-			isRandom := l.isLibraryGlobal(access.Expression, "Math") && access.Name().Text() == "random"
-			if symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && symbol.Flags&ast.SymbolFlagsMethod != 0 && !isRandom {
-				object := "its object"
-				if ast.IsIdentifier(access.Expression) || access.Expression.Kind == ast.KindThisKeyword {
-					object = scannedText(access.Expression)
-				}
-				parameters := "value"
-				if signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(symbol), checker.SignatureKindCall); len(signatures) > 0 {
-					names := []string{}
-					for _, parameter := range signatures[0].Parameters() {
-						names = append(names, parameter.Name)
-					}
-					parameters = strings.Join(names, ", ")
-				}
-				found = &Refused{Where: l.program.Where(node), What: "a method read as a value (" + symbol.Name + " would lose its object, and this with it)", Fix: "call it in an arrow that keeps the object: (" + parameters + ") => " + object + "." + symbol.Name + "(" + parameters + ") (unbound-method)"}
-				return true
-			}
-		}
-		if node.Kind == ast.KindClassDeclaration {
-			if err := l.checkOverrides(node, l.checker.GetTypeAtLocation(node.Name())); err != nil {
-				found = err
-				return true
-			}
-		}
-		// Prefer the writable-slot explanation when both a mutable view and nominal ancestry fail.
-		// A checked cast relates only members selected by its tag, not excluded source members.
-		if !checkedCast {
-			if err := l.refuseStringWidening(node); err != nil {
-				found = err
-				return true
-			}
-		}
-		if err := l.refuseVoidWidening(node); err != nil {
-			found = err
-			return true
-		}
-		if err := l.refuseOptionalWidening(node); err != nil {
-			found = err
-			return true
-		}
-		if err := l.classViewRefusal(node); err != nil {
-			found = err
-			return true
 		}
 		node.ForEachChild(visit)
 		return false
@@ -311,6 +117,111 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 	module.AsNode().ForEachChild(visit)
 	return found
 }
+
+// syntaxRefusal refuses the constructs refusals names by kind.
+func (l *lowering) syntaxRefusal(node *ast.Node) error {
+	// The index signature clause is dead, since refusals names no index signature; it's kept for order.
+	if refused, isRefused := refusals[node.Kind]; isRefused && !(node.Kind == ast.KindIndexSignature && l.enumerationIndexSignature(node)) && (node.Kind != ast.KindNonNullExpression || !l.checkedAssertionSource(node)) {
+		return &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
+	}
+	return nil
+}
+
+func init() { refusalRules.register(1400, "syntaxRefusal", (*lowering).syntaxRefusal) }
+
+// operatorRefusal refuses the binary operators refusedOperators names, at the operator.
+func (l *lowering) operatorRefusal(node *ast.Node) error {
+	if node.Kind == ast.KindBinaryExpression {
+		// The in clause is dead, since refusedOperators doesn't name in; it's kept for order.
+		if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused && !(node.AsBinaryExpression().OperatorToken.Kind == ast.KindInKeyword && l.recordElement(l.checker.GetTypeAtLocation(node.AsBinaryExpression().Right)) != nil) {
+			return &Refused{Where: l.program.Where(node.AsBinaryExpression().OperatorToken), What: refused.what, Fix: refused.fix}
+		}
+	}
+	return nil
+}
+
+func init() { refusalRules.register(2300, "operatorRefusal", (*lowering).operatorRefusal) }
+
+// Async generators have a separate ruling from synchronous generators.
+// Keep this refusal when synchronous generator lowering removes its check below.
+func (l *lowering) asyncGeneratorRefusal(node *ast.Node) error {
+	if asyncGenerator(node) {
+		return &Refused{Where: l.program.Where(node), What: "an async generator function", Fix: "use synchronous iteration; async generators need a separate ownership and cancellation ruling"}
+	}
+	return nil
+}
+
+func init() { refusalRules.register(2400, "asyncGeneratorRefusal", (*lowering).asyncGeneratorRefusal) }
+
+// generatorRefusal refuses a synchronous generator function. Covered async syntax is lowered by
+// async.go. Unsupported lifecycle and Promise operations get specific NotYet there; permanent
+// refusals here still apply.
+func (l *lowering) generatorRefusal(node *ast.Node) error {
+	generator := false
+	switch node.Kind {
+	case ast.KindFunctionDeclaration:
+		generator = node.AsFunctionDeclaration().AsteriskToken != nil
+	case ast.KindFunctionExpression:
+		generator = node.AsFunctionExpression().AsteriskToken != nil
+	case ast.KindMethodDeclaration:
+		generator = node.AsMethodDeclaration().AsteriskToken != nil
+	}
+	if generator {
+		return &Refused{Where: l.program.Where(node), What: "a generator function", Fix: "use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"}
+	}
+	return nil
+}
+
+func init() { refusalRules.register(2500, "generatorRefusal", (*lowering).generatorRefusal) }
+
+// shorthandLibraryMethodGap stops a shorthand property whose variable holds a library method value.
+func (l *lowering) shorthandLibraryMethodGap(node *ast.Node) error {
+	if node.Kind == ast.KindShorthandPropertyAssignment {
+		if symbol := l.checker.GetShorthandAssignmentValueSymbol(node); symbol != nil && len(symbol.Declarations) == 1 && symbol.Declarations[0].Kind == ast.KindVariableDeclaration {
+			if initializer := symbol.Declarations[0].AsVariableDeclaration().Initializer; initializer != nil {
+				if _, known := l.libraryMethod(initializer, map[*ast.Symbol]bool{}); known {
+					return l.notYet(node, "a library method value outside a const alias (an object field erases its receiver and callable ABI); use an arrow")
+				}
+			}
+		}
+	}
+	return nil
+}
+
+func init() {
+	refusalRules.register(2800, "shorthandLibraryMethodGap", (*lowering).shorthandLibraryMethodGap)
+}
+
+// methodValueRefusal refuses a method read as a value, which loses its object.
+func (l *lowering) methodValueRefusal(node *ast.Node) error {
+	if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.libraryMethodReadAllowed(node) && !l.detachedOwnMethod(node) {
+		// A method read as a value loses its object: this is undefined when it's called.
+		access := node.AsPropertyAccessExpression()
+		if access.Name().Text() == "isPrototypeOf" && l.libraryMember(node) {
+			return l.prototypeRead(node, "isPrototypeOf")
+		}
+		// Math.random has its own refusal, called or not.
+		isRandom := l.isLibraryGlobal(access.Expression, "Math") && access.Name().Text() == "random"
+		if symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && symbol.Flags&ast.SymbolFlagsMethod != 0 && !isRandom {
+			object := "its object"
+			if ast.IsIdentifier(access.Expression) || access.Expression.Kind == ast.KindThisKeyword {
+				object = scannedText(access.Expression)
+			}
+			parameters := "value"
+			if signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(symbol), checker.SignatureKindCall); len(signatures) > 0 {
+				names := []string{}
+				for _, parameter := range signatures[0].Parameters() {
+					names = append(names, parameter.Name)
+				}
+				parameters = strings.Join(names, ", ")
+			}
+			return &Refused{Where: l.program.Where(node), What: "a method read as a value (" + symbol.Name + " would lose its object, and this with it)", Fix: "call it in an arrow that keeps the object: (" + parameters + ") => " + object + "." + symbol.Name + "(" + parameters + ") (unbound-method)"}
+		}
+	}
+	return nil
+}
+
+func init() { refusalRules.register(2900, "methodValueRefusal", (*lowering).methodValueRefusal) }
 
 // called reports whether a property access is what a call calls, through any parentheses around it:
 // a method called on its object, which keeps it.

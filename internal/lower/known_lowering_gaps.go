@@ -64,6 +64,8 @@ func (l *lowering) knownLoweringGap(node *ast.Node) error {
 	return nil
 }
 
+func init() { refusalRules.register(200, "knownLoweringGap", (*lowering).knownLoweringGap) }
+
 // Error and its subclasses store non-enumerable own fields. Their structural
 // name/message types do not prove that copying runtime storage is a JS spread.
 func (l *lowering) errorStorage(proven *checker.Type, seen map[*checker.Type]bool) bool {

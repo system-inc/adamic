@@ -56,6 +56,8 @@ func (l *lowering) functionCallRefusal(node *ast.Node) error {
 	return nil
 }
 
+func init() { refusalRules.register(300, "functionCallRefusal", (*lowering).functionCallRefusal) }
+
 func sourceFunctionLength(node *ast.Node) int {
 	length := 0
 	for _, parameter := range node.Parameters() {

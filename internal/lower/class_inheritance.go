@@ -35,6 +35,18 @@ func (l *lowering) baseInstance(declaration *ast.Node, classType *checker.Type) 
 	return nil, nil
 }
 
+// classOverrideRefusal checks a class declaration's overrides against its bases.
+func (l *lowering) classOverrideRefusal(node *ast.Node) error {
+	if node.Kind == ast.KindClassDeclaration {
+		if err := l.checkOverrides(node, l.checker.GetTypeAtLocation(node.Name())); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func init() { refusalRules.register(3000, "classOverrideRefusal", (*lowering).classOverrideRefusal) }
+
 // TypeScript compares methods bivariantly and mutable properties covariantly. Neither is safe
 // through a base reference: arguments flow into the override, and fields can be written through it.
 func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type) error {
@@ -596,6 +608,8 @@ func (l *lowering) classViewRefusal(node *ast.Node) error {
 	target = mismatch
 	return &Refused{Where: l.program.Where(node), What: "a value without nominal ancestry seen as " + l.checker.TypeToString(target), Fix: "construct that class or a subclass; use an interface for structural values (adamic/nominal-class)"}
 }
+
+func init() { refusalRules.register(3400, "classViewRefusal", (*lowering).classViewRefusal) }
 
 func (l *lowering) nominalAncestor(source, target *checker.Type, seen map[[2]*checker.Type]bool) bool {
 	if source.Flags()&checker.TypeFlagsTypeParameter != 0 {

@@ -388,6 +388,20 @@ func (l *lowering) stringReadOnlyArgument(node *ast.Node) bool {
 	return callee.Kind == ast.KindPropertyAccessExpression && callee.Name().Text() == "raw" && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "String")
 }
 
+// Prefer the writable-slot explanation when both a mutable view and nominal ancestry fail.
+// A checked cast relates only members selected by its tag, not excluded source members, so a cast
+// castRefusal (1900) recorded as checked is let through.
+func (l *lowering) stringWideningRefusal(node *ast.Node) error {
+	if !l.refusal.checkedCasts[node] {
+		if err := l.refuseStringWidening(node); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func init() { refusalRules.register(3100, "stringWideningRefusal", (*lowering).stringWideningRefusal) }
+
 func (l *lowering) refuseStringWidening(node *ast.Node) error {
 	if l.stringReadOnlyArgument(node) || l.regexReplacementArgument(node) {
 		return nil

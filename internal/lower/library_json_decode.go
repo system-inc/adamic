@@ -77,6 +77,19 @@ func (l *lowering) isJSONSchemaCall(node *ast.Node) bool {
 	return node.Kind == ast.KindCallExpression && (l.isPreludeFunction(node.AsCallExpression().Expression, "decodeJson") || l.isPreludeFunction(node.AsCallExpression().Expression, "encodeJson"))
 }
 
+// jsonSchemaCallRefusal refuses a decodeJson or encodeJson call whose type has no schema.
+func (l *lowering) jsonSchemaCallRefusal(node *ast.Node) error {
+	if l.isJSONSchemaCall(node) {
+		_, err := l.jsonSchemaCallType(node)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func init() { refusalRules.register(1500, "jsonSchemaCallRefusal", (*lowering).jsonSchemaCallRefusal) }
+
 func (l *lowering) jsonSchemaCallType(node *ast.Node) (ir.JSONDecodeSchema, error) {
 	mode := jsonSchemaDecode
 	if l.isPreludeFunction(node.AsCallExpression().Expression, "encodeJson") {

@@ -61,6 +61,10 @@ func (l *lowering) recordDivergenceRefusal(node *ast.Node) error {
 	return nil
 }
 
+func init() {
+	refusalRules.register(1000, "recordDivergenceRefusal", (*lowering).recordDivergenceRefusal)
+}
+
 func (l *lowering) recordAccessPrototypeKey(node *ast.Node) string {
 	node = ast.SkipParentheses(node)
 	if node.Kind == ast.KindPropertyAccessExpression {

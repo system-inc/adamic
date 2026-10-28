@@ -26,6 +26,23 @@ func (l *lowering) isArgumentsLength(node *ast.Node) bool {
 	return access.Name().Text() == "length" && access.QuestionDotToken == nil && l.builtinArguments(access.Expression)
 }
 
+// argumentsObjectRefusal checks a use of JavaScript's arguments object.
+func (l *lowering) argumentsObjectRefusal(node *ast.Node) error {
+	if node.Kind == ast.KindIdentifier && node.Text() == "arguments" {
+		// JavaScript's arguments object, not a variable the program named arguments.
+		if symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && len(symbol.Declarations) == 0 {
+			if err := l.argumentsRefusal(node); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+func init() {
+	refusalRules.register(2600, "argumentsObjectRefusal", (*lowering).argumentsObjectRefusal)
+}
+
 func (l *lowering) argumentsRefusal(node *ast.Node) error {
 	for owner := node.Parent; owner != nil; owner = owner.Parent {
 		if ast.IsFunctionLike(owner) {
