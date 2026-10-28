@@ -84,6 +84,9 @@ type BlocksRule struct {
 	// TipFirst: a leased block plans its tip first, a green tip landing the whole block and a red one bisecting. Optional,
 	// and never null; absent reads as off (Loom 0.8.375, #fz4vetb).
 	TipFirst *bool `json:"tipFirst"`
+	// Stacked: a stacked child waits for a block behind its parent, which the queue honors only while replay is on too.
+	// Optional, and never null; absent reads as off (Loom 0.8.678, #tyncw8b).
+	Stacked *bool `json:"stacked"`
 }
 
 // DefaultBlocksDepth and MaximumBlocksDepth are the queue's: one standing block and one on it, and the deepest tower;
@@ -116,8 +119,8 @@ func ReadRules() (Rules, error) {
 }
 
 // ParseRules reads a rules file strictly: a rule the queue doesn't know, a field a rule doesn't take, a missing field,
-// a budget that isn't a whole number of 1 or more, a sizing, a depth, builders, a tipFirst, a door or a witness the lander
-// would refuse, or anything after the object is refused, so a typo can't land as a rule nobody meant.
+// a budget that isn't a whole number of 1 or more, a sizing, a depth, builders, a tipFirst, a stacked, a door or a witness
+// the lander would refuse, or anything after the object is refused, so a typo can't land as a rule nobody meant.
 func ParseRules(data []byte) (Rules, error) {
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
@@ -176,6 +179,9 @@ func ParseRules(data []byte) (Rules, error) {
 	}
 	if tipFirst, present := raw.Blocks["tipFirst"]; present && (bytes.Equal(bytes.TrimSpace(tipFirst), []byte("null")) || rules.Blocks.TipFirst == nil) {
 		return Rules{}, fmt.Errorf("rules.json: blocks' tipFirst is %s, and it's true or false", tipFirst)
+	}
+	if stacked, present := raw.Blocks["stacked"]; present && (bytes.Equal(bytes.TrimSpace(stacked), []byte("null")) || rules.Blocks.Stacked == nil) {
+		return Rules{}, fmt.Errorf("rules.json: blocks' stacked is %s, and it's true or false", stacked)
 	}
 	if raw.Door != nil {
 		var bounds map[string]json.RawMessage
