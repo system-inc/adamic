@@ -322,6 +322,12 @@ type lowering struct {
 	classType      *checker.Type
 	classNode      *ast.Node // The name identifier, declaration.Name(); Parent is the class declaration.
 
+	// entriesRecords is each object literal's entriesRecordLiteral answer, and entriesProgramRecords, once
+	// entriesProgramRecordsKnown, entriesProgramHasRecords' (entries_records.go).
+	entriesRecords             map[*ast.Node]bool
+	entriesProgramRecords      bool
+	entriesProgramRecordsKnown bool
+
 	// typeMapper is what the type parameters of the instantiation being lowered, and of those it's
 	// inside, stand for; instantiated is every class type an instantiation was made for (instantiate.go).
 	typeMapper   *typeMapper
