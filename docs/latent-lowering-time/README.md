@@ -152,6 +152,39 @@ This throwaway differs from the head `compiler/latent-shared-identities` (`f2479
 the head also has `statecopy` pass the map through, while here the generated state copier still
 copies it at each snapshot. So the head may be faster than this; its own run follows.
 
+## The head, f2479703, as the meter builds it (push 5, observed)
+
+`compiler/latent-shared-identities` at `f2479703` (one commit on main `95a7b63f`), in its own
+worktree with submodules (cohere `06af2e39`, TypeScript `d92d9bfe`), built exactly as
+`build_census` does: its own `make_overlay.py`, `gofmt -w`, then
+`go build -buildvcs=false -overlay=... ./stage3/census/latent/tool`, plus the throwaway timing lines
+([tools/timed_overlay.py.txt](tools/timed_overlay.py.txt)). Same adapted tree, same command. A
+container restart killed the first attempt at file 73; this is the rerun.
+
+| run | wall | user s | system s | peak RSS |
+|---|--:|--:|--:|--:|
+| main `85c9d783` trial | 53:49.6 | 4,316.0 | 27.3 | 4.66 GB |
+| main `85c9d783` + throwaway shared map | 28:41.9 | 1,833.7 | 26.3 | 4.49 GB |
+| head `f2479703` | 32:47.9 (1,967.9 s) | 2,122.1 | 44.9 | 4.44 GB |
+
+Per-file sum 1,956.8 s wall, 2,117.7 s user ([head/per-file.txt](head/per-file.txt),
+[head/head.time](head/head.time)).
+
+Output against the `85c9d783` trial: `latent.jsonl` differs (`cmp`: first at line 75; 20,131,373
+bytes against 20,129,953), and two decision lines differ
+([head/diff-against-main-85c9d783-trial.txt](head/diff-against-main-85c9d783-trial.txt)):
+`utilities.ts` refused 781 to 782 and `watch.ts` 43 to 44. Record by record
+([head/latent-jsonl-vs-main-85c9d783-trial.txt](head/latent-jsonl-vs-main-85c9d783-trial.txt)), each
+of those two files gains exactly one finding and loses none, and no unit differs:
+`utilities.ts:10747:65` and `watch.ts:994:28`, both "Adamic 0.1 refuses a read of a void value, as
+a returned value ... (adamic/no-void-read)". That rule comes with `95a7b63f`'s
+`internal/lower/void_reads.go`, which `85c9d783` lacks, so I expect it from the base and not from
+the shared map. The run of `95a7b63f` itself (running now) decides it.
+
+The head is about 14% slower per file than the throwaway on the same files (`utilities.ts` 380.8
+against 330.5 s, `visitorPublic.ts` 285.0 against 241.0). Not yet explained: it could be
+`95a7b63f`'s new pass, or box noise; `95a7b63f`'s own run will show which.
+
 ## What hasn't run yet, and why
 
 Order, as Performance asked after push 4: the head `f2479703` (compiler/latent-shared-identities)

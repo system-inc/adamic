@@ -1,0 +1,5 @@
+79 79 files
+utilities.ts findings only in trial: 0 only in head: 1 units differ: False
+  + {"depth": 0, "kind": "Refused", "measurement": "measured on a checker-rejected program", "phase": "refusal_scan", "reason": "a read of a void value, as a returned value", "root_kind": "", "text": "utilities.ts:10747:65: Adamic 0.1 refuses a read of a void value, as a returned value; call it as a statement, or give the function a return type (adamic/no-void-read)", "unit": "utilities.ts:10725:1", "where": "utilities.ts:10747:65"}
+watch.ts findings only in trial: 0 only in head: 1 units differ: False
+  + {"depth": 0, "kind": "Refused", "measurement": "measured on a checker-rejected program", "phase": "refusal_scan", "reason": "a read of a void value, as a returned value", "root_kind": "", "text": "watch.ts:994:28: Adamic 0.1 refuses a read of a void value, as a returned value; call it as a statement, or give the function a return type (adamic/no-void-read)", "unit": "watch.ts:987:1", "where": "watch.ts:994:28"}
