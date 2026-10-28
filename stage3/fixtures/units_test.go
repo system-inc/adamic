@@ -153,7 +153,7 @@ func TestFixtureDirectoriesHaveTopLevelTests(t *testing.T) {
 			if err != nil {
 				return err
 			}
-			if !entry.IsDir() && (entry.Name() == "status.json" || filepath.Ext(path) == ".a") {
+			if !entry.IsDir() && (entry.Name() == "status.json" || filepath.Ext(path) == ".a" || filepath.Ext(path) == ".ts") {
 				isFixture = true
 			}
 			return nil

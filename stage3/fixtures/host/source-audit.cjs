@@ -12,7 +12,7 @@ function tokens(node) {
     return printer.printNode(ts.EmitHint.Unspecified, node, node.getSourceFile());
 }
 const wanted = new Set();
-for (const file of fs.readdirSync(bucket).filter(name => /^\d\d_.*\.a$/.test(name))) {
+for (const file of fs.readdirSync(bucket).filter(name => /^\d\d_.*\.(?:a|ts)$/.test(name))) {
     const source = ts.createSourceFile(file, fs.readFileSync(path.join(bucket, file), "utf8"), ts.ScriptTarget.Latest, true);
     function visit(node) {
         if ((ts.isFunctionDeclaration(node) || ts.isMethodDeclaration(node)) && node.name) wanted.add(node.name.getText(source));
@@ -103,7 +103,7 @@ function auditDeclarations(file, text) {
     return found.size;
 }
 let declarationCount = 0;
-for (const file of fs.readdirSync(bucket).filter(name => /^\d\d_.*\.a$/.test(name)).sort()) {
+for (const file of fs.readdirSync(bucket).filter(name => /^\d\d_.*\.(?:a|ts)$/.test(name)).sort()) {
     declarationCount += auditDeclarations(file, fs.readFileSync(path.join(bucket, file), "utf8"));
 }
 console.log(`pass: ${declarationCount} copied declarations match adapted source; no reduction-added casts, non-null assertions or any`);
@@ -112,7 +112,7 @@ const driverSource = fs.readFileSync(path.join(bucket, driverFile), "utf8");
 assert.throws(() => auditDeclarations(driverFile, driverSource.replace("errorCode(e)", "(e as NodeJS.ErrnoException).code")), { code: "ERR_ASSERTION" });
 console.log("caught mutant: reduction-only ErrnoException cast rejected");
 let count = 0;
-for (const file of fs.readdirSync(bucket).filter(name => /^\d\d_.*\.a$/.test(name)).sort()) {
+for (const file of fs.readdirSync(bucket).filter(name => /^\d\d_.*\.(?:a|ts)$/.test(name)).sort()) {
     count += audit(file, fs.readFileSync(path.join(bucket, file), "utf8"));
 }
 console.log(`pass: ${count} upstream function and method spans retain their tokens`);

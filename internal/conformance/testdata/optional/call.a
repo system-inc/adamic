@@ -1,0 +1,5 @@
+// Spec: a call inside an optional chain
+// Expect: notyet a call through ?. (an optional call)
+const pick = (flag: boolean): ((name: string) => string) | undefined => (flag ? (name: string) => `hi ${name}` : undefined);
+console.log(pick(true)?.('ada') ?? 'none');
+console.log(pick(false)?.('ada') ?? 'none');

@@ -13,7 +13,7 @@ func TestCheckedViewFlagDowncast(t *testing.T) {
 	t.Parallel()
 	t.Run("tsc source", func(t *testing.T) {
 		t.Parallel()
-		path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/assertions/13_flag_downcast.a"))
+		path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/assertions/13_flag_downcast.ts"))
 		if err != nil {
 			t.Fatal(err)
 		}

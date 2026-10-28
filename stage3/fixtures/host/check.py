@@ -100,7 +100,7 @@ with tempfile.TemporaryDirectory(prefix='adamic-host-check-') as scratch:
         assert observed['exit'] == ({'18_exit_0.a': 0, '19_exit_1.a': 1, '20_exit_2.a': 2}.get(row['file'], 0))
         if not args.record:
             compare(observed, row['node'], row['file'] + ' Node')
-        binary = Path(scratch) / row['file'].replace('.a', '')
+        binary = Path(scratch) / str(Path(row['file']).with_suffix(''))
         built = run(['go', 'run', '-overlay=' + str(overlay), './cmd/adamic', 'build', str(file), '-o', str(binary)], row['file'] + '.stage0', args.compiler_repo)
         diagnostic = built['stdout'] + built['stderr']
         diagnostic = diagnostic.removeprefix('adamic: ').removesuffix('exit status 1\n').rstrip('\n')

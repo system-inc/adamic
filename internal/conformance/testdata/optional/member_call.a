@@ -1,0 +1,4 @@
+// Spec: a call inside an optional chain
+// Expect: notyet a call through ?. (an optional call)
+const box: { readonly name: string } | undefined = { name: 'ada' };
+console.log(box?.name.toUpperCase() ?? 'none');

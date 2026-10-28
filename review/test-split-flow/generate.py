@@ -26,6 +26,20 @@ for helper in ['refusedConstructorFixture', 'refusedGettersCensusFixture', 'unin
     assert names and re.sub(r'"[^"\n]+"|[\s,]', '', switch[1]) == '', 'unparsed flow exclusions'
     flow_excluded.update(names)
 
+# Boundary witnesses return their exact refusal instead of a boolean.
+helper = 'runtimeBoundaryLoweringReason'
+function = re.search(r'func ' + helper + r'\(path string\) string \{(.*?)\n\}', flow_source, re.S)
+assert function, 'missing flow exclusion helper: ' + helper
+switch = re.fullmatch(r'\s*switch filepath.Base\(path\) \{(.*?)\}\s*return ""\s*', function[1], re.S)
+assert switch, 'flow exclusion helper changed shape: ' + helper
+arm = re.compile(r'\s*case ((?:"[^"\n]+"[\s,]*)+):\s*return ("(?:[^"\\\n]|\\.)*")\s*')
+cases = list(arm.finditer(switch[1]))
+assert cases, 'missing boundary cases: ' + helper
+assert arm.sub('', switch[1]).strip() == '', 'unparsed flow exclusions: ' + helper
+for case in cases:
+    assert json.loads(case[2]), 'empty boundary refusal: ' + helper
+    flow_excluded.update(re.findall(r'"([^"\n]+)"', case[1]))
+
 # Mirrors flow_test.go's programs(): its deliberate .a refusal controls are excluded too.
 def refused(name):
     if name.endswith('.a') and (name.startswith('non_null_refuse_') or name.startswith('non_null_possible_')):
@@ -35,6 +49,12 @@ def refused(name):
 families = [('SingleAssignment', 'checkSingleAssignmentProgram'), ('MutationRanges', 'checkMutationRangesProgram'), ('GraphPaths', 'checkGraphPathsProgram'), ('Liveness', 'checkLivenessProgram')]
 manifest = []
 for package in ['flow', 'fresh']:
+    # Dedicated units append their own registrations; preserve their ownership.
+    owned = set()
+    for owner in sorted((root / 'internal' / package).glob('*_units_test.go')):
+        if owner.name == 'corpus_units_test.go':
+            continue
+        owned.update(re.findall(package + r'CorpusPaths = append\(' + package + r'CorpusPaths, "([^"]+)"\)', owner.read_text()))
     paths = []
     for pattern in patterns:
         for path in sorted(glob.glob(str(root / pattern))):
@@ -45,6 +65,8 @@ for package in ['flow', 'fresh']:
             if package == 'flow' and (source.name in excluded or refused(source.name)):
                 continue
             relative = Path(os.path.relpath(source, root / 'internal' / package)).as_posix()
+            if relative in owned:
+                continue
             paths.append(relative)
     assert len(paths) == len(set(paths))
     kinds = families if package == 'flow' else [('Writes', 'checkFreshProgram')]

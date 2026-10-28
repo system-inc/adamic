@@ -1,0 +1,4 @@
+import fs from 'node:fs';
+try { fs.realpathSync.native('missing'); } catch (error) {
+    if (error instanceof Error && 'syscall' in error && typeof error.syscall === 'string') console.log(error.syscall);
+}

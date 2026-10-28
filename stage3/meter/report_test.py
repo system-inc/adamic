@@ -204,7 +204,7 @@ class LatentReportTests(unittest.TestCase):
 
     def test_exact_prefix_and_variance_owners(self):
         owners = json.loads((Path(__file__).parent / 'owners.json').read_text())
-        self.assertEqual(reason_owner('a type predicate', owners), '01a1143b-d691')
+        self.assertEqual(reason_owner('a type predicate', owners), '#1w5bve2 (Optimizer)')
         self.assertEqual(reason_owner('reading SyntaxKind.SomeFlag', owners), 'compiler/stage3-front')
         self.assertEqual(reason_owner('a method call through a structural signature on X', owners), '01a1143c')
         self.assertEqual(reason_owner('a value of type X seen as Y', owners), 'adaptation 70, stage 3')
@@ -220,6 +220,19 @@ class LatentReportTests(unittest.TestCase):
                               'an index signature': '01a113e7', 'a value of type any': 'adaptation 40, stage 3',
                               "a cast the runtime can't check": '01a11410', 'a value of type unknown': '01a114ab',
                               'an object refinement using an open numeric enum as a literal tag': '#drwm5pj (Lower)'}.items():
+            self.assertEqual(reason_owner(reason, owners), owner)
+        # Group 1's classes as the daily meter on Oct 27 words them (#bbssdcy), each with its task and owner.
+        for reason, owner in {
+            'a type predicate whose return is not proven (return expression is not a trusted check on node)': '#1w5bve2 (Optimizer)',
+            'a type predicate whose return is not proven (there is no body proving this parameter)': '#1w5bve2 (Optimizer)',
+            'an unproven predicate argument for parameter test (argument "isNodeArray")': '#1w5bve2 (Optimizer)',
+            'checked predicate membership over an open tag domain': '#k1t2wp9 (Optimizer)',
+            'an indirect call of a checked predicate': '#3hxh5jm (Workers)',
+            'an indirect call of a checked predicate overload': '#3hxh5jm (Workers)',
+            'checked predicate overload target ClassElement': '#3hxh5jm (Workers)',
+            'a checked predicate without a reifiable target': '#1ge1bv8 (Diagnostics)',
+            "a checked predicate result read by a CallExpression inside a condition, which its direction walk doesn't read": '#1761dah (Lower)',
+        }.items():
             self.assertEqual(reason_owner(reason, owners), owner)
         self.assertEqual(reason_owner('unmatched', owners), 'OWNER BLANK')
         self.assertEqual(reason_owner('reading SyntaxKind', {'reading': 'general', 'reading SyntaxKind': 'specific'}), 'specific')

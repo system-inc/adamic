@@ -254,7 +254,7 @@ func TestCheckedViewV2CallableProducerMutant(t *testing.T) {
 
 func TestCheckedViewV2MovedStage3Results(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"taste/refused/21_truthy_loops.a", "predicates/03_void_zero.a", "assertions/11_parenthesized_kind.a", "assertions/20_type_flag_mask.a", "assertions/13_flag_downcast.a"} {
+	for _, name := range []string{"taste/refused/21_truthy_loops.ts", "predicates/03_void_zero.a", "assertions/11_parenthesized_kind.ts", "assertions/20_type_flag_mask.ts", "assertions/13_flag_downcast.ts"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs("../../stage3/fixtures/" + name)

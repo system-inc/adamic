@@ -1,0 +1,6 @@
+import fs from "node:fs";
+import type { HttpRequest, HttpResponse } from "adamic/http";
+export function hostPath(): string { return fs.realpathSync.native("."); }
+export function handle(request: HttpRequest): HttpResponse {
+    return { status: 200, headers: [], body: hostPath() };
+}

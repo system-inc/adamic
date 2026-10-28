@@ -8,7 +8,7 @@ root=pathlib.Path(__file__).resolve().parents[3]; feature=args.feature_root.reso
 (feature/'stage3/fixtures').mkdir(parents=True,exist_ok=True)
 if not (feature/bucket).exists(): (feature/bucket).symlink_to(root/bucket,target_is_directory=True)
 manifest=[]
-for path in sorted((root/bucket).glob("[0-9][0-9]_*.a")):
+for path in sorted((p for p in (root/bucket).glob('[0-9][0-9]_*') if p.suffix in ('.a', '.ts'))):
  text=path.read_text()
  manifest.append({"file":path.name,"tsc":re.findall(r"^// From TypeScript 6.0.3, (.+)$",text,re.M),"reason":"a function inside a function (a closure)"})
 results={}

@@ -347,6 +347,15 @@ _Noreturn void adamic_unreachable(void) {
 	adamic_panic(message, sizeof message - 1);
 }
 
+_Noreturn void adamic_invariant(const char *what) {
+	static const char prefix[] = "runtime invariant broken: ";
+	size_t length = strlen(what);
+	char message[sizeof prefix + length];
+	memcpy(message, prefix, sizeof prefix - 1);
+	memcpy(message + sizeof prefix - 1, what, length + 1);
+	adamic_panic(message, sizeof prefix - 1 + length);
+}
+
 // An explicit process exit bypasses all atexit hooks, worker joins, finally blocks and releases.
 _Noreturn void adamic_process_exit_now(int code) {
 	adamic_output_flush();

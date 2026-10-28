@@ -357,6 +357,20 @@ int main(int argc, char **argv) {
 	else if (strcmp(argv[1], "workload") == 0 || strcmp(argv[1], "bench") == 0) {
 		if (argc != 3) return 2;
 		workload((size_t)strtoull(argv[2], NULL, 10), strcmp(argv[1], "bench") == 0);
+	} else if (strcmp(argv[1], "fixed-optional-read") == 0 || strcmp(argv[1], "fixed-read") == 0 || strcmp(argv[1], "uniform-read") == 0) {
+		// A record reaching a fixed object's read: an optional field would otherwise read undefined.
+		adamic_record *record = adamic_record_new(false);
+		put(record, "total", 2);
+		adamic_slot_cache cache = {0};
+		if (strcmp(argv[1], "uniform-read") == 0) {
+			// The load a uniform field slot emits (fields.go): checked in sanitized and counted builds.
+			printf("%g\n", ADAMIC_UNIFORM_OBJECT(record, "total")->slots[1].number);
+		} else if (strcmp(argv[1], "fixed-optional-read") == 0) {
+			printf("%s\n", adamic_object_optional_field(record, "total", &cache) == NULL ? "undefined" : "found");
+		} else {
+			printf("%s\n", adamic_object_maybe_number(record, "0", &cache).present ? "found" : "undefined");
+		}
+		adamic_release(record);
 	} else if (strcmp(argv[1], "proto-assignment") == 0) {
 		adamic_record *record = adamic_record_new(false);
 		adamic_record_set(record, text("__proto__"), (adamic_value){.number = 42});

@@ -1,0 +1,4 @@
+import fs from 'node:fs';
+import {Buffer} from 'node:buffer';
+function visit(resolve: (path: string) => string): string { return ['.'].map(resolve).join('|'); }
+console.log(visit(fs.realpathSync.native));

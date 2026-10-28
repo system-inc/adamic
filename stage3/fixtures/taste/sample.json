@@ -109,7 +109,7 @@
     },
     {
       "form": "condition",
-      "fixture": "21_truthy_loops.a",
+      "fixture": "refused/21_truthy_loops.ts",
       "function": "getAncestor",
       "file": "src/compiler/utilities.ts",
       "line": 5256,
@@ -125,7 +125,7 @@
     },
     {
       "form": "condition",
-      "fixture": "21_truthy_loops.a",
+      "fixture": "refused/21_truthy_loops.ts",
       "function": "findActiveLabel",
       "file": "src/compiler/binder.ts",
       "line": 1608,
@@ -141,7 +141,7 @@
     },
     {
       "form": "condition",
-      "fixture": "21_truthy_loops.a",
+      "fixture": "refused/21_truthy_loops.ts",
       "function": "getRecursionIdentity",
       "file": "src/compiler/checker.ts",
       "line": 25323,
@@ -157,7 +157,7 @@
     },
     {
       "form": "condition",
-      "fixture": "21_truthy_loops.a",
+      "fixture": "refused/21_truthy_loops.ts",
       "function": "getRecursionIdentity",
       "file": "src/compiler/checker.ts",
       "line": 25328,
