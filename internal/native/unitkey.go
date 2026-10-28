@@ -495,7 +495,7 @@ func newUnitKeying(first string, common []runtimeFile, flags []string, compiler 
 	for _, flag := range flags {
 		parts = append(parts, "flag "+flag)
 	}
-	parts = append(parts, "compile "+strings.Join(unitCompileArguments("<unit>", "<directory>"), " "))
+	parts = append(parts, "compile "+strings.Join(unitCompileArguments("<unit>", "<directory>", flags), " "))
 	parts = append(parts, headers...)
 	files := slices.Clone(common)
 	sort.Slice(files, func(i, j int) bool { return files[i].name < files[j].name })
@@ -512,8 +512,19 @@ func (keying *unitKeying) key(unit compilationUnit) string {
 
 // unitCompileArguments are what follow a unit's flags when it compiles: the directory it compiles in mapped to one name
 // in everything the object records of a path, and the unit compiled to unit.o there.
-func unitCompileArguments(name string, directory string) []string {
-	return append(prefixMaps(directory, "/adamic-units"), "-c", name, "-o", "unit.o")
+func unitCompileArguments(name string, directory string, flags []string) []string {
+	arguments := prefixMaps(directory, "/adamic-units")
+	// A source-debug compile uses absolute generated paths so comp_dir cannot
+	// redirect C and header rows into the entry directory. Sanitizers keep the
+	// relative spelling recorded by ASan's metadata.
+	for _, flag := range flags {
+		if strings.HasPrefix(flag, "-fdebug-compilation-dir=") && !slices.Contains(flags, "-fsanitize=address,undefined") && !slices.Contains(flags, "-fsanitize=thread") {
+			arguments = append(arguments, "-I", directory)
+			name = filepath.Join(directory, name)
+			break
+		}
+	}
+	return append(arguments, "-c", name, "-o", "unit.o")
 }
 
 // fileDigest is the sha256 of what path holds, in hex.

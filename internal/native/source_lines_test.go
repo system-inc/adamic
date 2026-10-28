@@ -197,65 +197,103 @@ func runDebugStrippedIR(t *testing.T, shard int) {
 
 func TestDebugTwoDirectories(t *testing.T) {
 	t.Parallel()
-	debugDirectoriesProduct(t, false)
-	var first string
-	var firstKeys []string
-	for i := 0; i < 2; i++ {
-		path := filepath.Join(t.TempDir(), "fixture.a")
-		if err := os.Mkdir(filepath.Join(filepath.Dir(path), "lib"), 0755); err != nil {
-			t.Fatal(err)
-		}
-		if err := os.WriteFile(filepath.Join(filepath.Dir(path), "lib", "value.a"), []byte("export function f(n: number): number { return n + 1; }\n"), 0644); err != nil {
-			t.Fatal(err)
-		}
-		if err := os.WriteFile(path, []byte("import { f } from './lib/value.a';\nconsole.log((f(4)).toString());\n"), 0644); err != nil {
-			t.Fatal(err)
-		}
-		program, err := debugProgram(t, path, true)
-		if err != nil {
-			t.Fatal(err)
-		}
-		source := CWithOptions(program, Options{Debug: true})
+	for _, mode := range []struct {
+		name    string
+		options Options
+	}{
+		{"release", Options{Release: true}}, {"sanitized", Options{Sanitize: true}}, {"debug", Options{Debug: true}},
+	} {
+		t.Run(mode.name, func(t *testing.T) {
+			var firstBinary []byte
+			var first string
+			var firstKeys []string
+			for i := 0; i < 2; i++ {
+				path := filepath.Join(t.TempDir(), "fixture.a")
+				if err := os.Mkdir(filepath.Join(filepath.Dir(path), "lib"), 0755); err != nil {
+					t.Fatal(err)
+				}
+				if err := os.WriteFile(filepath.Join(filepath.Dir(path), "lib", "value.a"), []byte("export function f(n: number): number { return n + 1; }\n"), 0644); err != nil {
+					t.Fatal(err)
+				}
+				if err := os.WriteFile(path, []byte("import { f } from './lib/value.a';\nconsole.log((f(4)).toString());\n"), 0644); err != nil {
+					t.Fatal(err)
+				}
+				options := mode.options
+				options.DebugDirectory = filepath.Dir(path)
+				program, err := debugProgram(t, path, options.Debug)
+				if err != nil {
+					t.Fatal(err)
+				}
+				source := CWithOptions(program, options)
+				binary := filepath.Join(filepath.Dir(path), "program")
+				if err := Build(source, binary, options); err != nil {
+					t.Fatal(err)
+				}
+				if options.Debug && !strings.Contains(source, `#line 1 "lib/value.a"`) {
+					t.Fatal("missing entry-relative imported marker")
+				}
+				if options.Debug && !strings.Contains(source, `#line 2 "fixture.a"`) {
+					t.Fatal("missing relative entry marker")
+				}
+				contents, err := os.ReadFile(binary)
+				if err != nil {
+					t.Fatal(err)
+				}
+				if i == 0 {
+					firstBinary = contents
+				} else if options.Debug {
+					if bytes.Equal(firstBinary, contents) {
+						t.Fatal("debug binaries must differ by entry directory")
+					}
+				} else if !bytes.Equal(firstBinary, contents) {
+					t.Fatal("release/sanitized binaries must match")
+				}
+				if i == 0 {
+					first = source
+				} else if source != first {
+					t.Fatal("C differs between directories")
+				}
+				// Splitting is deterministic too, including each unit's resolved reset.
+				header, units, err := splitC(source)
+				if err != nil {
+					t.Fatal(err)
+				}
+				header2, units2, err := splitC(first)
+				if err != nil {
+					t.Fatal(err)
+				}
+				if header != header2 || !reflect.DeepEqual(units, units2) {
+					t.Fatal("split unit bytes differ")
+				}
+				common, err := readRuntime(runtime, "runtime")
+				if err != nil {
+					t.Fatal(err)
+				}
+				common = append(common, runtimeFile{name: "units.h", contents: []byte(header)})
+				keying := testUnitKeying(t, unitFirst, common, append(SourceFlags(source, options), programDebugFlags(options)...), unitKeyCompiler(t), unitKeyEnvironment())
+				var keys []string
+				for _, unit := range units {
+					keys = append(keys, keying.key(unit))
+				}
+				if i == 0 {
+					firstKeys = keys
+				} else if options.Debug {
+					if reflect.DeepEqual(firstKeys, keys) {
+						t.Fatal("debug keys must differ by entry directory")
+					}
+				} else if !reflect.DeepEqual(firstKeys, keys) {
+					t.Fatal("release/sanitized keys must match")
+				}
 
-		if !strings.Contains(source, `#line 1 "lib/value.a"`) {
-			t.Fatal("missing entry-relative imported marker")
-		}
-		if !strings.Contains(source, `#line 2 "fixture.a"`) {
-			t.Fatal("missing relative entry marker")
-		}
-		if i == 0 {
-			first = source
-		} else if source != first {
-			t.Fatal("C differs between directories")
-		}
-		// Splitting is deterministic too, including each unit's resolved reset.
-		header, units, err := splitC(source)
-		if err != nil {
-			t.Fatal(err)
-		}
-		header2, units2, err := splitC(first)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if header != header2 || !reflect.DeepEqual(units, units2) {
-			t.Fatal("split unit bytes differ")
-		}
-		common, err := readRuntime(runtime, "runtime")
-		if err != nil {
-			t.Fatal(err)
-		}
-		common = append(common, runtimeFile{name: "units.h", contents: []byte(header)})
-		keying := testUnitKeying(t, unitFirst, common, SourceFlags(source, Options{Debug: true}), unitKeyCompiler(t), unitKeyEnvironment())
-		var keys []string
-		for _, unit := range units {
-			keys = append(keys, keying.key(unit))
-		}
-		if i == 0 {
-			firstKeys = keys
-		} else if !reflect.DeepEqual(firstKeys, keys) {
-			t.Fatal("split unit keys differ")
-		}
-
+			}
+			// Debug binaries and unit keys embed the absolute entry directory, as Go
+			// does without -trimpath. C bytes remain identical in every mode.
+			if mode.options.Debug {
+				t.Log("C identical; debug binaries and keys differ because they embed the absolute entry directory")
+			} else {
+				t.Log("C, binaries and keys identical")
+			}
+		})
 	}
 }
 
