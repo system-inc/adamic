@@ -261,11 +261,35 @@ of the head's samples, and functions whose code did not change between the two m
 1.2 times their seconds on `85c9d783`. That points to a slower box after the second container
 restart rather than to new work, inferred, not measured. A same-box check follows.
 
+## One file alone against the 79-file program (push 8, observed)
+
+Does the time per statement grow with the number of files? `factory/nodeTests.ts` named alone
+(`latent-census-timed <adapted>/src/compiler/factory/nodeTests.ts out.jsonl`, the same env; `WalkDir`
+on a file yields just that file, so `program.Files()` holds one root while the checker still loads
+its whole import closure), on each compiler, one after another on today's box
+([one-file/](one-file)):
+
+| compiler | alone: loop s (user s) | process wall | in the 79-file program: loop s | 79-file / alone |
+|---|--:|--:|--:|--:|
+| main `85c9d783` | 27.0 (30.4) | 32.6 s | 130.6 (trial) | 4.8 |
+| main `95a7b63f` | 25.5 (29.0) | 29.7 s | 190.0 | 7.4 |
+| head `f2479703` | 19.6 (21.4) | 24.5 s | 48.3 | 2.5 |
+
+Yes: on main, the same file's statements cost 4.8 times as much inside the 79-file program as alone,
+with the same decision line both ways (`factory/nodeTests.ts 228 227`). The shared identity map
+removes part of that growth; the rest is the per-statement walks over all of `program.Files()`
+(`latentRegister`, `noteInheritance`, `noteAccessorNames`) and whatever under the predicate proof
+scales with the program.
+
+Drift: alone and on the same box, `95a7b63f` (25.5 s) is not slower than `85c9d783` (27.0 s), while
+inside the program it measured 190.0 against 130.6 s, the two runs hours and a container restart
+apart. That supports a slower box for the second, not new work. A same-box rerun of `85c9d783` over
+all 79 files is running now to settle it.
+
 ## What hasn't run yet, and why
 
-Still to run: a same-box check of the restart drift (one-file runs of `85c9d783` and
-`95a7b63f`, which also answer the one-file against 79-file question), then A's profile, B's timed
-run, and the A/B decision diffs.
+Still to run, queued in this order: a same-box rerun of main `85c9d783` over all 79 files, A's
+profile, B's timed run, then the A/B decision diffs.
 
 - The timeout is 3,600 s, not 900 s, since one process covers all 79 files and takes 3,230 s on main.
 - Per-file invocations (one process per file) are not the meter's step: the meter loads all 79
