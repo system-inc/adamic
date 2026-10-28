@@ -14,7 +14,7 @@ bucket = Path(__file__).resolve().parent
 scratch = args.logs.resolve()
 scratch.mkdir(parents=True, exist_ok=True)
 manifest = []
-for p in sorted(bucket.glob('[0-9][0-9]_*.a')):
+for p in sorted((p for p in bucket.glob('[0-9][0-9]_*') if p.suffix in ('.a', '.ts'))):
     tsc = [line.split('TypeScript 6.0.3, ')[1] for line in p.read_text().splitlines() if line.startswith('// From TypeScript 6.0.3, ')]
     manifest.append({'file': p.name, 'tsc': tsc, 'reason': 'a namespace'})
 results = {}

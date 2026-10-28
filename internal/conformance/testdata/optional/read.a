@@ -1,0 +1,6 @@
+// Spec: a property read through `?.` is in
+// Expect: lowers
+const boxes: readonly ({ readonly name: string } | undefined)[] = [{ name: 'ada' }, undefined];
+for (const box of boxes) {
+	console.log(box?.name ?? 'none');
+}

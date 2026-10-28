@@ -18,7 +18,7 @@ args.scratch.mkdir(parents=True, exist_ok=True)
 contracts = json.loads((HERE / 'expectations.json').read_text())
 recorded = json.loads((HERE / 'status.json').read_text()) if (HERE / 'status.json').exists() else None
 recorded_by_file = {r['file']: r for r in recorded or []}
-assert len(contracts) == 6 and {r['file'] for r in contracts} == {f.name for f in HERE.glob('*.a')}
+assert len(contracts) == 6 and {r['file'] for r in contracts} == {f.name for f in (file for file in HERE.iterdir() if file.is_file() and file.suffix in ('.a', '.ts'))}
 rows, mutations, acceptance = [], [], []
 
 

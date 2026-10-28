@@ -7,7 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 REPO = ROOT.parents[2]
 rows = json.loads((ROOT / 'status.json').read_text())
-assert {r['file'] for r in rows} == {f.name for f in ROOT.glob('*.a')}
+assert {r['file'] for r in rows} == {f.name for f in (file for file in ROOT.iterdir() if file.is_file() and file.suffix in ('.a', '.ts'))}
 assert len(rows) == len({r['file'] for r in rows})
 for row in rows:
     assert set(row) == {'file', 'tsc', 'reason', 'node', 'stage0'}

@@ -359,6 +359,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 
 // property lowers object.name, array.length, and Math's constants.
 func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+	if value, found, err := l.nodeRealpathValue(node); found {
+		return value, err
+	}
 	if value, found, err := l.nodeEnvironmentRead(node); found {
 		return value, err
 	}

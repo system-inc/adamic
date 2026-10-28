@@ -172,7 +172,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Compiles","what":""}
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/taste/13_void_callback.a:7:20: Adamic 0.1 refuses a read of a void value, as an argument; call it as a statement, or give the function a return type (adamic/no-void-read)"}
   },
   {
     "file": "14_relative_complement.a",
@@ -274,7 +274,7 @@
     "stage0": {"outcome":"Compiles","what":""}
   },
   {
-    "file": "refused/21_truthy_loops.a",
+    "file": "refused/21_truthy_loops.ts",
     "tsc": [
       "src/compiler/utilities.ts:5255",
       "src/compiler/binder.ts:1607",

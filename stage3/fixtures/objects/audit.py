@@ -33,7 +33,7 @@ for row in files:
     checked += 1
 print(f'Pinned source hashes: {checked} original sources checked')
 status = json.loads((bucket / 'status.json').read_text())
-fixtures = {file.name for file in bucket.glob('*.a')}
+fixtures = {file.name for file in (file for file in bucket.iterdir() if file.is_file() and file.suffix in ('.a', '.ts'))}
 assert len(status) == len(fixtures) == 25
 assert {row['file'] for row in status} == fixtures
 for row in status:

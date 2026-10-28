@@ -1,4 +1,5 @@
-// a-check: refused a function taking number seen as one taking never[] (tsc relates a method's parameters both ways), so it can be handed what it can't take
+// a-check: refused a value of type (level: number) => boolean seen as AnyFunction
+// parser driver evidence (Oct 8): promised refused a function taking number seen as one taking never[] (tsc relates a method's parameters both ways), so it can be handed what it can't take then
 // Reduced from TypeScript 6.0.3, Debug.shouldAssertFunction.
 // Namespace-free callable marker witness matching views-callables parser-cache.a.
 type AnyFunction = (...args: never[]) => void;

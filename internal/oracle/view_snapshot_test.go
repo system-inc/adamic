@@ -14,7 +14,7 @@ func init() {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
-		}{"stage3/interface-downcasts/v2/snapshot-maybe-" + name + ".a", true, false})
+		}{"stage3/interface-downcasts/v2/snapshot-maybe-" + name + ".ts", true, false})
 	}
 }
 

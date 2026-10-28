@@ -57,10 +57,12 @@ var cycleComparisonInputs = sync.OnceValues(func() ([]string, error) {
 	return paths, err
 })
 
+const cycleEqualityShardCount = 128
+
 func cycleComparisonShard(path string) uint64 {
 	h := fnv.New64a()
 	h.Write([]byte(path))
-	return h.Sum64() % 128
+	return h.Sum64() % cycleEqualityShardCount
 }
 
 // Compare the entire IR as well as refusal identity, rather than just admission.
@@ -299,6 +301,16 @@ func cycleFirstDifferenceResolved(a, b reflect.Value, path string, scanTypes, in
 	return "" // Unexported IR analysis caches do not carry ownership answers.
 }
 
+func cycleComparisonShardPaths(paths []string, shard uint64) []string {
+	var selected []string
+	for _, path := range paths {
+		if cycleComparisonShard(path) == shard {
+			selected = append(selected, path)
+		}
+	}
+	return selected
+}
+
 func runCycleFinderEqualityShard(t *testing.T, shard uint64) {
 	t.Helper()
 	paths, err := cycleComparisonInputs()
@@ -308,11 +320,9 @@ func runCycleFinderEqualityShard(t *testing.T, shard uint64) {
 	if len(paths) < 3500 {
 		t.Fatalf("cycle comparison inventory shrank: %d", len(paths))
 	}
-	for _, path := range paths {
-		if cycleComparisonShard(path) == shard {
-			if !t.Run(path, func(t *testing.T) { cycleCompareProgramRecorded(t, path) }) {
-				return
-			}
+	for _, path := range cycleComparisonShardPaths(paths, shard) {
+		if !t.Run(path, func(t *testing.T) { cycleCompareProgramRecorded(t, path) }) {
+			return
 		}
 	}
 }

@@ -1,0 +1,3 @@
+import fs from 'node:fs';
+import {Buffer} from 'node:buffer';
+let resolve = fs.realpathSync.native;

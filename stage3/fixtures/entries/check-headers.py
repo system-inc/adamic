@@ -11,7 +11,7 @@ ROOT=HERE.parents[2]
 p=argparse.ArgumentParser();p.add_argument('gate',type=Path);p.add_argument('--scratch',type=Path,required=True);a=p.parse_args()
 a.scratch.mkdir(parents=True,exist_ok=True)
 spec=importlib.util.spec_from_file_location('step12_fastgate',a.gate);module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
-paths=[str(f.relative_to(ROOT)) for f in sorted(HERE.glob('*.a'))]
+paths=[str(f.relative_to(ROOT)) for f in sorted((file for file in HERE.iterdir() if file.is_file() and file.suffix in ('.a', '.ts')))]
 observations={}
 class Process:
     def __init__(self,command):self.command=command;self.process=subprocess.Popen(command,cwd=ROOT,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)

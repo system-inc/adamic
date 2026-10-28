@@ -519,8 +519,9 @@ func run(args []string) error {
 			}
 			record.NegativeWitness = !agree && acceptsNegativeWitness(witness, headTree, node, javascript, native)
 			if record.NegativeWitness && witness.Form == checkedBoundaryForm {
-				// The repair is the stop's mutant: storing a value of the declared type, it agrees with Node.
-				repairPath := filepath.Join(scratch, fmt.Sprintf("repair-%d.a", index))
+				// The repair is the stop's mutant: storing a value of the declared type, it agrees with Node. It keeps
+				// the witness's extension, so it compiles in the witness's own mode: a .ts witness's repair as .ts.
+				repairPath := filepath.Join(scratch, fmt.Sprintf("repair-%d%s", index, filepath.Ext(source)))
 				if e := os.WriteFile(repairPath, repairedSource(data, witness), 0600); e != nil {
 					return e
 				}

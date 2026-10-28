@@ -47,7 +47,7 @@ func init() {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
-		}{"stage3/interface-downcasts/fx7/" + name + ".a", true, name != "depth-65" && name != "depth-200" && name != "depth-2000"})
+		}{"stage3/interface-downcasts/fx7/" + name + ".ts", true, name != "depth-65" && name != "depth-200" && name != "depth-2000"})
 	}
 }
 

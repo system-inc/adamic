@@ -44,7 +44,7 @@ for label, mutate in [
     else:
         raise AssertionError(label + ': survived')
 assert len(status) == 10
-assert {r['file'] for r in status} == {f.relative_to(BUCKET).as_posix() for f in BUCKET.glob('*/main.a')}
+assert {r['file'] for r in status} == {f.relative_to(BUCKET).as_posix() for f in (p for p in BUCKET.glob('*/main.*') if p.suffix in ('.a', '.ts'))}
 for row in status:
     assert set(row) == {'file', 'tsc', 'reason', 'node', 'stage0'}
     assert set(row['node']) == {'stdout', 'stderr', 'exit'}

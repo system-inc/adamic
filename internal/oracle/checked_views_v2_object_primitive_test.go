@@ -39,7 +39,7 @@ func TestCheckedViewObjectPrimitiveSource(t *testing.T) {
 				// Array membership needs V3 element-kind metadata and hole-aware reads.
 				t.Skip("awaits compiler/views-v3: array element kind and holes (b065fa576)")
 			}
-			path, err := filepath.Abs("../../stage3/interface-downcasts/lane4b/fixtures/" + sample.name + ".a")
+			path, err := filepath.Abs(filepath.Join(repository, interfaceFixturePath("lane4b/fixtures/"+sample.name)))
 			if err != nil {
 				t.Fatal(err)
 			}

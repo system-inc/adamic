@@ -9,7 +9,7 @@ REPO = ROOT.parents[2]
 LOGS = Path('/tmp/records-observations')
 LOGS.mkdir(exist_ok=True)
 rows = []
-for file in sorted(ROOT.glob('*.a')):
+for file in sorted((file for file in ROOT.iterdir() if file.is_file() and file.suffix in ('.a', '.ts'))):
     relative = file.relative_to(REPO)
     node = subprocess.run(['node', '--disable-warning=ExperimentalWarning', 'oracle/node.mjs', str(relative)], cwd=REPO, capture_output=True, text=True)
     (LOGS / (file.stem + '.node.log')).write_text(node.stdout + node.stderr)

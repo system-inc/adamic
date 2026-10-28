@@ -1,0 +1,8 @@
+import process from 'node:process';
+// These two names contain literal NULs.
+console.log(process.env['a\0b']);
+console.log(process.env['A\0B']);
+// Read the character code from the host so the compiler cannot fold these names.
+const separator = String.fromCharCode(Number(process.env.ADAMIC_ENV_NUL_CODE || '0'));
+console.log(process.env['a' + separator + 'b']);
+console.log(process.env['A' + separator + 'B']);

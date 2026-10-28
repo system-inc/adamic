@@ -1,4 +1,4 @@
-// a-check: refused a namespace
+// parser driver evidence (Oct 8): refused a namespace then; the language accepts it now
 // Minimal namespace reachability performance witness.
 // Dead branches share a call graph; Node executes no inner calls.
 function f0(): void {}

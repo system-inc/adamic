@@ -118,7 +118,8 @@ expected <type>, found <type>`, whose expected type (a read) or found type (a
 write) is `declared_type`. A `compiler bug:` panic or any other guard never
 qualifies. The declaration's line must declare that type, and the repair must
 replace exactly one place. Its repair is arbitrary text rather than a pinned
-literal, so a run that sees the stop also runs the repaired copy, and the entry
+literal, so a run that sees the stop also runs the repaired copy, written with the
+witness's own extension so a `.ts` witness's repair compiles as `.ts`, and the entry
 is a witness only when that copy agrees with Node (`repair_agree` in JSON).
 Other forms require an independent evidence validator before a ruling can use
 them. The repair's content hash cannot be listed. Every edit, including a type-correct repair, demands ordinary Node

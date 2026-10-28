@@ -89,3 +89,31 @@ func TestProcessEnvironmentInheritedKeyPanics(t *testing.T) {
 	expected := run{stderr: []byte("adamic: panic: node:process.Process.env inherited key: toString\n"), exitCode: 70}
 	processEnvironmentBackends(t, "prototype.a", nil, expected)
 }
+
+func TestProcessEnvironmentNULFixtureMatchesNode(t *testing.T) {
+	t.Parallel()
+	for _, one := range []struct {
+		name        string
+		environment []string
+		output      string
+	}{
+		{"nul", processEnvironmentFixtureEnvironment("nul.a"), "undefined\nset\nundefined\nset\n"},
+		// A non-NUL runtime separator changes only the last two reads. This
+		// neighbor catches folding the runtime name to the literal NUL case.
+		{"runtime_neighbor", []string{"A=set", "ADAMIC_ENV_NUL_CODE=65"}, "undefined\nset\nundefined\nundefined\n"},
+	} {
+		t.Run(one.name, func(t *testing.T) {
+			t.Parallel()
+			path, err := filepath.Abs("testdata/process_env/nul.a")
+			if err != nil {
+				t.Fatal(err)
+			}
+			truth := processEnvironmentRun(t, one.environment, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), path)
+			if truth.exitCode != 0 || len(truth.stderr) != 0 || string(truth.stdout) != one.output {
+				t.Fatalf("Node NUL-name witness changed: %+v", truth)
+			}
+			t.Logf("Node stdout: %q", truth.stdout)
+			processEnvironmentBackends(t, "nul.a", one.environment, truth)
+		})
+	}
+}

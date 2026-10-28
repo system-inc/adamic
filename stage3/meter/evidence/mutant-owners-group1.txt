@@ -1,0 +1,20 @@
+# Mutant evidence for group 1's owner entries in stage3/meter/owners.json (#bbssdcy)
+# Test: report_test.LatentReportTests.test_exact_prefix_and_variance_owners
+
+## With the entries (expected pass)
+Ran 1 test in 0.002s
+OK
+
+## Mutant 1: a planted wrong owner (01a1143b-d691) for the open tag domain class (expected red)
+AssertionError: '01a1143b-d691' != '#k1t2wp9 (Optimizer)'
+Ran 1 test in 0.002s
+FAILED (failures=1)
+
+## Mutant 2: the indirect call entry removed (expected red, owner blank)
+AssertionError: 'OWNER BLANK' != '#3hxh5jm (Workers)'
+Ran 1 test in 0.002s
+FAILED (failures=1)
+
+## Restored (expected pass)
+Ran 34 tests in 0.215s
+OK (skipped=4)

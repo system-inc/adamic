@@ -1,0 +1,14 @@
+enum SyntaxKind { Identifier, Block }
+interface Node { readonly kind: SyntaxKind }
+interface Identifier extends Node { readonly kind: SyntaxKind.Identifier; readonly text: string }
+// tsc's shape: a kind on an open SyntaxKind proves no layout, so the claim is checked through a view.
+function isIdentifier(node: Node): node is Identifier { return node.kind === SyntaxKind.Identifier; }
+// isIdentifier reaches visitNode as a value, as tsc's visitNode(node, visitor, isIdentifier) does.
+function visitNode(node: Node, test: (node: Node) => node is Identifier): string {
+	if (test(node)) return node.text;
+	return "other";
+}
+const identifier: Identifier = { kind: SyntaxKind.Identifier, text: "x" };
+const block: Node = { kind: SyntaxKind.Block };
+console.log(visitNode(identifier, isIdentifier));
+console.log(visitNode(block, isIdentifier));

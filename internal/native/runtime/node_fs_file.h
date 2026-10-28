@@ -36,3 +36,6 @@ adamic_string *adamic_fs_file_host_cwd(void);
 adamic_string *adamic_fs_file_host_tmpdir(void);
 double adamic_fs_file_host_chdir(const adamic_string *);
 #endif
+
+// Translate the saved host realpath errno; no other operation uses this error variant.
+void adamic_fs_file_realpath_error(const adamic_string *);
