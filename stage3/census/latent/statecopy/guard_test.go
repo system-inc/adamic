@@ -63,6 +63,9 @@ func TestLatentStatecopyCoversEveryLoweringStateField(t *testing.T) {
 					if name == "lowering" && id.Name == "impliedTargetQuery" && printed(field.Type) == "func(*ast.Node) *checker.Type" {
 						continue
 					}
+					if name == "lowering" && id.Name == "sourceIdentities" && printed(field.Type) == "map[*ast.Node]ir.SourceIdentity" {
+						continue
+					}
 					func() {
 						defer func() {
 							if failure := recover(); failure != nil {
@@ -102,4 +105,24 @@ func fieldSource(root, name string) string {
 		}
 	}
 	return name
+}
+
+// The shared identity map is passed through, never deep-copied: a lowering's copy reads and fills the one map every
+// lowering of a latent run shares (#pv935yw). Mutant: the generator's sourceIdentities case dropped, so the copy gets
+// result.sourceIdentities from a fresh map.
+func TestLatentStatecopySharesSourceIdentities(t *testing.T) {
+	t.Parallel()
+	// Reads: internal/lower/*.go
+	// Reads: internal/ir/*.go
+	root, err := filepath.Abs("../../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	result := string(generate(root, filepath.Join(root, "internal/lower/lower.go")))
+	if !strings.Contains(result, "func latentCopy_lowering(") {
+		t.Fatal("no lowering copier was generated")
+	}
+	if strings.Contains(result, "result.sourceIdentities=") || strings.Contains(result, "result.sourceIdentities =") {
+		t.Fatal("the lowering copier deep-copies sourceIdentities, which every lowering of a latent run shares")
+	}
 }
