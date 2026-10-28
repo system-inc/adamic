@@ -1,0 +1,11 @@
+{
+  "Name": "narrowed-record-tag",
+  "Test": "TestNarrowedUnionRecordTag",
+  "Mutation": "In internal/lower/locals.go's localRead, drop || held == ir.Record from the object kinds typeof can't tell apart, which puts back main's line.",
+  "Command": "go test -p 1 -count=1 -timeout 30m ./internal/oracle -run '^TestNarrowedUnionRecordTag$' -v",
+  "Runner": "ADAMIC_NARROWED_RECORD_MUTANT=1 go test -p 1 -count=1 -timeout 30m ./internal/oracle -run '^TestNarrowedUnionRecordTag$' -v",
+  "Diagnostic": "narrowed_union_record_test.go:47: want the object-tag NotYet at the narrowing, got <nil>",
+  "ExpectedStdout": "5\n",
+  "MutantStdout": "4.75719380707795e-310\n",
+  "ObservedOutput": "mutant admits it: release exit 0, stdout \"4.75719380707795e-310\\n\", stderr \"\" where Node prints \"5\\n\"; mutant admits it: native exit 70, stdout \"\", stderr \"adamic: panic: compiler bug: a record reached a fixed-object read of v\\n\" where Node prints \"5\\n\""
+}
