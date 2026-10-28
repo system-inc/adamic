@@ -1,0 +1,5 @@
+// Spec: a call through a `void` type is a statement
+// Expect: lowers
+const make: () => void = () => 42;
+make();
+console.log('discarded');

@@ -1,0 +1,7 @@
+// Spec: A `void` value is unobservable instead
+// Expect: refused a read of a void value
+// H2 (October 18): `make` returns 42 through a `() => void` slot. Node prints false; a read of the
+// void value would print true on both backends, a silent miscompile.
+const make: () => void = () => 42;
+const value = make();
+console.log(`${value === undefined}`);
