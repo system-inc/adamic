@@ -1,0 +1,3 @@
+// a-check: refused a void value at the initializer site through .v seen as unknown
+const make: () => void = () => 42; const all: void[] = [1, 2].map(() => make());
+const box: { readonly v: void } = { v: undefined }; const wide: { readonly v: unknown } = box; console.log(typeof wide);
