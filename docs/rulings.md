@@ -273,7 +273,7 @@ How to read an entry. The kinds are Accept, Refuse (a compile-time refusal with 
 - **`console.log` takes exactly one string; number formatting, `Math.round`, `pow`, sort stability and Map iteration order match Node.** Meaning. Oct 5 2026, Kirk; source: #8vpywxp. Spec: Semantics that differ from JavaScript. Test: internal/oracle/output_test.go:73 TestOneFileHoldsNodesOrder.
 - **A union of arrays is not an array of union elements; the latter stays unsupported.** NotYet. Undated, docs; source: docs/array-literal-never-element.md:19-24. Spec: not in the spec.
 - **On a tuple, a method that changes its length or order (`push`, `pop`, `shift`, `unshift`, `splice`, `reverse`, `sort`, `fill`, `copyWithin`) is refused, and so is a mutable tuple seen as a mutable array; a readonly array view is fine.** Refuse. Oct 18 2026, @system_adamic (#system_adamic_language); source: refusal #ktyqy3c. Spec: What's refused in 0.1 (row tuple methods). Test: NONE as a refusal (internal/lower/lower_test.go:576 TestATupleSeenAsAnArrayIsNotYet pins a NotYet).
-- **A `void` value is unobservable: binding and reading one, comparing it, returning it or passing it is refused; a call through a `void` type is a statement and the discarded value is released.** Refuse. Oct 18 2026, @system_adamic (#system_adamic_language); source: refusal #x2gt39p, release #f418fbz. Spec: What's refused in 0.1 (row Reading a `void` value). Test: NONE (not found; internal/lower/library_node_fs_file_test.go:41 TestNodeFSFileRefusesVoidValues covers one host case only).
+- **A `void` value is unobservable: binding and reading one, comparing it, returning it or passing it is refused; a call through a `void` type is a statement and the discarded value is released.** Refuse. Oct 18 2026, @system_adamic (#system_adamic_language); source: refusal #x2gt39p, release #f418fbz. Spec: What's refused in 0.1 (row Reading a `void` value). Test: internal/lower/void_reads_test.go:14 TestVoidReadsAreRefused and :46 TestVoidDiscardsStayLegal (the refusal, 8d39519a, Oct 27, #x2gt39p); internal/conformance/testdata/void/read.a and read.ts refuse it, and discard_fix.a lowers; internal/lower/library_node_fs_file_test.go:41 TestNodeFSFileRefusesVoidValues for one host case. A void value inside a container seen wider is ruled on #p7t8tmh (Oct 27) and not yet built.
 
 ## Memory and weak
 
@@ -369,7 +369,7 @@ Every current Refuse or Check ruling whose test column is NONE. A refusal here c
 1. Gate: the `cohere:adamic` set membership itself (adamic.json); a rule can leave the set unnoticed.
 2. Refuse: a write to a slot through a union must fit every member (#yawc0z5, Oct 18). **Pinned:** internal/conformance/testdata/unions (Oct 20).
 3. Refuse: ambient declarations, augmentation and `/// <reference>` (#3bddhs8, Oct 18). **Pinned:** internal/conformance/testdata/ambient (Oct 20).
-4. Refuse: reading a `void` value (#x2gt39p, Oct 18).
+4. Refuse: reading a `void` value (#x2gt39p, Oct 18). **Pinned:** internal/conformance/testdata/void (Oct 27), after the refusal landed as 8d39519a.
 5. Refuse: length-changing tuple methods and a mutable tuple as a mutable array (#ktyqy3c, Oct 18; only a NotYet is pinned).
 6. Refuse: `adamic/single-spread` in stage 0 (implemented at internal/lower/object.go:29; cohere only). **Pinned:** internal/conformance/testdata/untested/single_spread.a (Oct 22).
 7. Refuse: expandos, function expandos included, and tsc's `MultiMap` expando.
