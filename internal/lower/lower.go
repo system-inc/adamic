@@ -185,6 +185,8 @@ type lowering struct {
 	graphViewSite, graphDynamicSite *ast.Node
 	// impliedTargets memoizes inferred parent targets only within this checker.
 	impliedTargets map[*ast.Node]*checker.Type
+	// voidHolders memoizes holdsVoid: whether a type holds void at a position (#p7t8tmh).
+	voidHolders map[*checker.Type]bool
 	// A per-lowering query seam lets tests count actual checker calls without globals.
 	// Nil uses checker.GetTypeAtLocation.
 	impliedTargetQuery func(*ast.Node) *checker.Type
