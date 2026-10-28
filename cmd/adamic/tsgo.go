@@ -73,6 +73,8 @@ func buildWithNativeExports(path, output string, arguments []string, buildNative
 			}
 		case "--count":
 			options.Count = true
+		case "--debug":
+			options.Debug = true
 		case "--sanitize":
 			options.Sanitize = true
 		case "--tsgo":
@@ -113,7 +115,7 @@ func buildWithNativeExports(path, output string, arguments []string, buildNative
 		reactor = reactor || len(exports) > 0
 		options.Request = reactor || handler >= 0
 	} else {
-		program, code = compileLibrary(path, archive != "")
+		program, code = compileLibrary(path, archive != "", options.Debug)
 	}
 	if program == nil {
 		return code
@@ -142,7 +144,7 @@ func buildWithNativeExports(path, output string, arguments []string, buildNative
 				source, err = native.WASI(program, handler)
 			}
 		} else {
-			source = native.C(program)
+			source = native.CWithOptions(program, options)
 		}
 		if err == nil {
 			err = buildNative(source, output, options)

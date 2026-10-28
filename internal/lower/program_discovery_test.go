@@ -17,11 +17,11 @@ func TestProgramDiscoveryAllocationIdentities(t *testing.T) {
 	entry := loaded.Files()[0]
 	check, release := loaded.Checker(context.Background(), entry)
 	defer release()
-	first, err := lowerChecked(loaded, check, entry, nil, true)
+	first, err := lowerChecked(loaded, check, entry, nil, true, false)
 	if err != nil {
 		t.Fatal(err)
 	}
-	second, err := lowerChecked(loaded, check, entry, nil, true)
+	second, err := lowerChecked(loaded, check, entry, nil, true, false)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -33,7 +33,7 @@ func TestProgramDiscoveryAllocationIdentities(t *testing.T) {
 	if !reflect.DeepEqual(a.identities, b.identities) {
 		t.Fatal("repeated discovery changed allocation identities")
 	}
-	built, err := lowerChecked(loaded, check, entry, a, false)
+	built, err := lowerChecked(loaded, check, entry, a, false, false)
 	if err != nil {
 		t.Fatal(err)
 	}

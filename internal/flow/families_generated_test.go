@@ -413,6 +413,7 @@ func registerFlowCorpusIR() {
 		gob.Register(ir.SetNew{})
 		gob.Register(ir.SetProperty{})
 		gob.Register(ir.SetValues{})
+		gob.Register(ir.SourceLine{})
 		gob.Register(ir.StringCall{})
 		gob.Register(ir.StringConstant{})
 		gob.Register(ir.StringFromCodes{})
