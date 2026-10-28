@@ -58,7 +58,6 @@ func (l *lowering) provePredicate(node *ast.Node) (predicateProof, error) {
 	if node == nil || node.Kind != ast.KindTypePredicate || node.Parent == nil || !ast.IsFunctionLike(node.Parent) || node.Parent.Body() == nil {
 		return proof, predicateFailure(l, node, "no implementation body proves a return path")
 	}
-	v := &predicateVerifier{l: l, summaries: map[*ast.Node][]predicateTruth{}}
 	if node.AsTypePredicateNode().Type == nil {
 		if node.AsTypePredicateNode().AssertsModifier != nil {
 			return l.proveConditionAssertion(node)
@@ -66,59 +65,109 @@ func (l *lowering) provePredicate(node *ast.Node) (predicateProof, error) {
 		return proof, predicateFailure(l, node, "an assertion without a target type is not proved")
 	}
 	target := l.checker.GetTypeAtLocation(node.AsTypePredicateNode().Type)
-	if target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsUnion) != 0 && v.kindTarget(target) {
-		v.field = "kind"
+	field := ""
+	if target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsUnion) != 0 && (&predicateVerifier{l: l}).kindTarget(target) {
+		field = "kind"
 		proof.TaggedView = true
 	} else if !predicatePrimitiveTarget(target) {
 		return proof, predicateFailure(l, node, "the target has an unsupported runtime contract")
 	}
-	if v.field == "" {
+	point := l.predicateFixedPoint(field)
+	if _, ok := point.summaries[node.Parent]; ok {
+		return proof, nil
+	}
+	if failure, ok := point.failures[node.Parent]; ok {
+		return predicateProof{}, predicateFailureCopy(failure)
+	}
+	return predicateProof{}, predicateFailure(l, node, "unconverged helper proof")
+}
+
+// predicateProofs is one lowering's proof of every type predicate in the program: the declarations with a predicate
+// return and a body, in the program's order, and for each verifier mode ("" for the eight typeof cells, "kind" for a
+// tag), that mode's fixed point. provePredicate used to walk the program and run a fixed point over all of its
+// predicates on every call, 43% of the meter's latent step on tsc's 79 files (#pv935yw). The program and the checker
+// are every input to it (the verifier reads the checker, fieldLiteral, symbol, isPanicCall and enumTagHazardOf, never
+// typeMapper or other lowering state), so nothing invalidates it. It lives on one lowering, never across lowerings.
+type predicateProofs struct {
+	declarations []*ast.Node
+	modes        map[string]*predicateFixedPoint
+}
+
+// predicateFixedPoint is one mode's verifier run to its end: every declaration's summary, or the error its verify gave
+// in the last pass, the pass that proved nothing new. A summary is never dropped and the passes run in the program's
+// order, so a summary that provePredicate's early return saw is here too, and a declaration never proved has the
+// error from the same final pass it always had.
+type predicateFixedPoint struct {
+	summaries map[*ast.Node][]predicateTruth
+	failures  map[*ast.Node]error
+}
+
+// predicateFixedPoint returns mode field's fixed point, running it the first time it's asked.
+func (l *lowering) predicateFixedPoint(field string) *predicateFixedPoint {
+	if l.predicateProofs == nil {
+		proofs := &predicateProofs{modes: map[string]*predicateFixedPoint{}}
+		var visit ast.Visitor
+		visit = func(n *ast.Node) bool {
+			if ast.IsFunctionLike(n) && n.Type() != nil && n.Type().Kind == ast.KindTypePredicate && n.Body() != nil {
+				proofs.declarations = append(proofs.declarations, n)
+			}
+			n.ForEachChild(visit)
+			return false
+		}
+		for _, file := range l.program.Files() {
+			file.AsNode().ForEachChild(visit)
+		}
+		l.predicateProofs = proofs
+	}
+	if point, ok := l.predicateProofs.modes[field]; ok {
+		return point
+	}
+	v := &predicateVerifier{l: l, field: field, summaries: map[*ast.Node][]predicateTruth{}}
+	if field == "" {
 		v.cells = []string{"string", "number", "boolean", "undefined", "object", "function", "symbol", "bigint"}
 	} else {
+		// A tag's cells are every kind the program's predicates name, the same set whichever predicate asks.
 		v.cells = []string{"<other kind>"}
-	}
-	var declarations []*ast.Node
-	var visit ast.Visitor
-	visit = func(n *ast.Node) bool {
-		if ast.IsFunctionLike(n) && n.Type() != nil && n.Type().Kind == ast.KindTypePredicate && n.Body() != nil {
-			declarations = append(declarations, n)
-			if v.field != "" {
-				v.collectKinds(n)
-			}
+		for _, declaration := range l.predicateProofs.declarations {
+			v.collectKinds(declaration)
 		}
-		n.ForEachChild(visit)
-		return false
 	}
-	for _, file := range l.program.Files() {
-		file.AsNode().ForEachChild(visit)
-	}
-	var last error
+	point := &predicateFixedPoint{summaries: v.summaries, failures: map[*ast.Node]error{}}
 	for {
 		changed := false
-		for _, declaration := range declarations {
+		for _, declaration := range l.predicateProofs.declarations {
 			if _, ok := v.summaries[declaration]; ok {
 				continue
 			}
 			summary, err := v.verify(declaration)
-			if declaration == node.Parent {
-				last = err
-			}
 			if err == nil {
 				v.summaries[declaration] = summary
+				delete(point.failures, declaration)
 				changed = true
+			} else {
+				point.failures[declaration] = err
 			}
-		}
-		if _, ok := v.summaries[node.Parent]; ok {
-			return proof, nil
 		}
 		if !changed {
 			break
 		}
 	}
-	if last == nil {
-		last = predicateFailure(l, node, "unconverged helper proof")
+	l.predicateProofs.modes[field] = point
+	return point
+}
+
+// predicateFailureCopy is a memoized failure for one caller: its own copy of a refusal or a not-yet, so no caller's
+// change to it reaches another's.
+func predicateFailureCopy(err error) error {
+	switch failure := err.(type) {
+	case *Refused:
+		copied := *failure
+		return &copied
+	case *NotYet:
+		copied := *failure
+		return &copied
 	}
-	return predicateProof{}, last
+	return err
 }
 
 func predicatePrimitiveTarget(t *checker.Type) bool {

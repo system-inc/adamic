@@ -209,6 +209,8 @@ type lowering struct {
 	result           *ir.Program
 	sourceIdentities map[*ast.Node]ir.SourceIdentity
 	sourceModules    map[*ast.SourceFile]string
+	// predicateProofs is every type predicate's proof, run once per verifier mode (predicates_proof.go).
+	predicateProofs *predicateProofs
 
 	// cyclicModules keeps unresolved reads checked throughout a cyclic graph.
 	cyclicModules     bool
