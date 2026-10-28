@@ -1,4 +1,4 @@
-// NotYet: views-v3: array element kind
+// a-check: refused a downcast to View whose tag test is vacuous
 interface Node { readonly ready: boolean; }
 interface Root { readonly kind: 'Holder'; }
 interface View extends Root { readonly value: Node | readonly Node[]; }

@@ -99,10 +99,11 @@ func TestCheckedViewUntaggedCallableUnion(t *testing.T) {
 
 // A stored function that takes a boolean fits neither member of Target, read directly or through a nested holder, so
 // the read is refused where it stands rather than compiled to stop at run time where Node prints true (Compiler's
-// ruling (b) on #aecx10a).
+// ruling (b) on #aecx10a). In .a the cast before it is refused first: its tag test, kind === 'Receiver', is one every
+// source value passes (#q97a1rr); its .ts twin keeps the cast a checked view and is refused at the read.
 func TestCheckedViewUntaggedCallableUnionMisfitRefuses(t *testing.T) {
 	t.Parallel()
-	for variant, at := range map[string]string{"wrong": ":8:16:", "nested": ":9:16:"} {
+	for variant, at := range map[string]struct{ cast, read string }{"wrong": {":7:12:", ":8:16:"}, "nested": {":8:12:", ":9:16:"}} {
 		t.Run(variant, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, interfaceFixturePath("untagged/fixtures/callable-union-"+variant)))
@@ -114,8 +115,12 @@ func TestCheckedViewUntaggedCallableUnionMisfitRefuses(t *testing.T) {
 			}
 			_, err = lowered(t, path)
 			var refused *lower.Refused
-			if !errors.As(err, &refused) || !strings.Contains(err.Error(), "callable-union-"+variant+".a"+at) || refused.What != "checked view read of field value with unsupported representation conversion contract" {
-				t.Fatalf("want the located representation conversion refusal at %s, got %v", at, err)
+			if !errors.As(err, &refused) || !strings.Contains(err.Error(), "callable-union-"+variant+".a"+at.cast) || !strings.Contains(refused.What, "a downcast to Receiver whose tag test is vacuous") {
+				t.Fatalf("want the located vacuous downcast refusal at %s, got %v", at.cast, err)
+			}
+			_, err = lowered(t, typeScriptTwin(t, path))
+			if !errors.As(err, &refused) || !strings.Contains(err.Error(), "callable-union-"+variant+".ts"+at.read) || refused.What != "checked view read of field value with unsupported representation conversion contract" {
+				t.Fatalf("twin: want the located representation conversion refusal at %s, got %v", at.read, err)
 			}
 		})
 	}
@@ -210,19 +215,21 @@ func TestCheckedViewUntaggedRecursive(t *testing.T) {
 	}
 }
 
+// In .a each cast is refused first, since its tag test, kind === 'Receiver', is one every source value passes
+// (#q97a1rr); its .ts twin keeps the cast a checked view and stays NotYet at the array.
 func TestCheckedViewUntaggedArrayPending(t *testing.T) {
 	t.Parallel()
 	for _, variant := range []string{"good", "wrong", "nested", "empty", "mixed"} {
 		t.Run(variant, func(t *testing.T) {
 			t.Parallel()
 			path, _ := filepath.Abs("../../stage3/interface-downcasts/untagged/fixtures/array-union-" + variant + ".a")
-			loaded, err := load.Load([]string{path})
-			if err != nil {
-				t.Fatal(err)
+			_, err := lowered(t, path)
+			if refused, ok := err.(*lower.Refused); !ok || !strings.Contains(refused.What, "a downcast to Receiver whose tag test is vacuous") {
+				t.Fatalf("want the vacuous downcast refusal, got %v", err)
 			}
-			_, err = lower.Lower(context.Background(), loaded)
+			_, err = lowered(t, typeScriptTwin(t, path))
 			if unsupported, ok := err.(*lower.NotYet); !ok || !(strings.Contains(unsupported.What, "views-v3: array element kind") || variant == "empty" && unsupported.What == "an array of never") {
-				t.Fatalf("array admission must stay NotYet: %v", err)
+				t.Fatalf("twin: array admission must stay NotYet: %v", err)
 			}
 			// Array membership needs V3 element-kind metadata and hole-aware reads.
 			t.Skip("awaits compiler/views-v3: array element kind and holes (b065fa576)")
