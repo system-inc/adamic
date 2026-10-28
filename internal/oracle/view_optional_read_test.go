@@ -72,3 +72,15 @@ func TestViewOptionalReadsStopAtTheRead(t *testing.T) {
 	}
 }
 
+// The five stops are negative witnesses of the checked_boundary form (#1yr7rdh), listed in
+// cloud/admission-corpus/negative-witnesses.json, and each one's repair, which stores what the view
+// says the field holds, agrees with Node natively, sanitized and on JavaScript.
+func TestViewOptionalReadWitnessRepairsAgreeWithNode(t *testing.T) {
+	t.Parallel()
+	for _, name := range []string{"name_number", "destructured_number", "name_wrong_node", "chained_text", "specifier_name"} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			loomViewsDAgrees(t, "internal/oracle/testdata/view_optional_read_stops/"+name+"_repaired.ts")
+		})
+	}
+}
