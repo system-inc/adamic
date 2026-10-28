@@ -38,7 +38,7 @@ func buildWithNativeExports(path, output string, arguments []string, buildNative
 		fmt.Fprintf(os.Stderr, "adamic: -o %s: %v\n", output, absoluteError)
 		return 3
 	}
-	output = absoluteOutput
+	_ = absoluteOutput
 	options := native.Options{Release: true, ProgramRegion: programRegionRequested()}
 	archive := ""
 	explain := false
