@@ -93,7 +93,7 @@ func (l *lowering) refuseVoidWidening(node *ast.Node) error {
 	what := ""
 	if name == "return" && source.Flags() == checker.TypeFlagsVoid && target.Flags() != checker.TypeFlagsVoid {
 		what = "a void value at a return site whose function returns " + l.checker.TypeToString(target)
-	} else if found := l.voidWidened(source, target, 0, map[[2]*checker.Type]bool{}); found != nil {
+	} else if found := l.voidWidenedUnlessUndefined(node, source, target); found != nil {
 		if found.depthLimit {
 			return l.notYet(node, "a structural relation deeper than 64 type pairs while checking void function results")
 		}
@@ -267,9 +267,7 @@ func (l *lowering) voidWidenedSignatures(source, target *checker.Type, kind chec
 				found.path = call + "()" + found.path
 				return found
 			}
-			// Positions past a rest parameter read its element type.
-			positions := max(len(from.Parameters()), len(to.Parameters()))
-			for position := range positions {
+			for position := range voidRelatedPositions(from, to) {
 				if found := l.voidContained(l.checker.GetTypeAtPosition(to, position), l.checker.GetTypeAtPosition(from, position), depth, seen); found != nil {
 					found.path = call + "(" + strconv.Itoa(position) + ")" + found.path
 					return found
@@ -291,4 +289,92 @@ func (l *lowering) voidContained(inside, wider *checker.Type, depth int, seen ma
 		return &voidWidening{target: wider, contained: true}
 	}
 	return l.voidWidened(inside, wider, depth+1, seen)
+}
+
+// voidWidenedUnlessUndefined is voidWidened, except that a function written in place whose every return
+// is provably undefined isn't a lying void function (#9fj31n7, ruled Oct 28): its own result widens
+// freely, then's and catch's slots included, since nothing it returns is a value Node would keep. Its
+// parameters are still related. A concise body that's a call, a function value, a parameter or a field
+// stays refused, since it could carry a value or a thenable that Node would follow.
+func (l *lowering) voidWidenedUnlessUndefined(node *ast.Node, source, target *checker.Type) *voidWidening {
+	found := l.voidWidened(source, target, 0, map[[2]*checker.Type]bool{})
+	if found == nil || found.depthLimit || (found.path != "" && found.path != "()") || !l.returnsOnlyUndefined(node) {
+		return found
+	}
+	return l.voidWidenedParameters(source, target, map[[2]*checker.Type]bool{})
+}
+
+// voidWidenedParameters relates only the parameter positions of source's call signatures to target's.
+func (l *lowering) voidWidenedParameters(source, target *checker.Type, seen map[[2]*checker.Type]bool) *voidWidening {
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range target.Types() {
+			if found := l.voidWidenedParameters(source, member, seen); found != nil {
+				return found
+			}
+		}
+		return nil
+	}
+	for _, to := range l.checker.GetSignaturesOfType(target, checker.SignatureKindCall) {
+		for _, from := range l.checker.GetSignaturesOfType(source, checker.SignatureKindCall) {
+			to, from := checker.Checker_getCanonicalSignature(l.checker, to), checker.Checker_getCanonicalSignature(l.checker, from)
+			for position := range voidRelatedPositions(from, to) {
+				if found := l.voidContained(l.checker.GetTypeAtPosition(to, position), l.checker.GetTypeAtPosition(from, position), 0, seen); found != nil {
+					found.path = "(" + strconv.Itoa(position) + ")" + found.path
+					return found
+				}
+			}
+		}
+	}
+	return nil
+}
+
+// returnsOnlyUndefined is whether node is an arrow or a function expression, neither async nor a
+// generator, whose every return is provably undefined: a block with no return of a value, or a concise
+// body that's undefined or void's result. Nested functions' returns are their own.
+func (l *lowering) returnsOnlyUndefined(node *ast.Node) bool {
+	if node.Kind != ast.KindArrowFunction && node.Kind != ast.KindFunctionExpression || ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) {
+		return false
+	}
+	if node.Kind == ast.KindFunctionExpression && node.AsFunctionExpression().AsteriskToken != nil {
+		return false
+	}
+	body := node.Body()
+	if body == nil {
+		return false
+	}
+	if body.Kind != ast.KindBlock {
+		return l.provablyUndefined(body)
+	}
+	undefinedOnly := true
+	var visit ast.Visitor
+	visit = func(child *ast.Node) bool {
+		if !undefinedOnly || ast.IsFunctionLike(child) || ast.IsClassLike(child) {
+			return false
+		}
+		if child.Kind == ast.KindReturnStatement {
+			if returned := child.AsReturnStatement().Expression; returned != nil && !l.provablyUndefined(returned) {
+				undefinedOnly = false
+				return true
+			}
+		}
+		return child.ForEachChild(visit)
+	}
+	body.ForEachChild(visit)
+	return undefinedOnly
+}
+
+// provablyUndefined is whether expression is void's result or the value undefined.
+func (l *lowering) provablyUndefined(expression *ast.Node) bool {
+	expression = ast.SkipParentheses(expression)
+	return expression.Kind == ast.KindVoidExpression || ast.IsIdentifier(expression) && expression.Text() == "undefined" && l.checker.GetTypeAtLocation(expression).Flags() == checker.TypeFlagsUndefined
+}
+
+// voidRelatedPositions is how many parameter positions of to flow into from. A function never sees an
+// argument past its own parameters, so `() => { ... }` reads nothing forEach or then hands it; past a
+// rest parameter, every position reads its element type.
+func voidRelatedPositions(from, to *checker.Signature) int {
+	if from.HasRestParameter() {
+		return max(len(from.Parameters()), len(to.Parameters()))
+	}
+	return len(from.Parameters())
 }
