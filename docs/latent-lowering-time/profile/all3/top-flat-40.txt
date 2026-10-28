@@ -1,0 +1,49 @@
+File: latent-census-loopprof
+Build ID: 78baa87f1a1ff1c1461f6f281bfa7e89024710e5
+Type: cpu
+Time: 2026-10-28 08:12:48 UTC
+Duration: 1419.37s, Total samples = 1534.75s (108.13%)
+Showing nodes accounting for 1097.33s, 71.50% of 1534.75s total
+Dropped 2255 nodes (cum <= 7.67s)
+Showing top 40 nodes out of 269
+      flat  flat%   sum%        cum   cum%
+   138.35s  9.01%  9.01%    327.42s 21.33%  github.com/system-inc/adamic/internal/lower.(*lowering).entriesRecordLiteralWalk.func1
+   134.92s  8.79% 17.81%   1278.33s 83.29%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+    69.17s  4.51% 22.31%     69.17s  4.51%  internal/runtime/maps.ctrlGroup.matchH2 (inline)
+    61.07s  3.98% 26.29%    274.74s 17.90%  github.com/microsoft/TypeScript/tsc/internal/binder.(*NameResolver).Resolve
+    59.88s  3.90% 30.19%   1275.36s 83.10%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList (inline)
+    56.19s  3.66% 33.85%   1274.92s 83.07%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes (inline)
+    54.11s  3.53% 37.38%   1264.56s 82.40%  github.com/microsoft/TypeScript/tsc/internal/ast.visit (inline)
+    43.11s  2.81% 40.19%     96.58s  6.29%  github.com/system-inc/adamic/internal/lower.(*lowering).noteInheritance.func1
+    43.09s  2.81% 43.00%     96.35s  6.28%  github.com/system-inc/adamic/internal/lower.(*lowering).noteAccessorNames.func1
+    36.36s  2.37% 45.37%     36.36s  2.37%  runtime.spanClass.sizeclass (inline)
+    34.86s  2.27% 47.64%    118.61s  7.73%  runtime.mapaccess2_fast64
+    29.66s  1.93% 49.57%     31.05s  2.02%  github.com/microsoft/TypeScript/tsc/internal/ast.IsFunctionLikeKind (inline)
+    29.19s  1.90% 51.47%    378.71s 24.68%  github.com/system-inc/adamic/internal/lower.(*lowering).predicateArguments.func2
+    22.93s  1.49% 52.97%     22.93s  1.49%  internal/runtime/maps.memHashAES
+    15.47s  1.01% 53.97%     73.12s  4.76%  runtime.mapaccess2_faststr
+    15.24s  0.99% 54.97%     56.70s  3.69%  runtime.tryDeferToSpanScan
+    13.73s  0.89% 55.86%     30.01s  1.96%  internal/runtime/maps.(*Map).getWithoutKeySmallFastStr
+    13.56s  0.88% 56.74%    338.69s 22.07%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getSymbolOfNameOrPropertyAccessExpression
+    13.32s  0.87% 57.61%     16.19s  1.05%  runtime.findObject
+    13.25s  0.86% 58.48%     27.99s  1.82%  github.com/system-inc/adamic/internal/lower.(*lowering).refuseViewElementReads.func1
+    13.18s  0.86% 59.33%     72.15s  4.70%  runtime.scanObject
+    12.61s  0.82% 60.16%    176.71s 11.51%  github.com/system-inc/adamic/internal/lower.(*lowering).proveModuleReads.func1
+    12.50s  0.81% 60.97%     22.22s  1.45%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).GetExportSymbolOfSymbol
+    12.48s  0.81% 61.78%     12.48s  0.81%  internal/runtime/maps.h1 (inline)
+    11.73s  0.76% 62.55%     16.49s  1.07%  github.com/microsoft/TypeScript/tsc/internal/binder.getIsDeferredContext
+    11.55s  0.75% 63.30%     11.55s  0.75%  memeqbody
+    11.28s  0.73% 64.04%     11.64s  0.76%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).LocalsContainerData (inline)
+    10.07s  0.66% 64.69%    406.36s 26.48%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getSymbolAtLocation
+     9.61s  0.63% 65.32%     53.26s  3.47%  runtime.scanSpan
+     9.57s  0.62% 65.94%      9.57s  0.62%  runtime.memmove
+     9.09s  0.59% 66.53%     10.66s  0.69%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Text
+     9.07s  0.59% 67.12%      9.07s  0.59%  internal/runtime/maps.memHash64AES
+     9.04s  0.59% 67.71%     77.69s  5.06%  github.com/microsoft/TypeScript/tsc/internal/ast.(*TypeReferenceNode).ForEachChild
+     8.79s  0.57% 68.29%      8.83s  0.58%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getLateBoundSymbol
+     8.78s  0.57% 68.86%     14.67s  0.96%  github.com/microsoft/TypeScript/tsc/internal/ast.visitModifiers (inline)
+     8.74s  0.57% 69.43%    342.65s 22.33%  github.com/system-inc/adamic/internal/lower.(*lowering).symbol
+     8.73s  0.57% 70.00%     29.07s  1.89%  runtime.scanObjectsSmall
+     8.70s  0.57% 70.56%      8.75s  0.57%  github.com/microsoft/TypeScript/tsc/internal/binder.isSelfReferenceLocation
+     7.43s  0.48% 71.05%      7.88s  0.51%  github.com/microsoft/TypeScript/tsc/internal/ast.GetSourceFileOfNode
+     6.92s  0.45% 71.50%    295.96s 19.28%  github.com/microsoft/TypeScript/tsc/internal/ast.(*BinaryExpression).ForEachChild

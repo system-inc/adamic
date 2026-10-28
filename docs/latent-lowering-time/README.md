@@ -375,6 +375,36 @@ the box drifting, as it did between the two `f2479703` runs (1.16), but these we
 The three heads' profile is running now; after it, the memo merge runs again, so the three heads and
 the memo merge form a back-to-back pair.
 
+### The three heads' profile: is entriesRecordLiteral still hot? (push 12, observed)
+
+Yes. The three heads' meter-built overlay with the per-file loop profile, all 79 files: 1,419.4 s of
+profile duration, 1,534.8 s of samples; `latent.jsonl` byte-identical to its timed run. Tops:
+[profile/all3/top-cum-40.txt](profile/all3/top-cum-40.txt),
+[profile/all3/top-flat-40.txt](profile/all3/top-flat-40.txt), every node
+[profile/all3/top-cum-all-nodes.txt](profile/all3/top-cum-all-nodes.txt).
+
+| function | memo merge (push 10) | three heads |
+|---|--:|--:|
+| `lower.(*lowering).entriesRecordLiteral` | 421.5 s, 28.7% | 447.2 s, 29.1% |
+| `lower.(*lowering).entriesRecordLiteralWalk` (new, the memo's miss path) | (absent) | 450.4 s, 29.4% |
+| `lower.(*lowering).entriesProgramHasRecords` | 231.0 s, 15.7% | 227.6 s, 14.8% |
+| `checker.(*Checker).GetSymbolAtLocation` | 396.6 s, 27.0% | 411.8 s, 26.8% |
+| `lower.(*lowering).predicateArguments.func2` | 366.1 s, 24.9% | 378.7 s, 24.7% |
+| `lower.(*lowering).enumNeverValue` | 337.9 s, 23.0% | 338.1 s, 22.0% |
+| `lower.(*lowering).provePredicate` | 76.8 s, 5.2% | 78.3 s, 5.1% |
+| `runtime.gcBgMarkWorker` (GC) | 119.9 s, 8.2% | 127.3 s, 8.3% |
+
+`entriesRecordLiteralWalk`, the walk `992a6f53` runs on a memo miss, carries all of
+`entriesRecordLiteral`'s time: in the meter, every ask misses. Performance's guess holds, by the
+code as well (read, not measured): `992a6f53` keeps both answers on the `lowering`
+(`l.entriesRecords`, `l.entriesProgramRecordsKnown`), and `latentRun` makes a fresh `lowering`
+for every top-level statement, so the memo starts empty for each statement. A per-lowering memo
+pays in the meter only when one statement asks the same question again. `provePredicate` does,
+so `f27967ea` paid; `entriesProgramHasRecords` is asked once per lowering and
+`entriesRecordLiteral` once per literal, so `992a6f53` doesn't. In a real build, one lowering
+serves the whole program and the memo would hold. The same question applies to `761ee21c`'s
+memo of `predicateArguments.func2`; its run, next, shows it.
+
 ## What hasn't run yet, and why
 
 Dropped at Performance's word after push 8: the same-box rerun of `85c9d783` (stopped at file 10),
