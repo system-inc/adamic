@@ -24,6 +24,9 @@ func TestVoidReadsAreRefused(t *testing.T) {
 		{"bound wider", `const kept: unknown = make(); console.log(typeof kept);`, "as a binding's initializer"},
 		{"array element", `const all = [make()]; console.log(` + "`${all.length}`" + `);`, "as a value"},
 		{"conditional branch", `const pick = (go: boolean): unknown => go ? make() : 1; console.log(typeof pick(true));`, "as a returned value"},
+		// tsc folds void | undefined to void, so an optional call of a void function is a void read too.
+		{"optional call", `const maybe: (() => void) | undefined = make; const got = maybe?.(); console.log(` + "`${got === undefined}`" + `);`, "as an operand of ==="},
+		{"cast and read", `const seen = make() as unknown; console.log(typeof seen);`, "as a binding's initializer"},
 		{"async awaited", `async function later(): Promise<void> { return make(); } const got = await later(); console.log(typeof got);`, "as typeof's operand"},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
@@ -77,4 +80,21 @@ func lowerVoidProbe(t *testing.T, extension, source string) (any, error) {
 		return lowerTypeScriptAssertionSource(t, source)
 	}
 	return lowerSource(t, source)
+}
+
+// A cast, a satisfies and a .ts non-null hand on the value they wrap, so a void call under one as a
+// statement is a discard, never H2's refusal (#chmg7wr). Each still waits on its own stage-0 gap (a
+// cast as a statement, void! as never), which is a NotYet, a promise H2's Refused would have broken.
+func TestVoidUnderAWrapperStatementIsNoRead(t *testing.T) {
+	t.Parallel()
+	for _, statement := range []string{`make() as unknown;`, `make() satisfies void;`, `make()!;`} {
+		t.Run(statement, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerTypeScriptAssertionSource(t, voidReadMake+"\n"+statement+"\nconsole.log(\"done\");")
+			var refused *Refused
+			if errors.As(err, &refused) {
+				t.Fatalf("want no refusal for a discarded void value, got %v", err)
+			}
+		})
+	}
 }
