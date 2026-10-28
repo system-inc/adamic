@@ -1,0 +1,17 @@
+"""Throwaway: from a timed (or loop-profile) overlay, share one sourceIdentities map across every
+lowering the first-error loop makes for the program. Never committed."""
+import json, pathlib, shutil, sys
+source, destination = pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2])
+shutil.copytree(source, destination, dirs_exist_ok=True)
+hook = destination / 'internal_lower_latent_hook.go'
+text = hook.read_text()
+loop = '\tfor _, file := range program.Files() {\n\t\tlatentTimingStart := '
+assert text.count(loop) == 1, 'loop'
+text = text.replace(loop, '\tlatentSharedIdentities := map[*ast.Node]ir.SourceIdentity{}\n' + loop)
+fresh = 'return &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}'
+assert text.count(fresh) == 1, 'fresh'
+text = text.replace(fresh, 'return &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1, sourceIdentities: latentSharedIdentities}')
+hook.write_text(text)
+overlay = json.loads((source / 'overlay.json').read_text())
+replace = {k: (str(destination / pathlib.Path(v).relative_to(source)) if pathlib.Path(v).is_relative_to(source) else v) for k, v in overlay['Replace'].items()}
+(destination / 'overlay.json').write_text(json.dumps({'Replace': replace}, indent=2) + '\n')

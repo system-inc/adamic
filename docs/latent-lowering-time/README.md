@@ -125,11 +125,40 @@ and `noteAccessorNames` run once per statement over all of `program.Files()`. Al
 in A as well; of the suspects, only `predicateFalseFlow.escapes` is absent from A. A's profile
 decides how much is new.
 
+## One shared source identity map, throwaway (push 4, observed)
+
+Performance's ask after push 3: in main's (`85c9d783`) timed overlay only, declare one
+`map[*ast.Node]ir.SourceIdentity` before the first-error files loop in `latentRun` and have
+`fresh()` set `sourceIdentities` to it ([tools/shared_identity_overlay.py.txt](tools/shared_identity_overlay.py.txt);
+the whole change is those two lines). A's profile run was stopped at file 8 for this.
+
+| run | wall | user s | system s | peak RSS |
+|---|--:|--:|--:|--:|
+| main trial, per-lowering map | 53:49.6 (3,229.6 s) | 4,316.0 | 27.3 | 4.66 GB |
+| main, one shared map | 28:41.9 (1,721.9 s) | 1,833.7 | 26.3 | 4.49 GB |
+
+The loop's per-file sum is 1,718.5 s wall, 1,830.5 s user
+([shared-throwaway/per-file.txt](shared-throwaway/per-file.txt)): 0.53 of the trial's wall and
+0.42 of its user time. `latent.jsonl` is byte-identical to the trial's (`cmp`, 20,129,953 bytes,
+sha256 `348511ff...`), and the 79 stderr decision lines are identical
+([shared-throwaway/diff-against-trial.txt](shared-throwaway/diff-against-trial.txt)).
+
+Per file, against the trial: `types.ts` 369.3 to 40.9 s, `factory/nodeTests.ts` 130.6 to 43.1,
+`utilities.ts` 649.1 to 330.5, `utilitiesPublic.ts` 190.0 to 101.9, `commandLineParser.ts` 119.9 to
+61.7. Twelve files keep at least 0.9 of their time, among them `visitorPublic.ts` (248.0 to 241.0)
+and `transformers/ts.ts` (75.9 to 73.4): their cost is elsewhere.
+
+This throwaway differs from the head `compiler/latent-shared-identities` (`f2479703`) in one way:
+the head also has `statecopy` pass the map through, while here the generated state copier still
+copies it at each snapshot. So the head may be faster than this; its own run follows.
+
 ## What hasn't run yet, and why
 
-Order, as Performance asked after push 1: a CPU profile of main's whole first-error loop over all
-79 files (done, above), then the same on A (running now, timeout raised to 7,200 s), then one timed run of B, then the decision diffs across the three trees, then
-the one-file against 79-file comparison, and only then a second round.
+Order, as Performance asked after push 4: the head `f2479703` (compiler/latent-shared-identities)
+built exactly as the meter builds it, with the timing lines, over the same adapted tree (running
+now), then its parent main `95a7b63f` built the same way, then the diff of their `latent.jsonl` and
+decision lines, then the head's profile, then A's profile, B's timed run, and the one-file
+comparison.
 
 - The timeout is 3,600 s, not 900 s, since one process covers all 79 files and takes 3,230 s on main.
 - Per-file invocations (one process per file) are not the meter's step: the meter loads all 79
