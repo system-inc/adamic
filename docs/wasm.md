@@ -278,6 +278,7 @@ asserts their imports: a listed fixture that stops importing `path_*`, `fd_read`
 
 | Excluded fixture | Exact imports |
 | --- | --- |
+| `internal/oracle/testdata/review/agree/cwd.a` (lazy cwd initialization validates the supplied initial directory with `path_filestat_get`) | `args_get, args_sizes_get, clock_time_get, environ_get, environ_sizes_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_filestat_get, proc_exit` |
 | `stage3/namespace-init-sys/cwd.a` | `args_get, args_sizes_get, clock_time_get, environ_get, environ_sizes_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_filestat_get, proc_exit` |
 | `stage3/fixtures/host/14_getCurrentDirectory.a` (separate Program witness inventory) | `args_get, args_sizes_get, clock_time_get, environ_get, environ_sizes_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_readdir, fd_seek, fd_write, path_create_directory, path_filestat_get, path_open, path_readlink, path_remove_directory, path_unlink_file, proc_exit, random_get` |
 | `internal/oracle/testdata/program_region/parse.a` (separate benchmark inventory) | `args_get, args_sizes_get, clock_time_get, environ_get, environ_sizes_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_read, fd_seek, fd_write, path_filestat_get, path_open, proc_exit` |
