@@ -21,7 +21,10 @@ import (
 // The moves: length and any other field read, an element read (each yields a value judged in turn by
 // its own type), === and !== on the container, entering a slot whose type keeps every void position
 // exactly void, push, pop, shift, unshift, splice, slice and forEach called on it, for...of binding
-// its element to a name, flowing on where the whole expression stands, and a discard.
+// its element to a name, flowing on where the whole expression stands, and a discard. A promise adds
+// two (#tfycfvw, ruled Oct 28): await, and then and catch with callbacks written in place. Promise.all,
+// allSettled and race need no case of their own: the tuple they take keeps each void exactly, so the
+// promises enter it as a slot, and the container they yield is judged in turn.
 func (l *lowering) refuseVoidContainerRead(node *ast.Node) error {
 	if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) || ast.IsDeclarationName(node) || ast.IsAssignmentTarget(node) {
 		return nil
@@ -66,7 +69,7 @@ func (l *lowering) voidContainerUse(node *ast.Node, source *checker.Type) string
 		return "as a loop condition"
 	case ast.KindPropertyAccessExpression:
 		access := parent.AsPropertyAccessExpression()
-		return l.voidContainerMember(parent, l.checker.GetSymbolAtLocation(parent), access.Name().Text())
+		return l.voidContainerMember(parent, source, l.checker.GetSymbolAtLocation(parent), access.Name().Text())
 	case ast.KindElementAccessExpression:
 		if parent.AsElementAccessExpression().Expression != site {
 			return "as an index"
@@ -80,7 +83,7 @@ func (l *lowering) voidContainerUse(node *ast.Node, source *checker.Type) string
 		if symbol != nil {
 			name = symbol.Name
 		}
-		return l.voidContainerMember(parent, symbol, name)
+		return l.voidContainerMember(parent, source, symbol, name)
 	case ast.KindBinaryExpression:
 		binary := parent.AsBinaryExpression()
 		switch binary.OperatorToken.Kind {
@@ -161,14 +164,15 @@ func (l *lowering) voidContainerUse(node *ast.Node, source *checker.Type) string
 // voidContainerMember judges a member read off a container: a field or an accessor is a read of that
 // one value, judged by its own type, and a method is a read of the elements unless it is on the list
 // and called.
-func (l *lowering) voidContainerMember(access *ast.Node, symbol *ast.Symbol, name string) string {
+func (l *lowering) voidContainerMember(access *ast.Node, receiver *checker.Type, symbol *ast.Symbol, name string) string {
 	if symbol == nil {
 		return "through " + name
 	}
 	if symbol.Flags&ast.SymbolFlagsMethod == 0 {
 		return l.voidElementRead(access, "a field read")
 	}
-	if !voidContainerMethods[name] || !called(access) {
+	promised := (name == "then" || name == "catch") && l.isLibraryType(receiver, "Promise")
+	if !voidContainerMethods[name] && !promised || !called(access) {
 		return "through " + name
 	}
 	call := access
@@ -176,8 +180,11 @@ func (l *lowering) voidContainerMember(access *ast.Node, symbol *ast.Symbol, nam
 		call = call.Parent
 	}
 	call = call.Parent
-	if name == "forEach" {
-		return l.voidCallbackParameters(call)
+	switch {
+	case name == "forEach":
+		return l.voidCallbackParameters(call, name, 1)
+	case promised:
+		return l.voidCallbackParameters(call, name, 2)
 	}
 	if name == "pop" || name == "shift" {
 		return l.voidElementRead(call, name)
@@ -205,33 +212,41 @@ func (l *lowering) voidElementRead(read *ast.Node, what string) string {
 	return ""
 }
 
-// voidCallbackParameters keeps forEach a move only for a callback written in place whose parameters
-// keep the types forEach hands it: each is then judged where it's read. A function named instead of
-// written, or a parameter typed wider, would read the elements unseen.
-func (l *lowering) voidCallbackParameters(call *ast.Node) string {
-	arguments := call.AsCallExpression().Arguments.Nodes
-	if len(arguments) == 0 {
-		return ""
-	}
-	callback := ast.SkipParentheses(arguments[0])
-	if callback.Kind != ast.KindArrowFunction && callback.Kind != ast.KindFunctionExpression {
-		return "through forEach with a callback not written in place"
-	}
-	expected := l.argumentSlot(call, arguments[0])
-	if expected == nil {
-		return "through forEach with a callback whose type can't be read"
-	}
-	signatures := l.checker.GetSignaturesOfType(expected, checker.SignatureKindCall)
-	if len(signatures) != 1 {
-		return "through forEach with a callback whose type can't be read"
-	}
-	for index, parameter := range callback.Parameters() {
-		name := parameter.Name()
-		if name == nil || name.Kind != ast.KindIdentifier || parameter.AsParameterDeclaration().DotDotDotToken != nil {
-			return "through forEach's callback parameter " + strconv.Itoa(index) + ", destructured or rest"
+// voidCallbackParameters keeps forEach, then and catch moves only for callbacks written in place whose
+// parameters keep the types the method hands them: each is then judged where it's read. A function
+// named instead of written, or a parameter typed wider, would read the elements unseen. The first
+// callbacks arguments are the callbacks, and then's and catch's may be passed as undefined or null.
+func (l *lowering) voidCallbackParameters(call *ast.Node, method string, callbacks int) string {
+	for position, argument := range call.AsCallExpression().Arguments.Nodes {
+		if position >= callbacks {
+			break
 		}
-		if !l.voidKeepsPosition(l.checker.GetTypeAtPosition(signatures[0], index), l.checker.GetTypeAtLocation(name), 0, map[[2]*checker.Type]bool{}) {
-			return "through forEach's callback parameter " + name.Text() + ", typed wider"
+		callback := ast.SkipParentheses(argument)
+		if method != "forEach" && l.checker.GetTypeAtLocation(callback).Flags()&^(checker.TypeFlagsUndefined|checker.TypeFlagsNull) == 0 {
+			continue
+		}
+		if callback.Kind != ast.KindArrowFunction && callback.Kind != ast.KindFunctionExpression {
+			return "through " + method + " with a callback not written in place"
+		}
+		expected := l.argumentSlot(call, argument)
+		if expected != nil {
+			expected = l.checker.GetNonNullableType(expected)
+		}
+		var signatures []*checker.Signature
+		if expected != nil {
+			signatures = l.checker.GetSignaturesOfType(expected, checker.SignatureKindCall)
+		}
+		if len(signatures) != 1 {
+			return "through " + method + " with a callback whose type can't be read"
+		}
+		for index, parameter := range callback.Parameters() {
+			name := parameter.Name()
+			if name == nil || name.Kind != ast.KindIdentifier || parameter.AsParameterDeclaration().DotDotDotToken != nil {
+				return "through " + method + "'s callback parameter " + strconv.Itoa(index) + ", destructured or rest"
+			}
+			if !l.voidKeepsPosition(l.checker.GetTypeAtPosition(signatures[0], index), l.checker.GetTypeAtLocation(name), 0, map[[2]*checker.Type]bool{}) {
+				return "through " + method + "'s callback parameter " + name.Text() + ", typed wider"
+			}
 		}
 	}
 	return ""
