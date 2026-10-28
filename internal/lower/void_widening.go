@@ -330,7 +330,9 @@ func (l *lowering) voidWidenedParameters(source, target *checker.Type, seen map[
 
 // returnsOnlyUndefined is whether node is an arrow or a function expression, neither async nor a
 // generator, whose every return is provably undefined: a block with no return of a value, or a concise
-// body that's undefined or void's result. Nested functions' returns are their own.
+// body that's undefined or void's result. Nested functions' returns are their own. The return-site
+// refusal is the guard for a body returning a void value; this predicate keeps the admission exactly
+// the ruled shape, which is why a mutant loosening either branch here leaves `() => make()` refused.
 func (l *lowering) returnsOnlyUndefined(node *ast.Node) bool {
 	if node.Kind != ast.KindArrowFunction && node.Kind != ast.KindFunctionExpression || ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) {
 		return false
