@@ -2,6 +2,7 @@ package lower
 
 import (
 	"bytes"
+	"context"
 	"errors"
 	"fmt"
 	"os"
@@ -10,7 +11,9 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -157,6 +160,43 @@ func TestCheckedPredicateUnreadShapesArePending(t *testing.T) {
 			var notYet *NotYet
 			if !errors.As(err, &notYet) || notYet.What != probe.what || !strings.HasSuffix(notYet.Where, "main.ts:"+probe.where) {
 				t.Fatalf("want %q pending at the call, got %v", probe.what, err)
+			}
+		})
+	}
+}
+
+func TestCheckedPredicateTypelessNonAssertionIsNotYet(t *testing.T) {
+	t.Parallel()
+	loaded, err := load.Load([]string{writeAgreementSource(t, "main.a", "const value = true;\n")})
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := Lower(context.Background(), loaded)
+	if err != nil {
+		t.Fatal(err)
+	}
+	declaration, ok := program.Main[0].(ir.Declare)
+	if !ok {
+		t.Fatalf("want a lowered declaration, got %#v", program.Main[0])
+	}
+	node := loaded.Files()[0].Statements.Nodes[0]
+	for _, probe := range []struct {
+		name     string
+		result   ir.Expression
+		falseToo bool
+	}{
+		{"non-nil result", declaration.Value, false},
+		{"false direction", nil, true},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			l := &lowering{program: loaded, result: program}
+			statements, err := l.checkedPredicateCheck(node, node, declaration.Value, nil, nil, probe.result, probe.falseToo, nil, func(string) string { return "condition check" })
+			var notYet *NotYet
+			if !errors.As(err, &notYet) || notYet.What != "a checked predicate without a reifiable target" || notYet.Where != loaded.Where(node) {
+				t.Fatalf("want located typeless predicate NotYet, got %v", err)
+			}
+			if statements != nil {
+				t.Fatalf("typeless non-asserts caller received checks: %#v", statements)
 			}
 		})
 	}
