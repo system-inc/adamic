@@ -59,20 +59,22 @@ func TestUnitCacheFlagsHoldSanitizer(t *testing.T) {
 	cache := filepath.Join(directory, "cache")
 	unit := compilationUnit{"probe.c", `int adamic_probe(int input) { return input + 2147483647; }` + "\n"}
 	// The unit is its own first line, and nothing else is beside it.
-	compile := func(flags []string) string {
+	compile := func(options Options) string {
+		flags := Flags(options)
+		sanitized := options.Sanitize || options.ThreadSanitize
 		t.Helper()
-		keying, err := newUnitKeying(unit.source, nil, flags, compiler, toolchain.Env())
+		keying, err := newUnitKeying(unit.source, nil, flags, compiler, toolchain.Env(), sanitized)
 		if err != nil {
 			t.Fatal(err)
 		}
-		object, err := compileUnit(unit, nil, flags, compiler, keying, cache, directory, nil)
+		object, err := compileUnit(unit, nil, flags, compiler, keying, cache, directory, nil, sanitized)
 		if err != nil {
 			t.Fatal(err)
 		}
 		return object
 	}
-	release := compile(Flags(Options{}))
-	sanitized := compile(Flags(Options{Sanitize: true}))
+	release := compile(Options{})
+	sanitized := compile(Options{Sanitize: true})
 	// Do not assert that paths differ: the runtime sanitizer observation is the proof.
 	_ = release
 	main := filepath.Join(directory, "main.c")
@@ -153,11 +155,11 @@ func TestUnitSystemHeaderProvenance(t *testing.T) {
 		var keying *unitKeying
 		if !uncached {
 			var err error
-			if keying, err = newUnitKeying(firstLine, files, flags, compiler, toolchain.Env()); err != nil {
+			if keying, err = newUnitKeying(firstLine, files, flags, compiler, toolchain.Env(), false); err != nil {
 				t.Fatal(err)
 			}
 		}
-		object, err := compileUnit(unit, files, flags, compiler, keying, cache, directory, nil)
+		object, err := compileUnit(unit, files, flags, compiler, keying, cache, directory, nil, false)
 		if err != nil {
 			t.Fatalf("system-header provenance lost: %v", err)
 		}
@@ -189,7 +191,7 @@ func TestUnitSystemHeaderProvenance(t *testing.T) {
 	// provenance by disabling nullability or pedantic diagnostics for the whole unit.
 	userHeader := strings.TrimPrefix(header, "#pragma clang system_header\n")
 	files := []runtimeFile{{"probe-system.h", []byte(userHeader)}}
-	if _, err := compileUnit(unit, files, flags, compiler, nil, cache, directory, nil); err == nil || !strings.Contains(err.Error(), "-Wnullability-extension") {
+	if _, err := compileUnit(unit, files, flags, compiler, nil, cache, directory, nil, false); err == nil || !strings.Contains(err.Error(), "-Wnullability-extension") {
 		t.Fatalf("user-header extension must be rejected: %v", err)
 	}
 	t.Log("system-header extension accepted; changed header observed cached and uncached; user-header extension rejected")
