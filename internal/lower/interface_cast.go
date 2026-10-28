@@ -62,8 +62,10 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 			access := part.AsPropertyAccessExpression()
 			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
 				field := l.checker.GetSymbolAtLocation(part.Name())
-				if field != nil && len(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall)) == 0 && (field.Flags&ast.SymbolFlagsOptional != 0 || access.QuestionDotToken != nil || accessorSymbol(field)) {
-					refused = l.notYet(part, "a checked field alias requiring an optional, accessor, or representation conversion")
+				if field != nil && len(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall)) == 0 {
+					if gap := checkedFieldAliasGap(access, field, true); gap != "" {
+						refused = l.notYet(part, gap)
+					}
 				}
 			}
 		}
@@ -92,6 +94,23 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 	l.result.ViewOrigins = append(l.result.ViewOrigins, value)
 	l.graphViewSite = node
 	return value, nil
+}
+
+const checkedFieldAliasNotScalar = "a checked field alias whose field isn't a scalar"
+
+// checkedFieldAliasGap names the first conversion a checked field alias lacks,
+// in one order at every site: an optional slot, then an accessor, then a field
+// whose representation isn't a plain scalar. Empty means the alias needs none.
+func checkedFieldAliasGap(access *ast.PropertyAccessExpression, field *ast.Symbol, scalar bool) string {
+	switch {
+	case field.Flags&ast.SymbolFlagsOptional != 0 || access.QuestionDotToken != nil:
+		return "a checked field alias of an optional field or through ?."
+	case accessorSymbol(field):
+		return "a checked field alias of an accessor"
+	case !scalar:
+		return checkedFieldAliasNotScalar
+	}
+	return ""
 }
 
 func interfaceScalar(proven *checker.Type) bool {
@@ -242,8 +261,11 @@ func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *check
 				field := l.checker.GetSymbolAtLocation(part.Name())
 				if field != nil && len(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall)) == 0 {
 					of, known := l.representation(l.checker.GetTypeOfSymbol(field))
-					if !interfaceScalar(l.checker.GetTypeOfSymbol(field)) || !known || of < ir.Number || of > ir.String || field.Flags&ast.SymbolFlagsOptional != 0 || access.QuestionDotToken != nil || accessorSymbol(field) {
-						found = l.notYet(part, "a checked field alias requiring an optional, accessor, or representation conversion")
+					if gap := checkedFieldAliasGap(access, field, interfaceScalar(l.checker.GetTypeOfSymbol(field)) && known && of >= ir.Number && of <= ir.String); gap != "" {
+						if gap == checkedFieldAliasNotScalar {
+							gap += " (" + l.checker.TypeToString(l.checker.GetTypeOfSymbol(field)) + ")"
+						}
+						found = l.notYet(part, gap)
 					}
 				}
 			}
