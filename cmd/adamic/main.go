@@ -138,10 +138,10 @@ func check(paths []string) (*load.Program, int) {
 
 // compile checks and lowers one program.
 func compile(path string) (*ir.Program, int) {
-	return compileLibrary(path, false)
+	return compileLibrary(path, false, false)
 }
 
-func compileLibrary(path string, tsgo bool) (*ir.Program, int) {
+func compileLibrary(path string, tsgo, debug bool) (*ir.Program, int) {
 	program, code := check([]string{path})
 	if program == nil {
 		return nil, code
@@ -149,7 +149,8 @@ func compileLibrary(path string, tsgo bool) (*ir.Program, int) {
 	if tsgo {
 		program.EnableTSGo()
 	}
-	lowered, err := lower.Lower(context.Background(), program)
+	options := lower.Options{ProgramRegion: programRegionRequested(), OwnershipQuery: os.Getenv("ADAMIC_OWNERSHIP_QUERY") == "1", Debug: debug}
+	lowered, err := lower.LowerWithOptions(context.Background(), program, options)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, relative("adamic: "+err.Error()))
 		return nil, 1

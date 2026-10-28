@@ -158,7 +158,10 @@ func cycleLowerForComparison(program *load.Program, options Options, indexed boo
 	types := map[int]*checker.Type{}
 	lower := scanLowerCheckedWithCycleTypes
 	if indexed {
-		lower = lowerCheckedWithCycleTypes
+		// The frozen scanning reference compares unmarked IR.
+		lower = func(program *load.Program, checked *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery bool, types map[int]*checker.Type, ownershipQuery ...bool) (*lowering, error) {
+			return lowerCheckedWithCycleTypes(program, checked, entry, plan, discovery, false, types, ownershipQuery...)
+		}
 	}
 	var plan *programMembership
 	if options.ProgramRegion {
