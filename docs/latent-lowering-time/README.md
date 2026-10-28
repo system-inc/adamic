@@ -64,11 +64,71 @@ Inferred, not yet measured: the per-statement unit in the first-error loop calls
 top-level statement, which would make even tiny files cost seconds. The profiles will say whether
 that or the predicate checks dominate.
 
+## Main's profile (push 3, observed)
+
+The first profile run died in a container restart at file 73 of 79: `pprof` writes only on stop,
+so it left an empty profile. Its 73 timing lines are kept
+([killed/main-profile-run-73-files.txt](killed/main-profile-run-73-files.txt)) and agree with the
+trial: 2,083.4 s against 2,098.7 s on the same 73 files, per-file ratio 0.90 to 1.14.
+
+The rerun writes one CPU profile per iteration of the first-error loop
+([tools/loop_profile_overlay.py.txt](tools/loop_profile_overlay.py.txt)), merged with
+`go tool pprof -proto` into the whole loop: 79 files, 3,538.4 s of profile duration, 4,733.9 s of
+samples. With profiling on, the run passed 3,600 s at file 76, so I killed only the `timeout`
+wrapper (the census process kept running, reparented to init, and finished all 79 files). Its
+`time -v` ([profile/main/time-v-void.txt](profile/main/time-v-void.txt)) is therefore the
+wrapper's, not the run's; use the trial's for the process. Its 79 decision lines are identical to
+the trial's. Per-file lines: [profile/main/per-file.txt](profile/main/per-file.txt) (sum 3,540.3 s
+wall, 4,705.4 s user; profiling costs about 10% on this run).
+
+Tops: [profile/main/top-cum-40.txt](profile/main/top-cum-40.txt),
+[profile/main/top-flat-40.txt](profile/main/top-flat-40.txt), and every node,
+[profile/main/top-cum-all-nodes.txt](profile/main/top-cum-all-nodes.txt).
+
+Cumulative shares of the 4,733.9 s, from the every-node listing:
+
+| function | cum s | share |
+|---|--:|--:|
+| `lower.(*lowering).sourceIdentity.func1` (its walk) | 1,665.4 | 35.2% |
+| `lower.(*lowering).noteLocal`, which calls `sourceIdentity` | 1,260.7 | 26.6% |
+| `runtime.gcBgMarkWorker` (GC) | 1,187.8 | 25.1% |
+| `lower.(*lowering).latentRegister` (overlay) | 1,153.9 | 24.4% |
+| `lower.(*lowering).provePredicate` | 863.2 | 18.2% |
+| `lower.(*predicateVerifier).verify` | 711.0 | 15.0% |
+| `lower.(*lowering).checkedPredicateBodyProven` | 638.2 | 13.5% |
+| `lower.(*lowering).latentRefuse` (the refusal scan, overlay) | 503.0 | 10.6% |
+| `lower.(*lowering).checkedPredicateDeclaration` | 220.6 | 4.7% |
+| `lower.(*lowering).checkedPredicateArgumentProven` | 165.6 | 3.5% |
+| `lower.(*lowering).lowerFunction` | 117.2 | 2.5% |
+| `lower.(*predicateFalseFlow).escapingReference` | 116.1 | 2.5% |
+| `lower.(*predicateFalseFlow).escapes.func1` | 116.0 | 2.5% |
+| `lower.(*predicateFalseFlow).checkedDeclaration` | 116.2 | 2.5% |
+| `lower.(*lowering).noteInheritance` | 70.6 | 1.5% |
+| `lower.(*lowering).noteAccessorNames` | 70.3 | 1.5% |
+| `checker.(*Checker).GetTypeAtLocation` | 77.0 | 1.6% |
+| every other `predicateFalseFlow` method | under 0.3 s each | 0% |
+
+Flat, `maps.ctrlGroup.matchH2` (map probing) is 11.2% and `ForEachChild` 4.0%; `ast.ForEachChild`
+is 71.8% cumulative.
+
+Caveat: `latentRun` shows only 38.4% cumulative while `ForEachChild` shows 71.8%. The deep
+recursive AST walks overflow the profiler's stack depth, so many samples lose their outer
+frames. The shares above are lower bounds for callers far from the leaves (`latentRun`,
+`provePredicate`); `sourceIdentity.func1` is a leaf-side closure and is not affected that way.
+
+What the code says (read, not measured): `sourceIdentity` indexes a whole source file once per
+`lowering` and caches it in `l.sourceIdentities`. The latent first-error loop builds a `fresh()`
+`lowering` for every top-level statement, so the cache starts empty each time and every
+statement that declares a local re-walks its whole file: cost grows with statements times file
+size, which fits `utilities.ts` (the largest file) at 649 s. `latentRegister`, `noteInheritance`
+and `noteAccessorNames` run once per statement over all of `program.Files()`. All of these exist
+in A as well; of the suspects, only `predicateFalseFlow.escapes` is absent from A. A's profile
+decides how much is new.
+
 ## What hasn't run yet, and why
 
 Order, as Performance asked after push 1: a CPU profile of main's whole first-error loop over all
-79 files (running now, [tools/whole_profile_overlay.py.txt](tools/whole_profile_overlay.py.txt)),
-then the same on A, then one timed run of B, then the decision diffs across the three trees, then
+79 files (done, above), then the same on A (running now, timeout raised to 7,200 s), then one timed run of B, then the decision diffs across the three trees, then
 the one-file against 79-file comparison, and only then a second round.
 
 - The timeout is 3,600 s, not 900 s, since one process covers all 79 files and takes 3,230 s on main.

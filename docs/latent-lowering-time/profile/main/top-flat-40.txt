@@ -1,0 +1,49 @@
+File: latent-census-loopprof
+Build ID: 1caa4159f07f9202806a6c1db601df5b60ac352a
+Type: cpu
+Time: 2026-10-28 01:34:50 UTC
+Duration: 3538.40s, Total samples = 4733.93s (133.79%)
+Showing nodes accounting for 3114.88s, 65.80% of 4733.93s total
+Dropped 2414 nodes (cum <= 23.67s)
+Showing top 40 nodes out of 235
+      flat  flat%   sum%        cum   cum%
+   528.65s 11.17% 11.17%    528.65s 11.17%  internal/runtime/maps.ctrlGroup.matchH2 (inline)
+   203.05s  4.29% 15.46%    203.05s  4.29%  runtime.spanClass.sizeclass (inline)
+   187.91s  3.97% 19.43%   3396.75s 71.75%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+   186.07s  3.93% 23.36%    451.67s  9.54%  runtime.tryDeferToSpanScan
+   146.89s  3.10% 26.46%   1665.40s 35.18%  github.com/system-inc/adamic/internal/lower.(*lowering).sourceIdentity.func1
+   132.75s  2.80% 29.26%       619s 13.08%  runtime.scanObject
+   124.67s  2.63% 31.90%    132.16s  2.79%  github.com/microsoft/TypeScript/tsc/internal/ast.IsFunctionLikeKind (inline)
+   103.60s  2.19% 34.09%    166.14s  3.51%  runtime.findObject
+   102.91s  2.17% 36.26%    247.45s  5.23%  github.com/system-inc/adamic/internal/lower.(*lowering).entriesRecordLiteral.func1
+    81.24s  1.72% 37.98%     81.24s  1.72%  runtime.memclrNoHeapPointers
+    77.76s  1.64% 39.62%    889.57s 18.79%  runtime.mapassign_fast64ptr
+    74.19s  1.57% 41.19%    310.01s  6.55%  github.com/microsoft/TypeScript/tsc/internal/binder.(*NameResolver).Resolve
+    72.23s  1.53% 42.71%    201.42s  4.25%  runtime.mapaccess2_fast64
+    70.96s  1.50% 44.21%    149.35s  3.15%  runtime.scanObjectSmall
+       70s  1.48% 45.69%     71.35s  1.51%  internal/runtime/gc/scan.scanSpanPackedAVX512
+    69.35s  1.46% 47.15%   3376.33s 71.32%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList (inline)
+    67.82s  1.43% 48.59%   3320.73s 70.15%  github.com/microsoft/TypeScript/tsc/internal/ast.visit (inline)
+    65.20s  1.38% 49.96%    547.57s 11.57%  runtime.scanSpan
+    62.86s  1.33% 51.29%   3375.94s 71.31%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes (inline)
+    56.07s  1.18% 52.48%    137.98s  2.91%  runtime.scanObjectsSmall
+    54.42s  1.15% 53.63%     54.42s  1.15%  runtime.memmove
+    46.39s  0.98% 54.61%     46.39s  0.98%  runtime.extractHeapBitsSmall
+    38.47s  0.81% 55.42%     94.94s  2.01%  github.com/system-inc/adamic/internal/lower.(*lowering).indexSourceModules.func1
+    35.77s  0.76% 56.17%     35.77s  0.76%  internal/runtime/maps.memHash64AES
+    34.93s  0.74% 56.91%     77.20s  1.63%  github.com/system-inc/adamic/internal/lower.(*lowering).noteInheritance.func1
+    34.22s  0.72% 57.63%     76.58s  1.62%  github.com/system-inc/adamic/internal/lower.(*lowering).noteAccessorNames.func1
+    32.21s  0.68% 58.31%     32.21s  0.68%  internal/runtime/maps.memHashAES
+    31.91s  0.67% 58.99%     31.91s  0.67%  internal/runtime/maps.h1 (inline)
+    31.91s  0.67% 59.66%     62.27s  1.32%  runtime.greyobject
+    30.15s  0.64% 60.30%     30.15s  0.64%  runtime.typePointers.nextFast (inline)
+    30.11s  0.64% 60.94%        31s  0.65%  runtime.spanOf (inline)
+    27.44s  0.58% 61.52%     27.44s  0.58%  internal/runtime/maps.(*ctrlGroup).setEmpty (inline)
+    27.29s  0.58% 62.09%     70.87s  1.50%  strconv.appendQuotedWith
+    27.16s  0.57% 62.67%    276.47s  5.84%  fmt.(*pp).doPrintf
+    26.53s  0.56% 63.23%    102.62s  2.17%  fmt.(*pp).handleMethods
+    25.77s  0.54% 63.77%     28.90s  0.61%  runtime.typePointers.next
+    24.34s  0.51% 64.28%    218.40s  4.61%  runtime.mapaccess1_fast64
+    24.33s  0.51% 64.80%     24.33s  0.51%  memeqbody
+    23.82s   0.5% 65.30%     68.21s  1.44%  runtime.bulkBarrierPreWrite
+    23.53s   0.5% 65.80%     35.12s  0.74%  runtime.(*spanInlineMarkBits).tryAcquire

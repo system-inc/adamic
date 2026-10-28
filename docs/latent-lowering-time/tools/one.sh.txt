@@ -7,8 +7,8 @@ mkdir -p "$S/runs"
 out=$S/runs/$label
 cat /proc/loadavg > "$out.loadavg-start"
 profile=
-[ "${4:-}" = profile ] && profile=$out.cpu.pprof
-(cd "$S/trees/$tree" && LATENT_PROFILE_OUTPUT=$profile LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 /usr/bin/time -v -o "$out.time" \
-    timeout 3600 "$S/bin/$tree/$binary" "${TARGET:-$S/adapted/src/compiler}" "$out.jsonl" > "$out.log" 2>&1)
+[ "${4:-}" = profile ] && { profile=$out.profiles; mkdir -p "$profile"; }
+(cd "$S/trees/$tree" && LATENT_PROFILE_DIR=$profile LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 /usr/bin/time -v -o "$out.time" \
+    timeout ${TIMEOUT:-7200} "$S/bin/$tree/$binary" "${TARGET:-$S/adapted/src/compiler}" "$out.jsonl" > "$out.log" 2>&1)
 echo "exit=$?" > "$out.exit"
 cat /proc/loadavg > "$out.loadavg-end"

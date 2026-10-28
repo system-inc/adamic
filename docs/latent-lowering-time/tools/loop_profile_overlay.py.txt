@@ -1,0 +1,45 @@
+"""Throwaway: from a timed overlay, write one CPU profile per iteration of the first-error loop into
+LATENT_PROFILE_DIR, so the whole loop is their merge and a killed run keeps its finished files. Never committed."""
+import json, pathlib, shutil, sys
+source, destination = pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2])
+shutil.copytree(source, destination, dirs_exist_ok=True)
+timing = destination / 'internal_lower_latent_timing.go'
+text = timing.read_text()
+text = text.replace('import (\n', 'import (\n\t"path/filepath"\n\t"runtime/pprof"\n\t"strings"\n')
+text = text.replace('type latentTimingMark struct {\n', 'type latentTimingMark struct {\n\tprofile *os.File\n')
+old = '\treturn latentTimingMark{wall: time.Now(), user: time.Duration(usage.Utime.Nano())}\n}\n'
+assert text.count(old) == 1
+text = text.replace(old, old + '''
+var latentTimingIndex int
+
+func latentTimingProfileStart(file string, mark latentTimingMark) latentTimingMark {
+	directory := os.Getenv("LATENT_PROFILE_DIR")
+	if directory == "" {
+		return mark
+	}
+	latentTimingIndex++
+	name := fmt.Sprintf("%02d_%s.pprof", latentTimingIndex, strings.ReplaceAll(filepath.Base(filepath.Dir(file))+"_"+filepath.Base(file), "/", "_"))
+	output, err := os.Create(filepath.Join(directory, name))
+	if err != nil {
+		panic(err)
+	}
+	if err := pprof.StartCPUProfile(output); err != nil {
+		panic(err)
+	}
+	mark.profile = output
+	return mark
+}
+''')
+old = '\tend := latentTimingNow()\n'
+assert text.count(old) == 1
+text = text.replace(old, '\tif start.profile != nil {\n\t\tpprof.StopCPUProfile()\n\t\t_ = start.profile.Close()\n\t}\n' + old)
+timing.write_text(text)
+hook = destination / 'internal_lower_latent_hook.go'
+text = hook.read_text()
+old = '\t\tlatentTimingStart := latentTimingNow()\n'
+assert text.count(old) == 1
+text = text.replace(old, '\t\tlatentTimingStart := latentTimingProfileStart(program.FileName(file), latentTimingNow())\n')
+hook.write_text(text)
+overlay = json.loads((source / 'overlay.json').read_text())
+replace = {k: (str(destination / pathlib.Path(v).relative_to(source)) if pathlib.Path(v).is_relative_to(source) else v) for k, v in overlay['Replace'].items()}
+(destination / 'overlay.json').write_text(json.dumps({'Replace': replace}, indent=2) + '\n')
