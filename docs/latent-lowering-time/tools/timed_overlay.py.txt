@@ -1,0 +1,46 @@
+"""Throwaway: copy a latent overlay and add a per-file timing line to stderr. Never committed."""
+import json, pathlib, shutil, sys
+source, destination = pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2])
+shutil.copytree(source, destination, dirs_exist_ok=True)
+hook = destination / 'internal_lower_latent_hook.go'
+text = hook.read_text()
+loop = '\tfor _, file := range program.Files() {\n\t\tlatentFindings = nil\n'
+assert text.count(loop) == 1, 'loop'
+text = text.replace(loop, '\tfor _, file := range program.Files() {\n\t\tlatentTimingStart := latentTimingNow()\n\t\tlatentFindings = nil\n')
+tail = '\t\t\t\tseen[finding] = true\n\t\t\t}\n\t\t}\n\t\temit(record)\n\t}\n}\n'
+assert text.count(tail) == 1, 'tail'
+text = text.replace(tail, '\t\t\t\tseen[finding] = true\n\t\t\t}\n\t\t}\n\t\tlatentTimingReport(program.FileName(file), latentTimingStart)\n\t\temit(record)\n\t}\n}\n')
+hook.write_text(text)
+(destination / 'internal_lower_latent_timing.go').write_text('''package lower
+
+import (
+	"fmt"
+	"os"
+	"syscall"
+	"time"
+)
+
+type latentTimingMark struct {
+	wall time.Time
+	user time.Duration
+}
+
+func latentTimingNow() latentTimingMark {
+	var usage syscall.Rusage
+	_ = syscall.Getrusage(syscall.RUSAGE_SELF, &usage)
+	return latentTimingMark{wall: time.Now(), user: time.Duration(usage.Utime.Nano())}
+}
+
+func latentTimingReport(file string, start latentTimingMark) {
+	end := latentTimingNow()
+	fmt.Fprintf(os.Stderr, "LATENT_TIMING %s %.3f %.3f\\n", file, end.wall.Sub(start.wall).Seconds(), (end.user - start.user).Seconds())
+}
+''')
+overlay = json.loads((source / 'overlay.json').read_text())
+replace = {}
+for key, value in overlay['Replace'].items():
+    replace[key] = str(destination / pathlib.Path(value).relative_to(source)) if pathlib.Path(value).is_relative_to(source) else value
+hook_key = [k for k in replace if k.endswith('internal/lower/latent_hook.go')]
+assert len(hook_key) == 1
+replace[hook_key[0].replace('latent_hook.go', 'latent_timing.go')] = str(destination / 'internal_lower_latent_timing.go')
+(destination / 'overlay.json').write_text(json.dumps({'Replace': replace}, indent=2) + '\n')
