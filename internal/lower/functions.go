@@ -341,8 +341,9 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 		// Otherwise its value is what it returns.
 		var value ir.Expression
 		if value, err = l.expression(body); err == nil {
-			err = l.checkAsyncReturn(body, value)
-			lowered = []ir.Statement{ir.Return{Value: fit(value, function.BodyReturns())}}
+			if err = l.checkAsyncReturn(body, value); err == nil {
+				lowered, err = l.checkedPredicateReturn(declaration, body, fit(value, function.BodyReturns()))
+			}
 		}
 	}
 	l.function, l.this, l.functionIndex = outer, outerThis, outerIndex
