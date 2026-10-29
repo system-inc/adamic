@@ -6,7 +6,7 @@ func (e *emitter) nodeProcessCall(call ir.ProcessCall) (string, bool) {
 	if call.Operation == "tmpdir" {
 		return "adamicNodeTmpdir()", true
 	}
-	values := map[string]string{"performance": "performance", "nextTickFeature": "!!process.nextTick", "eol": "\"\\n\"", "handle": "process.stdout._handle", "cwd": "process.cwd()", "platform": "process.platform", "pid": "process.pid", "argv": "process.argv", "execArgv": "process.execArgv", "columns": "process.stdout.columns", "memoryUsage": "process.memoryUsage()", "now": "performance.now()", "timeOrigin": "performance.timeOrigin"}
+	values := map[string]string{"performance": "performance", "nextTickFeature": "!!process.nextTick", "eol": "\"\\n\"", "handle": "process.stdout._handle", "cwd": "process.cwd()", "platform": "process.platform", "pid": "process.pid", "argv": "process.argv", "execArgv": "process.execArgv", "memoryUsage": "process.memoryUsage()", "now": "performance.now()", "timeOrigin": "performance.timeOrigin"}
 	if value, known := values[call.Operation]; known {
 		return value, true
 	}

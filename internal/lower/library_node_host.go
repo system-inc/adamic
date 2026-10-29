@@ -444,10 +444,10 @@ func (l *lowering) nodeStdoutUseRefusal(node *ast.Node) (bool, error) {
 	}
 	name := l.nodeLibraryMember(access)
 	switch name {
-	case "node:tty.WriteStream.isTTY":
+	case "node:tty.WriteStream.isTTY", "node:tty.ReadStream.isTTY":
 		return true, l.notYet(access, "declared boolean, but undefined off a TTY; adamic/host-tty")
 	case "node:tty.WriteStream.columns":
-		return true, l.notYet(access, "declared number, but undefined off a TTY; adamic/host-tty")
+		return true, l.notYet(access, "Node caches the terminal width and refreshes it on SIGWINCH from the event loop; adamic/host-tty")
 	}
 	if name == "node:process.Process.stdout" {
 		outer := access

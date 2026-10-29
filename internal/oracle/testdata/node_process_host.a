@@ -11,8 +11,6 @@ console.log(`argv same ${process.argv === process.argv}`);
 console.log(`entry ${typeof process.argv[0]} ${typeof process.argv[1]}`);
 console.log(`profiling ${process.execArgv.includes('--prof')} ${process.execArgv.includes('--cpu-prof')}`);
 console.log(`execArgv same ${process.execArgv === process.execArgv}`);
-console.log(`width ${process.stdout.columns ?? -1}`);
-console.log(`tty ${process.stdout.isTTY ?? false}`);
 console.log(`heap ${Number.isInteger(process.memoryUsage().heapUsed)} ${process.memoryUsage().heapUsed > 0}`);
 console.log('before');
 process.stdout.write('raw \ud800 \0 héllo 🌍');

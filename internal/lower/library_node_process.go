@@ -13,7 +13,7 @@ func init() {
 	for _, name := range []string{"cwd", "chdir", "argv", "execArgv", "env", "platform", "pid", "stdout", "stderr", "memoryUsage", "nextTick"} {
 		RegisterNodeLibraryMembers("node:process.Process."+name, "node:process."+name)
 	}
-	RegisterNodeLibraryMembers("node:process.MemoryUsage.heapUsed", "node:tty.WriteStream.columns", "node:tty.WriteStream.isTTY", "node:tty.ReadStream.isTTY", "node:stream.Writable.write", "node:net.Socket.write")
+	RegisterNodeLibraryMembers("node:process.MemoryUsage.heapUsed", "node:stream.Writable.write", "node:net.Socket.write")
 	RegisterNodeLibraryMembers("node:perf_hooks.performance", "node:performance.performance")
 	for _, name := range []string{"timeOrigin", "now", "mark", "measure", "clearMarks", "clearMeasures"} {
 		RegisterNodeLibraryMembers("node:perf_hooks.Performance." + name)
@@ -121,34 +121,6 @@ func (l *lowering) nodeProcessEnvironmentMutation(node *ast.Node) (ir.Expression
 }
 
 func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error) {
-	// Node types call stdout a TTY WriteStream even when a pipe lacks these fields.
-	// Preserve the runtime absence in guarded reads instead of unwrapping the declared number.
-	if node.Kind == ast.KindBinaryExpression && node.AsBinaryExpression().OperatorToken.Kind == ast.KindQuestionQuestionToken {
-		binary := node.AsBinaryExpression()
-		operation, of := "", ir.Type(0)
-		switch l.processPath(binary.Left) {
-		case "process.stdout.columns":
-			operation, of = "columns", ir.MaybeNumber
-		case "process.stdout.isTTY":
-			operation, of = "stdoutTTY", ir.MaybeBoolean
-		case "process.stderr.isTTY":
-			operation, of = "stderrTTY", ir.MaybeBoolean
-		}
-		if operation != "" {
-			fallback, err := l.expression(binary.Right)
-			if err != nil {
-				return nil, true, err
-			}
-			expected := ir.Number
-			if of == ir.MaybeBoolean {
-				expected = ir.Boolean
-			}
-			if fallback.Type() != expected {
-				return nil, true, l.notYet(binary.Right, "a TTY fallback outside the primitive host ABI")
-			}
-			return ir.Coalesce{Value: ir.ProcessCall{Operation: operation, Of: of}, Fallback: fallback, Of: fallback.Type()}, true, nil
-		}
-	}
 
 	if value, known, err := l.nodeProcessEnvironmentMutation(node); known {
 		return value, known, err
@@ -276,13 +248,6 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 		call.Operation, call.Of = "execArgv", ir.Array
 	case "process.stdout._handle":
 		call.Operation, call.Of = "handle", ir.Object
-	case "process.stdout.isTTY", "process.stderr.isTTY":
-		if of, known := l.representation(l.checker.GetTypeAtLocation(node)); known && of == ir.Boolean {
-			return nil, true, l.notYet(node, path+" without a missing-value guard on the Node TTY declaration")
-		}
-		return nil, false, nil
-	case "process.stdout.columns":
-		return nil, true, l.notYet(node, path+" without a missing-value guard on the Node TTY declaration")
 	case "os.EOL":
 		call.Operation, call.Of = "eol", ir.String
 	case "performance.timeOrigin":
@@ -565,7 +530,7 @@ func (l *lowering) nodeProcessStorageABI(modules []*ast.SourceFile) error {
 	return nil
 }
 
-// The narrow process adapter owns guarded TTY reads and its optional handle.
+// The narrow process adapter owns only the optional stdout handle.
 // Keep the raw stdout scanner's refusals for all other stream observations.
 func (l *lowering) nodeProcessGuardedStdoutUse(node *ast.Node) bool {
 	outer := node
@@ -580,12 +545,5 @@ func (l *lowering) nodeProcessGuardedStdoutUse(node *ast.Node) bool {
 		}
 		break
 	}
-	switch l.processPath(outer) {
-	case "process.stdout._handle":
-		return true
-	case "process.stdout.columns", "process.stdout.isTTY", "process.stderr.isTTY":
-		parent := outer.Parent
-		return parent != nil && parent.Kind == ast.KindBinaryExpression && parent.AsBinaryExpression().OperatorToken.Kind == ast.KindQuestionQuestionToken && parent.AsBinaryExpression().Left == outer
-	}
-	return false
+	return l.processPath(outer) == "process.stdout._handle"
 }

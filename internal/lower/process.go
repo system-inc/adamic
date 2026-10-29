@@ -57,20 +57,8 @@ func (l *lowering) processValue(node *ast.Node) (ir.Expression, bool, error) {
 		return value, known, err
 	}
 	path := l.processPath(node)
-	var call ir.ProcessCall
-	switch path {
-	case "process.stdout.isTTY":
-		call = ir.ProcessCall{Operation: "stdoutTTY", Of: ir.MaybeBoolean}
-	case "process.stderr.isTTY":
-		call = ir.ProcessCall{Operation: "stderrTTY", Of: ir.MaybeBoolean}
-	case "":
+	if path == "" {
 		return nil, false, nil
-	default:
-		return nil, true, l.notYet(node, path+" as a value (use its supported process operation directly)")
 	}
-	// A getter narrowed to undefined still reads the live external state, as every getter does.
-	if to, known := l.representation(l.checker.GetTypeAtLocation(node)); known {
-		return fit(call, to), true, nil
-	}
-	return call, true, nil
+	return nil, true, l.notYet(node, path+" as a value (use its supported process operation directly)")
 }

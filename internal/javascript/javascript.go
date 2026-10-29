@@ -803,12 +803,6 @@ func (e *emitter) value(expression ir.Expression) string {
 		if value, known := e.nodeProcessCall(expression); known {
 			return value
 		}
-		switch expression.Operation {
-		case "stdoutTTY":
-			return "process.stdout.isTTY"
-		case "stderrTTY":
-			return "process.stderr.isTTY"
-		}
 	case ir.NodeHostCall:
 		return e.nodeHostCall(expression)
 	case ir.NodeFSFile:

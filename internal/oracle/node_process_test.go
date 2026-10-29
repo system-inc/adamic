@@ -16,6 +16,11 @@ import (
 )
 
 func init() {
+	// The retained handle fixture is counted with stdout as a pipe, as execute captures it.
+	const terminal = "internal/oracle/testdata/node_process_terminal.a"
+	additionalFixtureCounts = append(additionalFixtureCounts, countCase{terminal, func(t *testing.T) (string, func() string) {
+		return counted(t, terminal, false, nil, false, false)
+	}})
 	// The host fixture joins the common input runners in link 6, together with
 	// their exact WASI refusal handling. Its native witnesses remain here.
 	for _, name := range []string{"performance", "performance_core"} {
@@ -122,7 +127,6 @@ func TestNodeProcessMutants(t *testing.T) {
 		{"pid range", "node_process_host.a", "return (double)getpid();", "return 0;"},
 		{"argv", "node_process_host.a", "arguments = adamic_host_argv();", "arguments = adamic_host_exec_argv();"},
 		{"execArgv", "node_process_host.a", "execution_arguments = adamic_host_exec_argv();", "execution_arguments = adamic_host_exec_argv(); static adamic_string flag = ADAMIC_STRING(\"--prof\"); adamic_array_push(execution_arguments, (adamic_value){.reference = &flag});"},
-		{"columns", "node_process_terminal.a", "result.number = size.ws_col;", "result.number = 80;"},
 		{"handle feature", "node_process_terminal.a", " || S_ISREG(info.st_mode)", " || !S_ISREG(info.st_mode)"},
 		{"write", "node_process_host.a", "return adamic_write_raw(adamic_stdout, text);", "adamic_write_line(adamic_stdout, text); return true;"},
 		{"memory range", "node_process_host.a", "result->slots[0].number = observations.heapUsed;", "result->slots[0].number = observations.heapUsed - observations.heapUsed - 1;"},

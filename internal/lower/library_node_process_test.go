@@ -63,25 +63,3 @@ func TestNodeProcessPerformanceStructuralBoundaries(t *testing.T) {
 		})
 	}
 }
-
-func TestNodeProcessTTYFallbackABI(t *testing.T) {
-	t.Parallel()
-	for _, source := range []string{"process.stdout.isTTY??'missing'", "process.stdout.columns??false"} {
-		t.Run(source, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSource(t, "import 'node:process'; console.log(String("+source+"));")
-			var missing *NotYet
-			if !errors.As(err, &missing) {
-				t.Fatalf("want named TTY ABI refusal, got %v", err)
-			}
-		})
-	}
-	for _, source := range []string{"process.stdout.isTTY??false", "process.stdout.columns??-1"} {
-		t.Run(source, func(t *testing.T) {
-			t.Parallel()
-			if _, err := lowerSource(t, "import 'node:process'; console.log(String("+source+"));"); err != nil {
-				t.Fatal(err)
-			}
-		})
-	}
-}

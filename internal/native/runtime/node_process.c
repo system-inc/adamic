@@ -13,9 +13,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#ifndef ADAMIC_TARGET_WASI
-#include <sys/ioctl.h>
-#endif
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <time.h>
@@ -173,20 +170,6 @@ adamic_array *adamic_node_exec_argv(void) {
     // Native has no VM flags; retain Node's array identity in the library adapter.
     if (execution_arguments == NULL) { execution_arguments = adamic_host_exec_argv(); }
     return adamic_retain(execution_arguments);
-}
-
-adamic_maybe_number adamic_node_columns(void) {
-#ifdef ADAMIC_TARGET_WASI
-    adamic_panic("wasm32-wasi: process.stdout.columns requires terminal size", sizeof "wasm32-wasi: process.stdout.columns requires terminal size" - 1);
-#else
-    adamic_maybe_number result = {0};
-    if (isatty(STDOUT_FILENO)) {
-        struct winsize size = {0};
-        result.present = true;
-        if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &size) == 0) { result.number = size.ws_col; }
-    }
-    return result;
-#endif
 }
 
 bool adamic_node_stdout_write(const adamic_string *text) {

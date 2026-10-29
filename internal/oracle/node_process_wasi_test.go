@@ -19,7 +19,7 @@ func TestNodeProcessWASIAgreement(t *testing.T) {
 		{"host", "process.platform requires a Node host platform"},
 		{"performance", ""}, {"performance_core", ""}, {"cleared_marks", ""}, {"missing_mark", ""}, {"tmpdir", ""},
 		{"os_namespace", "process.platform requires a Node host platform"},
-		{"terminal", "process.stdout.columns requires terminal size"},
+		{"terminal", "process.stdout._handle requires terminal flag control"},
 		{"blocking", "process.stdout._handle requires terminal flag control"},
 	} {
 		t.Run(one.name, func(t *testing.T) {
