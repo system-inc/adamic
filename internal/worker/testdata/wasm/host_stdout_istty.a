@@ -1,0 +1,8 @@
+import process from 'node:process';
+export function hostTerminal(): boolean {
+ return !!process.stdout.isTTY;
+}
+import type { HttpRequest, HttpResponse } from 'adamic/http';
+export function handle(request: HttpRequest): HttpResponse {
+ return {status: 200, headers: [], body: hostTerminal() ? request.body : 'not a terminal'};
+}
