@@ -215,6 +215,11 @@ func (l *lowering) checkLazyViewReads() error {
 // checks a slot against. A read that is neither, such as an interface with a length held as a
 // union because a string, an array and an object all satisfy it, has no emission, so it stops at
 // the read. A method read is the call's to emit, through the adapter.
+//
+// An optional field the shape lacks reads undefined, so it goes through the adapter, and only when
+// its declared union holds undefined. A read through ?. reads undefined from an absent receiver
+// and checks a present one as any other read, through the adapter or in place. Neither carries a
+// callable's recorded signature.
 func unemittableCheckedViewRead(program *ir.Program) error {
 	var refused error
 	inspect := func(node any) bool {
@@ -229,8 +234,20 @@ func unemittableCheckedViewRead(program *ir.Program) error {
 		if contract > 0 && int(contract) <= len(program.ViewContracts) {
 			descriptor := program.ViewContracts[contract-1]
 			if descriptor.Kind == ir.ViewUnion || descriptor.FixedTuple || descriptor.Kind == ir.ViewCallable && descriptor.ProducerCertified {
+				if (read.Optional || read.Absent) && (descriptor.Of == ir.Closure || read.Of == ir.Closure) {
+					refused = &NotYet{Where: read.ViewWhere, What: "a checked view read of optional field " + read.Name + " of callable type " + read.ViewType}
+					return false
+				}
+				if read.Absent && !descriptor.Undefined {
+					refused = &NotYet{Where: read.ViewWhere, What: "a checked view read of optional field " + read.Name + " whose type " + read.ViewType + " doesn't hold undefined"}
+					return false
+				}
 				return true
 			}
+		}
+		if read.Absent {
+			refused = &NotYet{Where: read.ViewWhere, What: "a checked view read of optional field " + read.Name + " of type " + read.ViewType + " outside a union view contract"}
+			return false
 		}
 		switch read.Of {
 		case ir.Number, ir.Boolean, ir.String, ir.Object, ir.Array, ir.Map:
