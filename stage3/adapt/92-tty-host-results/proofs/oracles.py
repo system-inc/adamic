@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Main first, verify its unchanged lane predicate, then with-92; no concurrent work."""
 from pathlib import Path
-import os,sys,json,subprocess as s,time,hashlib
+import os,sys,json,subprocess as s,time,hashlib,gzip
 sys.dont_write_bytecode=True
 repo=Path(__file__).resolve().parents[4];proof=Path(__file__).resolve().parent;scratch=Path(os.environ.get('TTY_PROOF_SCRATCH','/tmp/tty-adaptation'))
 assert json.loads((proof/'preparation.json').read_text())['status']=='pass'
@@ -11,7 +11,16 @@ sys.path.insert(0,str(repo/'stage3/lane'));from check import check_results,api_c
 expected=json.loads((repo/'stage3/lane/expected.json').read_text());sanctioned=json.loads((repo/'stage3/lane/sanctioned-api.json').read_text())
 records=[]
 for label in ['control','after']:
- tree=scratch/label;out=scratch/('oracle-'+label);memory=Path('/sys/fs/cgroup/memory.events').read_text();command=['bash','stage3/oracle/run.sh',str(tree),str(out),'--workers','8','--limit-seconds','1800']
+ tree=scratch/label;out=scratch/('oracle-'+label)
+ # The stock host reads this generated cache at host.ts:204 and writes it at
+ # :600. Each comparison gets the same cold, size-based packing as a fresh tree.
+ perf=tree/'.parallelperf.json'
+ if perf.exists():
+  tracked=s.run(['git','-C',str(tree),'ls-files','--error-unmatch','.parallelperf.json'],stdout=s.DEVNULL,stderr=s.DEVNULL)
+  assert tracked.returncode!=0,'refuse to remove a tracked input'
+  with gzip.open(proof/'logs'/('generated-parallelperf-'+label+'.json.gz'),'wb') as saved:saved.write(perf.read_bytes())
+  perf.unlink()
+ memory=Path('/sys/fs/cgroup/memory.events').read_text();command=['bash','stage3/oracle/run.sh',str(tree),str(out),'--workers','8','--limit-seconds','1800']
  with (proof/'logs'/('free-'+label+'.log')).open('w') as f:
   s.run(['free','-m'],stdout=f,check=True);f.write('\n'+memory+'\nloadavg '+Path('/proc/loadavg').read_text())
  start=time.monotonic()
@@ -32,6 +41,12 @@ try:
  diff.write_bytes(new+b'\nextra baseline mutant\n');errors,_=api_check(scratch/'lane-after',sanctioned);assert any('baseline.diff does not exactly describe' in e for e in errors)
  (proof/'baseline-mutant.json').write_text(json.dumps({'caught':True,'errors':errors},indent=2)+'\n')
 finally:diff.write_bytes(new)
+# Verify the actual built-and-tested source still has the exact two-body scope.
+check=proof/'check.cjs'
+expression=f"const p=require({str(check)!r});console.log(JSON.stringify({{scope:p.TestTTYSourceScope({str(scratch/'control')!r},{str(scratch/'after')!r}),consumers:p.TestTTYConsumerEquivalence({str(scratch/'control')!r},{str(scratch/'after')!r})}}))"
+with (proof/'post-suite-scope.json').open('w') as output:s.run(['node','-e',expression],stdout=output,check=True,timeout=60)
+with (proof/'logs/post-suite-idempotence.log').open('w') as output:s.run(['node',str(proof.parent/'adapt.cjs'),str(scratch/'after')],stdout=output,stderr=s.STDOUT,check=True,timeout=180)
+assert json.loads((proof/'logs/post-suite-idempotence.log').read_text())['files']==0
 (proof/'baseline.diff').write_bytes(new)
 result={'status':'pass','runs':records,'baselineDiff':{'byteIdentical':True,'bytes':len(new),'sha256':hashlib.sha256(new).hexdigest()},'api':{'byteIdentical':True,'bytes':len(a),'sha256':hashlib.sha256(a).hexdigest()},'laneCheckerUnchanged':True,'baselineByteMutantCaught':True}
 (proof/'oracle-comparison.json').write_text(json.dumps(result,indent=2)+'\n');print('PASS serial oracle comparison',flush=True)

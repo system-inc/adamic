@@ -22,5 +22,5 @@ Adamic checker options are exercised. Real failing lines from the mutant run:
       Type 'boolean | undefined' is not assignable to type 'boolean'.
         Type 'undefined' is not assignable to type 'boolean'.
 
-The full assertion and named stack are in logs/undone-checker.log. The restored
-run is in logs/restored-checker.log. No mutation is left in either built tree.
+The full assertion and named stack are in logs/undone-checker.log.gz. The restored
+run is in logs/restored-checker.log.gz. No mutation is left in either built tree.

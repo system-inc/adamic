@@ -13,8 +13,8 @@ hashes, scope/idempotence proofs, proof logs and serial control/after oracle.
 
 ## Readers and Node equivalence
 
-On the fully adapted main tree, executeCommandLine.ts:265 and :534 are the only
-getWidthOfTerminal callers. Both already use sys.getWidthOfTerminal?.() ?? 0.
+On the fully adapted main tree, generateOptionOutput at executeCommandLine.ts:265
+and getHeader at :534 are the only getWidthOfTerminal callers. Both already use sys.getWidthOfTerminal?.() ?? 0.
 Moving that fallback into the method gives exactly the same value at each read.
 At :268, zero selects the compact option layout instead of the >=80-column
 layout; at :540 it omits the wide TS icon/header alignment. No width is invented.
@@ -37,10 +37,9 @@ not JavaScript byte identity, is the acceptance criterion.
 ## Proofs
 
 Bounded checker, consumer-equivalence, scope and mutation proofs and full serial
-main/with-92 oracles are recorded under proofs/. The initial push precedes the
-long runs; their actual counts and outcome will be added without changing the
-adapter or widening its scope. No expected count, API sanction or baseline is
-updated to make a failing run green.
+main/with-92 oracles are recorded under proofs/. The adapter and bounded proofs
+were pushed before accepting the long comparison; final oracle evidence follows
+by fast-forward. No expected count, API sanction or baseline was updated.
 
 The required mutant undoes both bodies with head A's exact served tty.d.ts.
 TestTTYHostAxiomTypecheck must report TS2322 at sys.ts:1531:13 and :1534:13;
@@ -81,3 +80,58 @@ Both upstream builds exit 0 and their built/local/typescript.d.ts bytes match.
 No expected count, API sanction, harness source or fixture status is changed.
 Main's current lane requires eight workers, so the complete serial oracle runs
 use eight and the unmodified lane checker (91's historical run used four).
+
+## Complete serial oracle and public API
+
+The current main lane pins eight workers. Both final full runs used
+--workers 8 --limit-seconds 1800, all runners and no filter. Both upstream
+builds finished before the first suite. No setup or other test workload ran
+beside either final suite. The actual unmodified stage3/lane/check.py CLI says
+PASS stage3 landing lane for both trees. The sole failure in each raw oracle is
+the existing sanctioned public-API baseline test; neither count nor sanction
+was changed.
+
+| Oracle | Passing | Sanctioned API failure | Pending | Wall seconds |
+| --- | ---: | ---: | ---: | ---: |
+| Main control | 106,366 | 1 | 0 | 313.431 |
+| With 92 | 106,366 | 1 | 0 | 321.55 |
+
+The complete baseline.diff is byte-identical: 51,093 bytes,
+SHA-256 `5333568a661aea24fc8af3149e9f4d2dfca70731842461c677f385b092adc4f0`.
+The emitted public typescript.d.ts is also byte-identical: 590,861 bytes,
+SHA-256 `477a56fb7b35a5f268be6131441c67d237b4646a9f8d2e1f50dc163879450051`. The unchanged normalizer accepts exactly
+223 sanctioned declarations. Appending an extra baseline-diff line makes the
+same lane's byte checker fail; the original bytes are restored and the full
+lane CLI passes again. See proofs/oracle.mutant.md.
+
+The final built compilers were also observed through Node v24.19.0 with stdout
+on a pipe. Main's raw width and TTY results are undefined/undefined; with 92 they
+are 0/false. Applying the actual readers gives 0/false in both. This witnesses
+the deliberate JavaScript change and the reader equivalence on real artifacts.
+
+After the suites, the 746-file scope check and all 63 reader cases pass again,
+and the adapter's final rerun writes zero files. Both final suites leave every
+cgroup memory-event counter unchanged.
+
+## Retained setup and resource attempts
+
+A pre-install checker probe had the same missing source-map-support diagnostic
+on both trees; installing the locked dependencies clears it. An initial PATH
+omitted npm; it was corrected while keeping pinned Node first. These attempts
+are not substituted for the completed checks above.
+
+An earlier full main run had the same 106,366/1/0 counts and passed the lane,
+but its extra resource check rejected a changed memory-pressure counter. A warm
+retry then reused the stock .parallelperf.json timing cache, packed tests by
+measured time, lost a worker to OOM, and produced no usable aggregate counts.
+Both raw attempts are retained. Old inactive Go/C scratch products were evicted;
+source and evidence remain. Each accepted final run starts with only the stock
+harness's generated, untracked .parallelperf.json cache reset, like a fresh tree.
+No harness source, worker count, fixture, baseline, or expected outcome changes.
+The main host reads that cache at src/testRunner/parallel/host.ts:204 and writes
+it at :600. Final logs show the stock size-based packing and unchanged counters.
+
+The official apply command regenerated the patch table, including older stale
+rows; there is no hand merge. No internal/load, library_node_host.go, fixture
+status, oracle implementation, lane checker, expected count or API sanction is
+changed by B1. Compressed raw logs use the same layout as adaptation 91.
