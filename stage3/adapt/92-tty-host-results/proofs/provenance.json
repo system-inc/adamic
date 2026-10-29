@@ -1,0 +1,19 @@
+{
+  "task": "#jk7tph7 B1",
+  "base": "f2cf1ebb169994b3d27b9d5fc9760c5b2d7d8c6a",
+  "initialPushedCommit": "73f07b9e97adb8e8dfb9b16e394ac735eea53804",
+  "headA": "92d1abe8f28073fd9bd242138017f4111aa02b73",
+  "headABase": "1b5e4e29af62346dd6f08242dd272fdc751bfbeb",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "control": "complete main adaptation set, excluding only the new 92 directory",
+  "applyExit": {
+    "control": 0,
+    "after": 0
+  },
+  "bodiesOnly": true,
+  "protected": [
+    "internal/load",
+    "internal/lower/library_node_host.go"
+  ],
+  "oracleWorkers": 8
+}

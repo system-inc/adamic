@@ -1,0 +1,15 @@
+--- a/src/compiler/sys.ts
++++ b/src/compiler/sys.ts
+@@ -1529,10 +1529,10 @@
+                 process.stdout.write(s);
+             },
+             getWidthOfTerminal() {
+-                return process.stdout.columns;
++                return process.stdout.columns ?? 0;
+             },
+             writeOutputIsTTY() {
+-                return process.stdout.isTTY;
++                return !!process.stdout.isTTY;
+             },
+             readFile,
+             writeFile,

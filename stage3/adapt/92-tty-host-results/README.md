@@ -46,3 +46,38 @@ The required mutant undoes both bodies with head A's exact served tty.d.ts.
 TestTTYHostAxiomTypecheck must report TS2322 at sys.ts:1531:13 and :1534:13;
 restoring 92 removes those two errors. The checker must also admit the adapted
 bodies against the published declarations. See proofs/typecheck.mutant.md.
+
+## Bounded preparation results
+
+Both full numbered applies exit 0. The official apply tool regenerated
+stage3/patch-set.md: row 92-tty-host-results is 1 file, 2 added lines, 2 removed.
+The same generation refreshes older stale table rows and removes its old prose
+suffix; none was hand-merged. The actual main control's total is 85 files,
+5,523 added / 5,481 removed; with 92 it is 85 files, 5,525 / 5,483.
+
+TestTTYSourceScope inventories all 746 source files and finds only sys.ts
+changed. Removing the two expression edits restores its exact source bytes.
+Comments-retained and comments-removed transpilation differ only at those two
+return expressions. The System interface text is byte-identical. The adapter's
+idempotence run reports zero files, and its moved-target guard rejects an added
+newline before writing. TestTTYConsumerEquivalence passes 63 cases using the
+actual method bodies, both actual width readers, defaultIsPretty and createColors.
+A wrong numeric fallback (1) makes that witness fail.
+
+With locked dependencies installed, the ordinary compiler check is:
+
+| Tree | Published @types/node | Head A served tty.d.ts |
+| --- | ---: | ---: |
+| Main control | 0 | 2 TS2322 |
+| With 92 | 0 | 0 |
+
+With Adamic's stricter options, the existing 140 diagnostics stay unchanged:
+main is 140 / 142, with-92 is 140 / 140. The two additions are exactly
+sys.ts:1531:13 and :1534:13. The required undone mutant exits 1 with those two
+errors; the restored check exits 0. The served Node file is exported through A's
+real applicator, not a second correction list. hashes and commands are retained.
+
+Both upstream builds exit 0 and their built/local/typescript.d.ts bytes match.
+No expected count, API sanction, harness source or fixture status is changed.
+Main's current lane requires eight workers, so the complete serial oracle runs
+use eight and the unmodified lane checker (91's historical run used four).

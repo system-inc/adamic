@@ -1,0 +1,128 @@
+[
+  {
+    "name": "control-install",
+    "command": [
+      "npm",
+      "ci",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/tmp/tty-adaptation/control",
+    "exit": 0,
+    "seconds": 5.693,
+    "limit": 600
+  },
+  {
+    "name": "after-install",
+    "command": [
+      "npm",
+      "ci",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/tmp/tty-adaptation/after",
+    "exit": 0,
+    "seconds": 2.479,
+    "limit": 600
+  },
+  {
+    "name": "checks",
+    "command": [
+      "node",
+      "/tmp/tty-adaptation/head/stage3/adapt/92-tty-host-results/proofs/check.cjs",
+      "/tmp/tty-adaptation/control",
+      "/tmp/tty-adaptation/after",
+      "/tmp/tty-adaptation/head/stage3/adapt/92-tty-host-results/proofs/checks.json"
+    ],
+    "cwd": "/tmp/tty-adaptation/head",
+    "exit": 0,
+    "seconds": 71.932,
+    "limit": 300
+  },
+  {
+    "name": "undone-checker",
+    "command": [
+      "node",
+      "/tmp/tty-adaptation/head/stage3/adapt/92-tty-host-results/proofs/check.cjs",
+      "--require-repaired",
+      "/tmp/tty-adaptation/control"
+    ],
+    "cwd": "/tmp/tty-adaptation/head",
+    "exit": 1,
+    "seconds": 20.391,
+    "limit": 180
+  },
+  {
+    "name": "restored-checker",
+    "command": [
+      "node",
+      "/tmp/tty-adaptation/head/stage3/adapt/92-tty-host-results/proofs/check.cjs",
+      "--require-repaired",
+      "/tmp/tty-adaptation/after"
+    ],
+    "cwd": "/tmp/tty-adaptation/head",
+    "exit": 0,
+    "seconds": 35.465,
+    "limit": 180
+  },
+  {
+    "name": "idempotence",
+    "command": [
+      "node",
+      "/tmp/tty-adaptation/head/stage3/adapt/92-tty-host-results/adapt.cjs",
+      "/tmp/tty-adaptation/after"
+    ],
+    "cwd": "/tmp/tty-adaptation/head",
+    "exit": 0,
+    "seconds": 1.279,
+    "limit": 180
+  },
+  {
+    "name": "moved-target-mutant",
+    "command": [
+      "node",
+      "/tmp/tty-adaptation/head/stage3/adapt/92-tty-host-results/adapt.cjs",
+      "/tmp/tty-adaptation/after"
+    ],
+    "cwd": "/tmp/tty-adaptation/head",
+    "exit": 1,
+    "seconds": 1.223,
+    "limit": 180
+  },
+  {
+    "name": "wrong-fallback-mutant",
+    "command": [
+      "node",
+      "-e",
+      "require('/tmp/tty-adaptation/head/stage3/adapt/92-tty-host-results/proofs/check.cjs').TestTTYConsumerEquivalence('/tmp/tty-adaptation/control','/tmp/tty-adaptation/after')"
+    ],
+    "cwd": "/tmp/tty-adaptation/head",
+    "exit": 1,
+    "seconds": 0.367,
+    "limit": 60
+  },
+  {
+    "name": "control-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/tmp/tty-adaptation/control",
+    "exit": 0,
+    "seconds": 22.898,
+    "limit": 1200
+  },
+  {
+    "name": "after-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/tmp/tty-adaptation/after",
+    "exit": 0,
+    "seconds": 22.976,
+    "limit": 1200
+  }
+]
