@@ -9,6 +9,7 @@ import (
 	"go/parser"
 	"go/token"
 	"os"
+	"strings"
 )
 
 func printed(n ast.Node) string {
@@ -16,6 +17,20 @@ func printed(n ast.Node) string {
 	_ = format.Node(&b, token.NewFileSet(), n)
 	return b.String()
 }
+
+// fieldTypes prints a parameter or result list's types in order, one per declared name, without the names.
+func fieldTypes(fields *ast.FieldList) string {
+	types := []string{}
+	if fields != nil {
+		for _, field := range fields.List {
+			for range max(1, len(field.Names)) {
+				types = append(types, printed(field.Type))
+			}
+		}
+	}
+	return strings.Join(types, ", ")
+}
+
 func main() {
 	if len(os.Args) != 3 {
 		panic("usage: statementrewrite input output")
@@ -40,7 +55,9 @@ func main() {
 		panic(fmt.Sprintf("latent statement rewrite: lowering.statement: expected exactly one function, found %d", len(matches)))
 	}
 	fn := matches[0]
-	if printed(fn.Type) != "func(node *ast.Node) ([]ir.Statement, error)" {
+	// The types are the contract, not the names: Diagnostics' debug source lines (f2cf1ebb) name the results so a
+	// defer can prepend a marker, and the raw method keeps its own names under the unnamed wrapper (#mdaed6m).
+	if fieldTypes(fn.Type.Params) != "*ast.Node" || fieldTypes(fn.Type.Results) != "[]ir.Statement, error" {
 		panic("latent statement rewrite: lowering.statement: unsupported signature " + printed(fn.Type))
 	}
 	fn.Name.Name = "latentStatementRaw"
