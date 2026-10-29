@@ -564,3 +564,28 @@ func (l *lowering) nodeProcessStorageABI(modules []*ast.SourceFile) error {
 	}
 	return nil
 }
+
+// The narrow process adapter owns guarded TTY reads and its optional handle.
+// Keep the raw stdout scanner's refusals for all other stream observations.
+func (l *lowering) nodeProcessGuardedStdoutUse(node *ast.Node) bool {
+	outer := node
+	if outer.Parent != nil && outer.Parent.Kind == ast.KindPropertyAccessExpression && outer.Parent.Name() == outer {
+		outer = outer.Parent
+	}
+	for outer.Parent != nil {
+		parent := outer.Parent
+		if parent.Kind == ast.KindParenthesizedExpression || parent.Kind == ast.KindAsExpression || parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == outer {
+			outer = parent
+			continue
+		}
+		break
+	}
+	switch l.processPath(outer) {
+	case "process.stdout._handle":
+		return true
+	case "process.stdout.columns", "process.stdout.isTTY", "process.stderr.isTTY":
+		parent := outer.Parent
+		return parent != nil && parent.Kind == ast.KindBinaryExpression && parent.AsBinaryExpression().OperatorToken.Kind == ast.KindQuestionQuestionToken && parent.AsBinaryExpression().Left == outer
+	}
+	return false
+}

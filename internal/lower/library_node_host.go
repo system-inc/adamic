@@ -435,6 +435,9 @@ func (l *lowering) nodeStdoutWrite(node *ast.Node) (ir.Expression, bool, error) 
 // The scanner sees the receiver, each property name and the call separately.
 // Admit those nodes only inside this exact call, without registering stdout.
 func (l *lowering) nodeStdoutUseRefusal(node *ast.Node) (bool, error) {
+	if l.nodeProcessGuardedStdoutUse(node) {
+		return false, nil
+	}
 	access := ast.SkipParentheses(node)
 	if node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.Name() == node {
 		access = node.Parent

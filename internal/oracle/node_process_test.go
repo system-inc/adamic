@@ -100,6 +100,10 @@ func nodeProcessMutant(t *testing.T, fixture, before, after string) (string, str
 	source = strings.Replace(source, before, after, 1)
 	source = nodeProcessMutantNames(source, "mutant_node_")
 	code := nodeProcessMutantNames(native.C(program), "mutant_node_")
+	if before == "return adamic_write_raw(adamic_stdout, text);" {
+		// Main lowers raw output directly; keep this mutant on that emitted route.
+		code = strings.ReplaceAll(code, "adamic_write_raw(adamic_stdout, ", "mutant_node_stdout_write(")
+	}
 	code = strings.Replace(code, "adamic_start(argc, argv);", "adamic_start(argc, argv); mutant_node_process_start(argc, argv);", 1)
 	binary := filepath.Join(t.TempDir(), "mutant")
 	if err := native.Build(source+"\n"+code, binary, native.Options{Sanitize: true}); err != nil {
@@ -407,7 +411,7 @@ int main(void) {
 	for _, mutant := range []bool{false, true} {
 		implementation := runtimeSource
 		if mutant {
-			start := strings.Index(implementation, "void adamic_write_line(")
+			start := strings.Index(implementation, "static void output_start(")
 			before := "output_mode = isatty(adamic_stdout) || regular_file ? 2 : 1;"
 			if start < 0 || strings.Count(implementation[start:], before) != 1 {
 				t.Fatal("raw file-mode mutation anchor changed")
