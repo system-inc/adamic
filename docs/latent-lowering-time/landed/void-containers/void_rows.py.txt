@@ -1,0 +1,76 @@
+"""Extract the void-container and generic-void findings from one latent.jsonl. Usage: void_rows.py LATENT_JSONL ADAPTED_COMPILER_DIR OUTPUT_DIR"""
+import collections, gzip, json, pathlib, re, sys
+latent, compiler, out = pathlib.Path(sys.argv[1]), sys.argv[2].rstrip('/') + '/', pathlib.Path(sys.argv[3])
+texts, offsets = {}, {}
+def offset(file, line, column):
+    # Where's line and column are 1-based; the column is taken as characters, so the offset is the character
+    # offset into the file's text (UTF-16 units and characters agree for every file whose text is in the BMP).
+    if file not in offsets:
+        text = (pathlib.Path(compiler) / file).read_text()
+        texts[file] = text
+        starts = [0]
+        for index, character in enumerate(text):
+            if character == '\n':
+                starts.append(index + 1)
+        offsets[file] = starts
+    return offsets[file][line - 1] + column - 1
+where_pattern = re.compile(r'^(.*):(\d+):(\d+)$')
+groups = {'void-container': [], 'generic-void': []}
+for line in latent.open():
+    record = json.loads(line)
+    if 'findings' not in record:
+        continue
+    file = record['file'].replace(compiler, '')
+    for finding in record['findings']:
+        reason = finding['reason'].replace(compiler, '')
+        if reason.startswith('a read of a void container'):
+            group = 'void-container'
+        elif 'generic instantiated at void' in reason:
+            group = 'generic-void'
+        else:
+            continue
+        where = finding['where'].replace(compiler, '')
+        match = where_pattern.match(where)
+        row = {'file': file, 'unit': finding['unit'].replace(compiler, ''), 'where': where, 'kind': finding['kind'],
+               'reason': reason, 'text': finding['text'].replace(compiler, ''), 'phase': finding['phase']}
+        if match:
+            # A site in another file than its record (a generic's body, reached from this file) is offset in its own file.
+            row['line'], row['column'] = int(match.group(2)), int(match.group(3))
+            row['start'] = offset(match.group(1), row['line'], row['column'])
+        else:
+            row['line'] = row['column'] = row['start'] = None
+        row['end'] = None
+        groups[group].append(row)
+for group, rows in groups.items():
+    with gzip.open(out / (group + '-rows.jsonl.gz'), 'wt') as output:
+        for row in rows:
+            output.write(json.dumps(row, sort_keys=True) + '\n')
+with (out / 'summary.txt').open('w') as summary:
+    summary.write('Source: the after run (main 51981922 + 55c1c38f) latent.jsonl, sha256 4a942058e4e277e0e2fd8e0220f1e1b20c62075a8047876ee7c7601b90262fe0.\n')
+    summary.write('Findings carry no start or end (their site_start and site_end are empty): start is the character offset of where\'s\n'
+                  'line and column in the adapted file that where names (for 4 generic-void rows, not the record\'s own file), and end is null.\n')
+    for group, rows in groups.items():
+        summary.write('\n== %s: %d findings, %d distinct sites (where), %d files, kinds %s\n' % (group, len(rows), len({r['where'] for r in rows}), len({r['file'] for r in rows}), dict(collections.Counter(r['kind'] for r in rows))))
+        summary.write('\n-- by reason\n')
+        for reason, count in collections.Counter(r['reason'] for r in rows).most_common():
+            summary.write('%6d  %s\n' % (count, reason))
+        summary.write('\n-- by file\n')
+        for file, count in collections.Counter(r['file'] for r in rows).most_common():
+            summary.write('%6d  %s\n' % (count, file))
+        summary.write('\n-- the 30 most frequent sites (where), with their reasons\n')
+        by_site = collections.defaultdict(list)
+        for r in rows:
+            by_site[r['where']].append(r['reason'])
+        summary.write('(no site repeats more than %d times)\n' % max(len(v) for v in by_site.values()))
+        for where, reasons in sorted(by_site.items(), key=lambda item: (-len(item[1]), item[0]))[:30]:
+            summary.write('%6d  %s  [%s]\n' % (len(reasons), where, '; '.join('%s x%d' % (k, c) for k, c in collections.Counter(reasons).most_common())))
+            offset(where.rsplit(':', 2)[0], 1, 1)
+            source_line = texts.get(where.rsplit(':', 2)[0], '').splitlines()
+            line_number = int(where.rsplit(':', 2)[1])
+            if source_line:
+                summary.write('        | %s\n' % source_line[line_number - 1].strip()[:160])
+    rows = groups['generic-void']
+    summary.write('\n== generic-void by the read site its reason names (read at ...), the generic body that reads the void value\n')
+    for site, count in collections.Counter(re.search(r'read at (\S+)', r['reason']).group(1) if re.search(r'read at (\S+)', r['reason']) else '(none)' for r in rows).most_common():
+        summary.write('%6d  %s\n' % (count, site))
+    summary.write('\nNo row lacks a start: %s\n' % all(r['start'] is not None for rows in groups.values() for r in rows))

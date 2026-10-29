@@ -1,0 +1,427 @@
+Source: the after run (main 51981922 + 55c1c38f) latent.jsonl, sha256 4a942058e4e277e0e2fd8e0220f1e1b20c62075a8047876ee7c7601b90262fe0.
+Findings carry no start or end (their site_start and site_end are empty): start is the character offset of where's
+line and column in the adapted file that where names (for 4 generic-void rows, not the record's own file), and end is null.
+
+== void-container: 9610 findings, 9504 distinct sites (where), 56 files, kinds {'Refused': 9610}
+
+-- by reason
+  5620  a read of a void container's elements, as an argument
+   897  a read of a void container's elements, as a value
+   880  a read of a void container's elements, as a returned value
+   562  a read of a void container's elements, as an assertion's operand
+   343  a read of a void container's elements, as an operand of &&
+   310  a read of a void container's elements, as an assigned value
+   149  a read of a void container's elements, as an operand of ||
+   138  a read of a void container's elements, as a condition
+    83  a read of a void container's elements, as a spread
+    65  a read of a void container's elements, as a destructured value
+    62  a read of a void container's elements, as an operand of ??
+    50  a read of a void container's elements, through get
+    42  a read of a void container's elements, as a binding's initializer
+    34  a read of a void container's elements, through set
+    28  a read of a void container's elements, as typeof's operand
+    23  a read of a void container's elements, through map
+    18  a read of a void container's elements, through getCompilerOptions
+    16  a read of a void container's elements, through getSourceFiles
+    15  a read of a void container's elements, through getSourceFileByPath
+    14  a read of a void container's elements, through has
+    13  a read of a void container's elements, through delete
+    10  a read of a void container's elements, through onDiagnosticReported: this holds void in field context, and onDiagnosticReported reads it
+     8  a read of a void container's elements, as an operand of ??=
+     8  a read of a void container's elements, through getCurrentDirectory
+     7  a read of a void container's elements, through indexOf
+     7  a read of a void container's elements, through some
+     7  a read of a void container's elements, through emit
+     7  a read of a void container's elements, through add
+     7  a read of a void container's elements, through filter
+     6  a read of a void container's elements, as a for...of source bound to an existing name or a pattern
+     6  a read of a void container's elements, through useCaseSensitiveFileNames
+     5  a read of a void container's elements, through getTypeChecker
+     5  a read of a void container's elements, through forEach with a callback not written in place
+     5  a read of a void container's elements, through afterProgramEmitAndDiagnostics
+     4  a read of a void container's elements, through enqueue
+     4  a read of a void container's elements, through isSourceFileDefaultLibrary
+     4  a read of a void container's elements, through clear
+     4  a read of a void container's elements, through getRootFileNames
+     4  a read of a void container's elements, through getProgram
+     4  a read of a void container's elements, through getDeclarationDiagnostics
+     4  a read of a void container's elements, through emitBuildInfo
+     4  a read of a void container's elements, through onWatchStatusChange
+     4  a read of a void container's elements, through getPackageJsonInfoCache
+     3  a read of a void container's elements, through getConfigFileParsingDiagnostics
+     3  a read of a void container's elements, through getSyntacticDiagnostics
+     3  a read of a void container's elements, through getOptionsDiagnostics
+     3  a read of a void container's elements, through getGlobalDiagnostics
+     3  a read of a void container's elements, through getSourceFile
+     3  a read of a void container's elements, through hasChangedEmitSignature
+     3  a read of a void container's elements, through getSemanticDiagnostics
+     3  a read of a void container's elements, through afterProgramCreate
+     3  a read of a void container's elements, through find
+     3  a read of a void container's elements, through getResolvedProjectReferences
+     3  a read of a void container's elements, through getParsedCommandLine
+     3  a read of a void container's elements, through setModifiedTime
+     3  a read of a void container's elements, through done
+     2  a read of a void container's elements, as a loop condition
+     2  a read of a void container's elements, through getProgramDiagnostics
+     2  a read of a void container's elements, through getFileIncludeReasons
+     2  a read of a void container's elements, through getProgramOrUndefined
+     2  a read of a void container's elements, through getAllDependencies
+     2  a read of a void container's elements, through releaseProgram
+     2  a read of a void container's elements, through getSemanticDiagnosticsOfNextAffectedFile
+     2  a read of a void container's elements, as an operand of in
+     2  a read of a void container's elements, through __debugTypeToString
+     2  a read of a void container's elements, through emitNodeWithNotification
+     2  a read of a void container's elements, through isEmitNotificationEnabled
+     2  a read of a void container's elements, through substituteNode
+     2  a read of a void container's elements, through dispose
+     2  a read of a void container's elements, through build
+     2  a read of a void container's elements, through getOrCreateCacheForNonRelativeName
+     2  a read of a void container's elements, through getFromDirectoryCache
+     2  a read of a void container's elements, through getProjectReferences
+     2  a read of a void container's elements, through getMissingFilePaths
+     2  a read of a void container's elements, through forEach's callback parameter 0, destructured or rest
+     2  a read of a void container's elements, through getCompilerOptionsForFile
+     2  a read of a void container's elements, through get: IdentifierNameMap<ExportSpecifier[]> holds void in its type argument 1 (ExportSpecifier[]), and get reads it at transformers/utilities.ts:401:16 through get
+     2  a read of a void container's elements, through get: IdentifierNameMap<ExportSpecifier[]> | undefined holds void in its type argument 1 (ExportSpecifier[]), and get reads it
+     2  a read of a void container's elements, through update
+     2  a read of a void container's elements, through realpath
+     2  a read of a void container's elements, through setTimeout
+     2  a read of a void container's elements, through clearTimeout
+     1  a read of a void container's elements, through isEmpty
+     1  a read of a void container's elements, through dequeue
+     1  a read of a void container's elements, through getBindAndCheckDiagnostics
+     1  a read of a void container's elements, through keys
+     1  a read of a void container's elements, through getBuildInfo
+     1  a read of a void container's elements, through emitNextAffectedFile
+     1  a read of a void container's elements, through getRedirectFromSourceFile
+     1  a read of a void container's elements, through forEachResolvedTypeReferenceDirective
+     1  a read of a void container's elements, through values
+     1  a read of a void container's elements, through select
+     1  a read of a void container's elements, through clean
+     1  a read of a void container's elements, through getBuildOrder
+     1  a read of a void container's elements, through getIdentifierCount
+     1  a read of a void container's elements, through getSymbolCount
+     1  a read of a void container's elements, through getTypeCount
+     1  a read of a void container's elements, through getInstantiationCount
+     1  a read of a void container's elements, through getRelationCacheSizes
+     1  a read of a void container's elements, through every
+     1  a read of a void container's elements, through getOrCreateCacheForModuleName
+     1  a read of a void container's elements, through getOrCreateCacheForDirectory
+     1  a read of a void container's elements, through getResolvedModuleFromModuleSpecifier
+     1  a read of a void container's elements, through getResolvedTypeReferenceDirectiveFromTypeReferenceDirective
+     1  a read of a void container's elements, through lastIndexOf
+     1  a read of a void container's elements, as an operand of ||=
+     1  a read of a void container's elements, through add: IdentifierNameMultiMap<ExportSpecifier> holds void in its type argument 1 (ExportSpecifier), and add reads it at transformers/utilities.ts:443:22 through get: this holds void in field _map, and get reads it
+     1  a read of a void container's elements, through getModifiedTime
+     1  a read of a void container's elements, through fileExists
+     1  a read of a void container's elements, through deleteFile
+     1  a read of a void container's elements, through getNewLine
+     1  a read of a void container's elements, through a computed member
+     1  a read of a void container's elements, as an operand of +
+     1  a read of a void container's elements, as a value seen without its void
+     1  a read of a void container's elements, through isEmittedFile
+
+-- by file
+  1184  parser.ts
+  1000  utilities.ts
+   815  factory/nodeFactory.ts
+   790  emitter.ts
+   766  binder.ts
+   573  transformers/module/module.ts
+   541  transformers/ts.ts
+   398  transformers/module/system.ts
+   347  expressionToTypeNode.ts
+   315  transformers/es2018.ts
+   247  factory/utilities.ts
+   209  utilitiesPublic.ts
+   199  visitorPublic.ts
+   191  builder.ts
+   159  transformers/legacyDecorators.ts
+   151  transformers/utilities.ts
+   135  transformers/typeSerializer.ts
+   131  tsbuildPublic.ts
+   120  transformers/declarations/diagnostics.ts
+   112  transformers/destructuring.ts
+   110  factory/emitHelpers.ts
+   105  transformers/namedEvaluation.ts
+    96  commandLineParser.ts
+    89  program.ts
+    85  transformers/es2020.ts
+    69  factory/nodeConverters.ts
+    68  factory/parenthesizerRules.ts
+    55  executeCommandLine.ts
+    50  moduleNameResolver.ts
+    49  debug.ts
+    47  builderState.ts
+    43  watch.ts
+    41  watchUtilities.ts
+    36  programDiagnostics.ts
+    36  transformers/es2016.ts
+    29  factory/emitNode.ts
+    29  moduleSpecifiers.ts
+    25  transformers/classThis.ts
+    23  transformers/es2021.ts
+    20  symbolWalker.ts
+    19  transformers/taggedTemplate.ts
+    18  transformers/es2017.ts
+    13  tracing.ts
+    13  transformers/classFields.ts
+    12  checker.ts
+    11  resolutionCache.ts
+     9  factory/nodeChildren.ts
+     6  builderPublic.ts
+     5  transformers/es2019.ts
+     5  transformers/module/impliedNodeFormatDependent.ts
+     4  sourcemap.ts
+     3  watchPublic.ts
+     1  core.ts
+     1  transformer.ts
+     1  transformers/declarations.ts
+     1  transformers/esnext.ts
+
+-- the 30 most frequent sites (where), with their reasons
+(no site repeats more than 2 times)
+     2  binder.ts:1698:21  [a read of a void container's elements, as a value x1; a read of a void container's elements, as an operand of && x1]
+        | if (currentReturnTarget && returnLabel.antecedent) {
+     2  binder.ts:1703:21  [a read of a void container's elements, as a value x1; a read of a void container's elements, as an operand of && x1]
+        | if (currentExceptionTarget && exceptionLabel.antecedent) {
+     2  binder.ts:2072:13  [a read of a void container's elements, as a value x1; a read of a void container's elements, as an operand of || x1]
+        | if (node.initializer || isForInOrOfStatement(node.parent.parent)) {
+     2  binder.ts:2541:25  [a read of a void container's elements, as an assigned value x1; a read of a void container's elements, as an operand of || x1]
+        | container = enclosingContainer || file;
+     2  binder.ts:3464:13  [a read of a void container's elements, as a value x1; a read of a void container's elements, as an operand of && x1]
+        | if (containerIsClass && namespaceSymbol && namespaceSymbol.valueDeclaration) {
+     2  binder.ts:669:65  [a read of a void container's elements, as an argument x1; a read of a void container's elements, as an assertion's operand x1]
+        | const moduleName = getTextOfIdentifierOrLiteral(name as Identifier | StringLiteral);
+     2  builder.ts:2169:26  [a read of a void container's elements, as an assigned value x1; a read of a void container's elements, as an operand of || x1]
+        | result = diagnostics || emptyArray;
+     2  builderState.ts:48:42  [a read of a void container's elements, as a destructured value x1; a read of a void container's elements, through emit x1]
+        | const { emitSkipped, diagnostics } = program.emit(sourceFile, writeFile, cancellationToken, emitOnlyDtsFiles, customTransformers, forceDtsEmit);
+     2  commandLineParser.ts:3703:9  [a read of a void container's elements, as a value x1; a read of a void container's elements, as an operand of && x1]
+        | if (extendedConfigCache && (value = extendedConfigCache.get(path))) {
+     2  commandLineParser.ts:3800:12  [a read of a void container's elements, as a condition x1; a read of a void container's elements, as an operand of && x1]
+        | return sourceFile && node ?
+     2  debug.ts:838:25  [a read of a void container's elements, as an argument x1; a read of a void container's elements, as an assertion's operand x1]
+        | this.targets as readonly DebugType[] || map(this.sources, () => "any"),
+     2  emitter.ts:2672:47  [a read of a void container's elements, as an argument x1; a read of a void container's elements, as an assertion's operand x1]
+        | const text = getLiteralTextOfNode(expression as LiteralExpression, /*sourceFile*/ undefined, /*neverAsciiEscape*/ true, /*jsxAttributeEscape*/ false);
+     2  emitter.ts:3386:36  [a read of a void container's elements, as an argument x1; a read of a void container's elements, as an operand of || x1]
+        | writeLineOrSpace(node, node.catchClause || node.tryBlock, node.finallyBlock);
+     2  emitter.ts:3711:13  [a read of a void container's elements, as a value x1; a read of a void container's elements, as an operand of && x1]
+        | if (node.name && node.namedBindings) {
+     2  emitter.ts:3960:13  [a read of a void container's elements, as a value x1; a read of a void container's elements, as an operand of || x1]
+        | if (node.expression || (!commentsDisabled && !nodeIsSynthesized(node) && hasCommentsAtPosition(node.pos))) { // preserve empty expressions if they contain comme
+     2  emitter.ts:5421:38  [a read of a void container's elements, as an argument x1; a read of a void container's elements, as an operand of || x1]
+        | generateNameIfNeeded((node as ImportSpecifier).propertyName || (node as ImportSpecifier).name);
+     2  factory/nodeChildren.ts:51:5  [a read of a void container's elements, through delete x1; a read of a void container's elements, through get x1]
+        | sourceFileToNodeChildren.get(origSourceFile)?.delete(node);
+     2  factory/nodeFactory.ts:1382:13  [a read of a void container's elements, as a value x1; a read of a void container's elements, as an operand of || x1]
+        | if (prefix || suffix) flags |= GeneratedIdentifierFlags.Optimistic;
+     2  factory/nodeFactory.ts:1426:23  [a read of a void container's elements, as a condition x1; a read of a void container's elements, as an operand of || x1]
+        | const flags = prefix || suffix ? GeneratedIdentifierFlags.Optimistic : GeneratedIdentifierFlags.None;
+     2  factory/nodeFactory.ts:1670:18  [a read of a void container's elements, as a condition x1; a read of a void container's elements, as an operand of ?? x1]
+        | (node.questionToken ?? node.type ? TransformFlags.ContainsTypeScript : TransformFlags.None) |
+     2  factory/nodeFactory.ts:1671:18  [a read of a void container's elements, as a condition x1; a read of a void container's elements, as an operand of ?? x1]
+        | (node.dotDotDotToken ?? node.initializer ? TransformFlags.ContainsES2015 : TransformFlags.None) |
+     2  factory/nodeFactory.ts:1785:14  [a read of a void container's elements, as a condition x1; a read of a void container's elements, as an operand of || x1]
+        | (isAmbient || node.questionToken || node.exclamationToken || node.type ? TransformFlags.ContainsTypeScript : TransformFlags.None) |
+     2  factory/nodeFactory.ts:1899:18  [a read of a void container's elements, as a condition x1; a read of a void container's elements, as an operand of || x1]
+        | (node.questionToken || node.typeParameters || node.type ? TransformFlags.ContainsTypeScript : TransformFlags.None) |
+     2  factory/nodeFactory.ts:2645:13  [a read of a void container's elements, as a value x1; a read of a void container's elements, as an operand of && x1]
+        | if (node.assertions && node.assertions.assertClause && node.attributes) {
+     2  factory/nodeFactory.ts:3210:14  [a read of a void container's elements, as a condition x1; a read of a void container's elements, as an operand of || x1]
+        | (node.typeParameters || node.type ? TransformFlags.ContainsTypeScript : TransformFlags.None) |
+     2  factory/nodeFactory.ts:3270:14  [a read of a void container's elements, as a condition x1; a read of a void container's elements, as an operand of || x1]
+        | (node.typeParameters || node.type ? TransformFlags.ContainsTypeScript : TransformFlags.None) |
+     2  factory/nodeFactory.ts:4259:14  [a read of a void container's elements, as a condition x1; a read of a void container's elements, as an operand of ?? x1]
+        | (node.exclamationToken ?? node.type ? TransformFlags.ContainsTypeScript : TransformFlags.None);
+     2  factory/nodeFactory.ts:4337:18  [a read of a void container's elements, as a condition x1; a read of a void container's elements, as an operand of || x1]
+        | (node.typeParameters || node.type ? TransformFlags.ContainsTypeScript : TransformFlags.None) |
+     2  factory/nodeFactory.ts:7164:16  [a read of a void container's elements, as a returned value x1; a read of a void container's elements, as an operand of && x1]
+        | return statement && isNotEmittedStatement(statement) ? setTextRange(setOriginal(createEmptyStatement(), statement), statement) : statement;
+     2  moduleNameResolver.ts:1460:13  [a read of a void container's elements, through set x1; a read of a void container's elements, through getOrCreateCacheForDirectory x1]
+        | cache.getOrCreateCacheForDirectory(containingDirectory, redirectedReference).set(moduleName, resolutionMode, result);
+
+== generic-void: 107 findings, 76 distinct sites (where), 24 files, kinds {'Refused': 107}
+
+-- by reason
+    21  a generic instantiated at void whose body reads the value: find's T = JSDocTag, read at core.ts:170:23 as an argument
+     5  a generic instantiated at void whose body reads the value: some's T = ClassElement, read at core.ts:622:31 as an argument
+     5  a generic instantiated at void whose body reads the value: some's T = string | number | boolean | readonly string[] | SourceFile | undefined, read at core.ts:622:31 as an argument
+     4  a generic instantiated at void whose body reads the value: visitEachChild's T = SourceFile, read at visitorPublic.ts:604:31 as a value seen without its void
+     3  a generic instantiated at void whose body reads the value: setOriginalNode's T = AssignmentExpression<EqualsToken>, read at factory/nodeFactory.ts:7423:13 as a value
+     3  a generic instantiated at void whose body reads the value: getOriginalNode's T = SourceFile, read at utilitiesPublic.ts:767:9 as a value
+     3  a generic instantiated at void whose body reads the value: createModuleOrTypeReferenceResolutionCache's T = ResolvedModuleWithFailedLookupLocations, read at moduleNameResolver.ts:1302:12 as a spread
+     3  a generic instantiated at void whose body reads the value: createModuleOrTypeReferenceResolutionCache's T = ResolvedTypeReferenceDirectiveWithFailedLookupLocations, read at moduleNameResolver.ts:1302:12 as a spread
+     3  a generic instantiated at void whose body reads the value: addRange's T = Diagnostic, read at core.ts:992:21 as an argument
+     3  a generic instantiated at void whose body reads the value: filter's T = ClassElement, read at core.ts:281:29 as an argument
+     3  a generic instantiated at void whose body reads the value: forEachPropertyAssignment's T = StringLiteral, read at utilities.ts:3096:20 as an argument
+     2  a generic instantiated at void whose body reads the value: createWatchCompilerHost's T = EmitAndSemanticDiagnosticsBuilderProgram, read at watch.ts:875:5 through afterProgramCreate
+     2  a generic instantiated at void whose body reads the value: setStartsOnNewLine's T = Expression, read at factory/emitNode.ts:176:25 as an argument
+     2  a generic instantiated at void whose body reads the value: forEachChild's T = Node, read at parser.ts:1254:46 as an argument
+     2  a generic instantiated at void whose body reads the value: filter's T = Diagnostic, read at core.ts:281:29 as an argument
+     2  a generic instantiated at void whose body reads the value: some's T = Decorator, read at core.ts:622:31 as an argument
+     2  a generic instantiated at void whose body reads the value: filter's T = AbstractKeyword | AccessorKeyword | AsyncKeyword | ConstKeyword | DeclareKeyword | Decorator | ... 9 more ... | StaticKeyword, read at core.ts:281:29 as an argument
+     1  a generic instantiated at void whose body reads the value: setParent's T = ModuleBody, read at utilities.ts:10707:9 as an operand of &&
+     1  a generic instantiated at void whose body reads the value: createQueue's T = Expression, read at core.ts:1570:41 as an operand of ??
+     1  a generic instantiated at void whose body reads the value: sameMap's T = Diagnostic, U = Diagnostic, read at core.ts:354:30 as an argument
+     1  a generic instantiated at void whose body reads the value: forEachEntry's V = Symbol, read at utilities.ts:747:22 through entries
+     1  a generic instantiated at void whose body reads the value: checkDefined's T = Program, read at debug.ts:257:16 as a returned value
+     1  a generic instantiated at void whose body reads the value: filterMutate's T = Diagnostic, read at core.ts:302:15 as an argument
+     1  a generic instantiated at void whose body reads the value: forEach's T = SourceFile, U = void (read from the signature), read at core.ts:36:37 as an argument
+     1  a generic instantiated at void whose body reads the value: emitFilesAndReportErrorsAndGetExitStatus's T = BuilderProgram | Program, read at watch.ts:644:41 as a destructured value
+     1  a generic instantiated at void whose body reads the value: setEmitFlags's T = Identifier, read at factory/emitNode.ts:93:25 as an argument
+     1  a generic instantiated at void whose body reads the value: cast's TIn = Expression, TOut = LeftHandSideExpression, read at core.ts:1784:37 as an argument
+     1  a generic instantiated at void whose body reads the value: setParent's T = Identifier, read at utilities.ts:10707:9 as an operand of &&
+     1  a generic instantiated at void whose body reads the value: forEach's T = Statement, U = ArrowFunction | ClassDeclaration | ClassExpression | ConstructorDeclaration | ConstructorTypeNode | ... 19 more ... | VariableStatement, read at core.ts:36:37 as an argument
+     1  a generic instantiated at void whose body reads the value: some's T = AbstractKeyword | AccessorKeyword | AsyncKeyword | ConstKeyword | DeclareKeyword | Decorator | ... 9 more ... | StaticKeyword, read at core.ts:622:31 as an argument
+     1  a generic instantiated at void whose body reads the value: checkDefined's T = SourceFile, read at debug.ts:257:16 as a returned value
+     1  a generic instantiated at void whose body reads the value: contains's T = ResolvedProjectReference, read at core.ts:223:34 as an argument
+     1  a generic instantiated at void whose body reads the value: filter's T = SourceFile, read at core.ts:281:29 as an argument
+     1  a generic instantiated at void whose body reads the value: forEach's T = BindingOrAssignmentElement, read at core.ts:36:37 as an argument
+     1  a generic instantiated at void whose body reads the value: setTextRangeEnd's T = Expression, read at utilities.ts:10658:6 as an assertion's operand
+     1  a generic instantiated at void whose body reads the value: setEmitFlags's T = PropertyAccessExpression, read at factory/emitNode.ts:93:25 as an argument
+     1  a generic instantiated at void whose body reads the value: getOriginalNode's T = Node, read at utilitiesPublic.ts:767:9 as a value
+     1  a generic instantiated at void whose body reads the value: map's T = SourceFile, U = SourceFile, read at core.ts:325:27 as an argument
+     1  a generic instantiated at void whose body reads the value: cast's TIn = NamedExports | NamespaceExport, TOut = NamedExports, read at core.ts:1784:37 as an argument
+     1  a generic instantiated at void whose body reads the value: binarySearchKey's T = Node, read at core.ts:1211:36 as an argument
+     1  a generic instantiated at void whose body reads the value: forEach's T = GetAccessorDeclaration | MethodDeclaration | PropertyAssignment | SetAccessorDeclaration | ShorthandPropertyAssignment | SpreadAssignment, U = false | Expression, read at core.ts:36:37 as an argument
+     1  a generic instantiated at void whose body reads the value: tryCast's TIn = NamedImports | NamespaceImport, TOut = NamespaceImport, read at core.ts:1779:12 as a returned value
+     1  a generic instantiated at void whose body reads the value: getAllJSDocTags's T = JSDocOverloadTag, read at utilitiesPublic.ts:1285:12 through filter
+     1  a generic instantiated at void whose body reads the value: filter's T = JsxChild, read at core.ts:281:29 as an argument
+     1  a generic instantiated at void whose body reads the value: flatMap's T = JSDocTag, U = TypeParameterDeclaration, read at core.ts:403:29 as an argument
+     1  a generic instantiated at void whose body reads the value: filter's T = VariableDeclaration, read at core.ts:281:29 as an argument
+     1  a generic instantiated at void whose body reads the value: find's T = Declaration, read at core.ts:170:23 as an argument
+     1  a generic instantiated at void whose body reads the value: forEachChild's T = void (read from the signature), read at parser.ts:1254:46 as an argument
+     1  a generic instantiated at void whose body reads the value: checkDefined's T = string | number | boolean | readonly string[] | SourceFile, read at debug.ts:257:16 as a returned value
+     1  a generic instantiated at void whose body reads the value: forEach's T = DiagnosticRelatedInformation, read at core.ts:36:37 as an argument
+     1  a generic instantiated at void whose body reads the value: checkDefined's T = TypeNode, read at debug.ts:257:16 as a returned value
+     1  a generic instantiated at void whose body reads the value: addEmitFlags's T = Node, read at factory/emitNode.ts:103:42 as an argument
+     1  a generic instantiated at void whose body reads the value: getAllJSDocTags's T = JSDocImplementsTag, read at utilitiesPublic.ts:1285:12 through filter
+     1  a generic instantiated at void whose body reads the value: some's T = Statement, read at core.ts:622:31 as an argument
+     1  a generic instantiated at void whose body reads the value: setEmitFlags's T = Block, read at factory/emitNode.ts:93:25 as an argument
+     1  a generic instantiated at void whose body reads the value: countWhere's T = Diagnostic, read at core.ts:247:27 as an argument
+
+-- by file
+    25  utilities.ts
+    25  utilitiesPublic.ts
+     9  factory/utilities.ts
+     8  transformers/utilities.ts
+     6  moduleNameResolver.ts
+     6  program.ts
+     4  executeCommandLine.ts
+     3  builder.ts
+     3  parser.ts
+     2  binder.ts
+     2  transformers/destructuring.ts
+     2  watch.ts
+     1  commandLineParser.ts
+     1  factory/emitHelpers.ts
+     1  factory/parenthesizerRules.ts
+     1  transformers/classThis.ts
+     1  transformers/declarations.ts
+     1  transformers/es2016.ts
+     1  transformers/es2017.ts
+     1  transformers/es2019.ts
+     1  transformers/es2020.ts
+     1  transformers/es2021.ts
+     1  transformers/namedEvaluation.ts
+     1  visitorPublic.ts
+
+-- the 30 most frequent sites (where), with their reasons
+(no site repeats more than 21 times)
+    21  utilitiesPublic.ts:1280:12  [a generic instantiated at void whose body reads the value: find's T = JSDocTag, read at core.ts:170:23 as an argument x21]
+        | return find(getJSDocTagsWorker(node, noCache), predicate);
+     3  moduleNameResolver.ts:1348:20  [a generic instantiated at void whose body reads the value: createModuleOrTypeReferenceResolutionCache's T = ResolvedModuleWithFailedLookupLocations, read at moduleNameResolver.ts:1302:12 as a spread x3]
+        | const result = createModuleOrTypeReferenceResolutionCache(
+     3  moduleNameResolver.ts:1381:12  [a generic instantiated at void whose body reads the value: createModuleOrTypeReferenceResolutionCache's T = ResolvedTypeReferenceDirectiveWithFailedLookupLocations, read at moduleNameResolver.ts:1302:12 as a spread x3]
+        | return createModuleOrTypeReferenceResolutionCache(
+     3  program.ts:638:19  [a generic instantiated at void whose body reads the value: addRange's T = Diagnostic, read at core.ts:992:21 as an argument x3]
+        | diagnostics = addRange(diagnostics, program.getConfigFileParsingDiagnostics());
+     3  transformers/utilities.ts:603:12  [a generic instantiated at void whose body reads the value: filter's T = ClassElement, read at core.ts:281:29 as an argument x3]
+        | return filter(node.members, isStaticPropertyDeclarationOrClassStaticBlockDeclaration);
+     3  utilities.ts:3556:20  [a generic instantiated at void whose body reads the value: some's T = ClassElement, read at core.ts:622:31 as an argument x3]
+        | return some((node as ClassDeclaration).members, m => nodeOrChildIsDecorated(useLegacyDecorators, m, node, parent!));
+     2  factory/utilities.ts:679:12  [a generic instantiated at void whose body reads the value: setStartsOnNewLine's T = Expression, read at factory/emitNode.ts:176:25 as an argument x2]
+        | return setStartsOnNewLine(node, /*newLine*/ true);
+     1  binder.ts:333:9  [a generic instantiated at void whose body reads the value: setParent's T = ModuleBody, read at utilities.ts:10707:9 as an operand of && x1]
+        | setParent(node.body, node);
+     1  binder.ts:3791:15  [a generic instantiated at void whose body reads the value: createQueue's T = Expression, read at core.ts:1570:41 as an operand of ?? x1]
+        | const q = createQueue<Expression>();
+     1  builder.ts:2478:16  [a generic instantiated at void whose body reads the value: checkDefined's T = Program, read at debug.ts:257:16 as a returned value x1]
+        | return Debug.checkDefined(state.program);
+     1  builder.ts:526:12  [a generic instantiated at void whose body reads the value: sameMap's T = Diagnostic, U = Diagnostic, read at core.ts:354:30 as an argument x1]
+        | return sameMap(diagnostics, diag => {
+     1  builder.ts:974:67  [a generic instantiated at void whose body reads the value: forEachEntry's V = Symbol, read at utilities.ts:747:22 through entries x1]
+        | const invalidateJsFiles = !!affectedFile.symbol?.exports && !!forEachEntry(
+     1  commandLineParser.ts:3376:9  [a generic instantiated at void whose body reads the value: filterMutate's T = Diagnostic, read at core.ts:302:15 as an argument x1]
+        | filterMutate(configParseDiagnostics, error => !isErrorNoInputFiles(error));
+     1  core.ts:1187:12  [a generic instantiated at void whose body reads the value: binarySearchKey's T = Node, read at core.ts:1211:36 as an argument x1]
+        | return binarySearchKey(array, keySelector(value), keySelector, keyComparer, offset);
+     1  executeCommandLine.ts:107:5  [a generic instantiated at void whose body reads the value: forEach's T = SourceFile, U = void (read from the signature), read at core.ts:36:37 as an argument x1]
+        | forEach(program.getSourceFiles(), file => {
+     1  executeCommandLine.ts:930:24  [a generic instantiated at void whose body reads the value: emitFilesAndReportErrorsAndGetExitStatus's T = BuilderProgram | Program, read at watch.ts:644:41 as a destructured value x1]
+        | const exitStatus = emitFilesAndReportErrorsAndGetExitStatus(
+     1  factory/emitHelpers.ts:203:16  [a generic instantiated at void whose body reads the value: setEmitFlags's T = Identifier, read at factory/emitNode.ts:93:25 as an argument x1]
+        | return setEmitFlags(factory.createIdentifier(name), EmitFlags.HelperName | EmitFlags.AdviseOnEmitNode);
+     1  factory/parenthesizerRules.ts:684:48  [a generic instantiated at void whose body reads the value: cast's TIn = Expression, TOut = LeftHandSideExpression, read at core.ts:1784:37 as an argument x1]
+        | parenthesizeExpressionOfNew: expression => cast(expression, isLeftHandSideExpression),
+     1  factory/utilities.ts:211:5  [a generic instantiated at void whose body reads the value: setParent's T = Identifier, read at utilities.ts:10707:9 as an operand of && x1]
+        | setParent(react, getParseTreeNode(parent));
+     1  factory/utilities.ts:412:12  [a generic instantiated at void whose body reads the value: setOriginalNode's T = AssignmentExpression<EqualsToken>, read at factory/nodeFactory.ts:7423:13 as a value x1]
+        | return setOriginalNode(
+     1  factory/utilities.ts:425:12  [a generic instantiated at void whose body reads the value: setOriginalNode's T = AssignmentExpression<EqualsToken>, read at factory/nodeFactory.ts:7423:13 as a value x1]
+        | return setOriginalNode(
+     1  factory/utilities.ts:438:12  [a generic instantiated at void whose body reads the value: setOriginalNode's T = AssignmentExpression<EqualsToken>, read at factory/nodeFactory.ts:7423:13 as a value x1]
+        | return setOriginalNode(
+     1  factory/utilities.ts:684:23  [a generic instantiated at void whose body reads the value: getOriginalNode's T = SourceFile, read at utilitiesPublic.ts:767:9 as a value x1]
+        | const parseNode = getOriginalNode(node, isSourceFile);
+     1  factory/utilities.ts:691:23  [a generic instantiated at void whose body reads the value: getOriginalNode's T = SourceFile, read at utilitiesPublic.ts:767:9 as a value x1]
+        | const parseNode = getOriginalNode(sourceFile, isSourceFile);
+     1  factory/utilities.ts:775:27  [a generic instantiated at void whose body reads the value: getOriginalNode's T = SourceFile, read at utilitiesPublic.ts:767:9 as a value x1]
+        | const parseNode = getOriginalNode(node, isSourceFile);
+     1  parser.ts:472:12  [a generic instantiated at void whose body reads the value: forEach's T = Statement, U = ArrowFunction | ClassDeclaration | ClassExpression | ConstructorDeclaration | ConstructorTypeNode | ... 19 more ... | VariableStatement, read at core.ts:36:37 as an argument x1]
+        | return forEach(sourceFile.statements, isAnExternalModuleIndicatorNode) ||
+     1  parser.ts:491:40  [a generic instantiated at void whose body reads the value: forEachChild's T = Node, read at parser.ts:1254:46 as an argument x1]
+        | return isImportMeta(node) ? node : forEachChild(node, walkTreeForImportMeta);
+     1  parser.ts:496:12  [a generic instantiated at void whose body reads the value: some's T = AbstractKeyword | AccessorKeyword | AsyncKeyword | ConstKeyword | DeclareKeyword | Decorator | ... 9 more ... | StaticKeyword, read at core.ts:622:31 as an argument x1]
+        | return some(node.modifiers, m => m.kind === kind);
+     1  program.ts:1196:18  [a generic instantiated at void whose body reads the value: checkDefined's T = SourceFile, read at debug.ts:257:16 as a returned value x1]
+        | const file = Debug.checkDefined(program.getSourceFileByPath(ref.file));
+     1  program.ts:1288:17  [a generic instantiated at void whose body reads the value: contains's T = ResolvedProjectReference, read at core.ts:223:34 as an argument x1]
+        | if (contains(seenResolvedRefs, oldResolvedRef)) return true;
+
+== generic-void by the read site its reason names (read at ...), the generic body that reads the void value
+    22  core.ts:170:23
+    14  core.ts:622:31
+    10  core.ts:281:29
+     6  moduleNameResolver.ts:1302:12
+     5  core.ts:36:37
+     4  debug.ts:257:16
+     4  utilitiesPublic.ts:767:9
+     4  visitorPublic.ts:604:31
+     3  factory/emitNode.ts:93:25
+     3  factory/nodeFactory.ts:7423:13
+     3  parser.ts:1254:46
+     3  core.ts:992:21
+     3  utilities.ts:3096:20
+     2  utilities.ts:10707:9
+     2  watch.ts:875:5
+     2  core.ts:1784:37
+     2  factory/emitNode.ts:176:25
+     2  utilitiesPublic.ts:1285:12
+     1  core.ts:1570:41
+     1  core.ts:354:30
+     1  utilities.ts:747:22
+     1  core.ts:302:15
+     1  watch.ts:644:41
+     1  core.ts:223:34
+     1  utilities.ts:10658:6
+     1  core.ts:325:27
+     1  core.ts:1211:36
+     1  core.ts:1779:12
+     1  core.ts:403:29
+     1  factory/emitNode.ts:103:42
+     1  core.ts:247:27
+
+No row lacks a start: True
