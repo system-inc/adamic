@@ -2,15 +2,18 @@ package native
 
 import (
 	"bytes"
+	"crypto/sha256"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"sync"
 	"sync/atomic"
 	"testing"
 	"testing/fstest"
+	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache/location"
 	"github.com/system-inc/adamic/internal/toolchain"
@@ -249,12 +252,8 @@ func TestRuntimeCacheConcurrentBuilders(t *testing.T) {
 	for _, library := range libraries {
 		runLibrary(t, library, "42\n")
 	}
-	entries, err := os.ReadDir(cache)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if len(entries) != 1 {
-		t.Fatalf("want one published entry with no temporary builds, got %d", len(entries))
+	if entries := publishedEntries(t, cache); len(entries) != 1 {
+		t.Fatalf("want one published entry with no temporary builds, got %q", entries)
 	}
 }
 
@@ -301,13 +300,135 @@ func TestRuntimeCacheConcurrentProcesses(t *testing.T) {
 			t.Errorf("process %d: %v\n%s", index, failure, outputs[index])
 		}
 	}
+	if entries := publishedEntries(t, cache); len(entries) != 1 {
+		t.Fatalf("want one published entry with no temporary builds, got %q", entries)
+	}
+}
+
+// publishedEntries are the names in a runtime cache other than the locks beside its entries (lockRuntime).
+func publishedEntries(t *testing.T, cache string) []string {
+	t.Helper()
 	entries, err := os.ReadDir(cache)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(entries) != 1 {
-		t.Fatalf("want one published entry with no temporary builds, got %d", len(entries))
+	var names []string
+	for _, entry := range entries {
+		if !strings.HasSuffix(entry.Name(), ".lock") {
+			names = append(names, entry.Name())
+		}
 	}
+	return names
+}
+
+// Processes asking for one runtime archive at once build it once: the rest wait on the lock beside its entry
+// (lockRuntime), find what the builder published, and take the same bytes. Each asks from a process of its own, as
+// Loom's product tests do, having scanned the headers its key reads before a common start, so all of them look for the
+// archive together and miss. The build log counts the builds: one cArchive miss with its units' compiles, and for every
+// other process a hit of 0 seconds, as a hit always logs, the wait never counted as compiling. The lock reaches neither
+// the archive nor its key: one process alone on another cache builds the same bytes under the same key.
+// Mutant: the lock dropped, leaving runtimeBuilds' mutex, which is one per process (a miss for each process).
+func TestProcessesAskingForOneRuntimeBuildItOnce(t *testing.T) {
+	t.Parallel()
+	const variable = "ADAMIC_TEST_ONE_RUNTIME_BUILD"
+	// Enough units that a build takes long enough for every process to miss inside it without the lock.
+	var files []runtimeFile
+	for index := range 16 {
+		files = append(files, runtimeFile{fmt.Sprintf("unit%d.c", index), []byte(fmt.Sprintf("int unit%d(void) { return %d; }\n", index, index))})
+	}
+	compiler, err := toolchain.Path("clang")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if asked := os.Getenv(variable); asked != "" {
+		cache, start, _ := strings.Cut(asked, "|")
+		if _, err := headersRead(files, Flags(Options{}), compiler); err != nil {
+			t.Fatal(err)
+		}
+		at, err := strconv.ParseInt(start, 10, 64)
+		if err != nil {
+			t.Fatal(err)
+		}
+		time.Sleep(time.Until(time.Unix(0, at)))
+		library, err := cachedRuntime(files, Flags(Options{}), compiler, "one build test", cache)
+		if err != nil {
+			t.Fatal(err)
+		}
+		archive, err := os.ReadFile(library)
+		if err != nil {
+			t.Fatal(err)
+		}
+		fmt.Printf("runtime.a %s %x\n", filepath.Base(filepath.Dir(library)), sha256.Sum256(archive))
+		return
+	}
+	directory := t.TempDir()
+	// ask has processes ask for the archive at once from cache, each logging to log, and returns the key and the digest
+	// of the archive each read, one line each.
+	ask := func(cache string, log string, processes int) []string {
+		t.Helper()
+		// Every process has started and scanned its headers by then, so they ask together.
+		start := time.Now().Add(3 * time.Second).UnixNano()
+		outputs := make([][]byte, processes)
+		failures := make([]error, processes)
+		var workers sync.WaitGroup
+		for index := range processes {
+			workers.Go(func() {
+				command := exec.Command(os.Args[0], "-test.run=^TestProcessesAskingForOneRuntimeBuildItOnce$", "-test.count=1")
+				command.Env = append(os.Environ(), fmt.Sprintf("%s=%s|%d", variable, cache, start), "ADAMIC_BUILD_LOG="+log)
+				outputs[index], failures[index] = command.Output()
+			})
+		}
+		workers.Wait()
+		var read []string
+		for index, failure := range failures {
+			if failure != nil {
+				t.Fatalf("process %d: %v\n%s", index, failure, outputs[index])
+			}
+			for _, line := range strings.Split(string(outputs[index]), "\n") {
+				if archive, found := strings.CutPrefix(line, "runtime.a "); found {
+					read = append(read, archive)
+				}
+			}
+		}
+		if len(read) != processes {
+			t.Fatalf("%d of %d processes reported the archive they read: %q", len(read), processes, read)
+		}
+		if entries := publishedEntries(t, cache); len(entries) != 1 {
+			t.Fatalf("want one published entry with no temporary builds, got %q", entries)
+		}
+		return read
+	}
+	const processes = 4
+	log := filepath.Join(directory, "build.log")
+	together := ask(filepath.Join(directory, "together"), log, processes)
+	for _, read := range together[1:] {
+		if read != together[0] {
+			t.Fatalf("processes asking for one archive read different ones: %q", together)
+		}
+	}
+	written, err := os.ReadFile(log)
+	if err != nil {
+		t.Fatal(err)
+	}
+	outcomes := map[string]int{}
+	for _, line := range strings.Split(strings.TrimSuffix(string(written), "\n"), "\n") {
+		match := buildLogLine.FindStringSubmatch(line)
+		if match == nil {
+			t.Fatalf("%q isn't a build log line", line)
+		}
+		outcomes[match[1]+" "+match[4]]++
+		if match[1] == "cArchive" && match[4] == "hit" && match[5] != "0.000" {
+			t.Fatalf("%q, want a hit of 0 seconds however long it waited", match[0])
+		}
+	}
+	if outcomes["cArchive miss"] != 1 || outcomes["cCompile miss"] != len(files) || outcomes["cArchive hit"] != processes-1 {
+		t.Fatalf("%d processes asking for one archive built it %d times (%d compiles) and found it %d times, want once (%d) and %d",
+			processes, outcomes["cArchive miss"], outcomes["cCompile miss"], outcomes["cArchive hit"], len(files), processes-1)
+	}
+	if alone := ask(filepath.Join(directory, "alone"), filepath.Join(directory, "alone.log"), 1); alone[0] != together[0] {
+		t.Fatalf("one process alone built %s, and %d together %s: want the same key and bytes", alone[0], processes, together[0])
+	}
+	t.Logf("%d processes asked for one archive at once: one built it, %d found it, all read the bytes one process alone builds", processes, processes-1)
 }
 
 // A runtime is addressed by the system headers its compile reads, by what they hold: a C library or compiler upgrade

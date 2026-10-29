@@ -27,7 +27,8 @@ type runtimeFile struct {
 }
 
 // runtimeBuilds serializes builders of the same disk entry within this process. Different flag
-// sets can build concurrently. Across processes, only a complete directory is published by rename.
+// sets can build concurrently. Across processes, a lock beside the entry has one of them build it (lockRuntime), and
+// only a complete directory is published by rename.
 var runtimeBuilds sync.Map
 
 // RuntimeLibrary returns a cached static library compiled with Flags(options). An empty directory
@@ -432,6 +433,14 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 	if err := os.MkdirAll(cache, 0o755); err != nil {
 		return "", fmt.Errorf("native: runtime cache: %w", err)
 	}
+	// Another process may be building this key: wait for it and look again, so a key every process misses together is
+	// compiled once. A hit before the lock takes none, so finding an archive writes nothing.
+	release := lockRuntime(directory)
+	defer release()
+	if found, ok := cachedFile(library); ok {
+		buildLog("cArchive", "runtime.a", filepath.Base(directory), "hit", 0)
+		return found, nil
+	}
 	temporary, err := os.MkdirTemp(cache, ".build-")
 	if err != nil {
 		return "", fmt.Errorf("native: %w", err)
@@ -447,7 +456,7 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 	if err := compileRuntime(files, flags, compiler, temporary, 1, jobserver, filepath.Base(directory)); err != nil {
 		return "", err
 	}
-	// Publish everything together. A competing process may already have published this key; its
+	// Publish everything together. A process that built without the lock may already have published this key; its
 	// identical complete entry wins, while this process removes only its own temporary directory.
 	if err := os.Rename(temporary, directory); err != nil {
 		found, ok := cachedFile(library)
