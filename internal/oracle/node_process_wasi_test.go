@@ -33,6 +33,12 @@ func TestNodeProcessWASIAgreement(t *testing.T) {
 				t.Fatal(err)
 			}
 			got := onWASI(t, native.C(program))
+			if one.name == "host" {
+				if got.exitCode != 70 || string(got.stderr) != wasiHostPlatformPanic {
+					t.Fatalf("want main's process.platform refusal: %+v", got)
+				}
+				return
+			}
 			if one.refusal != "" {
 				if got.exitCode != 70 || !strings.Contains(string(got.stderr), "wasm32-wasi: "+one.refusal) {
 					t.Fatalf("want explicit refusal %q: %+v", one.refusal, got)

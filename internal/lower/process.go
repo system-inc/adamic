@@ -44,6 +44,9 @@ func (l *lowering) processPath(node *ast.Node) string {
 // processValue handles only complete supported operations. Intermediate objects cannot escape
 // into ordinary object storage, whose slots could not model this live external state.
 func (l *lowering) processValue(node *ast.Node) (ir.Expression, bool, error) {
+	if value, known, err := l.nodePlatformRead(node); known {
+		return value, known, err
+	}
 	if value, known, err := l.nodeProcessValue(node); known {
 		return value, known, err
 	}
