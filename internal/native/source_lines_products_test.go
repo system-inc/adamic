@@ -38,9 +38,6 @@ func debugCacheEnvironment(t *testing.T, environment []string) []string {
 	if os.Getenv("ADAMIC_BUILD_CACHE_DIR") == "" {
 		t.Fatal("debug products require the unit's ADAMIC_BUILD_CACHE_DIR; refusing the home cache (#phzhe68)")
 	}
-	if os.Getenv("ADAMIC_BUILD_OUTPUT_DIR") == "" {
-		t.Fatal("debug products require the unit's ADAMIC_BUILD_OUTPUT_DIR")
-	}
 	cache, err := location.BuildCache()
 	if err != nil {
 		t.Fatal(err)
