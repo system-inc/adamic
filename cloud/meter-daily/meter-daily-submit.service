@@ -12,5 +12,5 @@ StateDirectory=adamic-meter-submit
 StateDirectoryMode=0700
 UMask=0077
 EnvironmentFile=-/etc/adamic-meter/submit.env
-ExecStart=/usr/bin/bash /opt/adamic-meter/submit.sh
+ExecStart=/usr/bin/bash /srv/adamic-meter/submit.sh
 TimeoutStartSec=15min
