@@ -17,6 +17,15 @@ import (
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
+// Only witness tools map their disposable entry directory, through a keyed Go
+// overlay. Shipped compilers and the ordinary command.test below keep the real
+// directory, which TestDebugSourcePaths proves a debugger can open (#gd4csnt).
+var debugWitnessMutations = []buildcache.Mutation{{
+	File:   "internal/native/native.go",
+	Before: `return []string{"-fdebug-compilation-dir=" + options.DebugDirectory}`,
+	After:  `return append([]string{"-fdebug-compilation-dir=" + options.DebugDirectory}, prefixMaps(options.DebugDirectory, "/adamic-debug-witness")...)`,
+}}
+
 var debugBuildOptions = []Options{{Release: true}, {Release: true, Debug: true}, {Release: true, Debug: true, Sanitize: true}}
 
 // The compiler is linked into this test binary, so declare its inputs as values
@@ -94,17 +103,24 @@ func runDebugReviewProducts(t *testing.T, shard, mode int) {
 func debugLineProduct(t *testing.T, build bool) string {
 	t.Helper()
 	return debugProduct(t, debugProductInputs("debug-line-table", Options{Debug: true, Release: true}), build, func(directory string) error {
-		compiler := buildcache.GoBuild(t, "adamic", "./cmd/adamic", nil)
-		path := filepath.Join(directory, "fixture.a")
-		if err := os.WriteFile(path, []byte(debugLineFixture), 0644); err != nil {
-			return err
-		}
-		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
-		defer cancel()
-		command := toolchain.CommandContextIn(ctx, "../..", compiler, "build", path, "-o", filepath.Join(directory, "program"), "--debug")
-		command.Env = debugCacheEnvironment(t, command.Env)
-		if output, err := command.CombinedOutput(); err != nil {
-			return fmt.Errorf("build --debug: %w: %s", err, output)
+		compiler := buildcache.GoBuildInMutated(t, "", "adamic-debug-lines", "./cmd/adamic", nil, debugWitnessMutations)
+		for index, copy := range []string{"one", "two"} {
+			entry := filepath.Join(directory, copy, "fixture.a")
+			if err := os.MkdirAll(filepath.Dir(entry), 0755); err != nil {
+				return err
+			}
+			if err := os.WriteFile(entry, []byte(debugLineFixture), 0644); err != nil {
+				return err
+			}
+			name := []string{"program", "program-again"}[index]
+			ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+			command := toolchain.CommandContextIn(ctx, "../..", compiler, "build", entry, "-o", filepath.Join(directory, name), "--debug")
+			command.Env = debugCacheEnvironment(t, command.Env)
+			output, err := command.CombinedOutput()
+			cancel()
+			if err != nil {
+				return fmt.Errorf("build --debug: %w: %s", err, output)
+			}
 		}
 		return nil
 	})
@@ -159,17 +175,25 @@ func debugCommandProduct(t *testing.T, build bool) string {
 		}
 		// Read the runtime dependency in this build's window, so native's test units
 		// fetch it as an upstream, rather than merely depending on producer order.
-		entry := filepath.Join(directory, "driver-witness.a")
-		if err := os.WriteFile(entry, []byte("console.log('driver');\n"), 0644); err != nil {
-			return err
-		}
-		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
-		defer cancel()
-		command := exec.CommandContext(ctx, driver, "-test.run=^TestBuildDebugDriver$", "--", "build", entry, "-o", filepath.Join(directory, "witness"), "--debug")
-		command.Dir = buildcache.Absolute("<repository>/cmd/adamic")
-		command.Env = debugCacheEnvironment(t, append(os.Environ(), "ADAMIC_BUILD_DEBUG_DRIVER=1"))
-		if output, err := command.CombinedOutput(); err != nil {
-			return fmt.Errorf("command driver: %w: %s", err, output)
+		witnessDriver := buildcache.GoTestMutated(t, "", "command-witness.test", "./cmd/adamic", nil, debugWitnessMutations)
+		for index, copy := range []string{"one", "two"} {
+			entry := filepath.Join(directory, copy, "driver-witness.a")
+			if err := os.MkdirAll(filepath.Dir(entry), 0755); err != nil {
+				return err
+			}
+			if err := os.WriteFile(entry, []byte("console.log('driver');\n"), 0644); err != nil {
+				return err
+			}
+			name := []string{"witness", "witness-again"}[index]
+			ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+			command := exec.CommandContext(ctx, witnessDriver, "-test.run=^TestBuildDebugDriver$", "--", "build", entry, "-o", filepath.Join(directory, name), "--debug")
+			command.Dir = buildcache.Absolute("<repository>/cmd/adamic")
+			command.Env = debugCacheEnvironment(t, append(os.Environ(), "ADAMIC_BUILD_DEBUG_DRIVER=1"))
+			output, err := command.CombinedOutput()
+			cancel()
+			if err != nil {
+				return fmt.Errorf("command driver: %w: %s", err, output)
+			}
 		}
 		return nil
 	})
@@ -181,8 +205,8 @@ func TestProduct_DebugCommandDriver(t *testing.T) { t.Parallel(); debugCommandPr
 func debugSharingProduct(t *testing.T, build bool) string {
 	t.Helper()
 	return debugProduct(t, debugProductInputs("debug-runtime-sharing", Options{Debug: true, Release: true}), build, func(directory string) error {
-		compiler := buildcache.Adamic(t)
-		root := t.TempDir()
+		compiler := buildcache.GoBuildInMutated(t, "", "adamic-debug-sharing", "./cmd/adamic", nil, debugWitnessMutations)
+		root := directory
 		// The cold-cache witness stays under the unit's handed output, never HOME.
 		cache := filepath.Join(directory, "raw-cache")
 		defer os.RemoveAll(cache)
@@ -197,7 +221,21 @@ func debugSharingProduct(t *testing.T, build bool) string {
 				return fmt.Errorf("runtime sharing build: %w: %s", err, output)
 			}
 		}
-		return nil
+		// Keep the observed archive outcomes and keys, which the consumer checks,
+		// without publishing wall-clock durations as part of this product's bytes.
+		path := filepath.Join(directory, "build.log")
+		contents, err := os.ReadFile(path)
+		if err != nil {
+			return err
+		}
+		var outcomes strings.Builder
+		for _, line := range strings.Split(string(contents), "\n") {
+			fields := strings.Fields(line)
+			if len(fields) == 5 && fields[0] == "cArchive" {
+				fmt.Fprintf(&outcomes, "%s 0.000\n", strings.Join(fields[:4], " "))
+			}
+		}
+		return os.WriteFile(path, []byte(outcomes.String()), 0644)
 	})
 }
 func TestProduct_DebugRuntimeSharing(t *testing.T) { t.Parallel(); debugSharingProduct(t, true) }
