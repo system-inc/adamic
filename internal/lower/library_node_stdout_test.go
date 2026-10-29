@@ -57,11 +57,10 @@ func TestNodeStdoutTTYRefusals(t *testing.T) {
 				}
 				_, err = lowerSourceAs(t, string(source), "."+ext)
 				var ny *NotYet
-				kind := "boolean"
+				want := "declared boolean, but undefined off a TTY; adamic/host-tty"
 				if member == "columns" {
-					kind = "number"
+					want = "Node caches the terminal width and refreshes it on SIGWINCH from the event loop; adamic/host-tty"
 				}
-				want := "declared " + kind + ", but undefined off a TTY; adamic/host-tty"
 				if !errors.As(err, &ny) || ny.What != want {
 					t.Fatalf("want exact %q, got %v", want, err)
 				}
