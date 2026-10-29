@@ -9,11 +9,19 @@ import (
 // Instructions retain the addresses of their original statement slots. Keep
 // source metadata beside the graph: its last instruction must remain the one
 // that throws or awaits. A child's markers never escape its own slice.
+//
+// Named slice types over ir.Statement and statements in maps have no recorded
+// slots. Missing #line metadata is incomplete, never wrong; keep statement-slot
+// addresses as the only keys rather than substituting another kind of key.
 func asyncSourceLines(body []ir.Statement) map[*ir.Statement]ir.SourceLine {
+	return asyncSourceLineValues(reflect.ValueOf(body))
+}
+
+func asyncSourceLineValues(body reflect.Value) map[*ir.Statement]ir.SourceLine {
 	locations := map[*ir.Statement]ir.SourceLine{}
 	var walk func(reflect.Value, ir.SourceLine)
 	walk = func(value reflect.Value, source ir.SourceLine) {
-		if !value.IsValid() {
+		if !value.IsValid() || !value.CanInterface() {
 			return
 		}
 		if value.Type() == reflect.TypeFor[[]ir.Statement]() {
@@ -37,6 +45,9 @@ func asyncSourceLines(body []ir.Statement) map[*ir.Statement]ir.SourceLine {
 			}
 		case reflect.Struct:
 			for index := 0; index < value.NumField(); index++ {
+				if !value.Type().Field(index).IsExported() {
+					continue
+				}
 				walk(value.Field(index), source)
 			}
 		case reflect.Slice, reflect.Array:
@@ -45,6 +56,6 @@ func asyncSourceLines(body []ir.Statement) map[*ir.Statement]ir.SourceLine {
 			}
 		}
 	}
-	walk(reflect.ValueOf(body), ir.SourceLine{})
+	walk(body, ir.SourceLine{})
 	return locations
 }
