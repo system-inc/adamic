@@ -2270,5 +2270,27 @@
     "opt_in_off": [
       "ADAMIC_MEASURE_STACK_GUARD"
     ]
+  },
+  {
+    "file": "internal/oracle/library_node_stdout_istty_test.go",
+    "test": "TestStdoutIsTTYMatchesNodeOnPty",
+    "id": "TestStdoutIsTTYMatchesNodeOnPty:e8c0efce197f7a4affafdad64d64f8e0166cace16d21ec59cf3ef8fcaff8e836",
+    "line": 140,
+    "condition": "os.Getenv(\"ADAMIC_ORACLE_STDOUT_PTY\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_ORACLE_STDOUT_PTY\")",
+      "os.Getenv(\"ADAMIC_ORACLE_WASI\")",
+      "os.ReadFile(destination.Name())",
+      "os.ReadFile(errorFile)"
+    ],
+    "callers": [
+      "TestStdoutIsTTYMatchesNodeOnPty"
+    ],
+    "message": "\"set ADAMIC_ORACLE_STDOUT_PTY=1 to run the stdout isTTY pty oracle (Platforms runs this lane by hand)\"",
+    "class": "opt-in-lane",
+    "provides": "The stdout isTTY pty oracle: with ADAMIC_ORACLE_STDOUT_PTY=1, TestStdoutIsTTYMatchesNodeOnPty runs the program's stdout on a pseudo-terminal and holds isTTY to Node's (#jk7tph7). Stock setup promises neither script(1) nor a usable /dev/ptmx, so no gate sets it; Platforms runs this lane by hand. The pipe, file and /dev/null cases beside it run on every runner.",
+    "opt_in_off": [
+      "ADAMIC_ORACLE_STDOUT_PTY"
+    ]
   }
 ]
