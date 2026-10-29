@@ -1,0 +1,4 @@
+import process from 'node:process';
+export function hostTerminal(): boolean {
+ return !!process.stdout.isTTY;
+}

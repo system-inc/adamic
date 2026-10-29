@@ -1,0 +1,7 @@
+import process from 'node:process';
+const tty = process.stdout.isTTY;
+const pretty = !!process.stdout.isTTY;
+const missing = process.stdout.isTTY === undefined;
+const message = (tty === undefined ? 'undefined' : tty ? 'true' : 'false') + ' ' + (pretty ? 'true' : 'false') + ' ' + (missing ? 'true' : 'false');
+console.log(message);
+console.error(message);

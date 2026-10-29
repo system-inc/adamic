@@ -2,6 +2,7 @@ package native
 
 import (
 	"fmt"
+	"slices"
 	"strings"
 
 	"github.com/system-inc/adamic/internal/ir"
@@ -19,6 +20,14 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 			array = "(adamic_string *const[]){" + strings.Join(args, ", ") + "}"
 		}
 		code = fmt.Sprintf("adamic_fs_file_host_join(%d, %s)", len(args), array)
+	}
+	if call.Operation == "host_stdout_is_tty" {
+		// Undefined has no payload. A terminal supplies true, never a present false.
+		const include = "#include <unistd.h>"
+		if !slices.Contains(e.declarations, include) {
+			e.declarations = append(e.declarations, include)
+		}
+		code = "(adamic_maybe_boolean){isatty(1) != 0, true}"
 	}
 	if call.Operation == "host_stdout_write" {
 		code = "(adamic_write_raw(adamic_stdout, " + args[0] + "), 0.0)"

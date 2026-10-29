@@ -47,7 +47,7 @@ func TestNodeStdoutWriteRefusals(t *testing.T) {
 
 func TestNodeStdoutTTYRefusals(t *testing.T) {
 	t.Parallel()
-	for _, member := range []string{"isTTY", "columns"} {
+	for _, member := range []string{"columns"} {
 		for _, ext := range []string{"a", "ts"} {
 			t.Run(member+"."+ext, func(t *testing.T) {
 				file := filepath.Join("testdata/stdout/refused", member+"."+ext)
@@ -57,11 +57,7 @@ func TestNodeStdoutTTYRefusals(t *testing.T) {
 				}
 				_, err = lowerSourceAs(t, string(source), "."+ext)
 				var ny *NotYet
-				kind := "boolean"
-				if member == "columns" {
-					kind = "number"
-				}
-				want := "declared " + kind + ", but undefined off a TTY; adamic/host-tty"
+				want := "Node caches the terminal width and refreshes it on SIGWINCH from the event loop; adamic/host-tty"
 				if !errors.As(err, &ny) || ny.What != want {
 					t.Fatalf("want exact %q, got %v", want, err)
 				}
