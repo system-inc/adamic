@@ -430,8 +430,14 @@ func (l *lowering) predicateRefusal(node *ast.Node) error {
 			for _, property := range l.checker.GetPropertiesOfType(member) {
 				if property.Flags&ast.SymbolFlagsOptional != 0 {
 					// The view proves a layout by its tag, and it can't check an optional field yet
-					// (#1yr7rdh). Say so: the return is already a trusted tag check (#1w5bve2).
-					return &Refused{Where: l.program.Where(node), What: "a tag-proven predicate whose target has an optional field (" + property.Name + " on " + l.checker.TypeToString(member) + ") that the view can't check yet", Fix: "make the field required, or return a boolean and narrow at the caller (adamic/no-type-predicate)"}
+					// (#1yr7rdh). Say so: the return is already a trusted tag check (#1w5bve2). In .ts
+					// that's a gap the checked optional read closes (#mr87ptk), so it's NotYet; .a needs
+					// proof, and keeps the refusal (Adamic's condition 5).
+					what := "a tag-proven predicate whose target has an optional field (" + property.Name + " on " + l.checker.TypeToString(member) + ") that the view can't check"
+					if l.checkedAssertionSource(node) {
+						return l.notYet(node, what)
+					}
+					return &Refused{Where: l.program.Where(node), What: what, Fix: "make the field required, or return a boolean and narrow at the caller (adamic/no-type-predicate)"}
 				}
 			}
 			// A body proven by its tag alone leaves the layout to the view: this registration serves
