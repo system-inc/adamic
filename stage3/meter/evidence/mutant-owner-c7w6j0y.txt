@@ -1,0 +1,20 @@
+# Mutant evidence for the overload-target owner entry in stage3/meter/owners.json (#c7w6j0y)
+# Test: report_test.LatentReportTests.test_exact_prefix_and_variance_owners
+
+## With the entry (expected pass)
+Ran 1 test in 0.002s
+OK
+
+## Mutant 1: the old owner (#3hxh5jm, Done) put back (expected red)
+AssertionError: '#3hxh5jm (Workers)' != '#c7w6j0y (Optimizer)'
+Ran 1 test in 0.002s
+FAILED (failures=1)
+
+## Mutant 2: the entry removed (expected red, owner blank)
+AssertionError: 'OWNER BLANK' != '#c7w6j0y (Optimizer)'
+Ran 1 test in 0.002s
+FAILED (failures=1)
+
+## Restored (expected pass)
+Ran 34 tests in 0.226s
+OK (skipped=4)

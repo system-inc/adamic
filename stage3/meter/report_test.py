@@ -229,7 +229,7 @@ class LatentReportTests(unittest.TestCase):
             'checked predicate membership over an open tag domain': '#k1t2wp9 (Optimizer)',
             'an indirect call of a checked predicate': '#3hxh5jm (Workers)',
             'an indirect call of a checked predicate overload': '#3hxh5jm (Workers)',
-            'checked predicate overload target ClassElement': '#3hxh5jm (Workers)',
+            'checked predicate overload target ClassElement': '#c7w6j0y (Optimizer)',
             'a checked predicate without a reifiable target': '#1ge1bv8 (Diagnostics)',
             "a checked predicate result read by a CallExpression inside a condition, which its direction walk doesn't read": '#1761dah (Lower)',
         }.items():
