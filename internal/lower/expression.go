@@ -143,10 +143,8 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 				if !known {
 					return 0, false
 				}
-				if of == ir.Record {
-					return 0, false // Nullable dictionary metadata is not modeled.
-				}
-				boxed = boxed || !of.IsReference() || of == ir.String || of == ir.Union
+				// A dictionary is boxed too: a bare record pointer has no null of its own.
+				boxed = boxed || !of.IsReference() || of == ir.String || of == ir.Union || of == ir.Record
 			}
 			if boxed {
 				return ir.Union, true
@@ -187,9 +185,6 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 				return maybe, true
 			}
 			return 0, false
-		}
-		if shared == ir.Record && l.includesNull(proven) {
-			return 0, false // Nullable dictionary metadata is not supported by this records path.
 		}
 		return shared, shared != 0
 	}

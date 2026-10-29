@@ -1,0 +1,8 @@
+{
+  "Name": "witness-entry-removed",
+  "Test": "TestRecordUnionWitnessIsRuled",
+  "Mutation": "In cloud/admission-corpus/negative-witnesses.json, delete the entry 1109a8df81bfc0551bcfce54097770f6f5fbe9f728230194ae9b1494665c8a6f, the ruled witness internal/oracle/testdata/records_union_lying.ts (#bq3fvdt, Adamic, Oct 27), then restore the file.",
+  "Command": "flock ~/suites/suite.lock go test -p 1 -count=1 -timeout 30m ./internal/oracle -run TestRecordUnionWitnessIsRuled -v",
+  "Diagnostic": "is not a listed negative witness",
+  "ObservedOutput": "records_union_options_test.go:162: internal/oracle/testdata/records_union_lying.ts is not a listed negative witness\n--- FAIL: TestRecordUnionWitnessIsRuled (0.00s)\nFAIL\nFAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.007s"
+}
