@@ -176,3 +176,25 @@ func TestVoidContainerClassWithStaticHolderIsRead(t *testing.T) {
 		})
 	}
 }
+
+// A void field that holds a discarded value is a holder, and its object read whole is refused: Node prints {"v":42} where a native that released the
+// value would print {}. Adamic kept holdsVoid narrow (#p7t8tmh, Oct 29): a phantom brand nothing
+// writes is typed undefined, not void, so this is the field the rule exists for. A write through a
+// computed key can't be written in Adamic: the cast to an indexable view is refused first.
+func TestVoidFieldHoldersAreRead(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, source string }{
+		{"literal", "const make: () => void = () => 42;\nconst held: { v: void } = { v: make() };\nconsole.log(String(JSON.stringify(held)));"},
+	} {
+		for _, extension := range []string{".a", ".ts"} {
+			t.Run(probe.name+extension, func(t *testing.T) {
+				t.Parallel()
+				_, err := lowerVoidProbe(t, extension, probe.source)
+				var refused *Refused
+				if !errors.As(err, &refused) || !strings.Contains(refused.Fix, "adamic/no-void") {
+					t.Fatalf("want the void field's object refused, got %v", err)
+				}
+			})
+		}
+	}
+}
