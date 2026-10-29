@@ -251,12 +251,15 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 	if l.function.BodyReturns() == 0 {
 		return []ir.Statement{ir.Evaluate{Value: value}, ir.Return{}}, nil
 	}
-	return []ir.Statement{ir.Return{Value: fit(value, l.function.BodyReturns())}}, nil
+	return l.checkedPredicateReturn(ast.GetContainingFunction(node), expression, fit(value, l.function.BodyReturns()))
 }
 
 // returnAssignment preserves the right side's value, assigns once, then returns
 // that same value. Reading the target again could observe another write.
 func (l *lowering) returnAssignment(node *ast.Node) ([]ir.Statement, error) {
+	if l.checkedPredicateClosure(ast.GetContainingFunction(node)) {
+		return nil, l.notYet(node, "a checked predicate returning an assignment")
+	}
 	statements, err := l.assignment(node)
 	if err != nil {
 		return nil, err

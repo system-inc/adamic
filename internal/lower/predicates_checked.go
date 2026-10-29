@@ -324,7 +324,7 @@ func (l *lowering) checkedPredicateResult(call *ast.CallExpression, value ir.Exp
 		return value, nil
 	}
 	if declaration.Kind != ast.KindFunctionDeclaration {
-		if l.checkedPredicateBodyProven(declaration.Type()) || l.predicateParameter(declaration.Type()) != nil {
+		if l.checkedPredicateBodyProven(declaration.Type()) || l.predicateParameter(declaration.Type()) != nil || l.checkedPredicateClosure(declaration) {
 			return value, nil
 		}
 		return nil, l.notYet(call.AsNode(), "a checked predicate without a named implementation")
@@ -564,4 +564,117 @@ func (l *lowering) checkedPredicateForwarder(node *ast.Node, symbol *ast.Symbol,
 	}
 	body = append(body, check...)
 	return append(body, ir.Return{Value: result}), true, nil
+}
+
+// checkedPredicateClosure is whether declaration is an arrow or a function expression in .ts claiming
+// `x is T` with a body that doesn't prove it (#1w5bve2, ruled Oct 27). R-T80 admits it, and the
+// closure is the value, so it checks its own claim at each return (checkedPredicateReturn): every call
+// of it, direct, through a value or as an argument, runs the check. An asserts claim, a generic, an
+// async or generator body, a claim on this, and a claimed parameter the body assigns stay refused.
+func (l *lowering) checkedPredicateClosure(declaration *ast.Node) bool {
+	if declaration == nil || declaration.Kind != ast.KindArrowFunction && declaration.Kind != ast.KindFunctionExpression {
+		return false
+	}
+	annotation := declaration.Type()
+	if annotation == nil || annotation.Kind != ast.KindTypePredicate || annotation.AsTypePredicateNode().AssertsModifier != nil || annotation.AsTypePredicateNode().Type == nil {
+		return false
+	}
+	if declaration.Body() == nil || len(declaration.TypeParameters()) != 0 || ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAsync) || declaration.Kind == ast.KindFunctionExpression && declaration.AsFunctionExpression().AsteriskToken != nil {
+		return false
+	}
+	if !l.checkedAssertionSource(declaration) || l.checkedPredicateBodyProven(annotation) {
+		return false
+	}
+	parameter := l.checkedPredicateClaimed(declaration)
+	if parameter == nil {
+		return false
+	}
+	// The claim names the argument, so a body that assigns the parameter would check another value.
+	symbol := l.symbol(parameter.Name())
+	assigned := false
+	var writes ast.Visitor
+	writes = func(n *ast.Node) bool {
+		if n.Kind == ast.KindIdentifier && ast.IsAssignmentTarget(n) && l.symbol(n) == symbol {
+			assigned = true
+		}
+		return assigned || n.ForEachChild(writes)
+	}
+	declaration.Body().ForEachChild(writes)
+	return !assigned
+}
+
+// checkedPredicateClosureCallee is whether callee can only be the checked closure declaration: a const
+// name whose initializer is the closure itself. A let, a namespace export or a field could hold any
+// function of the closure's type by the time it's called, an ambient predicate whose claim nobody
+// checks among them, so a call through one stays an indirect call (mutable.ts).
+func (l *lowering) checkedPredicateClosureCallee(callee, declaration *ast.Node) bool {
+	if !l.checkedPredicateClosure(declaration) || callee.Kind != ast.KindIdentifier {
+		return false
+	}
+	holder := declaration.Parent
+	for holder != nil && holder.Kind == ast.KindParenthesizedExpression {
+		holder = holder.Parent
+	}
+	if holder == nil || holder.Kind != ast.KindVariableDeclaration || holder.Parent == nil || holder.Parent.Flags&ast.NodeFlagsConst == 0 || holder.Name() == nil || holder.Name().Kind != ast.KindIdentifier {
+		return false
+	}
+	symbol := l.symbol(callee)
+	return symbol != nil && symbol == l.symbol(holder.Name())
+}
+
+// checkedPredicateClaimed is the parameter a predicate's claim names, when it's a plain identifier.
+func (l *lowering) checkedPredicateClaimed(declaration *ast.Node) *ast.Node {
+	name := declaration.Type().AsTypePredicateNode().ParameterName
+	if name == nil || name.Kind != ast.KindIdentifier {
+		return nil
+	}
+	for _, parameter := range declaration.Parameters() {
+		if parameter.Name() != nil && parameter.Name().Kind == ast.KindIdentifier && parameter.Name().Text() == name.Text() && parameter.AsParameterDeclaration().DotDotDotToken == nil {
+			return parameter
+		}
+	}
+	return nil
+}
+
+// checkedPredicateReturn is a return of value from function, which, when function is a checked
+// closure, checks the claim's true side before it returns: a lying true stops with the located
+// message. The false side is the walk's (#1761dah), as for a predicate's value (#vdt9f1q).
+func (l *lowering) checkedPredicateReturn(function, site *ast.Node, value ir.Expression) ([]ir.Statement, error) {
+	if !l.checkedPredicateClosure(function) {
+		return []ir.Statement{ir.Return{Value: value}}, nil
+	}
+	if value.Type() != ir.Boolean {
+		return nil, l.notYet(site, "a checked predicate with a non-boolean result")
+	}
+	parameter := l.checkedPredicateClaimed(function)
+	local, isLocal := l.locals[l.symbol(parameter.Name())]
+	if !isLocal {
+		return nil, l.notYet(site, "a checked predicate whose parameter isn't a local")
+	}
+	target := l.checker.GetTypeAtLocation(function.Type().AsTypePredicateNode().Type)
+	source := l.checker.GetTypeAtLocation(parameter.Name())
+	name := "an arrow"
+	if function.Kind == ast.KindFunctionExpression {
+		name = "a function expression"
+	}
+	if holder := function.Parent; holder != nil && holder.Kind == ast.KindVariableDeclaration && holder.Name() != nil && holder.Name().Kind == ast.KindIdentifier {
+		name = holder.Name().Text()
+	}
+	where := l.program.Where(function)
+	sourceName, targetName := l.checker.TypeToString(source), l.checker.TypeToString(target)
+	add := func(name string, of ir.Type) int {
+		index := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: name, Type: of, Function: l.functionIndex})
+		return index
+	}
+	held := add("result", ir.Boolean)
+	result := ir.Read{Local: held, Of: ir.Boolean}
+	check, err := l.checkedPredicateCheck(site, function, ir.Read{Local: local, Of: l.result.Locals[local].Type}, source, target, result, false, add, func(branch string) string {
+		return fmt.Sprintf("predicate %s, declared at %s, %s branch: source %s, target %s", name, where, branch, sourceName, targetName)
+	})
+	if err != nil {
+		return nil, err
+	}
+	statements := append([]ir.Statement{ir.Declare{Local: held, Value: value}}, check...)
+	return append(statements, ir.Return{Value: result}), nil
 }

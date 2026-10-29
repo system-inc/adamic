@@ -413,6 +413,9 @@ func (l *lowering) predicateRefusal(node *ast.Node) error {
 		if l.checkedAssertionSource(node) && node.Parent.Kind == ast.KindFunctionDeclaration && node.Parent.Body() != nil {
 			return nil // Every direct call validates this claim; other calls stay refused.
 		}
+		if l.checkedPredicateClosure(node.Parent) {
+			return nil // The closure checks its own claim at each return (#1w5bve2).
+		}
 		// A tag that can lie is the reason worth naming, whichever prover met it.
 		var flow, body *Refused
 		if errors.As(err, &body) && body.lyingTag != "" && (!errors.As(original, &flow) || flow.lyingTag == "") {
@@ -568,7 +571,8 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 		// namespace and module qualifications, check both directions at the static call.
 		named := declaration.Name() != nil && l.symbol(callee) == l.symbol(declaration.Name())
 		direct := l.directPredicateCallee(callee, declaration)
-		if declaration.Kind != ast.KindFunctionDeclaration || (!direct && (named || callee.Kind == ast.KindPropertyAccessExpression && l.namespaceMember(callee))) {
+		// A checked closure checks itself, but only a const name bound to it can hold nothing else.
+		if !l.checkedPredicateClosureCallee(callee, declaration) && (declaration.Kind != ast.KindFunctionDeclaration || (!direct && (named || callee.Kind == ast.KindPropertyAccessExpression && l.namespaceMember(callee)))) {
 			return l.notYet(node, "an indirect call of a checked predicate")
 		}
 	}
@@ -648,7 +652,8 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 			}
 			// A checked predicate passed by name is its checked forwarder (functionValue), which
 			// checks this claim's true side at every call through it (#vdt9f1q).
-			if !l.checkedPredicateArgumentProven(implementation.Type()) && !(argument.Kind == ast.KindIdentifier && l.checkedPredicateDeclaration(implementation)) {
+			// An arrow or function expression is itself the value, and checks its claim at each return.
+			if !l.checkedPredicateArgumentProven(implementation.Type()) && !(argument.Kind == ast.KindIdentifier && l.checkedPredicateDeclaration(implementation)) && !l.checkedPredicateClosure(implementation) {
 				refused := failure()
 				var proof *Refused
 				if err := l.predicateRefusal(implementation.Type()); errors.As(err, &proof) && proof.lyingTag != "" {
