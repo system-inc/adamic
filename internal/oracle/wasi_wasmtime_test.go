@@ -56,6 +56,9 @@ func wasmtimeHostLimits(t *testing.T, path string, expected run) (run, bool) {
 	if filepath.Base(filepath.Dir(path)) != "testdata" {
 		name = ""
 	}
+	if strings.HasSuffix(filepath.ToSlash(path), "internal/oracle/testdata/stdout_edges/read_after_print.a") {
+		name = "stdout_edges/read_after_print.a"
+	}
 	limited := false
 	replace := func(old, changed string) {
 		t.Helper()
@@ -77,6 +80,11 @@ func wasmtimeHostLimits(t *testing.T, path string, expected run) (run, bool) {
 		limited = true
 	case "prompt_then_read.a":
 		expected = run{stdout: []byte("ready\ncannot read /dev/stdin: permission denied\n")}
+		limited = true
+	case "stdout_edges/read_after_print.a":
+		// Reads stdin after printing to both streams, so it meets prompt_then_read.a's limit; the stderr after the
+		// read still arrives.
+		expected = run{stdout: []byte("out\ncannot read /dev/stdin: permission denied\n"), stderr: []byte("err\ndone\n")}
 		limited = true
 	case "arguments.a":
 		expected = run{exitCode: 1, stderr: []byte("Error: failed to convert \"a\\xFFb\" to utf-8\n")}
@@ -148,6 +156,11 @@ func runWasmtimeAgreesShard(t *testing.T, shard int) {
 			// Held to the refusal TestWASIAgreesWithNode holds them to (runtime_boundary_test.go).
 			if runtimeBoundaryViewFixture(fixture.path) {
 				assertRuntimeBoundaryViewRefusal(t, err)
+				boundary = true
+				return
+			}
+			// The async witnesses' named refusals, as TestWASIAgreesWithNode holds them (async_witnesses_test.go).
+			if assertAsyncWitnessRefusal(t, fixture.path, path, err) {
 				boundary = true
 				return
 			}
@@ -313,7 +326,7 @@ func TestWasmtimeCheckedWitness(t *testing.T) {
 // must fail that exact comparison; changed host behavior cannot become a pass.
 func TestWASINamedBehaviorCatchesMutants(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"write_stdout_order.a", "write_stderr_order.a", "prompt_then_read.a", "arguments.a"} {
+	for _, name := range []string{"write_stdout_order.a", "write_stderr_order.a", "prompt_then_read.a", "stdout_edges/read_after_print.a", "arguments.a"} {
 		t.Run(name, func(t *testing.T) {
 			expected, limited := wasmtimeHostLimits(t, filepath.Join("internal/oracle/testdata", name), run{})
 			if !limited {
