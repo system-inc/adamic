@@ -10,23 +10,18 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// Match oracle/wasi.mjs root access, plus libc's cwd alias and explicit absolute
-// scratch/dev aliases. A dot preopen alone shadows these absolute paths.
+// Match oracle/wasi.mjs: one root preopen and the working directory the
+// cwd-dependent runtime adapters enter before resolving relative paths.
 func onV8Input(t *testing.T, how inputRun, binary string) run {
 	t.Helper()
 	arguments := []string{"--disable-warning=ExperimentalWarning", "--input-type=module", "-e", `
 import { readFileSync } from 'node:fs';
 import { WASI } from 'node:wasi';
 const binary = process.argv[1];
-const preopens = { '/': '/' };
-if (process.argv[2] === 'cwd') Object.assign(preopens, { '.': process.cwd(), [process.argv[3]]: process.argv[3], '/dev': '/dev' });
-const wasi = new WASI({version:'preview1', args:[binary, ...process.argv.slice(4)], env:process.env, preopens, returnOnExit:true});
+const wasi = new WASI({version:'preview1', args:[binary, ...process.argv.slice(2)], env:{...process.env, ADAMIC_WASI_CWD:process.cwd()}, preopens:{'/':'/'}, returnOnExit:true});
 const module = await WebAssembly.compile(readFileSync(binary));
 const instance = await WebAssembly.instantiate(module, wasi.getImportObject());
-process.exitCode = wasi.start(instance);`, binary, "root", filepath.Dir(binary)}
-	if how.directory != "" {
-		arguments[len(arguments)-2] = "cwd"
-	}
+process.exitCode = wasi.start(instance);`, binary}
 	return executeInput(t, how, nil, "node", append(arguments, how.arguments...)...)
 }
 

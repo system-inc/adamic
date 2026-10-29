@@ -187,7 +187,7 @@ the test harness.
 | `ADAMIC_THREADS` | worker threads, an integer from 1 to 4096; anything else panics (70) | `internal/native/runtime/parallel.c:126-132` |
 | `ADAMIC_LEAK_CHECK` | an intentional exit writes `adamic: intentional exit: status N` for the leak harness | `internal/native/runtime/adamic.c:367-372` |
 | `ADAMIC_TSGO_PROFILE`, `ADAMIC_TSGO_TIMING` | tsgo builds only: checker profiling and timing | `internal/native/runtime/tsgo.c:16-17` |
-| `TMPDIR`, `TMP`, `TEMP` | `os.tmpdir()` | `internal/native/runtime/node_host.c:219-221` |
+| `TMPDIR`, `TMP`, `TEMP` | `os.tmpdir()` | `internal/native/runtime/node_host.c:220-222` |
 
 ## Toolchain
 
