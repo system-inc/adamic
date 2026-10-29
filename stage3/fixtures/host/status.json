@@ -309,7 +309,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Compiles","what":""}
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
   },
   {
     "file": "18_exit_0.a",
