@@ -7,6 +7,9 @@ import (
 	"go/parser"
 	"go/token"
 	"go/types"
+	"os"
+	"path/filepath"
+	"slices"
 	"strings"
 	"testing"
 )
@@ -48,6 +51,65 @@ func lower() error { return errors.New(f.Sprint("production")) }
 	if unused := unusedImports(t, output); len(unused) != 0 {
 		t.Fatalf("the cleaned fixture still leaves imports unused: %q\n%s", unused, output)
 	}
+}
+
+// Main's own lowering files, the stable input under every overlay rewrite, use each import they declare, so
+// importclean must take each one without an error and give it back unchanged, blank imports like _ "unsafe" for
+// go:linkname included. An import form it can't read or misjudges reds here, at its author's change, not at the meter.
+func TestImportCleanKeepsMainLowerImports(t *testing.T) {
+	t.Parallel()
+	// Reads: internal/lower/*.go
+	paths, err := filepath.Glob("../../../../internal/lower/*.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	cleaned := 0
+	for _, path := range paths {
+		// make_overlay.py hands importclean only the package's own files; tests are never overlaid.
+		if strings.HasSuffix(path, "_test.go") {
+			continue
+		}
+		source, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		output, err := clean(source)
+		if err != nil {
+			t.Errorf("%s doesn't clean: %v", filepath.Base(path), err)
+			continue
+		}
+		file, err := parser.ParseFile(token.NewFileSet(), filepath.Base(path), output, parser.ImportsOnly)
+		if err != nil {
+			t.Errorf("%s cleans to source that doesn't parse: %v", filepath.Base(path), err)
+			continue
+		}
+		original, err := parser.ParseFile(token.NewFileSet(), filepath.Base(path), source, parser.ImportsOnly)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if imports, want := importSpecs(file), importSpecs(original); !slices.Equal(imports, want) {
+			t.Errorf("%s's imports after cleaning are %q, want %q", filepath.Base(path), imports, want)
+		} else if !bytes.Equal(output, source) {
+			t.Errorf("%s comes back changed though every import is used", filepath.Base(path))
+		}
+		cleaned++
+	}
+	if cleaned == 0 {
+		t.Fatal("no internal/lower file was read")
+	}
+}
+
+// importSpecs reads each import as its name, if any, and quoted path, in source order.
+func importSpecs(file *ast.File) []string {
+	var specs []string
+	for _, spec := range file.Imports {
+		if spec.Name != nil {
+			specs = append(specs, spec.Name.Name+" "+spec.Path.Value)
+			continue
+		}
+		specs = append(specs, spec.Path.Value)
+	}
+	return specs
 }
 
 // unusedImports type-checks source the way the compiler judges imports, without running go: each import resolves to
