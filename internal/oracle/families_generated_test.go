@@ -1495,6 +1495,16 @@ func TestNativeAgreesWithNode_reuse_handover_fresh(t *testing.T) {
 	runNativeAgreesShard(t, -138)
 }
 
+func TestNativeAgreesWithNode_async_iterable_map_boolean_function(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -139)
+}
+
+func TestNativeAgreesWithNode_async_iterable_set_boolean_function(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -140)
+}
+
 func TestFamiliesCatchAPlantedCase_NativeAgreesWithNode(t *testing.T) {
 	t.Parallel()
 	catchPlantedCase(t, "TestNativeAgreesWithNode")
@@ -2818,6 +2828,16 @@ func TestWASIAgreesWithNode_slab_sizes(t *testing.T) {
 func TestWASIAgreesWithNode_reuse_handover_fresh(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -136)
+}
+
+func TestWASIAgreesWithNode_async_iterable_map_boolean_function(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -137)
+}
+
+func TestWASIAgreesWithNode_async_iterable_set_boolean_function(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -138)
 }
 
 func TestFamiliesCatchAPlantedCase_WASIAgreesWithNode(t *testing.T) {
@@ -4453,6 +4473,16 @@ func TestCountsAreRecorded_slab_sizes(t *testing.T) {
 func TestCountsAreRecorded_reuse_handover_fresh(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -129)
+}
+
+func TestCountsAreRecorded_async_iterable_map_boolean_function(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -130)
+}
+
+func TestCountsAreRecorded_async_iterable_set_boolean_function(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -131)
 }
 
 func TestFamiliesCatchAPlantedCase_CountsAreRecorded(t *testing.T) {
