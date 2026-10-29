@@ -305,3 +305,28 @@ func TestCompilerSlice3Shape(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+// Main's own lowering.refuse rewrites and keeps every line make_overlay.py counts on afterwards, so a reshape in
+// internal/lower reds here, at its author's change, not at the next meter run.
+func TestRefusalRewriteReadsMainRefusals(t *testing.T) {
+	t.Parallel()
+	// Reads: internal/lower/refusals.go
+	source, err := os.ReadFile("../../../../internal/lower/refusals.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	output, err := Rewrite(source)
+	if err != nil {
+		t.Fatalf("main's lowering.refuse doesn't rewrite: %v", err)
+	}
+	for _, binding := range []string{"found", "contractError"} {
+		if count := strings.Count(string(output), "\t\t\tlatentRecord("+binding+")\n"); count != 1 {
+			t.Errorf("make_overlay.py's refusal visitor identity for %s: found %d, want 1", binding, count)
+		}
+	}
+	for _, visitor := range []string{"contracts", "visit"} {
+		if count := strings.Count(string(output), visitor+" = func(node *ast.Node) (latentStop bool) {"); count != 1 {
+			t.Errorf("make_overlay.py's %s visitor entry: found %d, want 1", visitor, count)
+		}
+	}
+}
