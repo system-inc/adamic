@@ -38,6 +38,9 @@ func debugCacheEnvironment(t *testing.T, environment []string) []string {
 	if os.Getenv("ADAMIC_BUILD_CACHE_DIR") == "" {
 		t.Fatal("debug products require the unit's ADAMIC_BUILD_CACHE_DIR; refusing the home cache (#phzhe68)")
 	}
+	if os.Getenv("ADAMIC_BUILD_OUTPUT_DIR") == "" {
+		t.Fatal("debug products require the unit's ADAMIC_BUILD_OUTPUT_DIR")
+	}
 	cache, err := location.BuildCache()
 	if err != nil {
 		t.Fatal(err)
@@ -101,10 +104,18 @@ func debugLineProduct(t *testing.T, build bool) string {
 		}
 		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 		defer cancel()
-		command := toolchain.CommandContextIn(ctx, "../..", compiler, "build", path, "-o", filepath.Join(directory, "program"), "--debug")
-		command.Env = debugCacheEnvironment(t, command.Env)
-		if output, err := command.CombinedOutput(); err != nil {
-			return fmt.Errorf("build --debug: %w: %s", err, output)
+		for _, mode := range []struct {
+			name  string
+			flags []string
+		}{
+			{"program", []string{"--debug"}}, {"release", nil},
+		} {
+			arguments := append([]string{"build", path, "-o", filepath.Join(directory, mode.name)}, mode.flags...)
+			command := toolchain.CommandContextIn(ctx, "../..", compiler, arguments...)
+			command.Env = debugCacheEnvironment(t, command.Env)
+			if output, err := command.CombinedOutput(); err != nil {
+				return fmt.Errorf("build %s: %w: %s", mode.name, err, output)
+			}
 		}
 		return nil
 	})

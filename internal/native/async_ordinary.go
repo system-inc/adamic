@@ -15,6 +15,11 @@ func (e *emitter) asyncFunction(index int) string {
 	identity := stableName("fn", e.sourceReadable(index), e.functionKey(index, map[int]bool{}))
 	graph := flow.Build(e.program, index)
 	regions := flow.CutAsync(graph)
+	var sourceLines map[*ir.Statement]ir.SourceLine
+	if e.debug {
+		sourceLines = asyncSourceLines(function.Body)
+	}
+	var lastSourceLine ir.SourceLine
 	cells := slices.Clone(function.FrameEnvironment)
 	e.asyncSlots = map[int]int{}
 	e.asyncBorrows = asyncBorrowedSlots(e.program, index)
@@ -87,6 +92,10 @@ func (e *emitter) asyncFunction(index int) string {
 			var result ir.Expression
 			for _, instructionID := range block.Instructions {
 				instruction := graph.Instructions[instructionID]
+				if source, ok := sourceLines[instruction.At]; ok && source != lastSourceLine {
+					e.statement(source)
+					lastSourceLine = source
+				}
 				statement := *instruction.At
 				if attempt, ok := statement.(ir.Try); ok && instruction.Part == 1 {
 					if attempt.CatchLocal >= 0 {
@@ -161,6 +170,9 @@ func (e *emitter) asyncFunction(index int) string {
 			e.indent--
 			e.line("}")
 		}
+	}
+	if e.debug {
+		e.line(sourceLineReset)
 	}
 	out.WriteString(e.out.String())
 	e.out.Reset()
