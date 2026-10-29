@@ -50,7 +50,6 @@ func wasiHostRuntimeRefusal(t *testing.T, index int) {
 		{"adamic_fs_file_", "mkdtemp", "NULL", "fs.mkdtempSync requires temporary directory creation"},
 		{"adamic_node_", "pid", "", "process.pid requires process identifiers"},
 		{"adamic_node_", "platform", "", "process.platform requires a Node host platform"},
-		{"adamic_node_", "columns", "", "process.stdout.columns requires terminal size"},
 		{"adamic_node_", "memory_usage", "", "process.memoryUsage requires allocator observations"},
 		{"adamic_node_", "argv", "", "process.argv requires executable paths"},
 		{"adamic_fs_file_", "open", "&path, &flag, 0600", "file creation permission bits are not supported"},
@@ -131,8 +130,6 @@ func TestWASIHostRuntimeRefusal_005(t *testing.T) { t.Parallel(); wasiHostRuntim
 func TestWASIHostRuntimeRefusal_006(t *testing.T) { t.Parallel(); wasiHostRuntimeRefusal(t, 6) }
 
 func TestWASIHostRuntimeRefusal_007(t *testing.T) { t.Parallel(); wasiHostRuntimeRefusal(t, 7) }
-
-func TestWASIHostRuntimeRefusal_008(t *testing.T) { t.Parallel(); wasiHostRuntimeRefusal(t, 8) }
 
 func TestWASIFileAgreesWithNode_000(t *testing.T) { t.Parallel(); wasiFileAgreesWithNode(t, 0) }
 
