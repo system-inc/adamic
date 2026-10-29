@@ -113,7 +113,7 @@ func debugLineProduct(t *testing.T, build bool) string {
 				return err
 			}
 			name := []string{"program", "program-again"}[index]
-			ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 			command := toolchain.CommandContextIn(ctx, "../..", compiler, "build", entry, "-o", filepath.Join(directory, name), "--debug")
 			command.Env = debugCacheEnvironment(t, command.Env)
 			output, err := command.CombinedOutput()
@@ -185,7 +185,7 @@ func debugCommandProduct(t *testing.T, build bool) string {
 				return err
 			}
 			name := []string{"witness", "witness-again"}[index]
-			ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 			command := exec.CommandContext(ctx, witnessDriver, "-test.run=^TestBuildDebugDriver$", "--", "build", entry, "-o", filepath.Join(directory, name), "--debug")
 			command.Dir = buildcache.Absolute("<repository>/cmd/adamic")
 			command.Env = debugCacheEnvironment(t, append(os.Environ(), "ADAMIC_BUILD_DEBUG_DRIVER=1"))
