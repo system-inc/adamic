@@ -58,7 +58,7 @@ time. A platform the host passes in its environment would be a contract neither 
 offers, so Adamic doesn't invent one. Workers' Wasm functions never reach it: they must be pure, and a host
 read isn't.
 
-Held by: `wasiHostPlatformFixtures` in the `WASI` and shim oracles, asserted both ways, so a fixture that reads
+Held by: `wasiHostPlatformFixtures` in the `WASI` and shim oracles and the wasmtime witness, asserted both ways, so a fixture that reads
 the platform is listed and a listed one reads it.
 
 ## The engine's own stack
