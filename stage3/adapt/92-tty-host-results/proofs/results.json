@@ -1,0 +1,149 @@
+{
+  "status": "pass",
+  "conditions": {
+    "twoBodiesOnly": "pass",
+    "SystemInterfaceUnchanged": "pass",
+    "publishedAndHeadACheckers": "pass",
+    "callerEquivalence": "pass",
+    "sameFullOracleAndBaseline": "pass"
+  },
+  "checks": {
+    "baseline": [
+      {
+        "strict": false,
+        "published": 0,
+        "corrected": 2,
+        "added": [
+          {
+            "file": "src/compiler/sys.ts",
+            "line": 1531,
+            "column": 13,
+            "code": 2322,
+            "message": "Type '() => number | undefined' is not assignable to type '() => number'.\n  Type 'number | undefined' is not assignable to type 'number'.\n    Type 'undefined' is not assignable to type 'number'."
+          },
+          {
+            "file": "src/compiler/sys.ts",
+            "line": 1534,
+            "column": 13,
+            "code": 2322,
+            "message": "Type '() => boolean | undefined' is not assignable to type '() => boolean'.\n  Type 'boolean | undefined' is not assignable to type 'boolean'.\n    Type 'undefined' is not assignable to type 'boolean'."
+          }
+        ]
+      },
+      {
+        "strict": true,
+        "published": 140,
+        "corrected": 142,
+        "added": [
+          {
+            "file": "src/compiler/sys.ts",
+            "line": 1531,
+            "column": 13,
+            "code": 2322,
+            "message": "Type '() => number | undefined' is not assignable to type '() => number'.\n  Type 'number | undefined' is not assignable to type 'number'.\n    Type 'undefined' is not assignable to type 'number'."
+          },
+          {
+            "file": "src/compiler/sys.ts",
+            "line": 1534,
+            "column": 13,
+            "code": 2322,
+            "message": "Type '() => boolean | undefined' is not assignable to type '() => boolean'.\n  Type 'boolean | undefined' is not assignable to type 'boolean'.\n    Type 'undefined' is not assignable to type 'boolean'."
+          }
+        ]
+      }
+    ],
+    "adapted": [
+      {
+        "strict": false,
+        "published": 0,
+        "corrected": 0,
+        "types": {
+          "getWidthOfTerminal": "number | undefined",
+          "writeOutputIsTTY": "boolean | undefined"
+        }
+      },
+      {
+        "strict": true,
+        "published": 140,
+        "corrected": 140,
+        "types": {
+          "getWidthOfTerminal": "number | undefined",
+          "writeOutputIsTTY": "boolean | undefined"
+        }
+      }
+    ],
+    "scope": {
+      "files": 746,
+      "changed": [
+        "src/compiler/sys.ts"
+      ],
+      "systemInterfaceUnchanged": true,
+      "javascriptChanging": true
+    },
+    "consumers": {
+      "cases": 63,
+      "widthReaders": [
+        534,
+        265
+      ],
+      "prettyCaller": 166
+    }
+  },
+  "counts": {
+    "control": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "after": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    }
+  },
+  "baselineDiff": {
+    "byteIdentical": true,
+    "bytes": 51093,
+    "sha256": "5333568a661aea24fc8af3149e9f4d2dfca70731842461c677f385b092adc4f0"
+  },
+  "api": {
+    "byteIdentical": true,
+    "bytes": 590861,
+    "sha256": "477a56fb7b35a5f268be6131441c67d237b4646a9f8d2e1f50dc163879450051"
+  },
+  "requiredMutant": {
+    "test": "TestTTYHostAxiomTypecheck",
+    "exit": 1,
+    "sites": [
+      "src/compiler/sys.ts:1531:13 TS2322",
+      "src/compiler/sys.ts:1534:13 TS2322"
+    ],
+    "restoredExit": 0
+  },
+  "otherMutants": [
+    "moved target",
+    "wrong width fallback",
+    "extra baseline line"
+  ],
+  "postSuiteScope": {
+    "scope": {
+      "files": 746,
+      "changed": [
+        "src/compiler/sys.ts"
+      ],
+      "systemInterfaceUnchanged": true,
+      "javascriptChanging": true
+    },
+    "consumers": {
+      "cases": 63,
+      "widthReaders": [
+        534,
+        265
+      ],
+      "prettyCaller": 166
+    }
+  },
+  "postSuiteIdempotence": 0,
+  "oracleWorkers": 8,
+  "memoryEventsUnchanged": true
+}
