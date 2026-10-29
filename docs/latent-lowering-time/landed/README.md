@@ -20,5 +20,19 @@ origin/main is `51981922` as of this push, so the daily meter's per-ref `build_c
 line, under `set -e`) will stop at `latent-overlay` on this main. The same refusal hits the revert tree.
 `95a7b63f` builds.
 
-Next: a throwaway that lets `statementrewrite` accept the named results (renaming and wrapping work the same
-either way), never committed into the meter, so the three runs can go ahead. Its diff and results follow.
+## The trees (observed)
+
+At Performance's word, the fix is Correctness's `55c1c38f` (typescript/statementrewrite-named-results,
+chg_0wdzk9qm: "statementrewrite takes lowering.statement by its types, not its names"), cherry-picked as a
+throwaway onto both 51981922 trees, never pushed. A patch of my own, written first, was dropped unused.
+`95a7b63f` needs nothing.
+
+| label | tree | how |
+|---|---|---|
+| before | `95a7b63f` | main |
+| after | `be99a01a` | `51981922` + `55c1c38f` cherry-picked (`-x`, clean) |
+| revert | `589f337c` | `51981922` + `git revert --no-edit 07b24606` (`93245360`, clean, no fallback needed) + `55c1c38f` cherry-picked |
+
+All three pin cohere `06af2e39` and TypeScript `d92d9bfe`, and each built as the meter builds it plus the timing
+lines. `go test ./stage3/census/latent/statementrewrite/` is green on the after tree. The revert of `07b24606`
+removes its lowering changes and its tests and fixtures (62 files, 593 lines). Runs follow, back to back in that order.
