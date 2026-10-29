@@ -20,6 +20,9 @@ const nodeTypesRoot = "bundled:///node/node_modules/@types"
 // The exact published package travels with the compiler, independent of its
 // working directory. Build-time integrity tests hold every embedded byte.
 func nodeTypesIndex() (tspath.RootedFilePath, error) {
+	if err := validateNodeHostAxioms(embeddedNodeTypes); err != nil {
+		return "", err
+	}
 	return nodeTypesIndexFromFS(embeddedNodeTypes)
 }
 

@@ -20,3 +20,16 @@ backend runtime. Unsupported overloads still need a named NotYet in that lowerer
 Owners distinguish StatsBase.isFile from Dirent.isFile. Register object receivers
 as well when applicable, such as node:buffer.Buffer and node:perf_hooks.performance.
 The census's declared_owner identifies the class or interface part of the name.
+
+Adamic corrects false host axioms in host_axioms.json, without changing any
+embedded package bytes. Each row pins the published file and line, its exact
+replacement, observed Node behavior and ruling. Identical declarations on
+separate lines have separate rows; unaccounted occurrences, changed lines and
+already-corrected publications fail loading. CorrectNodeHostAxioms is shared by
+the bundled checker view and admission-delta's prepared npm checker copy.
+
+The table is a go:embed input, so buildcache.GoInputs includes it in GoBuild's
+content key. Products using an already linked compiler include it through
+compilerinputs.Lowering's internal directory. The admission compiler also keys
+its revision SHA. The package manifest and tarball integrity tests still hold
+only the untouched published bytes.

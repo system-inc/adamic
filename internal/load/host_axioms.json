@@ -1,0 +1,376 @@
+[
+  {
+    "file": "tty.d.ts",
+    "line": 51,
+    "published": "        isRaw: boolean;",
+    "corrected": "        isRaw?: boolean;",
+    "node": {
+      "version": "v24.19.0",
+      "stream": "process.stdin",
+      "pipe": {
+        "typeof": "undefined",
+        "value": "undefined"
+      },
+      "file": {
+        "typeof": "undefined",
+        "value": "undefined"
+      },
+      "null": {
+        "typeof": "undefined",
+        "value": "undefined"
+      },
+      "pty": {
+        "typeof": "boolean",
+        "value": false
+      }
+    },
+    "ruling": "@system_adamic on #jk7tph7, 2026-10-29 (Language's audit)"
+  },
+  {
+    "file": "tty.d.ts",
+    "line": 65,
+    "published": "        setRawMode(mode: boolean): this;",
+    "corrected": "        setRawMode?(mode: boolean): this;",
+    "node": {
+      "version": "v24.19.0",
+      "stream": "process.stdin",
+      "pipe": {
+        "typeof": "undefined",
+        "value": "undefined",
+        "call": {
+          "name": "TypeError",
+          "message": "process.stdin.setRawMode is not a function"
+        }
+      },
+      "file": {
+        "typeof": "undefined",
+        "value": "undefined",
+        "call": {
+          "name": "TypeError",
+          "message": "process.stdin.setRawMode is not a function"
+        }
+      },
+      "null": {
+        "typeof": "undefined",
+        "value": "undefined",
+        "call": {
+          "name": "TypeError",
+          "message": "process.stdin.setRawMode is not a function"
+        }
+      },
+      "pty": {
+        "typeof": "function",
+        "value": "function",
+        "call": "stream"
+      }
+    },
+    "ruling": "@system_adamic on #jk7tph7, 2026-10-29 (Language's audit)"
+  },
+  {
+    "file": "tty.d.ts",
+    "line": 70,
+    "published": "        isTTY: boolean;",
+    "corrected": "        isTTY?: boolean;",
+    "node": {
+      "version": "v24.19.0",
+      "stream": "process.stdin",
+      "pipe": {
+        "typeof": "undefined",
+        "value": "undefined"
+      },
+      "file": {
+        "typeof": "undefined",
+        "value": "undefined"
+      },
+      "null": {
+        "typeof": "undefined",
+        "value": "undefined"
+      },
+      "pty": {
+        "typeof": "boolean",
+        "value": true
+      }
+    },
+    "ruling": "@system_adamic on #jk7tph7, 2026-10-29 (Language's audit)"
+  },
+  {
+    "file": "tty.d.ts",
+    "line": 147,
+    "published": "        getColorDepth(env?: object): number;",
+    "corrected": "        getColorDepth?(env?: object): number;",
+    "node": {
+      "version": "v24.19.0",
+      "stream": "process.stdout",
+      "pipe": {
+        "typeof": "undefined",
+        "value": "undefined",
+        "call": {
+          "name": "TypeError",
+          "message": "process.stdout.getColorDepth is not a function"
+        }
+      },
+      "file": {
+        "typeof": "undefined",
+        "value": "undefined",
+        "call": {
+          "name": "TypeError",
+          "message": "process.stdout.getColorDepth is not a function"
+        }
+      },
+      "null": {
+        "typeof": "undefined",
+        "value": "undefined",
+        "call": {
+          "name": "TypeError",
+          "message": "process.stdout.getColorDepth is not a function"
+        }
+      },
+      "pty": {
+        "typeof": "function",
+        "value": "function",
+        "call": 1
+      }
+    },
+    "ruling": "@system_adamic on #jk7tph7, 2026-10-29 (Language's audit)"
+  },
+  {
+    "file": "tty.d.ts",
+    "line": 168,
+    "published": "        hasColors(count?: number): boolean;",
+    "corrected": "        hasColors?(count?: number): boolean;",
+    "node": {
+      "version": "v24.19.0",
+      "stream": "process.stdout",
+      "pipe": {
+        "typeof": "undefined",
+        "value": "undefined",
+        "call": {
+          "name": "TypeError",
+          "message": "process.stdout.hasColors is not a function"
+        }
+      },
+      "file": {
+        "typeof": "undefined",
+        "value": "undefined",
+        "call": {
+          "name": "TypeError",
+          "message": "process.stdout.hasColors is not a function"
+        }
+      },
+      "null": {
+        "typeof": "undefined",
+        "value": "undefined",
+        "call": {
+          "name": "TypeError",
+          "message": "process.stdout.hasColors is not a function"
+        }
+      },
+      "pty": {
+        "typeof": "function",
+        "value": "function",
+        "call": false
+      }
+    },
+    "ruling": "@system_adamic on #jk7tph7, 2026-10-29 (Language's audit)"
+  },
+  {
+    "file": "tty.d.ts",
+    "line": 169,
+    "published": "        hasColors(env?: object): boolean;",
+    "corrected": "        hasColors?(env?: object): boolean;",
+    "node": {
+      "version": "v24.19.0",
+      "stream": "process.stdout",
+      "pipe": {
+        "typeof": "undefined",
+        "value": "undefined",
+        "call": {
+          "name": "TypeError",
+          "message": "process.stdout.hasColors is not a function"
+        }
+      },
+      "file": {
+        "typeof": "undefined",
+        "value": "undefined",
+        "call": {
+          "name": "TypeError",
+          "message": "process.stdout.hasColors is not a function"
+        }
+      },
+      "null": {
+        "typeof": "undefined",
+        "value": "undefined",
+        "call": {
+          "name": "TypeError",
+          "message": "process.stdout.hasColors is not a function"
+        }
+      },
+      "pty": {
+        "typeof": "function",
+        "value": "function",
+        "call": false
+      }
+    },
+    "ruling": "@system_adamic on #jk7tph7, 2026-10-29 (Language's audit)"
+  },
+  {
+    "file": "tty.d.ts",
+    "line": 170,
+    "published": "        hasColors(count: number, env?: object): boolean;",
+    "corrected": "        hasColors?(count: number, env?: object): boolean;",
+    "node": {
+      "version": "v24.19.0",
+      "stream": "process.stdout",
+      "pipe": {
+        "typeof": "undefined",
+        "value": "undefined",
+        "call": {
+          "name": "TypeError",
+          "message": "process.stdout.hasColors is not a function"
+        }
+      },
+      "file": {
+        "typeof": "undefined",
+        "value": "undefined",
+        "call": {
+          "name": "TypeError",
+          "message": "process.stdout.hasColors is not a function"
+        }
+      },
+      "null": {
+        "typeof": "undefined",
+        "value": "undefined",
+        "call": {
+          "name": "TypeError",
+          "message": "process.stdout.hasColors is not a function"
+        }
+      },
+      "pty": {
+        "typeof": "function",
+        "value": "function",
+        "call": false
+      }
+    },
+    "ruling": "@system_adamic on #jk7tph7, 2026-10-29 (Language's audit)"
+  },
+  {
+    "file": "tty.d.ts",
+    "line": 177,
+    "published": "        getWindowSize(): [number, number];",
+    "corrected": "        getWindowSize?(): [number, number];",
+    "node": {
+      "version": "v24.19.0",
+      "stream": "process.stdout",
+      "pipe": {
+        "typeof": "undefined",
+        "value": "undefined",
+        "call": {
+          "name": "TypeError",
+          "message": "process.stdout.getWindowSize is not a function"
+        }
+      },
+      "file": {
+        "typeof": "undefined",
+        "value": "undefined",
+        "call": {
+          "name": "TypeError",
+          "message": "process.stdout.getWindowSize is not a function"
+        }
+      },
+      "null": {
+        "typeof": "undefined",
+        "value": "undefined",
+        "call": {
+          "name": "TypeError",
+          "message": "process.stdout.getWindowSize is not a function"
+        }
+      },
+      "pty": {
+        "typeof": "function",
+        "present": true
+      }
+    },
+    "ruling": "@system_adamic on #jk7tph7, 2026-10-29 (Language's audit)"
+  },
+  {
+    "file": "tty.d.ts",
+    "line": 183,
+    "published": "        columns: number;",
+    "corrected": "        columns?: number;",
+    "node": {
+      "version": "v24.19.0",
+      "stream": "process.stdout",
+      "pipe": {
+        "typeof": "undefined",
+        "value": "undefined"
+      },
+      "file": {
+        "typeof": "undefined",
+        "value": "undefined"
+      },
+      "null": {
+        "typeof": "undefined",
+        "value": "undefined"
+      },
+      "pty": {
+        "typeof": "number",
+        "present": true
+      }
+    },
+    "ruling": "@system_adamic on #grqdgpr, 2026-10-29: road 2"
+  },
+  {
+    "file": "tty.d.ts",
+    "line": 189,
+    "published": "        rows: number;",
+    "corrected": "        rows?: number;",
+    "node": {
+      "version": "v24.19.0",
+      "stream": "process.stdout",
+      "pipe": {
+        "typeof": "undefined",
+        "value": "undefined"
+      },
+      "file": {
+        "typeof": "undefined",
+        "value": "undefined"
+      },
+      "null": {
+        "typeof": "undefined",
+        "value": "undefined"
+      },
+      "pty": {
+        "typeof": "number",
+        "present": true
+      }
+    },
+    "ruling": "@system_adamic on #jk7tph7, 2026-10-29 (Language's audit)"
+  },
+  {
+    "file": "tty.d.ts",
+    "line": 194,
+    "published": "        isTTY: boolean;",
+    "corrected": "        isTTY?: boolean;",
+    "node": {
+      "version": "v24.19.0",
+      "stream": "process.stdout",
+      "pipe": {
+        "typeof": "undefined",
+        "value": "undefined"
+      },
+      "file": {
+        "typeof": "undefined",
+        "value": "undefined"
+      },
+      "null": {
+        "typeof": "undefined",
+        "value": "undefined"
+      },
+      "pty": {
+        "typeof": "boolean",
+        "value": true
+      }
+    },
+    "ruling": "@system_adamic on #grqdgpr, 2026-10-29: road 2"
+  }
+]
