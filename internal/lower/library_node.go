@@ -64,6 +64,9 @@ func (l *lowering) nodeLibraryRefusal(node *ast.Node) error {
 	if !ast.IsExpressionNode(node) || ast.IsPartOfTypeNode(node) {
 		return nil
 	}
+	if found, err := l.nodeStdoutUseRefusal(node); found {
+		return err
+	}
 	if found, err := l.nodeEnvironmentUseRefusal(node); found {
 		return err
 	}

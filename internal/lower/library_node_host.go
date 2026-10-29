@@ -12,6 +12,9 @@ func (l *lowering) nodeHost(node *ast.Node) (ir.Expression, bool, error) {
 	if value, found, err := l.nodeRealpathCall(node); found {
 		return value, true, err
 	}
+	if value, found, err := l.nodeStdoutWrite(node); found {
+		return value, true, err
+	}
 	name := l.nodeLibraryMember(node)
 	operation, of := "", ir.String
 	switch name {
@@ -321,4 +324,93 @@ func (l *lowering) nodeRealpathValue(node *ast.Node) (ir.Expression, bool, error
 	}
 	l.forwarders[index] = held
 	return ir.Read{Local: held, Of: ir.Closure}, true, nil
+}
+
+// Only a discarded one-string write is bound: Node's boolean is backpressure,
+// while the native primitive reports blocking success. Never expose that value.
+func (l *lowering) nodeStdoutWriteMember(node *ast.Node) bool {
+	node = ast.SkipParentheses(node)
+	return node.Kind == ast.KindPropertyAccessExpression && l.nodeLibraryMember(node) == "node:net.Socket.write" && l.nodeLibraryMember(node.AsPropertyAccessExpression().Expression) == "node:process.Process.stdout"
+}
+
+func (l *lowering) nodeStdoutWriteRefusal(node *ast.Node) error {
+	const name = "node:process.Process.stdout.write"
+	outer := node
+	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
+		outer = outer.Parent
+	}
+	if outer.Parent == nil || outer.Parent.Kind != ast.KindExpressionStatement {
+		return l.notYet(node, name+" used as a value: its boolean is backpressure in Node and blocking success natively")
+	}
+	call := node.AsCallExpression()
+	if node.Flags&ast.NodeFlagsOptionalChain != 0 || call.Expression.Flags&ast.NodeFlagsOptionalChain != 0 {
+		return l.notYet(node, name+" through an optional chain")
+	}
+	if len(call.Arguments.Nodes) != 1 {
+		return l.notYet(node, name+" requires exactly one string argument, without encoding or callback")
+	}
+	argument := call.Arguments.Nodes[0]
+	if argument.Kind == ast.KindSpreadElement {
+		return l.notYet(argument, name+" with spread arguments")
+	}
+	if of, known := l.representation(l.checker.GetTypeAtLocation(argument)); !known || of != ir.String {
+		return l.notYet(argument, name+" with a non-string argument (Buffer and Uint8Array are not bound)")
+	}
+	return nil
+}
+
+func (l *lowering) nodeStdoutWrite(node *ast.Node) (ir.Expression, bool, error) {
+	if node.Kind != ast.KindCallExpression || !l.nodeStdoutWriteMember(node.AsCallExpression().Expression) {
+		return nil, false, nil
+	}
+	if err := l.nodeStdoutWriteRefusal(node); err != nil {
+		return nil, true, err
+	}
+	value, err := l.expression(node.AsCallExpression().Arguments.Nodes[0])
+	if err != nil {
+		return nil, true, err
+	}
+	if value.Type() != ir.String {
+		return nil, true, l.notYet(node, "node:process.Process.stdout.write with a non-string argument")
+	}
+	return ir.NodeFSFile{Operation: "host_stdout_write", Arguments: []ir.Expression{value}, Of: ir.Number}, true, nil
+}
+
+// The scanner sees the receiver, each property name and the call separately.
+// Admit those nodes only inside this exact call, without registering stdout.
+func (l *lowering) nodeStdoutUseRefusal(node *ast.Node) (bool, error) {
+	access := ast.SkipParentheses(node)
+	if node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.Name() == node {
+		access = node.Parent
+	}
+	name := l.nodeLibraryMember(access)
+	switch name {
+	case "node:tty.WriteStream.isTTY":
+		return true, l.notYet(access, "declared boolean, but undefined off a TTY; adamic/host-tty")
+	case "node:tty.WriteStream.columns":
+		return true, l.notYet(access, "declared number, but undefined off a TTY; adamic/host-tty")
+	}
+	if name == "node:process.Process.stdout" {
+		outer := access
+		for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
+			outer = outer.Parent
+		}
+		if outer.Parent == nil || !l.nodeStdoutWriteMember(outer.Parent) {
+			return true, l.notYet(access, "node:process.Process.stdout used as a value")
+		}
+		access = outer.Parent
+	} else if !l.nodeStdoutWriteMember(access) {
+		if access.Kind == ast.KindCallExpression && l.nodeStdoutWriteMember(access.AsCallExpression().Expression) {
+			return true, l.nodeStdoutWriteRefusal(access)
+		}
+		return false, nil
+	}
+	outer := access
+	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
+		outer = outer.Parent
+	}
+	if outer.Parent != nil && outer.Parent.Kind == ast.KindCallExpression && ast.SkipParentheses(outer.Parent.AsCallExpression().Expression) == access {
+		return true, l.nodeStdoutWriteRefusal(outer.Parent)
+	}
+	return true, l.notYet(access, "node:process.Process.stdout.write used as a value: its boolean is backpressure in Node and blocking success natively")
 }

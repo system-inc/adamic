@@ -124,6 +124,7 @@ func TestOneFileHoldsNodesOrder(t *testing.T) {
 func TestClosedStdoutEndsAsOnNode(t *testing.T) {
 	t.Parallel()
 	for _, fixture := range []string{
+		"internal/oracle/testdata/host_stdout/closed.a",
 		"internal/oracle/testdata/large_output.a",
 		"internal/oracle/testdata/output_then_panic.a",
 		"internal/oracle/testdata/interleaved.a",

@@ -1,0 +1,10 @@
+import process from 'node:process';
+export function hostWrite(value: string): number {
+ process.stdout.write(value);
+ return 0;
+}
+import type { HttpRequest, HttpResponse } from 'adamic/http';
+export function handle(request: HttpRequest): HttpResponse {
+ hostWrite(request.body);
+ return {status: 200, headers: [], body: 'written'};
+}

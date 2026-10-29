@@ -1,0 +1,2 @@
+import host from 'node:process';
+host.stdout.write('héllo 雪 😀\ud800|\udfff\n');

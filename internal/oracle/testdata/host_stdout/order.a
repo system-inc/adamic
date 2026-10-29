@@ -1,0 +1,5 @@
+import process from 'node:process';
+for (let i = 0; i < 1000; i++) {
+ console.log(`line ${i}`);
+ process.stdout.write(`raw ${i}\n`);
+}
