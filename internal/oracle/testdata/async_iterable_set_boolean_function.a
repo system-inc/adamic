@@ -1,0 +1,4 @@
+async function walk(): Promise<void> {
+const set = new Set<boolean>([false, true]); for (const value of set) { await Promise.resolve(); console.log(`${value}`); break; }
+}
+await walk();

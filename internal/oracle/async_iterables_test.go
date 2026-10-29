@@ -79,11 +79,19 @@ func init() {
 	fixtures = append(fixtures, struct {
 		path            string
 		lowers, checked bool
+	}{"internal/oracle/testdata/async_iterable_map_boolean_function.a", true, false})
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
 	}{"internal/oracle/testdata/async_iterable_map_values_module.a", true, false})
 	fixtures = append(fixtures, struct {
 		path            string
 		lowers, checked bool
 	}{"internal/oracle/testdata/async_iterable_set_values_function.a", true, false})
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
+	}{"internal/oracle/testdata/async_iterable_set_boolean_function.a", true, false})
 	fixtures = append(fixtures, struct {
 		path            string
 		lowers, checked bool
@@ -683,4 +691,14 @@ func TestAsyncLiveUserIteratorFunctionRemainsUnproven(t *testing.T) {
 func TestAsyncLiveUserIteratorModuleRemainsUnproven(t *testing.T) {
 	t.Parallel()
 	asyncLoopsRefusal(t, "async_refuse_user_iterator_module", "async for-of over a user iterator", "")
+}
+
+func TestAsyncLiveIterableMapBooleanFunction(t *testing.T) {
+	t.Parallel()
+	asyncLoopWitness(t, "async_iterable_map_boolean_function", "false\n")
+}
+
+func TestAsyncLiveIterableSetBooleanFunction(t *testing.T) {
+	t.Parallel()
+	asyncLoopWitness(t, "async_iterable_set_boolean_function", "false\n")
 }
