@@ -138,7 +138,7 @@ pins 3 and that the message keeps `-o` as typed, on Linux, where a removed worki
 
 70 is EX_SOFTWARE (`internal/native/runtime/adamic.h:1438`). `process.exit` and `process.exitCode`
 use Node-compatible status validation (`internal/lower/process.go:lowering.processValue`,
-`internal/native/runtime/process.c:59-70`). A `--count` imbalance never changes the exit code; the counts line is for
+`internal/native/runtime/process.c:58-69`). A `--count` imbalance never changes the exit code; the counts line is for
 the test harness to judge (`internal/leakcheck/leakcheck.go:Unbalanced`).
 
 `adamic js` output panics the same way, `adamic: panic: <message>` and 70, but only where its
