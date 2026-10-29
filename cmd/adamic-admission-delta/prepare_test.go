@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/system-inc/adamic/internal/load"
 	"os"
 	"path/filepath"
 	"strings"
@@ -50,5 +51,47 @@ func TestProvisioningFindsNpmAsBuildsFindTools(t *testing.T) {
 	err := prepareCheckout(tree)
 	if err == nil || !strings.Contains(err.Error(), "provision stage3/api: npm: ADAMIC_SANDBOX=1 runs only tools under ADAMIC_TOOLS") {
 		t.Fatalf("provisioning without the gates' npm: %v, want the missing npm named", err)
+	}
+}
+
+func TestPreparedNodeTypesUseHostAxioms(t *testing.T) {
+	t.Parallel()
+	api := t.TempDir()
+	files, err := load.NodeHostAxiomFiles()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, file := range files {
+		published, err := os.ReadFile(filepath.Join("..", "..", "internal", "load", "node_types", "node_modules", "@types", "node", file))
+		if err != nil {
+			t.Fatal(err)
+		}
+		name := filepath.Join(api, "node_modules", "@types", "node", file)
+		if err := os.MkdirAll(filepath.Dir(name), 0700); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(name, published, 0600); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if err := correctPreparedNodeTypes(api); err != nil {
+		t.Fatal(err)
+	}
+	for _, file := range files {
+		published, err := os.ReadFile(filepath.Join("..", "..", "internal", "load", "node_types", "node_modules", "@types", "node", file))
+		if err != nil {
+			t.Fatal(err)
+		}
+		want, err := load.CorrectNodeHostAxioms(file, string(published))
+		if err != nil {
+			t.Fatal(err)
+		}
+		got, err := os.ReadFile(filepath.Join(api, "node_modules", "@types", "node", file))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if string(got) != want {
+			t.Fatalf("%s: prepared checker differs from bundled checker", file)
+		}
 	}
 }

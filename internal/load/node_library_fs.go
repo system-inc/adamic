@@ -45,7 +45,12 @@ func (s *nodeLibraryFS) FileExists(path tspath.RootedFilePath) bool {
 func (s *nodeLibraryFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
 	if name, bundled := nodeBundleName(path.AsString()); bundled {
 		data, err := embeddedNodeTypes.ReadFile(name)
-		return string(data), err == nil
+		if err != nil {
+			return "", false
+		}
+		file := strings.TrimPrefix(name, "node_types/node_modules/@types/node/")
+		text, err := CorrectNodeHostAxioms(file, string(data))
+		return text, err == nil
 	}
 	if callerNodeTypes(path.AsString()) {
 		return "", false

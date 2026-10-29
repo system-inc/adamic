@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -29,7 +30,10 @@ func prepareCheckout(tree string) error {
 	if install.Exit != 0 || install.Error != "" {
 		return fmt.Errorf("provision stage3/api: %s %s", install.Error, install.Stderr)
 	}
-	return verifyNodeTypes(api)
+	if err := verifyNodeTypes(api); err != nil {
+		return err
+	}
+	return correctPreparedNodeTypes(api)
 }
 func verifyNodeTypes(api string) error {
 	path := filepath.Join(api, "node_modules", "@types", "node", "package.json")
@@ -49,4 +53,28 @@ func verifyNodeTypes(api string) error {
 	}
 	_, err = os.Stat(filepath.Join(filepath.Dir(path), "index.d.ts"))
 	return err
+}
+
+// npm ci lays the untouched publication first. The stock checker then sees the
+// same host corrections as Adamic's bundled checker, never a second row list.
+func correctPreparedNodeTypes(api string) error {
+	files, err := load.NodeHostAxiomFiles()
+	if err != nil {
+		return err
+	}
+	for _, file := range files {
+		name := filepath.Join(api, "node_modules", "@types", "node", filepath.FromSlash(file))
+		published, err := os.ReadFile(name)
+		if err != nil {
+			return err
+		}
+		corrected, err := load.CorrectNodeHostAxioms(file, string(published))
+		if err != nil {
+			return err
+		}
+		if err := os.WriteFile(name, []byte(corrected), 0600); err != nil {
+			return err
+		}
+	}
+	return nil
 }
