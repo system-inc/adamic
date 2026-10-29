@@ -1254,6 +1254,10 @@ func productFor(root, cache, nameKey string, depth int, known productMemo) (foun
 
 func lookupProduct(root, cache, nameKey string, depth int, known productMemo) (found, error) {
 	productsLookedUp.Add(1)
+	// A resolved unit's lookups read the map its runner laid, never the read sets (resolved.go).
+	if products, resolved, err := resolvedProducts(); resolved {
+		return resolvedLookup(cache, nameKey, products, err), nil
+	}
 	file, err := loadReads(cache, nameKey)
 	if err != nil {
 		return found{}, err
