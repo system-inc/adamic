@@ -184,7 +184,9 @@ func runWasmtimeAgreesShard(t *testing.T, shard int) {
 			} else if fixture.checked {
 				expected = onJavaScriptBackend(t, program)
 			} else {
-				expected = onNodeWith(t, inputRun{}, path)
+				// onNode, as TestWASIAgreesWithNode's witness: it hands json fixtures the prebuilt json_types, where
+				// a bare run of oracle/node.mjs builds it with go run, which Loom's runners refuse.
+				expected = onNode(t, path)
 			}
 			if probing && fixture.path == planted {
 				// TestFamiliesCatchAPlantedCase's mutant: one byte more in the program wasmtime runs.
