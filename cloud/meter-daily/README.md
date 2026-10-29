@@ -30,7 +30,8 @@ read on the box's toolchain env.sh (`ADAMIC_METER_TOOLS_ENV`, default
 /home/ahra/adamic-tools/env.sh) with Go, Node 24, clang, gofmt, python3, git and curl. npm comes
 from the pin in cloud/markdown-width/npm-bootstrap.json when the toolchain has none.
 
-Install, then prove one run by hand before the timer:
+Install, then prove one run by hand before the timer. The scripts live in /srv, never /opt: a line box's /opt
+stays an empty, stamped listing, since clang's driver lists /opt in every unit that runs it.
 
 ```sh
 sudo useradd --system --create-home --shell /usr/sbin/nologin adamicmeter
@@ -38,8 +39,8 @@ sudo setfacl -m u:adamicmeter:--x /home/ahra
 sudo setfacl -R -P -m u:adamicmeter:rX -m d:u:adamicmeter:rX /home/ahra/adamic-tools
 sudo install -d -o adamicmeter -g adamicmeter -m 750 /var/lib/adamic-meter
 sudo setfacl -m u:ahra:rx -m d:u:ahra:rx -m d:u:adamicmeter:rwx /var/lib/adamic-meter
-sudo install -d -m 755 /opt/adamic-meter
-sudo install -m 755 cloud/meter-daily/run.sh cloud/meter-daily/submit.sh /opt/adamic-meter/
+sudo install -d -m 755 /srv/adamic-meter
+sudo install -m 755 cloud/meter-daily/run.sh cloud/meter-daily/submit.sh /srv/adamic-meter/
 sudo install -m 644 cloud/meter-daily/meter-daily.service cloud/meter-daily/meter-daily-submit.service cloud/meter-daily/meter-daily.timer /etc/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl start --no-block meter-daily.service
