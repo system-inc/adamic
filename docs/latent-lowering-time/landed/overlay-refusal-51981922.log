@@ -1,0 +1,16 @@
+panic: latent statement rewrite: lowering.statement: unsupported signature func(node *ast.Node) (result []ir.Statement, err error)
+
+goroutine 1 [running]:
+main.main()
+	trees/after/stage3/census/latent/statementrewrite/main.go:44 +0x499
+exit status 2
+Traceback (most recent call last):
+  File "trees/after/stage3/census/latent/make_overlay.py", line 30, in <module>
+    subprocess.run(['go', 'run', str(territory / 'statementrewrite'),
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    str(repository / 'internal/lower/statements.go'), str(statement_output)], check=True, cwd=territory)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['go', 'run', 'trees/after/stage3/census/latent/statementrewrite', 'trees/after/internal/lower/statements.go', 'bin/after/latent-overlay/internal_lower_statements.go']' returned non-zero exit status 1.
