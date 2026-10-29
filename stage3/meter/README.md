@@ -95,6 +95,33 @@ The existing whole_program field remains the separate aggregate all-roots run.
 Refused and NotYet pass the checker and fail lowering. A checker failure blocks
 lowering. Missing, duplicate or unknown census rows prevent a partial report.
 
+Each run records `box.json` before any build: hostname, available processor count,
+CPU quota and period in microseconds (null when unlimited or unavailable), total
+memory, and the starting load average. The ending load average is added after
+measurement, before reporting. `report.json` preserves this as `box` and Markdown
+prints the box below the run header.
+
+Each compiler-directory census also writes `latent-times.jsonl`, compressed after
+reporting. It contains one `{file, where, wall_seconds, cpu_seconds}` record per
+attempted unit, including recovered panics, in a stream separate from the
+byte-comparable findings. Deferred and checker-skipped units have no time record.
+Wall time uses Go's monotonic clock; CPU is the process's user plus system time
+from `getrusage(RUSAGE_SELF)`. The driver is sequential, so a unit includes its
+synchronous dependency work. Registration within an attempt is included; shared
+file setup and writing the time record are excluded. Both first-error and full
+mode record times. The paired trees still run concurrently and share the box.
+
+Each tree's `latent_time` JSON block contains wall/CPU totals, `files` summed and
+sorted by descending wall time, and `slowest_units` (at most ten). Source locations
+start at `src/`, like panic sites. Markdown shows totals and the five slowest
+files, explicitly labeled as this box's times, not comparable across boxes.
+Older runs use `latent_time: null` and say "no unit times recorded".
+
+`python3 -E -S -B stage3/meter/check-unit-time-mutant.py` drops the time block in
+a scratch reporter and requires
+`ReportTests.test_meter_unit_times_block_sorts_files_and_shortens_units` to fail
+with `KeyError: 'latent_time'`.
+
 After each tree's ordinary checker census, the meter runs the existing latent
 census through its scratch Go overlay. The overlay is built from the selected
 compiler checkout and never edits production compiler files. `LATENT_ASSERT_NO_OUTPUT=1`

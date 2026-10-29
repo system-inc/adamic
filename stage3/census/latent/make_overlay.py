@@ -32,6 +32,8 @@ subprocess.run(['go', 'run', str(territory / 'statementrewrite'),
 replace[str(repository / 'internal/lower/statements.go')] = str(statement_output)
 overlay('internal/lower/latent_full.go', (territory / 'full.go.txt').read_text())
 overlay('internal/lower/latent_units.go', (territory / 'units.go.txt').read_text())
+# Compile the tested recorder into the overlay, including per-ref source snapshots.
+overlay('internal/lower/latent_timing.go', (territory / 'timing/timing.go').read_text().replace('package timing', 'package lower', 1))
 overlay('internal/lower/latent_replay.go', (territory / 'replay.go.txt').read_text())
 
 # Parse the exact refusal function and its visitor scopes; fail on unsupported shapes.

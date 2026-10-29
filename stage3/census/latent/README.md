@@ -109,6 +109,15 @@ python3 stage3/census/latent/audit.py /tmp/latent-census > /tmp/latent-audit.log
 LATENT_ASSERT_NO_OUTPUT=1 /tmp/latent-census /path/to/adapted/src/compiler /tmp/latent.jsonl > /tmp/latent-run.log 2>&1
 ```
 
+Set `LATENT_TIMES=/path/to/latent-times.jsonl` to record attempted units in a
+separate JSONL stream. Each row has `file`, `where`, `wall_seconds` and
+`cpu_seconds` (process user plus system CPU from `getrusage(RUSAGE_SELF)`).
+First-error and full mode support timing. The sequential driver measures unit
+registration, lowering and panic recovery; skipped and deferred units have no
+row. This stream never changes the findings schema or adds nondeterminism to
+`latent.jsonl`. The recorder in `timing/` is tested as an ordinary Go package and
+compiled verbatim into the scratch lower overlay, including per-ref builds.
+
 `prepare_scratch.py REPOSITORY NEW_TMP_DIRECTORY UNIQUE_BRANCH_PREFIX` creates
 main, four individual feature configurations, and one cumulative configuration.
 It uses the recorded feature/main SHAs and resolves observed conflicts with

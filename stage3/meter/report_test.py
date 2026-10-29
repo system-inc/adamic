@@ -70,7 +70,7 @@ class ReportTests(unittest.TestCase):
         self.assertEqual(result['unlocated_diagnostics'], 1)
         self.assertEqual(result['external_diagnostics'], 1)
 
-    def test_pair_preserves_area_fields_and_prints_four_numbers_first(self):
+    def render_pair(self):
         self.render()
         for label in ['main', 'area']:
             directory = self.run / label
@@ -98,7 +98,14 @@ class ReportTests(unittest.TestCase):
         for label in ['main', 'area']:
             write_entry(self.tree, self.run / label / 'tsc',
                         diagnostics=[] if label == 'main' else ['error TS2307: entry-only missing module'])
-        result = report_pair(self.tree, self.tree, self.run, 'stamp', 'main-sha', 'area-sha')
+        for label in ['main', 'area']:
+            if hasattr(self, 'unit_times'):
+                (self.run / label / 'latent-times.jsonl').write_text(
+                    ''.join(json.dumps(row) + '\n' for row in self.unit_times))
+        return report_pair(self.tree, self.tree, self.run, 'stamp', 'main-sha', 'area-sha')
+
+    def test_pair_preserves_area_fields_and_prints_four_numbers_first(self):
+        result = self.render_pair()
         self.assertEqual(result['files'], result['trees']['area']['files'])
         text = (self.run / 'report.md').read_text()
         self.assertIn(MEASUREMENT, text)
@@ -109,6 +116,38 @@ class ReportTests(unittest.TestCase):
         self.assertEqual(result['trees']['main']['tree_ref'], 'origin/main')
         self.assertEqual((self.run / 'report.md').read_text().splitlines()[:2],
                          ['Whole program: main: 3/4; area: 0/4', 'Own file: main: 4/4; area: 3/4'])
+
+    def test_meter_unit_times_block_sorts_files_and_shortens_units(self):
+        prefix = str(self.tree / 'src/compiler')
+        self.unit_times = [
+            {'file': prefix + '/fast.ts', 'where': prefix + '/fast.ts:3:1', 'wall_seconds': 1.25, 'cpu_seconds': 0.5},
+            {'file': prefix + '/slow.ts', 'where': prefix + '/slow.ts:7:2', 'wall_seconds': 3.5, 'cpu_seconds': 2.0}]
+        box = {'hostname': 'meter-box', 'nproc': 8, 'cpu_quota': None, 'total_memory': '1000 kB',
+               'loadavg_start': '1 2 3 1/8 12', 'loadavg_end': '2 3 4 1/8 13'}
+        (self.run / 'box.json').write_text(json.dumps(box))
+        result = self.render_pair()
+        self.assertEqual(result['box'], box)
+        disk = json.loads((self.run / 'report.json').read_text())
+        for label in ('main', 'area'):
+            summary = disk['trees'][label]['latent_time']
+            self.assertEqual((summary['wall_seconds'], summary['cpu_seconds']), (4.75, 2.5))
+            self.assertEqual(summary['files'], [
+                {'file': 'src/compiler/slow.ts', 'wall_seconds': 3.5, 'cpu_seconds': 2.0},
+                {'file': 'src/compiler/fast.ts', 'wall_seconds': 1.25, 'cpu_seconds': 0.5}])
+            self.assertEqual(summary['slowest_units'], [
+                {'where': 'src/compiler/slow.ts:7:2', 'wall_seconds': 3.5, 'cpu_seconds': 2.0},
+                {'where': 'src/compiler/fast.ts:3:1', 'wall_seconds': 1.25, 'cpu_seconds': 0.5}])
+        text = (self.run / 'report.md').read_text()
+        self.assertIn('Stage 3 meter stamp\nBox: meter-box;', text)
+        self.assertIn("This box's times, not comparable across boxes: 4.750 wall seconds; 2.500 CPU seconds.", text)
+        self.assertIn('| src/compiler/slow.ts | 3.500 | 2.000 |', text)
+
+    def test_meter_old_run_has_no_unit_times(self):
+        result = self.render_pair()
+        for label in ('main', 'area'):
+            self.assertIsNone(result['trees'][label]['latent_time'])
+        self.assertIsNone(result['box'])
+        self.assertEqual((self.run / 'report.md').read_text().count('no unit times recorded'), 2)
 
     def test_malformed_diagnostic_is_rejected(self):
         self.records[0]['diagnostics'] = ['unexpected diagnostic encoding']
