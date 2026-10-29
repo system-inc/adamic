@@ -17,7 +17,7 @@ func TestNodeFSFileOperationsAreKnown(t *testing.T) {
 		"utimes_atime_date": 0, "utimes_mtime_date": 0,
 		"is_file": ir.Boolean, "is_directory": ir.Boolean,
 		"is_symbolic_link": ir.Boolean, "date_new": ir.Object,
-		"date_time": ir.Number, "host_realpath": ir.String,
+		"host_stdout_write": ir.Number, "date_time": ir.Number, "host_realpath": ir.String,
 	}
 	for operation, result := range operations {
 		t.Run(operation, func(t *testing.T) {

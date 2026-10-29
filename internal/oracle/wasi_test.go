@@ -90,6 +90,9 @@ func runWASIFixtures(t *testing.T, rows []int, mutate func(string, *ir.Program))
 				mutate(fixture.path, program)
 			}
 			actual := onWASI(t, native.C(program))
+			if fixture.path == "internal/oracle/testdata/host_stdout/closed.a" {
+				stdoutWASIClosedPipe(t, native.C(program))
+			}
 			if err := wasiFixtureDifference(t.Name(), expected, actual); err != nil {
 				t.Error(err)
 			}

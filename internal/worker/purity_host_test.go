@@ -34,3 +34,17 @@ func TestWasmPurityRefusesRealpathOperations(t *testing.T) {
 		}
 	}
 }
+
+func TestWasmPurityRefusesStdoutWrites(t *testing.T) {
+	t.Parallel()
+	builds := 0
+	err := BuildWith("testdata/wasm/host_stdout_write.a", filepath.Join(t.TempDir(), "worker"), Options{
+		Wasm:      []string{"hostWrite"},
+		BuildWasm: func(string, string, string, []string) error { builds++; return fmt.Errorf("unexpected Wasm build") },
+	})
+	for _, want := range []string{"hostWrite", "impure: host operation host_stdout_write", "fix:"} {
+		if err == nil || !strings.Contains(err.Error(), want) || builds != 0 {
+			t.Fatalf("want %s before build, got %v", want, err)
+		}
+	}
+}

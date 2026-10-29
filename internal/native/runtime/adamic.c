@@ -297,8 +297,9 @@ void adamic_start(int count, char **values) {
 #endif
 }
 
-void adamic_write_line(enum adamic_stream stream, const adamic_string *string) {
-	pthread_mutex_lock(&output_lock);
+// Both entry points register teardown, including a program that only writes raw text.
+// The caller holds output_lock.
+static void output_start(void) {
 	if (output_mode == 0) {
 #ifndef ADAMIC_TARGET_WASI
 		struct stat destination;
@@ -309,6 +310,11 @@ void adamic_write_line(enum adamic_stream stream, const adamic_string *string) {
 #endif
 		atexit(finish);
 	}
+}
+
+void adamic_write_line(enum adamic_stream stream, const adamic_string *string) {
+	pthread_mutex_lock(&output_lock);
+	output_start();
 	if (stream == adamic_stderr) {
 		// Whatever stdout holds was written first, and stderr may be the same file.
 		flush();
@@ -378,6 +384,7 @@ _Noreturn void adamic_process_exit_now(int code) {
 // Checked stream binding: preserve stdout/stderr order and complete the write synchronously.
 bool adamic_write_raw(enum adamic_stream stream, const adamic_string *text) {
 	pthread_mutex_lock(&output_lock);
+	output_start();
 	flush();
 	write_text(stream, text->bytes, text->length);
 	flush();

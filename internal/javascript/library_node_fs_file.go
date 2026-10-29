@@ -11,6 +11,8 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 		args[i] = e.value(arg)
 	}
 	switch call.Operation {
+	case "host_stdout_write":
+		return "adamicNodeProcess.stdout.write(" + args[0] + ")"
 	case "host_realpath":
 		return "adamicNodeFSFile.realpathSync.native(" + args[0] + ")"
 	case "host_env":

@@ -309,10 +309,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/17_write.a:13:5: stage 0 can't lower node:net.Socket.write yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "18_exit_0.a",
