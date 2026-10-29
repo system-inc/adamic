@@ -40,6 +40,44 @@ def site_where(where):
     return where[where.rindex('/src/') + 1:] if '/src/' in where else where
 
 
+def latent_time_summary(run):
+    path = run / 'latent-times.jsonl'
+    if not path.exists():
+        return None
+    units = [json.loads(line) for line in path.read_text().splitlines()]
+    files = {}
+    for unit in units:
+        name = site_where(unit['file'])
+        row = files.setdefault(name, {'file': name, 'wall_seconds': 0, 'cpu_seconds': 0})
+        for key in ('wall_seconds', 'cpu_seconds'):
+            row[key] += unit[key]
+    return {'wall_seconds': sum(unit['wall_seconds'] for unit in units),
+            'cpu_seconds': sum(unit['cpu_seconds'] for unit in units),
+            'files': sorted(files.values(), key=lambda row: (-row['wall_seconds'], row['file'])),
+            'slowest_units': [{'where': site_where(unit['where']),
+                               'wall_seconds': unit['wall_seconds'], 'cpu_seconds': unit['cpu_seconds']}
+                              for unit in sorted(units, key=lambda row: (-row['wall_seconds'], row['where']))[:10]]}
+
+
+def latent_time_lines(summary):
+    if summary is None:
+        return ['', 'no unit times recorded']
+    lines = ['', "This box's times, not comparable across boxes: "
+             f"{summary['wall_seconds']:.3f} wall seconds; {summary['cpu_seconds']:.3f} CPU seconds.",
+             '', '| Slowest files | Wall seconds | CPU seconds |', '| --- | ---: | ---: |']
+    for row in summary['files'][:5]:
+        lines.append(f"| {row['file']} | {row['wall_seconds']:.3f} | {row['cpu_seconds']:.3f} |")
+    return lines
+
+
+def box_line(box):
+    if box is None:
+        return 'Box: not recorded.'
+    return (f"Box: {box['hostname']}; {box['nproc']} CPUs; quota {box['cpu_quota']}; "
+            f"memory {box['total_memory']}; load start {box['loadavg_start']}; "
+            f"load end {box.get('loadavg_end', 'not recorded')}.")
+
+
 def kind_sites(sites, kind):
     return sorted(({'where': site_where(where), 'reason': reason, 'text': text}
                    for site_kind, where, reason, text in sites if site_kind == kind),
@@ -362,6 +400,7 @@ def report_pair(main_tree, area_tree, run, stamp, main_commit, area_commit):
         trees[label]['tree_ref'] = 'origin/main' if main_commit == area_commit or label == 'main' else 'origin/area/stage3'
         trees[label]['tree_commit'] = commit
         trees[label]['latent_lowering'] = latent_summary(tree, run / label)
+        trees[label]['latent_time'] = latent_time_summary(run / label)
         trees[label]['tsc_entry'] = entry_summary(tree, run / label / 'tsc')
         if metadata and 'latent_mode' in metadata:
             if trees[label]['latent_lowering']['latent_mode'] != metadata['latent_mode']:
@@ -371,11 +410,14 @@ def report_pair(main_tree, area_tree, run, stamp, main_commit, area_commit):
                 raise ValueError('entry overlay mode does not match requested mode')
         with (run / label / 'report.md').open('a') as output:
             output.write('\n'.join(entry_table(label, trees[label]['tsc_entry']) +
-                                   latent_table(label, trees[label]['latent_lowering'])) + '\n')
+                                   latent_table(label, trees[label]['latent_lowering']) +
+                                   latent_time_lines(trees[label]['latent_time'])) + '\n')
         (run / label / 'report.json').write_text(json.dumps(trees[label], indent=2) + '\n')
     # Preserve the existing area's single-tree fields for JSON consumers.
     unowned, unowned_lines = unowned_table(trees)
-    result = dict(trees['area'], trees=trees, unowned_reasons=unowned, compiler_mode=mode)
+    box_path = run / 'box.json'
+    box = json.loads(box_path.read_text()) if box_path.exists() else None
+    result = dict(trees['area'], trees=trees, unowned_reasons=unowned, compiler_mode=mode, box=box)
     (run / 'report.json').write_text(json.dumps(result, indent=2) + '\n')
     lines = []
     for key, title in [('checker_whole_program', 'Whole program'), ('checker_own_file', 'Own file')]:
@@ -391,7 +433,7 @@ def report_pair(main_tree, area_tree, run, stamp, main_commit, area_commit):
         compilers = (f"Main measured with Adamic {trees['main']['adamic_commit']}; "
                      f"area measured with Adamic {trees['area']['adamic_commit']}. "
                      'Each compiler is built from its pinned ref with ordinary stage 0 options.')
-    lines += ['', f'Stage 3 meter {stamp}', '',
+    lines += ['', f'Stage 3 meter {stamp}', box_line(box), '',
               f'Main: origin/main at {main_commit}. Area compatibility label at {area_commit}.',
               compilers, '',
               '| File | Main whole program | Main own file | Area whole program | Area own file |',
@@ -409,6 +451,7 @@ def report_pair(main_tree, area_tree, run, stamp, main_commit, area_commit):
     lines += unowned_lines
     for label in trees:
         lines += latent_table(label, trees[label]['latent_lowering'])
+        lines += latent_time_lines(trees[label]['latent_time'])
     lines += ['', 'Whole program includes imported diagnostics. Own file uses the primary diagnostic location.',
               'Global and external diagnostics are counted separately in JSON; they have no compiler-file location.',
               'Non-source inputs fail the extension gate and are excluded from source denominators.', '']

@@ -214,7 +214,16 @@ func (l *lowering) latentRegister(files []*ast.SourceFile) {
 var latentInstantiated map[string]bool
 var latentConcreteCallDepth int
 
+var latentUnitTimer *UnitTimer
+
 func Latent(ctx context.Context, program *load.Program, emit func(LatentFile)) {
+    latentUnitTimer = nil
+    if path := os.Getenv("LATENT_TIMES"); path != "" {
+        output, err := os.Create(path)
+        if err != nil { panic(err) }
+        defer func() { latentUnitTimer = nil; if err := output.Close(); err != nil { panic(err) } }()
+        latentUnitTimer = NewUnitTimer(output)
+    }
     latentInstantiated = map[string]bool{}
     latentConcreteCallDepth = 0
     records := []LatentFile{}
@@ -289,6 +298,7 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 				continue
 			}
 			func() {
+				defer latentUnitTimer.Start(record.File, unit.Where)()
 				defer func() {
 					if failure := recover(); failure != nil {
 						unit.Status = "panic"
