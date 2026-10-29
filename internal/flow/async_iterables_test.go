@@ -62,11 +62,19 @@ func init() {
 	asyncFlowUnits = append(asyncFlowUnits, struct {
 		path string
 		test func(*testing.T)
+	}{"../oracle/testdata/async_iterable_map_boolean_function.a", TestFlowAsyncLiveIterableMapBooleanFunction})
+	asyncFlowUnits = append(asyncFlowUnits, struct {
+		path string
+		test func(*testing.T)
 	}{"../oracle/testdata/async_iterable_map_values_module.a", TestFlowAsyncLiveIterableMapValuesModule})
 	asyncFlowUnits = append(asyncFlowUnits, struct {
 		path string
 		test func(*testing.T)
 	}{"../oracle/testdata/async_iterable_set_values_function.a", TestFlowAsyncLiveIterableSetValuesFunction})
+	asyncFlowUnits = append(asyncFlowUnits, struct {
+		path string
+		test func(*testing.T)
+	}{"../oracle/testdata/async_iterable_set_boolean_function.a", TestFlowAsyncLiveIterableSetBooleanFunction})
 	asyncFlowUnits = append(asyncFlowUnits, struct {
 		path string
 		test func(*testing.T)
@@ -203,6 +211,11 @@ func TestFlowAsyncLiveIterableMapValuesFunction(t *testing.T) {
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_map_values_function.a")
 }
+func TestFlowAsyncLiveIterableMapBooleanFunction(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_map_boolean_function.a")
+}
 func TestFlowAsyncLiveIterableMapValuesModule(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
@@ -212,6 +225,11 @@ func TestFlowAsyncLiveIterableSetValuesFunction(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_set_values_function.a")
+}
+func TestFlowAsyncLiveIterableSetBooleanFunction(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_set_boolean_function.a")
 }
 func TestFlowAsyncLiveIterableSetValuesModule(t *testing.T) {
 	t.Parallel()
