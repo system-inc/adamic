@@ -176,6 +176,7 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
 				continue
 			}
 			func() {
+				defer latentUnitTimer.Start(record.File, unit.Where)()
 				defer func() {
 					if failure := recover(); failure != nil {
 						unit.Status = "panic"

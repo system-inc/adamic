@@ -1,0 +1,499 @@
+{
+  "recorded_utc": "2026-10-29T10:44:00.354901+00:00",
+  "base_commit": "55c1c38fbb0840fbd4c2b93579c8722d4c1df35b",
+  "upstream_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "adaptation_key": "1deb3797e60dcbacb33649146d235e324cd0c7f125d132bb1f174ddaefed0e24",
+  "source_directory": "/tmp/meter-adapted/src/compiler",
+  "source_files": 79,
+  "source_manifest_sha256": "ee2ffd7de0a25287af004556566a01ea10a84573c238f6b09707286cf1c59dc1",
+  "binary_sha256": "3f4b3aca47133837abc5ce4b45f28c37eb08535db353da7442f23bf80a3e8c67",
+  "latent_mode": "first-error",
+  "box": {
+    "hostname": "d3063a73b7a1",
+    "nproc": 5,
+    "cpu_quota": {
+      "quota_us": 400000,
+      "period_us": 100000
+    },
+    "total_memory": "18440112 kB",
+    "loadavg_start": "2.35 6.03 3.45 1/145 11251",
+    "loadavg_end": "1.05 1.66 2.25 1/145 11485"
+  },
+  "unit_status_counts": {
+    "attempted": 4017,
+    "deferred_generic_instantiation": 498,
+    "skipped_checker_body": 28
+  },
+  "time_records": 4017,
+  "all_attempted_units_have_exactly_one_time_record": true,
+  "latent_time": {
+    "wall_seconds": 580.009824017,
+    "cpu_seconds": 631.9388599999986,
+    "files": [
+      {
+        "file": "src/compiler/utilities.ts",
+        "wall_seconds": 156.56687887399963,
+        "cpu_seconds": 174.69059500000014
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "wall_seconds": 63.755134213999995,
+        "cpu_seconds": 65.63879600000004
+      },
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "wall_seconds": 42.93185500100002,
+        "cpu_seconds": 45.05366299999977
+      },
+      {
+        "file": "src/compiler/builder.ts",
+        "wall_seconds": 41.963122455000004,
+        "cpu_seconds": 43.422427000000035
+      },
+      {
+        "file": "src/compiler/types.ts",
+        "wall_seconds": 37.49723656900005,
+        "cpu_seconds": 43.68167899999918
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "wall_seconds": 31.653772863999986,
+        "cpu_seconds": 32.70419499999991
+      },
+      {
+        "file": "src/compiler/utilitiesPublic.ts",
+        "wall_seconds": 21.923121132000023,
+        "cpu_seconds": 27.847061000000394
+      },
+      {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "wall_seconds": 20.126285825999997,
+        "cpu_seconds": 21.513900999999976
+      },
+      {
+        "file": "src/compiler/sourcemap.ts",
+        "wall_seconds": 14.845546432,
+        "cpu_seconds": 14.922755000000052
+      },
+      {
+        "file": "src/compiler/factory/utilities.ts",
+        "wall_seconds": 12.112491568,
+        "cpu_seconds": 13.09656799999982
+      },
+      {
+        "file": "src/compiler/factory/nodeTests.ts",
+        "wall_seconds": 10.359036182000002,
+        "cpu_seconds": 11.904948999999903
+      },
+      {
+        "file": "src/compiler/factory/emitNode.ts",
+        "wall_seconds": 10.024385521000001,
+        "cpu_seconds": 10.08919899999998
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "wall_seconds": 9.432016607000003,
+        "cpu_seconds": 10.085316000000006
+      },
+      {
+        "file": "src/compiler/parser.ts",
+        "wall_seconds": 8.396498386,
+        "cpu_seconds": 9.587433999999973
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "wall_seconds": 7.7609651490000005,
+        "cpu_seconds": 7.807898000000023
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "wall_seconds": 7.677004642999999,
+        "cpu_seconds": 8.318240000000003
+      },
+      {
+        "file": "src/compiler/factory/emitHelpers.ts",
+        "wall_seconds": 7.61339917,
+        "cpu_seconds": 8.195329000000214
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "wall_seconds": 7.356384590000001,
+        "cpu_seconds": 8.450566999999467
+      },
+      {
+        "file": "src/compiler/watch.ts",
+        "wall_seconds": 6.724370368000002,
+        "cpu_seconds": 6.758633000000373
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "wall_seconds": 6.042321046,
+        "cpu_seconds": 6.051465999999891
+      },
+      {
+        "file": "src/compiler/transformers/utilities.ts",
+        "wall_seconds": 5.149805132999999,
+        "cpu_seconds": 5.176807999999937
+      },
+      {
+        "file": "src/compiler/transformers/taggedTemplate.ts",
+        "wall_seconds": 4.875414531,
+        "cpu_seconds": 4.876852000000042
+      },
+      {
+        "file": "src/compiler/path.ts",
+        "wall_seconds": 3.911014688,
+        "cpu_seconds": 3.9733740000000353
+      },
+      {
+        "file": "src/compiler/_namespaces/ts.ts",
+        "wall_seconds": 3.2850105910000007,
+        "cpu_seconds": 3.623157
+      },
+      {
+        "file": "src/compiler/scanner.ts",
+        "wall_seconds": 3.248775992000002,
+        "cpu_seconds": 3.2544670000005453
+      },
+      {
+        "file": "src/compiler/core.ts",
+        "wall_seconds": 2.807755622,
+        "cpu_seconds": 3.3047720000001277
+      },
+      {
+        "file": "src/compiler/transformers/destructuring.ts",
+        "wall_seconds": 2.6927750930000003,
+        "cpu_seconds": 3.8971639999999184
+      },
+      {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "wall_seconds": 2.5649642320000003,
+        "cpu_seconds": 3.240290999999985
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "wall_seconds": 1.896567427,
+        "cpu_seconds": 1.8976989999997045
+      },
+      {
+        "file": "src/compiler/visitorPublic.ts",
+        "wall_seconds": 1.7103208569999997,
+        "cpu_seconds": 1.7184469999997418
+      },
+      {
+        "file": "src/compiler/semver.ts",
+        "wall_seconds": 1.6125453660000002,
+        "cpu_seconds": 2.635969999999986
+      },
+      {
+        "file": "src/compiler/resolutionCache.ts",
+        "wall_seconds": 1.4282050560000001,
+        "cpu_seconds": 2.5059329999998
+      },
+      {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "wall_seconds": 1.4174193650000004,
+        "cpu_seconds": 1.4253450000000498
+      },
+      {
+        "file": "src/compiler/performance.ts",
+        "wall_seconds": 1.212027796,
+        "cpu_seconds": 1.560892000000024
+      },
+      {
+        "file": "src/compiler/binder.ts",
+        "wall_seconds": 1.1627021640000001,
+        "cpu_seconds": 1.4304610000000082
+      },
+      {
+        "file": "src/compiler/watchUtilities.ts",
+        "wall_seconds": 1.1271664510000001,
+        "cpu_seconds": 1.1326339999997117
+      },
+      {
+        "file": "src/compiler/builderPublic.ts",
+        "wall_seconds": 1.1248729810000002,
+        "cpu_seconds": 1.13013100000002
+      },
+      {
+        "file": "src/compiler/transformer.ts",
+        "wall_seconds": 0.8535472840000001,
+        "cpu_seconds": 0.8536839999999302
+      },
+      {
+        "file": "src/compiler/performanceCore.ts",
+        "wall_seconds": 0.81747799,
+        "cpu_seconds": 0.8181249999999523
+      },
+      {
+        "file": "src/compiler/transformers/declarations/diagnostics.ts",
+        "wall_seconds": 0.807911103,
+        "cpu_seconds": 0.8090599999998744
+      },
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "wall_seconds": 0.807257717,
+        "cpu_seconds": 0.8125400000001264
+      },
+      {
+        "file": "src/compiler/transformers/esnext.ts",
+        "wall_seconds": 0.777337896,
+        "cpu_seconds": 1.710905999999909
+      },
+      {
+        "file": "src/compiler/transformers/declarations.ts",
+        "wall_seconds": 0.638164552,
+        "cpu_seconds": 0.6385060000000067
+      },
+      {
+        "file": "src/compiler/transformers/generators.ts",
+        "wall_seconds": 0.6183676570000001,
+        "cpu_seconds": 0.6215789999999402
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "wall_seconds": 0.5403247299999999,
+        "cpu_seconds": 0.5409539999999424
+      },
+      {
+        "file": "src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+        "wall_seconds": 0.499943952,
+        "cpu_seconds": 0.7851229999999996
+      },
+      {
+        "file": "src/compiler/factory/nodeChildren.ts",
+        "wall_seconds": 0.443794627,
+        "cpu_seconds": 0.45132699999999204
+      },
+      {
+        "file": "src/compiler/factory/nodeConverters.ts",
+        "wall_seconds": 0.40081930099999996,
+        "cpu_seconds": 0.4027680000000373
+      },
+      {
+        "file": "src/compiler/builderState.ts",
+        "wall_seconds": 0.397088376,
+        "cpu_seconds": 0.3993850000000094
+      },
+      {
+        "file": "src/compiler/corePublic.ts",
+        "wall_seconds": 0.39312177400000003,
+        "cpu_seconds": 0.3978020000000413
+      },
+      {
+        "file": "src/compiler/tracing.ts",
+        "wall_seconds": 0.3897667680000001,
+        "cpu_seconds": 0.38994499999989785
+      },
+      {
+        "file": "src/compiler/expressionToTypeNode.ts",
+        "wall_seconds": 0.3875865910000001,
+        "cpu_seconds": 0.3889539999999556
+      },
+      {
+        "file": "src/compiler/transformers/classThis.ts",
+        "wall_seconds": 0.387428307,
+        "cpu_seconds": 0.38899400000002515
+      },
+      {
+        "file": "src/compiler/transformers/es2017.ts",
+        "wall_seconds": 0.335787677,
+        "cpu_seconds": 0.3374919999999406
+      },
+      {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "wall_seconds": 0.323314021,
+        "cpu_seconds": 0.3247150000000829
+      },
+      {
+        "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "wall_seconds": 0.314202838,
+        "cpu_seconds": 0.3157779999999093
+      },
+      {
+        "file": "src/compiler/transformers/es2018.ts",
+        "wall_seconds": 0.290911469,
+        "cpu_seconds": 0.2912680000000023
+      },
+      {
+        "file": "src/compiler/transformers/ts.ts",
+        "wall_seconds": 0.280007573,
+        "cpu_seconds": 0.28034000000008064
+      },
+      {
+        "file": "src/compiler/programDiagnostics.ts",
+        "wall_seconds": 0.260397918,
+        "cpu_seconds": 0.2616379999999481
+      },
+      {
+        "file": "src/compiler/transformers/typeSerializer.ts",
+        "wall_seconds": 0.243203293,
+        "cpu_seconds": 0.2432750000000965
+      },
+      {
+        "file": "src/compiler/diagnosticInformationMap.generated.ts",
+        "wall_seconds": 0.23416145700000002,
+        "cpu_seconds": 0.23545199999995248
+      },
+      {
+        "file": "src/compiler/transformers/module/system.ts",
+        "wall_seconds": 0.22131953199999999,
+        "cpu_seconds": 0.2673449999999775
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "wall_seconds": 0.21199035,
+        "cpu_seconds": 0.21285900000009406
+      },
+      {
+        "file": "src/compiler/debug.ts",
+        "wall_seconds": 0.20617917700000002,
+        "cpu_seconds": 0.20727400000004081
+      },
+      {
+        "file": "src/compiler/symbolWalker.ts",
+        "wall_seconds": 0.194988066,
+        "cpu_seconds": 0.19594299999999976
+      },
+      {
+        "file": "src/compiler/tsbuild.ts",
+        "wall_seconds": 0.194282565,
+        "cpu_seconds": 0.1956060000000548
+      },
+      {
+        "file": "src/compiler/factory/parenthesizerRules.ts",
+        "wall_seconds": 0.18210445599999997,
+        "cpu_seconds": 0.1822779999999966
+      },
+      {
+        "file": "src/compiler/factory/utilitiesPublic.ts",
+        "wall_seconds": 0.173110653,
+        "cpu_seconds": 0.17326199999999403
+      },
+      {
+        "file": "src/compiler/hostErrors.ts",
+        "wall_seconds": 0.15651546700000002,
+        "cpu_seconds": 0.15673500000002605
+      },
+      {
+        "file": "src/compiler/factory/baseNodeFactory.ts",
+        "wall_seconds": 0.151396056,
+        "cpu_seconds": 0.15191100000004099
+      },
+      {
+        "file": "src/compiler/builderStatePublic.ts",
+        "wall_seconds": 0.144289361,
+        "cpu_seconds": 0.14505699999998
+      },
+      {
+        "file": "src/compiler/transformers/legacyDecorators.ts",
+        "wall_seconds": 0.126177918,
+        "cpu_seconds": 0.1268349999999714
+      },
+      {
+        "file": "src/compiler/transformers/es2020.ts",
+        "wall_seconds": 0.10802323,
+        "cpu_seconds": 0.10843099999999595
+      },
+      {
+        "file": "src/compiler/transformers/jsx.ts",
+        "wall_seconds": 0.106829395,
+        "cpu_seconds": 0.10754899999994905
+      },
+      {
+        "file": "src/compiler/transformers/es2016.ts",
+        "wall_seconds": 0.10551282000000001,
+        "cpu_seconds": 0.10602899999997817
+      },
+      {
+        "file": "src/compiler/transformers/es2021.ts",
+        "wall_seconds": 0.104801451,
+        "cpu_seconds": 0.10535700000002635
+      },
+      {
+        "file": "src/compiler/transformers/es2019.ts",
+        "wall_seconds": 0.103998371,
+        "cpu_seconds": 0.10403400000001284
+      },
+      {
+        "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+        "wall_seconds": 0.047421689,
+        "cpu_seconds": 0.047646999999983564
+      },
+      {
+        "file": "src/compiler/_namespaces/ts.performance.ts",
+        "wall_seconds": 0.039788647,
+        "cpu_seconds": 0.04002999999999979
+      }
+    ],
+    "slowest_units": [
+      {
+        "where": "src/compiler/moduleSpecifiers.ts:433:1",
+        "wall_seconds": 5.653752302,
+        "cpu_seconds": 5.697332000000017
+      },
+      {
+        "where": "src/compiler/commandLineParser.ts:1722:1",
+        "wall_seconds": 5.463494507,
+        "cpu_seconds": 5.501743000000005
+      },
+      {
+        "where": "src/compiler/moduleSpecifiers.ts:301:1",
+        "wall_seconds": 5.4453086729999995,
+        "cpu_seconds": 6.734940999999935
+      },
+      {
+        "where": "src/compiler/utilities.ts:2638:1",
+        "wall_seconds": 5.311620288,
+        "cpu_seconds": 7.428197999999952
+      },
+      {
+        "where": "src/compiler/utilities.ts:2036:1",
+        "wall_seconds": 5.228691289,
+        "cpu_seconds": 5.241222000000107
+      },
+      {
+        "where": "src/compiler/commandLineParser.ts:1728:1",
+        "wall_seconds": 5.167933446,
+        "cpu_seconds": 5.199083000000002
+      },
+      {
+        "where": "src/compiler/builder.ts:1621:1",
+        "wall_seconds": 5.163445873,
+        "cpu_seconds": 5.174607000000002
+      },
+      {
+        "where": "src/compiler/utilities.ts:6144:1",
+        "wall_seconds": 5.161593909,
+        "cpu_seconds": 5.197365000000104
+      },
+      {
+        "where": "src/compiler/moduleSpecifiers.ts:288:1",
+        "wall_seconds": 5.147976359,
+        "cpu_seconds": 5.177219000000036
+      },
+      {
+        "where": "src/compiler/parser.ts:1386:1",
+        "wall_seconds": 5.10900475,
+        "cpu_seconds": 5.107988999999975
+      }
+    ]
+  },
+  "times_sha256": "591a48c456175e828abb542a76e2b957e8f614ece496fb2fd61f9dd3e4d005a9",
+  "timed_findings_sha256": "9c035e9edf81136b7617b97424404e86ac50a41733e40c460a7540870679f2bc",
+  "untimed_findings_sha256": "9c035e9edf81136b7617b97424404e86ac50a41733e40c460a7540870679f2bc",
+  "cmp_command": "cmp /tmp/meter-unit-proof/latent.jsonl /tmp/meter-unit-proof/untimed.jsonl",
+  "cmp_exit_code": 0,
+  "commands": [
+    "LATENT_FULL=0 LATENT_TIMES=/tmp/meter-unit-proof/latent-times.jsonl LATENT_ASSERT_NO_OUTPUT=1 /tmp/meter-latent-census /tmp/meter-adapted/src/compiler /tmp/meter-unit-proof/latent.jsonl",
+    "env -u LATENT_TIMES LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 /tmp/meter-latent-census /tmp/meter-adapted/src/compiler /tmp/meter-unit-proof/untimed.jsonl",
+    "go test ./stage3/census/latent/... > /tmp/meter-latent-tests.log 2>&1",
+    "python3 -E -S -B -m unittest report_test entry_test > /tmp/meter-report-tests.log 2>&1",
+    "python3 -E -S -B stage3/meter/check-unit-time-mutant.py > /tmp/meter-unit-time-mutant.log 2>&1"
+  ],
+  "go_test_output": "ok  \tgithub.com/system-inc/adamic/stage3/census/latent/importclean\t(cached)\nok  \tgithub.com/system-inc/adamic/stage3/census/latent/refusalrewrite\t(cached)\n?   \tgithub.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd\t[no test files]\n?   \tgithub.com/system-inc/adamic/stage3/census/latent/replay\t[no test files]\n?   \tgithub.com/system-inc/adamic/stage3/census/latent/replay/worker\t[no test files]\nok  \tgithub.com/system-inc/adamic/stage3/census/latent/statecopy\t(cached)\nok  \tgithub.com/system-inc/adamic/stage3/census/latent/statementrewrite\t(cached)\nok  \tgithub.com/system-inc/adamic/stage3/census/latent/timing\t0.004s\n?   \tgithub.com/system-inc/adamic/stage3/census/latent/tool\t[no test files]\n",
+  "python_test_output": "ss.......................s.........s\n----------------------------------------------------------------------\nRan 36 tests in 0.286s\n\nOK (skipped=4)\n",
+  "mutant_output": "E\n======================================================================\nERROR: test_meter_unit_times_block_sorts_files_and_shortens_units (report_test.ReportTests.test_meter_unit_times_block_sorts_files_and_shortens_units)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/adamic/stage3/meter/report_test.py\", line 132, in test_meter_unit_times_block_sorts_files_and_shortens_units\n    summary = disk['trees'][label]['latent_time']\n              ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nKeyError: 'latent_time'\n\n----------------------------------------------------------------------\nRan 1 test in 0.536s\n\nFAILED (errors=1)\nCaught drop-latent_time: KeyError: 'latent_time'\n",
+  "driver_smoke": "first-error and full: two records for two attempted units; checker skip and generic deferral omitted",
+  "go_recorder_test": "TestLatentUnitTimerWritesSeparateSequentialRecords; recorder compiled verbatim into the scratch driver; no compiler subprocess in this test"
+}
