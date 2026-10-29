@@ -26,6 +26,12 @@ Fixes, each with `latent.jsonl` and the 79 decision lines byte-identical to the 
 | `4a9c4665` + `761ee21c` assigned-symbol-memo-3 | one assignment walk per lowering | 15:32 | 0.77 of `a1ce733b`, back to back |
 | shared memos (overlay only, `shared-memos/`) | proofs and assigned symbols shared per (program, checker) | 14:33 | 0.94 of `4a9c4665`, back to back |
 
+Landed on main (all four in `51981922`, with Correctness's statementrewrite fix `55c1c38f` cherry-picked since
+the meter's overlay refuses `51981922` without it): **13:00 against `95a7b63f`'s 1:02:23, back to back (0.21)**,
+while main's new void-container refusals raise the findings from 3,940 to 13,402. Reverting #3hxh5jm
+(`07b24606`) changes 17 files' findings and the time by 0.5%
+([latent-lowering-time/landed/README.md](latent-lowering-time/landed/README.md)).
+
 `95a7b63f` against `85c9d783` (1.4 times) is the box, not the code: alone on one box they take 25.5 s and
 27.0 s on `factory/nodeTests.ts`, and the same binary ran 12% slower an hour later with nothing changed. Only
 back-to-back pairs compare.

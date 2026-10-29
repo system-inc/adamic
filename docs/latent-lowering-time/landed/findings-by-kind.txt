@@ -1,0 +1,7 @@
+before {'NotYet': 1328, 'Refused': 2609, 'SkippedDependency': 3} total 3940
+after {'Refused': 12203, 'NotYet': 1198, 'SkippedDependency': 1} total 13402
+revert {'NotYet': 1249, 'Refused': 12202, 'SkippedDependency': 1} total 13452
+after -> revert, reasons that change:
+  NotYet: an indirect call of a checked predicate overload | after 0 | revert 38 | +38
+  NotYet: an indirect call of a checked predicate | after 0 | revert 13 | +13
+  Refused: an unproven predicate argument for parameter test (argument "createAssignmentCallback ? isIdentifier : isExpression") | after 1 | revert 0 | -1

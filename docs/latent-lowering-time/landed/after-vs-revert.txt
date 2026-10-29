@@ -1,0 +1,67 @@
+/tmp/claude-0/-home-user-adamic/aab0f5f4-fba0-5ef3-92ab-24a7492d1c84/scratchpad/runs/after.timed.jsonl /tmp/claude-0/-home-user-adamic/aab0f5f4-fba0-5ef3-92ab-24a7492d1c84/scratchpad/runs/revert.timed.jsonl differ: char 367962, line 5
+4a942058e4e277e0e2fd8e0220f1e1b20c62075a8047876ee7c7601b90262fe0  runs/after.timed.jsonl
+72b975ac305f65fea1424b7ccd46e7c01afb325f41fb2f12e811dd429f08b606  runs/revert.timed.jsonl
+27453371 runs/after.timed.jsonl
+27486038 runs/revert.timed.jsonl
+4c4
+< binder.ts 16 936 measured on a checker-rejected program
+---
+> binder.ts 16 942 measured on a checker-rejected program
+15c15
+< emitter.ts 50 964 measured on a checker-rejected program
+---
+> emitter.ts 50 970 measured on a checker-rejected program
+17c17
+< expressionToTypeNode.ts 9 392 measured on a checker-rejected program
+---
+> expressionToTypeNode.ts 9 393 measured on a checker-rejected program
+19c19
+< factory/emitHelpers.ts 45 122 measured on a checker-rejected program
+---
+> factory/emitHelpers.ts 45 123 measured on a checker-rejected program
+22c22
+< factory/nodeConverters.ts 3 77 measured on a checker-rejected program
+---
+> factory/nodeConverters.ts 3 80 measured on a checker-rejected program
+26c26
+< factory/utilities.ts 108 391 measured on a checker-rejected program
+---
+> factory/utilities.ts 108 395 measured on a checker-rejected program
+30,31c30,31
+< moduleSpecifiers.ts 49 106 measured on a checker-rejected program
+< parser.ts 75 1348 measured on a checker-rejected program
+---
+> moduleSpecifiers.ts 49 107 measured on a checker-rejected program
+> parser.ts 75 1349 measured on a checker-rejected program
+48,49c48,49
+< transformers/declarations/diagnostics.ts 8 171 measured on a checker-rejected program
+< transformers/destructuring.ts 22 151 measured on a checker-rejected program
+---
+> transformers/declarations/diagnostics.ts 8 172 measured on a checker-rejected program
+> transformers/destructuring.ts 22 156 measured on a checker-rejected program
+53c53
+< transformers/es2018.ts 4 337 measured on a checker-rejected program
+---
+> transformers/es2018.ts 4 338 measured on a checker-rejected program
+55c55
+< transformers/es2020.ts 2 89 measured on a checker-rejected program
+---
+> transformers/es2020.ts 2 94 measured on a checker-rejected program
+65c65
+< transformers/module/system.ts 2 424 measured on a checker-rejected program
+---
+> transformers/module/system.ts 2 425 measured on a checker-rejected program
+67,68c67,68
+< transformers/taggedTemplate.ts 5 27 measured on a checker-rejected program
+< transformers/ts.ts 5 588 measured on a checker-rejected program
+---
+> transformers/taggedTemplate.ts 5 28 measured on a checker-rejected program
+> transformers/ts.ts 5 593 measured on a checker-rejected program
+72c72
+< tsbuildPublic.ts 106 190 measured on a checker-rejected program
+---
+> tsbuildPublic.ts 106 191 measured on a checker-rejected program
+74c74
+< utilities.ts 893 1756 measured on a checker-rejected program
+---
+> utilities.ts 893 1763 measured on a checker-rejected program

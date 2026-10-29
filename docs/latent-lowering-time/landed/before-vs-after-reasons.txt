@@ -1,0 +1,239 @@
+unit statuses before {'attempted': 4017, 'deferred_generic_instantiation': 498, 'skipped_checker_body': 28}
+unit statuses after  {'attempted': 4017, 'deferred_generic_instantiation': 498, 'skipped_checker_body': 28}
+reason | before | after | change
+Refused: a read of a void container's elements, as an argument | 0 | 5620 | +5620
+Refused: a read of a void container's elements, as a value | 0 | 897 | +897
+Refused: a read of a void container's elements, as a returned value | 0 | 880 | +880
+Refused: a read of a void container's elements, as an assertion's operand | 0 | 562 | +562
+Refused: a read of a void container's elements, as an operand of && | 0 | 343 | +343
+NotYet: a checked field alias requiring an optional, accessor, or representation conversion | 340 | 0 | -340
+NotYet: a checked field alias of an optional field or through ?. | 0 | 334 | +334
+Refused: a read of a void container's elements, as an assigned value | 0 | 310 | +310
+Refused: a read of a void container's elements, as an operand of || | 0 | 149 | +149
+Refused: a read of a void container's elements, as a condition | 0 | 138 | +138
+Refused: a read of a void container's elements, as a spread | 0 | 83 | +83
+Refused: a read of a void container's elements, as a destructured value | 0 | 65 | +65
+Refused: a read of a void container's elements, as an operand of ?? | 0 | 62 | +62
+Refused: a read of a void container's elements, through get | 0 | 50 | +50
+Refused: a read of a void container's elements, as a binding's initializer | 0 | 42 | +42
+NotYet: an indirect call of a checked predicate overload | 38 | 0 | -38
+Refused: a read of a void container's elements, through set | 0 | 34 | +34
+Refused: optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields | 32 | 3 | -29
+Refused: a read of a void container's elements, as typeof's operand | 0 | 28 | +28
+NotYet: a checked predicate without a reifiable target | 24 | 0 | -24
+Refused: a read of a void container's elements, through map | 0 | 23 | +23
+Refused: overload 1 of find result U | undefined cannot be served by implementation result T | undefined | 24 | 2 | -22
+Refused: a generic instantiated at void whose body reads the value: find's T = JSDocTag, read at core.ts:170:23 as an argument | 0 | 21 | +21
+Refused: a read of a void container's elements, through getCompilerOptions | 0 | 18 | +18
+Refused: a read of a void container's elements, through getSourceFiles | 0 | 16 | +16
+Refused: a read of a void container's elements, through getSourceFileByPath | 0 | 15 | +15
+Refused: a read of a void container's elements, through has | 0 | 14 | +14
+Refused: a read of a void container's elements, through delete | 0 | 13 | +13
+NotYet: an indirect call of a checked predicate | 13 | 0 | -13
+NotYet: node:process.Process.stdout | 10 | 0 | -10
+Refused: optional property id in Node absent from structural source never, which can hide fields | 10 | 0 | -10
+Refused: overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined | 16 | 6 | -10
+Refused: a read of a void container's elements, through onDiagnosticReported: this holds void in field context, and onDiagnosticReported reads it | 0 | 10 | +10
+NotYet: node:process.Process.platform | 8 | 0 | -8
+Refused: a read of a void container's elements, as an operand of ??= | 0 | 8 | +8
+Refused: a read of a void container's elements, through getCurrentDirectory | 0 | 8 | +8
+Refused: a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 10 | 2 | -8
+Refused: a read of a void container's elements, through some | 0 | 7 | +7
+Refused: a read of a void container's elements, through emit | 0 | 7 | +7
+Refused: optional property id in ArrayBindingPattern absent from structural source never, which can hide fields | 7 | 0 | -7
+Refused: a read of a void container's elements, through filter | 0 | 7 | +7
+Refused: a read of a void container's elements, through indexOf | 0 | 7 | +7
+Refused: a read of a void container's elements, through add | 0 | 7 | +7
+Refused: optional property id in BigIntLiteral absent from structural source never, which can hide fields | 6 | 0 | -6
+Refused: a read of a void container's elements, through useCaseSensitiveFileNames | 0 | 6 | +6
+NotYet: a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions | 8 | 2 | -6
+Refused: a read of a void container's elements, as a for...of source bound to an existing name or a pattern | 0 | 6 | +6
+Refused: optional property id in Expression absent from structural source never, which can hide fields | 5 | 0 | -5
+Refused: a read of a void container's elements, through getTypeChecker | 0 | 5 | +5
+Refused: optional property id in ExternalModuleReference absent from structural source never, which can hide fields | 5 | 0 | -5
+Refused: a generic instantiated at void whose body reads the value: some's T = string | number | boolean | readonly string[] | SourceFile | undefined, read at core.ts:622:31 as an argument | 0 | 5 | +5
+Refused: a cast the runtime can't check | 602 | 597 | -5
+Refused: a read of a void container's elements, through afterProgramEmitAndDiagnostics | 0 | 5 | +5
+Refused: a generic instantiated at void whose body reads the value: some's T = ClassElement, read at core.ts:622:31 as an argument | 0 | 5 | +5
+Refused: a read of a void container's elements, through forEach with a callback not written in place | 0 | 5 | +5
+NotYet: slice with an index that isn't a number | 9 | 4 | -5
+NotYet: node:net.Socket.write | 4 | 0 | -4
+NotYet: a value of type T | 19 | 15 | -4
+Refused: a read of a void container's elements, through onWatchStatusChange | 0 | 4 | +4
+Refused: a read of a void container's elements, through isSourceFileDefaultLibrary | 0 | 4 | +4
+Refused: a read of a void container's elements, through getDeclarationDiagnostics | 0 | 4 | +4
+Refused: a read of a void container's elements, through getProgram | 0 | 4 | +4
+Refused: a read of a void container's elements, through getRootFileNames | 0 | 4 | +4
+Refused: a read of a void container's elements, through clear | 0 | 4 | +4
+Refused: overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor | 4 | 0 | -4
+Refused: a read of a void container's elements, through enqueue | 0 | 4 | +4
+Refused: a read of a void container's elements, through emitBuildInfo | 0 | 4 | +4
+Refused: a generic instantiated at void whose body reads the value: visitEachChild's T = SourceFile, read at visitorPublic.ts:604:31 as a value seen without its void | 0 | 4 | +4
+Refused: a void value at the argument site through [Symbol.iterator]().next()<1> seen as any | 0 | 4 | +4
+Refused: a read of a void container's elements, through getPackageJsonInfoCache | 0 | 4 | +4
+Refused: optional property id in Identifier absent from structural source never, which can hide fields | 4 | 0 | -4
+Refused: a read of a void container's elements, through hasChangedEmitSignature | 0 | 3 | +3
+Refused: a read of a void container's elements, through afterProgramCreate | 0 | 3 | +3
+Refused: a read of a void container's elements, through getSourceFile | 0 | 3 | +3
+Refused: a read of a void container's elements, through getGlobalDiagnostics | 0 | 3 | +3
+NotYet: a generic function value without a concrete contextual signature | 0 | 3 | +3
+Refused: a generic instantiated at void whose body reads the value: filter's T = ClassElement, read at core.ts:281:29 as an argument | 0 | 3 | +3
+Refused: a read of a void container's elements, through getConfigFileParsingDiagnostics | 0 | 3 | +3
+Refused: a generic instantiated at void whose body reads the value: getOriginalNode's T = SourceFile, read at utilitiesPublic.ts:767:9 as a value | 0 | 3 | +3
+NotYet: a value of type NodeArray<ObjectLiteralElementLike> | undefined | 3 | 0 | -3
+NotYet: node:process.Process.stdout used as a value | 0 | 3 | +3
+Refused: a read of a void container's elements, through setModifiedTime | 0 | 3 | +3
+Refused: a read of a void container's elements, through getSemanticDiagnostics | 0 | 3 | +3
+Refused: a read of a void container's elements, through getSyntacticDiagnostics | 0 | 3 | +3
+Refused: a generic instantiated at void whose body reads the value: setOriginalNode's T = AssignmentExpression<EqualsToken>, read at factory/nodeFactory.ts:7423:13 as a value | 0 | 3 | +3
+Refused: a generic instantiated at void whose body reads the value: createModuleOrTypeReferenceResolutionCache's T = ResolvedTypeReferenceDirectiveWithFailedLookupLocations, read at moduleNameResolver.ts:1302:12 as a spread | 0 | 3 | +3
+Refused: a read of a void container's elements, through getParsedCommandLine | 0 | 3 | +3
+Refused: a read of a void container's elements, through getOptionsDiagnostics | 0 | 3 | +3
+Refused: a read of a void container's elements, through getResolvedProjectReferences | 0 | 3 | +3
+Refused: a read of a void container's elements, through find | 0 | 3 | +3
+Refused: a generic instantiated at void whose body reads the value: forEachPropertyAssignment's T = StringLiteral, read at utilities.ts:3096:20 as an argument | 0 | 3 | +3
+Refused: a read of a void container's elements, through done | 0 | 3 | +3
+Refused: a generic instantiated at void whose body reads the value: addRange's T = Diagnostic, read at core.ts:992:21 as an argument | 0 | 3 | +3
+Refused: a generic instantiated at void whose body reads the value: createModuleOrTypeReferenceResolutionCache's T = ResolvedModuleWithFailedLookupLocations, read at moduleNameResolver.ts:1302:12 as a spread | 0 | 3 | +3
+Refused: a generic instantiated at void whose body reads the value: filter's T = Diagnostic, read at core.ts:281:29 as an argument | 0 | 2 | +2
+Refused: a read of a void container's elements, through getProgramDiagnostics | 0 | 2 | +2
+Refused: a read of a void container's elements, through clearTimeout | 0 | 2 | +2
+Refused: a read of a void container's elements, through getFileIncludeReasons | 0 | 2 | +2
+Refused: a generic instantiated at void whose body reads the value: some's T = Decorator, read at core.ts:622:31 as an argument | 0 | 2 | +2
+Refused: optional property modifiers in GetAccessorDeclaration absent from structural source never, which can hide fields | 2 | 0 | -2
+Refused: a read of a void container's elements, through __debugTypeToString | 0 | 2 | +2
+Refused: a generic instantiated at void whose body reads the value: setStartsOnNewLine's T = Expression, read at factory/emitNode.ts:176:25 as an argument | 0 | 2 | +2
+Refused: a read of a void container's elements, through realpath | 0 | 2 | +2
+Refused: a read of a void container's elements, through dispose | 0 | 2 | +2
+Refused: a read of a void container's elements, through getProgramOrUndefined | 0 | 2 | +2
+Refused: a read of a void container's elements, through getProjectReferences | 0 | 2 | +2
+Refused: a generic instantiated at void whose body reads the value: filter's T = AbstractKeyword | AccessorKeyword | AsyncKeyword | ConstKeyword | DeclareKeyword | Decorator | ... 9 more ... | StaticKeyword, read at core.ts:281:29 as an argument | 0 | 2 | +2
+Refused: a generic instantiated at void whose body reads the value: forEachChild's T = Node, read at parser.ts:1254:46 as an argument | 0 | 2 | +2
+Refused: a read of a void container's elements, through update | 0 | 2 | +2
+Refused: a read of a void container's elements, through get: IdentifierNameMap<ExportSpecifier[]> | undefined holds void in its type argument 1 (ExportSpecifier[]), and get reads it | 0 | 2 | +2
+Refused: a read of a void container's elements, through releaseProgram | 0 | 2 | +2
+Refused: a read of a void container's elements, through emitNodeWithNotification | 0 | 2 | +2
+Refused: a read of a void container's elements, as an operand of in | 0 | 2 | +2
+Refused: a read of a void container's elements, through getFromDirectoryCache | 0 | 2 | +2
+Refused: a read of a void container's elements, as a loop condition | 0 | 2 | +2
+Refused: a read of a void container's elements, through getSemanticDiagnosticsOfNextAffectedFile | 0 | 2 | +2
+NotYet: a template interpolating an object, an array, a map, a function or undefined | 3 | 1 | -2
+Refused: a read of a void container's elements, through build | 0 | 2 | +2
+Refused: a read of a void container's elements, through getCompilerOptionsForFile | 0 | 2 | +2
+Refused: optional property templateFlags in NoSubstitutionTemplateLiteral absent from structural source never, which can hide fields | 2 | 0 | -2
+Refused: a read of a void container's elements, through setTimeout | 0 | 2 | +2
+Refused: a read of a void container's elements, through getOrCreateCacheForNonRelativeName | 0 | 2 | +2
+Refused: a read of a void container's elements, through isEmitNotificationEnabled | 0 | 2 | +2
+SkippedDependency: a dependency function whose body has checker diagnostics (measurement skipped) | 3 | 1 | -2
+NotYet: a union or optional field read in a program with record storage | 69 | 67 | -2
+Refused: a read of a void container's elements, through getAllDependencies | 0 | 2 | +2
+Refused: a read of a void container's elements, through get: IdentifierNameMap<ExportSpecifier[]> holds void in its type argument 1 (ExportSpecifier[]), and get reads it at transformers/utilities.ts:401:16 through get | 0 | 2 | +2
+NotYet: node:tty.WriteStream.isTTY | 2 | 0 | -2
+Refused: a read of a void container's elements, through getMissingFilePaths | 0 | 2 | +2
+NotYet: node:tty.WriteStream.columns | 2 | 0 | -2
+Refused: a read of a void container's elements, through forEach's callback parameter 0, destructured or rest | 0 | 2 | +2
+Refused: a read of a void container's elements, through substituteNode | 0 | 2 | +2
+NotYet: a value of type NodeArray<ClassElement> | 5 | 3 | -2
+Refused: a generic instantiated at void whose body reads the value: createWatchCompilerHost's T = EmitAndSemanticDiagnosticsBuilderProgram, read at watch.ts:875:5 through afterProgramCreate | 0 | 2 | +2
+Refused: a value of type T seen as Mutable<T>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of T["pos"] would replace | 13 | 11 | -2
+Refused: a generic instantiated at void whose body reads the value: filter's T = JsxChild, read at core.ts:281:29 as an argument | 0 | 1 | +1
+Refused: a read of a void container's elements, through every | 0 | 1 | +1
+Refused: a read of a void container's elements, through values | 0 | 1 | +1
+Refused: a read of a void container's elements, as a value seen without its void | 0 | 1 | +1
+Refused: a read of a void container's elements, through getResolvedTypeReferenceDirectiveFromTypeReferenceDirective | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: checkDefined's T = string | number | boolean | readonly string[] | SourceFile, read at debug.ts:257:16 as a returned value | 0 | 1 | +1
+Refused: a read of a void container's elements, through getBuildInfo | 0 | 1 | +1
+Refused: an unproven predicate argument for parameter test (argument "createAssignmentCallback ? isIdentifier : isExpression") | 0 | 1 | +1
+Refused: a void value at the assertion site through ._typeNodeBrand seen as T["_typeNodeBrand"] | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: forEach's T = DiagnosticRelatedInformation, read at core.ts:36:37 as an argument | 0 | 1 | +1
+Refused: optional property modifiers in ExportAssignment absent from structural source never, which can hide fields | 1 | 0 | -1
+Refused: a generic instantiated at void whose body reads the value: setParent's T = ModuleBody, read at utilities.ts:10707:9 as an operand of && | 0 | 1 | +1
+Refused: a read of a void container's elements, through isEmpty | 0 | 1 | +1
+Refused: a read of a void container's elements, through getResolvedModuleFromModuleSpecifier | 0 | 1 | +1
+NotYet: a function returning T | undefined | 4 | 3 | -1
+Refused: a generic instantiated at void whose body reads the value: some's T = Statement, read at core.ts:622:31 as an argument | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: createQueue's T = Expression, read at core.ts:1570:41 as an operand of ?? | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: setEmitFlags's T = Identifier, read at factory/emitNode.ts:93:25 as an argument | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: getAllJSDocTags's T = JSDocOverloadTag, read at utilitiesPublic.ts:1285:12 through filter | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: setEmitFlags's T = Block, read at factory/emitNode.ts:93:25 as an argument | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: addEmitFlags's T = Node, read at factory/emitNode.ts:103:42 as an argument | 0 | 1 | +1
+Refused: optional property skipTrivia in SourceMapSource absent from structural source SourceFile, which can hide fields | 1 | 0 | -1
+Refused: a generic instantiated at void whose body reads the value: setEmitFlags's T = PropertyAccessExpression, read at factory/emitNode.ts:93:25 as an argument | 0 | 1 | +1
+Refused: a read of a void container's elements, through getBuildOrder | 0 | 1 | +1
+Refused: a read of a void container's elements, through getIdentifierCount | 0 | 1 | +1
+Refused: a read of a void container's elements, through keys | 0 | 1 | +1
+Refused: a read of a void container's elements, through getOrCreateCacheForDirectory | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: find's T = Declaration, read at core.ts:170:23 as an argument | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: setTextRangeEnd's T = Expression, read at utilities.ts:10658:6 as an assertion's operand | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: cast's TIn = Expression, TOut = LeftHandSideExpression, read at core.ts:1784:37 as an argument | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: tryCast's TIn = NamedImports | NamespaceImport, TOut = NamespaceImport, read at core.ts:1779:12 as a returned value | 0 | 1 | +1
+Refused: optional property jsDocCache in JSDocArray absent from structural source JSDoc[], which can hide fields | 1 | 0 | -1
+Refused: optional property equalsToken in ShorthandPropertyAssignment absent from structural source never, which can hide fields | 2 | 1 | -1
+Refused: a generic instantiated at void whose body reads the value: contains's T = ResolvedProjectReference, read at core.ts:223:34 as an argument | 0 | 1 | +1
+Refused: a read of a void container's elements, through getRelationCacheSizes | 0 | 1 | +1
+NotYet: declared boolean, but undefined off a TTY; adamic/host-tty | 0 | 1 | +1
+Refused: a read of a void container's elements, through getTypeCount | 0 | 1 | +1
+Refused: a read of a void container's elements, through clean | 0 | 1 | +1
+Refused: a read of a void container's elements, through getNewLine | 0 | 1 | +1
+Refused: a read of a void container's elements, as an operand of + | 0 | 1 | +1
+Refused: a void value at the assertion site through ._jsdocContainerBrand seen as T["_jsdocContainerBrand"] | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: filter's T = VariableDeclaration, read at core.ts:281:29 as an argument | 0 | 1 | +1
+Refused: a read of a void container's elements, as an operand of ||= | 0 | 1 | +1
+NotYet: a value of type NodeArray<ObjectLiteralElementLike> | 1 | 0 | -1
+Refused: overload 1 of sameMap result U[] cannot be served by implementation result readonly U[] | undefined | 1 | 0 | -1
+Refused: a generic instantiated at void whose body reads the value: getAllJSDocTags's T = JSDocImplementsTag, read at utilitiesPublic.ts:1285:12 through filter | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: forEachChild's T = void (read from the signature), read at parser.ts:1254:46 as an argument | 0 | 1 | +1
+NotYet: a function returning U | undefined | 2 | 1 | -1
+Refused: a generic instantiated at void whose body reads the value: some's T = AbstractKeyword | AccessorKeyword | AsyncKeyword | ConstKeyword | DeclareKeyword | Decorator | ... 9 more ... | StaticKeyword, read at core.ts:622:31 as an argument | 0 | 1 | +1
+Refused: optional property _propertyAccessExpressionLikeQualifiedNameBrand in PropertyAccessEntityNameExpression absent from structural source never, which can hide fields | 1 | 0 | -1
+Refused: a generic instantiated at void whose body reads the value: checkDefined's T = SourceFile, read at debug.ts:257:16 as a returned value | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: forEach's T = BindingOrAssignmentElement, read at core.ts:36:37 as an argument | 0 | 1 | +1
+Refused: a read of a void container's elements, through getRedirectFromSourceFile | 0 | 1 | +1
+Refused: optional property textSourceNode in StringLiteral absent from structural source never, which can hide fields | 2 | 1 | -1
+Refused: optional property modifiers in PropertyDeclaration absent from structural source never, which can hide fields | 1 | 0 | -1
+NotYet: a record value of type TsConfigSourceFile | CompilerOptionsValue | 59 | 60 | +1
+Refused: var | 1 | 2 | +1
+Refused: optional property modifiers in SetAccessorDeclaration absent from structural source never, which can hide fields | 1 | 0 | -1
+Refused: a read of a void container's elements, through select | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: cast's TIn = NamedExports | NamespaceExport, TOut = NamedExports, read at core.ts:1784:37 as an argument | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: forEach's T = SourceFile, U = void (read from the signature), read at core.ts:36:37 as an argument | 0 | 1 | +1
+Refused: a read of a void container's elements, through getSymbolCount | 0 | 1 | +1
+Refused: a read of a void container's elements, through a computed member | 0 | 1 | +1
+Refused: a read of a void container's elements, through lastIndexOf | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: binarySearchKey's T = Node, read at core.ts:1211:36 as an argument | 0 | 1 | +1
+Refused: a read of a void container's elements, through fileExists | 0 | 1 | +1
+Refused: a void value at the argument site through () seen as number | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: countWhere's T = Diagnostic, read at core.ts:247:27 as an argument | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: forEach's T = GetAccessorDeclaration | MethodDeclaration | PropertyAssignment | SetAccessorDeclaration | ShorthandPropertyAssignment | SpreadAssignment, U = false | Expression, read at core.ts:36:37 as an argument | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: getOriginalNode's T = Node, read at utilitiesPublic.ts:767:9 as a value | 0 | 1 | +1
+NotYet: a value of type NodeArray<Modifier> | NodeArray<ModifierLike> | undefined | 1 | 0 | -1
+NotYet: declared number, but undefined off a TTY; adamic/host-tty | 0 | 1 | +1
+Refused: a read of a void container's elements, through getOrCreateCacheForModuleName | 0 | 1 | +1
+Refused: a read of a void container's elements, through emitNextAffectedFile | 0 | 1 | +1
+Refused: optional property id in BinaryExpression absent from structural source never, which can hide fields | 1 | 0 | -1
+Refused: a read of a void container's elements, through getModifiedTime | 0 | 1 | +1
+NotYet: a call through ?. (an optional call) | 28 | 27 | -1
+NotYet: assigning a field of a value | 4 | 3 | -1
+Refused: a generic instantiated at void whose body reads the value: emitFilesAndReportErrorsAndGetExitStatus's T = BuilderProgram | Program, read at watch.ts:644:41 as a destructured value | 0 | 1 | +1
+NotYet: Array.isArray on a tuple or an erased object/any/unknown view | 1 | 0 | -1
+Refused: a read of a void container's elements, through dequeue | 0 | 1 | +1
+Refused: a read of a void container's elements, through getBindAndCheckDiagnostics | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: forEach's T = Statement, U = ArrowFunction | ClassDeclaration | ClassExpression | ConstructorDeclaration | ConstructorTypeNode | ... 19 more ... | VariableStatement, read at core.ts:36:37 as an argument | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: sameMap's T = Diagnostic, U = Diagnostic, read at core.ts:354:30 as an argument | 0 | 1 | +1
+Refused: a read of a void container's elements, through add: IdentifierNameMultiMap<ExportSpecifier> holds void in its type argument 1 (ExportSpecifier), and add reads it at transformers/utilities.ts:443:22 through get: this holds void in field _map, and get reads it | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: checkDefined's T = Program, read at debug.ts:257:16 as a returned value | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: flatMap's T = JSDocTag, U = TypeParameterDeclaration, read at core.ts:403:29 as an argument | 0 | 1 | +1
+Refused: a read of a void container's elements, through forEachResolvedTypeReferenceDirective | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: setParent's T = Identifier, read at utilities.ts:10707:9 as an operand of && | 0 | 1 | +1
+Refused: a read of a void container's elements, through deleteFile | 0 | 1 | +1
+Refused: a read of a void container's elements, through isEmittedFile | 0 | 1 | +1
+NotYet: a PostfixUnaryExpression | 1 | 2 | +1
+Refused: a generic instantiated at void whose body reads the value: map's T = SourceFile, U = SourceFile, read at core.ts:325:27 as an argument | 0 | 1 | +1
+Refused: an unproven relation from Node | undefined to T | undefined: the source is not assignable to the target | 1 | 0 | -1
+Refused: a generic instantiated at void whose body reads the value: checkDefined's T = TypeNode, read at debug.ts:257:16 as a returned value | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: filter's T = SourceFile, read at core.ts:281:29 as an argument | 0 | 1 | +1
+NotYet: a value of type NodeArray<Statement> | 5 | 4 | -1
+NotYet: a value of type ResolvedConfigFileName | 1 | 0 | -1
+Refused: a generic instantiated at void whose body reads the value: forEachEntry's V = Symbol, read at utilities.ts:747:22 through entries | 0 | 1 | +1
+Refused: a generic instantiated at void whose body reads the value: filterMutate's T = Diagnostic, read at core.ts:302:15 as an argument | 0 | 1 | +1
+Refused: a read of a void container's elements, through getInstantiationCount | 0 | 1 | +1
