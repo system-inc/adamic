@@ -429,7 +429,9 @@ func (l *lowering) predicateRefusal(node *ast.Node) error {
 		for _, member := range members {
 			for _, property := range l.checker.GetPropertiesOfType(member) {
 				if property.Flags&ast.SymbolFlagsOptional != 0 {
-					return original
+					// The view proves a layout by its tag, and it can't check an optional field yet
+					// (#1yr7rdh). Say so: the return is already a trusted tag check (#1w5bve2).
+					return &Refused{Where: l.program.Where(node), What: "a tag-proven predicate whose target has an optional field (" + property.Name + " on " + l.checker.TypeToString(member) + ") that the view can't check yet", Fix: "make the field required, or return a boolean and narrow at the caller (adamic/no-type-predicate)"}
 				}
 			}
 			// A body proven by its tag alone leaves the layout to the view: this registration serves
