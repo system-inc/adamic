@@ -351,6 +351,9 @@ func linkOne(directory string, compiler string, source string, output string, op
 // keeps relative input spellings. The comp_dir still applies to .a markers.
 // comp_dir also goes through toolMaps: entries under the compiler install or sysroot
 // read as /adamic-compiler/... or /adamic-sysroot/....
+// The debug witnesses' overlay compiler rewrites the return line below by its
+// exact text (debugWitnessMutations in source_lines_products_test.go), so a
+// change to that line updates the mutation's Before in the same change.
 func programDebugFlags(options Options) []string {
 	if options.Debug && options.DebugDirectory != "" {
 		return []string{"-fdebug-compilation-dir=" + options.DebugDirectory}
