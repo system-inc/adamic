@@ -2905,6 +2905,12 @@ class CoverageMarkdownOnly(unittest.TestCase):
         self.tree = os.path.join(scratch.name, "tree")
         sources = {
             "go.mod": "module " + run.module + "\ngo 1.24\n",
+            # A workspace beside the root module, as adamic's go.work uses cohere's: its files key coverage too.
+            "go.work": "go 1.24\n\nuse (\n\t.\n\t./sub\n)\n",
+            "go.work.sum": "",
+            "sub/go.mod": "module example.com/sub\ngo 1.24\n",
+            "sub/go.sum": "",
+            "sub/s.go": "package sub\n",
             "a/a.go": 'package a\n\nimport _ "embed"\n\n//go:embed doc.md\nvar Doc string\n',
             "a/doc.md": "# embedded\n",
             "README.md": "# probe\n",
@@ -2936,10 +2942,17 @@ class CoverageMarkdownOnly(unittest.TestCase):
         realRun(["git", "-C", self.tree, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", message, "--allow-empty"], check=True)
         return run.git(self.tree, "rev-parse", "HEAD")
 
-    def change(self, edit):
-        realRun(["git", "-C", self.tree, "checkout", "-q", "--detach", self.base], check=True)
+    def change(self, edit, on=None):
+        on = on or self.base
+        realRun(["git", "-C", self.tree, "checkout", "-q", "--detach", on], check=True)
         edit()
-        return {"base": self.base, "sha": self.commit("change"), "tools": self.tree}
+        return {"base": on, "sha": self.commit("change"), "tools": self.tree}
+
+    def readmeOn(self, edit):
+        # A Markdown-only change on a Go state the edit made: eligible, so its key is the narrowed one.
+        change = self.change(lambda: self.write("README.md", "# probe, edited\n"), self.change(edit)["sha"])
+        self.assertTrue(run.coverageMarkdownOnly(self.tree, self.tree, change, False))
+        return change
 
     def inputs(self, change):
         return run.phaseInputs(self.tree, "coverage", False, None, change)["inputs"]
@@ -2959,18 +2972,28 @@ class CoverageMarkdownOnly(unittest.TestCase):
         self.assertEqual(self.keyed(readme), self.keyed(guide))
         self.assertIn("160000 %s 0\tcohere" % self.cohere, self.keyed(readme)[2])
 
-    def test_a_cohere_move_moves_the_key(self):
+    def test_the_go_state_moves_the_key(self):
         readme = self.change(lambda: self.write("README.md", "# probe, edited\n"))
-        def moved():
-            self.write("README.md", "# probe, edited\n")
-            realRun(["git", "-C", self.tree, "update-index", "--cacheinfo", "160000,%s,cohere" % readme["sha"]], check=True)
-        self.assertNotEqual(self.keyed(readme)[2], self.keyed(self.change(moved))[2])
+        states = {
+            "cohere moved": lambda: realRun(["git", "-C", self.tree, "update-index", "--cacheinfo", "160000,%s,cohere" % self.base], check=True),
+            "the root go.mod": lambda: self.write("go.mod", "module " + run.module + "\ngo 1.24\n\n// edited\n"),
+            "a nested module's go.mod": lambda: self.write("sub/go.mod", "module example.com/sub\ngo 1.24\n\n// edited\n"),
+            "a nested module's go.sum": lambda: self.write("sub/go.sum", "example.com/x v1.0.0 h1:x=\n"),
+            "the workspace's go.work": lambda: self.write("go.work", "go 1.25\n\nuse (\n\t.\n\t./sub\n)\n"),
+            "the workspace's go.work.sum": lambda: self.write("go.work.sum", "example.com/x v1.0.0 h1:x=\n"),
+            "a nested module's source": lambda: self.write("sub/s.go", "package sub\n\nvar S = 1\n"),
+            "a C source": lambda: self.write("c/x.c", "int x;\n"),
+            "a driver script": lambda: self.write("stage3/drivers/parser/evidence/probe.py", "print(2)\n"),
+        }
+        for name, edit in states.items():
+            with self.subTest(name):
+                self.assertNotEqual(self.keyed(readme)[2], self.keyed(self.readmeOn(edit))[2])
 
     def test_a_go_edit_beside_markdown_moves_the_key(self):
         readme = self.change(lambda: self.write("README.md", "# probe, edited\n"))
         def both():
             self.write("README.md", "# probe, edited\n")
-            self.write("go.mod", "module " + run.module + "\ngo 1.25\n")
+            self.write("go.mod", "module " + run.module + "\ngo 1.24\n\n// edited\n")
         self.assertFalse(run.coverageMarkdownOnly(self.tree, self.tree, self.change(both), False))
         self.assertNotEqual(self.keyed(readme), self.keyed(self.change(both)))
 
