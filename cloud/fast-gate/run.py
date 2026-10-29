@@ -408,20 +408,85 @@ def coverageReduced(tree, tools, changed, unowned=None):
     return sorted(path for path in unowned if firstExecutor(rules, path) != "inert")
 
 
-def coverageChanged(tree, change, full):
-    """The paths the coverage phase reads its diff as: a fast gate's base...sha (fastPhaseInputs), a whole gate's sha
-    against its first parent, none for a root commit (executePhase). Unquoted, as the gate reads them."""
+def coverageRevisions(tree, change, full):
+    """The revisions the coverage phase reads its diff between: a fast gate's base...sha (fastPhaseInputs), a whole gate's
+    sha against its first parent (executePhase), or None for a root commit, which changes nothing."""
     if full:
         parents = git(tree, "rev-list", "--parents", "-n", "1", change["sha"]).split()[1:]
-        if not parents:
-            return []
-        revisions = [parents[0], change["sha"]]
-    else:
-        revisions = ["%s...%s" % (change["base"], change["sha"])]
+        return [parents[0], change["sha"]] if parents else None
+    return ["%s...%s" % (change["base"], change["sha"])]
+
+
+def coverageChanged(tree, change, full):
+    """The paths the coverage phase reads its diff as, unquoted, as the gate reads them; none for a root commit."""
+    revisions = coverageRevisions(tree, change, full)
+    if revisions is None:
+        return []
     return [path for path in git(tree, "-c", "core.quotePath=false", "diff", "--name-only", *revisions).split("\n") if path]
 
 
+# coverageGoStatePathspec is what coverage reads of the tree for a change coverageMarkdownOnly allows (#gw93f6b, Node's
+# ruling): a traced run on Pupa, Oct 29 (Pupa:~/scratch/judge-tools-trace/trace8.txt, a README edit on adamic cad2afb1c7),
+# read whole. go list -deps -test -json ./... (touched() and coverageReduced()) reads go.work and every module it names,
+# cohere's among them, opens each package's .go files and the C-family sources it checks build constraints in, and probes
+# a go.mod in every directory for a nested module; memoryFloors opens every tracked .go file; compilerDependencies opens
+# the stage3/drivers scripts and the tree's compiler-dependencies.json; cover()'s mapChanged reads whether the tree's
+# executors.txt changed. phaseInputs adds cloud/fast-gate (the maps, unit-needs.json among them), npmPackages' stage3/api
+# files, and the root go.mod and go.sum. A change to any of those functions in run.py retraces before this narrows again.
+coverageGoStatePathspec = ["*.go", ":(glob)**/go.mod", ":(glob)**/go.sum", ":(glob)**/go.work", ":(glob)**/go.work.sum",
+                           "*.c", "*.cc", "*.cpp", "*.cxx", "*.h", "*.hh", "*.hpp", "*.hxx", "*.m", "*.s", "*.S", "*.sx",
+                           "*.f", "*.F", "*.for", "*.f90", "*.syso", "*.swig", "*.swigcxx", "cohere", "stage3/drivers"]
+
+
+def coverageMarkdownOnly(tree, tools, change, full):
+    """Whether coverage may key on the tree's Go state alone for this change (#gw93f6b, Node's ruling): every changed
+    path a modified Markdown file, its mode a plain file's on both sides, its name ending in a lowercase .md, its first
+    rule in tools' executors.txt inert, and no package embedding it (go list opens an embedded file). Such a change
+    touches nothing a census reads, adds or removes nothing go list sees, and names nothing cover() reds on, so its verdict
+    is the tree's Go state's. Anything else, an empty or root change, or a diff or go list that doesn't read, is no."""
+    if change is None:
+        return False
+    try:
+        revisions = coverageRevisions(tree, change, full)
+        if revisions is None:
+            return False
+        raw = subprocess.run(["git", "-C", tree, "diff", "--raw", "-z", "-M", "--no-abbrev", *revisions],
+                             capture_output=True, text=True, check=True, timeout=120).stdout
+        fields = raw.split("\0")
+        if fields and fields[-1] == "":
+            fields.pop()
+        rules, paths = executorMap(tools)[0], []
+        while fields:
+            header = fields.pop(0).split()
+            # :<old mode> <new mode> <old blob> <new blob> <status>, then one path, or two for a rename or copy.
+            if len(header) != 5 or not header[0].startswith(":") or not fields:
+                return False
+            path = fields.pop(0)
+            if header[4][:1] in ("R", "C"):
+                if not fields:
+                    return False
+                path = fields.pop(0)  # a rename or copy names its source, then the path it makes
+            if header[4] != "M" or header[0] != ":100644" or header[1] != "100644":
+                return False
+            if not path.endswith(".md") or firstExecutor(rules, path) != "inert":
+                return False
+            paths.append(path)
+        if not paths:
+            return False
+        listing = subprocess.run(packageGraphCommand(), cwd=tree, capture_output=True, text=True, timeout=300)
+        if listing.returncode != 0:
+            return False
+        embedded = goPackages(tree, listing.stdout)[1]
+    except (subprocess.SubprocessError, OSError, ValueError, KeyError):
+        return False
+    return not any(path in embedded for path in paths)
+
+
 def coverageInputs(tree, unit, full, change):
+    if coverageMarkdownOnly(tree, change["tools"] if change else None, change, full):
+        # Nothing it judges by name: two Markdown-only changes on one Go state decide alike, so they key alike.
+        return {"packages": [], "paths": list(coverageGoStatePathspec), "names": [],
+                "note": "a Markdown-only change: coverage reads the tree's Go, module, driver and census state alone"}
     inputs = treeInputs("coverage uses the base diff, package/source census and executor map across the tree")
     if change is None:
         inputs["names"] = []

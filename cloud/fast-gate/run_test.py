@@ -2893,6 +2893,119 @@ class CoverageNames(unittest.TestCase):
         self.assertEqual(gate.result["uncovered_files"], [])
 
 
+class CoverageMarkdownOnly(unittest.TestCase):
+    """Coverage keys on the tree's Go state alone for a change whose every path is a modified Markdown file its map rules
+    inert (#gw93f6b, Node's ruling), by run.coverageMarkdownOnly alone, which --with-inputs asks; anything else keeps the
+    whole tree and its names. Mutants, each red here: the modified filter dropped; any inert path allowed; the embedded
+    check dropped; cohere left out of the narrowed paths."""
+
+    def setUp(self):
+        scratch = tempfile.TemporaryDirectory()
+        self.addCleanup(scratch.cleanup)
+        self.tree = os.path.join(scratch.name, "tree")
+        sources = {
+            "go.mod": "module " + run.module + "\ngo 1.24\n",
+            "a/a.go": 'package a\n\nimport _ "embed"\n\n//go:embed doc.md\nvar Doc string\n',
+            "a/doc.md": "# embedded\n",
+            "README.md": "# probe\n",
+            "docs/guide.md": "# guide\n",
+            "apple/README.md": "# apple\n",
+            "stage3/drivers/parser/evidence/probe.py": "print(1)\n",
+            "cloud/fast-gate/compiler-dependencies.json": '{"version":1,"packages":{}}',
+            "cloud/fast-gate/unit-needs.json": '{"version":1,"units":[]}',
+            "cloud/fast-gate/executors.txt": "mode enforce\ndarwin apple/*\ninert *.md\ninert */evidence/*\ninert cloud/*\n",
+        }
+        for name, source in sources.items():
+            self.write(name, source)
+        for command in (["init", "-q"], ["add", "-A"]):
+            realRun(["git", "-C", self.tree] + command, check=True)
+        # cohere is a submodule in adamic, keyed by its commit: a gitlink here, at the first commit's own sha.
+        self.cohere = self.commit("base")
+        realRun(["git", "-C", self.tree, "update-index", "--add", "--cacheinfo", "160000,%s,cohere" % self.cohere], check=True)
+        os.makedirs(os.path.join(self.tree, "cohere"))  # a submodule not checked out: its directory, empty
+        self.base = self.commit("cohere")
+
+    def write(self, name, source):
+        path = os.path.join(self.tree, name)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w") as handle:
+            handle.write(source)
+
+    def commit(self, message):
+        realRun(["git", "-C", self.tree, "add", "-A"], check=True)
+        realRun(["git", "-C", self.tree, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", message, "--allow-empty"], check=True)
+        return run.git(self.tree, "rev-parse", "HEAD")
+
+    def change(self, edit):
+        realRun(["git", "-C", self.tree, "checkout", "-q", "--detach", self.base], check=True)
+        edit()
+        return {"base": self.base, "sha": self.commit("change"), "tools": self.tree}
+
+    def inputs(self, change):
+        return run.phaseInputs(self.tree, "coverage", False, None, change)["inputs"]
+
+    def keyed(self, change):
+        # What the planner keys a bounded phase's paths on: git ls-files -s of them, the gitlink by its commit.
+        realRun(["git", "-C", self.tree, "checkout", "-q", "--detach", change["sha"]], check=True)
+        inputs = self.inputs(change)
+        return inputs["paths"], inputs["names"], run.git(self.tree, "ls-files", "-s", "--", *inputs["paths"])
+
+    def test_two_markdown_edits_key_alike_on_the_go_state(self):
+        readme = self.change(lambda: self.write("README.md", "# probe, edited\n"))
+        guide = self.change(lambda: self.write("docs/guide.md", "# guide, edited\n"))
+        self.assertTrue(run.coverageMarkdownOnly(self.tree, self.tree, readme, False))
+        self.assertNotIn(".", self.inputs(readme)["paths"])
+        self.assertIn("cohere", self.inputs(readme)["paths"])
+        self.assertEqual(self.keyed(readme), self.keyed(guide))
+        self.assertIn("160000 %s 0\tcohere" % self.cohere, self.keyed(readme)[2])
+
+    def test_a_cohere_move_moves_the_key(self):
+        readme = self.change(lambda: self.write("README.md", "# probe, edited\n"))
+        def moved():
+            self.write("README.md", "# probe, edited\n")
+            realRun(["git", "-C", self.tree, "update-index", "--cacheinfo", "160000,%s,cohere" % readme["sha"]], check=True)
+        self.assertNotEqual(self.keyed(readme)[2], self.keyed(self.change(moved))[2])
+
+    def test_a_go_edit_beside_markdown_moves_the_key(self):
+        readme = self.change(lambda: self.write("README.md", "# probe, edited\n"))
+        def both():
+            self.write("README.md", "# probe, edited\n")
+            self.write("go.mod", "module " + run.module + "\ngo 1.25\n")
+        self.assertFalse(run.coverageMarkdownOnly(self.tree, self.tree, self.change(both), False))
+        self.assertNotEqual(self.keyed(readme), self.keyed(self.change(both)))
+
+    def test_anything_else_keeps_the_whole_tree(self):
+        cases = {
+            "an inert evidence script": lambda: self.write("stage3/drivers/parser/evidence/probe.py", "import subprocess\n"),
+            "an added markdown file": lambda: self.write("docs/new.md", "# new\n"),
+            "an embedded markdown file": lambda: self.write("a/doc.md", "# embedded, edited\n"),
+            "markdown under a darwin rule": lambda: self.write("apple/README.md", "# apple, edited\n"),
+            "the tree's executor map": lambda: self.write("cloud/fast-gate/executors.txt", "mode enforce\ninert *\n"),
+            "an uppercase suffix": lambda: (os.rename(os.path.join(self.tree, "docs/guide.md"), os.path.join(self.tree, "docs/guide.MD"))),
+            "a renamed markdown file": lambda: os.rename(os.path.join(self.tree, "docs/guide.md"), os.path.join(self.tree, "docs/moved.md")),
+            "a mode change": lambda: os.chmod(os.path.join(self.tree, "README.md"), 0o755),
+            "a deleted markdown file": lambda: os.remove(os.path.join(self.tree, "docs/guide.md")),
+            "a submodule move alone": lambda: realRun(["git", "-C", self.tree, "update-index", "--cacheinfo", "160000,%s,cohere" % self.base], check=True),
+            "nothing": lambda: None,
+        }
+        for name, edit in cases.items():
+            with self.subTest(name):
+                change = self.change(edit)
+                self.assertFalse(run.coverageMarkdownOnly(self.tree, self.tree, change, False))
+                self.assertEqual(self.inputs(change)["paths"], ["."])
+
+    def test_a_diff_that_does_not_read_is_no(self):
+        change = {"base": "0" * 40, "sha": self.base, "tools": self.tree}
+        self.assertFalse(run.coverageMarkdownOnly(self.tree, self.tree, change, False))
+        self.assertFalse(run.coverageMarkdownOnly(self.tree, self.tree, None, False))
+
+    def test_the_whole_gate_reads_the_sha_against_its_first_parent(self):
+        readme = self.change(lambda: self.write("README.md", "# probe, edited\n"))
+        self.assertTrue(run.coverageMarkdownOnly(self.tree, self.tree, dict(readme, base=None), True))
+        # The cohere commit against the first: a gitlink added, never Markdown.
+        self.assertFalse(run.coverageMarkdownOnly(self.tree, self.tree, dict(readme, base=None, sha=self.base), True))
+
+
 class ListUnitsRefusal(unittest.TestCase):
     """A change the census refuses is refused, not crashed on: --list-units exits RefusalExit with one line naming the
     census and how to declare it, which the planner sends its owner as a red (Queue's unplannable). Any other error is
