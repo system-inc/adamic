@@ -2760,6 +2760,19 @@ class PhaseInputs(unittest.TestCase):
                      "verify/catalog/" + entry["patch"], entry["fixture"], package[2:] + "/testdata/input.a"):
             self.assertTrue(self.covered(inputs, path), (path, inputs))
 
+    def test_tools_reads_the_go_sources_it_greps_and_no_more(self):
+        # The tools phase declares exactly the pathspec its git grep searches (#gw93f6b): one list, so the two can't drift,
+        # and never the whole tree. Mutant: the grep searching a wider pathspec than the declaration, red.
+        declared = run.phaseInputProviders["tools"](self.tree, "", False)
+        self.assertEqual(declared["paths"], run.toolsSourcePathspec)
+        self.assertNotIn(".", run.phaseInputs(self.tree, "tools", False)["inputs"]["paths"])
+        searched = []
+        gate = types.SimpleNamespace(arguments=types.SimpleNamespace(tree=self.tree, tools=self.tree), steps={}, result={}, exits={},
+                                     command=lambda command, **keywords: searched.append(command) or types.SimpleNamespace(returncode=1, stdout="", stderr=""),
+                                     fail=lambda phase, why: None)
+        run.Gate.toolsDeclared(gate)
+        self.assertEqual(searched[0][searched[0].index("--") + 1:], declared["paths"])
+
     def test_wasi_fixture_path_mutant_is_caught(self):
         original = run.phaseInputProviders["wasi"]
         fixture = run.wasiFixtures(self.tree)[0]

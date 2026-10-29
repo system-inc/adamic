@@ -204,6 +204,13 @@ def declaresInputs(phase, provider):
     return decorate
 
 
+# toolsSourcePathspec is what the tools phase reads of the tree, the tracked Go sources outside cohere and the upstream
+# corpus, as one list its git grep searches and its declared inputs name (#gw93f6b, Node's ruling): the planner keys the
+# phase on these paths' content (git ls-files -s), so a README change leaves it still and any .go file added, removed or
+# edited moves it. tools.txt is the gate tools', already in the key.
+toolsSourcePathspec = ["*.go", ":!cohere", ":!stage3/upstream"]
+
+
 def treeInputs(note):
     return {"packages": [], "paths": ["."], "note": note}
 
@@ -1829,7 +1836,7 @@ class Gate:
                 self.fail(name, handle.read()[-4000:])
         return code == 0
 
-    @declaresInputs("tools", lambda tree, unit, full: treeInputs("tool declaration census reads tracked Go sources across the repository"))
+    @declaresInputs("tools", lambda tree, unit, full: {"packages": [], "paths": list(toolsSourcePathspec)})
     def toolsDeclared(self):
         """Every command the repository's Go code runs by literal name is declared in the tools checkout's
         cloud/fast-gate/tools.txt, which the box checks before the gate (cloud/fast-gate/tools-check.sh).
@@ -1838,7 +1845,7 @@ class Gate:
         started = time.monotonic()
         with open(os.path.join(self.arguments.tools, "cloud/fast-gate/tools.txt")) as handle:
             declared = {line.split("\t")[0] for line in handle if line.strip() and not line.startswith("#")}
-        found = self.command(["git", "-C", self.arguments.tree, "grep", "-nE", toolLiteralSearch, "--", "*.go", ":!cohere", ":!stage3/upstream"],
+        found = self.command(["git", "-C", self.arguments.tree, "grep", "-nE", toolLiteralSearch, "--"] + toolsSourcePathspec,
                                capture_output=True, text=True)
         if found.returncode not in (0, 1):
             raise RuntimeError("git grep for tool literals failed: %s" % found.stderr)
