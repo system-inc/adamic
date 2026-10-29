@@ -376,24 +376,82 @@ func (l *lowering) nodeStdoutWrite(node *ast.Node) (ir.Expression, bool, error) 
 	return ir.NodeFSFile{Operation: "host_stdout_write", Arguments: []ir.Expression{value}, Of: ir.Number}, true, nil
 }
 
+// Only stdout's library member is bound. Streams remain opaque values.
+func (l *lowering) nodeStdoutIsTTYMember(node *ast.Node) bool {
+	node = ast.SkipParentheses(node)
+	return node.Kind == ast.KindPropertyAccessExpression && l.nodeLibraryMember(node) == "node:tty.WriteStream.isTTY" && l.nodeLibraryMember(node.AsPropertyAccessExpression().Expression) == "node:process.Process.stdout"
+}
+
+func (l *lowering) nodeStdoutIsTTYRefusal(node *ast.Node) error {
+	const name = "node:process.Process.stdout.isTTY"
+	outer := node
+	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
+		outer = outer.Parent
+	}
+	if outer.Parent != nil && outer.Parent.Kind == ast.KindDeleteExpression {
+		return l.notYet(node, name+" deleted (fix: read process.stdout.isTTY; terminal status is read-only)")
+	}
+	if ast.IsAssignmentTarget(outer) {
+		return l.notYet(node, name+" written (fix: read process.stdout.isTTY; terminal status is read-only)")
+	}
+	if node.Flags&ast.NodeFlagsOptionalChain != 0 {
+		return l.notYet(node, name+" read through an optional chain (fix: read process.stdout.isTTY directly)")
+	}
+	return nil
+}
+
+func (l *lowering) nodeStdoutIsTTYRead(node *ast.Node) (ir.Expression, bool, error) {
+	if !l.nodeStdoutIsTTYMember(node) {
+		return nil, false, nil
+	}
+	if err := l.nodeStdoutIsTTYRefusal(node); err != nil {
+		return nil, true, err
+	}
+	return ir.NodeFSFile{Operation: "host_stdout_is_tty", Of: ir.MaybeBoolean}, true, nil
+}
+
 // The scanner sees the receiver, each property name and the call separately.
 // Admit those nodes only inside this exact call, without registering stdout.
 func (l *lowering) nodeStdoutUseRefusal(node *ast.Node) (bool, error) {
+	if node.Kind == ast.KindDeleteExpression {
+		target := ast.SkipParentheses(node.AsDeleteExpression().Expression)
+		if l.nodeStdoutIsTTYMember(target) {
+			return true, l.nodeStdoutIsTTYRefusal(target)
+		}
+	}
+
 	access := ast.SkipParentheses(node)
 	if node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.Name() == node {
 		access = node.Parent
 	}
+	receiver := access
+	for receiver.Parent != nil && receiver.Parent.Kind == ast.KindParenthesizedExpression {
+		receiver = receiver.Parent
+	}
+	if receiver.Parent != nil && l.nodeStdoutIsTTYMember(receiver.Parent) && ast.SkipParentheses(receiver.Parent.AsPropertyAccessExpression().Expression) == access {
+		return true, l.nodeStdoutIsTTYRefusal(receiver.Parent)
+	}
 	name := l.nodeLibraryMember(access)
 	switch name {
-	case "node:tty.WriteStream.isTTY":
-		return true, l.notYet(access, "declared boolean, but undefined off a TTY; adamic/host-tty")
+	case "node:tty.WriteStream.isTTY", "node:tty.ReadStream.isTTY":
+		if l.nodeStdoutIsTTYMember(access) {
+			return true, l.nodeStdoutIsTTYRefusal(access)
+		}
+		receiver := "node:tty stream"
+		if access.Kind == ast.KindPropertyAccessExpression {
+			receiver = l.nodeLibraryMember(access.AsPropertyAccessExpression().Expression)
+		}
+		return true, l.notYet(access, receiver+".isTTY is not bound (fix: read process.stdout.isTTY)")
 	case "node:tty.WriteStream.columns":
-		return true, l.notYet(access, "declared number, but undefined off a TTY; adamic/host-tty")
+		return true, l.notYet(access, "Node caches the terminal width and refreshes it on SIGWINCH from the event loop; adamic/host-tty")
 	}
 	if name == "node:process.Process.stdout" {
 		outer := access
 		for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
 			outer = outer.Parent
+		}
+		if outer.Parent != nil && l.nodeStdoutIsTTYMember(outer.Parent) {
+			return true, l.nodeStdoutIsTTYRefusal(outer.Parent)
 		}
 		if outer.Parent == nil || !l.nodeStdoutWriteMember(outer.Parent) {
 			return true, l.notYet(access, "node:process.Process.stdout used as a value")
