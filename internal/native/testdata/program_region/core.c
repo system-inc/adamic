@@ -94,6 +94,11 @@ int main(int argc, char **argv) {
         (void)adamic_program_adopt_owned(owner, sizeof *owner + sizeof owner->cells[0]);
         return 0;
     }
+    if (strcmp(argv[1], "unmovable-adoption") == 0) {
+        adamic_heap *box = adamic_box_number(7);
+        (void)adamic_program_adopt_owned(box, sizeof(adamic_number_box));
+        return 0;
+    }
     if (strcmp(argv[1], "weak-before-adoption") == 0) {
         adamic_object *owner = adamic_object_new(&shape);
         (void)adamic_weak_of(owner);

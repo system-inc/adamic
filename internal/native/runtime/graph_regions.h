@@ -21,6 +21,8 @@ static inline adamic_graph_header *adamic_graph_header_of(void *value) {
 // Size is the complete allocation size, including object metadata but excluding
 // separate container buffers. adamic_graph_adopt_owned joins initialized graph
 // slots and transfers their counts; direct self slots are re-aimed after moving.
+// The kind region adoption can't move, named for a refusal, or NULL (graph_regions.c).
+const char *adamic_region_unmovable(const adamic_heap *heap);
 void *adamic_graph_adopt(void *value, size_t size);
 void *adamic_heap_graph_storage(void *value, size_t size);
 void *adamic_heap_program_storage(void *value, size_t size);
