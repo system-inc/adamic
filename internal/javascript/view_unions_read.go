@@ -16,13 +16,18 @@ func readUnionViewAt(e *emitter, property ir.Property, object string) (string, b
 	if contract.Kind != ir.ViewUnion && !contract.FixedTuple && !(contract.Kind == ir.ViewCallable && contract.ProducerCertified) {
 		return "", false
 	}
-	if contract.Unsupported != "" || property.Optional || property.Absent || property.Method {
+	// An absent optional field reads undefined, so its declared union has to hold undefined. A
+	// callable's recorded signature has no undefined to stand for.
+	if contract.Unsupported != "" || property.Absent && !contract.Undefined || (property.Optional || property.Absent) && contract.Of == ir.Closure || property.Method {
 		panic("compiler bug: unavailable checked union read")
 	}
 	if object == "" {
 		object = e.value(property.Object)
 	}
-	raw := fmt.Sprintf("adamicReadField(%s,%s,%s,false,false,%s)", object, quote(property.Name), quote(property.View), quote(contract.Name))
+	if property.Optional {
+		return throughOptionalReceiver(e, property, object, readUnionViewAt), true
+	}
+	raw := fmt.Sprintf("adamicReadField(%s,%s,%s,false,%t,%s)", object, quote(property.Name), quote(property.View), property.Absent, quote(contract.Name))
 	if contract.Of == ir.Closure {
 		recorded := e.unionCallableRecorded("v")
 		expected := e.untaggedCallableUnionExpected(property, recorded, e.unionCallableExpected(property))

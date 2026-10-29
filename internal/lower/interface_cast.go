@@ -107,16 +107,14 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 		if refused != nil {
 			return true
 		}
-		// Optional receivers and optional/accessor slots still need a representation
-		// conversion that the V1 checked read boundary cannot emit.
+		// An accessor slot still needs a conversion the checked read boundary can't emit. An
+		// optional slot or receiver is emission's to judge, at the read (unemittableCheckedViewRead).
 		if part.Kind == ast.KindPropertyAccessExpression && l.checkedViewReceiverField(l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression), part.Name().Text()) {
 			access := part.AsPropertyAccessExpression()
 			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
 				field := l.checker.GetSymbolAtLocation(part.Name())
-				if field != nil && len(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall)) == 0 {
-					if gap := checkedFieldAliasGap(access, field, true); gap != "" {
-						refused = l.notYet(part, gap)
-					}
+				if field != nil && len(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall)) == 0 && accessorSymbol(field) {
+					refused = l.notYet(part, checkedFieldAliasAccessor)
 				}
 			}
 		}
@@ -147,6 +145,8 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 	return value, nil
 }
 
+const checkedFieldAliasAccessor = "a checked field alias of an accessor"
+
 const checkedFieldAliasNotScalar = "a checked field alias whose field isn't a scalar"
 
 // checkedFieldAliasGap names the first conversion a checked field alias lacks,
@@ -157,7 +157,7 @@ func checkedFieldAliasGap(access *ast.PropertyAccessExpression, field *ast.Symbo
 	case field.Flags&ast.SymbolFlagsOptional != 0 || access.QuestionDotToken != nil:
 		return "a checked field alias of an optional field or through ?."
 	case accessorSymbol(field):
-		return "a checked field alias of an accessor"
+		return checkedFieldAliasAccessor
 	case !scalar:
 		return checkedFieldAliasNotScalar
 	}
