@@ -47,6 +47,9 @@ func debugCacheEnvironment(t *testing.T, environment []string) []string {
 	if os.Getenv("ADAMIC_BUILD_CACHE_DIR") == "" {
 		t.Fatal("debug products require the unit's ADAMIC_BUILD_CACHE_DIR; refusing the home cache (#phzhe68)")
 	}
+	if os.Getenv("ADAMIC_BUILD_OUTPUT_DIR") == "" {
+		t.Fatal("debug products require the unit's ADAMIC_BUILD_OUTPUT_DIR")
+	}
 	cache, err := location.BuildCache()
 	if err != nil {
 		t.Fatal(err)
@@ -104,6 +107,8 @@ func debugLineProduct(t *testing.T, build bool) string {
 	t.Helper()
 	return debugProduct(t, debugProductInputs("debug-line-table", Options{Debug: true, Release: true}), build, func(directory string) error {
 		compiler := buildcache.GoBuildInMutated(t, "", "adamic-debug-lines", "./cmd/adamic", nil, debugWitnessMutations)
+		// Each copy builds a debug and a release program, so the witnesses below can
+		// require both to match byte for byte across entry directories.
 		for index, copy := range []string{"one", "two"} {
 			entry := filepath.Join(directory, copy, "fixture.a")
 			if err := os.MkdirAll(filepath.Dir(entry), 0755); err != nil {
@@ -112,14 +117,21 @@ func debugLineProduct(t *testing.T, build bool) string {
 			if err := os.WriteFile(entry, []byte(debugLineFixture), 0644); err != nil {
 				return err
 			}
-			name := []string{"program", "program-again"}[index]
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
-			command := toolchain.CommandContextIn(ctx, "../..", compiler, "build", entry, "-o", filepath.Join(directory, name), "--debug")
-			command.Env = debugCacheEnvironment(t, command.Env)
-			output, err := command.CombinedOutput()
-			cancel()
-			if err != nil {
-				return fmt.Errorf("build --debug: %w: %s", err, output)
+			for _, mode := range []struct {
+				names []string
+				flags []string
+			}{
+				{[]string{"program", "program-again"}, []string{"--debug"}}, {[]string{"release", "release-again"}, nil},
+			} {
+				ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
+				arguments := append([]string{"build", entry, "-o", filepath.Join(directory, mode.names[index])}, mode.flags...)
+				command := toolchain.CommandContextIn(ctx, "../..", compiler, arguments...)
+				command.Env = debugCacheEnvironment(t, command.Env)
+				output, err := command.CombinedOutput()
+				cancel()
+				if err != nil {
+					return fmt.Errorf("build %s: %w: %s", mode.names[index], err, output)
+				}
 			}
 		}
 		return nil

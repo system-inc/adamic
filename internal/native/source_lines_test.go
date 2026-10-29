@@ -521,11 +521,12 @@ func TestDebugLineTable(t *testing.T) {
 			}{name, span[0], span[1] - span[0]})
 		}
 	}
-	marked, async := false, false
+	marked, async, unmarked := false, false, false
 	for _, symbol := range symbols {
 		syncSubject := strings.Contains(symbol.Name, "marked") && strings.HasPrefix(symbol.Name, "adamic_function_")
 		asyncSubject := strings.Contains(symbol.Name, "async_resume") && strings.Contains(symbol.Name, "later")
-		if !syncSubject && !asyncSubject {
+		unmarkedSubject := strings.Contains(symbol.Name, "async_children") && strings.Contains(symbol.Name, "after")
+		if !syncSubject && !asyncSubject && !unmarkedSubject {
 			continue
 		}
 		rows := 0
@@ -563,14 +564,14 @@ func TestDebugLineTable(t *testing.T) {
 				}
 				rows++
 				file := filepath.Base(row.File.Name)
-				if syncSubject {
+				if syncSubject || asyncSubject {
 					if file == "fixture.a" {
 						right[row.Line] = true
 					}
 				} else if strings.HasSuffix(file, ".c") {
 					right[row.Line] = true
 				} else if !strings.HasSuffix(file, ".h") {
-					t.Fatalf("async frame maps to %s:%d", file, row.Line)
+					t.Fatalf("unmarked async children helper maps to %s:%d", file, row.Line)
 				}
 			}
 		}
@@ -583,17 +584,24 @@ func TestDebugLineTable(t *testing.T) {
 				t.Fatalf("marked rows %v, want 3,4", right)
 			}
 			marked = true
-		} else {
-			if len(right) == 0 {
-				t.Fatal("async function has no C rows")
+		} else if asyncSubject {
+			for _, line := range []int{7, 8, 10, 12} {
+				if !right[line] {
+					t.Fatalf("async rows %v, want fixture.a line %d before/after await and at throw", right, line)
+				}
 			}
 			async = true
+		} else {
+			if len(right) == 0 {
+				t.Fatal("following async children helper has no C rows")
+			}
+			unmarked = true
 		}
 	}
-	if !marked || !async {
-		t.Fatalf("subjects: marked=%t async=%t", marked, async)
+	if !marked || !async || !unmarked {
+		t.Fatalf("subjects: marked=%t async=%t unmarked=%t", marked, async, unmarked)
 	}
-	t.Log("llvm-dwarfdump: build --debug marked fixture.a lines 3,4; later adamic_async_resume frame: .c")
+	t.Log("llvm-dwarfdump: sync fixture.a lines 3,4; async fixture.a lines 7,8,10,12; following adamic_async_children_after helper: C")
 }
 
 func debugRunBinary(t *testing.T, binary string) mainPartsRun {
@@ -703,9 +711,18 @@ const debugLineFixture = `function marked(n: number): number {
  return n;
 }
 async function later(n: number): Promise<number> {
- if (n > 0) return (await later(n - 1)) + n;
- return n + 2;
+ const before = n + 2;
+ const resumed = await Promise.resolve(before);
+ if (resumed > 0) {
+  return resumed + 1;
+ }
+ throw new Error('negative');
+}
+async function after(n: number): Promise<number> {
+ return n;
 }
 console.log((marked(3)).toString());
 console.log((await later(2)).toString());
+try { await later(-3); } catch { console.log('caught'); }
+console.log((await after(9)).toString());
 `
