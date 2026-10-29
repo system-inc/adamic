@@ -2764,14 +2764,19 @@ class PhaseInputs(unittest.TestCase):
         # The tools phase declares exactly the pathspec its git grep searches (#gw93f6b): one list, so the two can't drift,
         # and never the whole tree. Mutant: the grep searching a wider pathspec than the declaration, red.
         declared = run.phaseInputProviders["tools"](self.tree, "", False)
-        self.assertEqual(declared["paths"], run.toolsSourcePathspec)
+        # What the grep searches, and every .gitattributes, which git grep reads beside each file (the Pupa trace).
+        self.assertEqual(declared["paths"], run.toolsSourcePathspec + run.toolsAttributesPathspec)
+        attributes = realRun(["git", "-C", self.tree, "ls-files", "--"] + run.toolsAttributesPathspec,
+                             capture_output=True, text=True, check=True, timeout=30).stdout.split()
+        self.assertIn(".gitattributes", attributes)
+        self.assertTrue(any(path.endswith("/.gitattributes") for path in attributes), attributes)
         self.assertNotIn(".", run.phaseInputs(self.tree, "tools", False)["inputs"]["paths"])
         searched = []
         gate = types.SimpleNamespace(arguments=types.SimpleNamespace(tree=self.tree, tools=self.tree), steps={}, result={}, exits={},
                                      command=lambda command, **keywords: searched.append(command) or types.SimpleNamespace(returncode=1, stdout="", stderr=""),
                                      fail=lambda phase, why: None)
         run.Gate.toolsDeclared(gate)
-        self.assertEqual(searched[0][searched[0].index("--") + 1:], declared["paths"])
+        self.assertEqual(searched[0][searched[0].index("--") + 1:], run.toolsSourcePathspec)
 
     def test_wasi_fixture_path_mutant_is_caught(self):
         original = run.phaseInputProviders["wasi"]

@@ -210,6 +210,11 @@ def declaresInputs(phase, provider):
 # edited moves it. tools.txt is the gate tools', already in the key.
 toolsSourcePathspec = ["*.go", ":!cohere", ":!stage3/upstream"]
 
+# toolsAttributesPathspec is every .gitattributes in the tree, which git grep reads beside each file it searches (a traced
+# run on Pupa, Oct 29, opened 9 and probed 304): an attribute that makes a .go file binary turns its matches into "Binary
+# file ... matches", so the phase's answer moves with them, and so must its key.
+toolsAttributesPathspec = [":(glob)**/.gitattributes"]
+
 
 def treeInputs(note):
     return {"packages": [], "paths": ["."], "note": note}
@@ -1836,7 +1841,7 @@ class Gate:
                 self.fail(name, handle.read()[-4000:])
         return code == 0
 
-    @declaresInputs("tools", lambda tree, unit, full: {"packages": [], "paths": list(toolsSourcePathspec)})
+    @declaresInputs("tools", lambda tree, unit, full: {"packages": [], "paths": toolsSourcePathspec + toolsAttributesPathspec})
     def toolsDeclared(self):
         """Every command the repository's Go code runs by literal name is declared in the tools checkout's
         cloud/fast-gate/tools.txt, which the box checks before the gate (cloud/fast-gate/tools-check.sh).
