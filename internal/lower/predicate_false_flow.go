@@ -169,12 +169,13 @@ func (f *predicateFalseFlow) escapingReference(identifier *ast.Node) bool {
 }
 
 // anyChecked is whether the program declares a predicate R-T80 checks, so a program with none never
-// pays for reading its expressions' types.
+// pays for reading its expressions' types. A checked closure counts (#1w5bve2): it checks only its
+// true side, so a program whose one checked predicate is an arrow needs the walk for its false side.
 func (f *predicateFalseFlow) anyChecked() bool {
 	found := false
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
-		found = found || (node.Kind == ast.KindFunctionDeclaration && f.checkedDeclaration(node))
+		found = found || (node.Kind == ast.KindFunctionDeclaration && f.checkedDeclaration(node)) || f.l.checkedPredicateClosure(node)
 		if !found {
 			node.ForEachChild(visit)
 		}

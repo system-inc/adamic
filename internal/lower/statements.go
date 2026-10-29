@@ -223,6 +223,11 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 		return []ir.Statement{returned}, nil
 	}
 	expression = ast.SkipParentheses(expression)
+	// Both assignment returns build their own return, so a checked closure refuses either form
+	// before them: neither would run the claim's check (Compiler, on #1w5bve2).
+	if expression.Kind == ast.KindBinaryExpression && ast.IsAssignmentOperator(expression.AsBinaryExpression().OperatorToken.Kind) && l.checkedPredicateClosure(ast.GetContainingFunction(node)) {
+		return nil, l.notYet(node, "a checked predicate returning an assignment")
+	}
 	if statements, handled, err := l.namespaceReturnAssignment(expression); handled {
 		return statements, err
 	}
@@ -251,7 +256,7 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 	if l.function.BodyReturns() == 0 {
 		return []ir.Statement{ir.Evaluate{Value: value}, ir.Return{}}, nil
 	}
-	return []ir.Statement{ir.Return{Value: fit(value, l.function.BodyReturns())}}, nil
+	return l.checkedPredicateReturn(ast.GetContainingFunction(node), expression, fit(value, l.function.BodyReturns()))
 }
 
 // returnAssignment preserves the right side's value, assigns once, then returns
