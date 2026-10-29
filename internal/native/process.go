@@ -9,5 +9,19 @@ func (e *emitter) processCall(call ir.ProcessCall) string {
 	if value, known := e.nodeProcessCall(call); known {
 		return value
 	}
+	switch call.Operation {
+	case "exitCode":
+		return e.snapshot(ir.MaybeNumber, "adamic_process_exit_code()")
+
+	case "setExitCode":
+		code := e.snapshot(ir.MaybeNumber, e.value(call.Arguments[0]))
+		e.line("adamic_process_set_exit_code(%s);", code)
+		e.checkThrown()
+		return code
+	case "exit":
+		e.line("adamic_process_exit(%s);", e.value(call.Arguments[0]))
+		e.checkThrown()
+		return "0.0"
+	}
 	panic(fmt.Sprintf("native: unknown process operation %s", call.Operation))
 }
