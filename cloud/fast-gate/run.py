@@ -17,6 +17,7 @@ and --tools (as for --select) to include this change's conditional executors.
 Add --with-inputs for JSON lines with the exact unit line and its package/path inputs.
 Package roots include test imports for commands that compile tests; paths are content inputs.
 Unbounded runtime readers declare paths ["."] with an inputs.note explaining the limit.
+coverage's inputs also carry names, the changed paths it judges (coverageReduced), empty without --base (or --sha with --full).
 Merged logs, Git history/branch state, toolchain and external spool identity still belong
 in the pool's verdict key: repository content alone cannot identify those inputs.
 
@@ -265,7 +266,7 @@ def wasiCommands(names):
              "./internal/native"] for name in names]
 
 
-def wasiInputs(tree, unit, full):
+def wasiInputs(tree, unit, full, change):
     names = wasiFixtures(tree)
     if unit and unit not in names:
         raise ValueError("unknown WASI unit " + unit)
@@ -284,7 +285,7 @@ def wasiInputs(tree, unit, full):
     return inputs
 
 
-def catalogInputs(tree, unit, full):
+def catalogInputs(tree, unit, full, change):
     if not full:
         return {"packages": [], "paths": ["verify/catalog/check.sh"]}
     entries = [entry for entry in catalogEntries(tree) if not unit or str(entry["number"]) == unit]
@@ -302,10 +303,140 @@ def catalogInputs(tree, unit, full):
     return inputs
 
 
-def phaseInputs(tree, line, full=False, products=None):
+def executorMap(tools):
+    """The tools checkout's cloud/fast-gate/executors.txt, read once for cover() and coverageReduced(): its executor rules
+    in file order, its reads lines, whether it enforces, and the a-check exemption globs (never executors, so never rules)."""
+    rules, readers, enforce = [], [], True
+    with open(os.path.join(tools, "cloud/fast-gate/executors.txt")) as handle:
+        for number, line in enumerate(handle, 1):
+            fields = line.split()
+            if fields[:2] == ["mode", "report"]:
+                enforce = False  # record uncovered paths without failing, until the rulings are in
+            elif fields and fields[0] == "reads":
+                # "reads <package> <glob> paths": the test reads which paths exist, not what they hold
+                # (gitignore walks the whole tree), so only an added or deleted path changes its input.
+                if len(fields) not in (3, 4) or (len(fields) == 4 and fields[3] != "paths"):
+                    raise ValueError("invalid reads line %d: %s" % (number, line.strip()))
+                readers.append((number, fields[1], fields[2], len(fields) == 4))
+            elif fields and not fields[0].startswith("#") and fields[0] != "mode":
+                rules.append((fields[0], fields[1]))
+    # "a-check-exempt <glob>" lines aren't executors: they name .a files that aren't Adamic programs.
+    exempt = [glob for name, glob in rules if name == "a-check-exempt"]
+    return [rule for rule in rules if rule[0] != "a-check-exempt"], readers, enforce, exempt
+
+
+def firstExecutor(rules, path):
+    """A path's executor: the first rule, in file order, whose glob fits it (fnmatch, so * spans directories), or None."""
+    return next((name for name, glob in rules if fnmatch.fnmatchcase(path, glob)), None)
+
+
+def packageGraphCommand():
+    return ["go", "list", "-deps", "-test", "-json", "./..."]
+
+
+def goPackages(tree, listing):
+    """packageGraphCommand's records of tree, for touched() and coverageReduced(): each module package's directory (relative
+    to tree) and the files it embeds (real and test embeds apart), the reverse production and test import edges, and each
+    module package's directory as go list names it."""
+    directories, embedded, reverse, testReverse, packageDirectories = {}, {}, {}, {}, {}
+    testEmbedded, realEmbedded = set(), set()
+    tree = os.path.realpath(tree)
+    decoder = json.JSONDecoder()
+    remaining = listing.strip()
+    while remaining:
+        package, end = decoder.raw_decode(remaining)
+        remaining = remaining[end:].lstrip()
+        # go list -test emits synthetic test binaries and annotated package variants.
+        # A variant's Imports are test edges, never production edges.
+        importPath = package.get("ForTest") or package["ImportPath"].split(" [", 1)[0]
+        if package.get("Name") == "main" and importPath.endswith(".test"):
+            continue
+        variant = bool(package.get("ForTest")) or " [" in package["ImportPath"]
+        for dependency in package.get("Imports", []):
+            edges = testReverse if variant else reverse
+            edges.setdefault(dependency.split(" [", 1)[0], set()).add(importPath)
+        for dependency in set(package.get("TestImports", []) + package.get("XTestImports", [])):
+            testReverse.setdefault(dependency.split(" [", 1)[0], set()).add(importPath)
+        directory = package.get("Dir")
+        if not directory or not (importPath == module or importPath.startswith(module + "/")):
+            continue
+        relative = os.path.relpath(os.path.realpath(directory), tree)
+        directories[relative] = importPath
+        packageDirectories[importPath] = directory
+        for field in ("EmbedFiles", "TestEmbedFiles", "XTestEmbedFiles"):
+            for name in package.get(field, []):
+                path = os.path.normpath(os.path.join(relative, name))
+                embedded[path] = importPath
+                if field == "EmbedFiles" and not variant:
+                    realEmbedded.add(path)
+                else:
+                    testEmbedded.add(path)
+    return directories, embedded, realEmbedded, testEmbedded, reverse, testReverse, packageDirectories
+
+
+def packageOwner(directories, embedded, path):
+    """A path's package: its own directory's, one that embeds it, or the nearest package directory above it. None is unowned."""
+    directory = os.path.dirname(path) or "."
+    owner = directories.get(directory) or embedded.get(path)
+    ancestor = directory
+    while owner is None and ancestor not in (".", ""):
+        ancestor = os.path.dirname(ancestor) or "."
+        owner = directories.get(ancestor) if ancestor != "." else None
+    return owner
+
+
+def unownedPaths(directories, embedded, changed):
+    """The changed paths outside every Go package, which cover() maps to executors. compiler-dependencies.json is never
+    among them: touched() runs every package it declares when it changes."""
+    return [path for path in changed
+            if path != "cloud/fast-gate/compiler-dependencies.json" and packageOwner(directories, embedded, path) is None]
+
+
+def coverageReduced(tree, tools, changed, unowned=None):
+    """The changed paths the coverage phase judges, sorted (#gw93f6b, Node's ruling): each neither owned, inside a Go package
+    as touched() decides, nor inert, its first rule in tools' executors.txt being inert. The phase is red only for one of
+    these that no rule matches, so a change that leaves this empty (a README alone) gives coverage nothing to judge. A
+    deleted path is judged as any other. cover() passes the unowned paths touched() already found; the listing finds them
+    here, with the same go list and ownership."""
+    if unowned is None:
+        listing = subprocess.run(packageGraphCommand(), cwd=tree, capture_output=True, text=True, timeout=300)
+        if listing.returncode != 0:
+            raise SystemExit("go list failed: " + listing.stderr)
+        directories, embedded = goPackages(tree, listing.stdout)[:2]
+        unowned = unownedPaths(directories, embedded, changed)
+    rules = executorMap(tools)[0]
+    return sorted(path for path in unowned if firstExecutor(rules, path) != "inert")
+
+
+def coverageChanged(tree, change, full):
+    """The paths the coverage phase reads its diff as: a fast gate's base...sha (fastPhaseInputs), a whole gate's sha
+    against its first parent, none for a root commit (executePhase). Unquoted, as the gate reads them."""
+    if full:
+        parents = git(tree, "rev-list", "--parents", "-n", "1", change["sha"]).split()[1:]
+        if not parents:
+            return []
+        revisions = [parents[0], change["sha"]]
+    else:
+        revisions = ["%s...%s" % (change["base"], change["sha"])]
+    return [path for path in git(tree, "-c", "core.quotePath=false", "diff", "--name-only", *revisions).split("\n") if path]
+
+
+def coverageInputs(tree, unit, full, change):
+    inputs = treeInputs("coverage uses the base diff, package/source census and executor map across the tree")
+    if change is None:
+        inputs["names"] = []
+        inputs["note"] += "; names is empty because the listing had no change to classify (--base for a fast gate, --sha for the whole)"
+    else:
+        # The paths coverage judges, by the one classification cover() decides its red from.
+        inputs["names"] = coverageReduced(tree, change["tools"], coverageChanged(tree, change, full))
+        inputs["note"] += "; names are the changed paths it judges, those neither in a Go package nor inert"
+    return inputs
+
+
+def phaseInputs(tree, line, full=False, products=None, change=None):
     phase, _, unit = line.partition(" ")
     provider = phaseInputProviders.get(phase)
-    inputs = (provider(tree, unit, full) if provider else
+    inputs = (provider(tree, unit, full, change) if provider else
               treeInputs("phase has no bounded input provider"))
     if "." not in inputs["paths"]:
         # Every phase enters runPhase's npm setup, and runs this runner/config.
@@ -338,8 +469,14 @@ def listUnits():
     units = wholeUnits(arguments.tree) if arguments.full else fastUnits(arguments.tree, arguments.base, arguments.sha, arguments.tools)
     if arguments.with_inputs:
         products = productInputSources(arguments.tree) if arguments.full else None
+        # The change a provider may classify: a fast gate's --base against --sha (HEAD without it, as fastUnits), a whole
+        # gate's --sha against its first parent. None without them.
+        change = None
+        if (arguments.sha if arguments.full else arguments.base) is not None:
+            change = {"base": arguments.base, "sha": arguments.sha or git(arguments.tree, "rev-parse", "HEAD"),
+                      "tools": arguments.tools or arguments.tree}
         for unit in units:
-            print(json.dumps(phaseInputs(arguments.tree, unit, arguments.full, products)))
+            print(json.dumps(phaseInputs(arguments.tree, unit, arguments.full, products, change)))
     else:
         print("\n".join(units))
 
@@ -927,7 +1064,7 @@ class Gate:
         self.result["unit"] = unit
         return chosen
 
-    @declaresInputs("products", lambda tree, unit, full: treeInputs("products run arbitrary declared tests; runtime reads are not yet bounded"))
+    @declaresInputs("products", lambda tree, unit, full, change: treeInputs("products run arbitrary declared tests; runtime reads are not yet bounded"))
     def wholeProducts(self, log):
         if getattr(self, "wholeProductsDone", False):
             return self.exits.get("products", 0) == 0
@@ -1023,30 +1160,14 @@ class Gate:
             self.fail("census", "cloud/fast-gate/deferred.txt names tests the whole gate doesn't run to a verdict; take each off the list or give the gate its input:\n" +
                       "\n".join(["%s: census class %s, refused" % row for row in refused] + unrun))
 
-    @declaresInputs("coverage", lambda tree, unit, full: treeInputs("coverage uses the base diff, package/source census and executor map across the tree"))
+    @declaresInputs("coverage", coverageInputs)
     def cover(self, unowned, changed=(), pathSetChanged=None, record=True):
         """Each changed path outside a Go package to its executor (cloud/fast-gate/executors.txt from the
         tools checkout, since what counts as inert is a ruling, not the candidate's to change). Any path
         with none turns the gate red before anything runs. Reads rules independently add tests for
         matching changed paths, including package-owned paths. Returns executors, or None."""
-        rules, readers, enforce = [], [], True
-        with open(os.path.join(self.arguments.tools, "cloud/fast-gate/executors.txt")) as handle:
-            for number, line in enumerate(handle, 1):
-                fields = line.split()
-                if fields[:2] == ["mode", "report"]:
-                    enforce = False  # record uncovered paths without failing, until the rulings are in
-                elif fields and fields[0] == "reads":
-                    # "reads <package> <glob> paths": the test reads which paths exist, not what they hold
-                    # (gitignore walks the whole tree), so only an added or deleted path changes its input.
-                    if len(fields) not in (3, 4) or (len(fields) == 4 and fields[3] != "paths"):
-                        raise ValueError("invalid reads line %d: %s" % (number, line.strip()))
-                    readers.append((number, fields[1], fields[2], len(fields) == 4))
-                elif fields and not fields[0].startswith("#") and fields[0] != "mode":
-                    rules.append((fields[0], fields[1]))
-        # "a-check-exempt <glob>" lines aren't executors: they name .a files that aren't Adamic programs.
-        exempt = [glob for name, glob in rules if name == "a-check-exempt"]
-        rules = [rule for rule in rules if rule[0] != "a-check-exempt"]
-        executors, covered, uncovered, unchecked = set(), {}, [], []
+        rules, readers, enforce, exempt = executorMap(self.arguments.tools)
+        executors, covered, unchecked = set(), {}, []
         self.result["reads"] = []
         readerPackages = set()
         mapChanged = "cloud/fast-gate/executors.txt" in changed
@@ -1064,20 +1185,22 @@ class Gate:
         scripted = ("cohere", "workers", "bench-workers", "catalog", "darwin")
         self.scriptedPaths = {}
         for path in changed:
-            executor = next((name for name, glob in rules if fnmatch.fnmatchcase(path, glob)), None)
+            executor = firstExecutor(rules, path)
             if executor in scripted:
                 executors.add(executor)
                 self.scriptedPaths.setdefault(executor, []).append(path)
         for path in unowned:
-            executor = next((name for name, glob in rules if fnmatch.fnmatchcase(path, glob)), None)
-            if executor is None:
-                uncovered.append(path)
-            else:
+            executor = firstExecutor(rules, path)
+            if executor is not None:
                 executors.add(executor)
                 covered[executor] = covered.get(executor, 0) + 1
 
                 if executor == "darwin" and path not in self.result.get("needs_darwin", []):
                     self.result.setdefault("needs_darwin", []).append(path)
+        # Red is a path the listing's coverage names hold, neither owned nor inert (coverageReduced, one classification for
+        # both), that no rule matches; in the order touched() found them.
+        reduced = set(coverageReduced(self.arguments.tree, self.arguments.tools, changed, unowned))
+        uncovered = [path for path in unowned if path in reduced and firstExecutor(rules, path) is None]
         # Every changed .a outside a package gets a-check, beside whatever else runs for it (stage3's
         # probes too): the extension promises proven types wherever the file sits.
         # A ruled exemption is named in the result, never dropped silently.
@@ -1114,7 +1237,7 @@ class Gate:
         listing = self.command(["go", "list", pattern], cwd=self.arguments.tree, capture_output=True, text=True)
         return listing.stdout.split() if listing.returncode == 0 else []
 
-    @declaresInputs("workers", lambda tree, unit, full: treeInputs("conditional scripts and their runtime reads are not yet bounded"))
+    @declaresInputs("workers", lambda tree, unit, full, change: treeInputs("conditional scripts and their runtime reads are not yet bounded"))
     def workers(self, executors):
         """Platforms' executors for Cloudflare Workers (their inventory, Oct 7 20:59), each from the
         repository root on Node 24, and node --check for the workerd-only measurement harnesses."""
@@ -1146,7 +1269,7 @@ class Gate:
         if failed:
             self.fail("workers", "workers executor failed: %s (log %s.log)" % (failed[0], failed[0]))
 
-    @declaresInputs("a-check", lambda tree, unit, full: treeInputs("conditional source programs may import outside their directories"))
+    @declaresInputs("a-check", lambda tree, unit, full, change: treeInputs("conditional source programs may import outside their directories"))
     def aCheck(self, paths):
         """Each changed .a outside a package through stage 0's front end (adamic c: the checker's proven
         types, then the refusal pass; it stops before C): a clean result or a "can't lower ... yet" stop
@@ -1207,7 +1330,7 @@ class Gate:
                     touched.append(name)
         return touched
 
-    @declaresInputs("catalog-apply", lambda tree, unit, full: treeInputs("patch application reads candidate and base trees"))
+    @declaresInputs("catalog-apply", lambda tree, unit, full, change: treeInputs("patch application reads candidate and base trees"))
     def catalogApply(self, patches):
         """Staling moves to where it's cheap to fix (@system_adamic, Oct 7 21:28): an entry's undo patch
         that applied to main and no longer applies with this change makes the change red, naming the
@@ -1505,71 +1628,33 @@ class Gate:
         a package's tree is that package's to test). Reverse imports and compiler declarations then
         expand production owners transitively; test imports are followed only once at the end.
         Test source and data edits select their owners only. Anything unowned goes to cover()."""
-        listing = self.command(["go", "list", "-deps", "-test", "-json", "./..."],
-                               cwd=self.arguments.tree, capture_output=True, text=True)
+        listing = self.command(packageGraphCommand(), cwd=self.arguments.tree, capture_output=True, text=True)
         if listing.returncode != 0:
             raise SystemExit("go list failed: " + listing.stderr)
-        directories, embedded, reverse, testReverse = {}, {}, {}, {}
-        testEmbedded, realEmbedded = set(), set()
-        self.packageDirectories = {}
-        tree = os.path.realpath(self.arguments.tree)
-        decoder = json.JSONDecoder()
-        remaining = listing.stdout.strip()
-        while remaining:
-            package, end = decoder.raw_decode(remaining)
-            remaining = remaining[end:].lstrip()
-            # go list -test emits synthetic test binaries and annotated package variants.
-            # A variant's Imports are test edges, never production edges.
-            importPath = package.get("ForTest") or package["ImportPath"].split(" [", 1)[0]
-            if package.get("Name") == "main" and importPath.endswith(".test"):
-                continue
-            variant = bool(package.get("ForTest")) or " [" in package["ImportPath"]
-            for dependency in package.get("Imports", []):
-                edges = testReverse if variant else reverse
-                edges.setdefault(dependency.split(" [", 1)[0], set()).add(importPath)
-            for dependency in set(package.get("TestImports", []) + package.get("XTestImports", [])):
-                testReverse.setdefault(dependency.split(" [", 1)[0], set()).add(importPath)
-            directory = package.get("Dir")
-            if not directory or not (importPath == module or importPath.startswith(module + "/")):
-                continue
-            relative = os.path.relpath(os.path.realpath(directory), tree)
-            directories[relative] = importPath
-            self.packageDirectories[importPath] = directory
-            for field in ("EmbedFiles", "TestEmbedFiles", "XTestEmbedFiles"):
-                for name in package.get(field, []):
-                    path = os.path.normpath(os.path.join(relative, name))
-                    embedded[path] = importPath
-                    if field == "EmbedFiles" and not variant:
-                        realEmbedded.add(path)
-                    else:
-                        testEmbedded.add(path)
+        directories, embedded, realEmbedded, testEmbedded, reverse, testReverse, self.packageDirectories = goPackages(self.arguments.tree, listing.stdout)
         dependencies = self.compilerDependencies(directories, changed)
         self.memoryFloors(changed)
         for package, inputs in dependencies.items():
             for dependency in inputs:
                 reverse.setdefault(module + "/" + dependency, set()).add(module + "/" + package)
-        packages, testsOnly, unowned = set(), set(), []
+        packages, testsOnly = set(), set()
         # Another package's tests may read this package's testdata by path; test-reads.json names those readers. A tree
         # without it can't say, so its testdata edits keep seeding the whole closure. A _test.go edit is its own
         # package's alone either way: no other package can import a test file.
         readersDeclared = any(os.path.exists(os.path.join(root, "cloud/fast-gate/test-reads.json"))
                               for root in (self.arguments.tools, self.arguments.tree))
         for path in changed:
-            directory = os.path.dirname(path) or "."
-            owner = directories.get(directory) or embedded.get(path)
-            ancestor = directory
-            while owner is None and ancestor not in (".", ""):
-                ancestor = os.path.dirname(ancestor) or "."
-                owner = directories.get(ancestor) if ancestor != "." else None
+            owner = packageOwner(directories, embedded, path)
             if owner is None:
-                unowned.append(path)
+                continue
+            if path in realEmbedded:
+                packages.add(owner)
+            elif path.endswith("_test.go") or (readersDeclared and ("testdata" in path.split("/") or path in testEmbedded)):
+                testsOnly.add(owner)
             else:
-                if path in realEmbedded:
-                    packages.add(owner)
-                elif path.endswith("_test.go") or (readersDeclared and ("testdata" in path.split("/") or path in testEmbedded)):
-                    testsOnly.add(owner)
-                else:
-                    packages.add(owner)
+                packages.add(owner)
+        # The same walk as coverageReduced's, so what coverage judges is what reaches cover() from here.
+        unowned = unownedPaths(directories, embedded, changed)
         # Optional explicit test-input readers; these name tests, not closure seeds.
         for root in dict.fromkeys((self.arguments.tools, self.arguments.tree)):
             name = os.path.join(root, "cloud/fast-gate/test-reads.json")
@@ -1583,7 +1668,6 @@ class Gate:
                     testsOnly.add(module + "/" + reader)
         if "cloud/fast-gate/compiler-dependencies.json" in changed:
             packages.update(module + "/" + package for package in dependencies if package in directories)
-            unowned = [path for path in unowned if path != "cloud/fast-gate/compiler-dependencies.json"]
         changedPackages = packages | testsOnly
         pending = list(packages)
         while pending:
@@ -1841,7 +1925,7 @@ class Gate:
                 self.fail(name, handle.read()[-4000:])
         return code == 0
 
-    @declaresInputs("tools", lambda tree, unit, full: {"packages": [], "paths": toolsSourcePathspec + toolsAttributesPathspec})
+    @declaresInputs("tools", lambda tree, unit, full, change: {"packages": [], "paths": toolsSourcePathspec + toolsAttributesPathspec})
     def toolsDeclared(self):
         """Every command the repository's Go code runs by literal name is declared in the tools checkout's
         cloud/fast-gate/tools.txt, which the box checks before the gate (cloud/fast-gate/tools-check.sh).
@@ -1866,11 +1950,11 @@ class Gate:
         if undeclared:
             self.fail("tools", "\n".join(undeclared) + "\nDeclare each in cloud/fast-gate/tools.txt (devtools/fast-gate), with a check, and have setup provide it.")
 
-    @declaresInputs("build", lambda tree, unit, full: goCommandInputs(tree, goPhaseCommand("build")))
+    @declaresInputs("build", lambda tree, unit, full, change: goCommandInputs(tree, goPhaseCommand("build")))
     def build(self):
         self.result["build_ok"] = self.step("build", goPhaseCommand("build"))
 
-    @declaresInputs("vet", lambda tree, unit, full: goCommandInputs(tree, goPhaseCommand("vet")))
+    @declaresInputs("vet", lambda tree, unit, full, change: goCommandInputs(tree, goPhaseCommand("vet")))
     def vet(self):
         self.result["vet_ok"] = self.step("vet", goPhaseCommand("vet"))
 
@@ -2144,7 +2228,7 @@ class Gate:
             return None
         return output
 
-    @declaresInputs("smoke", lambda tree, unit, full: treeInputs("smoke source programs and their runtime/import reads are not yet bounded"))
+    @declaresInputs("smoke", lambda tree, unit, full, change: treeInputs("smoke source programs and their runtime/import reads are not yet bounded"))
     def smoke(self, smoke, log):
         """The pinned smoke set in one process, then a check that every entry passed in its lane: an entry
         that didn't run is red, whether its fixture was missing from a lane that ran or its lane didn't run at
@@ -2199,8 +2283,8 @@ class Gate:
         if self.failure is None:
             self.cacheDrain("upload")
 
-    @declaresInputs("upload", lambda tree, unit, full: treeInputs("publisher reads externally generated spool records; repository inputs alone do not identify the verdict"))
-    @declaresInputs("audit", lambda tree, unit, full: treeInputs("publisher reads externally generated audit/spool records; repository inputs alone do not identify the verdict"))
+    @declaresInputs("upload", lambda tree, unit, full, change: treeInputs("publisher reads externally generated spool records; repository inputs alone do not identify the verdict"))
+    @declaresInputs("audit", lambda tree, unit, full, change: treeInputs("publisher reads externally generated audit/spool records; repository inputs alone do not identify the verdict"))
     def cacheDrain(self, name):
         required = name == "audit"
         command = ["go", "run", "./internal/buildcache/cmd/buildcache-publish"]
@@ -2319,7 +2403,7 @@ class Gate:
                 self.fail(name, "%s exited %d\n%s" % (identity, code, handle.read()[-4000:]))
         return None if fatal and self.failure is not None and not self.arguments.full and not self.complete else code
 
-    @declaresInputs("census", lambda tree, unit, full: treeInputs("skip census walks the whole repository and reads the supplied merged log and Git branch state"))
+    @declaresInputs("census", lambda tree, unit, full, change: treeInputs("skip census walks the whole repository and reads the supplied merged log and Git branch state"))
     def checkCensus(self):
         started = time.monotonic()
         tools = self.arguments.tools

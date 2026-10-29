@@ -2763,7 +2763,7 @@ class PhaseInputs(unittest.TestCase):
     def test_tools_reads_the_go_sources_it_greps_and_no_more(self):
         # The tools phase declares exactly the pathspec its git grep searches (#gw93f6b): one list, so the two can't drift,
         # and never the whole tree. Mutant: the grep searching a wider pathspec than the declaration, red.
-        declared = run.phaseInputProviders["tools"](self.tree, "", False)
+        declared = run.phaseInputProviders["tools"](self.tree, "", False, None)
         # What the grep searches, and every .gitattributes, which git grep reads beside each file (the Pupa trace).
         self.assertEqual(declared["paths"], run.toolsSourcePathspec + run.toolsAttributesPathspec)
         attributes = realRun(["git", "-C", self.tree, "ls-files", "--"] + run.toolsAttributesPathspec,
@@ -2781,8 +2781,8 @@ class PhaseInputs(unittest.TestCase):
     def test_wasi_fixture_path_mutant_is_caught(self):
         original = run.phaseInputProviders["wasi"]
         fixture = run.wasiFixtures(self.tree)[0]
-        def mutant(tree, unit, full):
-            inputs = original(tree, unit, full)
+        def mutant(tree, unit, full, change):
+            inputs = original(tree, unit, full, change)
             inputs["paths"].remove(os.path.dirname(fixture))
             return inputs
         with mock.patch.dict(run.phaseInputProviders, wasi=mutant):
@@ -2790,6 +2790,107 @@ class PhaseInputs(unittest.TestCase):
             PhaseInputs("test_wasi_inputs_cover_inventory_and_command_working_directories").run(result)
         self.assertEqual(len(result.failures), 1, result.errors)
         self.assertEqual(result.errors, [])
+
+
+class CoverageNames(unittest.TestCase):
+    """Coverage keys on its own classification of the change (#gw93f6b, Node's ruling): the changed paths neither in a Go
+    package nor inert, by run.coverageReduced alone, which cover() decides its red from and --with-inputs names. A README
+    alone reduces to nothing, so the planner can reuse an earlier pass. Mutants, each red here: cover() deciding from its
+    own rule loop; inert paths kept; owned paths kept; a deleted path dropped."""
+
+    def setUp(self):
+        scratch = tempfile.TemporaryDirectory()
+        self.addCleanup(scratch.cleanup)
+        # One level down: a listing's Gate keeps its build-store directories beside the tree, inside the scratch.
+        self.tree = os.path.join(scratch.name, "tree")
+        sources = {
+            "go.mod": "module " + run.module + "\ngo 1.24\n",
+            "a/a.go": "package a\n",
+            "README.md": "# probe\n",
+            "tools/kept.py": "kept\n",
+            "tools/gone.sh": "gone\n",
+            "cloud/fast-gate/compiler-dependencies.json": '{"version":1,"packages":{}}',
+            "cloud/fast-gate/unit-needs.json": '{"version":1,"units":[]}',
+            "cloud/fast-gate/executors.txt": "mode enforce\ninert *.md\ninert cloud/*\nbuild tools/*\n",
+        }
+        for name, source in sources.items():
+            path = os.path.join(self.tree, name)
+            os.makedirs(os.path.dirname(path), exist_ok=True)
+            with open(path, "w") as handle:
+                handle.write(source)
+        self.base = self.commit("base")
+        # The change: the README, a package's source, a ruled unowned file, a new file no rule matches, a deleted one.
+        for name, source in (("README.md", "# probe, edited\n"), ("a/a.go", "package a\n\nvar A = 1\n"),
+                             ("tools/kept.py", "kept, edited\n"), ("stray/unruled.txt", "stray\n")):
+            os.makedirs(os.path.dirname(os.path.join(self.tree, name)), exist_ok=True)
+            with open(os.path.join(self.tree, name), "w") as handle:
+                handle.write(source)
+        os.remove(os.path.join(self.tree, "tools/gone.sh"))
+        self.sha = self.commit("change")
+
+    def commit(self, message):
+        for command in (["init", "-q"], ["add", "-A"], ["-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", message]):
+            realRun(["git", "-C", self.tree] + command, check=True)
+        return run.git(self.tree, "rev-parse", "HEAD")
+
+    def reduced(self, changed):
+        return run.coverageReduced(self.tree, self.tree, changed)
+
+    def test_a_readme_alone_reduces_to_nothing(self):
+        self.assertEqual(self.reduced(["README.md"]), [])
+        # adamic's own map rules a README inert too, its ownership given as cover() gives it.
+        repository = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+        self.assertEqual(run.coverageReduced(repository, repository, ["README.md"], ["README.md"]), [])
+
+    def test_a_go_file_in_a_package_reduces_to_nothing(self):
+        self.assertEqual(self.reduced(["a/a.go"]), [])
+
+    def test_an_unowned_path_a_rule_runs_stays(self):
+        self.assertEqual(self.reduced(["tools/kept.py"]), ["tools/kept.py"])
+
+    def test_an_unowned_path_no_rule_matches_stays(self):
+        self.assertEqual(self.reduced(["stray/unruled.txt"]), ["stray/unruled.txt"])
+
+    def test_a_deleted_unowned_path_stays_by_name(self):
+        self.assertFalse(os.path.exists(os.path.join(self.tree, "tools/gone.sh")))
+        self.assertEqual(self.reduced(["tools/gone.sh"]), ["tools/gone.sh"])
+
+    def test_the_listing_names_what_coverage_judges(self):
+        def listed(*arguments):
+            output = realRun([sys.executable, run.__file__, "--list-units", "--with-inputs", "--tree", self.tree] + list(arguments),
+                             capture_output=True, text=True, check=True, timeout=120).stdout
+            return {row["unit"]: row["inputs"] for row in map(json.loads, output.splitlines())}
+        rows = listed("--base", self.base, "--sha", self.sha, "--tools", self.tree)
+        changed = [path for path in run.git(self.tree, "diff", "--name-only", self.base + "..." + self.sha).split("\n") if path]
+        self.assertEqual(rows["coverage"]["names"], run.coverageReduced(self.tree, self.tree, changed))
+        self.assertEqual(rows["coverage"]["names"], ["stray/unruled.txt", "tools/gone.sh", "tools/kept.py"])
+        self.assertEqual(rows["coverage"]["paths"], ["."])
+        self.assertEqual([unit for unit, inputs in rows.items() if "names" in inputs], ["coverage"])
+        # Without a change there is nothing to classify, and the note says so.
+        bare = listed()["coverage"]
+        self.assertEqual(bare["names"], [])
+        self.assertIn("names is empty", bare["note"])
+        # The whole gate's coverage reads the sha against its first parent, and a root commit changes nothing it judges.
+        whole = {"base": None, "sha": self.sha, "tools": self.tree}
+        self.assertEqual(run.phaseInputs(self.tree, "coverage", True, ([], False), whole)["inputs"]["names"], rows["coverage"]["names"])
+        self.assertEqual(run.phaseInputs(self.tree, "coverage", True, ([], False), dict(whole, sha=self.base))["inputs"]["names"], [])
+
+    def test_cover_and_the_listing_both_classify_through_coverage_reduced(self):
+        gate = run.Gate.__new__(run.Gate)
+        gate.arguments = types.SimpleNamespace(tree=self.tree, tools=self.tree)
+        gate.result, gate.steps, gate.exits = {}, {}, {}
+        changed = ["README.md", "a/a.go", "stray/unruled.txt", "tools/gone.sh", "tools/kept.py"]
+        unowned = ["README.md", "stray/unruled.txt", "tools/gone.sh", "tools/kept.py"]
+        with mock.patch.object(run, "coverageReduced", wraps=run.coverageReduced) as reduced:
+            gate.cover(unowned, changed, record=False)
+            self.assertEqual(reduced.call_count, 1)
+            self.assertEqual(gate.result["uncovered_files"], ["stray/unruled.txt"])
+            run.phaseInputs(self.tree, "coverage", False, None, {"base": self.base, "sha": self.sha, "tools": self.tree})
+            self.assertEqual(reduced.call_count, 2)
+        # cover()'s red follows the function: a path it doesn't keep is never uncovered.
+        with mock.patch.object(run, "coverageReduced", return_value=[]):
+            gate.cover(unowned, changed, record=False)
+        self.assertEqual(gate.result["uncovered_files"], [])
 
 
 class ListUnitsRefusal(unittest.TestCase):
