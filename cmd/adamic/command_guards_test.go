@@ -30,14 +30,26 @@ func TestBuildWASISanitizeTargetAfterSource(t *testing.T) {
 	assertWASISanitizeRefusal(t, source, []string{"build", source, "-o", filepath.Join(t.TempDir(), "out.wasm"), "--target", "wasm32-wasi", "--sanitize"})
 }
 
+// --debug is refused on wasm32-wasi rather than ignored: the module would carry no line table. Mutant: drop
+// ValidateOptions' Debug refusal, and the build goes on to WASI_SYSROOT or the SDK.
+func TestBuildWASIDebugTarget(t *testing.T) {
+	t.Parallel()
+	source := "testdata/build_target.a"
+	assertWASITargetRefusal(t, source, []string{"build", "--target", "wasm32-wasi", source, "-o", filepath.Join(t.TempDir(), "out.wasm"), "--debug"}, "adamic: native: debug builds are not supported for wasm32-wasi\n")
+}
+
 func assertWASISanitizeRefusal(t *testing.T, source string, arguments []string) {
+	t.Helper()
+	assertWASITargetRefusal(t, source, arguments, "adamic: native: sanitizers are not supported for wasm32-wasi\n")
+}
+
+func assertWASITargetRefusal(t *testing.T, source string, arguments []string, want string) {
 	t.Helper()
 	// A failed load must not stand in for the unsupported-options refusal.
 	if code, _, diagnostic := runGuardCommand(t, []string{"types", source}); code != 0 || diagnostic != "" {
 		t.Fatalf("fixture must load: got exit %d and stderr %q", code, diagnostic)
 	}
 	code, output, diagnostic := runGuardCommand(t, arguments)
-	want := "adamic: native: sanitizers are not supported for wasm32-wasi\n"
 	if code != 1 || output != "" || diagnostic != want {
 		t.Fatalf("%v: got exit %d, stdout %q, stderr %q; want exit 1 and stderr %q", arguments, code, output, diagnostic, want)
 	}
