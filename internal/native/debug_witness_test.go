@@ -31,7 +31,20 @@ func requireDebugWitnessBytes(t *testing.T, directory, first, second string) {
 // executables built ahead from different disposable source directories.
 func TestDebugLineWitnessReproducible(t *testing.T) {
 	t.Parallel()
-	requireDebugWitnessBytes(t, debugLineProduct(t, false), "program", "program-again")
+	directory := debugLineProduct(t, false)
+	requireDebugWitnessBytes(t, directory, "program", "program-again")
+	// A release build records no comp_dir, so it needs no map to match.
+	release, err := os.ReadFile(filepath.Join(directory, "release"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	again, err := os.ReadFile(filepath.Join(directory, "release-again"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal(release, again) {
+		t.Fatal("release witnesses differ between entry directories")
+	}
 }
 
 func TestDebugCommandWitnessReproducible(t *testing.T) {
