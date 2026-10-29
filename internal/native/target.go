@@ -26,6 +26,11 @@ func ValidateOptions(options Options) error {
 	if options.Sanitize {
 		return fmt.Errorf("native: sanitizers are not supported for wasm32-wasi")
 	}
+	// The WASI emitter writes no #line directives and WASILinkFlags strips debug sections, so a debug
+	// module would be the release one, built slower, and say nothing.
+	if options.Debug {
+		return fmt.Errorf("native: debug builds are not supported for wasm32-wasi")
+	}
 	if options.cpu != "" {
 		return fmt.Errorf("native: native CPU selection is not supported for wasm32-wasi")
 	}
