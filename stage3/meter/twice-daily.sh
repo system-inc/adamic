@@ -33,6 +33,9 @@ stamp=$(date -u +%Y%m%dT%H%M%SZ)
 run=$(mktemp -d "$runs/$stamp.XXXXXX")
 scratch=$(mktemp -d "${TMPDIR:-/tmp}/stage3-meter.XXXXXX")
 printf 'run: %s\n' "$run"
+# Capture this box before building or preparing either measured tree.
+python3 "$repository/stage3/meter/box.py" "$run/box.json" start
+
 # apply deliberately requires an explicit upstream input on a cold cache.
 # Bootstrap the exact recorded tag when the scheduler has not supplied one.
 if [[ -z ${ADAMIC_TYPESCRIPT_SOURCE:-} && -f $repository/stage3/source.json ]]; then
@@ -107,7 +110,7 @@ for label in main area; do
     "$binaries/census" "$entry" "$run/$label/tsc/census.jsonl" > "$run/$label/tsc/census.log" 2>&1
     LATENT_FULL=$latent_full LATENT_ASSERT_NO_OUTPUT=1 "$binaries/entry-census" "$entry" "$run/$label/tsc/latent.jsonl" > "$run/$label/tsc/latent.log" 2>&1
     "$binaries/census" "$scratch/$label-adapted/src/compiler" "$run/$label/census.jsonl" > "$run/$label/census.log" 2>&1
-    LATENT_FULL=$latent_full LATENT_ASSERT_NO_OUTPUT=1 "$binaries/latent-census" "$scratch/$label-adapted/src/compiler" "$run/$label/latent.jsonl" > "$run/$label/latent.log" 2>&1
+    LATENT_TIMES="$run/$label/latent-times.jsonl" LATENT_FULL=$latent_full LATENT_ASSERT_NO_OUTPUT=1 "$binaries/latent-census" "$scratch/$label-adapted/src/compiler" "$run/$label/latent.jsonl" > "$run/$label/latent.log" 2>&1
     ) &
     measurement_pids+=("$!")
 done
@@ -116,8 +119,9 @@ for pid in "${measurement_pids[@]}"; do
     wait "$pid" || measurement_status=$?
 done
 [[ $measurement_status == 0 ]] || exit "$measurement_status"
+python3 "$repository/stage3/meter/box.py" "$run/box.json" end
 python3 stage3/meter/report.py "$scratch/main-adapted" "$scratch/area-adapted" "$run" "$stamp" "$main_commit" "$area_commit"
-gzip "$run/main/tsc/census.jsonl" "$run/area/tsc/census.jsonl" "$run/main/tsc/latent.jsonl" "$run/area/tsc/latent.jsonl" "$run/main/census.jsonl" "$run/area/census.jsonl" "$run/main/latent.jsonl" "$run/area/latent.jsonl"
+gzip "$run/main/latent-times.jsonl" "$run/area/latent-times.jsonl" "$run/main/tsc/census.jsonl" "$run/area/tsc/census.jsonl" "$run/main/tsc/latent.jsonl" "$run/area/tsc/latent.jsonl" "$run/main/census.jsonl" "$run/area/census.jsonl" "$run/main/latent.jsonl" "$run/area/latent.jsonl"
 python3 - "$run" "$SECONDS" <<'PYTHON'
 import json, pathlib, sys
 run = pathlib.Path(sys.argv[1])
