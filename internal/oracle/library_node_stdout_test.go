@@ -109,3 +109,28 @@ func stdoutWASIClosedPipe(t *testing.T, source string) {
 	}
 	stdoutClosedPipe(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/wasi.mjs"), wasm)
 }
+
+func TestStdoutWriteParenthesizedReceiverMatchesNode(t *testing.T) {
+	t.Parallel()
+	path := filepath.Join(t.TempDir(), "main.a")
+	source := "import process from 'node:process';\n(process.stdout).write('x');\n"
+	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	if truth.exitCode != 0 || string(truth.stdout) != "x" || len(truth.stderr) != 0 {
+		t.Fatalf("Node witness changed: %+v", truth)
+	}
+	js := onJavaScriptBackend(t, program)
+	actual, _ := nativelyUncached(t, program)
+	if d := disagreement(truth, js); d != "" {
+		t.Fatal("javascript: " + d)
+	}
+	if d := disagreement(truth, actual); d != "" {
+		t.Fatal("native: " + d)
+	}
+}
