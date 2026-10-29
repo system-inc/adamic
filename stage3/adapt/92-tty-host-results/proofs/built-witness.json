@@ -1,0 +1,18 @@
+{
+  "test": "TestBuiltTTYConsumerEquivalence",
+  "stdio": "pipe",
+  "before": {
+    "node": "v24.19.0",
+    "width": "undefined",
+    "tty": "undefined",
+    "widthReader": 0,
+    "prettyReader": false
+  },
+  "after": {
+    "node": "v24.19.0",
+    "width": 0,
+    "tty": false,
+    "widthReader": 0,
+    "prettyReader": false
+  }
+}
