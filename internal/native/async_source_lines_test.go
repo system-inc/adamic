@@ -121,3 +121,27 @@ func TestDebugAsyncSourceInheritance(t *testing.T) {
 		t.Fatal("nested marker did not override its inherited marker")
 	}
 }
+
+func TestDebugAsyncUnexportedFields(t *testing.T) {
+	t.Parallel()
+	hidden := []ir.Statement{ir.SourceLine{File: "hidden.a", Line: 99}, ir.Debugger{}}
+	visible := []ir.Statement{ir.SourceLine{File: "visible.a", Line: 3}, ir.Debugger{}}
+	value := reflect.ValueOf(struct {
+		hidden  []ir.Statement
+		Visible []ir.Statement
+	}{hidden: hidden, Visible: visible})
+	t.Run("struct", func(t *testing.T) {
+		locations := asyncSourceLineValues(value)
+		if _, found := locations[&hidden[1]]; found {
+			t.Fatal("walked an unexported field")
+		}
+		if locations[&visible[1]] != (ir.SourceLine{File: "visible.a", Line: 3}) {
+			t.Fatal("lost the exported field's marker")
+		}
+	})
+	t.Run("field", func(t *testing.T) {
+		if locations := asyncSourceLineValues(value.Field(0)); len(locations) != 0 {
+			t.Fatal("walked a non-interfaceable value")
+		}
+	})
+}
