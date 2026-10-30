@@ -13,7 +13,7 @@ type NodeFSFile struct {
 func (call NodeFSFile) Type() Type { return call.Of }
 func (call NodeFSFile) MayThrow() bool {
 	switch call.Operation {
-	case "host_stdout_is_tty", "host_stdout_write", "host_env", "host_platform", "exists", "is_file", "is_directory", "is_symbolic_link", "date_new", "date_time":
+	case "host_stdout_columns", "host_stdout_is_tty", "host_stdout_write", "host_env", "host_platform", "exists", "is_file", "is_directory", "is_symbolic_link", "date_new", "date_time":
 		return false
 	}
 	return true

@@ -299,7 +299,12 @@ void adamic_start(int count, char **values) {
 
 // Both entry points register teardown, including a program that only writes raw text.
 // The caller holds output_lock.
+#include "stdout_tty_impl.h"
+
 static void output_start(void) {
+#ifndef ADAMIC_TARGET_WASI
+	stdout_tty_start();
+#endif
 	if (output_mode == 0) {
 #ifndef ADAMIC_TARGET_WASI
 		struct stat destination;
