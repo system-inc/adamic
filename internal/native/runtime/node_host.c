@@ -4,6 +4,7 @@
 #define _DARWIN_C_SOURCE
 #include "adamic.h"
 #include "host_platform.h"
+#include "node_cwd_wasi.h"
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
@@ -157,6 +158,9 @@ static const adamic_shape shape = {3, directory_error_names, references, NULL, k
 }
 
 adamic_string *adamic_fs_file_host_cwd(void) {
+#ifdef ADAMIC_TARGET_WASI
+    adamic_node_wasi_cwd();
+#endif
     if (!cleanup_registered) { atexit(finish_directory); cleanup_registered = true; }
     if (current_directory != NULL) { return adamic_retain(current_directory); }
     size_t capacity = 256;
@@ -192,6 +196,9 @@ static char *environment_text(const adamic_string *text) {
 }
 
 double adamic_fs_file_host_chdir(const adamic_string *directory) {
+#ifdef ADAMIC_TARGET_WASI
+    adamic_node_wasi_cwd();
+#endif
     char *path = environment_text(directory);
     if (chdir(path) == 0) {
         free(path);
