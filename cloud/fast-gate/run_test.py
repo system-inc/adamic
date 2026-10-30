@@ -2895,7 +2895,7 @@ class CoverageNames(unittest.TestCase):
 
 class CoverageMarkdownOnly(unittest.TestCase):
     """Coverage keys on the tree's Go state alone for a change whose every path is a modified Markdown file its map rules
-    inert (#gw93f6b, Node's ruling), by run.coverageMarkdownOnly alone, which --with-inputs asks; anything else keeps the
+    inert (#gw93f6b, Node's ruling), by run.markdownOnly alone, which --with-inputs asks; anything else keeps the
     whole tree and its names. Mutants, each red here: the modified filter dropped; any inert path allowed; the embedded
     check dropped; cohere left out of the narrowed paths."""
 
@@ -2951,7 +2951,7 @@ class CoverageMarkdownOnly(unittest.TestCase):
     def readmeOn(self, edit):
         # A Markdown-only change on a Go state the edit made: eligible, so its key is the narrowed one.
         change = self.change(lambda: self.write("README.md", "# probe, edited\n"), self.change(edit)["sha"])
-        self.assertTrue(run.coverageMarkdownOnly(self.tree, self.tree, change, False))
+        self.assertTrue(run.markdownOnly(self.tree, self.tree, change, False))
         return change
 
     def inputs(self, change):
@@ -2966,7 +2966,7 @@ class CoverageMarkdownOnly(unittest.TestCase):
     def test_two_markdown_edits_key_alike_on_the_go_state(self):
         readme = self.change(lambda: self.write("README.md", "# probe, edited\n"))
         guide = self.change(lambda: self.write("docs/guide.md", "# guide, edited\n"))
-        self.assertTrue(run.coverageMarkdownOnly(self.tree, self.tree, readme, False))
+        self.assertTrue(run.markdownOnly(self.tree, self.tree, readme, False))
         self.assertNotIn(".", self.inputs(readme)["paths"])
         self.assertIn("cohere", self.inputs(readme)["paths"])
         self.assertEqual(self.keyed(readme), self.keyed(guide))
@@ -2994,7 +2994,7 @@ class CoverageMarkdownOnly(unittest.TestCase):
         def both():
             self.write("README.md", "# probe, edited\n")
             self.write("go.mod", "module " + run.module + "\ngo 1.24\n\n// edited\n")
-        self.assertFalse(run.coverageMarkdownOnly(self.tree, self.tree, self.change(both), False))
+        self.assertFalse(run.markdownOnly(self.tree, self.tree, self.change(both), False))
         self.assertNotEqual(self.keyed(readme), self.keyed(self.change(both)))
 
     def test_anything_else_keeps_the_whole_tree(self):
@@ -3014,19 +3014,68 @@ class CoverageMarkdownOnly(unittest.TestCase):
         for name, edit in cases.items():
             with self.subTest(name):
                 change = self.change(edit)
-                self.assertFalse(run.coverageMarkdownOnly(self.tree, self.tree, change, False))
+                self.assertFalse(run.markdownOnly(self.tree, self.tree, change, False))
                 self.assertEqual(self.inputs(change)["paths"], ["."])
 
     def test_a_diff_that_does_not_read_is_no(self):
         change = {"base": "0" * 40, "sha": self.base, "tools": self.tree}
-        self.assertFalse(run.coverageMarkdownOnly(self.tree, self.tree, change, False))
-        self.assertFalse(run.coverageMarkdownOnly(self.tree, self.tree, None, False))
+        self.assertFalse(run.markdownOnly(self.tree, self.tree, change, False))
+        self.assertFalse(run.markdownOnly(self.tree, self.tree, None, False))
 
     def test_the_whole_gate_reads_the_sha_against_its_first_parent(self):
         readme = self.change(lambda: self.write("README.md", "# probe, edited\n"))
-        self.assertTrue(run.coverageMarkdownOnly(self.tree, self.tree, dict(readme, base=None), True))
+        self.assertTrue(run.markdownOnly(self.tree, self.tree, dict(readme, base=None), True))
         # The cohere commit against the first: a gitlink added, never Markdown.
-        self.assertFalse(run.coverageMarkdownOnly(self.tree, self.tree, dict(readme, base=None, sha=self.base), True))
+        self.assertFalse(run.markdownOnly(self.tree, self.tree, dict(readme, base=None, sha=self.base), True))
+
+
+class SmokeMarkdownOnly(unittest.TestCase):
+    """Smoke keys on every tracked file but the Markdown no package embeds for a change markdownOnly allows (#q11k6k6,
+    Node's ruling), and on the whole tree otherwise. An embedded file stays in the key by content, since go test compiles
+    its bytes. Mutants, each red here: every Markdown file excluded, embedded ones too; the narrowed paths only the .go
+    files; the narrowing taken for an added Markdown file."""
+
+    setUp, write, commit, change, readmeOn = (CoverageMarkdownOnly.setUp, CoverageMarkdownOnly.write, CoverageMarkdownOnly.commit,
+                                              CoverageMarkdownOnly.change, CoverageMarkdownOnly.readmeOn)
+
+    def inputs(self, change):
+        return run.phaseInputs(self.tree, "smoke", False, None, change)["inputs"]
+
+    def keyed(self, change):
+        realRun(["git", "-C", self.tree, "checkout", "-q", "--detach", change["sha"]], check=True)
+        inputs = self.inputs(change)
+        return inputs["paths"], inputs["names"], run.git(self.tree, "ls-files", "-s", "--", *inputs["paths"])
+
+    def test_two_markdown_edits_key_alike_on_every_other_file(self):
+        readme = self.change(lambda: self.write("README.md", "# probe, edited\n"))
+        guide = self.change(lambda: self.write("docs/guide.md", "# guide, edited\n"))
+        self.assertNotIn(".", self.inputs(readme)["paths"])
+        self.assertEqual(self.keyed(readme)[2], self.keyed(guide)[2])
+        listed = self.keyed(readme)[2]
+        self.assertNotIn("\tREADME.md", listed)
+        self.assertIn("\ta/doc.md", listed)  # embedded: kept by content
+        self.assertIn("160000 %s 0\tcohere" % self.cohere, listed)
+
+    def test_every_other_file_moves_the_key(self):
+        readme = self.change(lambda: self.write("README.md", "# probe, edited\n"))
+        states = {
+            "an embedded markdown file": lambda: self.write("a/doc.md", "# embedded, edited\n"),
+            "a go source": lambda: self.write("sub/s.go", "package sub\n\nvar S = 1\n"),
+            "a fixture beside the source": lambda: self.write("a/testdata/case.a", "let x = 1;\n"),
+            "a driver script": lambda: self.write("stage3/drivers/parser/evidence/probe.py", "print(2)\n"),
+            "cohere moved": lambda: realRun(["git", "-C", self.tree, "update-index", "--cacheinfo", "160000,%s,cohere" % self.base], check=True),
+        }
+        for name, edit in states.items():
+            with self.subTest(name):
+                self.assertNotEqual(self.keyed(readme)[2], self.keyed(self.readmeOn(edit))[2])
+
+    def test_anything_else_keeps_the_whole_tree(self):
+        for name, edit in {"an added markdown file": lambda: self.write("docs/new.md", "# new\n"),
+                           "an embedded markdown file": lambda: self.write("a/doc.md", "# embedded, edited\n"),
+                           "a go source": lambda: self.write("sub/s.go", "package sub\n\nvar S = 2\n"),
+                           "nothing": lambda: None}.items():
+            with self.subTest(name):
+                self.assertEqual(self.inputs(self.change(edit))["paths"], ["."])
 
 
 class ListUnitsRefusal(unittest.TestCase):
