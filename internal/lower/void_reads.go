@@ -23,7 +23,7 @@ func (l *lowering) refuseVoidRead(node *ast.Node) error {
 	if node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.AsPropertyAccessExpression().Name() == node {
 		return nil // The access is the read, never the name it reads.
 	}
-	if l.checker.GetTypeAtLocation(node).Flags() != checker.TypeFlagsVoid || l.brandRead(node) {
+	if !l.voidValued(l.checker.GetTypeAtLocation(node)) || l.brandRead(node) {
 		return nil
 	}
 	read := l.voidReadRole(node)
@@ -34,6 +34,53 @@ func (l *lowering) refuseVoidRead(node *ast.Node) error {
 }
 
 func init() { refusalRules.register(3250, "refuseVoidRead", (*lowering).refuseVoidRead) }
+
+// voidValued is whether a value of type t can be a discarded result: t is exactly void, or t, or a member
+// of its union, is an intersection with a void part (#jvw7qww, ruled Oct 30). `F & void` claims void-ness
+// as void does, so a value seen through it can be a value a void call discarded. The exception is a
+// phantom primitive brand, which phantomBase recognizes: a void part intersected only with objects whose
+// members are all phantom (void or undefined, not symbol-keyed, not a name the primitive has), and at
+// least one of them, so `void & {}` brands nothing. tsc's __String has one such arm,
+// `void & { __escapedIdentifier: void }`, and no function returning a value relates to a return type of
+// that shape without a cast, which item 8 refuses or checks. It's the exemption brandRead gives the read
+// of a brand's member.
+func (l *lowering) voidValued(t *checker.Type) bool {
+	if t.Flags() == checker.TypeFlagsVoid {
+		return true
+	}
+	members := []*checker.Type{t}
+	if t.Flags()&checker.TypeFlagsUnion != 0 {
+		members = t.Types()
+	}
+	for _, member := range members {
+		if member.Flags()&checker.TypeFlagsIntersection == 0 {
+			continue
+		}
+		voidPart := false
+		for _, part := range member.Types() {
+			voidPart = voidPart || part.Flags()&checker.TypeFlagsVoid != 0
+		}
+		if voidPart && !l.phantomVoidBrand(member) {
+			return true
+		}
+	}
+	return false
+}
+
+// phantomVoidBrand is whether intersection is a phantom primitive brand by phantomBase's own test, with
+// at least one brand member, so it names the brand without holding a value.
+func (l *lowering) phantomVoidBrand(intersection *checker.Type) bool {
+	if l.phantomBase(intersection) == nil {
+		return false
+	}
+	_, objects := l.phantomParts(intersection)
+	for _, object := range objects {
+		if len(l.checker.GetPropertiesOfType(object)) != 0 {
+			return true
+		}
+	}
+	return false
+}
 
 // voidReadRole is what the place a void value stands in does with it, or "" where it's discarded. A
 // conditional's branch, the right of &&, || and ??, and the operand of await, as, satisfies and !, stand
@@ -99,7 +146,7 @@ func (l *lowering) voidReadRole(node *ast.Node) string {
 	case ast.KindVariableDeclaration, ast.KindPropertyDeclaration, ast.KindParameter, ast.KindBindingElement:
 		// A binding that stays void keeps nothing anyone can see: a read of its name is refused there.
 		// One typed wider would hand the value on.
-		if name := parent.Name(); name != nil && name.Kind == ast.KindIdentifier && l.checker.GetTypeAtLocation(name).Flags() == checker.TypeFlagsVoid {
+		if name := parent.Name(); name != nil && name.Kind == ast.KindIdentifier && l.voidValued(l.checker.GetTypeAtLocation(name)) {
 			return ""
 		}
 		return "a binding's initializer"
