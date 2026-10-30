@@ -217,9 +217,9 @@ func runWasmtimeInputShard(t *testing.T, shard int) {
 		return
 	}
 	planted, probing := familyProbe("TestWasmtimeInputAgreesWithNode")
-	pass, limits, fail, skip := 0, 0, 0, 0
+	pass, limits, refused, fail, skip := 0, 0, 0, 0, 0
 	defer func() {
-		t.Logf("wasmtime input shard=%d fixtures=%d pass=%d limitations=%d fail=%d skip=%d", shard, pass+limits+fail+skip, pass, limits, fail, skip)
+		t.Logf("wasmtime input shard=%d fixtures=%d pass=%d limitations=%d refused=%d fail=%d skip=%d", shard, pass+limits+refused+fail+skip, pass, limits, refused, fail, skip)
 	}()
 	for _, index := range rows {
 		fixture := inputFixtures[index]
@@ -233,7 +233,7 @@ func runWasmtimeInputShard(t *testing.T, shard int) {
 			}
 		}
 		t.Run(fixture.path, func(t *testing.T) {
-			limited := false
+			limited, wasRefused := false, false
 			defer func() {
 				if t.Failed() {
 					fail++
@@ -241,6 +241,8 @@ func runWasmtimeInputShard(t *testing.T, shard int) {
 				} else if t.Skipped() {
 					skip++
 					t.Log("SKIP", fixture.path)
+				} else if wasRefused {
+					refused++
 				} else if limited {
 					limits++
 					t.Log("LIMIT", fixture.path)
@@ -249,7 +251,7 @@ func runWasmtimeInputShard(t *testing.T, shard int) {
 					t.Log("PASS", fixture.path)
 				}
 			}()
-			limited = runWASIInputFixture(t, fixture.path, fixture.arguments, fixture.unreadable, fixture.writes, fixture.plainNames, engine)
+			limited, wasRefused = runWASIInputFixture(t, fixture.path, fixture.arguments, fixture.unreadable, fixture.writes, fixture.plainNames, engine)
 		})
 	}
 }

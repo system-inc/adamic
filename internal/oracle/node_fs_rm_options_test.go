@@ -165,7 +165,11 @@ func TestNodeFSRmOptionsAgreesWithNode(t *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
 		t.Run("wasm32-wasi", func(t *testing.T) {
 			t.Parallel()
-			if difference := disagreement(truth, onWASI(t, native.C(program))); difference != "" {
+			actual, reason := observeWASI(t, native.C(program))
+			if assertWASIRefusal(t, rmOptionsFixture, reason, wasiRefusedFixtures) {
+				return
+			}
+			if difference := disagreement(truth, actual); difference != "" {
 				t.Fatal(difference)
 			}
 		})
