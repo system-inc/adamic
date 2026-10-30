@@ -2,8 +2,9 @@
 
 What `cmd/adamic` accepts, returns and needs, read from the code. Every claim cites what makes it
 true: Go by the declaration (`path.go:Name`, a method as `Type.Method`), anything else by line.
-`TestDocumentedCitationsResolve` (`cmd/adamic/cli_doc_test.go`) fails when a cited declaration, line or
-path is gone, so a change that moves one fixes the page in the same change. When the code and this
+`TestDocumentedGoCitationsResolve` (`cmd/adamic/treewalk/citations_test.go`) fails when a cited Go
+declaration or file is gone, and `TestDocumentedCitationsResolve` (`cmd/adamic/cli_doc_test.go`) when any
+other cited line or path is, so a change that moves one fixes the page in the same change. When the code and this
 page disagree, the code is right and this page is a bug.
 
 ## Usage
