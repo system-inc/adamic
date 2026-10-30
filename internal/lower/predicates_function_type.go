@@ -49,6 +49,9 @@ func (l *lowering) checkedFunctionTypeClaim(annotation *ast.Node) bool {
 	// An overload's parameter is called in its implementation, through the implementation's own
 	// parameter type, and the overload's result leans on the answers (takeWhile's U[]). So it's checked
 	// only when that parameter carries a checked claim too, which checks every call the body makes.
+	// The census overload proof refuses overload_union_impl too today ("cannot be served by
+	// implementation result"), so its fixture goes red through that refusal without this rule: the two
+	// guard one claim independently, and this one stays if the census proof is relaxed (Compiler, Oct 30).
 	if parameter := signature.Parent; parameter.Kind == ast.KindParameter && parameter.Parent.Kind == ast.KindFunctionDeclaration && parameter.Parent.Body() == nil {
 		implementation := l.censusImplementation(parameter.Parent)
 		if implementation == nil {
@@ -75,10 +78,24 @@ func (l *lowering) checkedFunctionTypeClaim(annotation *ast.Node) bool {
 // claim reads the value the call received.
 func (l *lowering) checkedFunctionTypeCall(node *ast.Node, call ir.CallClosure) (ir.Expression, error) {
 	resolved := l.checker.GetResolvedSignature(node)
-	if resolved == nil || resolved.Declaration() == nil || !l.checkedFunctionTypeClaim(resolved.Declaration().Type()) {
+	if resolved == nil {
 		return call, nil
 	}
 	claim := predicateOfSignature(l.checker, resolved)
+	// tsc makes one signature for a union or an intersection of callables and gives it one member's
+	// declaration, so neither a check nor a vouch read from that declaration speaks for the others.
+	if claim != nil && l.checker.GetTypeAtLocation(node.AsCallExpression().Expression).Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		return nil, l.notYet(node, "a call narrowing through a union or intersection of callables")
+	}
+	if resolved.Declaration() == nil || !l.checkedFunctionTypeClaim(resolved.Declaration().Type()) {
+		// Admitting these claims means a call can reach lowering through any signature that narrows: one
+		// tsc makes for a union or an intersection, or one with no declaration. Only a claim something
+		// stands behind goes unchecked (Lower's must 2).
+		if claim != nil && !l.predicateCallVouched(resolved.Declaration(), claim) {
+			return nil, l.notYet(node, "a call through a predicate signature nothing checks or proves")
+		}
+		return call, nil
+	}
 	if claim == nil || (claim.Kind() != checker.TypePredicateKindIdentifier && claim.Kind() != checker.TypePredicateKindAssertsIdentifier) {
 		return nil, l.notYet(node, "a checked function-type predicate without an identifier claim")
 	}
@@ -123,6 +140,12 @@ func (l *lowering) checkedFunctionTypeCall(node *ast.Node, call ir.CallClosure) 
 	var callee ir.Expression
 	var checked ir.CallClosure = call
 	if property, isMethod := call.Closure.(ir.Property); isMethod && property.Method {
+		// JavaScript reads a.m before it evaluates the arguments, and the check reads m off the receiver
+		// after them, so an argument that runs code (a write to a.m, a getter) would call a different
+		// function from Node's. Only arguments that run nothing keep the order (Lower's must 1).
+		if !predicateArgumentsRunNothing(call.Arguments) {
+			return nil, l.notYet(node, "a checked method claim whose arguments can run code before the method is read")
+		}
 		receiver := local("receiver", property.Object.Type())
 		callee = property.Object
 		property.Object = ir.Read{Local: receiver, Of: property.Object.Type()}
@@ -164,4 +187,51 @@ func (l *lowering) checkedFunctionTypeCall(node *ast.Node, call ir.CallClosure) 
 	body = append(body, ir.Return{Value: returned})
 	l.result.Functions[wrapper].Body = body
 	return ir.Call{Function: wrapper, Arguments: append([]ir.Expression{callee}, call.Arguments...), Returns: call.Type()}, nil
+}
+
+// predicateCallVouched is whether a call that narrows by claim, through declaration, has something behind
+// it besides a check at the call: a library's or the prelude's claim; one predicateParameter trusts
+// because every producer is proven; a checked closure, which checks itself; a checked declaration,
+// whose value is its checked forwarder; or a body that proves it, the annotation's or, for a claim tsc
+// inferred, the proof predicateArguments asks of an inferred argument. No declaration vouches for nothing.
+func (l *lowering) predicateCallVouched(declaration *ast.Node, claim *checker.TypePredicate) bool {
+	if declaration == nil {
+		return false
+	}
+	file := ast.GetSourceFileOfNode(declaration)
+	if load.IsLibrary(file) || load.IsPrelude(file) {
+		return true
+	}
+	annotation := declaration.Type()
+	if annotation == nil || annotation.Kind != ast.KindTypePredicate {
+		return claim.Type() != nil && ast.IsFunctionLike(declaration) && declaration.Body() != nil && l.proveInferredPredicate(declaration, claim.Type())
+	}
+	if l.predicateParameter(annotation) != nil || l.checkedPredicateClosure(declaration) || l.checkedPredicateDeclaration(declaration) {
+		return true
+	}
+	if _, err := l.provePredicate(annotation); err == nil {
+		return true
+	}
+	return l.proveFlowPredicate(annotation) == nil
+}
+
+// predicateArgumentsRunNothing is whether evaluating arguments can run no code of the program's, so a
+// read before them and one after them see the same function: names, field reads, constants, operators
+// and the closures written in place. Anything else, a call, an allocation that runs a constructor or a
+// library operation, is taken to run code.
+func predicateArgumentsRunNothing(arguments []ir.Expression) bool {
+	quiet := true
+	for _, argument := range arguments {
+		walk(argument, func(node any) bool {
+			switch expression := node.(type) {
+			case ir.Read, ir.NumberConstant, ir.StringConstant, ir.BooleanConstant, ir.Undefined, ir.IsUndefined, ir.Unary, ir.Binary, ir.Unwrap, ir.Defined, ir.MaybeOf, ir.Box, ir.Narrow, ir.TypeOf, ir.MakeClosure:
+			case ir.Property:
+				quiet = quiet && !expression.Method
+			default:
+				quiet = false
+			}
+			return quiet
+		})
+	}
+	return quiet
 }
