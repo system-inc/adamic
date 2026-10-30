@@ -2632,6 +2632,9 @@
     ],
     "internal/native TestProduct_DebugRuntimeSharing": [
       "internal/native TestProduct_WASICompiler"
+    ],
+    "internal/oracle TestProduct_StdoutColumnsProbes": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized0"
     ]
   }
 }
