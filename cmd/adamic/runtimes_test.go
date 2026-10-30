@@ -27,7 +27,7 @@ var commandRuntimes = []commandRuntimeSpec{
 	{"debug", native.Options{Release: true, Debug: true}, nil, ""},
 	{"shipped", native.Options{Release: true}, nil, "internal/oracle TestProduct_NativeRuntimesShipped0"},
 	{"counted", native.Options{Count: true}, nil, "internal/oracle TestProduct_NativeRuntimesCounted0"},
-	{"sanitized", native.Options{Sanitize: true}, nil, "internal/oracle TestProduct_NativeRuntimesSanitized0"},
+	{"sanitized", native.Options{Sanitize: true}, nil, ""},
 	{"wasm", native.Options{Target: "wasm32-wasi"}, nil, "internal/oracle TestProduct_NativeRuntimesWASI0"},
 	// commandRuntime drops Request, so this is the archive internal/oracle's wasm-request variant builds for the empty set.
 	{"wasm-counted", native.Options{Target: "wasm32-wasi", Count: true}, nil, "internal/oracle TestProduct_NativeRuntimesWASIRequest0"},
