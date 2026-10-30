@@ -35,18 +35,24 @@ var inputFixtures = []struct {
 	// not list and may not enter. What each run leaves there, every
 	// file's name, bytes and permissions, must agree too.
 	writes bool
+
+	// plainNames leaves out of that directory the file whose name isn't valid UTF-8, for a fixture that
+	// lists the directory for something else: wasmtime can't list a directory holding such a name
+	// (fd_readdir answers EILSEQ), which walk.a pins as its host limit and the directory-entries
+	// fixtures keep asking on every engine.
+	plainNames bool
 }{
-	{"internal/oracle/testdata/read_files.a", nil, false, false},
-	{"internal/oracle/testdata/empty-path.a", nil, false, false},
-	{"internal/oracle/testdata/utf8_sweep.a", nil, false, false},
+	{"internal/oracle/testdata/read_files.a", nil, false, false, false},
+	{"internal/oracle/testdata/empty-path.a", nil, false, false, false},
+	{"internal/oracle/testdata/utf8_sweep.a", nil, false, false, false},
 	{"internal/oracle/testdata/arguments.a", []string{
 		"plain", "", "with space", "héllo 🌍", "--flag=1",
 		// Invalid UTF-8, decoded as Node decodes argv: each bad sequence one U+FFFD.
 		"a\xffb", "\xe2\x82", "\xc0\x80", "\xed\xa0\x80", "\xf4\x90\x80\x80", "\xef\xbb\xbfmarked", "end \xf0\x9f\x8c",
-	}, false, false},
-	{"internal/oracle/testdata/read_arguments.a", []string{"reading/hello.txt", "reading/missing.txt", "reading"}, true, false},
-	{"internal/oracle/testdata/write_files.a", nil, false, true},
-	{"internal/oracle/testdata/walk.a", nil, false, true},
+	}, false, false, false},
+	{"internal/oracle/testdata/read_arguments.a", []string{"reading/hello.txt", "reading/missing.txt", "reading"}, true, false, false},
+	{"internal/oracle/testdata/write_files.a", nil, false, true, false},
+	{"internal/oracle/testdata/walk.a", nil, false, true, false},
 }
 
 // inputRun is where and as whom one input fixture runs.
@@ -147,7 +153,7 @@ func TestInputAgreesWithNode(t *testing.T) {
 						return how
 					}
 					runs++
-					written := writable(t, shared, fmt.Sprintf("run%d", runs))
+					written := writableDirectory(t, shared, fmt.Sprintf("run%d", runs), fixture.plainNames)
 					return inputRun{directory: how.directory, arguments: append([]string{written}, how.arguments...), credential: how.credential}
 				}
 				collect := func(given inputRun) map[string]string {
@@ -204,6 +210,13 @@ func TestInputAgreesWithNode(t *testing.T) {
 // isn't valid UTF-8.
 func writable(t *testing.T, shared string, name string) string {
 	t.Helper()
+	return writableDirectory(t, shared, name, false)
+}
+
+// writableDirectory is writable's directory, without the file whose name isn't valid UTF-8 when
+// plainNames is set (inputFixtures' plainNames).
+func writableDirectory(t *testing.T, shared string, name string, plainNames bool) string {
+	t.Helper()
 	directory := filepath.Join(shared, name)
 	if err := os.Mkdir(directory, 0o777); err != nil {
 		t.Fatal(err)
@@ -219,9 +232,11 @@ func writable(t *testing.T, shared string, name string) string {
 	// keeps any bytes; macOS's file system refuses such a name, so there the file is named what Node
 	// reads it back as, which lists, sorts among the rest and counts the same, and only the decoding
 	// goes unasked.
-	if err := os.WriteFile(filepath.Join(directory, "bad\xff name"), nil, 0o644); err != nil {
-		if err := os.WriteFile(filepath.Join(directory, "bad\uFFFD name"), nil, 0o644); err != nil {
-			t.Fatal(err)
+	if !plainNames {
+		if err := os.WriteFile(filepath.Join(directory, "bad\xff name"), nil, 0o644); err != nil {
+			if err := os.WriteFile(filepath.Join(directory, "bad\uFFFD name"), nil, 0o644); err != nil {
+				t.Fatal(err)
+			}
 		}
 	}
 	// And two a walk can't go into: unlisted can be passed through but not listed, and closed not

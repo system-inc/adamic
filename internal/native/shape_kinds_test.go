@@ -47,6 +47,7 @@ var shapeProducers = []struct{ name, path string }{
 	{"TupleViewProbe", "fx7_view_runtime_test.go"},
 	{"JSONEncoderProbe", "../oracle/testdata/json_encoder_contract/runtime.c"},
 	{"AsyncFrameObjects", ""}, {"WASIRecords", ""},
+	{"NodeFSDirectory", "runtime/node_fs_directory.c"},
 	{"Directory", "runtime/directory.c"}, {"Input", "runtime/input.c"},
 	{"Exceptions", "runtime/exceptions.c"}, {"AsyncHost", "runtime/async_host_impl.h"},
 	{"Record", "runtime/record.c"}, {"RegExp", "runtime/regexp.c"},
@@ -543,3 +544,8 @@ func TestShapeKindsEnvironmentMixed(t *testing.T) {
 	checkShapeProducer(t, "EnvironmentMixed")
 }
 func TestShapeKindsJSONDecoder(t *testing.T) { t.Parallel(); checkShapeProducer(t, "JSONDecoder") }
+
+func TestShapeKindsNodeFSDirectory(t *testing.T) {
+	t.Parallel()
+	checkShapeProducer(t, "NodeFSDirectory")
+}

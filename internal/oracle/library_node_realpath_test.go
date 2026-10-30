@@ -29,7 +29,7 @@ func realpathDirectory(t *testing.T) string {
 	if err := os.WriteFile(filepath.Join(root, "a"), []byte("data"), 0600); err != nil {
 		t.Fatal(err)
 	}
-	for name, target := range map[string]string{"link": "dir", "chain": "link", "dangling": "absent-target"} {
+	for name, target := range map[string]string{"link": "dir", "chain": "link", "dangling": "absent-target", "loop-a": "loop-b", "loop-b": "loop-a"} {
 		if err := os.Symlink(target, filepath.Join(root, name)); err != nil {
 			t.Fatal(err)
 		}
@@ -99,4 +99,14 @@ func TestHostRealpathClosureMatchesNode(t *testing.T) {
 func TestHostRealpathNULMatchesNode(t *testing.T) {
 	t.Parallel()
 	realpathAgreement(t, "nul.a")
+}
+
+func TestHostRealpathWalkErrorsMatchNode(t *testing.T) {
+	t.Parallel()
+	realpathAgreement(t, "walk-errors.a")
+}
+
+func TestHostRealpathWalkPathsMatchNode(t *testing.T) {
+	t.Parallel()
+	realpathAgreement(t, "walk-paths.a")
 }

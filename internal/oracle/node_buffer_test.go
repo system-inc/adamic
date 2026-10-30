@@ -14,7 +14,8 @@ func init() {
 		arguments  []string
 		unreadable bool
 		writes     bool
-	}{"internal/oracle/testdata/node_buffer_input.a", nil, false, false})
+		plainNames bool
+	}{"internal/oracle/testdata/node_buffer_input.a", nil, false, false, false})
 	fixtures = append(fixtures, struct {
 		path    string
 		lowers  bool
