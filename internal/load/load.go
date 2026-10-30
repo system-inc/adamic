@@ -14,6 +14,7 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
+	"time"
 	"unicode/utf16"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -27,6 +28,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/cachedvfs"
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
+	"github.com/system-inc/adamic/internal/buildlog"
 )
 
 var errReadOnly = errors.New("load: the source file system is read-only")
@@ -98,6 +100,8 @@ func LoadOverlay(paths []string, overlay map[string]string) (*Program, error) {
 }
 
 func load(paths []string, overlay map[string]string, display func(string) string) (*Program, error) {
+	// The load phase's line on $ADAMIC_BUILD_LOG, once a program, whichever of Load's forms called.
+	defer buildlog.Phase("load", time.Now())
 	if len(paths) == 0 {
 		return nil, errors.New("load: no files given")
 	}
