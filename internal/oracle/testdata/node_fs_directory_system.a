@@ -1,8 +1,10 @@
 import { getAccessibleFileSystemEntries, getDirectories, directoryExists, realpath, resolvePath, isFileSystemCaseSensitive } from '../../../stage3/host/fs_directory.a';
 for (const path of ['node_fs_directory_inputs/link-deep/..', 'node_fs_directory_inputs', 'walking', 'walking/link-to-inner', 'walking/dangling', 'walking/missing', 'reading/hello.txt', '']) {
-    const entries = getAccessibleFileSystemEntries(path);
-    console.log(`entries ${path}: ${entries.files.join('|')} / ${entries.directories.join('|')}`);
-    console.log(`directories ${getDirectories(path).join('|')}`);
+    if (path !== '') {
+        const entries = getAccessibleFileSystemEntries(path);
+        console.log(`entries ${path}: ${entries.files.join('|')} / ${entries.directories.join('|')}`);
+        console.log(`directories ${getDirectories(path).join('|')}`);
+    }
     console.log(`exists ${directoryExists(path)}`);
     console.log(`realpath ${realpath(path)}`);
     console.log(`resolve ${resolvePath(path)}`);

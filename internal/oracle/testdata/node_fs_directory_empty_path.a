@@ -1,0 +1,5 @@
+import { getAccessibleFileSystemEntries, getDirectories } from '../../../stage3/host/fs_directory.a';
+// Like tsc's host, an empty path lists the working directory.
+const entries = getAccessibleFileSystemEntries('');
+console.log(`entries : ${entries.files.join('|')} / ${entries.directories.join('|')}`);
+console.log(`directories ${getDirectories('').join('|')}`);

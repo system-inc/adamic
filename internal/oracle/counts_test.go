@@ -145,7 +145,9 @@ func pinnedStack(name string, arguments ...string) (string, []string) {
 // uncounted is the fixtures the table leaves out, each for the reason the table's header gives: a
 // count that measures something other than counting.
 var uncounted = map[string]bool{
-	"internal/oracle/testdata/stack_overflow.a": true,
+	// It lists the shared testdata directory, so its count moves with any entry another run leaves there (#33h46w1).
+	"internal/oracle/testdata/node_fs_directory_empty_path.a": true,
+	"internal/oracle/testdata/stack_overflow.a":               true,
 	// Its counted build is clang over its very large C, 70.85 s on a 4-CPU share, over a unit's 60 s; the moves tests
 	// build it as products and hold it to Node and the leak check.
 	moveObjectsPath: true,
@@ -266,6 +268,9 @@ func countCases() []countCase {
 		}
 	}
 	for _, fixture := range inputFixtures {
+		if uncounted[fixture.path] {
+			continue
+		}
 		cases = append(cases, countCase{fixture.path, func(t *testing.T) (string, func() string) {
 			return counted(t, fixture.path, true, fixture.arguments, fixture.unreadable, fixture.writes)
 		}})
