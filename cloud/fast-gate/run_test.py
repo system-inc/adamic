@@ -3033,7 +3033,7 @@ class SmokeMarkdownOnly(unittest.TestCase):
     """Smoke keys on every tracked file but the Markdown no package embeds for a change markdownOnly allows (#q11k6k6,
     Node's ruling), and on the whole tree otherwise. An embedded file stays in the key by content, since go test compiles
     its bytes. Mutants, each red here: every Markdown file excluded, embedded ones too; the narrowed paths only the .go
-    files; the narrowing taken for an added Markdown file."""
+    files; the narrowing taken for an added Markdown file; an exclusion read as a glob, never literally."""
 
     setUp, write, commit, change, readmeOn = (CoverageMarkdownOnly.setUp, CoverageMarkdownOnly.write, CoverageMarkdownOnly.commit,
                                               CoverageMarkdownOnly.change, CoverageMarkdownOnly.readmeOn)
@@ -3068,6 +3068,24 @@ class SmokeMarkdownOnly(unittest.TestCase):
         for name, edit in states.items():
             with self.subTest(name):
                 self.assertNotEqual(self.keyed(readme)[2], self.keyed(self.readmeOn(edit))[2])
+
+    def test_an_unembedded_name_that_reads_as_a_glob_never_drops_an_embedded_file(self):
+        # docs/a[b].md and docs/a*.md, unembedded, would match the embedded docs/ab.md as globs: each is excluded literally.
+        def laid():
+            self.write("docs/docs.go", 'package docs\n\nimport _ "embed"\n\n//go:embed ab.md\nvar AB string\n')
+            self.write("docs/ab.md", "# embedded\n")
+            self.write("docs/a[b].md", "# not embedded\n")
+            self.write("docs/a*.md", "# not embedded either\n")
+        tree = self.change(laid)["sha"]
+        readme = self.change(lambda: self.write("README.md", "# probe, edited\n"), tree)
+        self.assertTrue(run.markdownOnly(self.tree, self.tree, readme, False))
+        moved = self.change(lambda: self.write("docs/ab.md", "# embedded, edited\n"), tree)["sha"]
+        beside = self.change(lambda: self.write("README.md", "# probe, edited\n"), moved)
+        self.assertNotEqual(self.keyed(readme)[2], self.keyed(beside)[2])
+        listed = self.keyed(readme)[2]
+        self.assertIn("\tdocs/ab.md", listed)
+        self.assertNotIn("\tdocs/a[b].md", listed)
+        self.assertNotIn("\tdocs/a*.md", listed)
 
     def test_anything_else_keeps_the_whole_tree(self):
         for name, edit in {"an added markdown file": lambda: self.write("docs/new.md", "# new\n"),
