@@ -1,0 +1,9 @@
+const key = "ADAMIC_HOST_PROCESS_MUTATION";
+process.env[key] = "";
+console.log(process.env[key] ?? "missing");
+process.env[key] = "0";
+console.log(process.env[key] ?? "missing");
+process.env[key] = "héllo 🌍";
+console.log(process.env[key] ?? "missing");
+console.log(String(delete process.env[key]));
+console.log(process.env[key] ?? "missing");
