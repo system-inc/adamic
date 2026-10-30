@@ -1,0 +1,10 @@
+import { symlinkSync } from "node:fs";
+try {
+    symlinkSync("", "adamic-empty-symlink-link");
+} catch (error) {
+    if (error instanceof Error && "code" in error && "errno" in error) {
+        console.log(error.code);
+        console.log(error.errno);
+        console.log(error.message);
+    }
+}
