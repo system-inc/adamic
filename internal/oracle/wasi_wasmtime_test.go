@@ -196,10 +196,17 @@ func runWasmtimeAgreesShard(t *testing.T, shard int) {
 				program.Strings[0] += "!"
 			}
 			binary := filepath.Join(t.TempDir(), "program.wasm")
-			if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-				t.Fatal(err)
+			// The wasm32 refusals TestWASIAgreesWithNode holds by name (wasiRefusedFixtures), at build or at run.
+			reason := buildWASI(t, native.C(program), binary)
+			var actual run
+			if reason == "" {
+				actual = onWasmtime(t, inputRun{}, binary)
+				reason = wasiRefusalReason(actual)
 			}
-			actual := onWasmtime(t, inputRun{}, binary)
+			if assertWASIRefusal(t, fixture.path, reason, wasiRefusedFixtures) {
+				boundary = true
+				return
+			}
 			expected, limited = wasmtimeHostLimits(t, fixture.path, expected)
 			compareWasmtime(t, expected, actual, inputRun{}, binary)
 		})
@@ -217,9 +224,9 @@ func runWasmtimeInputShard(t *testing.T, shard int) {
 		return
 	}
 	planted, probing := familyProbe("TestWasmtimeInputAgreesWithNode")
-	pass, limits, fail, skip := 0, 0, 0, 0
+	pass, limits, refused, fail, skip := 0, 0, 0, 0, 0
 	defer func() {
-		t.Logf("wasmtime input shard=%d fixtures=%d pass=%d limitations=%d fail=%d skip=%d", shard, pass+limits+fail+skip, pass, limits, fail, skip)
+		t.Logf("wasmtime input shard=%d fixtures=%d pass=%d limitations=%d refused=%d fail=%d skip=%d", shard, pass+limits+refused+fail+skip, pass, limits, refused, fail, skip)
 	}()
 	for _, index := range rows {
 		fixture := inputFixtures[index]
@@ -233,7 +240,7 @@ func runWasmtimeInputShard(t *testing.T, shard int) {
 			}
 		}
 		t.Run(fixture.path, func(t *testing.T) {
-			limited := false
+			limited, wasRefused := false, false
 			defer func() {
 				if t.Failed() {
 					fail++
@@ -241,6 +248,8 @@ func runWasmtimeInputShard(t *testing.T, shard int) {
 				} else if t.Skipped() {
 					skip++
 					t.Log("SKIP", fixture.path)
+				} else if wasRefused {
+					refused++
 				} else if limited {
 					limits++
 					t.Log("LIMIT", fixture.path)
@@ -249,7 +258,7 @@ func runWasmtimeInputShard(t *testing.T, shard int) {
 					t.Log("PASS", fixture.path)
 				}
 			}()
-			limited = runWASIInputFixture(t, fixture.path, fixture.arguments, fixture.unreadable, fixture.writes, fixture.plainNames, engine)
+			limited, wasRefused = runWASIInputFixture(t, fixture.path, fixture.arguments, fixture.unreadable, fixture.writes, fixture.plainNames, engine)
 		})
 	}
 }
