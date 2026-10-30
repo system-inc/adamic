@@ -2,6 +2,7 @@ package native
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -11,6 +12,9 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
 )
 
 // buildLogLine is a line buildLog writes: kind, name, key12 or -, outcome, seconds. repass is compileUnits' second
@@ -219,4 +223,100 @@ func TestARepassAfterAMismatchSaysRepass(t *testing.T) {
 			t.Fatalf("%s's lines say %v, want %v:\n%s", name, got, want, written)
 		}
 	}
+}
+
+// phaseLine is a line buildlog.Phase writes, in buildLog's format: phase, the phase it timed, no key, off, seconds.
+var phaseLine = regexp.MustCompile(`^phase (load|lower|emit) - off [0-9]+\.[0-9]{3}$`)
+
+// A program loaded, lowered and emitted writes one phase line for each to ADAMIC_BUILD_LOG, in buildLog's format, and one
+// built in units writes one emit line still, since a split divides the C emitted once (#9x03wa7). The log never reaches
+// what is built: the C and the split binary are the same bytes with it set and unset. Mutants, each red: the emit line
+// written a unit rather than a program; load's line dropped; the log's path written into the C.
+//
+// Not parallel: t.Setenv changes ADAMIC_BUILD_LOG and ADAMIC_GATE_UNCACHED for the process.
+func TestEachPhaseLogsOnceAProgram(t *testing.T) {
+	directory := t.TempDir()
+	entry := filepath.Join(directory, "main.ts")
+	source := "function twice(value: number): number {\n\treturn value * 2;\n}\nfunction greet(name: string): string {\n\treturn `hello ${name}`;\n}\nconsole.log(`${twice(21)} ${greet('phase')}`);\n"
+	if err := os.WriteFile(entry, []byte(source), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("ADAMIC_GATE_UNCACHED", "1")
+	// phases loads, lowers and emits the program, with the log set when logged, and builds the C in units when split. It
+	// gives the C, the binary when split, and the phases the log names, in the order it names them.
+	phases := func(name string, logged, split bool) (string, []byte, []string) {
+		t.Helper()
+		log := filepath.Join(directory, name+".log")
+		if logged {
+			t.Setenv("ADAMIC_BUILD_LOG", log)
+		} else {
+			t.Setenv("ADAMIC_BUILD_LOG", "")
+		}
+		loaded, err := load.Load([]string{entry})
+		if err != nil {
+			t.Fatal(err)
+		}
+		program, err := lower.Lower(context.Background(), loaded)
+		if err != nil {
+			t.Fatal(err)
+		}
+		code := C(program)
+		var binary []byte
+		if split {
+			output := filepath.Join(directory, name, "program")
+			if err := os.MkdirAll(filepath.Dir(output), 0o755); err != nil {
+				t.Fatal(err)
+			}
+			if err := Build(code, output, Options{Split: true, Jobs: 2}); err != nil {
+				t.Fatal(err)
+			}
+			if binary, err = os.ReadFile(output); err != nil {
+				t.Fatal(err)
+			}
+		}
+		if !logged {
+			return code, binary, nil
+		}
+		written, err := os.ReadFile(log)
+		if err != nil {
+			t.Fatalf("%s: no build log: %v", name, err)
+		}
+		var named []string
+		for line := range strings.SplitSeq(strings.TrimSuffix(string(written), "\n"), "\n") {
+			// A split build's clang lines are TestSplitBuildLogsEachUnitAndTheLink's.
+			if !strings.HasPrefix(line, "phase ") {
+				continue
+			}
+			if !phaseLine.MatchString(line) {
+				t.Fatalf("%s: %q isn't a phase line", name, line)
+			}
+			named = append(named, strings.Fields(line)[1])
+		}
+		return code, binary, named
+	}
+	want := []string{"load", "lower", "emit"}
+	quiet, _, _ := phases("quiet", false, false)
+	logged, _, named := phases("logged", true, false)
+	if !slices.Equal(named, want) {
+		t.Fatalf("a program loaded, lowered and emitted logged the phases %v, want %v", named, want)
+	}
+	if logged != quiet {
+		t.Fatal("the C emitted with ADAMIC_BUILD_LOG set differs from the C emitted without it")
+	}
+	_, units, err := splitC(logged)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(units) < 2 {
+		t.Fatalf("the program splits into %d units, want more than one for a split to divide", len(units))
+	}
+	_, quietBinary, _ := phases("quiet-split", false, true)
+	_, loggedBinary, named := phases("logged-split", true, true)
+	if !slices.Equal(named, want) {
+		t.Fatalf("a program built in %d units logged the phases %v, want %v", len(units), named, want)
+	}
+	if !bytes.Equal(loggedBinary, quietBinary) {
+		t.Fatal("the split binary built with ADAMIC_BUILD_LOG set differs from the one built without it")
+	}
+	t.Logf("%d units: load, lower and emit each logged once a program, the C and the binary the same bytes", len(units))
 }
