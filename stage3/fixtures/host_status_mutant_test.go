@@ -31,7 +31,7 @@ func TestHostStatusMutants(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, index := range []int{0} {
+	for _, index := range []int{0, 15} {
 		for _, mutation := range []string{"real", "wrong stage", "missing fixture"} {
 			t.Run(rows[index].File+"/"+mutation, func(t *testing.T) {
 				t.Parallel()

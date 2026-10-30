@@ -395,6 +395,7 @@ func registerFlowCorpusIR() {
 		gob.Register(ir.Panic{})
 		gob.Register(ir.ParallelMap{})
 		gob.Register(ir.PhantomMember{})
+		gob.Register(ir.ProcessCall{})
 		gob.Register(ir.ProgramArguments{})
 		gob.Register(ir.PromiseValue{})
 		gob.Register(ir.Property{})
