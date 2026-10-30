@@ -41,9 +41,15 @@ func (l *lowering) processPath(node *ast.Node) string {
 	return ""
 }
 
+func (l *lowering) isProcessExit(node *ast.Node) bool {
+	node = ast.SkipParentheses(node)
+	return node.Kind == ast.KindCallExpression && l.processPath(node.AsCallExpression().Expression) == "process.exit"
+}
+
 // processValue handles only complete supported operations. Intermediate objects cannot escape
 // into ordinary object storage, whose slots could not model this live external state.
 func (l *lowering) processValue(node *ast.Node) (ir.Expression, bool, error) {
+	node = ast.SkipParentheses(node)
 	if value, known, err := l.nodeStdoutWrite(node); known {
 		return value, known, err
 	}
@@ -56,9 +62,58 @@ func (l *lowering) processValue(node *ast.Node) (ir.Expression, bool, error) {
 	if value, known, err := l.nodeEnvironmentRead(node); known {
 		return value, known, err
 	}
-	path := l.processPath(node)
-	if path == "" {
-		return nil, false, nil
+	if l.isProcessExit(node) {
+		arguments := node.AsCallExpression().Arguments.Nodes
+		if len(arguments) > 1 {
+			return nil, true, l.notYet(node, "process.exit with more than one argument")
+		}
+		code := ir.Expression(ir.ProcessCall{Operation: "exitCode", Of: ir.MaybeNumber})
+		if len(arguments) == 1 {
+			value, err := l.expression(arguments[0])
+			if err != nil {
+				return nil, true, err
+			}
+			code = fit(value, ir.MaybeNumber)
+			if code.Type() != ir.MaybeNumber {
+				return nil, true, l.notYet(arguments[0], "process.exit with a nonnumeric code")
+			}
+		}
+		return ir.ProcessCall{Operation: "exit", Arguments: []ir.Expression{code}, Of: ir.Number}, true, nil
 	}
-	return nil, true, l.notYet(node, path+" as a value (use its supported process operation directly)")
+	if node.Kind == ast.KindBinaryExpression {
+		binary := node.AsBinaryExpression()
+		if l.processPath(binary.Left) == "process.exitCode" {
+			if binary.OperatorToken.Kind != ast.KindEqualsToken {
+				return nil, true, l.notYet(node, "a compound process.exitCode assignment")
+			}
+			value, err := l.expression(binary.Right)
+			if err != nil {
+				return nil, true, err
+			}
+			code := fit(value, ir.MaybeNumber)
+			if code.Type() != ir.MaybeNumber {
+				return nil, true, l.notYet(binary.Right, "process.exitCode with a nonnumeric code")
+			}
+			call := ir.ProcessCall{Operation: "setExitCode", Arguments: []ir.Expression{code}, Of: ir.MaybeNumber}
+			if value.Type() == ir.Object {
+				return ir.Void{Value: call, Of: ir.Object}, true, nil
+			}
+			return fit(call, value.Type()), true, nil
+		}
+	}
+	path := l.processPath(node)
+	switch path {
+	case "process.exitCode":
+		// Writes to this live status are restricted to the numeric ABI above.
+		// The wider Node declaration also admits strings and null, which this unit refuses.
+		call := ir.Expression(ir.ProcessCall{Operation: "exitCode", Of: ir.MaybeNumber})
+		if to, known := l.representation(l.checker.GetTypeAtLocation(node)); known && to == ir.Number {
+			call = fit(call, to)
+		}
+		return call, true, nil
+	case "":
+		return nil, false, nil
+	default:
+		return nil, true, l.notYet(node, path+" as a value (use its supported process operation directly)")
+	}
 }
