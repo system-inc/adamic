@@ -14,7 +14,7 @@ import (
 )
 
 // nativeBuilds are internal/native's functions that run clang under the process's jobserver (native.UseJobserver).
-var nativeBuilds = []string{"Build", "BuildFlags", "BuildTSGo", "BuildSplitTSGo", "RuntimeLibrary", "RuntimeLibraryForSource", "RuntimeRequestFor"}
+var nativeBuilds = []string{"Build", "BuildFlags", "BuildSharedProbe", "BuildTSGo", "BuildSplitTSGo", "RuntimeLibrary", "RuntimeLibraryForSource", "RuntimeRequestFor"}
 
 const (
 	nativePath      = "github.com/system-inc/adamic/internal/native"
