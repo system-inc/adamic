@@ -8,8 +8,8 @@ import tempfile
 root = pathlib.Path(__file__).resolve().parents[3]
 cases = [
     ('false-off-tty', 'internal/native/library_node_fs_file.go',
-     '(adamic_maybe_boolean){isatty(1) != 0, true}',
-     '(adamic_maybe_boolean){true, isatty(1) != 0}',
+     'code = "adamic_host_stdout_is_tty()"',
+     'code = "(adamic_maybe_boolean){true, false}"',
      './internal/oracle', 'TestStdoutIsTTYMatchesNodeOnPipe', 'backend 1, pipe: stdout differs'),
     ('admit-stderr', 'internal/lower/library_node_host.go',
      'l.nodeLibraryMember(node.AsPropertyAccessExpression().Expression) == "node:process.Process.stdout"\n}',

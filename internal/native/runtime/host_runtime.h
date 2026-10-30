@@ -6,6 +6,15 @@
 // Borrowed text, encoded as Node UTF-8; blocking whole write, no added newline; true on success.
 bool adamic_write_raw(enum adamic_stream stream, const adamic_string *text);
 
+// Loop-thread stdout initialization and cached width. No refresh on a read.
+void adamic_host_stdout_start(void);
+adamic_maybe_boolean adamic_host_stdout_is_tty(void);
+adamic_maybe_number adamic_host_stdout_columns(void);
+// Internal event-loop checkpoint and its signal-safe wake pipe's read descriptor.
+void adamic_host_stdout_refresh(void);
+bool adamic_host_stdout_refresh_pending(void);
+int adamic_host_stdout_wake_descriptor(void);
+
 // Startup runs once before user code. argv storage is borrowed for the process lifetime.
 void adamic_host_start(int count, char **values);
 // Optional validated Int32 status; false restores undefined. Setting it never exits.

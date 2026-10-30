@@ -331,3 +331,12 @@
 # compare-and-swap, or a pointer published once), as decode_shapes needs its lock.
 `runtime-file:json_encode.c`
 `runtime-file:json_encode.h`
+
+# Output lock protects first-use, reads and refresh. Handler stdout_winch
+# publishes only its sig_atomic_t bit and a wake byte. No value graph.
+`runtime-file:stdout_tty_impl.h`
+`stdout_tty_impl.h:stdout_tty_started:1`
+`stdout_tty_impl.h:stdout_width_known:1`
+`stdout_tty_impl.h:stdout_width:1`
+`stdout_tty_impl.h:stdout_winch_pending:1`
+`stdout_tty_impl.h:stdout_winch_pipe:1`

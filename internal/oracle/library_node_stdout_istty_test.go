@@ -131,13 +131,15 @@ func stdoutIsTTYRun(t *testing.T, transport, name string, args ...string) run {
 	return run{stdout: out.Bytes(), stderr: errout.Bytes(), exitCode: cmd.ProcessState.ExitCode()}
 }
 
-func TestStdoutIsTTYMatchesNodeOnPipe(t *testing.T) { t.Parallel(); stdoutIsTTYAgreement(t, "pipe") }
-func TestStdoutIsTTYMatchesNodeOnFile(t *testing.T) { t.Parallel(); stdoutIsTTYAgreement(t, "file") }
-func TestStdoutIsTTYMatchesNodeOnNull(t *testing.T) { t.Parallel(); stdoutIsTTYAgreement(t, "null") }
+func TestStdoutIsTTYMatchesNodeOnPipe(t *testing.T) { t.Parallel(); stdoutTTYColumns(t, "pipe") }
+func TestStdoutIsTTYMatchesNodeOnFile(t *testing.T) { t.Parallel(); stdoutTTYColumns(t, "file") }
+func TestStdoutIsTTYMatchesNodeOnNull(t *testing.T) { t.Parallel(); stdoutTTYColumns(t, "null") }
 func TestStdoutIsTTYMatchesNodeOnPty(t *testing.T) {
 	t.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_STDOUT_PTY") != "1" {
 		t.Skip("set ADAMIC_ORACLE_STDOUT_PTY=1 to run the stdout isTTY pty oracle (Platforms runs this lane by hand)")
 	}
 	stdoutIsTTYAgreement(t, "pty")
+	stdoutColumnsAgreement(t, "pty")
+	stdoutColumnsLifecycle(t)
 }

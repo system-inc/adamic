@@ -208,6 +208,9 @@ func Build(source string, output string, options Options) error {
 	if err := ValidateOptions(options); err != nil {
 		return err
 	}
+	if err := terminalSizeTarget(source, options); err != nil {
+		return err
+	}
 	if options.Target == "" && (options.Split || os.Getenv("ADAMIC_NATIVE_SPLIT") == "1") {
 		return buildUnits(source, output, options)
 	}
@@ -222,6 +225,9 @@ func BuildFlags(source string, output string, options Options, flags []string) e
 		flags = append(slices.Clone(flags), "-DADAMIC_PROGRAM_REGION")
 	}
 	if err := ValidateOptions(options); err != nil {
+		return err
+	}
+	if err := terminalSizeTarget(source, options); err != nil {
 		return err
 	}
 	return buildOne(source, output, options, flags)
