@@ -111,13 +111,15 @@ func TestFunctionTypeClaimKeepsWhatTheCallCantCheck(t *testing.T) {
 	}
 	// A method's check reads the method off the receiver after the arguments, and JavaScript reads it
 	// before them, so arguments that run code stop it: method_order swaps the method in an argument, and
-	// Node calls the old one (Lower's must 1). A union of callables gets one signature from tsc, with one
-	// member's declaration, so a narrowing call through it stops too (Lower's must 2). Mutants: the
-	// argument test dropped, where native prints "new swapped" and Node "old swapped"; the union test
-	// dropped, where union.ts lowers.
+	// Node calls the old one (Lower's must 1); getter_order swaps it in a class's getter, read through a
+	// structural field. A union of callables gets one signature from tsc, with one member's declaration,
+	// so a narrowing call through it stops too (Lower's must 2). Mutants: the argument test dropped, where
+	// native prints "new swapped" and Node "old swapped"; a field read counted as quiet, where native
+	// prints "new" and Node "old"; the union test dropped, where union.ts lowers.
 	for _, pending := range []struct{ name, what string }{
 		{"untagged", "predicate overload target Named"},
 		{"method_order", "a checked method claim whose arguments can run code before the method is read"},
+		{"getter_order", "a checked method claim whose arguments can run code before the method is read"},
 		{"union", "a call narrowing through a union or intersection of callables"},
 	} {
 		_, err := lowerTypeScriptAssertionSource(t, read(pending.name))
