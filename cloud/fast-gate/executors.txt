@@ -1495,7 +1495,6 @@ reads stage3/fixtures oracle/node.mjs
 # Loom planner (Oct 10, Loom's ruling 00:20Z): the reads lines selection wrote on release/selection-reads-gaps 8b2af706
 # and the census branches through fe9c1932, still behind the old box canary, so the new path keys them now.
 reads internal/oracle stage3/census/repro/r05/main.a
-reads cmd/adamic internal/lower/testdata/predicates/*
 reads cmd/adamic-gate internal/native/normalize_test.go
 reads cmd/adamic-gate internal/native/string_index_test.go
 reads cmd/adamic-gate internal/oracle/input_test.go
@@ -1694,8 +1693,12 @@ reads internal/oracle internal/load/testdata/*
 reads internal/oracle internal/lower/testdata/*
 reads internal/oracle internal/fresh/testdata/*
 reads internal/oracle cmd/adamic/testdata/*
-reads cmd/adamic internal/lower/testdata/*
-reads cmd/adamic internal/oracle/testdata/*
+# cmd/adamic reads only the fixtures its explain tests name, each path built from a fixed prefix and suffix:
+# checks_test.go's internal/lower/testdata/predicates/<fixture>.a and non_null_checks_test.go's
+# internal/oracle/testdata/non_null_<probe>.ts. A line is keyed by package directory, so the whole testdata trees put
+# every lower and oracle fixture edit into the keys of cmd/adamic's runtime products (Hot Loom on #tnaxgrc).
+reads cmd/adamic internal/lower/testdata/predicates/*.a
+reads cmd/adamic internal/oracle/testdata/non_null_*.ts
 # Four fixed files cmd/adamic's tests read past its closure, undeclared until #tnaxgrc, so an edit to them didn't
 # rerun it: exports_test.go's ABI program, its Node host and the wrapper the host imports, and wasm_release_test.go's
 # program.
