@@ -23,6 +23,8 @@ func TestPhantomRefusals(t *testing.T) {
 		{"required undefined", "type Brand = number & { brand: undefined };", "a primitive brand member brand whose type is not void", "make brand void (or optional and typed undefined) so the brand is phantom"},
 		{"any Path", "type Path = string & { __pathBrand: any };", "a primitive brand member __pathBrand whose type is not void", "make __pathBrand void (or optional and typed undefined) so the brand is phantom"},
 		{"string index", "type Brand = string & { '0': void };", "a primitive brand member 0 that exists on the primitive", "use a member name the primitive does not have on its own properties or prototype chain"},
+		{"well-known symbol", "type Brand = string & { [Symbol.iterator]: void };", "a primitive brand member keyed by a symbol", "key the brand member by a name the primitive does not have on its own properties or prototype chain"},
+		{"unique symbol", "const k: unique symbol = Symbol('k');\ntype Brand = string & { [k]: void };", "a primitive brand member keyed by a symbol", "key the brand member by a name the primitive does not have on its own properties or prototype chain"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			t.Parallel()
