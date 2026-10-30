@@ -586,7 +586,7 @@ func (f *predicateFalseFlow) libraryCall(call *ast.Node, callee *ast.Node, decla
 		return false
 	}
 	for _, argument := range call.Arguments() {
-		if f.predicateValued(f.l.checker.GetTypeAtLocation(argument)) {
+		if f.l.predicateValued(f.l.checker.GetTypeAtLocation(argument)) {
 			return false
 		}
 	}
@@ -595,16 +595,16 @@ func (f *predicateFalseFlow) libraryCall(call *ast.Node, callee *ast.Node, decla
 
 // predicateValued is whether a value of type t can be called as a type predicate: some call
 // signature of it, or of a union or intersection member, carries one.
-func (f *predicateFalseFlow) predicateValued(t *checker.Type) bool {
+func (l *lowering) predicateValued(t *checker.Type) bool {
 	if t.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
 		for _, member := range t.Types() {
-			if f.predicateValued(member) {
+			if l.predicateValued(member) {
 				return true
 			}
 		}
 	}
-	for _, signature := range f.l.checker.GetSignaturesOfType(t, checker.SignatureKindCall) {
-		if predicateOfSignature(f.l.checker, signature) != nil {
+	for _, signature := range l.checker.GetSignaturesOfType(t, checker.SignatureKindCall) {
+		if predicateOfSignature(l.checker, signature) != nil {
 			return true
 		}
 	}

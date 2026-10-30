@@ -165,6 +165,31 @@ func TestCheckedPredicateUnreadShapesArePending(t *testing.T) {
 	}
 }
 
+// A checked predicate's answer passed to a call or a new is read wherever it stands (#6fas8b6, Lower's
+// ruling of Oct 29): the checker narrows nothing through an argument, and an assertion of that
+// parameter narrows the true side only, which the call checks. Each stands under a condition, as in
+// tsc's getDeclaredExpandoInitializer, and lowers. Mutant: the argument's return removed stops each as
+// read by a CallExpression or a NewExpression inside a condition.
+func TestCheckedPredicateArgumentIsRead(t *testing.T) {
+	t.Parallel()
+	prelude := `interface Expression { readonly kind: 'E'; readonly e: number } interface Statement { readonly kind: 'S'; readonly s: string } type Node = Expression | Statement; const kinds: string[] = ['S']; function isS(n: Node): n is Statement { return kinds.includes(n.kind); } `
+	for _, probe := range []struct{ name, source string }{
+		{"call", `function keep(flag: boolean): boolean { return flag; } function f(n: Node, ready: boolean): boolean { return ready && keep(isS(n)); } console.log(String(f({ kind: 'S', s: 'x' }, true)));`},
+		{"new", `class Box { constructor(readonly flag: boolean) {} } function f(n: Node, ready: boolean): boolean { if (ready || new Box(isS(n)).flag) { return true; } return false; } console.log(String(f({ kind: 'E', e: 1 }, false)));`},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			program, err := lowerTypeScriptAssertionSource(t, prelude+probe.source)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if program.PredicateChecks.Checked == 0 {
+				t.Fatalf("no checked predicate call: %+v", program.PredicateChecks)
+			}
+		})
+	}
+}
+
 func TestCheckedPredicateTypelessNonAssertionIsNotYet(t *testing.T) {
 	t.Parallel()
 	loaded, err := load.Load([]string{writeAgreementSource(t, "main.a", "const value = true;\n")})

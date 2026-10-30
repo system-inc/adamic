@@ -114,22 +114,31 @@ func (l *lowering) checkedPredicateDirections(call *ast.CallExpression, claim *c
 // can't say what the checker narrows there, "" when it can. Climbing through what the checker's
 // narrowType reads through (parentheses, !, && and ||, a comparison with a boolean literal, an
 // assignment's or a comma's right side), it stops at the first other parent. A condition the walk
-// reads, a const alias, or a discarded value is read. Any other parent is a value the walk reads
-// no direction from, so it must not stand in a condition or an alias, and must be one the checker
-// narrows nothing by; anything else is named, so an unread narrowing stops as NotYet instead of
-// going unchecked.
+// reads, a const alias, a discarded value, or a call's argument is read. Any other parent is a value
+// the walk reads no direction from, so it must not stand in a condition or an alias, and must be one
+// the checker narrows nothing by; anything else is named, so an unread narrowing stops as NotYet
+// instead of going unchecked.
 func (l *lowering) checkedPredicateUnclassifiedUse(call *ast.CallExpression) string {
-	// A function whose returns the checker infers a predicate from narrows its callers by this
-	// result, and a call of an inferred predicate is never checked.
-	if function := ast.GetContainingFunction(call.AsNode()); function != nil && function.Type() == nil {
-		if signature := l.checker.GetSignatureFromDeclaration(function); signature != nil && predicateOfSignature(l.checker, signature) != nil {
-			return "returned from a function the checker infers a type predicate for"
-		}
-	}
 	node, parent := call.AsNode(), call.AsNode().Parent
 	for ; parent != nil && checkedPredicateTransparent(parent, node); node, parent = parent, parent.Parent {
 	}
+	// A function whose returns the checker infers a predicate from narrows its callers by this
+	// result, and a call of an inferred predicate is never checked.
+	if function := ast.GetContainingFunction(call.AsNode()); function != nil && function.Type() == nil {
+		if signature := l.checker.GetSignatureFromDeclaration(function); signature != nil {
+			if claim := predicateOfSignature(l.checker, signature); claim != nil {
+				if use := l.checkedPredicateInferredUse(call.AsNode(), function, claim, parent != nil && checkedPredicateAlias(parent, node)); use != "" {
+					return "returned from a function the checker infers a type predicate for, " + use
+				}
+			}
+		}
+	}
 	if parent == nil || checkedPredicateCondition(parent, node) || checkedPredicateAlias(parent, node) || parent.Kind == ast.KindExpressionStatement || parent.Kind == ast.KindVoidExpression {
+		return ""
+	}
+	// The checker narrows nothing through a call's argument (#6fas8b6, Lower's ruling of Oct 29). An
+	// assertion of that parameter narrows the true side only, which this call already checks.
+	if (parent.Kind == ast.KindCallExpression || parent.Kind == ast.KindNewExpression) && parent.Expression() != node {
 		return ""
 	}
 	for child, holder := parent, parent.Parent; holder != nil && !ast.IsFunctionLike(holder); child, holder = holder, holder.Parent {
@@ -145,6 +154,171 @@ func (l *lowering) checkedPredicateUnclassifiedUse(call *ast.CallExpression) str
 		return ""
 	}
 	return "read by " + describe(parent)
+}
+
+// checkedPredicateInferredUse names what leaves a checked call in function, whose predicate the
+// checker infers, standing on an answer nobody checks, "" when nothing does (#6fas8b6, Lower's ruling
+// of Oct 29). The checker infers the predicate from the one returned expression, so a call elsewhere
+// in the body is any other call, unless it initializes a const the returned expression can narrow
+// through. Inside it, the returned expression must be calls claiming a predicate on the claimed
+// parameter, joined by && and || alone: then the function's true implies a true from one of them,
+// which stands as it does at any call of it, checked, proven or trusted. Its false rests on their
+// false answers, which nothing here checks, so no use of the function may read it: a direct call has
+// to be one whose false direction the walk finds unobservable, and the function passed as a value has
+// to go to a parameter whose type carries no predicate. Any other use, and a function whose uses can't
+// all be found, is named.
+func (l *lowering) checkedPredicateInferredUse(call, function *ast.Node, claim *checker.TypePredicate, aliased bool) string {
+	name := describe(function)
+	if function.Kind == ast.KindFunctionDeclaration && function.Name() != nil {
+		name = function.Name().Text()
+	}
+	returned := checkedPredicateReturned(function)
+	if returned == nil {
+		return name + ", with no one returned expression the walk finds"
+	}
+	inside := false
+	for node := call; node != nil && node != function; node = node.Parent {
+		inside = inside || node == returned
+	}
+	if !inside {
+		if aliased {
+			return name + ", through a const its returned expression can narrow by"
+		}
+		return ""
+	}
+	index := int(claim.ParameterIndex())
+	if claim.Kind() != checker.TypePredicateKindIdentifier || index < 0 || index >= len(function.Parameters()) {
+		return name + ", claiming what isn't a parameter"
+	}
+	if part := l.checkedPredicateInferredPart(returned, l.symbol(function.Parameters()[index].Name())); part != nil {
+		return name + ", whose returned expression holds " + describe(part) + " at " + l.program.Where(part)
+	}
+	// Every use of a function declaration spells its name, but an export's: a namespace object can
+	// reach it by a computed key.
+	if function.Kind != ast.KindFunctionDeclaration || function.Name() == nil {
+		return name + ", whose uses the walk doesn't follow"
+	}
+	if ast.HasSyntacticModifier(function, ast.ModifierFlagsExport) {
+		return name + ", exported"
+	}
+	symbol := l.symbol(function.Name())
+	use := ""
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindIdentifier && node.Text() == name && node != function.Name() && !ast.IsPartOfTypeNode(node) {
+			use = l.checkedPredicateInferredReference(node, symbol)
+		}
+		if use == "" {
+			node.ForEachChild(visit)
+		}
+		return use != ""
+	}
+	for _, file := range l.program.Files() {
+		if file.AsNode().ForEachChild(visit) {
+			return name + ", " + use
+		}
+	}
+	return ""
+}
+
+// checkedPredicateReturned is the one expression the checker infers function's predicate from, as
+// its getTypePredicateFromBody finds it: an arrow's expression body, or the body's one return.
+func checkedPredicateReturned(function *ast.Node) *ast.Node {
+	body := function.Body()
+	if body == nil {
+		return nil
+	}
+	if body.Kind != ast.KindBlock {
+		return body
+	}
+	var returned *ast.Node
+	if ast.ForEachReturnStatement(body, func(statement *ast.Node) bool {
+		if returned != nil || statement.Expression() == nil {
+			return true
+		}
+		returned = statement.Expression()
+		return false
+	}) {
+		return nil
+	}
+	return returned
+}
+
+// checkedPredicateInferredPart is the first part of a returned expression that isn't a call claiming
+// a predicate on parameter, read through parentheses, && and ||, or nil when there is none.
+func (l *lowering) checkedPredicateInferredPart(node *ast.Node, parameter *ast.Symbol) *ast.Node {
+	switch node.Kind {
+	case ast.KindParenthesizedExpression:
+		return l.checkedPredicateInferredPart(node.Expression(), parameter)
+	case ast.KindBinaryExpression:
+		binary := node.AsBinaryExpression()
+		if binary.OperatorToken.Kind == ast.KindAmpersandAmpersandToken || binary.OperatorToken.Kind == ast.KindBarBarToken {
+			if part := l.checkedPredicateInferredPart(binary.Left, parameter); part != nil {
+				return part
+			}
+			return l.checkedPredicateInferredPart(binary.Right, parameter)
+		}
+	case ast.KindCallExpression:
+		signature := l.checker.GetResolvedSignature(node)
+		if node.Flags&ast.NodeFlagsOptionalChain != 0 || signature == nil {
+			return node
+		}
+		claim := predicateOfSignature(l.checker, signature)
+		if claim == nil || claim.Kind() != checker.TypePredicateKindIdentifier || claim.Type() == nil {
+			return node
+		}
+		index := int(claim.ParameterIndex())
+		if index >= 0 && index < len(node.Arguments()) && parameter != nil && l.symbol(ast.SkipParentheses(node.Arguments()[index])) == parameter {
+			return nil
+		}
+	}
+	return node
+}
+
+// checkedPredicateInferredReference names how identifier uses an inferred predicate, the function
+// declaration symbol names, when the use can read the function's false side, "" when it can't or
+// identifier names something else.
+func (l *lowering) checkedPredicateInferredReference(identifier *ast.Node, symbol *ast.Symbol) string {
+	referenced := l.symbol(identifier)
+	if identifier.Parent.Kind == ast.KindShorthandPropertyAssignment {
+		// A shorthand field's name is the field; the value it stores is the function.
+		referenced = l.checker.GetShorthandAssignmentValueSymbol(identifier.Parent)
+		if referenced != nil && referenced.Flags&ast.SymbolFlagsAlias != 0 {
+			referenced = l.checker.GetAliasedSymbol(referenced)
+		}
+		if referenced == symbol {
+			return "used at " + l.program.Where(identifier) + " by " + describe(identifier.Parent)
+		}
+	}
+	if referenced != symbol {
+		return ""
+	}
+	reference := identifier
+	for reference.Parent.Kind == ast.KindParenthesizedExpression {
+		reference = reference.Parent
+	}
+	holder := reference.Parent
+	switch {
+	case holder.Kind == ast.KindTypeQuery:
+		// A typeof in a type names the function's type; the value goes wherever it's passed.
+		return ""
+	case holder.Kind == ast.KindCallExpression && holder.Expression() == reference:
+		signature := l.checker.GetResolvedSignature(holder)
+		if signature == nil {
+			return "called at " + l.program.Where(holder) + " with no signature"
+		}
+		if claim := predicateOfSignature(l.checker, signature); claim != nil && l.checkedPredicateDirections(holder.AsCallExpression(), claim)&predicateFalse != 0 {
+			return "whose false side the call at " + l.program.Where(holder) + " reads"
+		}
+		return ""
+	case holder.Kind == ast.KindCallExpression || holder.Kind == ast.KindNewExpression:
+		// The value narrows only where a call through it does: through a parameter typed with a predicate.
+		if parameter := l.checker.GetContextualType(reference, checker.ContextFlagsNone); parameter != nil && l.predicateValued(parameter) {
+			return "passed at " + l.program.Where(reference) + " to a parameter typed with a type predicate"
+		}
+		return ""
+	}
+	return "used at " + l.program.Where(identifier) + " by " + describe(holder)
 }
 
 // checkedPredicateTransparent is whether the checker's narrowType reads through parent to child.

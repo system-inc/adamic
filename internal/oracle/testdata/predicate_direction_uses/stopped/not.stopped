@@ -1,0 +1,1 @@
+internal/oracle/testdata/predicate_direction_uses/stopped/not.ts:36:13: stage 0 can't lower a checked predicate result returned from a function the checker infers a type predicate for, isNotA, whose returned expression holds a PrefixUnaryExpression at internal/oracle/testdata/predicate_direction_uses/stopped/not.ts:36:12, which its direction walk doesn't read yet
