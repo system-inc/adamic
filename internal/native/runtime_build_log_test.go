@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	goruntime "runtime"
 	"strconv"
 	"strings"
 	"testing"
@@ -134,9 +133,9 @@ func TestRuntimeArchiveLogsItsCompilesAndItsHit(t *testing.T) {
 	t.Logf("%d units and ar logged as misses under the archive's key, the cache's archive as a hit, one archive's bytes", len(files))
 }
 
-// A one-unit build (Build's default) logs its clang: on macOS main.c's compile and then the link, elsewhere the one call
-// that does both, as cBuild. The binary is the same bytes with the log and without it. A mutant that logs the one call as
-// a cLink, or writes 0 seconds, fails.
+// A one-unit build (Build's default) logs its clang: main.c's compile and then the link, each its own step on every
+// platform since the split (#2r9xhqs). The binary is the same bytes with the log and without it. A mutant that logs the
+// compile as a cLink, or writes 0 seconds, fails.
 //
 // Not parallel: it sets ADAMIC_BUILD_LOG for the process.
 func TestOneUnitBuildLogsItsClang(t *testing.T) {
@@ -178,10 +177,7 @@ func TestOneUnitBuildLogsItsClang(t *testing.T) {
 		}
 		steps = append(steps, match[1]+" "+match[2])
 	}
-	want := "cBuild program"
-	if goruntime.GOOS == "darwin" {
-		want = "cCompile main.c, cLink program"
-	}
+	want := "cCompile main.c, cLink program"
 	if strings.Join(steps, ", ") != want {
 		t.Fatalf("logged %q, want %s", steps, want)
 	}
