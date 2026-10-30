@@ -32,6 +32,13 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 	if call.Operation == "host_stdout_write" {
 		code = "(adamic_write_raw(adamic_stdout, " + args[0] + "), 0.0)"
 	}
+	if call.Operation == "host_env_set" {
+		e.line("adamic_host_environment_set(%s, %s);", args[0], args[1])
+		code = "adamic_retain(" + args[1] + ")"
+	}
+	if call.Operation == "host_env_delete" {
+		code = "adamic_host_environment_delete(" + args[0] + ")"
+	}
 	if call.Operation == "host_env" {
 		code = e.nodeEnvironmentRead(args[0])
 	}
