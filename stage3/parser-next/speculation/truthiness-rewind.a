@@ -1,0 +1,21 @@
+let position=11;
+let currentToken=7;
+let diagnosticLength=3;
+let parseError=false;
+function lookAhead(callback:()=>unknown):unknown {
+ const savedPosition=position;
+ const savedToken=currentToken;
+ const savedDiagnostics=diagnosticLength;
+ const savedError=parseError;
+ const result=callback();
+ position=savedPosition;currentToken=savedToken;diagnosticLength=savedDiagnostics;parseError=savedError;
+ return result;
+}
+function tryParse(callback:()=>unknown):unknown {const save=position;const result=callback();if(!result){position=save;}return result;}
+function failed():unknown {position=99;currentToken=42;diagnosticLength=8;parseError=true;return undefined;}
+console.log(lookAhead(failed)===undefined?'absent':'present');
+console.log(`${position}|${currentToken}|${diagnosticLength}|${parseError}`);
+let currentValue:unknown=undefined;
+function observed():unknown {position++;return currentValue;}
+function record(value:unknown):void {position=11;currentValue=value;const result=tryParse(observed);console.log(`${result?'truthy':'falsy'}|${position}`);}
+record(0);record(-0);record(NaN);record('');record(false);record(null);record(undefined);record(1);record('x');record([] as number[]);record({});

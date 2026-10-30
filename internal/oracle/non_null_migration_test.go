@@ -76,7 +76,20 @@ func TestNonNullLiteralUnionInitializers(t *testing.T) {
 			if err := os.WriteFile(path, []byte(source), 0644); err != nil {
 				t.Fatal(err)
 			}
-			assertMigratedNonNullCheck(t, path, literal+"!", "", true)
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			want := onSliceNode(t, path)
+			native, binary := nativelyUncached(t, program)
+			for _, got := range []run{native, onSliceJavaScript(t, program)} {
+				if difference := disagreement(want, got); difference != "" {
+					t.Fatal(difference)
+				}
+			}
+			if report := leaksUncached(t, program, binary); report != "" {
+				t.Fatal(report)
+			}
 		})
 	}
 }
@@ -92,7 +105,7 @@ func assertMigratedNonNullCheck(t *testing.T, path, expression, stdout string, m
 	if program.NonNullChecks.Checked == 0 {
 		t.Fatal("migrated fixture lost its inserted non-null check")
 	}
-	node := onNode(t, path)
+	node := onSliceNode(t, path)
 	if node.exitCode == 70 {
 		t.Fatal("source Node unexpectedly fired an Adamic check")
 	}
@@ -100,7 +113,7 @@ func assertMigratedNonNullCheck(t *testing.T, path, expression, stdout string, m
 	if native.exitCode != 70 || string(native.stdout) != stdout || !strings.HasPrefix(string(native.stderr), "adamic: panic: non-null assertion failed at "+path+":") || !strings.HasSuffix(string(native.stderr), ": "+expression+" is null or undefined\n") {
 		t.Fatalf("want eager checked %s with stdout %q, got %#v", expression, stdout, native)
 	}
-	if difference := disagreement(native, onJavaScriptBackend(t, program)); difference != "" {
+	if difference := disagreement(native, onSliceJavaScript(t, program)); difference != "" {
 		t.Fatal(difference)
 	}
 	if difference := disagreement(native, releasedUncached(t, program)); difference != "" {
