@@ -73,10 +73,11 @@ func (l *lowering) checkedFunctionTypeClaim(annotation *ast.Node) bool {
 }
 
 // checkedFunctionTypeCall is call, a call through a function value, checked against the claim of the
-// signature it resolved to when that's a checked function-type claim. The callee, or a method's
-// receiver, and the arguments are evaluated once, at the call site, into the check's parameters, so the
-// claim reads the value the call received.
-func (l *lowering) checkedFunctionTypeCall(node *ast.Node, call ir.CallClosure) (ir.Expression, error) {
+// signature it resolved to when that's a checked function-type claim. closure is call's callee, handed
+// in beside it so the check never reads a call target back out of the IR (call_targets_guard_test.go).
+// The callee, or a method's receiver, and the arguments are evaluated once, at the call site, into the
+// check's parameters, so the claim reads the value the call received.
+func (l *lowering) checkedFunctionTypeCall(node *ast.Node, closure ir.Expression, call ir.CallClosure) (ir.Expression, error) {
 	resolved := l.checker.GetResolvedSignature(node)
 	if resolved == nil {
 		return call, nil
@@ -144,7 +145,7 @@ func (l *lowering) checkedFunctionTypeCall(node *ast.Node, call ir.CallClosure) 
 	// method off it; any other callee is the function value itself.
 	var callee ir.Expression
 	var checked ir.CallClosure = call
-	if property, isMethod := call.Closure.(ir.Property); isMethod && property.Method {
+	if property, isMethod := closure.(ir.Property); isMethod && property.Method {
 		// JavaScript reads a.m before it evaluates the arguments, and the check reads m off the receiver
 		// after them, so an argument that runs code (a write to a.m, a getter) would call a different
 		// function from Node's. Only arguments that run nothing keep the order (Lower's must 1).
@@ -158,7 +159,7 @@ func (l *lowering) checkedFunctionTypeCall(node *ast.Node, call ir.CallClosure) 
 		l.result.Functions[wrapper].Parameters = append(l.result.Functions[wrapper].Parameters, receiver)
 	} else {
 		function := local("function", ir.Closure)
-		callee = call.Closure
+		callee = closure
 		checked.Closure = ir.Read{Local: function, Of: ir.Closure}
 		l.result.Functions[wrapper].Parameters = append(l.result.Functions[wrapper].Parameters, function)
 	}
