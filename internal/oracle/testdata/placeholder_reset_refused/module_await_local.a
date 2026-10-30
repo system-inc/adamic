@@ -1,0 +1,9 @@
+// a-check: refused a placeholder reset of a block local of a module that awaits at its top level
+// The top level becomes an async function, so the block's flag is declared before the await, out of reach of the reset.
+{
+	let text: string = 'before';
+	await Promise.resolve();
+	console.log(text);
+	text = undefined!;
+	console.log('after');
+}

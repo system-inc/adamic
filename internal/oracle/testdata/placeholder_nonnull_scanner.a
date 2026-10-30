@@ -1,0 +1,8 @@
+// TypeScript scanner.ts:4097 and the completing write at 4101.
+// Copyright Microsoft Corporation. Licensed under Apache-2.0.
+const valuesOfNonBinaryUnicodeProperties = {
+    Script: new Set(["Latn", "Greek"]),
+    Script_Extensions: undefined! as Set<string>,
+};
+valuesOfNonBinaryUnicodeProperties.Script_Extensions = valuesOfNonBinaryUnicodeProperties.Script;
+console.log(`${valuesOfNonBinaryUnicodeProperties.Script_Extensions.has("Latn")}|${valuesOfNonBinaryUnicodeProperties.Script_Extensions.has("Greek")}`);

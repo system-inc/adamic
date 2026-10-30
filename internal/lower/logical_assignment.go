@@ -48,6 +48,11 @@ func (l *lowering) logicalAssignment(node *ast.Node) (ir.Expression, error) {
 		if !known {
 			return nil, l.notYet(target, "a logical assignment to an accessor")
 		}
+		// A node array's fields live on its metadata object, and native's logical assignment takes the
+		// receiver as an object, not through the array to its metadata.
+		if store.Object.Type() == ir.Array {
+			return nil, l.notYet(target, "a logical assignment to a node array's field")
+		}
 		field := l.checker.GetSymbolAtLocation(target.Name())
 		if field != nil && accessorSymbol(field) {
 			return nil, l.notYet(target, "a logical assignment to an accessor")
