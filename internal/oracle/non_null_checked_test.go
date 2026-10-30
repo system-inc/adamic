@@ -136,7 +136,7 @@ func TestCheckedNonNullTypeScript(t *testing.T) {
 
 func TestCheckedNonNullAdamicRefusal(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_refuse_checked.a"))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_refused/non_null_refuse_checked.a"))
 	if err != nil {
 		t.Fatal(err)
 	}

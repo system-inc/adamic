@@ -1,0 +1,9 @@
+interface Identifier {kind:number;pos:number;end:number;text:string;}
+function createIdentifier(text:string):Identifier {
+ const node:Identifier={kind:1,pos:-1,end:-1,text:'base'};
+ node.text=text;
+ node.pos=0;
+ node.end=text.length;
+ return node;
+}
+console.log(createIdentifier('ready').text);

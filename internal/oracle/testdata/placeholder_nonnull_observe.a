@@ -1,0 +1,38 @@
+function observe(value: string | undefined): void {
+    console.log(value === undefined ? "optional missing" : "optional present");
+}
+let text: string = undefined!;
+console.log(`${text === undefined}|${typeof text}|${text ?? "fallback"}`);
+if (text) { console.log("unexpected"); } else { console.log("absent"); }
+observe(text);
+const saved = text;
+text = "written" + " later";
+text = saved;
+console.log(`${text === undefined}|${saved === undefined}`);
+text = "ready" + " again";
+console.log(`${text.length}`);
+let count: number = undefined!;
+console.log(`${count === undefined}|${count ?? 9}`);
+const savedCount = count;
+count = 0;
+count = savedCount;
+console.log(`${count === undefined}|${count ?? 8}`);
+class Slot { value: string = undefined!; count: number = undefined!; flag: boolean = undefined!; }
+const original = new Slot();
+const clone = new Slot();
+clone.value = original.value;
+clone.count = original.count;
+clone.flag = original.flag;
+console.log(`${clone.value === undefined}|${clone.count === undefined}|${clone.flag === undefined}`);
+clone.value = "field" + " value";
+clone.count = 0;
+clone.flag = false;
+console.log(`${clone.value.length}|${clone.count}|${clone.flag}`);
+interface View { value: string; count: number; flag: boolean; }
+function readView(view: View): void {
+    console.log(`${view.value === undefined}|${view.count === undefined}|${view.flag === undefined}`);
+    console.log(`${view.value ?? "view fallback"}|${view.count ?? 5}`);
+}
+const view: View = original;
+readView(view);
+readView(clone);

@@ -1,0 +1,27 @@
+class Slot { value: string = null!; count: number = null!; flag: boolean = null!; }
+interface View { value: string; count: number; flag: boolean; }
+function observe(view: View): void {
+    console.log(`${view.value === null}|${view.value === undefined}|${typeof view.value}|${view.value ?? "fallback"}`);
+    console.log(`${view.count === null}|${view.count === undefined}|${typeof view.count}|${view.count ?? 7}`);
+    console.log(`${view.flag === null}|${view.flag === undefined}|${typeof view.flag}|${view.flag ?? true}`);
+}
+const source = new Slot();
+const saved = source.value;
+const clone = new Slot();
+clone.value = source.value;
+clone.count = source.count;
+clone.flag = source.flag;
+source.value = "written" + " value";
+source.value = saved;
+observe(source);
+observe(clone);
+source.value = undefined!;
+clone.value = source.value;
+observe(clone);
+
+const unset = new Slot();
+const spread = { ...unset };
+observe(spread);
+unset.value = undefined!;
+const resetSpread = { ...unset };
+observe(resetSpread);

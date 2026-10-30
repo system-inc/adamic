@@ -1,0 +1,5 @@
+let value: string = undefined!;
+let target: string = undefined!;
+function saved(): string { return target = value; }
+function take(text: string): void { console.log(text === undefined ? "missing" : "present"); }
+take(saved());

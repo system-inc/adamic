@@ -229,7 +229,7 @@ func TestMovesSourceKeyNamesCompiler(t *testing.T) {
 func moveBuildOptions(build string) (native.Options, string) {
 	switch build {
 	case "asan":
-		return native.Options{Sanitize: true}, ""
+		return native.Options{Sanitize: true, Split: true, Jobs: 4}, ""
 	case "asan_slabs":
 		return native.Options{Sanitize: true}, "ADAMIC_SLABS"
 	case "tsan":
@@ -248,6 +248,9 @@ func moveBinary(t *testing.T, build string) string {
 	inputs := moveSourceInputs()
 	inputs.Name = "moves-native-" + build
 	inputs.Flags = append(native.Flags(options), "allocator="+allocator)
+	if options.Split {
+		inputs.Flags = append(inputs.Flags, fmt.Sprintf("split=true jobs=%d", options.Jobs))
+	}
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 	directory := buildcache.Product(t, inputs, func(directory string) error {
 		buildParallelProgram(t, moveSourceFile(t, "program.c"), filepath.Join(directory, "program"), options, allocator)

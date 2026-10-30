@@ -1,0 +1,14 @@
+let value: string = null!;
+console.log(value ?? "null fallback");
+value = undefined!;
+console.log(value ?? "undefined fallback");
+value = "written" + " value";
+console.log(value ?? "unused fallback");
+let count: number = null!;
+console.log(`${count ?? 7}`);
+count = 0;
+console.log(`${count ?? 7}`);
+let flag: boolean = null!;
+console.log(`${flag ?? true}`);
+flag = false;
+console.log(`${flag ?? true}`);

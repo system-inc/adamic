@@ -4,10 +4,36 @@ import (
 	"context"
 	"github.com/system-inc/adamic/internal/ir"
 	"os/exec"
-	"strings"
+	"regexp"
 	"testing"
 	"time"
 )
+
+// A Node global is used where its spelling starts an identifier, so a standard
+// global that ends in one, like ArrayBuffer.isView, is not a use.
+var nodeGlobalSpelling = regexp.MustCompile(`(^|[^A-Za-z0-9_$])(node:|process\.|Buffer\.)`)
+
+func nodeGlobalUse(code string) string {
+	if match := nodeGlobalSpelling.FindStringSubmatch(code); match != nil {
+		return match[2]
+	}
+	return ""
+}
+
+func TestNodeGlobalUseMatchesOnlyNodeGlobals(t *testing.T) {
+	t.Parallel()
+	for code, want := range map[string]string{
+		"Buffer.from(text)":                       "Buffer.",
+		"(process.env.HOME)":                      "process.",
+		`import { readFileSync } from "node:fs";`: "node:",
+		"!ArrayBuffer.isView(value)":              "",
+		"adamicProcess.exit(0)":                   "",
+	} {
+		if got := nodeGlobalUse(code); got != want {
+			t.Errorf("nodeGlobalUse(%q) = %q, want %q", code, got, want)
+		}
+	}
+}
 
 func TestWorkersCalleeWithoutNodeGlobals(t *testing.T) {
 	t.Parallel()
@@ -20,10 +46,8 @@ func TestWorkersCalleeWithoutNodeGlobals(t *testing.T) {
 			program := &ir.Program{Source: "worker.a", Locals: []ir.Local{{Name: "count", Type: ir.Number, Function: 0}}, Functions: []ir.Function{{Name: "handle", ArgumentsCount: one.count, Returns: ir.Number, Body: []ir.Statement{ir.Return{Value: ir.NumberConstant{Value: 1}}}}}}
 			runtime := "const noop=()=>{}; export {noop as encodeJson,noop as decodeJson,noop as fileStatus,noop as panic,noop as programArguments,noop as readDirectory,noop as readTextFile,noop as utf8At,noop as utf8Length,noop as writeTextFile};"
 			code := JavaScriptWith(program, Options{RuntimeImport: "data:text/javascript," + runtime})
-			for _, forbidden := range []string{"node:", "process.", "Buffer."} {
-				if strings.Contains(code, forbidden) {
-					t.Fatalf("Workers module uses unavailable %s", forbidden)
-				}
+			if forbidden := nodeGlobalUse(code); forbidden != "" {
+				t.Fatalf("Workers module uses unavailable %s", forbidden)
 			}
 			code += `
 globalThis.process=undefined; globalThis.Buffer=undefined;
