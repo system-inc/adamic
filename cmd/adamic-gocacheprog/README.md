@@ -39,6 +39,7 @@ next request.
 `go test ./cmd/adamic-gocacheprog` uses only local httptest servers and helper
 subprocesses, including two actual Go builds with fresh local caches. The second
 build must contain no compiler invocation. Each child command has a 25-second
-deadline.
+deadline. Its 18 test functions live in `main_test.go`, beside the helper's
+single source file, `main.go`.
 
 See [REPORT.md](REPORT.md) for validation and real-package timings.
