@@ -78,6 +78,13 @@ func TSGoC(program *ir.Program) (string, error) {
 // The public ABI header is embedded beside the archive's source, never copied
 // from cgo's generated implementation header.
 func BuildTSGo(source, output, archive string, options Options) error {
+	return buildTSGo(source, output, archive, options, false)
+}
+
+// buildTSGo compiles main.c to main.o and then links it, as linkOne does. oneCall has a build off macOS compile and link
+// it in one clang call instead, as it did before the split (#2r9xhqs), only so
+// TestACompiledThenLinkedCheckerIsTheOneCallChecker can hold the split's binary to the one call's bytes.
+func buildTSGo(source, output, archive string, options Options, oneCall bool) error {
 	archive, err := checkerArchivePath(archive)
 	if err != nil {
 		return err
@@ -111,13 +118,19 @@ func BuildTSGo(source, output, archive string, options Options) error {
 	}
 	flags := append(append(tsgoFlags(source, options), prefixMaps(directory, "/adamic-build")...), prefixMaps(filepath.Dir(library), "/adamic-runtime")...)
 	flags = append(flags, "-I", "runtime")
+	// main.c is compiled first and linked as main.o, for linkOne's reasons: on macOS so the debug map names it main.o
+	// alone, and elsewhere so the compile is a step of its own, the binary the one call's bytes.
 	program := "main.c"
-	if goruntime.GOOS == "darwin" {
+	if goruntime.GOOS == "darwin" || !oneCall {
 		compile := clangIn(directory, compilerName(options), append(slices.Clone(flags), "-c", program, "-o", "main.o")...)
 		var combined []byte
-		if err := jobserver.Hold(func() (err error) { combined, err = compile.CombinedOutput(); return err }); err != nil {
+		var compiling time.Duration
+		if err := jobserver.Hold(func() error {
+			return timed(&compiling, func() (err error) { combined, err = compile.CombinedOutput(); return err })
+		}); err != nil {
 			return fmt.Errorf("native: clang with checker archive failed: %w\n%s", err, combined)
 		}
+		buildLog("cCompile", "main.c", "", "off", compiling)
 		if err := os.Chtimes(filepath.Join(directory, "main.o"), time.Unix(0, 0), time.Unix(0, 0)); err != nil {
 			return err
 		}
@@ -128,9 +141,18 @@ func BuildTSGo(source, output, archive string, options Options) error {
 	arguments = append(append(arguments, checkerArchive, "-lm", "-lpthread", "-ldl"), objectPrefixFlags()...)
 	command := clangIn(directory, compilerName(options), arguments...)
 	var combined []byte
-	if err := jobserver.Hold(func() (err error) { combined, err = command.CombinedOutput(); return err }); err != nil {
+	var building time.Duration
+	if err := jobserver.Hold(func() error {
+		return timed(&building, func() (err error) { combined, err = command.CombinedOutput(); return err })
+	}); err != nil {
 		return fmt.Errorf("native: clang with checker archive failed: %w\n%s", err, combined)
 	}
+	// As linkOne's: a link alone is a cLink, and one call that compiles and links is a cBuild.
+	kind := "cBuild"
+	if program == "main.o" {
+		kind = "cLink"
+	}
+	buildLog(kind, filepath.Base(output), "", "off", building)
 	return nil
 }
 

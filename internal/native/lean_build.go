@@ -39,5 +39,5 @@ func BuildLean(compiler string, sourcePath string, archiveDirectory string, outp
 		return fmt.Errorf("native: the lean build's directory: %w", err)
 	}
 	defer os.RemoveAll(directory)
-	return linkOne(directory, compiler, string(source), output, options, Flags(options), filepath.Join(archiveDirectory, "runtime.a"), jobserver, nil)
+	return linkOne(directory, compiler, string(source), output, options, Flags(options), filepath.Join(archiveDirectory, "runtime.a"), jobserver, nil, true)
 }
