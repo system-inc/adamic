@@ -83,9 +83,14 @@ func (l *lowering) checkedFunctionTypeCall(node *ast.Node, call ir.CallClosure) 
 	}
 	claim := predicateOfSignature(l.checker, resolved)
 	// tsc makes one signature for a union or an intersection of callables and gives it one member's
-	// declaration, so neither a check nor a vouch read from that declaration speaks for the others.
-	if claim != nil && l.checker.GetTypeAtLocation(node.AsCallExpression().Expression).Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
-		return nil, l.notYet(node, "a call narrowing through a union or intersection of callables")
+	// declaration, so neither a check nor a vouch read from that declaration speaks for the others. The
+	// call stands only when every member's narrowing signature is vouched for on its own, as two proven
+	// predicates are (no_escape.ts's c41), and none is a claim this head would check.
+	if callee := l.checker.GetTypeAtLocation(node.AsCallExpression().Expression); claim != nil && callee.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		if !l.predicateCalleeMembersVouched(callee) {
+			return nil, l.notYet(node, "a call narrowing through a union or intersection of callables")
+		}
+		return call, nil
 	}
 	if resolved.Declaration() == nil || !l.checkedFunctionTypeClaim(resolved.Declaration().Type()) {
 		// Admitting these claims means a call can reach lowering through any signature that narrows: one
@@ -213,6 +218,24 @@ func (l *lowering) predicateCallVouched(declaration *ast.Node, claim *checker.Ty
 		return true
 	}
 	return l.proveFlowPredicate(annotation) == nil
+}
+
+// predicateCalleeMembersVouched is whether every member of a union or an intersection of callables
+// that narrows is vouched for by predicateCallVouched, with no checked function-type claim among them.
+func (l *lowering) predicateCalleeMembersVouched(callee *checker.Type) bool {
+	for _, member := range callee.Types() {
+		for _, signature := range l.checker.GetSignaturesOfType(member, checker.SignatureKindCall) {
+			claim := predicateOfSignature(l.checker, signature)
+			if claim == nil {
+				continue
+			}
+			declaration := signature.Declaration()
+			if declaration == nil || l.checkedFunctionTypeClaim(declaration.Type()) || !l.predicateCallVouched(declaration, claim) {
+				return false
+			}
+		}
+	}
+	return true
 }
 
 // predicateArgumentsRunNothing is whether evaluating arguments can run no code of the program's, so a
