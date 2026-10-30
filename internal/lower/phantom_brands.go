@@ -36,8 +36,8 @@ func (l *lowering) phantomRefusal(node *ast.Node) error {
 			if primitiveMember(primitive.Flags(), field.Name) {
 				return &Refused{Where: l.program.Where(node), What: "a primitive brand member " + field.Name + " that exists on the primitive", Fix: "use a member name the primitive does not have on its own properties or prototype chain"}
 			}
-			if !phantomField(l.checker.GetTypeOfSymbol(field), field.Flags&ast.SymbolFlagsOptional != 0) {
-				return &Refused{Where: l.program.Where(node), What: "a primitive brand member " + field.Name + " whose type is not void", Fix: "make " + field.Name + " void (or optional and typed undefined) so the brand is phantom"}
+			if !phantomField(l.checker.GetTypeOfSymbol(field)) {
+				return &Refused{Where: l.program.Where(node), What: "a primitive brand member " + field.Name + " whose type is not void", Fix: "make " + field.Name + " undefined (or void) so the brand is phantom"}
 			}
 		}
 	}

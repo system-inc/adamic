@@ -19,12 +19,15 @@ func TestPhantomRefusals(t *testing.T) {
 	for _, test := range []struct{ name, source, what, fix string }{
 		{"prototype", "type Brand = string & { __proto__: void };", "a primitive brand member __proto__ that exists on the primitive", "use a member name the primitive does not have on its own properties or prototype chain"},
 		{"length", "type Brand = string & { length: void };", "a primitive brand member length that exists on the primitive", "use a member name the primitive does not have on its own properties or prototype chain"},
-		{"nonvoid", "type Brand = string & { __escapedIdentifier: number };", "a primitive brand member __escapedIdentifier whose type is not void", "make __escapedIdentifier void (or optional and typed undefined) so the brand is phantom"},
-		{"required undefined", "type Brand = number & { brand: undefined };", "a primitive brand member brand whose type is not void", "make brand void (or optional and typed undefined) so the brand is phantom"},
-		{"any Path", "type Path = string & { __pathBrand: any };", "a primitive brand member __pathBrand whose type is not void", "make __pathBrand void (or optional and typed undefined) so the brand is phantom"},
+		{"nonvoid", "type Brand = string & { __escapedIdentifier: number };", "a primitive brand member __escapedIdentifier whose type is not void", "make __escapedIdentifier undefined (or void) so the brand is phantom"},
+		{"any Path", "type Path = string & { __pathBrand: any };", "a primitive brand member __pathBrand whose type is not void", "make __pathBrand undefined (or void) so the brand is phantom"},
 		{"string index", "type Brand = string & { '0': void };", "a primitive brand member 0 that exists on the primitive", "use a member name the primitive does not have on its own properties or prototype chain"},
 		{"well-known symbol", "type Brand = string & { [Symbol.iterator]: void };", "a primitive brand member keyed by a symbol", "key the brand member by a name the primitive does not have on its own properties or prototype chain"},
 		{"unique symbol", "const k: unique symbol = Symbol('k');\ntype Brand = string & { [k]: void };", "a primitive brand member keyed by a symbol", "key the brand member by a name the primitive does not have on its own properties or prototype chain"},
+		{"well-known symbol undefined", "type Brand = string & { [Symbol.iterator]: undefined };", "a primitive brand member keyed by a symbol", "key the brand member by a name the primitive does not have on its own properties or prototype chain"},
+		{"number", "type Brand = string & { _b: number };", "a primitive brand member _b whose type is not void", "make _b undefined (or void) so the brand is phantom"},
+		{"length undefined", "type Brand = string & { length: undefined };", "a primitive brand member length that exists on the primitive", "use a member name the primitive does not have on its own properties or prototype chain"},
+		{"prototype method undefined", "type Brand = string & { toString: undefined };", "a primitive brand member toString that exists on the primitive", "use a member name the primitive does not have on its own properties or prototype chain"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			t.Parallel()
@@ -54,43 +57,49 @@ func TestPhantomRefusals(t *testing.T) {
 
 func TestPhantomCastsAreErased(t *testing.T) {
 	t.Parallel()
-	branded := `type Escaped = string & { __escapedIdentifier: void };
-function into(value: string): Escaped { return value as Escaped; }
-function out(value: Escaped): string { return value as string; }
-console.log(out(into('made' + 'now')));`
 	plain := `type Escaped = string;
 function into(value: string): Escaped { return value; }
 function out(value: Escaped): string { return value; }
 console.log(out(into('made' + 'now')));`
-	got, err := lowerSource(t, branded)
-	if err != nil {
-		t.Fatal(err)
-	}
-	want, err := lowerSource(t, plain)
-	if err != nil {
-		t.Fatal(err)
-	}
-	// Checker function IDs are local to each load, and this fixture has no indirect calls.
-	got.FunctionTypeTargets, want.FunctionTypeTargets = nil, nil
-	// Each source is lowered from its own temporary directory, so its file's path differs. A
-	// boundary schema describes a parameter's or result's declared type, not a cast, and a brand
-	// can't be described as boundary data (ir.FunctionBoundary: no Schema), where string can. The
-	// bodies, which are what a cast could change, are compared whole.
-	for index := range got.Functions {
-		got.Functions[index].Position.File = want.Functions[index].Position.File
-		got.Functions[index].Boundary, want.Functions[index].Boundary = ir.FunctionBoundary{}, ir.FunctionBoundary{}
-	}
-	if !reflect.DeepEqual(got, want) {
-		t.Fatalf("casts must leave identical IR:\ngot %#v\nwant %#v", got.Functions, want.Functions)
-	}
-	for _, function := range got.Functions {
-		returned, ok := function.Body[0].(ir.Return)
-		if !ok {
-			t.Fatalf("unexpected body %v", function.Body)
-		}
-		if _, ok := returned.Value.(ir.Read); !ok {
-			t.Fatalf("cast kept runtime operation %T", returned.Value)
-		}
+	// A required undefined member is as phantom on a primitive as a void one: it's never present.
+	for _, brand := range []string{"{ __escapedIdentifier: void }", "{ _b: undefined }"} {
+		t.Run(brand, func(t *testing.T) {
+			t.Parallel()
+			branded := `type Escaped = string & ` + brand + `;
+function into(value: string): Escaped { return value as Escaped; }
+function out(value: Escaped): string { return value as string; }
+console.log(out(into('made' + 'now')));`
+			got, err := lowerSource(t, branded)
+			if err != nil {
+				t.Fatal(err)
+			}
+			want, err := lowerSource(t, plain)
+			if err != nil {
+				t.Fatal(err)
+			}
+			// Checker function IDs are local to each load, and this fixture has no indirect calls.
+			got.FunctionTypeTargets, want.FunctionTypeTargets = nil, nil
+			// Each source is lowered from its own temporary directory, so its file's path differs. A
+			// boundary schema describes a parameter's or result's declared type, not a cast, and a brand
+			// can't be described as boundary data (ir.FunctionBoundary: no Schema), where string can. The
+			// bodies, which are what a cast could change, are compared whole.
+			for index := range got.Functions {
+				got.Functions[index].Position.File = want.Functions[index].Position.File
+				got.Functions[index].Boundary, want.Functions[index].Boundary = ir.FunctionBoundary{}, ir.FunctionBoundary{}
+			}
+			if !reflect.DeepEqual(got, want) {
+				t.Fatalf("casts must leave identical IR:\ngot %#v\nwant %#v", got.Functions, want.Functions)
+			}
+			for _, function := range got.Functions {
+				returned, ok := function.Body[0].(ir.Return)
+				if !ok {
+					t.Fatalf("unexpected body %v", function.Body)
+				}
+				if _, ok := returned.Value.(ir.Read); !ok {
+					t.Fatalf("cast kept runtime operation %T", returned.Value)
+				}
+			}
+		})
 	}
 }
 
@@ -151,7 +160,7 @@ func TestPhantomRealPathRefusal(t *testing.T) {
 		t.Fatal(err)
 	}
 	_, err = lowerSource(t, string(source))
-	want := "main.a:3:20: Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom"
+	want := "main.a:3:20: Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand undefined (or void) so the brand is phantom"
 	if err == nil || !strings.HasSuffix(err.Error(), want) {
 		t.Fatalf("got %v, want %s", err, want)
 	}
