@@ -3,6 +3,7 @@ package oracle
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -69,8 +70,16 @@ func programHost14WASM(t *testing.T, counted bool) string {
 	} else {
 		err = native.Build(code, binary, options)
 	}
+	reason := ""
 	if err != nil {
-		t.Fatal(err)
+		var refusal *native.TargetRefused
+		if !errors.As(err, &refusal) {
+			t.Fatal(err)
+		}
+		reason = refusal.Error()
+	}
+	if assertWASIRefusal(t, programHost14Path, reason, wasiRefusedFixtures) {
+		return ""
 	}
 	return binary
 }
@@ -84,6 +93,9 @@ func TestProduct_ProgramHost14WASICounted(t *testing.T) {
 func TestProgramRegionHost14DefaultWASIAgreesWithNode(t *testing.T) {
 	t.Parallel()
 	binary := programHost14WASM(t, false)
+	if binary == "" {
+		return
+	}
 	path, err := filepath.Abs(filepath.Join(repository, programHost14Path))
 	if err != nil {
 		t.Fatal(err)
@@ -105,6 +117,9 @@ func TestProgramRegionHost14DefaultWASIAgreesWithNode(t *testing.T) {
 func TestProgramRegionHost14DefaultShimPending(t *testing.T) {
 	t.Parallel()
 	binary := programHost14WASM(t, false)
+	if binary == "" {
+		return
+	}
 	if !shimFileFixtures[programHost14Path] {
 		t.Fatal("host file access must be listed")
 	}
