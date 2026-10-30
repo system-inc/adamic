@@ -11,12 +11,13 @@ import (
 // `const make: () => void = () => 42; make() === undefined` is false on Node. Adamic releases what a
 // void call returns (#f418fbz), so a read of it would see undefined where Node sees 42. A void value is
 // unobservable instead: reading a binding of one, comparing it, returning it from a function whose
-// return type isn't exactly void, passing it, and binding it to a wider type are refused, in .a and .ts
-// alike. Relating a value-returning function to a void function type stays legal, and so do
+// return type isn't exactly void, passing it, binding it to a wider type, and standing it as the
+// target of ??=, ||= or &&=, which read their target before they decide to write it, are refused, in .a
+// and .ts alike. Relating a value-returning function to a void function type stays legal, and so do
 // #se1zcgr's discards: `return f()` and a concise arrow body inside a function whose own return type is
 // exactly void, or for an async function one that resolves to exactly void.
 func (l *lowering) refuseVoidRead(node *ast.Node) error {
-	if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) || ast.IsDeclarationName(node) || ast.IsAssignmentTarget(node) {
+	if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) || ast.IsDeclarationName(node) || (ast.IsAssignmentTarget(node) && !logicalAssignmentTarget(node)) {
 		return nil
 	}
 	if node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.AsPropertyAccessExpression().Name() == node {
@@ -35,7 +36,8 @@ func (l *lowering) refuseVoidRead(node *ast.Node) error {
 func init() { refusalRules.register(3250, "refuseVoidRead", (*lowering).refuseVoidRead) }
 
 // voidReadRole is what the place a void value stands in does with it, or "" where it's discarded. A
-// conditional's branch, and the right of &&, || and ??, stand where the whole expression stands.
+// conditional's branch, the right of &&, || and ??, and the operand of await, as, satisfies and !, stand
+// where the whole expression stands.
 func (l *lowering) voidReadRole(node *ast.Node) string {
 	site := node
 	for site.Parent != nil && site.Parent.Kind == ast.KindParenthesizedExpression {
@@ -64,6 +66,9 @@ func (l *lowering) voidReadRole(node *ast.Node) string {
 		return l.voidReadRole(parent)
 	case ast.KindBinaryExpression:
 		binary := parent.AsBinaryExpression()
+		if logicalAssignment(binary.OperatorToken.Kind) && binary.Left == site {
+			return "the target of " + scanner.TokenToString(binary.OperatorToken.Kind)
+		}
 		switch binary.OperatorToken.Kind {
 		case ast.KindCommaToken:
 			if binary.Left == site {
@@ -108,6 +113,15 @@ func (l *lowering) voidReadRole(node *ast.Node) string {
 		return "typeof's operand"
 	}
 	return "a value"
+}
+
+// logicalAssignmentTarget is whether node, through parentheses, is the left of ??=, ||= or &&=.
+func logicalAssignmentTarget(node *ast.Node) bool {
+	site := node
+	for site.Parent != nil && site.Parent.Kind == ast.KindParenthesizedExpression {
+		site = site.Parent
+	}
+	return site.Parent != nil && site.Parent.Kind == ast.KindBinaryExpression && logicalAssignment(site.Parent.AsBinaryExpression().OperatorToken.Kind) && site.Parent.AsBinaryExpression().Left == site
 }
 
 // returnsExactlyVoid is whether function's own return type is void, not void | X and not unknown, or for
