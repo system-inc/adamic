@@ -43,7 +43,8 @@ func init() { refusalRules.register(3250, "refuseVoidRead", (*lowering).refuseVo
 // least one of them, so `void & {}` brands nothing. tsc's __String has one such arm,
 // `void & { __escapedIdentifier: void }`, and no function returning a value relates to a return type of
 // that shape without a cast, which item 8 refuses or checks. It's the exemption brandRead gives the read
-// of a brand's member.
+// of a brand's member. A union holding plain void, `void | number`, isn't void-valued: only its
+// intersection members are examined, and H2's rule for void itself has always been exactly void.
 func (l *lowering) voidValued(t *checker.Type) bool {
 	if t.Flags() == checker.TypeFlagsVoid {
 		return true
