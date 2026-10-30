@@ -431,15 +431,12 @@ func (l *lowering) predicateRefusal(node *ast.Node) error {
 		}
 		for _, member := range members {
 			for _, property := range l.checker.GetPropertiesOfType(member) {
-				if property.Flags&ast.SymbolFlagsOptional != 0 {
-					// The view proves a layout by its tag, and it can't check an optional field yet
-					// (#1yr7rdh). Say so: the return is already a trusted tag check (#1w5bve2). In .ts
-					// that's a gap the checked optional read closes (#mr87ptk), so it's NotYet; .a needs
-					// proof, and keeps the refusal (Adamic's condition 5).
+				// In .ts the view checks an optional field where it's read (#1yr7rdh), and a write to
+				// one through the view is NotYet, never an unchecked store (#mr87ptk): absent reads
+				// undefined, and present is checked like any field. .a needs proof, and keeps the
+				// refusal, which names the field rather than the return (#1w5bve2, Adamic's condition 5).
+				if property.Flags&ast.SymbolFlagsOptional != 0 && !l.checkedAssertionSource(node) {
 					what := "a tag-proven predicate whose target has an optional field (" + property.Name + " on " + l.checker.TypeToString(member) + ") that the view can't check"
-					if l.checkedAssertionSource(node) {
-						return l.notYet(node, what)
-					}
 					return &Refused{Where: l.program.Where(node), What: what, Fix: "make the field required, or return a boolean and narrow at the caller (adamic/no-type-predicate)"}
 				}
 			}
