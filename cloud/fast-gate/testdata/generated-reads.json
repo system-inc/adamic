@@ -1,0 +1,127 @@
+{
+  "about": "The one fixture both readers of a `reads <package> <list> generated` line test against (Node's condition 2 on #q11k6k6): the planner's key reader (loom planner/reads.go, generatedReads) and the gate's run.py cover(). A copy of it sits beside each reader, byte for byte. tree is the tracked files; list is the line's list; reads are the tracked paths the list bounds; changes say, for each change to tree, whether it moves the package's key (the planner) and fires the line (run.py); badLists are lists each reader must read as the whole tree.",
+  "package": "cloud",
+  "list": "cloud/fast-gate/generated.json",
+  "tree": {
+    "go.mod": "module example.com/generated\n\ngo 1.22\n",
+    "cloud/generated_test.go": "package cloud\n",
+    "cloud/fast-gate/generated.json": "{\n  \"maxFiles\": 8,\n  \"files\": [\n    {\n      \"path\": \"counts.md\",\n      \"command\": [\n        \"go\",\n        \"test\",\n        \"./x\"\n      ],\n      \"maxBytes\": 65536\n    },\n    {\n      \"under\": \"internal/oracle/testdata/counts/\",\n      \"suffix\": \".counts\",\n      \"command\": [\n        \"go\",\n        \"test\",\n        \"./internal/oracle\"\n      ],\n      \"maxBytes\": 65536\n    }\n  ]\n}\n",
+    "counts.md": "counts\n",
+    "README.md": "readme\n",
+    "other/x.go": "package other\n",
+    "internal/oracle/testdata/counts/a.counts": "a\n",
+    "internal/oracle/testdata/counts/deep/b.counts": "b\n",
+    "internal/oracle/testdata/counts/notes.txt": "notes\n",
+    "internal/oracle/testdata/countsx/y.counts": "beside the under, not in it\n"
+  },
+  "reads": [
+    "cloud/fast-gate/generated.json",
+    "counts.md",
+    "internal/oracle/testdata/counts/a.counts",
+    "internal/oracle/testdata/counts/deep/b.counts",
+    "internal/oracle/testdata/counts/notes.txt"
+  ],
+  "changes": [
+    {
+      "why": "a README nothing in the list names",
+      "edit": [
+        "README.md"
+      ],
+      "moves": false
+    },
+    {
+      "why": "a Go file outside the list",
+      "edit": [
+        "other/x.go"
+      ],
+      "moves": false
+    },
+    {
+      "why": "a file beside the under, its name only a prefix of it",
+      "edit": [
+        "internal/oracle/testdata/countsx/y.counts"
+      ],
+      "moves": false
+    },
+    {
+      "why": "the list itself",
+      "edit": [
+        "cloud/fast-gate/generated.json"
+      ],
+      "moves": true
+    },
+    {
+      "why": "a path the list names, edited",
+      "edit": [
+        "counts.md"
+      ],
+      "moves": true
+    },
+    {
+      "why": "a path the list names, removed",
+      "delete": [
+        "counts.md"
+      ],
+      "moves": true
+    },
+    {
+      "why": "a suffix file under the under, edited",
+      "edit": [
+        "internal/oracle/testdata/counts/deep/b.counts"
+      ],
+      "moves": true
+    },
+    {
+      "why": "a suffix file added under the under",
+      "add": [
+        "internal/oracle/testdata/counts/c.counts"
+      ],
+      "moves": true
+    },
+    {
+      "why": "a file without the suffix added under the under, which the walk lists",
+      "add": [
+        "internal/oracle/testdata/counts/other.txt"
+      ],
+      "moves": true
+    },
+    {
+      "why": "the under emptied of its suffix files",
+      "delete": [
+        "internal/oracle/testdata/counts/a.counts",
+        "internal/oracle/testdata/counts/deep/b.counts"
+      ],
+      "moves": true
+    }
+  ],
+  "badLists": [
+    {
+      "why": "not JSON",
+      "list": "not json\n"
+    },
+    {
+      "why": "a field the reader doesn't know",
+      "list": "{\"maxFiles\": 1, \"files\": [{\"path\": \"counts.md\", \"command\": [\"go\"], \"maxBytes\": 1, \"glob\": \"*\"}]}\n"
+    },
+    {
+      "why": "an entry naming both a path and an under",
+      "list": "{\"maxFiles\": 1, \"files\": [{\"path\": \"counts.md\", \"under\": \"internal/\", \"suffix\": \".counts\", \"command\": [\"go\"], \"maxBytes\": 1}]}\n"
+    },
+    {
+      "why": "an entry naming neither",
+      "list": "{\"maxFiles\": 1, \"files\": [{\"command\": [\"go\"], \"maxBytes\": 1}]}\n"
+    },
+    {
+      "why": "a path climbing out of the tree",
+      "list": "{\"maxFiles\": 1, \"files\": [{\"path\": \"../counts.md\", \"command\": [\"go\"], \"maxBytes\": 1}]}\n"
+    },
+    {
+      "why": "an under without its slash",
+      "list": "{\"maxFiles\": 1, \"files\": [{\"under\": \"internal/oracle/testdata/counts\", \"suffix\": \".counts\", \"command\": [\"go\"], \"maxBytes\": 1}]}\n"
+    },
+    {
+      "why": "two values",
+      "list": "{\"maxFiles\": 1, \"files\": []}\n{}\n"
+    }
+  ]
+}
