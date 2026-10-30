@@ -553,7 +553,7 @@ func (n *inference) operands(node any) []shape {
 	return operands
 }
 
-// writes reports whether an IR node writes into a container it's handed. It's asked before the
+// writes reports whether an IR node writes into a supplied container or live process state. It's asked before the
 // node's type is, since a write can give something that can't be mutated (a clear is void, a
 // readSync is a count). writes_test.go fails on an IR expression it doesn't find classified: here,
 // in callsBack, in a case of value's own, as holding statements, or as writing nothing.
@@ -562,8 +562,8 @@ func writes(expression ir.Expression) bool {
 	case ir.NodeBufferCall:
 		return call.Function == "buffer_set" || call.Function == "hash_update" || call.Function == "hash_digest"
 	case ir.NodeFSFile:
-		// readSync reads into the buffer it's handed.
-		return call.Operation == "read_sync"
+		// readSync writes its buffer; environment mutations write live process state.
+		return call.Operation == "read_sync" || call.Operation == "host_env_set" || call.Operation == "host_env_delete"
 	case ir.ObjectCall:
 		return call.Method == "assign" || call.Method == "freeze"
 	case ir.RegExpCall:

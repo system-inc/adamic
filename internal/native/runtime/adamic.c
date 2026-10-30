@@ -261,6 +261,7 @@ void adamic_start(int count, char **values) {
 #endif
 	adamic_arguments_save(count, values);
 	adamic_host_start(count, values);
+	adamic_node_process_start(count, values);
 #ifndef ADAMIC_TARGET_WASI
 	default_action.sa_handler = SIG_DFL;
 	sigemptyset(&default_action.sa_mask);
