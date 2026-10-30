@@ -71,7 +71,8 @@ for (const source of program.getSourceFiles().filter(f => f.fileName.startsWith(
     const expression = ts.isExpressionNode(n) || ts.isIdentifier(n) && ts.isShorthandPropertyAssignment(n.parent) && n.parent.name === n;
     if (expression && !(ts.isPropertyAccessExpression(n.parent) && n.parent.name === n)) {
       const type = checker.getTypeAtLocation(n);
-      if (matches(type) && read(n)) {
+      // Parentheses are transparent to the lowering rule, not another read.
+      if (matches(type) && !ts.isParenthesizedExpression(n) && read(n)) {
         const pos = source.getLineAndCharacterOfPosition(n.getStart(source));
         const symbol = checker.getSymbolAtLocation(ts.isPropertyAccessExpression(n) ? n.name : n);
         const declarations = symbol?.declarations || [];
