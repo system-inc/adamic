@@ -6,7 +6,6 @@ cohere/TypeScript-shim/checker
 cohere/TypeScript-shim/compiler
 cohere/TypeScript-shim/core
 cohere/TypeScript-shim/locale
-cohere/TypeScript-shim/parser
 cohere/TypeScript-shim/scanner
 cohere/TypeScript-shim/tsoptions
 cohere/TypeScript-shim/tspath
@@ -54,6 +53,7 @@ cohere/TypeScript/tsc/internal/tspath
 cohere/TypeScript/tsc/internal/vfs
 go.mod
 go.work
+internal/buildlog
 internal/flow
 internal/fresh
 internal/ir
