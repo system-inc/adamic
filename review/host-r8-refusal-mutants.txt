@@ -1,0 +1,56 @@
+Task: #n49nnje
+Linux, clang 20.1.8; ADAMIC_ORACLE_WASI=1; GOMAXPROCS=4
+Only the refusal expectation table is mutated; fixture source and generated C stay unchanged.
+The unmutated requested WASI suite passed with zero skips.
+
+Mutant: drop-process-platform
+Command: go test -overlay=/tmp/adamic-gate/host-6r8-mutants/drop-process-platform.json ./internal/oracle -run ^TestWASIInputAgreesWithNode_007$ -count=1 -parallel=4 -timeout=90s -v
+Exit: 1
+Caught: node_process_host.a: unlisted wasm32 refusal: wasm32-wasi refuses process.platform: WASI has no Node host platform; use a native Node host target
+=== RUN   TestWASIInputAgreesWithNode_007
+=== PAUSE TestWASIInputAgreesWithNode_007
+=== CONT  TestWASIInputAgreesWithNode_007
+=== RUN   TestWASIInputAgreesWithNode_007/internal/oracle/testdata/read_arguments.a
+    wasi_input_test.go:161: PASS internal/oracle/testdata/read_arguments.a
+=== RUN   TestWASIInputAgreesWithNode_007/internal/oracle/testdata/node_path_relative.a
+    wasi_input_test.go:161: PASS internal/oracle/testdata/node_path_relative.a
+=== RUN   TestWASIInputAgreesWithNode_007/internal/oracle/testdata/node_process_host.a
+    wasi_input_test.go:164: internal/oracle/testdata/node_process_host.a: unlisted wasm32 refusal: wasm32-wasi refuses process.platform: WASI has no Node host platform; use a native Node host target
+    wasi_input_test.go:150: FAIL internal/oracle/testdata/node_process_host.a
+=== NAME  TestWASIInputAgreesWithNode_007
+    wasi_input_test.go:132: V8 input shard=7 fixtures=3 pass=2 limitations=0 refused=0 fail=1 skip=0
+--- FAIL: TestWASIInputAgreesWithNode_007 (2.31s)
+    --- PASS: TestWASIInputAgreesWithNode_007/internal/oracle/testdata/read_arguments.a (1.49s)
+    --- PASS: TestWASIInputAgreesWithNode_007/internal/oracle/testdata/node_path_relative.a (0.54s)
+    --- FAIL: TestWASIInputAgreesWithNode_007/internal/oracle/testdata/node_process_host.a (0.26s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	2.326s
+FAIL
+
+
+Mutant: add-agreeing-read-files
+Command: go test -overlay=/tmp/adamic-gate/host-6r8-mutants/add-agreeing-read-files.json ./internal/oracle -run ^TestWASIInputAgreesWithNode_000$ -count=1 -parallel=4 -timeout=90s -v
+Exit: 1
+Caught: read_files.a: listed wasm32 refusal "mutant: this agreeing fixture should be refused", but it ran
+=== RUN   TestWASIInputAgreesWithNode_000
+=== PAUSE TestWASIInputAgreesWithNode_000
+=== CONT  TestWASIInputAgreesWithNode_000
+=== RUN   TestWASIInputAgreesWithNode_000/internal/oracle/testdata/read_files.a
+    wasi_input_test.go:164: internal/oracle/testdata/read_files.a: listed wasm32 refusal "mutant: this agreeing fixture should be refused", but it ran
+    wasi_input_test.go:150: FAIL internal/oracle/testdata/read_files.a
+=== RUN   TestWASIInputAgreesWithNode_000/internal/oracle/testdata/utf8_sweep.a
+    wasi_input_test.go:161: PASS internal/oracle/testdata/utf8_sweep.a
+=== RUN   TestWASIInputAgreesWithNode_000/internal/oracle/testdata/node_fs_directory_union.a
+    wasi_input_test.go:161: PASS internal/oracle/testdata/node_fs_directory_union.a
+=== RUN   TestWASIInputAgreesWithNode_000/internal/oracle/testdata/node_fs_directory_realpath.a
+    wasi_input_test.go:161: PASS internal/oracle/testdata/node_fs_directory_realpath.a
+=== NAME  TestWASIInputAgreesWithNode_000
+    wasi_input_test.go:132: V8 input shard=0 fixtures=4 pass=3 limitations=0 refused=0 fail=1 skip=0
+--- FAIL: TestWASIInputAgreesWithNode_000 (2.99s)
+    --- FAIL: TestWASIInputAgreesWithNode_000/internal/oracle/testdata/read_files.a (1.56s)
+    --- PASS: TestWASIInputAgreesWithNode_000/internal/oracle/testdata/utf8_sweep.a (0.31s)
+    --- PASS: TestWASIInputAgreesWithNode_000/internal/oracle/testdata/node_fs_directory_union.a (0.60s)
+    --- PASS: TestWASIInputAgreesWithNode_000/internal/oracle/testdata/node_fs_directory_realpath.a (0.50s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	3.007s
+FAIL
