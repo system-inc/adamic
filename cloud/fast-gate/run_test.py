@@ -10,6 +10,7 @@ all-pass case proves the harness can go green at all. Run: python3 -m unittest c
 import io
 import re
 import shutil
+import contextlib
 import json
 import os
 import subprocess
@@ -3094,6 +3095,43 @@ class SmokeMarkdownOnly(unittest.TestCase):
                            "nothing": lambda: None}.items():
             with self.subTest(name):
                 self.assertEqual(self.inputs(self.change(edit))["paths"], ["."])
+
+
+class ListingRunsGoListOnce(unittest.TestCase):
+    """One --list-units --with-inputs pass runs packageGraphCommand once a tree, which coverage's and smoke's providers
+    share (run.packageGraph, Hotty's measure on #q11k6k6), and lists what it did without the share. Mutant, red here: the
+    pass's share dropped (each provider runs its own)."""
+
+    setUp, write, commit, change = (CoverageMarkdownOnly.setUp, CoverageMarkdownOnly.write, CoverageMarkdownOnly.commit,
+                                    CoverageMarkdownOnly.change)
+
+    def listed(self, change, shared):
+        realRun(["git", "-C", self.tree, "checkout", "-q", "--detach", change["sha"]], check=True)
+        calls = []
+
+        def counted(command, *arguments, **options):
+            if list(command) == run.packageGraphCommand():
+                calls.append(command)
+            return realRun(command, *arguments, **options)
+
+        argv = ["run.py", "--list-units", "--with-inputs", "--tree", self.tree, "--base", change["base"], "--sha", change["sha"], "--tools", self.tree]
+        output = io.StringIO()
+        with mock.patch.object(sys, "argv", argv), mock.patch.object(run.subprocess, "run", side_effect=counted), contextlib.redirect_stdout(output):
+            if shared:
+                run.listUnits()
+            else:
+                with mock.patch.object(run, "packageGraph", side_effect=lambda tree: run.subprocess.run(run.packageGraphCommand(), cwd=tree, capture_output=True, text=True, timeout=300)):
+                    run.listUnits()
+        run.listedPackageGraphs = None
+        return len(calls), output.getvalue()
+
+    def test_a_markdown_change_lists_with_one_go_list(self):
+        change = self.change(lambda: self.write("README.md", "# probe, edited\n"))
+        count, rows = self.listed(change, True)
+        self.assertEqual(count, 1)
+        alone, unshared = self.listed(change, False)
+        self.assertGreater(alone, 1)  # coverage's and smoke's each, without the share
+        self.assertEqual(rows, unshared)
 
 
 class ListUnitsRefusal(unittest.TestCase):

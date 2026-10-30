@@ -392,6 +392,25 @@ def unownedPaths(directories, embedded, changed):
             if path != "cloud/fast-gate/compiler-dependencies.json" and packageOwner(directories, embedded, path) is None]
 
 
+# listedPackageGraphs holds each tree's packageGraphCommand answer for one --list-units pass (listUnits sets it to a dict,
+# and None outside one): a listing reads one checkout that nothing moves, and coverage's and smoke's providers each ask
+# the same go list of it, about 10 s on adamic (Hotty's measure on #q11k6k6). Outside a listing every caller runs its
+# own, since a caller there (a test, a gate) may move the checkout between asks.
+listedPackageGraphs = None
+
+
+def packageGraph(tree):
+    """packageGraphCommand's answer in tree, run once a tree for a listing pass (listedPackageGraphs) and every time
+    outside one. A failed run is kept too, so a listing's callers all read the same failure."""
+    key = os.path.realpath(tree)
+    if listedPackageGraphs is not None and key in listedPackageGraphs:
+        return listedPackageGraphs[key]
+    listing = subprocess.run(packageGraphCommand(), cwd=tree, capture_output=True, text=True, timeout=300)
+    if listedPackageGraphs is not None:
+        listedPackageGraphs[key] = listing
+    return listing
+
+
 def coverageReduced(tree, tools, changed, unowned=None):
     """The changed paths the coverage phase judges, sorted (#gw93f6b, Node's ruling): each neither owned, inside a Go package
     as touched() decides, nor inert, its first rule in tools' executors.txt being inert. The phase is red only for one of
@@ -399,7 +418,7 @@ def coverageReduced(tree, tools, changed, unowned=None):
     deleted path is judged as any other. cover() passes the unowned paths touched() already found; the listing finds them
     here, with the same go list and ownership."""
     if unowned is None:
-        listing = subprocess.run(packageGraphCommand(), cwd=tree, capture_output=True, text=True, timeout=300)
+        listing = packageGraph(tree)
         if listing.returncode != 0:
             raise SystemExit("go list failed: " + listing.stderr)
         directories, embedded = goPackages(tree, listing.stdout)[:2]
@@ -480,7 +499,7 @@ def markdownOnlyEmbedded(tree, tools, change, full):
             paths.append(path)
         if not paths:
             return None
-        listing = subprocess.run(packageGraphCommand(), cwd=tree, capture_output=True, text=True, timeout=300)
+        listing = packageGraph(tree)
         if listing.returncode != 0:
             return None
         embedded = goPackages(tree, listing.stdout)[1]
@@ -567,6 +586,8 @@ def listUnits():
     lister.add_argument("--sha")
     lister.add_argument("--tools")
     arguments = lister.parse_args()
+    global listedPackageGraphs
+    listedPackageGraphs = {}
     units = wholeUnits(arguments.tree) if arguments.full else fastUnits(arguments.tree, arguments.base, arguments.sha, arguments.tools)
     if arguments.with_inputs:
         products = productInputSources(arguments.tree) if arguments.full else None
