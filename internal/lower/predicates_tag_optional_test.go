@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 )
@@ -80,6 +81,27 @@ func TestTagPredicateOptionalFieldIsCheckedAtTheRead(t *testing.T) {
 			program, err := lowerTypeScriptAssertionSource(t, tagOptionalPrelude+probe.source)
 			if err != nil {
 				t.Fatal(err)
+			}
+			// Every read of jsDoc is the checked view read (an ir.Property naming its view and its
+			// contract, on a field the view checks), the node Emit's TestViewOptionalReadsStopAtTheRead
+			// pins against a read that believes the slot. A predicate-registered view routed to a plain
+			// field read turns this red (Lower and Compiler, condition 4 on #mr87ptk).
+			reads, checked := 0, 0
+			inspect := func(node any) bool {
+				if read, ok := node.(ir.Property); ok && read.Name == "jsDoc" && !read.Method {
+					reads++
+					if read.View != "" && read.ViewContract > 0 && program.CheckedField(read.ViewReceiverTypeID, read.Name) {
+						checked++
+					}
+				}
+				return true
+			}
+			walk(program.Main, inspect)
+			for _, function := range program.Functions {
+				walk(function.Body, inspect)
+			}
+			if reads == 0 || checked != reads {
+				t.Fatalf("want every jsDoc read through the checked view read, got %d of %d", checked, reads)
 			}
 			directory := t.TempDir()
 			binary := filepath.Join(directory, "native")
