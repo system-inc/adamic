@@ -48,7 +48,7 @@ func (l *lowering) phantomBase(proven *checker.Type) *checker.Type {
 			return nil
 		}
 		for _, field := range l.checker.GetPropertiesOfType(object) {
-			if !phantomField(l.checker.GetTypeOfSymbol(field), field.Flags&ast.SymbolFlagsOptional != 0) || primitiveMember(primitive.Flags(), field.Name) {
+			if checker.IsKnownSymbol(field) || !phantomField(l.checker.GetTypeOfSymbol(field), field.Flags&ast.SymbolFlagsOptional != 0) || primitiveMember(primitive.Flags(), field.Name) {
 				return nil
 			}
 		}
@@ -76,6 +76,9 @@ var phantomObjectNames = strings.Fields("__defineGetter__ __defineSetter__ __loo
 var phantomStringNames = strings.Fields("anchor at big blink bold charAt charCodeAt codePointAt concat endsWith fixed fontcolor fontsize includes indexOf isWellFormed italics lastIndexOf length link localeCompare match matchAll normalize padEnd padStart repeat replace replaceAll search slice small split startsWith strike sub substr substring sup toLocaleLowerCase toLocaleUpperCase toLowerCase toUpperCase toWellFormed trim trimEnd trimLeft trimRight trimStart")
 var phantomNumberNames = strings.Fields("toExponential toFixed toPrecision")
 
+// A symbol key's checker name is internal (a well-known or unique symbol), so no inventory above
+// can hold it, and a primitive's prototype has symbol members (String.prototype[Symbol.iterator]).
+// Both callers refuse it beside primitiveMember, by tsc's own late-bound name test, whatever the primitive.
 func primitiveMember(flags checker.TypeFlags, name string) bool {
 	if flags&(checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0 {
 		return false
