@@ -37,27 +37,28 @@ var v8Engine = wasmEngine{run: onV8Input}
 // buildEngineFixture builds the fixture's wasm32 command in process, as TestWASIAgreesWithNode does, from the runtime
 // products built ahead. It once built cmd/adamic and ran adamic build, and on Loom's uncached boxes every shard
 // building the whole compiler at once ran each past its 60 s budget.
-func buildEngineFixture(t *testing.T, path, directory string) string {
+func buildEngineFixture(t *testing.T, path, directory string) (string, string) {
 	t.Helper()
 	program, err := lowered(t, path)
 	if err != nil {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(directory, "program.wasm")
-	if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-		t.Fatal(err)
-	}
-	return binary
+	return binary, buildWASI(t, native.C(program), binary)
 }
 
-func runWASIInputFixture(t *testing.T, fixture string, arguments []string, unreadable, writes bool, engine wasmEngine) bool {
+func runWASIInputFixture(t *testing.T, fixture string, arguments []string, unreadable, writes bool, engine wasmEngine) (bool, bool) {
 	t.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, fixture))
 	if err != nil {
 		t.Fatal(err)
 	}
 	shared := sharedDirectory(t)
-	binary := buildEngineFixture(t, path, shared)
+	binary, reason := buildEngineFixture(t, path, shared)
+	if reason != "" {
+		assertWASIRefusal(t, fixture, reason, wasiInputRefusedFixtures)
+		return false, true
+	}
 	how := inputRun{directory: filepath.Dir(path), arguments: append([]string{}, arguments...)}
 	if os.Geteuid() == 0 {
 		how.credential = &syscall.Credential{Uid: 65534, Gid: 65534}
@@ -86,6 +87,9 @@ func runWASIInputFixture(t *testing.T, fixture string, arguments []string, unrea
 		expected, limited = engine.limits(t, fixture, expected)
 	}
 	actual := engine.run(t, how, binary)
+	if assertWASIRefusal(t, fixture, wasiRefusalReason(actual), wasiInputRefusedFixtures) {
+		return false, true
+	}
 	if writes {
 		if difference := filesDiffer(files, snapshot(t, how.arguments[0])); difference != "" {
 			t.Error(difference)
@@ -94,7 +98,7 @@ func runWASIInputFixture(t *testing.T, fixture string, arguments []string, unrea
 	if difference := disagreement(expected, actual); difference != "" {
 		t.Errorf("%s: %s\nexpected exit=%d stdout=%q stderr=%q\nactual exit=%d stdout=%q stderr=%q", fixture, difference, expected.exitCode, expected.stdout, expected.stderr, actual.exitCode, actual.stdout, actual.stderr)
 	}
-	return limited
+	return limited, false
 }
 
 // inputFixturePaths is every input fixture's path, in the order inputFixtures runs them.
@@ -123,9 +127,9 @@ func runWASIInputShard(t *testing.T, shard int) {
 	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
-	pass, limits, fail, skip := 0, 0, 0, 0
+	pass, limits, refused, fail, skip := 0, 0, 0, 0, 0
 	defer func() {
-		t.Logf("V8 input shard=%d fixtures=%d pass=%d limitations=%d fail=%d skip=%d", shard, pass+limits+fail+skip, pass, limits, fail, skip)
+		t.Logf("V8 input shard=%d fixtures=%d pass=%d limitations=%d refused=%d fail=%d skip=%d", shard, pass+limits+refused+fail+skip, pass, limits, refused, fail, skip)
 	}()
 	for _, index := range rows {
 		fixture := inputFixtures[index]
@@ -139,7 +143,7 @@ func runWASIInputShard(t *testing.T, shard int) {
 			}
 		}
 		t.Run(fixture.path, func(t *testing.T) {
-			limited := false
+			limited, wasRefused := false, false
 			defer func() {
 				if t.Failed() {
 					fail++
@@ -147,6 +151,8 @@ func runWASIInputShard(t *testing.T, shard int) {
 				} else if t.Skipped() {
 					skip++
 					t.Log("SKIP", fixture.path)
+				} else if wasRefused {
+					refused++
 				} else if limited {
 					limits++
 					t.Log("LIMIT", fixture.path)
@@ -155,7 +161,7 @@ func runWASIInputShard(t *testing.T, shard int) {
 					t.Log("PASS", fixture.path)
 				}
 			}()
-			limited = runWASIInputFixture(t, fixture.path, fixture.arguments, fixture.unreadable, fixture.writes, engine)
+			limited, wasRefused = runWASIInputFixture(t, fixture.path, fixture.arguments, fixture.unreadable, fixture.writes, engine)
 		})
 	}
 }
