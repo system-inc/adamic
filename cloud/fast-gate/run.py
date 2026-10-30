@@ -1026,9 +1026,11 @@ class Gate:
                 elif fields and fields[0] == "reads":
                     # "reads <package> <glob> paths": the test reads which paths exist, not what they hold
                     # (gitignore walks the whole tree), so only an added or deleted path changes its input.
-                    if len(fields) not in (3, 4) or (len(fields) == 4 and fields[3] != "paths"):
+                    # "reads <package> <list> generated": the test walks what a generated.json names
+                    # (generatedReach), so the list bounds what it reads.
+                    if len(fields) not in (3, 4) or (len(fields) == 4 and fields[3] not in ("paths", "generated")):
                         raise ValueError("invalid reads line %d: %s" % (number, line.strip()))
-                    readers.append((number, fields[1], fields[2], len(fields) == 4))
+                    readers.append((number, fields[1], fields[2], fields[3] if len(fields) == 4 else ""))
                 elif fields and not fields[0].startswith("#") and fields[0] != "mode":
                     rules.append((fields[0], fields[1]))
         # "a-check-exempt <glob>" lines aren't executors: they name .a files that aren't Adamic programs.
@@ -1038,9 +1040,14 @@ class Gate:
         self.result["reads"] = []
         readerPackages = set()
         mapChanged = "cloud/fast-gate/executors.txt" in changed
-        for number, package, pattern, pathsOnly in readers:
-            # Without the added and deleted list (a caller that didn't compute it), every match fires.
-            paths = [path for path in changed if fnmatch.fnmatchcase(path, pattern) and (not pathsOnly or pathSetChanged is None or path in pathSetChanged)]
+        for number, package, pattern, mode in readers:
+            if mode == "generated":
+                # The list's bound, read from the candidate's tree; a list the reader can't read is the whole tree.
+                reach = generatedReach(self.arguments.tree, pattern)
+                paths = [path for path in changed if reach is None or path in reach[0] or path.startswith(reach[1])]
+            else:
+                # Without the added and deleted list (a caller that didn't compute it), every match fires.
+                paths = [path for path in changed if fnmatch.fnmatchcase(path, pattern) and (mode != "paths" or pathSetChanged is None or path in pathSetChanged)]
             if paths or mapChanged:
                 readerPackages.add(module + "/" + package)
                 self.result["reads"].append({"line": number, "package": package, "glob": pattern,
@@ -2747,6 +2754,54 @@ def topLevelOutcomes(path):
     except OSError:
         pass
     return outcomes
+
+
+def generatedReach(tree, listPath):
+    """What a test that walks a generated.json's entries reads, as loom's planner keys it (planner/reads.go
+    generatedReads; both readers test against testdata/generated-reads.json): the list itself and each path it names,
+    as a set of paths, and each under, as a tuple of prefixes every path below it starts with. None when the list can't be
+    read as the reader knows it: missing, not one JSON value of the shape cloud/generated_test.go's checkGenerated
+    decodes strictly, an entry naming both a path and an under or neither, a path that isn't clean inside the tree, or an
+    under that isn't a clean directory ending in a slash. The caller then reads the whole tree, never less."""
+    try:
+        with open(os.path.join(tree, listPath)) as handle:
+            declared = json.load(handle)
+    except (OSError, ValueError):
+        return None
+    if not isinstance(declared, dict) or not set(declared) <= {"maxFiles", "files"}:
+        return None
+    if declared.get("maxFiles") is not None and (type(declared["maxFiles"]) is not int):
+        return None
+    files = declared.get("files") or []
+    if not isinstance(files, list):
+        return None
+
+    def clean(name):
+        return name != "" and os.path.isabs(name) is False and os.path.normpath(name) == name and name != ".." and not name.startswith("../")
+
+    paths, unders = {listPath}, []
+    for entry in files:
+        if not isinstance(entry, dict) or not set(entry) <= {"path", "under", "suffix", "command", "maxBytes"}:
+            return None
+        for field in ("path", "under", "suffix"):
+            if entry.get(field) is not None and not isinstance(entry[field], str):
+                return None
+        if entry.get("command") is not None and not (isinstance(entry["command"], list) and all(isinstance(word, str) for word in entry["command"])):
+            return None
+        if entry.get("maxBytes") is not None and type(entry["maxBytes"]) is not int:
+            return None
+        path, under = entry.get("path") or "", entry.get("under") or ""
+        if (path == "") == (under == ""):
+            return None
+        if path:
+            if not clean(path):
+                return None
+            paths.add(path)
+        else:
+            if not under.endswith("/") or under == "./" or not clean(under[:-1]):
+                return None
+            unders.append(under)
+    return paths, tuple(unders)
 
 
 def deferredClassedOut(tools, deferred):

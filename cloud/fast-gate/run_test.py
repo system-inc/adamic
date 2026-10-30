@@ -826,6 +826,53 @@ class Coverage(FailClosed):
         gate.cover(["stage3/.gitignore"], ["stage3/.gitignore"], [])
         self.assertEqual(gate.extraPackages, [run.module + "/stage1/cohere/gitignore"])
 
+    def test_a_generated_reader_fires_on_what_its_list_bounds(self):
+        # The one fixture loom's planner keys the same line against (planner/testdata/generated-reads.json, byte for
+        # byte), so the two readers of a generated line can't mean two things (Node's condition 2 on #q11k6k6).
+        with open(os.path.join(os.path.dirname(os.path.abspath(run.__file__)), "testdata/generated-reads.json")) as handle:
+            fixture = json.load(handle)
+
+        def treeOf(files):
+            tree = tempfile.mkdtemp()
+            self.addCleanup(shutil.rmtree, tree)
+            for name, text in files.items():
+                os.makedirs(os.path.dirname(os.path.join(tree, name)), exist_ok=True)
+                with open(os.path.join(tree, name), "w") as handle:
+                    handle.write(text)
+            with open(os.path.join(tree, "cloud/fast-gate/executors.txt"), "w") as handle:
+                handle.write("reads %s %s generated\ninert *\n" % (fixture["package"], fixture["list"]))
+            return tree
+
+        def fires(tree, changed, comeOrGo):
+            gate = run.Gate.__new__(run.Gate)
+            gate.arguments = mock.Mock(tools=tree, tree=tree)
+            gate.result, gate.steps, gate.exits = {}, {}, {}
+            gate.cover(changed, changed, comeOrGo)
+            return run.module + "/" + fixture["package"] in gate.extraPackages
+
+        for change in fixture["changes"]:
+            with self.subTest(change=change["why"]):
+                files = dict(fixture["tree"])
+                for name in change.get("edit", []):
+                    files[name] = files[name] + "\n"
+                for name in change.get("add", []):
+                    files[name] = "added %s\n" % name
+                for name in change.get("delete", []):
+                    del files[name]
+                comeOrGo = change.get("add", []) + change.get("delete", [])
+                changed = change.get("edit", []) + comeOrGo
+                self.assertEqual(fires(treeOf(files), changed, comeOrGo), change["moves"])
+        for bad in fixture["badLists"]:
+            with self.subTest(bad=bad["why"]):
+                files = dict(fixture["tree"])
+                files[fixture["list"]] = bad["list"]
+                tree = treeOf(files)
+                self.assertIsNone(run.generatedReach(tree, fixture["list"]))
+                self.assertTrue(fires(tree, ["README.md"], []))
+        reach = run.generatedReach(treeOf(fixture["tree"]), fixture["list"])
+        bounded = sorted(name for name in fixture["tree"] if name in reach[0] or name.startswith(reach[1]))
+        self.assertEqual(bounded, fixture["reads"])
+
     def test_reads_do_not_cover_an_unowned_path(self):
         with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
             handle.write("reads stage1/cohere/tsprinter **/*.ts\n")

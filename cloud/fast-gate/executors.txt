@@ -1726,12 +1726,13 @@ reads stage1/typescript/parser stage1/typescript/scanner/*
 # Walks past each package's closure that Adamic Operations' repowalk rule found on #7pmja7p (Oct 20), every one run over
 # the tracked tree: cmd/adamic-test262's prepareMode sources walk internal/lower's non-test Go files; estree_test.go
 # walks internal/native/runtime keeping its .c and .h; list_layout_shards_test.go walks internal/native's Go files, its
-# tests included; and cloud/generated_test.go's checkGenerated walks whatever generated.json names under `under`,
-# anywhere in the tree, so cloud reads every tracked file until generated.json bounds it.
+# tests included; and cloud/generated_test.go's checkGenerated walks whatever generated.json names: the list's own
+# bytes, a stat of each path, and each under's listing at every depth with a stat of its suffix files (Adamic Operations'
+# trace on #q11k6k6, Golem:~/adamiclint-recut-work/trace-generated/strace.txt), so the list bounds what cloud reads.
 reads cmd/adamic-test262 internal/lower/*.go
 reads stage1/cohere/estree internal/native/runtime/*.[ch]
 reads stage1/cohere/markdownblocks internal/native/*.go
-reads cloud *
+reads cloud cloud/fast-gate/generated.json generated
 # cmd/adamic's TestDocumentedCitationsResolve (cli_doc_test.go) reads docs/cli.md and every path it cites: a Go file's
 # declarations (under *.go above), another file's lines, or that a path exists. Main 31408f80's page cites docs, cloud
 # scripts, oracle hosts, bridge/tsgo/README.md and internal/native/runtime's sources, each class keyed by its directory
