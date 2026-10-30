@@ -16,7 +16,7 @@ func TestNodeFSDirectoryWASIAgreement(t *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	for _, name := range []string{"node_path_posix", "node_path_basename", "node_path_relative", "node_fs_directory_entries", "node_fs_directory_union", "node_fs_directory_realpath", "node_fs_directory_system", "node_fs_directory_stat_options", "node_fs_directory_permissions", "node_fs_directory_symlink"} {
+	for _, name := range []string{"node_path_posix", "node_path_basename", "node_path_relative", "node_fs_directory_entries", "node_fs_directory_union", "node_fs_directory_realpath", "node_fs_directory_system", "node_fs_directory_empty_path", "node_fs_directory_stat_options", "node_fs_directory_permissions", "node_fs_directory_symlink"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name+".a"))
