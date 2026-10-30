@@ -30,6 +30,9 @@ func (l *lowering) phantomRefusal(node *ast.Node) error {
 	}
 	for _, object := range objects {
 		for _, field := range l.checker.GetPropertiesOfType(object) {
+			if checker.IsKnownSymbol(field) {
+				return &Refused{Where: l.program.Where(node), What: "a primitive brand member keyed by a symbol", Fix: "key the brand member by a name the primitive does not have on its own properties or prototype chain"}
+			}
 			if primitiveMember(primitive.Flags(), field.Name) {
 				return &Refused{Where: l.program.Where(node), What: "a primitive brand member " + field.Name + " that exists on the primitive", Fix: "use a member name the primitive does not have on its own properties or prototype chain"}
 			}
