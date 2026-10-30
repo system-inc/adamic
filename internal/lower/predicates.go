@@ -404,6 +404,9 @@ func (l *lowering) predicateRefusal(node *ast.Node) error {
 	if l.predicateParameter(node) != nil {
 		return nil
 	}
+	if l.checkedFunctionTypeClaim(node) {
+		return nil // Every call through it checks the claim it resolved to (predicates_function_type.go).
+	}
 	original := l.proveFlowPredicate(node)
 	if original == nil {
 		return nil
@@ -589,7 +592,10 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 				contract = declaration.Type().Type()
 			}
 		}
-		if contract == nil {
+		// A parameter whose claim is checked at every call through it takes any function of its type: a
+		// lie stops at that call. A library's parameter is called where nothing checks it, so its
+		// argument keeps the proof (checkedFunctionTypeClaim).
+		if contract == nil || l.checkedFunctionTypeClaim(contract) {
 			continue
 		}
 		argument := ast.SkipParentheses(node.AsCallExpression().Arguments.Nodes[index])
