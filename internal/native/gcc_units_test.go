@@ -15,6 +15,7 @@ var gccRuntimeUnits = []string{
 	"class_inheritance.c",
 	"class_static.c",
 	"closure.c",
+	"construction.c",
 	"count.c",
 	"directory.c",
 	"dtoa.c",
@@ -132,6 +133,12 @@ func TestGCCRuntimeClassStatic(t *testing.T) { t.Parallel(); checkGCCRuntimeUnit
 
 func TestProduct_GCCRuntimeClosure(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "closure.c") }
 func TestGCCRuntimeClosure(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "closure.c") }
+
+func TestProduct_GCCRuntimeConstruction(t *testing.T) {
+	t.Parallel()
+	gccRuntimeUnit(t, "construction.c")
+}
+func TestGCCRuntimeConstruction(t *testing.T) { t.Parallel(); checkGCCRuntimeUnit(t, "construction.c") }
 
 func TestProduct_GCCRuntimeCount(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "count.c") }
 func TestGCCRuntimeCount(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "count.c") }

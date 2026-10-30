@@ -645,7 +645,10 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	}
 	defer os.RemoveAll(directory)
 	if library == "" {
-		library, err = RuntimeLibraryForSource("", source, options)
+		// Split and Jobs describe program compilation, never a different runtime archive.
+		runtimeOptions := options
+		runtimeOptions.Split, runtimeOptions.Jobs = false, 0
+		library, err = RuntimeLibraryForSource("", source, runtimeOptions)
 		if err != nil {
 			return err
 		}
