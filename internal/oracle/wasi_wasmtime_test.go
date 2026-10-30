@@ -34,14 +34,17 @@ func requireWasmtime(t *testing.T) {
 // working directory would change absolute paths and permission probes.
 func onWasmtime(t *testing.T, how inputRun, binary string) run {
 	t.Helper()
-	arguments := []string{"run", "--dir", "/::/"}
-	// WASI libc resolves relative paths against a dot preopen, not the host
-	// process cwd. Keep root access and add that alias for input fixtures.
-	if how.directory != "" {
-		arguments = append(arguments, "--dir", how.directory+"::.",
-			"--dir", filepath.Dir(binary)+"::"+filepath.Dir(binary), "--dir", "/dev::/dev")
+	// As onV8Input does: the working directory reaches the module as ADAMIC_WASI_CWD, which the
+	// cwd-dependent runtime adapters enter before resolving a relative path (node_cwd_wasi.c), so
+	// one root preopen serves both. A dot preopen would shadow absolute paths.
+	directory := how.directory
+	if directory == "" {
+		var err error
+		if directory, err = os.Getwd(); err != nil {
+			t.Fatal(err)
+		}
 	}
-	arguments = append(arguments, binary)
+	arguments := []string{"run", "--dir", "/::/", "--env", "ADAMIC_WASI_CWD=" + directory, binary}
 	return executeInput(t, how, nil, "wasmtime", append(arguments, how.arguments...)...)
 }
 
