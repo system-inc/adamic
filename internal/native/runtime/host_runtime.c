@@ -101,7 +101,15 @@ bool adamic_host_exit_code(int32_t *code) {
 }
 int adamic_host_exit_status(void) {
 	int32_t code;
-	return adamic_host_exit_code(&code) ? (int)code : 0;
+	if (!adamic_host_exit_code(&code)) { return 0; }
+#ifdef ADAMIC_TARGET_WASI
+	// The status is proc_exit's whole argument here, where a native exit keeps only its low byte, so the
+	// module passes that byte itself: Node's process.exit(258) exits 2. Wasmtime refuses a status of 126
+	// or more, which stays its host limit.
+	return (unsigned char)code;
+#else
+	return (int)code;
+#endif
 }
 
 double adamic_host_performance_now(void) {
