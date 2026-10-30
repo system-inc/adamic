@@ -1,5 +1,6 @@
 // Classify the pinned census's nested declaration sites against this unit's
 // structural restrictions. This is not a claim that any corpus file compiles.
+// docs/nested-functions.md shows how to run it, with CENSUS_TYPESCRIPT set.
 const fs = require('node:fs');
 const path = require('node:path');
 const ts = require(process.env.CENSUS_TYPESCRIPT);
