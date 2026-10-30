@@ -6,11 +6,12 @@ import (
 	"go/token"
 	"os"
 	"path/filepath"
-	"regexp"
 	"slices"
 	"strconv"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/cmd/adamic/treewalk"
 )
 
 // docs/cli.md is the command's inventory, so its usage block is the usage the binary prints, and every word the
@@ -124,11 +125,10 @@ func isArgument(expression ast.Expr, taken map[string]bool) bool {
 	return false
 }
 
-// docs/cli.md cites Go by symbol, never by line, so a citation goes stale only when its declaration does, and then
-// this fails on the change that moved it rather than on whichever change next reads the page. Every `path.go:Name`
-// must name a top-level declaration of that file (a function, Type.Method, a type, var or const), every other
-// `path:line` must be a line the file has, and every backticked path must exist. Mutants: rename a cited function,
-// cite a Go file by line, or name a path that isn't there.
+// docs/cli.md's citations of files other than Go must hold: every `path:line` a line the file has, and every
+// backticked path one the tree has. treewalk checks the Go ones, whose files can sit anywhere in the tree, so a Go edit
+// that breaks a citation reruns the check wherever the file is (#hbq28nr). Mutants: cite a line past a file's end, or
+// name a path that isn't there.
 func TestDocumentedCitationsResolve(t *testing.T) {
 	t.Parallel()
 	root := filepath.Join("..", "..")
@@ -136,34 +136,19 @@ func TestDocumentedCitationsResolve(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	declared := map[string]map[string]bool{}
-	symbols := 0
-	for _, match := range citation.FindAllStringSubmatch(string(page), -1) {
+	lineCitations := 0
+	for _, match := range treewalk.Citation.FindAllStringSubmatch(string(page), -1) {
 		path, anchor := match[1], match[2]
+		if strings.HasSuffix(path, ".go") {
+			continue
+		}
 		if anchor == "" {
 			if _, err := os.Stat(filepath.Join(root, path)); err != nil {
 				t.Errorf("docs/cli.md names %s, which isn't in the tree", path)
 			}
 			continue
 		}
-		if strings.HasSuffix(path, ".go") {
-			if anchor[0] >= '0' && anchor[0] <= '9' {
-				t.Errorf("docs/cli.md cites %s:%s by line; cite Go by the symbol, as path.go:Name", path, anchor)
-				continue
-			}
-			names, ok := declared[path]
-			if !ok {
-				names = declarationsOf(t, filepath.Join(root, path))
-				declared[path] = names
-			}
-			for _, name := range strings.Split(anchor, ",") {
-				symbols++
-				if !names[name] {
-					t.Errorf("docs/cli.md cites %s:%s, which %s doesn't declare", path, name, path)
-				}
-			}
-			continue
-		}
+		lineCitations++
 		text, err := os.ReadFile(filepath.Join(root, path))
 		if err != nil {
 			t.Errorf("docs/cli.md cites %s:%s, which isn't in the tree", path, anchor)
@@ -176,52 +161,8 @@ func TestDocumentedCitationsResolve(t *testing.T) {
 			}
 		}
 	}
-	// A page with no symbol cites would pass every check above, so it fails here instead.
-	if symbols == 0 {
-		t.Fatal("found no Go symbol citations in docs/cli.md; the pattern looks at the wrong text")
+	// A page with no line cites would pass every check above, so it fails here instead.
+	if lineCitations == 0 {
+		t.Fatal("found no line citations in docs/cli.md; the pattern looks at the wrong text")
 	}
-}
-
-// citation is a backticked repository path, with an optional anchor after a colon: a symbol list for Go, or lines.
-var citation = regexp.MustCompile("`((?:[A-Za-z0-9_.-]+/)+[A-Za-z0-9_.-]+\\.[a-z]+)(?::([A-Za-z0-9_.,-]+))?`")
-
-// declarationsOf names every top-level declaration of a Go file, methods as Type.Method.
-func declarationsOf(t *testing.T, path string) map[string]bool {
-	t.Helper()
-	file, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
-	if err != nil {
-		t.Fatal(err)
-	}
-	names := map[string]bool{}
-	for _, declaration := range file.Decls {
-		switch declaration := declaration.(type) {
-		case *ast.FuncDecl:
-			name := declaration.Name.Name
-			if declaration.Recv != nil && len(declaration.Recv.List) == 1 {
-				receiver := declaration.Recv.List[0].Type
-				if star, ok := receiver.(*ast.StarExpr); ok {
-					receiver = star.X
-				}
-				if index, ok := receiver.(*ast.IndexExpr); ok {
-					receiver = index.X
-				}
-				if identifier, ok := receiver.(*ast.Ident); ok {
-					name = identifier.Name + "." + name
-				}
-			}
-			names[name] = true
-		case *ast.GenDecl:
-			for _, spec := range declaration.Specs {
-				switch spec := spec.(type) {
-				case *ast.ValueSpec:
-					for _, identifier := range spec.Names {
-						names[identifier.Name] = true
-					}
-				case *ast.TypeSpec:
-					names[spec.Name.Name] = true
-				}
-			}
-		}
-	}
-	return names
 }
