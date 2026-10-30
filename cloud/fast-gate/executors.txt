@@ -1696,15 +1696,17 @@ reads internal/oracle internal/fresh/testdata/*
 reads internal/oracle cmd/adamic/testdata/*
 reads cmd/adamic internal/lower/testdata/*
 reads cmd/adamic internal/oracle/testdata/*
-# cmd/adamic's runtime-owner census (runtime_owners_test.go's runtimeBuilderPackagesIn, run by
-# TestCommandRuntimeArchivesHaveOneBuilder) walks the repository and parses every .go file it finds, test files
-# included, skipping only testdata, vendor, node_modules, .git, submodules and the root .gitignore's directory rules,
-# which it reads with .gitmodules; TestCommandRuntimeProductsWaitForOwners reads product-order.json. Undeclared, an edit
-# to another package's test file left its key standing and main green while it was red (#fbf3zhk, chg_77vp7gh7).
-reads cmd/adamic *.go
-reads cmd/adamic .gitignore
-reads cmd/adamic .gitmodules
+# The runtime-owner census (cmd/adamic/runtimewalk's runtimeBuilderPackagesIn, run by TestBuildersAreWhatTheWalkFinds)
+# walks the repository and parses every .go file it finds, test files included, skipping only testdata, vendor,
+# node_modules, .git, submodules and the root .gitignore's directory rules, which it reads with .gitmodules. Undeclared,
+# an edit to another package's test file left its key standing and main green while it was red (#fbf3zhk,
+# chg_77vp7gh7). It walked from cmd/adamic until #hbq28nr, and the line moved the keys of cmd/adamic's six runtime
+# product tests on every Go edit; cmd/adamic now counts builders from runtimewalk.Builders, which this test pins.
+# TestCommandRuntimeProductsWaitForOwners reads product-order.json.
 reads cmd/adamic cloud/fast-gate/product-order.json
+reads cmd/adamic/runtimewalk *.go
+reads cmd/adamic/runtimewalk .gitignore
+reads cmd/adamic/runtimewalk .gitmodules
 reads internal/native internal/load/testdata/*
 reads internal/corpusfiles cohere
 
@@ -1733,14 +1735,22 @@ reads stage1/cohere/estree internal/native/runtime/*.[ch]
 reads stage1/cohere/markdownblocks internal/native/*.go
 reads cloud *
 # cmd/adamic's TestDocumentedCitationsResolve (cli_doc_test.go) reads docs/cli.md and every path it cites: a Go file's
-# declarations (under *.go above), another file's lines, or that a path exists. Main 31408f80's page cites docs, cloud
-# scripts, oracle hosts, bridge/tsgo/README.md and internal/native/runtime's sources, each class keyed by its directory
-# so a new citation of the same kind is covered without a line (CLI's question on #mjh6rd5).
+# declarations (in its closure, or named below), another file's lines, or that a path exists. Main 31408f80's page cites
+# docs, cloud scripts, oracle hosts, bridge/tsgo/README.md and internal/native/runtime's sources, each class keyed by
+# its directory so a new citation of the same kind is covered without a line (CLI's question on #mjh6rd5).
 reads cmd/adamic docs/*.md
 reads cmd/adamic cloud/*.sh
 reads cmd/adamic oracle/*.mjs
 reads cmd/adamic bridge/tsgo/README.md
 reads cmd/adamic internal/native/runtime/*
+# The Go files docs/cli.md cites outside cmd/adamic's closure, by name, since internal/oracle is edited often and the
+# page cites four of its files (#hbq28nr): a new citation of Go outside the closure needs a line of its own.
+reads cmd/adamic internal/fuzz/run.go
+reads cmd/adamic internal/leakcheck/leakcheck.go
+reads cmd/adamic internal/oracle/families_generated_test.go
+reads cmd/adamic internal/oracle/moves_darwin_test.go
+reads cmd/adamic internal/oracle/oracle_test.go
+reads cmd/adamic internal/oracle/wasi_test.go
 # internal/oracle's views_deep_chain_test.go reads every file of internal/native/runtime (os.ReadDir), and internal/flow's
 # writes_test.go parses ../ir/*.go: Adamic Operations' repowalk over main e50e502c and 876cdd2e.
 reads internal/oracle internal/native/runtime/*
