@@ -1,0 +1,10 @@
+// parser.ts:4602, named parser result or undefined, followed by a fallback.
+interface Parsed {readonly kind:number;readonly text:string;}
+let position=0;
+function tryParse<T>(callback:()=>T):T {const save=position;const result=callback();if(!result){position=save;}return result;}
+function parseKeywordAndNoDot():Parsed|undefined {position++;return position===1?{kind:1,text:'keyword'}:undefined;}
+const first=tryParse(parseKeywordAndNoDot);
+console.log(first===undefined?'absent':first.text);
+const second=tryParse(parseKeywordAndNoDot);
+console.log(second===undefined?'absent':second.text);
+console.log(String(position));

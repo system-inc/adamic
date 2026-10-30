@@ -1,0 +1,17 @@
+interface NodeArray extends Array<number> {pos:number;end:number;hasTrailingComma:boolean;transformFlags:number;cache?:string|undefined;}
+const nodes=[1,2] as NodeArray;
+console.log(String(nodes.pos === undefined));
+const saved=nodes.pos;
+console.log(String(saved === undefined));
+const optional:{pos?:number|undefined}={pos:nodes.pos};
+console.log(String(optional.pos === undefined));
+console.log(String(nodes.cache === undefined));
+console.log(String('cache' in nodes));
+nodes.cache='ready';
+console.log(String(nodes.cache));
+console.log(String('cache' in nodes));
+nodes.cache=undefined;
+console.log(String(nodes.cache));
+console.log(String('cache' in nodes));
+nodes.pos=-1;
+console.log(String(nodes.pos));
