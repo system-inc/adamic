@@ -48,7 +48,7 @@ func TestProgramRegionParseWASIImports(t *testing.T) {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
 	const path = "internal/oracle/testdata/program_region/parse.a"
-	const want = "args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_read, fd_seek, fd_write, path_open, proc_exit"
+	const want = "args_get, args_sizes_get, clock_time_get, environ_get, environ_sizes_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_read, fd_seek, fd_write, path_filestat_get, path_open, proc_exit"
 	if !shimFileFixtures[path] {
 		t.Fatal("file-reading parser must be excluded from the file-free shim")
 	}
