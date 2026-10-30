@@ -4,6 +4,8 @@ Run the command on a checked Adamic source:
 
     go run ./cmd/adamic-split internal/split/testdata/decisions.a
 
+Each fixture's expected table is the `.txt` beside it, and TestFixtures holds the output to it.
+
 Each line contains the IR function name, wasm or javascript, an optional entry
 marker, and the first failed eligibility rule. Analyze also returns the original
 function index and declaration name-token position. Decisions are sorted by file, line and
