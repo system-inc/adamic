@@ -1,0 +1,1 @@
+internal/oracle/testdata/predicate_direction_uses/stopped/false_read.ts:36:12: stage 0 can't lower a checked predicate result returned from a function the checker infers a type predicate for, isAOrB, whose false side the call at internal/oracle/testdata/predicate_direction_uses/stopped/false_read.ts:39:10 reads, which its direction walk doesn't read yet

@@ -1,0 +1,1 @@
+internal/oracle/testdata/predicate_direction_uses/stopped/alias.ts:36:16: stage 0 can't lower a checked predicate result returned from a function the checker infers a type predicate for, isAlsoA, through a const its returned expression can narrow by, which its direction walk doesn't read yet
