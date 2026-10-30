@@ -109,12 +109,24 @@ func TestFunctionTypeClaimKeepsWhatTheCallCantCheck(t *testing.T) {
 			t.Errorf("%s: want refused as %q in .ts, got %v", refusal.name, refusal.what, err)
 		}
 	}
-	_, err := lowerTypeScriptAssertionSource(t, read("untagged"))
-	var pending *NotYet
-	if !errors.As(err, &pending) || !strings.Contains(err.Error(), "predicate overload target Named") {
-		t.Errorf("untagged: want NotYet naming the target Named, got %v", err)
+	// A method's check reads the method off the receiver after the arguments, and JavaScript reads it
+	// before them, so arguments that run code stop it: method_order swaps the method in an argument, and
+	// Node calls the old one (Lower's must 1). A union of callables gets one signature from tsc, with one
+	// member's declaration, so a narrowing call through it stops too (Lower's must 2). Mutants: the
+	// argument test dropped, where native prints "new swapped" and Node "old swapped"; the union test
+	// dropped, where union.ts lowers.
+	for _, pending := range []struct{ name, what string }{
+		{"untagged", "predicate overload target Named"},
+		{"method_order", "a checked method claim whose arguments can run code before the method is read"},
+		{"union", "a call narrowing through a union or intersection of callables"},
+	} {
+		_, err := lowerTypeScriptAssertionSource(t, read(pending.name))
+		var notYet *NotYet
+		if !errors.As(err, &notYet) || !strings.Contains(err.Error(), pending.what) {
+			t.Errorf("%s: want NotYet with %q, got %v", pending.name, pending.what, err)
+		}
 	}
-	_, err = lowerSource(t, read("iface_honest"))
+	_, err := lowerSource(t, read("iface_honest"))
 	var refused *Refused
 	if !errors.As(err, &refused) || refused.What != "a type predicate whose return is not proven (there is no body proving this parameter)" {
 		t.Errorf("iface_honest in .a: want the claim refused, got %v", err)
