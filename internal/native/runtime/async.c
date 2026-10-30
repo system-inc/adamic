@@ -1,4 +1,5 @@
 #include "async.h"
+#include "host_runtime.h"
 #include <assert.h>
 #include <stdlib.h>
 
@@ -169,6 +170,7 @@ static void drain_jobs(void) {
 }
 void adamic_async_run(void) {
     for (;;) {
+        adamic_host_stdout_refresh();
         adamic_host_process_completions();
         if (!host_live()) break;
         host_wait_hook();
