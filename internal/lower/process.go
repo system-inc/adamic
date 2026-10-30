@@ -47,6 +47,9 @@ func (l *lowering) processValue(node *ast.Node) (ir.Expression, bool, error) {
 	if value, known, err := l.nodeStdoutWrite(node); known {
 		return value, known, err
 	}
+	if value, known, err := l.nodeStdoutIsTTYRead(node); known {
+		return value, known, err
+	}
 	if value, known, err := l.nodePlatformRead(node); known {
 		return value, known, err
 	}
