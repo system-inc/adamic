@@ -15,11 +15,12 @@ func (r *TargetRefused) Error() string {
 }
 
 var wasiHostRefusals = map[string]TargetRefused{
-	"adamic_node_argv":         {"process.argv", "WASI has no executable paths"},
-	"adamic_fs_file_mkdtemp":   {"fs.mkdtempSync", "WASI has no temporary directory creation"},
-	"adamic_node_pid":          {"process.pid", "WASI has no process identifiers"},
-	"adamic_node_platform":     {"process.platform", "WASI has no Node host platform"},
-	"adamic_node_memory_usage": {"process.memoryUsage", "WASI has no allocator observations"},
+	"adamic_host_stdout_columns": {"process.stdout.columns", "wasi preview1 reports no terminal size"},
+	"adamic_node_argv":           {"process.argv", "WASI has no executable paths"},
+	"adamic_fs_file_mkdtemp":     {"fs.mkdtempSync", "WASI has no temporary directory creation"},
+	"adamic_node_pid":            {"process.pid", "WASI has no process identifiers"},
+	"adamic_node_platform":       {"process.platform", "WASI has no Node host platform"},
+	"adamic_node_memory_usage":   {"process.memoryUsage", "WASI has no allocator observations"},
 }
 
 func validateBuild(source string, options Options) error {

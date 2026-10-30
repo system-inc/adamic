@@ -61,6 +61,9 @@ static void host_pipe_start(void) {
     adamic_panic(message, sizeof message - 1);
 }
 static void host_default_wake(void) { host_pipe_start(); }
+/* Custom hooks do not poll the stdout wake pipe. Their next completion turn
+ * refreshes width later than Node, never earlier; host-loop integration is a
+ * known gap. Only this default wait can be woken directly by SIGWINCH. */
 static void host_default_wait(void) { host_pipe_start(); }
 #else
 static void host_pipe_start(void) {
@@ -84,11 +87,14 @@ static void host_default_wait(void) {
     host_lock();
     bool ready = host_completions != NULL || host_requests == NULL;
     host_unlock();
-    if (ready) return;
-    struct pollfd descriptor = {.fd = host_pipe[0], .events = POLLIN};
+    if (ready || adamic_host_stdout_refresh_pending()) return;
+    struct pollfd descriptors[2] = {
+        {.fd = host_pipe[0], .events = POLLIN},
+        {.fd = adamic_host_stdout_wake_descriptor(), .events = POLLIN}
+    };
     int result;
-    do { result = poll(&descriptor, 1, -1); } while (result == -1 && errno == EINTR);
-    if (result < 0 || (descriptor.revents & (POLLERR | POLLNVAL))) abort();
+    do { result = poll(descriptors, 2, -1); } while (result == -1 && errno == EINTR);
+    if (result < 0 || ((descriptors[0].revents | descriptors[1].revents) & (POLLERR | POLLNVAL))) abort();
 }
 #endif
 bool adamic_host_set_loop_hooks(adamic_host_loop_hook wake, adamic_host_loop_hook wait) {
@@ -238,6 +244,9 @@ static void host_drop(host_entry *entry) {
     free(entry);
 }
 void adamic_host_process_completions(void) {
+    /* Custom hosts drain here without entering adamic_async_run. They cannot
+     * be woken by our pipe, but their next completion must refresh as well. */
+    adamic_host_stdout_refresh();
     if (host_started) host_loop_thread();
 #ifndef ADAMIC_TARGET_WASI
     /* Only the loop drains pipe bytes. Workers publish while holding the mutex;
