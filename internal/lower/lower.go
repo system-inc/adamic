@@ -12,12 +12,14 @@ import (
 	"fmt"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/buildlog"
 	"github.com/system-inc/adamic/internal/flow"
 	"github.com/system-inc/adamic/internal/fresh"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"os"
 	"path/filepath"
+	"time"
 )
 
 // Lower lowers a checked program from one entry, in ESM evaluation order.
@@ -38,6 +40,8 @@ func LowerWithOptions(ctx context.Context, program *load.Program, options Option
 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
 	}
 	entry := files[0]
+	// The lower phase's line on $ADAMIC_BUILD_LOG, once a program: a program region's discovery pass is in it.
+	defer buildlog.Phase("lower", time.Now())
 	// Stage 0 checks single-threaded, so one checker answers for every file.
 	typeChecker, release := program.Checker(ctx, entry)
 	defer release()

@@ -3,6 +3,9 @@ package lower
 import (
 	"context"
 	"errors"
+	"os"
+	"path/filepath"
+	"regexp"
 	"strings"
 	"testing"
 
@@ -672,5 +675,25 @@ func TestAMethodReadAsAValueIsRefused(t *testing.T) {
 			}
 			lowersAndAgreesWithNode(t, shelter+neighbor.source)
 		})
+	}
+}
+
+// A lowering writes one phase line to ADAMIC_BUILD_LOG after its load's, in internal/native's buildLog format, a program
+// region's discovery pass inside it (#9x03wa7). Mutant: the line written a lowerChecked pass, two for a program region.
+//
+// Not parallel: t.Setenv changes ADAMIC_BUILD_LOG and ADAMIC_PROGRAM_REGION for the process.
+func TestLowerLogsItsPhaseOnce(t *testing.T) {
+	log := filepath.Join(t.TempDir(), "build.log")
+	t.Setenv("ADAMIC_BUILD_LOG", log)
+	t.Setenv("ADAMIC_PROGRAM_REGION", "1")
+	if _, err := lowerSource(t, "console.log('phase');\n"); err != nil {
+		t.Fatal(err)
+	}
+	written, err := os.ReadFile(log)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !regexp.MustCompile(`^phase load - off [0-9]+\.[0-9]{3}\nphase lower - off [0-9]+\.[0-9]{3}\n$`).Match(written) {
+		t.Fatalf("wrote %q, want a load phase line, then one lower phase line", written)
 	}
 }
