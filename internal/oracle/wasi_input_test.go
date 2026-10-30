@@ -50,7 +50,7 @@ func buildEngineFixture(t *testing.T, path, directory string) string {
 	return binary
 }
 
-func runWASIInputFixture(t *testing.T, fixture string, arguments []string, unreadable, writes bool, engine wasmEngine) bool {
+func runWASIInputFixture(t *testing.T, fixture string, arguments []string, unreadable, writes, plainNames bool, engine wasmEngine) bool {
 	t.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, fixture))
 	if err != nil {
@@ -70,7 +70,7 @@ func runWASIInputFixture(t *testing.T, fixture string, arguments []string, unrea
 		how.arguments = append(how.arguments, file)
 	}
 	if writes {
-		how.arguments = append([]string{writable(t, shared, "written")}, how.arguments...)
+		how.arguments = append([]string{writableDirectory(t, shared, "written", plainNames)}, how.arguments...)
 	}
 	expected := onNodeWith(t, how, path)
 	var files map[string]string
@@ -79,7 +79,7 @@ func runWASIInputFixture(t *testing.T, fixture string, arguments []string, unrea
 		if err := os.RemoveAll(how.arguments[0]); err != nil {
 			t.Fatal(err)
 		}
-		writable(t, shared, "written")
+		writableDirectory(t, shared, "written", plainNames)
 	}
 	limited := false
 	if engine.limits != nil {
@@ -155,7 +155,7 @@ func runWASIInputShard(t *testing.T, shard int) {
 					t.Log("PASS", fixture.path)
 				}
 			}()
-			limited = runWASIInputFixture(t, fixture.path, fixture.arguments, fixture.unreadable, fixture.writes, engine)
+			limited = runWASIInputFixture(t, fixture.path, fixture.arguments, fixture.unreadable, fixture.writes, fixture.plainNames, engine)
 		})
 	}
 }

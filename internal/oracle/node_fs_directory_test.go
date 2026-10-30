@@ -21,7 +21,8 @@ func init() {
 		arguments  []string
 		unreadable bool
 		writes     bool
-	}{"internal/oracle/testdata/node_fs_directory_symlink.a", nil, false, true})
+		plainNames bool
+	}{"internal/oracle/testdata/node_fs_directory_symlink.a", nil, false, true, true})
 	for _, path := range []string{
 		"internal/oracle/testdata/node_path_posix.a",
 		"internal/oracle/testdata/node_path_basename.a",
@@ -38,7 +39,8 @@ func init() {
 			arguments  []string
 			unreadable bool
 			writes     bool
-		}{path, nil, false, false})
+			plainNames bool
+		}{path, nil, false, false, false})
 	}
 }
 

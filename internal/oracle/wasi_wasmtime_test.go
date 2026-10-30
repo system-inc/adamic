@@ -249,7 +249,7 @@ func runWasmtimeInputShard(t *testing.T, shard int) {
 					t.Log("PASS", fixture.path)
 				}
 			}()
-			limited = runWASIInputFixture(t, fixture.path, fixture.arguments, fixture.unreadable, fixture.writes, engine)
+			limited = runWASIInputFixture(t, fixture.path, fixture.arguments, fixture.unreadable, fixture.writes, fixture.plainNames, engine)
 		})
 	}
 }
