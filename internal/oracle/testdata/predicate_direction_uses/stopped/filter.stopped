@@ -1,0 +1,1 @@
+internal/oracle/testdata/predicate_direction_uses/stopped/filter.ts:38:33: Adamic 0.1 refuses an unproven predicate argument for parameter predicate (argument "isAOrB"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)
