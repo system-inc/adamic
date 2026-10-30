@@ -1,0 +1,5 @@
+interface FactoryNode { text:string; }
+function createBaseNode():FactoryNode { return {} as FactoryNode; }
+const node=createBaseNode();
+console.log(String(node.text === undefined));
+console.log(node.text.toUpperCase());
