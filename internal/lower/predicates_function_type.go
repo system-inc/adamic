@@ -216,17 +216,16 @@ func (l *lowering) predicateCallVouched(declaration *ast.Node, claim *checker.Ty
 }
 
 // predicateArgumentsRunNothing is whether evaluating arguments can run no code of the program's, so a
-// read before them and one after them see the same function: names, field reads, constants, operators
-// and the closures written in place. Anything else, a call, an allocation that runs a constructor or a
-// library operation, is taken to run code.
+// read before them and one after them see the same function: names, constants, operators over them and
+// the closures written in place. A field read isn't among them: through a structural type it can reach
+// a class's getter at run time (getter_order.ts, Lower's read of f8c25636). Anything else, a call, an
+// allocation that runs a constructor or a library operation, is taken to run code.
 func predicateArgumentsRunNothing(arguments []ir.Expression) bool {
 	quiet := true
 	for _, argument := range arguments {
 		walk(argument, func(node any) bool {
-			switch expression := node.(type) {
+			switch node.(type) {
 			case ir.Read, ir.NumberConstant, ir.StringConstant, ir.BooleanConstant, ir.Undefined, ir.IsUndefined, ir.Unary, ir.Binary, ir.Unwrap, ir.Defined, ir.MaybeOf, ir.Box, ir.Narrow, ir.TypeOf, ir.MakeClosure:
-			case ir.Property:
-				quiet = quiet && !expression.Method
 			default:
 				quiet = false
 			}
