@@ -339,3 +339,58 @@ export function identity<T>(value: T): T { return value; }`)
 		t.Fatalf("refusal wrote output: %v", err)
 	}
 }
+
+// An export lowering doesn't keep would vanish from the Worker's module, so each kind is refused by name, at
+// its site, before anything is written. Mutant: refuseDroppedExports's call removed, and every case builds.
+func TestDroppedExportRefused(t *testing.T) {
+	t.Parallel()
+	for _, test := range []struct {
+		name, source, refusal string
+	}{
+		{"class", "export class Counter { count = 0; }", "entry.a:3:14: refused: worker export Counter is a class,"},
+		{"const", "export const limit = 3;", "entry.a:3:14: refused: worker export limit is a const value that isn't a closure,"},
+		{"let", "export let label = 'worker';", "entry.a:3:12: refused: worker export label is a let value that isn't a closure,"},
+		{"enum", "export enum Mode { Plain, Fancy }", "entry.a:3:13: refused: worker export Mode is an enum,"},
+		{"namespace", "export namespace Limits { export const most = 3; }", "entry.a:3:18: refused: worker export Limits is a namespace,"},
+		{"alias", "const most = 3;\nexport { most as ceiling };", "entry.a:3:7: refused: worker export ceiling is a const value that isn't a closure,"},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+			directory := t.TempDir()
+			entry := filepath.Join(directory, "entry.a")
+			write(t, entry, "import type { HttpRequest, HttpResponse } from 'adamic/http';\nexport function handle(request: HttpRequest): HttpResponse { return {status: 200, headers: [], body: ''}; }\n"+test.source+"\n")
+			output := filepath.Join(directory, "output")
+			err := Build(entry, output)
+			if err == nil || !strings.Contains(err.Error(), test.refusal) {
+				t.Fatalf("want %q, got %v", test.refusal, err)
+			}
+			if _, err := os.Stat(output); !os.IsNotExist(err) {
+				t.Fatalf("refusal wrote output: %v", err)
+			}
+		})
+	}
+}
+
+// A type-only export has no value in the source's module either, so it builds and the module leaves it out.
+func TestTypeOnlyExportsBuild(t *testing.T) {
+	t.Parallel()
+	directory := t.TempDir()
+	write(t, filepath.Join(directory, "shapes.a"), `export interface Shape { readonly sides: number }`)
+	entry := filepath.Join(directory, "entry.a")
+	write(t, entry, `import type { HttpRequest, HttpResponse } from 'adamic/http';
+export function handle(request: HttpRequest): HttpResponse { return {status: 200, headers: [], body: ''}; }
+export interface Point { readonly x: number }
+export type Label = string;
+export type { Shape } from './shapes.a';
+export namespace Kinds { export type Kind = 'Plain' | 'Fancy'; }
+`)
+	output := filepath.Join(directory, "output")
+	if err := Build(entry, output); err != nil {
+		t.Fatal(err)
+	}
+	script := `import assert from 'node:assert/strict'; const module = await import(process.argv[1]); assert.deepEqual(Object.keys(module), ['handle']);`
+	command := exec.Command("node", "--input-type=module", "-e", script, filepath.Join(output, "handler.mjs"))
+	if output, err := command.CombinedOutput(); err != nil {
+		t.Fatalf("type-only exports: %v\n%s", err, output)
+	}
+}

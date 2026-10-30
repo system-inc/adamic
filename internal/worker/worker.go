@@ -7,11 +7,14 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"sort"
 	"strconv"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/microsoft/TypeScript/tsc/shim/scanner"
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -90,6 +93,62 @@ func CheckSignature(ctx context.Context, program *load.Program) error {
 	return nil
 }
 
+// refuseDroppedExports refuses each value export of the entry that lowering didn't keep. Lowering keeps
+// only functions and closures (recordExports), and the handler module exports exactly that list, so a
+// class, a value that isn't a closure, an enum or a namespace would vanish from the Worker's module where
+// the source's module has it. A type-only export has no value in either module and stays out.
+func refuseDroppedExports(program *load.Program, lowered *ir.Program) error {
+	kept := map[string]bool{}
+	for _, exported := range lowered.Exports {
+		kept[exported.Name] = true
+	}
+	entry := program.Files()[0]
+	types, release := program.Checker(context.Background(), entry)
+	defer release()
+	exports := types.GetExportsOfModule(entry.AsNode().Symbol())
+	sort.Slice(exports, func(left, right int) bool { return exports[left].Name < exports[right].Name })
+	for _, exported := range exports {
+		if kept[exported.Name] || types.GetTypeOnlyAliasDeclaration(exported) != nil {
+			continue
+		}
+		target := exported
+		if target.Flags&ast.SymbolFlagsAlias != 0 {
+			target = types.GetAliasedSymbol(target)
+		}
+		if target.Flags&ast.SymbolFlagsValue == 0 || len(target.Declarations) == 0 {
+			continue
+		}
+		declaration := target.Declarations[0]
+		if target.ValueDeclaration != nil {
+			declaration = target.ValueDeclaration
+		}
+		kind := "a " + declaration.Kind.String()
+		switch declaration.Kind {
+		case ast.KindClassDeclaration:
+			kind = "a class"
+		case ast.KindEnumDeclaration:
+			kind = "an enum"
+		case ast.KindModuleDeclaration:
+			kind = "a namespace"
+		case ast.KindVariableDeclaration:
+			kind = "a let value that isn't a closure"
+			if declaration.Parent != nil && declaration.Parent.Flags&ast.NodeFlagsConst != 0 {
+				kind = "a const value that isn't a closure"
+			}
+		case ast.KindFunctionDeclaration:
+			kind = "a function lowering kept no body for"
+		}
+		source := ast.GetSourceFileOfNode(declaration)
+		site := declaration
+		if name := declaration.Name(); name != nil {
+			site = name
+		}
+		line, column := scanner.GetLineAndCharacterOfPosition(source, scanner.GetTokenPosOfNode(site, source, false))
+		return fmt.Errorf("%s:%d:%d: refused: worker export %s is %s, and a Worker's module exports only functions and closures\n  fix: export a function that returns it, or stop exporting it", program.FileName(source), line+1, column+1, exported.Name, kind)
+	}
+	return nil
+}
+
 // Bridge imports a handler module; both the compiled handler and stripped source use this code.
 // Its fixed request and response layout follows the signature validated by CheckSignature.
 func Bridge(handlerImport string) string {
@@ -156,6 +215,9 @@ func BuildWith(entry, output string, options Options) error {
 	release()
 	lowered, err := lower.Lower(context.Background(), program)
 	if err != nil {
+		return err
+	}
+	if err := refuseDroppedExports(program, lowered); err != nil {
 		return err
 	}
 	hasHandle := false
