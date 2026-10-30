@@ -1,0 +1,41 @@
+{
+  "base_main": "519819228d84d2a8eefce34a6bf76b79c7eeff63",
+  "compiler_scratch_commit": "23f523921e58639c9c6185660cf6ec1b2460e991",
+  "measurement_only_cherry_pick": "55c1c38fbb0840fbd4c2b93579c8722d4c1df35b",
+  "mode": "first-error",
+  "environment": {
+    "GOPROXY": "https://proxy.golang.org|direct",
+    "LATENT_FULL": "0",
+    "LATENT_ASSERT_NO_OUTPUT": "1"
+  },
+  "build": "python3 SCRATCH_COMPILER/stage3/census/latent/make_overlay.py SCRATCH_COMPILER OVERLAY; gofmt -w OVERLAY/*.go; go build -buildvcs=false -overlay=OVERLAY/overlay.json -o BINARY ./stage3/census/latent/tool",
+  "before_tree": "/tmp/brands-before/adapted",
+  "after_tree": "/tmp/brands-after/census-adapted",
+  "after_tree_method": "copy the completed baseline apply; retype exactly 36 reviewed compiler annotations and 27 public API reference annotations; retype-check.cjs verifies every compiler source byte",
+  "setup": {
+    "exit": 0,
+    "seconds": 549.314,
+    "log": "/tmp/setup.log"
+  },
+  "lane": {
+    "status": "fail",
+    "errors": [
+      "apply exit: expected 0, observed 1; see apply.log"
+    ],
+    "execution": {
+      "commit": "519819228d84d2a8eefce34a6bf76b79c7eeff63",
+      "apply_exit": 1,
+      "oracle_exit": null,
+      "platform": {
+        "os": "linux",
+        "arch": "x64",
+        "node": "v24.19.0"
+      },
+      "wall_seconds": 266.113
+    },
+    "results": "/tmp/brands-undefined-lane",
+    "verdict": "FAIL stage3 landing lane: apply exit: expected 0, observed 1; see apply.log"
+  },
+  "before_binary_sha256": "6efc2042da877991ca2725923522ca9fd42beac01259b99ce064cf5ade1e5ad2",
+  "after_binary_sha256": "6efc2042da877991ca2725923522ca9fd42beac01259b99ce064cf5ade1e5ad2"
+}

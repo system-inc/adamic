@@ -1,0 +1,57 @@
+{
+  "sourceSites": 36,
+  "changed": [
+    {
+      "file": "src/compiler/builder.ts",
+      "sites": 2,
+      "before": "2406a7d64881d8df2382789790d315729be291560ad49956021fcbd813848bcc",
+      "after": "a46d02f194f268952f5ecf72533f7dfe9e62f66b131e5381183067265b26216d"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "sites": 1,
+      "before": "75fbb1868e174be02e8a927f0219077c2274c9187c19ef2535f84855f93e787f",
+      "after": "207c91ad384d14d0cdc1a356e4daba2bbb09b13330d0297cf6ac2232123827f1"
+    },
+    {
+      "file": "src/compiler/corePublic.ts",
+      "sites": 2,
+      "before": "fc41b009e9d5e9e085278f5e9e126fcdaef52340d07aaae24208dee119dcff44",
+      "after": "579512600ac65a6312f761f46db67357483c010e8e2c271cb03cce67328b32e7"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "sites": 2,
+      "before": "69c9cd16dadb7fc0120a92625008bc0065320f2c0e3ea171ee14816a3e4290ae",
+      "after": "fd2308b37703641f704b8a8f561fdbcb9da0e7df9f827cda93b5428e4bdea9b2"
+    },
+    {
+      "file": "src/compiler/path.ts",
+      "sites": 1,
+      "before": "b65d50d3fc8378ae7d9a2fc42501eefd70e234e5dabc5ec83fc9aef2a0995677",
+      "after": "4cf2621fcd2d659c0e7561d9177d0ff10f51e85b6357d91cfd30601ac5f29938"
+    },
+    {
+      "file": "src/compiler/transformers/esnext.ts",
+      "sites": 1,
+      "before": "b534f83ae6d5460fb12c313d9c1e5c1e50068e30b14cbe26ef452a9949635119",
+      "after": "665dfc48fddea254cd792e66023b2028340eb994c269053659cab4f63be7fd95"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "sites": 26,
+      "before": "05683a10945308f928e687ea5ccca7f7ed4e909035a87f1efd0bbe8b577c2def",
+      "after": "317959d6cd4fac0ad698ff2795e2091d66900d307da9b23c1534ddc8ca1b0732"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "sites": 1,
+      "before": "fdbb9727fecbe7b7556ccf13ffc79c8dc0ade4eafb8fbf3675adca435124aa3b",
+      "after": "e8f6c9b1c9e25531f9a904606886a597e52fa8749d9cbb78ca3cadd09fc6b36b"
+    }
+  ],
+  "publicLines": 27,
+  "otherCompilerSourcesIdentical": true,
+  "apiBefore": "be426834bb1b7171cec20105518beef643e5aa4d67dba57adf4ef4050934606e",
+  "apiAfter": "f87d6c30da287293aae741711fa94594b75d49e0977cea6bfd5982f90e2bafcf"
+}

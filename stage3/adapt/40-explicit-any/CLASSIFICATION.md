@@ -45,7 +45,7 @@ Original total: 207 tokens, 28 files, 33 disjoint classes. The remaining table e
 
 ## Decision
 
-Brands are done under @system_adamic's October 7 ruling (#bw3xg7c): unread phantom marker members typed any become void. No runtime statement or consumer is changed. JSON/config remains held for checked runtime narrowing; its earlier decision is preserved below as historical context.
+Under @system_adamic's October 29 ruling (#p7t8tmh), unread phantom marker members typed any become undefined. No runtime statement or consumer is changed. JSON/config remains held for checked runtime narrowing; its earlier decision is preserved below as historical context.
 
 The largest class is 38 JSON/config sites, not the 36 brands. For example, raw config extension merging writes ownConfig.raw.include/exclude/files and reads compileOnSave directly; public config conversion accepts arbitrary values before validation. Unknown would expose property-access errors. Adding object/field validation changes emitted JavaScript; a broad assertion would evade the requested proof. I therefore did not apply another class as a substitute for the largest class. The prior three-owner adapter and its proof are unchanged.
 
@@ -105,9 +105,9 @@ Locations:
 
 Marker properties on branded primitives, arrays, AST families and SymbolLinks, including two cache-key markers without Brand suffix. Each member was searched separately throughout src/compiler and independently audited as erased syntax. Every occurrence is a marker declaration: no reads, writes or tests, and no member retained for runtime use. Required markers and the one optional marker retain their keys and optionality. The adapter rejects runtime marker uses before writing.
 
-Rule: any becomes void at each of the 36 declarations. This revises the earlier undefined adaptation; the number of removed any tokens remains 36. The sorted-array key is literally `" __sortedArrayBrand"` (leading space). Both pinned declarations are required, unread any, so they meet the ruling's exception and become void; a pre-existing required undefined marker would be left alone.
+Rule: any becomes undefined at each of the 36 declarations, retaining every key and required/optional flag. The number of removed any tokens remains 36. The sorted-array key is literally `" __sortedArrayBrand"` (leading space).
 
-The 27 changed public lines were already sanctioned for undefined on this base branch. Their entries now sanction void line for line under the ruling; no unrelated public declaration is added. The SymbolLinks string mutant fails the upstream build with TS2416 and TS2322. See [the void proof report](BRANDS-VOID.md) and [per-member searches](evidence/brands-void/member-audit.json).
+The same 27 public brand lines are sanctioned as undefined. See [the current brand record](BRANDS-UNDEFINED.md) and [per-member searches](evidence/brands-void/member-audit.json).
 
 Locations:
 - 1: `src/compiler/builder.ts:1074:88`
@@ -436,7 +436,7 @@ Locations:
 
 ### Done: generic array predicate input (1)
 
-Site 58 was already classified as Generic array predicate input. The October 7 follow-up adopts unknown at the existing internal owner: `isArray(value: unknown): value is readonly unknown[]`. The predicate body still delegates directly to `Array.isArray`; no caller source or runtime expression changes. Compiler host-blockers a85a9cb1 supplies the unknown-predicate precedent. The function is @internal, so there is no public API line or new sanction. See [the current proof report](BRANDS-VOID.md).
+Site 58 was already classified as Generic array predicate input. The October 7 follow-up adopts unknown at the existing internal owner: `isArray(value: unknown): value is readonly unknown[]`. The predicate body still delegates directly to `Array.isArray`; no caller source or runtime expression changes. Compiler host-blockers a85a9cb1 supplies the unknown-predicate precedent. The function is @internal, so there is no public API line or new sanction. See [the current proof report](BRANDS-UNDEFINED.md).
 
 Rule: unknown input, retaining the existing readonly unknown[] predicate and body. Done: one token removed, zero public lines.
 

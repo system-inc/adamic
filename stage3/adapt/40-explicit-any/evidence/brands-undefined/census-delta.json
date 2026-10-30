@@ -1,0 +1,3145 @@
+{
+  "mode": "first-error",
+  "distinct_key": [
+    "kind",
+    "where",
+    "reason",
+    "text"
+  ],
+  "normalization": "remove each adapted tree root from embedded locations in where, reason and text",
+  "files": 79,
+  "before_sites": 12826,
+  "after_sites": 3273,
+  "changed_reasons": [
+    {
+      "reason": "Array.isArray on a tuple or an erased object/any/unknown view",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:8765:54",
+          "reason": "Array.isArray on a tuple or an erased object/any/unknown view",
+          "text": "src/compiler/utilities.ts:8765:54: stage 0 can't lower Array.isArray on a tuple or an erased object/any/unknown view yet"
+        }
+      ]
+    },
+    {
+      "reason": "JSON.parse: its result's type can't be proven from the text",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+      "before": 2,
+      "after": 3,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:1284:31",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+          "text": "src/compiler/moduleNameResolver.ts:1284:31: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+        }
+      ]
+    },
+    {
+      "reason": "a Set of Path (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:941:34",
+          "reason": "a Set of Path (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",
+          "text": "src/compiler/builder.ts:941:34: stage 0 can't lower a Set of Path (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far) yet"
+        }
+      ]
+    },
+    {
+      "reason": "a boolean | undefined variable a function value captures",
+      "before": 2,
+      "after": 1,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a call through ?. (an optional call)",
+      "before": 23,
+      "after": 20,
+      "delta": -3,
+      "examples": []
+    },
+    {
+      "reason": "a case whose type differs from the switch's",
+      "before": 2,
+      "after": 1,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a cast the runtime can't check",
+      "before": 536,
+      "after": 554,
+      "delta": 18,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/builder.ts:1392:49",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/builder.ts:1392:49: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/builder.ts:1403:77",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/builder.ts:1403:77: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/builder.ts:2270:37",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/builder.ts:2270:37: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ]
+    },
+    {
+      "reason": "a checked field alias of an optional field or through ?.",
+      "before": 49,
+      "after": 51,
+      "delta": 2,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:44608:179",
+          "reason": "a checked field alias of an optional field or through ?.",
+          "text": "src/compiler/checker.ts:44608:179: stage 0 can't lower a checked field alias of an optional field or through ?. yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/factory/nodeFactory.ts:5330:20",
+          "reason": "a checked field alias of an optional field or through ?.",
+          "text": "src/compiler/factory/nodeFactory.ts:5330:20: stage 0 can't lower a checked field alias of an optional field or through ?. yet"
+        }
+      ]
+    },
+    {
+      "reason": "a destructured name held otherwise than its field",
+      "before": 2,
+      "after": 1,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a function returning CompilerOptionsValue",
+      "before": 3,
+      "after": 2,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a function returning IncrementalBuildInfoFileId",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1388:14",
+          "reason": "a function returning IncrementalBuildInfoFileId",
+          "text": "src/compiler/builder.ts:1388:14: stage 0 can't lower a function returning IncrementalBuildInfoFileId yet"
+        }
+      ]
+    },
+    {
+      "reason": "a function returning ModeAwareCacheKey",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:1115:17",
+          "reason": "a function returning ModeAwareCacheKey",
+          "text": "src/compiler/moduleNameResolver.ts:1115:17: stage 0 can't lower a function returning ModeAwareCacheKey yet"
+        }
+      ]
+    },
+    {
+      "reason": "a function returning Path",
+      "before": 0,
+      "after": 5,
+      "delta": 5,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:2350:14",
+          "reason": "a function returning Path",
+          "text": "src/compiler/builder.ts:2350:14: stage 0 can't lower a function returning Path yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/executeCommandLine.ts:919:44",
+          "reason": "a function returning Path",
+          "text": "src/compiler/executeCommandLine.ts:919:44: stage 0 can't lower a function returning Path yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/path.ts:762:17",
+          "reason": "a function returning Path",
+          "text": "src/compiler/path.ts:762:17: stage 0 can't lower a function returning Path yet"
+        }
+      ]
+    },
+    {
+      "reason": "a function returning Path | undefined",
+      "before": 0,
+      "after": 2,
+      "delta": 2,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/resolutionCache.ts:258:17",
+          "reason": "a function returning Path | undefined",
+          "text": "src/compiler/resolutionCache.ts:258:17: stage 0 can't lower a function returning Path | undefined yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/resolutionCache.ts:468:17",
+          "reason": "a function returning Path | undefined",
+          "text": "src/compiler/resolutionCache.ts:468:17: stage 0 can't lower a function returning Path | undefined yet"
+        }
+      ]
+    },
+    {
+      "reason": "a function returning SortedReadonlyArray<Diagnostic>",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a function returning T | undefined",
+      "before": 2,
+      "after": 3,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/parser.ts:1249:17",
+          "reason": "a function returning T | undefined",
+          "text": "src/compiler/parser.ts:1249:17: stage 0 can't lower a function returning T | undefined yet"
+        }
+      ]
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: addEmitFlags's T = Node, read at src/compiler/factory/emitNode.ts:103:42 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: addRange's T = Diagnostic, read at src/compiler/core.ts:992:21 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: binarySearchKey's T = Node, read at src/compiler/core.ts:1211:36 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: cast's TIn = Expression, TOut = LeftHandSideExpression, read at src/compiler/core.ts:1784:37 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: cast's TIn = NamedExports | NamespaceExport, TOut = NamedExports, read at src/compiler/core.ts:1784:37 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: checkDefined's T = Program, read at src/compiler/debug.ts:257:16 as a returned value",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: checkDefined's T = SourceFile, read at src/compiler/debug.ts:257:16 as a returned value",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: checkDefined's T = TypeNode, read at src/compiler/debug.ts:257:16 as a returned value",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: checkDefined's T = string | number | boolean | readonly string[] | SourceFile, read at src/compiler/debug.ts:257:16 as a returned value",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: contains's T = ResolvedProjectReference, read at src/compiler/core.ts:223:34 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: countWhere's T = Diagnostic, read at src/compiler/core.ts:247:27 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: createModuleOrTypeReferenceResolutionCache's T = ResolvedModuleWithFailedLookupLocations, read at src/compiler/moduleNameResolver.ts:1302:12 as a spread",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: createModuleOrTypeReferenceResolutionCache's T = ResolvedTypeReferenceDirectiveWithFailedLookupLocations, read at src/compiler/moduleNameResolver.ts:1302:12 as a spread",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: createQueue's T = Expression, read at src/compiler/core.ts:1570:41 as an operand of ??",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: createWatchCompilerHost's T = EmitAndSemanticDiagnosticsBuilderProgram, read at src/compiler/watch.ts:875:5 through afterProgramCreate",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: emitFilesAndReportErrorsAndGetExitStatus's T = BuilderProgram | Program, read at src/compiler/watch.ts:644:41 as a destructured value",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: filter's T = AbstractKeyword | AccessorKeyword | AsyncKeyword | ConstKeyword | DeclareKeyword | Decorator | ... 9 more ... | StaticKeyword, read at src/compiler/core.ts:281:29 as an argument",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: filter's T = ClassElement, read at src/compiler/core.ts:281:29 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: filter's T = Diagnostic, read at src/compiler/core.ts:281:29 as an argument",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: filter's T = JsxChild, read at src/compiler/core.ts:281:29 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: filter's T = SourceFile, read at src/compiler/core.ts:281:29 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: filter's T = VariableDeclaration, read at src/compiler/core.ts:281:29 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: filterMutate's T = Diagnostic, read at src/compiler/core.ts:302:15 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: find's T = Declaration, read at src/compiler/core.ts:170:23 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: find's T = JSDocTag, read at src/compiler/core.ts:170:23 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: flatMap's T = JSDocTag, U = TypeParameterDeclaration, read at src/compiler/core.ts:403:29 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: forEach's T = BindingOrAssignmentElement, read at src/compiler/core.ts:36:37 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: forEach's T = DiagnosticRelatedInformation, read at src/compiler/core.ts:36:37 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: forEach's T = GetAccessorDeclaration | MethodDeclaration | PropertyAssignment | SetAccessorDeclaration | ShorthandPropertyAssignment | SpreadAssignment, U = false | Expression, read at src/compiler/core.ts:36:37 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: forEach's T = SourceFile, U = void (read from the signature), read at src/compiler/core.ts:36:37 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: forEach's T = Statement, U = ArrowFunction | ClassDeclaration | ClassExpression | ConstructorDeclaration | ConstructorTypeNode | ... 19 more ... | VariableStatement, read at src/compiler/core.ts:36:37 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: forEachChild's T = Node, read at src/compiler/parser.ts:1254:46 as an argument",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: forEachChild's T = void (read from the signature), read at src/compiler/parser.ts:1254:46 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: forEachEntry's V = Symbol, read at src/compiler/utilities.ts:747:22 through entries",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: forEachPropertyAssignment's T = StringLiteral, read at src/compiler/utilities.ts:3096:20 as an argument",
+      "before": 3,
+      "after": 0,
+      "delta": -3,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: getAllJSDocTags's T = JSDocImplementsTag, read at src/compiler/utilitiesPublic.ts:1285:12 through filter",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: getAllJSDocTags's T = JSDocOverloadTag, read at src/compiler/utilitiesPublic.ts:1285:12 through filter",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: getOriginalNode's T = Node, read at src/compiler/utilitiesPublic.ts:767:9 as a value",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: getOriginalNode's T = SourceFile, read at src/compiler/utilitiesPublic.ts:767:9 as a value",
+      "before": 3,
+      "after": 0,
+      "delta": -3,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: map's T = SourceFile, U = SourceFile, read at src/compiler/core.ts:325:27 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: sameMap's T = Diagnostic, U = Diagnostic, read at src/compiler/core.ts:354:30 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: setEmitFlags's T = Block, read at src/compiler/factory/emitNode.ts:93:25 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: setEmitFlags's T = Identifier, read at src/compiler/factory/emitNode.ts:93:25 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: setEmitFlags's T = PropertyAccessExpression, read at src/compiler/factory/emitNode.ts:93:25 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: setOriginalNode's T = AssignmentExpression<EqualsToken>, read at src/compiler/factory/nodeFactory.ts:7423:13 as a value",
+      "before": 3,
+      "after": 0,
+      "delta": -3,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: setParent's T = Identifier, read at src/compiler/utilities.ts:10707:9 as an operand of &&",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: setParent's T = ModuleBody, read at src/compiler/utilities.ts:10707:9 as an operand of &&",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: setStartsOnNewLine's T = Expression, read at src/compiler/factory/emitNode.ts:176:25 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: setTextRangeEnd's T = Expression, read at src/compiler/utilities.ts:10658:6 as an assertion's operand",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: some's T = AbstractKeyword | AccessorKeyword | AsyncKeyword | ConstKeyword | DeclareKeyword | Decorator | ... 9 more ... | StaticKeyword, read at src/compiler/core.ts:622:31 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: some's T = ClassElement, read at src/compiler/core.ts:622:31 as an argument",
+      "before": 3,
+      "after": 0,
+      "delta": -3,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: some's T = Decorator, read at src/compiler/core.ts:622:31 as an argument",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: some's T = Statement, read at src/compiler/core.ts:622:31 as an argument",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: some's T = string | number | boolean | readonly string[] | SourceFile | undefined, read at src/compiler/core.ts:622:31 as an argument",
+      "before": 5,
+      "after": 0,
+      "delta": -5,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: tryCast's TIn = NamedImports | NamespaceImport, TOut = NamespaceImport, read at src/compiler/core.ts:1779:12 as a returned value",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a generic instantiated at void whose body reads the value: visitEachChild's T = SourceFile, read at src/compiler/visitorPublic.ts:604:31 as a value seen without its void",
+      "before": 4,
+      "after": 0,
+      "delta": -4,
+      "examples": []
+    },
+    {
+      "reason": "a method sharing its name with a getter; rename the getter or use a callable arrow field in the interface and implementation",
+      "before": 4,
+      "after": 5,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/es2017.ts:1106:25",
+          "reason": "a method sharing its name with a getter; rename the getter or use a callable arrow field in the interface and implementation",
+          "text": "src/compiler/transformers/es2017.ts:1106:25: stage 0 can't lower a method sharing its name with a getter; rename the getter or use a callable arrow field in the interface and implementation yet"
+        }
+      ]
+    },
+    {
+      "reason": "a primitive brand member __compilerOptionsKey whose type is not void",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:975:33",
+          "reason": "a primitive brand member __compilerOptionsKey whose type is not void",
+          "text": "src/compiler/moduleNameResolver.ts:975:33: Adamic 0.1 refuses a primitive brand member __compilerOptionsKey whose type is not void; make __compilerOptionsKey void (or optional and typed undefined) so the brand is phantom"
+        }
+      ]
+    },
+    {
+      "reason": "a primitive brand member __incrementalBuildInfoFileIdBrand whose type is not void",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/builder.ts:1074:42",
+          "reason": "a primitive brand member __incrementalBuildInfoFileIdBrand whose type is not void",
+          "text": "src/compiler/builder.ts:1074:42: Adamic 0.1 refuses a primitive brand member __incrementalBuildInfoFileIdBrand whose type is not void; make __incrementalBuildInfoFileIdBrand void (or optional and typed undefined) so the brand is phantom"
+        }
+      ]
+    },
+    {
+      "reason": "a primitive brand member __incrementalBuildInfoFileIdListIdBrand whose type is not void",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/builder.ts:1076:48",
+          "reason": "a primitive brand member __incrementalBuildInfoFileIdListIdBrand whose type is not void",
+          "text": "src/compiler/builder.ts:1076:48: Adamic 0.1 refuses a primitive brand member __incrementalBuildInfoFileIdListIdBrand whose type is not void; make __incrementalBuildInfoFileIdListIdBrand void (or optional and typed undefined) so the brand is phantom"
+        }
+      ]
+    },
+    {
+      "reason": "a primitive brand member __modeAwareCacheKey whose type is not void",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:1113:33",
+          "reason": "a primitive brand member __modeAwareCacheKey whose type is not void",
+          "text": "src/compiler/moduleNameResolver.ts:1113:33: Adamic 0.1 refuses a primitive brand member __modeAwareCacheKey whose type is not void; make __modeAwareCacheKey void (or optional and typed undefined) so the brand is phantom"
+        }
+      ]
+    },
+    {
+      "reason": "a primitive brand member __pathBrand whose type is not void",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/types.ts:23:20",
+          "reason": "a primitive brand member __pathBrand whose type is not void",
+          "text": "src/compiler/types.ts:23:20: Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom"
+        }
+      ]
+    },
+    {
+      "reason": "a read of a void container's elements, as a binding's initializer",
+      "before": 42,
+      "after": 0,
+      "delta": -42,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, as a condition",
+      "before": 138,
+      "after": 0,
+      "delta": -138,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, as a destructured value",
+      "before": 65,
+      "after": 0,
+      "delta": -65,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, as a for...of source bound to an existing name or a pattern",
+      "before": 6,
+      "after": 0,
+      "delta": -6,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, as a loop condition",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, as a returned value",
+      "before": 880,
+      "after": 0,
+      "delta": -880,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, as a spread",
+      "before": 83,
+      "after": 0,
+      "delta": -83,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, as a value",
+      "before": 897,
+      "after": 0,
+      "delta": -897,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, as a value seen without its void",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, as an argument",
+      "before": 5620,
+      "after": 0,
+      "delta": -5620,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, as an assertion's operand",
+      "before": 562,
+      "after": 0,
+      "delta": -562,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, as an assigned value",
+      "before": 310,
+      "after": 0,
+      "delta": -310,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, as an operand of &&",
+      "before": 343,
+      "after": 0,
+      "delta": -343,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, as an operand of +",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, as an operand of ??",
+      "before": 62,
+      "after": 0,
+      "delta": -62,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, as an operand of ??=",
+      "before": 8,
+      "after": 0,
+      "delta": -8,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, as an operand of in",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, as an operand of ||",
+      "before": 149,
+      "after": 0,
+      "delta": -149,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, as an operand of ||=",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, as typeof's operand",
+      "before": 28,
+      "after": 0,
+      "delta": -28,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through __debugTypeToString",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through a computed member",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through add",
+      "before": 7,
+      "after": 0,
+      "delta": -7,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through add: IdentifierNameMultiMap<ExportSpecifier> holds void in its type argument 1 (ExportSpecifier), and add reads it at src/compiler/transformers/utilities.ts:443:22 through get: this holds void in field _map, and get reads it",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through afterProgramCreate",
+      "before": 3,
+      "after": 0,
+      "delta": -3,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through afterProgramEmitAndDiagnostics",
+      "before": 5,
+      "after": 0,
+      "delta": -5,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through build",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through clean",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through clear",
+      "before": 4,
+      "after": 0,
+      "delta": -4,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through clearTimeout",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through delete",
+      "before": 13,
+      "after": 0,
+      "delta": -13,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through deleteFile",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through dequeue",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through dispose",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through done",
+      "before": 3,
+      "after": 0,
+      "delta": -3,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through emit",
+      "before": 7,
+      "after": 0,
+      "delta": -7,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through emitBuildInfo",
+      "before": 4,
+      "after": 0,
+      "delta": -4,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through emitNextAffectedFile",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through emitNodeWithNotification",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through enqueue",
+      "before": 4,
+      "after": 0,
+      "delta": -4,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through every",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through fileExists",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through filter",
+      "before": 7,
+      "after": 0,
+      "delta": -7,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through find",
+      "before": 3,
+      "after": 0,
+      "delta": -3,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through forEach with a callback not written in place",
+      "before": 5,
+      "after": 0,
+      "delta": -5,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through forEach's callback parameter 0, destructured or rest",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through forEachResolvedTypeReferenceDirective",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through get",
+      "before": 50,
+      "after": 0,
+      "delta": -50,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through get: IdentifierNameMap<ExportSpecifier[]> holds void in its type argument 1 (ExportSpecifier[]), and get reads it at src/compiler/transformers/utilities.ts:401:16 through get",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through get: IdentifierNameMap<ExportSpecifier[]> | undefined holds void in its type argument 1 (ExportSpecifier[]), and get reads it",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getAllDependencies",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getBindAndCheckDiagnostics",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getBuildInfo",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getBuildOrder",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getCompilerOptions",
+      "before": 18,
+      "after": 0,
+      "delta": -18,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getCompilerOptionsForFile",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getConfigFileParsingDiagnostics",
+      "before": 3,
+      "after": 0,
+      "delta": -3,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getCurrentDirectory",
+      "before": 8,
+      "after": 0,
+      "delta": -8,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getDeclarationDiagnostics",
+      "before": 4,
+      "after": 0,
+      "delta": -4,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getFileIncludeReasons",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getFromDirectoryCache",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getGlobalDiagnostics",
+      "before": 3,
+      "after": 0,
+      "delta": -3,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getIdentifierCount",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getInstantiationCount",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getMissingFilePaths",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getModifiedTime",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getNewLine",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getOptionsDiagnostics",
+      "before": 3,
+      "after": 0,
+      "delta": -3,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getOrCreateCacheForDirectory",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getOrCreateCacheForModuleName",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getOrCreateCacheForNonRelativeName",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getPackageJsonInfoCache",
+      "before": 4,
+      "after": 0,
+      "delta": -4,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getParsedCommandLine",
+      "before": 3,
+      "after": 0,
+      "delta": -3,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getProgram",
+      "before": 4,
+      "after": 0,
+      "delta": -4,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getProgramDiagnostics",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getProgramOrUndefined",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getProjectReferences",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getRedirectFromSourceFile",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getRelationCacheSizes",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getResolvedModuleFromModuleSpecifier",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getResolvedProjectReferences",
+      "before": 3,
+      "after": 0,
+      "delta": -3,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getResolvedTypeReferenceDirectiveFromTypeReferenceDirective",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getRootFileNames",
+      "before": 4,
+      "after": 0,
+      "delta": -4,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getSemanticDiagnostics",
+      "before": 3,
+      "after": 0,
+      "delta": -3,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getSemanticDiagnosticsOfNextAffectedFile",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getSourceFile",
+      "before": 3,
+      "after": 0,
+      "delta": -3,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getSourceFileByPath",
+      "before": 15,
+      "after": 0,
+      "delta": -15,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getSourceFiles",
+      "before": 16,
+      "after": 0,
+      "delta": -16,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getSymbolCount",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getSyntacticDiagnostics",
+      "before": 3,
+      "after": 0,
+      "delta": -3,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getTypeChecker",
+      "before": 5,
+      "after": 0,
+      "delta": -5,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through getTypeCount",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through has",
+      "before": 14,
+      "after": 0,
+      "delta": -14,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through hasChangedEmitSignature",
+      "before": 3,
+      "after": 0,
+      "delta": -3,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through indexOf",
+      "before": 7,
+      "after": 0,
+      "delta": -7,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through isEmitNotificationEnabled",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through isEmittedFile",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through isEmpty",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through isSourceFileDefaultLibrary",
+      "before": 4,
+      "after": 0,
+      "delta": -4,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through keys",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through lastIndexOf",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through map",
+      "before": 23,
+      "after": 0,
+      "delta": -23,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through onDiagnosticReported: this holds void in field context, and onDiagnosticReported reads it",
+      "before": 10,
+      "after": 0,
+      "delta": -10,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through onWatchStatusChange",
+      "before": 4,
+      "after": 0,
+      "delta": -4,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through realpath",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through releaseProgram",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through select",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through set",
+      "before": 34,
+      "after": 0,
+      "delta": -34,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through setModifiedTime",
+      "before": 3,
+      "after": 0,
+      "delta": -3,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through setTimeout",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through some",
+      "before": 7,
+      "after": 0,
+      "delta": -7,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through substituteNode",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through update",
+      "before": 2,
+      "after": 0,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through useCaseSensitiveFileNames",
+      "before": 6,
+      "after": 0,
+      "delta": -6,
+      "examples": []
+    },
+    {
+      "reason": "a read of a void container's elements, through values",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a record value of type TsConfigSourceFile | CompilerOptionsValue",
+      "before": 58,
+      "after": 53,
+      "delta": -5,
+      "examples": []
+    },
+    {
+      "reason": "a template interpolating an object, an array, a map, a function or undefined",
+      "before": 1,
+      "after": 2,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1786:59",
+          "reason": "a template interpolating an object, an array, a map, a function or undefined",
+          "text": "src/compiler/core.ts:1786:59: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet"
+        }
+      ]
+    },
+    {
+      "reason": "a union or optional field read in a program with record storage",
+      "before": 67,
+      "after": 68,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:8632:29",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/utilities.ts:8632:29: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:8702:29",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/utilities.ts:8702:29: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:8734:29",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/utilities.ts:8734:29: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type IncrementalBuildInfoFileId",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:2428:22",
+          "reason": "a value of type IncrementalBuildInfoFileId",
+          "text": "src/compiler/builder.ts:2428:22: stage 0 can't lower a value of type IncrementalBuildInfoFileId yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type IncrementalBuildInfoFilePendingEmit",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:2239:5",
+          "reason": "a value of type IncrementalBuildInfoFilePendingEmit",
+          "text": "src/compiler/builder.ts:2239:5: stage 0 can't lower a value of type IncrementalBuildInfoFilePendingEmit yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type NodeArray<ClassElement>",
+      "before": 3,
+      "after": 5,
+      "delta": 2,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/classThis.ts:91:47",
+          "reason": "a value of type NodeArray<ClassElement>",
+          "text": "src/compiler/transformers/classThis.ts:91:47: stage 0 can't lower a value of type NodeArray<ClassElement> yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/namedEvaluation.ts:157:50",
+          "reason": "a value of type NodeArray<ClassElement>",
+          "text": "src/compiler/transformers/namedEvaluation.ts:157:50: stage 0 can't lower a value of type NodeArray<ClassElement> yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type NodeArray<Modifier> | NodeArray<ModifierLike> | undefined",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/parser.ts:496:17",
+          "reason": "a value of type NodeArray<Modifier> | NodeArray<ModifierLike> | undefined",
+          "text": "src/compiler/parser.ts:496:17: stage 0 can't lower a value of type NodeArray<Modifier> | NodeArray<ModifierLike> | undefined yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type NodeArray<ObjectLiteralElementLike>",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:3954:20",
+          "reason": "a value of type NodeArray<ObjectLiteralElementLike>",
+          "text": "src/compiler/utilities.ts:3954:20: stage 0 can't lower a value of type NodeArray<ObjectLiteralElementLike> yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type NodeArray<ObjectLiteralElementLike> | undefined",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:3096:20",
+          "reason": "a value of type NodeArray<ObjectLiteralElementLike> | undefined",
+          "text": "src/compiler/utilities.ts:3096:20: stage 0 can't lower a value of type NodeArray<ObjectLiteralElementLike> | undefined yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type NodeArray<Statement>",
+      "before": 4,
+      "after": 5,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/parser.ts:472:20",
+          "reason": "a value of type NodeArray<Statement>",
+          "text": "src/compiler/parser.ts:472:20: stage 0 can't lower a value of type NodeArray<Statement> yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type Path",
+      "before": 0,
+      "after": 26,
+      "delta": 26,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1006:5",
+          "reason": "a value of type Path",
+          "text": "src/compiler/builder.ts:1006:5: stage 0 can't lower a value of type Path yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1059:11",
+          "reason": "a value of type Path",
+          "text": "src/compiler/builder.ts:1059:11: stage 0 can't lower a value of type Path yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1646:13",
+          "reason": "a value of type Path",
+          "text": "src/compiler/builder.ts:1646:13: stage 0 can't lower a value of type Path yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type Readonly<PathPathComponents>",
+      "before": 7,
+      "after": 5,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "a value of type ReferencedFile & { kind: FileIncludeKind.LibReferenceDirective; }",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:190:74",
+          "reason": "a value of type ReferencedFile & { kind: FileIncludeKind.LibReferenceDirective; }",
+          "text": "src/compiler/programDiagnostics.ts:190:74: stage 0 can't lower a value of type ReferencedFile & { kind: FileIncludeKind.LibReferenceDirective; } yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type SortedReadonlyArray<Canonicalized>",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a value of type any",
+      "before": 23,
+      "after": 22,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a value of type string | ReusableDiagnosticMessageChain",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a void value at the assertion site through ._jsdocContainerBrand seen as T[\"_jsdocContainerBrand\"]",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a void value at the assertion site through ._typeNodeBrand seen as T[\"_typeNodeBrand\"]",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "an optional Map get through a structural receiver",
+      "before": 4,
+      "after": 3,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "an optional chain longer than one step",
+      "before": 4,
+      "after": 3,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "an unproven relation from Node | undefined to T | undefined: the source is not assignable to the target",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/utilitiesPublic.ts:774:16",
+          "reason": "an unproven relation from Node | undefined to T | undefined: the source is not assignable to the target",
+          "text": "src/compiler/utilitiesPublic.ts:774:16: Adamic 0.1 refuses an unproven relation from Node | undefined to T | undefined: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ]
+    },
+    {
+      "reason": "assigning a field of a value",
+      "before": 3,
+      "after": 4,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:307:5",
+          "reason": "assigning a field of a value",
+          "text": "src/compiler/core.ts:307:5: stage 0 can't lower assigning a field of a value yet"
+        }
+      ]
+    },
+    {
+      "reason": "inherited library member get read as an own field",
+      "before": 4,
+      "after": 3,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "new Map from something that isn't [key, value] pairs",
+      "before": 3,
+      "after": 1,
+      "delta": -2,
+      "examples": []
+    },
+    {
+      "reason": "optional property _propertyAccessExpressionLikeQualifiedNameBrand in PropertyAccessEntityNameExpression absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/binder.ts:3426:124",
+          "reason": "optional property _propertyAccessExpressionLikeQualifiedNameBrand in PropertyAccessEntityNameExpression absent from structural source never, which can hide fields",
+          "text": "src/compiler/binder.ts:3426:124: Adamic 0.1 refuses optional property _propertyAccessExpressionLikeQualifiedNameBrand in PropertyAccessEntityNameExpression absent from structural source never, which can hide fields; declare _propertyAccessExpressionLikeQualifiedNameBrand on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property equalsToken in ShorthandPropertyAssignment absent from structural source never, which can hide fields",
+      "before": 1,
+      "after": 2,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/transformers/namedEvaluation.ts:288:9",
+          "reason": "optional property equalsToken in ShorthandPropertyAssignment absent from structural source never, which can hide fields",
+          "text": "src/compiler/transformers/namedEvaluation.ts:288:9: Adamic 0.1 refuses optional property equalsToken in ShorthandPropertyAssignment absent from structural source never, which can hide fields; declare equalsToken on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+      "before": 3,
+      "after": 32,
+      "delta": 29,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/emitter.ts:1444:66",
+          "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+          "text": "src/compiler/emitter.ts:1444:66: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/emitter.ts:3961:112",
+          "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+          "text": "src/compiler/emitter.ts:3961:112: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/emitter.ts:3961:180",
+          "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+          "text": "src/compiler/emitter.ts:3961:180: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property id in ArrayBindingPattern absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 7,
+      "delta": 7,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/binder.ts:738:67",
+          "reason": "optional property id in ArrayBindingPattern absent from structural source never, which can hide fields",
+          "text": "src/compiler/binder.ts:738:67: Adamic 0.1 refuses optional property id in ArrayBindingPattern absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/transformers/namedEvaluation.ts:314:9",
+          "reason": "optional property id in ArrayBindingPattern absent from structural source never, which can hide fields",
+          "text": "src/compiler/transformers/namedEvaluation.ts:314:9: Adamic 0.1 refuses optional property id in ArrayBindingPattern absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/transformers/namedEvaluation.ts:315:9",
+          "reason": "optional property id in ArrayBindingPattern absent from structural source never, which can hide fields",
+          "text": "src/compiler/transformers/namedEvaluation.ts:315:9: Adamic 0.1 refuses optional property id in ArrayBindingPattern absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property id in BigIntLiteral absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 6,
+      "delta": 6,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/factory/utilities.ts:363:96",
+          "reason": "optional property id in BigIntLiteral absent from structural source never, which can hide fields",
+          "text": "src/compiler/factory/utilities.ts:363:96: Adamic 0.1 refuses optional property id in BigIntLiteral absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/factory/utilities.ts:368:58",
+          "reason": "optional property id in BigIntLiteral absent from structural source never, which can hide fields",
+          "text": "src/compiler/factory/utilities.ts:368:58: Adamic 0.1 refuses optional property id in BigIntLiteral absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/moduleSpecifiers.ts:881:141",
+          "reason": "optional property id in BigIntLiteral absent from structural source never, which can hide fields",
+          "text": "src/compiler/moduleSpecifiers.ts:881:141: Adamic 0.1 refuses optional property id in BigIntLiteral absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property id in BinaryExpression absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/transformers/namedEvaluation.ts:437:9",
+          "reason": "optional property id in BinaryExpression absent from structural source never, which can hide fields",
+          "text": "src/compiler/transformers/namedEvaluation.ts:437:9: Adamic 0.1 refuses optional property id in BinaryExpression absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property id in Expression absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 5,
+      "delta": 5,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/binder.ts:3293:68",
+          "reason": "optional property id in Expression absent from structural source never, which can hide fields",
+          "text": "src/compiler/binder.ts:3293:68: Adamic 0.1 refuses optional property id in Expression absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/binder.ts:3313:64",
+          "reason": "optional property id in Expression absent from structural source never, which can hide fields",
+          "text": "src/compiler/binder.ts:3313:64: Adamic 0.1 refuses optional property id in Expression absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/binder.ts:3427:55",
+          "reason": "optional property id in Expression absent from structural source never, which can hide fields",
+          "text": "src/compiler/binder.ts:3427:55: Adamic 0.1 refuses optional property id in Expression absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property id in ExternalModuleReference absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 5,
+      "delta": 5,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/transformers/module/module.ts:1566:55",
+          "reason": "optional property id in ExternalModuleReference absent from structural source never, which can hide fields",
+          "text": "src/compiler/transformers/module/module.ts:1566:55: Adamic 0.1 refuses optional property id in ExternalModuleReference absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/transformers/module/module.ts:1588:63",
+          "reason": "optional property id in ExternalModuleReference absent from structural source never, which can hide fields",
+          "text": "src/compiler/transformers/module/module.ts:1588:63: Adamic 0.1 refuses optional property id in ExternalModuleReference absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/transformers/module/module.ts:1618:73",
+          "reason": "optional property id in ExternalModuleReference absent from structural source never, which can hide fields",
+          "text": "src/compiler/transformers/module/module.ts:1618:73: Adamic 0.1 refuses optional property id in ExternalModuleReference absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property id in Identifier absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 4,
+      "delta": 4,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/transformers/namedEvaluation.ts:311:46",
+          "reason": "optional property id in Identifier absent from structural source never, which can hide fields",
+          "text": "src/compiler/transformers/namedEvaluation.ts:311:46: Adamic 0.1 refuses optional property id in Identifier absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/transformers/namedEvaluation.ts:341:46",
+          "reason": "optional property id in Identifier absent from structural source never, which can hide fields",
+          "text": "src/compiler/transformers/namedEvaluation.ts:341:46: Adamic 0.1 refuses optional property id in Identifier absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/transformers/namedEvaluation.ts:373:46",
+          "reason": "optional property id in Identifier absent from structural source never, which can hide fields",
+          "text": "src/compiler/transformers/namedEvaluation.ts:373:46: Adamic 0.1 refuses optional property id in Identifier absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property id in Node absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 10,
+      "delta": 10,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/binder.ts:3705:86",
+          "reason": "optional property id in Node absent from structural source never, which can hide fields",
+          "text": "src/compiler/binder.ts:3705:86: Adamic 0.1 refuses optional property id in Node absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/factory/nodeFactory.ts:7105:28",
+          "reason": "optional property id in Node absent from structural source never, which can hide fields",
+          "text": "src/compiler/factory/nodeFactory.ts:7105:28: Adamic 0.1 refuses optional property id in Node absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/factory/nodeFactory.ts:7302:56",
+          "reason": "optional property id in Node absent from structural source never, which can hide fields",
+          "text": "src/compiler/factory/nodeFactory.ts:7302:56: Adamic 0.1 refuses optional property id in Node absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property jsDocCache in JSDocArray absent from structural source JSDoc[], which can hide fields",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/parser.ts:1854:40",
+          "reason": "optional property jsDocCache in JSDocArray absent from structural source JSDoc[], which can hide fields",
+          "text": "src/compiler/parser.ts:1854:40: Adamic 0.1 refuses optional property jsDocCache in JSDocArray absent from structural source JSDoc[], which can hide fields; declare jsDocCache on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property modifiers in ExportAssignment absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/transformers/namedEvaluation.ts:459:9",
+          "reason": "optional property modifiers in ExportAssignment absent from structural source never, which can hide fields",
+          "text": "src/compiler/transformers/namedEvaluation.ts:459:9: Adamic 0.1 refuses optional property modifiers in ExportAssignment absent from structural source never, which can hide fields; declare modifiers on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property modifiers in GetAccessorDeclaration absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 2,
+      "delta": 2,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/utilities.ts:6839:25",
+          "reason": "optional property modifiers in GetAccessorDeclaration absent from structural source never, which can hide fields",
+          "text": "src/compiler/utilities.ts:6839:25: Adamic 0.1 refuses optional property modifiers in GetAccessorDeclaration absent from structural source never, which can hide fields; declare modifiers on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/utilities.ts:6841:27",
+          "reason": "optional property modifiers in GetAccessorDeclaration absent from structural source never, which can hide fields",
+          "text": "src/compiler/utilities.ts:6841:27: Adamic 0.1 refuses optional property modifiers in GetAccessorDeclaration absent from structural source never, which can hide fields; declare modifiers on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property modifiers in PropertyDeclaration absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/transformers/namedEvaluation.ts:396:9",
+          "reason": "optional property modifiers in PropertyDeclaration absent from structural source never, which can hide fields",
+          "text": "src/compiler/transformers/namedEvaluation.ts:396:9: Adamic 0.1 refuses optional property modifiers in PropertyDeclaration absent from structural source never, which can hide fields; declare modifiers on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property modifiers in SetAccessorDeclaration absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/utilities.ts:6844:27",
+          "reason": "optional property modifiers in SetAccessorDeclaration absent from structural source never, which can hide fields",
+          "text": "src/compiler/utilities.ts:6844:27: Adamic 0.1 refuses optional property modifiers in SetAccessorDeclaration absent from structural source never, which can hide fields; declare modifiers on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property skipTrivia in SourceMapSource absent from structural source SourceFile, which can hide fields",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/emitter.ts:1408:32",
+          "reason": "optional property skipTrivia in SourceMapSource absent from structural source SourceFile, which can hide fields",
+          "text": "src/compiler/emitter.ts:1408:32: Adamic 0.1 refuses optional property skipTrivia in SourceMapSource absent from structural source SourceFile, which can hide fields; declare skipTrivia on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property templateFlags in NoSubstitutionTemplateLiteral absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 2,
+      "delta": 2,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/utilities.ts:12192:121",
+          "reason": "optional property templateFlags in NoSubstitutionTemplateLiteral absent from structural source never, which can hide fields",
+          "text": "src/compiler/utilities.ts:12192:121: Adamic 0.1 refuses optional property templateFlags in NoSubstitutionTemplateLiteral absent from structural source never, which can hide fields; declare templateFlags on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/utilities.ts:4369:20",
+          "reason": "optional property templateFlags in NoSubstitutionTemplateLiteral absent from structural source never, which can hide fields",
+          "text": "src/compiler/utilities.ts:4369:20: Adamic 0.1 refuses optional property templateFlags in NoSubstitutionTemplateLiteral absent from structural source never, which can hide fields; declare templateFlags on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property textSourceNode in StringLiteral absent from structural source never, which can hide fields",
+      "before": 1,
+      "after": 2,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/expressionToTypeNode.ts:438:64",
+          "reason": "optional property textSourceNode in StringLiteral absent from structural source never, which can hide fields",
+          "text": "src/compiler/expressionToTypeNode.ts:438:64: Adamic 0.1 refuses optional property textSourceNode in StringLiteral absent from structural source never, which can hide fields; declare textSourceNode on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "overload 1 of ensureTrailingDirectorySeparator result Path cannot be served by implementation result string",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/path.ts:803:1",
+          "reason": "overload 1 of ensureTrailingDirectorySeparator result Path cannot be served by implementation result string",
+          "text": "src/compiler/path.ts:803:1: Adamic 0.1 refuses overload 1 of ensureTrailingDirectorySeparator result Path cannot be served by implementation result string; make the implementation result covariant with every overload result"
+        }
+      ]
+    },
+    {
+      "reason": "overload 1 of getDirectoryPath result Path cannot be served by implementation result string",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/path.ts:278:1",
+          "reason": "overload 1 of getDirectoryPath result Path cannot be served by implementation result string",
+          "text": "src/compiler/path.ts:278:1: Adamic 0.1 refuses overload 1 of getDirectoryPath result Path cannot be served by implementation result string; make the implementation result covariant with every overload result"
+        }
+      ]
+    },
+    {
+      "reason": "overload 1 of removeTrailingDirectorySeparator result Path cannot be served by implementation result string",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/path.ts:781:1",
+          "reason": "overload 1 of removeTrailingDirectorySeparator result Path cannot be served by implementation result string",
+          "text": "src/compiler/path.ts:781:1: Adamic 0.1 refuses overload 1 of removeTrailingDirectorySeparator result Path cannot be served by implementation result string; make the implementation result covariant with every overload result"
+        }
+      ]
+    },
+    {
+      "reason": "overload 1 of sameMap result U[] cannot be served by implementation result readonly U[] | undefined",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/core.ts:342:1",
+          "reason": "overload 1 of sameMap result U[] cannot be served by implementation result readonly U[] | undefined",
+          "text": "src/compiler/core.ts:342:1: Adamic 0.1 refuses overload 1 of sameMap result U[] cannot be served by implementation result readonly U[] | undefined; make the implementation result covariant with every overload result"
+        }
+      ]
+    },
+    {
+      "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/visitorPublic.ts:587:119",
+          "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+          "text": "src/compiler/visitorPublic.ts:587:119: Adamic 0.1 refuses overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        }
+      ]
+    },
+    {
+      "reason": "record values with an unsupported slot representation",
+      "before": 15,
+      "after": 14,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "before": 3,
+      "after": 2,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "writing a possibly absent optional own field",
+      "before": 4,
+      "after": 3,
+      "delta": -1,
+      "examples": []
+    }
+  ],
+  "new_or_growing": [
+    {
+      "reason": "Array.isArray on a tuple or an erased object/any/unknown view",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:8765:54",
+          "reason": "Array.isArray on a tuple or an erased object/any/unknown view",
+          "text": "src/compiler/utilities.ts:8765:54: stage 0 can't lower Array.isArray on a tuple or an erased object/any/unknown view yet"
+        }
+      ]
+    },
+    {
+      "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+      "before": 2,
+      "after": 3,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:1284:31",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+          "text": "src/compiler/moduleNameResolver.ts:1284:31: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+        }
+      ]
+    },
+    {
+      "reason": "a Set of Path (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:941:34",
+          "reason": "a Set of Path (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",
+          "text": "src/compiler/builder.ts:941:34: stage 0 can't lower a Set of Path (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far) yet"
+        }
+      ]
+    },
+    {
+      "reason": "a cast the runtime can't check",
+      "before": 536,
+      "after": 554,
+      "delta": 18,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/builder.ts:1392:49",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/builder.ts:1392:49: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/builder.ts:1403:77",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/builder.ts:1403:77: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/builder.ts:2270:37",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/builder.ts:2270:37: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ]
+    },
+    {
+      "reason": "a checked field alias of an optional field or through ?.",
+      "before": 49,
+      "after": 51,
+      "delta": 2,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:44608:179",
+          "reason": "a checked field alias of an optional field or through ?.",
+          "text": "src/compiler/checker.ts:44608:179: stage 0 can't lower a checked field alias of an optional field or through ?. yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/factory/nodeFactory.ts:5330:20",
+          "reason": "a checked field alias of an optional field or through ?.",
+          "text": "src/compiler/factory/nodeFactory.ts:5330:20: stage 0 can't lower a checked field alias of an optional field or through ?. yet"
+        }
+      ]
+    },
+    {
+      "reason": "a function returning IncrementalBuildInfoFileId",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1388:14",
+          "reason": "a function returning IncrementalBuildInfoFileId",
+          "text": "src/compiler/builder.ts:1388:14: stage 0 can't lower a function returning IncrementalBuildInfoFileId yet"
+        }
+      ]
+    },
+    {
+      "reason": "a function returning ModeAwareCacheKey",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:1115:17",
+          "reason": "a function returning ModeAwareCacheKey",
+          "text": "src/compiler/moduleNameResolver.ts:1115:17: stage 0 can't lower a function returning ModeAwareCacheKey yet"
+        }
+      ]
+    },
+    {
+      "reason": "a function returning Path",
+      "before": 0,
+      "after": 5,
+      "delta": 5,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:2350:14",
+          "reason": "a function returning Path",
+          "text": "src/compiler/builder.ts:2350:14: stage 0 can't lower a function returning Path yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/executeCommandLine.ts:919:44",
+          "reason": "a function returning Path",
+          "text": "src/compiler/executeCommandLine.ts:919:44: stage 0 can't lower a function returning Path yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/path.ts:762:17",
+          "reason": "a function returning Path",
+          "text": "src/compiler/path.ts:762:17: stage 0 can't lower a function returning Path yet"
+        }
+      ]
+    },
+    {
+      "reason": "a function returning Path | undefined",
+      "before": 0,
+      "after": 2,
+      "delta": 2,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/resolutionCache.ts:258:17",
+          "reason": "a function returning Path | undefined",
+          "text": "src/compiler/resolutionCache.ts:258:17: stage 0 can't lower a function returning Path | undefined yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/resolutionCache.ts:468:17",
+          "reason": "a function returning Path | undefined",
+          "text": "src/compiler/resolutionCache.ts:468:17: stage 0 can't lower a function returning Path | undefined yet"
+        }
+      ]
+    },
+    {
+      "reason": "a function returning T | undefined",
+      "before": 2,
+      "after": 3,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/parser.ts:1249:17",
+          "reason": "a function returning T | undefined",
+          "text": "src/compiler/parser.ts:1249:17: stage 0 can't lower a function returning T | undefined yet"
+        }
+      ]
+    },
+    {
+      "reason": "a method sharing its name with a getter; rename the getter or use a callable arrow field in the interface and implementation",
+      "before": 4,
+      "after": 5,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/es2017.ts:1106:25",
+          "reason": "a method sharing its name with a getter; rename the getter or use a callable arrow field in the interface and implementation",
+          "text": "src/compiler/transformers/es2017.ts:1106:25: stage 0 can't lower a method sharing its name with a getter; rename the getter or use a callable arrow field in the interface and implementation yet"
+        }
+      ]
+    },
+    {
+      "reason": "a primitive brand member __compilerOptionsKey whose type is not void",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:975:33",
+          "reason": "a primitive brand member __compilerOptionsKey whose type is not void",
+          "text": "src/compiler/moduleNameResolver.ts:975:33: Adamic 0.1 refuses a primitive brand member __compilerOptionsKey whose type is not void; make __compilerOptionsKey void (or optional and typed undefined) so the brand is phantom"
+        }
+      ]
+    },
+    {
+      "reason": "a primitive brand member __incrementalBuildInfoFileIdBrand whose type is not void",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/builder.ts:1074:42",
+          "reason": "a primitive brand member __incrementalBuildInfoFileIdBrand whose type is not void",
+          "text": "src/compiler/builder.ts:1074:42: Adamic 0.1 refuses a primitive brand member __incrementalBuildInfoFileIdBrand whose type is not void; make __incrementalBuildInfoFileIdBrand void (or optional and typed undefined) so the brand is phantom"
+        }
+      ]
+    },
+    {
+      "reason": "a primitive brand member __incrementalBuildInfoFileIdListIdBrand whose type is not void",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/builder.ts:1076:48",
+          "reason": "a primitive brand member __incrementalBuildInfoFileIdListIdBrand whose type is not void",
+          "text": "src/compiler/builder.ts:1076:48: Adamic 0.1 refuses a primitive brand member __incrementalBuildInfoFileIdListIdBrand whose type is not void; make __incrementalBuildInfoFileIdListIdBrand void (or optional and typed undefined) so the brand is phantom"
+        }
+      ]
+    },
+    {
+      "reason": "a primitive brand member __modeAwareCacheKey whose type is not void",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:1113:33",
+          "reason": "a primitive brand member __modeAwareCacheKey whose type is not void",
+          "text": "src/compiler/moduleNameResolver.ts:1113:33: Adamic 0.1 refuses a primitive brand member __modeAwareCacheKey whose type is not void; make __modeAwareCacheKey void (or optional and typed undefined) so the brand is phantom"
+        }
+      ]
+    },
+    {
+      "reason": "a primitive brand member __pathBrand whose type is not void",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/types.ts:23:20",
+          "reason": "a primitive brand member __pathBrand whose type is not void",
+          "text": "src/compiler/types.ts:23:20: Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom"
+        }
+      ]
+    },
+    {
+      "reason": "a template interpolating an object, an array, a map, a function or undefined",
+      "before": 1,
+      "after": 2,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1786:59",
+          "reason": "a template interpolating an object, an array, a map, a function or undefined",
+          "text": "src/compiler/core.ts:1786:59: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet"
+        }
+      ]
+    },
+    {
+      "reason": "a union or optional field read in a program with record storage",
+      "before": 67,
+      "after": 68,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:8632:29",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/utilities.ts:8632:29: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:8702:29",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/utilities.ts:8702:29: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:8734:29",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/utilities.ts:8734:29: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type IncrementalBuildInfoFileId",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:2428:22",
+          "reason": "a value of type IncrementalBuildInfoFileId",
+          "text": "src/compiler/builder.ts:2428:22: stage 0 can't lower a value of type IncrementalBuildInfoFileId yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type IncrementalBuildInfoFilePendingEmit",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:2239:5",
+          "reason": "a value of type IncrementalBuildInfoFilePendingEmit",
+          "text": "src/compiler/builder.ts:2239:5: stage 0 can't lower a value of type IncrementalBuildInfoFilePendingEmit yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type NodeArray<ClassElement>",
+      "before": 3,
+      "after": 5,
+      "delta": 2,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/classThis.ts:91:47",
+          "reason": "a value of type NodeArray<ClassElement>",
+          "text": "src/compiler/transformers/classThis.ts:91:47: stage 0 can't lower a value of type NodeArray<ClassElement> yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/namedEvaluation.ts:157:50",
+          "reason": "a value of type NodeArray<ClassElement>",
+          "text": "src/compiler/transformers/namedEvaluation.ts:157:50: stage 0 can't lower a value of type NodeArray<ClassElement> yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type NodeArray<Modifier> | NodeArray<ModifierLike> | undefined",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/parser.ts:496:17",
+          "reason": "a value of type NodeArray<Modifier> | NodeArray<ModifierLike> | undefined",
+          "text": "src/compiler/parser.ts:496:17: stage 0 can't lower a value of type NodeArray<Modifier> | NodeArray<ModifierLike> | undefined yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type NodeArray<ObjectLiteralElementLike>",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:3954:20",
+          "reason": "a value of type NodeArray<ObjectLiteralElementLike>",
+          "text": "src/compiler/utilities.ts:3954:20: stage 0 can't lower a value of type NodeArray<ObjectLiteralElementLike> yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type NodeArray<ObjectLiteralElementLike> | undefined",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:3096:20",
+          "reason": "a value of type NodeArray<ObjectLiteralElementLike> | undefined",
+          "text": "src/compiler/utilities.ts:3096:20: stage 0 can't lower a value of type NodeArray<ObjectLiteralElementLike> | undefined yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type NodeArray<Statement>",
+      "before": 4,
+      "after": 5,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/parser.ts:472:20",
+          "reason": "a value of type NodeArray<Statement>",
+          "text": "src/compiler/parser.ts:472:20: stage 0 can't lower a value of type NodeArray<Statement> yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type Path",
+      "before": 0,
+      "after": 26,
+      "delta": 26,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1006:5",
+          "reason": "a value of type Path",
+          "text": "src/compiler/builder.ts:1006:5: stage 0 can't lower a value of type Path yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1059:11",
+          "reason": "a value of type Path",
+          "text": "src/compiler/builder.ts:1059:11: stage 0 can't lower a value of type Path yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1646:13",
+          "reason": "a value of type Path",
+          "text": "src/compiler/builder.ts:1646:13: stage 0 can't lower a value of type Path yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type ReferencedFile & { kind: FileIncludeKind.LibReferenceDirective; }",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:190:74",
+          "reason": "a value of type ReferencedFile & { kind: FileIncludeKind.LibReferenceDirective; }",
+          "text": "src/compiler/programDiagnostics.ts:190:74: stage 0 can't lower a value of type ReferencedFile & { kind: FileIncludeKind.LibReferenceDirective; } yet"
+        }
+      ]
+    },
+    {
+      "reason": "an unproven relation from Node | undefined to T | undefined: the source is not assignable to the target",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/utilitiesPublic.ts:774:16",
+          "reason": "an unproven relation from Node | undefined to T | undefined: the source is not assignable to the target",
+          "text": "src/compiler/utilitiesPublic.ts:774:16: Adamic 0.1 refuses an unproven relation from Node | undefined to T | undefined: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ]
+    },
+    {
+      "reason": "assigning a field of a value",
+      "before": 3,
+      "after": 4,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:307:5",
+          "reason": "assigning a field of a value",
+          "text": "src/compiler/core.ts:307:5: stage 0 can't lower assigning a field of a value yet"
+        }
+      ]
+    },
+    {
+      "reason": "optional property _propertyAccessExpressionLikeQualifiedNameBrand in PropertyAccessEntityNameExpression absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/binder.ts:3426:124",
+          "reason": "optional property _propertyAccessExpressionLikeQualifiedNameBrand in PropertyAccessEntityNameExpression absent from structural source never, which can hide fields",
+          "text": "src/compiler/binder.ts:3426:124: Adamic 0.1 refuses optional property _propertyAccessExpressionLikeQualifiedNameBrand in PropertyAccessEntityNameExpression absent from structural source never, which can hide fields; declare _propertyAccessExpressionLikeQualifiedNameBrand on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property equalsToken in ShorthandPropertyAssignment absent from structural source never, which can hide fields",
+      "before": 1,
+      "after": 2,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/transformers/namedEvaluation.ts:288:9",
+          "reason": "optional property equalsToken in ShorthandPropertyAssignment absent from structural source never, which can hide fields",
+          "text": "src/compiler/transformers/namedEvaluation.ts:288:9: Adamic 0.1 refuses optional property equalsToken in ShorthandPropertyAssignment absent from structural source never, which can hide fields; declare equalsToken on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+      "before": 3,
+      "after": 32,
+      "delta": 29,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/emitter.ts:1444:66",
+          "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+          "text": "src/compiler/emitter.ts:1444:66: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/emitter.ts:3961:112",
+          "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+          "text": "src/compiler/emitter.ts:3961:112: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/emitter.ts:3961:180",
+          "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+          "text": "src/compiler/emitter.ts:3961:180: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property id in ArrayBindingPattern absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 7,
+      "delta": 7,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/binder.ts:738:67",
+          "reason": "optional property id in ArrayBindingPattern absent from structural source never, which can hide fields",
+          "text": "src/compiler/binder.ts:738:67: Adamic 0.1 refuses optional property id in ArrayBindingPattern absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/transformers/namedEvaluation.ts:314:9",
+          "reason": "optional property id in ArrayBindingPattern absent from structural source never, which can hide fields",
+          "text": "src/compiler/transformers/namedEvaluation.ts:314:9: Adamic 0.1 refuses optional property id in ArrayBindingPattern absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/transformers/namedEvaluation.ts:315:9",
+          "reason": "optional property id in ArrayBindingPattern absent from structural source never, which can hide fields",
+          "text": "src/compiler/transformers/namedEvaluation.ts:315:9: Adamic 0.1 refuses optional property id in ArrayBindingPattern absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property id in BigIntLiteral absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 6,
+      "delta": 6,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/factory/utilities.ts:363:96",
+          "reason": "optional property id in BigIntLiteral absent from structural source never, which can hide fields",
+          "text": "src/compiler/factory/utilities.ts:363:96: Adamic 0.1 refuses optional property id in BigIntLiteral absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/factory/utilities.ts:368:58",
+          "reason": "optional property id in BigIntLiteral absent from structural source never, which can hide fields",
+          "text": "src/compiler/factory/utilities.ts:368:58: Adamic 0.1 refuses optional property id in BigIntLiteral absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/moduleSpecifiers.ts:881:141",
+          "reason": "optional property id in BigIntLiteral absent from structural source never, which can hide fields",
+          "text": "src/compiler/moduleSpecifiers.ts:881:141: Adamic 0.1 refuses optional property id in BigIntLiteral absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property id in BinaryExpression absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/transformers/namedEvaluation.ts:437:9",
+          "reason": "optional property id in BinaryExpression absent from structural source never, which can hide fields",
+          "text": "src/compiler/transformers/namedEvaluation.ts:437:9: Adamic 0.1 refuses optional property id in BinaryExpression absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property id in Expression absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 5,
+      "delta": 5,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/binder.ts:3293:68",
+          "reason": "optional property id in Expression absent from structural source never, which can hide fields",
+          "text": "src/compiler/binder.ts:3293:68: Adamic 0.1 refuses optional property id in Expression absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/binder.ts:3313:64",
+          "reason": "optional property id in Expression absent from structural source never, which can hide fields",
+          "text": "src/compiler/binder.ts:3313:64: Adamic 0.1 refuses optional property id in Expression absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/binder.ts:3427:55",
+          "reason": "optional property id in Expression absent from structural source never, which can hide fields",
+          "text": "src/compiler/binder.ts:3427:55: Adamic 0.1 refuses optional property id in Expression absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property id in ExternalModuleReference absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 5,
+      "delta": 5,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/transformers/module/module.ts:1566:55",
+          "reason": "optional property id in ExternalModuleReference absent from structural source never, which can hide fields",
+          "text": "src/compiler/transformers/module/module.ts:1566:55: Adamic 0.1 refuses optional property id in ExternalModuleReference absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/transformers/module/module.ts:1588:63",
+          "reason": "optional property id in ExternalModuleReference absent from structural source never, which can hide fields",
+          "text": "src/compiler/transformers/module/module.ts:1588:63: Adamic 0.1 refuses optional property id in ExternalModuleReference absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/transformers/module/module.ts:1618:73",
+          "reason": "optional property id in ExternalModuleReference absent from structural source never, which can hide fields",
+          "text": "src/compiler/transformers/module/module.ts:1618:73: Adamic 0.1 refuses optional property id in ExternalModuleReference absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property id in Identifier absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 4,
+      "delta": 4,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/transformers/namedEvaluation.ts:311:46",
+          "reason": "optional property id in Identifier absent from structural source never, which can hide fields",
+          "text": "src/compiler/transformers/namedEvaluation.ts:311:46: Adamic 0.1 refuses optional property id in Identifier absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/transformers/namedEvaluation.ts:341:46",
+          "reason": "optional property id in Identifier absent from structural source never, which can hide fields",
+          "text": "src/compiler/transformers/namedEvaluation.ts:341:46: Adamic 0.1 refuses optional property id in Identifier absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/transformers/namedEvaluation.ts:373:46",
+          "reason": "optional property id in Identifier absent from structural source never, which can hide fields",
+          "text": "src/compiler/transformers/namedEvaluation.ts:373:46: Adamic 0.1 refuses optional property id in Identifier absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property id in Node absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 10,
+      "delta": 10,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/binder.ts:3705:86",
+          "reason": "optional property id in Node absent from structural source never, which can hide fields",
+          "text": "src/compiler/binder.ts:3705:86: Adamic 0.1 refuses optional property id in Node absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/factory/nodeFactory.ts:7105:28",
+          "reason": "optional property id in Node absent from structural source never, which can hide fields",
+          "text": "src/compiler/factory/nodeFactory.ts:7105:28: Adamic 0.1 refuses optional property id in Node absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/factory/nodeFactory.ts:7302:56",
+          "reason": "optional property id in Node absent from structural source never, which can hide fields",
+          "text": "src/compiler/factory/nodeFactory.ts:7302:56: Adamic 0.1 refuses optional property id in Node absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property jsDocCache in JSDocArray absent from structural source JSDoc[], which can hide fields",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/parser.ts:1854:40",
+          "reason": "optional property jsDocCache in JSDocArray absent from structural source JSDoc[], which can hide fields",
+          "text": "src/compiler/parser.ts:1854:40: Adamic 0.1 refuses optional property jsDocCache in JSDocArray absent from structural source JSDoc[], which can hide fields; declare jsDocCache on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property modifiers in ExportAssignment absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/transformers/namedEvaluation.ts:459:9",
+          "reason": "optional property modifiers in ExportAssignment absent from structural source never, which can hide fields",
+          "text": "src/compiler/transformers/namedEvaluation.ts:459:9: Adamic 0.1 refuses optional property modifiers in ExportAssignment absent from structural source never, which can hide fields; declare modifiers on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property modifiers in GetAccessorDeclaration absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 2,
+      "delta": 2,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/utilities.ts:6839:25",
+          "reason": "optional property modifiers in GetAccessorDeclaration absent from structural source never, which can hide fields",
+          "text": "src/compiler/utilities.ts:6839:25: Adamic 0.1 refuses optional property modifiers in GetAccessorDeclaration absent from structural source never, which can hide fields; declare modifiers on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/utilities.ts:6841:27",
+          "reason": "optional property modifiers in GetAccessorDeclaration absent from structural source never, which can hide fields",
+          "text": "src/compiler/utilities.ts:6841:27: Adamic 0.1 refuses optional property modifiers in GetAccessorDeclaration absent from structural source never, which can hide fields; declare modifiers on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property modifiers in PropertyDeclaration absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/transformers/namedEvaluation.ts:396:9",
+          "reason": "optional property modifiers in PropertyDeclaration absent from structural source never, which can hide fields",
+          "text": "src/compiler/transformers/namedEvaluation.ts:396:9: Adamic 0.1 refuses optional property modifiers in PropertyDeclaration absent from structural source never, which can hide fields; declare modifiers on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property modifiers in SetAccessorDeclaration absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/utilities.ts:6844:27",
+          "reason": "optional property modifiers in SetAccessorDeclaration absent from structural source never, which can hide fields",
+          "text": "src/compiler/utilities.ts:6844:27: Adamic 0.1 refuses optional property modifiers in SetAccessorDeclaration absent from structural source never, which can hide fields; declare modifiers on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property skipTrivia in SourceMapSource absent from structural source SourceFile, which can hide fields",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/emitter.ts:1408:32",
+          "reason": "optional property skipTrivia in SourceMapSource absent from structural source SourceFile, which can hide fields",
+          "text": "src/compiler/emitter.ts:1408:32: Adamic 0.1 refuses optional property skipTrivia in SourceMapSource absent from structural source SourceFile, which can hide fields; declare skipTrivia on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property templateFlags in NoSubstitutionTemplateLiteral absent from structural source never, which can hide fields",
+      "before": 0,
+      "after": 2,
+      "delta": 2,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/utilities.ts:12192:121",
+          "reason": "optional property templateFlags in NoSubstitutionTemplateLiteral absent from structural source never, which can hide fields",
+          "text": "src/compiler/utilities.ts:12192:121: Adamic 0.1 refuses optional property templateFlags in NoSubstitutionTemplateLiteral absent from structural source never, which can hide fields; declare templateFlags on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        },
+        {
+          "kind": "Refused",
+          "where": "src/compiler/utilities.ts:4369:20",
+          "reason": "optional property templateFlags in NoSubstitutionTemplateLiteral absent from structural source never, which can hide fields",
+          "text": "src/compiler/utilities.ts:4369:20: Adamic 0.1 refuses optional property templateFlags in NoSubstitutionTemplateLiteral absent from structural source never, which can hide fields; declare templateFlags on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "optional property textSourceNode in StringLiteral absent from structural source never, which can hide fields",
+      "before": 1,
+      "after": 2,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/expressionToTypeNode.ts:438:64",
+          "reason": "optional property textSourceNode in StringLiteral absent from structural source never, which can hide fields",
+          "text": "src/compiler/expressionToTypeNode.ts:438:64: Adamic 0.1 refuses optional property textSourceNode in StringLiteral absent from structural source never, which can hide fields; declare textSourceNode on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "reason": "overload 1 of ensureTrailingDirectorySeparator result Path cannot be served by implementation result string",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/path.ts:803:1",
+          "reason": "overload 1 of ensureTrailingDirectorySeparator result Path cannot be served by implementation result string",
+          "text": "src/compiler/path.ts:803:1: Adamic 0.1 refuses overload 1 of ensureTrailingDirectorySeparator result Path cannot be served by implementation result string; make the implementation result covariant with every overload result"
+        }
+      ]
+    },
+    {
+      "reason": "overload 1 of getDirectoryPath result Path cannot be served by implementation result string",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/path.ts:278:1",
+          "reason": "overload 1 of getDirectoryPath result Path cannot be served by implementation result string",
+          "text": "src/compiler/path.ts:278:1: Adamic 0.1 refuses overload 1 of getDirectoryPath result Path cannot be served by implementation result string; make the implementation result covariant with every overload result"
+        }
+      ]
+    },
+    {
+      "reason": "overload 1 of removeTrailingDirectorySeparator result Path cannot be served by implementation result string",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/path.ts:781:1",
+          "reason": "overload 1 of removeTrailingDirectorySeparator result Path cannot be served by implementation result string",
+          "text": "src/compiler/path.ts:781:1: Adamic 0.1 refuses overload 1 of removeTrailingDirectorySeparator result Path cannot be served by implementation result string; make the implementation result covariant with every overload result"
+        }
+      ]
+    },
+    {
+      "reason": "overload 1 of sameMap result U[] cannot be served by implementation result readonly U[] | undefined",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/core.ts:342:1",
+          "reason": "overload 1 of sameMap result U[] cannot be served by implementation result readonly U[] | undefined",
+          "text": "src/compiler/core.ts:342:1: Adamic 0.1 refuses overload 1 of sameMap result U[] cannot be served by implementation result readonly U[] | undefined; make the implementation result covariant with every overload result"
+        }
+      ]
+    },
+    {
+      "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "Refused",
+          "where": "src/compiler/visitorPublic.ts:587:119",
+          "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+          "text": "src/compiler/visitorPublic.ts:587:119: Adamic 0.1 refuses overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        }
+      ]
+    }
+  ],
+  "raw_sha256": {
+    "before": "bcae23771a06dcdd582b734467ec32702338cfa2b0409a12b1534e5ebdb8b3cf",
+    "after": "461d46a911b483a07f60098c61ff8746226f5cdfdf3ef07f696bb8f4cccc1042"
+  }
+}

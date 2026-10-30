@@ -1,6 +1,6 @@
 # Type-only class applications
 
-The original brand proof below is historical. October 7 revises its 36 replacements to void under #bw3xg7c; see [BRANDS-VOID.md](BRANDS-VOID.md) for current composition, searches, build mutant and lane evidence.
+The original brand proof below is historical. October 29 revises its 36 replacements to undefined under #p7t8tmh; see [BRANDS-UNDEFINED.md](BRANDS-UNDEFINED.md) for current composition, searches, build mutant and lane evidence.
 
 Historical brands: 36 owner types changed from any to undefined, preserving marker keys
 and optionality. Required markers remain required; the optional qualified-name
@@ -209,7 +209,7 @@ in `isArray(value: unknown): value is readonly unknown[]`. The body is unchanged
 all compiler callers are checked by the stock compiler. This follows the
 host-blockers a85a9cb1 proof and removes one more any token. Combined with the
 filesystem entry classification, 70 of 210 are removed and 140 remain. The function is @internal and contributes no public API line.
-Current commands, observations and mutants are in [BRANDS-VOID.md](BRANDS-VOID.md).
+Current commands, observations and mutants are in [BRANDS-UNDEFINED.md](BRANDS-UNDEFINED.md).
 
 ## Error host members, October 7
 

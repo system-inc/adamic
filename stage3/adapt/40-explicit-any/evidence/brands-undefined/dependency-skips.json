@@ -1,0 +1,30 @@
+[
+  {
+    "label": "before",
+    "sites": [
+      {
+        "kind": "SkippedDependency",
+        "where": "src/compiler/sys.ts:1463:27",
+        "reason": "a dependency function whose body has checker diagnostics (measurement skipped)",
+        "text": "latent census: skipped checker-diagnosed dependency at src/compiler/sys.ts:1463:27"
+      }
+    ]
+  },
+  {
+    "label": "after",
+    "sites": [
+      {
+        "kind": "SkippedDependency",
+        "where": "src/compiler/sys.ts:1463:27",
+        "reason": "a dependency function whose body has checker diagnostics (measurement skipped)",
+        "text": "latent census: skipped checker-diagnosed dependency at src/compiler/sys.ts:1463:27"
+      },
+      {
+        "kind": "SkippedDependency",
+        "where": "src/compiler/watch.ts:843:1",
+        "reason": "a dependency function whose body has checker diagnostics (measurement skipped)",
+        "text": "latent census: skipped checker-diagnosed dependency at src/compiler/watch.ts:843:1"
+      }
+    ]
+  }
+]

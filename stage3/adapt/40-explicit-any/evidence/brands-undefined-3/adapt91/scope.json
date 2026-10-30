@@ -1,0 +1,44 @@
+{
+  "typescript": "6.0.3",
+  "sourceFiles": 746,
+  "changed": [
+    "src/compiler/factory/nodeFactory.ts",
+    "src/compiler/utilities.ts"
+  ],
+  "sites": [
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "before": "forEach(nodeFactoryPatchers, fn => fn(factory));",
+      "after": "forEach(nodeFactoryPatchers, fn => { fn(factory); });",
+      "emits": [
+        {
+          "removeComments": false,
+          "before": "fn(factory)",
+          "after": "{ fn(factory); }"
+        },
+        {
+          "removeComments": true,
+          "before": "fn(factory)",
+          "after": "{ fn(factory); }"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "before": "forEach(objectAllocatorPatchers, fn => fn(objectAllocator));",
+      "after": "forEach(objectAllocatorPatchers, fn => { fn(objectAllocator); });",
+      "emits": [
+        {
+          "removeComments": false,
+          "before": "fn(objectAllocator)",
+          "after": "{ fn(objectAllocator); }"
+        },
+        {
+          "removeComments": true,
+          "before": "fn(objectAllocator)",
+          "after": "{ fn(objectAllocator); }"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "status": "pass",
+  "control": {
+    "status": "pass",
+    "units": 398,
+    "tests": 106367,
+    "counts": {
+      "pass": 106366,
+      "fail": 1,
+      "skip": 0
+    },
+    "failed_tests": [
+      "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+    ],
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ],
+    "names_digest": "1004b377ba6d3c36e8f10d7d67e28ab06944f62ca5b2cd22cde1250b342c9498",
+    "maximum_seconds": 12.037487104999855,
+    "manifest_sha256": "96ed1f0883957c46090d4fda52f4d09ea8eb3fa85c0365a7ecc6f732ffb51acd",
+    "product_path": true,
+    "concurrency": 4
+  },
+  "retyped": {
+    "status": "pass",
+    "units": 398,
+    "tests": 106367,
+    "counts": {
+      "pass": 106366,
+      "fail": 1,
+      "skip": 0
+    },
+    "failed_tests": [
+      "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+    ],
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ],
+    "names_digest": "1004b377ba6d3c36e8f10d7d67e28ab06944f62ca5b2cd22cde1250b342c9498",
+    "maximum_seconds": 12.93409640200025,
+    "manifest_sha256": "0ccefeed4c3e355c1dbd2fd69dcba01e2c09010a5d1927a61a289dc7be30c166",
+    "product_path": true,
+    "concurrency": 4
+  },
+  "same_test_identity_digest": true,
+  "only_failure": "sanctioned Public APIs acknowledgement",
+  "public_api_delta": "exactly 27 void-to-undefined lines, built and reference; see api-runtime.json",
+  "cgroup_memory_events_after_oracles": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\n",
+  "census_not_started_until_both_oracles_done": true
+}

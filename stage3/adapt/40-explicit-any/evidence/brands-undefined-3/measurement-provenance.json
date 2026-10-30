@@ -1,0 +1,22 @@
+{
+  "base": "a108bf788ab0cf570e025bdd7d605d5fd26ba958",
+  "compiler_and_overlay_sources_unchanged_from_base": true,
+  "measurement_cherry_picks": [],
+  "census_binary_sha256": "c1f67cf989fe956dd1c83103132a61f50da658ef77c8b4d66fcb04ec7fb73c40",
+  "census_build": [
+    "python3 stage3/census/latent/make_overlay.py REPOSITORY OVERLAY",
+    "gofmt -w OVERLAY/*.go",
+    "go build -buildvcs=false -overlay=OVERLAY/overlay.json -o BINARY ./stage3/census/latent/tool"
+  ],
+  "census_environment": {
+    "LATENT_FULL": "0",
+    "LATENT_ASSERT_NO_OUTPUT": "1"
+  },
+  "control": "/workspace/scratch/brands2/control-tree",
+  "retyped": "/workspace/scratch/brands3/retyped-tree",
+  "same_machine": true,
+  "oracles_then_censuses": true,
+  "oracle_commands": "every stage3/lane/shards.json manifest command, four concurrently, each with one upstream worker",
+  "oracle_coordinator_view_cleanup": "Completed private views removed only after their report and observations are saved; byte-comparison view retained",
+  "upstream_pin": "050880ce59e30b356b686bd3144efe24f875ebc8"
+}

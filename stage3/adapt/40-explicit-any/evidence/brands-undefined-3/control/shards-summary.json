@@ -1,0 +1,21 @@
+{
+  "status": "pass",
+  "units": 398,
+  "tests": 106367,
+  "counts": {
+    "pass": 106366,
+    "fail": 1,
+    "skip": 0
+  },
+  "failed_tests": [
+    "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+  ],
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "names_digest": "1004b377ba6d3c36e8f10d7d67e28ab06944f62ca5b2cd22cde1250b342c9498",
+  "maximum_seconds": 12.037487104999855,
+  "manifest_sha256": "96ed1f0883957c46090d4fda52f4d09ea8eb3fa85c0365a7ecc6f732ffb51acd",
+  "product_path": true,
+  "concurrency": 4
+}

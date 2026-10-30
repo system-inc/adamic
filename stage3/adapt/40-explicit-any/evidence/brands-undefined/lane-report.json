@@ -1,0 +1,19 @@
+{
+  "status": "fail",
+  "errors": [
+    "apply exit: expected 0, observed 1; see apply.log"
+  ],
+  "execution": {
+    "commit": "519819228d84d2a8eefce34a6bf76b79c7eeff63",
+    "apply_exit": 1,
+    "oracle_exit": null,
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "wall_seconds": 266.113
+  },
+  "results": "/tmp/brands-undefined-lane",
+  "verdict": "FAIL stage3 landing lane: apply exit: expected 0, observed 1; see apply.log"
+}

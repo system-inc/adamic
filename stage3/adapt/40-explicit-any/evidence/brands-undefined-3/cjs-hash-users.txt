@@ -1,0 +1,32 @@
+stage3/adapt/42-scanner-any/prove.cjs:76:const hash=s=>crypto.createHash('sha256').update(s).digest('hex');
+stage3/adapt/71-writable-views/guard-mutants.cjs:14:        [path.relative(tree, f), crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex')]);
+stage3/adapt/75-optional-widening/verify.cjs:16:            else if (entry.isFile() && file.endsWith(suffix)) result[path.relative(root,file)] = crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+stage3/adapt/92-tty-host-results/adapt.cjs:18:    const digest = crypto.createHash('sha256').update(file.text).digest('hex');
+stage3/adapt/92-tty-host-results/adapt.cjs:19:    assert([manifest[0].beforeSha256, manifest[0].afterSha256].includes(digest), 'target source moved: sys.ts');
+stage3/adapt/92-tty-host-results/adapt.cjs:40:    assert.equal(crypto.createHash('sha256').update(text).digest('hex'),manifest[0].afterSha256,'unreviewed body change');
+stage3/adapt/71-writable-views/type-plans.cjs:17:    return crypto.createHash('sha256').update(JSON.stringify(visit(node))).digest('hex');
+stage3/adapt/71-writable-views/type-plans.cjs:43:            records.push({ family: spec.family, ...owner, runtime_sha256: fingerprint(fn.body) });
+stage3/adapt/91-patcher-discard/adapt.cjs:21:        const digest = crypto.createHash('sha256').update(file.text).digest('hex');
+stage3/adapt/91-patcher-discard/adapt.cjs:22:        assert([pin.beforeSha256, pin.afterSha256].includes(digest), 'target source moved: ' + target.file);
+stage3/adapt/47-host-errors/api.cjs:72:const digest = text => crypto.createHash("sha256").update(text).digest("hex");
+stage3/adapt/47-host-errors/api.cjs:73:const report = { status: "pass", helperChangesPublicAPI: false, beforeSHA256: digest(previous), afterSHA256: digest(actual), adaptation20Lines: sanctionedLines, preexistingChanges, preparedOracle: mode === "--prepare-oracle" };
+stage3/adapt/49-honest-optionals/artifact-proof.cjs:3:const hash=b=>crypto.createHash('sha256').update(b).digest('hex');
+stage3/adapt/49-honest-optionals/artifact-proof.cjs:5:function compare(a,b,names,label){const rows=[];for(const n of names){const x=fs.readFileSync(path.join(a,n)),y=fs.readFileSync(path.join(b,n));assert.deepEqual(y,x,label+': '+n);rows.push({file:n,bytes:x.length,sha256:hash(x)});}return rows;}
+stage3/adapt/49-honest-optionals/artifact-proof.cjs:14:console.log(JSON.stringify({javascript,api,baseline_files:baselines.length,baseline_manifest_sha256:hash(Buffer.from(JSON.stringify(baselines))),oracle_counts:next.counts,baseline_diffs:next.baseline_diffs,mutants},null,2));
+stage3/adapt/49-honest-optionals/idempotence.cjs:3:for(const file of new Set(rules.map(r=>r.file))){const text=fs.readFileSync(path.join(root,file),'utf8'),once=adapt(text,file),twice=adapt(once,file);assert.equal(once,text,'already-adapted input changes: '+file);assert.equal(twice,once,'second run changes: '+file);rows.push({file,bytes:Buffer.byteLength(text),sha256:crypto.createHash('sha256').update(text).digest('hex')});}
+stage3/adapt/43-any-returns/proof.cjs:13:const hash = b => crypto.createHash('sha256').update(b).digest('hex');
+stage3/adapt/41-explicit-any-remaining/family-proof.cjs:6:const hash = s => crypto.createHash("sha256").update(s).digest("hex");
+stage3/adapt/71-writable-views/family-guards.cjs:17:            else result[path.relative(root, file)] = crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+stage3/adapt/71-writable-views/plan-mutants.cjs:16:            else result[path.relative(root, file)] = crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+stage3/adapt/90-void-widening/adapt.cjs:6:const hash = text => crypto.createHash('sha256').update(text).digest('hex');
+stage3/adapt/90-void-widening/adapt.cjs:12:        const state = digest === entry.beforeSha256 ? 'before' : digest === entry.afterSha256 ? 'after' : null;
+stage3/adapt/90-void-widening/adapt.cjs:20:        assert.equal(hash(changed), entry.afterSha256, 'unreviewed rewrite');
+stage3/adapt/44-config-generics/proof.cjs:8:const hash = b => crypto.createHash('sha256').update(b).digest('hex');
+stage3/adapt/44-config-generics/proof.cjs:72:    artifactMutants.push({artifact, mutation: 'one real emitted artifact byte added', caughtBy: 'artifact SHA256 equality'});
+stage3/adapt/44-config-generics/proof.cjs:113:const report = {base: oldLane.execution.commit, node: process.version, typescript: ts.version, reviewedSites: rules.map(r => r.id), sourceFiles: sourceFiles.length, sourceJavaScriptIdentical: true, idempotent: true, LFReconstruction: true, predicateExact: true, runtime: {fixtures: 'falsy and primitive raw inputs, bad list elements, normalized options, defaults, inherited keys, one-read accessor, cyclic object, compileOnSave mutation, watch/typeAcquisition diagnostics', sha256: hash(oldRuntime)}, outputs: current, jsFiles: Object.keys(current).filter(f => /\.(js|mjs|cjs)$/.test(f)).length, publicAPIFiles: Object.keys(current).filter(f => /typescript\.d\.(ts|mts|cts)$/.test(f)), lane: {status: newLane.status, counts: newLane.counts, failed_tests: newLane.failed_tests, baseline_diffs: newLane.baseline_diffs}, mutants, artifactMutants, laneCountMutant: 'caught', runtimeMutant: {site: 'convertOptionsFromJson', mutation: 'return defaults for falsy input', caughtBy: 'actual extracted converter return equality'}};
+stage3/adapt/45-regex-captures/test.cjs:22:    return files.map(file => crypto.createHash("sha256").update(fs.readFileSync(path.join(tree, "src/compiler", file + ".ts"))).digest("hex"));
+stage3/adapt/45-regex-captures/test.cjs:91:    return crypto.createHash("sha256").update(JSON.stringify(normalize(parsed))).digest("hex");
+stage3/adapt/41-explicit-any-remaining/prove.cjs:6:const hash = s => crypto.createHash('sha256').update(s).digest('hex');
+stage3/adapt/41-explicit-any-remaining/prove.cjs:24:        evidence.emissions[file]={bytes:Buffer.byteLength(a),sha256:hash(a)};
+stage3/adapt/46-fix-pragma-empty-argument/test.cjs:25:const digest = () => crypto.createHash("sha256").update(fs.readFileSync(file)).digest("hex");
+stage3/adapt/41-explicit-any-remaining/oracle-proof.cjs:22:const report={mutant:'append number = string to actual forInStatement1.ts input',control:originalReport.counts,mutantCounts:failed.counts,mutantBaselineDiffs:failed.baseline_diffs,restored:restored.counts,restoredBaselineDiffs:restored.baseline_diffs,fixtureSHA256:crypto.createHash('sha256').update(before).digest('hex')};

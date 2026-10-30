@@ -1,0 +1,43 @@
+{
+  "bar_met": true,
+  "changed_reasons": 211,
+  "new_or_growing_reasons": 35,
+  "new_distinct_sites": 100,
+  "positive_reason_net_growth": 100,
+  "other_event_deltas": [
+    {
+      "kind": "SkippedDependency",
+      "reason": "a dependency function whose body has checker diagnostics (measurement skipped)",
+      "before": 1,
+      "after": 3,
+      "examples": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/executeCommandLine.ts:812:1",
+          "phase": "lowering",
+          "kind": "SkippedDependency",
+          "where": "src/compiler/tsbuildPublic.ts:295:1",
+          "reason": "a dependency function whose body has checker diagnostics (measurement skipped)",
+          "text": "latent census: skipped checker-diagnosed dependency at src/compiler/tsbuildPublic.ts:295:1"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/executeCommandLine.ts:1034:1",
+          "phase": "lowering",
+          "kind": "SkippedDependency",
+          "where": "src/compiler/watch.ts:843:1",
+          "reason": "a dependency function whose body has checker diagnostics (measurement skipped)",
+          "text": "latent census: skipped checker-diagnosed dependency at src/compiler/watch.ts:843:1"
+        }
+      ]
+    }
+  ],
+  "unchanged_nonvoid_primitive_brand_reasons": {
+    "__canonicalKey": 1,
+    "_isResolvedConfigFileName": 2
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "status": "complete",
+  "base": "a108bf788ab0cf570e025bdd7d605d5fd26ba958",
+  "apply": 0,
+  "own_checks_90_91_92": 0,
+  "oracle_control": {
+    "pass": 106366,
+    "fail": 1,
+    "skip": 0
+  },
+  "oracle_retyped": {
+    "pass": 106366,
+    "fail": 1,
+    "skip": 0
+  },
+  "census": {
+    "control": {
+      "files": 79,
+      "totals": {
+        "NotYet": 676,
+        "Refused": 11747,
+        "SkippedDependency": 1,
+        "error": 0,
+        "panic": 0
+      },
+      "checker_diagnostics": 144,
+      "void_container": 9612,
+      "instantiated_at_void": 80,
+      "Path_value": 0,
+      "all_primitive_brand_not_void": 3,
+      "original_five_primitive_brand_sites": 0
+    },
+    "retyped": {
+      "files": 79,
+      "totals": {
+        "NotYet": 694,
+        "Refused": 2135,
+        "SkippedDependency": 3,
+        "error": 0,
+        "panic": 0
+      },
+      "checker_diagnostics": 144,
+      "void_container": 0,
+      "instantiated_at_void": 0,
+      "Path_value": 0,
+      "all_primitive_brand_not_void": 3,
+      "original_five_primitive_brand_sites": 0
+    }
+  },
+  "previous_133": {
+    "previous_unclassified_sites": 133,
+    "context_examples_capped_at": 3,
+    "site_status": {
+      "absent from current treatment ledger": 36,
+      "present only in current treatment": 97
+    },
+    "treatment_only_with_control_void_at_same_location": 87,
+    "treatment_only_with_control_void_in_same_attempt": 97,
+    "known31_remaining_in_treatment": 0,
+    "limits": "An absent observation is not proof the construct now lowers; a same-attempt or same-location prior void finding does not prove the later refusal existed with old types. First-error ledgers do not provide that counterfactual. Main also changed between the historical and current runs."
+  },
+  "source_pins": [
+    {
+      "adaptation": "90",
+      "file": "src/compiler/checker.ts",
+      "field": "beforeSha256",
+      "old": "a3e59ab71f1c98dca1cd08943e04d94e8b3ffeaf2c9a705d237094c6bcd5c419",
+      "new": "750160c12c5f293beecdc21474e0240c1b4c3a468f1d3e93b27f533caf6e8a3b"
+    },
+    {
+      "adaptation": "90",
+      "file": "src/compiler/checker.ts",
+      "field": "afterSha256",
+      "old": "75fbb1868e174be02e8a927f0219077c2274c9187c19ef2535f84855f93e787f",
+      "new": "207c91ad384d14d0cdc1a356e4daba2bbb09b13330d0297cf6ac2232123827f1"
+    },
+    {
+      "adaptation": "91",
+      "file": "src/compiler/utilities.ts",
+      "field": "beforeSha256",
+      "old": "850e68859cc1d901df641b2128e7e5c7a00ed87e960025c3ca115b8bfe8786b3",
+      "new": "be42957f4ef90d32fcb912717ebe55d8a531820f0724ee56d24d62cc35001269"
+    },
+    {
+      "adaptation": "91",
+      "file": "src/compiler/utilities.ts",
+      "field": "afterSha256",
+      "old": "fdbb9727fecbe7b7556ccf13ffc79c8dc0ade4eafb8fbf3675adca435124aa3b",
+      "new": "e8f6c9b1c9e25531f9a904606886a597e52fa8749d9cbb78ca3cadd09fc6b36b"
+    }
+  ],
+  "mutant": "changed sanctioned API declaration: TypeAliasDeclaration:[\"ts\",\"Path\"]#0",
+  "compiler_changed": false
+}

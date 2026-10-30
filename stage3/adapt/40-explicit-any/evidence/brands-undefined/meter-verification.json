@@ -1,0 +1,30 @@
+{
+  "before": {
+    "totals": {
+      "NotYet": 811,
+      "Refused": 12015,
+      "SkippedDependency": 1,
+      "error": 0,
+      "panic": 0
+    },
+    "files": 79,
+    "checker_diagnostics": 144,
+    "void_container_sites": 9610,
+    "instantiated_at_void_sites": 76,
+    "first_error": true
+  },
+  "after": {
+    "totals": {
+      "NotYet": 840,
+      "Refused": 2433,
+      "SkippedDependency": 2,
+      "error": 0,
+      "panic": 0
+    },
+    "files": 79,
+    "checker_diagnostics": 144,
+    "void_container_sites": 0,
+    "instantiated_at_void_sites": 0,
+    "first_error": true
+  }
+}

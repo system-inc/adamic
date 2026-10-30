@@ -1,0 +1,35 @@
+[
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "src/compiler/builder.ts:933:1",
+    "phase": "lowering",
+    "kind": "NotYet",
+    "where": "src/compiler/builder.ts:985:5",
+    "reason": "a call through ?. (an optional call)",
+    "text": "src/compiler/builder.ts:985:5: stage 0 can't lower a call through ?. (an optional call) yet"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "src/compiler/commandLineParser.ts:3265:1",
+    "phase": "lowering",
+    "kind": "NotYet",
+    "where": "src/compiler/commandLineParser.ts:3275:21",
+    "reason": "a union or optional field read in a program with record storage",
+    "text": "src/compiler/commandLineParser.ts:3275:21: stage 0 can't lower a union or optional field read in a program with record storage yet"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "src/compiler/program.ts:1228:1",
+    "phase": "lowering",
+    "kind": "NotYet",
+    "where": "src/compiler/program.ts:1290:19",
+    "reason": "a value of type ResolvedConfigFileName",
+    "text": "src/compiler/program.ts:1290:19: stage 0 can't lower a value of type ResolvedConfigFileName yet"
+  }
+]

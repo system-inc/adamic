@@ -1,0 +1,14 @@
+{
+  "status": "stopped-incomplete",
+  "planned_units": 398,
+  "completed_units": 152,
+  "completed_pass_units": 152,
+  "completed_red_units": [],
+  "partial_counts_not_full_oracle": {
+    "pass": 34031,
+    "fail": 1,
+    "skip": 0
+  },
+  "retyped_oracle": "not run: apply stopped in 91",
+  "census": "not run: stop condition before oracle completion"
+}

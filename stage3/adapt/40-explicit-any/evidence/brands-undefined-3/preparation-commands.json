@@ -1,0 +1,149 @@
+[
+  {
+    "name": "91-no-registrant",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/proofs/references.cjs",
+      "/workspace/scratch/brands3/retyped-tree",
+      "/workspace/adamic/stage3/adapt/40-explicit-any/evidence/brands-undefined-3/adapt91/references.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "expected": 0,
+    "exit": 0,
+    "seconds": 25.65585007100026
+  },
+  {
+    "name": "91-body-only",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/proofs/scope.cjs",
+      "/workspace/scratch/brands3/without91",
+      "/workspace/scratch/brands3/retyped-tree",
+      "/workspace/adamic/stage3/adapt/40-explicit-any/evidence/brands-undefined-3/adapt91/scope.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "expected": 0,
+    "exit": 0,
+    "seconds": 2.1809150409999347
+  },
+  {
+    "name": "retyped-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/workspace/scratch/brands3/retyped-tree",
+    "expected": 0,
+    "exit": 0,
+    "seconds": 24.023743382999783
+  },
+  {
+    "name": "without91-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/workspace/scratch/brands3/without91",
+    "expected": 0,
+    "exit": 0,
+    "seconds": 24.147572261999812
+  },
+  {
+    "name": "91-original-node-witness",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/proofs/hooks.cjs",
+      "/workspace/scratch/brands3/without91/built/local/typescript.js",
+      "/workspace/adamic/stage3/adapt/40-explicit-any/evidence/brands-undefined-3/adapt91/hooks-original.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "expected": 0,
+    "exit": 0,
+    "seconds": 0.21482586999991327
+  },
+  {
+    "name": "91-before-node-witness",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/proofs/hooks-check.cjs",
+      "/workspace/scratch/brands3/without91/built/local/typescript.js",
+      "[1,0,1,0]",
+      "/workspace/adamic/stage3/adapt/40-explicit-any/evidence/brands-undefined-3/adapt91/hooks-before.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "expected": 0,
+    "exit": 0,
+    "seconds": 0.21497441499968772
+  },
+  {
+    "name": "91-after-node-witness",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/proofs/hooks-check.cjs",
+      "/workspace/scratch/brands3/retyped-tree/built/local/typescript.js",
+      "[1,1,1,1]",
+      "/workspace/adamic/stage3/adapt/40-explicit-any/evidence/brands-undefined-3/adapt91/hooks-after.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "expected": 0,
+    "exit": 0,
+    "seconds": 0.21459569200033002
+  },
+  {
+    "name": "91-main-node-witness",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/proofs/hooks-check.cjs",
+      "/workspace/scratch/brands2/control-tree/built/local/typescript.js",
+      "[1,1,1,1]",
+      "/workspace/adamic/stage3/adapt/40-explicit-any/evidence/brands-undefined-3/adapt91/hooks-main.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "expected": 0,
+    "exit": 0,
+    "seconds": 0.2167361950000668
+  },
+  {
+    "name": "91-original-witness-still-red-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/proofs/hooks.cjs",
+      "/workspace/scratch/brands3/retyped-tree/built/local/typescript.js",
+      "/workspace/adamic/stage3/adapt/40-explicit-any/evidence/brands-undefined-3/adapt91/unexpected-original-hooks.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "expected": 1,
+    "exit": 1,
+    "seconds": 0.21472573800019745
+  },
+  {
+    "name": "brand-member-audit",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/40-explicit-any/brands-undefined-proof.cjs",
+      "audit",
+      "/workspace/scratch/brands3/retyped-tree",
+      "/workspace/adamic/stage3/adapt/40-explicit-any/evidence/brands-undefined-3"
+    ],
+    "cwd": "/workspace/adamic",
+    "expected": 0,
+    "exit": 0,
+    "seconds": 2.1869648940000843
+  },
+  {
+    "name": "retype-only-source-api",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/40-explicit-any/retype-check.cjs",
+      "/workspace/scratch/brands2/control-tree",
+      "/workspace/scratch/brands3/retyped-tree",
+      "/workspace/adamic/stage3/adapt/40-explicit-any/evidence/brands-undefined-3"
+    ],
+    "cwd": "/workspace/adamic",
+    "expected": 0,
+    "exit": 0,
+    "seconds": 2.187059110000064
+  }
+]

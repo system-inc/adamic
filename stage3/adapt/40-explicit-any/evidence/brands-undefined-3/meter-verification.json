@@ -1,0 +1,34 @@
+{
+  "control": {
+    "files": 79,
+    "totals": {
+      "NotYet": 676,
+      "Refused": 11747,
+      "SkippedDependency": 1,
+      "error": 0,
+      "panic": 0
+    },
+    "checker_diagnostics": 144,
+    "void_container": 9612,
+    "instantiated_at_void": 80,
+    "Path_value": 0,
+    "all_primitive_brand_not_void": 3,
+    "original_five_primitive_brand_sites": 0
+  },
+  "retyped": {
+    "files": 79,
+    "totals": {
+      "NotYet": 694,
+      "Refused": 2135,
+      "SkippedDependency": 3,
+      "error": 0,
+      "panic": 0
+    },
+    "checker_diagnostics": 144,
+    "void_container": 0,
+    "instantiated_at_void": 0,
+    "Path_value": 0,
+    "all_primitive_brand_not_void": 3,
+    "original_five_primitive_brand_sites": 0
+  }
+}

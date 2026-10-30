@@ -1,0 +1,7 @@
+{
+  "test": "retype-check.cjs: only reviewed void-to-undefined annotations",
+  "mutation": "undo the retype, restoring baseline void annotations",
+  "file": "src/compiler/builder.ts",
+  "result": "red: source differs from independent undefined projection",
+  "baselineIsUndoOfRetype": true
+}

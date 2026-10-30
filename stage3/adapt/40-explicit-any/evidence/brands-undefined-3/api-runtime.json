@@ -1,0 +1,20 @@
+{
+  "javascript_files": 10,
+  "javascript_bytes_identical": true,
+  "apis": [
+    {
+      "artifact": "built/local/typescript.d.ts",
+      "changed_lines": 27,
+      "only": "void to undefined",
+      "before_sha256": "477a56fb7b35a5f268be6131441c67d237b4646a9f8d2e1f50dc163879450051",
+      "after_sha256": "b901adcc6ec29e299ec21401b2a155b2b2c14c046ec743fed6ee45679b726d5d"
+    },
+    {
+      "artifact": "tests/baselines/reference/api/typescript.d.ts",
+      "changed_lines": 27,
+      "only": "void to undefined",
+      "before_sha256": "be426834bb1b7171cec20105518beef643e5aa4d67dba57adf4ef4050934606e",
+      "after_sha256": "f87d6c30da287293aae741711fa94594b75d49e0977cea6bfd5982f90e2bafcf"
+    }
+  ]
+}

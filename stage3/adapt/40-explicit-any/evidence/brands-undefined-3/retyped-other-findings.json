@@ -1,0 +1,20 @@
+[
+  {
+    "kind": "SkippedDependency",
+    "where": "/workspace/scratch/brands3/retyped-tree/src/compiler/sys.ts:1463:27",
+    "reason": "a dependency function whose body has checker diagnostics (measurement skipped)",
+    "text": "latent census: skipped checker-diagnosed dependency at /workspace/scratch/brands3/retyped-tree/src/compiler/sys.ts:1463:27"
+  },
+  {
+    "kind": "SkippedDependency",
+    "where": "/workspace/scratch/brands3/retyped-tree/src/compiler/tsbuildPublic.ts:295:1",
+    "reason": "a dependency function whose body has checker diagnostics (measurement skipped)",
+    "text": "latent census: skipped checker-diagnosed dependency at /workspace/scratch/brands3/retyped-tree/src/compiler/tsbuildPublic.ts:295:1"
+  },
+  {
+    "kind": "SkippedDependency",
+    "where": "/workspace/scratch/brands3/retyped-tree/src/compiler/watch.ts:843:1",
+    "reason": "a dependency function whose body has checker diagnostics (measurement skipped)",
+    "text": "latent census: skipped checker-diagnosed dependency at /workspace/scratch/brands3/retyped-tree/src/compiler/watch.ts:843:1"
+  }
+]

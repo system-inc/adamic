@@ -1,0 +1,18 @@
+{
+  "files": 0,
+  "javascriptChanging": true,
+  "sites": [
+    {
+      "name": "getWidthOfTerminal",
+      "line": 1531,
+      "before": "process.stdout.columns",
+      "after": "process.stdout.columns ?? 0"
+    },
+    {
+      "name": "writeOutputIsTTY",
+      "line": 1534,
+      "before": "process.stdout.isTTY",
+      "after": "!!process.stdout.isTTY"
+    }
+  ]
+}

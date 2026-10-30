@@ -1,7 +1,7 @@
 [
   {
     "key": "__incrementalBuildInfoFileIdBrand",
-    "search": "/tmp/any-brands-before/src/compiler/builder.ts:1074:export type IncrementalBuildInfoFileId = number & { __incrementalBuildInfoFileIdBrand: any; };\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/builder.ts:1074:export type IncrementalBuildInfoFileId = number & { __incrementalBuildInfoFileIdBrand: undefined; };\r\n",
     "declarations": [
       {
         "file": "src/compiler/builder.ts",
@@ -13,11 +13,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "__incrementalBuildInfoFileIdListIdBrand",
-    "search": "/tmp/any-brands-before/src/compiler/builder.ts:1076:export type IncrementalBuildInfoFileIdListId = number & { __incrementalBuildInfoFileIdListIdBrand: any; };\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/builder.ts:1076:export type IncrementalBuildInfoFileIdListId = number & { __incrementalBuildInfoFileIdListIdBrand: undefined; };\r\n",
     "declarations": [
       {
         "file": "src/compiler/builder.ts",
@@ -29,11 +29,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "_symbolLinksBrand",
-    "search": "/tmp/any-brands-before/src/compiler/checker.ts:1452:    declare _symbolLinksBrand: any;\r\n/tmp/any-brands-before/src/compiler/types.ts:6064:    _symbolLinksBrand: any;\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:6064:    _symbolLinksBrand: undefined;\r\n/workspace/scratch/brands3/retyped-tree/src/compiler/checker.ts:1452:    declare _symbolLinksBrand: undefined;\r\n",
     "declarations": [
       {
         "file": "src/compiler/checker.ts",
@@ -51,11 +51,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": " __sortedArrayBrand",
-    "search": "/tmp/any-brands-before/src/compiler/corePublic.ts:18:    \" __sortedArrayBrand\": any;\r\n/tmp/any-brands-before/src/compiler/corePublic.ts:22:    \" __sortedArrayBrand\": any;\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/corePublic.ts:18:    \" __sortedArrayBrand\": undefined;\r\n/workspace/scratch/brands3/retyped-tree/src/compiler/corePublic.ts:22:    \" __sortedArrayBrand\": undefined;\r\n",
     "declarations": [
       {
         "file": "src/compiler/corePublic.ts",
@@ -73,11 +73,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "__compilerOptionsKey",
-    "search": "/tmp/any-brands-before/src/compiler/moduleNameResolver.ts:975:export type RedirectsCacheKey = string & { __compilerOptionsKey: any; };\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/moduleNameResolver.ts:975:export type RedirectsCacheKey = string & { __compilerOptionsKey: undefined; };\r\n",
     "declarations": [
       {
         "file": "src/compiler/moduleNameResolver.ts",
@@ -89,11 +89,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "__modeAwareCacheKey",
-    "search": "/tmp/any-brands-before/src/compiler/moduleNameResolver.ts:1113:export type ModeAwareCacheKey = string & { __modeAwareCacheKey: any; };\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/moduleNameResolver.ts:1113:export type ModeAwareCacheKey = string & { __modeAwareCacheKey: undefined; };\r\n",
     "declarations": [
       {
         "file": "src/compiler/moduleNameResolver.ts",
@@ -105,11 +105,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "__pathComponensBrand",
-    "search": "/tmp/any-brands-before/src/compiler/path.ts:457:export type PathPathComponents = Path[] & { __pathComponensBrand: any; };\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/path.ts:457:export type PathPathComponents = Path[] & { __pathComponensBrand: undefined; };\r\n",
     "declarations": [
       {
         "file": "src/compiler/path.ts",
@@ -121,11 +121,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "_usingBrand",
-    "search": "/tmp/any-brands-before/src/compiler/transformers/esnext.ts:774:function isUsingVariableDeclarationList(node: Node): node is VariableDeclarationList & { _usingBrand: any; } {\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/transformers/esnext.ts:774:function isUsingVariableDeclarationList(node: Node): node is VariableDeclarationList & { _usingBrand: undefined; } {\r\n",
     "declarations": [
       {
         "file": "src/compiler/transformers/esnext.ts",
@@ -137,11 +137,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "__pathBrand",
-    "search": "/tmp/any-brands-before/src/compiler/types.ts:23:export type Path = string & { __pathBrand: any; };\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:23:export type Path = string & { __pathBrand: undefined; };\r\n",
     "declarations": [
       {
         "file": "src/compiler/types.ts",
@@ -153,11 +153,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "_jsdocContainerBrand",
-    "search": "/tmp/any-brands-before/src/compiler/types.ts:958:    _jsdocContainerBrand: any;\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:958:    _jsdocContainerBrand: undefined;\r\n",
     "declarations": [
       {
         "file": "src/compiler/types.ts",
@@ -169,11 +169,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "_localsContainerBrand",
-    "search": "/tmp/any-brands-before/src/compiler/types.ts:968:    _localsContainerBrand: any;\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:968:    _localsContainerBrand: undefined;\r\n",
     "declarations": [
       {
         "file": "src/compiler/types.ts",
@@ -185,11 +185,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "_flowContainerBrand",
-    "search": "/tmp/any-brands-before/src/compiler/types.ts:974:    _flowContainerBrand: any;\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:974:    _flowContainerBrand: undefined;\r\n",
     "declarations": [
       {
         "file": "src/compiler/types.ts",
@@ -201,11 +201,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "_declarationBrand",
-    "search": "/tmp/any-brands-before/src/compiler/types.ts:1757:    _declarationBrand: any;\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:1757:    _declarationBrand: undefined;\r\n",
     "declarations": [
       {
         "file": "src/compiler/types.ts",
@@ -217,11 +217,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "_autoAccessorBrand",
-    "search": "/tmp/any-brands-before/src/compiler/types.ts:1944:    _autoAccessorBrand: any;\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:1944:    _autoAccessorBrand: undefined;\r\n",
     "declarations": [
       {
         "file": "src/compiler/types.ts",
@@ -233,11 +233,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "_objectLiteralBrand",
-    "search": "/tmp/any-brands-before/src/compiler/types.ts:1981:    _objectLiteralBrand: any;\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:1981:    _objectLiteralBrand: undefined;\r\n",
     "declarations": [
       {
         "file": "src/compiler/types.ts",
@@ -249,11 +249,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "_functionLikeDeclarationBrand",
-    "search": "/tmp/any-brands-before/src/compiler/types.ts:2064:    _functionLikeDeclarationBrand: any;\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:2064:    _functionLikeDeclarationBrand: undefined;\r\n",
     "declarations": [
       {
         "file": "src/compiler/types.ts",
@@ -265,11 +265,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "_typeNodeBrand",
-    "search": "/tmp/any-brands-before/src/compiler/types.ts:2185:    _typeNodeBrand: any;\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:2185:    _typeNodeBrand: undefined;\r\n",
     "declarations": [
       {
         "file": "src/compiler/types.ts",
@@ -281,11 +281,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "_expressionBrand",
-    "search": "/tmp/any-brands-before/src/compiler/types.ts:2397:    _expressionBrand: any;\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:2397:    _expressionBrand: undefined;\r\n",
     "declarations": [
       {
         "file": "src/compiler/types.ts",
@@ -297,11 +297,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "_unaryExpressionBrand",
-    "search": "/tmp/any-brands-before/src/compiler/types.ts:2412:    _unaryExpressionBrand: any;\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:2412:    _unaryExpressionBrand: undefined;\r\n",
     "declarations": [
       {
         "file": "src/compiler/types.ts",
@@ -313,11 +313,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "_updateExpressionBrand",
-    "search": "/tmp/any-brands-before/src/compiler/types.ts:2418:    _updateExpressionBrand: any;\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:2418:    _updateExpressionBrand: undefined;\r\n",
     "declarations": [
       {
         "file": "src/compiler/types.ts",
@@ -329,11 +329,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "_leftHandSideExpressionBrand",
-    "search": "/tmp/any-brands-before/src/compiler/types.ts:2449:    _leftHandSideExpressionBrand: any;\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:2449:    _leftHandSideExpressionBrand: undefined;\r\n",
     "declarations": [
       {
         "file": "src/compiler/types.ts",
@@ -345,11 +345,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "_memberExpressionBrand",
-    "search": "/tmp/any-brands-before/src/compiler/types.ts:2453:    _memberExpressionBrand: any;\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:2453:    _memberExpressionBrand: undefined;\r\n",
     "declarations": [
       {
         "file": "src/compiler/types.ts",
@@ -361,11 +361,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "_primaryExpressionBrand",
-    "search": "/tmp/any-brands-before/src/compiler/types.ts:2457:    _primaryExpressionBrand: any;\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:2457:    _primaryExpressionBrand: undefined;\r\n",
     "declarations": [
       {
         "file": "src/compiler/types.ts",
@@ -377,11 +377,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "_literalExpressionBrand",
-    "search": "/tmp/any-brands-before/src/compiler/types.ts:2785:    _literalExpressionBrand: any;\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:2785:    _literalExpressionBrand: undefined;\r\n",
     "declarations": [
       {
         "file": "src/compiler/types.ts",
@@ -393,11 +393,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "_optionalChainBrand",
-    "search": "/tmp/any-brands-before/src/compiler/types.ts:2982:    _optionalChainBrand: any;\r\n/tmp/any-brands-before/src/compiler/types.ts:3010:    _optionalChainBrand: any;\r\n/tmp/any-brands-before/src/compiler/types.ts:3034:    _optionalChainBrand: any;\r\n/tmp/any-brands-before/src/compiler/types.ts:3168:    _optionalChainBrand: any;\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:2982:    _optionalChainBrand: undefined;\r\n/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:3010:    _optionalChainBrand: undefined;\r\n/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:3034:    _optionalChainBrand: undefined;\r\n/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:3168:    _optionalChainBrand: undefined;\r\n",
     "declarations": [
       {
         "file": "src/compiler/types.ts",
@@ -427,11 +427,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "_propertyAccessExpressionLikeQualifiedNameBrand",
-    "search": "/tmp/any-brands-before/src/compiler/types.ts:2997:    _propertyAccessExpressionLikeQualifiedNameBrand?: any;\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:2997:    _propertyAccessExpressionLikeQualifiedNameBrand?: undefined;\r\n",
     "declarations": [
       {
         "file": "src/compiler/types.ts",
@@ -443,11 +443,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "_statementBrand",
-    "search": "/tmp/any-brands-before/src/compiler/types.ts:3322:    _statementBrand: any;\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:3322:    _statementBrand: undefined;\r\n",
     "declarations": [
       {
         "file": "src/compiler/types.ts",
@@ -459,11 +459,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "_classElementBrand",
-    "search": "/tmp/any-brands-before/src/compiler/types.ts:3568:    _classElementBrand: any;\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:3568:    _classElementBrand: undefined;\r\n",
     "declarations": [
       {
         "file": "src/compiler/types.ts",
@@ -475,11 +475,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "_typeElementBrand",
-    "search": "/tmp/any-brands-before/src/compiler/types.ts:3573:    _typeElementBrand: any;\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:3573:    _typeElementBrand: undefined;\r\n",
     "declarations": [
       {
         "file": "src/compiler/types.ts",
@@ -491,11 +491,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "_jsDocTypeBrand",
-    "search": "/tmp/any-brands-before/src/compiler/types.ts:3903:    _jsDocTypeBrand: any;\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/types.ts:3903:    _jsDocTypeBrand: undefined;\r\n",
     "declarations": [
       {
         "file": "src/compiler/types.ts",
@@ -507,11 +507,11 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   },
   {
     "key": "_prototypePropertyAssignmentBrand",
-    "search": "/tmp/any-brands-before/src/compiler/utilities.ts:4289:    _prototypePropertyAssignmentBrand: any;\r\n",
+    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/utilities.ts:4289:    _prototypePropertyAssignmentBrand: undefined;\r\n",
     "declarations": [
       {
         "file": "src/compiler/utilities.ts",
@@ -523,6 +523,6 @@
     "reads": 0,
     "writes": 0,
     "tests": 0,
-    "decision": "void"
+    "decision": "undefined"
   }
 ]

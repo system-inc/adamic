@@ -1,0 +1,159 @@
+{
+  "brand_files": [
+    "src/compiler/builder.ts",
+    "src/compiler/checker.ts",
+    "src/compiler/corePublic.ts",
+    "src/compiler/moduleNameResolver.ts",
+    "src/compiler/path.ts",
+    "src/compiler/transformers/esnext.ts",
+    "src/compiler/types.ts",
+    "src/compiler/utilities.ts"
+  ],
+  "active_source_pins": [
+    {
+      "adaptation": "90-void-widening",
+      "manifest": "stage3/adapt/90-void-widening/targets.json",
+      "file": "src/compiler/binder.ts",
+      "touched_by_40_brands": false,
+      "before": "52433067d990791b86887480f2a54d876ccacbf6dbbfb3bcba5ae95ab91b8d4a",
+      "after": "7d2fe86cb48e04e45b5b260d8029116f57660aa1a00efaaa180f0dda6837d370"
+    },
+    {
+      "adaptation": "90-void-widening",
+      "manifest": "stage3/adapt/90-void-widening/targets.json",
+      "file": "src/compiler/checker.ts",
+      "touched_by_40_brands": true,
+      "before": "750160c12c5f293beecdc21474e0240c1b4c3a468f1d3e93b27f533caf6e8a3b",
+      "after": "207c91ad384d14d0cdc1a356e4daba2bbb09b13330d0297cf6ac2232123827f1"
+    },
+    {
+      "adaptation": "90-void-widening",
+      "manifest": "stage3/adapt/90-void-widening/targets.json",
+      "file": "src/compiler/emitter.ts",
+      "touched_by_40_brands": false,
+      "before": "56b9970cba54c7dfce34e95f57d355a5c8e08c6de41a403eec703a76bb91fb30",
+      "after": "7be216d0f04aebcb91ce166181d06bea298a8b418848f7ea203b4ffaace2550d"
+    },
+    {
+      "adaptation": "90-void-widening",
+      "manifest": "stage3/adapt/90-void-widening/targets.json",
+      "file": "src/compiler/parser.ts",
+      "touched_by_40_brands": false,
+      "before": "9c8e41e143294677580750ada80e5ba18128645e280e7950b001e054b4ae0df4",
+      "after": "f45d616292f311841069bd036008dc9630c3a51f3da3e0789b1701f8478542af"
+    },
+    {
+      "adaptation": "90-void-widening",
+      "manifest": "stage3/adapt/90-void-widening/targets.json",
+      "file": "src/compiler/program.ts",
+      "touched_by_40_brands": false,
+      "before": "f34112c624147a4adaf9f580d59acbb592687641194eb092f89a41724d10b13b",
+      "after": "be45803f3842bb2e14720aedda5cd3477e63050ba0a6d1d7e9b3fe28e0a603df"
+    },
+    {
+      "adaptation": "90-void-widening",
+      "manifest": "stage3/adapt/90-void-widening/targets.json",
+      "file": "src/compiler/symbolWalker.ts",
+      "touched_by_40_brands": false,
+      "before": "e9c78f8c78e5f78e893c9dd371a91c8bfdd8c98d2951c4b6174aa37d41475216",
+      "after": "f8dc15db9cc3afa950a3007f50d3456e91eeedb9891982f10a9e3c64a2a111e6"
+    },
+    {
+      "adaptation": "90-void-widening",
+      "manifest": "stage3/adapt/90-void-widening/targets.json",
+      "file": "src/compiler/transformers/es2017.ts",
+      "touched_by_40_brands": false,
+      "before": "18dc472c3bda1fd9deb5a7d051e7a3bb36576c5408fbdf4caca7323299cd1eb5",
+      "after": "57ba4bc6ac88589c2f9605980301c7defcd19f082b4c27c1e087b6a79781019e"
+    },
+    {
+      "adaptation": "91-patcher-discard",
+      "manifest": "stage3/adapt/91-patcher-discard/proofs/targets.json",
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "touched_by_40_brands": false,
+      "before": "6719964224eebda39ea2aea8447bdbbf1858e579430abe1f11555f0891d49ce3",
+      "after": "bfac415cab939ce57ea75c724782afd5ab264d10c7188605aaef7485be0569de"
+    },
+    {
+      "adaptation": "91-patcher-discard",
+      "manifest": "stage3/adapt/91-patcher-discard/proofs/targets.json",
+      "file": "src/compiler/utilities.ts",
+      "touched_by_40_brands": true,
+      "before": "850e68859cc1d901df641b2128e7e5c7a00ed87e960025c3ca115b8bfe8786b3",
+      "after": "fdbb9727fecbe7b7556ccf13ffc79c8dc0ade4eafb8fbf3675adca435124aa3b"
+    },
+    {
+      "adaptation": "92-tty-host-results",
+      "manifest": "stage3/adapt/92-tty-host-results/proofs/targets.json",
+      "file": "src/compiler/sys.ts",
+      "touched_by_40_brands": false,
+      "before": "c97c103378b8f11b55ac4bdcfeca89a88fb2de1b860a28d229c783cd50360dd6",
+      "after": "5c45814e8fb6155701df1ef9be2755096ccac593ac6d53b13a4d26d90c7284d8"
+    }
+  ],
+  "sys_ts_has_adaptation40_brand": false,
+  "other_hash_users": "71/type-plans.cjs compares computed AST fingerprints, not fixed source hashes; other sha256 users outside active adapt.cjs dependencies are proof/evidence tools, listed in sha256-readers.txt",
+  "inventory_phase": "before the adaptation-91 refresh and before full apply; adaptation-90 refresh was already present",
+  "final_source_pins": [
+    {
+      "adaptation": "90",
+      "file": "src/compiler/binder.ts",
+      "beforeSha256": "52433067d990791b86887480f2a54d876ccacbf6dbbfb3bcba5ae95ab91b8d4a",
+      "afterSha256": "7d2fe86cb48e04e45b5b260d8029116f57660aa1a00efaaa180f0dda6837d370"
+    },
+    {
+      "adaptation": "90",
+      "file": "src/compiler/checker.ts",
+      "beforeSha256": "750160c12c5f293beecdc21474e0240c1b4c3a468f1d3e93b27f533caf6e8a3b",
+      "afterSha256": "207c91ad384d14d0cdc1a356e4daba2bbb09b13330d0297cf6ac2232123827f1"
+    },
+    {
+      "adaptation": "90",
+      "file": "src/compiler/emitter.ts",
+      "beforeSha256": "56b9970cba54c7dfce34e95f57d355a5c8e08c6de41a403eec703a76bb91fb30",
+      "afterSha256": "7be216d0f04aebcb91ce166181d06bea298a8b418848f7ea203b4ffaace2550d"
+    },
+    {
+      "adaptation": "90",
+      "file": "src/compiler/parser.ts",
+      "beforeSha256": "9c8e41e143294677580750ada80e5ba18128645e280e7950b001e054b4ae0df4",
+      "afterSha256": "f45d616292f311841069bd036008dc9630c3a51f3da3e0789b1701f8478542af"
+    },
+    {
+      "adaptation": "90",
+      "file": "src/compiler/program.ts",
+      "beforeSha256": "f34112c624147a4adaf9f580d59acbb592687641194eb092f89a41724d10b13b",
+      "afterSha256": "be45803f3842bb2e14720aedda5cd3477e63050ba0a6d1d7e9b3fe28e0a603df"
+    },
+    {
+      "adaptation": "90",
+      "file": "src/compiler/symbolWalker.ts",
+      "beforeSha256": "e9c78f8c78e5f78e893c9dd371a91c8bfdd8c98d2951c4b6174aa37d41475216",
+      "afterSha256": "f8dc15db9cc3afa950a3007f50d3456e91eeedb9891982f10a9e3c64a2a111e6"
+    },
+    {
+      "adaptation": "90",
+      "file": "src/compiler/transformers/es2017.ts",
+      "beforeSha256": "18dc472c3bda1fd9deb5a7d051e7a3bb36576c5408fbdf4caca7323299cd1eb5",
+      "afterSha256": "57ba4bc6ac88589c2f9605980301c7defcd19f082b4c27c1e087b6a79781019e"
+    },
+    {
+      "adaptation": "91",
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "beforeSha256": "6719964224eebda39ea2aea8447bdbbf1858e579430abe1f11555f0891d49ce3",
+      "afterSha256": "bfac415cab939ce57ea75c724782afd5ab264d10c7188605aaef7485be0569de"
+    },
+    {
+      "adaptation": "91",
+      "file": "src/compiler/utilities.ts",
+      "beforeSha256": "be42957f4ef90d32fcb912717ebe55d8a531820f0724ee56d24d62cc35001269",
+      "afterSha256": "e8f6c9b1c9e25531f9a904606886a597e52fa8749d9cbb78ca3cadd09fc6b36b"
+    },
+    {
+      "adaptation": "92",
+      "file": "src/compiler/sys.ts",
+      "beforeSha256": "c97c103378b8f11b55ac4bdcfeca89a88fb2de1b860a28d229c783cd50360dd6",
+      "afterSha256": "5c45814e8fb6155701df1ef9be2755096ccac593ac6d53b13a4d26d90c7284d8"
+    }
+  ]
+}

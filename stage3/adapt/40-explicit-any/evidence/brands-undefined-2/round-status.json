@@ -1,0 +1,19 @@
+{
+  "base": "a108bf788ab0cf570e025bdd7d605d5fd26ba958",
+  "reapplied": "07ca4739f3204bdc4cfac437de7f478da83e73f1",
+  "setup_exit": 0,
+  "setup_seconds": 50.416,
+  "control_apply_exit": 0,
+  "retyped_apply_exit": 1,
+  "stop": "adaptation 91 utilities.ts whole-file hash; adaptation 91 was not changed",
+  "adapt90_rerun_exit": 0,
+  "oracle_runner": "all commands from stage3/lane/shards.json via its measure_shards coordinator with completed private views removed; task commands and acceptance checks unchanged",
+  "oracle_concurrency": 2,
+  "oracle_beside_census": false,
+  "census_built_from_main_without_cherry_pick": true,
+  "census_binary_sha256": "c1f67cf989fe956dd1c83103132a61f50da658ef77c8b4d66fcb04ec7fb73c40",
+  "census_runs": 0,
+  "reason_table_current_base": "not measured: stop before census",
+  "previous_133_split": "not remeasured; historical 133 remain causally unclassified",
+  "history": "October 29 evidence is retained unchanged under evidence/brands-undefined"
+}

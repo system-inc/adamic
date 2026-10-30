@@ -7,7 +7,7 @@ const {plan, owner, auditBrands} = require('./classes.cjs');
 const rules = require('./class-rules.json').brands;
 const [mode, tree, proof] = process.argv.slice(2);
 assert.equal(ts.version, '6.0.3');
-assert(tree && proof && ['prepare', 'before', 'after'].includes(mode), 'usage: prepare|before|after tree proof');
+assert(tree && proof && ['prepare', 'before', 'after', 'audit'].includes(mode), 'usage: prepare|before|after|audit tree proof');
 const walk = d => fs.readdirSync(d, {withFileTypes:true}).flatMap(e =>
     e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)]).sort();
 const hash = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
@@ -19,12 +19,12 @@ function project(text, file, preparing = false) {
     function visit(n) {
         if ((ts.isPropertySignature(n) || ts.isPropertyDeclaration(n)) && n.type &&
             contracts.some(c => c.key === n.name.text && c.owner === owner(n)) &&
-            (preparing ? [ts.SyntaxKind.VoidKeyword, ts.SyntaxKind.UndefinedKeyword].includes(n.type.kind) :
-                n.type.kind === ts.SyntaxKind.AnyKeyword)) edits.push([n.type.getStart(src), n.type.end]);
+            (preparing ? n.type.kind === ts.SyntaxKind.UndefinedKeyword :
+                n.type.kind === ts.SyntaxKind.VoidKeyword)) edits.push([n.type.getStart(src), n.type.end]);
         ts.forEachChild(n, visit);
     }
     visit(src);
-    for (const [a,b] of edits.sort((a,b) => b[0]-a[0])) text = text.slice(0,a) + (preparing ? 'any' : 'void') + text.slice(b);
+    for (const [a,b] of edits.sort((a,b) => b[0]-a[0])) text = text.slice(0,a) + (preparing ? 'void' : 'undefined') + text.slice(b);
     return {text, count:edits.length};
 }
 function snapshot() {
@@ -40,6 +40,23 @@ function snapshot() {
     return {sources, js, declarations, reference:fs.readFileSync(path.join(tree,'tests/baselines/reference/api/typescript.d.ts'),'utf8')};
 }
 fs.mkdirSync(proof,{recursive:true});
+if (mode === 'audit') {
+    const state = {sources:Object.fromEntries(walk(path.join(tree,'src/compiler')).filter(f => f.endsWith('.ts')).map(f => [path.relative(tree,f),fs.readFileSync(f,'utf8')]))};
+    const keys = [...new Set(rules.map(r => r.key))];
+    const allDeclarations = Object.entries(state.sources).flatMap(([file,text]) =>
+        auditBrands(text,file).map(d => ({file,...d})));
+    const audit = keys.map(key => {
+        const search = cp.execFileSync('rg',['-n','-F',key,path.join(tree,'src/compiler')],{encoding:'utf8'});
+        const declarations = allDeclarations.filter(d => d.key === key);
+        assert.equal(declarations.length,search.trim().split('\n').length);
+        return {key,search,declarations,reads:0,writes:0,tests:0,decision:'undefined'};
+    });
+    fs.writeFileSync(path.join(proof,'member-audit.json'),JSON.stringify(audit,null,2)+'\n');
+    assert.equal(audit.length,31);
+    assert.equal(audit.reduce((n,r)=>n+r.declarations.length,0),36);
+    console.log(JSON.stringify({members:audit.length,sites:36,reads:0,writes:0,tests:0}));
+    process.exit(0);
+}
 if (mode === 'prepare') {
     let count = 0;
     for (const file of files) {
@@ -56,16 +73,6 @@ if (mode === 'prepare') {
     const state = snapshot();
     assert.equal(Object.entries(state.sources).reduce((n,[file,text]) => n + project(text,file).count,0),36);
     assert.equal(project(state.reference,'api').count,27);
-    const keys = [...new Set(rules.map(r => r.key))];
-    const allDeclarations = Object.entries(state.sources).flatMap(([file,text]) =>
-        auditBrands(text,file).map(d => ({file,...d})));
-    const audit = keys.map(key => {
-        const search = cp.execFileSync('rg',['-n','-F',key,path.join(tree,'src/compiler')],{encoding:'utf8'});
-        const declarations = allDeclarations.filter(d => d.key === key);
-        assert.equal(declarations.length,search.trim().split('\n').length);
-        return {key,search,declarations,reads:0,writes:0,tests:0,decision:'void'};
-    });
-    fs.writeFileSync(path.join(proof,'member-audit.json'),JSON.stringify(audit,null,2)+'\n');
     fs.writeFileSync(path.join(proof,'state-before.json'),JSON.stringify(state));
     fs.writeFileSync(path.join(proof,'before-js.json'),JSON.stringify(state.js,null,2)+'\n');
     console.log(JSON.stringify({sources:Object.keys(state.sources).length,jsFiles:Object.keys(state.js).length,brandSites:36,publicLines:27}));

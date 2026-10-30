@@ -1,0 +1,42 @@
+{
+  "changed_declarations": [
+    "TypeAliasDeclaration:[\"ts\",\"Path\"]#0",
+    "member:[\"ts\",\"AutoAccessorPropertyDeclaration\",\"_autoAccessorBrand\"]#0",
+    "member:[\"ts\",\"CallChain\",\"_optionalChainBrand\"]#0",
+    "member:[\"ts\",\"ClassElement\",\"_classElementBrand\"]#0",
+    "member:[\"ts\",\"Declaration\",\"_declarationBrand\"]#0",
+    "member:[\"ts\",\"ElementAccessChain\",\"_optionalChainBrand\"]#0",
+    "member:[\"ts\",\"Expression\",\"_expressionBrand\"]#0",
+    "member:[\"ts\",\"FlowContainer\",\"_flowContainerBrand\"]#0",
+    "member:[\"ts\",\"FunctionLikeDeclarationBase\",\"_functionLikeDeclarationBrand\"]#0",
+    "member:[\"ts\",\"JSDocContainer\",\"_jsdocContainerBrand\"]#0",
+    "member:[\"ts\",\"JSDocType\",\"_jsDocTypeBrand\"]#0",
+    "member:[\"ts\",\"LeftHandSideExpression\",\"_leftHandSideExpressionBrand\"]#0",
+    "member:[\"ts\",\"LiteralExpression\",\"_literalExpressionBrand\"]#0",
+    "member:[\"ts\",\"LocalsContainer\",\"_localsContainerBrand\"]#0",
+    "member:[\"ts\",\"MemberExpression\",\"_memberExpressionBrand\"]#0",
+    "member:[\"ts\",\"NonNullChain\",\"_optionalChainBrand\"]#0",
+    "member:[\"ts\",\"ObjectLiteralElement\",\"_objectLiteralBrand\"]#0",
+    "member:[\"ts\",\"PrimaryExpression\",\"_primaryExpressionBrand\"]#0",
+    "member:[\"ts\",\"PropertyAccessChain\",\"_optionalChainBrand\"]#0",
+    "member:[\"ts\",\"PropertyAccessEntityNameExpression\",\"_propertyAccessExpressionLikeQualifiedNameBrand\"]#0",
+    "member:[\"ts\",\"SortedArray\",\" __sortedArrayBrand\"]#0",
+    "member:[\"ts\",\"SortedReadonlyArray\",\" __sortedArrayBrand\"]#0",
+    "member:[\"ts\",\"Statement\",\"_statementBrand\"]#0",
+    "member:[\"ts\",\"TypeElement\",\"_typeElementBrand\"]#0",
+    "member:[\"ts\",\"TypeNode\",\"_typeNodeBrand\"]#0",
+    "member:[\"ts\",\"UnaryExpression\",\"_unaryExpressionBrand\"]#0",
+    "member:[\"ts\",\"UpdateExpression\",\"_updateExpressionBrand\"]#0"
+  ],
+  "counts_unchanged": {
+    "20": 189,
+    "30": 0,
+    "32": 3,
+    "33": 0,
+    "40": 28,
+    "70": 1,
+    "75": 1,
+    "79": 1
+  },
+  "api_diff_lines": 27
+}
