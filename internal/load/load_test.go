@@ -5,6 +5,7 @@ import (
 	"errors"
 	"os"
 	"path/filepath"
+	"regexp"
 	"slices"
 	"strings"
 	"testing"
@@ -295,5 +296,25 @@ func TestALoadedProgramNamesItsFilesAsDisplayed(t *testing.T) {
 	var rejected *CheckError
 	if !errors.As(err, &rejected) || len(rejected.Diagnostics) != 1 || !strings.HasPrefix(rejected.Diagnostics[0], "<repository>/main.ts:1:7: ") {
 		t.Errorf("the diagnostic reads %v", err)
+	}
+}
+
+// A load writes one phase line to ADAMIC_BUILD_LOG, in internal/native's buildLog format, whatever its time (#9x03wa7).
+// Mutant: load's line dropped.
+//
+// Not parallel: t.Setenv changes ADAMIC_BUILD_LOG for the process.
+func TestLoadLogsItsPhaseOnce(t *testing.T) {
+	paths := writeProgram(t, [2]string{"main.ts", "console.log('phase');\n"})
+	log := filepath.Join(t.TempDir(), "build.log")
+	t.Setenv("ADAMIC_BUILD_LOG", log)
+	if _, err := Load(paths); err != nil {
+		t.Fatal(err)
+	}
+	written, err := os.ReadFile(log)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !regexp.MustCompile(`^phase load - off [0-9]+\.[0-9]{3}\n$`).Match(written) {
+		t.Fatalf("wrote %q, want one load phase line", written)
 	}
 }

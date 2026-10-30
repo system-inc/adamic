@@ -2,9 +2,11 @@ package native
 
 import (
 	"fmt"
+	"github.com/system-inc/adamic/internal/buildlog"
 	"github.com/system-inc/adamic/internal/ir"
 	"sort"
 	"strings"
+	"time"
 )
 
 // C is a program as one C translation unit, to be compiled with the runtime.
@@ -28,6 +30,9 @@ func CWithOptions(program *ir.Program, options Options) string {
 }
 
 func cProgram(program *ir.Program, handler, lines int, options ...Options) string {
+	// The emit phase's line on $ADAMIC_BUILD_LOG, once a program: a split build divides this one translation unit after
+	// it's emitted (splitC), so a program in units still emits here once.
+	defer buildlog.Phase("emit", time.Now())
 	emitter := &emitter{program: program}
 	if len(options) > 0 {
 		emitter.debug = options[0].Debug
