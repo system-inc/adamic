@@ -128,7 +128,8 @@ func isArgument(expression ast.Expr, taken map[string]bool) bool {
 // this fails on the change that moved it rather than on whichever change next reads the page. Every `path.go:Name`
 // must name a top-level declaration of that file (a function, Type.Method, a type, var or const), every other
 // `path:line` must be a line the file has, and every backticked path must exist. Mutants: rename a cited function,
-// cite a Go file by line, or name a path that isn't there.
+// cite a Go file by line, or name a path that isn't there. A Go file the page cites outside this package's import
+// closure is read only if executors.txt names it with a reads line for cmd/adamic, so a new such citation adds one.
 func TestDocumentedCitationsResolve(t *testing.T) {
 	t.Parallel()
 	root := filepath.Join("..", "..")
