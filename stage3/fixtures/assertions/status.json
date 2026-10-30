@@ -241,7 +241,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Refused","what":"stage3/fixtures/assertions/16_unknown_chain.a:5:22: Adamic 0.1 refuses a primitive brand member __watchFileKind whose type is not void; make __watchFileKind void (or optional and typed undefined) so the brand is phantom"}
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/assertions/16_unknown_chain.a:5:22: Adamic 0.1 refuses a primitive brand member __watchFileKind whose type is not void; make __watchFileKind undefined (or void) so the brand is phantom"}
   },
   {
     "file": "17_brand_upcast.a",
@@ -254,7 +254,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Refused","what":"stage3/fixtures/assertions/17_brand_upcast.a:5:17: Adamic 0.1 refuses a primitive brand member __escapedIdentifier whose type is not void; make __escapedIdentifier void (or optional and typed undefined) so the brand is phantom"}
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/assertions/17_brand_upcast.a:5:17: Adamic 0.1 refuses a primitive brand member __escapedIdentifier whose type is not void; make __escapedIdentifier undefined (or void) so the brand is phantom"}
   },
   {
     "file": "18_const_tuple.a",

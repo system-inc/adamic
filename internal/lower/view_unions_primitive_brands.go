@@ -5,7 +5,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
@@ -48,7 +47,7 @@ func (l *lowering) phantomBase(proven *checker.Type) *checker.Type {
 			return nil
 		}
 		for _, field := range l.checker.GetPropertiesOfType(object) {
-			if checker.IsKnownSymbol(field) || !phantomField(l.checker.GetTypeOfSymbol(field), field.Flags&ast.SymbolFlagsOptional != 0) || primitiveMember(primitive.Flags(), field.Name) {
+			if checker.IsKnownSymbol(field) || !phantomField(l.checker.GetTypeOfSymbol(field)) || primitiveMember(primitive.Flags(), field.Name) {
 				return nil
 			}
 		}
@@ -56,17 +55,19 @@ func (l *lowering) phantomBase(proven *checker.Type) *checker.Type {
 	return primitive
 }
 
-func phantomField(proven *checker.Type, optional bool) bool {
+// On a primitive the brand member is never present, so a read gives undefined on Node and natively.
+// A required undefined says that as truly as void does, and an optional member's type holds undefined.
+func phantomField(proven *checker.Type) bool {
 	flags := proven.Flags()
 	if flags&checker.TypeFlagsUnion != 0 {
 		for _, part := range proven.Types() {
-			if !phantomField(part, optional) {
+			if !phantomField(part) {
 				return false
 			}
 		}
 		return true
 	}
-	return flags&checker.TypeFlagsVoid != 0 || optional && flags&checker.TypeFlagsUndefined != 0
+	return flags&(checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0
 }
 
 // These inventories are the own names of boxed primitives and their complete prototype chains,
