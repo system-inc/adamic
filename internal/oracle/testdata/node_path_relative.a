@@ -1,0 +1,7 @@
+// relative is used by the upstream readDirectory acceptance driver.
+import { relative } from 'node:path';
+for (const from of ['', '.', '..', '/', '/a', '/a/b', '/aa', '/a/b/', 'a/../b', 'é/中', '\0', 'a//b']) {
+    for (const to of ['', '.', '..', '/', '/a', '/a/b', '/aa', '/a/b/', 'a/../b', 'é/中', '\0', 'a//b']) {
+        console.log(relative(from, to));
+    }
+}

@@ -1388,6 +1388,8 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.ReadDirectory:
 		a.value(expression.Path)
 		return a.fresh(anyField, a.fresh(elementKey, value{}))
+	case ir.NodeHostCall:
+		return a.call(a.operands(expression), expression.Type())
 	case ir.NodeFSFile:
 		return a.nodeFSFile(expression)
 	case ir.FileStatus:

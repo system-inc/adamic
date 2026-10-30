@@ -39,8 +39,11 @@ var gccRuntimeUnits = []string{
 	"maybe.c",
 	"node_buffer.c",
 	"node_crypto.c",
+	"node_cwd_wasi.c",
+	"node_fs_directory.c",
 	"node_fs_file.c",
 	"node_host.c",
+	"node_path.c",
 	"normalize.c",
 	"number.c",
 	"object.c",
@@ -471,3 +474,21 @@ func TestGCCRuntimeViewUnionsUntagged(t *testing.T) {
 
 func TestProduct_GCCRuntimeWeak(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "weak.c") }
 func TestGCCRuntimeWeak(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "weak.c") }
+
+func TestProduct_GCCRuntimeNodeCwdWasi(t *testing.T) {
+	t.Parallel()
+	gccRuntimeUnit(t, "node_cwd_wasi.c")
+}
+func TestGCCRuntimeNodeCwdWasi(t *testing.T) { t.Parallel(); checkGCCRuntimeUnit(t, "node_cwd_wasi.c") }
+
+func TestProduct_GCCRuntimeNodeFSDirectory(t *testing.T) {
+	t.Parallel()
+	gccRuntimeUnit(t, "node_fs_directory.c")
+}
+func TestGCCRuntimeNodeFSDirectory(t *testing.T) {
+	t.Parallel()
+	checkGCCRuntimeUnit(t, "node_fs_directory.c")
+}
+
+func TestProduct_GCCRuntimeNodePath(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "node_path.c") }
+func TestGCCRuntimeNodePath(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "node_path.c") }

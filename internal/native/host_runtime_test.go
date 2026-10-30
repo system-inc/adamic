@@ -124,7 +124,7 @@ func hostFixture(t *testing.T) (source, dir, oracle string, env []string) {
 	if err := os.WriteFile(filepath.Join(child, "file"), []byte("data"), 0600); err != nil {
 		t.Fatal(err)
 	}
-	for name, target := range map[string]string{"link": "file", "dangling": "missing"} {
+	for name, target := range map[string]string{"link": "file", "dangling": "missing", "loop-a": "loop-b", "loop-b": "loop-a"} {
 		if err := os.Symlink(target, filepath.Join(child, name)); err != nil {
 			t.Fatal(err)
 		}
@@ -136,10 +136,11 @@ func hostFixture(t *testing.T) (source, dir, oracle string, env []string) {
 func runHostRuntimeContracts(t *testing.T, options native.Options) {
 	t.Helper()
 	source, dir, oracle, env := hostFixture(t)
-	modes := []string{"output", "exit", "status", "clocks", "memory", "identity", "cwd", "environment", "realpath", "realpath-error", "eol"}
+	modes := []string{"output", "exit", "status", "clocks", "memory", "identity", "cwd", "environment", "realpath", "realpath-error", "realpath-walk-error", "eol"}
 	binary := filepath.Join(dir, fmt.Sprintf("host-%t", options.Sanitize))
 	hostBuild(t, source, binary, "", options)
 	for _, mode := range modes {
+		// Not parallel: modes share filesystem fixtures, including directory mutations.
 		t.Run(fmt.Sprintf("sanitized=%t/%s", options.Sanitize, mode), func(t *testing.T) {
 			args := []string{mode}
 			if mode == "exit" {
