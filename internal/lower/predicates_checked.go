@@ -533,32 +533,7 @@ func (l *lowering) checkedPredicateResult(call *ast.CallExpression, value ir.Exp
 	if claim.Type() != nil {
 		targetName = l.checker.TypeToString(claim.Type())
 	}
-	for _, direction := range []predicateTruth{predicateTrue, predicateFalse} {
-		if assertion && direction == predicateFalse {
-			continue
-		}
-		branch := "true"
-		if direction == predicateFalse {
-			branch = "false"
-		}
-		if assertion {
-			branch = "asserts"
-		}
-		report := ir.PredicateDirectionCheck{Direction: branch, Reason: sourceName + " -> " + targetName}
-		switch {
-		case proven:
-			report.Status = "proven"
-			l.result.PredicateChecks.Proven++
-		case directions&direction != 0:
-			report.Status = "checked"
-			l.result.PredicateChecks.Checked++
-		default:
-			report.Status = "unobservable"
-			l.result.PredicateChecks.Unobservable++
-		}
-		site.Directions = append(site.Directions, report)
-	}
-	l.result.PredicateChecks.Sites = append(l.result.PredicateChecks.Sites, site)
+	l.recordPredicateSite(&site, assertion, proven, directions, sourceName+" -> "+targetName)
 	if proven {
 		return value, nil
 	}
@@ -620,6 +595,38 @@ func (l *lowering) checkedPredicateResult(call *ast.CallExpression, value ir.Exp
 	body = append(body, ir.Return{Value: returned})
 	l.result.Functions[wrapper].Body = body
 	return ir.Call{Function: wrapper, Arguments: invoked.Arguments, Returns: invoked.Type()}, nil
+}
+
+// recordPredicateSite counts a checked call's directions into PredicateChecks and keeps its site: each
+// direction is proven, checked where the call's direction walk says a caller narrows on it, or
+// unobservable. An asserts claim has one direction.
+func (l *lowering) recordPredicateSite(site *ir.PredicateCallCheck, assertion, proven bool, directions predicateTruth, reason string) {
+	for _, direction := range []predicateTruth{predicateTrue, predicateFalse} {
+		if assertion && direction == predicateFalse {
+			continue
+		}
+		branch := "true"
+		if direction == predicateFalse {
+			branch = "false"
+		}
+		if assertion {
+			branch = "asserts"
+		}
+		report := ir.PredicateDirectionCheck{Direction: branch, Reason: reason}
+		switch {
+		case proven:
+			report.Status = "proven"
+			l.result.PredicateChecks.Proven++
+		case directions&direction != 0:
+			report.Status = "checked"
+			l.result.PredicateChecks.Checked++
+		default:
+			report.Status = "unobservable"
+			l.result.PredicateChecks.Unobservable++
+		}
+		site.Directions = append(site.Directions, report)
+	}
+	l.result.PredicateChecks.Sites = append(l.result.PredicateChecks.Sites, *site)
 }
 
 // checkedPredicateCheck is the one check a checked predicate's claim gets, wherever it's checked: at
