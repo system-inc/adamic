@@ -1,0 +1,17 @@
+# Mutant evidence for the tag-proven predicate owner entry in stage3/meter/owners.json (#1w5bve2)
+# Test: report_test.LatentReportTests.test_exact_prefix_and_variance_owners
+# The reason is Optimizer's rename on main 96583baa (step b): internal/lower/predicates.go names the
+# optional field instead of the flow prover's "return is not proven".
+
+## With the entry (expected pass)
+Ran 1 test in 0.001s
+OK
+
+## Mutant: the entry removed (expected red, owner blank)
+AssertionError: 'OWNER BLANK' != '#1w5bve2 (Optimizer)'
+Ran 1 test in 0.002s
+FAILED (failures=1)
+
+## Restored (expected pass)
+report_test: Ran 23 tests in 0.165s
+OK (skipped=2)
