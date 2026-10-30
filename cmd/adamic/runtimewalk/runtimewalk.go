@@ -8,4 +8,4 @@ package runtimewalk
 // Builders are the packages whose sources call runtimeproducts.Build or Supply, sorted. cmd/adamic counts each command
 // runtime archive's builders from it, and TestBuildersAreWhatTheWalkFinds holds it to the source tree, so a new
 // producer is reviewed here.
-var Builders = []string{"internal/oracle"}
+var Builders = []string{}
