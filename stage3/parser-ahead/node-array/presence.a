@@ -1,0 +1,9 @@
+// a-check: refused an unproven relation
+interface Node {kind:number;}
+interface OptionalNodeArray<T extends Node> extends Array<T> {cache?:string|undefined;}
+const nodes=[{kind:1}] as OptionalNodeArray<Node>;
+console.log(`${'cache' in nodes}|${nodes.cache === undefined}`);
+nodes.cache=undefined;
+console.log(`${'cache' in nodes}|${nodes.cache === undefined}`);
+nodes.cache='ready';
+console.log(`${'cache' in nodes}|${nodes.cache}`);
