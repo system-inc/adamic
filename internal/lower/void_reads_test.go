@@ -122,3 +122,71 @@ func TestVoidReadThroughNonNullIsRefused(t *testing.T) {
 		t.Fatalf("want a void read refused as a binding's initializer, got %v", err)
 	}
 }
+
+// A value whose type has a void part in an intersection is a void read (#jvw7qww, ruled Oct 30): the
+// callable `(() => number) & void` Optimizer met under a symbol-keyed brand, a void with a member that
+// isn't phantom, and a void branded by nothing. Each is built through an alias, so the intersection
+// reaches H2 rather than phantomRefusal, which refuses an intersection written in place first. A
+// phantom primitive brand's void arm, as tsc's __String has, isn't one: its reads stay legal and agree
+// with Node. Mutants: the exemption dropped reddens __String; phantomBase's every-member test dropped
+// reddens the void with a number member; the at-least-one-member test dropped reddens `void & {}`.
+func TestVoidIntersectionReads(t *testing.T) {
+	t.Parallel()
+	const both = "type Both<A, B> = A & B;\n"
+	for _, probe := range []struct{ name, parameter string }{
+		{"callable", "Both<() => number, void>"},
+		{"member not phantom", "Both<void, { b: void; n: number }>"},
+		{"brand of nothing", "Both<void, {}>"},
+	} {
+		for _, extension := range []string{".a", ".ts"} {
+			t.Run(probe.name+extension, func(t *testing.T) {
+				t.Parallel()
+				_, err := lowerVoidProbe(t, extension, both+"function show(x: "+probe.parameter+"): void { console.log(typeof x); }\nconsole.log(\"done\");")
+				var refused *Refused
+				if !errors.As(err, &refused) || refused.What != "a read of a void value, as typeof's operand" {
+					t.Fatalf("want a void read refused as typeof's operand, got %v", err)
+				}
+			})
+		}
+	}
+	t.Run("__String", func(t *testing.T) {
+		t.Parallel()
+		lowersAndAgreesWithNode(t, `type __String = (string & { __escapedIdentifier: void }) | (void & { __escapedIdentifier: void });
+function escape(text: string): __String { return text as __String; }
+const name = escape('na' + 'me');
+console.log(typeof name);
+console.log(String(name === escape('name')));`)
+	})
+}
+
+// The exemption rests on one premise (Language, on #jvw7qww): a discarded value reaches a brand's void
+// arm only through a cast, and every such cast is held. These are the roads, each refused in .a and .ts,
+// where Node holds make's 42 behind the brand (typeof prints number). A lift of any one of them must be
+// weighed against the exemption, so they're pinned beside it. The control, a string cast into the brand,
+// lowers and agrees with Node.
+func TestVoidBrandArmIsReachedOnlyByAHeldCast(t *testing.T) {
+	t.Parallel()
+	const escaped = "type Escaped = (string & { readonly __esc: void }) | (void & { readonly __esc: void });\nconst make: () => void = () => 42;\n"
+	for _, road := range []struct{ name, source, what string }{
+		{"cast of a void call", escaped + "const s = make() as Escaped;\nconsole.log(String(s === undefined));", "a read of a void value, as a binding's initializer"},
+		{"cast to the void arm", "type Arm = void & { readonly __esc: void };\nconst make: () => void = () => 42;\nconst s = make() as Arm;\nconsole.log(String(s === undefined));", "a read of a void value, as a binding's initializer"},
+		{"typeof", escaped + "const s = make() as Escaped;\nconsole.log(typeof s);", "a read of a void value, as a binding's initializer"},
+		{"through a function", escaped + "function esc(v: void): Escaped { return v as Escaped; }\nconsole.log(typeof esc(make()));", "a read of a void value, as a returned value"},
+		{"generic", escaped + "function as_<T>(v: unknown): T { return v as T; }\nconsole.log(typeof as_<Escaped>(make()));", "a cast the runtime can't check"},
+	} {
+		for _, extension := range []string{".a", ".ts"} {
+			t.Run(road.name+extension, func(t *testing.T) {
+				t.Parallel()
+				_, err := lowerVoidProbe(t, extension, road.source)
+				var refused *Refused
+				if !errors.As(err, &refused) || !strings.Contains(refused.What, road.what) {
+					t.Fatalf("want refused with %q, got %v", road.what, err)
+				}
+			})
+		}
+	}
+	t.Run("control", func(t *testing.T) {
+		t.Parallel()
+		lowersAndAgreesWithNode(t, "type Escaped = (string & { readonly __esc: void }) | (void & { readonly __esc: void });\nconst s = \"ab\" as Escaped;\nconsole.log(typeof s);")
+	})
+}
