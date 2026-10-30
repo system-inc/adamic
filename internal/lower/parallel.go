@@ -211,6 +211,9 @@ func parallelWrite(node *ast.Node) *ast.Node {
 	if node.Kind == ast.KindPostfixUnaryExpression {
 		return node.AsPostfixUnaryExpression().Operand
 	}
+	if node.Kind == ast.KindDeleteExpression {
+		return node.AsDeleteExpression().Expression
+	}
 	return nil
 }
 
@@ -362,6 +365,9 @@ func (p *parallelProof) fresh(node, owner *ast.Node) bool {
 
 func (p *parallelProof) write(target, owner *ast.Node, chain []string) error {
 	target = ast.SkipParentheses(target)
+	if _, environment := p.l.nodeEnvironmentAccess(target); environment {
+		return p.effect(target, chain, "writes the process environment")
+	}
 	if ast.IsIdentifier(target) {
 		declaration := p.declaration(target)
 		if declaration != nil && parallelInside(declaration, owner) {

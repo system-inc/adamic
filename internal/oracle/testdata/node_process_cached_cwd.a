@@ -1,0 +1,8 @@
+import 'node:process';
+import { readTextFile, programArguments, panic } from 'adamic';
+const first = process.cwd();
+process.stdout.write('ready\n');
+const signal = readTextFile(programArguments()[0] ?? '');
+if (signal.kind !== 'Ok') { panic(signal.message); }
+if (signal.text !== 'continue') { panic('invalid cwd barrier'); }
+console.log(`cached ${process.cwd() === first}`);
