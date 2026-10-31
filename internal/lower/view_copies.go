@@ -9,13 +9,15 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// wholeObjectCopy is a value copied whole into another object: an object spread's source, or an
-// Object.assign source. A rest binding copies whole too, and destructuring refuses it before it
-// lowers (destructureFrom).
+// wholeObjectCopy is a value read whole: copied into another object, an object spread's source or
+// an Object.assign source, which checkViewCopies decides, or read field by field by a reader, which
+// names it (encodeJson), and which checkViewWidenedReads decides with what the value holds. A rest
+// binding copies whole too, and destructuring refuses it before it lowers (destructureFrom).
 type wholeObjectCopy struct {
 	node   *ast.Node
 	source ir.Expression
 	copied *checker.Type
+	reader string
 }
 
 // A checked view's fields are checked where they're read, under the view's receiver type
@@ -48,6 +50,9 @@ func (l *lowering) checkViewCopies() error {
 	var viewed map[int]bool
 	unknown := len(l.result.ViewOrigins) == 0
 	for _, copied := range l.wholeObjectCopies {
+		if copied.reader != "" {
+			continue
+		}
 		if view := l.checkedViewType(copied.copied, receivers); view != nil {
 			return l.notYet(copied.node, "a whole-object copy of a value of checked view type "+l.checker.TypeToString(view))
 		}

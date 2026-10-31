@@ -114,7 +114,7 @@ func (l *lowering) checkLazyViewReads() error {
 
 		switch read := node.(type) {
 		case ir.Property:
-			if !program.CheckedField(read.ViewReceiverTypeID, read.Name) {
+			if viewReadOf(program, read) != viewReadChecks {
 				return true
 			}
 			if err := l.callableProducerViewRefusal(graph, read); err != nil {
@@ -239,7 +239,7 @@ func unemittableCheckedViewRead(program *ir.Program) error {
 			return false
 		}
 		read, isProperty := node.(ir.Property)
-		if !isProperty || read.View == "" || read.Method || !program.CheckedField(read.ViewReceiverTypeID, read.Name) {
+		if !isProperty || read.View == "" || read.Method || viewReadOf(program, read) != viewReadChecks {
 			return true
 		}
 		contract := emittedViewContract(program, read)
