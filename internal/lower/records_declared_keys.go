@@ -2,6 +2,8 @@ package lower
 
 import (
 	"errors"
+	"reflect"
+	"strconv"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -18,8 +20,9 @@ import (
 //   - A dictionary seen as Options: its entry under outFile, whatever it holds, is read as a string.
 //     widened holds the dictionary's values against each declared property they'd be read through.
 //   - A write through a key that isn't one literal, options[name] = 3 or { [name]: 3 }, which tsc
-//     checks against the index signature alone. It's refused when what it writes doesn't fit every
-//     declared property, since only that can land under one.
+//     checks against the index signature alone. It's refused when what it writes doesn't fit a
+//     declared property it can land under, by recordNamedWrite's own check, since only the value
+//     written can land there.
 // .ts keeps the checked read instead (recordReadType), which stops loudly at the declared read.
 
 // declaredKeysFix is what each of the three refusals offers.
@@ -60,14 +63,16 @@ func init() {
 }
 
 // declaredKeyWrite refuses a write through a key that isn't one literal, into a record with a
-// writable index signature, of a value a declared property can't hold: an element access written to
-// (by =, a compound assignment, ++, a destructuring target or a for-in or for-of head), or an object
-// literal's computed name, whose entry is written as the literal is made into the type it's written
-// into. Where the value written isn't one expression's (a destructuring target, a loop's head), it's
-// whatever the index signature holds.
+// writable index signature, of a value that doesn't fit a declared property it can land under, by the
+// check recordNamedWrite stops on in .ts (namedWriteMisfit): an element access written to (by =, a
+// compound assignment, ++, a destructuring target or a for-in or for-of head), or an object literal's
+// computed name, whose entry is written as the literal is made, into its own type and the type it's
+// written into. Where the value written isn't one expression's (a destructuring target, a loop's head),
+// it's whatever the index signature holds.
 func (l *lowering) declaredKeyWrite(node *ast.Node) error {
 	var key *ast.Node
-	var receiver, value *checker.Type
+	var receivers []*checker.Type
+	var value *checker.Type
 	switch node.Kind {
 	case ast.KindElementAccessExpression:
 		if !ast.IsAssignmentTarget(node) {
@@ -75,39 +80,80 @@ func (l *lowering) declaredKeyWrite(node *ast.Node) error {
 		}
 		access := node.AsElementAccessExpression()
 		key = access.ArgumentExpression
-		receiver = l.checker.GetTypeAtLocation(access.Expression)
+		receivers = []*checker.Type{l.checker.GetTypeAtLocation(access.Expression)}
 		value = l.writtenValue(node)
 	case ast.KindComputedPropertyName:
 		member := node.Parent
 		if member == nil || member.Parent == nil || member.Parent.Kind != ast.KindObjectLiteralExpression || ast.IsAssignmentTarget(member.Parent) {
 			return nil
 		}
+		// { outFile: 'a', [name]: 3 } is itself a record declaring outFile, whatever it's written into.
 		key = node.AsComputedPropertyName().Expression
-		receiver = l.checker.GetContextualType(member.Parent, checker.ContextFlagsNone)
+		receivers = []*checker.Type{l.checker.GetTypeAtLocation(member.Parent)}
+		if contextual := l.checker.GetContextualType(member.Parent, checker.ContextFlagsNone); contextual != nil {
+			receivers = append(receivers, contextual)
+		}
 		if member.Kind == ast.KindPropertyAssignment {
 			value = l.checker.GetTypeAtLocation(member.AsPropertyAssignment().Initializer)
 		}
 	default:
 		return nil
 	}
-	if receiver == nil || l.literalKey(key) {
+	names, single := l.writtenNames(key)
+	if single {
 		return nil
 	}
-	for _, member := range l.definedMembers(l.checker.GetNonNullableType(receiver)) {
-		for _, info := range l.checker.GetIndexInfosOfType(member) {
-			if info.KeyType().Flags() != checker.TypeFlagsString || info.IsReadonly() {
-				continue
-			}
-			written := value
-			if written == nil {
-				written = info.ValueType()
-			}
-			if property := l.declaredNarrower(member, written, nil); property != nil {
-				return &Refused{Where: l.program.Where(node), What: "a write into a record with declared properties through a key that is not one literal, which can store under a declared property what it does not hold (" + l.checker.TypeToString(written) + " written into " + l.checker.TypeToString(member) + " by " + sourceExpression(key) + ": " + property.Name + " is declared " + l.checker.TypeToString(l.checker.GetTypeOfSymbol(property)) + ")", Fix: declaredKeysFix}
+	for _, receiver := range receivers {
+		for _, member := range l.definedMembers(l.checker.GetNonNullableType(receiver)) {
+			for _, info := range l.checker.GetIndexInfosOfType(member) {
+				if info.KeyType().Flags() != checker.TypeFlagsString || info.IsReadonly() {
+					continue
+				}
+				written := value
+				if written == nil {
+					written = info.ValueType()
+				}
+				if property, _ := l.namedWriteMisfit(member, written, names); property != nil {
+					return &Refused{Where: l.program.Where(node), What: "a write into a record with declared properties through a key that is not one literal, of a value that is not the type of a declared property it can land under (" + l.checker.TypeToString(written) + " written into " + l.checker.TypeToString(member) + " by " + sourceExpression(key) + ": " + property.Name + " is declared " + l.checker.TypeToString(l.checker.GetTypeOfSymbol(property)) + ")", Fix: declaredKeysFix}
+				}
 			}
 		}
 	}
 	return nil
+}
+
+// writtenNames is the names a key can be: single when it's one literal, or a value of one literal's
+// type, whose write tsc checks against the property it names, or which lands in the index signature
+// under a name no declared property takes. Otherwise it's each name a union of literals can be, or
+// the name strings joined by + fold to (constantStringKey), which tsc types as string and doesn't
+// check, so ["" + "constructor"] is judged as constructor is; or nil, when it can be any name.
+func (l *lowering) writtenNames(key *ast.Node) (map[string]bool, bool) {
+	key = ast.SkipParentheses(key)
+	if key.Kind == ast.KindStringLiteral || key.Kind == ast.KindNoSubstitutionTemplateLiteral || key.Kind == ast.KindNumericLiteral {
+		return nil, true
+	}
+	proven := l.checker.GetTypeAtLocation(key)
+	if proven.Flags()&(checker.TypeFlagsStringLiteral|checker.TypeFlagsNumberLiteral|checker.TypeFlagsUniqueESSymbol) != 0 {
+		return nil, true
+	}
+	if folded, known := constantStringKey(key); known {
+		return map[string]bool{folded: true}, false
+	}
+	if proven.Flags()&checker.TypeFlagsUnion == 0 {
+		return nil, false
+	}
+	names := map[string]bool{}
+	for _, member := range proven.Types() {
+		switch {
+		case member.Flags()&checker.TypeFlagsStringLiteral != 0:
+			names[member.AsLiteralType().Value().(string)] = true
+		case member.Flags()&checker.TypeFlagsNumberLiteral != 0:
+			names[strconv.FormatFloat(reflect.ValueOf(member.AsLiteralType().Value()).Float(), 'f', -1, 64)] = true
+		default:
+			return nil, false
+		}
+	}
+	return names, false
 }
 
 // writtenValue is the type of what an assignment or an increment writes into its target, or nil when
@@ -129,17 +175,6 @@ func (l *lowering) writtenValue(target *ast.Node) *checker.Type {
 		return l.checker.GetTypeAtLocation(parent)
 	}
 	return nil
-}
-
-// literalKey reports whether a key names one property: a literal, or a value of one literal's type.
-// A write by it is checked by tsc against that property, or lands in the index signature under a
-// name no declared property takes.
-func (l *lowering) literalKey(key *ast.Node) bool {
-	key = ast.SkipParentheses(key)
-	if key.Kind == ast.KindStringLiteral || key.Kind == ast.KindNoSubstitutionTemplateLiteral || key.Kind == ast.KindNumericLiteral {
-		return true
-	}
-	return l.checker.GetTypeAtLocation(key).Flags()&(checker.TypeFlagsStringLiteral|checker.TypeFlagsNumberLiteral|checker.TypeFlagsUniqueESSymbol) != 0
 }
 
 // declaredNarrower is the first property declares has, but those skip names, that can't hold a value
