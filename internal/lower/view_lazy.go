@@ -91,52 +91,7 @@ func (l *lowering) checkLazyViewReads() error {
 	if len(program.ViewOrigins) == 0 {
 		return unemittableCheckedViewRead(program)
 	}
-	assignAllocationSites(program)
-	graph := newAllocationFlowGraph(program)
-	viewed := map[int]bool{}
-	unknown := false
-	queue := []int{}
-	add := func(set ir.AllocationSet) {
-		unknown = unknown || set.Unknown
-		for _, site := range set.Sites {
-			if !viewed[site] {
-				viewed[site] = true
-				queue = append(queue, site)
-			}
-		}
-	}
-	for _, origin := range program.ViewOrigins {
-		add(graph.ReachingAllocations(origin))
-	}
-	index := graph.projectionIndex()
-	for len(queue) != 0 {
-		site := queue[len(queue)-1]
-		queue = queue[:len(queue)-1]
-		if literal, ok := index.records[site]; ok {
-			for _, field := range literal.Fields {
-				if viewAggregate(field.Value) {
-					add(graph.ReachingAllocations(field.Value))
-				}
-			}
-			if literal.Spread != nil {
-				add(graph.ReachingAllocations(literal.Spread))
-			}
-		}
-		if literal, ok := index.arrays[site]; ok {
-			for _, element := range literal.Elements {
-				if viewAggregate(element) {
-					add(graph.ReachingAllocations(element))
-				}
-			}
-		}
-		for _, values := range index.stores[site] {
-			for _, value := range values {
-				if viewAggregate(value) {
-					add(graph.ReachingAllocations(value))
-				}
-			}
-		}
-	}
+	graph, viewed, unknown := viewedAllocations(program)
 	// Wider interfaces and instantiated helpers can give the same member a
 	// different checker type id. Field-name fallback retains the refusal until
 	// the receiver flow proves it cannot receive a viewed allocation.
@@ -208,6 +163,59 @@ func (l *lowering) checkLazyViewReads() error {
 		return refused
 	}
 	return unemittableCheckedViewRead(program)
+}
+
+// viewedAllocations is every allocation a view origin can reach, through the
+// fields, elements and stores of what it reaches, and whether any reach was
+// unknown.
+func viewedAllocations(program *ir.Program) (*allocationFlowGraph, map[int]bool, bool) {
+	assignAllocationSites(program)
+	graph := newAllocationFlowGraph(program)
+	viewed := map[int]bool{}
+	unknown := false
+	queue := []int{}
+	add := func(set ir.AllocationSet) {
+		unknown = unknown || set.Unknown
+		for _, site := range set.Sites {
+			if !viewed[site] {
+				viewed[site] = true
+				queue = append(queue, site)
+			}
+		}
+	}
+	for _, origin := range program.ViewOrigins {
+		add(graph.ReachingAllocations(origin))
+	}
+	index := graph.projectionIndex()
+	for len(queue) != 0 {
+		site := queue[len(queue)-1]
+		queue = queue[:len(queue)-1]
+		if literal, ok := index.records[site]; ok {
+			for _, field := range literal.Fields {
+				if viewAggregate(field.Value) {
+					add(graph.ReachingAllocations(field.Value))
+				}
+			}
+			if literal.Spread != nil {
+				add(graph.ReachingAllocations(literal.Spread))
+			}
+		}
+		if literal, ok := index.arrays[site]; ok {
+			for _, element := range literal.Elements {
+				if viewAggregate(element) {
+					add(graph.ReachingAllocations(element))
+				}
+			}
+		}
+		for _, values := range index.stores[site] {
+			for _, value := range values {
+				if viewAggregate(value) {
+					add(graph.ReachingAllocations(value))
+				}
+			}
+		}
+	}
+	return graph, viewed, unknown
 }
 
 // A checked field read is emitted either through the union adapter, whose contracts are unions,

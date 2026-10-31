@@ -146,6 +146,9 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 	if err := lowering.findCycles(modules); err != nil {
 		return nil, err
 	}
+	if err := lowering.checkViewCopies(); err != nil {
+		return nil, err
+	}
 	if len(lowering.asyncPayloadFailures) > 0 {
 		return nil, lowering.asyncPayloadFailures[0]
 	}
@@ -206,6 +209,7 @@ type lowering struct {
 	impliedTargetQuery func(*ast.Node) *checker.Type
 
 	librarySpreads      []librarySpread
+	wholeObjectCopies   []wholeObjectCopy
 	parallelMoveDemand  map[parallelMoveSite]bool
 	hasMovedParallelMap bool
 	moveSites           []*ast.Node
