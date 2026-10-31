@@ -1,0 +1,9 @@
+// a-check: refused a write into a record with declared properties through a key that is not one literal, which can store under a declared property what it does not hold (Options written by k: outFile is declared string | undefined, and the index signature holds string | number | undefined)
+interface Options { outFile?: string; [name: string]: string | number | undefined; }
+type Dict = { [name: string]: string | number | undefined };
+function key(): string { return 'outFile'; }
+const name: string = key();
+function put(o: Options, k: 'outFile' | string): void { o[k] = 3; }
+const options: Options = {};
+put(options, 'outFile');
+console.log(typeof options.outFile);
