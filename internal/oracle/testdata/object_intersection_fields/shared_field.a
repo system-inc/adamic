@@ -1,0 +1,10 @@
+// An object field the copy shares with its original: a write through one is read through the other.
+interface Counter { count: number; }
+interface Holder { readonly kind: 1; readonly counter: Counter; }
+type Named = Holder & { readonly name: string };
+const holder: Named = { kind: 1, counter: { count: 0 }, name: 'built' + '-holder' };
+const named: Named = { ...holder, name: 'built' + '-named' };
+named.counter.count = 5;
+console.log(`${holder.counter.count} ${holder.name} ${named.name}`);
+holder.counter.count = 7;
+console.log(`${named.counter.count} ${named.counter === holder.counter}`);

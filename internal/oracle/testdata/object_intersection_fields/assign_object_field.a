@@ -1,0 +1,7 @@
+// Object.assign onto a target that holds an object field: the scalar and string fields are copied,
+// the object field is left as it was, and the result is the target.
+const label = { text: 'built' + '-label' };
+const target = { count: 1, name: 'built' + '-old', label: label };
+const source = { count: 2, name: 'built' + '-new' };
+const result = Object.assign(target, source);
+console.log(`${result.count} ${result.name} ${result.label.text} ${Object.is(result, target)} ${result.label === label}`);
