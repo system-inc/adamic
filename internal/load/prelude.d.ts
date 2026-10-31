@@ -103,3 +103,10 @@ interface ReadonlySetLike<T> {
 interface JSON {
 	stringify(value?: unknown, replacer?: unknown, space?: unknown): string | undefined;
 }
+
+// isArray proves an array, not its elements. The bundled any[] predicate would let a program read
+// an unknown value as any typed array, so this overload narrows unknown to readonly unknown[], and a
+// union member that is already an array keeps its own type.
+interface ArrayConstructor {
+	isArray(arg: unknown): arg is readonly unknown[];
+}
