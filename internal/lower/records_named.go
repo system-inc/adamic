@@ -122,7 +122,9 @@ func (l *lowering) recordComputedEntry(literal, entry *ast.Node, of ir.Type) err
 // #b6m00y7), and it stops as the direct write to the property would. A second list of slot rules here
 // failed open on the rules it didn't name: nominal ancestry let an Other into names: Point, whose method
 // native then ran on it (Language's w8), and void widening let a () => void into names: () => unknown
-// (w10). What stays here is what no rule at the direct write judges, since a direct write can't do it:
+// (w10). Lowering's own slot checks at the value run against the property too (valueSlotStops), since
+// the value is lowered against the index type. What stays here is what no rule at the direct write
+// judges, since a direct write can't do it:
 // a readonly property written through the index, a value tsc's own relation doesn't take (the registry
 // presumes the site passed it), and a value the record's one storage can't hold as that property does.
 func (l *lowering) namedWriteStop(where *ast.Node, receiver *checker.Type, value *ast.Node, names map[string]bool) error {
@@ -136,6 +138,13 @@ func (l *lowering) namedWriteStop(where *ast.Node, receiver *checker.Type, value
 			return l.notYet(where, "an unrestricted dictionary write that can violate named property "+property.Name+"; use a literal key or a value accepted by every named property")
 		}
 		if err := l.refuseInSlot(value, to); err != nil {
+			return err
+		}
+		// Lowering judges the value against the index type it's stored as, so its own slot checks (a
+		// host object's view, a weak or strong keep, a tuple seen as an array) are run here against the
+		// declared property too (Lower's probe: a host object under names: View, its index Clock).
+		held, known := l.representation(from)
+		if err := l.valueSlotStops(value, to, known && held.IsReference()); err != nil {
 			return err
 		}
 	}
