@@ -428,6 +428,13 @@ func (l *lowering) predicateRefusal(node *ast.Node) error {
 	}
 	if proof.TaggedView {
 		target := l.checker.GetTypeAtLocation(node.AsTypePredicateNode().Type)
+		// The claimed parameter's type is what the view's value had before it, or none.
+		var source *checker.Type
+		if node.Parent.Type() == node {
+			if parameter := l.checkedPredicateClaimed(node.Parent); parameter != nil {
+				source = l.checker.GetTypeAtLocation(parameter.Name())
+			}
+		}
 		members := []*checker.Type{target}
 		if target.Flags()&checker.TypeFlagsUnion != 0 {
 			members = target.Types()
@@ -446,9 +453,11 @@ func (l *lowering) predicateRefusal(node *ast.Node) error {
 			// A body proven by its tag alone leaves the layout to the view: this registration serves
 			// a tag-proven predicate wherever no checked call wraps it. A checked call registers the
 			// same view in predicateMembership, so neither alone is guarded by a test (#k1t2wp9).
-			if _, err := l.view(node, nil, member); err != nil {
+			if _, err := l.view(node, nil, source, member); err != nil {
 				return err
 			}
+			// The value enters the view wherever a caller's read is narrowed to it (view_widened.go).
+			l.viewSources[len(l.viewSources)-1].narrows = true
 		}
 	}
 	return nil
