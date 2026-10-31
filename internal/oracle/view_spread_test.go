@@ -69,8 +69,9 @@ interface Point { readonly x: number; readonly label: string; }
 function show(n: Node): void { if (n.kind === 9) { const l = n as Lit; console.log(l.text); } }
 const p: Point = { x: 1, label: "a" };
 const c = { ...p, x: 2 };
-console.log(c.x, c.label, p.x);
-show({ kind: 9, pos: 1, text: "t" });
+console.log(` + "`${c.x} ${c.label} ${p.x}`" + `);
+const v = { kind: 9, pos: 1, text: "t" };
+show(v);
 `
 	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
 		t.Fatal(err)
