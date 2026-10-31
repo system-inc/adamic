@@ -149,6 +149,7 @@ func objectKeyLogged(t *testing.T, path string) map[string][]string {
 // build directory) and sanitized, through Build trusted as a candidate: every per-build place is a placeholder in the
 // arguments and mapped in the preprocessed bytes. The three builds key apart. Mutant, red: the build directory left in
 // the arguments as it is.
+// Not parallel: it swaps objectTrust, the package's trust, for the build it runs.
 func TestObjectKeyIsTheSameFromAnyDirectory(t *testing.T) {
 	source := splitCorpusSource(t, "arguments.a")
 	root := t.TempDir()
@@ -252,7 +253,7 @@ func TestObjectKeyMovesWithEachInput(t *testing.T) {
 				t.Fatalf("no key: %v", keyed.refusal)
 			}
 			if moved := keyed.keying.key != base.keying.key; moved != row.moves {
-				t.Errorf("the key moved: %t, want %t (%s, the base's %s)", moved, row.moves, keyed.keying.key, base.keying.key)
+				t.Errorf("the key moved: %t, want %t (%s, the base's %s)\n%s", moved, row.moves, keyed.keying.key, base.keying.key, objectPartsMoved(base.keying.parts, keyed.keying.parts))
 			}
 			if keyed.differs != "" {
 				t.Errorf("an untouched build's recheck differs: %s", keyed.differs)
@@ -433,6 +434,7 @@ func TestObjectKeyMapsOnlyTheLineMarkersPaths(t *testing.T) {
 // line for main.c's compile names no key, with no line for a preprocessing. Trusted as a candidate, the same build
 // preprocesses twice and its compile's line carries the key, so the untrusted build's silence isn't the log's. This
 // process's own trust is unset, so Build keys nothing.
+// Not parallel: it swaps objectTrust, the package's trust, and names its build log with t.Setenv.
 func TestObjectKeyOffRunsNoPreprocessing(t *testing.T) {
 	if objectTrust() != "" {
 		t.Skipf("%s is set to %q", objectTrustVariable, objectTrust())
@@ -597,6 +599,7 @@ func objectEntries(t *testing.T, directory string) []string {
 
 // A hit links the binary the uncached build links, byte for byte, released, Debug and sanitized: the cache's object is
 // copied to main.o and nothing compiles, and the miss before it stored exactly the object it compiled.
+// Not parallel: each build names its log with t.Setenv (objectCacheBuild), which a parallel test may not.
 func TestObjectCacheHitIsTheUncachedBinary(t *testing.T) {
 	for _, build := range []struct {
 		name    string
@@ -629,6 +632,7 @@ func TestObjectCacheHitIsTheUncachedBinary(t *testing.T) {
 // Trust holds: a candidate writes its own directory and never main's; a candidate reads an object main stored; main
 // never reads one a candidate stored, so a main build after a candidate's misses and stores its own. Mutants, each red:
 // a candidate writing main's directory, and main reading the candidate's.
+// Not parallel: each build names its log with t.Setenv (objectCacheBuild), which a parallel test may not.
 func TestObjectCacheTrust(t *testing.T) {
 	library, err := RuntimeLibraryForSource("", objectKeySource, Options{})
 	if err != nil {
@@ -663,6 +667,7 @@ func TestObjectCacheTrust(t *testing.T) {
 // A recheck that fails stores nothing: adamic.h rewritten with the same bytes after main.c is keyed and before it
 // compiles leaves the build green and the cache empty, and the next build misses again. Mutant, red: storing on a
 // failed recheck.
+// Not parallel: each build names its log with t.Setenv (objectCacheBuild), which a parallel test may not.
 func TestObjectCacheRecheckFailureStoresNothing(t *testing.T) {
 	library, err := RuntimeLibraryForSource("", objectKeySource, Options{})
 	if err != nil {
@@ -695,6 +700,7 @@ func TestObjectCacheRecheckFailureStoresNothing(t *testing.T) {
 // compiled: the build links the cold object, the uncached build's binary, says the unit cache's mismatch line naming
 // main.c and its key, and marks the unit cache off, which turns the object cache off too. Mutant, red: the forced check
 // skipped.
+// Not parallel: each build names its log with t.Setenv (objectCacheBuild), which a parallel test may not.
 func TestObjectCacheForcedCheckCatchesAPlantedObject(t *testing.T) {
 	library, err := RuntimeLibraryForSource("", objectKeySource, Options{})
 	if err != nil {
@@ -744,6 +750,7 @@ func TestObjectCacheForcedCheckCatchesAPlantedObject(t *testing.T) {
 // whose sum file is gone each compile cold as a miss, link the uncached build's binary, and are replaced by the object
 // that compile stores, so the build after hits. A crash or a disk mid-write leaves such an entry. Mutant, red: the sum
 // check dropped, which links the torn object.
+// Not parallel: each build names its log with t.Setenv (objectCacheBuild), which a parallel test may not.
 func TestObjectCacheNeverLinksATornEntry(t *testing.T) {
 	library, err := RuntimeLibraryForSource("", objectKeySource, Options{})
 	if err != nil {
@@ -801,4 +808,20 @@ func TestObjectCacheNeverLinksATornEntry(t *testing.T) {
 			t.Errorf("%s: the build after its replacement says %s", tear.name, outcome)
 		}
 	}
+}
+
+// objectPartsMoved says which of two keys' parts are in one and not the other, each part on a line of its own.
+func objectPartsMoved(base []string, other []string) string {
+	var moved strings.Builder
+	for _, part := range base {
+		if !slices.Contains(other, part) {
+			fmt.Fprintf(&moved, "  only the base's: %s\n", part)
+		}
+	}
+	for _, part := range other {
+		if !slices.Contains(base, part) {
+			fmt.Fprintf(&moved, "  only this one's: %s\n", part)
+		}
+	}
+	return moved.String()
 }
