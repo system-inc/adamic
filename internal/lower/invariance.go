@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"slices"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/load"
@@ -741,18 +743,152 @@ type slotTargets struct {
 	explicit map[*ast.Node]*checker.Type
 	// implied memoizes impliedExpressionTarget's answer per parent, within this checker.
 	implied map[*ast.Node]*checker.Type
+	// uncarried collects, while refuseInSlot judges a value, the parts of it whose slot tsc would carry
+	// down from the explicit one but Adamic can't read off it, which refuseInSlot stops at.
+	uncarried []*ast.Node
 }
 
-// slotType is the slot a value at node goes into: the one a caller set for it (slots.explicit), or else
-// the checker's contextual type, exactly. Every refusal rule reads its slot here and never from the
-// checker (TestRefusalRulesReadTheirSlotThroughSlotType), so a caller that judges a value against a
-// slot the checker doesn't give sets it and runs the whole registry over the value, and no rule is
-// skipped because a second list beside the registry forgot it (#b6m00y7).
+// slotType is the slot a value at node goes into: the one a caller set for it (slots.explicit), or the
+// one tsc's contextual typing carries down from it to a part of the value (carriedSlot), or else the
+// checker's contextual type, exactly. Every refusal rule reads its slot here and never from the checker
+// (TestRefusalRulesReadTheirSlotThroughSlotType), so a caller that judges a value against a slot the
+// checker doesn't give sets it and runs the whole registry over the value, and no rule is skipped
+// because a second list beside the registry forgot it (#b6m00y7).
 func (l *lowering) slotType(node *ast.Node) *checker.Type {
-	if slot, set := l.slots.explicit[node]; set {
-		return slot
+	if len(l.slots.explicit) > 0 {
+		if slot, carried, readable := l.carriedSlot(node); carried {
+			if !readable {
+				l.slots.uncarried = append(l.slots.uncarried, node)
+			}
+			return slot
+		}
 	}
 	return l.checker.GetContextualType(node, checker.ContextFlagsNone)
+}
+
+// slotSet is whether node's slot comes from one a caller set (carriedSlot). A rule that reads a site's
+// slot some other way than the contextual type, such as an argument's parameter from the call's resolved
+// signature, reads slotType instead when this holds: a delayed write's call is lib's, whose parameter is
+// any, and the slot the caller set is the one the value is written into.
+func (l *lowering) slotSet(node *ast.Node) bool {
+	if len(l.slots.explicit) == 0 {
+		return false
+	}
+	_, carried, _ := l.carriedSlot(node)
+	return carried
+}
+
+// carriedSlot is node's slot when it comes from one a caller set: node's own, or the one tsc's
+// contextual typing would carry down to it from an enclosing value that has one, through parentheses, a
+// non-null, an as const, a conditional's branches, a logical operand, the right of a comma, and a
+// literal's property, spread or element. carried is false when no explicit slot reaches node, and the
+// checker's contextual type is its slot. readable is false when one reaches it but Adamic can't read
+// node's part off it (a computed name, a property the slot doesn't declare, an element of a slot that
+// isn't an array or a tuple), and the caller fails closed rather than judging node by the checker's.
+func (l *lowering) carriedSlot(node *ast.Node) (slot *checker.Type, carried bool, readable bool) {
+	if slot, set := l.slots.explicit[node]; set {
+		return slot, true, true
+	}
+	parent := node.Parent
+	if parent == nil {
+		return nil, false, false
+	}
+	switch parent.Kind {
+	case ast.KindParenthesizedExpression, ast.KindNonNullExpression:
+		return l.carriedSlot(parent)
+	case ast.KindAsExpression:
+		// x as const keeps the slot x goes into; any other assertion gives x the asserted type.
+		if as := parent.AsAsExpression(); as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+			return l.carriedSlot(parent)
+		}
+	case ast.KindConditionalExpression:
+		if conditional := parent.AsConditionalExpression(); conditional.WhenTrue == node || conditional.WhenFalse == node {
+			return l.carriedSlot(parent)
+		}
+	case ast.KindBinaryExpression:
+		binary := parent.AsBinaryExpression()
+		switch binary.OperatorToken.Kind {
+		case ast.KindBarBarToken, ast.KindQuestionQuestionToken:
+			return l.carriedSlot(parent)
+		case ast.KindAmpersandAmpersandToken, ast.KindCommaToken:
+			// Only the right is the value; tsc gives the left no slot.
+			if binary.Right == node {
+				return l.carriedSlot(parent)
+			}
+			if _, carried, _ := l.carriedSlot(parent); carried {
+				return nil, true, true
+			}
+		}
+	case ast.KindPropertyAssignment:
+		if parent.AsPropertyAssignment().Initializer == node {
+			literal, carried, readable := l.carriedSlot(parent.Parent)
+			if !carried || !readable {
+				return nil, carried, readable
+			}
+			property, readable := l.carriedProperty(literal, parent.Name())
+			return property, true, readable
+		}
+	case ast.KindObjectLiteralExpression:
+		// A member of the literal: a spread is the literal's whole slot, and a property, a shorthand, a
+		// method or an accessor is its property's.
+		if node.Kind == ast.KindSpreadAssignment {
+			return l.carriedSlot(parent)
+		}
+		if literal, carried, readable := l.carriedSlot(parent); carried {
+			if !readable {
+				return nil, true, false
+			}
+			property, readable := l.carriedProperty(literal, node.Name())
+			return property, true, readable
+		}
+	case ast.KindSpreadAssignment:
+		return l.carriedSlot(parent.Parent)
+	case ast.KindSpreadElement:
+		if parent.Parent.Kind == ast.KindArrayLiteralExpression {
+			return l.carriedSlot(parent.Parent)
+		}
+	case ast.KindArrayLiteralExpression:
+		array, carried, readable := l.carriedSlot(parent)
+		if !carried || !readable || array == nil {
+			return nil, carried, readable
+		}
+		array = l.checker.GetNonNullableType(array)
+		elements := parent.AsArrayLiteralExpression().Elements.Nodes
+		if checker.IsTupleType(array) {
+			index := slices.Index(elements, node)
+			arguments := l.checker.GetTypeArguments(array)
+			if index < 0 || index >= len(arguments) || slices.ContainsFunc(elements[:index], func(element *ast.Node) bool { return element.Kind == ast.KindSpreadElement }) {
+				return nil, true, false
+			}
+			return arguments[index], true, true
+		}
+		if l.checker.IsArrayType(array) {
+			return l.checker.GetElementTypeOfArrayType(array), true, true
+		}
+		return nil, true, false
+	}
+	return nil, false, false
+}
+
+// carriedProperty is the slot tsc carries from a literal's slot to its property name: the property's
+// declared type, or the slot's string index signature. readable is false for a computed name or one
+// the slot doesn't declare, which Adamic can't read off it.
+func (l *lowering) carriedProperty(literal *checker.Type, name *ast.Node) (*checker.Type, bool) {
+	if literal == nil {
+		// No slot reaches the literal, so none reaches its property.
+		return nil, true
+	}
+	if name == nil || !ast.IsIdentifier(name) && !ast.IsStringLiteral(name) && !ast.IsNumericLiteral(name) {
+		return nil, false
+	}
+	literal = l.checker.GetNonNullableType(literal)
+	if property := l.checker.GetPropertyOfType(literal, name.Text()); property != nil {
+		return l.checker.GetTypeOfSymbol(property), true
+	}
+	if index := l.checker.GetIndexTypeOfType(literal, l.checker.GetStringType()); index != nil {
+		return index, true
+	}
+	return nil, false
 }
 
 // destructuringTarget is the array pattern a value is assigned into, [a, b] = value, or nil.

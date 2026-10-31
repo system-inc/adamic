@@ -119,6 +119,10 @@ func (l *lowering) relationSite(node *ast.Node) (string, *checker.Type, *checker
 			}
 		}
 	}
+	if l.slotSet(node) {
+		// The slot a caller set is what the value is written into, not the resolved signature's parameter.
+		target = l.slotType(node)
+	}
 	if target == nil {
 		target = l.impliedTarget(node)
 	}
