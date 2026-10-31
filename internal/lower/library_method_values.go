@@ -246,10 +246,16 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
 		}
 		switch method.name {
 		case "indexOf", "includes", "lastIndexOf":
+			if err := l.delayedArrayWritesFit(node, receiver, method.name, written); err != nil {
+				return nil, true, err
+			}
 			value, handled, err = l.libraryArrayMethodArguments(node, receiver, method.name, written)
 		case "slice", "join", "at", "push", "reverse", "concat", "fill", "splice":
 			if ast.SkipParentheses(receiver).Kind == ast.KindNewExpression && method.name == "fill" {
 				return nil, true, l.notYet(node, "delayed fill of an array with holes; write the direct filled construction")
+			}
+			if err := l.delayedArrayWritesFit(node, receiver, method.name, written); err != nil {
+				return nil, true, err
 			}
 			value, handled, err = l.arrayMethodArguments(node, receiver, method.name, written)
 		}
@@ -352,6 +358,76 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
 		value = l.methodSequence(append(prefix, value))
 	}
 	return value, true, nil
+}
+
+// delayedArrayWriters and delayedArrayReaders classify every Array method a delayed call reaches an adapter
+// for: a writer stores values into its receiver, and a reader stores none. delayedArrayWritesFit refuses a
+// name in neither, so an adapter added later is checked or NotYet, never unchecked by default (Compiler's
+// change on c8f64485).
+var delayedArrayWriters = map[string]bool{"push": true, "fill": true, "splice": true, "concat": true}
+var delayedArrayReaders = map[string]bool{"slice": true, "join": true, "at": true, "reverse": true, "indexOf": true, "includes": true, "lastIndexOf": true}
+
+// delayedArrayWritesFit is the check a delayed Array method's writes need. lib types Array.prototype as
+// any[], so a method value taken from it has any parameters, and the checker never checks what call or
+// apply hands it: push.call(names, { x: 1 }) writes an object into a string[], which native then reads
+// as a string (#gw3yrsn, Language's k10). So each value a writer stores into the receiver must be
+// assignable to the receiver's own element type, and then pass the argument site's own check against it
+// (slotRelation), since tsc's relation alone admits what Adamic refuses, such as a string[] seen as a
+// (string | number)[]: push's arguments, fill's value, splice's items from the third on,
+// and each array concat appends, by its elements. A reader stores nothing: slice's result goes through
+// the delayed result check, and the searches only compare.
+func (l *lowering) delayedArrayWritesFit(node, receiver *ast.Node, name string, written []*ast.Node) error {
+	if delayedArrayReaders[name] {
+		return nil
+	}
+	if !delayedArrayWriters[name] {
+		return l.notYet(node, "a delayed "+name+" whose writes aren't classified")
+	}
+	element := l.checker.GetElementTypeOfArrayType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver)))
+	var values []*ast.Node
+	switch name {
+	case "push":
+		values = written
+	case "fill":
+		values = written[:min(1, len(written))]
+	case "splice":
+		values = written[min(2, len(written)):]
+	case "concat":
+		// Each array's elements are written into the result, so the array is judged as the receiver's
+		// type, element by element, by the same check.
+		for _, other := range written {
+			inside := l.checker.GetElementTypeOfArrayType(l.checker.GetTypeAtLocation(other))
+			if element == nil || inside == nil || !l.checker.IsTypeAssignableTo(inside, element) {
+				return l.notYet(other, "a delayed concat of an array whose elements aren't the receiver's element type")
+			}
+			if err := l.slotRelation(other, other, l.checker.GetTypeAtLocation(receiver)); err != nil {
+				return err
+			}
+			if inside != element || !l.sameKeeping(inside, element, map[[2]*checker.Type]bool{}) {
+				return l.notYet(other, "a delayed concat of an array whose elements aren't the receiver's element type itself")
+			}
+		}
+		return nil
+	}
+	for _, value := range values {
+		if element == nil || !l.checker.IsTypeAssignableTo(l.checker.GetTypeAtLocation(value), element) {
+			return l.notYet(value, "a delayed "+name+" writing a value that isn't the receiver's element type")
+		}
+		// The argument site's own check, against the slot lib's any hides: invariance, optional fields,
+		// nominal classes and void widening (Language's must on c8f64485).
+		if err := l.slotRelation(value, value, element); err != nil {
+			return err
+		}
+		// slotRelation names some of the argument site's rules, and a list fails open on the rule it
+		// doesn't name: record storage let a fixed object into a Record<string, number>[] (Language's h7,
+		// a crash in map.c natively). Until the registry itself judges a delayed write (l.slotType), the
+		// value's widened type, its literals at their base type ("c" as string), must be the element type itself,
+		// so no rule's road is open (Adamic's ruling).
+		if widened := checker.Checker_getBaseTypeOfLiteralType(l.checker, l.checker.GetWidenedType(l.checker.GetTypeAtLocation(value))); widened != element || !l.sameKeeping(widened, element, map[[2]*checker.Type]bool{}) {
+			return l.notYet(value, "a delayed "+name+" writing a value whose type isn't the receiver's element type itself")
+		}
+	}
+	return nil
 }
 
 func (l *lowering) objectTagCall(node, receiver *ast.Node, written []*ast.Node) (ir.Expression, error) {
