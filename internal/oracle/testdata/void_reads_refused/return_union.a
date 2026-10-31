@@ -1,0 +1,8 @@
+// Language's finding: a number | void function returning a void call's value prints none natively
+// where Node prints got number. The void widening refusal's return check stops it first.
+const make: () => void = () => 42;
+function step(): number | void {
+	return make();
+}
+const next = step();
+console.log(next === undefined ? 'none' : `got ${typeof next}`);

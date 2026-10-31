@@ -1,0 +1,3 @@
+// The left of ?? is read: Node keeps 42, never the fallback.
+const make: () => void = () => 42;
+console.log(`${make() ?? 0}`);

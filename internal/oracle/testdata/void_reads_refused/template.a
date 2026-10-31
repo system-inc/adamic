@@ -1,0 +1,3 @@
+// A template reads the value: Node prints 42.
+const make: () => void = () => 42;
+console.log(`made ${make()}`);

@@ -1,0 +1,4 @@
+// An array literal's element reads the value: Node keeps 42 in the array.
+const make: () => void = () => 42;
+const values = [make()];
+console.log(typeof values[0]);

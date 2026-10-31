@@ -1,0 +1,48 @@
+// Every place a void value is let go, never read, lowers and agrees with Node (#x2gt39p).
+const make: () => void = () => 42;
+let made = 0;
+const count: () => void = () => {
+	made++;
+	return made * 10;
+};
+
+// A value-returning function passed for a void callback, and one assigned to a void function type.
+const values: number[] = [];
+[1, 2].forEach((value) => values.push(value));
+const answer: () => void = (): number => 42;
+answer();
+console.log(`callbacks ${values.join(',')}`);
+
+// A statement, void's operand, a comma's left, and a for statement's initializer and incrementor.
+make();
+count();
+void make();
+void count();
+(count(), console.log(`comma ${made}`));
+let steps = 0;
+for (count(); steps < 2; count()) {
+	steps++;
+}
+console.log(`statements ${made} ${steps}`);
+
+// A return from an exactly void function, and an arrow's body when the arrow's return type is void,
+// written or inferred.
+function forward(): void {
+	return count();
+}
+forward();
+const relay = (): void => count();
+relay();
+const inferred = () => count();
+inferred();
+const callbacks: Array<() => void> = [() => count(), relay];
+for (const callback of callbacks) {
+	callback();
+}
+console.log(`returns ${made}`);
+
+// A conditional's branch and the right of && are let go where the expression around them is.
+const flag = made > 0;
+flag ? count() : forward();
+flag && count();
+console.log(`branches ${made}`);

@@ -1,0 +1,5 @@
+// A conditional's branch is its value, read where the conditional is: Node keeps 42.
+const make: () => void = () => 42;
+const flag = make.length === 0;
+const picked = flag ? make() : 'none';
+console.log(typeof picked);

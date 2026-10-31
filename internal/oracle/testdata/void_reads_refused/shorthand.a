@@ -1,0 +1,6 @@
+// A shorthand field reads its void binding: Node keeps the 42 the argument held.
+const make: () => void = () => 42;
+function wrap(value: void): { value: unknown } {
+	return { value };
+}
+console.log(typeof wrap(make()).value);

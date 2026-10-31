@@ -1,0 +1,4 @@
+// An object literal's field reads the value: Node keeps 42 in the field.
+const make: () => void = () => 42;
+const box = { value: make() };
+console.log(typeof box.value);

@@ -1,0 +1,10 @@
+// A switch reads its subject: Node matches 42, never undefined. tsc already refuses a void value
+// tested for truthiness (if, ?:, !, the left of && and ||), so a switch is the condition left to read.
+const make: () => void = () => 42;
+switch (make()) {
+	case undefined:
+		console.log('undefined');
+		break;
+	default:
+		console.log('a value');
+}

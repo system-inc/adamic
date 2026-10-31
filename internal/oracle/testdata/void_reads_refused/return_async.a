@@ -1,0 +1,8 @@
+// An async function's own return type is a Promise, whose resolution a wider view reads: Node
+// resolves 42.
+const make: () => void = () => 42;
+async function step(): Promise<void> {
+	return make();
+}
+const wider: Promise<unknown> = step();
+console.log(typeof (await wider));

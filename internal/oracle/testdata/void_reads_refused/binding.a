@@ -1,0 +1,4 @@
+// A void-typed binding still holds what the function returned on Node.
+const make: () => void = () => 42;
+const value = make();
+console.log(`${value === undefined}`);

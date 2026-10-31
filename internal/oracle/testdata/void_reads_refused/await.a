@@ -1,0 +1,7 @@
+// await reads its operand to wait on it: Node waits for the promise a void slot was given.
+const make: () => void = async () => {
+	await Promise.resolve();
+	console.log('inside');
+};
+await make();
+console.log('after');

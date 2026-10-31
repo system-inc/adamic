@@ -1,0 +1,5 @@
+// An assignment reads its right side into the slot: Node stores 42.
+const make: () => void = () => 42;
+let slot: unknown = 0;
+slot = make();
+console.log(typeof slot);

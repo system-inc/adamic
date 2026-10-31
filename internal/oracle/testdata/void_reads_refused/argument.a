@@ -1,0 +1,3 @@
+// An argument reads the value: Node passes 42 on.
+const make: () => void = () => 42;
+console.log(String(make()));

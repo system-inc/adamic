@@ -1,0 +1,3 @@
+// A comparison reads the value: Node compares 42.
+const make: () => void = () => 42;
+console.log(`${make() === undefined}`);
