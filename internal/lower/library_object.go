@@ -265,16 +265,28 @@ func (l *lowering) objectCanFreeze() bool {
 }
 
 // objectIntersection represents tsc's intersection of plain object views. Every constituent must
-// be a plain, noncallable shape, and every resulting field must have a proven scalar type.
+// be a plain shape, as a checked view's intersection members are: not an array, not callable or
+// constructable, and of no family of its own (a class instance, an index signature's dictionary, a
+// collection, a tuple). Every resulting field must have a storage a record would give it: an
+// object, array or boxed union field is held as it is in any object, and a Weak or a two-word
+// optional boolean is not (recordStorageType). A field held as a closure waits on its own ruling. A
+// field that holds the intersection itself is the object being proven.
 func (l *lowering) objectIntersection(proven *checker.Type) (ir.Type, bool) {
 	for _, part := range proven.Types() {
-		if part.Flags()&checker.TypeFlagsObject == 0 || l.checker.IsArrayType(part) || checker.IsTupleType(part) || isClassInstance(part) || len(l.checker.GetSignaturesOfType(part, checker.SignatureKindCall)) != 0 {
+		if part.Flags()&checker.TypeFlagsObject == 0 || l.checker.IsArrayType(part) || len(l.checker.GetSignaturesOfType(part, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(part, checker.SignatureKindConstruct)) != 0 || l.unsupportedViewFamily(part) != "" {
 			return 0, false
 		}
 	}
+	if l.objectIntersections[proven] {
+		return ir.Object, true
+	}
+	if l.objectIntersections == nil {
+		l.objectIntersections = map[*checker.Type]bool{}
+	}
+	l.objectIntersections[proven] = true
+	defer delete(l.objectIntersections, proven)
 	for _, field := range l.checker.GetPropertiesOfType(proven) {
-		of, known := l.representation(l.checker.GetTypeOfSymbol(field))
-		if !known || (of != ir.Number && of != ir.String && of != ir.Boolean) {
+		if held, known := l.recordStorageType(l.checker.GetTypeOfSymbol(field)); !known || held == ir.Closure {
 			return 0, false
 		}
 	}
