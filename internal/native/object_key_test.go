@@ -150,13 +150,11 @@ func objectKeyLogged(t *testing.T, path string) map[string][]string {
 // placeholder in the arguments and mapped in the preprocessed bytes. A release or sanitized build names no directory a
 // Debug one doesn't, so one kind is the test, two whole builds where it was six. Mutant, red: the build directory left
 // in the arguments as it is.
-// Not parallel: it swaps objectTrust, the package's trust, for the build it runs.
+// Not parallel: it sets the trust, ADAMIC_NATIVE_OBJECT_TRUST, with t.Setenv for the builds it runs.
 func TestObjectKeyIsTheSameFromAnyDirectory(t *testing.T) {
 	source := splitCorpusSource(t, "arguments.a")
 	root := t.TempDir()
-	trust := objectTrust
-	objectTrust = func() string { return "candidate" }
-	t.Cleanup(func() { objectTrust = trust })
+	t.Setenv(objectTrustVariable, "candidate")
 	for _, build := range []struct {
 		name    string
 		options Options
@@ -435,7 +433,7 @@ func TestObjectKeyMapsOnlyTheLineMarkersPaths(t *testing.T) {
 // line for main.c's compile names no key, with no line for a preprocessing. Trusted as a candidate, the same build
 // preprocesses twice and its compile's line carries the key, so the untrusted build's silence isn't the log's. This
 // process's own trust is unset, so Build keys nothing.
-// Not parallel: it swaps objectTrust, the package's trust, and names its build log with t.Setenv.
+// Not parallel: it names its build log with t.Setenv.
 func TestObjectKeyOffRunsNoPreprocessing(t *testing.T) {
 	if objectTrust() != "" {
 		t.Skipf("%s is set to %q", objectTrustVariable, objectTrust())
