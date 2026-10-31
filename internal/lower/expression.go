@@ -301,7 +301,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 			// the members that type reaches (#8k12t4s); Buffer and Hash are refused whole above.
 			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferType(l.present(own), "Buffer") && !l.nodeBufferType(l.present(own), "Hash") {
 				if reached := l.nodeHostViewReach(own, contextual, 0, map[[2]*checker.Type]bool{}); reached != "" {
-					return nil, l.notYet(node, "a host object of type "+l.checker.TypeToString(own)+" seen as "+l.checker.TypeToString(contextual)+", which reaches "+reached+", a member no host registration names")
+					return nil, l.nodeHostViewRefusal(node, own, contextual, reached)
 				}
 			}
 			if own := l.contextualGenericType(node, l.checker.GetTypeAtLocation(node)); !l.typedArraySetArgument(node) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) && !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
@@ -311,6 +311,17 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 				return nil, l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(contextual)+" (one keeps something weakly that the other keeps strongly)")
 			} else if tuple, array := l.tupleSeenAsArray(own, contextual, map[[2]*checker.Type]bool{}); tuple != nil {
 				return nil, l.notYet(node, "a "+l.checker.TypeToString(tuple)+" seen as a "+l.checker.TypeToString(array)+" (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]])")
+			}
+		}
+	}
+	// A generic body names its parameter's constraint, not what the call infers, so an argument is
+	// judged against the parameter as declared too, a literal made right there included (#8k12t4s).
+	if err == nil && value.Type().IsReference() {
+		if declared := l.nodeHostDeclaredArgument(node); declared != nil {
+			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferType(l.present(own), "Buffer") && !l.nodeBufferType(l.present(own), "Hash") {
+				if reached := l.nodeHostViewReach(own, declared, 0, map[[2]*checker.Type]bool{}); reached != "" {
+					return nil, l.nodeHostViewRefusal(node, own, declared, reached)
+				}
 			}
 		}
 	}
