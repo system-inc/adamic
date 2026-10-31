@@ -1,4 +1,4 @@
-// Spec: | `as` except `as const`, upcasts, and **checked downcasts** |
+// Spec: | `as` except `as const`, upcasts, and checked downcasts in `.ts` |
 // Expect: refused a cast the runtime can't check
 interface User {
 	readonly name: string;

@@ -157,24 +157,25 @@ func TestInterfaceCastRuntimeMutants(t *testing.T) {
 	}
 }
 
-// An unused malformed factory does not prevent a valid read in another module.
+// An unused malformed factory does not prevent a valid read in another module. The modules are .ts, where
+// the cast stays a checked view: in .a a downcast whose checks no proof erases is refused (#m8dvvmf).
 func TestInterfaceCastImportedConstruction(t *testing.T) {
 	t.Parallel()
 	directory := t.TempDir()
 	sources := map[string]string{
-		"nodes.a": `export interface Node { readonly kind: 'identifier' | 'number'; } export interface Identifier extends Node { readonly kind: 'identifier'; readonly name: string; } export function bad(): Node { return { kind: 'identifier' }; }`,
-		"main.a":  `import { type Node, type Identifier } from './nodes.a'; function cast(node: Node): Identifier { return node as Identifier; } console.log(cast({ kind: 'identifier', name: 'ok' } as Identifier).name);`,
+		"nodes.ts": `export interface Node { readonly kind: 'identifier' | 'number'; } export interface Identifier extends Node { readonly kind: 'identifier'; readonly name: string; } export function bad(): Node { return { kind: 'identifier' }; }`,
+		"main.ts":  `import { type Node, type Identifier } from './nodes.ts'; function cast(node: Node): Identifier { return node as Identifier; } console.log(cast({ kind: 'identifier', name: 'ok' } as Identifier).name);`,
 	}
 	for name, source := range sources {
 		if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
 			t.Fatal(err)
 		}
 	}
-	program, err := lowered(t, filepath.Join(directory, "main.a"))
+	program, err := lowered(t, filepath.Join(directory, "main.ts"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	want := onNode(t, filepath.Join(directory, "main.a"))
+	want := onNode(t, filepath.Join(directory, "main.ts"))
 	actual, _ := nativelyUncached(t, program)
 	for _, got := range []run{actual, onJavaScriptBackend(t, program)} {
 		if difference := disagreement(want, got); difference != "" {
@@ -183,7 +184,8 @@ func TestInterfaceCastImportedConstruction(t *testing.T) {
 	}
 }
 
-// Numeric and boolean tags use the same default cast check.
+// Numeric and boolean tags use the same default cast check, in .ts, where the cast stays a checked view: in
+// .a a downcast whose checks no proof erases is refused (#m8dvvmf).
 func TestInterfaceCastScalarTags(t *testing.T) {
 	t.Parallel()
 	for _, test := range []struct {
@@ -197,7 +199,7 @@ func TestInterfaceCastScalarTags(t *testing.T) {
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			t.Parallel()
-			path := filepath.Join(t.TempDir(), "scalar.a")
+			path := filepath.Join(t.TempDir(), "scalar.ts")
 			source := "interface Base { readonly kind: " + test.domain + "; }\n" +
 				"interface Member extends Base { readonly kind: " + test.target + "; readonly name: string; }\n" +
 				"function make(kind: " + test.domain + "): Base { const raw = { kind, name: 'payload'.repeat(2) }; return raw; }\n" +
