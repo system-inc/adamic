@@ -168,9 +168,9 @@ func objectKeyer() func(compile *exec.Cmd, source string, compileFlags []string,
 	return nil
 }
 
-// objectKey keys compile, main.c's compile with compileFlags of program, source's bytes, before it runs
-// (newObjectKeying), and is the key and the recheck to run once it has, which says what differed when the object may not
-// be stored. A compile the key can't account for has no key, and says why.
+// objectKey keys compile, main.c's compile, before it runs (newObjectKeying), and is the key and the recheck to run once
+// it has, which says what differed when the object may not be stored. A compile the key can't account for has no key,
+// and says why.
 func objectKey(compile *exec.Cmd, source string, compileFlags []string, program string, jobserver *Jobserver) (string, func(), error) {
 	keying, err := newObjectKeying(compile, source, compileFlags, program, jobserver)
 	if errors.Is(err, errUncachedObject) {
@@ -187,10 +187,11 @@ func objectKey(compile *exec.Cmd, source string, compileFlags []string, program 
 	}, nil
 }
 
-// newObjectKeying reads the key of compile, main.c's compile with compileFlags of program, source's bytes, or
-// errUncachedObject naming what the key can't account for: a source that reads the time it's compiled, what a split
-// unit's key refuses of the flags, the environment and clang, or a preprocessing that fails, which leaves the compile to
-// fail as it would. It runs main.c's preprocessing in the compile's directory, writing main.i and main.d there.
+// newObjectKeying reads the key of compile, main.c's compile, which holds source and is compiled with compileFlags by
+// the name program, or errUncachedObject naming what the key can't account for: a source that reads the time it's
+// compiled, what a split unit's key refuses of the flags, the environment and clang, or a preprocessing that fails,
+// which leaves the compile to fail as it would. It runs main.c's preprocessing in the compile's directory, writing main.i
+// and main.d there.
 func newObjectKeying(compile *exec.Cmd, source string, compileFlags []string, program string, jobserver *Jobserver) (*objectKeying, error) {
 	if macro := unitTime.FindString(source); macro != "" {
 		return nil, fmt.Errorf("%w: main.c reads %s", errUncachedObject, macro)

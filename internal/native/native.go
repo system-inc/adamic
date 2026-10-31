@@ -256,8 +256,8 @@ func buildOneWithRuntime(source string, output string, options Options, flags []
 // (nil bounds none). links, when it isn't nil, gives the flags linking what else the program links (the regexp
 // compiler's archive), from inside the build directory; BuildLean, handed one archive alone, gives none. keyObject,
 // when it isn't nil, keys main.c's compile before it runs and is the recheck to run after it (objectKey), which only
-// measures: the object linked is the compile's own. BuildLean, which reads no environment, gives none, and a one call
-// build, which has no compile of its own, is never keyed.
+// measures: the object linked is the compile's own. BuildLean, which reads no environment, gives none, and a build with
+// oneCall set is never keyed, on macOS either, where its main.c is compiled first too.
 //
 // A native program's main.c is compiled to main.o and then linked, in two clang calls. oneCall has a build off macOS
 // compile and link it in one call instead, as every build there did before the split (#2r9xhqs). BuildLean keeps the
