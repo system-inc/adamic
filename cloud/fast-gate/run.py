@@ -537,7 +537,7 @@ def inertOnlyChange(tree, tools, change, full):
                 if not fields:
                     return None
                 path = fields.pop(0)  # a rename or copy names its source, then the path it makes
-            if header[4] != "M" or header[0] != ":100644" or header[1] != "100644":
+            if header[4] != "M" or not phaseUnreadMode(header[0][1:]) or not phaseUnreadMode(header[1]):
                 return None
             if firstExecutor(rules, path) != "inert" or phaseSetupPath(path):
                 return None  # asked before the tree's state, so a change that touches anything else costs no go list
@@ -550,6 +550,14 @@ def inertOnlyChange(tree, tools, change, full):
     except (subprocess.SubprocessError, OSError, ValueError, KeyError):
         return None
     return (state.embedded, sorted(paths)) if all(phaseUnreadPath(path, state) for path in paths) else None
+
+
+def phaseUnreadMode(mode):
+    """Whether a file of this git mode can be phase-unread: a plain file, 100644, alone, the one mode test inertOnlyChange
+    holds both sides of a change to and phaseUnread lists by (Node's must on 426b75d6). An inert 100755 file listed
+    unread would be edited by a change inertOnly refuses, so coverage and smoke key on the whole tree and read it: a
+    false green in a lookup that decided it empty."""
+    return mode == "100644"
 
 
 def phaseSetupPath(path):
@@ -576,7 +584,7 @@ def phaseReadState(tree, tools):
 
 
 def phaseUnreadPath(path, state):
-    """Whether no phase reads path when it's modified, a regular file on both sides (#nz7hm5j, Node's ruling): the one
+    """Whether no phase reads path when it's modified, a plain file on both sides (#nz7hm5j, Node's ruling): the one
     per-path test inertOnly narrows coverage and smoke by and --phase-unread lists. Its first rule is inert and it's
     outside the phases' setup, so no executor runs for it and no map reads it; it's outside the Go state, which coverage
     keys on and build, vet and gofmt read; no package embeds it, since go test compiles an embed's bytes; it's no
@@ -590,9 +598,9 @@ def phaseUnreadPath(path, state):
 
 
 def phaseUnread(tree, tools):
-    """Every tracked regular file of tree no phase reads when it's modified (phaseUnreadPath), sorted: the set Loom's no-move
-    check matches a change's paths against, kept per base tree and gate tools commit (#nz7hm5j). Raises when the tree's
-    state doesn't read, so a caller never takes a partial set."""
+    """Every tracked plain file of tree (phaseUnreadMode) no phase reads when it's modified (phaseUnreadPath), sorted: the
+    set Loom's no-move check matches a change's paths against, kept per base tree and gate tools commit (#nz7hm5j).
+    Raises when the tree's state doesn't read, so a caller never takes a partial set."""
     state = phaseReadState(tree, tools)
     if state is None:
         raise ValueError("go list of %s doesn't read" % tree)
@@ -603,7 +611,7 @@ def phaseUnread(tree, tools):
         if not entry:
             continue
         mode, path = entry.split(" ", 1)[0], entry.split("\t", 1)[1]
-        if mode in ("100644", "100755") and phaseUnreadPath(path, state):
+        if phaseUnreadMode(mode) and phaseUnreadPath(path, state):
             unread.append(path)
     return sorted(unread)
 

@@ -3182,8 +3182,8 @@ class PhaseUnreadAgrees(unittest.TestCase):
     own files) equal on both: no phase key can move, so a lookup deciding it empty is no false green. For each regular file
     it doesn't name, some phase reads what the edit moved, so the lookup sends it to the compare (one that moved nothing is
     an over-read). Every file that shapes the set (the Go state, cloud/fast-gate, the catalog's patches, a .gitattributes)
-    is outside it. Mutants, red here: each exclusion dropped, the Go state, an embed, a .gitattributes, an .a, a catalog
-    patch's target."""
+    is outside it, and so is an inert executable, whose change inertOnly refuses. Mutants, red here: each exclusion dropped,
+    the Go state, an embed, a .gitattributes, an .a, a catalog patch's target; 100755 listed beside 100644."""
 
     setUp_, write, commit = CoverageMarkdownOnly.setUp, CoverageMarkdownOnly.write, CoverageMarkdownOnly.commit
 
@@ -3195,6 +3195,10 @@ class PhaseUnreadAgrees(unittest.TestCase):
         self.write("notes/.gitattributes", "*.log text\n")
         self.write("notes/target.txt", "t\n")
         self.write("verify/catalog/01-probe.patch", "--- a/notes/target.txt\n+++ b/notes/target.txt\n@@ -1 +1 @@\n-t\n+u\n")
+        # An inert executable (Node's must on 426b75d6): inertOnly refuses any mode but a plain file's, so coverage and smoke
+        # read it, and the set mustn't name it.
+        self.write("notes/tool.log", "x\n")
+        os.chmod(os.path.join(self.tree, "notes/tool.log"), 0o755)
         self.base = self.commit("phase shapes")
 
     def observed(self, change):
@@ -3231,7 +3235,7 @@ class PhaseUnreadAgrees(unittest.TestCase):
     def test_the_set_and_the_listing_agree(self):
         unread = run.phaseUnread(self.tree, self.tree)
         for shaping in ("go.mod", "a/a.go", "notes/probe.c", "a/doc.md", "cloud/fast-gate/executors.txt", "notes/.gitattributes",
-                        "notes/gen.a", "notes/target.txt", "verify/catalog/01-probe.patch", "cohere"):
+                        "notes/gen.a", "notes/target.txt", "verify/catalog/01-probe.patch", "cohere", "notes/tool.log"):
             self.assertNotIn(shaping, unread)
         self.assertTrue({"README.md", "docs/guide.md", "notes/counts.log"} <= set(unread), unread)
         tracked = [entry.split("\t", 1)[1] for entry in run.git(self.tree, "ls-files", "-s").splitlines() if entry.split(" ", 1)[0] in ("100644", "100755")]
