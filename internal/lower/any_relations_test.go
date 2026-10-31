@@ -61,6 +61,10 @@ const w = { kind: 9, pos: 1, text: 5 }; console.log(String(isWord(w))); show(w);
 		{"library result stored first", `interface Visible { readonly visible: number; }
 function show(view: Visible): void { const e = Object.entries(view); const t: [string, number][] = e; console.log(String(t.length)); }
 show({ visible: 1 });`, "a member typed any ([][1]) related to number at the initializer site"},
+		// A value that is itself any is the expression rule's NotYet, before any relation (Compiler's probe
+		// on dab38125): a local typed any, and a function returning any.
+		{"local typed any", `const x: any = 5; const s: string = x; console.log(String(s.length));`, "a value of type any"},
+		{"function returning any", `function f(): any { return 5; } const s: string = f(); console.log(String(s.length));`, "a function returning any"},
 		{"cast then widened", `interface LitL { readonly kind: 9; readonly pos: number; readonly text: any; }
 function show(n: Loose): void { if (n.kind === 9) { const l = n as LitL; const h: HasText = l; console.log(h.text); } }
 const w = { kind: 9, pos: 1, text: 5 }; show(w);`, "a member typed any (text) related to string at the initializer site"},
@@ -125,5 +129,35 @@ const box: { tag?: number } = { tag: 1 }; delete box.tag;`
 	var pending *NotYet
 	if !errors.As(l.refusal.deferred, &pending) || !strings.Contains(pending.What, "a member typed any (text) related to string at the initializer site") {
 		t.Fatalf("want the any relation's NotYet recorded beside it, got %v", l.refusal.deferred)
+	}
+}
+
+// A declaration file the program ships is the program's own, not the library (Compiler's must on
+// dab38125). Its declare function is refused before any relation, as an ambient declaration, so this pins
+// that the road stays shut whichever rule holds it. librarySignature takes no declaration file as library
+// either, so Node's own declarations count until their host audit lands.
+func TestAnyMemberRelationCountsAProgramDeclarationFile(t *testing.T) {
+	t.Parallel()
+	directory := t.TempDir()
+	if err := os.WriteFile(filepath.Join(directory, "loader.d.ts"), []byte(`export declare function load(): { readonly text: any };
+`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	main := filepath.Join(directory, "main.ts")
+	if err := os.WriteFile(main, []byte(`import { load } from "./loader";
+interface HasText { readonly text: string; }
+const h: HasText = load();
+console.log(h.text);
+`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	program, err := load.Load([]string{main})
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = Lower(context.Background(), program)
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "an ambient function declaration") {
+		t.Fatalf("want the ambient declaration's Refused, got %v", err)
 	}
 }
