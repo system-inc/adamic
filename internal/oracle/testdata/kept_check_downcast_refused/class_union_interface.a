@@ -1,0 +1,14 @@
+// a-check: refused a cast the runtime can't check
+// Language's attack, the union form: a source that is a class or a structural interface. Square is a
+// class, but Area is not, so the cast to Circle has no nominal ancestry to test against an Area.
+interface Area { readonly area: number; }
+class Square {
+	constructor(readonly area: number) {}
+}
+class Circle {
+	constructor(readonly area: number, readonly radius: number) {}
+}
+function radius(shape: Square | Area): number {
+	return (shape as Circle).radius;
+}
+console.log(`radius ${radius(new Circle(12, 2))}`);

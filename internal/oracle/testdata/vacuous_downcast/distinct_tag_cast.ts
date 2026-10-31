@@ -1,5 +1,6 @@
-// A downcast whose tag test a source value can fail: every Base has kind 'Holder' or 'Viewed', and
-// Viewed declares 'Viewed' alone, so the cast's test tells them apart and .a admits it.
+// kept_check_downcast_refused/distinct_tag_cast.a as .ts, where the cast stays a checked cast: Viewed
+// declares kind 'Viewed', which a Base's kind can fail, the test passes, and the program prints what Node
+// prints.
 interface Base { readonly kind: 'Holder' | 'Viewed'; }
 interface Viewed extends Base { readonly kind: 'Viewed'; count: number; }
 const raw = { kind: 'Viewed' as const, count: 4 };

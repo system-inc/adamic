@@ -98,9 +98,16 @@ func TestGraphFlowReturnAndConditional(t *testing.T) {
 
 const graphReviewCycle = `interface Link {next:Link|undefined} const link:Link={next:undefined};link.next=link;`
 
+// In .a the view's cast is a downcast whose checks no proof erases, refused (#m8dvvmf) before graph
+// adoption is reached; the .ts twin keeps the checked view and pins the adoption refusal.
 func TestGraphViewAdoptionIsRefused(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSource(t, interfaceCastSource+graphReviewCycle+`console.log(identifier({kind:'identifier',pos:0,name:'ok'} as Identifier).name);`)
+	source := interfaceCastSource + graphReviewCycle + `console.log(identifier({kind:'identifier',pos:0,name:'ok'} as Identifier).name);`
+	_, err := lowerSource(t, source)
+	if err == nil || !strings.Contains(err.Error(), "a downcast from Node to Identifier in .a whose checks no proof erases") {
+		t.Fatalf("view graph adoption in .a: %v", err)
+	}
+	_, err = lowerSourceAs(t, source, ".ts")
 	if err == nil || !strings.Contains(err.Error(), "checked-view adapter") {
 		t.Fatalf("view graph adoption: %v", err)
 	}
@@ -266,14 +273,21 @@ run();
 	}
 }
 
+// In .a the cast to a sub-union is a downcast whose checks no proof erases, refused (#m8dvvmf) before
+// graph adoption is reached; the .ts twin keeps the checked view and pins the adoption refusal.
 func TestGraphLegacyViewAdoptionIsRefused(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSource(t, graphReviewCycle+`
+	source := graphReviewCycle + `
  type First={readonly kind:'a';readonly name:string};
  type Second={readonly kind:'b';readonly name:string};
  type Third={readonly kind:'c';readonly name:string};
  function narrow(value:First|Second|Third):First|Second{return value as First|Second;}
- console.log(narrow({kind:'a',name:'kept'}).name);`)
+ console.log(narrow({kind:'a',name:'kept'}).name);`
+	_, err := lowerSource(t, source)
+	if err == nil || !strings.Contains(err.Error(), "a downcast from First | Second | Third to First | Second in .a whose checks no proof erases") {
+		t.Fatalf("legacy view graph adoption in .a: %v", err)
+	}
+	_, err = lowerSourceAs(t, source, ".ts")
 	if err == nil || !strings.Contains(err.Error(), "checked-view adapter") {
 		t.Fatalf("legacy view graph adoption: %v", err)
 	}

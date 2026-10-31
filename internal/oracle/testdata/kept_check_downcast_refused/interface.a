@@ -1,0 +1,10 @@
+// a-check: refused a downcast from Node to Identifier in .a whose checks no proof erases
+// Identifier declares kind 'identifier', which a Node's kind can fail, so the cast's tag test is real,
+// and its reads of name are checked: checks the program asserts and no proof erases.
+interface Node { readonly kind: 'identifier' | 'number'; readonly pos: number; }
+interface Identifier extends Node { readonly kind: 'identifier'; readonly name: string; }
+const raw = { kind: 'identifier' as const, pos: 0, name: 'ok' };
+const node: Node = raw;
+console.log('viewing');
+const identifier = node as Identifier;
+console.log(`name ${identifier.name}`);

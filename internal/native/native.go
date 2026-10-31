@@ -10,6 +10,7 @@ import (
 	"embed"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	goruntime "runtime"
 	"slices"
@@ -189,6 +190,24 @@ func linkFlags(flags []string, options Options) []string {
 	return flags
 }
 
+// compileOnlyFlags are flags without the ones only a link reads: -Wl, and -Xlinker with its argument, -l and -L, -fuse-ld,
+// -nostdlib and -rdynamic. A compile given one says it's unused, which -Werror makes a failure; a link in one call reads
+// them, so a split build's compile drops them and its link keeps them, and the binary is the one call's.
+func compileOnlyFlags(flags []string) []string {
+	var compiled []string
+	for index := 0; index < len(flags); index++ {
+		flag := flags[index]
+		switch {
+		case flag == "-Xlinker" || flag == "-l" || flag == "-L":
+			index++
+		case strings.HasPrefix(flag, "-Wl,"), strings.HasPrefix(flag, "-l"), strings.HasPrefix(flag, "-L"), strings.HasPrefix(flag, "-fuse-ld="), flag == "-nostdlib", flag == "-rdynamic":
+		default:
+			compiled = append(compiled, flag)
+		}
+	}
+	return compiled
+}
+
 // objectPrefixFlags take the link's working directory off the paths its debug map records. On macOS ld records each
 // object it links that carries debug info by path, for a debugger to find its DWARF there (the stabs' N_OSO), an
 // archive's member by the archive's path, made absolute against the working directory when it isn't: the checker
@@ -247,14 +266,22 @@ func buildOneWithRuntime(source string, output string, options Options, flags []
 	defer os.RemoveAll(directory)
 	return linkOne(directory, compilerName(options), source, output, options, flags, library, jobserver, func(directory string) ([]string, error) {
 		return regexpCompilerLinkFlags(source, options, directory)
-	})
+	}, objectKeyer(), false)
 }
 
 // linkOne compiles source in one translation unit with compiler and links it with the runtime archive library into
 // output, in directory, an empty build directory its caller made and removes, each clang holding a token of jobserver
 // (nil bounds none). links, when it isn't nil, gives the flags linking what else the program links (the regexp
-// compiler's archive), from inside the build directory; BuildLean, handed one archive alone, gives none.
-func linkOne(directory string, compiler string, source string, output string, options Options, flags []string, library string, jobserver *Jobserver, links func(directory string) ([]string, error)) error {
+// compiler's archive), from inside the build directory; BuildLean, handed one archive alone, gives none. compileObject,
+// when it isn't nil, makes main.o in place of the compile, from the object cache or by it (objectCache.compile). BuildLean,
+// which reads no environment, gives none, and a build with oneCall set never takes it, on macOS either, where its main.c
+// is compiled first too.
+//
+// A native program's main.c is compiled to main.o and then linked, in two clang calls. oneCall has a build off macOS
+// compile and link it in one call instead, as every build there did before the split (#2r9xhqs). BuildLean keeps the
+// one call, since the split is for a cache of the compile's object and BuildLean reads no cache, and
+// TestACompiledThenLinkedProgramIsTheOneCallProgram builds both ways to hold the split's binary to the one call's bytes.
+func linkOne(directory string, compiler string, source string, output string, options Options, flags []string, library string, jobserver *Jobserver, links func(directory string) ([]string, error), compileObject func(compile *exec.Cmd, source string, compileFlags []string, program string, jobserver *Jobserver) error, oneCall bool) error {
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); err != nil {
 		return fmt.Errorf("native: %w", err)
 	}
@@ -278,17 +305,27 @@ func linkOne(directory string, compiler string, source string, output string, op
 	// and a compile and link in one call links main.c's object from clang's own temporary file, <TMPDIR>/main-<random>.o,
 	// random per build (Tests, from Compiler, Oct 12: a whole sanitized build's binary named it). There main.c is
 	// compiled to main.o in the build directory first and linked by that name, -oso_prefix taking the directory off, so
-	// the debug map names it main.o alone, as a split build's names its units. An ELF linker records no input's path.
-	if goruntime.GOOS == "darwin" && options.Target != "wasm32-wasi" {
-		compile := clangIn(directory, compiler, append(slices.Clone(compileFlags), "-c", program, "-o", "main.o")...)
-		var combined []byte
-		var compiling time.Duration
-		if err := jobserver.Hold(func() error {
-			return timed(&compiling, func() (err error) { combined, err = compile.CombinedOutput(); return err })
-		}); err != nil {
-			return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
+	// the debug map names it main.o alone, as a split build's names its units. An ELF linker records no input's path, so
+	// off macOS the binary is the same bytes either way, and main.c is compiled first there too, so its compile is a step
+	// of its own whose object a cache can hold (#2r9xhqs). The compile is the one call's compile, and the link is given
+	// the same flags, so every semantic one still reaches ThinLTO's code generation (linkFlags): the binary is the one
+	// call's bytes, release, Debug and sanitized (TestACompiledThenLinkedProgramIsTheOneCallProgram).
+	if options.Target != "wasm32-wasi" && (goruntime.GOOS == "darwin" || !oneCall) {
+		// The compile takes every flag but a link's alone, which clang under -Werror refuses as an input unused by a
+		// compile (stdout columns' -Wl,--wrap= probes, TestProduct_StdoutColumnsProbes); the link below keeps them all.
+		compiled := compileOnlyFlags(compileFlags)
+		compile := clangIn(directory, compiler, append(slices.Clone(compiled), "-c", program, "-o", "main.o")...)
+		if compileObject != nil && !oneCall {
+			if err := compileObject(compile, source, compiled, program, jobserver); err != nil {
+				return err
+			}
+		} else {
+			compiling, err := compileMain(compile, jobserver)
+			if err != nil {
+				return err
+			}
+			buildLog("cCompile", "main.c", "", "off", compiling)
 		}
-		buildLog("cCompile", "main.c", "", "off", compiling)
 		// The debug map records each object's modification time beside its name, so main.o's is the epoch's, as
 		// ZERO_AR_DATE has ar give an archive member's: a fresh main.o's would differ per build.
 		if err := os.Chtimes(filepath.Join(directory, "main.o"), time.Unix(0, 0), time.Unix(0, 0)); err != nil {
@@ -334,14 +371,28 @@ func linkOne(directory string, compiler string, source string, output string, op
 	}); err != nil {
 		return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
 	}
-	// Where main.c was compiled first, this call only links; elsewhere one clang call compiles main.c and links it, which
-	// the log says as cBuild, so neither its compile nor its link is taken for the other.
+	// Where main.c was compiled first, this call only links; otherwise (a WASI module, or BuildLean off macOS) one clang
+	// call compiles main.c and links it, which the log says as cBuild, so neither its compile nor its link is taken for
+	// the other.
 	kind := "cBuild"
 	if program == "main.o" {
 		kind = "cLink"
 	}
 	buildLog(kind, filepath.Base(output), "", "off", building)
 	return nil
+}
+
+// compileMain runs compile, main.c's compile to main.o, holding a token of jobserver, and is how long clang ran, a wait
+// for the token left out.
+func compileMain(compile *exec.Cmd, jobserver *Jobserver) (time.Duration, error) {
+	var combined []byte
+	var compiling time.Duration
+	if err := jobserver.Hold(func() error {
+		return timed(&compiling, func() (err error) { combined, err = compile.CombinedOutput(); return err })
+	}); err != nil {
+		return 0, fmt.Errorf("native: clang failed: %w\n%s", err, combined)
+	}
+	return compiling, nil
 }
 
 // programDebugFlags belongs beside the program's prefix maps, never in Flags:

@@ -8,10 +8,11 @@ import (
 
 func TestViewObjectContractsAreAvailableToEraser(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, `interface Base {readonly kind:'box'|'other'}
+	// .ts, where the cast stays a checked view: in .a a downcast whose checks no proof erases is refused (#m8dvvmf).
+	program, err := lowerSourceAs(t, `interface Base {readonly kind:'box'|'other'}
  interface Box extends Base {readonly kind:'box';readonly child:{readonly ready:boolean}}
  function visit(node:Base):boolean {return (node as Box).child.ready}
- const raw={kind:'box' as const,child:{ready:true}}; console.log(String(visit(raw)));`)
+ const raw={kind:'box' as const,child:{ready:true}}; console.log(String(visit(raw)));`, ".ts")
 	if err != nil {
 		t.Fatal(err)
 	}

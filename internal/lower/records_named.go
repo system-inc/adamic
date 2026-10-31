@@ -81,7 +81,7 @@ func (l *lowering) recordNamedWrite(access, value *ast.Node) error {
 	if key.Kind == ast.KindStringLiteral || key.Kind == ast.KindNoSubstitutionTemplateLiteral || key.Kind == ast.KindNumericLiteral {
 		return nil // The checker already applies the named property's write type.
 	}
-	return l.namedWriteStop(access, l.checker.GetTypeAtLocation(a.Expression), l.checker.GetTypeAtLocation(value), nil)
+	return l.namedWriteStop(access, l.checker.GetTypeAtLocation(a.Expression), value, nil)
 }
 
 // recordComputedEntry is recordNamedWrite for a record literal's entry under a computed name, which is
@@ -93,10 +93,10 @@ func (l *lowering) recordNamedWrite(access, value *ast.Node) error {
 // A method or an accessor under such a name stores a function under it unjudged, so it's not yet
 // unless its folded name names no declared property.
 //
-// In a slot boxed as a union (of), a declared property whose read is proven guarded there is left to
-// its read (readGuardedInUnionSlot). Every other one is judged, an unknown representation included:
-// a function's tag says only "function", so a () => void under names: () => unknown was read as
-// unknown.
+// In a slot boxed as a union (of), a declared property whose read is proven to stop on a lie there is
+// left to its read (readGuardedInUnionSlot). Every other one is judged, an unknown representation
+// included: a function's tag says only "function", so a () => void under names: () => unknown was
+// read as unknown.
 func (l *lowering) recordComputedEntry(literal, entry *ast.Node, of ir.Type) error {
 	key := ast.SkipParentheses(entry.Name().AsComputedPropertyName().Expression)
 	if key.Kind == ast.KindStringLiteral || key.Kind == ast.KindNoSubstitutionTemplateLiteral || key.Kind == ast.KindNumericLiteral {
@@ -107,7 +107,7 @@ func (l *lowering) recordComputedEntry(literal, entry *ast.Node, of ir.Type) err
 		folded = map[string]bool{name: true}
 	}
 	receivers := []*checker.Type{l.checker.GetTypeAtLocation(literal)}
-	if contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone); contextual != nil {
+	if contextual := l.slotType(literal); contextual != nil {
 		receivers = append(receivers, l.checker.GetNonNullableType(contextual))
 	}
 	for _, receiver := range receivers {
@@ -129,7 +129,7 @@ func (l *lowering) recordComputedEntry(literal, entry *ast.Node, of ir.Type) err
 		if entry.Kind != ast.KindPropertyAssignment {
 			return l.notYet(entry.Name(), "a computed method or accessor in a record literal whose name a named property may take")
 		}
-		if err := l.namedWriteStop(entry.Name(), receiver, l.checker.GetTypeAtLocation(entry.AsPropertyAssignment().Initializer), names); err != nil {
+		if err := l.namedWriteStop(entry.Name(), receiver, entry.AsPropertyAssignment().Initializer, names); err != nil {
 			return err
 		}
 	}
@@ -137,51 +137,39 @@ func (l *lowering) recordComputedEntry(literal, entry *ast.Node, of ir.Type) err
 }
 
 // readGuardedInUnionSlot is each representation whose declared read from a slot boxed as a union is
-// proven to stop on a lie, each by a pin in TestNamedRecordWritesAreThePropertyTypeItself. A number,
+// proven to stop on a lie, each by a pin in TestNamedRecordWritesAreJudgedAsTheirDirectTwins. A number,
 // string or boolean is read through recordReadType's exact tag check, which stops loudly
 // (records_union_lying.ts is Adamic's .ts witness). A plain object, an array, a Map and a dictionary
-// have no checked tag, so their read is not yet: Language's b8, a8 and p8 and records_union_options.ts's
-// MapLike (r8). A function's tag says only "function", so it's not here and is judged.
+// have no checked tag, so their read is not yet: Language's b8, a8 and p8, and r8, the MapLike that
+// records_union_options.ts, tsc's commandLineParser shape, declares. A function's tag says only
+// "function", so it's judged (b10), as is any representation not here.
 var readGuardedInUnionSlot = map[ir.Type]bool{ir.Number: true, ir.String: true, ir.Boolean: true, ir.Object: true, ir.Array: true, ir.Map: true, ir.Record: true}
 
-// namedWriteStop is the not yet for a value of type from written under a name the key can't promise
-// into receiver, through its index signature, when it doesn't fit one of its named properties
-// (namedWriteMisfit), or nil.
-func (l *lowering) namedWriteStop(where *ast.Node, receiver, from *checker.Type, names map[string]bool) error {
-	property, identity := l.namedWriteMisfit(receiver, from, names)
-	switch {
-	case property == nil:
-		return nil
-	case identity:
-		return l.notYet(where, "an unrestricted dictionary write of a value whose type isn't named property "+property.Name+"'s type itself; use a literal key or a value of exactly that type")
-	}
-	return l.notYet(where, "an unrestricted dictionary write that can violate named property "+property.Name+"; use a literal key or a value accepted by every named property")
-}
-
-// namedWriteMisfit is the first named property of receiver, of those names holds when it's given, that
-// a value of type from, written under its name through the index signature, doesn't fit, and whether
-// it's the identity check it fails; or nil.
-//
-// The list names some of Adamic's slot rules and fails open on those it doesn't: nominal ancestry let
-// an Other into names: Point, whose method native then ran on it (Language's w8), and void widening
-// let a () => void into names: () => unknown (w10). Until the registry judges the write (l.slotType,
-// #b6m00y7), the value's widened type, its literals at their base type, must be each named property's
-// type itself, as a delayed Array write's must be (delayedArrayWritesFit).
-func (l *lowering) namedWriteMisfit(receiver, from *checker.Type, names map[string]bool) (*ast.Symbol, bool) {
-	widened := checker.Checker_getBaseTypeOfLiteralType(l.checker, l.checker.GetWidenedType(from))
+// namedWriteStop stops a value written under a name the key can't promise into receiver, through its
+// index signature, at the first named property of receiver (of those names holds, when it's given) it
+// doesn't fit, or returns nil. The value lands under that name, so it's judged as written into that
+// property: the whole refusal registry runs over it with the property's type as its slot (refuseInSlot,
+// #b6m00y7), and it stops as the direct write to the property would. A second list of slot rules here
+// failed open on the rules it didn't name: nominal ancestry let an Other into names: Point, whose method
+// native then ran on it (Language's w8), and void widening let a () => void into names: () => unknown
+// (w10). What stays here is what no rule at the direct write judges, since a direct write can't do it:
+// a readonly property written through the index, a value tsc's own relation doesn't take (the registry
+// presumes the site passed it), and a value the record's one storage can't hold as that property does.
+func (l *lowering) namedWriteStop(where *ast.Node, receiver *checker.Type, value *ast.Node, names map[string]bool) error {
+	from := l.checker.GetTypeAtLocation(value)
 	for _, property := range l.checker.GetPropertiesOfType(receiver) {
 		if names != nil && !names[property.Name] {
 			continue
 		}
 		to := l.checker.GetNonMissingTypeOfSymbol(property)
-		if l.checker.IsReadonlySymbol(property) || !l.checker.IsTypeAssignableTo(from, to) || !l.enumAssignable(from, to) || l.widened(from, to, map[[2]*checker.Type]bool{}) != nil || !l.sameRecordStorage(from, to, map[[2]*checker.Type]bool{}) {
-			return property, false
+		if l.checker.IsReadonlySymbol(property) || !l.checker.IsTypeAssignableTo(from, to) || !l.sameRecordStorage(from, to, map[[2]*checker.Type]bool{}) {
+			return l.notYet(where, "an unrestricted dictionary write that can violate named property "+property.Name+"; use a literal key or a value accepted by every named property")
 		}
-		if widened != to || !l.sameKeeping(widened, to, map[[2]*checker.Type]bool{}) {
-			return property, true
+		if err := l.refuseInSlot(value, to); err != nil {
+			return err
 		}
 	}
-	return nil, false
+	return nil
 }
 
 // Erasing or widening a named contract would allow another alias to write through

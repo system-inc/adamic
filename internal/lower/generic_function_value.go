@@ -134,7 +134,7 @@ func (l *lowering) genericFunctionIdentityNew(node *ast.Node) error {
 // conditional/logical expressions and parentheses; lowering need not infer it
 // by climbing the syntax tree or borrowing the other operand's signature.
 func (l *lowering) contextualGenericSignature(node *ast.Node, target *checker.Signature) *checker.Signature {
-	contextual := l.concrete(l.checker.GetContextualType(node, checker.ContextFlagsNone))
+	contextual := l.concrete(l.slotType(node))
 	if contextual == nil || target == nil {
 		return nil
 	}
@@ -162,7 +162,7 @@ func (l *lowering) contextualGenericType(node *ast.Node, own *checker.Type) *che
 // callableContext accepts only the single concrete function destination used by
 // generic-value specialization. Object and container views keep main's rules.
 func (l *lowering) callableContext(node *ast.Node) *checker.Type {
-	context := l.concrete(l.checker.GetContextualType(node, checker.ContextFlagsNone))
+	context := l.concrete(l.slotType(node))
 	if context == nil {
 		return nil
 	}

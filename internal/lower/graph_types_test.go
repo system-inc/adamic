@@ -86,14 +86,21 @@ show({visible:1});`, "Object.entries(view)", "a dynamic-shape object in a graph 
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
+			// The checked views are .ts, where their casts stay checked views: in .a a downcast whose checks no
+			// proof erases is refused at the same node (#m8dvvmf), before graph adoption is reached.
+			extension := ".a"
+			switch probe.name {
+			case "checked view", "legacy checked view":
+				extension = ".ts"
+			}
 			directory := t.TempDir()
-			main := filepath.Join(directory, "main.a")
-			cause := filepath.Join(directory, "cause.a")
+			main := filepath.Join(directory, "main"+extension)
+			cause := filepath.Join(directory, "cause"+extension)
 			source := "// The offending node is in an imported module.\n\n" + probe.source + "\nexport {};\n"
 			if err := os.WriteFile(cause, []byte(source), 0600); err != nil {
 				t.Fatal(err)
 			}
-			if err := os.WriteFile(main, []byte("import './cause.a';\n"+graphReviewCycle), 0600); err != nil {
+			if err := os.WriteFile(main, []byte("import './cause"+extension+"';\n"+graphReviewCycle), 0600); err != nil {
 				t.Fatal(err)
 			}
 			checked, err := load.Load([]string{main})

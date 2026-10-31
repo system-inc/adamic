@@ -202,7 +202,7 @@ func readUnitClang(compiler string, flags []string, environment []string) ([]str
 		}
 		parts = append(parts, "driver"+line)
 	}
-	verbose, err := run(append(slices.Clone(flags), "-E", "-v", "-x", "c", os.DevNull)...)
+	verbose, err := run(slices.Concat(flags, unitSearchProbe(probe))...)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -214,6 +214,15 @@ func readUnitClang(compiler string, flags []string, environment []string) ([]str
 		parts = append(parts, fmt.Sprintf("search %s framework=%t", directory.path, directory.framework))
 	}
 	return parts, search, nil
+}
+
+// unitSearchProbe is what follows a compile's flags to have clang list its search path (searchPath): -E -v over an
+// empty C input. Under -v the Linux driver also looks for a ROCm installation, listing /opt to find one, a read no key
+// names that a traced build refuses (Adam's tree 4efff9dd, 414 product tests); --rocm-path names the probe's own empty
+// directory instead, which a C compile never reads, so nothing outside the probe is listed and the search path printed
+// is the same (Pupa, clang 20.1.8).
+func unitSearchProbe(probe string) []string {
+	return []string{"-E", "-v", "--rocm-path=" + probe, "-x", "c", os.DevNull}
 }
 
 // A searchDirectory is one directory of clang's `<name>` search path: a framework directory (macOS's, marked
@@ -467,13 +476,21 @@ func (keying *unitKeying) checked(unit compilationUnit) bool {
 	return unitChecked()
 }
 
-// newUnitKeying reads a build's unitKeying, or errUncachedUnit naming what the key can't account for.
-func newUnitKeying(first string, common []runtimeFile, flags []string, compiler string, environment []string, sanitized bool) (*unitKeying, error) {
+// unitFlagsRefusal is errUncachedUnit naming a flag the key can't account for, or nil.
+func unitFlagsRefusal(flags []string) error {
 	for _, flag := range flags {
 		// Clang modules read module maps and a module cache the resolution table doesn't walk.
 		if strings.HasPrefix(flag, "-fmodule") || strings.HasPrefix(flag, "-fimplicit-module") {
-			return nil, fmt.Errorf("%w: the flags use clang modules (%s)", errUncachedUnit, flag)
+			return fmt.Errorf("%w: the flags use clang modules (%s)", errUncachedUnit, flag)
 		}
+	}
+	return nil
+}
+
+// newUnitKeying reads a build's unitKeying, or errUncachedUnit naming what the key can't account for.
+func newUnitKeying(first string, common []runtimeFile, flags []string, compiler string, environment []string, sanitized bool) (*unitKeying, error) {
+	if err := unitFlagsRefusal(flags); err != nil {
+		return nil, err
 	}
 	environmentParts, err := unitEnvironmentParts(environment)
 	if err != nil {

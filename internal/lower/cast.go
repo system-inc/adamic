@@ -51,7 +51,7 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	if len(proof.allowed) == 0 && len(proof.classes) == 0 {
 		return value, nil
 	}
-	refused := &Refused{Where: l.program.Where(node), What: "a cast without an object tag representation", Fix: castRepair}
+	refused := &Refused{Where: l.program.Where(node), What: "a cast without an object tag representation", Fix: l.castRepair(node)}
 	if value.Type() != ir.Object {
 		return nil, refused
 	}

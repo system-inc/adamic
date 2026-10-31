@@ -183,7 +183,7 @@ const nodeLinks: NodeLinks = { resolvedSignature: 7 };
 console.log(String(cachedResolvedSignatures.length));
 console.log(String(cachedResolvedSignatures[0]?.[1]));
 `);
-add('19_identifier_kind.a','checker.ts','getIdentifierFromEntityNameExpression',cast,`
+add('19_identifier_kind.ts','checker.ts','getIdentifierFromEntityNameExpression',cast,`
 const SyntaxKind = { Identifier: 80, PropertyAccessExpression: 212 } as const;
 interface Node { readonly kind: number; }
 type Expression = Node;

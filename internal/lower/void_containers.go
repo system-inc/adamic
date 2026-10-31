@@ -297,8 +297,12 @@ func (l *lowering) voidContainerReturn(source *checker.Type, function *ast.Node)
 	return l.voidContainerSlot(source, returns, "a returned value")
 }
 
-// argumentSlot is the instantiated parameter type argument enters, or nil.
+// argumentSlot is the instantiated parameter type argument enters, or nil, or the slot a caller set for
+// it (slotSet).
 func (l *lowering) argumentSlot(call, argument *ast.Node) *checker.Type {
+	if l.slotSet(argument) {
+		return l.slotType(argument)
+	}
 	signature := l.checker.GetResolvedSignature(call)
 	if signature == nil {
 		return nil

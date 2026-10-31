@@ -10,7 +10,9 @@ interface Identifier extends Node { readonly kind: 'identifier'; readonly name: 
 function identifier(node: Node): Identifier { return node as Identifier; }
 `
 
-// Malformed constructions are admitted; their fields are checked when read.
+// Malformed constructions are admitted; their fields are checked when read. Each row but "in .a" lowers
+// as .ts, where the cast stays a checked view; "in .a" pins that .a refuses the downcast, whose checks
+// no proof erases (#m8dvvmf).
 func TestDefaultTaggedInterfaceAdmission(t *testing.T) {
 	t.Parallel()
 	for _, test := range []struct{ name, source, reason string }{
@@ -29,15 +31,20 @@ func TestDefaultTaggedInterfaceAdmission(t *testing.T) {
 		{"generic", `function make<T extends string>(name: T): Node { const raw = { kind: 'identifier' as const, pos: 0, name }; return raw; } console.log(identifier(make('ok')).name);`, ""},
 		{"staged class", `class Incomplete { readonly kind = 'identifier'; readonly pos = 0; } console.log(identifier(new Incomplete()).name);`, ""},
 		{"forged payload", `const name = 42 as unknown as string; console.log(identifier({ kind: 'identifier', pos: 0, name } as Identifier).name);`, "cast the runtime can't check"},
+		{"in .a", `console.log(identifier({ kind: 'identifier', pos: 0, name: 'ok' } as Identifier).name);`, "a downcast from Node to Identifier in .a whose checks no proof erases"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			t.Parallel()
 			switch test.name {
 			case "complete", "alias write", "unused bad factory", "dynamic complete", "spread", "generic", "optional target", "optional target read":
-				lowersAndAgreesWithNode(t, interfaceCastSource+test.source)
+				lowersAndAgreesWithNodeAs(t, interfaceCastSource+test.source, ".ts")
 				return
 			}
-			_, err := lowerSource(t, interfaceCastSource+test.source)
+			extension := ".ts"
+			if test.name == "in .a" {
+				extension = ".a"
+			}
+			_, err := lowerSourceAs(t, interfaceCastSource+test.source, extension)
 			if test.reason == "" {
 				if err != nil {
 					t.Fatal(err)

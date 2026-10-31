@@ -50,9 +50,12 @@ func TestLoomViewKeyRead(t *testing.T) {
 	requireLoomViewTwinRefusal(t, "key", "view member read by element access is not yet checked", "use view.count")
 }
 
+// In .a unsupported's cast is an untagged view whose checked reads no proof erases, so the cast is refused
+// (#m8dvvmf) before the read is reached; its .ts twin pins the read's own refusal.
 func TestLoomViewUnsupportedRead(t *testing.T) {
 	t.Parallel()
-	requireLoomViewRefusal(t, "unsupported", "xx / 0\n", "checked view read of field", "contract before reading this field")
+	requireLoomViewRefusal(t, "unsupported", "xx / 0\n", "a downcast from Base to View in .a whose checks no proof erases", "move the file to .ts")
+	requireLoomViewTwinRefusal(t, "unsupported", "checked view read of field", "contract before reading this field")
 }
 
 // Views D checks this read against its contract, so it compiles and prints what Node prints.
@@ -72,11 +75,13 @@ func TestLoomViewKeyFix(t *testing.T) {
 	lowersAndAgreesWithNodeAs(t, source, ".ts")
 }
 
+// unsupported.a without its read lowers as .ts, where the cast stays a checked view: in .a a downcast
+// whose checks no proof erases is refused (#m8dvvmf).
 func TestLoomViewUnsupportedUnreadControl(t *testing.T) {
 	t.Parallel()
-	source, extension := loomViewFixture(t, "unsupported.a")
+	source, _ := loomViewFixture(t, "unsupported.a")
 	source = strings.Replace(source, "console.log(`${view.label} / ${view.count}`);", "console.log('created');", 1)
-	lowersAndAgreesWithNodeAs(t, source, extension)
+	lowersAndAgreesWithNodeAs(t, source, ".ts")
 }
 
 func TestLoomViewOriginalViewsP01(t *testing.T) {

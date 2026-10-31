@@ -6,6 +6,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 func (l *lowering) isArrayPredicateCall(node *ast.Node) bool {
@@ -15,7 +16,31 @@ func (l *lowering) isArrayPredicateCall(node *ast.Node) bool {
 	}
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
-	return call.QuestionDotToken == nil && len(call.Arguments.Nodes) == 1 && callee.Kind == ast.KindPropertyAccessExpression && callee.AsPropertyAccessExpression().QuestionDotToken == nil && callee.Name().Text() == "isArray" && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Array") && l.libraryMember(callee)
+	return call.QuestionDotToken == nil && len(call.Arguments.Nodes) == 1 && callee.Kind == ast.KindPropertyAccessExpression && callee.AsPropertyAccessExpression().QuestionDotToken == nil && callee.Name().Text() == "isArray" && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Array") && l.arrayPredicateMember(callee)
+}
+
+// The prelude's readonly unknown[] overload merges into the library's isArray, so the builtin is
+// the member whose every declaration is the library's or the prelude's, never the program's.
+func (l *lowering) arrayPredicateMember(callee *ast.Node) bool {
+	symbol := l.memberSymbol(callee)
+	if symbol == nil {
+		return false
+	}
+	roots := l.checker.GetRootSymbols(symbol)
+	if len(roots) == 0 {
+		return false
+	}
+	for _, root := range roots {
+		if len(root.Declarations) == 0 {
+			return false
+		}
+		for _, declaration := range root.Declarations {
+			if file := ast.GetSourceFileOfNode(declaration); !load.IsLibrary(file) && !load.IsPrelude(file) {
+				return false
+			}
+		}
+	}
+	return true
 }
 
 func (l *lowering) arrayIsArray(node *ast.Node) (ir.Expression, bool, error) {
@@ -33,8 +58,9 @@ func (l *lowering) arrayIsArray(node *ast.Node) (ir.Expression, bool, error) {
 	return ir.ArrayIsArray{Value: fit(value, ir.Union)}, true, nil
 }
 
-// The library's any[] predicate describes the runtime test, not an element
-// contract. Only array members already promised by the declared input survive.
+// isArray's predicate, the prelude's readonly unknown[] overload in place of the bundled any[]
+// one, describes the runtime test, not an element contract. Only array members already promised
+// by the declared input survive.
 func (l *lowering) arrayPredicateMembers(proven *checker.Type, array bool) *checker.Type {
 	members := []*checker.Type{}
 	var collect func(*checker.Type)
@@ -93,8 +119,9 @@ func (l *lowering) arrayPredicateDomain(proven *checker.Type) bool {
 	return proven.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(proven) || l.isLibraryType(proven, "Uint8Array", "Int32Array", "Float64Array")
 }
 
-// TypeScript's built-in signature is value is any[]. Recover the declared
-// array member at a direct, dominating positive test instead of adopting any.
+// The prelude's readonly unknown[] overload wins over the bundled any[] predicate it replaces, so
+// the checker narrows to the declared array members. This recovers the same members from the
+// declared type at a direct, dominating positive test, the builtin's or a proven wrapper's.
 func (l *lowering) arrayPredicateType(node *ast.Node) *checker.Type {
 	node = ast.SkipParentheses(node)
 	actual := l.checker.GetTypeAtLocation(node)

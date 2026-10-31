@@ -1,0 +1,12 @@
+// a-check: refused a downcast from Shape to Circle in .a whose checks no proof erases
+// Language's attack: a downcast through a type alias. The alias names the member, so the cast is the
+// same tag test as shape as Circle.
+type Circle = { readonly kind: 'Circle'; readonly radius: number };
+type Square = { readonly kind: 'Square'; readonly side: number };
+type Shape = Circle | Square;
+type Round = Extract<Shape, { kind: 'Circle' }>;
+function radius(shape: Shape): number {
+	const round = shape as Round;
+	return round.radius;
+}
+console.log(`radius ${radius({ kind: 'Circle', radius: 2 })}`);

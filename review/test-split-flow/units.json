@@ -4106,6 +4106,22 @@
   {
     "package": "flow",
     "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_library_array_is_array_union_a_d4bff55e7bc0",
+    "program": "internal/oracle/testdata/library_array_is_array_union.a",
+    "path": "../oracle/testdata/library_array_is_array_union.a",
+    "sha256": "784d87524d9614bc6716a029430da75f9586c2a40500a56c36bf09c9f2682505"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_library_array_is_array_unknown_a_1c0d86ec2313",
+    "program": "internal/oracle/testdata/library_array_is_array_unknown.a",
+    "path": "../oracle/testdata/library_array_is_array_unknown.a",
+    "sha256": "5a31361d0ca632c81766b7cb2d4c00e7b81f00b2ea1c61f1b5816e08a1c7f074"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
     "test": "TestFlowProgram____oracle_testdata_library_array_iterators_a_a44efcbf14ab",
     "program": "internal/oracle/testdata/library_array_iterators.a",
     "path": "../oracle/testdata/library_array_iterators.a",
@@ -13918,6 +13934,22 @@
     "program": "internal/oracle/testdata/library_array_flat_map.a",
     "path": "../oracle/testdata/library_array_flat_map.a",
     "sha256": "fae8891b58f4a3b7c6fd1d9145bdc5ccbec71357b32f78b2e7879649b652123a"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_library_array_is_array_union_a_d4bff55e7bc0",
+    "program": "internal/oracle/testdata/library_array_is_array_union.a",
+    "path": "../oracle/testdata/library_array_is_array_union.a",
+    "sha256": "784d87524d9614bc6716a029430da75f9586c2a40500a56c36bf09c9f2682505"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_library_array_is_array_unknown_a_1c0d86ec2313",
+    "program": "internal/oracle/testdata/library_array_is_array_unknown.a",
+    "path": "../oracle/testdata/library_array_is_array_unknown.a",
+    "sha256": "5a31361d0ca632c81766b7cb2d4c00e7b81f00b2ea1c61f1b5816e08a1c7f074"
   },
   {
     "package": "flow",
@@ -23738,6 +23770,22 @@
   {
     "package": "flow",
     "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_library_array_is_array_union_a_d4bff55e7bc0",
+    "program": "internal/oracle/testdata/library_array_is_array_union.a",
+    "path": "../oracle/testdata/library_array_is_array_union.a",
+    "sha256": "784d87524d9614bc6716a029430da75f9586c2a40500a56c36bf09c9f2682505"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_library_array_is_array_unknown_a_1c0d86ec2313",
+    "program": "internal/oracle/testdata/library_array_is_array_unknown.a",
+    "path": "../oracle/testdata/library_array_is_array_unknown.a",
+    "sha256": "5a31361d0ca632c81766b7cb2d4c00e7b81f00b2ea1c61f1b5816e08a1c7f074"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
     "test": "TestFlowProgram____oracle_testdata_library_array_iterators_a_a44efcbf14ab",
     "program": "internal/oracle/testdata/library_array_iterators.a",
     "path": "../oracle/testdata/library_array_iterators.a",
@@ -33550,6 +33598,22 @@
     "program": "internal/oracle/testdata/library_array_flat_map.a",
     "path": "../oracle/testdata/library_array_flat_map.a",
     "sha256": "fae8891b58f4a3b7c6fd1d9145bdc5ccbec71357b32f78b2e7879649b652123a"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_library_array_is_array_union_a_d4bff55e7bc0",
+    "program": "internal/oracle/testdata/library_array_is_array_union.a",
+    "path": "../oracle/testdata/library_array_is_array_union.a",
+    "sha256": "784d87524d9614bc6716a029430da75f9586c2a40500a56c36bf09c9f2682505"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_library_array_is_array_unknown_a_1c0d86ec2313",
+    "program": "internal/oracle/testdata/library_array_is_array_unknown.a",
+    "path": "../oracle/testdata/library_array_is_array_unknown.a",
+    "sha256": "5a31361d0ca632c81766b7cb2d4c00e7b81f00b2ea1c61f1b5816e08a1c7f074"
   },
   {
     "package": "flow",
@@ -43710,6 +43774,22 @@
     "program": "internal/oracle/testdata/library_array_flat_map.a",
     "path": "../oracle/testdata/library_array_flat_map.a",
     "sha256": "fae8891b58f4a3b7c6fd1d9145bdc5ccbec71357b32f78b2e7879649b652123a"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_library_array_is_array_union_a_d4bff55e7bc0",
+    "program": "internal/oracle/testdata/library_array_is_array_union.a",
+    "path": "../oracle/testdata/library_array_is_array_union.a",
+    "sha256": "784d87524d9614bc6716a029430da75f9586c2a40500a56c36bf09c9f2682505"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_library_array_is_array_unknown_a_1c0d86ec2313",
+    "program": "internal/oracle/testdata/library_array_is_array_unknown.a",
+    "path": "../oracle/testdata/library_array_is_array_unknown.a",
+    "sha256": "5a31361d0ca632c81766b7cb2d4c00e7b81f00b2ea1c61f1b5816e08a1c7f074"
   },
   {
     "package": "fresh",

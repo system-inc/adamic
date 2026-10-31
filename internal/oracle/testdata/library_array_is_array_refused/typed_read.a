@@ -1,0 +1,17 @@
+// a-check: type error TS4104
+// The library's any[] predicate let an unknown narrowed by Array.isArray be read as any typed
+// array, so [5] was admitted as a string[]. The prelude's readonly unknown[] proves no element
+// type, so both reads are the checker's errors. Node prints -1, then undefined.
+function lengths(value: unknown): number {
+	if (Array.isArray(value)) {
+		const strings: string[] = value;
+		return strings[0]?.length ?? -1;
+	}
+	return -2;
+}
+function firstLength(value: unknown): number {
+	if (Array.isArray(value)) return value[0].length;
+	return -2;
+}
+console.log(String(lengths([5])));
+console.log(String(firstLength([5])));

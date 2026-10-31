@@ -1,0 +1,1 @@
+internal/oracle/testdata/kept_check_downcast_refused/later_tag.a:8:16: Adamic 0.1 refuses a downcast from Root to View in .a whose checks no proof erases; declare Root as a union with View as a member and narrow it, as .a writes !: if (base.kind !== "Viewed") panic('why'), or move the file to .ts, where the cast stays a checked cast

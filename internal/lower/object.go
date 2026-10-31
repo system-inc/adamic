@@ -207,7 +207,7 @@ func (l *lowering) typeOfSymbol(node *ast.Node, symbol *ast.Symbol) (ir.Type, er
 // declaredField is the representation of a field as the type an object literal is written into
 // declares it, or 0 when there is no such type to say.
 func (l *lowering) declaredField(literal *ast.Node, name string) ir.Type {
-	contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone)
+	contextual := l.slotType(literal)
 	if contextual == nil {
 		return 0
 	}
@@ -261,7 +261,7 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 	}
 	literal := ir.ArrayLiteral{Element: element}
 	items := node.AsArrayLiteralExpression().Elements.Nodes
-	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
+	if contextual := l.slotType(node); contextual != nil && l.checker.IsArrayType(contextual) {
 		declared, known := l.representation(l.checker.GetElementTypeOfArrayType(contextual))
 		if !known || declared != element {
 			for _, item := range items {
@@ -340,7 +340,7 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		// A fresh [] has no slots yet. Use the same contextual element path as
 		// generic returns; nested literals also have a best-common destination.
 		if len(literal.AsArrayLiteralExpression().Elements.Nodes) == 0 {
-			contexts := []*checker.Type{l.checker.GetContextualType(literal, checker.ContextFlagsNone)}
+			contexts := []*checker.Type{l.slotType(literal)}
 			child := literal
 			for child.Parent != nil && child.Parent.Kind == ast.KindParenthesizedExpression {
 				child = child.Parent
@@ -348,7 +348,7 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 			if parent := child.Parent; parent != nil && parent.Kind == ast.KindArrayLiteralExpression {
 				// The checker can leave the inner literal as never[] even when
 				// the enclosing array has an explicit union-of-arrays destination.
-				contexts = append(contexts, l.literalArrayElement(l.checker.GetContextualType(parent, checker.ContextFlagsNone)))
+				contexts = append(contexts, l.literalArrayElement(l.slotType(parent)))
 			}
 			contexts = append(contexts, l.impliedTarget(literal))
 			for _, contextual := range contexts {
@@ -358,7 +358,7 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 					}
 				}
 			}
-		} else if contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
+		} else if contextual := l.slotType(literal); contextual != nil && l.checker.IsArrayType(contextual) {
 			// Layout must follow the destination, even when the literal infers narrower elements.
 			if declared, known := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); known && declared == ir.Union {
 				if inferred, known := l.kept(l.checker.GetElementTypeOfArrayType(arrayType)); known && inferred != ir.Union {
@@ -2156,7 +2156,7 @@ func (l *lowering) stringFromCodesArguments(node *ast.Node, codePoints bool, wri
 func (l *lowering) tupleType(node *ast.Node) *checker.Type {
 	// The tuple it's written into first: [5] written into [number, string?] is that tuple, with its
 	// second element undefined, though the literal's own type is [number].
-	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil && checker.IsTupleType(contextual) && l.everyKnown(l.checker.GetTypeArguments(contextual)) {
+	if contextual := l.slotType(node); contextual != nil && checker.IsTupleType(contextual) && l.everyKnown(l.checker.GetTypeArguments(contextual)) {
 		// (Under as const the contextual tuple's elements are any, and the literal's own type says
 		// how they're held.)
 		return contextual

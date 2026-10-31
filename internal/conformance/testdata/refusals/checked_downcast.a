@@ -1,5 +1,5 @@
-// Spec: A downcast to a member of a union is checkable
-// Expect: lowers
+// Spec: a downcast whose checks no proof erases (a tag test, or a view's checked reads) is refused
+// Expect: refused whose checks no proof erases
 type Shape = { readonly kind: 'Circle'; readonly radius: number } | { readonly kind: 'Square'; readonly side: number };
 const shapes: readonly Shape[] = [{ kind: 'Circle', radius: 2 }];
 for (const shape of shapes) {
