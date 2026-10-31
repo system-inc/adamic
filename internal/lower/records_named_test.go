@@ -132,13 +132,14 @@ func TestNamedRecordLiesAreRefusedInA(t *testing.T) {
 // POINT where Node prints OTHER (w8), and void widening, so a () => void was read as () => unknown (w10).
 // A record literal's computed name is the same write, made as the literal is: w8's and w10's shapes
 // through { names: ..., [key]: ... } are not yet too. Language's w12 to w14 reach the same write through
-// an alias, a chained assignment and a parameter, and w10's literal in a slot boxed by a number is
-// judged too, since a declared function read from a boxed slot is checked only by its tag. Each is
-// tsc's to accept, so .a stops on it as .ts does, not yet rather than refused: the registry may admit
-// it later (l.slotType). An honest write, a number into number properties, still lowers in both.
-// Mutants: the identity check dropped lowers w8, w10, both literals, w12 to w14 and the boxed w10, and
-// w8's print POINT natively; recordComputedEntry skipped lowers w8's literal, which prints POINT
-// natively, and w10's two literals.
+// an alias, a chained assignment and a parameter. In a slot boxed by a number in the index, w10's
+// literal, an array's and a Map's are judged too, since a declared function, array or Map read from a
+// boxed slot is checked only by its tag; only a declared number, string or boolean is left to its
+// exact read check. Each is tsc's to accept, so .a stops on it as .ts does, not yet rather than
+// refused: the registry may admit it later (l.slotType). An honest write, a number into number
+// properties, still lowers in both. Mutants: the identity check dropped lowers w8, w10, both literals,
+// w12 to w14 and the boxed rows, and w8's print POINT natively; recordComputedEntry skipped lowers
+// w8's literal, which prints POINT natively, and the other literals.
 func TestNamedRecordWritesAreThePropertyTypeItself(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source string }{
@@ -233,6 +234,35 @@ console.log(typeof seen === "string" ? seen.toUpperCase() : "none");
 				}
 			})
 		}
+	}
+	// An array or a Map that tsc doesn't relate to the declared one fails recordNamedWrite's list, so it's
+	// not yet in .ts and refused in .a, where 0.1 forbids it (records_declared_keys.go).
+	for _, probe := range []struct{ name, source string }{
+		{"array construction boxed", `type Lists = { names: string[]; [k: string]: string[] | number[] | number };
+const keys: string[] = ["names", "other"];
+const key = keys[0] ?? "other";
+const lists: Lists = { names: ["a"], [key]: [1, 2] };
+console.log((lists.names[0] ?? "").toUpperCase());
+`},
+		{"map construction boxed", `type Tables = { names: Map<string, string>; [k: string]: Map<string, string> | Map<string, number> | number };
+const keys: string[] = ["names", "other"];
+const key = keys[0] ?? "other";
+const tables: Tables = { names: new Map<string, string>([["a", "b"]]), [key]: new Map<string, number>([["a", 1]]) };
+console.log((tables.names.get("a") ?? "").toUpperCase());
+`},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			_, err := lowerSourceAs(t, probe.source, ".ts")
+			var ny *NotYet
+			if !errors.As(err, &ny) || !strings.Contains(err.Error(), "named property names") {
+				t.Fatalf("got %v, want the NotYet for a value named property names doesn't take", err)
+			}
+			_, err = lowerSource(t, probe.source)
+			var refused *Refused
+			if !errors.As(err, &refused) || refused.Fix != declaredKeysFix {
+				t.Fatalf("in .a: got %v, want the declared-key write refusal", err)
+			}
+		})
 	}
 	// Stops of their own that the boxed slot and a computed method rely on, in .ts, where no declared-key
 	// write refusal comes first: w8's literal in a slot boxed by a number in the index reads names as an
