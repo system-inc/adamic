@@ -15,7 +15,9 @@ import (
 // printed 5 for view_widened.ts, release native segfaulted and sanitized native died in AddressSanitizer, while the
 // JavaScript backend printed 5 as Node does. The same held on every road Language found (#80cs7rz): an array element,
 // a Map value, a closure capture, a parameter, a return, an object field, destructuring, a template, a conditional's
-// arm, a class field and satisfies, and a ?. read and a method read through the wider type besides. A read of a field
+// arm, a class field and satisfies, and a ?. read and a method read through the wider type besides, the same with a
+// checked predicate as the entry instead of the cast, through a type written inline, and for the value a checked read
+// takes out of a viewed one. A read of a field
 // a view checks, through a receiver type that doesn't check it, is now NotYet at the read when the receiver's flow
 // may come from the view, failing closed when the reach is unknown (internal/lower/view_widened.go). The fixtures sit in
 // reland_refused, since the flow and fresh corpora lower every program in testdata. Mutant: checkViewWidenedReads
@@ -39,6 +41,18 @@ func TestViewWidenedReadNotYet(t *testing.T) {
 		{"view_widened_optional.ts", "5:144", "text", "HasText", "5\n"},
 		// Node throws calling the lying say, a number: a callable field read through Says is read raw too.
 		{"view_widened_method.ts", "5:103", "say", "Says", ""},
+		// A type written inline at the widening: no view covers it, so only this rule sees the read.
+		{"view_widened_anonymous.ts", "5:164", "text", "{ readonly kind: 9; readonly pos: number; readonly text: string; }", "5\n"},
+		// The value inside a viewed value, which a checked read of o.inner takes out.
+		{"view_widened_inner.ts", "6:114", "text", "HasText", "5\n"},
+		{"view_widened_inner_parameter.ts", "6:46", "text", "HasText", "5\n"},
+		// A predicate admits the value with no CheckedCast: it enters where isLit(n) narrows n.
+		{"view_widened_predicate.ts", "6:82", "text", "HasText", "5\n"},
+		{"view_widened_predicate_array.ts", "6:107", "text", "HasText", "5\n"},
+		{"view_widened_predicate_parameter.ts", "6:46", "text", "HasText", "5\n"},
+		{"view_widened_predicate_closure.ts", "6:94", "text", "HasText", "5\n"},
+		{"view_widened_predicate_field.ts", "7:88", "text", "HasText", "5\n"},
+		{"view_widened_predicate_anonymous.ts", "6:140", "text", "{ readonly kind: 9; readonly pos: number; readonly text: string; }", "5\n"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()
@@ -145,8 +159,9 @@ func TestViewWidenedRoadsHeld(t *testing.T) {
 // A read through a wider type of a value no view touched is honest. Beside a view of another value, a widened local,
 // a parameter and the source's own tag test and fields lower and agree with Node, on sanitized and release native as
 // well as JavaScript, which can't see this class of hole. With no view in the program, an array element and a Map
-// value read through the wider type do too. An honest array element read beside a view isn't: the element's reach
-// is unknown, and unknown fails closed.
+// value read through the wider type do too, and so do the honest spreads into a copy that is later cast, whose source
+// no cast reached (#yq6fkp5's over-refusal, fixed on its base). An honest array element read beside a view isn't:
+// the element's reach is unknown, and unknown fails closed.
 func TestHonestWidenedReadAgrees(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, node string }{
@@ -186,6 +201,30 @@ console.log(g === undefined ? "none" : g.text);
 			program, err := lowered(t, path)
 			if err != nil {
 				t.Fatalf("an honest widened read must lower: %v", err)
+			}
+			native, _ := natively(t, program)
+			for name, got := range map[string]run{"native": native, "release": released(t, program), "javascript": onJavaScriptBackend(t, program)} {
+				if problem := disagreement(truth, got); problem != "" {
+					t.Fatalf("%s: %s: exit %d, stdout %q, stderr %q", name, problem, got.exitCode, got.stdout, got.stderr)
+				}
+			}
+		})
+	}
+	for _, file := range []string{
+		"stage3/interface-downcasts/v2/snapshot-maybe-number.ts",
+		"internal/oracle/testdata/review/agree/fxspptb_oct9_native_p01_maybe_boolean_spread.ts",
+		"internal/oracle/testdata/loom_views_c/snapshot-original.ts",
+	} {
+		t.Run(file, func(t *testing.T) {
+			t.Parallel()
+			path, err := filepath.Abs(filepath.Join(repository, file))
+			if err != nil {
+				t.Fatal(err)
+			}
+			truth := onNode(t, path)
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatalf("an honest spread source must lower: %v", err)
 			}
 			native, _ := natively(t, program)
 			for name, got := range map[string]run{"native": native, "release": released(t, program), "javascript": onJavaScriptBackend(t, program)} {
