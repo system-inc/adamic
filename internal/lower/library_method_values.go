@@ -251,6 +251,9 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
 			if ast.SkipParentheses(receiver).Kind == ast.KindNewExpression && method.name == "fill" {
 				return nil, true, l.notYet(node, "delayed fill of an array with holes; write the direct filled construction")
 			}
+			if err := l.delayedArrayWritesFit(node, receiver, method.name, written); err != nil {
+				return nil, true, err
+			}
 			value, handled, err = l.arrayMethodArguments(node, receiver, method.name, written)
 		}
 	case "String.prototype":
@@ -352,6 +355,43 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
 		value = l.methodSequence(append(prefix, value))
 	}
 	return value, true, nil
+}
+
+// delayedArrayWritesFit is the check a delayed Array method's writes need. lib types Array.prototype as
+// any[], so a method value taken from it has any parameters, and the checker never checks what call or
+// apply hands it: push.call(names, { x: 1 }) writes an object into a string[], which native then reads
+// as a string (#gw3yrsn, Language's k10). So each value an adapter writes into the receiver must be
+// assignable to the receiver's own element type, judged by the checker, since a representation match
+// can't tell two object shapes apart: push's arguments, fill's value, splice's items from the third on,
+// and each array concat appends, by its elements. slice, join, at and reverse write nothing, and the
+// searches (indexOf, includes, lastIndexOf) only compare.
+func (l *lowering) delayedArrayWritesFit(node, receiver *ast.Node, name string, written []*ast.Node) error {
+	element := l.checker.GetElementTypeOfArrayType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver)))
+	var values []*ast.Node
+	switch name {
+	case "push":
+		values = written
+	case "fill":
+		values = written[:min(1, len(written))]
+	case "splice":
+		values = written[min(2, len(written)):]
+	case "concat":
+		for _, other := range written {
+			inside := l.checker.GetElementTypeOfArrayType(l.checker.GetTypeAtLocation(other))
+			if element == nil || inside == nil || !l.checker.IsTypeAssignableTo(inside, element) {
+				return l.notYet(other, "a delayed concat of an array whose elements aren't the receiver's element type")
+			}
+		}
+		return nil
+	default:
+		return nil
+	}
+	for _, value := range values {
+		if element == nil || !l.checker.IsTypeAssignableTo(l.checker.GetTypeAtLocation(value), element) {
+			return l.notYet(value, "a delayed "+name+" writing a value that isn't the receiver's element type")
+		}
+	}
+	return nil
 }
 
 func (l *lowering) objectTagCall(node, receiver *ast.Node, written []*ast.Node) (ir.Expression, error) {
