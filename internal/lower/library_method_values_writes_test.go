@@ -100,7 +100,7 @@ console.log((inner[1] ?? "").toUpperCase());`, "seen as (string | number)[]"},
 function make(): void {}
 const fs: (() => unknown)[] = [];
 push.call(fs, make);
-console.log(String(fs.length));`, "a void-returning function written where"},
+console.log(String(fs.length));`, "a void-returning function at the argument site seen as () => unknown"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
