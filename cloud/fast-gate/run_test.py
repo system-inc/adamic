@@ -3175,6 +3175,78 @@ class SmokeMarkdownOnly(unittest.TestCase):
                 self.assertEqual(self.inputs(self.change(edit))["paths"], ["."])
 
 
+class PhaseUnreadAgrees(unittest.TestCase):
+    """run.py --phase-unread names the tracked files no phase reads when modified (#nz7hm5j, Node's ruling), and the
+    listing agrees, both ways. For each file it names, a change editing it alone lists only the base phases, each with the
+    same inputs on the change's tree as on its base's, and what those inputs read (their paths' content and their packages'
+    own files) equal on both: no phase key can move, so a lookup deciding it empty is no false green. For each regular file
+    it doesn't name, some phase reads what the edit moved, so the lookup sends it to the compare (one that moved nothing is
+    an over-read). Every file that shapes the set (the Go state, cloud/fast-gate, the catalog's patches, a .gitattributes)
+    is outside it. Mutants, red here: each exclusion dropped, the Go state, an embed, a .gitattributes, an .a, a catalog
+    patch's target."""
+
+    setUp_, write, commit = CoverageMarkdownOnly.setUp, CoverageMarkdownOnly.write, CoverageMarkdownOnly.commit
+
+    def setUp(self):
+        self.setUp_()
+        # The shapes inertOnly alone doesn't rule out, each under an inert rule: an .a (a-check), a .gitattributes (tools),
+        # and a catalog undo patch's target (catalog-apply).
+        self.write("notes/gen.a", "a\n")
+        self.write("notes/.gitattributes", "*.log text\n")
+        self.write("notes/target.txt", "t\n")
+        self.write("verify/catalog/01-probe.patch", "--- a/notes/target.txt\n+++ b/notes/target.txt\n@@ -1 +1 @@\n-t\n+u\n")
+        self.base = self.commit("phase shapes")
+
+    def observed(self, change):
+        """The listing of change on its own tree and on its base's, each with what its inputs read there."""
+        argv = ["run.py", "--list-units", "--with-inputs", "--tree", self.tree, "--base", change["base"], "--sha", change["sha"], "--tools", self.tree]
+        sides = []
+        for checkout in (change["sha"], change["base"]):
+            realRun(["git", "-C", self.tree, "checkout", "-q", "--detach", checkout], check=True)
+            output = io.StringIO()
+            try:
+                with mock.patch.object(sys, "argv", argv), contextlib.redirect_stdout(output):
+                    run.listUnits()
+            finally:
+                run.listedGoLists = None
+            # census is the judge's step, never planned (loom planner.JudgedPhase), so no key of it can move.
+            rows = [row for row in map(json.loads, output.getvalue().splitlines()) if row["unit"] != "census"]
+            directories = {package: directory for directory, package in run.goPackages(self.tree, run.packageGraph(self.tree).stdout)[0].items()}
+            read = []
+            for row in rows:
+                inputs = row["inputs"]
+                owned = [":(glob)%s/*" % directories[package] for package in inputs["packages"] if package in directories]
+                read.append((row["unit"], run.git(self.tree, "ls-files", "-s", "--", *inputs["paths"]) if inputs["paths"] else "",
+                             run.git(self.tree, "ls-files", "-s", "--", *owned) if owned else ""))
+            sides.append((rows, read))
+        realRun(["git", "-C", self.tree, "checkout", "-q", "--detach", self.base], check=True)
+        return sides
+
+    def edited(self, path):
+        realRun(["git", "-C", self.tree, "checkout", "-q", "--detach", self.base], check=True)
+        with open(os.path.join(self.tree, path), "a") as handle:
+            handle.write("\n")  # new bytes every file here still parses with: Go, a module file, JSON, a patch
+        return {"base": self.base, "sha": self.commit("edit " + path), "tools": self.tree}
+
+    def test_the_set_and_the_listing_agree(self):
+        unread = run.phaseUnread(self.tree, self.tree)
+        for shaping in ("go.mod", "a/a.go", "notes/probe.c", "a/doc.md", "cloud/fast-gate/executors.txt", "notes/.gitattributes",
+                        "notes/gen.a", "notes/target.txt", "verify/catalog/01-probe.patch", "cohere"):
+            self.assertNotIn(shaping, unread)
+        self.assertTrue({"README.md", "docs/guide.md", "notes/counts.log"} <= set(unread), unread)
+        tracked = [entry.split("\t", 1)[1] for entry in run.git(self.tree, "ls-files", "-s").splitlines() if entry.split(" ", 1)[0] in ("100644", "100755")]
+        for path in tracked:
+            with self.subTest(path):
+                (tipRows, tipRead), (baseRows, baseRead) = self.observed(self.edited(path))
+                if path in unread:
+                    self.assertEqual([row["unit"] for row in tipRows], [phase for phase in run.fastBasePhases if phase != "census"], "%s: a false green, it selected a phase" % path)
+                    self.assertEqual(tipRows, baseRows, "%s: a false green, a phase's inputs moved" % path)
+                    for tip, base in zip(tipRead, baseRead):
+                        self.assertEqual(tip, base, "%s: a false green, phase %s reads it" % (path, tip[0]))
+                else:
+                    self.assertNotEqual((tipRows, tipRead), (baseRows, baseRead), "%s: an over-read, nothing moved" % path)
+
+
 class GoListFieldsHoldEveryRead(unittest.TestCase):
     """go list writes only run.goListFields, so a field a reader reads that the list leaves out would read as missing, a
     graph with edges or embeds gone, and fail open. Over a real go list of a tree with every shape the readers meet (a
