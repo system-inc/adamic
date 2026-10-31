@@ -649,6 +649,11 @@ func (l *lowering) checkedPredicateCheck(node, declaration *ast.Node, argument i
 	if (l.enumTagHazardOf(source, "kind") != enumTagNoHazard || !l.checkedPredicateTagProvesLayout(source, target)) && falseToo {
 		return nil, l.notYet(node, "checked predicate membership by an enum tag another member can hold")
 	}
+	// A branded supertype's membership is only that the value is an object, so its negation would stop
+	// every honest false (#c7w6j0y): its false side stays pending.
+	if falseToo && l.brandedMembership(target) {
+		return nil, l.notYet(node, "checked predicate membership of a branded supertype on its false branch")
+	}
 	setup, membership, err := l.predicateMembership(declaration, argument, source, target, local, 0)
 	if err != nil {
 		return nil, err
