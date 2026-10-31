@@ -1,0 +1,17 @@
+// A union of an object intersection with undefined and null is the boxed one, which keeps null apart
+// from undefined.
+interface Base<T> { readonly token: T; }
+type Shape = Base<'='> & { readonly left: { readonly text: string } };
+function make(choice: number): Shape | undefined | null {
+    if (choice === 0) {
+        return null;
+    }
+    if (choice === 1) {
+        return undefined;
+    }
+    return { token: '=', left: { text: 'built' + '-left' } };
+}
+for (let choice = 0; choice < 3; choice++) {
+    const made = make(choice);
+    console.log(`${made === null} ${made === undefined} ${typeof made} ${made === null || made === undefined ? '-' : made.left.text}`);
+}

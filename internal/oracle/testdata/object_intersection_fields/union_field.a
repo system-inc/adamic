@@ -1,0 +1,14 @@
+// An intersection whose fields are a boxed union and an object that may be undefined.
+interface Counter { readonly count: number; }
+interface Holder { readonly kind: 1; readonly value: string | number; }
+type Maybe = Holder & { readonly counter: Counter | undefined };
+function describe(item: Maybe): string {
+    const counted = item.counter === undefined ? 'none' : `${item.counter.count}`;
+    return `${typeof item.value} ${item.value} ${counted}`;
+}
+const text: Maybe = { kind: 1, value: 'built' + '-text', counter: undefined };
+const number: Maybe = { kind: 1, value: 4, counter: { count: 9 } };
+console.log(describe(text));
+console.log(describe(number));
+const copy: Maybe = { ...number, value: 'built' + '-copy' };
+console.log(`${describe(copy)} ${copy.counter === number.counter}`);
