@@ -93,6 +93,21 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		return contractError
 	}
 	var found error
+	l.refusal.deferred = nil
+	module.AsNode().ForEachChild(func(node *ast.Node) bool {
+		found = l.refuseNode(node)
+		return found != nil
+	})
+	if found == nil {
+		found = l.refusal.deferred
+	}
+	return found
+}
+
+// refuseNode runs refuse's per-node rules over node and everything under it, in refuse's order, and
+// returns the first refusal. A deferred stop is left in l.refusal.deferred for the caller.
+func (l *lowering) refuseNode(root *ast.Node) error {
+	var found error
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		if found != nil {
@@ -115,12 +130,47 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		node.ForEachChild(visit)
 		return false
 	}
-	l.refusal.deferred = nil
-	module.AsNode().ForEachChild(visit)
-	if found == nil {
-		found = l.refusal.deferred
-	}
+	visit(root)
 	return found
+}
+
+// refuseInSlot judges a value written into a slot the checker doesn't give it, such as a delayed Array
+// write's element, whose parameter lib types any: the slot is set as the value's (slotType), and the
+// whole registry runs over the value as refuse's walk runs it over a value the checker does give one
+// (#b6m00y7). The slot stays set, so lowering builds the value as what it's written into. A function
+// written in place in the value is NotYet, since the checker typed its parameters by lib's any, and so is
+// a part of the value whose slot tsc would carry down from this one but Adamic can't read off it.
+func (l *lowering) refuseInSlot(value *ast.Node, slot *checker.Type) error {
+	if l.slots.explicit == nil {
+		l.slots.explicit = map[*ast.Node]*checker.Type{}
+	}
+	l.slots.explicit[value] = slot
+	var function *ast.Node
+	var find ast.Visitor
+	find = func(node *ast.Node) bool {
+		switch node.Kind {
+		case ast.KindArrowFunction, ast.KindFunctionExpression, ast.KindClassExpression, ast.KindMethodDeclaration, ast.KindGetAccessor, ast.KindSetAccessor:
+			if _, carried, _ := l.carriedSlot(node); carried {
+				function = node
+				return true
+			}
+		}
+		return node.ForEachChild(find)
+	}
+	if find(value) {
+		return l.notYet(function, "a function written in place in a value written where the checker gives it no slot (lib types it any, so its parameters were typed any); bind it to a typed const first")
+	}
+	judging, uncarried, deferred := l.slots.judging, l.slots.uncarried, l.refusal.deferred
+	l.slots.judging, l.slots.uncarried, l.refusal.deferred = true, nil, nil
+	err := l.refuseNode(value)
+	if err == nil && len(l.slots.uncarried) > 0 {
+		err = l.notYet(l.slots.uncarried[0], "a part of a value written where the checker gives it no slot, whose own slot can't be read off the one it's written into")
+	}
+	if err == nil {
+		err = l.refusal.deferred
+	}
+	l.slots.judging, l.slots.uncarried, l.refusal.deferred = judging, uncarried, deferred
+	return err
 }
 
 // syntaxRefusal refuses the constructs refusals names by kind.
