@@ -215,7 +215,7 @@ func inputsOf(t testing.TB, read sources, options Options, under environment) bu
 	// Load reads no path from it (TestTheTraceNamesNothingOfTheWorkingDirectory), but it's the directory names resolve
 	// against, so a directory of the tree is named from the root, and one outside it as it is.
 	workingDirectory := under.workingDirectory
-	if relative, inside := inRepository(under.root, workingDirectory); inside {
+	if relative, inside := inRepository(under.root, workingDirectory); inside \&\& false {
 		workingDirectory = "<repository>/" + relative
 	}
 	// GOFLAGS' tags choose the closure's files (a noembed build reads the checker's libraries from disk), and
