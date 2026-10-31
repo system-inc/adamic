@@ -12,12 +12,15 @@ import (
 
 // viewSource is a view's target, the type its value had before it (a cast's operand, a checked
 // predicate's argument or a tag-proven predicate's parameter, nil when there's none to name), and
-// where its value enters the view in the IR: a cast's CheckedCast, or the local a structural cast
-// or a checked predicate's call admits. A view with neither is judged by its allocations alone.
+// where its value enters the view in the IR: a cast's CheckedCast, the local a structural cast or
+// a checked predicate's call admits, or each argument a tag-proven predicate's claimed parameter
+// takes. A view with none of these is judged by its allocations alone.
 type viewSource struct {
 	source, target *checker.Type
 	cast           bool
 	entry          ir.Expression
+	predicate      *ast.Node
+	claimed        int
 }
 
 // viewLie is what one view checks that its source doesn't guarantee. Lied are the names read raw
@@ -72,9 +75,16 @@ func (l *lowering) checkViewWidenedReads() error {
 	var unentered []viewLie
 	for i, view := range l.viewSources {
 		lies[i] = l.viewLie(view)
-		if read, isRead := view.entry.(ir.Read); !view.cast && isRead {
+		read, isRead := view.entry.(ir.Read)
+		switch {
+		case view.cast:
+		case view.predicate != nil:
+			if !l.predicateArguments(view, entryLocals) {
+				unentered = append(unentered, lies[i])
+			}
+		case isRead:
 			entryLocals[read.Local] = true
-		} else if !view.cast {
+		default:
 			unentered = append(unentered, lies[i])
 		}
 	}
@@ -142,6 +152,47 @@ func (l *lowering) checkViewWidenedReads() error {
 		walk(function.Body, inspect)
 	}
 	return refused
+}
+
+// predicateArguments adds to locals each local a tag-proven predicate's claimed parameter takes at
+// a call, the value a true result narrows at its caller. It says false when it can't name them
+// all: a predicate that isn't a declared function, one taken as a value, or a call passing
+// something other than a local.
+func (l *lowering) predicateArguments(view viewSource, locals map[int]bool) bool {
+	name := view.predicate.Name()
+	if name == nil || name.Kind != ast.KindIdentifier {
+		return false
+	}
+	function, declared := l.functions[l.symbol(name)]
+	if !declared {
+		return false
+	}
+	named := true
+	inspect := func(node any) bool {
+		switch value := node.(type) {
+		case ir.MakeClosure:
+			named = named && value.Function != function
+		case ir.Call:
+			if !slices.Contains(l.result.CallTargets(value), function) {
+				break
+			}
+			if view.claimed >= len(value.Arguments) {
+				named = false
+				break
+			}
+			read, isRead := value.Arguments[view.claimed].(ir.Read)
+			named = named && isRead
+			if isRead {
+				locals[read.Local] = true
+			}
+		}
+		return named
+	}
+	walk(l.result.Main, inspect)
+	for _, body := range l.result.Functions {
+		walk(body.Body, inspect)
+	}
+	return named
 }
 
 // viewLie is what a view checks that its source doesn't guarantee: its target's own fields, and

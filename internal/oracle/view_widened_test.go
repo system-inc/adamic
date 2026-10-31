@@ -16,8 +16,8 @@ import (
 // JavaScript backend printed 5 as Node does. The same held on every road Language found (#80cs7rz): an array element,
 // a Map value, a closure capture, a parameter, a return, an object field, destructuring, a template, a conditional's
 // arm, a class field and satisfies, and a ?. read and a method read through the wider type besides. A read of a field
-// a view checks, through a receiver type that doesn't check it, is now NotYet at the read when the receiver may hold
-// a viewed allocation, failing closed when the reach is unknown (internal/lower/view_widened.go). The fixtures sit in
+// a view checks, through a receiver type that doesn't check it, is now NotYet at the read when the receiver's flow
+// may come from the view, failing closed when the reach is unknown (internal/lower/view_widened.go). The fixtures sit in
 // reland_refused, since the flow and fresh corpora lower every program in testdata. Mutant: checkViewWidenedReads
 // returning nil at once; with it applied, this test goes red, and ADAMIC_VIEW_WIDENED_MUTANT=1 holds the mutant's
 // admitted programs to Node on sanitized and release native to show the crash.
