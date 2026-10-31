@@ -1,4 +1,4 @@
-package main
+package parallelcensus
 
 import (
 	"fmt"
