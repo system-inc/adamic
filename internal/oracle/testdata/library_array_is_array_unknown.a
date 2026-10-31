@@ -1,0 +1,25 @@
+// Array.isArray narrows unknown to readonly unknown[] (the prelude's overload), so what the
+// narrowed value proves is its arrayness and its length. Its elements stay unknown, and an
+// element read is NotYet until a checked read of an unknown element lowers.
+function size(value: unknown): number {
+	if (Array.isArray(value)) return value.length;
+	return -1;
+}
+function describe(value: unknown): string {
+	if (!Array.isArray(value)) return 'not an array';
+	const array: readonly unknown[] = value;
+	return array.length === 0 ? 'empty' : `${array.length} unknown elements`;
+}
+function show(value: unknown): void {
+	console.log(`${size(value)} ${describe(value)}`);
+}
+show([5]);
+show(['one', 'two']);
+show([]);
+show('text');
+show(7);
+show(null);
+show(undefined);
+show({ length: 3 });
+const nested: unknown = [[1, 2], [3]];
+if (Array.isArray(nested)) console.log(String(nested.length));
