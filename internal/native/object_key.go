@@ -239,9 +239,16 @@ func (cache objectCache) compile(compile *exec.Cmd, source string, compileFlags 
 func (cache objectCache) compileKeyed(keying *objectKeying, compile *exec.Cmd, jobserver *Jobserver) error {
 	object := filepath.Join(compile.Dir, "main.o")
 	for _, directory := range cache.reads {
-		if found, ok := cachedFile(filepath.Join(directory, keying.key, "main.o")); ok {
-			return cache.hit(keying.key, found, object, compile, jobserver)
+		cached, found, whole := objectEntry(filepath.Join(directory, keying.key))
+		if !found {
+			continue
 		}
+		if !whole {
+			// A crash or a disk mid-write: the entry's bytes aren't the ones its sum names, so it's passed over as a miss.
+			fmt.Fprintf(os.Stderr, "native: main.c's object under %s in %s isn't the bytes its sum names; it isn't used\n", keying.key, directory)
+			continue
+		}
+		return cache.hit(keying.key, cached, object, compile, jobserver)
 	}
 	clang, err := compileMain(compile, jobserver)
 	if err != nil {
@@ -256,13 +263,33 @@ func (cache objectCache) compileKeyed(keying *objectKeying, compile *exec.Cmd, j
 	return cache.store(keying.key, object)
 }
 
-// hit copies the object found under key to object, never linking the cache's file in place, unless unitCheckVariable
-// asks every hit compiled again: then compile makes object, and a cached object other than it is a mismatch.
-func (cache objectCache) hit(key string, found string, object string, compile *exec.Cmd, jobserver *Jobserver) error {
+// objectSumName is the file beside an entry's main.o holding the sha256 of its bytes, written by store and checked by
+// every read (objectEntry), so an object torn by a crash or a disk mid-write is never linked.
+const objectSumName = "main.o.sha256"
+
+// objectEntry reads the object an entry holds: its bytes, whether the entry holds a main.o at all, and whether the bytes
+// are whole, the sha256 its sum file names. An entry with no sum, a sum that doesn't read, or bytes that don't hash to
+// it is found but not whole.
+func objectEntry(entry string) ([]byte, bool, bool) {
+	found, ok := cachedFile(filepath.Join(entry, "main.o"))
+	if !ok {
+		return nil, false, false
+	}
 	cached, err := os.ReadFile(found)
 	if err != nil {
-		return err
+		return nil, true, false
 	}
+	sum, err := os.ReadFile(filepath.Join(filepath.Dir(found), objectSumName))
+	if err != nil {
+		return nil, true, false
+	}
+	return cached, true, string(bytes.TrimSpace(sum)) == fmt.Sprintf("%x", sha256.Sum256(cached))
+}
+
+// hit copies cached, the object found under key, to object, never linking the cache's file in place, unless
+// unitCheckVariable asks every hit compiled again: then compile makes object, and a cached object other than it is a
+// mismatch.
+func (cache objectCache) hit(key string, cached []byte, object string, compile *exec.Cmd, jobserver *Jobserver) error {
 	if os.Getenv(unitCheckVariable) == "" {
 		var copying time.Duration
 		if err := timed(&copying, func() error { return os.WriteFile(object, cached, 0o644) }); err != nil {
@@ -295,8 +322,9 @@ func (cache objectCache) hit(key string, found string, object string, compile *e
 	return nil
 }
 
-// store publishes object under key in the directory the cache writes, made whole before it's in place, as compileUnitAs
-// publishes a unit; an entry another process published first is kept.
+// store publishes object under key in the directory the cache writes, with its sum beside it, made whole before it's in
+// place, as compileUnitAs publishes a unit; an entry another process published first is kept when it's whole, and one
+// that isn't (objectEntry) is removed and replaced.
 func (cache objectCache) store(key string, object string) error {
 	contents, err := os.ReadFile(object)
 	if err != nil {
@@ -313,9 +341,27 @@ func (cache objectCache) store(key string, object string) error {
 	if err := os.WriteFile(filepath.Join(published, "main.o"), contents, 0o644); err != nil {
 		return err
 	}
+	if err := os.WriteFile(filepath.Join(published, objectSumName), fmt.Appendf(nil, "%x\n", sha256.Sum256(contents)), 0o644); err != nil {
+		return err
+	}
 	entry := filepath.Join(cache.writes, key)
+	err = os.Rename(published, entry)
+	if err == nil {
+		return nil
+	}
+	if _, _, whole := objectEntry(entry); whole {
+		return nil
+	}
+	if _, statErr := os.Lstat(entry); statErr != nil {
+		// Nothing is there, so the rename failed for a reason of its own.
+		return err
+	}
+	// The entry there isn't whole: it goes, by its own name, and this object takes its place.
+	if err := os.RemoveAll(entry); err != nil {
+		return err
+	}
 	if err := os.Rename(published, entry); err != nil {
-		if _, ok := cachedFile(filepath.Join(entry, "main.o")); !ok {
+		if _, _, whole := objectEntry(entry); !whole {
 			return err
 		}
 	}
