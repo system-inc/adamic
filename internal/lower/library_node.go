@@ -90,9 +90,10 @@ const (
 // the view, each object member of a union view, the property's type and a method's result, with a
 // seen-set, and past nodeHostViewDepth it fails closed, naming the type it stopped at. A value
 // that isn't a host object is walked together with its view to every host object inside it: an
-// instantiated generic (an array, a tuple, a Map) through its type arguments paired with the
-// view's, and any other object through its properties, index signatures and methods' results. So a
-// container holding one is the host object seen through the container's view. A type parameter in
+// instantiated library generic (an array, a tuple, a Map) through its type arguments paired with
+// the view's, and any other object through its properties, index signatures and methods' results,
+// and anything callable through its call and construct results. So a container holding one, or a
+// function giving one, is the host object seen through the container's view. A type parameter in
 // the view is seen as its constraint, which is all its body can name.
 func (l *lowering) nodeHostViewReach(own, view *checker.Type, depth int, seen map[[2]*checker.Type]bool) string {
 	if own == nil || view == nil || own == view {
@@ -143,9 +144,20 @@ func (l *lowering) nodeHostViewReach(own, view *checker.Type, depth int, seen ma
 		return nodeHostViewTooDeep + l.checker.TypeToString(own)
 	}
 	seen[[2]*checker.Type{own, view}] = true
-	// A container that's an instantiated generic (an array, a tuple, a Map, a Promise) holds what its
-	// type arguments are, so they're paired with the view's, and its library methods aren't walked.
-	if !host && own.ObjectFlags()&checker.ObjectFlagsReference != 0 && view.ObjectFlags()&checker.ObjectFlagsReference != 0 {
+	// A function or a class seen as a callable view gives what its calls give: each call or construct
+	// signature's result is paired with the view's, as a callable property's are below.
+	for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
+		for _, called := range l.checker.GetSignaturesOfType(view, kind) {
+			for _, call := range l.checker.GetSignaturesOfType(own, kind) {
+				if reached := l.nodeHostViewReach(l.checker.GetReturnTypeOfSignature(call), l.checker.GetReturnTypeOfSignature(called), depth+1, seen); reached != "" {
+					return reached
+				}
+			}
+		}
+	}
+	// A library container that's an instantiated generic (an array, a tuple, a Map, a Promise) holds
+	// what its type arguments are, so they're paired with the view's, and its methods aren't walked.
+	if !host && l.nodeLibraryContainer(own) && view.ObjectFlags()&checker.ObjectFlagsReference != 0 {
 		held, seenAs := l.checker.GetTypeArguments(own), l.checker.GetTypeArguments(view)
 		if len(held) == len(seenAs) {
 			for index := range held {
@@ -195,8 +207,8 @@ func (l *lowering) nodeHostViewReach(own, view *checker.Type, depth int, seen ma
 }
 
 // nodeHoldsHost says whether a value of a type may hold a host object anywhere inside it, along the
-// edges nodeHostViewReach walks: a union's members, an instantiated generic's type arguments, and
-// another object's properties, index signatures and call results. It's remembered for the
+// edges nodeHostViewReach walks: a union's members, a library container's type arguments, and any
+// other object's properties, index signatures and call and construct results. It's remembered for the
 // lowering, so the walk passes over the many program types that hold none: a search from one type
 // that meets no host object proves every type it met holds none, and one that meets a host object
 // proves the types on the way to it hold one.
@@ -229,7 +241,7 @@ func (l *lowering) nodeHoldsHost(root *checker.Type) bool {
 		case proven.Flags()&checker.TypeFlagsUnion != 0:
 			next = proven.Types()
 		case proven.Flags()&checker.TypeFlagsObject == 0:
-		case proven.ObjectFlags()&checker.ObjectFlagsReference != 0:
+		case l.nodeLibraryContainer(proven):
 			next = l.checker.GetTypeArguments(proven)
 		default:
 			for _, property := range l.checker.GetPropertiesOfType(proven) {
@@ -238,8 +250,10 @@ func (l *lowering) nodeHoldsHost(root *checker.Type) bool {
 			for _, index := range l.checker.GetIndexInfosOfType(proven) {
 				next = append(next, index.ValueType())
 			}
-			for _, signature := range l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall) {
-				next = append(next, l.checker.GetReturnTypeOfSignature(signature))
+			for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
+				for _, signature := range l.checker.GetSignaturesOfType(proven, kind) {
+					next = append(next, l.checker.GetReturnTypeOfSignature(signature))
+				}
 			}
 		}
 		for _, inner := range next {
@@ -257,6 +271,18 @@ func (l *lowering) nodeHoldsHost(root *checker.Type) bool {
 		l.nodeHostHolders[proven] = false
 	}
 	return false
+}
+
+// nodeLibraryContainer says whether a type is a tuple or an instantiated generic the library
+// declares (an array, a Map, a Set, a Promise), which holds only what its type arguments are. A
+// program's class or interface is a reference too, to itself with this, and holds what its members
+// hold, so it's walked through them instead.
+func (l *lowering) nodeLibraryContainer(proven *checker.Type) bool {
+	if checker.IsTupleType(proven) {
+		return true
+	}
+	symbol := proven.Symbol()
+	return proven.ObjectFlags()&checker.ObjectFlagsReference != 0 && symbol != nil && len(symbol.Declarations) != 0 && load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0]))
 }
 
 // nodeHostViewAt is nodeHostViewReach from a relation, remembered for the lowering: the same value
