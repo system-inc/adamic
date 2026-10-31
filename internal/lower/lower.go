@@ -323,6 +323,9 @@ type lowering struct {
 	// initializing is the variables whose initializers are being lowered, by where each is declared.
 	initializing map[int]*ast.Node
 
+	// nodeHostViews remembers each value type and view nodeHostViewAt has judged (library_node.go).
+	nodeHostViews map[[2]*checker.Type]string
+
 	// For the cycle finder (cycles.go): the checker's type of each local, and where it's declared;
 	// every function value made, with its type; and the class type being instantiated, for this.
 	localTypes     map[int]*checker.Type
