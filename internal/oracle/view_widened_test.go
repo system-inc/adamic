@@ -187,6 +187,16 @@ const m = new Map<string, HasText>([["k", l]]);
 const g = m.get("k");
 console.log(g === undefined ? "none" : g.text);
 `, "lit\nlit\nlit\n"},
+		{"an honest encodeJson beside a view", `import { encodeJson } from 'adamic';
+interface Node { readonly kind: number; readonly pos: number; }
+interface Lit extends Node { readonly kind: 9; readonly text: string; }
+interface HasText { readonly text: string; }
+function show(n: Node): void { if (n.kind === 9) { const l = n as Lit; console.log(l.text); } }
+const honest: HasText = { text: "plain" };
+console.log(encodeJson<HasText>(honest));
+const real = { kind: 9, pos: 2, text: "real" };
+show(real);
+`, "{\"text\":\"plain\"}\nreal\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -280,6 +290,51 @@ func TestViewWidenedPriceAccepted(t *testing.T) {
 			}
 			_, err = lowered(t, path)
 			what := filepath.Base(probe.file) + ":" + probe.at + ": stage 0 can't lower a read of field " + probe.field + " through type " + probe.through + ", which may hold a checked view's value"
+			var notYet *lower.NotYet
+			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), what) {
+				t.Fatalf("want %q, got %v", what, err)
+			}
+		})
+	}
+}
+
+// encodeJson reads every field of its value and of what that holds by its schema, raw, so it read a
+// lying layout as the types the schema says, through the view's own type as well as a wider one: on
+// a2cd978f, release native segfaulted and sanitized native died in AddressSanitizer for both programs
+// here, where Node prints the field. It's NotYet now when anything in its value may come from a
+// view's entry (#shh1v0z, view_reads.go's whole-value reader). ADAMIC_VIEW_WIDENED_MUTANT=1 holds the
+// mutant's admitted programs to Node natively, as TestViewWidenedReadNotYet does.
+func TestViewWholeValueReadNotYet(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ file, at, through, node string }{
+		{"view_widened_encode.ts", "6:126", "HasText", "{\"text\":5}\n"},
+		{"view_widened_encode_lit.ts", "6:100", "Lit", "{\"kind\":9,\"text\":5,\"pos\":1}\n"},
+	} {
+		t.Run(probe.file, func(t *testing.T) {
+			t.Parallel()
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file))
+			if err != nil {
+				t.Fatal(err)
+			}
+			truth := onNode(t, path)
+			if disagreement(run{stdout: []byte(probe.node)}, truth) != "" {
+				t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
+			}
+			program, err := lowered(t, path)
+			if os.Getenv("ADAMIC_VIEW_WIDENED_MUTANT") == "1" {
+				if err != nil {
+					t.Fatalf("the mutant must admit the program: %v", err)
+				}
+				native, _ := nativelyUncached(t, program)
+				for name, got := range map[string]run{"native": native, "release": releasedUncached(t, program)} {
+					if disagreement(truth, got) == "" {
+						t.Fatalf("the mutant's %s program agrees with Node: %+v", name, got)
+					}
+					t.Logf("mutant admits it: %s exit %d, stdout %q, stderr %q where Node prints %q", name, got.exitCode, got.stdout, got.stderr, truth.stdout)
+				}
+				return
+			}
+			what := probe.file + ":" + probe.at + ": stage 0 can't lower a read of every field of a value of type " + probe.through + " by encodeJson, which may hold a checked view's value"
 			var notYet *lower.NotYet
 			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), what) {
 				t.Fatalf("want %q, got %v", what, err)
