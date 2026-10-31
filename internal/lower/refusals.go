@@ -138,9 +138,10 @@ func (l *lowering) refuseNode(root *ast.Node) error {
 // write's element, whose parameter lib types any: the slot is set as the value's (slotType), and the
 // whole registry runs over the value as refuse's walk runs it over a value the checker does give one
 // (#b6m00y7). It only judges: the slot is unset after, so a caller can judge one value against several
-// slots, and lowering builds the value as it did. A function written in place in the value is NotYet,
-// since the checker typed its parameters by lib's any, and so is a part of the value whose slot tsc
-// would carry down from this one but Adamic can't read off it.
+// slots, and lowering builds the value as it did. Before any rule runs, every part of the value is read
+// for its slot: a function written in place where the slot reaches is NotYet, since the checker typed
+// its parameters by lib's any, and so is any part the slot reaches but Adamic can't read off it, whether
+// or not a rule would have asked for that part's slot.
 func (l *lowering) refuseInSlot(value *ast.Node, slot *checker.Type) error {
 	if l.slots.explicit == nil {
 		l.slots.explicit = map[*ast.Node]*checker.Type{}
@@ -154,31 +155,31 @@ func (l *lowering) refuseInSlot(value *ast.Node, slot *checker.Type) error {
 			delete(l.slots.explicit, value)
 		}
 	}()
-	var function *ast.Node
-	var find ast.Visitor
-	find = func(node *ast.Node) bool {
-		switch node.Kind {
-		case ast.KindArrowFunction, ast.KindFunctionExpression, ast.KindClassExpression, ast.KindMethodDeclaration, ast.KindGetAccessor, ast.KindSetAccessor:
-			if _, carried, _ := l.carriedSlot(node); carried {
-				function = node
-				return true
-			}
+	var stop error
+	var read ast.Visitor
+	read = func(node *ast.Node) bool {
+		_, carried, readable := l.carriedSlot(node)
+		switch {
+		case !carried:
+		case node.Kind == ast.KindArrowFunction || node.Kind == ast.KindFunctionExpression || node.Kind == ast.KindClassExpression || node.Kind == ast.KindMethodDeclaration || node.Kind == ast.KindGetAccessor || node.Kind == ast.KindSetAccessor:
+			stop = l.notYet(node, "a function written in place in a value written where the checker gives it no slot (lib types it any, so its parameters were typed any); bind it to a typed const first")
+			return true
+		case !readable && l.isExpression(node):
+			stop = l.notYet(node, "a part of a value written where the checker gives it no slot, whose own slot can't be read off the one it's written into")
+			return true
 		}
-		return node.ForEachChild(find)
+		return node.ForEachChild(read)
 	}
-	if find(value) {
-		return l.notYet(function, "a function written in place in a value written where the checker gives it no slot (lib types it any, so its parameters were typed any); bind it to a typed const first")
+	if read(value) {
+		return stop
 	}
-	uncarried, deferred := l.slots.uncarried, l.refusal.deferred
-	l.slots.uncarried, l.refusal.deferred = nil, nil
+	deferred := l.refusal.deferred
+	l.refusal.deferred = nil
 	err := l.refuseNode(value)
-	if err == nil && len(l.slots.uncarried) > 0 {
-		err = l.notYet(l.slots.uncarried[0], "a part of a value written where the checker gives it no slot, whose own slot can't be read off the one it's written into")
-	}
 	if err == nil {
 		err = l.refusal.deferred
 	}
-	l.slots.uncarried, l.refusal.deferred = uncarried, deferred
+	l.refusal.deferred = deferred
 	return err
 }
 

@@ -743,9 +743,6 @@ type slotTargets struct {
 	explicit map[*ast.Node]*checker.Type
 	// implied memoizes impliedExpressionTarget's answer per parent, within this checker.
 	implied map[*ast.Node]*checker.Type
-	// uncarried collects, while refuseInSlot judges a value, the parts of it whose slot tsc would carry
-	// down from the explicit one but Adamic can't read off it, which refuseInSlot stops at.
-	uncarried []*ast.Node
 }
 
 // slotType is the slot a value at node goes into: the one a caller set for it (slots.explicit), or the
@@ -756,10 +753,7 @@ type slotTargets struct {
 // because a second list beside the registry forgot it (#b6m00y7).
 func (l *lowering) slotType(node *ast.Node) *checker.Type {
 	if len(l.slots.explicit) > 0 {
-		if slot, carried, readable := l.carriedSlot(node); carried {
-			if !readable {
-				l.slots.uncarried = append(l.slots.uncarried, node)
-			}
+		if slot, carried, _ := l.carriedSlot(node); carried {
 			return slot
 		}
 	}
@@ -781,10 +775,13 @@ func (l *lowering) slotSet(node *ast.Node) bool {
 // carriedSlot is node's slot when it comes from one a caller set: node's own, or the one tsc's
 // contextual typing would carry down to it from an enclosing value that has one, through parentheses, a
 // non-null, an as const, a conditional's branches, a logical operand, the right of a comma, and a
-// literal's property, spread or element. carried is false when no explicit slot reaches node, and the
-// checker's contextual type is its slot. readable is false when one reaches it but Adamic can't read
-// node's part off it (a computed name, a property the slot doesn't declare, an element of a slot that
-// isn't an array or a tuple), and the caller fails closed rather than judging node by the checker's.
+// literal's property, shorthand, spread or element. carried is false when no explicit slot reaches node,
+// and the checker's contextual type is its slot. readable is false when one reaches it but Adamic can't
+// read node's part off it (a computed name, a property the slot doesn't declare, an element of a slot
+// that isn't an array or a tuple, or a parent kind this doesn't model, such as an await's operand), and
+// refuseInSlot fails closed rather than judging node by the checker's. Only the kinds tsc carries
+// nothing through are let go (slotIndependent), so a kind nobody listed fails closed (Compiler's must on
+// c06ed629).
 func (l *lowering) carriedSlot(node *ast.Node) (slot *checker.Type, carried bool, readable bool) {
 	if slot, set := l.slots.explicit[node]; set {
 		return slot, true, true
@@ -841,6 +838,16 @@ func (l *lowering) carriedSlot(node *ast.Node) (slot *checker.Type, carried bool
 			property, readable := l.carriedProperty(literal, node.Name())
 			return property, true, readable
 		}
+	case ast.KindShorthandPropertyAssignment:
+		// { p } is the variable written as the literal's property p.
+		if parent.Name() == node {
+			literal, carried, readable := l.carriedSlot(parent.Parent)
+			if !carried || !readable {
+				return nil, carried, readable
+			}
+			property, readable := l.carriedProperty(literal, node)
+			return property, true, readable
+		}
 	case ast.KindSpreadAssignment:
 		return l.carriedSlot(parent.Parent)
 	case ast.KindSpreadElement:
@@ -867,7 +874,36 @@ func (l *lowering) carriedSlot(node *ast.Node) (slot *checker.Type, carried bool
 		}
 		return nil, true, false
 	}
+	if slotIndependent(parent, node) {
+		return nil, false, false
+	}
+	if _, carried, _ := l.carriedSlot(parent); carried {
+		return nil, true, false
+	}
 	return nil, false, false
+}
+
+// slotIndependent is whether tsc gives node no slot from its parent's, so that whatever slot node has is
+// its own: a call's callee and arguments (which take its parameters), an access's object and key, an
+// operator's operands but the ones carriedSlot carries, a conditional's test, an assertion's operand
+// (the asserted type), an untagged template's spans, a computed key, a property's name, a spread
+// argument in a call, and any type. It names the kinds that carry nothing, never the ones that carry,
+// so a kind left off it fails closed in carriedSlot.
+func slotIndependent(parent, node *ast.Node) bool {
+	if ast.IsPartOfTypeNode(node) {
+		return true
+	}
+	switch parent.Kind {
+	case ast.KindCallExpression, ast.KindNewExpression, ast.KindTaggedTemplateExpression,
+		ast.KindPropertyAccessExpression, ast.KindElementAccessExpression,
+		ast.KindBinaryExpression, ast.KindPrefixUnaryExpression, ast.KindPostfixUnaryExpression,
+		ast.KindTypeOfExpression, ast.KindVoidExpression, ast.KindDeleteExpression,
+		ast.KindConditionalExpression, ast.KindAsExpression, ast.KindSatisfiesExpression, ast.KindTypeAssertionExpression,
+		ast.KindTemplateExpression, ast.KindTemplateSpan, ast.KindComputedPropertyName, ast.KindSpreadElement,
+		ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment:
+		return true
+	}
+	return false
 }
 
 // carriedProperty is the slot tsc carries from a literal's slot to its property name: the property's
