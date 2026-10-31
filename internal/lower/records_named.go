@@ -93,11 +93,11 @@ func (l *lowering) recordNamedWrite(access, value *ast.Node) error {
 // A method or an accessor under such a name stores a function under it unjudged, so it's not yet
 // unless its folded name names no declared property.
 //
-// In a slot boxed as a union (of), a declared read already stops on a lie, so only a property read
-// unchecked there is judged: recordReadType checks a declared scalar's tag and stops loudly
-// (records_union_lying.ts is Adamic's .ts witness), and a declared object read from it is not yet;
-// but a declared function is checked only by its tag, so a () => void under names: () => unknown
-// would be read as unknown, and it's judged here.
+// In a slot boxed as a union (of), a declared number, string or boolean is read through
+// recordReadType's exact tag check, which stops loudly on a lie (records_union_lying.ts is Adamic's
+// .ts witness), so only those are left to their reads. Every other declared property is judged, an
+// unknown representation included: a function's tag says only "function", so a () => void under
+// names: () => unknown was read as unknown, and an array's says only that it's an array.
 func (l *lowering) recordComputedEntry(literal, entry *ast.Node, of ir.Type) error {
 	key := ast.SkipParentheses(entry.Name().AsComputedPropertyName().Expression)
 	if key.Kind == ast.KindStringLiteral || key.Kind == ast.KindNoSubstitutionTemplateLiteral || key.Kind == ast.KindNumericLiteral {
@@ -118,7 +118,7 @@ func (l *lowering) recordComputedEntry(literal, entry *ast.Node, of ir.Type) err
 				continue
 			}
 			if of == ir.Union {
-				if stored, known := l.representation(l.checker.GetNonMissingTypeOfSymbol(property)); known && stored.Present() != ir.Closure {
+				if stored, known := l.representation(l.checker.GetNonMissingTypeOfSymbol(property)); known && (stored.Present() == ir.Number || stored.Present() == ir.String || stored.Present() == ir.Boolean) {
 					continue
 				}
 			}

@@ -105,8 +105,9 @@ func TestNamedRecordRefusals(t *testing.T) {
 // A record literal's computed name is the same write, made as the literal is: w8's and w10's shapes
 // through { names: ..., [key]: ... } are not yet too. An honest write, a number into number properties,
 // still lowers. Language's w12 to w14 reach the same write through an alias, a chained assignment and
-// a parameter, and w10's literal in a slot boxed by a number is judged too, since a declared function
-// read from a boxed slot is checked only by its tag. Mutants: the identity check dropped lowers w8,
+// a parameter. In a slot boxed by a number in the index, w10's literal, an array's and a Map's are
+// judged too, since a declared function, array or Map read from a boxed slot is checked only by its
+// tag; only a declared number, string or boolean is left to its exact read check. Mutants: the identity check dropped lowers w8,
 // w10, both literals, w12 to w14 and the boxed w10, and w8's print POINT natively; recordComputedEntry
 // skipped lowers w8's literal, which prints POINT natively, and w10's two literals.
 func TestNamedRecordWritesAreThePropertyTypeItself(t *testing.T) {
@@ -183,6 +184,18 @@ const key = keys[0] ?? "other";
 const write = (target: Places, at: string): void => { target[at] = new Other(); };
 write(places, key);
 console.log(places.names.describe().toUpperCase());
+`},
+		{"array construction boxed", `type Lists = { names: string[]; [k: string]: string[] | number[] | number };
+const keys: string[] = ["names", "other"];
+const key = keys[0] ?? "other";
+const lists: Lists = { names: ["a"], [key]: [1, 2] };
+console.log((lists.names[0] ?? "").toUpperCase());
+`},
+		{"map construction boxed", `type Tables = { names: Map<string, string>; [k: string]: Map<string, string> | Map<string, number> | number };
+const keys: string[] = ["names", "other"];
+const key = keys[0] ?? "other";
+const tables: Tables = { names: new Map<string, string>([["a", "b"]]), [key]: new Map<string, number>([["a", 1]]) };
+console.log((tables.names.get("a") ?? "").toUpperCase());
 `},
 		{"w10 construction boxed", `type Handlers = { names: () => unknown; [k: string]: (() => void) | number };
 const keys: string[] = ["names", "other"];
