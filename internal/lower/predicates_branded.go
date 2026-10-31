@@ -129,8 +129,11 @@ func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Typ
 	}
 	// The checker narrows the argument's own type, so a type parameter T narrows to T & S, whose
 	// instance is an intersection with an id of its own that no view covers (Language's must on
-	// 7f4b7030). Judging concrete(T) would see a supertype and admit it.
-	if declared := l.checker.GetTypeAtLocation(argument); holdsTypeParameter(declared) {
+	// 7f4b7030). Judging concrete(T) would see a supertype and admit it. Any type the instance changes
+	// mentions a type parameter, a generic object like Holder<K> or Readonly<T> included (Language's
+	// must on 4a1fe092), so that's the test, not the type's own flags. A body lowered with no mapper
+	// leaves the type as it is, so mentionsTypeParameter names the parameter there too.
+	if declared := l.checker.GetTypeAtLocation(argument); l.concrete(declared) != declared || l.mentionsTypeParameter(declared, map[*checker.Type]bool{}) {
 		return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(claim)+" over a generic argument "+l.checker.TypeToString(declared)+", which narrows to an intersection no view covers")
 	}
 	source := l.concrete(l.checker.GetTypeAtLocation(argument))
@@ -158,17 +161,30 @@ func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Typ
 	return nil
 }
 
-// holdsTypeParameter is whether t is a type parameter or another instantiable type, or a union or
-// intersection holding one.
-func holdsTypeParameter(t *checker.Type) bool {
+// mentionsTypeParameter is whether t is instantiable, or names an instantiable type through a union's or
+// intersection's members, its alias's type arguments, or a reference's type arguments, as Readonly<T>
+// and Holder<K> do. visited ends a recursive type on its second visit.
+func (l *lowering) mentionsTypeParameter(t *checker.Type, visited map[*checker.Type]bool) bool {
+	if visited[t] {
+		return false
+	}
+	visited[t] = true
 	if t.Flags()&checker.TypeFlagsInstantiable != 0 {
 		return true
 	}
+	var parts []*checker.Type
 	if t.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
-		for _, member := range t.Types() {
-			if holdsTypeParameter(member) {
-				return true
-			}
+		parts = append(parts, t.Types()...)
+	}
+	if alias := t.Alias(); alias != nil {
+		parts = append(parts, alias.TypeArguments()...)
+	}
+	if t.Flags()&checker.TypeFlagsObject != 0 && t.ObjectFlags()&checker.ObjectFlagsReference != 0 {
+		parts = append(parts, l.checker.GetTypeArguments(t)...)
+	}
+	for _, part := range parts {
+		if l.mentionsTypeParameter(part, visited) {
+			return true
 		}
 	}
 	return false

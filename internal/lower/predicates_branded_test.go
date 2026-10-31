@@ -172,6 +172,13 @@ const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const v: Node = w; sh
 const w = { kind: 80, pos: 2, escapedText: "e", name: 5, _declarationBrand: 0 }; show(w);`, "over a generic argument T, which narrows to an intersection no view covers"},
 		{"generic argument given its type", `function show<T extends Node>(n: T): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
 const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show<Node>(w);`, "over a generic argument T, which narrows to an intersection no view covers"},
+		// A generic object type mentions its type parameter in an argument (Language's g4 and g5 on
+		// 4a1fe092). Mutant: the guard judged by the type's own flags, and g4 lowers.
+		{"generic object argument", `interface Holder<K extends number> { readonly kind: K; readonly pos: number; }
+function show<K extends number>(n: Holder<K>): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
+const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const v: Holder<number> = w; show(v);`, "over a generic argument Holder<K>, which narrows to an intersection no view covers"},
+		{"generic readonly argument", `function show<T extends Node>(n: Readonly<T>): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
+const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const v: Node = w; show(v);`, "over a generic argument Readonly<T>, which narrows to an intersection no view covers"},
 		{"no brand", `interface Expression extends Node { readonly text: string; }
 function isExpression(n: Node): n is Expression { return kindOf(n) === 9; }
 function show(n: Node): void { if (isExpression(n)) { console.log(n.text); } }
