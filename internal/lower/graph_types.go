@@ -16,7 +16,7 @@ func (l *lowering) graphAllocation(value ir.Expression, node *ast.Node) ir.Expre
 	if node.Parent != nil && node.Parent.Kind == ast.KindVariableDeclaration && node.Parent.Name() != nil {
 		ids = append(ids, l.cycleTypeID(l.concrete(l.checker.GetTypeAtLocation(node.Parent.Name()))))
 	}
-	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+	if contextual := l.slotType(node); contextual != nil {
 		ids = append(ids, l.cycleTypeID(l.concrete(contextual)))
 	}
 	switch value := value.(type) {
@@ -132,7 +132,7 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 			}
 			if ast.IsExpressionNode(node) {
 				f.use(f.l.checker.GetTypeAtLocation(node), node)
-				if contextual := f.l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+				if contextual := f.l.slotType(node); contextual != nil {
 					f.use(contextual, node)
 				}
 			}
