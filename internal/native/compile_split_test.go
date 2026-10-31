@@ -9,8 +9,8 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
-	"slices"
 	"strings"
+	"sync"
 	"testing"
 
 	bridge "github.com/system-inc/adamic/bridge/tsgo"
@@ -148,57 +148,115 @@ func splitDifference(oneCall, split splitBuilt) string {
 // splitCorpusSource is the C of the oracle program named name.
 func splitCorpusSource(t *testing.T, name string) string {
 	t.Helper()
-	checked, err := load.Load([]string{filepath.Join("..", "oracle", "testdata", name)})
+	source, err := splitCorpusLowered(name)
 	if err != nil {
 		t.Fatal(err)
+	}
+	return source
+}
+
+// splitCorpusLowered is the C of the oracle program named name, or why it couldn't be made.
+func splitCorpusLowered(name string) (string, error) {
+	checked, err := load.Load([]string{filepath.Join("..", "oracle", "testdata", name)})
+	if err != nil {
+		return "", err
 	}
 	program, err := lower.Lower(context.Background(), checked)
 	if err != nil {
+		return "", err
+	}
+	return C(program), nil
+}
+
+// splitCorpusSources are the names of the programs a split build is held to the one call's bytes over, splitCorpus and
+// splitRegexpCompiler, and their C, lowered once for the five build kinds' tests to share.
+var splitCorpusSources = sync.OnceValues(func() ([][2]string, error) {
+	programs := [][2]string{}
+	for _, name := range splitCorpus {
+		source, err := splitCorpusLowered(name)
+		if err != nil {
+			return nil, fmt.Errorf("%s: %w", name, err)
+		}
+		programs = append(programs, [2]string{name, source})
+	}
+	programs = append(programs, [2]string{"regexp compiler", splitRegexpCompiler})
+	// The corpus is held to what it says it reaches, so a fixture renamed or rewritten can't quietly narrow it.
+	var regexpCompiler, features int
+	for _, program := range programs {
+		if regexpCompilerSource(program[1]) {
+			regexpCompiler++
+		}
+		if len(Features(program[1])) > 0 {
+			features++
+		}
+	}
+	if regexpCompiler == 0 || features == 0 {
+		return nil, fmt.Errorf("of %d programs, %d link the regexp compiler and %d turn on a runtime feature; the corpus needs both", len(programs), regexpCompiler, features)
+	}
+	return programs, nil
+})
+
+// testSplitCorpus holds the programs of the corpus from first up to last, built as build says, split to the one call's
+// binary byte for byte. A last past the corpus's end is its end.
+func testSplitCorpus(t *testing.T, build Options, first, last int) {
+	programs, err := splitCorpusSources()
+	if err != nil {
 		t.Fatal(err)
 	}
-	return C(program)
+	for _, program := range programs[first:min(last, len(programs))] {
+		t.Run(program[0], func(t *testing.T) {
+			t.Parallel()
+			oneCall, split := buildOneCallAndSplit(t, program[1], build)
+			if oneCall.failure != "" {
+				t.Errorf("the one call failed: %s", oneCall.failure)
+			}
+			if difference := splitDifference(oneCall, split); difference != "" {
+				t.Error(difference)
+			}
+		})
+	}
 }
 
 // Compiling main.c to main.o and then linking it makes the one call's binary, byte for byte (#2r9xhqs): the split exists
 // so the compile's object can be cached, which it can only be if the split itself changes nothing. Over the oracle's
-// programs, one of each family, each as a release, a shipped release, Debug, and both sanitized builds; the whole binary
-// equal covers the Debug builds' line and file tables. Mutants, each red: a compile flag left off the compile (the
-// prefix maps, so the build directory reaches the debug info), and the compile's flags left off the link.
+// programs, one of each family, as a release, a shipped release, Debug, and both sanitized builds, a test for each build
+// kind so each stays in a test's time on a runner (Compiler, on step 1); the whole binary equal covers the Debug builds'
+// line and file tables. Mutants, each red: a compile flag left off the compile (the prefix maps, so the build directory
+// reaches the debug info), and the compile's flags left off the link.
 func TestACompiledThenLinkedProgramIsTheOneCallProgram(t *testing.T) {
 	t.Parallel()
-	names := append(slices.Clone(splitCorpus), "regexp compiler")
-	sources := make([]string, len(names))
-	var regexpCompiler, features int
-	for index, name := range names {
-		sources[index] = splitRegexpCompiler
-		if index < len(splitCorpus) {
-			sources[index] = splitCorpusSource(t, name)
-		}
-		if regexpCompilerSource(sources[index]) {
-			regexpCompiler++
-		}
-		if len(Features(sources[index])) > 0 {
-			features++
-		}
-	}
-	// The corpus is held to what it says it reaches, so a fixture renamed or rewritten can't quietly narrow it.
-	if regexpCompiler == 0 || features == 0 {
-		t.Fatalf("of %d programs, %d link the regexp compiler and %d turn on a runtime feature; the corpus needs both", len(names), regexpCompiler, features)
-	}
-	for index, name := range names {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			for _, build := range splitBuilds {
-				oneCall, split := buildOneCallAndSplit(t, sources[index], build.options)
-				if oneCall.failure != "" {
-					t.Errorf("%s: the one call failed: %s", build.name, oneCall.failure)
-				}
-				if difference := splitDifference(oneCall, split); difference != "" {
-					t.Errorf("%s: %s", build.name, difference)
-				}
-			}
-		})
-	}
+	testSplitCorpus(t, splitBuilds[0].options, 0, len(splitCorpus)+1)
+}
+
+// The same, as a shipped release, whose code generation ThinLTO runs in the link, the slowest build kind, so its corpus
+// is held in two tests: the first half here.
+func TestACompiledThenLinkedShippedProgramIsTheOneCallProgram(t *testing.T) {
+	t.Parallel()
+	testSplitCorpus(t, splitBuilds[1].options, 0, len(splitCorpus)/2)
+}
+
+// The same, as a shipped release: the second half of the corpus, the regexp compiler's program among it.
+func TestACompiledThenLinkedShippedProgramIsTheOneCallProgramToo(t *testing.T) {
+	t.Parallel()
+	testSplitCorpus(t, splitBuilds[1].options, len(splitCorpus)/2, len(splitCorpus)+1)
+}
+
+// The same, as a Debug build.
+func TestACompiledThenLinkedDebugProgramIsTheOneCallProgram(t *testing.T) {
+	t.Parallel()
+	testSplitCorpus(t, splitBuilds[2].options, 0, len(splitCorpus)+1)
+}
+
+// The same, as a sanitized build.
+func TestACompiledThenLinkedSanitizedProgramIsTheOneCallProgram(t *testing.T) {
+	t.Parallel()
+	testSplitCorpus(t, splitBuilds[3].options, 0, len(splitCorpus)+1)
+}
+
+// The same, as a thread sanitized build.
+func TestACompiledThenLinkedThreadSanitizedProgramIsTheOneCallProgram(t *testing.T) {
+	t.Parallel()
+	testSplitCorpus(t, splitBuilds[4].options, 0, len(splitCorpus)+1)
 }
 
 // splitFaults are C a program's source ends with that fails its build: under -Werror (a variable used before it may be
