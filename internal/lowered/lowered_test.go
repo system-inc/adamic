@@ -264,8 +264,9 @@ func copyInto(t *testing.T, root, other, name string) {
 }
 
 // Two checkouts of one tree key alike: every place in the key is named from the checkout's root, the sources' and the
-// working directory's both. Each stand-in checkout holds the key's files and the program, copied from this one, and the
-// key's environment names its own root. Mutant: the working directory keyed as it is.
+// working directory's both, so the key's lines are the same lines, whatever buildcache makes portable after, and the
+// keys equal. Each stand-in checkout holds the key's files and the program, copied from this one, and the key's
+// environment names its own root. Mutant: the working directory keyed as the machine spells it.
 func TestTwoCheckoutsOfOneTreeKeyAlike(t *testing.T) {
 	t.Parallel()
 	this := here(t)
@@ -278,6 +279,7 @@ func TestTwoCheckoutsOfOneTreeKeyAlike(t *testing.T) {
 		t.Fatalf("the test runs outside the repository, in %s", this.workingDirectory)
 	}
 	var keys []string
+	var flags [][]string
 	for range 2 {
 		checkout := t.TempDir()
 		for _, file := range append(slices.Clone(lowering.files), corpus[3]...) {
@@ -288,7 +290,14 @@ func TestTwoCheckoutsOfOneTreeKeyAlike(t *testing.T) {
 		for index, path := range corpus[3] {
 			paths[index] = filepath.Join(checkout, filepath.FromSlash(path))
 		}
-		keys = append(keys, keyAt(t, checkout, inputsOf(t, sourcesOf(t, paths), Options{}, under)))
+		inputs := inputsOf(t, sourcesOf(t, paths), Options{}, under)
+		flags = append(flags, inputs.Flags)
+		keys = append(keys, keyAt(t, checkout, inputs))
+	}
+	for index := range max(len(flags[0]), len(flags[1])) {
+		if index >= len(flags[0]) || index >= len(flags[1]) || flags[0][index] != flags[1][index] {
+			t.Fatalf("two checkouts of one tree keyed apart, from line %d: %q and %q", index, flags[0][index:], flags[1][index:])
+		}
 	}
 	if keys[0] != keys[1] {
 		t.Fatalf("two checkouts of one tree keyed apart: %s and %s", keys[0][:12], keys[1][:12])
