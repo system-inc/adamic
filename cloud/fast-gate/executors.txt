@@ -88,8 +88,9 @@ a-check        *.a
 reads bridge/tsgo internal/lower/tsgo.go
 # TestBridge — bridge/tsgo/bridge_test.go:274
 reads bridge/tsgo internal/native/runtime/tsgo.c
-# TestTypeAwareChildrenAndParentCost — cmd/adamic-gate/resume_test.go:137
-reads cmd/adamic-gate stage1/cohere/typeaware/volume_test.go
+# The census tests in cmd/adamic-gate/parallelcensus, which name it beside *_test.go (resume_test.go's
+# TestLiteralChildrenAndParentCost reads a table of its own since 113707a8)
+reads cmd/adamic-gate/parallelcensus stage1/cohere/typeaware/volume_test.go
 # TestParallelCachedMatchesSerial — cmd/adamic-test262/cache_test.go:138
 # TestOrderedProgress — cmd/adamic-test262/cache_test.go:219
 # TestUnavailableCacheStillRuns — cmd/adamic-test262/cache_test.go:239
@@ -1495,16 +1496,17 @@ reads stage3/fixtures oracle/node.mjs
 # Loom planner (Oct 10, Loom's ruling 00:20Z): the reads lines selection wrote on release/selection-reads-gaps 8b2af706
 # and the census branches through fe9c1932, still behind the old box canary, so the new path keys them now.
 reads internal/oracle stage3/census/repro/r05/main.a
-reads cmd/adamic-gate internal/native/normalize_test.go
-reads cmd/adamic-gate internal/native/string_index_test.go
-reads cmd/adamic-gate internal/oracle/input_test.go
-reads cmd/adamic-gate internal/oracle/oracle_test.go
-reads cmd/adamic-gate stage1/cohere/css/print_test.go
-reads cmd/adamic-gate stage1/cohere/lint/lint_test.go
-# TestEveryTestIsParallelOrSaysWhy (cmd/adamic-gate/parallel_test.go) parses every _test.go in the tree for its
-# parallel census, so its key names them all (#006gzv8): named only by the lines above, it reused a green past
-# runtime's 53c2e7a01d, whose reason sat inside its test's body, and main went red unseen.
-reads cmd/adamic-gate *_test.go
+reads cmd/adamic-gate/parallelcensus internal/native/normalize_test.go
+reads cmd/adamic-gate/parallelcensus internal/native/string_index_test.go
+reads cmd/adamic-gate/parallelcensus internal/oracle/input_test.go
+reads cmd/adamic-gate/parallelcensus internal/oracle/oracle_test.go
+reads cmd/adamic-gate/parallelcensus stage1/cohere/css/print_test.go
+reads cmd/adamic-gate/parallelcensus stage1/cohere/lint/lint_test.go
+# TestEveryTestIsParallelOrSaysWhy (cmd/adamic-gate/parallelcensus/parallel_test.go) parses every _test.go in the tree
+# for its parallel census, so its key names them all (#006gzv8): named only by the lines above, it reused a green past
+# runtime's 53c2e7a01d, whose reason sat inside its test's body, and main went red unseen. It and the package's two
+# other walks live in their own package, so this line keys only them, never cmd/adamic-gate's products (#se8mh14).
+reads cmd/adamic-gate/parallelcensus *_test.go
 # TestEveryCCompilerRunsThroughNative (internal/compilercensus/census_test.go) parses every Go file in the tree for
 # C compiler calls, so its key names them all (#fwms5s4): in internal/native, keyed on native's reads, it reused a
 # green past chg_gm7k75w9's clang lookup in internal/oracle, and main went red unseen. Its own package, so only the
