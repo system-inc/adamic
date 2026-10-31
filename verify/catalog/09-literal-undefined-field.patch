@@ -10,7 +10,7 @@
  				value = fit(value, declared)
  			}
 @@ -213,27 +213,6 @@
- 	contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone)
+ 	contextual := l.slotType(literal)
  	if contextual == nil {
  		return 0
 -	}

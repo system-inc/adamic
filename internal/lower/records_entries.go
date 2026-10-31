@@ -29,7 +29,7 @@ func (l *lowering) enumerationRecordStorageType(t *checker.Type) bool {
 		if found {
 			return true
 		}
-		if node.Kind == ast.KindObjectLiteralExpression && l.checker.GetContextualType(node, checker.ContextFlagsNone) == t && l.enumerationInModule(ast.GetSourceFileOfNode(node).AsSourceFile()) && l.entriesRecordLiteral(node) {
+		if node.Kind == ast.KindObjectLiteralExpression && l.slotType(node) == t && l.enumerationInModule(ast.GetSourceFileOfNode(node).AsSourceFile()) && l.entriesRecordLiteral(node) {
 			found = true
 			return true
 		}
