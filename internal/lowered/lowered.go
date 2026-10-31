@@ -12,15 +12,21 @@
 //   - the Go closure of the lowering, computed by go list -deps ./internal/load ./internal/lower (closure.go), with
 //     this package's own files, which build the product. internal/native and internal/javascript are not in it, so a
 //     change confined to emit keeps the key;
-//   - the program's sources, by content, laid out as they sit beside the entry;
-//   - lower's options and load's (TSGo), every environment variable the closure reads that can shape the IR
-//     (keyedEnvironment, held to the closure's source by TestEveryEnvironmentReadOfTheLoweringIsKeyed), and the working
-//     directory load resolves names against (load.go's os.Getwd);
+//   - the program's sources, by content, and where they sit in the repository;
+//   - every field of lower's options and of load's (TSGo), by value; every environment variable the closure reads that
+//     can shape the IR (keyedEnvironment, held to the closure's source by TestEveryEnvironmentReadOfTheLoweringIsKeyed);
+//     the working directory, from the repository's root; and the case sensitivity the checker compares names by;
 //   - the Go release and the system it targets, and GOFLAGS, whose tags choose the closure's files.
 //
-// The product holds the IR as gob, encoded once, and its sha256 beside it. Every read checks the sum and decodes, and a
-// sum that doesn't match or a decode that fails is a miss, rebuilt, never an IR served. Each read decodes afresh, since
-// emit writes into the IR it's given.
+// The checker reads nothing from disk: it loads the sources from memory, where they sit (sealed.go), and every other
+// path it asks after answers absent and is traced. That trace, what the program's resolution looked for outside its
+// sources (each directory's package.json up to the root, the names an import might mean), is stored with the IR, and
+// every path in it must be absent on disk, when the product is built and each time it's read (resolution.go): a
+// program beside which one of them is there is refused, never lowered without it.
+//
+// The product holds the IR as gob, encoded once, and the trace, with the sha256 of each beside them. Every read checks
+// the sums and decodes, and a sum that doesn't match or a decode that fails is a miss, rebuilt, never an IR served.
+// Each read decodes afresh, since emit writes into the IR it's given.
 package lowered
 
 import (
@@ -35,10 +41,13 @@ import (
 	"runtime"
 	"slices"
 	"sort"
+	"strconv"
 	"strings"
 	"testing"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
+	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
@@ -52,38 +61,53 @@ type Options struct {
 	TSGo  bool
 }
 
-// productName is the product's name. A change to what the product holds, or to how it's read, is a new name.
-const productName = "lowered-ir-v1"
+// optionLines are every field of options by its name and value. A field added to Options or lower.Options without a
+// line here fails TestEveryOptionIsKeyedByValue.
+func optionLines(options Options) []string {
+	return []string{
+		"Lower.Debug=" + strconv.FormatBool(options.Lower.Debug),
+		"Lower.ProgramRegion=" + strconv.FormatBool(options.Lower.ProgramRegion),
+		"Lower.OwnershipQuery=" + strconv.FormatBool(options.Lower.OwnershipQuery),
+		"TSGo=" + strconv.FormatBool(options.TSGo),
+	}
+}
 
-// The product's two files: the IR as gob, and the hex sha256 of exactly those bytes.
+// productName is the product's name. A change to what the product holds, or to how it's read, is a new name.
+const productName = "lowered-ir-v2"
+
+// The product's files: the IR as gob, the trace of what its resolution looked for, and the hex sha256 of each.
 const (
-	gobFile = "program.gob"
-	sumFile = "program.gob.sha256"
+	gobFile        = "program.gob"
+	resolutionFile = "resolution"
+	sumFile        = "sha256"
 )
 
 // keyedEnvironment is every environment variable the lowering's closure reads that can change the IR it makes, each
-// keyed by its value: lower.Lower's two (lower.go). Lowered lowers with the Options it's given, which lower.Lower and
-// cmd/adamic take from these, so the key holds both.
-var keyedEnvironment = []string{"ADAMIC_PROGRAM_REGION", "ADAMIC_OWNERSHIP_QUERY"}
+// keyed by its value: lower.Lower's two (lower.go), which lower.Lower and cmd/adamic take Options from, and the
+// checker's stack limit (tsc's core.ApplyDebugStackLimit), which can change whether the checker stops.
+var keyedEnvironment = []string{"ADAMIC_PROGRAM_REGION", "ADAMIC_OWNERSHIP_QUERY", "TS_GO_DEBUG_STACK_LIMIT"}
 
 // unkeyedEnvironment is every variable the closure reads that can't change the IR, with why. A read the guard finds in
 // neither list fails it.
 var unkeyedEnvironment = map[string]string{
-	"ADAMIC_BUILD_LOG": "buildlog.Phase appends a phase's timing to the log the variable names; nothing it writes is an input to the program (buildlog.go)",
+	"ADAMIC_BUILD_LOG":           "buildlog.Phase appends a phase's timing to the log the variable names; nothing it writes is an input to the program (buildlog.go)",
+	"TERMUX_EXEC__PROC_SELF_EXE": "read on Android alone (tsc's osutil/os_android.go), naming the executable whose path osvfs probes for the file system's case sensitivity; that sensitivity is keyed itself, and the libraries a noembed build reads beside it are embedded here",
 }
 
-// Lowered is the program lowered from paths, the entry first and then each file its imports read, with options: a
-// fresh decode of the stored IR, built on a miss, and stage 1's key, the Inputs a stage 2 product extends with emit's
-// closure.
+// Lowered is the program lowered from paths, the entry first and then each file its imports read, all inside the
+// repository, with options: a fresh decode of the stored IR, built on a miss, and stage 1's key, the Inputs a stage 2
+// product extends with emit's closure. A program whose resolution would find a file on disk beside its sources fails
+// t: it's refused for the cache.
 func Lowered(t testing.TB, paths []string, options Options) (*ir.Program, buildcache.Inputs) {
 	t.Helper()
 	program, inputs, _ := stored(t, sourcesOf(t, paths), options, build)
 	return program, inputs
 }
 
-// sources are a program's files as they were read for the key, by their path from the directory holding them all;
-// entry is the first's.
+// sources are a program's files as they were read for the key: base, the absolute directory holding them all, and each
+// file by its path from base; entry is the first's.
 type sources struct {
+	base  string
 	entry string
 	files map[string][]byte
 }
@@ -102,14 +126,13 @@ func sourcesOf(t testing.TB, paths []string) sources {
 		}
 		absolute[index] = resolved
 	}
-	// The directory holding them all, which the build lays them out under as they sit there.
 	base := filepath.Dir(absolute[0])
 	for _, path := range absolute[1:] {
 		for base != filepath.Dir(base) && !strings.HasPrefix(path, base+string(filepath.Separator)) {
 			base = filepath.Dir(base)
 		}
 	}
-	read := sources{files: map[string][]byte{}}
+	read := sources{base: base, files: map[string][]byte{}}
 	for index, path := range absolute {
 		relative, err := filepath.Rel(base, path)
 		if err != nil {
@@ -128,8 +151,10 @@ func sourcesOf(t testing.TB, paths []string) sources {
 	return read
 }
 
-// environment is what the key reads from the process: a variable's value, and the working directory.
+// environment is what the key reads from the process: the repository's root, a variable's value, and the working
+// directory.
 type environment struct {
+	root             string
 	getenv           func(string) string
 	workingDirectory string
 }
@@ -137,27 +162,45 @@ type environment struct {
 // processEnvironment is this process's.
 func processEnvironment(t testing.TB) environment {
 	t.Helper()
+	root, err := repositoryRoot()
+	if err != nil {
+		t.Fatal(err)
+	}
 	workingDirectory, err := os.Getwd()
 	if err != nil {
 		t.Fatal(err)
 	}
-	return environment{getenv: os.Getenv, workingDirectory: workingDirectory}
+	return environment{root: root, getenv: os.Getenv, workingDirectory: workingDirectory}
 }
 
-// inputsOf is stage 1's key for the program from sources with options, under environment.
+// inRepository is path from the repository's root, when it's at or under it.
+func inRepository(root, path string) (string, bool) {
+	relative, err := filepath.Rel(root, path)
+	if err != nil || relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+		return "", false
+	}
+	return filepath.ToSlash(relative), true
+}
+
+// inputsOf is stage 1's key for the program from sources with options, under environment. Every place in it is named
+// from the repository's root, so two checkouts of one tree key alike.
 func inputsOf(t testing.TB, read sources, options Options, under environment) buildcache.Inputs {
 	t.Helper()
 	lowering, err := loweringClosure()
 	if err != nil {
 		t.Fatal(err)
 	}
+	location, inside := inRepository(under.root, read.base)
+	if !inside {
+		t.Fatalf("lowered: the sources sit in %s, outside the repository: a product names its program from the repository's root", read.base)
+	}
 	inputs := buildcache.Inputs{
 		Name:      productName,
 		Files:     slices.Clone(lowering.files),
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
 	}
-	// Every field of both option sets by name, so a field added to either is keyed without a line here.
-	inputs.Flags = append(inputs.Flags, fmt.Sprintf("options=%+v", options), "entry="+read.entry)
+	inputs.Flags = append(inputs.Flags, optionLines(options)...)
+	inputs.Flags = append(inputs.Flags, "location="+location, "entry="+read.entry)
 	names := make([]string, 0, len(read.files))
 	for file := range read.files {
 		names = append(names, file)
@@ -169,40 +212,49 @@ func inputsOf(t testing.TB, read sources, options Options, under environment) bu
 	for _, variable := range keyedEnvironment {
 		inputs.Flags = append(inputs.Flags, variable+"="+under.getenv(variable))
 	}
+	// Load reads no path from it (TestTheTraceNamesNothingOfTheWorkingDirectory), but it's the directory names resolve
+	// against, so a directory of the tree is named from the root, and one outside it as it is.
+	workingDirectory := under.workingDirectory
+	if relative, inside := inRepository(under.root, workingDirectory); inside {
+		workingDirectory = "<repository>/" + relative
+	}
 	// GOFLAGS' tags choose the closure's files (a noembed build reads the checker's libraries from disk), and
 	// buildcache drops its -p share.
-	inputs.Flags = append(inputs.Flags, "GOFLAGS="+under.getenv("GOFLAGS"), "working-directory="+under.workingDirectory)
+	inputs.Flags = append(inputs.Flags, "GOFLAGS="+under.getenv("GOFLAGS"), "working-directory="+workingDirectory,
+		"case-sensitive="+strconv.FormatBool(osvfs.FS().CaseSensitivity() == tspath.CaseSensitive))
 	inputs.Flags = append(inputs.Flags, lowering.external...)
 	return inputs
 }
 
 // stored is the program from sources, lowered with options: the stored IR, decoded, the key it's stored under and the
-// directory it was read from. A stored IR that doesn't read back is a miss: it's built again, as a product
-// keyed beside the first by what it found there, so the next read of the same torn product finds the rebuilt one. builder
-// is build, or a test's count of it.
+// directory it was read from. A stored IR that doesn't read back is a miss: it's built again, as a product keyed beside
+// the first by what it found there, so the next read of the same torn product finds the rebuilt one. A program whose
+// traced resolution finds a file on disk now is refused, built or found. builder is build, or a test's count of it.
 func stored(t testing.TB, read sources, options Options, builder func(directory string, read sources, options Options) error) (*ir.Program, buildcache.Inputs, string) {
 	t.Helper()
 	inputs := inputsOf(t, read, options, processEnvironment(t))
 	directory := buildcache.Product(t, inputs, func(directory string) error { return builder(directory, read, options) })
-	program, err := readStored(directory)
-	if err == nil {
-		return program, inputs, directory
-	}
-	t.Logf("lowered: the IR stored in %s doesn't read back, a miss: %v", directory, err)
-	rebuilt := inputs
-	rebuilt.Flags = append(slices.Clone(inputs.Flags), "replaces="+storedDigest(directory))
-	directory = buildcache.Product(t, rebuilt, func(directory string) error { return builder(directory, read, options) })
-	program, err = readStored(directory)
+	program, trace, err := readStored(directory)
 	if err != nil {
-		t.Fatalf("lowered: the IR rebuilt in %s doesn't read back either: %v", directory, err)
+		t.Logf("lowered: the IR stored in %s doesn't read back, a miss: %v", directory, err)
+		rebuilt := inputs
+		rebuilt.Flags = append(slices.Clone(inputs.Flags), "replaces="+storedDigest(directory))
+		directory = buildcache.Product(t, rebuilt, func(directory string) error { return builder(directory, read, options) })
+		program, trace, err = readStored(directory)
+		if err != nil {
+			t.Fatalf("lowered: the IR rebuilt in %s doesn't read back either: %v", directory, err)
+		}
+	}
+	if err := absent(read.base, trace); err != nil {
+		t.Fatal(err)
 	}
 	return program, inputs, directory
 }
 
-// storedDigest names what a product directory holds, whatever it is: the sha256 of its gob and its sum together.
+// storedDigest names what a product directory holds, whatever it is: the sha256 of its files together.
 func storedDigest(directory string) string {
 	hash := sha256.New()
-	for _, file := range []string{gobFile, sumFile} {
+	for _, file := range []string{gobFile, resolutionFile, sumFile} {
 		data, _ := os.ReadFile(filepath.Join(directory, file))
 		fmt.Fprintf(hash, "%s %d\n", file, len(data))
 		hash.Write(data)
@@ -210,31 +262,45 @@ func storedDigest(directory string) string {
 	return hex.EncodeToString(hash.Sum(nil))
 }
 
-// readStored decodes the IR stored in directory, once its bytes are the ones its sum names.
-func readStored(directory string) (*ir.Program, error) {
-	data, err := os.ReadFile(filepath.Join(directory, gobFile))
-	if err != nil {
-		return nil, err
+// sums is the sum file for the product's files, as sha256sum writes one.
+func sums(files map[string][]byte) []byte {
+	var written bytes.Buffer
+	for _, file := range []string{gobFile, resolutionFile} {
+		fmt.Fprintf(&written, "%x  %s\n", sha256.Sum256(files[file]), file)
+	}
+	return written.Bytes()
+}
+
+// readStored decodes the IR stored in directory and reads its resolution's trace, once the bytes of each are the ones
+// the sum file names.
+func readStored(directory string) (*ir.Program, []string, error) {
+	files := map[string][]byte{}
+	for _, file := range []string{gobFile, resolutionFile} {
+		data, err := os.ReadFile(filepath.Join(directory, file))
+		if err != nil {
+			return nil, nil, err
+		}
+		files[file] = data
 	}
 	sum, err := os.ReadFile(filepath.Join(directory, sumFile))
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	if got, want := fmt.Sprintf("%x", sha256.Sum256(data)), strings.TrimSpace(string(sum)); got != want {
-		return nil, fmt.Errorf("%s's sha256 is %s, and its sum says %s", gobFile, got, want)
+	if want := sums(files); !bytes.Equal(sum, want) {
+		return nil, nil, fmt.Errorf("the product's sha256 are\n%s and its sum file says\n%s", want, sum)
 	}
 	ir.RegisterGob()
 	var program ir.Program
-	if err := gob.NewDecoder(bytes.NewReader(data)).Decode(&program); err != nil {
-		return nil, fmt.Errorf("decode %s: %w", gobFile, err)
+	if err := gob.NewDecoder(bytes.NewReader(files[gobFile])).Decode(&program); err != nil {
+		return nil, nil, fmt.Errorf("decode %s: %w", gobFile, err)
 	}
-	return &program, nil
+	return &program, strings.Split(strings.TrimSuffix(string(files[resolutionFile]), "\n"), "\n"), nil
 }
 
-// build lowers the program from sources into directory: the sources laid out under source/ as they sat, loaded from
-// there, lowered with options, encoded once, and the encoding's sum written beside it.
+// build lowers the program from sources into directory: loaded sealed, lowered with options, encoded once, and stored
+// with its resolution's trace and the sums of both.
 func build(directory string, read sources, options Options) error {
-	program, err := loaded(directory, read, options)
+	program, trace, err := loaded(read, options)
 	if err != nil {
 		return err
 	}
@@ -247,51 +313,45 @@ func build(directory string, read sources, options Options) error {
 	if err := gob.NewEncoder(&encoded).Encode(lowering); err != nil {
 		return fmt.Errorf("encode the IR: %w", err)
 	}
-	if err := os.WriteFile(filepath.Join(directory, gobFile), encoded.Bytes(), 0o644); err != nil {
-		return err
+	files := map[string][]byte{gobFile: encoded.Bytes(), resolutionFile: []byte(strings.Join(trace, "\n") + "\n")}
+	for file, data := range files {
+		if err := os.WriteFile(filepath.Join(directory, file), data, 0o644); err != nil {
+			return err
+		}
 	}
-	if err := os.WriteFile(filepath.Join(directory, sumFile), fmt.Appendf(nil, "%x\n", sha256.Sum256(encoded.Bytes())), 0o644); err != nil {
-		return err
-	}
-	// The sources' imports may name this checkout; the product names it <repository> (#tqrqx60).
-	return buildcache.RelativeFiles(filepath.Join(directory, "source"))
+	return os.WriteFile(filepath.Join(directory, sumFile), sums(files), 0o644)
 }
 
-// loaded is the program from sources, laid out under directory's source/ and loaded from there, refused when the
-// checker read a file from disk that isn't one of them: the key names the sources alone, so a program reading
-// another would be served when that file changed. The checker's libraries, Node's declarations and the prelude are
-// in the binary (TestTheLibrariesAndThePreludeAreInTheBinary), at paths no disk has.
-func loaded(directory string, read sources, options Options) (*load.Program, error) {
-	source := filepath.Join(directory, "source")
+// loaded is the program from sources, checked on a sealed disk that holds them where they sit and nothing else, and the
+// trace of what its resolution looked for outside them. It's refused when one of those paths is on disk, before any
+// error the check gave: the program a fresh load reads would be another one.
+func loaded(read sources, options Options) (*load.Program, []string, error) {
+	held := make(map[string]string, len(read.files))
 	for file, data := range read.files {
-		path := filepath.Join(source, filepath.FromSlash(file))
-		if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
-			return nil, err
-		}
-		if err := os.WriteFile(path, data, 0o644); err != nil {
-			return nil, err
-		}
+		held[filepath.ToSlash(filepath.Join(read.base, filepath.FromSlash(file)))] = string(data)
 	}
-	// Named placelessly: the IR's positions would otherwise carry this build directory, random per build (#tqrqx60).
-	program, err := load.LoadDisplayed([]string{filepath.Join(source, filepath.FromSlash(read.entry))}, buildcache.Relative)
+	disk := sealedOver(held)
+	// Named placelessly: the IR's positions name the tree as <repository> (#tqrqx60).
+	program, checked := load.LoadFrom([]string{filepath.Join(read.base, filepath.FromSlash(read.entry))}, buildcache.Relative, disk)
+	trace, err := resolutionOf(read.base, disk.trace())
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	// The checker may name the directory as its links resolve (macOS's /var is /private/var).
-	places := []string{source + "/"}
-	if resolved, err := filepath.EvalSymlinks(source); err == nil {
-		places = append(places, resolved+"/")
+	if err := absent(read.base, trace); err != nil {
+		return nil, nil, err
+	}
+	if checked != nil {
+		return nil, nil, checked
 	}
 	for _, file := range program.CompilerProgram().GetSourceFiles() {
-		path := file.FileName().AsString()
-		if !inBinary(file) && !slices.ContainsFunc(places, func(place string) bool { return strings.HasPrefix(path, place) }) {
-			return nil, fmt.Errorf("lowered: the program reads %s, which isn't one of its sources; name it among Lowered's paths", path)
+		if !inBinary(file) && !disk.holds(file.FileName().AsString()) {
+			return nil, nil, fmt.Errorf("lowered: the program reads %s, which isn't one of its sources", file.FileName().AsString())
 		}
 	}
 	if options.TSGo {
 		program.EnableTSGo()
 	}
-	return program, nil
+	return program, trace, nil
 }
 
 // bundledScheme is the prefix of every path the checker serves from the binary: its libraries (bundled:///libs) and
