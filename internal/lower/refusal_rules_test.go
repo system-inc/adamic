@@ -49,6 +49,8 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		"3200 refuseVoidWidening",
 		"3250 refuseVoidRead",
 		"3260 refuseVoidContainerRead",
+		// refuseAnyRelation records its NotYet and lets the walk go on, so a NotYet here can lose to
+		// a later rule anywhere in the module (refusalPass.deferred).
 		"3270 refuseAnyRelation",
 		"3300 refuseOptionalWidening",
 		"3400 classViewRefusal",

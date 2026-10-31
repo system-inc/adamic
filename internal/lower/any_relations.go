@@ -22,23 +22,24 @@ func (l *lowering) refuseAnyRelation(node *ast.Node) error {
 	if target == nil || source == nil || source.Flags()&checker.TypeFlagsAny != 0 {
 		return nil
 	}
-	found := l.anyRelated(source, target, false, 0, map[anyPair]bool{})
+	found := l.anyRelated(source, target, 0, map[[2]*checker.Type]bool{})
 	if found == nil {
 		return nil
 	}
-	if found.depthLimit {
-		return l.notYet(node, "a structural relation deeper than 64 type pairs while checking members typed any")
+	// The lowest-priority stop: another rule's refusal anywhere in the module is the stronger reason, as
+	// Array.prototype.fill's method value and Object.entries over a graph record already are, so this one
+	// is kept for refuse to return only when nothing else refused.
+	if l.refusal.deferred == nil {
+		if found.depthLimit {
+			l.refusal.deferred = l.notYet(node, "a structural relation deeper than 64 type pairs while checking members typed any")
+		} else {
+			l.refusal.deferred = l.notYet(node, "a member typed any ("+found.path+") related to "+l.checker.TypeToString(found.target)+" at the "+name+" site")
+		}
 	}
-	return l.notYet(node, "a member typed any ("+found.path+") related to "+l.checker.TypeToString(found.target)+" at the "+name+" site")
+	return nil
 }
 
 func init() { refusalRules.register(3270, "refuseAnyRelation", (*lowering).refuseAnyRelation) }
-
-// anyPair is one step of the walk: a source and target pair, and whether a program's member led there.
-type anyPair struct {
-	source, target *checker.Type
-	owned          bool
-}
 
 // anyRelation is a position where a member typed any meets a member that isn't any or unknown.
 type anyRelation struct {
@@ -48,30 +49,16 @@ type anyRelation struct {
 }
 
 // anyRelated walks source against target as voidWidened does, with a seen set of pairs and a bound of
-// 64, past which it answers depthLimit so the caller fails closed. Unions relate member by member. Only
-// the program's own any counts: owned is whether the nearest property on the path is declared in the
-// program's source (never the library, the prelude or a declaration file such as Node's types), so
-// `items: any[]` and `make: () => any` count, and the library's own any, reached through a program's
-// property (a typed array's reduce, a Set's union, an iterator's result), doesn't. The seen set keys on
-// owned too, so a pair first met unowned is walked again once owned.
-func (l *lowering) ownMember(property *ast.Symbol) bool {
-	if property == nil {
-		return false
-	}
-	for _, declaration := range property.Declarations {
-		file := ast.GetSourceFileOfNode(declaration)
-		if file != nil && !file.IsDeclarationFile && !load.IsLibrary(file) && !load.IsPrelude(file) {
-			return true
-		}
-	}
-	return false
-}
-
-func (l *lowering) anyRelated(source, target *checker.Type, owned bool, depth int, seen map[anyPair]bool) *anyRelation {
+// 64, past which it answers depthLimit so the caller fails closed. Unions relate member by member. Every
+// value-carrying position counts its any whoever wrote it, the library included (Language's position rule
+// on 99634edf): an element, a property, a type argument, a return. Array.isArray's `any[]` seen as a
+// `string[]` holds whatever the value held. Only a parameter position is exempt, and only between two
+// signatures the library declares (anyRelatedSignatures).
+func (l *lowering) anyRelated(source, target *checker.Type, depth int, seen map[[2]*checker.Type]bool) *anyRelation {
 	if source == nil || target == nil || source == target {
 		return nil
 	}
-	pair := anyPair{source: source, target: target, owned: owned}
+	pair := [2]*checker.Type{source, target}
 	if seen[pair] {
 		return nil
 	}
@@ -81,7 +68,7 @@ func (l *lowering) anyRelated(source, target *checker.Type, owned bool, depth in
 	}
 	if source.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range source.Types() {
-			if found := l.anyRelated(member, target, owned, depth+1, seen); found != nil {
+			if found := l.anyRelated(member, target, depth+1, seen); found != nil {
 				return found
 			}
 		}
@@ -89,17 +76,17 @@ func (l *lowering) anyRelated(source, target *checker.Type, owned bool, depth in
 	}
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range target.Types() {
-			if found := l.anyRelated(source, member, owned, depth+1, seen); found != nil {
+			if found := l.anyRelated(source, member, depth+1, seen); found != nil {
 				return found
 			}
 		}
 		return nil
 	}
 	if source.Flags()&checker.TypeFlagsTypeParameter != 0 {
-		return l.anyRelated(l.checker.GetBaseConstraintOfType(source), target, owned, depth+1, seen)
+		return l.anyRelated(l.checker.GetBaseConstraintOfType(source), target, depth+1, seen)
 	}
 	if target.Flags()&checker.TypeFlagsTypeParameter != 0 {
-		return l.anyRelated(source, l.checker.GetBaseConstraintOfType(target), owned, depth+1, seen)
+		return l.anyRelated(source, l.checker.GetBaseConstraintOfType(target), depth+1, seen)
 	}
 	if source.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 || target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 {
 		return nil
@@ -109,7 +96,7 @@ func (l *lowering) anyRelated(source, target *checker.Type, owned bool, depth in
 			sources, targets := l.checker.GetTypeArguments(source), l.checker.GetTypeArguments(target)
 			for index, inside := range sources {
 				if index < len(targets) {
-					if found := l.anyContained(inside, targets[index], owned, depth, seen); found != nil {
+					if found := l.anyContained(inside, targets[index], depth, seen); found != nil {
 						found.path = "[" + strconv.Itoa(index) + "]" + found.path
 						return found
 					}
@@ -117,14 +104,14 @@ func (l *lowering) anyRelated(source, target *checker.Type, owned bool, depth in
 			}
 			return nil
 		}
-		if found := l.anyContained(l.checker.GetNumberIndexType(source), l.checker.GetNumberIndexType(target), owned, depth, seen); found != nil {
+		if found := l.anyContained(l.checker.GetNumberIndexType(source), l.checker.GetNumberIndexType(target), depth, seen); found != nil {
 			found.path = "[]" + found.path
 			return found
 		}
 		return nil
 	}
 	for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
-		if found := l.anyRelatedSignatures(source, target, kind, owned, depth, seen); found != nil {
+		if found := l.anyRelatedSignatures(source, target, kind, depth, seen); found != nil {
 			return found
 		}
 	}
@@ -132,7 +119,7 @@ func (l *lowering) anyRelated(source, target *checker.Type, owned bool, depth in
 		sources, targets := l.checker.GetTypeArguments(source), l.checker.GetTypeArguments(target)
 		for index, inside := range sources {
 			if index < len(targets) {
-				if found := l.anyContained(inside, targets[index], owned, depth, seen); found != nil {
+				if found := l.anyContained(inside, targets[index], depth, seen); found != nil {
 					found.path = "<" + strconv.Itoa(index+1) + ">" + found.path
 					return found
 				}
@@ -142,7 +129,7 @@ func (l *lowering) anyRelated(source, target *checker.Type, owned bool, depth in
 	for _, property := range l.checker.GetPropertiesOfType(target) {
 		from := l.checker.GetTypeOfPropertyOfType(source, property.Name)
 		to := l.checker.GetTypeOfPropertyOfType(target, property.Name)
-		if found := l.anyContained(from, to, l.ownMember(l.checker.GetPropertyOfType(source, property.Name)), depth, seen); found != nil {
+		if found := l.anyContained(from, to, depth, seen); found != nil {
 			step := property.Name
 			if strings.HasPrefix(property.Name, ast.InternalSymbolNamePrefix) {
 				// A well-known symbol's key is internal; name it as the source spells it.
@@ -159,8 +146,11 @@ func (l *lowering) anyRelated(source, target *checker.Type, owned bool, depth in
 }
 
 // anyRelatedSignatures relates returns covariantly and parameters contravariantly, every target
-// signature against every source one, through canonical signatures as voidWidenedSignatures does.
-func (l *lowering) anyRelatedSignatures(source, target *checker.Type, kind checker.SignatureKind, owned bool, depth int, seen map[anyPair]bool) *anyRelation {
+// signature against every source one, through canonical signatures as voidWidenedSignatures does. A
+// return always counts. Parameters are skipped when both signatures are the library's: a library
+// callback's any parameter related to another library signature (a typed array's reduce, Set's union) is
+// the library's own modelling of what flows in, and no value the program holds passes through it.
+func (l *lowering) anyRelatedSignatures(source, target *checker.Type, kind checker.SignatureKind, depth int, seen map[[2]*checker.Type]bool) *anyRelation {
 	sources := l.checker.GetSignaturesOfType(source, kind)
 	targets := l.checker.GetSignaturesOfType(target, kind)
 	if len(sources) == 0 || len(targets) == 0 {
@@ -169,12 +159,15 @@ func (l *lowering) anyRelatedSignatures(source, target *checker.Type, kind check
 	for _, to := range targets {
 		for _, from := range sources {
 			to, from := checker.Checker_getCanonicalSignature(l.checker, to), checker.Checker_getCanonicalSignature(l.checker, from)
-			if found := l.anyContained(l.checker.GetReturnTypeOfSignature(from), l.checker.GetReturnTypeOfSignature(to), owned, depth, seen); found != nil {
+			if found := l.anyContained(l.checker.GetReturnTypeOfSignature(from), l.checker.GetReturnTypeOfSignature(to), depth, seen); found != nil {
 				found.path = "()" + found.path
 				return found
 			}
-			for position := range voidRelatedPositions(from, to) {
-				if found := l.anyContained(l.checker.GetTypeAtPosition(to, position), l.checker.GetTypeAtPosition(from, position), owned, depth, seen); found != nil {
+			if librarySignature(from) && librarySignature(to) {
+				continue
+			}
+			for position := range anyRelatedPositions(from, to) {
+				if found := l.anyContained(l.checker.GetTypeAtPosition(to, position), l.checker.GetTypeAtPosition(from, position), depth, seen); found != nil {
 					found.path = "(" + strconv.Itoa(position) + ")" + found.path
 					return found
 				}
@@ -184,12 +177,32 @@ func (l *lowering) anyRelatedSignatures(source, target *checker.Type, kind check
 	return nil
 }
 
+// anyRelatedPositions is how many parameter positions carry a value from a caller through to into from:
+// those to declares, or every one of from's past a rest parameter of to's. A position to doesn't declare
+// gets no argument, and the checker's any for it there is no value anyone passes, as with
+// `const f: (path: string) => string = fs.realpathSync.native` and its options.
+func anyRelatedPositions(from, to *checker.Signature) int {
+	if to.HasRestParameter() {
+		return voidRelatedPositions(from, to)
+	}
+	return min(voidRelatedPositions(from, to), len(to.Parameters()))
+}
+
+// librarySignature is whether a signature is declared in the library, the prelude or a declaration file.
+func librarySignature(signature *checker.Signature) bool {
+	declaration := signature.Declaration()
+	if declaration == nil {
+		return false
+	}
+	file := ast.GetSourceFileOfNode(declaration)
+	return file != nil && (file.IsDeclarationFile || load.IsLibrary(file) || load.IsPrelude(file))
+}
+
 // anyContained relates one position inside a container: a member typed any seen as anything but any
-// or unknown is the hazard, once the walk has passed through a member the program declares (owned), and
-// anything else is walked in turn.
-func (l *lowering) anyContained(inside, wider *checker.Type, owned bool, depth int, seen map[anyPair]bool) *anyRelation {
-	if owned && inside != nil && wider != nil && inside.Flags()&checker.TypeFlagsAny != 0 && wider.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) == 0 {
+// or unknown is the hazard, and anything else is walked in turn.
+func (l *lowering) anyContained(inside, wider *checker.Type, depth int, seen map[[2]*checker.Type]bool) *anyRelation {
+	if inside != nil && wider != nil && inside.Flags()&checker.TypeFlagsAny != 0 && wider.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) == 0 {
 		return &anyRelation{target: wider}
 	}
-	return l.anyRelated(inside, wider, owned, depth+1, seen)
+	return l.anyRelated(inside, wider, depth+1, seen)
 }
