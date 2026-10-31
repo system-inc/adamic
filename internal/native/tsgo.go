@@ -122,7 +122,7 @@ func buildTSGo(source, output, archive string, options Options, oneCall bool) er
 	// alone, and elsewhere so the compile is a step of its own, the binary the one call's bytes.
 	program := "main.c"
 	if goruntime.GOOS == "darwin" || !oneCall {
-		compile := clangIn(directory, compilerName(options), append(slices.Clone(flags), "-c", program, "-o", "main.o")...)
+		compile := clangIn(directory, compilerName(options), append(compileOnlyFlags(flags), "-c", program, "-o", "main.o")...)
 		var combined []byte
 		var compiling time.Duration
 		if err := jobserver.Hold(func() error {

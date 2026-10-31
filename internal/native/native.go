@@ -190,6 +190,24 @@ func linkFlags(flags []string, options Options) []string {
 	return flags
 }
 
+// compileOnlyFlags are flags without the ones only a link reads: -Wl, and -Xlinker with its argument, -l and -L, -fuse-ld,
+// -nostdlib and -rdynamic. A compile given one says it's unused, which -Werror makes a failure; a link in one call reads
+// them, so a split build's compile drops them and its link keeps them, and the binary is the one call's.
+func compileOnlyFlags(flags []string) []string {
+	var compiled []string
+	for index := 0; index < len(flags); index++ {
+		flag := flags[index]
+		switch {
+		case flag == "-Xlinker" || flag == "-l" || flag == "-L":
+			index++
+		case strings.HasPrefix(flag, "-Wl,"), strings.HasPrefix(flag, "-l"), strings.HasPrefix(flag, "-L"), strings.HasPrefix(flag, "-fuse-ld="), flag == "-nostdlib", flag == "-rdynamic":
+		default:
+			compiled = append(compiled, flag)
+		}
+	}
+	return compiled
+}
+
 // objectPrefixFlags take the link's working directory off the paths its debug map records. On macOS ld records each
 // object it links that carries debug info by path, for a debugger to find its DWARF there (the stabs' N_OSO), an
 // archive's member by the archive's path, made absolute against the working directory when it isn't: the checker
@@ -293,9 +311,12 @@ func linkOne(directory string, compiler string, source string, output string, op
 	// the same flags, so every semantic one still reaches ThinLTO's code generation (linkFlags): the binary is the one
 	// call's bytes, release, Debug and sanitized (TestACompiledThenLinkedProgramIsTheOneCallProgram).
 	if options.Target != "wasm32-wasi" && (goruntime.GOOS == "darwin" || !oneCall) {
-		compile := clangIn(directory, compiler, append(slices.Clone(compileFlags), "-c", program, "-o", "main.o")...)
+		// The compile takes every flag but a link's alone, which clang under -Werror refuses as an input unused by a
+		// compile (stdout columns' -Wl,--wrap= probes, TestProduct_StdoutColumnsProbes); the link below keeps them all.
+		compiled := compileOnlyFlags(compileFlags)
+		compile := clangIn(directory, compiler, append(slices.Clone(compiled), "-c", program, "-o", "main.o")...)
 		if compileObject != nil && !oneCall {
-			if err := compileObject(compile, source, compileFlags, program, jobserver); err != nil {
+			if err := compileObject(compile, source, compiled, program, jobserver); err != nil {
 				return err
 			}
 		} else {
