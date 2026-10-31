@@ -182,6 +182,12 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 					if !known || (of != ir.Number && of != ir.Boolean && of != ir.String) || !l.enumAssignable(fromType, toType) || !l.enumAssignable(toType, fromType) || !l.checker.IsTypeAssignableTo(fromType, toType) || !l.checker.IsTypeAssignableTo(toType, fromType) {
 						return refused("source and target field types must agree in both directions with tsc's intersection result; widening, conflicting fields and reference cycles are refused")
 					}
+					// adamic_object_assign retains and releases by the source slot's reference flag, so a
+					// name must be held alike on both sides. Agreeing both ways gives that for the fields
+					// admitted above; a field held otherwise in the target waits on a store by its own flag.
+					if held, isKnown := l.representation(toType); !isKnown || held != of {
+						return nil, true, l.notYet(argument, "Object.assign of field "+field.Name+", held as a "+typeName(of)+" in the source and otherwise in the target")
+					}
 				}
 				lowered, err := l.expression(argument)
 				if err != nil {
@@ -264,16 +270,26 @@ func (l *lowering) objectCanFreeze() bool {
 }
 
 // objectIntersection represents tsc's intersection of plain object views. Every constituent must
-// be a plain, noncallable shape, and every resulting field must have a proven scalar type.
+// be a plain, noncallable shape, and every resulting field must have a storage a record would give
+// it: an object, array or boxed union field is held as it is in any object, and a Weak or a
+// two-word optional boolean is not (recordStorageType). A field that holds the intersection itself
+// is the object being proven.
 func (l *lowering) objectIntersection(proven *checker.Type) (ir.Type, bool) {
 	for _, part := range proven.Types() {
 		if part.Flags()&checker.TypeFlagsObject == 0 || l.checker.IsArrayType(part) || checker.IsTupleType(part) || isClassInstance(part) || len(l.checker.GetSignaturesOfType(part, checker.SignatureKindCall)) != 0 {
 			return 0, false
 		}
 	}
+	if l.objectIntersections[proven] {
+		return ir.Object, true
+	}
+	if l.objectIntersections == nil {
+		l.objectIntersections = map[*checker.Type]bool{}
+	}
+	l.objectIntersections[proven] = true
+	defer delete(l.objectIntersections, proven)
 	for _, field := range l.checker.GetPropertiesOfType(proven) {
-		of, known := l.representation(l.checker.GetTypeOfSymbol(field))
-		if !known || (of != ir.Number && of != ir.String && of != ir.Boolean) {
+		if _, known := l.recordStorageType(l.checker.GetTypeOfSymbol(field)); !known {
 			return 0, false
 		}
 	}

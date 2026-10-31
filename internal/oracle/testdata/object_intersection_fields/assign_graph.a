@@ -1,0 +1,8 @@
+// Object.assign onto a target that holds a node of a cyclic type, in a program with graph types.
+interface Node { readonly name: string; next: Node | undefined; }
+const first: Node = { name: 'built' + '-first', next: undefined };
+const second: Node = { name: 'built' + '-second', next: first };
+first.next = second;
+const head = { name: 'built' + '-head', next: second };
+const renamed = Object.assign(head, { name: 'built' + '-renamed' });
+console.log(`${renamed.name} ${renamed.next.name} ${renamed.next.next === undefined ? 'end' : renamed.next.next.name}`);

@@ -1,0 +1,17 @@
+// An intersection whose field holds the intersection itself: a chain, walked and summed.
+type Chain = { readonly value: number } & { readonly next: Chain | undefined };
+function build(count: number): Chain | undefined {
+    let chain: Chain | undefined = undefined;
+    for (let index = 1; index <= count; index++) {
+        const link: Chain = { value: index, next: chain };
+        chain = link;
+    }
+    return chain;
+}
+let total = 0;
+let at = build(4);
+while (at !== undefined) {
+    total += at.value;
+    at = at.next;
+}
+console.log(`${total}`);

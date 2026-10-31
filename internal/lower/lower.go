@@ -219,6 +219,9 @@ type lowering struct {
 
 	// V2 retains exact logical producer types for union member certification.
 	untaggedCallableTargets map[ir.ViewContractID]*checker.Type
+	// objectIntersections are the intersections objectIntersection is proving, so a field that
+	// holds one of them again ends there.
+	objectIntersections map[*checker.Type]bool
 
 	program          *load.Program
 	checker          *checker.Checker
