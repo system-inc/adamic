@@ -3,6 +3,7 @@ package load
 import (
 	_ "embed"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
@@ -35,16 +36,37 @@ type sourceFS struct {
 	nodePreludeText string
 	// display names a file for whoever reads the program (LoadDisplayed); nil names it by its path.
 	display func(string) string
+	// adamicFiles is adamicFile's answer for each path it was asked, an adamicAnswer, kept for the load's life.
+	adamicFiles sync.Map
+}
+
+// adamicAnswer is one path's adamicFile answer: the .a file behind it, and whether there is one.
+type adamicAnswer struct {
+	path  tspath.RootedFilePath
+	found bool
 }
 
 // adamicFile is the .a file behind a path the checker asked for, when there is one and no real .ts
-// file of that name.
+// file of that name. Its two stats are asked once a path in a load and kept (adamicFiles): Program.Where
+// names a file through displayName, never through the checker's cached file system, and lowering asks
+// Where for every unit and finding, so one internal/lower test binary stat'd one fixture's pair 238,336
+// times (#npd568j). A load's sources don't change while it is read, as cachedvfs already assumes of the
+// same disk, and a new load is a new sourceFS, so a file written between two loads is seen by the second.
 func (s *sourceFS) adamicFile(path tspath.RootedFilePath) (tspath.RootedFilePath, bool) {
-	if !strings.HasSuffix(path.AsString(), ".a.ts") || s.FS.FileExists(path) {
+	if !strings.HasSuffix(path.AsString(), ".a.ts") {
 		return "", false
 	}
-	adamicPath := path.RemoveExtension(".ts").AppendSuffix("")
-	return adamicPath, s.FS.FileExists(adamicPath)
+	if kept, ok := s.adamicFiles.Load(path); ok {
+		answer := kept.(adamicAnswer)
+		return answer.path, answer.found
+	}
+	answer := adamicAnswer{}
+	if !s.FS.FileExists(path) {
+		answer.path = path.RemoveExtension(".ts").AppendSuffix("")
+		answer.found = s.FS.FileExists(answer.path)
+	}
+	s.adamicFiles.Store(path, answer)
+	return answer.path, answer.found
 }
 
 // displayName is the name a person wrote, for a file name the checker uses, as display shows it.
