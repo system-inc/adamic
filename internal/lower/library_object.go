@@ -183,8 +183,9 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 						return refused("source and target field types must agree in both directions with tsc's intersection result; widening, conflicting fields and reference cycles are refused")
 					}
 					// adamic_object_assign retains and releases by the source slot's reference flag, so a
-					// name must be held alike on both sides. Agreeing both ways gives that for the fields
-					// admitted above; a field held otherwise in the target waits on a store by its own flag.
+					// name must be held alike on both sides. The number, string and boolean fields agreeing
+					// both ways above always are, so no program reaches this: it guards the day the field
+					// rule widens, until the runtime stores by the target's own flag.
 					if held, isKnown := l.representation(toType); !isKnown || held != of {
 						return nil, true, l.notYet(argument, "Object.assign of field "+field.Name+", held as a "+typeName(of)+" in the source and otherwise in the target")
 					}
