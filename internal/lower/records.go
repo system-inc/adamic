@@ -365,6 +365,23 @@ func (l *lowering) recordObjectCallArguments(node *ast.Node, name string, args [
 
 // Aliases cannot change the native storage kind, even when tsc accepts the structural view.
 func (l *lowering) recordStorageView(node *ast.Node) error {
+	source, target := l.recordViewSite(node)
+	if source == nil {
+		return nil
+	}
+	own := l.checker.GetTypeAtLocation(source)
+	if !l.sameRecordStorage(own, target, map[[2]*checker.Type]bool{}) {
+		return l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as "+l.checker.TypeToString(target)+" (fixed objects and records have different storage; copy explicitly)")
+	}
+	return nil
+}
+
+func init() { refusalRules.register(2000, "recordStorageView", (*lowering).recordStorageView) }
+
+// recordViewSite is the value a node puts into a typed slot and the slot's type, as recordStorageView
+// judges them, or nil: an initializer, an as expression, or a view site, but an object literal, which
+// is made as its slot, and an argument the library's own record operations take.
+func (l *lowering) recordViewSite(node *ast.Node) (*ast.Node, *checker.Type) {
 	var source *ast.Node
 	var target *checker.Type
 	if node.Kind == ast.KindVariableDeclaration {
@@ -380,31 +397,25 @@ func (l *lowering) recordStorageView(node *ast.Node) error {
 		target = l.checker.GetContextualType(node, checker.ContextFlagsNone)
 	}
 	if source == nil || target == nil || ast.SkipParentheses(source).Kind == ast.KindObjectLiteralExpression {
-		return nil
+		return nil, nil
 	}
 	if l.recordLibraryArgument(source) {
-		return nil // Intrinsic adapters validate the actual storage, not their erased checker parameter.
+		return nil, nil // Intrinsic adapters validate the actual storage, not their erased checker parameter.
 	}
 	if parent := source.Parent; parent != nil && parent.Kind == ast.KindCallExpression {
 		if l.detachedOwnCallReceiver(parent) != nil {
-			return nil
+			return nil, nil
 		}
 		callee := ast.SkipParentheses(parent.AsCallExpression().Expression)
 		if l.isLibraryGlobal(callee, "String") {
-			return nil
+			return nil, nil
 		}
 		if callee.Kind == ast.KindPropertyAccessExpression && (l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object") || l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "JSON")) {
-			return nil
+			return nil, nil
 		}
 	}
-	own := l.checker.GetTypeAtLocation(source)
-	if !l.sameRecordStorage(own, target, map[[2]*checker.Type]bool{}) {
-		return l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as "+l.checker.TypeToString(target)+" (fixed objects and records have different storage; copy explicitly)")
-	}
-	return nil
+	return source, target
 }
-
-func init() { refusalRules.register(2000, "recordStorageView", (*lowering).recordStorageView) }
 
 // Structural views must preserve dictionary storage at every depth, including callbacks.
 func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
