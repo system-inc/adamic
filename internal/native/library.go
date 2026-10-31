@@ -711,6 +711,8 @@ func slicesContain(values []string, wanted string) bool {
 // (internal/buildcache's record): '<kind> <name> <key12> hit|miss|off <seconds>'. kind is cCompile for a translation
 // unit, cArchive for the runtime's archive, cLink for a link, and cBuild for one clang call that compiles a program's
 // one unit and links it (a WASI module's build, or a lean build's off macOS), so neither half is taken for the other.
+// Where main.c's compile is keyed (objectKeyVariable), cPreprocess is the preprocessing its key reads, and cRecheck the
+// preprocessing again after the compile with the look again at every file the first read.
 // name is the unit, archive or output it made; key12 is the first 12 of the cache key the step was looked up by, or -
 // when nothing keys it. hit is an object or archive the cache held, miss one made into the cache, off a step that read
 // no cache. seconds is how long the tool ran for it, a wait for a compile token left out: a split unit's hit is its
