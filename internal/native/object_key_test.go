@@ -3,6 +3,7 @@ package native
 import (
 	"bufio"
 	"bytes"
+	"crypto/sha256"
 	"errors"
 	"fmt"
 	"os"
@@ -709,7 +710,12 @@ func TestObjectCacheForcedCheckCatchesAPlantedObject(t *testing.T) {
 	if len(held) != 1 {
 		t.Fatalf("main's directory holds %v", held)
 	}
-	if err := os.WriteFile(filepath.Join(root, "main", held[0], "main.o"), []byte("not an object\n"), 0o644); err != nil {
+	// Planted whole, its sum beside it, so the sum check passes it and only the forced check can catch it.
+	planted := []byte("not an object\n")
+	if err := os.WriteFile(filepath.Join(root, "main", held[0], "main.o"), planted, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(root, "main", held[0], objectSumName), fmt.Appendf(nil, "%x\n", sha256.Sum256(planted)), 0o644); err != nil {
 		t.Fatal(err)
 	}
 	t.Setenv(unitCheckVariable, "every")
@@ -731,5 +737,68 @@ func TestObjectCacheForcedCheckCatchesAPlantedObject(t *testing.T) {
 		t.Error("the mismatch didn't mark the unit cache off")
 	} else if !strings.Contains(why, "main.c") {
 		t.Errorf("the mark says %s", why)
+	}
+}
+
+// An entry that isn't the bytes its sum names is never linked: an object truncated, one with a byte flipped, and one
+// whose sum file is gone each compile cold as a miss, link the uncached build's binary, and are replaced by the object
+// that compile stores, so the build after hits. A crash or a disk mid-write leaves such an entry. Mutant, red: the sum
+// check dropped, which links the torn object.
+func TestObjectCacheNeverLinksATornEntry(t *testing.T) {
+	library, err := RuntimeLibraryForSource("", objectKeySource, Options{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	root := t.TempDir()
+	cache := objectCaches(t, root, "main")
+	uncached, _ := objectCacheBuild(t, root, "uncached", nil, objectKeySource, Options{}, library, nil)
+	if _, outcome := objectCacheBuild(t, root, "stored", &cache, objectKeySource, Options{}, library, nil); outcome != "miss" {
+		t.Fatalf("the first build says %s", outcome)
+	}
+	held := objectEntries(t, filepath.Join(root, "main"))
+	if len(held) != 1 {
+		t.Fatalf("main's directory holds %v", held)
+	}
+	entry := filepath.Join(root, "main", held[0])
+	for index, tear := range []struct {
+		name string
+		tear func(object []byte)
+	}{
+		{"truncated", func(object []byte) {
+			if err := os.WriteFile(filepath.Join(entry, "main.o"), object[:len(object)/2], 0o644); err != nil {
+				t.Fatal(err)
+			}
+		}},
+		{"a byte flipped", func(object []byte) {
+			flipped := slices.Clone(object)
+			flipped[len(flipped)/2] ^= 0xff
+			if err := os.WriteFile(filepath.Join(entry, "main.o"), flipped, 0o644); err != nil {
+				t.Fatal(err)
+			}
+		}},
+		{"its sum gone", func([]byte) {
+			if err := os.Remove(filepath.Join(entry, objectSumName)); err != nil {
+				t.Fatal(err)
+			}
+		}},
+	} {
+		object, err := os.ReadFile(filepath.Join(entry, "main.o"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		tear.tear(object)
+		binary, outcome := objectCacheBuild(t, root, fmt.Sprintf("torn-%d", index), &cache, objectKeySource, Options{}, library, nil)
+		if outcome != "miss" {
+			t.Errorf("%s: the build says %s", tear.name, outcome)
+		}
+		if !bytes.Equal(binary, uncached) {
+			t.Errorf("%s: the build didn't link the cold object", tear.name)
+		}
+		if _, _, whole := objectEntry(entry); !whole {
+			t.Errorf("%s: the torn entry wasn't replaced", tear.name)
+		}
+		if _, outcome := objectCacheBuild(t, root, fmt.Sprintf("after-%d", index), &cache, objectKeySource, Options{}, library, nil); outcome != "hit" {
+			t.Errorf("%s: the build after its replacement says %s", tear.name, outcome)
+		}
 	}
 }
