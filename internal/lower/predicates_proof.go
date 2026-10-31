@@ -6,6 +6,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // A tag proof certifies membership in the tag set only. Admission must preserve
@@ -940,6 +941,9 @@ func (l *lowering) checkedPredicateTargetCause(target *checker.Type) string {
 				base = append(base, part)
 			}
 		}
+		if len(base) == 0 {
+			base = target.Types() // Anonymous parts alone are their own base.
+		}
 	}
 	required := false
 	for _, part := range base {
@@ -951,7 +955,7 @@ func (l *lowering) checkedPredicateTargetCause(target *checker.Type) string {
 		return "a checked predicate target whose base has no required field to check"
 	}
 	for _, property := range l.checker.GetPropertiesOfType(target) {
-		if property.Flags&ast.SymbolFlagsOptional == 0 && l.untaggedRecord(l.checker.GetTypeOfSymbol(property)) {
+		if property.Flags&ast.SymbolFlagsOptional == 0 && l.untaggedRecord(l.checker.GetTypeOfSymbol(property), map[*checker.Type]bool{}) {
 			return "a checked predicate target whose check would read past the depth bound"
 		}
 	}
@@ -959,11 +963,17 @@ func (l *lowering) checkedPredicateTargetCause(target *checker.Type) string {
 }
 
 // untaggedRecord is whether t holds an object with no kind property, alone, as a union member or as an
-// array's elements: a structure a check could only read field by field.
-func (l *lowering) untaggedRecord(t *checker.Type) bool {
+// array's elements: a structure a check could only read field by field. A library type (Map, Date,
+// Promise) isn't one, since its check isn't a matter of depth. visited ends a recursive alias, such as
+// `type Json = string | number | Json[]`, on its second visit.
+func (l *lowering) untaggedRecord(t *checker.Type, visited map[*checker.Type]bool) bool {
+	if visited[t] {
+		return false
+	}
+	visited[t] = true
 	if t.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range t.Types() {
-			if l.untaggedRecord(member) {
+			if l.untaggedRecord(member, visited) {
 				return true
 			}
 		}
@@ -971,11 +981,16 @@ func (l *lowering) untaggedRecord(t *checker.Type) bool {
 	}
 	if l.checker.IsArrayType(t) || checker.IsTupleType(t) {
 		for _, element := range l.checker.GetTypeArguments(t) {
-			if l.untaggedRecord(element) {
+			if l.untaggedRecord(element, visited) {
 				return true
 			}
 		}
 		return false
+	}
+	if symbol := t.Symbol(); symbol != nil && len(symbol.Declarations) > 0 {
+		if file := ast.GetSourceFileOfNode(symbol.Declarations[0]); load.IsLibrary(file) || load.IsPrelude(file) {
+			return false
+		}
 	}
 	return t.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(t) && l.checker.GetPropertyOfType(t, "kind") == nil && len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) == 0
 }
