@@ -202,7 +202,7 @@ func readUnitClang(compiler string, flags []string, environment []string) ([]str
 		}
 		parts = append(parts, "driver"+line)
 	}
-	verbose, err := run(append(slices.Clone(flags), "-E", "-v", "-x", "c", os.DevNull)...)
+	verbose, err := run(slices.Concat(flags, unitSearchProbe(probe))...)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -214,6 +214,15 @@ func readUnitClang(compiler string, flags []string, environment []string) ([]str
 		parts = append(parts, fmt.Sprintf("search %s framework=%t", directory.path, directory.framework))
 	}
 	return parts, search, nil
+}
+
+// unitSearchProbe is what follows a compile's flags to have clang list its search path (searchPath): -E -v over an
+// empty C input. Under -v the Linux driver also looks for a ROCm installation, listing /opt to find one, a read no key
+// names that a traced build refuses (Adam's tree 4efff9dd, 414 product tests); --rocm-path names the probe's own empty
+// directory instead, which a C compile never reads, so nothing outside the probe is listed and the search path printed
+// is the same (Pupa, clang 20.1.8).
+func unitSearchProbe(probe string) []string {
+	return []string{"-E", "-v", "--rocm-path=" + probe, "-x", "c", os.DevNull}
 }
 
 // A searchDirectory is one directory of clang's `<name>` search path: a framework directory (macOS's, marked
