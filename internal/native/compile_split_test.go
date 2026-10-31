@@ -82,6 +82,12 @@ type splitBuilt struct {
 // output, so the two differ by the split alone. Each is linkOne as Build reaches it, with Build's flags and its runtime.
 func buildOneCallAndSplit(t *testing.T, source string, options Options) (splitBuilt, splitBuilt) {
 	t.Helper()
+	return buildOneCallAndSplitWith(t, source, options, Flags(options))
+}
+
+// buildOneCallAndSplitWith is buildOneCallAndSplit with flags in place of options' own.
+func buildOneCallAndSplitWith(t *testing.T, source string, options Options, flags []string) (splitBuilt, splitBuilt) {
+	t.Helper()
 	library, err := RuntimeLibraryForSource("", source, options)
 	if err != nil {
 		t.Fatal(err)
@@ -98,7 +104,7 @@ func buildOneCallAndSplit(t *testing.T, source string, options Options) (splitBu
 		}
 		defer os.RemoveAll(directory)
 		defer os.Remove(output)
-		err := linkOne(directory, compilerName(options), source, output, options, Flags(options), library, jobserver, func(directory string) ([]string, error) {
+		err := linkOne(directory, compilerName(options), source, output, options, flags, library, jobserver, func(directory string) ([]string, error) {
 			return regexpCompilerLinkFlags(source, options, directory)
 		}, objectKeyer(), oneCall)
 		return splitResult(t, output, err)
@@ -343,5 +349,29 @@ func TestACompiledThenLinkedCheckerIsTheOneCallChecker(t *testing.T) {
 		if difference := splitDifference(built[0], built[1]); difference != "" {
 			t.Errorf("%s: %s", build.name, difference)
 		}
+	}
+}
+
+// A program given flags only a link reads builds split as in one call: -Wl,--wrap= as stdout columns' probes give it,
+// -Xlinker with its argument, and -l, which a compile under -Werror refuses as unused. Release and sanitized, the binary
+// the one call's. Mutant, red: the compile given every flag (compileOnlyFlags dropped).
+func TestACompiledThenLinkedProgramTakesFlagsOnlyALinkReads(t *testing.T) {
+	t.Parallel()
+	source := splitCorpusSource(t, "arguments.a")
+	for _, build := range []struct {
+		name    string
+		options Options
+	}{{"release", Options{}}, {"sanitized", Options{Sanitize: true}}} {
+		t.Run(build.name, func(t *testing.T) {
+			t.Parallel()
+			flags := append(Flags(build.options), "-Wl,--wrap=adamic_split_test_unreferenced", "-Xlinker", "--as-needed", "-lm")
+			oneCall, split := buildOneCallAndSplitWith(t, source, build.options, flags)
+			if oneCall.failure != "" {
+				t.Fatalf("the one call failed: %s", oneCall.failure)
+			}
+			if difference := splitDifference(oneCall, split); difference != "" {
+				t.Error(difference)
+			}
+		})
 	}
 }
