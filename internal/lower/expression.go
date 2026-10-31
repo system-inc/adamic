@@ -297,6 +297,13 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferView(l.present(own), l.present(contextual)) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) {
 				return nil, l.notYet(node, "Buffer or Hash viewed as another object type (native host internal slots)")
 			}
+			// Any other host object may be seen through a type only as far as its registration names
+			// the members that type reaches (#8k12t4s); Buffer and Hash are refused whole above.
+			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferType(l.present(own), "Buffer") && !l.nodeBufferType(l.present(own), "Hash") {
+				if reached := l.nodeHostViewReach(own, contextual, 0, map[[2]*checker.Type]bool{}); reached != "" {
+					return nil, l.notYet(node, "a host object of type "+l.checker.TypeToString(own)+" seen as "+l.checker.TypeToString(contextual)+", which reaches "+reached+", a member no host registration names")
+				}
+			}
 			if own := l.contextualGenericType(node, l.checker.GetTypeAtLocation(node)); !l.typedArraySetArgument(node) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) && !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
 				if l.typedArrayKind(l.checker.GetNonNullableType(own)) != 0 {
 					return nil, l.notYet(node, "a typed array seen through a structural view that loses its buffer representation")
