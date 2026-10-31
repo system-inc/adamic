@@ -63,7 +63,9 @@ func TestArrayPredicateIgnoresAProgramsOwnMerge(t *testing.T) {
 		if builtin != probe.builtin {
 			t.Errorf("%q: builtin %v, want %v", probe.source, builtin, probe.builtin)
 		}
-		if _, err := Lower(context.Background(), program); probe.builtin == (err != nil) {
+		_, err = Lower(context.Background(), program)
+		var refused *Refused
+		if probe.builtin && err != nil || !probe.builtin && (!errors.As(err, &refused) || refused.Error() != path+":3:1: Adamic 0.1 refuses a global augmentation; define the values in a module and import them; use Adamic-generated platform bindings for host values") {
 			t.Errorf("%q: Lower: %v", probe.source, err)
 		}
 	}
