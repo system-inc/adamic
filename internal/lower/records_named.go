@@ -104,7 +104,7 @@ func (l *lowering) recordComputedEntry(literal, entry *ast.Node, of ir.Type) err
 	}
 	from := l.checker.GetTypeAtLocation(entry.AsPropertyAssignment().Initializer)
 	receivers := []*checker.Type{l.checker.GetTypeAtLocation(literal)}
-	if contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone); contextual != nil {
+	if contextual := l.slotType(literal); contextual != nil {
 		receivers = append(receivers, l.checker.GetNonNullableType(contextual))
 	}
 	for _, receiver := range receivers {
