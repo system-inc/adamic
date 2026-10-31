@@ -44,7 +44,7 @@ func TestObjectIntersectionFields(t *testing.T) {
 func TestObjectAssignKeepsFieldsHeldAlike(t *testing.T) {
 	t.Parallel()
 	for name, source := range map[string]string{
-		"string and boxed union": "const target = { value: 'built' + '-text' };\nconst source = { value: 1 as string | number };\nObject.assign(target, source);\nconsole.log(target.value);\n",
+		"string and boxed union":      "const target = { value: 'built' + '-text' };\nconst source = { value: 1 as string | number };\nObject.assign(target, source);\nconsole.log(target.value);\n",
 		"itself with an object field": "const target = { count: 1, label: { text: 'built' + '-label' } };\nconst same = Object.assign(target, target);\nconsole.log(`${same.count} ${same.label.text}`);\n",
 	} {
 		t.Run(name, func(t *testing.T) {
