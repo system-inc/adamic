@@ -90,7 +90,7 @@ var keyedEnvironment = []string{"ADAMIC_PROGRAM_REGION", "ADAMIC_OWNERSHIP_QUERY
 // unkeyedEnvironment is every variable the closure reads that can't change the IR, with why. A read the guard finds in
 // neither list fails it.
 var unkeyedEnvironment = map[string]string{
-	"ADAMIC_BUILD_LOG": "buildlog.Phase appends a phase's timing to the log the variable names; nothing it writes is an input to the program (buildlog.go)",
+	"ADAMIC_BUILD_LOG":           "buildlog.Phase appends a phase's timing to the log the variable names; nothing it writes is an input to the program (buildlog.go)",
 	"TERMUX_EXEC__PROC_SELF_EXE": "read on Android alone (tsc's osutil/os_android.go), naming the executable whose path osvfs probes for the file system's case sensitivity; that sensitivity is keyed itself, and the libraries a noembed build reads beside it are embedded here",
 }
 

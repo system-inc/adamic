@@ -42,9 +42,13 @@ func sealedOver(files map[string]string) *sealed {
 	return disk
 }
 
-// holds is whether name is one of the sources.
+// holds is whether name is one of the sources, as the checker names it: an X.a source is X.a.ts to the checker
+// (load's sourceFS).
 func (disk *sealed) holds(name string) bool {
 	_, held := disk.files[name]
+	if alias, isAlias := strings.CutSuffix(name, ".a.ts"); isAlias && !held {
+		_, held = disk.files[alias+".a"]
+	}
 	return held
 }
 

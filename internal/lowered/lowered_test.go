@@ -790,7 +790,10 @@ func TestAProgramReadingAFileBesideItsSourcesIsRefused(t *testing.T) {
 	t.Parallel()
 	elsewhere := writeProgram(t, t.TempDir(), [2]string{"values.ts", "export const value = 'beside';\n"})
 	entry := writeProgram(t, t.TempDir(), [2]string{"main.ts", fmt.Sprintf("import { value } from %q;\nconsole.log(value);\n", elsewhere)})
-	if _, _, err := loaded(sourcesOf(t, []string{entry}), Options{}); err == nil || !strings.Contains(err.Error(), elsewhere) || !strings.Contains(err.Error(), "refused") {
+	// Resolution asks first whether the file's directory is there, and the trace names that.
+	if _, _, err := loaded(sourcesOf(t, []string{entry}), Options{}); err == nil || !strings.Contains(err.Error(), filepath.Dir(elsewhere)) || !strings.Contains(err.Error(), "refused") {
 		t.Fatalf("got %v, want the read of %s refused", err, elsewhere)
+	} else {
+		t.Log(err)
 	}
 }
