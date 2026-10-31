@@ -35,7 +35,7 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		"1800 enumRefusal",
 		"1900 castRefusal",
 		// recordDeclaredKeyRefusal names, in .a, a view recordStorageView would call a storage gap.
-		"1950 recordDeclaredKeyRefusal",
+		"1975 recordDeclaredKeyRefusal",
 		"2000 recordStorageView",
 		"2100 namespaceRefusal",
 		"2200 ambientRefusal",

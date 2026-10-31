@@ -79,9 +79,10 @@ func TestRecordDeclaredKeysAreRefusedInA(t *testing.T) {
 // The rest of the roads keep the stops they had, pinned in each program's .stop file. In .a, the
 // control lowers and agrees with Node, and so do a computed key folded to a name no declared property
 // takes and the scanner's ["" + "constructor"] beside its declared keywords (01_scanner_keywords.a's
-// shape). A value tsc fits but Adamic's checks don't prove (an Other into names: Point, an open number
-// into kind: Kind, an Other through a 'names' | 'other' key) is not yet in .a as in .ts, since the
-// registry may admit it later. Object.assign(options, dict) (r06) is left not yet at its record
+// shape). A value that fails only the identity gate (an Other into names: Point, an open number into
+// kind: Kind, an Other through a 'names' | 'other' key, a SubPoint into names: Point), or only the
+// optional undefined (undefined under outFile?), is not yet in .a as in .ts, since the registry may
+// admit it later. Object.assign(options, dict) (r06) is left not yet at its record
 // operation, since tsc infers its target and source apart and no relation sees Dict as Options, and
 // r21 at its Readonly<Options> view's storage gap, a line before its widening: both fail closed. In
 // .ts, every road keeps the stop it had before the .a refusal: the storage views, the named write and
@@ -129,7 +130,7 @@ func TestRecordDeclaredKeyStopsArePinned(t *testing.T) {
 			}
 		})
 	}
-	if programs != 43 {
-		t.Fatalf("found %d programs, want 43", programs)
+	if programs != 47 {
+		t.Fatalf("found %d programs, want 47", programs)
 	}
 }

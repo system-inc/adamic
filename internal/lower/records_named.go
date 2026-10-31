@@ -90,25 +90,47 @@ func (l *lowering) recordNamedWrite(access, value *ast.Node) error {
 // judged against the named properties of the literal's own type and of the type it's written into.
 // A name strings joined by + make (constantStringKey) is judged as that name alone, so tsc's
 // ["" + "constructor"] beside the keywords it declares (01_scanner_keywords.a) names none of them.
-// A slot boxed as a union (of) is left to its reads: recordReadType checks a declared scalar's tag
-// and stops loudly on a lie, Adamic's .ts ruling for { [name]: 3 } (records_union_lying.ts), and a
-// declared object read from it is not yet. Only an unboxed slot is read as the declared type unchecked.
+// A method or an accessor under such a name stores a function under it unjudged, so it's not yet
+// unless its folded name names no declared property.
+//
+// In a slot boxed as a union (of), a declared read already stops on a lie, so only a property read
+// unchecked there is judged: recordReadType checks a declared scalar's tag and stops loudly
+// (records_union_lying.ts is Adamic's .ts witness), and a declared object read from it is not yet;
+// but a declared function is checked only by its tag, so a () => void under names: () => unknown
+// would be read as unknown, and it's judged here.
 func (l *lowering) recordComputedEntry(literal, entry *ast.Node, of ir.Type) error {
 	key := ast.SkipParentheses(entry.Name().AsComputedPropertyName().Expression)
-	if of == ir.Union || key.Kind == ast.KindStringLiteral || key.Kind == ast.KindNoSubstitutionTemplateLiteral || key.Kind == ast.KindNumericLiteral || entry.Kind != ast.KindPropertyAssignment {
+	if key.Kind == ast.KindStringLiteral || key.Kind == ast.KindNoSubstitutionTemplateLiteral || key.Kind == ast.KindNumericLiteral {
 		return nil
 	}
-	var names map[string]bool
-	if folded, known := constantStringKey(key); known {
-		names = map[string]bool{folded: true}
+	var folded map[string]bool
+	if name, known := constantStringKey(key); known {
+		folded = map[string]bool{name: true}
 	}
-	from := l.checker.GetTypeAtLocation(entry.AsPropertyAssignment().Initializer)
 	receivers := []*checker.Type{l.checker.GetTypeAtLocation(literal)}
 	if contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone); contextual != nil {
 		receivers = append(receivers, l.checker.GetNonNullableType(contextual))
 	}
 	for _, receiver := range receivers {
-		if err := l.namedWriteStop(entry.Name(), receiver, from, names); err != nil {
+		names := map[string]bool{}
+		for _, property := range l.checker.GetPropertiesOfType(receiver) {
+			if folded != nil && !folded[property.Name] {
+				continue
+			}
+			if of == ir.Union {
+				if stored, known := l.representation(l.checker.GetNonMissingTypeOfSymbol(property)); known && stored.Present() != ir.Closure {
+					continue
+				}
+			}
+			names[property.Name] = true
+		}
+		if len(names) == 0 {
+			continue
+		}
+		if entry.Kind != ast.KindPropertyAssignment {
+			return l.notYet(entry.Name(), "a computed method or accessor in a record literal whose name a named property may take")
+		}
+		if err := l.namedWriteStop(entry.Name(), receiver, l.checker.GetTypeAtLocation(entry.AsPropertyAssignment().Initializer), names); err != nil {
 			return err
 		}
 	}

@@ -1,4 +1,4 @@
-// a-check: refused a write into a record with declared properties through a key that is not one literal, of a value a declared property it can land under can't hold (undefined written into Counts by key: required is declared number)
+// a-check: refused a write into a record with declared properties through a key that is not one literal, of a value a declared property it can land under cannot hold (undefined written into Counts by key: required is declared number)
 interface Counts { required: number; [k: string]: number | undefined; }
 const keys: string[] = ["required", "other"];
 const key = keys[0] ?? "other";

@@ -21,9 +21,9 @@ import (
 //     widened holds the dictionary's values against each declared property they'd be read through.
 //   - A write through a key that isn't one literal, options[name] = 3 or { [name]: 3 }, which tsc
 //     checks against the index signature alone. Only the value written can land under a declared
-//     property, so the value is judged: refused when a declared property it can land under can't
-//     hold it at all, and not yet, as in .ts, when tsc fits it but Adamic's own checks don't prove it
-//     (recordNamedWrite's namedWriteStop), since the registry may admit it later (l.slotType).
+//     property, so the value is judged by recordNamedWrite's own check: refused when it fails one of
+//     the rules 0.1 forbids (declaredKeyRefusable), and not yet, as in .ts, when it fails only the
+//     identity gate, since the registry may admit it later (l.slotType).
 // .ts keeps the checked read instead (recordReadType), which stops loudly at the declared read.
 
 // declaredKeysFix is what each of the three refusals offers.
@@ -60,12 +60,12 @@ func (l *lowering) recordDeclaredKeyRefusal(node *ast.Node) error {
 }
 
 func init() {
-	refusalRules.register(1950, "recordDeclaredKeyRefusal", (*lowering).recordDeclaredKeyRefusal)
+	refusalRules.register(1975, "recordDeclaredKeyRefusal", (*lowering).recordDeclaredKeyRefusal)
 }
 
 // declaredKeyWrite refuses a write through a key that isn't one literal, into a record with a
 // writable index signature, of a value a declared property it can land under can't hold, and stops
-// one tsc fits but namedWriteStop doesn't, not yet, as recordNamedWrite does in .ts. The writes are an
+// one only the identity gate stops, not yet, as recordNamedWrite does in .ts (declaredKeyRefusable). The writes are an
 // element access written to (by =, a compound assignment, ++, a destructuring target or a for-in or
 // for-of head), and an object literal's computed name, whose entry is written as the literal is made,
 // into its own type and the type it's written into. Where the value written isn't one expression's
@@ -114,11 +114,8 @@ func (l *lowering) declaredKeyWrite(node *ast.Node) error {
 				if written == nil {
 					written = info.ValueType()
 				}
-				for _, property := range l.checker.GetPropertiesOfType(member) {
-					if names != nil && !names[property.Name] || l.checker.IsTypeAssignableTo(written, l.checker.GetTypeOfSymbol(property)) {
-						continue
-					}
-					return &Refused{Where: l.program.Where(node), What: "a write into a record with declared properties through a key that is not one literal, of a value a declared property it can land under cannot hold (" + l.checker.TypeToString(written) + " written into " + l.checker.TypeToString(member) + " by " + sourceExpression(key) + ": " + property.Name + " is declared " + l.checker.TypeToString(l.checker.GetTypeOfSymbol(property)) + ")", Fix: declaredKeysFix}
+				if property, identity := l.namedWriteMisfit(member, written, names); property != nil && !identity && l.declaredKeyRefusable(property, written) {
+					return &Refused{Where: l.program.Where(node), What: "a write into a record with declared properties through a key that is not one literal, of a value a declared property it can land under cannot take (" + l.checker.TypeToString(written) + " written into " + l.checker.TypeToString(member) + " by " + sourceExpression(key) + ": " + property.Name + " is declared " + l.checker.TypeToString(l.checker.GetTypeOfSymbol(property)) + ")", Fix: declaredKeysFix}
 				}
 				if err := l.namedWriteStop(node, member, written, names); err != nil {
 					return err
@@ -161,6 +158,17 @@ func (l *lowering) writtenNames(key *ast.Node) (map[string]bool, bool) {
 		}
 	}
 	return names, false
+}
+
+// declaredKeyRefusable reports whether a value recordNamedWrite's list doesn't fit to a declared
+// property is one 0.1 forbids there: not assignable to it, its optional undefined included, or
+// failing the list's enum, invariance or storage rule, or the property readonly. A value that fails
+// only the optional undefined (undefined written under an optional property, which may hold it), or
+// only the identity gate (a SubPoint under names: Point, or an Other tsc relates to it structurally),
+// is not yet, as in .ts: the registry may admit it once it judges the write (l.slotType, #b6m00y7).
+func (l *lowering) declaredKeyRefusable(property *ast.Symbol, written *checker.Type) bool {
+	to := l.checker.GetNonMissingTypeOfSymbol(property)
+	return l.checker.IsReadonlySymbol(property) || !l.checker.IsTypeAssignableTo(written, l.checker.GetTypeOfSymbol(property)) || !l.enumAssignable(written, to) || l.widened(written, to, map[[2]*checker.Type]bool{}) != nil || !l.sameRecordStorage(written, to, map[[2]*checker.Type]bool{})
 }
 
 // writtenValue is the type of what an assignment or an increment writes into its target, or nil when
