@@ -1743,6 +1743,11 @@ func scanLowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.
 	if err := lowering.scanFindCycles(modules); err != nil {
 		return nil, err
 	}
+	// As lowerCheckedWithCycleTypes does: without it, TestCycleFinderEquality goes red on the
+	// reland_refused view_spread fixtures, which the reference lowers where lowering stops.
+	if err := lowering.checkViewCopies(); err != nil {
+		return nil, err
+	}
 	if len(lowering.asyncPayloadFailures) > 0 {
 		return nil, lowering.asyncPayloadFailures[0]
 	}
