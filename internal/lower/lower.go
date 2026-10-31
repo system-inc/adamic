@@ -222,6 +222,11 @@ type lowering struct {
 	// (view_widened.go).
 	viewSources []viewSource
 	viewTypes   map[int]*checker.Type
+	// narrowedReads are, for each local, the types the checker narrowed a read of it to, and
+	// narrowedFields the types it narrowed a field read to: where a predicate's view takes its
+	// value (view_widened.go).
+	narrowedReads  map[int]map[int]*checker.Type
+	narrowedFields []*checker.Type
 
 	programPlan          *programMembership
 	programDiscovery     bool

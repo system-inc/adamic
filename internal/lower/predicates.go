@@ -3,7 +3,6 @@ package lower
 import (
 	"errors"
 	"fmt"
-	"slices"
 	_ "unsafe"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -429,14 +428,11 @@ func (l *lowering) predicateRefusal(node *ast.Node) error {
 	}
 	if proof.TaggedView {
 		target := l.checker.GetTypeAtLocation(node.AsTypePredicateNode().Type)
-		// The claimed parameter's type is what the view's value had before it, or none, and its
-		// arguments are where the value enters the view (view_widened.go).
+		// The claimed parameter's type is what the view's value had before it, or none.
 		var source *checker.Type
-		claimed := -1
 		if node.Parent.Type() == node {
 			if parameter := l.checkedPredicateClaimed(node.Parent); parameter != nil {
 				source = l.checker.GetTypeAtLocation(parameter.Name())
-				claimed = slices.Index(node.Parent.Parameters(), parameter)
 			}
 		}
 		members := []*checker.Type{target}
@@ -460,10 +456,8 @@ func (l *lowering) predicateRefusal(node *ast.Node) error {
 			if _, err := l.view(node, nil, source, member); err != nil {
 				return err
 			}
-			if claimed >= 0 {
-				l.viewSources[len(l.viewSources)-1].predicate = node.Parent
-				l.viewSources[len(l.viewSources)-1].claimed = claimed
-			}
+			// The value enters the view wherever a caller's read is narrowed to it (view_widened.go).
+			l.viewSources[len(l.viewSources)-1].narrows = true
 		}
 	}
 	return nil

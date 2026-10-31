@@ -12,15 +12,12 @@ import (
 
 // viewSource is a view's target, the type its value had before it (a cast's operand, a checked
 // predicate's argument or a tag-proven predicate's parameter, nil when there's none to name), and
-// where its value enters the view in the IR: a cast's CheckedCast, the local a structural cast or
-// a checked predicate's call admits, or each argument a tag-proven predicate's claimed parameter
-// takes. A view with none of these is judged by its allocations alone.
+// where its value enters the view in the IR: a cast's CheckedCast, the local a structural cast
+// admits, or, for a predicate's view, wherever a read is narrowed to the target.
 type viewSource struct {
 	source, target *checker.Type
-	cast           bool
+	cast, narrows  bool
 	entry          ir.Expression
-	predicate      *ast.Node
-	claimed        int
 }
 
 // viewLie is what one view checks that its source doesn't guarantee. Lied are the names read raw
@@ -54,16 +51,17 @@ const (
 // refuse every read made before the view (the tag test, the producer's own type), since those
 // reach the same allocation, and a layout lies only once a view claims it. The entries, one for
 // each place view registers one:
+//
 //   - a cast's CheckedCast (interfaceCast, and cast's tag cast), the value itself;
 //   - a structural cast (structuralViewCast), which leaves no IR node of its own: every read of
 //     the local it casts, a superset of where the admitted value goes;
-//   - a checked predicate's call (predicateMembership), no node either: every read of the local
-//     the call checks;
-//   - a tag-proven predicate (predicateRefusal), no node either: every read of each local a call
-//     passes to its claimed parameter (predicateEntries);
+//   - a predicate's view, a checked call's (predicateMembership) or a tag-proven predicate's
+//     (predicateRefusal), no node either: every read of each local the checker narrowed some
+//     read of to the target (narrowedEntries), which is where a true result admits the value;
 //   - a checked read of an aggregate field, the value inside a viewed value.
-// A view whose entry names no local (a predicate taken as a value or passed something else, a cast
-// of something other than a local) falls back to the allocations it may reach, as checkViewCopies
+//
+// A view whose entry names no local (a predicate that narrows a field read, a structural cast of
+// something other than a local) falls back to the allocations it may reach, as checkViewCopies
 // does. Predicate views give no ViewOrigin, only nil, so that reach is unknown and every read the
 // fallback weighs is NotYet. The flow follows what the graph follows: locals (a captured one is
 // the same local, in its cell), parameters, returns, conditional arms, and literal fields and
@@ -94,8 +92,8 @@ func (l *lowering) checkViewWidenedReads() error {
 		read, isRead := view.entry.(ir.Read)
 		switch {
 		case view.cast:
-		case view.predicate != nil:
-			if !l.predicateEntries(view, entryLocals) {
+		case view.narrows:
+			if !l.narrowedEntries(view.target, entryLocals) {
 				unentered = append(unentered, lies[i])
 			}
 		case isRead:
@@ -170,45 +168,57 @@ func (l *lowering) checkViewWidenedReads() error {
 	return refused
 }
 
-// predicateEntries adds to locals each local a tag-proven predicate's claimed parameter takes at
-// a call, the value a true result narrows at its caller. It says false when it can't name them
-// all: a predicate that isn't a declared function, one taken as a value, or a call passing
-// something other than a local.
-func (l *lowering) predicateEntries(view viewSource, locals map[int]bool) bool {
-	name := view.predicate.Name()
-	if name == nil || name.Kind != ast.KindIdentifier {
-		return false
+// narrowedEntries adds to locals each local a read of was narrowed to a type holding target, the
+// value a predicate's true result admits at its caller. It says false when a field read was
+// narrowed to one too, a value with no local to name.
+func (l *lowering) narrowedEntries(target *checker.Type, locals map[int]bool) bool {
+	for _, narrowed := range l.narrowedFields {
+		if l.typeHolds(narrowed, target) {
+			return false
+		}
 	}
-	function, declared := l.functions[l.symbol(name)]
-	if !declared {
-		return false
+	for local, types := range l.narrowedReads {
+		for _, narrowed := range types {
+			locals[local] = locals[local] || l.typeHolds(narrowed, target)
+		}
 	}
-	named := true
-	inspect := func(node any) bool {
-		switch value := node.(type) {
-		case ir.MakeClosure:
-			named = named && value.Function != function
-		case ir.Call:
-			if !slices.Contains(l.result.CallTargets(value), function) {
-				break
-			}
-			if view.claimed >= len(value.Arguments) {
-				named = false
-				break
-			}
-			read, isRead := value.Arguments[view.claimed].(ir.Read)
-			named = named && isRead
-			if isRead {
-				locals[read.Local] = true
+	return true
+}
+
+// typeHolds says whether a type is target, or a union or intersection holding it.
+func (l *lowering) typeHolds(held, target *checker.Type) bool {
+	held = l.checker.GetNonNullableType(l.concrete(held))
+	if held.Id() == target.Id() {
+		return true
+	}
+	if held.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		for _, member := range held.Types() {
+			if l.typeHolds(member, target) {
+				return true
 			}
 		}
-		return named
 	}
-	walk(l.result.Main, inspect)
-	for _, body := range l.result.Functions {
-		walk(body.Body, inspect)
+	return false
+}
+
+// narrowedRead keeps the type the checker narrowed a read of a local to, when it isn't the
+// local's own (narrowedEntries).
+func (l *lowering) narrowedRead(node *ast.Node, local int) {
+	symbol := l.symbol(node)
+	if symbol == nil {
+		return
 	}
-	return named
+	narrowed := l.checker.GetTypeAtLocation(node)
+	if narrowed.Id() == l.checker.GetTypeOfSymbol(symbol).Id() {
+		return
+	}
+	if l.narrowedReads == nil {
+		l.narrowedReads = map[int]map[int]*checker.Type{}
+	}
+	if l.narrowedReads[local] == nil {
+		l.narrowedReads[local] = map[int]*checker.Type{}
+	}
+	l.narrowedReads[local][int(narrowed.Id())] = narrowed
 }
 
 // viewLie is what a view checks that its source doesn't guarantee: its target's own fields, and

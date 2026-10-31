@@ -909,8 +909,8 @@ func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, sour
 			if _, err := l.view(node, nil, source, target); err != nil {
 				return nil, nil, err
 			}
-			// The call checks value, and the value it narrows enters the view there.
-			l.viewSources[len(l.viewSources)-1].entry = value
+			// The value enters the view wherever a caller's read is narrowed to it (view_widened.go).
+			l.viewSources[len(l.viewSources)-1].narrows = true
 			literal, of, known := l.literalConstant(tag)
 			if known {
 				return nil, ir.Binary{Operator: ir.And, Left: censusCondition(value), Right: equal(ir.Property{Object: value, Name: "kind", Of: of, View: "predicate argument.kind", ViewType: l.checker.TypeToString(tag)}, literal)}, nil
