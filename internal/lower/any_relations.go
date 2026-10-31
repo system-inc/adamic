@@ -209,8 +209,12 @@ func (l *lowering) libraryCallResult(node *ast.Node) bool {
 }
 
 // libraryCallArgument is whether node is an argument of a call or new expression whose resolved signature
-// the library declares.
+// the library declares. A value given a slot by a caller (slotSet) is written into that slot, not handed
+// to the library, so it isn't one.
 func (l *lowering) libraryCallArgument(node *ast.Node) bool {
+	if l.slotSet(node) {
+		return false
+	}
 	site := node
 	for site.Parent != nil && site.Parent.Kind == ast.KindParenthesizedExpression {
 		site = site.Parent
