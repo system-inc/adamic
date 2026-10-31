@@ -53,6 +53,9 @@ func TestViewWidenedReadNotYet(t *testing.T) {
 		{"view_widened_predicate_closure.ts", "6:94", "text", "HasText", "5\n"},
 		{"view_widened_predicate_field.ts", "7:88", "text", "HasText", "5\n"},
 		{"view_widened_predicate_anonymous.ts", "6:140", "text", "{ readonly kind: 9; readonly pos: number; readonly text: string; }", "5\n"},
+		// A source field typed any vouches for nothing: Loose's text is any, so LitL's string came from the
+		// cast alone (#tmdhz1d, Language's v1).
+		{"view_widened_vouched_any.ts", "4:108", "text", "HasText", "5\n"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()
