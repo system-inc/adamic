@@ -134,6 +134,7 @@ func TestNodeHostViewRegisteredAgrees(t *testing.T) {
 		{"timeOrigin related", "import { performance } from \"node:perf_hooks\";\nconst p: { readonly timeOrigin: number } = performance;\nconsole.log(String(p.timeOrigin > 0));\n"},
 		{"timeOrigin destructured", "import { performance } from \"node:perf_hooks\";\nconst { timeOrigin } = performance;\nconsole.log(String(timeOrigin > 0));\n"},
 		{"now related", "import { performance } from \"node:perf_hooks\";\nconst p: { now(): number } = performance;\nconsole.log(String(p.now() >= 0));\n"},
+		{"realpathSync through a view giving a string", "import * as fs from \"node:fs\";\nconst real: (path: string) => string = fs.realpathSync;\nconst native: (path: string) => string = fs.realpathSync.native;\nconsole.log(String(real(\".\").length > 0 && native(\".\").length > 0));\n"},
 		{"timeOrigin through a union's arm", "import { performance } from \"node:perf_hooks\";\nconst p: number | { readonly timeOrigin: number } = performance;\nif (typeof p !== \"number\") console.log(String(p.timeOrigin > 0)); else console.log(\"none\");\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
@@ -184,6 +185,11 @@ func TestNodeHostViewStopsHeld(t *testing.T) {
 		// A callable one level down, a property or an argument, is already judged at 20cf2e2d.
 		{"node_host_view_held_callable_property.ts", "4:44", "a value of type { get: () => Performance; } holding a host object seen as { readonly get: () => View; }, which reaches node:perf_hooks.Performance.eventLoopUtilization"},
 		{"node_host_view_held_function_argument.ts", "4:30", "a host object of type Performance seen as View, which reaches node:perf_hooks.Performance.eventLoopUtilization"},
+		// Overloads taking the same arguments with a narrower result first (TestNodeRegisteredOverloads
+		// in internal/lower): mkdtempSync isn't a value at all, and realpathSync's value takes one path
+		// and nothing Node reads as options, so its string overload is the one a view can reach.
+		{"node_host_view_held_overload_value.ts", "3:40", "node:fs.mkdtempSync as a value"},
+		{"node_host_view_held_overload_options.ts", "3:20", "is admitted only as a const called with one path"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()
