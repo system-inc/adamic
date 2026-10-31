@@ -1,0 +1,4 @@
+// A compound assignment.
+import 'node:process';
+Error.stackTraceLimit += 1;
+console.log(String(Error.stackTraceLimit));

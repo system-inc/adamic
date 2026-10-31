@@ -5874,6 +5874,14 @@
   {
     "package": "flow",
     "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_node_error_stack_trace_limit_a_5db31465450e",
+    "program": "internal/oracle/testdata/node_error_stack_trace_limit.a",
+    "path": "../oracle/testdata/node_error_stack_trace_limit.a",
+    "sha256": "1e5aa80b863aa16d125ad982fadf9b736c1abc5ba384ce528d1ebf240a387c96"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
     "test": "TestFlowProgram____oracle_testdata_node_fs_directory_empty_path_a_6da36a81fe67",
     "program": "internal/oracle/testdata/node_fs_directory_empty_path.a",
     "path": "../oracle/testdata/node_fs_directory_empty_path.a",
@@ -15678,6 +15686,14 @@
     "program": "internal/oracle/testdata/node_buffer_writes.a",
     "path": "../oracle/testdata/node_buffer_writes.a",
     "sha256": "e50ccc6f324af08f230b84c406b989b2467a88ff187b73d0761843ccc8ba3695"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_node_error_stack_trace_limit_a_5db31465450e",
+    "program": "internal/oracle/testdata/node_error_stack_trace_limit.a",
+    "path": "../oracle/testdata/node_error_stack_trace_limit.a",
+    "sha256": "1e5aa80b863aa16d125ad982fadf9b736c1abc5ba384ce528d1ebf240a387c96"
   },
   {
     "package": "flow",
@@ -25490,6 +25506,14 @@
   {
     "package": "flow",
     "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_node_error_stack_trace_limit_a_5db31465450e",
+    "program": "internal/oracle/testdata/node_error_stack_trace_limit.a",
+    "path": "../oracle/testdata/node_error_stack_trace_limit.a",
+    "sha256": "1e5aa80b863aa16d125ad982fadf9b736c1abc5ba384ce528d1ebf240a387c96"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
     "test": "TestFlowProgram____oracle_testdata_node_fs_directory_empty_path_a_6da36a81fe67",
     "program": "internal/oracle/testdata/node_fs_directory_empty_path.a",
     "path": "../oracle/testdata/node_fs_directory_empty_path.a",
@@ -35294,6 +35318,14 @@
     "program": "internal/oracle/testdata/node_buffer_writes.a",
     "path": "../oracle/testdata/node_buffer_writes.a",
     "sha256": "e50ccc6f324af08f230b84c406b989b2467a88ff187b73d0761843ccc8ba3695"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_node_error_stack_trace_limit_a_5db31465450e",
+    "program": "internal/oracle/testdata/node_error_stack_trace_limit.a",
+    "path": "../oracle/testdata/node_error_stack_trace_limit.a",
+    "sha256": "1e5aa80b863aa16d125ad982fadf9b736c1abc5ba384ce528d1ebf240a387c96"
   },
   {
     "package": "flow",
@@ -45454,6 +45486,14 @@
     "program": "internal/oracle/testdata/node_buffer_writes.a",
     "path": "../oracle/testdata/node_buffer_writes.a",
     "sha256": "e50ccc6f324af08f230b84c406b989b2467a88ff187b73d0761843ccc8ba3695"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_node_error_stack_trace_limit_a_5db31465450e",
+    "program": "internal/oracle/testdata/node_error_stack_trace_limit.a",
+    "path": "../oracle/testdata/node_error_stack_trace_limit.a",
+    "sha256": "1e5aa80b863aa16d125ad982fadf9b736c1abc5ba384ce528d1ebf240a387c96"
   },
   {
     "package": "fresh",

@@ -13,6 +13,7 @@ func (e *emitter) nodeProcessCall(call ir.ProcessCall) (string, bool) {
 		"now": "adamic_node_performance_now", "timeOrigin": "adamic_node_time_origin",
 		"mark": "adamic_node_mark", "measure": "adamic_node_measure",
 		"clearMarks": "adamic_node_clear_marks", "clearMeasures": "adamic_node_clear_measures",
+		"stackTraceLimit": "adamic_node_stack_trace_limit", "setStackTraceLimit": "adamic_node_set_stack_trace_limit",
 	}
 	function, known := functions[call.Operation]
 	if !known {

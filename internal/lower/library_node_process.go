@@ -120,9 +120,89 @@ func (l *lowering) nodeProcessEnvironmentMutation(node *ast.Node) (ir.Expression
 	return call, true, nil
 }
 
+// Error.stackTraceLimit is Node's writable frame count on the global Error, 10 by default. Adamic
+// refuses .stack, so the count is all a program can observe of it. As with process.platform the
+// member isn't registered: a position nodeStackTraceLimitUseRefusal misses falls to the generic NotYet.
+const nodeStackTraceLimitMember = "node:globals.ErrorConstructor.stackTraceLimit"
+
+// nodeStackTraceLimitRefusal names every use of Error.stackTraceLimit but a plain read, or a plain =
+// write of a number, through the global Error identifier.
+func (l *lowering) nodeStackTraceLimitRefusal(node *ast.Node) error {
+	if node.Kind != ast.KindPropertyAccessExpression {
+		return l.notYet(node, nodeStackTraceLimitMember+" outside a property access (fix: read or write Error.stackTraceLimit)")
+	}
+	if !l.isLibraryGlobal(node.AsPropertyAccessExpression().Expression, "Error") {
+		return l.notYet(node, nodeStackTraceLimitMember+" through a receiver other than the global Error (fix: read or write Error.stackTraceLimit)")
+	}
+	outer := node
+	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
+		outer = outer.Parent
+	}
+	switch {
+	case node.Flags&ast.NodeFlagsOptionalChain != 0:
+		return l.notYet(node, nodeStackTraceLimitMember+" read through an optional chain (fix: read Error.stackTraceLimit directly)")
+	case outer.Parent != nil && outer.Parent.Kind == ast.KindDeleteExpression:
+		return l.notYet(node, nodeStackTraceLimitMember+" deleted (fix: assign it a number)")
+	case ast.IsAssignmentTarget(outer):
+		parent := outer.Parent
+		if parent == nil || parent.Kind != ast.KindBinaryExpression || parent.AsBinaryExpression().OperatorToken.Kind != ast.KindEqualsToken || parent.AsBinaryExpression().Left != outer {
+			return l.notYet(node, nodeStackTraceLimitMember+" written other than by a plain = (fix: assign the computed number with =)")
+		}
+		if of, known := l.representation(l.checker.GetTypeAtLocation(parent.AsBinaryExpression().Right)); !known || of != ir.Number {
+			return l.notYet(parent.AsBinaryExpression().Right, nodeStackTraceLimitMember+" written with a value not typed number")
+		}
+	}
+	return nil
+}
+
+// nodeStackTraceLimitUseRefusal is the refusal visitor's view of Error.stackTraceLimit: its property
+// name is part of the access, the access is judged by nodeStackTraceLimitRefusal, and the member
+// anywhere else is NotYet.
+func (l *lowering) nodeStackTraceLimitUseRefusal(node *ast.Node) (bool, error) {
+	if node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.Name() == node && l.nodeLibraryMember(node.Parent) == nodeStackTraceLimitMember {
+		return true, l.nodeStackTraceLimitRefusal(node.Parent)
+	}
+	if l.nodeLibraryMember(node) != nodeStackTraceLimitMember {
+		return false, nil
+	}
+	return true, l.nodeStackTraceLimitRefusal(node)
+}
+
+// nodeStackTraceLimit lowers a read of Error.stackTraceLimit to the runtime's stored count, and a
+// plain = write of a number to a store that yields the number, as the assignment does in JavaScript.
+func (l *lowering) nodeStackTraceLimit(node *ast.Node) (ir.Expression, bool, error) {
+	if node.Kind == ast.KindBinaryExpression && node.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
+		target := ast.SkipParentheses(node.AsBinaryExpression().Left)
+		if target.Kind != ast.KindPropertyAccessExpression || l.nodeLibraryMember(target) != nodeStackTraceLimitMember {
+			return nil, false, nil
+		}
+		if err := l.nodeStackTraceLimitRefusal(target); err != nil {
+			return nil, true, err
+		}
+		value, err := l.expression(node.AsBinaryExpression().Right)
+		if err != nil {
+			return nil, true, err
+		}
+		if value.Type() != ir.Number {
+			return nil, true, l.notYet(node.AsBinaryExpression().Right, nodeStackTraceLimitMember+" written with a value not typed number")
+		}
+		return ir.ProcessCall{Operation: "setStackTraceLimit", Arguments: []ir.Expression{value}, Of: ir.Number}, true, nil
+	}
+	if (node.Kind != ast.KindPropertyAccessExpression && node.Kind != ast.KindElementAccessExpression) || l.nodeLibraryMember(node) != nodeStackTraceLimitMember {
+		return nil, false, nil
+	}
+	if err := l.nodeStackTraceLimitRefusal(node); err != nil {
+		return nil, true, err
+	}
+	return ir.ProcessCall{Operation: "stackTraceLimit", Of: ir.Number}, true, nil
+}
+
 func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error) {
 
 	if value, known, err := l.nodeProcessEnvironmentMutation(node); known {
+		return value, known, err
+	}
+	if value, known, err := l.nodeStackTraceLimit(node); known {
 		return value, known, err
 	}
 	if node.Kind == ast.KindPrefixUnaryExpression {

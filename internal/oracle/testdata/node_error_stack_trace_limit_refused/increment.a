@@ -1,0 +1,4 @@
+// An update expression.
+import 'node:process';
+Error.stackTraceLimit++;
+console.log(String(Error.stackTraceLimit));

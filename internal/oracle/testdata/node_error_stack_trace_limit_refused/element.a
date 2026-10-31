@@ -1,0 +1,3 @@
+// An element access names the member by a string.
+import 'node:process';
+console.log(String(Error['stackTraceLimit']));

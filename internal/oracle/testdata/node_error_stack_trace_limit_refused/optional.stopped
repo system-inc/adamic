@@ -1,0 +1,1 @@
+internal/oracle/testdata/node_error_stack_trace_limit_refused/optional.a:3:20: stage 0 can't lower node:globals.ErrorConstructor.stackTraceLimit read through an optional chain (fix: read Error.stackTraceLimit directly) yet

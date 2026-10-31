@@ -1,0 +1,5 @@
+// A write of a value typed any, not number.
+import 'node:process';
+const limit: any = 50;
+Error.stackTraceLimit = limit;
+console.log(String(Error.stackTraceLimit));

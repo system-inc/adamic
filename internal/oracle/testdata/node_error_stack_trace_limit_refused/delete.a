@@ -1,0 +1,4 @@
+// A delete. The checker refuses it first, since the member isn't optional.
+import 'node:process';
+delete Error.stackTraceLimit;
+console.log(String(Error.stackTraceLimit));

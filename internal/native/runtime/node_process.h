@@ -15,6 +15,8 @@ bool adamic_node_stdout_write(const adamic_string *text);
 adamic_object *adamic_node_memory_usage(void);
 double adamic_node_performance_now(void);
 double adamic_node_time_origin(void);
+double adamic_node_stack_trace_limit(void);
+double adamic_node_set_stack_trace_limit(double limit);
 adamic_object *adamic_node_mark(const adamic_string *name);
 adamic_object *adamic_node_measure(const adamic_string *name, const adamic_string *start, const adamic_string *end);
 void adamic_node_clear_marks(const adamic_string *name);

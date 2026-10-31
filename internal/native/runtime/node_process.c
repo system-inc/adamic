@@ -10,6 +10,7 @@
 #include "host_runtime.h"
 #include "node_cwd_wasi.h"
 #include <errno.h>
+#include <stdatomic.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -60,6 +61,15 @@ void adamic_node_process_start(int count, char **values) {
 
 double adamic_node_performance_now(void) { return adamic_host_performance_now(); }
 double adamic_node_time_origin(void) { return adamic_host_time_origin(); }
+
+// Error.stackTraceLimit, Node's default of 10. Adamic refuses .stack, so the count is only stored
+// and read back. Relaxed atomics, as backing_bytes, keep it safe for any thread that reaches it.
+static _Atomic double stack_trace_limit = 10;
+double adamic_node_stack_trace_limit(void) { return atomic_load_explicit(&stack_trace_limit, memory_order_relaxed); }
+double adamic_node_set_stack_trace_limit(double limit) {
+    atomic_store_explicit(&stack_trace_limit, limit, memory_order_relaxed);
+    return limit;
+}
 adamic_string *adamic_node_eol(void) { return adamic_host_eol(); }
 
 bool adamic_node_next_tick_feature(void) { return true; }

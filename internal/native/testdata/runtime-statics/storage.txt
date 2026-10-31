@@ -371,6 +371,8 @@
 `node_process.c:performance_object:1`
 `node_process.c:platform:1`
 `node_process.c:platform:2`
+# Error.stackTraceLimit's stored count, read and written only through relaxed atomics.
+`node_process.c:stack_trace_limit:1`
 `runtime-file:node_process.c`
 `runtime-file:node_process.h`
 `runtime-file:process.c`
