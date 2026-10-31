@@ -7,7 +7,7 @@ import (
 )
 
 // A branded supertype, such as tsc's TypeElement or LiteralExpression, is an interface over many node
-// kinds: its kind is wide, and a brand field typed any or undefined, which no value carries, keeps other nodes
+// kinds: its kind is wide, and a brand field typed undefined, which no value carries, keeps other nodes
 // from being assignable to it. Which kinds belong is a naming convention no run-time check can recover:
 // a kind set built from the types assignable to it leaves out JsxText, which isLiteralExpression takes,
 // and every late-bound declaration isLateBound takes (#c7w6j0y, measured on tsc Oct 31). So a checked
@@ -21,8 +21,9 @@ import (
 
 // brandedSupertype is whether target is the shape that rule is keyed on, judged by type, never by name:
 // a kind property that isn't one literal, and at least one brand member, a required member that isn't
-// symbol-keyed, typed any or phantom as phantomField judges a primitive brand's (void or undefined), so
-// the two rules can't drift when a brand is retyped: tsc's 36 are undefined since #ptd2v1r.
+// symbol-keyed, phantom as phantomField judges a primitive brand's (void or undefined), so the two rules
+// can't drift when a brand is retyped: tsc's 36 are undefined since #ptd2v1r. A member typed any is never
+// a brand, since #bw3xg7c refuses any (Adamic's correction, #tmdhz1d).
 func (l *lowering) brandedSupertype(target *checker.Type) bool {
 	kind := l.checker.GetPropertyOfType(target, "kind")
 	if kind == nil || l.fieldLiteral(target, "kind") != nil {
@@ -32,7 +33,7 @@ func (l *lowering) brandedSupertype(target *checker.Type) bool {
 		if property.Flags&ast.SymbolFlagsOptional != 0 || checker.IsKnownSymbol(property) {
 			continue
 		}
-		if member := l.checker.GetTypeOfSymbol(property); member.Flags()&checker.TypeFlagsAny != 0 || phantomField(member) {
+		if phantomField(l.checker.GetTypeOfSymbol(property)) {
 			return true
 		}
 	}
