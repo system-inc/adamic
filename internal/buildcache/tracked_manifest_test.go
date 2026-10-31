@@ -177,3 +177,45 @@ func TestAnUnpackedSourceValuesACleanFileByItsManifest(t *testing.T) {
 		}
 	})
 }
+
+// An unpacked source's manifest is read as keying, as a checkout's .git is: a traced product test from a source with
+// no .git never records .tracked in its read set, where it is refused as untracked and the test falls back untraced
+// (#asrz3cy). The look for the manifest at each parent and the read of its listing both count. Mutant: manifestListing
+// called outside keying.
+// Not parallel: t.Setenv, statManifest, openManifest and forgetTracked.
+func TestAnUnpackedSourcesManifestIsReadAsKeying(t *testing.T) {
+	t.Setenv("ADAMIC_BUILD_TRACE", t.TempDir())
+	root := unpacked(t, nil)
+	listing := "100644 blob " + blobID([]byte(declaredTree["flags.txt"]), 40) + "\tflags.txt\x00"
+	write(t, root, ".tracked/files", listing)
+	var looks, unkeyed []string
+	savedStat, savedOpen := statManifest, openManifest
+	statManifest = func(name string) (os.FileInfo, error) {
+		looks = append(looks, name)
+		if keyingNow.Load() == 0 {
+			unkeyed = append(unkeyed, name)
+		}
+		return savedStat(name)
+	}
+	openManifest = func(name string) (*os.File, error) {
+		looks = append(looks, name)
+		if keyingNow.Load() == 0 {
+			unkeyed = append(unkeyed, name)
+		}
+		return savedOpen(name)
+	}
+	t.Cleanup(func() { statManifest, openManifest = savedStat, savedOpen })
+	forgetTracked()
+	t.Cleanup(forgetTracked)
+	files := repositoryAt(root)
+	if files == nil || !files.paths["flags.txt"] || files.paths["source/a.c"] {
+		t.Fatalf("the manifest's listing isn't the source's tracked files: %+v", files)
+	}
+	// A directory under the root the manifest doesn't record looks for it at each parent, and isn't a repository.
+	if repositoryAt(filepath.Join(root, "source", "nested")) != nil {
+		t.Fatal("a directory the manifest doesn't record reads as a repository")
+	}
+	if len(looks) < 5 || len(unkeyed) != 0 {
+		t.Fatalf("read the manifest at %q; outside keying at %q", looks, unkeyed)
+	}
+}

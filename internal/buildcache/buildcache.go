@@ -837,7 +837,7 @@ func repositoryAt(directory string) *trackedFiles {
 				files.directories[parent] = true
 			}
 		}
-	} else if listing, taken, ok := manifestListing(directory); ok {
+	} else if listing, taken, ok := keyedManifestListing(directory); ok {
 		// A Loom runner's source has no .git: build-tree ships git's answers for each repository in a manifest, so the
 		// tracked files are its listing and nothing else, never the npm packages or the manifest the source carries
 		// beside them (#59paqn3). A file is valued by the blob id the listing holds for it, unread, as a checkout's
@@ -872,16 +872,29 @@ func repositoryAt(directory string) *trackedFiles {
 // builder/tracked.go writes them, `git ls-tree -r -z --full-tree HEAD` byte for byte).
 const trackedManifestDirectory = ".tracked"
 
+// keyedManifestListing is manifestListing, run as keying: the manifest stands where .git would, so the probe for it at
+// each parent and the read of its listing are keying, as statGit's look and git's listing are, and a traced product
+// test from an unpacked source never records .tracked in its read set, where it is refused as untracked (#asrz3cy). A
+// file the listing names is still the build's read when the build reads it.
+func keyedManifestListing(directory string) (listing []byte, taken time.Time, ok bool) {
+	keying(func() { listing, taken, ok = manifestListing(directory) })
+	return listing, taken, ok
+}
+
+// statManifest and openManifest are os.Stat and os.Open, of a source's manifest: a test watches them.
+var statManifest = os.Stat
+var openManifest = os.Open
+
 // manifestListing is directory's repository's listing from the manifest at or above it, and when it was written (its
 // modification time), when the manifest records directory as a repository; a directory it doesn't record isn't one.
 func manifestListing(directory string) ([]byte, time.Time, bool) {
 	for root := directory; ; root = filepath.Dir(root) {
-		if info, err := os.Stat(filepath.Join(root, trackedManifestDirectory)); err == nil && info.IsDir() {
+		if info, err := statManifest(filepath.Join(root, trackedManifestDirectory)); err == nil && info.IsDir() {
 			relative, err := filepath.Rel(root, directory)
 			if err != nil || relative == trackedManifestDirectory || strings.HasPrefix(relative, trackedManifestDirectory+string(filepath.Separator)) {
 				return nil, time.Time{}, false
 			}
-			file, err := os.Open(filepath.Join(root, trackedManifestDirectory, relative, "files"))
+			file, err := openManifest(filepath.Join(root, trackedManifestDirectory, relative, "files"))
 			if err != nil {
 				return nil, time.Time{}, false
 			}

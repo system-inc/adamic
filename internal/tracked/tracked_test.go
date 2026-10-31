@@ -476,3 +476,45 @@ func TestPathsUnderLeavesSkippedDirectoriesUnentered(t *testing.T) {
 		t.Fatalf("a skipped name as root: %q %v", rooted, err)
 	}
 }
+
+// An unpacked source's manifest is read as key-time work (asKeying, buildcache.Keying), as git's answers are, so a
+// traced product test from a source with no .git never records .tracked in its read set (#asrz3cy). The counting
+// wrapper puts the manifest in place only while it runs, so a read outside it, of a record or of a parent's HEAD, finds
+// no manifest and fails. Mutant: readManifest's reads not wrapped.
+// Not parallel: asKeying.
+func TestManifestIsReadAsKeying(t *testing.T) {
+	checkout := checkout(t)
+	source := unpack(t, checkout, true)
+	away := filepath.Join(t.TempDir(), "away")
+	if err := os.Rename(filepath.Join(source, ManifestDirectory), away); err != nil {
+		t.Fatal(err)
+	}
+	calls := 0
+	saved := asKeying
+	asKeying = func(compute func()) {
+		calls++
+		if err := os.Rename(away, filepath.Join(source, ManifestDirectory)); err != nil {
+			t.Fatal(err)
+		}
+		defer func() {
+			if err := os.Rename(filepath.Join(source, ManifestDirectory), away); err != nil {
+				t.Fatal(err)
+			}
+		}()
+		saved(compute)
+	}
+	t.Cleanup(func() { asKeying = saved })
+	for _, repository := range []string{"cohere/TypeScript", "cohere", "."} {
+		gitHead, err := Head(filepath.Join(checkout, repository))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if head, err := Head(filepath.Join(source, repository)); err != nil || head != gitHead {
+			t.Fatalf("%s: HEAD %s (%v), git says %s", repository, head, err, gitHead)
+		}
+	}
+	// TypeScript's record and the look for cohere's HEAD, cohere's and the look for the root's HEAD, the root's.
+	if calls < 5 {
+		t.Fatalf("the manifest was read through asKeying %d times", calls)
+	}
+}
