@@ -157,6 +157,8 @@ func objectReadOf(directory string, name string) (objectRead, error) {
 // preprocessing, its bytes and every file it read.
 type objectKeying struct {
 	key string
+	// parts are what key hashes, kept so a test can say which part moved it.
+	parts []string
 	// compile is the compile keyed, whose directory, program and environment every preprocessing runs with.
 	compile *exec.Cmd
 	// preprocess are the preprocessing's arguments but its outputs: the compile's flags, -E and main.c.
@@ -441,7 +443,7 @@ func newObjectKeying(compile *exec.Cmd, source string, compileFlags []string, pr
 	}
 	parts = append(parts, files...)
 	parts = append(parts, fmt.Sprintf("preprocessed %x", sha256.Sum256(objectMarkersMapped(preprocessed, places))))
-	keying.key = partsKey(parts)
+	keying.key, keying.parts = partsKey(parts), parts
 	buildLog("cPreprocess", "main.c", keying.key, "off", preprocessing)
 	return keying, nil
 }
