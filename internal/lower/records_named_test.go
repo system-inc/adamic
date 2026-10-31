@@ -102,8 +102,10 @@ func TestNamedRecordRefusals(t *testing.T) {
 // itself (#npqr3sx, Language's w8 and w10): tsc relates the value to a named property structurally, and
 // recordNamedWrite's list missed nominal ancestry, so native ran Point's describe on an Other and printed
 // POINT where Node prints OTHER (w8), and void widening, so a () => void was read as () => unknown (w10).
-// An honest write, a number into number properties, still lowers. Mutant: the identity check dropped
-// lowers w8, which then prints POINT natively.
+// A record literal's computed name is the same write, made as the literal is: w8's and w10's shapes
+// through { names: ..., [key]: ... } are not yet too. An honest write, a number into number properties,
+// still lowers. Mutants: the identity check dropped lowers w8, which then prints POINT natively, and
+// recordComputedEntry skipped lowers w8's literal, which prints POINT natively too.
 func TestNamedRecordWritesAreThePropertyTypeItself(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source string }{
@@ -127,6 +129,24 @@ handlers[key] = quiet;
 const seen = handlers.names();
 console.log(typeof seen === "string" ? seen.toUpperCase() : "none");
 `},
+		{"w8 construction", `interface Shape { x: number; describe(): string }
+class Point { x = 1; describe(): string { return "point"; } }
+class Other { x = 2; label = "other"; describe(): string { return this.label; } }
+type Places = { names: Point; [k: string]: Point | Shape };
+const keys: string[] = ["names", "other"];
+const key = keys[0] ?? "other";
+const places: Places = { names: new Point(), [key]: new Other() };
+console.log(places.names.describe().toUpperCase());
+`},
+		{"w10 construction", `type Handlers = { names: () => unknown; [k: string]: () => void };
+const keys: string[] = ["names", "other"];
+const quiet: () => void = () => "ab" + String(keys.length);
+const first = (): unknown => undefined;
+const key = keys[0] ?? "other";
+const handlers: Handlers = { names: first, [key]: quiet };
+const seen = handlers.names();
+console.log(typeof seen === "string" ? seen.toUpperCase() : "none");
+`},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			_, err := lowerSource(t, probe.source)
@@ -139,5 +159,10 @@ console.log(typeof seen === "string" ? seen.toUpperCase() : "none");
 	if _, err := lowerSource(t, `interface Options { target?: number; required: number; [option: string]: number | undefined }
 function write(options: Options, key: string): void { options[key] = 9; }`); err != nil {
 		t.Fatalf("an honest write: %v", err)
+	}
+	// A computed name strings joined by + make is judged as that name: tsc's ["" + "constructor"] beside
+	// the keywords its literal declares names none of them (01_scanner_keywords.a's shape).
+	if _, err := lowerSource(t, "const SyntaxKind = { AbstractKeyword: 128, AccessorKeyword: 129, ConstructorKeyword: 137 } as const;\ntype KeywordSyntaxKind = (typeof SyntaxKind)[keyof typeof SyntaxKind];\ninterface MapLike<T> { [index: string]: T; }\nconst kinds: MapLike<KeywordSyntaxKind> = {\n    abstract: SyntaxKind.AbstractKeyword,\n    accessor: SyntaxKind.AccessorKeyword,\n    [\"\" + \"constructor\"]: SyntaxKind.ConstructorKeyword,\n};\nconsole.log(`${String(kinds[\"abstract\"])} ${Object.keys(kinds).join(\",\")}`);\n"); err != nil {
+		t.Fatalf("a folded name no named property takes: %v", err)
 	}
 }
