@@ -9,8 +9,10 @@ import (
 // An object intersection is held as an object whatever its fields hold, so long as a record would
 // hold each one: an object field and one that holds the intersection again lower. A Weak field and
 // a two-word optional boolean have no such storage (recordStorageType), and a closure field waits on
-// its own ruling, so each stays NotYet. So does an intersection with a constructable member or an
-// index signature, as a checked view over it would.
+// its own ruling, so each stays NotYet. So does an intersection with a constructable member, an
+// index signature or a class instance, as a checked view over it would. A readonly index signature is
+// stopped by the dictionary storage rule before any intersection, but a mutable one (a Record) and a
+// class instance with fields alone are kept out only by the member's family (unsupportedViewFamily).
 func TestObjectIntersectionFields(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct {
@@ -24,6 +26,8 @@ func TestObjectIntersectionFields(t *testing.T) {
 		{"closure field", "type Called = { readonly id: number } & { readonly run: () => number };\nconst value: Called = { id: 1, run: (): number => 2 };\nconsole.log(`${value.id + value.run()}`);\n", false},
 		{"constructable member", "class Made { readonly made: number = 1; }\ntype Maker = { readonly id: number } & { new (): Made };\nfunction find(): Maker | undefined { return undefined; }\nconsole.log(typeof find());\n", false},
 		{"index signature member", "type Counts = { readonly id: number } & { readonly [key: string]: number };\nconst value: Counts = { id: 1 };\nconsole.log(`${value.id}`);\n", false},
+		{"record member", "type Counts = Record<string, number> & { readonly id: number };\nconst value: Counts = { id: 1, more: 2 };\nconsole.log(`${value.id}`);\n", false},
+		{"class instance member", "class Box { readonly v: number = 1; }\ntype Tagged = Box & { readonly tag: string };\nconst value: Tagged = { v: 2, tag: 'built' + '-tag' };\nconsole.log(`${value.v} ${value.tag}`);\n", false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
