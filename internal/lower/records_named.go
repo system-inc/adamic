@@ -142,9 +142,11 @@ func (l *lowering) namedWriteStop(where *ast.Node, receiver *checker.Type, value
 		}
 		// Lowering judges the value against the index type it's stored as, so its own slot checks (a
 		// host object's view, a weak or strong keep, a tuple seen as an array) are run here against the
-		// declared property too (Lower's probe: a host object under names: View, its index Clock).
+		// declared property too (Lower's probe: a host object under names: View, its index Clock). A value
+		// whose representation isn't known is judged as a reference, so this never leans on its own
+		// lowering stopping it later (Lower's should on fffa97b5).
 		held, known := l.representation(from)
-		if err := l.valueSlotStops(value, to, known && held.IsReference()); err != nil {
+		if err := l.valueSlotStops(value, to, !known || held.IsReference()); err != nil {
 			return err
 		}
 	}
