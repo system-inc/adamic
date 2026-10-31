@@ -247,6 +247,11 @@ func (l *lowering) viewLie(view viewSource) viewLie {
 		if source != nil && !l.result.CheckedField(l.viewReceiverTypeID(source), property.Name) {
 			held = l.checker.GetPropertyOfType(source, property.Name)
 		}
+		// A source field typed any guarantees nothing: any is assignable to every type, so it would
+		// vouch for a read of whatever the view claims (#tmdhz1d, Language's v1).
+		if held != nil && l.mentionsAny(l.checker.GetTypeOfSymbol(held), map[*checker.Type]bool{}, 0) {
+			held = nil
+		}
 		if held == nil {
 			lie.liedTop[property.Name] = true
 		} else {
@@ -259,6 +264,43 @@ func (l *lowering) viewLie(view viewSource) viewLie {
 		}
 	}
 	return lie
+}
+
+// mentionsAny is whether a type is any, or holds any in a member, a property, an element or a type
+// argument, the positions a view's nested contracts check. The walk ends at a type it has seen, and
+// says yes past its depth bound, so an unexplored type never vouches.
+func (l *lowering) mentionsAny(held *checker.Type, seen map[*checker.Type]bool, depth int) bool {
+	if held.Flags()&checker.TypeFlagsAny != 0 || depth > 16 {
+		return true
+	}
+	if seen[held] {
+		return false
+	}
+	seen[held] = true
+	if held.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		for _, member := range held.Types() {
+			if l.mentionsAny(member, seen, depth+1) {
+				return true
+			}
+		}
+		return false
+	}
+	if held.Flags()&checker.TypeFlagsObject == 0 {
+		return false
+	}
+	if held.ObjectFlags()&checker.ObjectFlagsReference != 0 {
+		for _, argument := range l.checker.GetTypeArguments(held) {
+			if l.mentionsAny(argument, seen, depth+1) {
+				return true
+			}
+		}
+	}
+	for _, property := range l.checker.GetPropertiesOfType(held) {
+		if l.mentionsAny(l.checker.GetTypeOfSymbol(property), seen, depth+1) {
+			return true
+		}
+	}
+	return false
 }
 
 // viewContractNames adds every field name a contract checks, through its fields and members.
