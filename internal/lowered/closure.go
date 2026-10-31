@@ -18,7 +18,7 @@ import (
 
 // loweringEntry is the lowering's two packages, whose Go closure go list computes: what a test that lowers links of the
 // compiler, never internal/native or internal/javascript.
-var loweringEntry = []string{"./internal/load", "./internal/lower"}
+var loweringEntry = []string{"./internal/load", "./internal/lower", "./internal/native"}
 
 // ownPackage is this package, which builds the product: its files are keyed beside the closure, its tests are not.
 const ownPackage = "./internal/lowered"
