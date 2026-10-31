@@ -20,9 +20,10 @@ import (
 //   - A dictionary seen as Options: its entry under outFile, whatever it holds, is read as a string.
 //     widened holds the dictionary's values against each declared property they'd be read through.
 //   - A write through a key that isn't one literal, options[name] = 3 or { [name]: 3 }, which tsc
-//     checks against the index signature alone. It's refused when what it writes doesn't fit a
-//     declared property it can land under, by recordNamedWrite's own check, since only the value
-//     written can land there.
+//     checks against the index signature alone. Only the value written can land under a declared
+//     property, so the value is judged: refused when a declared property it can land under can't
+//     hold it at all, and not yet, as in .ts, when tsc fits it but Adamic's own checks don't prove it
+//     (recordNamedWrite's namedWriteStop), since the registry may admit it later (l.slotType).
 // .ts keeps the checked read instead (recordReadType), which stops loudly at the declared read.
 
 // declaredKeysFix is what each of the three refusals offers.
@@ -63,12 +64,12 @@ func init() {
 }
 
 // declaredKeyWrite refuses a write through a key that isn't one literal, into a record with a
-// writable index signature, of a value that doesn't fit a declared property it can land under, by the
-// check recordNamedWrite stops on in .ts (namedWriteMisfit): an element access written to (by =, a
-// compound assignment, ++, a destructuring target or a for-in or for-of head), or an object literal's
-// computed name, whose entry is written as the literal is made, into its own type and the type it's
-// written into. Where the value written isn't one expression's (a destructuring target, a loop's head),
-// it's whatever the index signature holds.
+// writable index signature, of a value a declared property it can land under can't hold, and stops
+// one tsc fits but namedWriteStop doesn't, not yet, as recordNamedWrite does in .ts. The writes are an
+// element access written to (by =, a compound assignment, ++, a destructuring target or a for-in or
+// for-of head), and an object literal's computed name, whose entry is written as the literal is made,
+// into its own type and the type it's written into. Where the value written isn't one expression's
+// (a destructuring target, a loop's head), it's whatever the index signature holds.
 func (l *lowering) declaredKeyWrite(node *ast.Node) error {
 	var key *ast.Node
 	var receivers []*checker.Type
@@ -113,8 +114,14 @@ func (l *lowering) declaredKeyWrite(node *ast.Node) error {
 				if written == nil {
 					written = info.ValueType()
 				}
-				if property, _ := l.namedWriteMisfit(member, written, names); property != nil {
-					return &Refused{Where: l.program.Where(node), What: "a write into a record with declared properties through a key that is not one literal, of a value that is not the type of a declared property it can land under (" + l.checker.TypeToString(written) + " written into " + l.checker.TypeToString(member) + " by " + sourceExpression(key) + ": " + property.Name + " is declared " + l.checker.TypeToString(l.checker.GetTypeOfSymbol(property)) + ")", Fix: declaredKeysFix}
+				for _, property := range l.checker.GetPropertiesOfType(member) {
+					if names != nil && !names[property.Name] || l.checker.IsTypeAssignableTo(written, l.checker.GetTypeOfSymbol(property)) {
+						continue
+					}
+					return &Refused{Where: l.program.Where(node), What: "a write into a record with declared properties through a key that is not one literal, of a value a declared property it can land under can't hold (" + l.checker.TypeToString(written) + " written into " + l.checker.TypeToString(member) + " by " + sourceExpression(key) + ": " + property.Name + " is declared " + l.checker.TypeToString(l.checker.GetTypeOfSymbol(property)) + ")", Fix: declaredKeysFix}
+				}
+				if err := l.namedWriteStop(node, member, written, names); err != nil {
+					return err
 				}
 			}
 		}

@@ -1,4 +1,4 @@
-// a-check: refused a write into a record with declared properties through a key that is not one literal, which can store under a declared property what it does not hold (string | number | undefined written into Options by name: outFile is declared string | undefined)
+// a-check: refused a write into a record with declared properties through a key that is not one literal, of a value that is not the type of a declared property it can land under (string | number | undefined written into Options by name: outFile is declared string | undefined)
 interface Options { outFile?: string; [name: string]: string | number | undefined; }
 type Dict = { [name: string]: string | number | undefined };
 function key(): string { return 'outFile'; }
