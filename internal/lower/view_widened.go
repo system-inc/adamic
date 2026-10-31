@@ -79,7 +79,7 @@ func (l *lowering) checkViewWidenedReads() error {
 		switch {
 		case view.cast:
 		case view.predicate != nil:
-			if !l.predicateArguments(view, entryLocals) {
+			if !l.predicateEntries(view, entryLocals) {
 				unentered = append(unentered, lies[i])
 			}
 		case isRead:
@@ -154,11 +154,11 @@ func (l *lowering) checkViewWidenedReads() error {
 	return refused
 }
 
-// predicateArguments adds to locals each local a tag-proven predicate's claimed parameter takes at
+// predicateEntries adds to locals each local a tag-proven predicate's claimed parameter takes at
 // a call, the value a true result narrows at its caller. It says false when it can't name them
 // all: a predicate that isn't a declared function, one taken as a value, or a call passing
 // something other than a local.
-func (l *lowering) predicateArguments(view viewSource, locals map[int]bool) bool {
+func (l *lowering) predicateEntries(view viewSource, locals map[int]bool) bool {
 	name := view.predicate.Name()
 	if name == nil || name.Kind != ast.KindIdentifier {
 		return false
