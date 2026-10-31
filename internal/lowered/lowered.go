@@ -67,7 +67,6 @@ func optionLines(options Options) []string {
 	return []string{
 		"Lower.Debug=" + strconv.FormatBool(options.Lower.Debug),
 		"Lower.ProgramRegion=" + strconv.FormatBool(options.Lower.ProgramRegion),
-		"Lower.OwnershipQuery=" + strconv.FormatBool(options.Lower.OwnershipQuery),
 		"TSGo=" + strconv.FormatBool(options.TSGo),
 	}
 }
