@@ -58,6 +58,17 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 		represented = base
 	}
 	of, known := l.representation(represented)
+	// representation() knows an object intersection only when every field is a scalar
+	// (objectIntersection). A plain one is an object whatever its fields hold, so its contract takes
+	// that from its members, each held as an object, and its fields from its refined properties.
+	if !known && represented == target && l.plainObjectIntersection(target) {
+		of, known = ir.Object, true
+		for _, member := range target.Types() {
+			if held, isKnown := l.representation(member); !isKnown || held != ir.Object {
+				known = false
+			}
+		}
+	}
 	if !known {
 		return 0, l.notYet(node, "checked-view representation for "+l.checker.TypeToString(target))
 	}
