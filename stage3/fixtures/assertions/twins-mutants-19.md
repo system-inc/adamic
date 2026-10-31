@@ -62,3 +62,56 @@ GREEN, exit 0. All six test events passed, including Node, native, and stage0. N
 Before migration, `go test ./stage3/fixtures ./internal/oracle -run '^(TestFixturesAssertions|TestCheckedViewOptionalReadAgreesWithNode|TestCheckedViewObjectPrimitiveSource)$' -count=1 -json -timeout=20m` passed with exit 0. Logs: `/workspace/scratch/m8dv-before-holding.jsonl` and `.stderr`. The object primitive test holds both lane4b files, so these three top-level tests hold all four fixtures.
 
 Source and companion audits passed: all four source files equal the base byte for byte, and all four companion files equal the base with only the requested extension substitutions. `git diff --check` passed.
+
+## Stage 2 scratch merge
+
+The detached scratch checkout started at `b94fae07ac6d63543c000ef543a91fa693d7c3a2` and merged migration commit `ab1d86903` cleanly, producing local merge `05a9902641644a8d4a67cdb9006ebda613cdb933`. The merge is not pushed. Dependency installations are reused from the main checkout. Merge log: `/workspace/scratch/m8dv-stage2-merge.log`.
+
+Holding command:
+
+```sh
+go test ./stage3/fixtures ./internal/oracle -run '^(TestFixturesAssertions|TestCheckedViewOptionalReadAgreesWithNode|TestCheckedViewObjectPrimitiveSource)$' -count=1 -json -timeout=20m > /workspace/scratch/m8dv-stage2-holding.jsonl 2> /workspace/scratch/m8dv-stage2-holding.stderr
+```
+
+Exit 1 overall: oracle PASS (38.376 seconds), fixtures FAIL (31.682 seconds). All four migrated fixture subtests pass, including Node, native, and stage0 for `19_identifier_kind.ts`, both lane4b optional subtests, and lane1's checked read and unchanged control. The aggregate `TestFixturesAssertions` fails only on untouched `09_interface_kind.a`: stage 2 changes its recorded `NotYet` into `Refused` before reaching its array-element gap.
+
+```text
+fixtures_test.go:472: gap changed: update status.json and check the native output; got {Outcome:Refused What:stage3/fixtures/assertions/09_interface_kind.a:15:10: Adamic 0.1 refuses a downcast from Node to ObjectLiteralExpression in .a whose checks no proof erases; declare Node as a union with ObjectLiteralExpression as a member and narrow it, as .a writes !: if (expression.kind !== 211) panic('why'), or move the file to .ts, where the cast stays a checked cast Stdout:}; recorded {Outcome:NotYet What:stage3/fixtures/assertions/09_interface_kind.a:15:9: stage 0 can't lower checked view union arm awaits views-v3: array element kind yet Stdout:}
+```
+
+An isolated rerun of the migrated assertion passed, exit 0:
+
+```sh
+go test ./stage3/fixtures -run '^TestFixturesAssertions$/^assertions$/^19_identifier_kind[.]ts$' -count=1 -json -timeout=20m > /workspace/scratch/m8dv-stage2-target-assertion.jsonl 2> /workspace/scratch/m8dv-stage2-target-assertion.stderr
+```
+
+The unrelated `.a` fixture and its recorded outcome remain unchanged. This prevents claiming that every aggregate holding test passes on stage 2; no additional fixture migration or compiler change is included.
+
+## Full main-tip validation
+
+Ran the full packages used by all three earlier waves:
+
+```sh
+ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript go test ./stage3/fixtures/... ./internal/oracle/... -count=1 -json -timeout=60m > /workspace/scratch/m8dv-full.jsonl 2> /workspace/scratch/m8dv-full.stderr
+```
+
+All three holding tests PASS: `TestFixturesAssertions`, `TestCheckedViewOptionalReadAgreesWithNode`, and `TestCheckedViewObjectPrimitiveSource`. Every migrated fixture and the unchanged optional control pass.
+
+The full fixtures package PASS, 233.834 seconds: 35 top-level and 763 subtests passed (798 passing events), one top-level skip, zero failures.
+
+The full oracle package finished in 1177.773 seconds: 2066 top-level and 6578 subtests passed (8644 passing events), 665 top-level and 107 subtests skipped (772 skip events), one top-level failure. Overall command exit 1. Stderr is empty. The sole failure was an environment prerequisite, unrelated to the fixture migration:
+
+```text
+TestStdoutColumnsRefusesWASI
+library_node_stdout_columns_test.go:246: want typed, named WASI refusal, got native: wasm32-wasi requires WASI_SYSROOT
+```
+
+The required default setup does not install its optional WASI SDK. Installed the repository's pinned SDK with `timeout --kill-after=60s 1800 bash cloud/setup.sh --wasi-sdk > /workspace/scratch/setup-wasi.log 2>&1` (PASS, exit 0, 24.401 seconds), then sourced `/workspace/adamic-tools/env.sh` again and reran the sole failed test:
+
+```sh
+go test ./internal/oracle -run '^TestStdoutColumnsRefusesWASI$' -count=1 -json -timeout=20m > /workspace/scratch/m8dv-wasi-rerun.jsonl 2> /workspace/scratch/m8dv-wasi-rerun.stderr
+```
+
+PASS, exit 0, 0.453 seconds. The original full-run failure remains recorded; the full suite was not rerun. No tests, expected outcomes, or compiler code were changed to address either this setup prerequisite or the unrelated stage 2 refusal.
+
+Final scope and whitespace checks passed. Both commits touch only paths retained in the final diff. Logs, temporary capture utilities, dependency installations, and scratch merge changes are not included.
