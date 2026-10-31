@@ -16,6 +16,9 @@ type allocationFlowGraph struct {
 	program           *ir.Program
 	sources           map[int][]ir.Expression
 	unknownParameters map[int]bool
+	// entry, when set, names a value an expression is where it enters a view: the flow stops there
+	// and reaches the site entry gives, which no allocation has (view_widened.go).
+	entry func(ir.Expression) int
 }
 
 func (graph *allocationFlowGraph) resultNode(function int) int {

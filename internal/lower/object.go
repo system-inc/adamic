@@ -725,7 +725,11 @@ func (l *lowering) viewedField(node *ast.Node, property ir.Property) ir.Property
 	}
 	if symbol := l.checker.GetSymbolAtLocation(node.Name()); symbol != nil {
 		declared := l.checker.GetTypeOfSymbol(symbol)
-		property.ViewTypeID = int(declared.Id())
+		if narrowed := l.checker.GetTypeAtLocation(node); narrowed.Id() != declared.Id() {
+			// A field read the checker narrowed, as a predicate narrows its argument (view_widened.go).
+			l.narrowedFields = append(l.narrowedFields, narrowed)
+		}
+		property.ViewTypeID = l.viewTypeID(declared)
 		property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
 		property.ViewType = l.checker.TypeToString(declared)
 		property.ViewAllowed = l.viewLiterals(declared)
@@ -2067,7 +2071,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	if position, err := strconv.Atoi(index.Text()); err == nil {
 		elements := l.typeArguments(receiver)
 		if position >= 0 && position < len(elements) {
-			property.ViewTypeID = int(elements[position].Id())
+			property.ViewTypeID = l.viewTypeID(elements[position])
 			property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
 			property.ViewReceiverTypeID = l.viewReceiverTypeID(receiver)
 			property.ViewType = l.checker.TypeToString(elements[position])

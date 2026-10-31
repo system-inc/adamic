@@ -68,7 +68,8 @@ func (l *lowering) checkedSpeculativeResult(node *ast.Node) (ir.Expression, erro
 	if held == ir.Object {
 		local := b.declare("speculative_result", checked)
 		checked = b.read(local)
-		if _, err := l.view(node, checked, present); err != nil {
+		// The speculation's own result is unknown, so the view vouches for nothing before it.
+		if _, err := l.view(node, checked, nil, present); err != nil {
 			return nil, err
 		}
 		for _, field := range l.checker.GetPropertiesOfType(present) {

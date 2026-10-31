@@ -358,7 +358,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of, Absent: absent}
 		value.View = sourceExpression(binding) + " (field " + field + ")"
 		value.ViewReceiverTypeID = l.viewReceiverTypeID(destructured)
-		value.ViewTypeID = int(fieldType.Id())
+		value.ViewTypeID = l.viewTypeID(fieldType)
 		value.ViewWhere = l.program.Where(binding)
 		value.ViewType = l.checker.TypeToString(fieldType)
 		value.ViewAllowed = l.viewLiterals(fieldType)

@@ -2,6 +2,7 @@ package oracle
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
@@ -256,7 +257,9 @@ func TestCheckedViewV2CallableProducerMutant(t *testing.T) {
 
 func TestCheckedViewV2MovedStage3Results(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"taste/refused/21_truthy_loops.ts", "predicates/03_void_zero.a", "assertions/11_parenthesized_kind.ts", "assertions/20_type_flag_mask.ts", "assertions/13_flag_downcast.ts"} {
+	// #80cs7rz: predicates/03_void_zero.a is NotYet now, isNumericLiteral reading kind through Node of node.expression, a
+	// viewed value inside a viewed one; the per-read check wins it back. Pinned in TestCheckedViewV2MovedStage3NotYet.
+	for _, name := range []string{"taste/refused/21_truthy_loops.ts", "assertions/11_parenthesized_kind.ts", "assertions/20_type_flag_mask.ts", "assertions/13_flag_downcast.ts"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs("../../stage3/fixtures/" + name)
@@ -282,5 +285,28 @@ func TestCheckedViewV2MovedStage3Results(t *testing.T) {
 				t.Fatal(report)
 			}
 		})
+	}
+}
+
+// The stage 3 result 03_void_zero.a moved to NotYet with #80cs7rz (its status.json row says so): isVoidZero passes
+// node.expression, which a checked read takes out of the viewed VoidExpression, to isNumericLiteral, which reads its kind
+// through Node. Node prints the result; stage 0 stops at the read until the per-read check wins it back.
+func TestCheckedViewV2MovedStage3NotYet(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs("../../stage3/fixtures/predicates/03_void_zero.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if difference := disagreement(run{stdout: []byte("true\nfalse\nfalse\n")}, onNode(t, path)); difference != "" {
+		t.Fatal("Node: " + difference)
+	}
+	loaded, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lower.Lower(context.Background(), loaded)
+	var notYet *lower.NotYet
+	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "03_void_zero.a:23:12: stage 0 can't lower a read of field kind through type Node, which may hold a checked view's value") {
+		t.Fatalf("want the widened read NotYet at 23:12, got %v", err)
 	}
 }

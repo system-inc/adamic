@@ -26,5 +26,5 @@ func (l *lowering) structuralViewCast(node *ast.Node, value ir.Expression, sourc
 	if err := l.widened(target, source, map[[2]*checker.Type]bool{}); err != nil {
 		return nil, l.notYet(node, "a writable-slot checked view requiring source contract certification")
 	}
-	return l.view(node, value, target)
+	return l.view(node, value, source, target)
 }

@@ -1748,6 +1748,9 @@ func scanLowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.
 	if err := lowering.checkViewCopies(); err != nil {
 		return nil, err
 	}
+	if err := lowering.checkViewWidenedReads(); err != nil {
+		return nil, err
+	}
 	if len(lowering.asyncPayloadFailures) > 0 {
 		return nil, lowering.asyncPayloadFailures[0]
 	}

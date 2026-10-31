@@ -256,6 +256,7 @@ func (l *lowering) constant(value string) int {
 
 // localRead preserves checker narrowing for both private and qualified singleton reads.
 func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
+	l.narrowedRead(node, local)
 	if origin := l.result.Locals[local].Placeholder; origin != "" {
 		return l.placeholderRead(node, ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.result.Locals[local].NamespaceState || l.checkedModuleRead(node, local), Unset: true}, origin), nil
 	}

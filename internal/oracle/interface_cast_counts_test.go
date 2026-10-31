@@ -34,9 +34,11 @@ func interfaceCastCountCases() []countCase {
 	for _, name := range []string{"identifier", "identifier-uninitialized", "number", "number-uninitialized"} {
 		paths = append(paths, "stage3/interface-downcasts/readiness-"+name+".ts")
 	}
+	// #80cs7rz: objects-good is NotYet now, a viewed value inside a viewed one read through another written type, so it
+	// has no count; the per-read check wins it back.
 	for _, name := range []string{
 		"interfaces-good", "interfaces-missing-inherited", "interfaces-uninitialized-object", "interfaces-wrong-inherited",
-		"objects-good", "objects-missing-nested", "objects-uninitialized-nested", "objects-untagged-good", "objects-untagged-wrong", "objects-wrong-nested", "optional-read-control", "flag-downcast-wrong",
+		"objects-missing-nested", "objects-uninitialized-nested", "objects-untagged-good", "objects-untagged-wrong", "objects-wrong-nested", "optional-read-control", "flag-downcast-wrong",
 	} {
 		paths = append(paths, interfaceFixturePath("lane1/"+name))
 	}

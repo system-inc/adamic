@@ -42,7 +42,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Compiles"}
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/predicates/03_void_zero.a:23:12: stage 0 can't lower a read of field kind through type Node, which may hold a checked view's value yet"}
   },
   {
     "file": "04_literal_or.a",
