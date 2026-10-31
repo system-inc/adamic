@@ -750,8 +750,39 @@ type trackedFiles struct {
 
 type gitObject struct{ mode, id string }
 
-// repositories holds each directory's trackedFiles once per process, or nil for a directory that isn't a repository's.
+// repositories holds each directory's repositoryRun once per process, by repositoryKey: its trackedFiles, or nil for a
+// directory that isn't a repository's.
 var repositories sync.Map
+
+// A repositoryRun is one reading of a directory's repository, which every asker of that directory waits on (done) and
+// then reads. One that failed (git couldn't list it) is answered to those already waiting and then dropped, so the next
+// asker reads it again: a failure is never kept.
+type repositoryRun struct {
+	done   chan struct{}
+	files  *trackedFiles
+	failed bool
+}
+
+// listRepository is git's listing of a checkout's index and its dirty files (repositoryAt): a test counts it.
+var listRepository = func(directory string) (listed, dirty []byte, err error) {
+	if listed, err = toolchain.GitCommand("-C", directory, "ls-files", "-s", "-v", "-z").Output(); err == nil {
+		dirty, err = toolchain.GitCommand("-C", directory, "diff-files", "--name-only", "-z").Output()
+	}
+	return listed, dirty, err
+}
+
+// repositoryKey is the one name repositories knows a directory by: absolute, cleaned and with its links resolved, so a
+// directory asked as relative and absolute, or through a link, is read once (#npd568j). One that can't be resolved is
+// known by its cleaned absolute path.
+func repositoryKey(directory string) string {
+	if absolute, err := filepath.Abs(directory); err == nil {
+		directory = absolute
+	}
+	if resolved, err := filepath.EvalSymlinks(directory); err == nil {
+		return resolved
+	}
+	return filepath.Clean(directory)
+}
 
 // Tracked says whether name, under root, is in the source the tree carries: an entry of the nearest repository above
 // it at or under root (git ls-files there, so a submodule answers for its own files), or anything at all when there is
@@ -789,11 +820,31 @@ func Tracked(root, name string, directory bool) bool {
 // statGit is os.Lstat, of a directory's .git: a test watches it.
 var statGit = os.Lstat
 
+// repositoryAt is directory's trackedFiles, read once a process: parallel tests asking one directory at once wait on one
+// reading. A checkout's reading runs git ls-files and diff-files over its whole repository, and git's diff-files stats
+// every entry of its index in up to 20 threads (preload_index), about 67,000 for cohere/TypeScript, so each of a
+// process's racing askers used to run its own, three in one product test (Builder's trace on #npd568j).
 func repositoryAt(directory string) *trackedFiles {
-	if found, ok := repositories.Load(directory); ok {
-		return found.(*trackedFiles)
+	key := repositoryKey(directory)
+	run := &repositoryRun{done: make(chan struct{})}
+	if found, loaded := repositories.LoadOrStore(key, run); loaded {
+		waited := found.(*repositoryRun)
+		<-waited.done
+		return waited.files
 	}
+	run.files, run.failed = readRepository(directory)
+	close(run.done)
+	if run.failed {
+		repositories.CompareAndDelete(key, run)
+	}
+	return run.files
+}
+
+// readRepository reads directory's repository for repositoryAt: its trackedFiles, or nil for a directory that isn't a
+// repository's, and whether git failed to list it (its files are then all).
+func readRepository(directory string) (*trackedFiles, bool) {
 	var files *trackedFiles
+	failed := false
 	// Whether directory holds .git is a look at .git, which no product's read set may hold, so it is keying, as the
 	// listing is: a build that asks Tracked of a directory never reads .git (#1p6sent, a traced walk of the tree).
 	repository := false
@@ -808,13 +859,10 @@ func repositoryAt(directory string) *trackedFiles {
 		// git reads .git, which no product's read set may hold: listing what the tree carries is keying. It runs with
 		// toolchain's git environment, so nothing of the home (a ~/.gitconfig's filter, fsmonitor or autocrlf) shapes
 		// what it says the tree holds.
-		keying(func() {
-			if listed, err = toolchain.GitCommand("-C", directory, "ls-files", "-s", "-v", "-z").Output(); err == nil {
-				dirty, err = toolchain.GitCommand("-C", directory, "diff-files", "--name-only", "-z").Output()
-			}
-		})
+		keying(func() { listed, dirty, err = listRepository(directory) })
 		if err != nil {
 			files.all = true
+			failed = true
 		}
 		for _, name := range strings.Split(string(dirty), "\x00") {
 			files.dirty[name] = true
@@ -863,8 +911,7 @@ func repositoryAt(directory string) *trackedFiles {
 			}
 		}
 	}
-	found, _ := repositories.LoadOrStore(directory, files)
-	return found.(*trackedFiles)
+	return files, failed
 }
 
 // trackedManifestDirectory is where a source with no .git carries git's answers about each of its repositories, at the
