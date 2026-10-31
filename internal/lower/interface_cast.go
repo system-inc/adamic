@@ -32,7 +32,7 @@ func (l *lowering) interfaceCast(node *ast.Node, value ir.Expression, source, ta
 			}
 			continue
 		}
-		if _, err := l.view(node, value, target); err != nil {
+		if _, err := l.view(node, value, source, target); err != nil {
 			return nil, err
 		}
 		return ir.CheckedCast{Value: value, Field: field, FieldType: fieldType, Allowed: []ir.Expression{allowed}, CheckedFields: true, Message: "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)}, nil
@@ -81,8 +81,11 @@ func (l *lowering) withinLiterals(declared *checker.Type, allowed []*checker.Typ
 }
 
 // view registers checks by receiver type and member, including nested contracts.
-// An unrelated receiver with the same member name does not become a view.
-func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Type) (ir.Expression, error) {
+// An unrelated receiver with the same member name does not become a view. Source
+// is the type the value had before the view, nil when there's none to name; what
+// it already guarantees is read honestly through a wider type (view_widened.go).
+func (l *lowering) view(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
+	l.viewSources = append(l.viewSources, viewSource{source: source, target: target})
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		return l.legacyView(node, value, target)
 	}
@@ -355,7 +358,16 @@ func (l *lowering) viewReceiverTypeID(receiver *checker.Type) int {
 			receiver = l.concrete(constraint)
 		}
 	}
-	return int(l.checker.GetNonNullableType(receiver).Id())
+	return l.viewTypeID(l.checker.GetNonNullableType(receiver))
+}
+
+// viewTypeID is the id a read's view names a type by, kept with its type in viewTypes.
+func (l *lowering) viewTypeID(named *checker.Type) int {
+	if l.viewTypes == nil {
+		l.viewTypes = map[int]*checker.Type{}
+	}
+	l.viewTypes[int(named.Id())] = named
+	return int(named.Id())
 }
 
 // A union receiver can carry a checked member's allocation. Preserve that

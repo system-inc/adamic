@@ -149,6 +149,9 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 	if err := lowering.checkViewCopies(); err != nil {
 		return nil, err
 	}
+	if err := lowering.checkViewWidenedReads(); err != nil {
+		return nil, err
+	}
 	if len(lowering.asyncPayloadFailures) > 0 {
 		return nil, lowering.asyncPayloadFailures[0]
 	}
@@ -213,6 +216,12 @@ type lowering struct {
 	parallelMoveDemand  map[parallelMoveSite]bool
 	hasMovedParallelMap bool
 	moveSites           []*ast.Node
+
+	// viewSources is each view's source and target, and viewTypes the checker types a read's view
+	// ids name, its receiver's and its field's, so the passes after lowering can judge and name them
+	// (view_widened.go).
+	viewSources []viewSource
+	viewTypes   map[int]*checker.Type
 
 	programPlan          *programMembership
 	programDiscovery     bool

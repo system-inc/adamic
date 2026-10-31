@@ -906,7 +906,7 @@ func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, sour
 			// true branch (#k1t2wp9). predicateRefusal registers the same view for a body proven by
 			// tag alone, so either covers the other on these programs and no test guards one alone:
 			// keep both.
-			if _, err := l.view(node, nil, target); err != nil {
+			if _, err := l.view(node, nil, source, target); err != nil {
 				return nil, nil, err
 			}
 			literal, of, known := l.literalConstant(tag)
