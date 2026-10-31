@@ -1,4 +1,4 @@
-// a-check: refused PLACEHOLDER
+// a-check: refused a downcast from Shape to Circle in .a whose checks no proof erases
 // Language's attack: a downcast inside an .a generic whose source is a type parameter, which the walk
 // that refuses sees before any instantiation is lowered.
 type Circle = { readonly kind: 'Circle'; readonly radius: number };

@@ -1,4 +1,4 @@
-// a-check: refused PLACEHOLDER
+// a-check: refused a cast the runtime can't check
 // Language's attack: a class downcast that looks nominal but crosses a structural interface. Circle
 // implements Area, but an Area is any object with an area, never known to be a Circle, so there is no
 // nominal ancestry for an identity test to follow.

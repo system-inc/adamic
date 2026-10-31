@@ -1,4 +1,4 @@
-// a-check: refused PLACEHOLDER
+// a-check: refused a cast the runtime can't check
 // Language's attack, the union form: a source that is a class or a structural interface. Square is a
 // class, but Area is not, so the cast to Circle has no nominal ancestry to test against an Area.
 interface Area { readonly area: number; }

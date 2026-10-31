@@ -1,4 +1,4 @@
-// a-check: refused PLACEHOLDER
+// a-check: refused a downcast from Shape to Circle in .a whose checks no proof erases
 // Language's attack: a downcast through a type alias. The alias names the member, so the cast is the
 // same tag test as shape as Circle.
 type Circle = { readonly kind: 'Circle'; readonly radius: number };
