@@ -569,7 +569,7 @@ func (l *lowering) classViewRefusal(node *ast.Node) error {
 	if parent := node.Parent; parent != nil && parent.Kind == ast.KindVariableDeclaration && parent.Name().Kind == ast.KindArrayBindingPattern {
 		return l.classDestructuredView(node, parent.Name())
 	}
-	target := l.checker.GetContextualType(node, checker.ContextFlagsNone)
+	target := l.slotType(node)
 	if target == nil {
 		return nil
 	}
