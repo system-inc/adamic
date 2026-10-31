@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"slices"
 	"strconv"
 	"strings"
 
@@ -9,22 +10,33 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// viewSource is a view's target and the type its value had before it: a cast's operand, a checked
-// predicate's argument or a tag-proven predicate's parameter. Source is nil when there's none to
-// name, and then the view's source guarantees none of its fields.
+// viewSource is a view's target, the type its value had before it (a cast's operand, a checked
+// predicate's argument or a tag-proven predicate's parameter, nil when there's none to name), and
+// where its value enters the view in the IR: a cast's CheckedCast, or the local a structural cast
+// or a checked predicate's call admits. A view with neither is judged by its allocations alone.
 type viewSource struct {
 	source, target *checker.Type
+	cast           bool
+	entry          ir.Expression
 }
 
 // viewLie is what one view checks that its source doesn't guarantee. Lied are the names read raw
-// through any other type: one the source lacks, one the source holds as a checked view itself, and
-// every name inside a field the source doesn't hold as the view does. Held are the names the
-// source has, each with the source's type for it, honest through a type whose field it fits.
-// Honest are the names inside a field the source holds as the view does.
+// through any other type: one the source lacks, one the source holds as a checked view itself
+// (both lied at the top), and every name inside a field the source doesn't hold as the view does
+// (lied inside). Held are the names the source has, each with the source's type for it, honest
+// through a type whose field it fits. Honest are the names inside a field the source holds as the
+// view does.
 type viewLie struct {
-	lied, honest map[string]bool
-	held         map[string]*checker.Type
+	liedTop, liedInside, honest map[string]bool
+	held                        map[string]*checker.Type
 }
+
+// The sites a viewed value's flow reaches where it enters a view, which no allocation has (those
+// are negative): the view's own value, and a value a checked read took out of a viewed one.
+const (
+	viewedValueSite = 1
+	viewedFieldSite = 2
+)
 
 // A checked view's fields are checked where they're read, under the view's receiver type
 // (CheckedFieldKey). The value the view admitted can be seen as another type after: widened by an
@@ -32,10 +44,16 @@ type viewLie struct {
 // A read through that type is a plain read, so it read a lying layout's field as the type it
 // claims, and native crashed where Node printed the field. Until such a read checks against the
 // view, a read of a field a view checks, through a receiver type that doesn't check it, is NotYet
-// when the receiver may hold a viewed allocation, failing closed when the reach is unknown, as
-// checkViewCopies is for a copy. A field the view's source already held is honest through a type
-// it fits, so the source's own reads (the tag test before the cast) still lower. Views register
-// as their casts lower, so this is decided once lowering is done.
+// when the receiver may hold a viewed value, failing closed when the reach is unknown.
+//
+// Whether it may is asked of the shared allocation graph with an entry hook: the receiver's flow
+// reaches a view's entry, a checked cast, a local a structural cast or a checked predicate admits,
+// or a checked read of an aggregate field. Asking which allocations it reaches would refuse every
+// read made before the view (the tag test, the producer's own type), since those reach the same
+// allocation. A field the view's source already held is honest through a type it fits, as the cast
+// changed nothing the source guaranteed. A view with no entry in the IR, a tag-proven predicate's,
+// falls back to the allocations, as checkViewCopies does. Views register as their casts lower, so
+// this is decided once lowering is done.
 func (l *lowering) checkViewWidenedReads() error {
 	names := map[string]bool{}
 	for key := range l.result.CheckedFields {
@@ -50,8 +68,34 @@ func (l *lowering) checkViewWidenedReads() error {
 		return nil
 	}
 	lies := make([]viewLie, len(l.viewSources))
+	entryLocals := map[int]bool{}
+	var unentered []viewLie
 	for i, view := range l.viewSources {
 		lies[i] = l.viewLie(view)
+		if read, isRead := view.entry.(ir.Read); !view.cast && isRead {
+			entryLocals[read.Local] = true
+		} else if !view.cast {
+			unentered = append(unentered, lies[i])
+		}
+	}
+	assignAllocationSites(l.result)
+	entered := newAllocationFlowGraph(l.result)
+	entered.entry = func(value ir.Expression) int {
+		switch value := value.(type) {
+		case ir.CheckedCast:
+			if value.CheckedFields {
+				return viewedValueSite
+			}
+		case ir.Read:
+			if entryLocals[value.Local] {
+				return viewedValueSite
+			}
+		case ir.Property:
+			if l.result.CheckedFields[ir.CheckedFieldKey(value.ViewReceiverTypeID, value.Name)] && viewAggregate(value) {
+				return viewedFieldSite
+			}
+		}
+		return 0
 	}
 	var graph *allocationFlowGraph
 	var viewed map[int]bool
@@ -64,18 +108,24 @@ func (l *lowering) checkViewWidenedReads() error {
 		read, isProperty := node.(ir.Property)
 		// A read with no place in the source is lowering's own, a predicate's tag test, and no read
 		// through a type. A method read counts: a callable field is read raw too.
-		if !isProperty || read.ViewWhere == "" || !names[read.Name] || l.result.CheckedField(read.ViewReceiverTypeID, read.Name) || viewVouched(lies, read.Name, l.viewTypes[read.ViewTypeID], l.checker) {
+		if !isProperty || read.ViewWhere == "" || !names[read.Name] || l.result.CheckedField(read.ViewReceiverTypeID, read.Name) {
 			return true
 		}
-		if graph == nil {
-			var reachUnknown bool
-			graph, viewed, reachUnknown = viewedAllocations(l.result)
-			unknown = unknown || reachUnknown
-		}
-		reaches := graph.ReachingAllocations(read.Object)
-		demanded := unknown || reaches.Unknown
-		for _, site := range reaches.Sites {
-			demanded = demanded || viewed[site]
+		field := l.viewTypes[read.ViewTypeID]
+		reaches := entered.ReachingAllocations(read.Object)
+		inside := reaches.Unknown || slices.Contains(reaches.Sites, viewedFieldSite)
+		demanded := inside && !viewVouched(lies, read.Name, field, true, l.checker) || slices.Contains(reaches.Sites, viewedValueSite) && !viewVouched(lies, read.Name, field, false, l.checker)
+		if !demanded && len(unentered) != 0 && !viewVouched(unentered, read.Name, field, true, l.checker) {
+			if graph == nil {
+				var reachUnknown bool
+				graph, viewed, reachUnknown = viewedAllocations(l.result)
+				unknown = unknown || reachUnknown
+			}
+			allocations := graph.ReachingAllocations(read.Object)
+			demanded = unknown || allocations.Unknown
+			for _, site := range allocations.Sites {
+				demanded = demanded || viewed[site]
+			}
 		}
 		if demanded {
 			through := "an unnamed type"
@@ -97,7 +147,7 @@ func (l *lowering) checkViewWidenedReads() error {
 // viewLie is what a view checks that its source doesn't guarantee: its target's own fields, and
 // the fields of the contracts inside them.
 func (l *lowering) viewLie(view viewSource) viewLie {
-	lie := viewLie{lied: map[string]bool{}, honest: map[string]bool{}, held: map[string]*checker.Type{}}
+	lie := viewLie{liedTop: map[string]bool{}, liedInside: map[string]bool{}, honest: map[string]bool{}, held: map[string]*checker.Type{}}
 	var source *checker.Type
 	if view.source != nil {
 		source = l.checker.GetNonNullableType(l.concrete(view.source))
@@ -114,12 +164,12 @@ func (l *lowering) viewLie(view viewSource) viewLie {
 			held = l.checker.GetPropertyOfType(source, property.Name)
 		}
 		if held == nil {
-			lie.lied[property.Name] = true
+			lie.liedTop[property.Name] = true
 		} else {
 			lie.held[property.Name] = l.checker.GetTypeOfSymbol(held)
 		}
 		if held == nil || !l.checker.IsTypeAssignableTo(l.checker.GetTypeOfSymbol(held), l.checker.GetTypeOfSymbol(property)) {
-			l.viewContractNames(contracts[property.Name], lie.lied, map[ir.ViewContractID]bool{})
+			l.viewContractNames(contracts[property.Name], lie.liedInside, map[ir.ViewContractID]bool{})
 		} else {
 			l.viewContractNames(contracts[property.Name], lie.honest, map[ir.ViewContractID]bool{})
 		}
@@ -145,12 +195,13 @@ func (l *lowering) viewContractNames(id ir.ViewContractID, names map[string]bool
 
 // viewVouched says whether every view that checks name had it from its source, as a type that
 // fits read, the field's type where it's read: then the read sees what the source already
-// guaranteed. A read whose field type lowering didn't record is never vouched for, and nor is a
-// name no recorded view accounts for.
-func viewVouched(lies []viewLie, name string, read *checker.Type, typeChecker *checker.Checker) bool {
+// guaranteed. Inside is whether the value may be one inside a viewed value, where a name the view
+// lies about in a field counts too and a name inside an honest field is vouched for. A read whose
+// field type lowering didn't record is never vouched for, and nor is a name no view accounts for.
+func viewVouched(lies []viewLie, name string, read *checker.Type, inside bool, typeChecker *checker.Checker) bool {
 	vouched := false
 	for _, lie := range lies {
-		if lie.lied[name] {
+		if lie.liedTop[name] || inside && lie.liedInside[name] {
 			return false
 		}
 		if held, ok := lie.held[name]; ok {
@@ -159,7 +210,7 @@ func viewVouched(lies []viewLie, name string, read *checker.Type, typeChecker *c
 			}
 			vouched = true
 		}
-		vouched = vouched || lie.honest[name]
+		vouched = vouched || inside && lie.honest[name]
 	}
 	return vouched
 }

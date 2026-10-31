@@ -42,6 +42,12 @@ func (graph *allocationFlowGraph) reachingAllocations(expression ir.Expression, 
 	unknown := func(reason string) { result.Unknown = true; reasons[reason] = true }
 	var follow func(ir.Expression, int)
 	follow = func(value ir.Expression, level int) {
+		if graph.entry != nil {
+			if site := graph.entry(value); site != 0 {
+				sites[site] = true
+				return
+			}
+		}
 		if project {
 			sources, reasons, recognized := graph.projectedSources(value, level)
 			if recognized {

@@ -62,6 +62,7 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	if _, err := l.view(node, value, source, target); err != nil {
 		return nil, err
 	}
+	l.viewSources[len(l.viewSources)-1].cast = true
 	cast.CheckedFields = true
 	return cast, nil
 }

@@ -35,6 +35,7 @@ func (l *lowering) interfaceCast(node *ast.Node, value ir.Expression, source, ta
 		if _, err := l.view(node, value, source, target); err != nil {
 			return nil, err
 		}
+		l.viewSources[len(l.viewSources)-1].cast = true
 		return ir.CheckedCast{Value: value, Field: field, FieldType: fieldType, Allowed: []ir.Expression{allowed}, CheckedFields: true, Message: "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)}, nil
 	}
 	if vacuous != nil {
@@ -84,8 +85,9 @@ func (l *lowering) withinLiterals(declared *checker.Type, allowed []*checker.Typ
 // An unrelated receiver with the same member name does not become a view. Source
 // is the type the value had before the view, nil when there's none to name; what
 // it already guarantees is read honestly through a wider type (view_widened.go).
+// Value is where the view's value enters it, unless a CheckedCast wraps it.
 func (l *lowering) view(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
-	l.viewSources = append(l.viewSources, viewSource{source: source, target: target})
+	l.viewSources = append(l.viewSources, viewSource{source: source, target: target, entry: value})
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		return l.legacyView(node, value, target)
 	}
