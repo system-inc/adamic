@@ -104,7 +104,9 @@ func TestNamedRecordRefusals(t *testing.T) {
 // recordNamedWrite's own list missed nominal ancestry, so native ran Point's describe on an Other and
 // printed POINT where Node prints OTHER (Language's w8), and void widening, so a () => void was read as
 // () => unknown (w10). A record literal's computed name is the same write, made as the literal is. An
-// honest write, a number into number properties, still lowers. Mutants: slotType ignoring the slot a
+// honest write, a number into number properties, still lowers. The literal's twin, { names: quiet }, is
+// stopped a level up, at the whole literal's initializer through .names, so a construction is held to its
+// twin's kind and rule (the fix it names) rather than to where it's said. Mutants: slotType ignoring the slot a
 // caller set lowers w8, which then prints POINT natively; recordComputedEntry skipped lowers w8's literal.
 func TestNamedRecordWritesAreJudgedAsTheirDirectTwins(t *testing.T) {
 	t.Parallel()
@@ -121,11 +123,14 @@ const quiet: () => void = () => "ab" + String(keys.length);
 const first = (): unknown => undefined;
 const key = keys[0] ?? "other";
 `
-	for _, probe := range []struct{ name, source, write, direct string }{
-		{"w8", w8, "const places: Places = { names: new Point() };\nplaces[key] = new Other();", "const places: Places = { names: new Point() };\nplaces.names = new Other();"},
-		{"w10", w10, "const handlers: Handlers = { names: first };\nhandlers[key] = quiet;", "const handlers: Handlers = { names: first };\nhandlers.names = quiet;"},
-		{"w8 construction", w8, "const places: Places = { names: new Point(), [key]: new Other() };", "const places: Places = { names: new Other() };"},
-		{"w10 construction", w10, "const handlers: Handlers = { names: first, [key]: quiet };", "const handlers: Handlers = { names: quiet };"},
+	for _, probe := range []struct {
+		name, source, write, direct string
+		byRule                      bool
+	}{
+		{"w8", w8, "const places: Places = { names: new Point() };\nplaces[key] = new Other();", "const places: Places = { names: new Point() };\nplaces.names = new Other();", false},
+		{"w10", w10, "const handlers: Handlers = { names: first };\nhandlers[key] = quiet;", "const handlers: Handlers = { names: first };\nhandlers.names = quiet;", false},
+		{"w8 construction", w8, "const places: Places = { names: new Point(), [key]: new Other() };", "const places: Places = { names: new Other() };", true},
+		{"w10 construction", w10, "const handlers: Handlers = { names: first, [key]: quiet };", "const handlers: Handlers = { names: quiet };", true},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -134,7 +139,11 @@ const key = keys[0] ?? "other";
 			if direct == nil {
 				t.Fatalf("the direct twin %q lowers, so it proves nothing about the write", probe.direct)
 			}
-			if written == nil || stoppedFor(written) != stoppedFor(direct) {
+			same := written != nil && stoppedFor(written) == stoppedFor(direct)
+			if probe.byRule {
+				same = written != nil && ruleOf(written) == ruleOf(direct)
+			}
+			if !same {
 				t.Fatalf("the write stopped as %v, want what its direct twin stops as: %v", written, direct)
 			}
 		})
@@ -148,4 +157,13 @@ function write(options: Options, key: string): void { options[key] = 9; }`); err
 	if _, err := lowerSource(t, "const SyntaxKind = { AbstractKeyword: 128, AccessorKeyword: 129, ConstructorKeyword: 137 } as const;\ntype KeywordSyntaxKind = (typeof SyntaxKind)[keyof typeof SyntaxKind];\ninterface MapLike<T> { [index: string]: T; }\nconst kinds: MapLike<KeywordSyntaxKind> = {\n    abstract: SyntaxKind.AbstractKeyword,\n    accessor: SyntaxKind.AccessorKeyword,\n    [\"\" + \"constructor\"]: SyntaxKind.ConstructorKeyword,\n};\nconsole.log(`${String(kinds[\"abstract\"])} ${Object.keys(kinds).join(\",\")}`);\n"); err != nil {
 		t.Fatalf("a folded name no named property takes: %v", err)
 	}
+}
+
+// ruleOf is whether an error is a refusal or a NotYet, and the fix a refusal names, which names its rule.
+func ruleOf(err error) string {
+	var refused *Refused
+	if errors.As(err, &refused) {
+		return "Refused: " + refused.Fix
+	}
+	return stoppedFor(err)
 }
