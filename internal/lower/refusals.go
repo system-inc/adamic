@@ -137,14 +137,23 @@ func (l *lowering) refuseNode(root *ast.Node) error {
 // refuseInSlot judges a value written into a slot the checker doesn't give it, such as a delayed Array
 // write's element, whose parameter lib types any: the slot is set as the value's (slotType), and the
 // whole registry runs over the value as refuse's walk runs it over a value the checker does give one
-// (#b6m00y7). The slot stays set, so lowering builds the value as what it's written into. A function
-// written in place in the value is NotYet, since the checker typed its parameters by lib's any, and so is
-// a part of the value whose slot tsc would carry down from this one but Adamic can't read off it.
+// (#b6m00y7). It only judges: the slot is unset after, so a caller can judge one value against several
+// slots, and lowering builds the value as it did. A function written in place in the value is NotYet,
+// since the checker typed its parameters by lib's any, and so is a part of the value whose slot tsc
+// would carry down from this one but Adamic can't read off it.
 func (l *lowering) refuseInSlot(value *ast.Node, slot *checker.Type) error {
 	if l.slots.explicit == nil {
 		l.slots.explicit = map[*ast.Node]*checker.Type{}
 	}
+	previous, had := l.slots.explicit[value]
 	l.slots.explicit[value] = slot
+	defer func() {
+		if had {
+			l.slots.explicit[value] = previous
+		} else {
+			delete(l.slots.explicit, value)
+		}
+	}()
 	var function *ast.Node
 	var find ast.Visitor
 	find = func(node *ast.Node) bool {
