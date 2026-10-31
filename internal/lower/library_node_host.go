@@ -343,7 +343,7 @@ func (l *lowering) nodeRealpathValue(node *ast.Node) (ir.Expression, bool, error
 	if plain {
 		role = "host_realpath_walk"
 	}
-	if expected := l.checker.GetContextualType(node, checker.ContextFlagsNone); expected != nil {
+	if expected := l.slotType(node); expected != nil {
 		signatures := l.checker.GetSignaturesOfType(expected, checker.SignatureKindCall)
 		valid := len(signatures) == 1
 		if valid {

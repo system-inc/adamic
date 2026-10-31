@@ -41,7 +41,7 @@ func unionObservation(node *ast.Node) bool {
 func (l *lowering) checkedNullableObject(node *ast.Node, read ir.Expression) ir.Expression {
 	observed := l.concrete(l.checker.GetTypeAtLocation(node))
 	narrowed, known := l.representation(observed)
-	contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone)
+	contextual := l.slotType(node)
 	if contextual != nil && l.nullableObjectUnion(contextual) {
 		return read
 	}
@@ -81,7 +81,7 @@ func (l *lowering) nullableObjectBoundary(node *ast.Node, value ir.Expression) i
 	if !l.includesNull(own) || l.includesUndefined(own) {
 		return value
 	}
-	contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone)
+	contextual := l.slotType(node)
 	if contextual == nil {
 		return value
 	}

@@ -22,7 +22,7 @@ func (l *lowering) adaptArrayCallback(node *ast.Node, callback ir.Expression, su
 	// A nullable reference uses NULL in its source storage. A boxed union
 	// instead distinguishes the immortal null token from undefined (NULL).
 	var incoming []*ast.Symbol
-	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+	if contextual := l.slotType(node); contextual != nil {
 		if source := l.checker.GetSignaturesOfType(l.concrete(contextual), checker.SignatureKindCall); len(source) == 1 {
 			incoming = source[0].Parameters()
 		}

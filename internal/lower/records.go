@@ -38,7 +38,7 @@ func (l *lowering) recordElement(t *checker.Type) *checker.Type {
 	return infos[0].ValueType()
 }
 func (l *lowering) recordLiteralElement(node *ast.Node) *checker.Type {
-	if t := l.checker.GetContextualType(node, checker.ContextFlagsNone); t != nil {
+	if t := l.slotType(node); t != nil {
 		if e := l.recordElement(l.checker.GetNonNullableType(t)); e != nil {
 			return e
 		}
@@ -377,7 +377,7 @@ func (l *lowering) recordStorageView(node *ast.Node) error {
 		target = l.checker.GetTypeAtLocation(node)
 	} else if l.isExpression(node) && viewSite(node) {
 		source = node
-		target = l.checker.GetContextualType(node, checker.ContextFlagsNone)
+		target = l.slotType(node)
 	}
 	if source == nil || target == nil || ast.SkipParentheses(source).Kind == ast.KindObjectLiteralExpression {
 		return nil
