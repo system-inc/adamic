@@ -7,25 +7,32 @@ import (
 )
 
 // A branded supertype, such as tsc's TypeElement or LiteralExpression, is an interface over many node
-// kinds: its kind is wide, and a brand field typed any or void, which no value carries, keeps other nodes
+// kinds: its kind is wide, and a brand field typed any or undefined, which no value carries, keeps other nodes
 // from being assignable to it. Which kinds belong is a naming convention no run-time check can recover:
 // a kind set built from the types assignable to it leaves out JsxText, which isLiteralExpression takes,
 // and every late-bound declaration isLateBound takes (#c7w6j0y, measured on tsc Oct 31). So a checked
 // predicate claiming one checks at the call only that the value is an object, and checks its shape where
 // it's relied on: S's view checks every field read through S, and so does the view of every type the
-// program declares assignable to S, since narrowing, a cast or a subtype's parameter gives the value one
-// of those types and a lie carrying a real subtype's kind must still stop at its first bad read. A
-// subtype no view can take, a class or a generic, leaves S NotYet.
+// program declares assignable to S. A declared type S is itself assignable to, a field-less restatement
+// (`interface Restated extends TypeElement {}`) or an alias of S's exact shape, takes the value by plain
+// assignment, with no cast and no predicate, and a lie must still stop at its first bad read there
+// (Language's attack on 7f4b7030). Narrowing to a subtype never gives a lie its type: brandedNarrowing
+// fails closed. A subtype no view can take, a class or a generic, leaves S NotYet.
 
 // brandedSupertype is whether target is the shape that rule is keyed on, judged by type, never by name:
-// a kind property that isn't one literal, and at least one property typed exactly any or void.
+// a kind property that isn't one literal, and at least one brand member, a required member that isn't
+// symbol-keyed, typed any or phantom as phantomField judges a primitive brand's (void or undefined), so
+// the two rules can't drift when a brand is retyped: tsc's 36 are undefined since #ptd2v1r.
 func (l *lowering) brandedSupertype(target *checker.Type) bool {
 	kind := l.checker.GetPropertyOfType(target, "kind")
 	if kind == nil || l.fieldLiteral(target, "kind") != nil {
 		return false
 	}
 	for _, property := range l.checker.GetPropertiesOfType(target) {
-		if property.Flags&ast.SymbolFlagsOptional == 0 && l.checker.GetTypeOfSymbol(property).Flags()&(checker.TypeFlagsAny|checker.TypeFlagsVoid) != 0 {
+		if property.Flags&ast.SymbolFlagsOptional != 0 || checker.IsKnownSymbol(property) {
+			continue
+		}
+		if member := l.checker.GetTypeOfSymbol(property); member.Flags()&checker.TypeFlagsAny != 0 || phantomField(member) {
 			return true
 		}
 	}
@@ -120,6 +127,12 @@ func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Typ
 	if claim.Flags()&checker.TypeFlagsUnion != 0 {
 		targets = claim.Types()
 	}
+	// The checker narrows the argument's own type, so a type parameter T narrows to T & S, whose
+	// instance is an intersection with an id of its own that no view covers (Language's must on
+	// 7f4b7030). Judging concrete(T) would see a supertype and admit it.
+	if declared := l.checker.GetTypeAtLocation(argument); holdsTypeParameter(declared) {
+		return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(claim)+" over a generic argument "+l.checker.TypeToString(declared)+", which narrows to an intersection no view covers")
+	}
 	source := l.concrete(l.checker.GetTypeAtLocation(argument))
 	members := []*checker.Type{source}
 	if source.Flags()&checker.TypeFlagsUnion != 0 {
@@ -143,6 +156,22 @@ func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Typ
 		}
 	}
 	return nil
+}
+
+// holdsTypeParameter is whether t is a type parameter or another instantiable type, or a union or
+// intersection holding one.
+func holdsTypeParameter(t *checker.Type) bool {
+	if t.Flags()&checker.TypeFlagsInstantiable != 0 {
+		return true
+	}
+	if t.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		for _, member := range t.Types() {
+			if holdsTypeParameter(member) {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 // brandedSpreads keeps a branded supertype NotYet while the program copies a value of a type its views cover whole,

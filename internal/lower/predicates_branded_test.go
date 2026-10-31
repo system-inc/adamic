@@ -57,6 +57,21 @@ const p: PropertyDeclaration = { kind: 172, pos: 1, _declarationBrand: 0, name: 
 			lowersAndAgreesWithNodeAs(t, brandedPrelude+probe.source, ".ts")
 		})
 	}
+	// tsc's brands are typed undefined (#ptd2v1r), so an undefined brand takes the same road (Correctness's
+	// census on 8c7afca2 found the rule never firing on tsc). Mutant: undefined dropped from phantomField,
+	// which reddens these with phantomField's own pins.
+	undefinedBrands := strings.ReplaceAll(brandedPrelude, "Brand: any;", "Brand: undefined;")
+	t.Run("undefined brand", func(t *testing.T) {
+		t.Parallel()
+		lowersAndAgreesWithNodeAs(t, undefinedBrands+`function show(n: Node): void { if (isTypeElement(n)) { console.log(String(n.pos)); } else { console.log("no"); } }
+const a = { kind: 171, pos: 1, name: "a", typeText: "t" }; show(a);
+const b = { kind: 80, pos: 2, escapedText: "e" }; show(b);`, ".ts")
+	})
+	t.Run("undefined brand lie", func(t *testing.T) {
+		t.Parallel()
+		brandedStops(t, undefinedBrands+`function show(n: Node): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
+const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);`, "adamic: panic: field read failed: n.name matches no member of string | undefined")
+	})
 	for _, probe := range []struct{ name, source, stderr string }{
 		{"layout", `function show(n: Node): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
 const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);`, "adamic: panic: field read failed: n.name matches no member of string | undefined"},
@@ -71,6 +86,24 @@ const v = { kind: 171, pos: 2 }; show(v);`, "adamic: panic: field read failed: p
 		{"passed as a subtype", `function read(p: PropertySignature): void { console.log(p.typeText); }
 function show(n: Node): void { if (isTypeElementLie(n) && n.kind === 171) { read(n as PropertySignature); } }
 const v = { kind: 171, pos: 2 }; show(v);`, "adamic: panic: field read failed: p.typeText is not initialized"},
+		// A declared type S is assignable to takes the value by plain assignment, so only its own view
+		// stops the lie (Language's s4, s5, s7, s8 on 7f4b7030). Mutant: the subtypes' views not
+		// registered, and all four read the lie raw.
+		{"assigned to a restatement", `interface Restated extends TypeElement {}
+function show(n: Node): void { if (isTypeElementLie(n)) { const r: Restated = n; console.log(String(r.name)); } }
+const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);`, "adamic: panic: field read failed: r.name matches no member of string | undefined"},
+		{"assigned to an alias of its shape", `type Shape = { readonly kind: number; readonly pos: number; _declarationBrand: any; _typeElementBrand: any; readonly name?: string };
+function show(n: Node): void { if (isTypeElementLie(n)) { const r: Shape = n; console.log(String(r.name)); } }
+const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);`, "adamic: panic: field read failed: r.name matches no member of string | undefined"},
+		{"passed as a restatement", `interface Restated extends TypeElement {}
+function nameOf(r: Restated): string { return String(r.name); }
+function show(n: Node): void { if (isTypeElementLie(n)) { console.log(nameOf(n)); } }
+const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);`, "adamic: panic: field read failed: r.name matches no member of string | undefined"},
+		{"stored as a restatement", `interface Restated extends TypeElement {}
+const kept: Restated[] = [];
+function show(n: Node): void { if (isTypeElementLie(n)) { kept.push(n); } }
+const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);
+for (const r of kept) { console.log(String(r.name)); }`, "adamic: panic: field read failed: r.name matches no member of string | undefined"},
 		{"write", `interface Counter extends Declaration { _counterBrand: any; count: number; }
 function isCounter(n: Node): n is Counter { return kindOf(n) === 5; }
 function bump(n: Node): void { if (isCounter(n)) { n.count = 7; } }
@@ -131,6 +164,14 @@ const i: Identifier = { kind: 80, pos: 2, escapedText: "e" }; show(i);`, "a chec
 		{"asserts over a union", `function assertTypeElement(n: Node): asserts n is TypeElement { if (kindOf(n) === 0) { throw new Error("no"); } }
 function show(x: PropertySignature | Identifier): void { assertTypeElement(x); console.log(x.typeText); }
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" }; show(i);`, "a checked predicate target TypeElement that narrows Identifier, which is neither its supertype nor a subtype its views cover"},
+		// A generic argument narrows to T & S, an intersection no view covers, so the call is NotYet
+		// (Language's g1 to g3 on 7f4b7030). Mutant: the type-parameter guard dropped, and g1 lowers.
+		{"generic argument", `function show<T extends Node>(n: T): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
+const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const v: Node = w; show(v);`, "over a generic argument T, which narrows to an intersection no view covers"},
+		{"generic argument through a supertype", `function show<T extends Declaration>(n: T): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
+const w = { kind: 80, pos: 2, escapedText: "e", name: 5, _declarationBrand: 0 }; show(w);`, "over a generic argument T, which narrows to an intersection no view covers"},
+		{"generic argument given its type", `function show<T extends Node>(n: T): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
+const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show<Node>(w);`, "over a generic argument T, which narrows to an intersection no view covers"},
 		{"no brand", `interface Expression extends Node { readonly text: string; }
 function isExpression(n: Node): n is Expression { return kindOf(n) === 9; }
 function show(n: Node): void { if (isExpression(n)) { console.log(n.text); } }
