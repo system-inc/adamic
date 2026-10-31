@@ -120,7 +120,7 @@ console.log(String(fs.length));`, "a void-returning function at the argument sit
 // and a view inside a literal written in place, whose property's slot is carried down from the element
 // type as tsc would carry it. Mutants: slotType ignoring the slot a caller set, under which h7 lowers and
 // dies natively; and carriedSlot carrying nothing to a literal's property, under which the literal's view
-// lowers.
+// lowers; and keepSlot not called, under which the node host object and the tuple lower.
 func TestDelayedArrayWritesAreJudgedAsTheirDirectTwins(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, declarations, delayed, direct string }{
@@ -138,6 +138,9 @@ func TestDelayedArrayWritesAreJudgedAsTheirDirectTwins(t *testing.T) {
 		// A Node host object is judged against the element it's written into, not the declared parameter
 		// lib's any gives call (nodeHostDeclaredArgument asks slotSet; Lower's pin).
 		{"a node host object", "import { performance } from \"node:perf_hooks\";\ntype View = { eventLoopUtilization(): { readonly idle: number } };\nconst views: View[] = [];", "push.call(views, performance);", "views.push(performance);"},
+		// Lowering's own checks at a value read the slot as well, so it stays set while the value is lowered:
+		// a tuple where an array goes is held as an object and read as an array (expression's check).
+		{"a tuple where an array goes", "const pair: [number, number] = [1, 2]; const rows: number[][] = [];", "push.call(rows, pair);", "rows.push(pair);"},
 		// The value was judged already, honestly, at a direct write: the delayed verdict doesn't lean on it.
 		{"h7 after an honest direct write", "const named = { a: 1 }; const plain: { a: number }[] = []; plain.push(named); const records: Record<string, number>[] = [];", "push.call(records, named);", "records.push(named);"},
 	} {

@@ -804,6 +804,17 @@ func (l *lowering) slotType(node *ast.Node) *checker.Type {
 	return l.checker.GetContextualType(node, checker.ContextFlagsNone)
 }
 
+// keepSlot sets slot as node's own for the rest of the lowering. refuseInSlot only judges, but lowering
+// has checks of its own at a value that read slotType (expression's weak or strong keep, a host object's
+// view, a tuple where an array goes), so a value written into a slot the checker doesn't give is lowered
+// with that slot kept, as what it's written into, the way a direct write's value is.
+func (l *lowering) keepSlot(node *ast.Node, slot *checker.Type) {
+	if l.slots.explicit == nil {
+		l.slots.explicit = map[*ast.Node]*checker.Type{}
+	}
+	l.slots.explicit[node] = slot
+}
+
 // slotSet is whether node's slot comes from one a caller set (carriedSlot). A rule that reads a site's
 // slot some other way than the contextual type, such as an argument's parameter from the call's resolved
 // signature, reads slotType instead when this holds: a delayed write's call is lib's, whose parameter is

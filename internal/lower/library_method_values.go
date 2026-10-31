@@ -404,6 +404,7 @@ func (l *lowering) delayedArrayWritesFit(node, receiver *ast.Node, name string, 
 			if err := l.refuseInSlot(other, l.checker.GetTypeAtLocation(receiver)); err != nil {
 				return err
 			}
+			l.keepSlot(other, l.checker.GetTypeAtLocation(receiver))
 		}
 		return nil
 	}
@@ -418,6 +419,9 @@ func (l *lowering) delayedArrayWritesFit(node, receiver *ast.Node, name string, 
 		if err := l.refuseInSlot(value, element); err != nil {
 			return err
 		}
+		// Lowering's own checks at the value (a weak or strong keep, a host object's view, a tuple
+		// where an array goes) read the slot too, so it stays set while the value is lowered.
+		l.keepSlot(value, element)
 	}
 	return nil
 }
