@@ -17,15 +17,15 @@ import (
 
 // A program's main.c is keyed by what its compile reads, read just before clang compiles it (#2r9xhqs, step 2 of the C
 // bytes object cache): clang's build as a split unit's key reads it (unitClang), the environment clang reads, every
-// argument of the compile with each per-build place written as a placeholder, and main.c preprocessed, which holds what
-// every header it reached says. After the compile the preprocessing runs again and every file it read is looked at again
+// argument of the compile with each per-build place written as a placeholder, every file the preprocessing read by its
+// bytes, and main.c preprocessed, which holds what resolution decided of every header it reached. After the compile the preprocessing runs again and every file it read is looked at again
 // (objectKeying.recheck), so a header changed while main.c compiled is caught. The key only measures so far: no object is
 // stored or read by it, and linkOne links the compile's own object whatever it says.
 //
 // Preprocessed bytes keep the column of a line's first token but no other spacing and no comment, and a Debug or
 // sanitized object's line table records each token's column: two sources a space apart inside a line preprocess to the
-// same bytes and compile, under -g, to other objects (Golem, clang 20.1.8). A store keyed by these bytes alone would hand
-// one of them the other's object.
+// same bytes and compile, under -g, to other objects (Golem, clang 20.1.8). So every file the preprocessing read is keyed
+// by its own bytes too, which hold every column.
 
 // objectKeyVariable, set to "on", keys main.c's compile in every build that reaches linkOne but BuildLean's, which reads
 // no environment, and says each key's preprocessing and recheck in the build log (buildLog's cPreprocess and cRecheck).
@@ -226,7 +226,9 @@ func newObjectKeying(compile *exec.Cmd, source string, compileFlags []string, pr
 	if err != nil {
 		return nil, fmt.Errorf("%w: its preprocessing's dependencies: %v", errUncachedObject, err)
 	}
-	// A name the make rules spell in a way dependencies doesn't read ($$, \#) fails its stat, and refuses.
+	// A name the make rules spell in a way dependencies doesn't read ($$, \#) fails its stat, and refuses. Each file is
+	// stated before it's hashed, so bytes that change after the hash move the change time the recheck looks at again.
+	var files []string
 	seen := map[string]bool{}
 	for _, name := range dependencies(rules) {
 		if seen[name] {
@@ -238,14 +240,25 @@ func newObjectKeying(compile *exec.Cmd, source string, compileFlags []string, pr
 			return nil, fmt.Errorf("%w: a file its preprocessing read: %v", errUncachedObject, err)
 		}
 		keying.reads = append(keying.reads, read)
+		path := name
+		if !filepath.IsAbs(path) {
+			path = filepath.Join(compile.Dir, path)
+		}
+		digest, err := fileDigest(path)
+		if err != nil {
+			return nil, fmt.Errorf("%w: a file its preprocessing read: %v", errUncachedObject, err)
+		}
+		files = append(files, "file "+placeheld.Replace(name)+" "+digest)
 	}
-	// v1: keyed by main.c preprocessed and the compile's arguments, every per-build place a placeholder (#2r9xhqs).
+	// v1: keyed by main.c preprocessed, every file it read by its bytes, in the dependency list's order, and the compile's
+	// arguments, every per-build place a placeholder (#2r9xhqs).
 	parts := []string{"adamic-objects-v1", "os " + goruntime.GOOS, "arch " + goruntime.GOARCH}
 	parts = append(parts, clang.parts...)
 	parts = append(parts, environmentParts...)
 	for _, argument := range compile.Args[1:] {
 		parts = append(parts, "argument "+placeheld.Replace(argument))
 	}
+	parts = append(parts, files...)
 	parts = append(parts, fmt.Sprintf("preprocessed %x", sha256.Sum256(objectMarkersMapped(preprocessed, places))))
 	keying.key = partsKey(parts)
 	buildLog("cPreprocess", "main.c", keying.key, "off", preprocessing)

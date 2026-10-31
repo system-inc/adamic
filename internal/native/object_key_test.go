@@ -459,3 +459,46 @@ func TestObjectKeyOffRunsNoPreprocessing(t *testing.T) {
 		}
 	}
 }
+
+// Two sources a space apart inside one line preprocess to the same bytes, and under -g compile to other objects, whose
+// line tables record columns: they key apart, released and Debug, since every file the preprocessing read is keyed by
+// its bytes. Mutant, red: the files' hashes left out of the key.
+func TestObjectKeyHoldsEveryColumn(t *testing.T) {
+	t.Parallel()
+	compiler, err := toolchain.Path("clang")
+	if err != nil {
+		t.Fatal(err)
+	}
+	root := t.TempDir()
+	spaced := strings.Replace(objectKeySource, "return 0;", "return  0;", 1)
+	for _, build := range []struct {
+		name    string
+		options Options
+	}{{"release", Options{}}, {"debug", Options{Debug: true}}} {
+		t.Run(build.name, func(t *testing.T) {
+			t.Parallel()
+			library, err := RuntimeLibraryForSource("", objectKeySource, build.options)
+			if err != nil {
+				t.Fatal(err)
+			}
+			var keyed [2]objectKeyed
+			for index, source := range []string{objectKeySource, spaced} {
+				keyed[index] = objectKeyBuild(t, filepath.Join(root, fmt.Sprintf("%s-%d", build.name, index)), compiler, source, build.options, Flags(build.options), library, nil, nil)
+				if keyed[index].keying == nil {
+					t.Fatalf("no key: %v", keyed[index].refusal)
+				}
+			}
+			// A Debug build's markers name its own build directory, so the bytes are compared as the key maps them.
+			var mapped [2][]byte
+			for index := range keyed {
+				mapped[index] = objectMarkersMapped(keyed[index].keying.preprocessed, objectPlaces(keyed[index].keying.compile.Args[1:]))
+			}
+			if !bytes.Equal(mapped[0], mapped[1]) {
+				t.Fatal("the two sources preprocess to other bytes, so the test shows nothing of the files' hashes")
+			}
+			if keyed[0].keying.key == keyed[1].keying.key {
+				t.Errorf("two sources a space apart key the same: %s", keyed[0].keying.key)
+			}
+		})
+	}
+}
