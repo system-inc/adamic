@@ -1,0 +1,9 @@
+// a-check: refused a write into a record with declared properties through a key that is not one literal, of a value a declared property it can land under cannot take (3 written into Options by k: outFile is declared string | undefined)
+interface Options { outFile?: string; [name: string]: string | number | undefined; }
+type Dict = { [name: string]: string | number | undefined };
+function key(): string { return 'outFile'; }
+const name: string = key();
+function put(o: Options, k: 'outFile' | string): void { o[k] = 3; }
+const options: Options = {};
+put(options, 'outFile');
+console.log(typeof options.outFile);
