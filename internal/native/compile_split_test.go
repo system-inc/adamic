@@ -100,7 +100,7 @@ func buildOneCallAndSplit(t *testing.T, source string, options Options) (splitBu
 		defer os.Remove(output)
 		err := linkOne(directory, compilerName(options), source, output, options, Flags(options), library, jobserver, func(directory string) ([]string, error) {
 			return regexpCompilerLinkFlags(source, options, directory)
-		}, oneCall)
+		}, objectKeyer(), oneCall)
 		return splitResult(t, output, err)
 	}
 	return build(true), build(false)
