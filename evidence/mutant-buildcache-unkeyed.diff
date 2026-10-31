@@ -1,0 +1,28 @@
+diff --git a/cohere b/cohere
+deleted file mode 160000
+index 06af2e39..00000000
+--- a/cohere
++++ /dev/null
+@@ -1 +0,0 @@
+-Subproject commit 06af2e399c6c1fb93fd570b774027942747400b4
+diff --git a/cohere b/cohere
+new file mode 120000
+index 00000000..5ef23dd8
+--- /dev/null
++++ b/cohere
+@@ -0,0 +1 @@
++/home/user/adamic/cohere
+\ No newline at end of file
+diff --git a/internal/buildcache/buildcache.go b/internal/buildcache/buildcache.go
+index 3bdbc2dc..77c07080 100644
+--- a/internal/buildcache/buildcache.go
++++ b/internal/buildcache/buildcache.go
+@@ -877,7 +877,7 @@ const trackedManifestDirectory = ".tracked"
+ // test from an unpacked source never records .tracked in its read set, where it is refused as untracked (#asrz3cy). A
+ // file the listing names is still the build's read when the build reads it.
+ func keyedManifestListing(directory string) (listing []byte, taken time.Time, ok bool) {
+-	keying(func() { listing, taken, ok = manifestListing(directory) })
++	listing, taken, ok = manifestListing(directory)
+ 	return listing, taken, ok
+ }
+ 

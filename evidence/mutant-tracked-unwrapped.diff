@@ -1,0 +1,41 @@
+diff --git a/cohere b/cohere
+deleted file mode 160000
+index 06af2e39..00000000
+--- a/cohere
++++ /dev/null
+@@ -1 +0,0 @@
+-Subproject commit 06af2e399c6c1fb93fd570b774027942747400b4
+diff --git a/cohere b/cohere
+new file mode 120000
+index 00000000..5ef23dd8
+--- /dev/null
++++ b/cohere
+@@ -0,0 +1 @@
++/home/user/adamic/cohere
+\ No newline at end of file
+diff --git a/internal/tracked/tracked.go b/internal/tracked/tracked.go
+index b3a72826..bcd6141f 100644
+--- a/internal/tracked/tracked.go
++++ b/internal/tracked/tracked.go
+@@ -569,7 +569,7 @@ func readManifest(directory string) (*manifest, error) {
+ 	var root, relative string
+ 	var found *manifest
+ 	var err error
+-	asKeying(func() { root, relative, found, err = readRecord(directory) })
++	root, relative, found, err = readRecord(directory)
+ 	if err != nil {
+ 		return nil, err
+ 	}
+@@ -580,10 +580,10 @@ func readManifest(directory string) (*manifest, error) {
+ 	for parent := path.Dir(relative); ; parent = path.Dir(parent) {
+ 		parentDirectory := filepath.Join(root, filepath.FromSlash(parent))
+ 		recorded := false
+-		asKeying(func() {
++		func() {
+ 			_, err := os.Stat(filepath.Join(root, ManifestDirectory, filepath.FromSlash(parent), headFile))
+ 			recorded = err == nil
+-		})
++		}()
+ 		if recorded {
+ 			above, err := manifestOf(parentDirectory)
+ 			if err != nil {
