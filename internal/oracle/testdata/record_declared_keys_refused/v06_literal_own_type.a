@@ -1,0 +1,7 @@
+// a-check: refused a write into a record with declared properties through a key that is not one literal, of a value that is not the type of a declared property it can land under (3 written into { [x: string]: string | number; outFile: string; } by name: outFile is declared string)
+interface Options { outFile?: string; [name: string]: string | number | undefined; }
+type Dict = { [name: string]: string | number | undefined };
+function key(): string { return 'outFile'; }
+const name: string = key();
+const o = { outFile: "a", [name]: 3 };
+console.log(typeof o.outFile);

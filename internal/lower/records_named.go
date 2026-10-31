@@ -81,23 +81,41 @@ func (l *lowering) recordNamedWrite(access, value *ast.Node) error {
 	if key.Kind == ast.KindStringLiteral || key.Kind == ast.KindNoSubstitutionTemplateLiteral || key.Kind == ast.KindNumericLiteral {
 		return nil // The checker already applies the named property's write type.
 	}
-	from := l.checker.GetTypeAtLocation(value)
-	// The list below names some of Adamic's slot rules and fails open on those it doesn't: nominal
-	// ancestry let an Other into names: Point, whose method native then ran on it (Language's w8), and
-	// void widening let a () => void into names: () => unknown (w10). Until the registry judges the
-	// write (l.slotType, #b6m00y7), the value's widened type, its literals at their base type, must be
-	// each named property's type itself, as a delayed Array write's must be (delayedArrayWritesFit).
+	property, identity := l.namedWriteMisfit(l.checker.GetTypeAtLocation(a.Expression), l.checker.GetTypeAtLocation(value), nil)
+	switch {
+	case property == nil:
+		return nil
+	case identity:
+		return l.notYet(access, "an unrestricted dictionary write of a value whose type isn't named property "+property.Name+"'s type itself; use a literal key or a value of exactly that type")
+	}
+	return l.notYet(access, "an unrestricted dictionary write that can violate named property "+property.Name+"; use a literal key or a value accepted by every named property")
+}
+
+// namedWriteMisfit is the first named property of receiver, of those names holds when it's given, that
+// a value of type from, written under its name through the index signature, doesn't fit, and whether
+// it's the identity check it fails; or nil. recordNamedWrite stops on it in .ts, and declaredKeyWrite
+// refuses it in .a (records_declared_keys.go).
+//
+// The list names some of Adamic's slot rules and fails open on those it doesn't: nominal ancestry let
+// an Other into names: Point, whose method native then ran on it (Language's w8), and void widening
+// let a () => void into names: () => unknown (w10). Until the registry judges the write (l.slotType,
+// #b6m00y7), the value's widened type, its literals at their base type, must be each named property's
+// type itself, as a delayed Array write's must be (delayedArrayWritesFit).
+func (l *lowering) namedWriteMisfit(receiver, from *checker.Type, names map[string]bool) (*ast.Symbol, bool) {
 	widened := checker.Checker_getBaseTypeOfLiteralType(l.checker, l.checker.GetWidenedType(from))
-	for _, property := range l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(a.Expression)) {
+	for _, property := range l.checker.GetPropertiesOfType(receiver) {
+		if names != nil && !names[property.Name] {
+			continue
+		}
 		to := l.checker.GetNonMissingTypeOfSymbol(property)
 		if l.checker.IsReadonlySymbol(property) || !l.checker.IsTypeAssignableTo(from, to) || !l.enumAssignable(from, to) || l.widened(from, to, map[[2]*checker.Type]bool{}) != nil || !l.sameRecordStorage(from, to, map[[2]*checker.Type]bool{}) {
-			return l.notYet(access, "an unrestricted dictionary write that can violate named property "+property.Name+"; use a literal key or a value accepted by every named property")
+			return property, false
 		}
 		if widened != to || !l.sameKeeping(widened, to, map[[2]*checker.Type]bool{}) {
-			return l.notYet(access, "an unrestricted dictionary write of a value whose type isn't named property "+property.Name+"'s type itself; use a literal key or a value of exactly that type")
+			return property, true
 		}
 	}
-	return nil
+	return nil, false
 }
 
 // Erasing or widening a named contract would allow another alias to write through
