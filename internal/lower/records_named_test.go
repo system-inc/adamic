@@ -129,6 +129,9 @@ const key = keys[0] ?? "other";
 	}{
 		{"w8", w8, "const places: Places = { names: new Point() };\nplaces[key] = new Other();", "const places: Places = { names: new Point() };\nplaces.names = new Other();", false},
 		{"w10", w10, "const handlers: Handlers = { names: first };\nhandlers[key] = quiet;", "const handlers: Handlers = { names: first };\nhandlers.names = quiet;", false},
+		// An enum's members are a closed union a number seen as it can break, which refuseWidening judges
+		// (widened's enumAssignable), not a check of the write's own (Compiler's probe on 82ae5693).
+		{"an arbitrary number under an enum property", "enum Color { Red, Green }\ntype Bag = { color: Color; [k: string]: Color | number };\nconst keys: string[] = [\"color\", \"other\"];\nconst key = keys[0] ?? \"other\";\nconst n: number = 7;\n", "const bag: Bag = { color: Color.Red };\nbag[key] = n;", "const bag: Bag = { color: Color.Red };\nbag.color = n;", false},
 		{"w8 construction", w8, "const places: Places = { names: new Point(), [key]: new Other() };", "const places: Places = { names: new Other() };", true},
 		{"w10 construction", w10, "const handlers: Handlers = { names: first, [key]: quiet };", "const handlers: Handlers = { names: quiet };", true},
 	} {
@@ -147,6 +150,11 @@ const key = keys[0] ?? "other";
 				t.Fatalf("the write stopped as %v, want what its direct twin stops as: %v", written, direct)
 			}
 		})
+	}
+	// A literal 7 under color: Color isn't tsc's to relate (its direct twin is a checker error), so it stops at
+	// the write's own relation check, which stays.
+	if _, err := lowerSource(t, "enum Color { Red, Green }\ntype Bag = { color: Color; [k: string]: Color | number };\nconst keys: string[] = [\"color\", \"other\"];\nconst key = keys[0] ?? \"other\";\nconst bag: Bag = { color: Color.Red };\nbag[key] = 7;\nconsole.log('ran');\n"); err == nil || !strings.Contains(err.Error(), "can violate named property color") {
+		t.Fatalf("a literal 7 under an enum property: got %v, want the write's own relation NotYet", err)
 	}
 	if _, err := lowerSource(t, `interface Options { target?: number; required: number; [option: string]: number | undefined }
 function write(options: Options, key: string): void { options[key] = 9; }`); err != nil {
