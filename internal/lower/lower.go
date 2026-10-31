@@ -35,6 +35,7 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 }
 
 func LowerWithOptions(ctx context.Context, program *load.Program, options Options) (*ir.Program, error) {
+	_ = os.Getenv("ADAMIC_PLANTED")
 	files := program.Files()
 	if len(files) != 1 {
 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
