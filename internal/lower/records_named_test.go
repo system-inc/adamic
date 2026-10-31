@@ -107,9 +107,10 @@ func TestNamedRecordRefusals(t *testing.T) {
 // still lowers. Language's w12 to w14 reach the same write through an alias, a chained assignment and
 // a parameter. In a slot boxed by a number in the index, w10's literal, an array's and a Map's are
 // judged too, since a declared function, array or Map read from a boxed slot is checked only by its
-// tag; only a declared number, string or boolean is left to its exact read check. Mutants: the identity check dropped lowers w8,
-// w10, both literals, w12 to w14 and the boxed w10, and w8's print POINT natively; recordComputedEntry
-// skipped lowers w8's literal, which prints POINT natively, and w10's two literals.
+// tag; only a declared number, string or boolean is left to its exact read check. Mutants: the
+// identity check dropped lowers w8, w10, both literals, w12 to w14 and the boxed w10, and w8's print
+// POINT natively; recordComputedEntry skipped lowers w8's literal, which prints POINT natively, and
+// the boxed literals.
 func TestNamedRecordWritesAreThePropertyTypeItself(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source string }{
@@ -185,18 +186,6 @@ const write = (target: Places, at: string): void => { target[at] = new Other(); 
 write(places, key);
 console.log(places.names.describe().toUpperCase());
 `},
-		{"array construction boxed", `type Lists = { names: string[]; [k: string]: string[] | number[] | number };
-const keys: string[] = ["names", "other"];
-const key = keys[0] ?? "other";
-const lists: Lists = { names: ["a"], [key]: [1, 2] };
-console.log((lists.names[0] ?? "").toUpperCase());
-`},
-		{"map construction boxed", `type Tables = { names: Map<string, string>; [k: string]: Map<string, string> | Map<string, number> | number };
-const keys: string[] = ["names", "other"];
-const key = keys[0] ?? "other";
-const tables: Tables = { names: new Map<string, string>([["a", "b"]]), [key]: new Map<string, number>([["a", 1]]) };
-console.log((tables.names.get("a") ?? "").toUpperCase());
-`},
 		{"w10 construction boxed", `type Handlers = { names: () => unknown; [k: string]: (() => void) | number };
 const keys: string[] = ["names", "other"];
 const quiet: () => void = () => "ab" + String(keys.length);
@@ -212,6 +201,29 @@ console.log(typeof seen === "string" ? seen.toUpperCase() : "none");
 			var ny *NotYet
 			if !errors.As(err, &ny) || !strings.Contains(err.Error(), "type itself") {
 				t.Fatalf("got %v, want the NotYet for a value that isn't the named property's type itself", err)
+			}
+		})
+	}
+	// An array or a Map that tsc doesn't relate to the declared one fails recordNamedWrite's list first.
+	for _, probe := range []struct{ name, source string }{
+		{"array construction boxed", `type Lists = { names: string[]; [k: string]: string[] | number[] | number };
+const keys: string[] = ["names", "other"];
+const key = keys[0] ?? "other";
+const lists: Lists = { names: ["a"], [key]: [1, 2] };
+console.log((lists.names[0] ?? "").toUpperCase());
+`},
+		{"map construction boxed", `type Tables = { names: Map<string, string>; [k: string]: Map<string, string> | Map<string, number> | number };
+const keys: string[] = ["names", "other"];
+const key = keys[0] ?? "other";
+const tables: Tables = { names: new Map<string, string>([["a", "b"]]), [key]: new Map<string, number>([["a", 1]]) };
+console.log((tables.names.get("a") ?? "").toUpperCase());
+`},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			_, err := lowerSource(t, probe.source)
+			var ny *NotYet
+			if !errors.As(err, &ny) || !strings.Contains(err.Error(), "named property names") {
+				t.Fatalf("got %v, want the NotYet for a value named property names doesn't take", err)
 			}
 		})
 	}
