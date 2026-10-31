@@ -410,18 +410,18 @@ func TestEveryEnvironmentReadOfTheLoweringIsKeyed(t *testing.T) {
 	}
 	keyed := inputsOf(t, sources{entry: "main.ts", files: map[string][]byte{"main.ts": nil}}, Options{}, environment{getenv: func(variable string) string { return "set-" + variable }})
 	for variable, where := range read {
-		_, explained := UnkeyedEnvironment[variable]
+		_, explained := unkeyedEnvironment[variable]
 		switch {
-		case slices.Contains(KeyedEnvironment, variable):
+		case slices.Contains(keyedEnvironment, variable):
 			if !slices.Contains(keyed.Flags, variable+"=set-"+variable) {
 				t.Errorf("%s is listed as keyed and the key holds no line of its value", variable)
 			}
 		case !explained:
-			t.Errorf("%s reads %s, which the key doesn't hold: key it (KeyedEnvironment) or say why it shapes nothing the IR holds (UnkeyedEnvironment)", strings.Join(where, ", "), variable)
+			t.Errorf("%s reads %s, which the key doesn't hold: key it (keyedEnvironment) or say why it shapes nothing the IR holds (unkeyedEnvironment)", strings.Join(where, ", "), variable)
 		}
 	}
-	listedVariables := slices.Clone(KeyedEnvironment)
-	for variable := range UnkeyedEnvironment {
+	listedVariables := slices.Clone(keyedEnvironment)
+	for variable := range unkeyedEnvironment {
 		listedVariables = append(listedVariables, variable)
 	}
 	for _, variable := range listedVariables {

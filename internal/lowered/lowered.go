@@ -14,7 +14,7 @@
 //     change confined to emit keeps the key;
 //   - the program's sources, by content, laid out as they sit beside the entry;
 //   - lower's options and load's (TSGo), every environment variable the closure reads that can shape the IR
-//     (KeyedEnvironment, held to the closure's source by TestEveryEnvironmentReadOfTheLoweringIsKeyed), and the working
+//     (keyedEnvironment, held to the closure's source by TestEveryEnvironmentReadOfTheLoweringIsKeyed), and the working
 //     directory load resolves names against (load.go's os.Getwd);
 //   - the Go release and the system it targets, and GOFLAGS, whose tags choose the closure's files.
 //
@@ -61,14 +61,14 @@ const (
 	sumFile = "program.gob.sha256"
 )
 
-// KeyedEnvironment is every environment variable the lowering's closure reads that can change the IR it makes, each
-// keyed by its value: lower.Lower's two (lower.go). Lowered lowers with the Options it's given, so neither changes what
-// it builds, but a caller whose options came from them (cmd/adamic, lower.Lower) keys alike.
-var KeyedEnvironment = []string{"ADAMIC_PROGRAM_REGION", "ADAMIC_OWNERSHIP_QUERY"}
+// keyedEnvironment is every environment variable the lowering's closure reads that can change the IR it makes, each
+// keyed by its value: lower.Lower's two (lower.go). Lowered lowers with the Options it's given, which lower.Lower and
+// cmd/adamic take from these, so the key holds both.
+var keyedEnvironment = []string{"ADAMIC_PROGRAM_REGION", "ADAMIC_OWNERSHIP_QUERY"}
 
-// UnkeyedEnvironment is every variable the closure reads that can't change the IR, with why. A read the guard finds in
+// unkeyedEnvironment is every variable the closure reads that can't change the IR, with why. A read the guard finds in
 // neither list fails it.
-var UnkeyedEnvironment = map[string]string{
+var unkeyedEnvironment = map[string]string{
 	"ADAMIC_BUILD_LOG": "buildlog.Phase appends a phase's timing to the log the variable names; nothing it writes is an input to the program (buildlog.go)",
 }
 
@@ -81,10 +81,9 @@ func Lowered(t testing.TB, paths []string, options Options) (*ir.Program, buildc
 	return program, inputs
 }
 
-// sources are a program's files as they were read for the key, by their path from base, the directory holding them
-// all; entry is the first's.
+// sources are a program's files as they were read for the key, by their path from the directory holding them all;
+// entry is the first's.
 type sources struct {
-	base  string
 	entry string
 	files map[string][]byte
 }
@@ -103,13 +102,14 @@ func sourcesOf(t testing.TB, paths []string) sources {
 		}
 		absolute[index] = resolved
 	}
+	// The directory holding them all, which the build lays them out under as they sit there.
 	base := filepath.Dir(absolute[0])
 	for _, path := range absolute[1:] {
-		for !strings.HasPrefix(path, base+string(filepath.Separator)) {
+		for base != filepath.Dir(base) && !strings.HasPrefix(path, base+string(filepath.Separator)) {
 			base = filepath.Dir(base)
 		}
 	}
-	read := sources{base: base, files: map[string][]byte{}}
+	read := sources{files: map[string][]byte{}}
 	for index, path := range absolute {
 		relative, err := filepath.Rel(base, path)
 		if err != nil {
@@ -166,7 +166,7 @@ func inputsOf(t testing.TB, read sources, options Options, under environment) bu
 	for _, file := range names {
 		inputs.Flags = append(inputs.Flags, fmt.Sprintf("source %s=%x", file, sha256.Sum256(read.files[file])))
 	}
-	for _, variable := range KeyedEnvironment {
+	for _, variable := range keyedEnvironment {
 		inputs.Flags = append(inputs.Flags, variable+"="+under.getenv(variable))
 	}
 	// GOFLAGS' tags choose the closure's files (a noembed build reads the checker's libraries from disk), and
