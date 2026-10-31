@@ -1,0 +1,1 @@
+internal/oracle/testdata/record_declared_keys_stops/r19_record_type.ts:6:7: stage 0 can't lower a Options seen as Record<string, string | number | undefined> (fixed objects and records have different storage; copy explicitly) yet

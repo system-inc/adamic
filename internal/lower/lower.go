@@ -346,6 +346,10 @@ type lowering struct {
 	typeMapper   *typeMapper
 	instantiated []*checker.Type
 
+	// declaredKeys is set while recordDeclaredKeyRefusal judges an .a module's views, where widened
+	// holds a declared property invariant against an index signature (records_declared_keys.go).
+	declaredKeys bool
+
 	// writeSites is every write into a slot lowering made, by its IR node's Site less one (fresh.go).
 	writeSites       []writeSite
 	accessorCaptures []accessorCapture
