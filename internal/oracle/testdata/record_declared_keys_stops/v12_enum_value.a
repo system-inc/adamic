@@ -1,4 +1,3 @@
-// a-check: refused a write into a record with declared properties through a key that is not one literal, of a value that is not the type of a declared property it can land under (number written into Tagged by key: kind is declared Kind)
 enum Kind { A, B }
 interface Tagged { kind: Kind; [k: string]: number; }
 const keys: string[] = ["kind", "other"];

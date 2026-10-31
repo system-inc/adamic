@@ -118,7 +118,7 @@ func (l *lowering) declaredKeyWrite(node *ast.Node) error {
 					if names != nil && !names[property.Name] || l.checker.IsTypeAssignableTo(written, l.checker.GetTypeOfSymbol(property)) {
 						continue
 					}
-					return &Refused{Where: l.program.Where(node), What: "a write into a record with declared properties through a key that is not one literal, of a value a declared property it can land under can't hold (" + l.checker.TypeToString(written) + " written into " + l.checker.TypeToString(member) + " by " + sourceExpression(key) + ": " + property.Name + " is declared " + l.checker.TypeToString(l.checker.GetTypeOfSymbol(property)) + ")", Fix: declaredKeysFix}
+					return &Refused{Where: l.program.Where(node), What: "a write into a record with declared properties through a key that is not one literal, of a value a declared property it can land under cannot hold (" + l.checker.TypeToString(written) + " written into " + l.checker.TypeToString(member) + " by " + sourceExpression(key) + ": " + property.Name + " is declared " + l.checker.TypeToString(l.checker.GetTypeOfSymbol(property)) + ")", Fix: declaredKeysFix}
 				}
 				if err := l.namedWriteStop(node, member, written, names); err != nil {
 					return err
