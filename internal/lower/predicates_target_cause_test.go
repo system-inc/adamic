@@ -77,7 +77,8 @@ show({ kind: 7 } as Node);`)
 // field, as CompilerOptions has only optional fields and an index signature, and a required field holding
 // untagged records, as the build infos do. An untagged target of primitive fields is rule 3's, a
 // structural check not built yet, and keeps the old reason, as does a branded supertype, which the tag-set
-// rule takes. Mutant: the cause dropped, which puts the first two back under the old reason.
+// rule takes. Mutants: the cause dropped, which puts the first two back under the old reason; untaggedRecord's
+// visited set dropped, which never returns on the recursive alias.
 func TestCheckedPredicateTargetCause(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, types, target, want string }{
@@ -85,6 +86,12 @@ func TestCheckedPredicateTargetCause(t *testing.T) {
 		{"build info", `interface Diagnostic { readonly file: string; readonly start: number; } interface Info { readonly version: string; readonly diagnostics: readonly Diagnostic[]; }`, `Info`, "a checked predicate target whose check would read past the depth bound (Info)"},
 		{"primitive fields", `interface Referenced { readonly file: string; readonly index: number; }`, `Referenced`, "checked predicate overload target Referenced"},
 		{"string array", `interface Plain { readonly version: string; readonly root: readonly string[]; readonly errors: true | undefined; }`, `Plain`, "checked predicate overload target Plain"},
+		// A recursive alias ends its walk on the second visit (Compiler's must): Json's array holds Json.
+		{"recursive alias", `type Json = string | number | Json[]; interface Tree { readonly value: Json; }`, `Tree`, "checked predicate overload target Tree"},
+		// Anonymous parts alone are their own base, so their required fields count (Lower's should).
+		{"anonymous parts", `type Pair = { readonly a: string } & { readonly b: number };`, `Pair`, "checked predicate overload target Pair"},
+		// A library type isn't an untagged record: Map's check isn't a matter of depth.
+		{"library field", `interface Index { readonly names: Map<string, number>; }`, `Index`, "checked predicate overload target Index"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
