@@ -222,14 +222,16 @@ func (l *lowering) libraryCallArgument(node *ast.Node) bool {
 	return signature != nil && librarySignature(signature)
 }
 
-// librarySignature is whether a signature is declared in the library, the prelude or a declaration file.
+// librarySignature is whether a signature is declared in the bundled library or the prelude. A declaration
+// file is not the library: Node's own declarations stay counted until their host audit lands, and a .d.ts
+// the program ships is the program's own (Compiler's must on dab38125).
 func librarySignature(signature *checker.Signature) bool {
 	declaration := signature.Declaration()
 	if declaration == nil {
 		return false
 	}
 	file := ast.GetSourceFileOfNode(declaration)
-	return file != nil && (file.IsDeclarationFile || load.IsLibrary(file) || load.IsPrelude(file))
+	return file != nil && (load.IsLibrary(file) || load.IsPrelude(file))
 }
 
 // anyContained relates one position inside a container: a member typed any seen as anything but any
