@@ -558,47 +558,19 @@ func manifestOf(directory string) (*manifest, error) {
 	return found, nil
 }
 
+// asKeying is buildcache.Keying, the way readManifest reads the manifest: a test watches it.
+var asKeying = buildcache.Keying
+
+// readManifest reads directory's record and checks it against its parent's. The manifest stands where .git would, so
+// reading it is key-time work (buildcache.Keying), as git's own answers are: under Workshop's trace a product test in an
+// unpacked source never records .tracked in its read set, which refuses it as untracked (#asrz3cy). A parent's record
+// is read by its own manifestOf, keyed on its own, so no keying runs inside another.
 func readManifest(directory string) (*manifest, error) {
-	root := directory
-	for {
-		if info, err := os.Stat(filepath.Join(root, ManifestDirectory)); err == nil && info.IsDir() {
-			break
-		}
-		parent := filepath.Dir(root)
-		if parent == root {
-			return nil, fmt.Errorf("%s has no .git, and no %s manifest at or above it records its commit and tracked files (build-tree writes one into the source it chunks)", directory, ManifestDirectory)
-		}
-		root = parent
-	}
-	relative, err := filepath.Rel(root, directory)
+	var root, relative string
+	var found *manifest
+	var err error
+	asKeying(func() { root, relative, found, err = readRecord(directory) })
 	if err != nil {
-		return nil, err
-	}
-	relative = filepath.ToSlash(relative)
-	if relative == "." {
-		relative = ""
-	}
-	record := filepath.Join(root, ManifestDirectory, filepath.FromSlash(relative))
-	head, err := os.ReadFile(filepath.Join(record, headFile))
-	if err != nil {
-		return nil, fmt.Errorf("%s has no .git, and the tree's manifest has no commit for it: %w", directory, err)
-	}
-	listing, err := os.ReadFile(filepath.Join(record, filesFile))
-	if err != nil {
-		return nil, fmt.Errorf("%s has no .git, and the tree's manifest has no tracked files for it: %w", directory, err)
-	}
-	found := &manifest{directory: directory, head: strings.TrimSpace(string(head))}
-	if !objectID(found.head) {
-		return nil, fmt.Errorf("%s: the manifest's commit %q isn't an object id", filepath.Join(record, headFile), found.head)
-	}
-	if found.entries, err = parseTree(filepath.Join(record, filesFile), listing); err != nil {
-		return nil, err
-	}
-	commit, err := os.ReadFile(filepath.Join(record, commitFile))
-	if err != nil {
-		return nil, fmt.Errorf("%s has no .git, and the tree's manifest has no commit object for it, so nothing binds its files to its commit: %w", directory, err)
-	}
-	if err := bound(record, found, commit); err != nil {
 		return nil, err
 	}
 	if relative == "" {
@@ -607,7 +579,12 @@ func readManifest(directory string) (*manifest, error) {
 	// A submodule's record must be the commit its parent pins: the nearest repository above it that has a record.
 	for parent := path.Dir(relative); ; parent = path.Dir(parent) {
 		parentDirectory := filepath.Join(root, filepath.FromSlash(parent))
-		if _, err := os.Stat(filepath.Join(root, ManifestDirectory, filepath.FromSlash(parent), headFile)); err == nil {
+		recorded := false
+		asKeying(func() {
+			_, err := os.Stat(filepath.Join(root, ManifestDirectory, filepath.FromSlash(parent), headFile))
+			recorded = err == nil
+		})
+		if recorded {
 			above, err := manifestOf(parentDirectory)
 			if err != nil {
 				return nil, err
@@ -630,6 +607,54 @@ func readManifest(directory string) (*manifest, error) {
 			return nil, fmt.Errorf("%s: the manifest records it, but no repository above it", directory)
 		}
 	}
+}
+
+// readRecord finds the tree root at or above directory that holds ManifestDirectory and reads and binds directory's
+// record there, returning the root and directory's path under it ("" for the root's own record).
+func readRecord(directory string) (string, string, *manifest, error) {
+	root := directory
+	for {
+		if info, err := os.Stat(filepath.Join(root, ManifestDirectory)); err == nil && info.IsDir() {
+			break
+		}
+		parent := filepath.Dir(root)
+		if parent == root {
+			return "", "", nil, fmt.Errorf("%s has no .git, and no %s manifest at or above it records its commit and tracked files (build-tree writes one into the source it chunks)", directory, ManifestDirectory)
+		}
+		root = parent
+	}
+	relative, err := filepath.Rel(root, directory)
+	if err != nil {
+		return "", "", nil, err
+	}
+	relative = filepath.ToSlash(relative)
+	if relative == "." {
+		relative = ""
+	}
+	record := filepath.Join(root, ManifestDirectory, filepath.FromSlash(relative))
+	head, err := os.ReadFile(filepath.Join(record, headFile))
+	if err != nil {
+		return "", "", nil, fmt.Errorf("%s has no .git, and the tree's manifest has no commit for it: %w", directory, err)
+	}
+	listing, err := os.ReadFile(filepath.Join(record, filesFile))
+	if err != nil {
+		return "", "", nil, fmt.Errorf("%s has no .git, and the tree's manifest has no tracked files for it: %w", directory, err)
+	}
+	found := &manifest{directory: directory, head: strings.TrimSpace(string(head))}
+	if !objectID(found.head) {
+		return "", "", nil, fmt.Errorf("%s: the manifest's commit %q isn't an object id", filepath.Join(record, headFile), found.head)
+	}
+	if found.entries, err = parseTree(filepath.Join(record, filesFile), listing); err != nil {
+		return "", "", nil, err
+	}
+	commit, err := os.ReadFile(filepath.Join(record, commitFile))
+	if err != nil {
+		return "", "", nil, fmt.Errorf("%s has no .git, and the tree's manifest has no commit object for it, so nothing binds its files to its commit: %w", directory, err)
+	}
+	if err := bound(record, found, commit); err != nil {
+		return "", "", nil, err
+	}
+	return root, relative, found, nil
 }
 
 // parseTree reads git ls-tree -r -z's entries: "<mode> <type> <object>\t<path>", each ended by NUL.
