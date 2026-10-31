@@ -99,14 +99,15 @@ var intersectionPastDepthBound = "intersection nested past the depth bound of " 
 // An intersection of plain object types is described by its resolved properties, each with its
 // refined type: the checker gives true for boolean & true and Identifier for DeclarationName &
 // Identifier, so a read checks the narrower type and never the base's. Any other member keeps the
-// intersection unsupported: a class instance would lose its nominal check, a callable member its
-// signature, an index signature its dictionary, and a type parameter has no layout to describe.
+// intersection unsupported: a type parameter has no layout to describe, a callable member would
+// lose its signature, and a member with a family of its own (a class instance's nominal check, an
+// index signature's dictionary, a collection, a tuple) would lose that.
 func (l *lowering) intersectionViewFamily(target *checker.Type) string {
-	if l.weakTarget(target) != nil || len(l.checker.GetIndexInfosOfType(target)) != 0 {
+	if l.weakTarget(target) != nil {
 		return "intersection"
 	}
 	for _, member := range target.Types() {
-		if member.Flags()&checker.TypeFlagsObject == 0 || l.checker.IsArrayType(member) || checker.IsTupleType(member) || isClassInstance(member) || l.callableViewContract(member) || len(l.checker.GetIndexInfosOfType(member)) != 0 || l.unsupportedViewFamily(member) != "" {
+		if member.Flags()&checker.TypeFlagsObject == 0 || l.checker.IsArrayType(member) || l.callableViewContract(member) || l.unsupportedViewFamily(member) != "" {
 			return "intersection"
 		}
 	}
