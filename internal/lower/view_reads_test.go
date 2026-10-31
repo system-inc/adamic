@@ -5,6 +5,7 @@ import (
 	"go/parser"
 	"go/token"
 	"maps"
+	"os"
 	"path/filepath"
 	"reflect"
 	"slices"
@@ -53,7 +54,7 @@ var viewNoField = []viewReadExample{
 	{ir.ArrayFrom{}, "a new array from a length and a callback, whose reads are classed where they are"},
 	{ir.ArrayIndex{}, "reads an array's element, which is no field; a tuple's is a Property"},
 	{ir.ArrayIsArray{}, "tests a value's brand"},
-	{ir.ArrayJoin{}, "joins scalar elements; an array of objects is NotYet before it lowers"},
+	{ir.ArrayJoin{}, "joins scalar elements; an array of objects is NotYet before it lowers (pinned by view_widened_held_join.ts)"},
 	{ir.ArrayLiteral{}, "a new array of the elements it's given, moved"},
 	{ir.ArrayMap{}, "calls back with the elements, moved; the callback's reads are classed where they are"},
 	{ir.ArrayPop{}, "moves an element out"},
@@ -88,7 +89,7 @@ var viewNoField = []viewReadExample{
 	{ir.IsNull{}, "tests a reference"},
 	{ir.IsUndefined{}, "tests a reference"},
 	{ir.JSONDecode{}, "parses a string"},
-	{ir.JSONStringify{}, "a scalar or an array of scalars; an object reference is NotYet before it lowers"},
+	{ir.JSONStringify{}, "a scalar or an array of scalars; an object reference is NotYet before it lowers (pinned by view_widened_held_json.ts)"},
 	{ir.Length{}, "an array's length"},
 	{ir.Logical{}, "one of its operands"},
 	{ir.LogicalAssignment{}, "its read is a Property and its write a SetProperty, each classed where it is"},
@@ -119,7 +120,7 @@ var viewNoField = []viewReadExample{
 	{ir.ObjectCall{Method: "is"}, "compares by SameValue"},
 	{ir.ObjectCall{Method: "isFrozen"}, "tests a flag"},
 	{ir.ObjectCall{Method: "freeze"}, "sets a flag on a shape a literal proves"},
-	{ir.ObjectCall{Method: "values"}, "unchecked only for a literal's own const binding (enumerationProven), whose fields no cast claimed"},
+	{ir.ObjectCall{Method: "values"}, "unchecked only for a literal's own const binding (enumerationProven), whose fields no cast claimed; a viewed value is refused through an interface and checked through a type literal (pinned by view_widened_held_values.ts, view_widened_held_entries.ts, view_widened_held_values_checked.ts, view_widened_held_entries_checked.ts)"},
 	{ir.ObjectKeys{}, "an object's own keys, no field's value"},
 	{ir.ObjectLiteral{}, "a new object of the values it's given, moved"},
 	{ir.ParallelMap{}, "moves items to workers, whose reads are classed where they are"},
@@ -129,9 +130,9 @@ var viewNoField = []viewReadExample{
 	{ir.PromiseValue{}, "the value itself, settled"},
 	{ir.ReadDirectory{}, "reads a path from the host"},
 	{ir.ReadTextFile{}, "reads a path from the host"},
-	{ir.RecordCall{}, "a record's own entries; a fixed object is no record"},
+	{ir.RecordCall{}, "a record's own entries; a fixed object seen as a record is NotYet before it lowers (pinned by view_widened_held_record.ts)"},
 	{ir.RecordCoalesce{}, "a record's own entries"},
-	{ir.RecordLiteral{}, "a record's own entries; a fixed object spread into one is NotYet before it lowers"},
+	{ir.RecordLiteral{}, "a record's own entries; a fixed object spread into one is NotYet before it lowers (pinned by view_widened_held_record_spread.ts)"},
 	{ir.RegExpCall{}, "a pattern on a string"},
 	{ir.RegExpGroup{}, "a match's named group, which no view claims"},
 	{ir.RegExpNew{}, "a new pattern"},
@@ -154,7 +155,7 @@ var viewNoField = []viewReadExample{
 	{ir.TypedArraySort{}, "sorts a typed array"},
 	{ir.TypedArraySubarray{}, "a view of a typed array"},
 	{ir.Unary{}, "an operator on a number or a boolean"},
-	{ir.UnionToString{}, "a scalar union's spelling; a union with an object in it is NotYet before it lowers"},
+	{ir.UnionToString{}, "a scalar union's spelling; a union with an object in it is NotYet before it lowers, in String and in a template, as an object alone is (pinned by view_widened_held_union_string.ts, view_widened_held_union_template.ts, view_widened_held_string.ts, view_widened_held_template_object.ts); console.log takes a string in Adamic's library, so an object passed to it doesn't type-check"},
 	{ir.Unwrap{}, "the value itself, checked present"},
 	{ir.Utf8At{}, "reads a string"},
 	{ir.Utf8Length{}, "reads a string"},
@@ -295,4 +296,80 @@ func irOperandHolders(t *testing.T) map[string]bool {
 		result[expression] = holder
 	}
 	return result
+}
+
+// viewReadPins are where each rule a "reads no field" reason rests on is handed a viewed value: the
+// reason names the fixture, and the fixture stops there, at stops, or lowers to the checked call its
+// reason says. TestViewReadReasonsArePinned holds them, so the day such a rule loosens, the reason
+// goes red here before a lying layout is read raw natively.
+var viewReadPins = map[string]struct{ at, stops, checked string }{
+	"view_widened_held_join.ts":            {"5:84", "join on an array of objects", ""},
+	"view_widened_held_json.ts":            {"5:121", "JSON.stringify object references", ""},
+	"view_widened_held_values.ts":          {"5:113", "refuses Object.values", ""},
+	"view_widened_held_entries.ts":         {"5:115", "refuses Object.entries", ""},
+	"view_widened_held_values_checked.ts":  {"", "", "values"},
+	"view_widened_held_entries_checked.ts": {"", "", "entries"},
+	"view_widened_held_record.ts":          {"5:118", "seen as Record<string, string> (fixed objects and records have different storage", ""},
+	"view_widened_held_record_spread.ts":   {"5:148", "a spread into record storage from a fixed object", ""},
+	"view_widened_held_union_string.ts":    {"5:140", "String conversion of an object", ""},
+	"view_widened_held_union_template.ts":  {"5:138", "a template interpolating a union with an object", ""},
+	"view_widened_held_string.ts":          {"5:91", "String conversion of an object", ""},
+	"view_widened_held_template_object.ts": {"5:89", "a template interpolating an object", ""},
+}
+
+func TestViewReadReasonsArePinned(t *testing.T) {
+	t.Parallel()
+	named := map[string]bool{}
+	for _, example := range viewNoField {
+		rests := strings.Contains(example.why, "before it lowers") || strings.Contains(example.why, "const binding")
+		_, pinned, found := strings.Cut(example.why, "(pinned by ")
+		if rests && !found {
+			t.Errorf("ir.%s's reason rests on another rule and names no pin: %q", reflect.TypeOf(example.expression).Name(), example.why)
+		}
+		if !found {
+			continue
+		}
+		pinned, _, _ = strings.Cut(pinned, ")")
+		for _, file := range strings.Split(pinned, ", ") {
+			named[file] = true
+			if _, ok := viewReadPins[file]; !ok {
+				t.Errorf("ir.%s's reason names %s, which viewReadPins doesn't hold", reflect.TypeOf(example.expression).Name(), file)
+			}
+		}
+	}
+	for file, pin := range viewReadPins {
+		t.Run(file, func(t *testing.T) {
+			t.Parallel()
+			if !named[file] {
+				t.Fatalf("%s pins no reason", file)
+			}
+			source, err := os.ReadFile(filepath.Join("../oracle/testdata/reland_refused", file))
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := lowerSourceAs(t, string(source), ".ts")
+			if pin.checked == "" {
+				if err == nil || !strings.Contains(err.Error(), "main.ts:"+pin.at+":") || !strings.Contains(err.Error(), pin.stops) {
+					t.Fatalf("want it stopped at %s by %q, got %v", pin.at, pin.stops, err)
+				}
+				return
+			}
+			if err != nil {
+				t.Fatalf("want it lowered to a checked Object.%s, got %v", pin.checked, err)
+			}
+			checked := false
+			inspect := func(node any) bool {
+				call, isCall := node.(ir.ObjectCall)
+				checked = checked || isCall && call.Method == pin.checked && call.Checked
+				return true
+			}
+			walk(program.Main, inspect)
+			for _, function := range program.Functions {
+				walk(function.Body, inspect)
+			}
+			if !checked {
+				t.Fatalf("want a checked Object.%s, lowered without one", pin.checked)
+			}
+		})
+	}
 }
