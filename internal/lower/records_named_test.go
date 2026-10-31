@@ -130,8 +130,9 @@ func TestNamedRecordLiesAreRefusedInA(t *testing.T) {
 // itself (#npqr3sx, Language's w8 and w10): tsc relates the value to a named property structurally, and
 // recordNamedWrite's list missed nominal ancestry, so native ran Point's describe on an Other and printed
 // POINT where Node prints OTHER (w8), and void widening, so a () => void was read as () => unknown (w10).
-// An honest write, a number into number properties, still lowers. Mutant: the identity check dropped
-// lowers w8, which then prints POINT natively.
+// Each is .ts here, where it's not yet; .a refuses it by the same check. An honest write, a number into
+// number properties, still lowers in both. Mutant: the identity check dropped lowers w8, which then
+// prints POINT natively.
 func TestNamedRecordWritesAreThePropertyTypeItself(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source string }{
@@ -157,15 +158,23 @@ console.log(typeof seen === "string" ? seen.toUpperCase() : "none");
 `},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
-			_, err := lowerSource(t, probe.source)
+			_, err := lowerSourceAs(t, probe.source, ".ts")
 			var ny *NotYet
 			if !errors.As(err, &ny) || !strings.Contains(err.Error(), "type itself") {
 				t.Fatalf("got %v, want the NotYet for a value that isn't the named property's type itself", err)
 			}
+			// In .a the same check refuses it, ahead of lowering (records_declared_keys.go).
+			_, err = lowerSource(t, probe.source)
+			var refused *Refused
+			if !errors.As(err, &refused) || refused.Fix != declaredKeysFix {
+				t.Fatalf("in .a: got %v, want the declared-key write refusal", err)
+			}
 		})
 	}
-	if _, err := lowerSource(t, `interface Options { target?: number; required: number; [option: string]: number | undefined }
-function write(options: Options, key: string): void { options[key] = 9; }`); err != nil {
-		t.Fatalf("an honest write: %v", err)
+	for _, extension := range []string{".a", ".ts"} {
+		if _, err := lowerSourceAs(t, `interface Options { target?: number; required: number; [option: string]: number | undefined }
+function write(options: Options, key: string): void { options[key] = 9; }`, extension); err != nil {
+			t.Fatalf("an honest write in %s: %v", extension, err)
+		}
 	}
 }
