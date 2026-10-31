@@ -3176,40 +3176,55 @@ class SmokeMarkdownOnly(unittest.TestCase):
 
 
 class ListingRunsGoListOnce(unittest.TestCase):
-    """One --list-units --with-inputs pass runs packageGraphCommand once a tree, which coverage's and smoke's providers
-    share (run.packageGraph, Hotty's measure on #q11k6k6), and lists what it did without the share. Mutant, red here: the
-    pass's share dropped (each provider runs its own)."""
+    """One --list-units --with-inputs pass runs each go list once a tree (run.listedGoList, Hotty's measures on #q11k6k6
+    and #cb8bpe7): packageGraphCommand, which touched() and coverage's and smoke's providers share, and go list -json ./...,
+    which build's and vet's providers share. It lists what it did without the share. Every process the pass starts is
+    counted at Popen, so touched()'s, started through the gate's own spawn, is too. Mutants, red here: the pass's share
+    dropped (each asker runs its own); touched() running its own in a listing; build's and vet's each running theirs."""
 
     setUp, write, commit, change = (CoverageMarkdownOnly.setUp, CoverageMarkdownOnly.write, CoverageMarkdownOnly.commit,
                                     CoverageMarkdownOnly.change)
+    listings = {"graph": run.packageGraphCommand(), "packages": ["go", "list", "-json", "./..."]}
 
     def listed(self, change, shared):
         realRun(["git", "-C", self.tree, "checkout", "-q", "--detach", change["sha"]], check=True)
-        calls = []
+        calls = {name: 0 for name in self.listings}
+        realPopen = run.subprocess.Popen
 
         def counted(command, *arguments, **options):
-            if list(command) == run.packageGraphCommand():
-                calls.append(command)
-            return realRun(command, *arguments, **options)
+            for name, listing in self.listings.items():
+                if list(command) == listing:
+                    calls[name] += 1
+            return realPopen(command, *arguments, **options)
+
+        def unshared(tree, command, timeout, environment=None):
+            return run.subprocess.run(command, cwd=tree, capture_output=True, text=True, timeout=timeout, env=environment)
 
         argv = ["run.py", "--list-units", "--with-inputs", "--tree", self.tree, "--base", change["base"], "--sha", change["sha"], "--tools", self.tree]
         output = io.StringIO()
-        with mock.patch.object(sys, "argv", argv), mock.patch.object(run.subprocess, "run", side_effect=counted), contextlib.redirect_stdout(output):
-            if shared:
-                run.listUnits()
-            else:
-                with mock.patch.object(run, "packageGraph", side_effect=lambda tree: run.subprocess.run(run.packageGraphCommand(), cwd=tree, capture_output=True, text=True, timeout=300)):
+        try:
+            with mock.patch.object(sys, "argv", argv), mock.patch.object(run.subprocess, "Popen", side_effect=counted), contextlib.redirect_stdout(output):
+                if shared:
                     run.listUnits()
-        run.listedPackageGraphs = None
-        return len(calls), output.getvalue()
+                else:
+                    with mock.patch.object(run, "listedGoList", side_effect=unshared):
+                        run.listUnits()
+        finally:
+            run.listedGoLists = None
+        return calls, output.getvalue()
 
-    def test_a_markdown_change_lists_with_one_go_list(self):
-        change = self.change(lambda: self.write("README.md", "# probe, edited\n"))
-        count, rows = self.listed(change, True)
-        self.assertEqual(count, 1)
-        alone, unshared = self.listed(change, False)
-        self.assertGreater(alone, 1)  # coverage's and smoke's each, without the share
-        self.assertEqual(rows, unshared)
+    def test_each_go_list_runs_once_a_listing(self):
+        # Without the share: touched()'s, then coverage's and smoke's inertOnly for a Markdown change, or coverageReduced's
+        # alone for a Go one (inertOnly says no from the diff); build's and vet's.
+        for name, edit, graphs in (("a markdown change", lambda: self.write("README.md", "# probe, edited\n"), 3),
+                                   ("a go change", lambda: self.write("sub/s.go", "package sub\n\nvar S = 2\n"), 2)):
+            with self.subTest(name):
+                change = self.change(edit)
+                counts, rows = self.listed(change, True)
+                self.assertEqual(counts, {"graph": 1, "packages": 1})
+                alone, unshared = self.listed(change, False)
+                self.assertEqual(alone, {"graph": graphs, "packages": 2})
+                self.assertEqual(rows, unshared)
 
 
 class ListUnitsRefusal(unittest.TestCase):

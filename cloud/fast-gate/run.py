@@ -228,8 +228,9 @@ def goPhaseCommand(phase):
 def goCommandInputs(tree, command):
     # Import paths, never patterns: the consumer computes each go list -deps closure.
     patterns = [arg for arg in command[2:] if arg.startswith(("./", module))]
-    result = subprocess.run(["go", "list", "-json"] + patterns, cwd=tree,
-                            capture_output=True, text=True, check=True, timeout=90)
+    # build's and vet's ask the same listing of ./..., and a listing pass runs it once for both (listedGoList).
+    result = listedGoList(tree, ["go", "list", "-json"] + patterns, 90)
+    result.check_returncode()
     decoder, remaining, packages = json.JSONDecoder(), result.stdout.strip(), set()
     while remaining:
         package, end = decoder.raw_decode(remaining)
@@ -394,23 +395,33 @@ def unownedPaths(directories, embedded, changed):
             if path != "cloud/fast-gate/compiler-dependencies.json" and packageOwner(directories, embedded, path) is None]
 
 
-# listedPackageGraphs holds each tree's packageGraphCommand answer for one --list-units pass (listUnits sets it to a dict,
-# and None outside one): a listing reads one checkout that nothing moves, and coverage's and smoke's providers each ask
-# the same go list of it, about 10 s on adamic (Hotty's measure on #q11k6k6). Outside a listing every caller runs its
-# own, since a caller there (a test, a gate) may move the checkout between asks.
-listedPackageGraphs = None
+# listedGoLists holds each go list a --list-units pass ran, by tree and command (listUnits sets it to a dict, and None
+# outside one): a listing reads one checkout that nothing moves, and its askers ask the same listings of it, touched()
+# and coverage's and smoke's providers packageGraphCommand's, build's and vet's providers go list -json ./... (Hotty's
+# measures on #q11k6k6 and #cb8bpe7: about 10 s on adamic once, then 1.5 to 1.8 s and about 1 s a repeat). Outside a
+# listing every caller runs its own, since a caller there (a test, a gate) may move the checkout between asks. Each
+# command runs in one environment wherever it's asked, so the command names its answer.
+listedGoLists = None
+
+
+def listedGoList(tree, command, timeout, environment=None):
+    """command's answer in tree, run once a tree for a listing pass (listedGoLists) and every time outside one. A failed
+    run is kept too, so a listing's callers all read the same failure."""
+    key = (os.path.realpath(tree), tuple(command))
+    if listedGoLists is not None and key in listedGoLists:
+        return listedGoLists[key]
+    listing = subprocess.run(command, cwd=tree, capture_output=True, text=True, timeout=timeout, env=environment)
+    if listedGoLists is not None:
+        listedGoLists[key] = listing
+    return listing
 
 
 def packageGraph(tree):
-    """packageGraphCommand's answer in tree, run once a tree for a listing pass (listedPackageGraphs) and every time
-    outside one. A failed run is kept too, so a listing's callers all read the same failure."""
-    key = os.path.realpath(tree)
-    if listedPackageGraphs is not None and key in listedPackageGraphs:
-        return listedPackageGraphs[key]
-    listing = subprocess.run(packageGraphCommand(), cwd=tree, capture_output=True, text=True, timeout=300)
-    if listedPackageGraphs is not None:
-        listedPackageGraphs[key] = listing
-    return listing
+    """packageGraphCommand's answer in tree, in the environment the gate runs it in (Gate.spawn's go flags), so touched()
+    in a listing and coverage's and smoke's providers read one listing. The flags move only go list's Stale and
+    StaleReason, which no reader of the listing reads (Pupa, Oct 31, adamic bdbea3709a: the two listings equal but for
+    those lines)."""
+    return listedGoList(tree, packageGraphCommand(), 300, dict(os.environ, **gateEnvironment))
 
 
 def coverageReduced(tree, tools, changed, unowned=None):
@@ -605,8 +616,8 @@ def listUnits():
     lister.add_argument("--sha")
     lister.add_argument("--tools")
     arguments = lister.parse_args()
-    global listedPackageGraphs
-    listedPackageGraphs = {}
+    global listedGoLists
+    listedGoLists = {}
     units = wholeUnits(arguments.tree) if arguments.full else fastUnits(arguments.tree, arguments.base, arguments.sha, arguments.tools)
     if arguments.with_inputs:
         products = productInputSources(arguments.tree) if arguments.full else None
@@ -1774,7 +1785,11 @@ class Gate:
         a package's tree is that package's to test). Reverse imports and compiler declarations then
         expand production owners transitively; test imports are followed only once at the end.
         Test source and data edits select their owners only. Anything unowned goes to cover()."""
-        listing = self.command(packageGraphCommand(), cwd=self.arguments.tree, capture_output=True, text=True)
+        if listedGoLists is not None:
+            # A listing pass: the one listing coverage's and smoke's providers read too, run in this gate's environment.
+            listing = packageGraph(self.arguments.tree)
+        else:
+            listing = self.command(packageGraphCommand(), cwd=self.arguments.tree, capture_output=True, text=True)
         if listing.returncode != 0:
             raise SystemExit("go list failed: " + listing.stderr)
         directories, embedded, realEmbedded, testEmbedded, reverse, testReverse, self.packageDirectories = goPackages(self.arguments.tree, listing.stdout)
