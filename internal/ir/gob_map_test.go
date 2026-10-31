@@ -74,33 +74,14 @@ func TestASortedMapIsNilWhereAPlainMapIs(t *testing.T) {
 	}
 }
 
-// No map a program holds is a plain one, so no field added later brings gob's random order back. Mutant: one field a
-// plain map again.
+// No map a program holds is a plain one, behind an Expression or a Statement included, so no field added later brings
+// gob's random order back. Mutant: one field a plain map again.
 func TestEveryMapAProgramHoldsIsSorted(t *testing.T) {
 	t.Parallel()
 	encoder := reflect.TypeFor[gob.GobEncoder]()
-	seen := map[reflect.Type]bool{}
-	var walk func(reflect.Type, string)
-	walk = func(kind reflect.Type, at string) {
-		if seen[kind] {
-			return
+	walkGobTypes(func(kind reflect.Type, at string) {
+		if kind.Kind() == reflect.Map && !kind.Implements(encoder) {
+			t.Errorf("%s is a plain %s: gob writes it in random order; make it a SortedMap", at, kind)
 		}
-		seen[kind] = true
-		switch kind.Kind() {
-		case reflect.Map:
-			if !kind.Implements(encoder) {
-				t.Errorf("%s is a plain %s: gob writes it in random order; make it a SortedMap", at, kind)
-			}
-			walk(kind.Elem(), at+"[value]")
-		case reflect.Pointer, reflect.Slice, reflect.Array:
-			walk(kind.Elem(), at+"[]")
-		case reflect.Struct:
-			for index := range kind.NumField() {
-				if field := kind.Field(index); field.IsExported() {
-					walk(field.Type, at+"."+field.Name)
-				}
-			}
-		}
-	}
-	walk(reflect.TypeFor[Program](), "Program")
+	})
 }

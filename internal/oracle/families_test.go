@@ -481,6 +481,13 @@ var families = []family{
 	{name: "TestLibraryMethodValueMutants", shards: 4, runner: "runLibraryMethodValueMutantsShard", keys: libraryMethodValueMutants, planted: "trim", caught: "mutant changed nothing"},
 	// Each fixture's C emitted twice by stage 0, in two processes, and compared byte for byte (determinism_test.go).
 	{name: "TestStage0EmitsDeterministically", shards: 32, runner: "runDeterministicEmissionShard", keys: determinismKeys, planted: determinismWitness, caught: "stage 0 emitted different C"},
+	// Each fixture lowered, written as gob twice, and its C emitted from it and from a fresh decode, one family per way
+	// native emits (gob_round_trip_test.go): 187 s of one core per family over the corpus (Golem, Oct 31, loaded).
+	{name: "TestGobRoundTripEmitsTheSameRelease", shards: 32, runner: "runGobRoundTripReleaseShard", keys: gobRoundTripPaths, planted: gobRoundTripWitness, caught: "-0 constants, its decode 0"},
+	{name: "TestGobRoundTripEmitsTheSameDebug", shards: 32, runner: "runGobRoundTripDebugShard", keys: gobRoundTripPaths, planted: gobRoundTripWitness, caught: "-0 constants, its decode 0"},
+	{name: "TestGobRoundTripEmitsTheSameSanitized", shards: 32, runner: "runGobRoundTripSanitizedShard", keys: gobRoundTripPaths, planted: gobRoundTripWitness, caught: "-0 constants, its decode 0"},
+	{name: "TestGobRoundTripEmitsTheSameThreadSanitized", shards: 32, runner: "runGobRoundTripThreadSanitizedShard", keys: gobRoundTripPaths, planted: gobRoundTripWitness, caught: "-0 constants, its decode 0"},
+	{name: "TestGobRoundTripEmitsTheSameWASI", shards: 32, runner: "runGobRoundTripWASIShard", keys: gobRoundTripPaths, planted: gobRoundTripWitness, caught: "-0 constants, its decode 0"},
 }
 
 // A family is one test over many cases, run as shards. runner is the function each wrapper calls with its shard, keys

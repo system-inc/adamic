@@ -5424,3 +5424,828 @@ func TestFamiliesCatchAPlantedCase_Stage0EmitsDeterministically(t *testing.T) {
 	t.Parallel()
 	catchPlantedCase(t, "TestStage0EmitsDeterministically")
 }
+
+func TestGobRoundTripEmitsTheSameRelease_000(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 0)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_001(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 1)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_002(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 2)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_003(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 3)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_004(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 4)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_005(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 5)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_006(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 6)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_007(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 7)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_008(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 8)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_009(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 9)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_010(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 10)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_011(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 11)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_012(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 12)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_013(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 13)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_014(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 14)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_015(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 15)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_016(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 16)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_017(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 17)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_018(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 18)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_019(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 19)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_020(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 20)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_021(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 21)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_022(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 22)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_023(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 23)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_024(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 24)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_025(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 25)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_026(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 26)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_027(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 27)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_028(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 28)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_029(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 29)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_030(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 30)
+}
+
+func TestGobRoundTripEmitsTheSameRelease_031(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripReleaseShard(t, 31)
+}
+
+func TestFamiliesCatchAPlantedCase_GobRoundTripEmitsTheSameRelease(t *testing.T) {
+	t.Parallel()
+	catchPlantedCase(t, "TestGobRoundTripEmitsTheSameRelease")
+}
+
+func TestGobRoundTripEmitsTheSameDebug_000(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 0)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_001(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 1)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_002(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 2)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_003(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 3)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_004(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 4)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_005(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 5)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_006(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 6)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_007(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 7)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_008(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 8)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_009(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 9)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_010(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 10)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_011(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 11)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_012(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 12)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_013(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 13)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_014(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 14)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_015(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 15)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_016(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 16)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_017(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 17)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_018(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 18)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_019(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 19)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_020(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 20)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_021(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 21)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_022(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 22)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_023(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 23)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_024(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 24)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_025(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 25)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_026(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 26)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_027(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 27)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_028(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 28)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_029(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 29)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_030(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 30)
+}
+
+func TestGobRoundTripEmitsTheSameDebug_031(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripDebugShard(t, 31)
+}
+
+func TestFamiliesCatchAPlantedCase_GobRoundTripEmitsTheSameDebug(t *testing.T) {
+	t.Parallel()
+	catchPlantedCase(t, "TestGobRoundTripEmitsTheSameDebug")
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_000(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 0)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_001(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 1)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_002(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 2)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_003(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 3)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_004(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 4)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_005(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 5)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_006(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 6)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_007(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 7)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_008(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 8)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_009(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 9)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_010(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 10)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_011(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 11)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_012(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 12)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_013(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 13)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_014(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 14)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_015(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 15)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_016(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 16)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_017(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 17)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_018(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 18)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_019(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 19)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_020(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 20)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_021(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 21)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_022(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 22)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_023(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 23)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_024(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 24)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_025(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 25)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_026(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 26)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_027(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 27)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_028(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 28)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_029(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 29)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_030(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 30)
+}
+
+func TestGobRoundTripEmitsTheSameSanitized_031(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripSanitizedShard(t, 31)
+}
+
+func TestFamiliesCatchAPlantedCase_GobRoundTripEmitsTheSameSanitized(t *testing.T) {
+	t.Parallel()
+	catchPlantedCase(t, "TestGobRoundTripEmitsTheSameSanitized")
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_000(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 0)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_001(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 1)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_002(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 2)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_003(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 3)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_004(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 4)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_005(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 5)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_006(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 6)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_007(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 7)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_008(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 8)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_009(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 9)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_010(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 10)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_011(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 11)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_012(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 12)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_013(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 13)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_014(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 14)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_015(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 15)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_016(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 16)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_017(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 17)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_018(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 18)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_019(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 19)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_020(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 20)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_021(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 21)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_022(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 22)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_023(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 23)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_024(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 24)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_025(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 25)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_026(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 26)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_027(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 27)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_028(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 28)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_029(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 29)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_030(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 30)
+}
+
+func TestGobRoundTripEmitsTheSameThreadSanitized_031(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripThreadSanitizedShard(t, 31)
+}
+
+func TestFamiliesCatchAPlantedCase_GobRoundTripEmitsTheSameThreadSanitized(t *testing.T) {
+	t.Parallel()
+	catchPlantedCase(t, "TestGobRoundTripEmitsTheSameThreadSanitized")
+}
+
+func TestGobRoundTripEmitsTheSameWASI_000(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 0)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_001(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 1)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_002(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 2)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_003(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 3)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_004(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 4)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_005(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 5)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_006(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 6)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_007(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 7)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_008(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 8)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_009(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 9)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_010(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 10)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_011(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 11)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_012(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 12)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_013(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 13)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_014(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 14)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_015(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 15)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_016(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 16)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_017(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 17)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_018(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 18)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_019(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 19)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_020(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 20)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_021(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 21)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_022(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 22)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_023(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 23)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_024(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 24)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_025(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 25)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_026(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 26)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_027(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 27)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_028(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 28)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_029(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 29)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_030(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 30)
+}
+
+func TestGobRoundTripEmitsTheSameWASI_031(t *testing.T) {
+	t.Parallel()
+	runGobRoundTripWASIShard(t, 31)
+}
+
+func TestFamiliesCatchAPlantedCase_GobRoundTripEmitsTheSameWASI(t *testing.T) {
+	t.Parallel()
+	catchPlantedCase(t, "TestGobRoundTripEmitsTheSameWASI")
+}

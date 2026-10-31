@@ -21,45 +21,7 @@ import (
 // have no checked IR; their existing refusal contracts must still hold.
 func TestJSONCheckedIRGobRoundTrip(t *testing.T) {
 	t.Parallel()
-	registered := map[reflect.Type]bool{}
-	var register func(reflect.Value)
-	register = func(v reflect.Value) {
-		if !v.IsValid() {
-			return
-		}
-		switch v.Kind() {
-		case reflect.Interface:
-			if v.IsNil() {
-				return
-			}
-			concrete := v.Elem()
-			if !registered[concrete.Type()] {
-				gob.Register(concrete.Interface())
-				registered[concrete.Type()] = true
-			}
-			register(concrete)
-		case reflect.Pointer:
-			if !v.IsNil() {
-				register(v.Elem())
-			}
-		case reflect.Struct:
-			for i := 0; i < v.NumField(); i++ {
-				if v.Type().Field(i).IsExported() {
-					register(v.Field(i))
-				}
-			}
-		case reflect.Slice, reflect.Array:
-			for i := 0; i < v.Len(); i++ {
-				register(v.Index(i))
-			}
-		case reflect.Map:
-			entries := v.MapRange()
-			for entries.Next() {
-				register(entries.Key())
-				register(entries.Value())
-			}
-		}
-	}
+	ir.RegisterGob()
 	var paths []string
 	for _, pattern := range []string{"json_decode_*.a", "json_encode_*.a", "json_schema_names.a", "json_encode_refused/*.a"} {
 		matches, err := filepath.Glob(filepath.Join(repository, "internal/oracle/testdata", pattern))
@@ -95,7 +57,6 @@ func TestJSONCheckedIRGobRoundTrip(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			register(reflect.ValueOf(program))
 			var data bytes.Buffer
 			if err := gob.NewEncoder(&data).Encode(program); err != nil {
 				t.Fatalf("encode checked IR: %v", err)
