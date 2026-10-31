@@ -2,10 +2,11 @@
 //
 // A top-level test that doesn't call t.Parallel() runs alone, and every parallel test in its package waits for it, so
 // one serial test stretches the whole package's run; and the shared state that makes a test serial is what the next
-// reader needs to know before touching it. cmd/adamic-gate's TestEveryTestIsParallelOrSaysWhy holds the same line,
-// but only when that test runs, so a serial test was found on Loom, after the change was queued: 9 reds and 242 held
-// change-minutes trace to this family. As a lint rule the author meets it first. The rule reads tests exactly as that
-// test does, so the two agree while both run, and it has no baseline: a test the test's baseline allowed is a finding.
+// reader needs to know before touching it. cmd/adamic-gate/parallelcensus's TestEveryTestIsParallelOrSaysWhy holds the
+// same line, but only when that test runs, so a serial test was found on Loom, after the change was queued: 9 reds and
+// 242 held change-minutes trace to this family. As a lint rule the author meets it first. The rule reads tests exactly
+// as that test does, so the two agree while both run, and it has no baseline: a test the test's baseline allowed is a
+// finding.
 //
 // A test is what go test runs as one: a function of a _test.go file named Test, or Test followed by anything but a
 // lower-case letter, with no receiver, no type parameters and no results, and one named parameter of type

@@ -1,4 +1,4 @@
-package main
+package parallelcensus
 
 import (
 	"bufio"
@@ -52,7 +52,7 @@ func TestEveryTestIsParallelOrSaysWhy(t *testing.T) {
 	}
 	sort.Strings(keys)
 	t.Logf("checked %d top-level tests; %d fail the parallel rule", tests, len(keys))
-	baselinePath := filepath.Join(root, "cmd", "adamic-gate", "testdata", "serial-baseline.txt")
+	baselinePath := filepath.Join(root, "cmd", "adamic-gate", "parallelcensus", "testdata", "serial-baseline.txt")
 	if *updateSerialBaseline {
 		if err := os.MkdirAll(filepath.Dir(baselinePath), 0755); err != nil {
 			t.Fatal(err)
