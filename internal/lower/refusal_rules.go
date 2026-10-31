@@ -53,4 +53,7 @@ type refusalPass struct {
 	// checkedCasts are the as expressions whose cast is checked at runtime (castRefusal, 1900), which
 	// stringWideningRefusal (3100) lets through.
 	checkedCasts map[*ast.Node]bool
+	// deferred is the lowest-priority stop, refuseAnyRelation's (3270): it lets the walk go on, so any
+	// other refusal in the module is the one a program hears, and refuse returns it only when none did.
+	deferred error
 }

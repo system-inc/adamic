@@ -114,7 +114,11 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		node.ForEachChild(visit)
 		return false
 	}
+	l.refusal.deferred = nil
 	module.AsNode().ForEachChild(visit)
+	if found == nil {
+		found = l.refusal.deferred
+	}
 	return found
 }
 
