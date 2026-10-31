@@ -42,6 +42,12 @@ func sealedOver(files map[string]string) *sealed {
 	return disk
 }
 
+// holds is whether name is one of the sources.
+func (disk *sealed) holds(name string) bool {
+	_, held := disk.files[name]
+	return held
+}
+
 // ask records a path the sources don't hold.
 func (disk *sealed) ask(name string) {
 	disk.mutex.Lock()
