@@ -275,10 +275,8 @@ assert.equal(runtime.utf8At('abc', 0), 97);
 		if err != nil {
 			t.Fatal(err)
 		}
-		for _, forbidden := range []string{"node:", "process.", "Buffer.", "eval(", "new Function("} {
-			if bytes.Contains(source, []byte(forbidden)) {
-				t.Fatalf("%s uses Workers-unavailable %s", name, forbidden)
-			}
+		if forbidden := workersUnavailable(source); forbidden != "" {
+			t.Fatalf("%s uses Workers-unavailable %s", name, forbidden)
 		}
 	}
 }

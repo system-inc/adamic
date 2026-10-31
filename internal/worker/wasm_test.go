@@ -115,10 +115,8 @@ func runWasmWorkersShard(t *testing.T, shard int) {
 				if err != nil {
 					t.Fatal(err)
 				}
-				for _, forbidden := range []string{"node:", "process.", "Buffer.", "eval(", "new Function("} {
-					if bytes.Contains(contents, []byte(forbidden)) {
-						t.Fatalf("%s uses Workers-unavailable %s", file.Name(), forbidden)
-					}
+				if forbidden := workersUnavailable(contents); forbidden != "" {
+					t.Fatalf("%s uses Workers-unavailable %s", file.Name(), forbidden)
 				}
 			}
 			configuration, _ := os.ReadFile(filepath.Join(directory, "wrangler.toml"))

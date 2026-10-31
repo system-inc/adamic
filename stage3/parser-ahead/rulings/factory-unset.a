@@ -1,0 +1,11 @@
+interface FactoryNode { text:string; }
+function createBaseNode():FactoryNode { return {} as FactoryNode; }
+const node=createBaseNode();
+console.log(String(node.text === undefined));
+const optional:{text?:string|undefined}={text:node.text};
+console.log(String(optional.text === undefined));
+const saved=node.text;
+console.log(String(saved === undefined));
+if(saved !== undefined){console.log(saved.toUpperCase());}
+node.text='ready';
+console.log(node.text.toUpperCase());

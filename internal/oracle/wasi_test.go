@@ -80,7 +80,11 @@ func runWASIFixtures(t *testing.T, rows []int, mutate func(string, *ir.Program))
 			}
 			platform, readsPlatform := wasiHostPlatform(t, fixture.path, program)
 			expected := onNode(t, path)
-			if fixture.checked {
+			// A ruled backend divergence differs from JavaScript by ruling, and wasm32 is a native build
+			// (backend_divergences_test.go), as TestWASIShimAgreesWithNode's witness has it.
+			if outcome, ruled := ruledNativeOutcome(fixture.path); ruled {
+				expected = outcome
+			} else if fixture.checked {
 				expected = onJavaScriptBackend(t, program)
 			}
 			if readsPlatform {

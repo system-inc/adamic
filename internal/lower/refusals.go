@@ -34,6 +34,7 @@ var refusedOperators = map[ast.Kind]refusal{
 
 // refuse walks a module for what 0.1 refuses and returns the first, with where it is and the fix.
 func (l *lowering) refuse(module *ast.SourceFile) error {
+	l.notePlaceholderSlots()
 	// Use the parser's directives, which also recognize the block forms honored by the checker.
 	// Text in a string or a prose comment never enters this list.
 	if len(module.CommentDirectives) > 0 {
@@ -121,7 +122,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 // syntaxRefusal refuses the constructs refusals names by kind.
 func (l *lowering) syntaxRefusal(node *ast.Node) error {
 	// The index signature clause is dead, since refusals names no index signature; it's kept for order.
-	if refused, isRefused := refusals[node.Kind]; isRefused && !(node.Kind == ast.KindIndexSignature && l.enumerationIndexSignature(node)) && (node.Kind != ast.KindNonNullExpression || !l.checkedAssertionSource(node)) {
+	if refused, isRefused := refusals[node.Kind]; isRefused && !(node.Kind == ast.KindIndexSignature && l.enumerationIndexSignature(node)) && (node.Kind != ast.KindNonNullExpression || !l.placeholderDeclaration(node) && !l.checkedAssertionSource(node)) {
 		return &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 	}
 	return nil
@@ -133,7 +134,7 @@ func init() { refusalRules.register(1400, "syntaxRefusal", (*lowering).syntaxRef
 func (l *lowering) operatorRefusal(node *ast.Node) error {
 	if node.Kind == ast.KindBinaryExpression {
 		// The in clause is dead, since refusedOperators doesn't name in; it's kept for order.
-		if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused && !(node.AsBinaryExpression().OperatorToken.Kind == ast.KindInKeyword && l.recordElement(l.checker.GetTypeAtLocation(node.AsBinaryExpression().Right)) != nil) {
+		if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused && !(node.AsBinaryExpression().OperatorToken.Kind == ast.KindInKeyword && l.recordElement(l.checker.GetTypeAtLocation(node.AsBinaryExpression().Right)) != nil) && !l.placeholderNullishTest(node) {
 			return &Refused{Where: l.program.Where(node.AsBinaryExpression().OperatorToken), What: refused.what, Fix: refused.fix}
 		}
 	}
