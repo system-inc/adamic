@@ -219,6 +219,9 @@ type lowering struct {
 
 	// V2 retains exact logical producer types for union member certification.
 	untaggedCallableTargets map[ir.ViewContractID]*checker.Type
+	// intersectionViewDepth is how many intersections' view contracts are being built, each inside
+	// a field of the one before (view_lazy.go's intersectionViewDepthBound).
+	intersectionViewDepth int
 
 	program          *load.Program
 	checker          *checker.Checker
