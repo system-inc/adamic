@@ -1,0 +1,19 @@
+{
+  "mode": "first-error",
+  "distinct_key": [
+    "kind",
+    "where",
+    "reason",
+    "text"
+  ],
+  "normalization": "remove each adapted tree root from embedded locations in where, reason and text",
+  "files": 79,
+  "before_sites": 2824,
+  "after_sites": 2824,
+  "changed_reasons": [],
+  "new_or_growing": [],
+  "raw_sha256": {
+    "before": "2c2bd81803ebe5e57a81eba37b39f1784850af0fe29eb987da25f6c79d4fcee8",
+    "after": "2c2bd81803ebe5e57a81eba37b39f1784850af0fe29eb987da25f6c79d4fcee8"
+  }
+}
