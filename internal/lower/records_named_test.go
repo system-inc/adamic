@@ -105,9 +105,9 @@ func TestNamedRecordRefusals(t *testing.T) {
 // A record literal's computed name is the same write, made as the literal is: w8's and w10's shapes
 // through { names: ..., [key]: ... } are not yet too. An honest write, a number into number properties,
 // still lowers. Language's w12 to w14 reach the same write through an alias, a chained assignment and
-// a parameter. In a slot boxed by a number in the index, w10's literal, an array's and a Map's are
-// judged too, since a declared function, array or Map read from a boxed slot is checked only by its
-// tag; only a declared number, string or boolean is left to its exact read check. Mutants: the
+// a parameter. In a slot boxed by a number in the index, w8's and w10's literals, an array's and a
+// Map's are judged too: only a declared number, string or boolean is left to its exact read check,
+// since an object's, a function's, an array's or a Map's tag says only its kind. Mutants: the
 // identity check dropped lowers w8, w10, both literals, w12 to w14 and the boxed w10, and w8's print
 // POINT natively; recordComputedEntry skipped lowers w8's literal, which prints POINT natively, and
 // the boxed literals.
@@ -195,6 +195,15 @@ const handlers: Handlers = { names: first, [key]: quiet };
 const seen = handlers.names();
 console.log(typeof seen === "string" ? seen.toUpperCase() : "none");
 `},
+		{"w8 construction boxed", `interface Shape { x: number; describe(): string }
+class Point { x = 1; describe(): string { return "point"; } }
+class Other { x = 2; label = "other"; describe(): string { return this.label; } }
+type Places = { names: Point; [k: string]: Point | Shape | number };
+const keys: string[] = ["names", "other"];
+const key = keys[0] ?? "other";
+const places: Places = { names: new Point(), [key]: new Other() };
+console.log(places.names.describe().toUpperCase());
+`},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			_, err := lowerSource(t, probe.source)
@@ -227,19 +236,9 @@ console.log((tables.names.get("a") ?? "").toUpperCase());
 			}
 		})
 	}
-	// Stops of their own that the boxed slot and a computed method rely on: w8's literal in a slot boxed
-	// by a number in the index reads names as an object kind with no checked tag, and a computed method
-	// is no data entry. Each goes red if the code it relies on stops holding.
+	// A stop of its own that a computed method relies on: it's no data entry, so this goes red if the
+	// code it relies on stops holding.
 	for _, probe := range []struct{ name, source, reason string }{
-		{"w8 construction boxed", `interface Shape { x: number; describe(): string }
-class Point { x = 1; describe(): string { return "point"; } }
-class Other { x = 2; label = "other"; describe(): string { return this.label; } }
-type Places = { names: Point; [k: string]: Point | Shape | number };
-const keys: string[] = ["names", "other"];
-const key = keys[0] ?? "other";
-const places: Places = { names: new Point(), [key]: new Other() };
-console.log(places.names.describe().toUpperCase());
-`, "narrowed to an object kind without a checked runtime tag"},
 		{"w10 computed method", `type Handlers = { names: () => unknown; [k: string]: () => void };
 const keys: string[] = ["names", "other"];
 const first = (): unknown => undefined;

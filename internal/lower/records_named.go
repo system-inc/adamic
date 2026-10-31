@@ -93,11 +93,10 @@ func (l *lowering) recordNamedWrite(access, value *ast.Node) error {
 // A method or an accessor under such a name stores a function under it unjudged, so it's not yet
 // unless its folded name names no declared property.
 //
-// In a slot boxed as a union (of), a declared number, string or boolean is read through
-// recordReadType's exact tag check, which stops loudly on a lie (records_union_lying.ts is Adamic's
-// .ts witness), so only those are left to their reads. Every other declared property is judged, an
-// unknown representation included: a function's tag says only "function", so a () => void under
-// names: () => unknown was read as unknown, and an array's says only that it's an array.
+// In a slot boxed as a union (of), a declared property whose read is proven guarded there is left to
+// its read (readGuardedInUnionSlot). Every other one is judged, an unknown representation included:
+// a function's tag says only "function", so a () => void under names: () => unknown was read as
+// unknown.
 func (l *lowering) recordComputedEntry(literal, entry *ast.Node, of ir.Type) error {
 	key := ast.SkipParentheses(entry.Name().AsComputedPropertyName().Expression)
 	if key.Kind == ast.KindStringLiteral || key.Kind == ast.KindNoSubstitutionTemplateLiteral || key.Kind == ast.KindNumericLiteral {
@@ -118,7 +117,7 @@ func (l *lowering) recordComputedEntry(literal, entry *ast.Node, of ir.Type) err
 				continue
 			}
 			if of == ir.Union {
-				if stored, known := l.representation(l.checker.GetNonMissingTypeOfSymbol(property)); known && (stored.Present() == ir.Number || stored.Present() == ir.String || stored.Present() == ir.Boolean) {
+				if stored, known := l.representation(l.checker.GetNonMissingTypeOfSymbol(property)); known && readGuardedInUnionSlot[stored.Present()] {
 					continue
 				}
 			}
@@ -136,6 +135,14 @@ func (l *lowering) recordComputedEntry(literal, entry *ast.Node, of ir.Type) err
 	}
 	return nil
 }
+
+// readGuardedInUnionSlot is each representation whose declared read from a slot boxed as a union is
+// proven to stop on a lie, each by a pin in TestNamedRecordWritesAreThePropertyTypeItself. A number,
+// string or boolean is read through recordReadType's exact tag check, which stops loudly
+// (records_union_lying.ts is Adamic's .ts witness). A plain object, an array, a Map and a dictionary
+// have no checked tag, so their read is not yet: Language's b8, a8 and p8 and records_union_options.ts's
+// MapLike (r8). A function's tag says only "function", so it's not here and is judged.
+var readGuardedInUnionSlot = map[ir.Type]bool{ir.Number: true, ir.String: true, ir.Boolean: true, ir.Object: true, ir.Array: true, ir.Map: true, ir.Record: true}
 
 // namedWriteStop is the not yet for a value of type from written under a name the key can't promise
 // into receiver, through its index signature, when it doesn't fit one of its named properties
