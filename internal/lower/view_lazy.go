@@ -103,18 +103,27 @@ var intersectionPastDepthBound = "intersection nested past the depth bound of " 
 // lose its signature, and a member with a family of its own (a class instance's nominal check, an
 // index signature's dictionary, a collection, a tuple) would lose that.
 func (l *lowering) intersectionViewFamily(target *checker.Type) string {
-	if l.weakTarget(target) != nil {
+	if !l.plainObjectIntersection(target) {
 		return "intersection"
-	}
-	for _, member := range target.Types() {
-		if member.Flags()&checker.TypeFlagsObject == 0 || l.checker.IsArrayType(member) || l.callableViewContract(member) || l.unsupportedViewFamily(member) != "" {
-			return "intersection"
-		}
 	}
 	if l.intersectionViewDepth >= intersectionViewDepthBound {
 		return intersectionPastDepthBound
 	}
 	return ""
+}
+
+// plainObjectIntersection is whether every member of an intersection is a plain object type, and
+// it isn't the present half of a Weak<Target>, which is kept weakly.
+func (l *lowering) plainObjectIntersection(target *checker.Type) bool {
+	if target.Flags()&checker.TypeFlagsIntersection == 0 || l.weakTarget(target) != nil {
+		return false
+	}
+	for _, member := range target.Types() {
+		if member.Flags()&checker.TypeFlagsObject == 0 || l.checker.IsArrayType(member) || l.callableViewContract(member) || l.unsupportedViewFamily(member) != "" {
+			return false
+		}
+	}
+	return true
 }
 
 // Demand uses the same allocations, joined arguments/results and projected
