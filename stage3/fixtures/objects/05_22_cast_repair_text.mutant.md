@@ -1,0 +1,16 @@
+Mutant evidence for objects fixtures 05 and 22's stage-0 records in status.json.
+
+What moved: castRepair, the fix every refused cast names, is split by file kind (#m8dvvmf, Language's wording). In .a a cast to a union member is refused too, so .a's fix reads "use a proven upcast, narrow a discriminated union by its tag (`if (shape.kind !== 'Circle') panic('why')`), downcast along nominal class ancestry, or move the file to `.ts`, where a member cast is checked (adamic/no-unchecked-cast)", where it read "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)". .ts keeps the old text. Fixtures 05 and 22 stop at the same refusal at the same place; only the fix text in their records moves. The fixtures are unchanged.
+
+Mutant: castRepair's file-kind test made false (`if false && strings.HasSuffix(...)`), so every file names .ts's forms, on top of this change; the change's status.json stays.
+Command: go test -p 1 -count=1 -timeout 60m ./stage3/fixtures -run 'TestFixtures(Assertions|Enums|Objects)$' -v
+Result with the mutant: exit 1, red in objects on exactly 05_polling_array_metadata.a and 22_nested_optional_calls.a. Restored, checked with cmp (linux/amd64, Node v24.19.0).
+
+    fixtures_test.go:472: gap changed: update status.json and check the native output; got {Outcome:Refused What:stage3/fixtures/objects/05_polling_array_metadata.a:12:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast) Stdout:}; recorded {Outcome:Refused What:stage3/fixtures/objects/05_polling_array_metadata.a:12:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, narrow a discriminated union by its tag (`if (shape.kind !== 'Circle') panic('why')`), downcast along nominal class ancestry, or move the file to `.ts`, where a member cast is checked (adamic/no-unchecked-cast) Stdout:}
+    fixtures_test.go:472: gap changed: update status.json and check the native output; got {Outcome:Refused What:stage3/fixtures/objects/22_nested_optional_calls.a:16:33: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast) Stdout:}; recorded {Outcome:Refused What:stage3/fixtures/objects/22_nested_optional_calls.a:16:33: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, narrow a discriminated union by its tag (`if (shape.kind !== 'Circle') panic('why')`), downcast along nominal class ancestry, or move the file to `.ts`, where a member cast is checked (adamic/no-unchecked-cast) Stdout:}
+--- FAIL: TestFixturesObjects (13.16s)
+    --- FAIL: TestFixturesObjects/objects (0.00s)
+        --- FAIL: TestFixturesObjects/objects/05_polling_array_metadata.a (0.33s)
+            --- FAIL: TestFixturesObjects/objects/05_polling_array_metadata.a/stage0 (0.00s)
+        --- FAIL: TestFixturesObjects/objects/22_nested_optional_calls.a (0.33s)
+            --- FAIL: TestFixturesObjects/objects/22_nested_optional_calls.a/stage0 (0.00s)

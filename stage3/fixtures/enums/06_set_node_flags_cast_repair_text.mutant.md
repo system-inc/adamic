@@ -1,0 +1,13 @@
+Mutant evidence for enums fixture 06's stage-0 record in status.json.
+
+What moved: castRepair, the fix every refused cast names, is split by file kind (#m8dvvmf, Language's wording). In .a a cast to a union member is refused too, so .a's fix reads "use a proven upcast, narrow a discriminated union by its tag (`if (shape.kind !== 'Circle') panic('why')`), downcast along nominal class ancestry, or move the file to `.ts`, where a member cast is checked (adamic/no-unchecked-cast)", where it read "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)". .ts keeps the old text. Fixture 06 stop at the same refusal at the same place; only the fix text in their records moves. The fixtures are unchanged.
+
+Mutant: castRepair's file-kind test made false (`if false && strings.HasSuffix(...)`), so every file names .ts's forms, on top of this change; the change's status.json stays.
+Command: go test -p 1 -count=1 -timeout 60m ./stage3/fixtures -run 'TestFixtures(Assertions|Enums|Objects)$' -v
+Result with the mutant: exit 1, red in enums on exactly 06_set_node_flags.a. Restored, checked with cmp (linux/amd64, Node v24.19.0).
+
+    fixtures_test.go:472: gap changed: update status.json and check the native output; got {Outcome:Refused What:stage3/fixtures/enums/06_set_node_flags.a:79:10: Adamic 0.1 refuses a value of type T seen as Mutable<T>, which can write T["flags"] where NodeFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast) Stdout:}; recorded {Outcome:Refused What:stage3/fixtures/enums/06_set_node_flags.a:79:10: Adamic 0.1 refuses a value of type T seen as Mutable<T>, which can write T["flags"] where NodeFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, narrow a discriminated union by its tag (`if (shape.kind !== 'Circle') panic('why')`), downcast along nominal class ancestry, or move the file to `.ts`, where a member cast is checked (adamic/no-unchecked-cast) Stdout:}
+--- FAIL: TestFixturesEnums (13.14s)
+    --- FAIL: TestFixturesEnums/enums (0.00s)
+        --- FAIL: TestFixturesEnums/enums/06_set_node_flags.a (0.35s)
+            --- FAIL: TestFixturesEnums/enums/06_set_node_flags.a/stage0 (0.00s)
