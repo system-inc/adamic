@@ -1,0 +1,14 @@
+{
+  "A_total_seconds": 652.345069746,
+  "B_total_seconds": 654.044471945,
+  "A_cpu_seconds": 702.8921030000013,
+  "B_cpu_seconds": 703.4416810000038,
+  "units": 4017,
+  "controls": {
+    "units": 1215,
+    "median_absolute_delta": 0.0036352200000000015,
+    "p95_absolute_delta": 0.055006476,
+    "median_ratio": 1.011537887196256
+  },
+  "control_definition": "Imports, interfaces and type aliases with identical lowering findings: no checked-predicate body to exercise B. These include registration costs; one paired run cannot separate scheduling, GC and common registration overhead."
+}

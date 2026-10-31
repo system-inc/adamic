@@ -1,0 +1,39 @@
+[
+  {
+    "B": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/tree/src/compiler/utilities.ts:6832:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/tree/src/compiler/utilities.ts:6838:9",
+      "reason": "a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which is neither its supertype nor a subtype its views cover",
+      "text": "/workspace/scratch/tree/src/compiler/utilities.ts:6838:9: stage 0 can't lower a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which is neither its supertype nor a subtype its views cover yet"
+    },
+    "A_unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/scratch/tree/src/compiler/utilities.ts:6832:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 269488,
+      "body_end": 271204,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getAllAccessorDeclarations"
+    },
+    "A_lowering_findings": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/tree/src/compiler/utilities.ts:6832:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/tree/src/compiler/sourcemap.ts:474:9",
+        "reason": "a getter in a checked field contract",
+        "text": "/workspace/scratch/tree/src/compiler/sourcemap.ts:474:9: stage 0 can't lower a getter in a checked field contract yet"
+      }
+    ]
+  }
+]

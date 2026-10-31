@@ -1,0 +1,84 @@
+{
+  "mode": "first-error",
+  "distinct_key": [
+    "kind",
+    "where",
+    "reason",
+    "text"
+  ],
+  "normalization": "remove each adapted tree root from embedded locations in where, reason and text",
+  "files": 79,
+  "before_sites": 2824,
+  "after_sites": 2820,
+  "changed_reasons": [
+    {
+      "reason": "a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which is neither its supertype nor a subtype its views cover",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:6838:9",
+          "reason": "a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which is neither its supertype nor a subtype its views cover",
+          "text": "src/compiler/utilities.ts:6838:9: stage 0 can't lower a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which is neither its supertype nor a subtype its views cover yet"
+        }
+      ]
+    },
+    {
+      "reason": "checked predicate overload target ClassElement",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "checked predicate overload target JSDocPropertyLikeTag",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "checked predicate overload target LateBoundDeclaration",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "checked predicate overload target LiteralExpression",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "checked predicate overload target TypeElement",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    }
+  ],
+  "new_or_growing": [
+    {
+      "reason": "a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which is neither its supertype nor a subtype its views cover",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:6838:9",
+          "reason": "a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which is neither its supertype nor a subtype its views cover",
+          "text": "src/compiler/utilities.ts:6838:9: stage 0 can't lower a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which is neither its supertype nor a subtype its views cover yet"
+        }
+      ]
+    }
+  ],
+  "raw_sha256": {
+    "before": "2c2bd81803ebe5e57a81eba37b39f1784850af0fe29eb987da25f6c79d4fcee8",
+    "after": "8e2b73cdc418e0ad9f438bd80030015989947f99c5c7a369b366ef9b94e22321"
+  }
+}

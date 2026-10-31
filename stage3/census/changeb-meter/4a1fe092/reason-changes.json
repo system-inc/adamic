@@ -1,0 +1,74 @@
+[
+  {
+    "kind": "NotYet",
+    "reason": "a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which is neither its supertype nor a subtype its views cover",
+    "A": 0,
+    "B": 1,
+    "delta": 1,
+    "A_examples": [],
+    "B_examples": [
+      "src/compiler/utilities.ts:6838:9"
+    ],
+    "callout": true
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target ClassElement",
+    "A": 1,
+    "B": 0,
+    "delta": -1,
+    "A_examples": [
+      "src/compiler/utilitiesPublic.ts:1732:1"
+    ],
+    "B_examples": [],
+    "callout": true
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target JSDocPropertyLikeTag",
+    "A": 1,
+    "B": 0,
+    "delta": -1,
+    "A_examples": [
+      "src/compiler/utilitiesPublic.ts:1449:1"
+    ],
+    "B_examples": [],
+    "callout": true
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target LateBoundDeclaration",
+    "A": 1,
+    "B": 0,
+    "delta": -1,
+    "A_examples": [
+      "src/compiler/emitter.ts:1158:18"
+    ],
+    "B_examples": [],
+    "callout": true
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target LiteralExpression",
+    "A": 1,
+    "B": 0,
+    "delta": -1,
+    "A_examples": [
+      "src/compiler/utilitiesPublic.ts:1498:1"
+    ],
+    "B_examples": [],
+    "callout": true
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target TypeElement",
+    "A": 1,
+    "B": 0,
+    "delta": -1,
+    "A_examples": [
+      "src/compiler/utilitiesPublic.ts:1782:1"
+    ],
+    "B_examples": [],
+    "callout": true
+  }
+]

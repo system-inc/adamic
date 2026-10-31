@@ -1,0 +1,8 @@
+[
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/utilities.ts:6838:9",
+    "reason": "a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which is neither its supertype nor a subtype its views cover",
+    "text": "src/compiler/utilities.ts:6838:9: stage 0 can't lower a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which is neither its supertype nor a subtype its views cover yet"
+  }
+]
