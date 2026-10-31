@@ -28,6 +28,32 @@ func (l *lowering) provenRelation(where, expression *ast.Node, target *checker.T
 	return nil
 }
 
+// slotRelation is the check a value written into a slot gets, judged against that slot's type: what an
+// argument site runs, given the slot explicitly where the checker's contextual type doesn't name it (a
+// delayed library call's parameter, which lib types any). It is provenRelation's writable-slot, optional
+// field and nominal proofs, then void widening's, so a rule added to either reaches every caller
+// (#gw3yrsn, Adamic's ruling). The rules that read a contextual type at the site itself (string widening,
+// void reads, class views) aren't in it: each takes its slot from the checker, not from a caller.
+func (l *lowering) slotRelation(where, expression *ast.Node, target *checker.Type) error {
+	if err := l.provenRelation(where, expression, target); err != nil {
+		return err
+	}
+	if found := l.voidWidenedUnlessUndefined(expression, l.checker.GetTypeAtLocation(expression), target); found != nil {
+		if found.depthLimit {
+			return l.notYet(where, "a structural relation deeper than 64 type pairs while checking void function results")
+		}
+		what := "a void-returning function written where " + l.checker.TypeToString(found.target) + " is read"
+		if found.contained {
+			what = "a void value written where " + l.checker.TypeToString(found.target) + " is read"
+		}
+		if found.path != "" {
+			what += " through " + found.path
+		}
+		return &Refused{Where: l.program.Where(where), What: what, Fix: "declare the function's real return type (adamic/no-void-widening)"}
+	}
+	return nil
+}
+
 // Optional fields absent from a structural view may exist with an unrelated type at runtime.
 // Follow containers, callback arguments/results and nested fields, as the other relation walks do.
 func (l *lowering) optionalRelationFailure(from, to *checker.Type, origin *ast.Node, seen map[[2]*checker.Type]bool) string {

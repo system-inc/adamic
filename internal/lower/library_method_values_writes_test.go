@@ -2,6 +2,10 @@ package lower
 
 import (
 	"errors"
+	"go/ast"
+	"go/parser"
+	"go/token"
+	"strconv"
 	"strings"
 	"testing"
 )
@@ -61,6 +65,54 @@ console.log(String((array[0] ?? "").length));`, "delayed Array.prototype.unshift
 	}
 }
 
+// A delayed write gets the argument site's own check against the receiver's element type, not tsc's
+// relation alone (Language's must on c8f64485, live on main): a string[] pushed, filled or spliced into a
+// (string | number)[][] could have a number written into it through the wider view, which native read past
+// the string array's end (heap-buffer-overflow under ASan), and a void function pushed where a function
+// returning unknown is read is void widening. Mutant: slotRelation skipped for delayed writes, under which
+// g1 lowers and dies natively.
+func TestDelayedArrayWritesGetTheSlotCheck(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, source, want string }{
+		{"g1 push", `const push = Array.prototype.push;
+const inner: string[] = ["a"];
+const outer: (string | number)[][] = [];
+push.call(outer, inner);
+const first = outer[0];
+if (first !== undefined) first.push(5);
+const last = inner[1] ?? "";
+console.log(last.toUpperCase());`, "seen as (string | number)[]"},
+		{"g6 fill", `const fill = Array.prototype.fill;
+const inner: string[] = ["a"];
+const outer: (string | number)[][] = [[]];
+fill.call(outer, inner);
+const first = outer[0];
+if (first !== undefined) first.push(5);
+console.log((inner[1] ?? "").toUpperCase());`, "seen as (string | number)[]"},
+		{"g7 splice", `const splice = Array.prototype.splice;
+const inner: string[] = ["a"];
+const outer: (string | number)[][] = [];
+splice.apply(outer, [0, 0, inner]);
+const first = outer[0];
+if (first !== undefined) first.push(5);
+console.log((inner[1] ?? "").toUpperCase());`, "seen as (string | number)[]"},
+		{"g2 void function", `const push = Array.prototype.push;
+function make(): void {}
+const fs: (() => unknown)[] = [];
+push.call(fs, make);
+console.log(String(fs.length));`, "a void-returning function written where"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerTypeScriptAssertionSource(t, probe.source)
+			var refused *Refused
+			if !errors.As(err, &refused) || !strings.Contains(err.Error(), probe.want) {
+				t.Fatalf("want Refused with %q, got %v", probe.want, err)
+			}
+		})
+	}
+}
+
 // Writes of the receiver's own element type still lower and agree with Node, through call and apply.
 func TestDelayedArrayWritesOfTheElementsLower(t *testing.T) {
 	t.Parallel()
@@ -73,5 +125,53 @@ func TestDelayedArrayWritesOfTheElementsLower(t *testing.T) {
 			t.Parallel()
 			lowersAndAgreesWithNodeAs(t, probe.source, ".ts")
 		})
+	}
+}
+
+// Every Array method a delayed call reaches an adapter for is in exactly one class, a writer or a reader,
+// read from libraryMethodCall's own Array.prototype switch, so a name added there without a class is a
+// failure here and not an unchecked write (Compiler's change on c8f64485). Mutant: a name dropped from
+// delayedArrayReaders, which this reports, and which the switch's default then makes NotYet.
+func TestDelayedArrayMethodsAreClassified(t *testing.T) {
+	t.Parallel()
+	file, err := parser.ParseFile(token.NewFileSet(), "library_method_values.go", nil, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var names []string
+	ast.Inspect(file, func(node ast.Node) bool {
+		family, isCase := node.(*ast.CaseClause)
+		if !isCase || len(family.List) != 1 {
+			return true
+		}
+		if literal, isLiteral := family.List[0].(*ast.BasicLit); !isLiteral || literal.Value != `"Array.prototype"` {
+			return true
+		}
+		for _, statement := range family.Body {
+			inner, isSwitch := statement.(*ast.SwitchStmt)
+			if !isSwitch {
+				continue
+			}
+			for _, clause := range inner.Body.List {
+				for _, expression := range clause.(*ast.CaseClause).List {
+					if literal, isLiteral := expression.(*ast.BasicLit); isLiteral {
+						name, err := strconv.Unquote(literal.Value)
+						if err != nil {
+							t.Fatal(err)
+						}
+						names = append(names, name)
+					}
+				}
+			}
+		}
+		return false
+	})
+	if len(names) == 0 {
+		t.Fatal("found no Array.prototype adapter names in libraryMethodCall")
+	}
+	for _, name := range names {
+		if delayedArrayWriters[name] == delayedArrayReaders[name] {
+			t.Errorf("%s is a writer: %t, a reader: %t; want exactly one", name, delayedArrayWriters[name], delayedArrayReaders[name])
+		}
 	}
 }
