@@ -39,7 +39,7 @@ type objectKeyed struct {
 }
 
 // objectKeyBuild builds source as options say with linkOne, as buildOneWithRuntime does, in directory, made here, with
-// compiler and flags, linking library, and main.c keyed as objectKey keys it, read here rather than said. prepare, when
+// compiler and flags, linking library, and main.c keyed and compiled uncached, its recheck read here. prepare, when
 // it isn't nil, is handed the compile before it's keyed, and between, when it isn't nil, runs once it's keyed and before
 // it compiles.
 func objectKeyBuild(t *testing.T, directory string, compiler string, source string, options Options, flags []string, library string, prepare func(compile *exec.Cmd), between func(keying *objectKeying)) objectKeyed {
@@ -52,23 +52,28 @@ func objectKeyBuild(t *testing.T, directory string, compiler string, source stri
 		t.Fatal(err)
 	}
 	var keyed objectKeyed
-	keyObject := func(compile *exec.Cmd, source string, compileFlags []string, program string, jobserver *Jobserver) (string, func(), error) {
+	keyObject := func(compile *exec.Cmd, source string, compileFlags []string, program string, jobserver *Jobserver) error {
 		if prepare != nil {
 			prepare(compile)
 		}
 		keying, err := newObjectKeying(compile, source, compileFlags, program, jobserver)
 		if errors.Is(err, errUncachedObject) {
 			keyed.refusal = err
-			return "", nil, nil
+			_, err := compileMain(compile, jobserver)
+			return err
 		}
 		if err != nil {
-			return "", nil, err
+			return err
 		}
 		keyed.keying = keying
 		if between != nil {
 			between(keying)
 		}
-		return keying.key, func() { keyed.differs = keying.recheck(jobserver) }, nil
+		if _, err := compileMain(compile, jobserver); err != nil {
+			return err
+		}
+		keyed.differs = keying.recheck(jobserver)
+		return nil
 	}
 	output := directory + ".program"
 	if err := linkOne(directory, compiler, source, output, options, flags, library, jobserver, func(directory string) ([]string, error) {
@@ -118,7 +123,7 @@ func objectKeyEdited(t *testing.T, header []byte) []byte {
 var objectKeyLine = regexp.MustCompile(`^(cCompile|cPreprocess|cRecheck) main\.c (\S+) (\S+) `)
 
 // objectKeyLogged is the key each of main.c's lines in the build log at path carries, by its kind: cCompile's, and
-// cPreprocess's and cRecheck's where it was keyed.
+// cPreprocess's and cRecheck's where it was keyed; cCompile's outcome is under "outcome".
 func objectKeyLogged(t *testing.T, path string) map[string][]string {
 	t.Helper()
 	contents, err := os.ReadFile(path)
@@ -129,10 +134,10 @@ func objectKeyLogged(t *testing.T, path string) map[string][]string {
 	scanner := bufio.NewScanner(bytes.NewReader(contents))
 	for scanner.Scan() {
 		if match := objectKeyLine.FindStringSubmatch(scanner.Text()); match != nil {
-			if match[3] != "off" {
-				t.Errorf("main.c's %s line says %s; nothing is cached by its key", match[1], match[3])
-			}
 			logged[match[1]] = append(logged[match[1]], match[2])
+			if match[1] == "cCompile" {
+				logged["outcome"] = append(logged["outcome"], match[3])
+			}
 		}
 	}
 	return logged
@@ -140,13 +145,15 @@ func objectKeyLogged(t *testing.T, path string) map[string][]string {
 
 // The same program built in two build directories under two temporary directories gets the same object key, released,
 // Debug (where main.c and the runtime's headers are compiled by their absolute paths, so its line markers name the
-// build directory) and sanitized, through Build with ADAMIC_NATIVE_OBJECT_KEY=on: every per-build place is a placeholder
-// in the arguments and mapped in the preprocessed bytes. The three builds key apart. Mutant, red: the build directory
-// left in the arguments as it is.
+// build directory) and sanitized, through Build trusted as a candidate: every per-build place is a placeholder in the
+// arguments and mapped in the preprocessed bytes. The three builds key apart. Mutant, red: the build directory left in
+// the arguments as it is.
 func TestObjectKeyIsTheSameFromAnyDirectory(t *testing.T) {
 	source := splitCorpusSource(t, "arguments.a")
 	root := t.TempDir()
-	t.Setenv(objectKeyVariable, "on")
+	trust := objectTrust
+	objectTrust = func() string { return "candidate" }
+	t.Cleanup(func() { objectTrust = trust })
 	seen := map[string]string{}
 	for _, build := range []struct {
 		name    string
@@ -165,11 +172,12 @@ func TestObjectKeyIsTheSameFromAnyDirectory(t *testing.T) {
 				t.Fatalf("%s: %v", build.name, err)
 			}
 			logged := objectKeyLogged(t, log)
-			if len(logged["cCompile"]) != 1 || len(logged["cPreprocess"]) != 1 || len(logged["cRecheck"]) != 1 {
+			// A hit, the second build's when the first stored its object, runs no recheck.
+			if len(logged["cCompile"]) != 1 || len(logged["cPreprocess"]) != 1 || len(logged["cRecheck"]) > 1 {
 				t.Fatalf("%s: main.c's lines in the build log, by kind: %v", build.name, logged)
 			}
 			keys[index] = logged["cCompile"][0]
-			if keys[index] == "-" || logged["cPreprocess"][0] != keys[index] || logged["cRecheck"][0] != keys[index] {
+			if keys[index] == "-" || logged["cPreprocess"][0] != keys[index] || (len(logged["cRecheck"]) == 1 && logged["cRecheck"][0] != keys[index]) {
 				t.Fatalf("%s: main.c's compile wasn't keyed, or its lines disagree: %v", build.name, logged)
 			}
 		}
@@ -420,10 +428,17 @@ func TestObjectKeyMapsOnlyTheLineMarkersPaths(t *testing.T) {
 	}
 }
 
-// With ADAMIC_NATIVE_OBJECT_KEY unset, a build keys nothing: linkOne preprocesses nothing, writing no main.i or main.d,
-// and the build log's line for main.c's compile names no key, with no line for a preprocessing. Set to on, the same build
-// preprocesses twice and its compile's line carries the key, so the off build's silence isn't the log's.
+// With no trust, a build keys nothing: linkOne preprocesses nothing, writing no main.i or main.d, and the build log's
+// line for main.c's compile names no key, with no line for a preprocessing. Trusted as a candidate, the same build
+// preprocesses twice and its compile's line carries the key, so the untrusted build's silence isn't the log's. This
+// process's own trust is unset, so Build keys nothing.
 func TestObjectKeyOffRunsNoPreprocessing(t *testing.T) {
+	if objectTrust() != "" {
+		t.Skipf("%s is set to %q", objectTrustVariable, objectTrust())
+	}
+	if objectKeyer() != nil {
+		t.Error("with no trust, a build keys main.c")
+	}
 	library, err := RuntimeLibraryForSource("", objectKeySource, Options{})
 	if err != nil {
 		t.Fatal(err)
@@ -433,15 +448,18 @@ func TestObjectKeyOffRunsNoPreprocessing(t *testing.T) {
 		t.Fatal(err)
 	}
 	root := t.TempDir()
-	for _, setting := range []string{"", "on"} {
-		t.Setenv(objectKeyVariable, setting)
-		log := filepath.Join(root, "build-"+setting+".log")
+	for _, trust := range []string{"", "anything", "candidate"} {
+		var compileObject func(compile *exec.Cmd, source string, compileFlags []string, program string, jobserver *Jobserver) error
+		if cache, on := objectCacheFor(trust, filepath.Join(root, "main"), filepath.Join(root, "candidate"), filepath.Join(root, "units")); on {
+			compileObject = cache.compile
+		}
+		log := filepath.Join(root, "build-"+trust+".log")
 		t.Setenv("ADAMIC_BUILD_LOG", log)
-		directory := filepath.Join(root, "build-"+setting)
+		directory := filepath.Join(root, "build-"+trust)
 		if err := os.Mkdir(directory, 0o755); err != nil {
 			t.Fatal(err)
 		}
-		if err := linkOne(directory, "clang", objectKeySource, directory+".program", Options{}, Flags(Options{}), library, jobserver, nil, objectKeyer(), false); err != nil {
+		if err := linkOne(directory, "clang", objectKeySource, directory+".program", Options{}, Flags(Options{}), library, jobserver, nil, compileObject, false); err != nil {
 			t.Fatal(err)
 		}
 		var written []string
@@ -451,11 +469,11 @@ func TestObjectKeyOffRunsNoPreprocessing(t *testing.T) {
 			}
 		}
 		logged := objectKeyLogged(t, log)
-		if setting == "" && (len(written) > 0 || !slices.Equal(logged["cCompile"], []string{"-"}) || len(logged) != 1) {
-			t.Errorf("off, the build wrote %v and logged %v", written, logged)
+		if trust != "candidate" && (len(written) > 0 || !slices.Equal(logged["cCompile"], []string{"-"}) || !slices.Equal(logged["outcome"], []string{"off"}) || len(logged) != 2) {
+			t.Errorf("trusted %q, the build wrote %v and logged %v", trust, written, logged)
 		}
-		if setting == "on" && (len(written) != 3 || len(logged["cCompile"]) != 1 || logged["cCompile"][0] == "-" || len(logged["cPreprocess"]) != 1 || len(logged["cRecheck"]) != 1) {
-			t.Errorf("on, the build wrote %v and logged %v", written, logged)
+		if trust == "candidate" && (len(written) != 3 || len(logged["cCompile"]) != 1 || logged["cCompile"][0] == "-" || len(logged["cPreprocess"]) != 1 || len(logged["cRecheck"]) != 1) {
+			t.Errorf("trusted as a candidate, the build wrote %v and logged %v", written, logged)
 		}
 	}
 }
@@ -500,5 +518,218 @@ func TestObjectKeyHoldsEveryColumn(t *testing.T) {
 				t.Errorf("two sources a space apart key the same: %s", keyed[0].keying.key)
 			}
 		})
+	}
+}
+
+// objectCaches are a test's two object directories and its unit cache's, under root.
+func objectCaches(t *testing.T, root string, trust string) objectCache {
+	t.Helper()
+	cache, on := objectCacheFor(trust, filepath.Join(root, "main"), filepath.Join(root, "candidate"), filepath.Join(root, "units"))
+	if !on {
+		t.Fatalf("no cache for %q", trust)
+	}
+	return cache
+}
+
+// objectCacheBuild builds source as options say with linkOne in a build directory named name under root, main.c made by
+// cache's compile, or compiled as today when cache is nil, and is the binary's bytes and the outcome main.c's compile
+// line says, read from a build log of its own. Its caller sets no test parallel: the log is named by the environment.
+// between, when it isn't nil, runs once main.c is keyed and before the cache is looked in.
+func objectCacheBuild(t *testing.T, root string, name string, cache *objectCache, source string, options Options, library string, between func(directory string)) ([]byte, string) {
+	t.Helper()
+	jobserver, err := defaultJobserver()
+	if err != nil {
+		t.Fatal(err)
+	}
+	directory := filepath.Join(root, name)
+	if err := os.Mkdir(directory, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	log := directory + ".log"
+	t.Setenv("ADAMIC_BUILD_LOG", log)
+	var compileObject func(compile *exec.Cmd, source string, compileFlags []string, program string, jobserver *Jobserver) error
+	if cache != nil {
+		compileObject = func(compile *exec.Cmd, source string, compileFlags []string, program string, jobserver *Jobserver) error {
+			keying, err := newObjectKeying(compile, source, compileFlags, program, jobserver)
+			if err != nil {
+				return err
+			}
+			if between != nil {
+				between(directory)
+			}
+			return cache.compileKeyed(keying, compile, jobserver)
+		}
+	}
+	output := directory + ".program"
+	if err := linkOne(directory, "clang", source, output, options, Flags(options), library, jobserver, nil, compileObject, false); err != nil {
+		t.Fatal(err)
+	}
+	binary, err := os.ReadFile(output)
+	if err != nil {
+		t.Fatal(err)
+	}
+	logged := objectKeyLogged(t, log)
+	if len(logged["outcome"]) != 1 {
+		t.Fatalf("%s: main.c's compile lines: %v", name, logged)
+	}
+	return binary, logged["outcome"][0]
+}
+
+// objectEntries are the keys a cache directory holds an object under.
+func objectEntries(t *testing.T, directory string) []string {
+	t.Helper()
+	entries, err := os.ReadDir(directory)
+	if errors.Is(err, os.ErrNotExist) {
+		return nil
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	var keys []string
+	for _, entry := range entries {
+		if _, err := os.Stat(filepath.Join(directory, entry.Name(), "main.o")); err == nil {
+			keys = append(keys, entry.Name())
+		}
+	}
+	return keys
+}
+
+// A hit links the binary the uncached build links, byte for byte, released, Debug and sanitized: the cache's object is
+// copied to main.o and nothing compiles, and the miss before it stored exactly the object it compiled.
+func TestObjectCacheHitIsTheUncachedBinary(t *testing.T) {
+	for _, build := range []struct {
+		name    string
+		options Options
+	}{{"release", Options{}}, {"debug", Options{Debug: true}}, {"sanitized", Options{Sanitize: true}}} {
+		t.Run(build.name, func(t *testing.T) {
+			library, err := RuntimeLibraryForSource("", objectKeySource, build.options)
+			if err != nil {
+				t.Fatal(err)
+			}
+			root := t.TempDir()
+			cache := objectCaches(t, root, "candidate")
+			uncached, outcome := objectCacheBuild(t, root, "uncached", nil, objectKeySource, build.options, library, nil)
+			if outcome != "off" {
+				t.Fatalf("the uncached build's compile says %s", outcome)
+			}
+			for index, want := range []string{"miss", "hit"} {
+				binary, outcome := objectCacheBuild(t, root, fmt.Sprintf("cached-%d", index), &cache, objectKeySource, build.options, library, nil)
+				if outcome != want {
+					t.Errorf("build %d's compile says %s, want %s", index, outcome, want)
+				}
+				if !bytes.Equal(binary, uncached) {
+					t.Errorf("the %s's binary isn't the uncached build's", want)
+				}
+			}
+		})
+	}
+}
+
+// Trust holds: a candidate writes its own directory and never main's; a candidate reads an object main stored; main
+// never reads one a candidate stored, so a main build after a candidate's misses and stores its own. Mutants, each red:
+// a candidate writing main's directory, and main reading the candidate's.
+func TestObjectCacheTrust(t *testing.T) {
+	library, err := RuntimeLibraryForSource("", objectKeySource, Options{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	root := t.TempDir()
+	main, candidate := objectCaches(t, root, "main"), objectCaches(t, root, "candidate")
+	if _, outcome := objectCacheBuild(t, root, "candidate-first", &candidate, objectKeySource, Options{}, library, nil); outcome != "miss" {
+		t.Fatalf("the first candidate build says %s", outcome)
+	}
+	if held := objectEntries(t, filepath.Join(root, "main")); len(held) > 0 {
+		t.Errorf("a candidate's build wrote main's directory: %v", held)
+	}
+	if held := objectEntries(t, filepath.Join(root, "candidate")); len(held) != 1 {
+		t.Fatalf("the candidate's directory holds %v", held)
+	}
+	if _, outcome := objectCacheBuild(t, root, "main-after-candidate", &main, objectKeySource, Options{}, library, nil); outcome != "miss" {
+		t.Errorf("main's build after a candidate's says %s: main read the candidate's object", outcome)
+	}
+	if held := objectEntries(t, filepath.Join(root, "main")); len(held) != 1 {
+		t.Fatalf("main's directory holds %v", held)
+	}
+	// With main's object stored, a candidate whose own directory holds nothing reads main's.
+	if err := os.Rename(filepath.Join(root, "candidate"), filepath.Join(root, "candidate-moved")); err != nil {
+		t.Fatal(err)
+	}
+	if _, outcome := objectCacheBuild(t, root, "candidate-after-main", &candidate, objectKeySource, Options{}, library, nil); outcome != "hit" {
+		t.Errorf("a candidate's build says %s with main's object stored", outcome)
+	}
+}
+
+// A recheck that fails stores nothing: adamic.h rewritten with the same bytes after main.c is keyed and before it
+// compiles leaves the build green and the cache empty, and the next build misses again. Mutant, red: storing on a
+// failed recheck.
+func TestObjectCacheRecheckFailureStoresNothing(t *testing.T) {
+	library, err := RuntimeLibraryForSource("", objectKeySource, Options{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	root := t.TempDir()
+	copied := objectKeyRuntime(t, library, filepath.Join(root, "runtime"), nil)
+	cache := objectCaches(t, root, "candidate")
+	if _, outcome := objectCacheBuild(t, root, "moved", &cache, objectKeySource, Options{}, copied, func(directory string) {
+		header := filepath.Join(directory, "runtime", "adamic.h")
+		contents, err := os.ReadFile(header)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(header, contents, 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}); outcome != "miss" {
+		t.Fatalf("the build says %s", outcome)
+	}
+	if held := objectEntries(t, filepath.Join(root, "candidate")); len(held) > 0 {
+		t.Errorf("a build whose recheck failed stored %v", held)
+	}
+	if _, outcome := objectCacheBuild(t, root, "again", &cache, objectKeySource, Options{}, copied, nil); outcome != "miss" {
+		t.Errorf("the build after it says %s", outcome)
+	}
+}
+
+// A wrong object planted under the right key in main's directory is caught where ADAMIC_NATIVE_UNIT_CHECK asks every hit
+// compiled: the build links the cold object, the uncached build's binary, says the unit cache's mismatch line naming
+// main.c and its key, and marks the unit cache off, which turns the object cache off too. Mutant, red: the forced check
+// skipped.
+func TestObjectCacheForcedCheckCatchesAPlantedObject(t *testing.T) {
+	library, err := RuntimeLibraryForSource("", objectKeySource, Options{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	root := t.TempDir()
+	cache := objectCaches(t, root, "main")
+	uncached, _ := objectCacheBuild(t, root, "uncached", nil, objectKeySource, Options{}, library, nil)
+	if _, outcome := objectCacheBuild(t, root, "stored", &cache, objectKeySource, Options{}, library, nil); outcome != "miss" {
+		t.Fatalf("the first build says %s", outcome)
+	}
+	held := objectEntries(t, filepath.Join(root, "main"))
+	if len(held) != 1 {
+		t.Fatalf("main's directory holds %v", held)
+	}
+	if err := os.WriteFile(filepath.Join(root, "main", held[0], "main.o"), []byte("not an object\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv(unitCheckVariable, "every")
+	binary, outcome := objectCacheBuild(t, root, "checked", &cache, objectKeySource, Options{}, library, nil)
+	if outcome != "miss" {
+		t.Errorf("the checked build says %s", outcome)
+	}
+	if !bytes.Equal(binary, uncached) {
+		t.Error("the checked build didn't link the cold object")
+	}
+	log, err := os.ReadFile(filepath.Join(root, "checked.log"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if want := regexp.MustCompile(`(?m)^` + regexp.QuoteMeta(UnitMismatchPrefix) + `unit main\.c key ` + held[0] + ` cached [0-9a-f]{64} cold [0-9a-f]{64}$`); !want.Match(log) {
+		t.Errorf("the build log says no mismatch line:\n%s", log)
+	}
+	if why, off := unitCacheOff(filepath.Join(root, "units")); !off {
+		t.Error("the mismatch didn't mark the unit cache off")
+	} else if !strings.Contains(why, "main.c") {
+		t.Errorf("the mark says %s", why)
 	}
 }

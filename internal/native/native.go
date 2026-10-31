@@ -254,16 +254,16 @@ func buildOneWithRuntime(source string, output string, options Options, flags []
 // linkOne compiles source in one translation unit with compiler and links it with the runtime archive library into
 // output, in directory, an empty build directory its caller made and removes, each clang holding a token of jobserver
 // (nil bounds none). links, when it isn't nil, gives the flags linking what else the program links (the regexp
-// compiler's archive), from inside the build directory; BuildLean, handed one archive alone, gives none. keyObject,
-// when it isn't nil, keys main.c's compile before it runs and is the recheck to run after it (objectKey), which only
-// measures: the object linked is the compile's own. BuildLean, which reads no environment, gives none, and a build with
-// oneCall set is never keyed, on macOS either, where its main.c is compiled first too.
+// compiler's archive), from inside the build directory; BuildLean, handed one archive alone, gives none. compileObject,
+// when it isn't nil, makes main.o in place of the compile, from the object cache or by it (objectCache.compile). BuildLean,
+// which reads no environment, gives none, and a build with oneCall set never takes it, on macOS either, where its main.c
+// is compiled first too.
 //
 // A native program's main.c is compiled to main.o and then linked, in two clang calls. oneCall has a build off macOS
 // compile and link it in one call instead, as every build there did before the split (#2r9xhqs). BuildLean keeps the
 // one call, since the split is for a cache of the compile's object and BuildLean reads no cache, and
 // TestACompiledThenLinkedProgramIsTheOneCallProgram builds both ways to hold the split's binary to the one call's bytes.
-func linkOne(directory string, compiler string, source string, output string, options Options, flags []string, library string, jobserver *Jobserver, links func(directory string) ([]string, error), keyObject func(compile *exec.Cmd, source string, compileFlags []string, program string, jobserver *Jobserver) (string, func(), error), oneCall bool) error {
+func linkOne(directory string, compiler string, source string, output string, options Options, flags []string, library string, jobserver *Jobserver, links func(directory string) ([]string, error), compileObject func(compile *exec.Cmd, source string, compileFlags []string, program string, jobserver *Jobserver) error, oneCall bool) error {
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); err != nil {
 		return fmt.Errorf("native: %w", err)
 	}
@@ -294,25 +294,16 @@ func linkOne(directory string, compiler string, source string, output string, op
 	// call's bytes, release, Debug and sanitized (TestACompiledThenLinkedProgramIsTheOneCallProgram).
 	if options.Target != "wasm32-wasi" && (goruntime.GOOS == "darwin" || !oneCall) {
 		compile := clangIn(directory, compiler, append(slices.Clone(compileFlags), "-c", program, "-o", "main.o")...)
-		var key string
-		var recheck func()
-		if keyObject != nil && !oneCall {
-			var err error
-			if key, recheck, err = keyObject(compile, source, compileFlags, program, jobserver); err != nil {
+		if compileObject != nil && !oneCall {
+			if err := compileObject(compile, source, compileFlags, program, jobserver); err != nil {
 				return err
 			}
-		}
-		var combined []byte
-		var compiling time.Duration
-		if err := jobserver.Hold(func() error {
-			return timed(&compiling, func() (err error) { combined, err = compile.CombinedOutput(); return err })
-		}); err != nil {
-			return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
-		}
-		// Nothing is cached by the key yet, so the compile is off whether or not it was keyed.
-		buildLog("cCompile", "main.c", key, "off", compiling)
-		if recheck != nil {
-			recheck()
+		} else {
+			compiling, err := compileMain(compile, jobserver)
+			if err != nil {
+				return err
+			}
+			buildLog("cCompile", "main.c", "", "off", compiling)
 		}
 		// The debug map records each object's modification time beside its name, so main.o's is the epoch's, as
 		// ZERO_AR_DATE has ar give an archive member's: a fresh main.o's would differ per build.
@@ -368,6 +359,19 @@ func linkOne(directory string, compiler string, source string, output string, op
 	}
 	buildLog(kind, filepath.Base(output), "", "off", building)
 	return nil
+}
+
+// compileMain runs compile, main.c's compile to main.o, holding a token of jobserver, and is how long clang ran, a wait
+// for the token left out.
+func compileMain(compile *exec.Cmd, jobserver *Jobserver) (time.Duration, error) {
+	var combined []byte
+	var compiling time.Duration
+	if err := jobserver.Hold(func() error {
+		return timed(&compiling, func() (err error) { combined, err = compile.CombinedOutput(); return err })
+	}); err != nil {
+		return 0, fmt.Errorf("native: clang failed: %w\n%s", err, combined)
+	}
+	return compiling, nil
 }
 
 // programDebugFlags belongs beside the program's prefix maps, never in Flags:

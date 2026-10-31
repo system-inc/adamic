@@ -12,25 +12,31 @@ import (
 	"slices"
 	"sort"
 	"strings"
+	"sync"
 	"time"
 )
 
-// A program's main.c is keyed by what its compile reads, read just before clang compiles it (#2r9xhqs, step 2 of the C
-// bytes object cache): clang's build as a split unit's key reads it (unitClang), the environment clang reads, every
-// argument of the compile with each per-build place written as a placeholder, every file the preprocessing read by its
-// bytes, and main.c preprocessed, which holds what resolution decided of every header it reached. After the compile the preprocessing runs again and every file it read is looked at again
-// (objectKeying.recheck), so a header changed while main.c compiled is caught. The key only measures so far: no object is
-// stored or read by it, and linkOne links the compile's own object whatever it says.
+// A program's main.c is keyed by what its compile reads, read just before clang compiles it (#2r9xhqs, the C bytes
+// object cache): clang's build as a split unit's key reads it (unitClang), the environment clang reads, every argument of
+// the compile with each per-build place written as a placeholder, every file the preprocessing read by its bytes, and
+// main.c preprocessed, which holds what resolution decided of every header it reached. An object the cache holds under
+// the key is copied to main.o and nothing compiles. A miss compiles, and after the compile the preprocessing runs again
+// and every file it read is looked at again (objectKeying.recheck), so a header changed while main.c compiled is caught
+// and its object is never stored.
 //
 // Preprocessed bytes keep the column of a line's first token but no other spacing and no comment, and a Debug or
 // sanitized object's line table records each token's column: two sources a space apart inside a line preprocess to the
 // same bytes and compile, under -g, to other objects (Golem, clang 20.1.8). So every file the preprocessing read is keyed
 // by its own bytes too, which hold every column.
 
-// objectKeyVariable, set to "on", keys main.c's compile in every build that reaches linkOne but BuildLean's, which reads
-// no environment, and says each key's preprocessing and recheck in the build log (buildLog's cPreprocess and cRecheck).
-// Off by default.
-const objectKeyVariable = "ADAMIC_NATIVE_OBJECT_KEY"
+// objectTrustVariable is how far a build's objects are trusted, read once a process: main, a build of main's own, reads
+// and writes the main directory alone; candidate reads main's, then its own, and writes its own alone, so nothing a
+// candidate compiled is ever read by main. Unset or anything else, main.c is neither keyed nor cached. BuildLean, which
+// reads no environment, never is.
+const objectTrustVariable = "ADAMIC_NATIVE_OBJECT_TRUST"
+
+// objectTrust is objectTrustVariable as this process reads it, once.
+var objectTrust = sync.OnceValue(func() string { return os.Getenv(objectTrustVariable) })
 
 // errUncachedObject is a reason main.c gets no key: its compile reads something the key can't account for.
 var errUncachedObject = errors.New("native: main.c compiles uncached")
@@ -159,32 +165,161 @@ type objectKeying struct {
 	reads        []objectRead
 }
 
-// objectKeyer is linkOne's keyObject for a build that reads the environment: objectKey where objectKeyVariable is on,
-// and none where it isn't.
-func objectKeyer() func(compile *exec.Cmd, source string, compileFlags []string, program string, jobserver *Jobserver) (string, func(), error) {
-	if os.Getenv(objectKeyVariable) == "on" {
-		return objectKey
+// objectKeyer is linkOne's compileObject for a build that reads the environment: the object cache for this process's
+// trust (objectTrust), in the build cache's two object directories, or none where the trust is neither main nor
+// candidate, or where the unit cache is off (unitCacheOff, its variable or a mismatch's mark), which turns this cache off
+// with it.
+func objectKeyer() func(compile *exec.Cmd, source string, compileFlags []string, program string, jobserver *Jobserver) error {
+	main, err := cacheDirectory("native-objects-main")
+	if err != nil {
+		return nil
 	}
-	return nil
+	candidate, err := cacheDirectory("native-objects-candidate")
+	if err != nil {
+		return nil
+	}
+	units, err := cacheDirectory("native-units")
+	if err != nil {
+		return nil
+	}
+	cache, on := objectCacheFor(objectTrust(), main, candidate, units)
+	if !on {
+		return nil
+	}
+	if why, off := unitCacheOff(units); off {
+		fmt.Fprintf(os.Stderr, "native: main.c compiles uncached: %s\n", why)
+		return nil
+	}
+	return cache.compile
 }
 
-// objectKey keys compile, main.c's compile, before it runs (newObjectKeying), and is the key and the recheck to run once
-// it has, which says what differed when the object may not be stored. A compile the key can't account for has no key,
-// and says why.
-func objectKey(compile *exec.Cmd, source string, compileFlags []string, program string, jobserver *Jobserver) (string, func(), error) {
+// An objectCache is where main.c's objects are read and written under one trust, and units the unit cache's directory,
+// whose mark a mismatch leaves (markUnitCacheOff), turning both caches off.
+type objectCache struct {
+	reads  []string
+	writes string
+	units  string
+}
+
+// objectCacheFor is the object cache trust reads and writes, of the directories main and candidate, and whether trust
+// names one.
+func objectCacheFor(trust string, main string, candidate string, units string) (objectCache, bool) {
+	switch trust {
+	case "main":
+		return objectCache{reads: []string{main}, writes: main, units: units}, true
+	case "candidate":
+		return objectCache{reads: []string{main, candidate}, writes: candidate, units: units}, true
+	}
+	return objectCache{}, false
+}
+
+// compile makes main.o in the compile's directory: copied from the first of the cache's directories holding an object
+// under main.c's key, or compiled, and once its recheck passed, stored in the directory the cache writes. A compile the
+// key can't account for compiles uncached, and says why. With unitCheckVariable set, every hit compiles too and the two
+// objects are compared: a mismatch prints UnitMismatchPrefix's line, marks the unit cache off, and is the cold object.
+func (cache objectCache) compile(compile *exec.Cmd, source string, compileFlags []string, program string, jobserver *Jobserver) error {
 	keying, err := newObjectKeying(compile, source, compileFlags, program, jobserver)
 	if errors.Is(err, errUncachedObject) {
 		fmt.Fprintln(os.Stderr, err)
-		return "", nil, nil
+		clang, err := compileMain(compile, jobserver)
+		if err != nil {
+			return err
+		}
+		buildLog("cCompile", "main.c", "", "off", clang)
+		return nil
 	}
 	if err != nil {
-		return "", nil, err
+		return err
 	}
-	return keying.key, func() {
-		if differs := keying.recheck(jobserver); differs != "" {
-			fmt.Fprintf(os.Stderr, "native: main.c's object may not be stored: %s\n", differs)
+	return cache.compileKeyed(keying, compile, jobserver)
+}
+
+// compileKeyed is compile once main.c is keyed, a step of its own so a test can move an input between the key and the
+// compile.
+func (cache objectCache) compileKeyed(keying *objectKeying, compile *exec.Cmd, jobserver *Jobserver) error {
+	object := filepath.Join(compile.Dir, "main.o")
+	for _, directory := range cache.reads {
+		if found, ok := cachedFile(filepath.Join(directory, keying.key, "main.o")); ok {
+			return cache.hit(keying.key, found, object, compile, jobserver)
 		}
-	}, nil
+	}
+	clang, err := compileMain(compile, jobserver)
+	if err != nil {
+		return err
+	}
+	// clang compiled it, so it is a miss whether or not it's stored.
+	buildLog("cCompile", "main.c", keying.key, "miss", clang)
+	if differs := keying.recheck(jobserver); differs != "" {
+		fmt.Fprintf(os.Stderr, "native: main.c's object isn't stored: %s\n", differs)
+		return nil
+	}
+	return cache.store(keying.key, object)
+}
+
+// hit copies the object found under key to object, never linking the cache's file in place, unless unitCheckVariable
+// asks every hit compiled again: then compile makes object, and a cached object other than it is a mismatch.
+func (cache objectCache) hit(key string, found string, object string, compile *exec.Cmd, jobserver *Jobserver) error {
+	cached, err := os.ReadFile(found)
+	if err != nil {
+		return err
+	}
+	if os.Getenv(unitCheckVariable) == "" {
+		var copying time.Duration
+		if err := timed(&copying, func() error { return os.WriteFile(object, cached, 0o644) }); err != nil {
+			return err
+		}
+		buildLog("cCompile", "main.c", key, "hit", copying)
+		return nil
+	}
+	clang, err := compileMain(compile, jobserver)
+	if err != nil {
+		return err
+	}
+	cold, err := os.ReadFile(object)
+	if err != nil {
+		return err
+	}
+	if !bytes.Equal(cached, cold) {
+		mismatch := unitMismatch{Unit: "main.c", Key: key, Cached: fmt.Sprintf("%x", sha256.Sum256(cached)), Cold: fmt.Sprintf("%x", sha256.Sum256(cold)), At: time.Now().UTC()}
+		// The cold bytes were compiled from main.c's sources, so they're its object, and the build goes on with them.
+		marked := "marked off at " + filepath.Join(cache.units, unitCacheOffName)
+		if err := markUnitCacheOff(cache.units, mismatch); err != nil {
+			marked = "its mark couldn't be written: " + err.Error()
+		}
+		fmt.Fprintln(os.Stderr, unitMismatchLine(mismatch)+"; the unit cache is "+marked)
+		noteUnitMismatch(mismatch)
+		buildLog("cCompile", "main.c", key, "miss", clang)
+		return nil
+	}
+	buildLog("cCompile", "main.c", key, "hit", clang)
+	return nil
+}
+
+// store publishes object under key in the directory the cache writes, made whole before it's in place, as compileUnitAs
+// publishes a unit; an entry another process published first is kept.
+func (cache objectCache) store(key string, object string) error {
+	contents, err := os.ReadFile(object)
+	if err != nil {
+		return err
+	}
+	if err := os.MkdirAll(cache.writes, 0o755); err != nil {
+		return err
+	}
+	published, err := os.MkdirTemp(cache.writes, ".publish-")
+	if err != nil {
+		return err
+	}
+	defer os.RemoveAll(published)
+	if err := os.WriteFile(filepath.Join(published, "main.o"), contents, 0o644); err != nil {
+		return err
+	}
+	entry := filepath.Join(cache.writes, key)
+	if err := os.Rename(published, entry); err != nil {
+		if _, ok := cachedFile(filepath.Join(entry, "main.o")); !ok {
+			return err
+		}
+	}
+	return nil
 }
 
 // newObjectKeying reads the key of compile, main.c's compile, which holds source and is compiled with compileFlags by
