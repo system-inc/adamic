@@ -1,0 +1,33 @@
+1f6fc7575ec69c14937574de09a51b1c8f2709fc
+diff --git a/internal/buildcache/buildcache.go b/internal/buildcache/buildcache.go
+index cfa97d24..31505db9 100644
+--- a/internal/buildcache/buildcache.go
++++ b/internal/buildcache/buildcache.go
+@@ -862,8 +862,8 @@ func readRepositoryRun(key, directory string, run *repositoryRun) *trackedFiles
+ 		if run.failed {
+ 			repositories.CompareAndDelete(key, run)
+ 		}
+-		close(run.done)
+ 	}()
++	close(run.done)
+ 	run.files, run.failed = readRepository(directory)
+ 	returned = true
+ 	return run.files
+=== RUN   TestOneCheckoutIsListedOnceHoweverManyAsk
+--- PASS: TestOneCheckoutIsListedOnceHoweverManyAsk (0.00s)
+=== RUN   TestOneCheckoutByThreeNamesIsListedOnce
+--- PASS: TestOneCheckoutByThreeNamesIsListedOnce (0.00s)
+=== RUN   TestAFailedListingIsNeverKept
+--- PASS: TestAFailedListingIsNeverKept (0.00s)
+=== RUN   TestEveryWaiterWakesToTheReadingsAnswer
+    repository_once_test.go:147: asker 0 of 16 got <nil>, want the listing's one tracked file, a.txt
+--- FAIL: TestEveryWaiterWakesToTheReadingsAnswer (0.00s)
+=== RUN   TestAReadingThatPanicsFreesItsWaiters
+    repository_once_test.go:205: the asker waiting on a reading that panicked got <nil>, want the next reading's a.txt
+--- FAIL: TestAReadingThatPanicsFreesItsWaiters (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/buildcache	0.011s
+FAIL
+exit=1
+== git diff after restore:
+restored-clean

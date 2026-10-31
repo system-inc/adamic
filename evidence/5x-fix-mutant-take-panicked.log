@@ -1,0 +1,35 @@
+1f6fc7575ec69c14937574de09a51b1c8f2709fc
+== mutant diff
+diff --git a/internal/buildcache/buildcache.go b/internal/buildcache/buildcache.go
+index cfa97d24..78367998 100644
+--- a/internal/buildcache/buildcache.go
++++ b/internal/buildcache/buildcache.go
+@@ -839,9 +839,7 @@ func repositoryAt(directory string) *trackedFiles {
+ 		waited := found.(*repositoryRun)
+ 		waitingOnRepository()
+ 		<-waited.done
+-		if !waited.panicked {
+-			return waited.files
+-		}
++		return waited.files
+ 	}
+ }
+ 
+== test
+=== RUN   TestOneCheckoutIsListedOnceHoweverManyAsk
+--- PASS: TestOneCheckoutIsListedOnceHoweverManyAsk (0.00s)
+=== RUN   TestOneCheckoutByThreeNamesIsListedOnce
+--- PASS: TestOneCheckoutByThreeNamesIsListedOnce (0.00s)
+=== RUN   TestAFailedListingIsNeverKept
+--- PASS: TestAFailedListingIsNeverKept (0.00s)
+=== RUN   TestEveryWaiterWakesToTheReadingsAnswer
+--- PASS: TestEveryWaiterWakesToTheReadingsAnswer (0.00s)
+=== RUN   TestAReadingThatPanicsFreesItsWaiters
+    repository_once_test.go:205: the asker waiting on a reading that panicked got <nil>, want the next reading's a.txt
+--- FAIL: TestAReadingThatPanicsFreesItsWaiters (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/buildcache	0.041s
+FAIL
+exit=1
+== git diff after restore (empty expected):
+restored-clean

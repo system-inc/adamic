@@ -1,0 +1,7 @@
+      3 ["/usr/lib/git-core/git", "status", "--porcelain=2", "-uno"]
+      1 ["/usr/bin/git", "-C", "/home/user/adamic/cohere/TypeScr"..., "ls-files", "-s", "-v", "-z"]
+      1 ["/usr/bin/git", "-C", "/home/user/adamic/cohere/TypeScr"..., "diff-files", "--name-only", "-z"]
+      1 ["/usr/bin/git", "-C", "/home/user/adamic/cohere", "ls-files", "-s", "-v", "-z"]
+      1 ["/usr/bin/git", "-C", "/home/user/adamic/cohere", "diff-files", "--name-only", "-z"]
+      1 ["/usr/bin/git", "-C", "/home/user/adamic", "ls-files", "-s", "-v", "-z"]
+      1 ["/usr/bin/git", "-C", "/home/user/adamic", "diff-files", "--name-only", "-z"]

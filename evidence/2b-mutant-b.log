@@ -1,0 +1,29 @@
+== mutant diff
+diff --git a/internal/buildcache/buildcache.go b/internal/buildcache/buildcache.go
+index 60ecdbf2..dba6cd38 100644
+--- a/internal/buildcache/buildcache.go
++++ b/internal/buildcache/buildcache.go
+@@ -834,9 +834,6 @@ func repositoryAt(directory string) *trackedFiles {
+ 	}
+ 	run.files, run.failed = readRepository(directory)
+ 	close(run.done)
+-	if run.failed {
+-		repositories.CompareAndDelete(key, run)
+-	}
+ 	return run.files
+ }
+ 
+== test
+=== RUN   TestOneCheckoutIsListedOnceHoweverManyAsk
+--- PASS: TestOneCheckoutIsListedOnceHoweverManyAsk (0.00s)
+=== RUN   TestOneCheckoutByThreeNamesIsListedOnce
+--- PASS: TestOneCheckoutByThreeNamesIsListedOnce (0.00s)
+=== RUN   TestAFailedListingIsNeverKept
+    repository_once_test.go:91: the next asker after a failure got &{paths:map[] directories:map[] all:true objects:map[] dirty:map[:true] taken:{wall:14029173410280758425 ext:10453895 loc:0x14ba420}}, want a fresh listing
+--- FAIL: TestAFailedListingIsNeverKept (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/buildcache	0.024s
+FAIL
+exit=1
+== git diff after restore (empty expected):
+restored-clean

@@ -1,0 +1,27 @@
+== mutant diff
+diff --git a/internal/buildcache/buildcache.go b/internal/buildcache/buildcache.go
+index 60ecdbf2..f588c2aa 100644
+--- a/internal/buildcache/buildcache.go
++++ b/internal/buildcache/buildcache.go
+@@ -775,6 +775,7 @@ var listRepository = func(directory string) (listed, dirty []byte, err error) {
+ // directory asked as relative and absolute, or through a link, is read once (#npd568j). One that can't be resolved is
+ // known by its cleaned absolute path.
+ func repositoryKey(directory string) string {
++	return directory
+ 	if absolute, err := filepath.Abs(directory); err == nil {
+ 		directory = absolute
+ 	}
+== test
+=== RUN   TestOneCheckoutIsListedOnceHoweverManyAsk
+--- PASS: TestOneCheckoutIsListedOnceHoweverManyAsk (0.00s)
+=== RUN   TestOneCheckoutByThreeNamesIsListedOnce
+    repository_once_test.go:75: one checkout by four spellings was listed 4 times, want once
+--- FAIL: TestOneCheckoutByThreeNamesIsListedOnce (0.00s)
+=== RUN   TestAFailedListingIsNeverKept
+--- PASS: TestAFailedListingIsNeverKept (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/buildcache	0.022s
+FAIL
+exit=1
+== git diff after restore (empty expected):
+restored-clean

@@ -1,0 +1,9 @@
+=== RUN   TestOneCheckoutIsListedOnceHoweverManyAsk
+--- PASS: TestOneCheckoutIsListedOnceHoweverManyAsk (0.00s)
+=== RUN   TestOneCheckoutByThreeNamesIsListedOnce
+--- PASS: TestOneCheckoutByThreeNamesIsListedOnce (0.00s)
+=== RUN   TestAFailedListingIsNeverKept
+--- PASS: TestAFailedListingIsNeverKept (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/buildcache	1.025s
+exit=0

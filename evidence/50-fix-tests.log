@@ -1,0 +1,14 @@
+1f6fc7575ec69c14937574de09a51b1c8f2709fc
+=== RUN   TestOneCheckoutIsListedOnceHoweverManyAsk
+--- PASS: TestOneCheckoutIsListedOnceHoweverManyAsk (0.01s)
+=== RUN   TestOneCheckoutByThreeNamesIsListedOnce
+--- PASS: TestOneCheckoutByThreeNamesIsListedOnce (0.00s)
+=== RUN   TestAFailedListingIsNeverKept
+--- PASS: TestAFailedListingIsNeverKept (0.00s)
+=== RUN   TestEveryWaiterWakesToTheReadingsAnswer
+--- PASS: TestEveryWaiterWakesToTheReadingsAnswer (0.00s)
+=== RUN   TestAReadingThatPanicsFreesItsWaiters
+--- PASS: TestAReadingThatPanicsFreesItsWaiters (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/buildcache	1.033s
+exit=0

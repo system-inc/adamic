@@ -1,0 +1,32 @@
+== mutant diff
+diff --git a/internal/buildcache/buildcache.go b/internal/buildcache/buildcache.go
+index 60ecdbf2..6b02970e 100644
+--- a/internal/buildcache/buildcache.go
++++ b/internal/buildcache/buildcache.go
+@@ -829,8 +829,9 @@ func repositoryAt(directory string) *trackedFiles {
+ 	run := &repositoryRun{done: make(chan struct{})}
+ 	if found, loaded := repositories.LoadOrStore(key, run); loaded {
+ 		waited := found.(*repositoryRun)
+-		<-waited.done
+-		return waited.files
++		_ = waited
++		files, _ := readRepository(directory)
++		return files
+ 	}
+ 	run.files, run.failed = readRepository(directory)
+ 	close(run.done)
+== test
+=== RUN   TestOneCheckoutIsListedOnceHoweverManyAsk
+    repository_once_test.go:57: one checkout was listed 132 times, want once
+--- FAIL: TestOneCheckoutIsListedOnceHoweverManyAsk (0.01s)
+=== RUN   TestOneCheckoutByThreeNamesIsListedOnce
+    repository_once_test.go:75: one checkout by four spellings was listed 4 times, want once
+--- FAIL: TestOneCheckoutByThreeNamesIsListedOnce (0.00s)
+=== RUN   TestAFailedListingIsNeverKept
+--- PASS: TestAFailedListingIsNeverKept (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/buildcache	0.031s
+FAIL
+exit=1
+== git diff after restore (empty expected):
+restored-clean

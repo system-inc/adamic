@@ -1,0 +1,144 @@
+1f6fc7575ec69c14937574de09a51b1c8f2709fc
+== mutant diff
+diff --git a/internal/buildcache/buildcache.go b/internal/buildcache/buildcache.go
+index cfa97d24..31505db9 100644
+--- a/internal/buildcache/buildcache.go
++++ b/internal/buildcache/buildcache.go
+@@ -862,8 +862,8 @@ func readRepositoryRun(key, directory string, run *repositoryRun) *trackedFiles
+ 		if run.failed {
+ 			repositories.CompareAndDelete(key, run)
+ 		}
+-		close(run.done)
+ 	}()
++	close(run.done)
+ 	run.files, run.failed = readRepository(directory)
+ 	returned = true
+ 	return run.files
+== test
+=== RUN   TestOneCheckoutIsListedOnceHoweverManyAsk
+==================
+WARNING: DATA RACE
+Write at 0x00c000192008 by goroutine 10:
+  github.com/system-inc/adamic/internal/buildcache.readRepositoryRun()
+      github.com/system-inc/adamic/internal/buildcache/buildcache.go:867 +0x144
+  github.com/system-inc/adamic/internal/buildcache.repositoryAt()
+      github.com/system-inc/adamic/internal/buildcache/buildcache.go:837 +0x1b8
+  github.com/system-inc/adamic/internal/buildcache.TestOneCheckoutIsListedOnceHoweverManyAsk.func1()
+      github.com/system-inc/adamic/internal/buildcache/repository_once_test.go:51 +0x38
+
+Previous read at 0x00c000192008 by goroutine 16:
+  github.com/system-inc/adamic/internal/buildcache.repositoryAt()
+      github.com/system-inc/adamic/internal/buildcache/buildcache.go:843 +0x17c
+  github.com/system-inc/adamic/internal/buildcache.TestOneCheckoutIsListedOnceHoweverManyAsk.func1()
+      github.com/system-inc/adamic/internal/buildcache/repository_once_test.go:51 +0x38
+
+Goroutine 10 (running) created at:
+  sync.(*WaitGroup).Go()
+      sync/waitgroup.go:238 +0x72
+  testing.tRunner()
+      testing/testing.go:2193 +0x21c
+  testing.(*T).Run.gowrap1()
+      testing/testing.go:2258 +0x38
+
+Goroutine 16 (finished) created at:
+  sync.(*WaitGroup).Go()
+      sync/waitgroup.go:238 +0x72
+  testing.tRunner()
+      testing/testing.go:2193 +0x21c
+  testing.(*T).Run.gowrap1()
+      testing/testing.go:2258 +0x38
+==================
+    testing.go:1865: race detected during execution of test
+--- FAIL: TestOneCheckoutIsListedOnceHoweverManyAsk (0.00s)
+=== RUN   TestOneCheckoutByThreeNamesIsListedOnce
+--- PASS: TestOneCheckoutByThreeNamesIsListedOnce (0.00s)
+=== RUN   TestAFailedListingIsNeverKept
+--- PASS: TestAFailedListingIsNeverKept (0.00s)
+=== RUN   TestEveryWaiterWakesToTheReadingsAnswer
+==================
+WARNING: DATA RACE
+Write at 0x00c0001455c8 by goroutine 58:
+  github.com/system-inc/adamic/internal/buildcache.readRepositoryRun()
+      github.com/system-inc/adamic/internal/buildcache/buildcache.go:867 +0x144
+  github.com/system-inc/adamic/internal/buildcache.repositoryAt()
+      github.com/system-inc/adamic/internal/buildcache/buildcache.go:837 +0x1b8
+  github.com/system-inc/adamic/internal/buildcache.TestEveryWaiterWakesToTheReadingsAnswer.func3()
+      github.com/system-inc/adamic/internal/buildcache/repository_once_test.go:142 +0x57
+
+Previous read at 0x00c0001455c8 by goroutine 55:
+  github.com/system-inc/adamic/internal/buildcache.repositoryAt()
+      github.com/system-inc/adamic/internal/buildcache/buildcache.go:843 +0x17c
+  github.com/system-inc/adamic/internal/buildcache.TestEveryWaiterWakesToTheReadingsAnswer.func3()
+      github.com/system-inc/adamic/internal/buildcache/repository_once_test.go:142 +0x57
+
+Goroutine 58 (running) created at:
+  sync.(*WaitGroup).Go()
+      sync/waitgroup.go:238 +0x72
+  testing.tRunner()
+      testing/testing.go:2193 +0x21c
+  testing.(*T).Run.gowrap1()
+      testing/testing.go:2258 +0x38
+
+Goroutine 55 (finished) created at:
+  sync.(*WaitGroup).Go()
+      sync/waitgroup.go:238 +0x72
+  testing.tRunner()
+      testing/testing.go:2193 +0x21c
+  testing.(*T).Run.gowrap1()
+      testing/testing.go:2258 +0x38
+==================
+    repository_once_test.go:147: asker 0 of 16 got <nil>, want the listing's one tracked file, a.txt
+    testing.go:1865: race detected during execution of test
+--- FAIL: TestEveryWaiterWakesToTheReadingsAnswer (0.00s)
+=== RUN   TestAReadingThatPanicsFreesItsWaiters
+==================
+WARNING: DATA RACE
+Write at 0x00c00048a119 by goroutine 62:
+  github.com/system-inc/adamic/internal/buildcache.readRepositoryRun.func1()
+      github.com/system-inc/adamic/internal/buildcache/buildcache.go:859 +0x71
+  runtime.gopanic()
+      runtime/panic.go:859 +0x124
+  github.com/system-inc/adamic/internal/buildcache.readRepository.func2()
+      github.com/system-inc/adamic/internal/buildcache/buildcache.go:891 +0x6d
+  github.com/system-inc/adamic/internal/buildcache.keying()
+      github.com/system-inc/adamic/internal/buildcache/trace.go:53 +0x152
+  github.com/system-inc/adamic/internal/buildcache.readRepository()
+      github.com/system-inc/adamic/internal/buildcache/buildcache.go:891 +0x431
+  github.com/system-inc/adamic/internal/buildcache.readRepositoryRun()
+      github.com/system-inc/adamic/internal/buildcache/buildcache.go:867 +0x124
+  github.com/system-inc/adamic/internal/buildcache.repositoryAt()
+      github.com/system-inc/adamic/internal/buildcache/buildcache.go:837 +0x1b8
+  github.com/system-inc/adamic/internal/buildcache.TestAReadingThatPanicsFreesItsWaiters.func3()
+      github.com/system-inc/adamic/internal/buildcache/repository_once_test.go:189 +0xb3
+
+Previous read at 0x00c00048a119 by goroutine 63:
+  github.com/system-inc/adamic/internal/buildcache.repositoryAt()
+      github.com/system-inc/adamic/internal/buildcache/buildcache.go:842 +0x164
+  github.com/system-inc/adamic/internal/buildcache.TestAReadingThatPanicsFreesItsWaiters.func3()
+      github.com/system-inc/adamic/internal/buildcache/repository_once_test.go:189 +0xb3
+
+Goroutine 62 (running) created at:
+  github.com/system-inc/adamic/internal/buildcache.TestAReadingThatPanicsFreesItsWaiters()
+      github.com/system-inc/adamic/internal/buildcache/repository_once_test.go:186 +0x2fa
+  testing.tRunner()
+      testing/testing.go:2193 +0x21c
+  testing.(*T).Run.gowrap1()
+      testing/testing.go:2258 +0x38
+
+Goroutine 63 (running) created at:
+  github.com/system-inc/adamic/internal/buildcache.TestAReadingThatPanicsFreesItsWaiters()
+      github.com/system-inc/adamic/internal/buildcache/repository_once_test.go:186 +0x2fa
+  testing.tRunner()
+      testing/testing.go:2193 +0x21c
+  testing.(*T).Run.gowrap1()
+      testing/testing.go:2258 +0x38
+==================
+    repository_once_test.go:205: the asker waiting on a reading that panicked got <nil>, want the next reading's a.txt
+    testing.go:1865: race detected during execution of test
+--- FAIL: TestAReadingThatPanicsFreesItsWaiters (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/buildcache	0.031s
+FAIL
+exit=1
+== git diff after restore (empty expected):
+restored-clean

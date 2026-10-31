@@ -1,0 +1,35 @@
+2838  execve("/tmp/adamic-gate/bin/oracles.head", ["/tmp/adamic-gate/bin/oracles.hea"..., "-test.run", "^TestProduct_HelperOracle$", "-test.count=1", "-test.v"], 0x7fffa748f410 /* 177 vars */) = 0
+2846  execve("/usr/local/go/bin/go", ["/usr/local/go/bin/go", "list", "-deps", "-json", "-overlay=/tmp/adamic-gate/TestPr"..., "/home/user/adamic/cohere/adamic_"..., "/home/user/adamic/cohere/adamic_"...], 0x155e3c47c2d0 /* 16 vars */) = 0
+2848  execve("/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.0.linux-amd64/bin/go", ["/usr/local/go/bin/go", "list", "-deps", "-json", "-overlay=/tmp/adamic-gate/TestPr"..., "/home/user/adamic/cohere/adamic_"..., "/home/user/adamic/cohere/adamic_"...], 0xc000268000 /* 22 vars */ <pid changed to 2846 ...>
+2846  +++ superseded by execve in pid 2848 +++
+2846  <... execve resumed>)             = 0
+2858  execve("/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.0.linux-amd64/pkg/tool/linux_amd64/compile", ["/root/go/pkg/mod/golang.org/tool"..., "-V=full"], 0x3fb9b8b10000 /* 39 vars */) = 0
+2864  execve("/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.0.linux-amd64/pkg/tool/linux_amd64/asm", ["/root/go/pkg/mod/golang.org/tool"..., "-V=full"], 0x3fb9b85c9180 /* 39 vars */) = 0
+2870  execve("/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.0.linux-amd64/pkg/tool/linux_amd64/cgo", ["/root/go/pkg/mod/golang.org/tool"..., "-V=full"], 0x3fb9b85c9180 /* 39 vars */) = 0
+2875  execve("/opt/adamic-tools/bin/clang", ["clang", "-###", "-x", "c", "-c", "-"], 0x3fb9b8a4c160 /* 40 vars */) = 0
+2876  execve("/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.0.linux-amd64/pkg/tool/linux_amd64/link", ["/root/go/pkg/mod/golang.org/tool"..., "-V=full"], 0x3fb9b8a1e000 /* 39 vars */) = 0
+2881  execve("/usr/local/go/bin/go", ["/usr/local/go/bin/go", "work", "edit", "-json", "/home/user/adamic/go.work"], 0x155e3c3f4000 /* 16 vars */) = 0
+2881  execve("/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/bin/go", ["/usr/local/go/bin/go", "work", "edit", "-json", "/home/user/adamic/go.work"], 0xc0001280c0 /* 22 vars */) = 0
+2890  execve("/usr/local/go/bin/go", ["/usr/local/go/bin/go", "work", "edit", "-json", "/home/user/adamic/cohere/go.work"], 0x155e3c616090 /* 16 vars */) = 0
+2890  execve("/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/bin/go", ["/usr/local/go/bin/go", "work", "edit", "-json", "/home/user/adamic/cohere/go.work"], 0xc0001bc000 /* 22 vars */) = 0
+2899  execve("/usr/local/go/bin/go", ["/usr/local/go/bin/go", "env", "-json", "GOVERSION", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "GOEXPERIMENT", "GOFLAGS", "GOWORK", "CGO_ENABLED", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOTOOLCHAIN"], 0x155e3c47c3f0 /* 16 vars */) = 0
+2904  execve("/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.0.linux-amd64/bin/go", ["/usr/local/go/bin/go", "env", "-json", "GOVERSION", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "GOEXPERIMENT", "GOFLAGS", "GOWORK", "CGO_ENABLED", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOTOOLCHAIN"], 0xc00012a0c0 /* 22 vars */ <pid changed to 2899 ...>
+2899  +++ superseded by execve in pid 2904 +++
+2899  <... execve resumed>)             = 0
+2910  execve("/opt/adamic-tools/bin/clang", ["clang", "-###", "-x", "c", "-c", "-"], 0x18750d4c8000 /* 40 vars */) = 0
+2911  execve("/usr/local/go/bin/go", ["/usr/local/go/bin/go", "work", "edit", "-json", "/home/user/adamic/cohere/go.work"], 0x155e3c548000 /* 16 vars */) = 0
+2911  execve("/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/bin/go", ["/usr/local/go/bin/go", "work", "edit", "-json", "/home/user/adamic/cohere/go.work"], 0xc00023a000 /* 22 vars */) = 0
+2921  execve("/usr/local/go/bin/go", ["/usr/local/go/bin/go", "version"], 0x155e3c5481b0 /* 16 vars */) = 0
+2926  execve("/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/bin/go", ["/usr/local/go/bin/go", "version"], 0xc0000d20c0 /* 22 vars */ <pid changed to 2921 ...>
+2921  +++ superseded by execve in pid 2926 +++
+2921  <... execve resumed>)             = 0
+2931  execve("/opt/adamic-tools/bin/clang", ["/opt/adamic-tools/bin/clang", "--version"], 0x155e3c548240 /* 16 vars */) = 0
+2932  execve("/usr/bin/git", ["/usr/bin/git", "-C", "/home/user/adamic/cohere", "ls-files", "-s", "-v", "-z"], 0x155e3c5c0480 /* 10 vars */) = 0
+2933  execve("/usr/bin/git", ["/usr/bin/git", "-C", "/home/user/adamic/cohere", "diff-files", "--name-only", "-z"], 0x155e3c4363c0 /* 10 vars */) = 0
+2944  execve("/usr/lib/git-core/git", ["/usr/lib/git-core/git", "status", "--porcelain=2", "-uno"], 0x55c43b248df0 /* 12 vars */) = 0
+2968  execve("/usr/bin/git", ["/usr/bin/git", "-C", "/home/user/adamic/cohere/TypeScr"..., "ls-files", "-s", "-v", "-z"], 0x155e3c436360 /* 10 vars */) = 0
+2970  execve("/usr/bin/git", ["/usr/bin/git", "-C", "/home/user/adamic/cohere/TypeScr"..., "diff-files", "--name-only", "-z"], 0x155e3c436480 /* 10 vars */) = 0
+2991  execve("/usr/bin/git", ["/usr/bin/git", "-C", "/home/user/adamic", "ls-files", "-s", "-v", "-z"], 0x155e3c436360 /* 10 vars */) = 0
+2992  execve("/usr/bin/git", ["/usr/bin/git", "-C", "/home/user/adamic", "diff-files", "--name-only", "-z"], 0x155e3c436480 /* 10 vars */) = 0
+3013  execve("/usr/lib/git-core/git", ["/usr/lib/git-core/git", "status", "--porcelain=2", "-uno"], 0x5643e0f85a20 /* 12 vars */) = 0
+3024  execve("/usr/lib/git-core/git", ["/usr/lib/git-core/git", "status", "--porcelain=2", "-uno"], 0x55db7b0900c0 /* 12 vars */) = 0

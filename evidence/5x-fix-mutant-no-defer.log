@@ -1,0 +1,45 @@
+1f6fc7575ec69c14937574de09a51b1c8f2709fc
+== mutant diff
+diff --git a/internal/buildcache/buildcache.go b/internal/buildcache/buildcache.go
+index cfa97d24..bdf5b0d4 100644
+--- a/internal/buildcache/buildcache.go
++++ b/internal/buildcache/buildcache.go
+@@ -854,7 +854,7 @@ var waitingOnRepository = func() {}
+ // free is deferred so that a panic in the reading frees them too, and the panic goes on.
+ func readRepositoryRun(key, directory string, run *repositoryRun) *trackedFiles {
+ 	returned := false
+-	defer func() {
++	free := func() {
+ 		if !returned {
+ 			run.panicked = true
+ 			run.failed = true
+@@ -863,9 +863,10 @@ func readRepositoryRun(key, directory string, run *repositoryRun) *trackedFiles
+ 			repositories.CompareAndDelete(key, run)
+ 		}
+ 		close(run.done)
+-	}()
++	}
+ 	run.files, run.failed = readRepository(directory)
+ 	returned = true
++	free()
+ 	return run.files
+ }
+ 
+== test
+=== RUN   TestOneCheckoutIsListedOnceHoweverManyAsk
+--- PASS: TestOneCheckoutIsListedOnceHoweverManyAsk (0.00s)
+=== RUN   TestOneCheckoutByThreeNamesIsListedOnce
+--- PASS: TestOneCheckoutByThreeNamesIsListedOnce (0.00s)
+=== RUN   TestAFailedListingIsNeverKept
+--- PASS: TestAFailedListingIsNeverKept (0.00s)
+=== RUN   TestEveryWaiterWakesToTheReadingsAnswer
+--- PASS: TestEveryWaiterWakesToTheReadingsAnswer (0.00s)
+=== RUN   TestAReadingThatPanicsFreesItsWaiters
+    repository_once_test.go:209: an asker of a reading that panicked never got an answer: its waiters were never freed
+--- FAIL: TestAReadingThatPanicsFreesItsWaiters (30.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/buildcache	30.032s
+FAIL
+exit=1
+== git diff after restore (empty expected):
+restored-clean
