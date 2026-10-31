@@ -135,6 +135,9 @@ func TestDelayedArrayWritesAreJudgedAsTheirDirectTwins(t *testing.T) {
 		// so as and satisfies launder no view through a delayed write either (Language's c7d and c8d).
 		{"c7d as", "const inner: string[] = []; const outer: (string | number)[][] = [];", "push.call(outer, inner as string[]);", "outer.push(inner as string[]);"},
 		{"c8d satisfies", "const inner: string[] = []; const outer: (string | number)[][] = [];", "push.call(outer, inner satisfies string[]);", "outer.push(inner satisfies string[]);"},
+		// A Node host object is judged against the element it's written into, not the declared parameter
+		// lib's any gives call (nodeHostDeclaredArgument asks slotSet; Lower's pin).
+		{"a node host object", "import { performance } from \"node:perf_hooks\";\ntype View = { eventLoopUtilization(): { readonly idle: number } };\nconst views: View[] = [];", "push.call(views, performance);", "views.push(performance);"},
 		// The value was judged already, honestly, at a direct write: the delayed verdict doesn't lean on it.
 		{"h7 after an honest direct write", "const named = { a: 1 }; const plain: { a: number }[] = []; plain.push(named); const records: Record<string, number>[] = [];", "push.call(records, named);", "records.push(named);"},
 	} {
