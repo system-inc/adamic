@@ -182,13 +182,6 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 					if !known || (of != ir.Number && of != ir.Boolean && of != ir.String) || !l.enumAssignable(fromType, toType) || !l.enumAssignable(toType, fromType) || !l.checker.IsTypeAssignableTo(fromType, toType) || !l.checker.IsTypeAssignableTo(toType, fromType) {
 						return refused("source and target field types must agree in both directions with tsc's intersection result; widening, conflicting fields and reference cycles are refused")
 					}
-					// adamic_object_assign retains and releases by the source slot's reference flag, so a
-					// name must be held alike on both sides. The number, string and boolean fields agreeing
-					// both ways above always are, so no program reaches this: it guards the day the field
-					// rule widens, until the runtime stores by the target's own flag.
-					if held, isKnown := l.representation(toType); !isKnown || held != of {
-						return nil, true, l.notYet(argument, "Object.assign of field "+field.Name+", held as a "+typeName(of)+" in the source and otherwise in the target")
-					}
 				}
 				lowered, err := l.expression(argument)
 				if err != nil {
