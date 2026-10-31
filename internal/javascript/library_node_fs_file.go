@@ -11,6 +11,8 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 		args[i] = e.value(arg)
 	}
 	switch call.Operation {
+	case "host_stdout_columns":
+		return "adamicNodeProcess.stdout.columns"
 	case "host_stdout_is_tty":
 		return "adamicNodeProcess.stdout.isTTY"
 	case "host_stdout_write":

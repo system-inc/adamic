@@ -364,6 +364,7 @@ func TestProcessEnvironmentWrites(t *testing.T) {
 		want      bool
 	}{
 		{"host_env", false}, {"host_env_set", true}, {"host_env_delete", true},
+		{"host_stdout_columns", false},
 	} {
 		t.Run(one.operation, func(t *testing.T) {
 			t.Parallel()
