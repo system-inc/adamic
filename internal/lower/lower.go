@@ -226,6 +226,9 @@ type lowering struct {
 	// objectIntersections are the intersections objectIntersection is proving, so a field that
 	// holds one of them again ends there.
 	objectIntersections map[*checker.Type]bool
+	// intersectionViewDepth is how many intersections' view contracts are being built, each inside
+	// a field of the one before (view_lazy.go's intersectionViewDepthBound).
+	intersectionViewDepth int
 
 	program          *load.Program
 	checker          *checker.Checker
