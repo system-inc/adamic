@@ -187,6 +187,7 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 				if err != nil {
 					return nil, true, err
 				}
+				l.wholeObjectCopies = append(l.wholeObjectCopies, wholeObjectCopy{node: argument, source: lowered, copied: l.concrete(source)})
 				call.Arguments = append(call.Arguments, lowered)
 			}
 			call.Returns = ir.Object
