@@ -14,5 +14,4 @@ function stamp(node: Node): string {
 const raw = { kind: 205, argument: { kind: 201, literal: 11, token: "fs", text: "node:fs", flags: "two" } };
 console.log(stamp({ kind: 1 }));
 console.log(stamp(raw));
-const after: string = raw.argument.flags;
-console.log(`${typeof after}`);
+console.log(`${typeof raw.argument.flags}`);

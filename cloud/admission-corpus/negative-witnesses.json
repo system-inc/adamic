@@ -132,6 +132,54 @@
       "type_correct_sha256": "fabaf22ea00dddb1b72e28ff3eda23191a8466c8bd59b2d3de8f7dd95789c929",
       "exit": 70,
       "stderr": "adamic: panic: field read failed: specifier(node)?.name matches no member of Identifier | StringLiteral; expected Identifier | StringLiteral, found boolean\n"
+    },
+    "b18a827ebcc79e32d13457d13595fd9a9e71796bd5a5d43d3cb40d4530a4d99c": {
+      "form": "checked_boundary",
+      "ruling_task": "#qqvq6n7",
+      "ruling": "Adamic, Oct 30, on #c7w6j0y: a lie in a refined field of an intersection view stops at its read",
+      "declaration": "internal/oracle/testdata/intersection_views_stops/nested_literal.ts:5",
+      "declared_type": "11",
+      "repair_from": "literal: 12,",
+      "repair_to": "literal: 11,",
+      "type_correct_sha256": "740c1469d93e6a0bfb5cecbb992a9433e0c0a50a375e9b079fa56d8fdd5592f1",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: imported.argument.literal expected 11, found number 12\n"
+    },
+    "4d41063c70c95e0ef75d01deb06dc313004297176ee325006b34a3922d6aed30": {
+      "form": "checked_boundary",
+      "ruling_task": "#qqvq6n7",
+      "ruling": "Adamic, Oct 30, on #c7w6j0y: a lie in a refined field of an intersection view stops at its read",
+      "declaration": "internal/oracle/testdata/intersection_views_stops/nested_boolean.ts:5",
+      "declared_type": "true",
+      "repair_from": "isTypeOnly: false",
+      "repair_to": "isTypeOnly: true",
+      "type_correct_sha256": "a734b0b1133c001a73cc079a45c7787dc56caad4b698e6b57225033b7389c15c",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: declaration.clause.isTypeOnly expected true, found boolean false\n"
+    },
+    "04766bc317cb71654cff8cd750f3587c7c7681268d67182df25145ea571f7118": {
+      "form": "checked_boundary",
+      "ruling_task": "#qqvq6n7",
+      "ruling": "Adamic, Oct 30, on #c7w6j0y: a lie in a refined field of an intersection view stops at its read",
+      "declaration": "internal/oracle/testdata/intersection_views_stops/nested_token.ts:5",
+      "declared_type": "string",
+      "repair_from": "token: 7,",
+      "repair_to": "token: \"fs\",",
+      "type_correct_sha256": "1f12735cbf62d3177310186fa89ade0e572ebae5037dc37ce8f2c9bbc621c994",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: imported.argument.token is not a string; expected string, found number\n"
+    },
+    "22fa275c7ed3e1a3094004078a243531917f4ecea2b0d60767f07a8fc79d362a": {
+      "form": "checked_boundary",
+      "ruling_task": "#qqvq6n7",
+      "ruling": "Adamic, Oct 30, on #c7w6j0y: a lie in a refined field of an intersection view stops at its read",
+      "declaration": "internal/oracle/testdata/intersection_views_stops/nested_write.ts:3",
+      "declared_type": "number",
+      "repair_from": "flags: \"two\"",
+      "repair_to": "flags: 2",
+      "type_correct_sha256": "d98cadfd7b621481a9b15dd922cb5659887f49fbc6419bae9fd982444cd7f13d",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: <write>.flags is not a number; expected number, found string\n"
     }
   }
 }
