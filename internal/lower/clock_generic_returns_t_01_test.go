@@ -47,9 +47,10 @@ func TestClockGenericReturnsT01Shapes(t *testing.T) {
 		_, err := lowerSource(t, `interface Base<T> { readonly token: T; }
 function make(): (Base<"="> & { readonly left: { readonly text: string } }) | undefined | null { return null; }
 console.log(typeof make());`)
-		var stop *NotYet
-		if !errors.As(err, &stop) {
-			t.Fatalf("want a distinct null/undefined representation stop, got %v", err)
+		// The intersection is an object, so the union is the boxed one that keeps null apart from
+		// undefined (object_intersection_fields/null_distinct.a holds that to Node on both backends).
+		if err != nil {
+			t.Fatal(err)
 		}
 	})
 

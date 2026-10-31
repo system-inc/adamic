@@ -1,0 +1,21 @@
+// A spread copy of an intersection holds its object and array fields once more: the original
+// dropped first while the copy lives on, then the copy dropped first while the original does.
+interface Label { readonly text: string; }
+interface Base { readonly kind: 1; readonly label: Label; }
+type Tagged = Base & { readonly tags: readonly string[] };
+function keepCopy(text: string): Tagged {
+    const original: Tagged = { kind: 1, label: { text: text }, tags: [text + '!'] };
+    const copy: Tagged = { ...original };
+    console.log(`${original.label.text} ${copy.label === original.label}`);
+    return copy;
+}
+function keepOriginal(text: string): Tagged {
+    const original: Tagged = { kind: 1, label: { text: text }, tags: [text, text] };
+    const copy: Tagged = { ...original, tags: [text] };
+    console.log(`${copy.label.text} ${copy.tags.length} ${copy.label === original.label}`);
+    return original;
+}
+const copied = keepCopy('built' + '-first');
+console.log(`${copied.label.text} ${copied.tags[0]}`);
+const kept = keepOriginal('built' + '-second');
+console.log(`${kept.label.text} ${kept.tags.length}`);
