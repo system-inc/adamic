@@ -209,7 +209,12 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 		origins := len(l.result.ViewOrigins)
 		defer func() { l.result.ViewOrigins = l.result.ViewOrigins[:origins] }()
 		if checked, err := l.interfaceCast(node, ir.Read{Of: ir.Object}, source, target); checked != nil || err != nil {
-			return castProof{interfaceView: checked != nil}, err
+			proof := castProof{interfaceView: checked != nil}
+			// The tag the view tests, which .a's refusal names in the narrowing it offers.
+			if cast, isCast := checked.(ir.CheckedCast); isCast {
+				proof.field = cast.Field
+			}
+			return proof, err
 		}
 		from, fromKnown := l.representation(source)
 		to, toKnown := l.representation(target)
