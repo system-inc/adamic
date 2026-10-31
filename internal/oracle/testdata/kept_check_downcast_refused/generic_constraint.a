@@ -1,0 +1,10 @@
+// a-check: refused PLACEHOLDER
+// Language's attack: a downcast inside an .a generic whose source is a type parameter, which the walk
+// that refuses sees before any instantiation is lowered.
+type Circle = { readonly kind: 'Circle'; readonly radius: number };
+type Square = { readonly kind: 'Square'; readonly side: number };
+type Shape = Circle | Square;
+function radius<T extends Shape>(shape: T): number {
+	return (shape as Circle).radius;
+}
+console.log(`radius ${radius({ kind: 'Circle', radius: 2 })}`);

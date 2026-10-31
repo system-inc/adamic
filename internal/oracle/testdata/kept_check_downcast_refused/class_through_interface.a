@@ -1,0 +1,15 @@
+// a-check: refused PLACEHOLDER
+// Language's attack: a class downcast that looks nominal but crosses a structural interface. Circle
+// implements Area, but an Area is any object with an area, never known to be a Circle, so there is no
+// nominal ancestry for an identity test to follow.
+interface Area { readonly area: number; }
+class Circle implements Area {
+	readonly area: number;
+	constructor(readonly radius: number) {
+		this.area = 3 * radius * radius;
+	}
+}
+function radius(shape: Area): number {
+	return (shape as Circle).radius;
+}
+console.log(`radius ${radius(new Circle(2))}`);

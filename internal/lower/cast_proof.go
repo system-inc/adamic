@@ -2,6 +2,7 @@ package lower
 
 import (
 	"reflect"
+	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -21,7 +22,14 @@ type castProof struct {
 	speculation    bool
 }
 
-const castRepair = "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+// castRepair is the fix a refused cast names, by file kind. In .a a cast to a union member is refused too
+// (keptCheckDowncastRefusal), so .a narrows by the tag; .ts keeps the checked member cast.
+func (l *lowering) castRepair(node *ast.Node) string {
+	if strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a") {
+		return "use a proven upcast, narrow a discriminated union by its tag (`if (shape.kind !== 'Circle') panic('why')`), downcast along nominal class ancestry, or move the file to `.ts`, where a member cast is checked (adamic/no-unchecked-cast)"
+	}
+	return "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+}
 
 func (l *lowering) castAssignable(source, target *checker.Type) bool {
 	return l.classAssignable(source, target) && l.enumAssignable(source, target) && l.widened(source, target, map[[2]*checker.Type]bool{}) == nil && l.castOptionalFields(source, target, map[[2]*checker.Type]bool{}) && l.optionalRelationFailure(source, target, nil, map[[2]*checker.Type]bool{}) == ""
@@ -128,7 +136,7 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	if l.phantomCast(source, target) {
 		return castProof{}, nil
 	}
-	refused := &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: castRepair}
+	refused := &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: l.castRepair(node)}
 	inner := ast.SkipParentheses(as.Expression)
 	if inner.Kind == ast.KindAsExpression && l.checker.GetTypeAtLocation(inner).Flags()&checker.TypeFlagsUnknown != 0 {
 		return castProof{}, refused
@@ -161,12 +169,12 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 		rawSource, rawTarget := l.checker.GetTypeAtLocation(as.Expression), l.checker.GetTypeAtLocation(node)
 		if !allClasses || l.optionalRelationFailure(rawSource, rawTarget, as.Expression, map[[2]*checker.Type]bool{}) != "" || l.freshOrWidened(as.Expression, rawSource, rawTarget) != nil {
 			if reason, ok := err.(*Refused); ok {
-				reason.Fix += "; " + castRepair
+				reason.Fix += "; " + l.castRepair(node)
 			}
 			return castProof{}, err
 		}
 		if reason, ok := err.(*Refused); ok {
-			reason.Fix += "; " + castRepair
+			reason.Fix += "; " + l.castRepair(node)
 		}
 		upcastFailure = err
 	}
@@ -174,7 +182,7 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	if !allClasses && l.checker.IsTypeAssignableTo(source, target) {
 		if err := l.refuseWidening(node); err != nil {
 			if reason, ok := err.(*Refused); ok {
-				reason.Fix += "; " + castRepair
+				reason.Fix += "; " + l.castRepair(node)
 			}
 			return castProof{}, err
 		}
@@ -321,7 +329,7 @@ func (l *lowering) checkedClassCast(node *ast.Node, value ir.Expression, targets
 	for _, target := range targets {
 		declaration := l.classNodeFor(target)
 		if declaration == nil || declaration.Kind != ast.KindClassDeclaration {
-			return nil, &Refused{Where: l.program.Where(node), What: "a cast without a declared class identity", Fix: castRepair}
+			return nil, &Refused{Where: l.program.Where(node), What: "a cast without a declared class identity", Fix: l.castRepair(node)}
 		}
 		if len(declaration.TypeParameters()) > 0 {
 			identities = append(identities, l.classIdentity(declaration))

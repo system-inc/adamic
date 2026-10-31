@@ -33,10 +33,14 @@ func TestUncheckableCastsStayRefused(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			_, err := lowerSource(t, probe.source)
-			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/no-unchecked-cast") || !strings.Contains(err.Error(), "enum tags") || !strings.Contains(err.Error(), "nominal class ancestry") {
-				t.Fatalf("want unchecked-cast refusal and accepted forms, got %v", err)
+			// The fix names the forms each file kind accepts: .a narrows by the tag, since a member cast is
+			// refused there too (#m8dvvmf), and .ts casts to a member, which stays checked.
+			for extension, accepted := range map[string]string{".a": "narrow a discriminated union by its tag", ".ts": "enum tags"} {
+				_, err := lowerSourceAs(t, probe.source, extension)
+				var refused *Refused
+				if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/no-unchecked-cast") || !strings.Contains(err.Error(), accepted) || !strings.Contains(err.Error(), "nominal class ancestry") {
+					t.Fatalf("%s: want unchecked-cast refusal and accepted forms, got %v", extension, err)
+				}
 			}
 		})
 	}

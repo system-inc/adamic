@@ -1,0 +1,11 @@
+// a-check: refused PLACEHOLDER
+// Language's attack: a downcast inside satisfies. satisfies only checks its operand, so the cast inside
+// it is still a tag test no proof erases.
+type Circle = { readonly kind: 'Circle'; readonly radius: number };
+type Square = { readonly kind: 'Square'; readonly side: number };
+type Shape = Circle | Square;
+function radius(shape: Shape): number {
+	const circle = (shape as Circle) satisfies Circle;
+	return circle.radius;
+}
+console.log(`radius ${radius({ kind: 'Circle', radius: 2 })}`);

@@ -135,7 +135,7 @@ func TestGettersCensusBinaryFunction(t *testing.T) {
 
 func TestGettersCensusOverloadedFunction(t *testing.T) {
 	t.Parallel()
-	observeGettersCensus(t, "overloaded_function", "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)", "10\n")
+	observeGettersCensus(t, "overloaded_function", "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, narrow a discriminated union by its tag (`if (shape.kind !== 'Circle') panic('why')`), downcast along nominal class ancestry, or move the file to `.ts`, where a member cast is checked (adamic/no-unchecked-cast)", "10\n")
 }
 
 func TestGettersCensusUnaryFunction(t *testing.T) {

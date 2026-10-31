@@ -1,4 +1,4 @@
-// Spec: a downcast whose tag test is vacuous
+// Spec: stage 1 refused a vacuous tag test
 // Expect: lowers
 interface Root { readonly kind: 'Holder'; }
 interface View extends Root { count: number; }
