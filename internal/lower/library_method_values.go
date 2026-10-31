@@ -371,11 +371,12 @@ var delayedArrayReaders = map[string]bool{"slice": true, "join": true, "at": tru
 // any[], so a method value taken from it has any parameters, and the checker never checks what call or
 // apply hands it: push.call(names, { x: 1 }) writes an object into a string[], which native then reads
 // as a string (#gw3yrsn, Language's k10). So each value a writer stores into the receiver must be
-// assignable to the receiver's own element type, and then pass the argument site's own check against it
-// (slotRelation), since tsc's relation alone admits what Adamic refuses, such as a string[] seen as a
-// (string | number)[]: push's arguments, fill's value, splice's items from the third on,
-// and each array concat appends, by its elements. A reader stores nothing: slice's result goes through
-// the delayed result check, and the searches only compare.
+// assignable to the receiver's own element type, as the checker would have judged the direct write, and
+// then is judged by the whole refusal registry with that element type as its slot (refuseInSlot), since
+// tsc's relation alone admits what Adamic refuses, such as a string[] seen as a (string | number)[]:
+// push's arguments, fill's value, splice's items from the third on, and each array concat appends, as
+// the receiver's own array type. A reader stores nothing: slice's result goes through the delayed result
+// check, and the searches only compare.
 func (l *lowering) delayedArrayWritesFit(node, receiver *ast.Node, name string, written []*ast.Node) error {
 	if delayedArrayReaders[name] {
 		return nil
@@ -400,11 +401,8 @@ func (l *lowering) delayedArrayWritesFit(node, receiver *ast.Node, name string, 
 			if element == nil || inside == nil || !l.checker.IsTypeAssignableTo(inside, element) {
 				return l.notYet(other, "a delayed concat of an array whose elements aren't the receiver's element type")
 			}
-			if err := l.slotRelation(other, other, l.checker.GetTypeAtLocation(receiver)); err != nil {
+			if err := l.refuseInSlot(other, l.checker.GetTypeAtLocation(receiver)); err != nil {
 				return err
-			}
-			if inside != element || !l.sameKeeping(inside, element, map[[2]*checker.Type]bool{}) {
-				return l.notYet(other, "a delayed concat of an array whose elements aren't the receiver's element type itself")
 			}
 		}
 		return nil
@@ -413,18 +411,12 @@ func (l *lowering) delayedArrayWritesFit(node, receiver *ast.Node, name string, 
 		if element == nil || !l.checker.IsTypeAssignableTo(l.checker.GetTypeAtLocation(value), element) {
 			return l.notYet(value, "a delayed "+name+" writing a value that isn't the receiver's element type")
 		}
-		// The argument site's own check, against the slot lib's any hides: invariance, optional fields,
-		// nominal classes and void widening (Language's must on c8f64485).
-		if err := l.slotRelation(value, value, element); err != nil {
+		// The argument site's own checks, every rule of them, against the slot lib's any hides:
+		// invariance, optional fields, nominal classes, void widening, record storage (Language's h7, a
+		// crash in map.c natively when a second list beside the registry forgot it) and whatever is
+		// registered after them.
+		if err := l.refuseInSlot(value, element); err != nil {
 			return err
-		}
-		// slotRelation names some of the argument site's rules, and a list fails open on the rule it
-		// doesn't name: record storage let a fixed object into a Record<string, number>[] (Language's h7,
-		// a crash in map.c natively). Until the registry itself judges a delayed write (l.slotType), the
-		// value's widened type, its literals at their base type ("c" as string), must be the element type itself,
-		// so no rule's road is open (Adamic's ruling).
-		if widened := checker.Checker_getBaseTypeOfLiteralType(l.checker, l.checker.GetWidenedType(l.checker.GetTypeAtLocation(value))); widened != element || !l.sameKeeping(widened, element, map[[2]*checker.Type]bool{}) {
-			return l.notYet(value, "a delayed "+name+" writing a value whose type isn't the receiver's element type itself")
 		}
 	}
 	return nil
