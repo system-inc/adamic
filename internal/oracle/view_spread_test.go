@@ -15,16 +15,18 @@ import (
 // view_spread.ts and sanitized native died in AddressSanitizer reading c.text. A whole-object copy of a value of a
 // view's receiver type is now NotYet at the copy (internal/lower/view_copies.go), decided once lowering is done, so a
 // copy in a function lowered before the cast (view_spread_parameter.ts) is caught too, as is a checked predicate's
-// view (view_spread_predicate.ts). The fixtures sit in reland_refused, since they don't lower and the flow and fresh
-// corpora lower every program in testdata. Mutant: checkViewCopies returning nil at once; with it applied, this test
-// goes red, and ADAMIC_VIEW_SPREAD_MUTANT=1 holds the mutant's admitted programs to Node on sanitized and release
-// native to show the crash.
+// view (view_spread_predicate.ts). A copy through a wider type that names a checked field, of a value that may be a
+// viewed allocation, is NotYet too (view_spread_supertype.ts). The fixtures sit in reland_refused, since they don't
+// lower and the flow and fresh corpora lower every program in testdata. Mutant: checkViewCopies returning nil at once;
+// with it applied, this test goes red, and ADAMIC_VIEW_SPREAD_MUTANT=1 holds the mutant's admitted programs to Node on
+// sanitized and release native to show the crash.
 func TestViewSpreadNotYet(t *testing.T) {
 	t.Parallel()
-	for _, probe := range []struct{ file, at, view string }{
-		{"view_spread.ts", "3:84", "Lit"},
-		{"view_spread_parameter.ts", "3:34", "Lit"},
-		{"view_spread_predicate.ts", "4:60", "Lit"},
+	for _, probe := range []struct{ file, at, what string }{
+		{"view_spread.ts", "3:84", "a whole-object copy of a value of checked view type Lit"},
+		{"view_spread_parameter.ts", "3:34", "a whole-object copy of a value of checked view type Lit"},
+		{"view_spread_predicate.ts", "4:60", "a whole-object copy of a value of checked view type Lit"},
+		{"view_spread_supertype.ts", "4:106", "a whole-object copy of a value of type HasText that may hold a checked view's value"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()
@@ -51,8 +53,33 @@ func TestViewSpreadNotYet(t *testing.T) {
 				return
 			}
 			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.file+":"+probe.at) || !strings.Contains(err.Error(), "a whole-object copy of a value of checked view type "+probe.view) {
+			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.file+":"+probe.at) || !strings.Contains(err.Error(), probe.what) {
 				t.Fatalf("want the whole-object copy NotYet at the spread, got %v", err)
+			}
+		})
+	}
+}
+
+// The other whole-object copies of a viewed value stop before they lower: Object.assign takes only a source whose
+// shape a literal proves, and destructuring takes no rest binding. They stay refused at those rules.
+func TestViewCopyVariantsRefused(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ file, at, what string }{
+		{"view_spread_assign.ts", "3:122", "each source must have its complete shape proven by a literal or const binding"},
+		{"view_spread_rest.ts", "3:86", "a destructured name that isn't plain"},
+	} {
+		t.Run(probe.file, func(t *testing.T) {
+			t.Parallel()
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if truth := onNode(t, path); disagreement(run{stdout: []byte("5\n")}, truth) != "" {
+				t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
+			}
+			_, err = lowered(t, path)
+			if err == nil || !strings.Contains(err.Error(), probe.file+":"+probe.at) || !strings.Contains(err.Error(), probe.what) {
+				t.Fatalf("want the copy refused at %s, got %v", probe.at, err)
 			}
 		})
 	}
