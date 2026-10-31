@@ -1,0 +1,39 @@
+=== RUN   TestATreeThatChangedDuringTheRunRefusesIt
+=== RUN   TestATreeThatChangedDuringTheRunRefusesIt/a_submodule's_dirty_file_edited_again
+    precise_test.go:1780: build port 7d625b7dcd46 miss 0.00
+=== RUN   TestATreeThatChangedDuringTheRunRefusesIt/a_package_upgraded
+    precise_test.go:1780: build port 7d625b7dcd46 miss 0.00
+=== RUN   TestATreeThatChangedDuringTheRunRefusesIt/a_commit
+    precise_test.go:1780: build port 7d625b7dcd46 miss 0.00
+=== RUN   TestATreeThatChangedDuringTheRunRefusesIt/an_edit
+    precise_test.go:1780: build port 7d625b7dcd46 miss 0.00
+=== RUN   TestATreeThatChangedDuringTheRunRefusesIt/an_untracked_file
+    precise_test.go:1780: build port 7d625b7dcd46 miss 0.00
+=== RUN   TestATreeThatChangedDuringTheRunRefusesIt/a_dirty_file_edited_again
+    precise_test.go:1780: build port 7d625b7dcd46 miss 0.00
+=== RUN   TestATreeThatChangedDuringTheRunRefusesIt/an_untracked_file_edited_again
+    precise_test.go:1780: build port 7d625b7dcd46 miss 0.00
+--- PASS: TestATreeThatChangedDuringTheRunRefusesIt (0.75s)
+    --- PASS: TestATreeThatChangedDuringTheRunRefusesIt/a_submodule's_dirty_file_edited_again (0.18s)
+    --- PASS: TestATreeThatChangedDuringTheRunRefusesIt/a_package_upgraded (0.09s)
+    --- PASS: TestATreeThatChangedDuringTheRunRefusesIt/a_commit (0.09s)
+    --- PASS: TestATreeThatChangedDuringTheRunRefusesIt/an_edit (0.09s)
+    --- PASS: TestATreeThatChangedDuringTheRunRefusesIt/an_untracked_file (0.09s)
+    --- PASS: TestATreeThatChangedDuringTheRunRefusesIt/a_dirty_file_edited_again (0.11s)
+    --- PASS: TestATreeThatChangedDuringTheRunRefusesIt/an_untracked_file_edited_again (0.09s)
+=== RUN   TestAParentsReadingNeverAsksItsSubmodules
+--- PASS: TestAParentsReadingNeverAsksItsSubmodules (0.09s)
+=== RUN   TestAFileInASubmoduleIsValuedByTheSubmodulesOwnListing
+--- PASS: TestAFileInASubmoduleIsValuedByTheSubmodulesOwnListing (0.09s)
+=== RUN   TestTreeStateSeesASubmodulesChangeHoweverDeep
+=== RUN   TestTreeStateSeesASubmodulesChangeHoweverDeep/edited_in_a_submodule
+=== RUN   TestTreeStateSeesASubmodulesChangeHoweverDeep/edited_two_submodules_deep
+=== RUN   TestTreeStateSeesASubmodulesChangeHoweverDeep/staged_in_a_submodule
+=== RUN   TestTreeStateSeesASubmodulesChangeHoweverDeep/staged_two_submodules_deep
+--- PASS: TestTreeStateSeesASubmodulesChangeHoweverDeep (1.33s)
+    --- PASS: TestTreeStateSeesASubmodulesChangeHoweverDeep/edited_in_a_submodule (0.35s)
+    --- PASS: TestTreeStateSeesASubmodulesChangeHoweverDeep/edited_two_submodules_deep (0.32s)
+    --- PASS: TestTreeStateSeesASubmodulesChangeHoweverDeep/staged_in_a_submodule (0.33s)
+    --- PASS: TestTreeStateSeesASubmodulesChangeHoweverDeep/staged_two_submodules_deep (0.33s)
+PASS
+ok  	github.com/system-inc/adamic/internal/buildcache	2.265s

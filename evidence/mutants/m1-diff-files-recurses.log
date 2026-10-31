@@ -1,0 +1,5 @@
+--- FAIL: TestAParentsReadingNeverAsksItsSubmodules (0.11s)
+    submodule_recursion_test.go:42: the parent's reading asked its submodule whether it is dirty: &{paths:map[.gitmodules:true module:true outer.c:true] directories:map[] all:false objects:map[.gitmodules:{mode:100644 id:88b0fc064964c0449d76d3d6ae93181632eb2739} module:{mode:160000 id:dc40f3c027aa5a6dfe411932ab59414ab57321b1} outer.c:{mode:100644 id:ac5bd5424e2e2974beabba84162de29c39ca3c21}] dirty:map[:true module:true] taken:{wall:14029174688941058425 ext:1044867652 loc:0x1018620}}
+FAIL
+FAIL	github.com/system-inc/adamic/internal/buildcache	2.699s
+FAIL

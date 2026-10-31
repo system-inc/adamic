@@ -1,0 +1,17 @@
+--- FAIL: TestTreeStateSeesASubmodulesChangeHoweverDeep (1.81s)
+    --- FAIL: TestTreeStateSeesASubmodulesChangeHoweverDeep/staged_two_submodules_deep (0.46s)
+        submodule_recursion_test.go:140: the change went unseen: the state stayed
+            13a440982e7de7dc053a57b106e85efea120d65c
+            
+             ac25e810ad358deda4670ea47a5feee6a6a808e1 module (heads/main)
+             71380325b0d73cd88053e0cf257d2bec9d724c1d module/deep (heads/main)
+            
+            repository 
+            
+            repository /module
+            
+            repository /module/deep
+            dpkg status 3f8438bf9737ad034dbe4c759ff3495b8481336cc7f5ee5eaeb40869ec0c7b16
+FAIL
+FAIL	github.com/system-inc/adamic/internal/buildcache	3.104s
+FAIL

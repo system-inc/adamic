@@ -1,0 +1,17 @@
+git 2.43.0; a superproject with one submodule, sub, holding 5,000 tracked files, sub/d1/f1.txt edited; each run warmed twice before
+
+$ strace -f -c -e trace=newfstatat,lstat,statx git diff-files --name-only
+names: sub
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.388068          37     10237        36 newfstatat
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.388068          37     10237        36 total
+
+$ strace -f -c -e trace=newfstatat,lstat,statx git diff-files --ignore-submodules --name-only
+names: (none)
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+  0.00    0.000000           0        62        11 newfstatat
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.000000           0        62        11 total

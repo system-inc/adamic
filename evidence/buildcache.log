@@ -1,0 +1,27 @@
+--- FAIL: TestAHandedHouseValuesMachineFilesWithoutDpkg (0.00s)
+    housevalues_test.go:116: handed, a stamped file values "", house values /tmp/adamic-gate/TestAHandedHouseValuesMachineFilesWithoutDpkg2514299257/002/efe02d41409bae52c61a6ab016ab9e6c061172245c7a394a3f376abd9a167d4b.json: its directory /tmp/adamic-gate/TestAHandedHouseValuesMachineFilesWithoutDpkg2514299257/002 can be written by this process
+--- FAIL: TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefused (0.01s)
+    --- FAIL: TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefused/bytes_that_differ_from_its_name (0.00s)
+        housevalues_test.go:211: handed bytes that differ from its name, valued "", house values /tmp/adamic-gate/TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefusedbytes_th4133242308/002/7c64e53f498704c23b5e36eae4e41a53227b44d6aad3a9d5d553fd5db760b4d4.json: its directory /tmp/adamic-gate/TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefusedbytes_th4133242308/002 can be written by this process
+    --- FAIL: TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefused/a_name_that_isn't_a_digest (0.00s)
+        housevalues_test.go:211: handed a name that isn't a digest, valued "", house values /tmp/adamic-gate/TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefuseda_name_t1275039894/001/house-system.json: its directory /tmp/adamic-gate/TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefuseda_name_t1275039894/001 can be written by this process
+    --- FAIL: TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefused/naming_no_path (0.00s)
+        housevalues_test.go:211: handed naming no path, valued "", house values /tmp/adamic-gate/TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefusednaming_n2923601219/001/2790164507bb43ffdd0aef72c20f919fea38352b9774036224aa13364d31ea01.json: its directory /tmp/adamic-gate/TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefusednaming_n2923601219/001 can be written by this process
+    --- FAIL: TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefused/a_place_not_named_place: (0.00s)
+        housevalues_test.go:211: handed a place not named place:, valued "", house values /tmp/adamic-gate/TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefuseda_place_1854851783/001/e5eccbe1cea81f1dc0d38c2663ad292d3c05f2b72579493647f20af2a6f965e3.json: its directory /tmp/adamic-gate/TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefuseda_place_1854851783/001 can be written by this process
+    --- FAIL: TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefused/a_place_with_no_digest (0.00s)
+        housevalues_test.go:211: handed a place with no digest, valued "", house values /tmp/adamic-gate/TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefuseda_place_645804578/001/35889089004d49a6879da0ec602df43da371f0989f63816c6d502cd17f19ea2d.json: its directory /tmp/adamic-gate/TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefuseda_place_645804578/001 can be written by this process
+    --- FAIL: TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefused/a_place_naming_a_relative_path (0.00s)
+        housevalues_test.go:211: handed a place naming a relative path, valued "", house values /tmp/adamic-gate/TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefuseda_place_1764140840/001/b1c82539bc4585cb73a368540294835b9e901d0590634b05c894a6453a3efff1.json: its directory /tmp/adamic-gate/TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefuseda_place_1764140840/001 can be written by this process
+    --- FAIL: TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefused/a_place_naming_an_unclean_path (0.00s)
+        housevalues_test.go:211: handed a place naming an unclean path, valued "", house values /tmp/adamic-gate/TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefuseda_place_3710962136/001/83bf3ae360f5aff033fbb4752554495f1131a934c4eea771844d1243cd615cc4.json: its directory /tmp/adamic-gate/TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefuseda_place_3710962136/001 can be written by this process
+--- FAIL: TestTheHousesBoxAndMomentNeverValueAKey (0.00s)
+    housevalues_test.go:267: house values /tmp/adamic-gate/TestTheHousesBoxAndMomentNeverValueAKey1064710541/002/b0582faa911360e884f3896ff8b89b4624eb67ab9c603506d90f90a91b84555b.json: its directory /tmp/adamic-gate/TestTheHousesBoxAndMomentNeverValueAKey1064710541/002 can be written by this process
+--- FAIL: TestAPlaceValuesEveryPathItCoversFirst (0.00s)
+    housevalues_test.go:343: /tmp/adamic-gate/TestAPlaceValuesEveryPathItCoversFirst524072282/001/usr/include/aarch64/stdio.h: house values /tmp/adamic-gate/TestAPlaceValuesEveryPathItCoversFirst524072282/002/4cf9d5260ab97c0dde9a49f2ec1d1c845c0f835bd2aa95e48aed4cdcbd27d5ec.json: its directory /tmp/adamic-gate/TestAPlaceValuesEveryPathItCoversFirst524072282/002 can be written by this process
+--- FAIL: TestAProductNamingItsMachineFailsItsBuild (0.61s)
+    relative_test.go:51: a tool in the home directory: the build gave <nil>, want a refusal naming manifest.json and the home directory
+    relative_test.go:65: a refused product left /tmp/adamic-gate/TestAProductNamingItsMachineFailsItsBuild2875840793/001/local/9a8c07f7d501ff3f5b4be024a213246cd250163f3898f13df940792f3fe3ac2a in the cache
+FAIL
+FAIL	github.com/system-inc/adamic/internal/buildcache	121.289s
+FAIL

@@ -1,0 +1,11 @@
+--- a/internal/buildcache/reads.go
++++ b/internal/buildcache/reads.go
+@@ -858,7 +858,7 @@
+ 		object, ok := files.objects[relative]
+ 		margin := files.taken.Add(-time.Second)
+ 		changed, known := changeTime(info)
+-		if !ok || files.dirty[relative] || !strings.HasPrefix(object.mode, "100") || !info.ModTime().Before(margin) || !known || !changed.Before(margin) {
++		if !ok || files.dirty[relative] || !info.ModTime().Before(margin) || !known || !changed.Before(margin) {
+ 			return gitObject{}, length, false
+ 		}
+ 		return object, length, true

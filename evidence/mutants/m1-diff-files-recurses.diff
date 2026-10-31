@@ -1,0 +1,11 @@
+--- a/internal/buildcache/buildcache.go
++++ b/internal/buildcache/buildcache.go
+@@ -817,7 +817,7 @@
+ 		// whose own diff-files names it.
+ 		keying(func() {
+ 			if listed, err = toolchain.GitCommand("-C", directory, "ls-files", "-s", "-v", "-z").Output(); err == nil {
+-				dirty, err = toolchain.GitCommand("-C", directory, "diff-files", "--ignore-submodules", "--name-only", "-z").Output()
++				dirty, err = toolchain.GitCommand("-C", directory, "diff-files", "--name-only", "-z").Output()
+ 			}
+ 		})
+ 		if err != nil {
