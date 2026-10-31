@@ -197,7 +197,7 @@ func TestEveryTypeAProgramHoldsGobsExactly(t *testing.T) {
 		case reflect.Func, reflect.Chan, reflect.UnsafePointer, reflect.Complex64, reflect.Complex128:
 			t.Errorf("%s is a %s, which gob can't carry exactly", at, kind)
 		}
-		if writesItself(kind) && !reflect.PointerTo(kind).Implements(decoder) {
+		if kind.Kind() != reflect.Pointer && writesItself(kind) && !reflect.PointerTo(kind).Implements(decoder) {
 			t.Errorf("%s has GobEncode and no GobDecode", kind)
 		}
 		if kind.Kind() != reflect.Struct {
