@@ -808,9 +808,16 @@ func repositoryAt(directory string) *trackedFiles {
 		// git reads .git, which no product's read set may hold: listing what the tree carries is keying. It runs with
 		// toolchain's git environment, so nothing of the home (a ~/.gitconfig's filter, fsmonitor or autocrlf) shapes
 		// what it says the tree holds.
+		//
+		// diff-files asks no submodule whether it is dirty (--ignore-submodules). Without it git runs status in every
+		// submodule, and that recurses, so a checkout's root, cohere and cohere/TypeScript each swept cohere/TypeScript's
+		// index, three sweeps a product test where one is needed (#npd568j). No answer moves: dirty is read only by
+		// cleanObject, which also requires a file's mode (100644, 100755), so a gitlink's dirty mark (160000) was never
+		// consulted, and a file inside a submodule is valued by the nearest repository above it, the submodule's own,
+		// whose own diff-files names it.
 		keying(func() {
 			if listed, err = toolchain.GitCommand("-C", directory, "ls-files", "-s", "-v", "-z").Output(); err == nil {
-				dirty, err = toolchain.GitCommand("-C", directory, "diff-files", "--name-only", "-z").Output()
+				dirty, err = toolchain.GitCommand("-C", directory, "diff-files", "--ignore-submodules", "--name-only", "-z").Output()
 			}
 		})
 		if err != nil {
