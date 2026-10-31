@@ -1,0 +1,10 @@
+// Spec: writes it as a narrowing
+// Expect: lowers
+import { panic } from 'adamic';
+
+type Shape = { readonly kind: 'Circle'; readonly radius: number } | { readonly kind: 'Square'; readonly side: number };
+const shapes: readonly Shape[] = [{ kind: 'Circle', radius: 2 }];
+for (const shape of shapes) {
+	if (shape.kind !== 'Circle') panic('only circles were made');
+	console.log(`${shape.radius}`);
+}

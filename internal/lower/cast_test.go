@@ -59,7 +59,14 @@ func TestCheckedCastProofAndElision(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			program, err := lowerSource(t, probe.source)
+			// The tag casts are .ts, where they stay checked casts: in .a a downcast whose checks no proof
+			// erases is refused (#m8dvvmf). A class downcast keeps its identity test in .a too.
+			extension := ".a"
+			switch probe.name {
+			case "enum member", "invariant mutable payload", "sub-union":
+				extension = ".ts"
+			}
+			program, err := lowerSourceAs(t, probe.source, extension)
 			if err != nil {
 				t.Fatal(err)
 			}
