@@ -467,13 +467,21 @@ func (keying *unitKeying) checked(unit compilationUnit) bool {
 	return unitChecked()
 }
 
-// newUnitKeying reads a build's unitKeying, or errUncachedUnit naming what the key can't account for.
-func newUnitKeying(first string, common []runtimeFile, flags []string, compiler string, environment []string, sanitized bool) (*unitKeying, error) {
+// unitFlagsRefusal is errUncachedUnit naming a flag the key can't account for, or nil.
+func unitFlagsRefusal(flags []string) error {
 	for _, flag := range flags {
 		// Clang modules read module maps and a module cache the resolution table doesn't walk.
 		if strings.HasPrefix(flag, "-fmodule") || strings.HasPrefix(flag, "-fimplicit-module") {
-			return nil, fmt.Errorf("%w: the flags use clang modules (%s)", errUncachedUnit, flag)
+			return fmt.Errorf("%w: the flags use clang modules (%s)", errUncachedUnit, flag)
 		}
+	}
+	return nil
+}
+
+// newUnitKeying reads a build's unitKeying, or errUncachedUnit naming what the key can't account for.
+func newUnitKeying(first string, common []runtimeFile, flags []string, compiler string, environment []string, sanitized bool) (*unitKeying, error) {
+	if err := unitFlagsRefusal(flags); err != nil {
+		return nil, err
 	}
 	environmentParts, err := unitEnvironmentParts(environment)
 	if err != nil {
