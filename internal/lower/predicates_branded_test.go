@@ -179,6 +179,11 @@ function show<K extends number>(n: Holder<K>): void { if (isTypeElementLie(n)) {
 const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const v: Holder<number> = w; show(v);`, "over a generic argument Holder<K>, which narrows to an intersection no view covers"},
 		{"generic readonly argument", `function show<T extends Node>(n: Readonly<T>): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
 const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const v: Node = w; show(v);`, "over a generic argument Readonly<T>, which narrows to an intersection no view covers"},
+		// An anonymous object holding a type parameter is held by the related-member rule, not the generic
+		// one, since mentionsTypeParameter doesn't walk members (Language's g7 on 59d9c44b, a should). It's
+		// safe either way, so this pins the reason it has, and a later loosening of either rule shows here.
+		{"generic anonymous argument", `function show<K extends number>(n: { readonly kind: K; readonly pos: number }): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
+const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(w);`, "which is neither its supertype nor a subtype its views cover"},
 		{"no brand", `interface Expression extends Node { readonly text: string; }
 function isExpression(n: Node): n is Expression { return kindOf(n) === 9; }
 function show(n: Node): void { if (isExpression(n)) { console.log(n.text); } }
