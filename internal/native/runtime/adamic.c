@@ -2,6 +2,9 @@
 
 // SIGPIPE and isatty are POSIX's, which strict C11 doesn't show without asking.
 #define _POSIX_C_SOURCE 200809L
+// SIGWINCH (stdout_tty_impl.h) isn't POSIX: macOS hides it once _POSIX_C_SOURCE is set,
+// unless Darwin's own extensions are asked for too. glibc ignores this macro.
+#define _DARWIN_C_SOURCE
 
 #include "adamic.h"
 #include "count.h"
