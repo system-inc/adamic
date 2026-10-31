@@ -1,0 +1,3 @@
+// a-check: refused the non-null assertion !
+function value(): number { return null!; }
+console.log(`${value()}`);

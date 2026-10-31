@@ -1,0 +1,10 @@
+function run(): void {
+    let value: string = null!;
+    const observe = (): string => typeof value;
+    console.log(observe());
+    value = undefined!;
+    console.log(observe());
+    value = "written" + " value";
+    console.log(observe());
+}
+run();

@@ -92,7 +92,7 @@ func stackProbe(t *testing.T, limit int, arguments, environment []string, alone 
 		rememberRun(t, result)
 		return result
 	}
-	want := run{stdout: []byte("start\n"), stderr: []byte("adamic: panic: RangeError: Maximum call stack size exceeded\n"), exitCode: 70}
+	want := run{stdout: []byte("start\n"), stderr: []byte("adamic: panic: RangeError: Maximum call stack size exceeded in sum\n"), exitCode: 70}
 	if limit == 0 || limit >= 1024 {
 		nodeArguments := []string{"--disable-warning=ExperimentalWarning"}
 		// V8's default recursion budget exceeds the usable stack after long argv at 1 MiB.

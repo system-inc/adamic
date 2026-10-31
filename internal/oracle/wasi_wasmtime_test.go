@@ -184,6 +184,9 @@ func runWasmtimeAgreesShard(t *testing.T, shard int) {
 			var expected run
 			if readsPlatform {
 				expected = platform
+			} else if outcome, ruled := ruledNativeOutcome(fixture.path); ruled {
+				// A ruled backend divergence's wasm32 build is native, so its ruled native outcome is its witness.
+				expected = outcome
 			} else if fixture.checked {
 				expected = onJavaScriptBackend(t, program)
 			} else {
