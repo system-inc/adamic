@@ -49,6 +49,7 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		"3200 refuseVoidWidening",
 		"3250 refuseVoidRead",
 		"3260 refuseVoidContainerRead",
+		"3270 refuseAnyRelation",
 		"3300 refuseOptionalWidening",
 		"3400 classViewRefusal",
 	}

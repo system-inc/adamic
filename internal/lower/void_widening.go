@@ -11,8 +11,43 @@ import (
 // A void call has already discarded its result. No runtime check can recover it
 // when another view of the function promises a value, even through a union.
 func (l *lowering) refuseVoidWidening(node *ast.Node) error {
-	if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) {
+	name, source, target := l.relationSite(node)
+	if target == nil || source == nil {
 		return nil
+	}
+	what := ""
+	if name == "return" && source.Flags() == checker.TypeFlagsVoid && target.Flags() != checker.TypeFlagsVoid {
+		what = "a void value at a return site whose function returns " + l.checker.TypeToString(target)
+	} else if found := l.voidWidenedUnlessUndefined(node, source, target); found != nil {
+		if found.depthLimit {
+			return l.notYet(node, "a structural relation deeper than 64 type pairs while checking void function results")
+		}
+		what = "a void-returning function at the " + name + " site"
+		if found.contained {
+			what = "a void value at the " + name + " site"
+		}
+		if found.path != "" {
+			what += " through " + found.path
+		}
+		what += " seen as " + l.checker.TypeToString(found.target)
+	}
+	if what == "" {
+		return nil
+	}
+	return &Refused{Where: l.program.Where(node), What: what,
+		Fix: "declare the function's real return type (adamic/no-void-widening)"}
+}
+
+func init() { refusalRules.register(3200, "refuseVoidWidening", (*lowering).refuseVoidWidening) }
+
+// relationSite is the relation an expression takes part in where it stands: the site's name, the
+// expression's type and the type it's seen as there, or nil types when it's no relation's source. It
+// covers initializers, assignments, returns (awaited in an async function), arguments (a rest
+// parameter's element), object fields and shorthand fields, array elements, assertions and the implied
+// target. refuseVoidWidening and refuseAnyRelation share it.
+func (l *lowering) relationSite(node *ast.Node) (string, *checker.Type, *checker.Type) {
+	if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) {
+		return "", nil, nil
 	}
 	site := node
 	for site.Parent != nil && site.Parent.Kind == ast.KindParenthesizedExpression {
@@ -20,7 +55,7 @@ func (l *lowering) refuseVoidWidening(node *ast.Node) error {
 	}
 	parent := site.Parent
 	if parent == nil {
-		return nil
+		return "", nil, nil
 	}
 	source := l.checker.GetTypeAtLocation(node)
 	var target *checker.Type
@@ -87,33 +122,8 @@ func (l *lowering) refuseVoidWidening(node *ast.Node) error {
 	if target == nil {
 		target = l.impliedTarget(node)
 	}
-	if target == nil || source == nil {
-		return nil
-	}
-	what := ""
-	if name == "return" && source.Flags() == checker.TypeFlagsVoid && target.Flags() != checker.TypeFlagsVoid {
-		what = "a void value at a return site whose function returns " + l.checker.TypeToString(target)
-	} else if found := l.voidWidenedUnlessUndefined(node, source, target); found != nil {
-		if found.depthLimit {
-			return l.notYet(node, "a structural relation deeper than 64 type pairs while checking void function results")
-		}
-		what = "a void-returning function at the " + name + " site"
-		if found.contained {
-			what = "a void value at the " + name + " site"
-		}
-		if found.path != "" {
-			what += " through " + found.path
-		}
-		what += " seen as " + l.checker.TypeToString(found.target)
-	}
-	if what == "" {
-		return nil
-	}
-	return &Refused{Where: l.program.Where(node), What: what,
-		Fix: "declare the function's real return type (adamic/no-void-widening)"}
+	return name, source, target
 }
-
-func init() { refusalRules.register(3200, "refuseVoidWidening", (*lowering).refuseVoidWidening) }
 
 func (l *lowering) onlyVoidCalls(source *checker.Type) bool {
 	signatures := l.checker.GetSignaturesOfType(source, checker.SignatureKindCall)
