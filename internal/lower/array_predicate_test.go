@@ -1,9 +1,12 @@
 package lower
 
 import (
+	"context"
 	"errors"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/load"
 )
 
 func TestArrayPredicatePreservesDeclaredElementContract(t *testing.T) {
@@ -29,6 +32,39 @@ func TestArrayPredicateDoesNotMisclassifyNativeTuples(t *testing.T) {
 		var notYet *NotYet
 		if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "tuple or an erased") {
 			t.Fatalf("%s: want an explicit representation refusal, got %v", source, err)
+		}
+	}
+}
+
+// The builtin is a member whose every declaration is the library's or the prelude's. A program's own
+// ArrayConstructor merge adds a declaration of its own to isArray, whose predicate the engine never
+// checks, so that member is no builtin. Lower refuses the merge first, as a global augmentation, and
+// this pins the recognizer behind it, on the checked program. Mutant: arrayPredicateMember taking any
+// declaration, which recognizes the merged member as the builtin.
+func TestArrayPredicateIgnoresAProgramsOwnMerge(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct {
+		source  string
+		builtin bool
+	}{
+		{"const value: unknown = ['a'];\nconst result = Array.isArray(value);\n", true},
+		{"const value: unknown = ['a'];\nconst result = Array.isArray(value);\ndeclare global { interface ArrayConstructor { isArray(arg: unknown): arg is string[]; } }\n", false},
+	} {
+		path := writeAgreementSource(t, "main.a", probe.source)
+		program, err := load.Load([]string{path})
+		if err != nil {
+			t.Fatal(err)
+		}
+		file := program.Files()[0]
+		checked, release := program.Checker(context.Background(), file)
+		call := file.Statements.Nodes[1].AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes[0].Initializer()
+		builtin := (&lowering{checker: checked}).arrayPredicateMember(call.AsCallExpression().Expression)
+		release()
+		if builtin != probe.builtin {
+			t.Errorf("%q: builtin %v, want %v", probe.source, builtin, probe.builtin)
+		}
+		if _, err := Lower(context.Background(), program); probe.builtin == (err != nil) {
+			t.Errorf("%q: Lower: %v", probe.source, err)
 		}
 	}
 }
