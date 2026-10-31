@@ -58,8 +58,9 @@ func (l *lowering) arrayIsArray(node *ast.Node) (ir.Expression, bool, error) {
 	return ir.ArrayIsArray{Value: fit(value, ir.Union)}, true, nil
 }
 
-// The library's any[] predicate describes the runtime test, not an element
-// contract. Only array members already promised by the declared input survive.
+// isArray's predicate, the prelude's readonly unknown[] overload in place of the bundled any[]
+// one, describes the runtime test, not an element contract. Only array members already promised
+// by the declared input survive.
 func (l *lowering) arrayPredicateMembers(proven *checker.Type, array bool) *checker.Type {
 	members := []*checker.Type{}
 	var collect func(*checker.Type)
@@ -118,8 +119,9 @@ func (l *lowering) arrayPredicateDomain(proven *checker.Type) bool {
 	return proven.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(proven) || l.isLibraryType(proven, "Uint8Array", "Int32Array", "Float64Array")
 }
 
-// TypeScript's built-in signature is value is any[]. Recover the declared
-// array member at a direct, dominating positive test instead of adopting any.
+// The prelude's readonly unknown[] overload wins over the bundled any[] predicate it replaces, so
+// the checker narrows to the declared array members. This recovers the same members from the
+// declared type at a direct, dominating positive test, the builtin's or a proven wrapper's.
 func (l *lowering) arrayPredicateType(node *ast.Node) *checker.Type {
 	node = ast.SkipParentheses(node)
 	actual := l.checker.GetTypeAtLocation(node)
