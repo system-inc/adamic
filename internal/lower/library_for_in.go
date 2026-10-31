@@ -20,7 +20,8 @@ func (l *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
 	// Require a plain literal origin, including aliases. This deliberately refuses parameters and
 	// calls until their possible shapes and property presence can be proved.
 	isRecord := l.recordElement(proven) != nil
-	if !isRecord && !l.plainEnumerableObject(statement.Expression, map[*ast.Symbol]bool{}) {
+	_, construction := l.constructionJSON(ast.SkipParentheses(statement.Expression))
+	if !isRecord && !construction && !l.plainEnumerableObject(statement.Expression, map[*ast.Symbol]bool{}) {
 		return nil, l.notYet(statement.Expression, "for...in without a proven fixed plain-object origin (arrays, prototypes and absent synthetic fields cannot be enumerated soundly)")
 	}
 	object, err := l.expression(statement.Expression)

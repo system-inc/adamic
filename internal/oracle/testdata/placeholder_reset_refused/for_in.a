@@ -1,0 +1,8 @@
+// a-check: refused a placeholder reset of a for-in loop variable
+// A for-in variable has no declaration to hold its readiness flag, so a reset would write an undeclared one.
+const record: Record<string, number> = { a: 1, b: 2 };
+for (let key in record) {
+	console.log(key);
+	key = undefined!;
+	console.log('after');
+}

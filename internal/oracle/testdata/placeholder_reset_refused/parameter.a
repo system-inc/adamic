@@ -1,0 +1,8 @@
+// a-check: refused a placeholder reset of a parameter
+// A parameter has no declaration to hold its readiness flag, so a reset would write an undeclared one.
+function clear(callback: () => number): void {
+	console.log(String(callback()));
+	callback = undefined!;
+	console.log('after');
+}
+clear(() => 42);

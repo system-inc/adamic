@@ -1,0 +1,11 @@
+interface Node { readonly kind: 'identifier' | 'other'; pos:number; end:number; }
+interface Identifier extends Node { readonly kind:'identifier'; text:string; }
+function createBaseNode():Node { return {kind:'identifier',pos:-1,end:-1}; }
+function expose(node:Identifier):void { console.log(String(node.text)); }
+function createIdentifier(text:string):Identifier {
+ const node=createBaseNode() as Identifier;
+ expose(node);
+ node.text=text;
+ return node;
+}
+createIdentifier('late');

@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"testing"
 	"time"
 
@@ -93,6 +94,10 @@ func splitTSGoBaseline(t *testing.T, source, archive string) string {
 		Flags:     []string{fmt.Sprintf("source=%x", sha256.Sum256([]byte(source))), fmt.Sprintf("archive=%x", sha256.Sum256(archiveBytes)), "options=" + string(optionBytes)},
 		Toolchain: []string{buildcache.Tool("clang", "--version")},
 	}, func(directory string) error {
+		// Baseline compilation is a separate product unit, never a behavior unit's setup.
+		if !strings.HasPrefix(t.Name(), "TestProduct_") {
+			return fmt.Errorf("split-tsgo-baseline must be built ahead by TestProduct_SplitTSGoBaseline")
+		}
 		return BuildTSGo(source, filepath.Join(directory, "whole"), archive, splitTSGoOptions)
 	})
 	return filepath.Join(directory, "whole")
