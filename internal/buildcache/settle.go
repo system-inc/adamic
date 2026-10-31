@@ -117,7 +117,10 @@ func TreeState() (string, error) {
 				continue
 			}
 			state.WriteString("repository " + strings.TrimPrefix(repository, root) + "\n")
-			keep(git(repository, "status", "--porcelain=v2", "-uall"))
+			// status asks no submodule whether it is dirty (--ignore-submodules=all), so cohere/TypeScript is swept once
+			// rather than once for each repository above it. Nothing goes unseen: every submodule with a .git gets its own
+			// status and ls-files in this loop, and submodule status --recursive above records each one's HEAD.
+			keep(git(repository, "status", "--porcelain=v2", "-uall", "--ignore-submodules=all"))
 			for _, name := range strings.Split(git(repository, "ls-files", "-m", "-o", "--exclude-standard", "-z"), "\x00") {
 				if name == "" || unkeyed(name) {
 					continue
