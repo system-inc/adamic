@@ -1,23 +1,43 @@
 package oracle
 
 import (
+	"errors"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/lower"
+	"path/filepath"
 	"reflect"
+	"strings"
 	"testing"
 )
 
 func TestCheckedViewObjects(t *testing.T) {
 	t.Parallel()
-	for _, probe := range []struct{ name, stdout, diagnostic string }{
-		{"objects-good", "true:okok\ntrue\n", ""},
-		{"objects-untagged-good", "true:okok\ntrue:1\n", ""},
-		{"objects-untagged-wrong", "", "field read failed: view.child.ready is not a boolean; expected boolean, found number"},
-		{"objects-wrong-nested", "", "field read failed: view.child.ready is not a boolean; expected boolean, found number"},
-		{"objects-missing-nested", "", "field read failed: view.child.ready is not initialized; expected boolean, found missing"},
-		{"objects-uninitialized-nested", "", "field read failed: view.child.ready is not initialized; expected boolean, found uninitialized"},
+	for _, probe := range []struct{ name, stdout, diagnostic, notYet string }{
+		// #80cs7rz: view.child is a viewed value inside a viewed one, read through another written type; the per-read check wins it back.
+		{"objects-good", "true:okok\ntrue\n", "", "objects-good.ts:4:92: stage 0 can't lower a read of field ready through type { readonly ready: boolean; readonly label: string; }, which may hold a checked view's value"},
+		{"objects-untagged-good", "true:okok\ntrue:1\n", "", ""},
+		{"objects-untagged-wrong", "", "field read failed: view.child.ready is not a boolean; expected boolean, found number", ""},
+		{"objects-wrong-nested", "", "field read failed: view.child.ready is not a boolean; expected boolean, found number", ""},
+		{"objects-missing-nested", "", "field read failed: view.child.ready is not initialized; expected boolean, found missing", ""},
+		{"objects-uninitialized-nested", "", "field read failed: view.child.ready is not initialized; expected boolean, found uninitialized", ""},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
+			if probe.notYet != "" {
+				path, err := filepath.Abs(filepath.Join(repository, interfaceFixturePath("lane1/"+probe.name)))
+				if err != nil {
+					t.Fatal(err)
+				}
+				if difference := disagreement(run{stdout: []byte(probe.stdout)}, onNode(t, path)); difference != "" {
+					t.Fatal("Node: " + difference)
+				}
+				_, err = lowered(t, path)
+				var notYet *lower.NotYet
+				if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.notYet) {
+					t.Fatalf("want %q, got %v", probe.notYet, err)
+				}
+				return
+			}
 			program, path := interfaceFixture(t, "lane1/"+probe.name)
 			want := run{stdout: []byte(probe.stdout)}
 			if probe.diagnostic == "" {

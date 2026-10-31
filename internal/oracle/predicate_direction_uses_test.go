@@ -23,7 +23,10 @@ import (
 // body_call at isLeaf's call.
 func TestPredicateDirectionUsesLower(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"argument", "inferred_call", "inferred_some", "body_call"} {
+	// #80cs7rz: inferred_call is NotYet now, its declaration a for-of element whose reach is unknown, stored into
+	// symbol.valueDeclaration and read through Declaration; the per-read check wins it back. Pinned in
+	// TestViewWidenedPriceAccepted.
+	for _, name := range []string{"argument", "inferred_some", "body_call"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/predicate_direction_uses", name+".ts"))

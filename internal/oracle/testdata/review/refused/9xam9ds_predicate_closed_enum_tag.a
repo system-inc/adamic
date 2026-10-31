@@ -1,3 +1,5 @@
+// #80cs7rz: found comes from nodes.find(isB), a library call the flow doesn't follow, so its reach is unknown and
+// found.value is NotYet; the per-read check wins it back.
 // The open enum tag rule's control (#9xam9ds): each member's kind is its own member of Kind, so
 // kind tells them apart and isA is proven, through filter, find and an if.
 enum Kind { A = 1, B = 2 }
