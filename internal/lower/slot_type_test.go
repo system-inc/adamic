@@ -81,6 +81,9 @@ func TestRefusalRulesReadTheirSlotThroughSlotType(t *testing.T) {
 		}
 	}
 	var direct []string
+	// readsSignature is each reached function that reads a call's resolved signature, and defers says
+	// whether it asks slotSet, so an argument's parameter it reads gives way to a slot a caller set.
+	readsSignature, defers := map[string]bool{}, map[string]bool{}
 	for len(queue) > 0 {
 		name := queue[0]
 		queue = queue[1:]
@@ -101,12 +104,28 @@ func TestRefusalRulesReadTheirSlotThroughSlotType(t *testing.T) {
 					if node.Sel.Name == "GetContextualType" && name != "slotType" {
 						direct = append(direct, files.Position(node.Pos()).String()+" in "+name+", reached from rule "+rule)
 					}
+					if node.Sel.Name == "GetResolvedSignature" {
+						readsSignature[name] = true
+					}
+					if node.Sel.Name == "slotSet" {
+						defers[name] = true
+					}
 					reach(node.Sel.Name, rule)
 				case *ast.Ident:
 					reach(node.Name, rule)
 				}
 				return true
 			})
+		}
+	}
+	for name := range readsSignature {
+		if !defers[name] && signatureReaders[name] == "" {
+			direct = append(direct, name+" reads a call's resolved signature, reached from rule "+reachedFrom[name]+": ask slotSet before reading an argument's parameter from it, or add it to signatureReaders with why it reads no slot")
+		}
+	}
+	for name := range signatureReaders {
+		if !readsSignature[name] {
+			t.Errorf("signatureReaders names %s, which no rule reaches reading a resolved signature; take it out", name)
 		}
 	}
 	sort.Strings(direct)
@@ -120,4 +139,28 @@ func TestRefusalRulesReadTheirSlotThroughSlotType(t *testing.T) {
 			t.Errorf("the walk from the registry never reached %s", name)
 		}
 	}
+}
+
+// signatureReaders are the functions a refusal rule reaches that read a call's resolved signature for
+// something other than the slot an argument goes into, each with what it reads instead. Any other reader
+// asks slotSet first (TestRefusalRulesReadTheirSlotThroughSlotType).
+var signatureReaders = map[string]string{
+	"carrier":                           "the callee's declaration, to follow a predicate's false side into it",
+	"censusCallReturnsUndefined":        "the callee's declaration, to read what it returns",
+	"censusOverloadResult":              "the callee's declaration and type predicate, to pick a census overload",
+	"censusPredicateMarkerContract":     "an argument's parameter, only to accept a marker function passed to a never-rest callback; lib's any parameter is none, so it fails closed",
+	"checkedFunctionTypeCall":           "the callee's signature, to check a function type's predicate claim at the call",
+	"checkedPredicateInferredPart":      "the callee's type predicate, to read the part it narrows",
+	"checkedPredicateInferredReference": "the callee's type predicate, to read the reference it narrows",
+	"checkedPredicateResult":            "the callee's declaration, to check a predicate's claim at the call",
+	"classGenericCall":                  "the callee's instantiation, to lower a generic class's method",
+	"detachedOwnOpaqueArgument":         "a parameter's declaration, to find the own-property helper by name",
+	"instantiateFunction":               "the callee's instantiation, to lower a generic function",
+	"libraryCallResult":                 "the callee's declaration, whether the library declares it",
+	"notePlaceholderSlots":              "a program parameter's symbol, to carry a placeholder into it; lib's any parameter is never a placeholder",
+	"predicateArguments":                "the callee's declaration and type predicate, to check the predicate's argument",
+	"predicateUseDirections":            "the callee's type predicate, to read which way a call narrows",
+	"recordInterveningMutation":         "the callee's declaration, to look for a write in its body",
+	"recordPrototypeKey":                "the callee's declaration, to follow an argument into its parameter's key",
+	"speculativeCast":                   "the callee's callback parameter, to recognize tsc's speculation helpers by shape",
 }
