@@ -169,8 +169,8 @@ func (l *lowering) refuseInSlot(value *ast.Node, slot *checker.Type) error {
 	if find(value) {
 		return l.notYet(function, "a function written in place in a value written where the checker gives it no slot (lib types it any, so its parameters were typed any); bind it to a typed const first")
 	}
-	judging, uncarried, deferred := l.slots.judging, l.slots.uncarried, l.refusal.deferred
-	l.slots.judging, l.slots.uncarried, l.refusal.deferred = true, nil, nil
+	uncarried, deferred := l.slots.uncarried, l.refusal.deferred
+	l.slots.uncarried, l.refusal.deferred = nil, nil
 	err := l.refuseNode(value)
 	if err == nil && len(l.slots.uncarried) > 0 {
 		err = l.notYet(l.slots.uncarried[0], "a part of a value written where the checker gives it no slot, whose own slot can't be read off the one it's written into")
@@ -178,7 +178,7 @@ func (l *lowering) refuseInSlot(value *ast.Node, slot *checker.Type) error {
 	if err == nil {
 		err = l.refusal.deferred
 	}
-	l.slots.judging, l.slots.uncarried, l.refusal.deferred = judging, uncarried, deferred
+	l.slots.uncarried, l.refusal.deferred = uncarried, deferred
 	return err
 }
 

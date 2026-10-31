@@ -743,10 +743,8 @@ type slotTargets struct {
 	explicit map[*ast.Node]*checker.Type
 	// implied memoizes impliedExpressionTarget's answer per parent, within this checker.
 	implied map[*ast.Node]*checker.Type
-	// judging is set while refuseInSlot runs the registry over a value given an explicit slot, and
-	// uncarried collects the parts of it whose slot tsc would carry down from that one but Adamic can't
-	// read off it, which refuseInSlot stops at.
-	judging   bool
+	// uncarried collects, while refuseInSlot judges a value, the parts of it whose slot tsc would carry
+	// down from the explicit one but Adamic can't read off it, which refuseInSlot stops at.
 	uncarried []*ast.Node
 }
 
@@ -759,7 +757,7 @@ type slotTargets struct {
 func (l *lowering) slotType(node *ast.Node) *checker.Type {
 	if len(l.slots.explicit) > 0 {
 		if slot, carried, readable := l.carriedSlot(node); carried {
-			if !readable && l.slots.judging {
+			if !readable {
 				l.slots.uncarried = append(l.slots.uncarried, node)
 			}
 			return slot
