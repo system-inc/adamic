@@ -1,4 +1,5 @@
 #include "async.h"
+#include "host_runtime.h"
 #include <assert.h>
 #include <stdlib.h>
 
@@ -168,7 +169,13 @@ static void drain_jobs(void) {
     }
 }
 void adamic_async_run(void) {
+    /* A resolved await is a microtask, not a host turn. Run queued jobs before
+     * observing SIGWINCH, and do not make an unreferenced signal keep us live. */
+    if (host_started) host_loop_thread();
+    drain_jobs();
     for (;;) {
+        if (!host_live()) break;
+        adamic_host_stdout_refresh();
         adamic_host_process_completions();
         if (!host_live()) break;
         host_wait_hook();

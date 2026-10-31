@@ -21,13 +21,17 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 		}
 		code = fmt.Sprintf("adamic_fs_file_host_join(%d, %s)", len(args), array)
 	}
-	if call.Operation == "host_stdout_is_tty" {
-		// Undefined has no payload. A terminal supplies true, never a present false.
-		const include = "#include <unistd.h>"
-		if !slices.Contains(e.declarations, include) {
-			e.declarations = append(e.declarations, include)
+	if call.Operation == "host_stdout_columns" {
+		const unavailable = `#ifdef ADAMIC_TARGET_WASI
+#error "wasi preview1 reports no terminal size"
+#endif`
+		if !slices.Contains(e.declarations, unavailable) {
+			e.declarations = append(e.declarations, unavailable)
 		}
-		code = "(adamic_maybe_boolean){isatty(1) != 0, true}"
+		code = "adamic_host_stdout_columns()"
+	}
+	if call.Operation == "host_stdout_is_tty" {
+		code = "adamic_host_stdout_is_tty()"
 	}
 	if call.Operation == "host_stdout_write" {
 		code = "(adamic_write_raw(adamic_stdout, " + args[0] + "), 0.0)"

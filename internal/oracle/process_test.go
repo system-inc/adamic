@@ -100,7 +100,7 @@ func processOutputProgramWith(t *testing.T, source, mutation string, options nat
 		}
 		runtimeSource = strings.Replace(runtimeSource, before, after, 1)
 		var declarations strings.Builder
-		for _, name := range []string{"adamic_start", "adamic_write_line", "adamic_write_raw", "adamic_output_flush", "adamic_panic", "adamic_invariant", "adamic_unreachable", "adamic_process_exit_now"} {
+		for _, name := range []string{"adamic_start", "adamic_write_line", "adamic_write_raw", "adamic_output_flush", "adamic_panic", "adamic_invariant", "adamic_unreachable", "adamic_process_exit_now", "adamic_host_stdout_start", "adamic_host_stdout_is_tty", "adamic_host_stdout_columns", "adamic_host_stdout_wake_descriptor", "adamic_host_stdout_refresh_pending", "adamic_host_stdout_refresh"} {
 			fmt.Fprintf(&declarations, "#define %s mutant_%s\n", name, name)
 			runtimeSource = strings.ReplaceAll(runtimeSource, name, "mutant_"+name)
 			code = strings.ReplaceAll(code, name, "mutant_"+name)

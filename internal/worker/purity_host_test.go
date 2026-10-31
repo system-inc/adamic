@@ -62,3 +62,17 @@ func TestWasmPurityRefusesStdoutTTYReads(t *testing.T) {
 		}
 	}
 }
+
+func TestWasmPurityRefusesStdoutColumnsReads(t *testing.T) {
+	t.Parallel()
+	builds := 0
+	err := BuildWith("testdata/wasm/host_stdout_columns.a", filepath.Join(t.TempDir(), "worker"), Options{
+		Wasm:      []string{"hostTerminal"},
+		BuildWasm: func(string, string, string, []string) error { builds++; return fmt.Errorf("unexpected Wasm build") },
+	})
+	for _, want := range []string{"hostTerminal", "impure: host operation host_stdout_columns", "fix:"} {
+		if err == nil || !strings.Contains(err.Error(), want) || builds != 0 {
+			t.Fatalf("want %s before build, got %v", want, err)
+		}
+	}
+}

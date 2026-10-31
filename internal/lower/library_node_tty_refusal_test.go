@@ -9,7 +9,7 @@ import (
 func TestNodeProcessTTYRefusals(t *testing.T) {
 	t.Parallel()
 	for _, one := range []struct{ expression, reason string }{
-		{"process.stdout.columns ?? -1", "Node caches the terminal width and refreshes it on SIGWINCH from the event loop; adamic/host-tty"},
+		{"process.stderr.columns ?? -1", "node:tty.WriteStream.columns on another stream (fix: read process.stdout.columns)"},
 		// stdout's isTTY is main's binding (library_node_stdout_istty_test.go); stderr's stays refused there.
 		{"process.stderr.isTTY ?? false", "node:process.Process.stderr.isTTY is not bound (fix: read process.stdout.isTTY)"},
 	} {
