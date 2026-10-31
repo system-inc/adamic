@@ -131,6 +131,8 @@ func TestDelayedArrayWritesAreJudgedAsTheirDirectTwins(t *testing.T) {
 		{"g2 push", "function make(): void {} const fs: (() => unknown)[] = [];", "push.call(fs, make);", "fs.push(make);"},
 		{"a view in a literal", "class Animal { name = 'a'; } class Dog extends Animal { bark(): string { return 'woof'; } } const dogs: Dog[] = []; const holders: { pets: Animal[] }[] = [];", "push.call(holders, { pets: dogs });", "holders.push({ pets: dogs });"},
 		{"a view in an array literal", "class Animal { name = 'a'; } class Dog extends Animal { bark(): string { return 'woof'; } } const dogs: Dog[] = []; const nested: Animal[][][] = [];", "push.call(nested, [dogs]);", "nested.push([dogs]);"},
+		// The value was judged already, honestly, at a direct write: the delayed verdict doesn't lean on it.
+		{"h7 after an honest direct write", "const named = { a: 1 }; const plain: { a: number }[] = []; plain.push(named); const records: Record<string, number>[] = [];", "push.call(records, named);", "records.push(named);"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -163,8 +165,10 @@ func stoppedFor(err error) string {
 // What the identity check head 1 held a delayed write to refused, the registry gives back: an object
 // literal written into an array of an interface (Language's n3), a literal 5 into a (string | number)[],
 // and a literal into an array of a literal union, each agreeing with Node. A part of the value whose slot
-// can't be read off the element type (a computed key), and a function written in place, whose parameters
-// lib's any typed, stay NotYet.
+// can't be read off the element type (a computed key, or an await's operand, a parent kind carriedSlot
+// doesn't model and so fails closed on), and a function written in place, whose parameters lib's any
+// typed, stay NotYet. Mutant: carriedSlot letting an unlisted parent kind go, under which the await's
+// operand reaches the registry against nothing and isn't stopped there.
 func TestDelayedArrayWritesTheRegistryAdmits(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source string }{
@@ -181,6 +185,16 @@ console.log(values.map((value) => String(value)).join("|"));`},
 const kinds: ("a" | "b")[] = ["b"];
 push.call(kinds, "a");
 console.log(kinds.join("|"));`},
+		// One value judged at a delayed write and at direct writes, in either order, keeps every verdict.
+		{"the same value delayed and direct", `interface Point { x: number; }
+const push = Array.prototype.push;
+const p: Point = { x: 1 };
+const points: Point[] = [];
+const others: Point[] = [];
+push.call(points, p);
+others.push(p);
+push.call(others, p);
+console.log(String(points.length) + " " + String(others.length));`},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -193,6 +207,15 @@ const push = Array.prototype.push;
 const points: Point[] = [];
 push.call(points, { ["x"]: 2 });
 console.log(String(points.length));`, "whose own slot can't be read off the one it's written into"},
+		{"an await's operand", `class Point { x = 1; describe(): string { return "point"; } }
+class Other { x = 2; label = "other"; describe(): string { return this.label; } }
+interface Holder { p: Point }
+async function main(): Promise<void> {
+  const holders: Holder[] = [];
+  Array.prototype.push.call(holders, await { p: new Other() });
+  console.log(String(holders.length));
+}
+main();`, "whose own slot can't be read off the one it's written into"},
 		{"a function written in place", `const push = Array.prototype.push;
 const handlers: ((value: number) => string)[] = [];
 push.call(handlers, (value: number) => String(value));
