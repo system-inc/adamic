@@ -427,14 +427,23 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		}
 		source, target := l.checker.GetTypeAtLocation(as.Expression), l.checker.GetTypeAtLocation(node)
 		if l.checker.IsTypeAssignableTo(source, target) || l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target) {
-			return l.provenRelation(node, as.Expression, target)
+			if err := l.provenRelation(node, as.Expression, target); err != nil {
+				return err
+			}
+		} else {
+			// Preserve the existing checks on downcasts; their lowering belongs to cast.go.
+			own, contextual = source, target
+			if found = l.freshOrWidened(as.Expression, own, contextual); found != nil {
+				break
+			}
 		}
-		// Preserve the existing checks on downcasts; their lowering belongs to cast.go.
-		own, contextual = source, target
-		found = l.freshOrWidened(as.Expression, own, contextual)
+		own, contextual, found = l.castSlotWidened(node)
 	case node.Kind == ast.KindSatisfiesExpression:
 		satisfies := node.AsSatisfiesExpression()
-		return l.provenRelation(node, satisfies.Expression, l.checker.GetTypeAtLocation(satisfies.Type))
+		if err := l.provenRelation(node, satisfies.Expression, l.checker.GetTypeAtLocation(satisfies.Type)); err != nil {
+			return err
+		}
+		own, contextual, found = l.castSlotWidened(node)
 	case node.Kind == ast.KindShorthandPropertyAssignment:
 		// { pets } is { pets: pets }: the variable seen as the literal's property.
 		literal := l.checker.GetContextualType(node.Parent, checker.ContextFlagsNone)
@@ -504,6 +513,41 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 			}
 		}
 	}
+	if found == nil {
+		return nil
+	}
+	return l.wideningRefusal(node, own, contextual, found)
+}
+
+// castSlotWidened judges an as or satisfies at a view site as the value it is: the cast's own type
+// against the slot it goes into, as the default branch judges any other value there. The cast's relation
+// to its operand is judged apart from it, and passing that says nothing of the slot, so without this
+// inner satisfies string[] went into a (string | number)[] and wrote a number past the strings (#b6m00y7).
+// The operand under the casts decides freshness, so a literal made right there stays fresh.
+func (l *lowering) castSlotWidened(node *ast.Node) (*checker.Type, *checker.Type, *widening) {
+	if !viewSite(node) {
+		return nil, nil, nil
+	}
+	contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone)
+	if contextual == nil {
+		return nil, nil, nil
+	}
+	operand := ast.SkipParentheses(node)
+	for operand.Kind == ast.KindAsExpression || operand.Kind == ast.KindSatisfiesExpression {
+		operand = ast.SkipParentheses(operand.Expression())
+	}
+	own := l.checker.GetTypeAtLocation(node)
+	return own, contextual, l.freshOrWidened(operand, own, contextual)
+}
+
+// castSlotRefusal refuses a cast whose own type goes into a slot that can write what it can't hold, the
+// judgment castSlotWidened makes, for a checked cast, whose relation to its operand stringWideningRefusal
+// leaves to cast.go.
+func (l *lowering) castSlotRefusal(node *ast.Node) error {
+	if l.nodeFSFileReadOnlyArgument(node) || l.regexCallbackIntrinsicView(node) {
+		return nil
+	}
+	own, contextual, found := l.castSlotWidened(node)
 	if found == nil {
 		return nil
 	}

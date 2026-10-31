@@ -390,14 +390,16 @@ func (l *lowering) stringReadOnlyArgument(node *ast.Node) bool {
 
 // Prefer the writable-slot explanation when both a mutable view and nominal ancestry fail.
 // A checked cast relates only members selected by its tag, not excluded source members, so a cast
-// castRefusal (1900) recorded as checked is let through.
+// castRefusal (1900) recorded as checked has that relation let through; the slot its own type goes
+// into is still judged (castSlotRefusal).
 func (l *lowering) stringWideningRefusal(node *ast.Node) error {
 	if !l.refusal.checkedCasts[node] {
-		if err := l.refuseStringWidening(node); err != nil {
-			return err
-		}
+		return l.refuseStringWidening(node)
 	}
-	return nil
+	if l.stringReadOnlyArgument(node) || l.regexReplacementArgument(node) {
+		return nil
+	}
+	return l.castSlotRefusal(node)
 }
 
 func init() { refusalRules.register(3100, "stringWideningRefusal", (*lowering).stringWideningRefusal) }
