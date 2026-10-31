@@ -766,6 +766,18 @@ func (l *lowering) slotType(node *ast.Node) *checker.Type {
 	return l.checker.GetContextualType(node, checker.ContextFlagsNone)
 }
 
+// slotSet is whether node's slot comes from one a caller set (carriedSlot). A rule that reads a site's
+// slot some other way than the contextual type, such as an argument's parameter from the call's resolved
+// signature, reads slotType instead when this holds: a delayed write's call is lib's, whose parameter is
+// any, and the slot the caller set is the one the value is written into.
+func (l *lowering) slotSet(node *ast.Node) bool {
+	if len(l.slots.explicit) == 0 {
+		return false
+	}
+	_, carried, _ := l.carriedSlot(node)
+	return carried
+}
+
 // carriedSlot is node's slot when it comes from one a caller set: node's own, or the one tsc's
 // contextual typing would carry down to it from an enclosing value that has one, through parentheses, a
 // non-null, an as const, a conditional's branches, a logical operand, the right of a comma, and a

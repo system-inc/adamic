@@ -81,6 +81,9 @@ func TestRefusalRulesReadTheirSlotThroughSlotType(t *testing.T) {
 		}
 	}
 	var direct []string
+	// readsSignature is each reached function that reads a call's resolved signature, and defers says
+	// whether it asks slotSet, so an argument's parameter it reads gives way to a slot a caller set.
+	readsSignature, defers := map[string]bool{}, map[string]bool{}
 	for len(queue) > 0 {
 		name := queue[0]
 		queue = queue[1:]
@@ -101,12 +104,28 @@ func TestRefusalRulesReadTheirSlotThroughSlotType(t *testing.T) {
 					if node.Sel.Name == "GetContextualType" && name != "slotType" {
 						direct = append(direct, files.Position(node.Pos()).String()+" in "+name+", reached from rule "+rule)
 					}
+					if node.Sel.Name == "GetResolvedSignature" {
+						readsSignature[name] = true
+					}
+					if node.Sel.Name == "slotSet" {
+						defers[name] = true
+					}
 					reach(node.Sel.Name, rule)
 				case *ast.Ident:
 					reach(node.Name, rule)
 				}
 				return true
 			})
+		}
+	}
+	for name := range readsSignature {
+		if !defers[name] && signatureReaders[name] == "" {
+			direct = append(direct, name+" reads a call's resolved signature, reached from rule "+reachedFrom[name]+": ask slotSet before reading an argument's parameter from it, or add it to signatureReaders with why it reads no slot")
+		}
+	}
+	for name := range signatureReaders {
+		if !readsSignature[name] {
+			t.Errorf("signatureReaders names %s, which no rule reaches reading a resolved signature; take it out", name)
 		}
 	}
 	sort.Strings(direct)
@@ -121,3 +140,8 @@ func TestRefusalRulesReadTheirSlotThroughSlotType(t *testing.T) {
 		}
 	}
 }
+
+// signatureReaders are the functions a refusal rule reaches that read a call's resolved signature for
+// something other than the slot an argument goes into, each with what it reads instead. Any other reader
+// asks slotSet first (TestRefusalRulesReadTheirSlotThroughSlotType).
+var signatureReaders = map[string]string{}

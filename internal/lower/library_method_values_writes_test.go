@@ -174,7 +174,7 @@ const points: Point[] = [{ x: 1 }];
 push.call(points, { x: 2 });
 console.log(points.map((point) => String(point.x)).join(" "));`},
 		{"a literal number into a union array", `const push = Array.prototype.push;
-const values: (string | number)[] = ["a"];
+const values: (string | number)[] = ["a", 1];
 push.call(values, 5);
 console.log(values.map((value) => String(value)).join("|"));`},
 		{"a literal into a literal union array", `const push = Array.prototype.push;
