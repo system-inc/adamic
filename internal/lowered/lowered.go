@@ -85,7 +85,7 @@ const (
 // keyedEnvironment is every environment variable the lowering's closure reads that can change the IR it makes, each
 // keyed by its value: lower.Lower's two (lower.go), which lower.Lower and cmd/adamic take Options from, and the
 // checker's stack limit (tsc's core.ApplyDebugStackLimit), which can change whether the checker stops.
-var keyedEnvironment = []string{"ADAMIC_PROGRAM_REGION", "ADAMIC_OWNERSHIP_QUERY", "TS_GO_DEBUG_STACK_LIMIT"}
+var keyedEnvironment = []string{"ADAMIC_PROGRAM_REGION", "ADAMIC_OWNERSHIP_QUERY"}
 
 // unkeyedEnvironment is every variable the closure reads that can't change the IR, with why. A read the guard finds in
 // neither list fails it.
