@@ -112,19 +112,43 @@ func (l *lowering) nodeCallbackHostObject(member *ast.Symbol) string {
 			callback := l.checker.GetNonNullableType(l.checker.GetTypeOfSymbol(parameter))
 			for _, called := range l.checker.GetSignaturesOfType(callback, checker.SignatureKindCall) {
 				for _, handed := range called.Parameters() {
-					proven := l.checker.GetNonNullableType(l.checker.GetTypeOfSymbol(handed))
-					members := []*checker.Type{proven}
-					if proven.Flags()&checker.TypeFlagsUnion != 0 {
-						members = proven.Types()
-					}
-					for _, member := range members {
-						if _, host := l.nodeHostObject(member); host {
-							return "a " + l.checker.TypeToString(member) + " to its " + parameter.Name
-						}
+					if host := l.nodeHeldHostObject(l.checker.GetTypeOfSymbol(handed), 0); host != nil {
+						return "a " + l.checker.TypeToString(host) + " to its " + parameter.Name
 					}
 				}
 			}
 		}
 	}
 	return ""
+}
+
+// nodeHeldHostObject is a host object a handed type may be: itself, a union's member, a generic's
+// constraint (Writable.on's listener takes ...WritableEventMap[E]), or a tuple's or an array's
+// element, as a rest parameter holds them.
+func (l *lowering) nodeHeldHostObject(proven *checker.Type, depth int) *checker.Type {
+	if proven == nil || depth > 8 {
+		return nil
+	}
+	proven = l.checker.GetNonNullableType(proven)
+	if _, host := l.nodeHostObject(proven); host {
+		return proven
+	}
+	if proven.Flags()&(checker.TypeFlagsTypeParameter|checker.TypeFlagsIndexedAccess) != 0 {
+		if constraint := l.checker.GetBaseConstraintOfType(proven); constraint != nil && constraint != proven {
+			return l.nodeHeldHostObject(constraint, depth+1)
+		}
+		return nil
+	}
+	members := []*checker.Type{}
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		members = proven.Types()
+	} else if l.checker.IsArrayType(proven) || checker.IsTupleType(proven) {
+		members = l.checker.GetTypeArguments(proven)
+	}
+	for _, member := range members {
+		if host := l.nodeHeldHostObject(member, depth+1); host != nil {
+			return host
+		}
+	}
+	return nil
 }
