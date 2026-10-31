@@ -131,6 +131,10 @@ func TestDelayedArrayWritesAreJudgedAsTheirDirectTwins(t *testing.T) {
 		{"g2 push", "function make(): void {} const fs: (() => unknown)[] = [];", "push.call(fs, make);", "fs.push(make);"},
 		{"a view in a literal", "class Animal { name = 'a'; } class Dog extends Animal { bark(): string { return 'woof'; } } const dogs: Dog[] = []; const holders: { pets: Animal[] }[] = [];", "push.call(holders, { pets: dogs });", "holders.push({ pets: dogs });"},
 		{"a view in an array literal", "class Animal { name = 'a'; } class Dog extends Animal { bark(): string { return 'woof'; } } const dogs: Dog[] = []; const nested: Animal[][][] = [];", "push.call(nested, [dogs]);", "nested.push([dogs]);"},
+		// A cast is judged as the value it is against the slot it goes into (#agm7npb's castSlotWidened),
+		// so as and satisfies launder no view through a delayed write either (Language's c7d and c8d).
+		{"c7d as", "const inner: string[] = []; const outer: (string | number)[][] = [];", "push.call(outer, inner as string[]);", "outer.push(inner as string[]);"},
+		{"c8d satisfies", "const inner: string[] = []; const outer: (string | number)[][] = [];", "push.call(outer, inner satisfies string[]);", "outer.push(inner satisfies string[]);"},
 		// The value was judged already, honestly, at a direct write: the delayed verdict doesn't lean on it.
 		{"h7 after an honest direct write", "const named = { a: 1 }; const plain: { a: number }[] = []; plain.push(named); const records: Record<string, number>[] = [];", "push.call(records, named);", "records.push(named);"},
 	} {
