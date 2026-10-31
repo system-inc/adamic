@@ -83,7 +83,7 @@ func (l *lowering) enumMemberOrigin(node *ast.Node, identity *ast.Symbol, seen m
 // panic is shared by both backends; never itself does not need a new machine representation.
 func (l *lowering) enumNeverCheck(node *ast.Node, value ir.Expression, identity *ast.Symbol) ir.Expression {
 	of := ir.Number
-	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+	if contextual := l.slotType(node); contextual != nil {
 		if representation, known := l.representation(contextual); known && !slotless(representation) {
 			of = representation
 		}
