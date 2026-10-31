@@ -1,0 +1,15 @@
+diff --git a/internal/load/source_fs.go b/internal/load/source_fs.go
+index 65ee3e59..d5f29741 100644
+--- a/internal/load/source_fs.go
++++ b/internal/load/source_fs.go
+@@ -56,10 +56,6 @@ func (s *sourceFS) adamicFile(path tspath.RootedFilePath) (tspath.RootedFilePath
+ 	if !strings.HasSuffix(path.AsString(), ".a.ts") {
+ 		return "", false
+ 	}
+-	if kept, ok := s.adamicFiles.Load(path); ok {
+-		answer := kept.(adamicAnswer)
+-		return answer.path, answer.found
+-	}
+ 	answer := adamicAnswer{}
+ 	if !s.FS.FileExists(path) {
+ 		answer.path = path.RemoveExtension(".ts").AppendSuffix("")

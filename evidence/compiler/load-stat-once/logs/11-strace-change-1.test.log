@@ -1,0 +1,1281 @@
+=== RUN   TestCycleFinderEquality_000
+=== PAUSE TestCycleFinderEquality_000
+=== RUN   TestCycleFinderEquality_001
+=== PAUSE TestCycleFinderEquality_001
+=== RUN   TestCycleFinderEquality_002
+=== PAUSE TestCycleFinderEquality_002
+=== RUN   TestCycleFinderEquality_003
+=== PAUSE TestCycleFinderEquality_003
+=== RUN   TestCycleFinderEquality_004
+=== PAUSE TestCycleFinderEquality_004
+=== RUN   TestCycleFinderEquality_005
+=== PAUSE TestCycleFinderEquality_005
+=== RUN   TestCycleFinderEquality_006
+=== PAUSE TestCycleFinderEquality_006
+=== RUN   TestCycleFinderEquality_007
+=== PAUSE TestCycleFinderEquality_007
+=== RUN   TestCycleFinderEquality_008
+=== PAUSE TestCycleFinderEquality_008
+=== RUN   TestCycleFinderEquality_009
+=== PAUSE TestCycleFinderEquality_009
+=== CONT  TestCycleFinderEquality_000
+=== CONT  TestCycleFinderEquality_005
+=== CONT  TestCycleFinderEquality_002
+=== CONT  TestCycleFinderEquality_001
+=== RUN   TestCycleFinderEquality_000/internal/conformance/testdata/overloads/result_lies.a
+=== RUN   TestCycleFinderEquality_005/internal/conformance/testdata/refusals/predicate_alias.a
+=== RUN   TestCycleFinderEquality_002/internal/conformance/testdata/classes/field_initializer_order.a
+=== RUN   TestCycleFinderEquality_001/internal/lower/testdata/input-spread/utf8Length_nested.a
+=== NAME  TestCycleFinderEquality_005/internal/conformance/testdata/refusals/predicate_alias.a
+    cycles_equality_test.go:327: internal/conformance/testdata/refusals/predicate_alias.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/internal/lower/testdata/census_panics/generic_closure.a
+=== NAME  TestCycleFinderEquality_002/internal/conformance/testdata/classes/field_initializer_order.a
+    cycles_equality_test.go:327: internal/conformance/testdata/classes/field_initializer_order.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_002/internal/oracle/testdata/047cb0d_f_maybe_ref.a
+=== NAME  TestCycleFinderEquality_000/internal/conformance/testdata/overloads/result_lies.a
+    cycles_equality_test.go:327: internal/conformance/testdata/overloads/result_lies.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/internal/ir/testdata/call_targets.a
+=== NAME  TestCycleFinderEquality_001/internal/lower/testdata/input-spread/utf8Length_nested.a
+    cycles_equality_test.go:327: internal/lower/testdata/input-spread/utf8Length_nested.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/internal/lower/testdata/input-spread/writeTextFile_later.a
+=== NAME  TestCycleFinderEquality_000/internal/ir/testdata/call_targets.a
+    cycles_equality_test.go:327: internal/ir/testdata/call_targets.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/internal/lower/testdata/namespaces_notyet/reaching_helper.a
+=== NAME  TestCycleFinderEquality_001/internal/lower/testdata/input-spread/writeTextFile_later.a
+    cycles_equality_test.go:327: internal/lower/testdata/input-spread/writeTextFile_later.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/internal/lower/testdata/optional_widening/class_field.a
+=== NAME  TestCycleFinderEquality_002/internal/oracle/testdata/047cb0d_f_maybe_ref.a
+    cycles_equality_test.go:327: internal/oracle/testdata/047cb0d_f_maybe_ref.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_002/internal/oracle/testdata/coverage_view_closure.a
+=== NAME  TestCycleFinderEquality_005/internal/lower/testdata/census_panics/generic_closure.a
+    cycles_equality_test.go:327: internal/lower/testdata/census_panics/generic_closure.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/internal/lower/testdata/eep_presence/eep1m5z-93122fa_t_t5.a
+=== NAME  TestCycleFinderEquality_000/internal/lower/testdata/namespaces_notyet/reaching_helper.a
+    cycles_equality_test.go:327: internal/lower/testdata/namespaces_notyet/reaching_helper.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/internal/lower/testdata/predicates/overload_some_objects.a
+=== NAME  TestCycleFinderEquality_001/internal/lower/testdata/optional_widening/class_field.a
+    cycles_equality_test.go:327: internal/lower/testdata/optional_widening/class_field.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/internal/lower/testdata/predicate_qualified_refused/mutable.ts
+=== NAME  TestCycleFinderEquality_002/internal/oracle/testdata/coverage_view_closure.a
+    cycles_equality_test.go:327: internal/oracle/testdata/coverage_view_closure.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_002/internal/oracle/testdata/graph_regions_anchor.a
+=== NAME  TestCycleFinderEquality_005/internal/lower/testdata/eep_presence/eep1m5z-93122fa_t_t5.a
+    cycles_equality_test.go:327: internal/lower/testdata/eep_presence/eep1m5z-93122fa_t_t5.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/internal/lower/testdata/predicates_function_type/overload_union_impl.ts
+=== NAME  TestCycleFinderEquality_001/internal/lower/testdata/predicate_qualified_refused/mutable.ts
+    cycles_equality_test.go:327: internal/lower/testdata/predicate_qualified_refused/mutable.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/internal/lower/testdata/realpath/refused/for_each.a
+=== NAME  TestCycleFinderEquality_000/internal/lower/testdata/predicates/overload_some_objects.a
+    cycles_equality_test.go:327: internal/lower/testdata/predicates/overload_some_objects.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/internal/lower/testdata/predicates_checked/false_element_condition.a
+=== NAME  TestCycleFinderEquality_002/internal/oracle/testdata/graph_regions_anchor.a
+    cycles_equality_test.go:327: internal/oracle/testdata/graph_regions_anchor.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_002/internal/oracle/testdata/import_cycles/hoisted/a.a
+=== NAME  TestCycleFinderEquality_005/internal/lower/testdata/predicates_function_type/overload_union_impl.ts
+    cycles_equality_test.go:327: internal/lower/testdata/predicates_function_type/overload_union_impl.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/internal/native/testdata/program_region/oracle.a
+    cycles_equality_test.go:327: internal/native/testdata/program_region/oracle.a: common loader refusal: /home/user/adamic/internal/native/testdata/program_region/oracle.a:10:40: error TS2532: Object is possibly 'undefined'.
+        /home/user/adamic/internal/native/testdata/program_region/oracle.a:10:51: error TS2339: Property 'next' does not exist on type 'string'.
+        /home/user/adamic/internal/native/testdata/program_region/oracle.a:5:1: error TS2322: Type '{ next: { next: undefined; text: string; counted: { text: string; }; }; text: string; }' is not assignable to type 'undefined'.
+        /home/user/adamic/internal/native/testdata/program_region/oracle.a:7:37: error TS2769: No overload matches this call.
+          The last overload gave the following error.
+            Type '{ next: undefined; text: string; counted: { text: string; }; }' is not assignable to type 'string'.
+=== RUN   TestCycleFinderEquality_005/internal/oracle/testdata/array_literal_empty_union.a
+=== NAME  TestCycleFinderEquality_000/internal/lower/testdata/predicates_checked/false_element_condition.a
+    cycles_equality_test.go:327: internal/lower/testdata/predicates_checked/false_element_condition.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/internal/oracle/testdata/async_for_of_mutation.a
+=== NAME  TestCycleFinderEquality_002/internal/oracle/testdata/import_cycles/hoisted/a.a
+    cycles_equality_test.go:327: internal/oracle/testdata/import_cycles/hoisted/a.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_002/internal/oracle/testdata/map_foreach_closures.a
+=== NAME  TestCycleFinderEquality_005/internal/oracle/testdata/array_literal_empty_union.a
+    cycles_equality_test.go:327: internal/oracle/testdata/array_literal_empty_union.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/internal/oracle/testdata/cast_enum_const.ts
+=== NAME  TestCycleFinderEquality_000/internal/oracle/testdata/async_for_of_mutation.a
+    cycles_equality_test.go:327: internal/oracle/testdata/async_for_of_mutation.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/internal/oracle/testdata/async_iterable_map_entries_function.a
+=== NAME  TestCycleFinderEquality_005/internal/oracle/testdata/cast_enum_const.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/cast_enum_const.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/internal/oracle/testdata/concurrency/refused/date.a
+=== NAME  TestCycleFinderEquality_000/internal/oracle/testdata/async_iterable_map_entries_function.a
+    cycles_equality_test.go:327: internal/oracle/testdata/async_iterable_map_entries_function.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/internal/oracle/testdata/census_small_rest.a
+=== NAME  TestCycleFinderEquality_002/internal/oracle/testdata/map_foreach_closures.a
+    cycles_equality_test.go:327: internal/oracle/testdata/map_foreach_closures.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_002/internal/oracle/testdata/method_coverage_string_lastindexof.a
+=== NAME  TestCycleFinderEquality_000/internal/oracle/testdata/census_small_rest.a
+    cycles_equality_test.go:327: internal/oracle/testdata/census_small_rest.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/internal/oracle/testdata/enum_tag_refused/getter_tag.a
+=== NAME  TestCycleFinderEquality_002/internal/oracle/testdata/method_coverage_string_lastindexof.a
+    cycles_equality_test.go:327: internal/oracle/testdata/method_coverage_string_lastindexof.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_002/internal/oracle/testdata/number_parsing.a
+=== NAME  TestCycleFinderEquality_005/internal/oracle/testdata/concurrency/refused/date.a
+    cycles_equality_test.go:327: internal/oracle/testdata/concurrency/refused/date.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/internal/oracle/testdata/devirtualize_abstract.a
+=== NAME  TestCycleFinderEquality_000/internal/oracle/testdata/enum_tag_refused/getter_tag.a
+    cycles_equality_test.go:327: internal/oracle/testdata/enum_tag_refused/getter_tag.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/internal/oracle/testdata/finally_leaves.a
+=== NAME  TestCycleFinderEquality_005/internal/oracle/testdata/devirtualize_abstract.a
+    cycles_equality_test.go:327: internal/oracle/testdata/devirtualize_abstract.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/internal/oracle/testdata/json_stringify_options.a
+=== NAME  TestCycleFinderEquality_002/internal/oracle/testdata/number_parsing.a
+    cycles_equality_test.go:327: internal/oracle/testdata/number_parsing.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_002/internal/oracle/testdata/object_intersection_fields/null_distinct.a
+    cycles_equality_test.go:327: internal/oracle/testdata/object_intersection_fields/null_distinct.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_002/internal/oracle/testdata/predicate_qualified/reexport_truth/main.ts
+=== NAME  TestCycleFinderEquality_000/internal/oracle/testdata/finally_leaves.a
+    cycles_equality_test.go:327: internal/oracle/testdata/finally_leaves.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/internal/oracle/testdata/getters_census_higher_callback_pair_methods.a
+=== NAME  TestCycleFinderEquality_005/internal/oracle/testdata/json_stringify_options.a
+    cycles_equality_test.go:327: internal/oracle/testdata/json_stringify_options.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/internal/oracle/testdata/library_math_number_math.a
+=== NAME  TestCycleFinderEquality_002/internal/oracle/testdata/predicate_qualified/reexport_truth/main.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/predicate_qualified/reexport_truth/main.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_002/internal/oracle/testdata/regexp_v8_surrogates.a
+=== NAME  TestCycleFinderEquality_001/internal/lower/testdata/realpath/refused/for_each.a
+    cycles_equality_test.go:327: internal/lower/testdata/realpath/refused/for_each.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/internal/lower/testdata/scalar_union_views/p54_b.ts
+=== NAME  TestCycleFinderEquality_000/internal/oracle/testdata/getters_census_higher_callback_pair_methods.a
+    cycles_equality_test.go:327: internal/oracle/testdata/getters_census_higher_callback_pair_methods.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/internal/oracle/testdata/graph_regions_escape.a
+=== NAME  TestCycleFinderEquality_005/internal/oracle/testdata/library_math_number_math.a
+    cycles_equality_test.go:327: internal/oracle/testdata/library_math_number_math.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/internal/oracle/testdata/node_error_stack_trace_limit_refused/untyped_write.a
+=== NAME  TestCycleFinderEquality_002/internal/oracle/testdata/regexp_v8_surrogates.a
+    cycles_equality_test.go:327: internal/oracle/testdata/regexp_v8_surrogates.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_002/internal/oracle/testdata/reland_refused/narrowed_union_typed_array_tag.ts
+=== NAME  TestCycleFinderEquality_001/internal/lower/testdata/scalar_union_views/p54_b.ts
+    cycles_equality_test.go:327: internal/lower/testdata/scalar_union_views/p54_b.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/internal/oracle/testdata/async_for_of_body_cells.a
+=== NAME  TestCycleFinderEquality_000/internal/oracle/testdata/graph_regions_escape.a
+    cycles_equality_test.go:327: internal/oracle/testdata/graph_regions_escape.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/internal/oracle/testdata/library_object_order.a
+=== NAME  TestCycleFinderEquality_002/internal/oracle/testdata/reland_refused/narrowed_union_typed_array_tag.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/reland_refused/narrowed_union_typed_array_tag.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_002/internal/oracle/testdata/review/agree/fxspptb_047cb0d_f_maybe_ref.a
+=== NAME  TestCycleFinderEquality_001/internal/oracle/testdata/async_for_of_body_cells.a
+    cycles_equality_test.go:327: internal/oracle/testdata/async_for_of_body_cells.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/internal/oracle/testdata/async_for_of_return.a
+=== NAME  TestCycleFinderEquality_000/internal/oracle/testdata/library_object_order.a
+    cycles_equality_test.go:327: internal/oracle/testdata/library_object_order.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/internal/oracle/testdata/maybe_booleans.a
+=== NAME  TestCycleFinderEquality_001/internal/oracle/testdata/async_for_of_return.a
+    cycles_equality_test.go:327: internal/oracle/testdata/async_for_of_return.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/internal/oracle/testdata/async_iterable_string_emoji_module.a
+=== NAME  TestCycleFinderEquality_002/internal/oracle/testdata/review/agree/fxspptb_047cb0d_f_maybe_ref.a
+    cycles_equality_test.go:327: internal/oracle/testdata/review/agree/fxspptb_047cb0d_f_maybe_ref.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_002/internal/oracle/testdata/scout_nullable_storage_refused/callable.a
+=== NAME  TestCycleFinderEquality_001/internal/oracle/testdata/async_iterable_string_emoji_module.a
+    cycles_equality_test.go:327: internal/oracle/testdata/async_iterable_string_emoji_module.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/internal/oracle/testdata/async_refused/async_refuse_arrow_thenable.a
+=== NAME  TestCycleFinderEquality_002/internal/oracle/testdata/scout_nullable_storage_refused/callable.a
+    cycles_equality_test.go:327: internal/oracle/testdata/scout_nullable_storage_refused/callable.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_002/internal/oracle/testdata/search_shrink_findIndex_checked.a
+=== NAME  TestCycleFinderEquality_000/internal/oracle/testdata/maybe_booleans.a
+    cycles_equality_test.go:327: internal/oracle/testdata/maybe_booleans.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/internal/oracle/testdata/miscompile_2a/error_undefined_message.a
+=== NAME  TestCycleFinderEquality_001/internal/oracle/testdata/async_refused/async_refuse_arrow_thenable.a
+    cycles_equality_test.go:327: internal/oracle/testdata/async_refused/async_refuse_arrow_thenable.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/internal/oracle/testdata/census_unary_truthiness.a
+=== NAME  TestCycleFinderEquality_000/internal/oracle/testdata/miscompile_2a/error_undefined_message.a
+    cycles_equality_test.go:327: internal/oracle/testdata/miscompile_2a/error_undefined_message.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/internal/oracle/testdata/nested_assignment_return.a
+=== NAME  TestCycleFinderEquality_002/internal/oracle/testdata/search_shrink_findIndex_checked.a
+    cycles_equality_test.go:327: internal/oracle/testdata/search_shrink_findIndex_checked.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_002/internal/oracle/testdata/taste_exports/erased.a
+=== NAME  TestCycleFinderEquality_000/internal/oracle/testdata/nested_assignment_return.a
+    cycles_equality_test.go:327: internal/oracle/testdata/nested_assignment_return.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/internal/oracle/testdata/optional_widening_refused/node_fs_file_exists.a
+=== NAME  TestCycleFinderEquality_001/internal/oracle/testdata/census_unary_truthiness.a
+    cycles_equality_test.go:327: internal/oracle/testdata/census_unary_truthiness.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/internal/oracle/testdata/class_wrong_output_refused/classfeat_init_super_getter.a
+=== NAME  TestCycleFinderEquality_002/internal/oracle/testdata/taste_exports/erased.a
+    cycles_equality_test.go:327: internal/oracle/testdata/taste_exports/erased.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_002/internal/oracle/testdata/taste_star/types.a
+=== NAME  TestCycleFinderEquality_001/internal/oracle/testdata/class_wrong_output_refused/classfeat_init_super_getter.a
+    cycles_equality_test.go:327: internal/oracle/testdata/class_wrong_output_refused/classfeat_init_super_getter.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/internal/oracle/testdata/fresh_refused/escaped_before.a
+=== NAME  TestCycleFinderEquality_002/internal/oracle/testdata/taste_star/types.a
+    cycles_equality_test.go:327: internal/oracle/testdata/taste_star/types.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_002/internal/oracle/testdata/vacuous_downcast/later_tag.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/vacuous_downcast/later_tag.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_002/internal/oracle/testdata/view_optional_read_stops/chained_text.ts
+=== NAME  TestCycleFinderEquality_001/internal/oracle/testdata/fresh_refused/escaped_before.a
+    cycles_equality_test.go:327: internal/oracle/testdata/fresh_refused/escaped_before.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/internal/oracle/testdata/gaps.a
+=== NAME  TestCycleFinderEquality_005/internal/oracle/testdata/node_error_stack_trace_limit_refused/untyped_write.a
+    cycles_equality_test.go:327: internal/oracle/testdata/node_error_stack_trace_limit_refused/untyped_write.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/internal/oracle/testdata/placeholder_nonnull_null_json.a
+=== NAME  TestCycleFinderEquality_002/internal/oracle/testdata/view_optional_read_stops/chained_text.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/view_optional_read_stops/chained_text.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_002/review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/10_exports-missing_toString/main.a
+=== NAME  TestCycleFinderEquality_005/internal/oracle/testdata/placeholder_nonnull_null_json.a
+    cycles_equality_test.go:327: internal/oracle/testdata/placeholder_nonnull_null_json.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/internal/oracle/testdata/predicate_false_flow_stopped/c20_destructured.ts
+=== NAME  TestCycleFinderEquality_002/review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/10_exports-missing_toString/main.a
+    cycles_equality_test.go:327: review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/10_exports-missing_toString/main.a: common loader refusal: /home/user/adamic/review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/10_exports-missing_toString/main.a:2:23: error TS2307: Cannot find module 'pkg' or its corresponding type declarations.
+=== RUN   TestCycleFinderEquality_002/stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/messages.a
+=== NAME  TestCycleFinderEquality_001/internal/oracle/testdata/gaps.a
+    cycles_equality_test.go:327: internal/oracle/testdata/gaps.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/internal/oracle/testdata/graph_regions_counted_container.a
+=== NAME  TestCycleFinderEquality_005/internal/oracle/testdata/predicate_false_flow_stopped/c20_destructured.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/predicate_false_flow_stopped/c20_destructured.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/internal/oracle/testdata/predicate_false_flow_stopped/c35_nonnull.ts
+=== NAME  TestCycleFinderEquality_002/stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/messages.a
+    cycles_equality_test.go:327: stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/messages.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_002/stage1/cohere/lint/rules/no-unsafe-finally/messages.a
+=== NAME  TestCycleFinderEquality_001/internal/oracle/testdata/graph_regions_counted_container.a
+    cycles_equality_test.go:327: internal/oracle/testdata/graph_regions_counted_container.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/internal/oracle/testdata/moves/accepted/cleanup.a
+=== NAME  TestCycleFinderEquality_005/internal/oracle/testdata/predicate_false_flow_stopped/c35_nonnull.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/predicate_false_flow_stopped/c35_nonnull.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/internal/oracle/testdata/predicate_false_flow_stopped/c50_catch.ts
+=== NAME  TestCycleFinderEquality_002/stage1/cohere/lint/rules/no-unsafe-finally/messages.a
+    cycles_equality_test.go:327: stage1/cohere/lint/rules/no-unsafe-finally/messages.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_002/stage3/fixtures/real/bytes-revealed/any-return/main.a
+=== NAME  TestCycleFinderEquality_001/internal/oracle/testdata/moves/accepted/cleanup.a
+    cycles_equality_test.go:327: internal/oracle/testdata/moves/accepted/cleanup.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/internal/oracle/testdata/predicate_false_flow_stopped/c52_closure_const.ts
+=== NAME  TestCycleFinderEquality_005/internal/oracle/testdata/predicate_false_flow_stopped/c50_catch.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/predicate_false_flow_stopped/c50_catch.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/internal/oracle/testdata/predicate_qualified/type_truth/main.ts
+=== NAME  TestCycleFinderEquality_002/stage3/fixtures/real/bytes-revealed/any-return/main.a
+    cycles_equality_test.go:327: stage3/fixtures/real/bytes-revealed/any-return/main.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_002/stage3/fixtures/real/non-null-assertion/main.a
+=== NAME  TestCycleFinderEquality_005/internal/oracle/testdata/predicate_qualified/type_truth/main.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/predicate_qualified/type_truth/main.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p23_callable_union_literal_result.ts
+=== NAME  TestCycleFinderEquality_001/internal/oracle/testdata/predicate_false_flow_stopped/c52_closure_const.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/predicate_false_flow_stopped/c52_closure_const.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/internal/oracle/testdata/predicate_refusals/oct8_predicates_p14_overload_optional_chain_container.a
+=== NAME  TestCycleFinderEquality_002/stage3/fixtures/real/non-null-assertion/main.a
+    cycles_equality_test.go:327: stage3/fixtures/real/non-null-assertion/main.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_002/stage3/fixtures/records/input-fixtures/25_cli-unknown_constructor/main.a
+=== NAME  TestCycleFinderEquality_005/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p23_callable_union_literal_result.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/review/agree/fxspptb_oct9_views_p23_callable_union_literal_result.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/internal/oracle/testdata/route_targets_virtual_fresh.a
+=== NAME  TestCycleFinderEquality_000/internal/oracle/testdata/optional_widening_refused/node_fs_file_exists.a
+    cycles_equality_test.go:327: internal/oracle/testdata/optional_widening_refused/node_fs_file_exists.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/internal/oracle/testdata/predicate_direction_uses/argument.ts
+=== NAME  TestCycleFinderEquality_001/internal/oracle/testdata/predicate_refusals/oct8_predicates_p14_overload_optional_chain_container.a
+    cycles_equality_test.go:327: internal/oracle/testdata/predicate_refusals/oct8_predicates_p14_overload_optional_chain_container.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/internal/oracle/testdata/review/refused/fxspptb_p06_helper_second_parameter_undefined.a
+=== NAME  TestCycleFinderEquality_002/stage3/fixtures/records/input-fixtures/25_cli-unknown_constructor/main.a
+    cycles_equality_test.go:327: stage3/fixtures/records/input-fixtures/25_cli-unknown_constructor/main.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_002/stage3/ledger/checker-259/witnesses/index-read.a
+    cycles_equality_test.go:327: stage3/ledger/checker-259/witnesses/index-read.a: common loader refusal: /home/user/adamic/stage3/ledger/checker-259/witnesses/index-read.a:3:7: error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+=== RUN   TestCycleFinderEquality_002/stage3/namespace-parser-stops/native-namespace-class.a
+=== NAME  TestCycleFinderEquality_001/internal/oracle/testdata/review/refused/fxspptb_p06_helper_second_parameter_undefined.a
+    cycles_equality_test.go:327: internal/oracle/testdata/review/refused/fxspptb_p06_helper_second_parameter_undefined.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/internal/oracle/testdata/route_targets_recursive.a
+=== NAME  TestCycleFinderEquality_005/internal/oracle/testdata/route_targets_virtual_fresh.a
+    cycles_equality_test.go:327: internal/oracle/testdata/route_targets_virtual_fresh.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/internal/oracle/testdata/set_foreach_named_more.a
+=== NAME  TestCycleFinderEquality_000/internal/oracle/testdata/predicate_direction_uses/argument.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/predicate_direction_uses/argument.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/internal/oracle/testdata/predicate_false_flow_stopped/escape_shorthand.ts
+=== NAME  TestCycleFinderEquality_002/stage3/namespace-parser-stops/native-namespace-class.a
+    cycles_equality_test.go:327: stage3/namespace-parser-stops/native-namespace-class.a: equal scanning/indexed outcomes in modes [false true]
+--- PASS: TestCycleFinderEquality_002 (13.01s)
+    --- PASS: TestCycleFinderEquality_002/internal/conformance/testdata/classes/field_initializer_order.a (0.67s)
+    --- PASS: TestCycleFinderEquality_002/internal/oracle/testdata/047cb0d_f_maybe_ref.a (0.43s)
+    --- PASS: TestCycleFinderEquality_002/internal/oracle/testdata/coverage_view_closure.a (0.43s)
+    --- PASS: TestCycleFinderEquality_002/internal/oracle/testdata/graph_regions_anchor.a (0.55s)
+    --- PASS: TestCycleFinderEquality_002/internal/oracle/testdata/import_cycles/hoisted/a.a (0.49s)
+    --- PASS: TestCycleFinderEquality_002/internal/oracle/testdata/map_foreach_closures.a (0.86s)
+    --- PASS: TestCycleFinderEquality_002/internal/oracle/testdata/method_coverage_string_lastindexof.a (0.44s)
+    --- PASS: TestCycleFinderEquality_002/internal/oracle/testdata/number_parsing.a (0.43s)
+    --- PASS: TestCycleFinderEquality_002/internal/oracle/testdata/object_intersection_fields/null_distinct.a (0.57s)
+    --- PASS: TestCycleFinderEquality_002/internal/oracle/testdata/predicate_qualified/reexport_truth/main.ts (0.40s)
+    --- PASS: TestCycleFinderEquality_002/internal/oracle/testdata/regexp_v8_surrogates.a (0.53s)
+    --- PASS: TestCycleFinderEquality_002/internal/oracle/testdata/reland_refused/narrowed_union_typed_array_tag.ts (0.38s)
+    --- PASS: TestCycleFinderEquality_002/internal/oracle/testdata/review/agree/fxspptb_047cb0d_f_maybe_ref.a (0.49s)
+    --- PASS: TestCycleFinderEquality_002/internal/oracle/testdata/scout_nullable_storage_refused/callable.a (0.37s)
+    --- PASS: TestCycleFinderEquality_002/internal/oracle/testdata/search_shrink_findIndex_checked.a (0.46s)
+    --- PASS: TestCycleFinderEquality_002/internal/oracle/testdata/taste_exports/erased.a (0.39s)
+    --- PASS: TestCycleFinderEquality_002/internal/oracle/testdata/taste_star/types.a (0.31s)
+    --- PASS: TestCycleFinderEquality_002/internal/oracle/testdata/vacuous_downcast/later_tag.ts (0.39s)
+    --- PASS: TestCycleFinderEquality_002/internal/oracle/testdata/view_optional_read_stops/chained_text.ts (0.57s)
+    --- PASS: TestCycleFinderEquality_002/review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/10_exports-missing_toString/main.a (0.09s)
+    --- PASS: TestCycleFinderEquality_002/stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/messages.a (0.39s)
+    --- PASS: TestCycleFinderEquality_002/stage1/cohere/lint/rules/no-unsafe-finally/messages.a (0.45s)
+    --- PASS: TestCycleFinderEquality_002/stage3/fixtures/real/bytes-revealed/any-return/main.a (0.45s)
+    --- PASS: TestCycleFinderEquality_002/stage3/fixtures/real/non-null-assertion/main.a (0.47s)
+    --- PASS: TestCycleFinderEquality_002/stage3/fixtures/records/input-fixtures/25_cli-unknown_constructor/main.a (0.40s)
+    --- PASS: TestCycleFinderEquality_002/stage3/ledger/checker-259/witnesses/index-read.a (0.12s)
+    --- PASS: TestCycleFinderEquality_002/stage3/namespace-parser-stops/native-namespace-class.a (0.36s)
+=== CONT  TestCycleFinderEquality_009
+=== RUN   TestCycleFinderEquality_009/internal/lower/testdata/array_narrowing/cat.a
+=== NAME  TestCycleFinderEquality_000/internal/oracle/testdata/predicate_false_flow_stopped/escape_shorthand.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/predicate_false_flow_stopped/escape_shorthand.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/internal/oracle/testdata/predicate_qualified/defined_truth/main.ts
+=== NAME  TestCycleFinderEquality_009/internal/lower/testdata/array_narrowing/cat.a
+    cycles_equality_test.go:327: internal/lower/testdata/array_narrowing/cat.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_009/internal/oracle/testdata/async_finally_snapshot.a
+=== NAME  TestCycleFinderEquality_001/internal/oracle/testdata/route_targets_recursive.a
+    cycles_equality_test.go:327: internal/oracle/testdata/route_targets_recursive.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/internal/oracle/testdata/set_foreach_fnexpr.a
+=== NAME  TestCycleFinderEquality_005/internal/oracle/testdata/set_foreach_named_more.a
+    cycles_equality_test.go:327: internal/oracle/testdata/set_foreach_named_more.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a
+=== NAME  TestCycleFinderEquality_000/internal/oracle/testdata/predicate_qualified/defined_truth/main.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/predicate_qualified/defined_truth/main.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/internal/oracle/testdata/review/agree/fxspptb_d96d304_try_pad.a
+=== NAME  TestCycleFinderEquality_005/internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a
+    cycles_equality_test.go:327: internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/internal/oracle/testdata/utf8_view_fails.a
+=== NAME  TestCycleFinderEquality_009/internal/oracle/testdata/async_finally_snapshot.a
+    cycles_equality_test.go:327: internal/oracle/testdata/async_finally_snapshot.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_009/internal/oracle/testdata/class_inheritance.a
+=== NAME  TestCycleFinderEquality_001/internal/oracle/testdata/set_foreach_fnexpr.a
+    cycles_equality_test.go:327: internal/oracle/testdata/set_foreach_fnexpr.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/internal/oracle/testdata/taste_exports/bridge.a
+=== NAME  TestCycleFinderEquality_000/internal/oracle/testdata/review/agree/fxspptb_d96d304_try_pad.a
+    cycles_equality_test.go:327: internal/oracle/testdata/review/agree/fxspptb_d96d304_try_pad.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/internal/oracle/testdata/set_foreach_closures.a
+=== NAME  TestCycleFinderEquality_005/internal/oracle/testdata/utf8_view_fails.a
+    cycles_equality_test.go:327: internal/oracle/testdata/utf8_view_fails.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/internal/worker/wasm/panic.a
+=== NAME  TestCycleFinderEquality_001/internal/oracle/testdata/taste_exports/bridge.a
+    cycles_equality_test.go:327: internal/oracle/testdata/taste_exports/bridge.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/internal/oracle/testdata/typeof_string_literal.a
+=== NAME  TestCycleFinderEquality_009/internal/oracle/testdata/class_inheritance.a
+    cycles_equality_test.go:327: internal/oracle/testdata/class_inheritance.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_009/internal/oracle/testdata/coverage_regexp_new.a
+=== NAME  TestCycleFinderEquality_005/internal/worker/wasm/panic.a
+    cycles_equality_test.go:327: internal/worker/wasm/panic.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/notes/method-values/unsupported/map_numeric_parser.a
+=== NAME  TestCycleFinderEquality_001/internal/oracle/testdata/typeof_string_literal.a
+    cycles_equality_test.go:327: internal/oracle/testdata/typeof_string_literal.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/internal/oracle/testdata/void_widening_refused/w03_union_void_returns_void_call.a
+=== NAME  TestCycleFinderEquality_005/notes/method-values/unsupported/map_numeric_parser.a
+    cycles_equality_test.go:327: notes/method-values/unsupported/map_numeric_parser.a: common loader refusal: /home/user/adamic/notes/method-values/unsupported/map_numeric_parser.a:2:26: error TS2345: Argument of type '(string: string) => number' is not assignable to parameter of type '(value: number, index: number, array: number[]) => number'.
+          Types of parameters 'string' and 'value' are incompatible.
+            Type 'number' is not assignable to type 'string'.
+=== RUN   TestCycleFinderEquality_005/review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/18_typesVersions-own_toString/main.a
+=== NAME  TestCycleFinderEquality_009/internal/oracle/testdata/coverage_regexp_new.a
+    cycles_equality_test.go:327: internal/oracle/testdata/coverage_regexp_new.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_009/internal/oracle/testdata/devirtualize_factory.a
+=== NAME  TestCycleFinderEquality_005/review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/18_typesVersions-own_toString/main.a
+    cycles_equality_test.go:327: review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/18_typesVersions-own_toString/main.a: common loader refusal: /home/user/adamic/review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/18_typesVersions-own_toString/main.a:2:23: error TS2307: Cannot find module 'pkg/toString' or its corresponding type declarations.
+=== RUN   TestCycleFinderEquality_005/stage1/cohere/lint/regex/testdata/shapes/m/044.a
+=== NAME  TestCycleFinderEquality_000/internal/oracle/testdata/set_foreach_closures.a
+    cycles_equality_test.go:327: internal/oracle/testdata/set_foreach_closures.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/internal/oracle/testdata/string_views_lifetime.a
+=== NAME  TestCycleFinderEquality_001/internal/oracle/testdata/void_widening_refused/w03_union_void_returns_void_call.a
+    cycles_equality_test.go:327: internal/oracle/testdata/void_widening_refused/w03_union_void_returns_void_call.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/notes/stdout-edges/programs/panic_edges.a
+=== NAME  TestCycleFinderEquality_009/internal/oracle/testdata/devirtualize_factory.a
+    cycles_equality_test.go:327: internal/oracle/testdata/devirtualize_factory.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_009/internal/oracle/testdata/instantiation_array.a
+=== NAME  TestCycleFinderEquality_005/stage1/cohere/lint/regex/testdata/shapes/m/044.a
+    cycles_equality_test.go:327: stage1/cohere/lint/regex/testdata/shapes/m/044.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/stage1/cohere/lint/regex/testdata/shapes/plain/022_runtime.a
+=== NAME  TestCycleFinderEquality_000/internal/oracle/testdata/string_views_lifetime.a
+    cycles_equality_test.go:327: internal/oracle/testdata/string_views_lifetime.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/internal/oracle/testdata/union_write_refused/logical_assignment.a
+=== NAME  TestCycleFinderEquality_001/notes/stdout-edges/programs/panic_edges.a
+    cycles_equality_test.go:327: notes/stdout-edges/programs/panic_edges.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/25_cli-unknown_constructor/main.a
+=== NAME  TestCycleFinderEquality_009/internal/oracle/testdata/instantiation_array.a
+    cycles_equality_test.go:327: internal/oracle/testdata/instantiation_array.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_009/internal/oracle/testdata/json_encode_scalars.a
+=== NAME  TestCycleFinderEquality_000/internal/oracle/testdata/union_write_refused/logical_assignment.a
+    cycles_equality_test.go:327: internal/oracle/testdata/union_write_refused/logical_assignment.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/notes/stdout-edges/programs/stderr_only.a
+=== NAME  TestCycleFinderEquality_005/stage1/cohere/lint/regex/testdata/shapes/plain/022_runtime.a
+    cycles_equality_test.go:327: stage1/cohere/lint/regex/testdata/shapes/plain/022_runtime.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/stage1/cohere/lint/regex/testdata/shapes/plain/080_runtime.a
+=== NAME  TestCycleFinderEquality_001/review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/25_cli-unknown_constructor/main.a
+    cycles_equality_test.go:327: review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/25_cli-unknown_constructor/main.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/stage1/cohere/lint/regex/testdata/shapes/plain/070.a
+=== NAME  TestCycleFinderEquality_000/notes/stdout-edges/programs/stderr_only.a
+    cycles_equality_test.go:327: notes/stdout-edges/programs/stderr_only.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/stage1/cohere/lint/regex/testdata/shapes/plain/077.a
+=== NAME  TestCycleFinderEquality_005/stage1/cohere/lint/regex/testdata/shapes/plain/080_runtime.a
+    cycles_equality_test.go:327: stage1/cohere/lint/regex/testdata/shapes/plain/080_runtime.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/stage1/cohere/lint/rules/typescript-no-this-alias/rule.a
+=== NAME  TestCycleFinderEquality_009/internal/oracle/testdata/json_encode_scalars.a
+    cycles_equality_test.go:327: internal/oracle/testdata/json_encode_scalars.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_009/internal/oracle/testdata/json_stringify_indent.a
+=== NAME  TestCycleFinderEquality_001/stage1/cohere/lint/regex/testdata/shapes/plain/070.a
+    cycles_equality_test.go:327: stage1/cohere/lint/regex/testdata/shapes/plain/070.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/stage3/drivers/parser/kinds.a
+=== NAME  TestCycleFinderEquality_000/stage1/cohere/lint/regex/testdata/shapes/plain/077.a
+    cycles_equality_test.go:327: stage1/cohere/lint/regex/testdata/shapes/plain/077.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a
+=== NAME  TestCycleFinderEquality_009/internal/oracle/testdata/json_stringify_indent.a
+    cycles_equality_test.go:327: internal/oracle/testdata/json_stringify_indent.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_009/internal/oracle/testdata/library_array_flat.a
+=== NAME  TestCycleFinderEquality_001/stage3/drivers/parser/kinds.a
+    cycles_equality_test.go:327: stage3/drivers/parser/kinds.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/stage3/drivers/scanner/evidence/clean-records-rebase/witnesses/04-cast.a
+    cycles_equality_test.go:327: stage3/drivers/scanner/evidence/clean-records-rebase/witnesses/04-cast.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/stage3/drivers/scanner/evidence/combined-records-library/witnesses/09-string-cast.a
+=== NAME  TestCycleFinderEquality_009/internal/oracle/testdata/library_array_flat.a
+    cycles_equality_test.go:327: internal/oracle/testdata/library_array_flat.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_009/internal/oracle/testdata/map_foreach_keep.a
+=== NAME  TestCycleFinderEquality_005/stage1/cohere/lint/rules/typescript-no-this-alias/rule.a
+    cycles_equality_test.go:327: stage1/cohere/lint/rules/typescript-no-this-alias/rule.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/stage3/fixtures/cycles/03_extensions/path.a
+=== NAME  TestCycleFinderEquality_001/stage3/drivers/scanner/evidence/combined-records-library/witnesses/09-string-cast.a
+    cycles_equality_test.go:327: stage3/drivers/scanner/evidence/combined-records-library/witnesses/09-string-cast.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/stage3/drivers/scanner/evidence/native3-records/witnesses/11-array.a
+=== NAME  TestCycleFinderEquality_009/internal/oracle/testdata/map_foreach_keep.a
+    cycles_equality_test.go:327: internal/oracle/testdata/map_foreach_keep.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_009/internal/oracle/testdata/map_union_value_source_file.a
+=== NAME  TestCycleFinderEquality_005/stage3/fixtures/cycles/03_extensions/path.a
+    cycles_equality_test.go:327: stage3/fixtures/cycles/03_extensions/path.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_005/stage3/fixtures/records/08_option_boolean.a
+    cycles_equality_test.go:327: stage3/fixtures/records/08_option_boolean.a: common loader refusal: /home/user/adamic/stage3/fixtures/records/08_option_boolean.a:66:79: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+=== RUN   TestCycleFinderEquality_005/stage3/fixtures/records/14_group_by.a
+    cycles_equality_test.go:327: stage3/fixtures/records/14_group_by.a: common loader refusal: /home/user/adamic/stage3/fixtures/records/14_group_by.a:10:24: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.
+          'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.
+        /home/user/adamic/stage3/fixtures/records/14_group_by.a:8:40: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.
+          'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.
+=== RUN   TestCycleFinderEquality_005/stage3/fixtures/records/input-fixtures/09_exports-missing_constructor/main.a
+=== NAME  TestCycleFinderEquality_001/stage3/drivers/scanner/evidence/native3-records/witnesses/11-array.a
+    cycles_equality_test.go:327: stage3/drivers/scanner/evidence/native3-records/witnesses/11-array.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/stage3/fixtures/cycles/03_extensions/core.a
+=== NAME  TestCycleFinderEquality_005/stage3/fixtures/records/input-fixtures/09_exports-missing_constructor/main.a
+    cycles_equality_test.go:327: stage3/fixtures/records/input-fixtures/09_exports-missing_constructor/main.a: common loader refusal: /home/user/adamic/stage3/fixtures/records/input-fixtures/09_exports-missing_constructor/main.a:1:23: error TS2307: Cannot find module 'pkg' or its corresponding type declarations.
+--- PASS: TestCycleFinderEquality_005 (18.73s)
+    --- PASS: TestCycleFinderEquality_005/internal/conformance/testdata/refusals/predicate_alias.a (0.67s)
+    --- PASS: TestCycleFinderEquality_005/internal/lower/testdata/census_panics/generic_closure.a (0.47s)
+    --- PASS: TestCycleFinderEquality_005/internal/lower/testdata/eep_presence/eep1m5z-93122fa_t_t5.a (0.46s)
+    --- PASS: TestCycleFinderEquality_005/internal/lower/testdata/predicates_function_type/overload_union_impl.ts (0.48s)
+    --- PASS: TestCycleFinderEquality_005/internal/native/testdata/program_region/oracle.a (0.16s)
+    --- PASS: TestCycleFinderEquality_005/internal/oracle/testdata/array_literal_empty_union.a (0.62s)
+    --- PASS: TestCycleFinderEquality_005/internal/oracle/testdata/cast_enum_const.ts (0.48s)
+    --- PASS: TestCycleFinderEquality_005/internal/oracle/testdata/concurrency/refused/date.a (0.52s)
+    --- PASS: TestCycleFinderEquality_005/internal/oracle/testdata/devirtualize_abstract.a (0.42s)
+    --- PASS: TestCycleFinderEquality_005/internal/oracle/testdata/json_stringify_options.a (0.79s)
+    --- PASS: TestCycleFinderEquality_005/internal/oracle/testdata/library_math_number_math.a (0.42s)
+    --- PASS: TestCycleFinderEquality_005/internal/oracle/testdata/node_error_stack_trace_limit_refused/untyped_write.a (3.31s)
+    --- PASS: TestCycleFinderEquality_005/internal/oracle/testdata/placeholder_nonnull_null_json.a (0.41s)
+    --- PASS: TestCycleFinderEquality_005/internal/oracle/testdata/predicate_false_flow_stopped/c20_destructured.ts (0.35s)
+    --- PASS: TestCycleFinderEquality_005/internal/oracle/testdata/predicate_false_flow_stopped/c35_nonnull.ts (0.50s)
+    --- PASS: TestCycleFinderEquality_005/internal/oracle/testdata/predicate_false_flow_stopped/c50_catch.ts (0.37s)
+    --- PASS: TestCycleFinderEquality_005/internal/oracle/testdata/predicate_qualified/type_truth/main.ts (0.43s)
+    --- PASS: TestCycleFinderEquality_005/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p23_callable_union_literal_result.ts (0.42s)
+    --- PASS: TestCycleFinderEquality_005/internal/oracle/testdata/route_targets_virtual_fresh.a (0.50s)
+    --- PASS: TestCycleFinderEquality_005/internal/oracle/testdata/set_foreach_named_more.a (0.54s)
+    --- PASS: TestCycleFinderEquality_005/internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a (0.45s)
+    --- PASS: TestCycleFinderEquality_005/internal/oracle/testdata/utf8_view_fails.a (0.49s)
+    --- PASS: TestCycleFinderEquality_005/internal/worker/wasm/panic.a (0.44s)
+    --- PASS: TestCycleFinderEquality_005/notes/method-values/unsupported/map_numeric_parser.a (0.10s)
+    --- PASS: TestCycleFinderEquality_005/review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/18_typesVersions-own_toString/main.a (0.08s)
+    --- PASS: TestCycleFinderEquality_005/stage1/cohere/lint/regex/testdata/shapes/m/044.a (0.46s)
+    --- PASS: TestCycleFinderEquality_005/stage1/cohere/lint/regex/testdata/shapes/plain/022_runtime.a (0.60s)
+    --- PASS: TestCycleFinderEquality_005/stage1/cohere/lint/regex/testdata/shapes/plain/080_runtime.a (0.49s)
+    --- PASS: TestCycleFinderEquality_005/stage1/cohere/lint/rules/typescript-no-this-alias/rule.a (1.50s)
+    --- PASS: TestCycleFinderEquality_005/stage3/fixtures/cycles/03_extensions/path.a (0.42s)
+    --- PASS: TestCycleFinderEquality_005/stage3/fixtures/records/08_option_boolean.a (0.06s)
+    --- PASS: TestCycleFinderEquality_005/stage3/fixtures/records/14_group_by.a (0.09s)
+    --- PASS: TestCycleFinderEquality_005/stage3/fixtures/records/input-fixtures/09_exports-missing_constructor/main.a (0.11s)
+=== CONT  TestCycleFinderEquality_008
+=== RUN   TestCycleFinderEquality_008/internal/native/testdata/prototypes/sites/debug_598.a
+=== NAME  TestCycleFinderEquality_009/internal/oracle/testdata/map_union_value_source_file.a
+    cycles_equality_test.go:327: internal/oracle/testdata/map_union_value_source_file.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_009/internal/oracle/testdata/non_null_refused/non_null_refuse_checked.a
+=== NAME  TestCycleFinderEquality_008/internal/native/testdata/prototypes/sites/debug_598.a
+    cycles_equality_test.go:327: internal/native/testdata/prototypes/sites/debug_598.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_008/internal/oracle/testdata/devirtualize.a
+=== NAME  TestCycleFinderEquality_001/stage3/fixtures/cycles/03_extensions/core.a
+    cycles_equality_test.go:327: stage3/fixtures/cycles/03_extensions/core.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/stage3/fixtures/objects/10_build_options.a
+=== NAME  TestCycleFinderEquality_009/internal/oracle/testdata/non_null_refused/non_null_refuse_checked.a
+    cycles_equality_test.go:327: internal/oracle/testdata/non_null_refused/non_null_refuse_checked.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_009/internal/oracle/testdata/predicate_false_flow_stopped/c16_double_not.ts
+=== NAME  TestCycleFinderEquality_001/stage3/fixtures/objects/10_build_options.a
+    cycles_equality_test.go:327: stage3/fixtures/objects/10_build_options.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/stage3/fixtures/predicates/06_signed_numeric.a
+=== NAME  TestCycleFinderEquality_008/internal/oracle/testdata/devirtualize.a
+    cycles_equality_test.go:327: internal/oracle/testdata/devirtualize.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_008/internal/oracle/testdata/fresh_calls.a
+=== NAME  TestCycleFinderEquality_009/internal/oracle/testdata/predicate_false_flow_stopped/c16_double_not.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/predicate_false_flow_stopped/c16_double_not.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_009/internal/oracle/testdata/records_refused/records_environment_boundary.a
+=== NAME  TestCycleFinderEquality_000/stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a
+    cycles_equality_test.go:327: stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/stage1/cohere/lint/rules/no-empty-static-block/messages.a
+=== NAME  TestCycleFinderEquality_001/stage3/fixtures/predicates/06_signed_numeric.a
+    cycles_equality_test.go:327: stage3/fixtures/predicates/06_signed_numeric.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/stage3/fixtures/records/input-fixtures/20_typesVersions-own___proto__/node_modules/pkg/target.d.a
+=== NAME  TestCycleFinderEquality_009/internal/oracle/testdata/records_refused/records_environment_boundary.a
+    cycles_equality_test.go:327: internal/oracle/testdata/records_refused/records_environment_boundary.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_009/internal/oracle/testdata/refusal_rulings/function_call.a
+=== NAME  TestCycleFinderEquality_008/internal/oracle/testdata/fresh_calls.a
+    cycles_equality_test.go:327: internal/oracle/testdata/fresh_calls.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_008/internal/oracle/testdata/library_map_set_iterator_exhausted.a
+=== NAME  TestCycleFinderEquality_001/stage3/fixtures/records/input-fixtures/20_typesVersions-own___proto__/node_modules/pkg/target.d.a
+    cycles_equality_test.go:327: stage3/fixtures/records/input-fixtures/20_typesVersions-own___proto__/node_modules/pkg/target.d.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_001/stage3/fixtures/runner/03_return_true.a
+=== NAME  TestCycleFinderEquality_000/stage1/cohere/lint/rules/no-empty-static-block/messages.a
+    cycles_equality_test.go:327: stage1/cohere/lint/rules/no-empty-static-block/messages.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/stage3/adapt/71-writable-views/language-questions/text-range.a
+=== NAME  TestCycleFinderEquality_009/internal/oracle/testdata/refusal_rulings/function_call.a
+    cycles_equality_test.go:327: internal/oracle/testdata/refusal_rulings/function_call.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_009/internal/oracle/testdata/regexp_replace/throw.a
+=== NAME  TestCycleFinderEquality_001/stage3/fixtures/runner/03_return_true.a
+    cycles_equality_test.go:327: stage3/fixtures/runner/03_return_true.a: equal scanning/indexed outcomes in modes [false true]
+--- PASS: TestCycleFinderEquality_001 (20.85s)
+    --- PASS: TestCycleFinderEquality_001/internal/lower/testdata/input-spread/utf8Length_nested.a (0.75s)
+    --- PASS: TestCycleFinderEquality_001/internal/lower/testdata/input-spread/writeTextFile_later.a (0.35s)
+    --- PASS: TestCycleFinderEquality_001/internal/lower/testdata/optional_widening/class_field.a (0.40s)
+    --- PASS: TestCycleFinderEquality_001/internal/lower/testdata/predicate_qualified_refused/mutable.ts (0.37s)
+    --- PASS: TestCycleFinderEquality_001/internal/lower/testdata/realpath/refused/for_each.a (3.48s)
+    --- PASS: TestCycleFinderEquality_001/internal/lower/testdata/scalar_union_views/p54_b.ts (0.46s)
+    --- PASS: TestCycleFinderEquality_001/internal/oracle/testdata/async_for_of_body_cells.a (0.38s)
+    --- PASS: TestCycleFinderEquality_001/internal/oracle/testdata/async_for_of_return.a (0.45s)
+    --- PASS: TestCycleFinderEquality_001/internal/oracle/testdata/async_iterable_string_emoji_module.a (0.33s)
+    --- PASS: TestCycleFinderEquality_001/internal/oracle/testdata/async_refused/async_refuse_arrow_thenable.a (0.38s)
+    --- PASS: TestCycleFinderEquality_001/internal/oracle/testdata/census_unary_truthiness.a (0.49s)
+    --- PASS: TestCycleFinderEquality_001/internal/oracle/testdata/class_wrong_output_refused/classfeat_init_super_getter.a (0.33s)
+    --- PASS: TestCycleFinderEquality_001/internal/oracle/testdata/fresh_refused/escaped_before.a (0.50s)
+    --- PASS: TestCycleFinderEquality_001/internal/oracle/testdata/gaps.a (0.79s)
+    --- PASS: TestCycleFinderEquality_001/internal/oracle/testdata/graph_regions_counted_container.a (0.44s)
+    --- PASS: TestCycleFinderEquality_001/internal/oracle/testdata/moves/accepted/cleanup.a (0.47s)
+    --- PASS: TestCycleFinderEquality_001/internal/oracle/testdata/predicate_false_flow_stopped/c52_closure_const.ts (0.49s)
+    --- PASS: TestCycleFinderEquality_001/internal/oracle/testdata/predicate_refusals/oct8_predicates_p14_overload_optional_chain_container.a (0.43s)
+    --- PASS: TestCycleFinderEquality_001/internal/oracle/testdata/review/refused/fxspptb_p06_helper_second_parameter_undefined.a (0.40s)
+    --- PASS: TestCycleFinderEquality_001/internal/oracle/testdata/route_targets_recursive.a (0.62s)
+    --- PASS: TestCycleFinderEquality_001/internal/oracle/testdata/set_foreach_fnexpr.a (0.51s)
+    --- PASS: TestCycleFinderEquality_001/internal/oracle/testdata/taste_exports/bridge.a (0.56s)
+    --- PASS: TestCycleFinderEquality_001/internal/oracle/testdata/typeof_string_literal.a (0.40s)
+    --- PASS: TestCycleFinderEquality_001/internal/oracle/testdata/void_widening_refused/w03_union_void_returns_void_call.a (0.37s)
+    --- PASS: TestCycleFinderEquality_001/notes/stdout-edges/programs/panic_edges.a (0.49s)
+    --- PASS: TestCycleFinderEquality_001/review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/25_cli-unknown_constructor/main.a (0.42s)
+    --- PASS: TestCycleFinderEquality_001/stage1/cohere/lint/regex/testdata/shapes/plain/070.a (0.58s)
+    --- PASS: TestCycleFinderEquality_001/stage3/drivers/parser/kinds.a (0.67s)
+    --- PASS: TestCycleFinderEquality_001/stage3/drivers/scanner/evidence/clean-records-rebase/witnesses/04-cast.a (0.36s)
+    --- PASS: TestCycleFinderEquality_001/stage3/drivers/scanner/evidence/combined-records-library/witnesses/09-string-cast.a (0.44s)
+    --- PASS: TestCycleFinderEquality_001/stage3/drivers/scanner/evidence/native3-records/witnesses/11-array.a (0.42s)
+    --- PASS: TestCycleFinderEquality_001/stage3/fixtures/cycles/03_extensions/core.a (0.52s)
+    --- PASS: TestCycleFinderEquality_001/stage3/fixtures/objects/10_build_options.a (0.42s)
+    --- PASS: TestCycleFinderEquality_001/stage3/fixtures/predicates/06_signed_numeric.a (0.37s)
+    --- PASS: TestCycleFinderEquality_001/stage3/fixtures/records/input-fixtures/20_typesVersions-own___proto__/node_modules/pkg/target.d.a (0.39s)
+    --- PASS: TestCycleFinderEquality_001/stage3/fixtures/runner/03_return_true.a (0.50s)
+=== CONT  TestCycleFinderEquality_007
+=== RUN   TestCycleFinderEquality_007/internal/lower/testdata/callable_producers/p23.ts
+=== NAME  TestCycleFinderEquality_008/internal/oracle/testdata/library_map_set_iterator_exhausted.a
+    cycles_equality_test.go:327: internal/oracle/testdata/library_map_set_iterator_exhausted.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_008/internal/oracle/testdata/library_object_same.a
+=== NAME  TestCycleFinderEquality_000/stage3/adapt/71-writable-views/language-questions/text-range.a
+    cycles_equality_test.go:327: stage3/adapt/71-writable-views/language-questions/text-range.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/stage3/census/repro/r25/main.a
+=== NAME  TestCycleFinderEquality_009/internal/oracle/testdata/regexp_replace/throw.a
+    cycles_equality_test.go:327: internal/oracle/testdata/regexp_replace/throw.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_009/internal/oracle/testdata/static_constructor_spread_owned.a
+=== NAME  TestCycleFinderEquality_000/stage3/census/repro/r25/main.a
+    cycles_equality_test.go:327: stage3/census/repro/r25/main.a: common loader refusal: /home/user/adamic/stage3/census/repro/r25/main.a:2:87: error TS2339: Property 'count' does not exist on type '{ kind: "a"; count: number; } | { kind: "b"; }'.
+          Property 'count' does not exist on type '{ kind: "b"; }'.
+=== RUN   TestCycleFinderEquality_000/stage3/drivers/parser/evidence/front23/call-graph/depth-16-edges-2.a
+=== NAME  TestCycleFinderEquality_007/internal/lower/testdata/callable_producers/p23.ts
+    cycles_equality_test.go:327: internal/lower/testdata/callable_producers/p23.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/internal/lower/testdata/optional_widening/arrow.a
+=== NAME  TestCycleFinderEquality_008/internal/oracle/testdata/library_object_same.a
+    cycles_equality_test.go:327: internal/oracle/testdata/library_object_same.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_008/internal/oracle/testdata/module_namespace_reads/direct_early.a
+=== NAME  TestCycleFinderEquality_009/internal/oracle/testdata/static_constructor_spread_owned.a
+    cycles_equality_test.go:327: internal/oracle/testdata/static_constructor_spread_owned.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_009/internal/oracle/testdata/structural_statics_instance.a
+=== NAME  TestCycleFinderEquality_000/stage3/drivers/parser/evidence/front23/call-graph/depth-16-edges-2.a
+    cycles_equality_test.go:327: stage3/drivers/parser/evidence/front23/call-graph/depth-16-edges-2.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/stage3/fixtures/enum-init-reach/native-enum-map.a
+=== NAME  TestCycleFinderEquality_007/internal/lower/testdata/optional_widening/arrow.a
+    cycles_equality_test.go:327: internal/lower/testdata/optional_widening/arrow.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/internal/lower/testdata/realpath/refused/let.a
+=== NAME  TestCycleFinderEquality_008/internal/oracle/testdata/module_namespace_reads/direct_early.a
+    cycles_equality_test.go:327: internal/oracle/testdata/module_namespace_reads/direct_early.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_008/internal/oracle/testdata/records_named_alias_unready.a
+=== NAME  TestCycleFinderEquality_009/internal/oracle/testdata/structural_statics_instance.a
+    cycles_equality_test.go:327: internal/oracle/testdata/structural_statics_instance.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_009/internal/oracle/testdata/weak/narrowed.a
+=== NAME  TestCycleFinderEquality_000/stage3/fixtures/enum-init-reach/native-enum-map.a
+    cycles_equality_test.go:327: stage3/fixtures/enum-init-reach/native-enum-map.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/stage3/fixtures/real/any-value/main.a
+=== NAME  TestCycleFinderEquality_009/internal/oracle/testdata/weak/narrowed.a
+    cycles_equality_test.go:327: internal/oracle/testdata/weak/narrowed.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_009/internal/worker/testdata/panic.a
+=== NAME  TestCycleFinderEquality_008/internal/oracle/testdata/records_named_alias_unready.a
+    cycles_equality_test.go:327: internal/oracle/testdata/records_named_alias_unready.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_008/internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q02_findlast_inferred.a
+=== NAME  TestCycleFinderEquality_000/stage3/fixtures/real/any-value/main.a
+    cycles_equality_test.go:327: stage3/fixtures/real/any-value/main.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_000/stage3/fixtures/records/input-fixtures/19_typesVersions-own_hasOwnProperty/main.a
+    cycles_equality_test.go:327: stage3/fixtures/records/input-fixtures/19_typesVersions-own_hasOwnProperty/main.a: common loader refusal: /home/user/adamic/stage3/fixtures/records/input-fixtures/19_typesVersions-own_hasOwnProperty/main.a:1:23: error TS2307: Cannot find module 'pkg/hasOwnProperty' or its corresponding type declarations.
+--- PASS: TestCycleFinderEquality_000 (22.50s)
+    --- PASS: TestCycleFinderEquality_000/internal/conformance/testdata/overloads/result_lies.a (0.68s)
+    --- PASS: TestCycleFinderEquality_000/internal/ir/testdata/call_targets.a (0.41s)
+    --- PASS: TestCycleFinderEquality_000/internal/lower/testdata/namespaces_notyet/reaching_helper.a (0.40s)
+    --- PASS: TestCycleFinderEquality_000/internal/lower/testdata/predicates/overload_some_objects.a (0.40s)
+    --- PASS: TestCycleFinderEquality_000/internal/lower/testdata/predicates_checked/false_element_condition.a (0.59s)
+    --- PASS: TestCycleFinderEquality_000/internal/oracle/testdata/async_for_of_mutation.a (0.55s)
+    --- PASS: TestCycleFinderEquality_000/internal/oracle/testdata/async_iterable_map_entries_function.a (0.36s)
+    --- PASS: TestCycleFinderEquality_000/internal/oracle/testdata/census_small_rest.a (0.46s)
+    --- PASS: TestCycleFinderEquality_000/internal/oracle/testdata/enum_tag_refused/getter_tag.a (0.40s)
+    --- PASS: TestCycleFinderEquality_000/internal/oracle/testdata/finally_leaves.a (0.80s)
+    --- PASS: TestCycleFinderEquality_000/internal/oracle/testdata/getters_census_higher_callback_pair_methods.a (0.41s)
+    --- PASS: TestCycleFinderEquality_000/internal/oracle/testdata/graph_regions_escape.a (0.44s)
+    --- PASS: TestCycleFinderEquality_000/internal/oracle/testdata/library_object_order.a (0.42s)
+    --- PASS: TestCycleFinderEquality_000/internal/oracle/testdata/maybe_booleans.a (0.73s)
+    --- PASS: TestCycleFinderEquality_000/internal/oracle/testdata/miscompile_2a/error_undefined_message.a (0.41s)
+    --- PASS: TestCycleFinderEquality_000/internal/oracle/testdata/nested_assignment_return.a (0.38s)
+    --- PASS: TestCycleFinderEquality_000/internal/oracle/testdata/optional_widening_refused/node_fs_file_exists.a (3.45s)
+    --- PASS: TestCycleFinderEquality_000/internal/oracle/testdata/predicate_direction_uses/argument.ts (0.53s)
+    --- PASS: TestCycleFinderEquality_000/internal/oracle/testdata/predicate_false_flow_stopped/escape_shorthand.ts (0.46s)
+    --- PASS: TestCycleFinderEquality_000/internal/oracle/testdata/predicate_qualified/defined_truth/main.ts (0.44s)
+    --- PASS: TestCycleFinderEquality_000/internal/oracle/testdata/review/agree/fxspptb_d96d304_try_pad.a (0.44s)
+    --- PASS: TestCycleFinderEquality_000/internal/oracle/testdata/set_foreach_closures.a (0.78s)
+    --- PASS: TestCycleFinderEquality_000/internal/oracle/testdata/string_views_lifetime.a (0.45s)
+    --- PASS: TestCycleFinderEquality_000/internal/oracle/testdata/union_write_refused/logical_assignment.a (0.51s)
+    --- PASS: TestCycleFinderEquality_000/notes/stdout-edges/programs/stderr_only.a (0.49s)
+    --- PASS: TestCycleFinderEquality_000/stage1/cohere/lint/regex/testdata/shapes/plain/077.a (0.64s)
+    --- PASS: TestCycleFinderEquality_000/stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a (2.79s)
+    --- PASS: TestCycleFinderEquality_000/stage1/cohere/lint/rules/no-empty-static-block/messages.a (0.49s)
+    --- PASS: TestCycleFinderEquality_000/stage3/adapt/71-writable-views/language-questions/text-range.a (0.46s)
+    --- PASS: TestCycleFinderEquality_000/stage3/census/repro/r25/main.a (0.11s)
+    --- PASS: TestCycleFinderEquality_000/stage3/drivers/parser/evidence/front23/call-graph/depth-16-edges-2.a (0.47s)
+    --- PASS: TestCycleFinderEquality_000/stage3/fixtures/enum-init-reach/native-enum-map.a (0.45s)
+    --- PASS: TestCycleFinderEquality_000/stage3/fixtures/real/any-value/main.a (0.45s)
+    --- PASS: TestCycleFinderEquality_000/stage3/fixtures/records/input-fixtures/19_typesVersions-own_hasOwnProperty/main.a (0.12s)
+=== CONT  TestCycleFinderEquality_006
+=== RUN   TestCycleFinderEquality_006/internal/conformance/testdata/void/read.a
+=== NAME  TestCycleFinderEquality_009/internal/worker/testdata/panic.a
+    cycles_equality_test.go:327: internal/worker/testdata/panic.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_009/internal/worker/testdata/wasm/sieve.a
+=== NAME  TestCycleFinderEquality_008/internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q02_findlast_inferred.a
+    cycles_equality_test.go:327: internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q02_findlast_inferred.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_008/internal/oracle/testdata/weak_miscompiles_refused/9984394_view_method.a
+=== NAME  TestCycleFinderEquality_006/internal/conformance/testdata/void/read.a
+    cycles_equality_test.go:327: internal/conformance/testdata/void/read.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/lower/testdata/callback_widening/array_structural.a
+=== NAME  TestCycleFinderEquality_008/internal/oracle/testdata/weak_miscompiles_refused/9984394_view_method.a
+    cycles_equality_test.go:327: internal/oracle/testdata/weak_miscompiles_refused/9984394_view_method.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_008/internal/split/testdata/unions.a
+=== NAME  TestCycleFinderEquality_009/internal/worker/testdata/wasm/sieve.a
+    cycles_equality_test.go:327: internal/worker/testdata/wasm/sieve.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_009/notes/method-values/unsupported/boxed_string.a
+=== NAME  TestCycleFinderEquality_006/internal/lower/testdata/callback_widening/array_structural.a
+    cycles_equality_test.go:327: internal/lower/testdata/callback_widening/array_structural.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/lower/testdata/fx6/p53.ts
+=== NAME  TestCycleFinderEquality_008/internal/split/testdata/unions.a
+    cycles_equality_test.go:327: internal/split/testdata/unions.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_008/stage1/cohere/lint/regex/testdata/shapes/dynamic/048_runtime.a
+=== NAME  TestCycleFinderEquality_006/internal/lower/testdata/fx6/p53.ts
+    cycles_equality_test.go:327: internal/lower/testdata/fx6/p53.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/lower/testdata/optional_widening/initializer.a
+=== NAME  TestCycleFinderEquality_009/notes/method-values/unsupported/boxed_string.a
+    cycles_equality_test.go:327: notes/method-values/unsupported/boxed_string.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_009/notes/stdout-edges/programs/little_streams.a
+=== NAME  TestCycleFinderEquality_006/internal/lower/testdata/optional_widening/initializer.a
+    cycles_equality_test.go:327: internal/lower/testdata/optional_widening/initializer.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/lower/testdata/realpath/refused/return.a
+=== NAME  TestCycleFinderEquality_009/notes/stdout-edges/programs/little_streams.a
+    cycles_equality_test.go:327: notes/stdout-edges/programs/little_streams.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_009/stage1/cohere/lint/regex/testdata/shapes/plain/034.a
+=== NAME  TestCycleFinderEquality_008/stage1/cohere/lint/regex/testdata/shapes/dynamic/048_runtime.a
+    cycles_equality_test.go:327: stage1/cohere/lint/regex/testdata/shapes/dynamic/048_runtime.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_008/stage1/cohere/lint/rules/typescript-init-declarations/rule.a
+=== NAME  TestCycleFinderEquality_009/stage1/cohere/lint/regex/testdata/shapes/plain/034.a
+    cycles_equality_test.go:327: stage1/cohere/lint/regex/testdata/shapes/plain/034.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_009/stage1/cohere/lint/regex/testdata/shapes/plain/071_runtime.a
+=== NAME  TestCycleFinderEquality_007/internal/lower/testdata/realpath/refused/let.a
+    cycles_equality_test.go:327: internal/lower/testdata/realpath/refused/let.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/internal/lower/testdata/realpath/refused/object.a
+=== NAME  TestCycleFinderEquality_009/stage1/cohere/lint/regex/testdata/shapes/plain/071_runtime.a
+    cycles_equality_test.go:327: stage1/cohere/lint/regex/testdata/shapes/plain/071_runtime.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_009/stage3/census/repro/r06/main.a
+    cycles_equality_test.go:327: stage3/census/repro/r06/main.a: common loader refusal: /home/user/adamic/stage3/census/repro/r06/main.a:2:109: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+          Type 'undefined' is not assignable to type 'number'.
+=== RUN   TestCycleFinderEquality_009/stage3/fixtures/self-compare/closure.a
+    cycles_equality_test.go:327: stage3/fixtures/self-compare/closure.a: equal scanning/indexed outcomes in modes [false true]
+--- PASS: TestCycleFinderEquality_009 (12.42s)
+    --- PASS: TestCycleFinderEquality_009/internal/lower/testdata/array_narrowing/cat.a (0.42s)
+    --- PASS: TestCycleFinderEquality_009/internal/oracle/testdata/async_finally_snapshot.a (0.45s)
+    --- PASS: TestCycleFinderEquality_009/internal/oracle/testdata/class_inheritance.a (0.63s)
+    --- PASS: TestCycleFinderEquality_009/internal/oracle/testdata/coverage_regexp_new.a (0.42s)
+    --- PASS: TestCycleFinderEquality_009/internal/oracle/testdata/devirtualize_factory.a (0.49s)
+    --- PASS: TestCycleFinderEquality_009/internal/oracle/testdata/instantiation_array.a (0.57s)
+    --- PASS: TestCycleFinderEquality_009/internal/oracle/testdata/json_encode_scalars.a (0.54s)
+    --- PASS: TestCycleFinderEquality_009/internal/oracle/testdata/json_stringify_indent.a (0.77s)
+    --- PASS: TestCycleFinderEquality_009/internal/oracle/testdata/library_array_flat.a (0.52s)
+    --- PASS: TestCycleFinderEquality_009/internal/oracle/testdata/map_foreach_keep.a (0.53s)
+    --- PASS: TestCycleFinderEquality_009/internal/oracle/testdata/map_union_value_source_file.a (0.51s)
+    --- PASS: TestCycleFinderEquality_009/internal/oracle/testdata/non_null_refused/non_null_refuse_checked.a (0.37s)
+    --- PASS: TestCycleFinderEquality_009/internal/oracle/testdata/predicate_false_flow_stopped/c16_double_not.ts (0.42s)
+    --- PASS: TestCycleFinderEquality_009/internal/oracle/testdata/records_refused/records_environment_boundary.a (0.38s)
+    --- PASS: TestCycleFinderEquality_009/internal/oracle/testdata/refusal_rulings/function_call.a (0.46s)
+    --- PASS: TestCycleFinderEquality_009/internal/oracle/testdata/regexp_replace/throw.a (0.43s)
+    --- PASS: TestCycleFinderEquality_009/internal/oracle/testdata/static_constructor_spread_owned.a (0.46s)
+    --- PASS: TestCycleFinderEquality_009/internal/oracle/testdata/structural_statics_instance.a (0.50s)
+    --- PASS: TestCycleFinderEquality_009/internal/oracle/testdata/weak/narrowed.a (0.40s)
+    --- PASS: TestCycleFinderEquality_009/internal/worker/testdata/panic.a (0.45s)
+    --- PASS: TestCycleFinderEquality_009/internal/worker/testdata/wasm/sieve.a (0.42s)
+    --- PASS: TestCycleFinderEquality_009/notes/method-values/unsupported/boxed_string.a (0.47s)
+    --- PASS: TestCycleFinderEquality_009/notes/stdout-edges/programs/little_streams.a (0.34s)
+    --- PASS: TestCycleFinderEquality_009/stage1/cohere/lint/regex/testdata/shapes/plain/034.a (0.45s)
+    --- PASS: TestCycleFinderEquality_009/stage1/cohere/lint/regex/testdata/shapes/plain/071_runtime.a (0.52s)
+    --- PASS: TestCycleFinderEquality_009/stage3/census/repro/r06/main.a (0.12s)
+    --- PASS: TestCycleFinderEquality_009/stage3/fixtures/self-compare/closure.a (0.36s)
+=== CONT  TestCycleFinderEquality_004
+=== RUN   TestCycleFinderEquality_004/internal/conformance/testdata/grown/destructured_beside_default.a
+=== NAME  TestCycleFinderEquality_008/stage1/cohere/lint/rules/typescript-init-declarations/rule.a
+    cycles_equality_test.go:327: stage1/cohere/lint/rules/typescript-init-declarations/rule.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_008/stage3/drivers/scanner/evidence/native3-records/witnesses/14-nullish.a
+=== NAME  TestCycleFinderEquality_004/internal/conformance/testdata/grown/destructured_beside_default.a
+    cycles_equality_test.go:327: internal/conformance/testdata/grown/destructured_beside_default.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/internal/lower/testdata/realpath/refused/map.a
+=== NAME  TestCycleFinderEquality_008/stage3/drivers/scanner/evidence/native3-records/witnesses/14-nullish.a
+    cycles_equality_test.go:327: stage3/drivers/scanner/evidence/native3-records/witnesses/14-nullish.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_008/stage3/fixtures/cycles/09_function_value_load/_namespaces/ts.performance.a
+    cycles_equality_test.go:327: stage3/fixtures/cycles/09_function_value_load/_namespaces/ts.performance.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_008/stage3/fixtures/predicates/08_flags.a
+    cycles_equality_test.go:327: stage3/fixtures/predicates/08_flags.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_008/stage3/fixtures/records/13_strict_option.a
+=== NAME  TestCycleFinderEquality_006/internal/lower/testdata/realpath/refused/return.a
+    cycles_equality_test.go:327: internal/lower/testdata/realpath/refused/return.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/93122fa_s2.a
+=== NAME  TestCycleFinderEquality_008/stage3/fixtures/records/13_strict_option.a
+    cycles_equality_test.go:327: stage3/fixtures/records/13_strict_option.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_008/workers/compute/native-driver.a
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/93122fa_s2.a
+    cycles_equality_test.go:327: internal/oracle/testdata/93122fa_s2.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/async_for_of_collections_mutation.a
+=== NAME  TestCycleFinderEquality_007/internal/lower/testdata/realpath/refused/object.a
+    cycles_equality_test.go:327: internal/lower/testdata/realpath/refused/object.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/internal/oracle/testdata/cast_enum_string_fails.ts
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/async_for_of_collections_mutation.a
+    cycles_equality_test.go:327: internal/oracle/testdata/async_for_of_collections_mutation.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/async_iterable_nested_maps_module.a
+=== NAME  TestCycleFinderEquality_008/workers/compute/native-driver.a
+    cycles_equality_test.go:327: workers/compute/native-driver.a: equal scanning/indexed outcomes in modes [false true]
+--- PASS: TestCycleFinderEquality_008 (9.46s)
+    --- PASS: TestCycleFinderEquality_008/internal/native/testdata/prototypes/sites/debug_598.a (0.39s)
+    --- PASS: TestCycleFinderEquality_008/internal/oracle/testdata/devirtualize.a (0.49s)
+    --- PASS: TestCycleFinderEquality_008/internal/oracle/testdata/fresh_calls.a (0.68s)
+    --- PASS: TestCycleFinderEquality_008/internal/oracle/testdata/library_map_set_iterator_exhausted.a (0.61s)
+    --- PASS: TestCycleFinderEquality_008/internal/oracle/testdata/library_object_same.a (0.47s)
+    --- PASS: TestCycleFinderEquality_008/internal/oracle/testdata/module_namespace_reads/direct_early.a (0.45s)
+    --- PASS: TestCycleFinderEquality_008/internal/oracle/testdata/records_named_alias_unready.a (0.49s)
+    --- PASS: TestCycleFinderEquality_008/internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q02_findlast_inferred.a (0.48s)
+    --- PASS: TestCycleFinderEquality_008/internal/oracle/testdata/weak_miscompiles_refused/9984394_view_method.a (0.35s)
+    --- PASS: TestCycleFinderEquality_008/internal/split/testdata/unions.a (0.39s)
+    --- PASS: TestCycleFinderEquality_008/stage1/cohere/lint/regex/testdata/shapes/dynamic/048_runtime.a (0.52s)
+    --- PASS: TestCycleFinderEquality_008/stage1/cohere/lint/rules/typescript-init-declarations/rule.a (1.40s)
+    --- PASS: TestCycleFinderEquality_008/stage3/drivers/scanner/evidence/native3-records/witnesses/14-nullish.a (0.42s)
+    --- PASS: TestCycleFinderEquality_008/stage3/fixtures/cycles/09_function_value_load/_namespaces/ts.performance.a (0.55s)
+    --- PASS: TestCycleFinderEquality_008/stage3/fixtures/predicates/08_flags.a (0.51s)
+    --- PASS: TestCycleFinderEquality_008/stage3/fixtures/records/13_strict_option.a (0.41s)
+    --- PASS: TestCycleFinderEquality_008/workers/compute/native-driver.a (0.85s)
+=== CONT  TestCycleFinderEquality_003
+=== RUN   TestCycleFinderEquality_003/internal/conformance/testdata/refusals/vacuous_downcast.a
+=== NAME  TestCycleFinderEquality_007/internal/oracle/testdata/cast_enum_string_fails.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/cast_enum_string_fails.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/internal/oracle/testdata/class_features_static_private.a
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/async_iterable_nested_maps_module.a
+    cycles_equality_test.go:327: internal/oracle/testdata/async_iterable_nested_maps_module.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/async_iterable_string_ascii_function.a
+=== NAME  TestCycleFinderEquality_003/internal/conformance/testdata/refusals/vacuous_downcast.a
+    cycles_equality_test.go:327: internal/conformance/testdata/refusals/vacuous_downcast.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/lower/testdata/fx7_wrong_aborts/bad_callable.a
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/async_iterable_string_ascii_function.a
+    cycles_equality_test.go:327: internal/oracle/testdata/async_iterable_string_ascii_function.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/callback_widening/object-sort.a
+=== NAME  TestCycleFinderEquality_007/internal/oracle/testdata/class_features_static_private.a
+    cycles_equality_test.go:327: internal/oracle/testdata/class_features_static_private.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/internal/oracle/testdata/concurrency/refused/dispatch.a
+=== NAME  TestCycleFinderEquality_003/internal/lower/testdata/fx7_wrong_aborts/bad_callable.a
+    cycles_equality_test.go:327: internal/lower/testdata/fx7_wrong_aborts/bad_callable.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/lower/testdata/input-spread/utf8At_tuple.a
+=== NAME  TestCycleFinderEquality_004/internal/lower/testdata/realpath/refused/map.a
+    cycles_equality_test.go:327: internal/lower/testdata/realpath/refused/map.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/internal/oracle/testdata/array_literal_empty_last.a
+=== NAME  TestCycleFinderEquality_007/internal/oracle/testdata/concurrency/refused/dispatch.a
+    cycles_equality_test.go:327: internal/oracle/testdata/concurrency/refused/dispatch.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/internal/oracle/testdata/entries_checked_boolean.a
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/callback_widening/object-sort.a
+    cycles_equality_test.go:327: internal/oracle/testdata/callback_widening/object-sort.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/casts.ts
+=== NAME  TestCycleFinderEquality_003/internal/lower/testdata/input-spread/utf8At_tuple.a
+    cycles_equality_test.go:327: internal/lower/testdata/input-spread/utf8At_tuple.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/lower/testdata/predicates/overload_nominal.a
+=== NAME  TestCycleFinderEquality_004/internal/oracle/testdata/array_literal_empty_last.a
+    cycles_equality_test.go:327: internal/oracle/testdata/array_literal_empty_last.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/internal/oracle/testdata/async_iterable_map_readd_module.a
+=== NAME  TestCycleFinderEquality_007/internal/oracle/testdata/entries_checked_boolean.a
+    cycles_equality_test.go:327: internal/oracle/testdata/entries_checked_boolean.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/internal/oracle/testdata/environment_callback_escape.a
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/casts.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/casts.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/class_features_private.a
+=== NAME  TestCycleFinderEquality_003/internal/lower/testdata/predicates/overload_nominal.a
+    cycles_equality_test.go:327: internal/lower/testdata/predicates/overload_nominal.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/oracle/testdata/arguments_length_refused/returning.a
+=== NAME  TestCycleFinderEquality_004/internal/oracle/testdata/async_iterable_map_readd_module.a
+    cycles_equality_test.go:327: internal/oracle/testdata/async_iterable_map_readd_module.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/internal/oracle/testdata/call_targets_region.a
+=== NAME  TestCycleFinderEquality_007/internal/oracle/testdata/environment_callback_escape.a
+    cycles_equality_test.go:327: internal/oracle/testdata/environment_callback_escape.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/internal/oracle/testdata/fresh_refused/call_grandchild.a
+=== NAME  TestCycleFinderEquality_003/internal/oracle/testdata/arguments_length_refused/returning.a
+    cycles_equality_test.go:327: internal/oracle/testdata/arguments_length_refused/returning.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/oracle/testdata/census_predicate_marker_live.a
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/class_features_private.a
+    cycles_equality_test.go:327: internal/oracle/testdata/class_features_private.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/concurrency/refused/global_write.a
+=== NAME  TestCycleFinderEquality_004/internal/oracle/testdata/call_targets_region.a
+    cycles_equality_test.go:327: internal/oracle/testdata/call_targets_region.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/internal/oracle/testdata/callback_widening/object-filter.a
+=== NAME  TestCycleFinderEquality_007/internal/oracle/testdata/fresh_refused/call_grandchild.a
+    cycles_equality_test.go:327: internal/oracle/testdata/fresh_refused/call_grandchild.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/internal/oracle/testdata/fresh_refused/spread_outside.a
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/concurrency/refused/global_write.a
+    cycles_equality_test.go:327: internal/oracle/testdata/concurrency/refused/global_write.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/environment_unknown_callback.a
+=== NAME  TestCycleFinderEquality_003/internal/oracle/testdata/census_predicate_marker_live.a
+    cycles_equality_test.go:327: internal/oracle/testdata/census_predicate_marker_live.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/oracle/testdata/census_unary_numeric.a
+=== NAME  TestCycleFinderEquality_004/internal/oracle/testdata/callback_widening/object-filter.a
+    cycles_equality_test.go:327: internal/oracle/testdata/callback_widening/object-filter.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/internal/oracle/testdata/class_oct6_parameters.a
+=== NAME  TestCycleFinderEquality_007/internal/oracle/testdata/fresh_refused/spread_outside.a
+    cycles_equality_test.go:327: internal/oracle/testdata/fresh_refused/spread_outside.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/internal/oracle/testdata/host_phantom_overload_primitive.a
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/environment_unknown_callback.a
+    cycles_equality_test.go:327: internal/oracle/testdata/environment_unknown_callback.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/host_array_predicate.a
+=== NAME  TestCycleFinderEquality_004/internal/oracle/testdata/class_oct6_parameters.a
+    cycles_equality_test.go:327: internal/oracle/testdata/class_oct6_parameters.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/internal/oracle/testdata/entries_checked_fit.a
+=== NAME  TestCycleFinderEquality_003/internal/oracle/testdata/census_unary_numeric.a
+    cycles_equality_test.go:327: internal/oracle/testdata/census_unary_numeric.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/oracle/testdata/enum_literal_slot_refused/spread.ts
+=== NAME  TestCycleFinderEquality_007/internal/oracle/testdata/host_phantom_overload_primitive.a
+    cycles_equality_test.go:327: internal/oracle/testdata/host_phantom_overload_primitive.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/internal/oracle/testdata/map_union_value_host_file_info.a
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/host_array_predicate.a
+    cycles_equality_test.go:327: internal/oracle/testdata/host_array_predicate.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/module_namespace_reads/cycle_barrel.a
+=== NAME  TestCycleFinderEquality_003/internal/oracle/testdata/enum_literal_slot_refused/spread.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/enum_literal_slot_refused/spread.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/oracle/testdata/enum_tag_refused/switch_true.a
+=== NAME  TestCycleFinderEquality_004/internal/oracle/testdata/entries_checked_fit.a
+    cycles_equality_test.go:327: internal/oracle/testdata/entries_checked_fit.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/internal/oracle/testdata/fresh_refused/escapes_after_return.a
+=== NAME  TestCycleFinderEquality_007/internal/oracle/testdata/map_union_value_host_file_info.a
+    cycles_equality_test.go:327: internal/oracle/testdata/map_union_value_host_file_info.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/internal/oracle/testdata/nested_mixed.a
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/module_namespace_reads/cycle_barrel.a
+    cycles_equality_test.go:327: internal/oracle/testdata/module_namespace_reads/cycle_barrel.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/namespaces_parser_state.a
+=== NAME  TestCycleFinderEquality_003/internal/oracle/testdata/enum_tag_refused/switch_true.a
+    cycles_equality_test.go:327: internal/oracle/testdata/enum_tag_refused/switch_true.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/oracle/testdata/enums_open.a
+=== NAME  TestCycleFinderEquality_007/internal/oracle/testdata/nested_mixed.a
+    cycles_equality_test.go:327: internal/oracle/testdata/nested_mixed.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/internal/oracle/testdata/node_process_host.a
+=== NAME  TestCycleFinderEquality_004/internal/oracle/testdata/fresh_refused/escapes_after_return.a
+    cycles_equality_test.go:327: internal/oracle/testdata/fresh_refused/escapes_after_return.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/internal/oracle/testdata/generic_values.a
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/namespaces_parser_state.a
+    cycles_equality_test.go:327: internal/oracle/testdata/namespaces_parser_state.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/node_fs_directory_system.a
+=== NAME  TestCycleFinderEquality_003/internal/oracle/testdata/enums_open.a
+    cycles_equality_test.go:327: internal/oracle/testdata/enums_open.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/oracle/testdata/fresh_refused/call_clobbers.a
+=== NAME  TestCycleFinderEquality_004/internal/oracle/testdata/generic_values.a
+    cycles_equality_test.go:327: internal/oracle/testdata/generic_values.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/internal/oracle/testdata/label_block_continue_sync.a
+=== NAME  TestCycleFinderEquality_003/internal/oracle/testdata/fresh_refused/call_clobbers.a
+    cycles_equality_test.go:327: internal/oracle/testdata/fresh_refused/call_clobbers.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/oracle/testdata/fresh_refused/call_comparator.a
+=== NAME  TestCycleFinderEquality_004/internal/oracle/testdata/label_block_continue_sync.a
+    cycles_equality_test.go:327: internal/oracle/testdata/label_block_continue_sync.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/internal/oracle/testdata/miscompile_2a/4ddd17f_long_name.a
+=== NAME  TestCycleFinderEquality_003/internal/oracle/testdata/fresh_refused/call_comparator.a
+    cycles_equality_test.go:327: internal/oracle/testdata/fresh_refused/call_comparator.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/oracle/testdata/library_array_copy.a
+=== NAME  TestCycleFinderEquality_004/internal/oracle/testdata/miscompile_2a/4ddd17f_long_name.a
+    cycles_equality_test.go:327: internal/oracle/testdata/miscompile_2a/4ddd17f_long_name.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/internal/oracle/testdata/non_null_definite.ts
+=== NAME  TestCycleFinderEquality_003/internal/oracle/testdata/library_array_copy.a
+    cycles_equality_test.go:327: internal/oracle/testdata/library_array_copy.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/oracle/testdata/native-arguments-length-value.a
+=== NAME  TestCycleFinderEquality_004/internal/oracle/testdata/non_null_definite.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/non_null_definite.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/internal/oracle/testdata/regexp_v8_folding.a
+=== NAME  TestCycleFinderEquality_003/internal/oracle/testdata/native-arguments-length-value.a
+    cycles_equality_test.go:327: internal/oracle/testdata/native-arguments-length-value.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/oracle/testdata/nested_callback_levels.a
+=== NAME  TestCycleFinderEquality_004/internal/oracle/testdata/regexp_v8_folding.a
+    cycles_equality_test.go:327: internal/oracle/testdata/regexp_v8_folding.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/internal/oracle/testdata/review/agree/fxspptb_9984394_aside_throw.a
+=== NAME  TestCycleFinderEquality_003/internal/oracle/testdata/nested_callback_levels.a
+    cycles_equality_test.go:327: internal/oracle/testdata/nested_callback_levels.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/oracle/testdata/non_null_literal_assignment.ts
+=== NAME  TestCycleFinderEquality_007/internal/oracle/testdata/node_process_host.a
+    cycles_equality_test.go:327: internal/oracle/testdata/node_process_host.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/internal/oracle/testdata/read_arguments.a
+=== NAME  TestCycleFinderEquality_003/internal/oracle/testdata/non_null_literal_assignment.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/non_null_literal_assignment.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/oracle/testdata/params_namespaces_types.a
+=== NAME  TestCycleFinderEquality_004/internal/oracle/testdata/review/agree/fxspptb_9984394_aside_throw.a
+    cycles_equality_test.go:327: internal/oracle/testdata/review/agree/fxspptb_9984394_aside_throw.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/internal/oracle/testdata/review/agree/fxspptb_aee89b2_clobber_link_loop.a
+=== NAME  TestCycleFinderEquality_007/internal/oracle/testdata/read_arguments.a
+    cycles_equality_test.go:327: internal/oracle/testdata/read_arguments.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/internal/oracle/testdata/regexp_match.a
+=== NAME  TestCycleFinderEquality_003/internal/oracle/testdata/params_namespaces_types.a
+    cycles_equality_test.go:327: internal/oracle/testdata/params_namespaces_types.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/oracle/testdata/phantom_catch.a
+=== NAME  TestCycleFinderEquality_004/internal/oracle/testdata/review/agree/fxspptb_aee89b2_clobber_link_loop.a
+    cycles_equality_test.go:327: internal/oracle/testdata/review/agree/fxspptb_aee89b2_clobber_link_loop.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p59_union_member_method_shorthand.a
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/node_fs_directory_system.a
+    cycles_equality_test.go:327: internal/oracle/testdata/node_fs_directory_system.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/node_fs_file_write_buffer.a
+=== NAME  TestCycleFinderEquality_007/internal/oracle/testdata/regexp_match.a
+    cycles_equality_test.go:327: internal/oracle/testdata/regexp_match.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/internal/oracle/testdata/release_fast_graph.a
+=== NAME  TestCycleFinderEquality_004/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p59_union_member_method_shorthand.a
+    cycles_equality_test.go:327: internal/oracle/testdata/review/agree/fxspptb_oct9_views_p59_union_member_method_shorthand.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/internal/oracle/testdata/scout_hir_optional_boolean.a
+=== NAME  TestCycleFinderEquality_003/internal/oracle/testdata/phantom_catch.a
+    cycles_equality_test.go:327: internal/oracle/testdata/phantom_catch.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/oracle/testdata/predicate_qualified/each_lie/main.ts
+=== NAME  TestCycleFinderEquality_004/internal/oracle/testdata/scout_hir_optional_boolean.a
+    cycles_equality_test.go:327: internal/oracle/testdata/scout_hir_optional_boolean.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/internal/oracle/testdata/view_optional_read/destructure.ts
+=== NAME  TestCycleFinderEquality_003/internal/oracle/testdata/predicate_qualified/each_lie/main.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/predicate_qualified/each_lie/main.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/oracle/testdata/process_env/nul.a
+=== NAME  TestCycleFinderEquality_004/internal/oracle/testdata/view_optional_read/destructure.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/view_optional_read/destructure.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/internal/oracle/testdata/void_widening_refused/container_recursive.a
+=== NAME  TestCycleFinderEquality_007/internal/oracle/testdata/release_fast_graph.a
+    cycles_equality_test.go:327: internal/oracle/testdata/release_fast_graph.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/internal/oracle/testdata/review/agree/fxspptb_4ddd17f_long_name.a
+=== NAME  TestCycleFinderEquality_004/internal/oracle/testdata/void_widening_refused/container_recursive.a
+    cycles_equality_test.go:327: internal/oracle/testdata/void_widening_refused/container_recursive.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/stage1/cohere/lint/rules/typescript-init-declarations/initializer.a
+=== NAME  TestCycleFinderEquality_007/internal/oracle/testdata/review/agree/fxspptb_4ddd17f_long_name.a
+    cycles_equality_test.go:327: internal/oracle/testdata/review/agree/fxspptb_4ddd17f_long_name.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/internal/oracle/testdata/taste_star/barrel.a
+    cycles_equality_test.go:327: internal/oracle/testdata/taste_star/barrel.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/internal/oracle/testdata/view_optional_read/scalars.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/view_optional_read/scalars.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/internal/oracle/testdata/void_discards_canonical.a
+=== NAME  TestCycleFinderEquality_004/stage1/cohere/lint/rules/typescript-init-declarations/initializer.a
+    cycles_equality_test.go:327: stage1/cohere/lint/rules/typescript-init-declarations/initializer.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/stage1/cohere/parse/no_octal_escape.a
+=== NAME  TestCycleFinderEquality_007/internal/oracle/testdata/void_discards_canonical.a
+    cycles_equality_test.go:327: internal/oracle/testdata/void_discards_canonical.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/internal/oracle/testdata/weak/reuse.a
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/node_fs_file_write_buffer.a
+    cycles_equality_test.go:327: internal/oracle/testdata/node_fs_file_write_buffer.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/object_prototype.a
+=== NAME  TestCycleFinderEquality_007/internal/oracle/testdata/weak/reuse.a
+    cycles_equality_test.go:327: internal/oracle/testdata/weak/reuse.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/notes/nbody-speed/optional_write_number.a
+    cycles_equality_test.go:327: notes/nbody-speed/optional_write_number.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/stage1/cohere/lint/regex/testdata/shapes/plain/006_runtime.a
+=== NAME  TestCycleFinderEquality_003/internal/oracle/testdata/process_env/nul.a
+    cycles_equality_test.go:327: internal/oracle/testdata/process_env/nul.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/oracle/testdata/records_named_options.a
+=== NAME  TestCycleFinderEquality_004/stage1/cohere/parse/no_octal_escape.a
+    cycles_equality_test.go:327: stage1/cohere/parse/no_octal_escape.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/stage3/drivers/parser/native-predicate-function-view.a
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/object_prototype.a
+    cycles_equality_test.go:327: internal/oracle/testdata/object_prototype.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/objects.a
+=== NAME  TestCycleFinderEquality_007/stage1/cohere/lint/regex/testdata/shapes/plain/006_runtime.a
+    cycles_equality_test.go:327: stage1/cohere/lint/regex/testdata/shapes/plain/006_runtime.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/stage1/cohere/lint/regex/testdata/shapes/plain/055_runtime.a
+=== NAME  TestCycleFinderEquality_003/internal/oracle/testdata/records_named_options.a
+    cycles_equality_test.go:327: internal/oracle/testdata/records_named_options.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/oracle/testdata/records_narrowed_reference.a
+=== NAME  TestCycleFinderEquality_004/stage3/drivers/parser/native-predicate-function-view.a
+    cycles_equality_test.go:327: stage3/drivers/parser/native-predicate-function-view.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/stage3/fixtures/assertions/17_brand_upcast.a
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/objects.a
+    cycles_equality_test.go:327: internal/oracle/testdata/objects.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/regexp_replace.a
+=== NAME  TestCycleFinderEquality_007/stage1/cohere/lint/regex/testdata/shapes/plain/055_runtime.a
+    cycles_equality_test.go:327: stage1/cohere/lint/regex/testdata/shapes/plain/055_runtime.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/stage1/cohere/lint/regex/testdata/shapes/plain/058.a
+=== NAME  TestCycleFinderEquality_003/internal/oracle/testdata/records_narrowed_reference.a
+    cycles_equality_test.go:327: internal/oracle/testdata/records_narrowed_reference.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/oracle/testdata/reland_refused/view_spread_parameter.ts
+=== NAME  TestCycleFinderEquality_004/stage3/fixtures/assertions/17_brand_upcast.a
+    cycles_equality_test.go:327: stage3/fixtures/assertions/17_brand_upcast.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/stage3/fixtures/cycles/10_hoisted_before_body/core.a
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/regexp_replace.a
+    cycles_equality_test.go:327: internal/oracle/testdata/regexp_replace.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/review/agree/fxspptb_1d3929c_optional_field_min.a
+=== NAME  TestCycleFinderEquality_007/stage1/cohere/lint/regex/testdata/shapes/plain/058.a
+    cycles_equality_test.go:327: stage1/cohere/lint/regex/testdata/shapes/plain/058.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/stage1/cohere/lint/rules/no-useless-concat/rule.a
+=== NAME  TestCycleFinderEquality_004/stage3/fixtures/cycles/10_hoisted_before_body/core.a
+    cycles_equality_test.go:327: stage3/fixtures/cycles/10_hoisted_before_body/core.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/stage3/interface-downcasts/lane1/optional-read-control.a
+=== NAME  TestCycleFinderEquality_003/internal/oracle/testdata/reland_refused/view_spread_parameter.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/reland_refused/view_spread_parameter.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/oracle/testdata/reuse_spread_method_alias.a
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/review/agree/fxspptb_1d3929c_optional_field_min.a
+    cycles_equality_test.go:327: internal/oracle/testdata/review/agree/fxspptb_1d3929c_optional_field_min.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/review/agree/fxspptb_93122fa_s2.a
+=== NAME  TestCycleFinderEquality_004/stage3/interface-downcasts/lane1/optional-read-control.a
+    cycles_equality_test.go:327: stage3/interface-downcasts/lane1/optional-read-control.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_004/stage3/interface-downcasts/nodes.a
+=== NAME  TestCycleFinderEquality_003/internal/oracle/testdata/reuse_spread_method_alias.a
+    cycles_equality_test.go:327: internal/oracle/testdata/reuse_spread_method_alias.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/oracle/testdata/review/agree/fxspptb_abfe962_split_throw.a
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/review/agree/fxspptb_93122fa_s2.a
+    cycles_equality_test.go:327: internal/oracle/testdata/review/agree/fxspptb_93122fa_s2.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/review/agree/fxspptb_aa17d3c_defined_lent.a
+=== NAME  TestCycleFinderEquality_004/stage3/interface-downcasts/nodes.a
+    cycles_equality_test.go:327: stage3/interface-downcasts/nodes.a: equal scanning/indexed outcomes in modes [false true]
+--- PASS: TestCycleFinderEquality_004 (17.09s)
+    --- PASS: TestCycleFinderEquality_004/internal/conformance/testdata/grown/destructured_beside_default.a (0.42s)
+    --- PASS: TestCycleFinderEquality_004/internal/lower/testdata/realpath/refused/map.a (3.19s)
+    --- PASS: TestCycleFinderEquality_004/internal/oracle/testdata/array_literal_empty_last.a (0.45s)
+    --- PASS: TestCycleFinderEquality_004/internal/oracle/testdata/async_iterable_map_readd_module.a (0.37s)
+    --- PASS: TestCycleFinderEquality_004/internal/oracle/testdata/call_targets_region.a (0.52s)
+    --- PASS: TestCycleFinderEquality_004/internal/oracle/testdata/callback_widening/object-filter.a (0.52s)
+    --- PASS: TestCycleFinderEquality_004/internal/oracle/testdata/class_oct6_parameters.a (0.51s)
+    --- PASS: TestCycleFinderEquality_004/internal/oracle/testdata/entries_checked_fit.a (0.49s)
+    --- PASS: TestCycleFinderEquality_004/internal/oracle/testdata/fresh_refused/escapes_after_return.a (0.55s)
+    --- PASS: TestCycleFinderEquality_004/internal/oracle/testdata/generic_values.a (0.52s)
+    --- PASS: TestCycleFinderEquality_004/internal/oracle/testdata/label_block_continue_sync.a (0.43s)
+    --- PASS: TestCycleFinderEquality_004/internal/oracle/testdata/miscompile_2a/4ddd17f_long_name.a (0.78s)
+    --- PASS: TestCycleFinderEquality_004/internal/oracle/testdata/non_null_definite.ts (0.40s)
+    --- PASS: TestCycleFinderEquality_004/internal/oracle/testdata/regexp_v8_folding.a (0.36s)
+    --- PASS: TestCycleFinderEquality_004/internal/oracle/testdata/review/agree/fxspptb_9984394_aside_throw.a (0.46s)
+    --- PASS: TestCycleFinderEquality_004/internal/oracle/testdata/review/agree/fxspptb_aee89b2_clobber_link_loop.a (0.46s)
+    --- PASS: TestCycleFinderEquality_004/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p59_union_member_method_shorthand.a (0.38s)
+    --- PASS: TestCycleFinderEquality_004/internal/oracle/testdata/scout_hir_optional_boolean.a (0.39s)
+    --- PASS: TestCycleFinderEquality_004/internal/oracle/testdata/view_optional_read/destructure.ts (0.37s)
+    --- PASS: TestCycleFinderEquality_004/internal/oracle/testdata/void_widening_refused/container_recursive.a (0.45s)
+    --- PASS: TestCycleFinderEquality_004/stage1/cohere/lint/rules/typescript-init-declarations/initializer.a (1.44s)
+    --- PASS: TestCycleFinderEquality_004/stage1/cohere/parse/no_octal_escape.a (1.30s)
+    --- PASS: TestCycleFinderEquality_004/stage3/drivers/parser/native-predicate-function-view.a (0.45s)
+    --- PASS: TestCycleFinderEquality_004/stage3/fixtures/assertions/17_brand_upcast.a (0.58s)
+    --- PASS: TestCycleFinderEquality_004/stage3/fixtures/cycles/10_hoisted_before_body/core.a (0.47s)
+    --- PASS: TestCycleFinderEquality_004/stage3/interface-downcasts/lane1/optional-read-control.a (0.39s)
+    --- PASS: TestCycleFinderEquality_004/stage3/interface-downcasts/nodes.a (0.43s)
+=== NAME  TestCycleFinderEquality_003/internal/oracle/testdata/review/agree/fxspptb_abfe962_split_throw.a
+    cycles_equality_test.go:327: internal/oracle/testdata/review/agree/fxspptb_abfe962_split_throw.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q18_every_mixed_literal.a
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/review/agree/fxspptb_aa17d3c_defined_lent.a
+    cycles_equality_test.go:327: internal/oracle/testdata/review/agree/fxspptb_aa17d3c_defined_lent.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/review/agree/fxspptb_aee89b2_escaped_before.a
+=== NAME  TestCycleFinderEquality_003/internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q18_every_mixed_literal.a
+    cycles_equality_test.go:327: internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q18_every_mixed_literal.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/oracle/testdata/union_write_refused/array_element.a
+=== NAME  TestCycleFinderEquality_007/stage1/cohere/lint/rules/no-useless-concat/rule.a
+    cycles_equality_test.go:327: stage1/cohere/lint/rules/no-useless-concat/rule.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/stage3/census/repro/r13/main.a
+    cycles_equality_test.go:327: stage3/census/repro/r13/main.a: common loader refusal: /home/user/adamic/stage3/census/repro/r13/main.a:2:49: error TS2532: Object is possibly 'undefined'.
+=== RUN   TestCycleFinderEquality_007/stage3/drivers/scanner/evidence/land-area-next/witnesses/03-error-cast.a
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/review/agree/fxspptb_aee89b2_escaped_before.a
+    cycles_equality_test.go:327: internal/oracle/testdata/review/agree/fxspptb_aee89b2_escaped_before.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/review/agree/fxspptb_d96d304_try_repeat.a
+=== NAME  TestCycleFinderEquality_003/internal/oracle/testdata/union_write_refused/array_element.a
+    cycles_equality_test.go:327: internal/oracle/testdata/union_write_refused/array_element.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/internal/oracle/testdata/view_logical_write/nullish.ts
+=== NAME  TestCycleFinderEquality_007/stage3/drivers/scanner/evidence/land-area-next/witnesses/03-error-cast.a
+    cycles_equality_test.go:327: stage3/drivers/scanner/evidence/land-area-next/witnesses/03-error-cast.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/stage3/drivers/scanner/evidence/scratch-run/witnesses/witness-04-00.a
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/review/agree/fxspptb_d96d304_try_repeat.a
+    cycles_equality_test.go:327: internal/oracle/testdata/review/agree/fxspptb_d96d304_try_repeat.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/set_foreach_named_objects.a
+=== NAME  TestCycleFinderEquality_003/internal/oracle/testdata/view_logical_write/nullish.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/view_logical_write/nullish.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/notes/nbody-speed/optional_write_string.a
+=== NAME  TestCycleFinderEquality_007/stage3/drivers/scanner/evidence/scratch-run/witnesses/witness-04-00.a
+    cycles_equality_test.go:327: stage3/drivers/scanner/evidence/scratch-run/witnesses/witness-04-00.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/stage3/fixtures/cycles/03_extensions/main.a
+=== NAME  TestCycleFinderEquality_003/notes/nbody-speed/optional_write_string.a
+    cycles_equality_test.go:327: notes/nbody-speed/optional_write_string.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/review/oct6/class_oct6_construction.a
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/set_foreach_named_objects.a
+    cycles_equality_test.go:327: internal/oracle/testdata/set_foreach_named_objects.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/view_optional_read_stops/specifier_name.ts
+=== NAME  TestCycleFinderEquality_007/stage3/fixtures/cycles/03_extensions/main.a
+    cycles_equality_test.go:327: stage3/fixtures/cycles/03_extensions/main.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/stage3/fixtures/records/input-fixtures/06_paths-own_toString/target.a
+=== NAME  TestCycleFinderEquality_003/review/oct6/class_oct6_construction.a
+    cycles_equality_test.go:327: review/oct6/class_oct6_construction.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/stage1/cohere/lint/regex/testdata/shapes/plain/043.a
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/view_optional_read_stops/specifier_name.ts
+    cycles_equality_test.go:327: internal/oracle/testdata/view_optional_read_stops/specifier_name.ts: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/void_widening_refused/contained_field.a
+=== NAME  TestCycleFinderEquality_007/stage3/fixtures/records/input-fixtures/06_paths-own_toString/target.a
+    cycles_equality_test.go:327: stage3/fixtures/records/input-fixtures/06_paths-own_toString/target.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/stage3/fixtures/records/input-fixtures/07_paths-own_hasOwnProperty/target.a
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/void_widening_refused/contained_field.a
+    cycles_equality_test.go:327: internal/oracle/testdata/void_widening_refused/contained_field.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/internal/oracle/testdata/void_widening_refused/container_tuple.a
+=== NAME  TestCycleFinderEquality_003/stage1/cohere/lint/regex/testdata/shapes/plain/043.a
+    cycles_equality_test.go:327: stage1/cohere/lint/regex/testdata/shapes/plain/043.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/stage1/cohere/lint/regex/testdata/shapes/s/031.a
+=== NAME  TestCycleFinderEquality_007/stage3/fixtures/records/input-fixtures/07_paths-own_hasOwnProperty/target.a
+    cycles_equality_test.go:327: stage3/fixtures/records/input-fixtures/07_paths-own_hasOwnProperty/target.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/stage3/fixtures/records/input-fixtures/11_exports-missing_hasOwnProperty/main.a
+=== NAME  TestCycleFinderEquality_006/internal/oracle/testdata/void_widening_refused/container_tuple.a
+    cycles_equality_test.go:327: internal/oracle/testdata/void_widening_refused/container_tuple.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/28_cli-unknown___proto__/main.a
+=== NAME  TestCycleFinderEquality_007/stage3/fixtures/records/input-fixtures/11_exports-missing_hasOwnProperty/main.a
+    cycles_equality_test.go:327: stage3/fixtures/records/input-fixtures/11_exports-missing_hasOwnProperty/main.a: common loader refusal: /home/user/adamic/stage3/fixtures/records/input-fixtures/11_exports-missing_hasOwnProperty/main.a:1:23: error TS2307: Cannot find module 'pkg' or its corresponding type declarations.
+=== RUN   TestCycleFinderEquality_007/stage3/fixtures/self-compare/array-fill.a
+=== NAME  TestCycleFinderEquality_003/stage1/cohere/lint/regex/testdata/shapes/s/031.a
+    cycles_equality_test.go:327: stage1/cohere/lint/regex/testdata/shapes/s/031.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/stage3/adapt/48-memoize/a-explicit.a
+=== NAME  TestCycleFinderEquality_006/review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/28_cli-unknown___proto__/main.a
+    cycles_equality_test.go:327: review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/28_cli-unknown___proto__/main.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/stage1/cohere/lint/rules/nexus-consistency-no-for-in/rule.a
+=== NAME  TestCycleFinderEquality_007/stage3/fixtures/self-compare/array-fill.a
+    cycles_equality_test.go:327: stage3/fixtures/self-compare/array-fill.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_007/stage3/namespaces/shapes/ReactNames.a
+=== NAME  TestCycleFinderEquality_003/stage3/adapt/48-memoize/a-explicit.a
+    cycles_equality_test.go:327: stage3/adapt/48-memoize/a-explicit.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/stage3/census/repro/r26/main.a
+    cycles_equality_test.go:327: stage3/census/repro/r26/main.a: common loader refusal: /home/user/adamic/stage3/census/repro/r26/main.a:2:98: error TS2538: Type 'undefined' cannot be used as an index type.
+=== RUN   TestCycleFinderEquality_003/stage3/fixtures/cycles/01_call_time/main.a
+=== NAME  TestCycleFinderEquality_007/stage3/namespaces/shapes/ReactNames.a
+    cycles_equality_test.go:327: stage3/namespaces/shapes/ReactNames.a: equal scanning/indexed outcomes in modes [false true]
+--- PASS: TestCycleFinderEquality_007 (25.17s)
+    --- PASS: TestCycleFinderEquality_007/internal/lower/testdata/callable_producers/p23.ts (0.36s)
+    --- PASS: TestCycleFinderEquality_007/internal/lower/testdata/optional_widening/arrow.a (0.44s)
+    --- PASS: TestCycleFinderEquality_007/internal/lower/testdata/realpath/refused/let.a (3.05s)
+    --- PASS: TestCycleFinderEquality_007/internal/lower/testdata/realpath/refused/object.a (3.09s)
+    --- PASS: TestCycleFinderEquality_007/internal/oracle/testdata/cast_enum_string_fails.ts (0.45s)
+    --- PASS: TestCycleFinderEquality_007/internal/oracle/testdata/class_features_static_private.a (0.59s)
+    --- PASS: TestCycleFinderEquality_007/internal/oracle/testdata/concurrency/refused/dispatch.a (0.37s)
+    --- PASS: TestCycleFinderEquality_007/internal/oracle/testdata/entries_checked_boolean.a (0.42s)
+    --- PASS: TestCycleFinderEquality_007/internal/oracle/testdata/environment_callback_escape.a (0.46s)
+    --- PASS: TestCycleFinderEquality_007/internal/oracle/testdata/fresh_refused/call_grandchild.a (0.49s)
+    --- PASS: TestCycleFinderEquality_007/internal/oracle/testdata/fresh_refused/spread_outside.a (0.42s)
+    --- PASS: TestCycleFinderEquality_007/internal/oracle/testdata/host_phantom_overload_primitive.a (0.52s)
+    --- PASS: TestCycleFinderEquality_007/internal/oracle/testdata/map_union_value_host_file_info.a (0.49s)
+    --- PASS: TestCycleFinderEquality_007/internal/oracle/testdata/nested_mixed.a (0.41s)
+    --- PASS: TestCycleFinderEquality_007/internal/oracle/testdata/node_process_host.a (2.81s)
+    --- PASS: TestCycleFinderEquality_007/internal/oracle/testdata/read_arguments.a (0.38s)
+    --- PASS: TestCycleFinderEquality_007/internal/oracle/testdata/regexp_match.a (0.60s)
+    --- PASS: TestCycleFinderEquality_007/internal/oracle/testdata/release_fast_graph.a (0.95s)
+    --- PASS: TestCycleFinderEquality_007/internal/oracle/testdata/review/agree/fxspptb_4ddd17f_long_name.a (0.80s)
+    --- PASS: TestCycleFinderEquality_007/internal/oracle/testdata/taste_star/barrel.a (0.35s)
+    --- PASS: TestCycleFinderEquality_007/internal/oracle/testdata/view_optional_read/scalars.ts (0.45s)
+    --- PASS: TestCycleFinderEquality_007/internal/oracle/testdata/void_discards_canonical.a (0.48s)
+    --- PASS: TestCycleFinderEquality_007/internal/oracle/testdata/weak/reuse.a (0.34s)
+    --- PASS: TestCycleFinderEquality_007/notes/nbody-speed/optional_write_number.a (0.31s)
+    --- PASS: TestCycleFinderEquality_007/stage1/cohere/lint/regex/testdata/shapes/plain/006_runtime.a (0.41s)
+    --- PASS: TestCycleFinderEquality_007/stage1/cohere/lint/regex/testdata/shapes/plain/055_runtime.a (0.59s)
+    --- PASS: TestCycleFinderEquality_007/stage1/cohere/lint/regex/testdata/shapes/plain/058.a (0.53s)
+    --- PASS: TestCycleFinderEquality_007/stage1/cohere/lint/rules/no-useless-concat/rule.a (1.50s)
+    --- PASS: TestCycleFinderEquality_007/stage3/census/repro/r13/main.a (0.10s)
+    --- PASS: TestCycleFinderEquality_007/stage3/drivers/scanner/evidence/land-area-next/witnesses/03-error-cast.a (0.43s)
+    --- PASS: TestCycleFinderEquality_007/stage3/drivers/scanner/evidence/scratch-run/witnesses/witness-04-00.a (0.44s)
+    --- PASS: TestCycleFinderEquality_007/stage3/fixtures/cycles/03_extensions/main.a (0.49s)
+    --- PASS: TestCycleFinderEquality_007/stage3/fixtures/records/input-fixtures/06_paths-own_toString/target.a (0.41s)
+    --- PASS: TestCycleFinderEquality_007/stage3/fixtures/records/input-fixtures/07_paths-own_hasOwnProperty/target.a (0.39s)
+    --- PASS: TestCycleFinderEquality_007/stage3/fixtures/records/input-fixtures/11_exports-missing_hasOwnProperty/main.a (0.09s)
+    --- PASS: TestCycleFinderEquality_007/stage3/fixtures/self-compare/array-fill.a (0.35s)
+    --- PASS: TestCycleFinderEquality_007/stage3/namespaces/shapes/ReactNames.a (0.35s)
+=== NAME  TestCycleFinderEquality_003/stage3/fixtures/cycles/01_call_time/main.a
+    cycles_equality_test.go:327: stage3/fixtures/cycles/01_call_time/main.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_003/stage3/fixtures/objects/12_decorator_descriptor.a
+    cycles_equality_test.go:327: stage3/fixtures/objects/12_decorator_descriptor.a: equal scanning/indexed outcomes in modes [false true]
+--- PASS: TestCycleFinderEquality_003 (18.51s)
+    --- PASS: TestCycleFinderEquality_003/internal/conformance/testdata/refusals/vacuous_downcast.a (0.45s)
+    --- PASS: TestCycleFinderEquality_003/internal/lower/testdata/fx7_wrong_aborts/bad_callable.a (0.36s)
+    --- PASS: TestCycleFinderEquality_003/internal/lower/testdata/input-spread/utf8At_tuple.a (0.37s)
+    --- PASS: TestCycleFinderEquality_003/internal/lower/testdata/predicates/overload_nominal.a (0.45s)
+    --- PASS: TestCycleFinderEquality_003/internal/oracle/testdata/arguments_length_refused/returning.a (0.50s)
+    --- PASS: TestCycleFinderEquality_003/internal/oracle/testdata/census_predicate_marker_live.a (0.48s)
+    --- PASS: TestCycleFinderEquality_003/internal/oracle/testdata/census_unary_numeric.a (0.61s)
+    --- PASS: TestCycleFinderEquality_003/internal/oracle/testdata/enum_literal_slot_refused/spread.ts (0.41s)
+    --- PASS: TestCycleFinderEquality_003/internal/oracle/testdata/enum_tag_refused/switch_true.a (0.49s)
+    --- PASS: TestCycleFinderEquality_003/internal/oracle/testdata/enums_open.a (0.50s)
+    --- PASS: TestCycleFinderEquality_003/internal/oracle/testdata/fresh_refused/call_clobbers.a (0.40s)
+    --- PASS: TestCycleFinderEquality_003/internal/oracle/testdata/fresh_refused/call_comparator.a (0.49s)
+    --- PASS: TestCycleFinderEquality_003/internal/oracle/testdata/library_array_copy.a (0.53s)
+    --- PASS: TestCycleFinderEquality_003/internal/oracle/testdata/native-arguments-length-value.a (0.39s)
+    --- PASS: TestCycleFinderEquality_003/internal/oracle/testdata/nested_callback_levels.a (0.34s)
+    --- PASS: TestCycleFinderEquality_003/internal/oracle/testdata/non_null_literal_assignment.ts (0.32s)
+    --- PASS: TestCycleFinderEquality_003/internal/oracle/testdata/params_namespaces_types.a (0.44s)
+    --- PASS: TestCycleFinderEquality_003/internal/oracle/testdata/phantom_catch.a (0.77s)
+    --- PASS: TestCycleFinderEquality_003/internal/oracle/testdata/predicate_qualified/each_lie/main.ts (0.44s)
+    --- PASS: TestCycleFinderEquality_003/internal/oracle/testdata/process_env/nul.a (3.22s)
+    --- PASS: TestCycleFinderEquality_003/internal/oracle/testdata/records_named_options.a (0.48s)
+    --- PASS: TestCycleFinderEquality_003/internal/oracle/testdata/records_narrowed_reference.a (0.50s)
+    --- PASS: TestCycleFinderEquality_003/internal/oracle/testdata/reland_refused/view_spread_parameter.ts (0.58s)
+    --- PASS: TestCycleFinderEquality_003/internal/oracle/testdata/reuse_spread_method_alias.a (0.44s)
+    --- PASS: TestCycleFinderEquality_003/internal/oracle/testdata/review/agree/fxspptb_abfe962_split_throw.a (0.42s)
+    --- PASS: TestCycleFinderEquality_003/internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q18_every_mixed_literal.a (0.35s)
+    --- PASS: TestCycleFinderEquality_003/internal/oracle/testdata/union_write_refused/array_element.a (0.33s)
+    --- PASS: TestCycleFinderEquality_003/internal/oracle/testdata/view_logical_write/nullish.ts (0.42s)
+    --- PASS: TestCycleFinderEquality_003/notes/nbody-speed/optional_write_string.a (0.40s)
+    --- PASS: TestCycleFinderEquality_003/review/oct6/class_oct6_construction.a (0.37s)
+    --- PASS: TestCycleFinderEquality_003/stage1/cohere/lint/regex/testdata/shapes/plain/043.a (0.49s)
+    --- PASS: TestCycleFinderEquality_003/stage1/cohere/lint/regex/testdata/shapes/s/031.a (0.55s)
+    --- PASS: TestCycleFinderEquality_003/stage3/adapt/48-memoize/a-explicit.a (0.37s)
+    --- PASS: TestCycleFinderEquality_003/stage3/census/repro/r26/main.a (0.08s)
+    --- PASS: TestCycleFinderEquality_003/stage3/fixtures/cycles/01_call_time/main.a (0.40s)
+    --- PASS: TestCycleFinderEquality_003/stage3/fixtures/objects/12_decorator_descriptor.a (0.35s)
+=== NAME  TestCycleFinderEquality_006/stage1/cohere/lint/rules/nexus-consistency-no-for-in/rule.a
+    cycles_equality_test.go:327: stage1/cohere/lint/rules/nexus-consistency-no-for-in/rule.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/stage1/cohere/lint/rules/no-iterator/rule.a
+    cycles_equality_test.go:327: stage1/cohere/lint/rules/no-iterator/rule.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/stage3/drivers/scanner/evidence/combined-records-library/witnesses/15-condition.a
+    cycles_equality_test.go:327: stage3/drivers/scanner/evidence/combined-records-library/witnesses/15-condition.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/stage3/drivers/scanner/probes/index-signature-type-only.a
+    cycles_equality_test.go:327: stage3/drivers/scanner/probes/index-signature-type-only.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/stage3/fixtures/cycles/08_named_reexports/_namespaces/ts.a
+    cycles_equality_test.go:327: stage3/fixtures/cycles/08_named_reexports/_namespaces/ts.a: equal scanning/indexed outcomes in modes [false true]
+=== RUN   TestCycleFinderEquality_006/stage3/fixtures/records/10_option_wrong_type.a
+    cycles_equality_test.go:327: stage3/fixtures/records/10_option_wrong_type.a: common loader refusal: /home/user/adamic/stage3/fixtures/records/10_option_wrong_type.a:66:79: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+--- PASS: TestCycleFinderEquality_006 (26.64s)
+    --- PASS: TestCycleFinderEquality_006/internal/conformance/testdata/void/read.a (0.35s)
+    --- PASS: TestCycleFinderEquality_006/internal/lower/testdata/callback_widening/array_structural.a (0.36s)
+    --- PASS: TestCycleFinderEquality_006/internal/lower/testdata/fx6/p53.ts (0.41s)
+    --- PASS: TestCycleFinderEquality_006/internal/lower/testdata/optional_widening/initializer.a (0.36s)
+    --- PASS: TestCycleFinderEquality_006/internal/lower/testdata/realpath/refused/return.a (3.13s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/93122fa_s2.a (0.43s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/async_for_of_collections_mutation.a (0.45s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/async_iterable_nested_maps_module.a (0.45s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/async_iterable_string_ascii_function.a (0.39s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/callback_widening/object-sort.a (0.40s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/casts.ts (0.47s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/class_features_private.a (0.63s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/concurrency/refused/global_write.a (0.36s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/environment_unknown_callback.a (0.42s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/host_array_predicate.a (0.53s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/module_namespace_reads/cycle_barrel.a (0.44s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/namespaces_parser_state.a (0.47s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/node_fs_directory_system.a (3.37s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/node_fs_file_write_buffer.a (3.65s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/object_prototype.a (0.66s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/objects.a (0.59s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/regexp_replace.a (0.52s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/review/agree/fxspptb_1d3929c_optional_field_min.a (0.52s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/review/agree/fxspptb_93122fa_s2.a (0.41s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/review/agree/fxspptb_aa17d3c_defined_lent.a (0.36s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/review/agree/fxspptb_aee89b2_escaped_before.a (0.48s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/review/agree/fxspptb_d96d304_try_repeat.a (0.42s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/set_foreach_named_objects.a (0.58s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/view_optional_read_stops/specifier_name.ts (0.38s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/void_widening_refused/contained_field.a (0.38s)
+    --- PASS: TestCycleFinderEquality_006/internal/oracle/testdata/void_widening_refused/container_tuple.a (0.38s)
+    --- PASS: TestCycleFinderEquality_006/review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/28_cli-unknown___proto__/main.a (0.35s)
+    --- PASS: TestCycleFinderEquality_006/stage1/cohere/lint/rules/nexus-consistency-no-for-in/rule.a (1.25s)
+    --- PASS: TestCycleFinderEquality_006/stage1/cohere/lint/rules/no-iterator/rule.a (1.22s)
+    --- PASS: TestCycleFinderEquality_006/stage3/drivers/scanner/evidence/combined-records-library/witnesses/15-condition.a (0.29s)
+    --- PASS: TestCycleFinderEquality_006/stage3/drivers/scanner/probes/index-signature-type-only.a (0.33s)
+    --- PASS: TestCycleFinderEquality_006/stage3/fixtures/cycles/08_named_reexports/_namespaces/ts.a (0.34s)
+    --- PASS: TestCycleFinderEquality_006/stage3/fixtures/records/10_option_wrong_type.a (0.07s)
+PASS

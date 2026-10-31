@@ -1,0 +1,22 @@
+--- FAIL: TestClassFeaturesAccessorCaptureCycle (3.60s)
+    class_features_test.go:84: native: listing the runtime's headers: exit status 1
+        heap.c:51:10: fatal error: 'sanitizer/asan_interface.h' file not found
+           51 | #include <sanitizer/asan_interface.h>
+              |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        1 error generated.
+        
+--- FAIL: TestClassFeaturesStaticInterfaceCycle (3.70s)
+    class_features_test.go:105: native: listing the runtime's headers: exit status 1
+        heap.c:51:10: fatal error: 'sanitizer/asan_interface.h' file not found
+           51 | #include <sanitizer/asan_interface.h>
+              |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        1 error generated.
+        
+--- FAIL: TestClassFeaturesStaticSoundness (3.24s)
+    class_features_test.go:72: native: listing the runtime's headers: exit status 1
+        heap.c:51:10: fatal error: 'sanitizer/asan_interface.h' file not found
+           51 | #include <sanitizer/asan_interface.h>
+              |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        1 error generated.
+        
+FAIL

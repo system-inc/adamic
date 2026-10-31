@@ -1,0 +1,11 @@
+=== RUN   TestALoadStatsAnAdamicFileOnce
+=== PAUSE TestALoadStatsAnAdamicFileOnce
+=== RUN   TestAFileMadeBetweenTwoLoadsIsFound
+=== PAUSE TestAFileMadeBetweenTwoLoadsIsFound
+=== CONT  TestALoadStatsAnAdamicFileOnce
+=== CONT  TestAFileMadeBetweenTwoLoadsIsFound
+--- PASS: TestALoadStatsAnAdamicFileOnce (0.00s)
+--- PASS: TestAFileMadeBetweenTwoLoadsIsFound (0.12s)
+PASS
+ok  	github.com/system-inc/adamic/internal/load	0.132s
+exit=0

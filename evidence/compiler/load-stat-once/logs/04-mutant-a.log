@@ -1,0 +1,14 @@
+=== RUN   TestALoadStatsAnAdamicFileOnce
+=== PAUSE TestALoadStatsAnAdamicFileOnce
+=== RUN   TestAFileMadeBetweenTwoLoadsIsFound
+=== PAUSE TestAFileMadeBetweenTwoLoadsIsFound
+=== CONT  TestALoadStatsAnAdamicFileOnce
+=== CONT  TestAFileMadeBetweenTwoLoadsIsFound
+=== NAME  TestALoadStatsAnAdamicFileOnce
+    source_fs_stats_test.go:49: one load asked /tmp/adamic-gate/TestALoadStatsAnAdamicFileOnce2857604632/001/shapes.a.ts 1000 times, want once
+--- FAIL: TestALoadStatsAnAdamicFileOnce (0.01s)
+--- PASS: TestAFileMadeBetweenTwoLoadsIsFound (0.14s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	0.160s
+FAIL
+exit=1

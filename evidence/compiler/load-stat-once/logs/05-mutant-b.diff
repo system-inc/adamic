@@ -1,0 +1,31 @@
+diff --git a/internal/load/source_fs.go b/internal/load/source_fs.go
+index 65ee3e59..3765ff38 100644
+--- a/internal/load/source_fs.go
++++ b/internal/load/source_fs.go
+@@ -40,6 +40,8 @@ type sourceFS struct {
+ 	adamicFiles sync.Map
+ }
+ 
++var sharedAdamicFiles sync.Map
++
+ // adamicAnswer is one path's adamicFile answer: the .a file behind it, and whether there is one.
+ type adamicAnswer struct {
+ 	path  tspath.RootedFilePath
+@@ -56,7 +58,7 @@ func (s *sourceFS) adamicFile(path tspath.RootedFilePath) (tspath.RootedFilePath
+ 	if !strings.HasSuffix(path.AsString(), ".a.ts") {
+ 		return "", false
+ 	}
+-	if kept, ok := s.adamicFiles.Load(path); ok {
++	if kept, ok := sharedAdamicFiles.Load(path); ok {
+ 		answer := kept.(adamicAnswer)
+ 		return answer.path, answer.found
+ 	}
+@@ -65,7 +67,7 @@ func (s *sourceFS) adamicFile(path tspath.RootedFilePath) (tspath.RootedFilePath
+ 		answer.path = path.RemoveExtension(".ts").AppendSuffix("")
+ 		answer.found = s.FS.FileExists(answer.path)
+ 	}
+-	s.adamicFiles.Store(path, answer)
++	sharedAdamicFiles.Store(path, answer)
+ 	return answer.path, answer.found
+ }
+ 

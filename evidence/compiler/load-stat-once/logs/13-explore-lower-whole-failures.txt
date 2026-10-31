@@ -1,0 +1,14 @@
+exit=1 785s (from the background task's echo)
+--- FAIL: TestCycleFinderCensusEquality (0.02s)
+        --- FAIL: TestNodeRealpathNativeClosedUses (0.00s)
+            --- FAIL: TestNodeRealpathNativeClosedUses/two_arguments.a (0.75s)
+--- FAIL: TestProgramRegionCensusMembership (0.01s)
+
+    cycles_census_equality_test.go:280: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestCycleFinderCensusEquality (0.02s)
+    cycles_equality_test.go:327: internal/lower/testdata/predicates_checked/false_element_condition.a: equal scanning/indexed outcomes in modes [false true]
+--- PASS: TestCycleScalarShapeKeysPreserveDistinctFields (0.08s)
+    cycles_equality_test.go:327: stage3/fixtures/objects/27_delete_substitution.a: equal scanning/indexed outcomes in modes [false true]
+--
+    program_region_census_test.go:369: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProgramRegionCensusMembership (0.01s)

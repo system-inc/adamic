@@ -1,0 +1,14 @@
+=== RUN   TestALoadStatsAnAdamicFileOnce
+=== PAUSE TestALoadStatsAnAdamicFileOnce
+=== RUN   TestAFileMadeBetweenTwoLoadsIsFound
+=== PAUSE TestAFileMadeBetweenTwoLoadsIsFound
+=== CONT  TestALoadStatsAnAdamicFileOnce
+=== CONT  TestAFileMadeBetweenTwoLoadsIsFound
+--- PASS: TestALoadStatsAnAdamicFileOnce (0.00s)
+=== NAME  TestAFileMadeBetweenTwoLoadsIsFound
+    source_fs_stats_test.go:72: the second load, after late.a was written, gave /tmp/adamic-gate/TestAFileMadeBetweenTwoLoadsIsFound2058567529/001/main.a:1:23: error TS2307: Cannot find module './late.a' or its corresponding type declarations.; want it found
+--- FAIL: TestAFileMadeBetweenTwoLoadsIsFound (0.13s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	0.145s
+FAIL
+exit=1
