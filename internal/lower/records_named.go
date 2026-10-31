@@ -90,30 +90,60 @@ func (l *lowering) recordNamedWrite(access, value *ast.Node) error {
 // judged against the named properties of the literal's own type and of the type it's written into.
 // A name strings joined by + make (constantStringKey) is judged as that name alone, so tsc's
 // ["" + "constructor"] beside the keywords it declares (01_scanner_keywords.a) names none of them.
-// A slot boxed as a union (of) is left to its reads: recordReadType checks a declared scalar's tag
-// and stops loudly on a lie, Adamic's .ts ruling for { [name]: 3 } (records_union_lying.ts), and a
-// declared object read from it is not yet. Only an unboxed slot is read as the declared type unchecked.
+// A method or an accessor under such a name stores a function under it unjudged, so it's not yet
+// unless its folded name names no declared property.
+//
+// In a slot boxed as a union (of), a declared property whose read is proven to stop on a lie there is
+// left to its read (readGuardedInUnionSlot). Every other one is judged, an unknown representation
+// included: a function's tag says only "function", so a () => void under names: () => unknown was
+// read as unknown.
 func (l *lowering) recordComputedEntry(literal, entry *ast.Node, of ir.Type) error {
 	key := ast.SkipParentheses(entry.Name().AsComputedPropertyName().Expression)
-	if of == ir.Union || key.Kind == ast.KindStringLiteral || key.Kind == ast.KindNoSubstitutionTemplateLiteral || key.Kind == ast.KindNumericLiteral || entry.Kind != ast.KindPropertyAssignment {
+	if key.Kind == ast.KindStringLiteral || key.Kind == ast.KindNoSubstitutionTemplateLiteral || key.Kind == ast.KindNumericLiteral {
 		return nil
 	}
-	var names map[string]bool
-	if folded, known := constantStringKey(key); known {
-		names = map[string]bool{folded: true}
+	var folded map[string]bool
+	if name, known := constantStringKey(key); known {
+		folded = map[string]bool{name: true}
 	}
-	value := entry.AsPropertyAssignment().Initializer
 	receivers := []*checker.Type{l.checker.GetTypeAtLocation(literal)}
 	if contextual := l.slotType(literal); contextual != nil {
 		receivers = append(receivers, l.checker.GetNonNullableType(contextual))
 	}
 	for _, receiver := range receivers {
-		if err := l.namedWriteStop(entry.Name(), receiver, value, names); err != nil {
+		names := map[string]bool{}
+		for _, property := range l.checker.GetPropertiesOfType(receiver) {
+			if folded != nil && !folded[property.Name] {
+				continue
+			}
+			if of == ir.Union {
+				if stored, known := l.representation(l.checker.GetNonMissingTypeOfSymbol(property)); known && readGuardedInUnionSlot[stored.Present()] {
+					continue
+				}
+			}
+			names[property.Name] = true
+		}
+		if len(names) == 0 {
+			continue
+		}
+		if entry.Kind != ast.KindPropertyAssignment {
+			return l.notYet(entry.Name(), "a computed method or accessor in a record literal whose name a named property may take")
+		}
+		if err := l.namedWriteStop(entry.Name(), receiver, entry.AsPropertyAssignment().Initializer, names); err != nil {
 			return err
 		}
 	}
 	return nil
 }
+
+// readGuardedInUnionSlot is each representation whose declared read from a slot boxed as a union is
+// proven to stop on a lie, each by a pin in TestNamedRecordWritesAreJudgedAsTheirDirectTwins. A number,
+// string or boolean is read through recordReadType's exact tag check, which stops loudly
+// (records_union_lying.ts is Adamic's .ts witness). A plain object, an array, a Map and a dictionary
+// have no checked tag, so their read is not yet: Language's b8, a8 and p8, and r8, the MapLike that
+// records_union_options.ts, tsc's commandLineParser shape, declares. A function's tag says only
+// "function", so it's judged (b10), as is any representation not here.
+var readGuardedInUnionSlot = map[ir.Type]bool{ir.Number: true, ir.String: true, ir.Boolean: true, ir.Object: true, ir.Array: true, ir.Map: true, ir.Record: true}
 
 // namedWriteStop stops a value written under a name the key can't promise into receiver, through its
 // index signature, at the first named property of receiver (of those names holds, when it's given) it
