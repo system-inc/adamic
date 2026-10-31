@@ -84,7 +84,7 @@ var gobRoundTripVariants = map[string]native.Options{
 
 // gobRoundTripWitness is a fixture whose lowering holds a -0 constant, each family's planted case. Its probe reads the
 // decode back with every -0 made +0, gob's own reading of a float written by value.
-const gobRoundTripWitness = "internal/oracle/testdata/WITNESS"
+const gobRoundTripWitness = "internal/oracle/testdata/enums.a"
 
 func runGobRoundTripReleaseShard(t *testing.T, shard int) {
 	gobRoundTripShard(t, "TestGobRoundTripEmitsTheSameRelease", shard)
