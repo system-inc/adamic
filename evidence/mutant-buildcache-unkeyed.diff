@@ -1,0 +1,11 @@
+--- internal/buildcache/buildcache.go	2026-10-31 16:21:55.383266055 +0000
++++ internal/buildcache/buildcache.go (mutant)	2026-10-31 16:21:55.380550146 +0000
+@@ -924,7 +924,7 @@
+ // test from an unpacked source never records .tracked in its read set, where it is refused as untracked (#asrz3cy). A
+ // file the listing names is still the build's read when the build reads it.
+ func keyedManifestListing(directory string) (listing []byte, taken time.Time, ok bool) {
+-	keying(func() { listing, taken, ok = manifestListing(directory) })
++	listing, taken, ok = manifestListing(directory)
+ 	return listing, taken, ok
+ }
+ 

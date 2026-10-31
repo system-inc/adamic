@@ -1,0 +1,6 @@
+=== RUN   TestManifestIsReadAsKeying
+    tracked_test.go:513: cohere/TypeScript: HEAD  (/tmp/adamic-gate/TestManifestIsReadAsKeying1220430919/004/cohere/TypeScript has no .git, and no .tracked manifest at or above it records its commit and tracked files (build-tree writes one into the source it chunks)), git says 81a0cd08bceac9a1b8fc5d01a6f7d96dd08557d6
+--- FAIL: TestManifestIsReadAsKeying (0.52s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/tracked	0.529s
+FAIL

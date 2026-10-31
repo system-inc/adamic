@@ -1,0 +1,24 @@
+--- internal/tracked/tracked.go	2026-10-31 16:22:09.001538255 +0000
++++ internal/tracked/tracked.go (mutant)	2026-10-31 16:22:09.028645492 +0000
+@@ -569,7 +569,7 @@
+ 	var root, relative string
+ 	var found *manifest
+ 	var err error
+-	asKeying(func() { root, relative, found, err = readRecord(directory) })
++	root, relative, found, err = readRecord(directory)
+ 	if err != nil {
+ 		return nil, err
+ 	}
+@@ -580,10 +580,10 @@
+ 	for parent := path.Dir(relative); ; parent = path.Dir(parent) {
+ 		parentDirectory := filepath.Join(root, filepath.FromSlash(parent))
+ 		recorded := false
+-		asKeying(func() {
++		func() {
+ 			_, err := os.Stat(filepath.Join(root, ManifestDirectory, filepath.FromSlash(parent), headFile))
+ 			recorded = err == nil
+-		})
++		}()
+ 		if recorded {
+ 			above, err := manifestOf(parentDirectory)
+ 			if err != nil {
