@@ -540,6 +540,20 @@ func (l *lowering) castSlotWidened(node *ast.Node) (*checker.Type, *checker.Type
 	return own, contextual, l.freshOrWidened(operand, own, contextual)
 }
 
+// castSlotRefusal refuses a cast whose own type goes into a slot that can write what it can't hold, the
+// judgment castSlotWidened makes, for a checked cast, whose relation to its operand stringWideningRefusal
+// leaves to cast.go.
+func (l *lowering) castSlotRefusal(node *ast.Node) error {
+	if l.nodeFSFileReadOnlyArgument(node) || l.regexCallbackIntrinsicView(node) {
+		return nil
+	}
+	own, contextual, found := l.castSlotWidened(node)
+	if found == nil {
+		return nil
+	}
+	return l.wideningRefusal(node, own, contextual, found)
+}
+
 // An object literal written where a union goes is built as one of its members, so a property is
 // judged against each member's own slot, not the union's property. For { kind: Kind.Text } |
 // { kind: Kind.Count } that property is Kind.Text | Kind.Count, the whole open enum, which takes any
