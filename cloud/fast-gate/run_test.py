@@ -3175,6 +3175,33 @@ class SmokeMarkdownOnly(unittest.TestCase):
                 self.assertEqual(self.inputs(self.change(edit))["paths"], ["."])
 
 
+class GoListRecordsReadInPlace(unittest.TestCase):
+    """run.goListRecords reads a go list -json answer as the records it holds, in order, whatever whitespace lies before,
+    between and after them, as the loop that sliced off each record did. Mutants, red here: the whitespace after a record
+    left unskipped; the first record's leading whitespace left unskipped; the last record dropped."""
+
+    records = [{"ImportPath": "example.com/a", "Imports": ["fmt"], "Dir": "/t/a"},
+               {"ImportPath": "example.com/b [example.com/b.test]", "ForTest": "example.com/b", "Embed": "x\ty"},
+               {"ImportPath": "example.com/c", "Note": "a } inside a string, then { again"}]
+
+    def sliced(self, text):
+        decoder, remaining, out = json.JSONDecoder(), text.strip(), []
+        while remaining:
+            record, end = decoder.raw_decode(remaining)
+            remaining = remaining[end:].lstrip()
+            out.append(record)
+        return out
+
+    def test_records_read_in_place_are_the_sliced_ones(self):
+        for name, text in {"go list's own shape": "".join(json.dumps(record, indent="\t") + "\n" for record in self.records),
+                           "whitespace around and between": "\n \t" + "\r\n\n".join(json.dumps(record) for record in self.records) + " \n\n",
+                           "no whitespace between": "".join(json.dumps(record) for record in self.records),
+                           "empty": "", "whitespace alone": " \n\t "}.items():
+            with self.subTest(name):
+                self.assertEqual(list(run.goListRecords(text)), self.sliced(text))
+                self.assertEqual(list(run.goListRecords(text)), self.records if text.strip() else [])
+
+
 class ListingRunsGoListOnce(unittest.TestCase):
     """One --list-units --with-inputs pass runs each go list once a tree (run.listedGoList, Hotty's measures on #q11k6k6
     and #cb8bpe7): packageGraphCommand, which touched() and coverage's and smoke's providers share, and go list -json ./...,

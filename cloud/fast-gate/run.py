@@ -231,15 +231,28 @@ def goCommandInputs(tree, command):
     # build's and vet's ask the same listing of ./..., and a listing pass runs it once for both (listedGoList).
     result = listedGoList(tree, ["go", "list", "-json"] + patterns, 90)
     result.check_returncode()
-    decoder, remaining, packages = json.JSONDecoder(), result.stdout.strip(), set()
-    while remaining:
-        package, end = decoder.raw_decode(remaining)
-        remaining = remaining[end:].lstrip()
+    packages = set()
+    for package in goListRecords(result.stdout):
         packages.add(package["ImportPath"])
         if command[1] in ("test", "vet"):
             # go list -deps on a root alone omits the test imports vet/go test compile.
             packages.update(package.get("TestImports", []) + package.get("XTestImports", []))
     return {"packages": sorted(packages), "paths": []}
+
+
+# goListWhitespace is what go list -json writes between its records, as str.lstrip reads it.
+goListWhitespace = re.compile(r"\s*")
+
+
+def goListRecords(text):
+    """The records of a go list -json answer, in order, decoded where each starts. Slicing off each record decoded copied
+    the rest of the answer once a record: about 0.48 s a parse of adamic's 3.9 MB package graph (777 records, Pupa, Oct
+    31), which a listing pass parses three times, against 0.01 s read in place."""
+    decoder, index = json.JSONDecoder(), goListWhitespace.match(text).end()
+    while index < len(text):
+        record, index = decoder.raw_decode(text, index)
+        index = goListWhitespace.match(text, index).end()
+        yield record
 
 
 def productListingCommand():
@@ -344,11 +357,7 @@ def goPackages(tree, listing):
     directories, embedded, reverse, testReverse, packageDirectories = {}, {}, {}, {}, {}
     testEmbedded, realEmbedded = set(), set()
     tree = os.path.realpath(tree)
-    decoder = json.JSONDecoder()
-    remaining = listing.strip()
-    while remaining:
-        package, end = decoder.raw_decode(remaining)
-        remaining = remaining[end:].lstrip()
+    for package in goListRecords(listing):
         # go list -test emits synthetic test binaries and annotated package variants.
         # A variant's Imports are test edges, never production edges.
         importPath = package.get("ForTest") or package["ImportPath"].split(" [", 1)[0]
