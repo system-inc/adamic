@@ -2,7 +2,6 @@ package lower
 
 import (
 	"bytes"
-	"context"
 	"errors"
 	"os"
 	"os/exec"
@@ -10,9 +9,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -34,12 +31,10 @@ function isTypeElementLie(n: Node): n is TypeElement { return kindOf(n) !== 0; }
 // An honest value agrees with Node whatever its kind, a value whose kind no subtype names included, as
 // tsc's isLiteralExpression takes JsxText and isLateBound a declaration whose name it refines. A lie stops
 // at its first bad read on sanitized native and the JavaScript backend, however it got its type: read
-// through S, stored or captured and read later, cast or passed as a subtype, or narrowed to a subtype by
-// an asserts call, which no cast covers, so only the subtypes' views stop it. A write of the wrong type
+// through S, stored or captured and read later, or cast or passed as a subtype. A write of the wrong type
 // stops at the write. Mutants: no view registered, which reads every lie raw but the cast and the subtype
-// parameter, which the cast's own view holds too; S's view alone, which reads the asserts lie raw (the
-// JavaScript backend prints undefined, native calls it a compiler bug); one of S's fields dropped from the
-// checked set, which reads the layout, stored and captured lies raw.
+// parameter, which the cast's own view holds too; one of S's fields dropped from the checked set, which
+// reads the layout, stored and captured lies raw.
 func TestBrandedSupertypeIsCheckedByItsViews(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source string }{
@@ -76,9 +71,6 @@ const v = { kind: 171, pos: 2 }; show(v);`, "adamic: panic: field read failed: p
 		{"passed as a subtype", `function read(p: PropertySignature): void { console.log(p.typeText); }
 function show(n: Node): void { if (isTypeElementLie(n) && n.kind === 171) { read(n as PropertySignature); } }
 const v = { kind: 171, pos: 2 }; show(v);`, "adamic: panic: field read failed: p.typeText is not initialized"},
-		{"narrowed to a subtype", `function assertTypeElement(n: Node): asserts n is TypeElement { if (kindOf(n) === 0) { throw new Error("no"); } }
-function show(x: PropertySignature | Identifier): void { assertTypeElement(x); console.log(x.typeText); }
-const i: Identifier = { kind: 80, pos: 2, escapedText: "e" }; show(i);`, "adamic: panic: field read failed: x.typeText is not initialized"},
 		{"write", `interface Counter extends Declaration { _counterBrand: any; count: number; }
 function isCounter(n: Node): n is Counter { return kindOf(n) === 5; }
 function bump(n: Node): void { if (isCounter(n)) { n.count = 7; } }
@@ -100,7 +92,7 @@ const v = { kind: 5, pos: 1, count: "s" }; bump(v); console.log(v.count);`, "ada
 func TestBrandedSupertypeStaysNotYet(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, want string }{
-		{"false branch", `function show(x: PropertySignature | Identifier): void { if (isTypeElement(x)) { console.log("element"); } else { console.log(x.escapedText); } }
+		{"false branch", `function show(x: PropertySignature | Node): void { if (isTypeElement(x)) { console.log("element"); } else { console.log(String(x.pos)); } }
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" }; show(i);`, "checked predicate membership of a branded supertype on its false branch"},
 		{"spread", `function show(n: Node): void { if (isTypeElementLie(n)) { const c = { ...n }; console.log(String(c.name)); } }
 const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);`, "a whole-object copy of a branded supertype's value, which no view checks"},
@@ -129,7 +121,16 @@ interface PropertyDeclaration extends Declaration { readonly kind: 172; readonly
 interface LateBound extends Declaration { readonly name: Computed; }
 function isLateLie(d: Declaration): d is LateBound { return kindOf(d) !== 0; }
 function show(p: PropertyDeclaration): void { if (isLateLie(p)) { console.log(p.name.expressionText); } }
-const p: PropertyDeclaration = { kind: 172, pos: 1, _declarationBrand: 0, name: { kind: 80, pos: 2, escapedText: "x" } }; show(p);`, "a checked predicate target LateBound that narrows PropertyDeclaration to an intersection no view covers"},
+const p: PropertyDeclaration = { kind: 172, pos: 1, _declarationBrand: 0, name: { kind: 80, pos: 2, escapedText: "x" } }; show(p);`, "a checked predicate target LateBound that narrows PropertyDeclaration, which is neither its supertype nor a subtype its views cover"},
+		// A member assignable to S but not its subtype, beside an unrelated one: the checker narrows both to
+		// intersections, so the call is NotYet, never a model of which member it drops (Compiler's must on
+		// 8c7afca2). Mutant: an unrelated member dropped beside a related one, and the call lowers.
+		{"unrelated member", `interface Loose extends Declaration { _typeElementBrand: any; readonly kind: 174; readonly name: any; }
+function show(x: Loose | Identifier): void { if (isTypeElementLie(x)) { console.log(String(x.pos)); } }
+const i: Identifier = { kind: 80, pos: 2, escapedText: "e" }; show(i);`, "a checked predicate target TypeElement that narrows Identifier, which is neither its supertype nor a subtype its views cover"},
+		{"asserts over a union", `function assertTypeElement(n: Node): asserts n is TypeElement { if (kindOf(n) === 0) { throw new Error("no"); } }
+function show(x: PropertySignature | Identifier): void { assertTypeElement(x); console.log(x.typeText); }
+const i: Identifier = { kind: 80, pos: 2, escapedText: "e" }; show(i);`, "a checked predicate target TypeElement that narrows Identifier, which is neither its supertype nor a subtype its views cover"},
 		{"no brand", `interface Expression extends Node { readonly text: string; }
 function isExpression(n: Node): n is Expression { return kindOf(n) === 9; }
 function show(n: Node): void { if (isExpression(n)) { console.log(n.text); } }
@@ -150,6 +151,28 @@ const v = { kind: 9, pos: 1, text: "x" }; show(v);`, "checked predicate overload
 	}
 }
 
+// A subtype declared in a file the program imports only for its types is covered too, since programFiles
+// follows type-only imports, so a call whose argument may be one lowers and agrees with Node. Mutant: the
+// program's root files alone, and the subtype goes uncovered, so the call is NotYet.
+func TestBrandedSupertypeCoversATypeOnlyImport(t *testing.T) {
+	t.Parallel()
+	directory := t.TempDir()
+	if err := os.WriteFile(filepath.Join(directory, "types.ts"), []byte(brandedPrelude[:strings.Index(brandedPrelude, "function kindOf")]+`export interface Signature extends TypeElement { readonly kind: 174; readonly arity: string; }
+export type { Node, TypeElement };
+`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	main := filepath.Join(directory, "main.ts")
+	if err := os.WriteFile(main, []byte(`import type { Node, TypeElement, Signature } from "./types";
+function assertTypeElement(n: Node): asserts n is TypeElement { if (n.kind !== 174) { throw new Error("no"); } }
+function show(x: Signature | Node): void { assertTypeElement(x); console.log(String(x.pos)); }
+const s: Signature = { kind: 174, pos: 3, arity: "1", _declarationBrand: 0, _typeElementBrand: 0 }; show(s);
+`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	agreeEntry(t, main, nil, 0, nil, nil)
+}
+
 // brandedStops lowers a .ts program and runs it on sanitized native and the JavaScript backend, each of
 // which must stop at exit 70 with nothing printed and stderr starting with the located failure.
 func brandedStops(t *testing.T, source, stderr string) {
@@ -158,42 +181,6 @@ func brandedStops(t *testing.T, source, stderr string) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	brandedProgramStops(t, program, stderr)
-}
-
-// A subtype declared in a file the program imports only for its types gets its view too, since programFiles
-// follows type-only imports, so a lie narrowed to it by an asserts call stops at its first bad read. Mutant:
-// the program's root files alone, and the subtype goes uncovered.
-func TestBrandedSupertypeCoversATypeOnlyImport(t *testing.T) {
-	t.Parallel()
-	directory := t.TempDir()
-	if err := os.WriteFile(filepath.Join(directory, "types.ts"), []byte(brandedPrelude[:strings.Index(brandedPrelude, "function kindOf")]+`export interface Signature extends TypeElement { readonly kind: 174; readonly arity: string; }
-export type { Node, TypeElement, Identifier };
-`), 0o644); err != nil {
-		t.Fatal(err)
-	}
-	main := filepath.Join(directory, "main.ts")
-	if err := os.WriteFile(main, []byte(`import type { Node, TypeElement, Signature, Identifier } from "./types";
-function assertTypeElement(n: Node): asserts n is TypeElement { if (n.kind === 0) { throw new Error("no"); } }
-function show(x: Signature | Identifier): void { assertTypeElement(x); console.log(x.arity); }
-const i: Identifier = { kind: 80, pos: 2, escapedText: "e" }; show(i);
-`), 0o644); err != nil {
-		t.Fatal(err)
-	}
-	checked, err := load.Load([]string{main})
-	if err != nil {
-		t.Fatal(err)
-	}
-	program, err := Lower(context.Background(), checked)
-	if err != nil {
-		t.Fatal(err)
-	}
-	brandedProgramStops(t, program, "adamic: panic: field read failed: x.arity is not initialized")
-}
-
-// brandedProgramStops runs a lowered program as brandedStops does.
-func brandedProgramStops(t *testing.T, program *ir.Program, stderr string) {
-	t.Helper()
 	directory := t.TempDir()
 	binary := filepath.Join(directory, "native")
 	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {

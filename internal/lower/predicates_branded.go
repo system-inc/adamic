@@ -107,13 +107,13 @@ func (l *lowering) brandedSubtypes(target *checker.Type) []declaredType {
 	return subtypes
 }
 
-// brandedNarrowing keeps a direct call NotYet when the checker narrows its argument, on the true side, to a
-// type no branded view covers (Compiler's must on 9abcbdca). Narrowing a member the claim is assignable to
-// gives the claim, and a member assignable to the claim keeps itself, which must then be one of its
-// declared subtypes. A member neither way becomes the member & S, an intersection no view is registered
-// for, so its fields would be read raw. In a union, members related to S neither way are dropped, as the
-// checker drops them, unless none is related. A branded supertype inside an array target is NotYet, since
-// its elements narrow by the same rule with no call to judge them at.
+// brandedNarrowing keeps a direct call NotYet unless the checker's narrowing of its argument, on the true
+// side, can only give S or a type its views cover (Compiler's musts on 9abcbdca and 8c7afca2). Every
+// member of the argument's type must be a supertype of S, which narrows to S, or a declared subtype the
+// views cover, which keeps itself. Any other member is NotYet, never modelled: the checker drops an
+// unrelated member only beside one that's its subtype, and makes an intersection no view is registered
+// for otherwise, so judging its drop by assignability would admit an X & S read raw. A branded supertype
+// inside an array target is NotYet, since its elements narrow by the same rule with no call to judge at.
 func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Type) error {
 	claim = l.concrete(claim)
 	targets := []*checker.Type{claim}
@@ -132,22 +132,13 @@ func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Typ
 		if l.checker.IsArrayType(target) || target.Flags()&checker.TypeFlagsUnion != 0 {
 			return l.notYet(node, "a branded supertype inside a checked predicate's array target")
 		}
-		covered := map[*checker.Type]bool{target: true}
+		covered := map[*checker.Type]bool{}
 		for _, subtype := range l.brandedSubtypes(target) {
 			covered[subtype.declared] = !subtype.generic && !isClassInstance(subtype.declared)
 		}
-		var related []*checker.Type
 		for _, member := range members {
-			if l.checker.IsTypeAssignableTo(target, member) || l.checker.IsTypeAssignableTo(member, target) {
-				related = append(related, member)
-			}
-		}
-		if len(related) == 0 {
-			return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(target)+" that narrows "+l.checker.TypeToString(source)+" to an intersection no view covers")
-		}
-		for _, member := range related {
-			if !l.checker.IsTypeAssignableTo(target, member) && !covered[member] {
-				return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(target)+" that narrows "+l.checker.TypeToString(source)+" to "+l.checker.TypeToString(member)+", which no view covers")
+			if !l.checker.IsTypeAssignableTo(target, member) && !(covered[member] && l.checker.IsTypeAssignableTo(member, target)) {
+				return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(target)+" that narrows "+l.checker.TypeToString(member)+", which is neither its supertype nor a subtype its views cover")
 			}
 		}
 	}
