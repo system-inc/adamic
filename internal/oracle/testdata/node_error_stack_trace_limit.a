@@ -1,0 +1,14 @@
+// Node's Error.stackTraceLimit is a writable number on the global Error, 10 by default. tsc's sys.ts
+// raises it to 100 when it is lower; the count is read back after each write, and an assignment
+// expression yields the number it stored.
+import 'node:process';
+console.log(String(Error.stackTraceLimit));
+console.log(String(Error.stackTraceLimit < 100));
+if (Error.stackTraceLimit < 100) {
+	Error.stackTraceLimit = 100;
+}
+console.log(String(Error.stackTraceLimit));
+Error.stackTraceLimit = 7;
+console.log(String(Error.stackTraceLimit));
+console.log(String((Error.stackTraceLimit = 12)));
+console.log(String(Error.stackTraceLimit));

@@ -1,0 +1,4 @@
+// A receiver other than the global Error identifier, here a const alias of it.
+import 'node:process';
+const E = Error;
+console.log(String(E.stackTraceLimit));

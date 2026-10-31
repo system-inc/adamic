@@ -1,0 +1,4 @@
+// The Error constructor itself as a value, without the count.
+import 'node:process';
+const E = Error;
+console.log(String(E === Error));

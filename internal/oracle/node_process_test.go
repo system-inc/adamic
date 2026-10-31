@@ -140,6 +140,7 @@ func TestNodeProcessMutants(t *testing.T) {
 		{"clear all marks", "node_process_cleared_marks.a", "name == NULL || (record->length", "name != NULL && (record->length"},
 		{"clear named marks", "node_process_missing_mark.a", "void adamic_node_clear_marks(const adamic_string *name) { clear_marks(name); }", "void adamic_node_clear_marks(const adamic_string *name) { (void)name; }"},
 		{"clear measures", "node_process_performance.a", "void adamic_node_clear_measures(const adamic_string *name) { (void)name; }", "void adamic_node_clear_measures(const adamic_string *name) { clear_marks(name); }"},
+		{"stack trace limit", "node_error_stack_trace_limit.a", "return atomic_load_explicit(&stack_trace_limit, memory_order_relaxed);", "return 10;"},
 	} {
 		t.Run(mutant.name, func(t *testing.T) {
 			t.Parallel()

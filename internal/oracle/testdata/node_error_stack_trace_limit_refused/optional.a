@@ -1,0 +1,3 @@
+// An optional chain on the global Error.
+import 'node:process';
+console.log(String(Error?.stackTraceLimit));
