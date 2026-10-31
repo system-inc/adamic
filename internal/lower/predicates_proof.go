@@ -915,7 +915,69 @@ func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, sour
 			}
 		}
 	}
+	if cause := l.checkedPredicateTargetCause(target); cause != "" {
+		return nil, nil, l.notYet(node, cause+" ("+l.checker.TypeToString(target)+")")
+	}
 	return nil, nil, l.notYet(node, "checked predicate overload target "+l.checker.TypeToString(target))
+}
+
+// checkedPredicateTargetCause names why an untagged target, one with no kind property, has no check a
+// runtime can afford, or "" when a structural check might serve (#c7w6j0y, ruled Oct 30 into group 10,
+// with the casts the runtime can't check). Its base, the intersection's named parts, may have no required
+// field, as CompilerOptions has only optional fields and an index signature, so nothing identifies the
+// value. Or a required field holds an untagged record, alone, in a union or as an array's elements, so
+// the check would read structure after structure past the depth bound, as the build infos do. A target
+// with a kind property, tagged or a branded supertype, is the tag rules', never this.
+func (l *lowering) checkedPredicateTargetCause(target *checker.Type) string {
+	if target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 || isClassInstance(target) || l.checker.GetPropertyOfType(target, "kind") != nil {
+		return ""
+	}
+	base := []*checker.Type{target}
+	if target.Flags()&checker.TypeFlagsIntersection != 0 {
+		base = nil
+		for _, part := range target.Types() {
+			if part.ObjectFlags()&checker.ObjectFlagsAnonymous == 0 {
+				base = append(base, part)
+			}
+		}
+	}
+	required := false
+	for _, part := range base {
+		for _, property := range l.checker.GetPropertiesOfType(part) {
+			required = required || property.Flags&ast.SymbolFlagsOptional == 0
+		}
+	}
+	if !required {
+		return "a checked predicate target whose base has no required field to check"
+	}
+	for _, property := range l.checker.GetPropertiesOfType(target) {
+		if property.Flags&ast.SymbolFlagsOptional == 0 && l.untaggedRecord(l.checker.GetTypeOfSymbol(property)) {
+			return "a checked predicate target whose check would read past the depth bound"
+		}
+	}
+	return ""
+}
+
+// untaggedRecord is whether t holds an object with no kind property, alone, as a union member or as an
+// array's elements: a structure a check could only read field by field.
+func (l *lowering) untaggedRecord(t *checker.Type) bool {
+	if t.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range t.Types() {
+			if l.untaggedRecord(member) {
+				return true
+			}
+		}
+		return false
+	}
+	if l.checker.IsArrayType(t) || checker.IsTupleType(t) {
+		for _, element := range l.checker.GetTypeArguments(t) {
+			if l.untaggedRecord(element) {
+				return true
+			}
+		}
+		return false
+	}
+	return t.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(t) && l.checker.GetPropertyOfType(t, "kind") == nil && len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) == 0
 }
 
 // A direction is observable whenever the checker still narrows a value read in
