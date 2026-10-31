@@ -213,13 +213,15 @@ type lowering struct {
 
 	librarySpreads      []librarySpread
 	wholeObjectCopies   []wholeObjectCopy
-	viewSources         []viewSource
-	// viewTypes are the checker types a read's view ids name, its receiver's and its field's, so the
-	// passes after lowering can judge and name them (view_widened.go).
-	viewTypes           map[int]*checker.Type
 	parallelMoveDemand  map[parallelMoveSite]bool
 	hasMovedParallelMap bool
 	moveSites           []*ast.Node
+
+	// viewSources is each view's source and target, and viewTypes the checker types a read's view
+	// ids name, its receiver's and its field's, so the passes after lowering can judge and name them
+	// (view_widened.go).
+	viewSources []viewSource
+	viewTypes   map[int]*checker.Type
 
 	programPlan          *programMembership
 	programDiscovery     bool
