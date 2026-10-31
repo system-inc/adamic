@@ -149,7 +149,21 @@ void adamic_object_assign(adamic_object *target, const adamic_object *source) {
   adamic_slot_cache cache = {0};
   adamic_value *slot = adamic_object_field(target, name, &cache);
   adamic_value value = source->slots[index];
-  if (source->shape->references[index]) {
+  // The slot is released and stored as the target holds it. Lowering refuses a name held one way
+  // in the source and another in the target (library_object.go), so a mismatch here is a compiler
+  // bug: released by the source's flag it would free a number's bits or drop a counted pointer.
+  if (slot < target->slots || slot >= target->slots + target->shape->count) {
+   char message[160];
+   int length = snprintf(message, sizeof message, "compiler bug: Object.assign of field %s into storage outside its target's own slots", name);
+   adamic_panic(message, (size_t)length);
+  }
+  bool reference = target->shape->references[adamic_slot_index(target, slot)];
+  if (reference != source->shape->references[index]) {
+   char message[160];
+   int length = snprintf(message, sizeof message, "compiler bug: Object.assign of field %s, held as a reference on one side only", name);
+   adamic_panic(message, (size_t)length);
+  }
+  if (reference) {
    adamic_retain(value.reference);
    adamic_release(slot->reference);
   }
