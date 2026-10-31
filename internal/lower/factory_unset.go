@@ -122,7 +122,7 @@ func (l *lowering) unsetSpecialization(node *ast.Node, value ir.Expression, decl
 		matches = ir.Binary{Operator: ir.And, Left: matches, Right: fits}
 	}
 	optional := l.includesUndefined(l.checker.GetTypeAtLocation(node))
-	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil && l.includesUndefined(contextual) {
+	if contextual := l.slotType(node); contextual != nil && l.includesUndefined(contextual) {
 		optional = true
 	}
 	if optional {
