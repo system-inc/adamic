@@ -28,7 +28,7 @@ func (l *lowering) selectProgramMembership(f *cycleFinder, modules []*ast.Source
 			}
 			if ast.IsExpressionNode(node) {
 				f.use(f.l.checker.GetTypeAtLocation(node), node)
-				if contextual := f.l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+				if contextual := f.l.slotType(node); contextual != nil {
 					f.use(contextual, node)
 				}
 			}
@@ -224,7 +224,7 @@ func (l *lowering) programAllocation(node *ast.Node, value ir.Expression) (ir.Ex
 		}
 	}
 	member := false
-	types := []*checker.Type{l.checker.GetTypeAtLocation(node), l.checker.GetContextualType(node, checker.ContextFlagsNone)}
+	types := []*checker.Type{l.checker.GetTypeAtLocation(node), l.slotType(node)}
 	if target := l.impliedTarget(node); target != nil {
 		types = append(types, target)
 	}

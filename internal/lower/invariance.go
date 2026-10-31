@@ -437,7 +437,7 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		return l.provenRelation(node, satisfies.Expression, l.checker.GetTypeAtLocation(satisfies.Type))
 	case node.Kind == ast.KindShorthandPropertyAssignment:
 		// { pets } is { pets: pets }: the variable seen as the literal's property.
-		literal := l.checker.GetContextualType(node.Parent, checker.ContextFlagsNone)
+		literal := l.slotType(node.Parent)
 		if literal == nil {
 			return nil
 		}
@@ -453,7 +453,7 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 	case node.Kind == ast.KindSpreadAssignment:
 		// { ...kennel } copies kennel's fields, not what they hold: each field not written again after
 		// it is kennel's value seen as the literal's field.
-		literal := l.checker.GetContextualType(node.Parent, checker.ContextFlagsNone)
+		literal := l.slotType(node.Parent)
 		if literal == nil {
 			return nil
 		}
@@ -483,7 +483,7 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 			return l.refuseElementWidening(node, pattern)
 		}
 		if viewSite(node) {
-			contextual = l.checker.GetContextualType(node, checker.ContextFlagsNone)
+			contextual = l.slotType(node)
 		}
 		if contextual == nil {
 			// With no type written for it, a value can still be taken into a wider one tsc made: the
@@ -498,7 +498,7 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		found = l.freshOrWidened(node, own, contextual)
 		if found == nil && node.Parent != nil && node.Parent.Kind == ast.KindPropertyAssignment && node.Parent.AsPropertyAssignment().Initializer == node {
 			if name := node.Parent.Name(); name != nil && (ast.IsIdentifier(name) || ast.IsStringLiteral(name) || ast.IsNumericLiteral(name)) {
-				if literal := l.checker.GetContextualType(node.Parent.Parent, checker.ContextFlagsNone); literal != nil {
+				if literal := l.slotType(node.Parent.Parent); literal != nil {
 					contextual, found = l.memberLiteralSlotWidened(node, own, literal, name.Text(), contextual)
 				}
 			}
@@ -683,7 +683,7 @@ func (l *lowering) impliedTarget(node *ast.Node) *checker.Type {
 			if context := l.callableContext(parent); context != nil {
 				return context
 			}
-			if contextual := l.checker.GetContextualType(parent, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(l.withoutUndefined(contextual)) {
+			if contextual := l.slotType(parent); contextual != nil && l.checker.IsArrayType(l.withoutUndefined(contextual)) {
 				return contextual
 			}
 			return l.impliedExpressionTarget(parent)
@@ -710,7 +710,7 @@ func (l *lowering) impliedTarget(node *ast.Node) *checker.Type {
 // element targets. The checker and source tree stay fixed for this lowering;
 // branches share the parent's type and array elements share its element type.
 func (l *lowering) impliedExpressionTarget(parent *ast.Node) *checker.Type {
-	if target, ok := l.impliedTargets[parent]; ok {
+	if target, ok := l.slots.implied[parent]; ok {
 		return target
 	}
 	query := l.impliedTargetQuery
@@ -727,11 +727,32 @@ func (l *lowering) impliedExpressionTarget(parent *ast.Node) *checker.Type {
 			}
 		}
 	}
-	if l.impliedTargets == nil {
-		l.impliedTargets = make(map[*ast.Node]*checker.Type)
+	if l.slots.implied == nil {
+		l.slots.implied = make(map[*ast.Node]*checker.Type)
 	}
-	l.impliedTargets[parent] = target
+	l.slots.implied[parent] = target
 	return target
+}
+
+// slotTargets are the slots a value is judged against that the checker's contextual type doesn't give.
+type slotTargets struct {
+	// explicit is the slot a caller set for a value the checker gives none to, which slotType returns
+	// before the contextual type: a delayed Array write's element, whose parameter lib types any.
+	explicit map[*ast.Node]*checker.Type
+	// implied memoizes impliedExpressionTarget's answer per parent, within this checker.
+	implied map[*ast.Node]*checker.Type
+}
+
+// slotType is the slot a value at node goes into: the one a caller set for it (slots.explicit), or else
+// the checker's contextual type, exactly. Every refusal rule reads its slot here and never from the
+// checker (TestRefusalRulesReadTheirSlotThroughSlotType), so a caller that judges a value against a
+// slot the checker doesn't give sets it and runs the whole registry over the value, and no rule is
+// skipped because a second list beside the registry forgot it (#b6m00y7).
+func (l *lowering) slotType(node *ast.Node) *checker.Type {
+	if slot, set := l.slots.explicit[node]; set {
+		return slot
+	}
+	return l.checker.GetContextualType(node, checker.ContextFlagsNone)
 }
 
 // destructuringTarget is the array pattern a value is assigned into, [a, b] = value, or nil.
@@ -754,7 +775,7 @@ func destructuringTarget(node *ast.Node) *ast.Node {
 func (l *lowering) refuseElementWidening(node *ast.Node, pattern *ast.Node) error {
 	own := l.checker.GetTypeAtLocation(node)
 	if !checker.IsTupleType(own) {
-		contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone)
+		contextual := l.slotType(node)
 		if contextual == nil {
 			return nil
 		}

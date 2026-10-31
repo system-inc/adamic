@@ -623,7 +623,7 @@ func (l *lowering) noteOmittedOptionals(modules []*ast.SourceFile) {
 }
 
 func (l *lowering) noteOmittedOptionalsOf(literal *ast.Node) {
-	contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone)
+	contextual := l.slotType(literal)
 	if contextual == nil {
 		return
 	}

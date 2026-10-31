@@ -193,8 +193,9 @@ type lowering struct {
 
 	// Source-only sites for graph adoption diagnostics; never stored in emitted IR.
 	graphViewSite, graphDynamicSite *ast.Node
-	// impliedTargets memoizes inferred parent targets only within this checker.
-	impliedTargets map[*ast.Node]*checker.Type
+	// slots are what a value is judged against where the checker's contextual type isn't the whole
+	// answer (slotType, impliedTarget).
+	slots slotTargets
 	// voidHolders memoizes holdsVoid: whether a type holds void at a position (#p7t8tmh).
 	voidHolders map[*checker.Type]bool
 	// voidBound is, while a generic body instantiated at void is judged, each type parameter bound to

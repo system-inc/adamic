@@ -2,7 +2,6 @@ package lower
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
-	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
@@ -140,7 +139,7 @@ func (l *lowering) acceptsUndefined(node *ast.Node) bool {
 			}
 		}
 	}
-	contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone)
+	contextual := l.slotType(node)
 	return contextual != nil && l.includesUndefined(contextual)
 }
 

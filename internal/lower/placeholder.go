@@ -255,7 +255,7 @@ func (l *lowering) notePlaceholderSlots() {
 			}
 		}
 		if node.Parent != nil && ast.IsExpression(node) && !ast.IsDeclarationName(node) && !ast.IsPartOfTypeNode(node) {
-			if targetType := l.checker.GetContextualType(node, checker.ContextFlagsNone); targetType != nil {
+			if targetType := l.slotType(node); targetType != nil {
 				sourceType := l.checker.GetTypeAtLocation(node)
 				if sourceType.Flags()&checker.TypeFlagsObject != 0 && targetType.Flags()&checker.TypeFlagsObject != 0 {
 					for _, field := range l.checker.GetPropertiesOfType(targetType) {
@@ -384,7 +384,7 @@ func (l *lowering) placeholderAllowsUnset(node *ast.Node) bool {
 	case ast.KindArrayLiteralExpression, ast.KindSpreadElement:
 		return false
 	}
-	contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone)
+	contextual := l.slotType(node)
 	return contextual != nil && l.placeholderOptional(contextual)
 }
 

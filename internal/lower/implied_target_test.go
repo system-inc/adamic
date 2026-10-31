@@ -73,7 +73,7 @@ func TestImpliedTargetLargeArrayQueriesOnce(t *testing.T) {
 		if count != 1 {
 			t.Fatalf("array queries = %d, want 1", count)
 		}
-		target := l.impliedTargets[node]
+		target := l.slots.implied[node]
 		if target == nil || l.checker.GetPropertyOfType(target, "value") == nil {
 			t.Fatal("array element target lost object fields")
 		}
@@ -101,7 +101,7 @@ func TestImpliedTargetConditionalQueriesOnce(t *testing.T) {
 			continue
 		}
 		conditionals++
-		if count != 1 || l.checker.TypeToString(l.impliedTargets[node]) != l.checker.TypeToString(l.checker.GetTypeAtLocation(node)) {
+		if count != 1 || l.checker.TypeToString(l.slots.implied[node]) != l.checker.TypeToString(l.checker.GetTypeAtLocation(node)) {
 			t.Fatal("conditional target changed or queried repeatedly")
 		}
 		// The condition is not a branch, even after its parent's target is cached.
@@ -133,7 +133,7 @@ func checkImpliedLogicalQueries(t *testing.T, operator string) {
 			continue
 		}
 		logical++
-		if count != 1 || l.checker.TypeToString(l.impliedTargets[node]) != l.checker.TypeToString(l.checker.GetTypeAtLocation(node)) {
+		if count != 1 || l.checker.TypeToString(l.slots.implied[node]) != l.checker.TypeToString(l.checker.GetTypeAtLocation(node)) {
 			t.Fatal("logical target changed or queried repeatedly")
 		}
 	}
