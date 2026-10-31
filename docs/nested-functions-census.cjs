@@ -69,7 +69,7 @@ for (const file of files) {
  inspect(file);
 }
 const sites = [...declarations.values()];
-// Optional independent census inventory must identify precisely the same sites.
+// An optional census inventory, the second argument, must name exactly the same sites.
 if (process.argv[3]) {
  const expected = JSON.parse(fs.readFileSync(process.argv[3], 'utf8'))
   .filter(site => site.reason === 'a function inside a function (a closure)');
