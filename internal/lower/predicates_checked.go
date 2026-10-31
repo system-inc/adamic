@@ -528,6 +528,11 @@ func (l *lowering) checkedPredicateResult(call *ast.CallExpression, value ir.Exp
 	sourceName := "missing argument"
 	if index >= 0 && index < len(call.Arguments.Nodes) {
 		sourceName = l.checker.TypeToString(l.checker.GetTypeAtLocation(call.Arguments.Nodes[index]))
+		if claim.Type() != nil && !proven {
+			if err := l.brandedNarrowing(call.AsNode(), call.Arguments.Nodes[index], claim.Type()); err != nil {
+				return nil, err
+			}
+		}
 	}
 	targetName := "truthy"
 	if claim.Type() != nil {
@@ -651,7 +656,7 @@ func (l *lowering) checkedPredicateCheck(node, declaration *ast.Node, argument i
 	}
 	// A branded supertype's membership is only that the value is an object, so its negation would stop
 	// every honest false (#c7w6j0y): its false side stays pending.
-	if falseToo && l.brandedMembership(target) {
+	if falseToo && l.brandedMembership(target, map[*checker.Type]bool{}) {
 		return nil, l.notYet(node, "checked predicate membership of a branded supertype on its false branch")
 	}
 	setup, membership, err := l.predicateMembership(declaration, argument, source, target, local, 0)

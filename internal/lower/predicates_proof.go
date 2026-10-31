@@ -92,10 +92,13 @@ func (l *lowering) provePredicate(node *ast.Node) (predicateProof, error) {
 type predicateProofs struct {
 	declarations []*ast.Node
 	modes        map[string]*predicateFixedPoint
-	// brandedViews is each branded supertype's views, registered once with the error that stopped them
-	// (predicates_branded.go), and declaredTypes the program's own declared types they're found among.
-	brandedViews  map[*checker.Type]error
-	declaredTypes []declaredType
+	// brandedViews is each branded supertype's views, registered once with the error that stopped them,
+	// brandedSubtypes the declared types assignable to it, declaredTypes the types they're found among,
+	// and files the program's files they're declared in (predicates_branded.go).
+	brandedViews    map[*checker.Type]error
+	brandedSubtypes map[*checker.Type][]declaredType
+	declaredTypes   []declaredType
+	files           []*ast.SourceFile
 }
 
 // predicateFixedPoint is one mode's verifier run to its end: every declaration's summary, or the error its verify gave
@@ -119,7 +122,7 @@ func (l *lowering) predicateFixedPoint(field string) *predicateFixedPoint {
 // proofs is the lowering's predicateProofs, its declarations found the first time it's asked.
 func (l *lowering) proofs() *predicateProofs {
 	if l.predicateProofs == nil {
-		proofs := &predicateProofs{modes: map[string]*predicateFixedPoint{}, brandedViews: map[*checker.Type]error{}}
+		proofs := &predicateProofs{modes: map[string]*predicateFixedPoint{}, brandedViews: map[*checker.Type]error{}, brandedSubtypes: map[*checker.Type][]declaredType{}}
 		var visit ast.Visitor
 		visit = func(n *ast.Node) bool {
 			if ast.IsFunctionLike(n) && n.Type() != nil && n.Type().Kind == ast.KindTypePredicate && n.Body() != nil {

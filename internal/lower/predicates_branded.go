@@ -3,6 +3,7 @@ package lower
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // A branded supertype, such as tsc's TypeElement or LiteralExpression, is an interface over many node
@@ -43,31 +44,32 @@ func (l *lowering) brandedSupertypeViews(node *ast.Node, target *checker.Type) e
 }
 
 // brandedMembership is whether target's membership check, as predicateMembership builds it, holds a
-// branded supertype's: through a union's members or an array's elements, it can't be negated.
-func (l *lowering) brandedMembership(target *checker.Type) bool {
+// branded supertype's: through a union's members or an array's elements, it can't be negated. visited
+// ends a recursive alias, such as `type Nodes = Identifier | Nodes[]`, on its second visit.
+func (l *lowering) brandedMembership(target *checker.Type, visited map[*checker.Type]bool) bool {
 	target = l.concrete(target)
+	if visited[target] {
+		return false
+	}
+	visited[target] = true
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range target.Types() {
-			if l.brandedMembership(member) {
+			if l.brandedMembership(member, visited) {
 				return true
 			}
 		}
 		return false
 	}
 	if l.checker.IsArrayType(target) {
-		return l.brandedMembership(l.checker.GetElementTypeOfArrayType(target))
+		return l.brandedMembership(l.checker.GetElementTypeOfArrayType(target), visited)
 	}
 	return target.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(target) && l.fieldLiteral(target, "kind") == nil && l.brandedSupertype(target)
 }
 
 func (l *lowering) registerBrandedSupertypeViews(node *ast.Node, target *checker.Type) error {
 	covered := []*checker.Type{target}
-	var subtypes []declaredType
-	for _, declaration := range l.declaredTypes() {
-		if declaration.declared != target && declaration.declared.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) != 0 && l.checker.IsTypeAssignableTo(declaration.declared, target) {
-			covered = append(covered, declaration.declared)
-			subtypes = append(subtypes, declaration)
-		}
+	for _, subtype := range l.brandedSubtypes(target) {
+		covered = append(covered, subtype.declared)
 	}
 	if err := l.brandedSpreads(covered); err != nil {
 		return err
@@ -75,7 +77,7 @@ func (l *lowering) registerBrandedSupertypeViews(node *ast.Node, target *checker
 	if _, err := l.view(node, nil, target); err != nil {
 		return err
 	}
-	for _, subtype := range subtypes {
+	for _, subtype := range l.brandedSubtypes(target) {
 		if isClassInstance(subtype.declared) {
 			return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(target)+" that class "+l.checker.TypeToString(subtype.declared)+" is assignable to")
 		}
@@ -84,6 +86,69 @@ func (l *lowering) registerBrandedSupertypeViews(node *ast.Node, target *checker
 		}
 		if _, err := l.view(node, nil, subtype.declared); err != nil {
 			return err
+		}
+	}
+	return nil
+}
+
+// brandedSubtypes is every type the program declares that's assignable to target, target aside, found once.
+func (l *lowering) brandedSubtypes(target *checker.Type) []declaredType {
+	proofs := l.proofs()
+	if subtypes, found := proofs.brandedSubtypes[target]; found {
+		return subtypes
+	}
+	subtypes := []declaredType{}
+	for _, declaration := range l.declaredTypes() {
+		if declaration.declared != target && declaration.declared.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) != 0 && l.checker.IsTypeAssignableTo(declaration.declared, target) {
+			subtypes = append(subtypes, declaration)
+		}
+	}
+	proofs.brandedSubtypes[target] = subtypes
+	return subtypes
+}
+
+// brandedNarrowing keeps a direct call NotYet when the checker narrows its argument, on the true side, to a
+// type no branded view covers (Compiler's must on 9abcbdca). Narrowing a member the claim is assignable to
+// gives the claim, and a member assignable to the claim keeps itself, which must then be one of its
+// declared subtypes. A member neither way becomes the member & S, an intersection no view is registered
+// for, so its fields would be read raw. In a union, members related to S neither way are dropped, as the
+// checker drops them, unless none is related. A branded supertype inside an array target is NotYet, since
+// its elements narrow by the same rule with no call to judge them at.
+func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Type) error {
+	claim = l.concrete(claim)
+	targets := []*checker.Type{claim}
+	if claim.Flags()&checker.TypeFlagsUnion != 0 {
+		targets = claim.Types()
+	}
+	source := l.concrete(l.checker.GetTypeAtLocation(argument))
+	members := []*checker.Type{source}
+	if source.Flags()&checker.TypeFlagsUnion != 0 {
+		members = source.Types()
+	}
+	for _, target := range targets {
+		if !l.brandedMembership(target, map[*checker.Type]bool{}) {
+			continue
+		}
+		if l.checker.IsArrayType(target) || target.Flags()&checker.TypeFlagsUnion != 0 {
+			return l.notYet(node, "a branded supertype inside a checked predicate's array target")
+		}
+		covered := map[*checker.Type]bool{target: true}
+		for _, subtype := range l.brandedSubtypes(target) {
+			covered[subtype.declared] = !subtype.generic && !isClassInstance(subtype.declared)
+		}
+		var related []*checker.Type
+		for _, member := range members {
+			if l.checker.IsTypeAssignableTo(target, member) || l.checker.IsTypeAssignableTo(member, target) {
+				related = append(related, member)
+			}
+		}
+		if len(related) == 0 {
+			return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(target)+" that narrows "+l.checker.TypeToString(source)+" to an intersection no view covers")
+		}
+		for _, member := range related {
+			if !l.checker.IsTypeAssignableTo(target, member) && !covered[member] {
+				return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(target)+" that narrows "+l.checker.TypeToString(source)+" to "+l.checker.TypeToString(member)+", which no view covers")
+			}
 		}
 	}
 	return nil
@@ -100,6 +165,7 @@ func (l *lowering) brandedSpreads(covered []*checker.Type) error {
 	var copies func(t *checker.Type) bool
 	copies = func(t *checker.Type) bool {
 		t = l.checker.GetNonNullableType(l.concrete(t))
+		// A union's members are never unions, since the checker flattens them, so this goes one level down.
 		if t.Flags()&checker.TypeFlagsUnion != 0 {
 			for _, member := range t.Types() {
 				if copies(member) {
@@ -140,7 +206,7 @@ func (l *lowering) brandedSpreads(covered []*checker.Type) error {
 		}
 		return site != nil
 	}
-	for _, file := range l.program.Files() {
+	for _, file := range l.programFiles() {
 		file.AsNode().ForEachChild(visit)
 	}
 	if site != nil {
@@ -157,7 +223,7 @@ type declaredType struct {
 	generic  bool
 }
 
-// declaredTypes is every interface, class and type alias the program's own files declare, anywhere, a
+// declaredTypes is every interface, class and type alias the program's files declare, anywhere, a
 // function's local ones included, found once.
 func (l *lowering) declaredTypes() []declaredType {
 	proofs := l.proofs()
@@ -180,8 +246,49 @@ func (l *lowering) declaredTypes() []declaredType {
 		n.ForEachChild(visit)
 		return false
 	}
-	for _, file := range l.program.Files() {
+	for _, file := range l.programFiles() {
 		file.AsNode().ForEachChild(visit)
 	}
 	return proofs.declaredTypes
+}
+
+// programFiles is the program's files, its roots and every file they import or export from, type-only
+// imports included, since a subtype declared in a file a root imports only for its types still gives
+// values its type, found once. The library and the prelude declare no subtype a view must cover.
+func (l *lowering) programFiles() []*ast.SourceFile {
+	proofs := l.proofs()
+	if proofs.files != nil {
+		return proofs.files
+	}
+	proofs.files = []*ast.SourceFile{}
+	seen := map[*ast.SourceFile]bool{}
+	var visit func(file *ast.SourceFile)
+	visit = func(file *ast.SourceFile) {
+		if seen[file] || load.IsPrelude(file) || load.IsLibrary(file) {
+			return
+		}
+		seen[file] = true
+		proofs.files = append(proofs.files, file)
+		for _, statement := range file.Statements.Nodes {
+			var specifier *ast.Node
+			switch statement.Kind {
+			case ast.KindImportDeclaration, ast.KindExportDeclaration:
+				specifier = statement.ModuleSpecifier()
+			case ast.KindImportEqualsDeclaration:
+				if reference := statement.AsImportEqualsDeclaration().ModuleReference; reference.Kind == ast.KindExternalModuleReference {
+					specifier = reference.AsExternalModuleReference().Expression
+				}
+			}
+			if specifier == nil {
+				continue
+			}
+			if target := l.checker.GetSymbolAtLocation(specifier); target != nil && len(target.Declarations) > 0 && target.Declarations[0].Kind == ast.KindSourceFile {
+				visit(target.Declarations[0].AsSourceFile())
+			}
+		}
+	}
+	for _, file := range l.program.Files() {
+		visit(file)
+	}
+	return proofs.files
 }

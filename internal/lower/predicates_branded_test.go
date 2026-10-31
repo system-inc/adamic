@@ -2,6 +2,7 @@ package lower
 
 import (
 	"bytes"
+	"context"
 	"errors"
 	"os"
 	"os/exec"
@@ -9,7 +10,9 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -111,6 +114,22 @@ show(new Signature());`, "a checked predicate target TypeElement that class Sign
 		{"generic", `interface Tagged<K extends number> extends TypeElement { readonly kind: K; readonly extra: number; }
 function show(n: Node): void { if (isTypeElement(n)) { console.log(String(n.pos)); } }
 const a = { kind: 171, pos: 1, name: "a", typeText: "t" }; show(a);`, "a checked predicate target TypeElement that generic Tagged<K> is assignable to"},
+		// A recursive alias ends the false side's walk on its second visit (Lower's must on 9abcbdca): Nodes'
+		// array holds Nodes, and no member is branded, so the walk would recurse forever without it.
+		{"recursive alias", `type Nodes = Identifier | Nodes[];
+function isNodes(x: unknown): x is Nodes { return x !== 0; }
+function show(x: unknown): void { if (isNodes(x)) { console.log("nodes"); } else { console.log(String(x)); } }
+show(1);`, ""},
+		// A concrete source neither way related to the claim narrows to Source & S, which no view covers
+		// (Compiler's must on 9abcbdca): name would be read as Computed while the value holds a Plain.
+		// Mutant: the narrowing check dropped, and the call lowers.
+		{"intersection", `interface Computed extends Node { readonly kind: 167; readonly expressionText: string; }
+interface Plain extends Node { readonly kind: 80; readonly escapedText: string; }
+interface PropertyDeclaration extends Declaration { readonly kind: 172; readonly name: Computed | Plain; }
+interface LateBound extends Declaration { readonly name: Computed; }
+function isLateLie(d: Declaration): d is LateBound { return kindOf(d) !== 0; }
+function show(p: PropertyDeclaration): void { if (isLateLie(p)) { console.log(p.name.expressionText); } }
+const p: PropertyDeclaration = { kind: 172, pos: 1, _declarationBrand: 0, name: { kind: 80, pos: 2, escapedText: "x" } }; show(p);`, "a checked predicate target LateBound that narrows PropertyDeclaration to an intersection no view covers"},
 		{"no brand", `interface Expression extends Node { readonly text: string; }
 function isExpression(n: Node): n is Expression { return kindOf(n) === 9; }
 function show(n: Node): void { if (isExpression(n)) { console.log(n.text); } }
@@ -121,6 +140,10 @@ const v = { kind: 9, pos: 1, text: "x" }; show(v);`, "checked predicate overload
 			_, err := lowerTypeScriptAssertionSource(t, brandedPrelude+probe.source)
 			var pending *NotYet
 			if !errors.As(err, &pending) || !strings.Contains(err.Error(), probe.want) {
+				var refused *Refused
+				if probe.want == "" && errors.As(err, &refused) {
+					return
+				}
 				t.Fatalf("want NotYet with %q, got %v", probe.want, err)
 			}
 		})
@@ -135,6 +158,42 @@ func brandedStops(t *testing.T, source, stderr string) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	brandedProgramStops(t, program, stderr)
+}
+
+// A subtype declared in a file the program imports only for its types gets its view too, since programFiles
+// follows type-only imports, so a lie narrowed to it by an asserts call stops at its first bad read. Mutant:
+// the program's root files alone, and the subtype goes uncovered.
+func TestBrandedSupertypeCoversATypeOnlyImport(t *testing.T) {
+	t.Parallel()
+	directory := t.TempDir()
+	if err := os.WriteFile(filepath.Join(directory, "types.ts"), []byte(brandedPrelude[:strings.Index(brandedPrelude, "function kindOf")]+`export interface Signature extends TypeElement { readonly kind: 174; readonly arity: string; }
+export type { Node, TypeElement, Identifier };
+`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	main := filepath.Join(directory, "main.ts")
+	if err := os.WriteFile(main, []byte(`import type { Node, TypeElement, Signature, Identifier } from "./types";
+function assertTypeElement(n: Node): asserts n is TypeElement { if (n.kind === 0) { throw new Error("no"); } }
+function show(x: Signature | Identifier): void { assertTypeElement(x); console.log(x.arity); }
+const i: Identifier = { kind: 80, pos: 2, escapedText: "e" }; show(i);
+`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	checked, err := load.Load([]string{main})
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := Lower(context.Background(), checked)
+	if err != nil {
+		t.Fatal(err)
+	}
+	brandedProgramStops(t, program, "adamic: panic: field read failed: x.arity is not initialized")
+}
+
+// brandedProgramStops runs a lowered program as brandedStops does.
+func brandedProgramStops(t *testing.T, program *ir.Program, stderr string) {
+	t.Helper()
 	directory := t.TempDir()
 	binary := filepath.Join(directory, "native")
 	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
