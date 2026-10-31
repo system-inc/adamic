@@ -10,16 +10,17 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-// In .a a downcast is admitted where its tag tells the target from the source (#q97a1rr): the sound
-// sibling of a vacuous cast, a discriminated union narrowed by ===, a cast whose test a source value
-// can fail, and a cast whose first tag every source value passes but whose second a source value can
-// fail, which .a tests instead. Each lowers and agrees with Node natively and through the JavaScript
-// backend. Mutant: withinLiterals calling every tag vacuous refuses distinct_tag_cast and later_tag.
+// The sound sibling of a vacuous cast in .a, a discriminated union narrowed by === (#q97a1rr). Stage 1
+// admitted in .a a cast whose test a source value can fail, and a cast whose first tag every source value
+// passes but whose second a source value can fail; stage 2 (#m8dvvmf) refuses both on purpose, so they
+// are kept_check_downcast_refused's distinct_tag_cast.a and later_tag.a, and their .ts twins here hold
+// the agreement they pinned. Each lowers and agrees with Node natively and through the JavaScript
+// backend.
 func init() {
 	for _, path := range []string{
 		"internal/oracle/testdata/vacuous_downcast/distinct_tag_union.a",
-		"internal/oracle/testdata/vacuous_downcast/distinct_tag_cast.a",
-		"internal/oracle/testdata/vacuous_downcast/later_tag.a",
+		"internal/oracle/testdata/vacuous_downcast/distinct_tag_cast.ts",
+		"internal/oracle/testdata/vacuous_downcast/later_tag.ts",
 	} {
 		fixtures = append(fixtures, struct {
 			path    string

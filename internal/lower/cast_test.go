@@ -33,10 +33,14 @@ func TestUncheckableCastsStayRefused(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			_, err := lowerSource(t, probe.source)
-			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/no-unchecked-cast") || !strings.Contains(err.Error(), "enum tags") || !strings.Contains(err.Error(), "nominal class ancestry") {
-				t.Fatalf("want unchecked-cast refusal and accepted forms, got %v", err)
+			// The fix names the forms each file kind accepts: .a narrows by the tag, since a member cast is
+			// refused there too (#m8dvvmf), and .ts casts to a member, which stays checked.
+			for extension, accepted := range map[string]string{".a": "narrow a discriminated union by its tag", ".ts": "enum tags"} {
+				_, err := lowerSourceAs(t, probe.source, extension)
+				var refused *Refused
+				if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/no-unchecked-cast") || !strings.Contains(err.Error(), accepted) || !strings.Contains(err.Error(), "nominal class ancestry") {
+					t.Fatalf("%s: want unchecked-cast refusal and accepted forms, got %v", extension, err)
+				}
 			}
 		})
 	}
@@ -59,7 +63,14 @@ func TestCheckedCastProofAndElision(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			program, err := lowerSource(t, probe.source)
+			// The tag casts are .ts, where they stay checked casts: in .a a downcast whose checks no proof
+			// erases is refused (#m8dvvmf). A class downcast keeps its identity test in .a too.
+			extension := ".a"
+			switch probe.name {
+			case "enum member", "invariant mutable payload", "sub-union":
+				extension = ".ts"
+			}
+			program, err := lowerSourceAs(t, probe.source, extension)
 			if err != nil {
 				t.Fatal(err)
 			}

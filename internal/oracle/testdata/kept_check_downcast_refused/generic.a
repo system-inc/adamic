@@ -1,0 +1,10 @@
+// a-check: refused a downcast from Shape<T> to Circle<T> in .a whose checks no proof erases
+// The union is generic, and the cast's tag test is the same at every instantiation, so the walk that
+// refuses sees it before any instantiation is lowered.
+type Circle<T> = { readonly kind: 'Circle'; readonly radius: T };
+type Square<T> = { readonly kind: 'Square'; readonly side: T };
+type Shape<T> = Circle<T> | Square<T>;
+function radius<T>(shape: Shape<T>): T {
+	return (shape as Circle<T>).radius;
+}
+console.log(`radius ${radius<number>({ kind: 'Circle', radius: 2 })}`);

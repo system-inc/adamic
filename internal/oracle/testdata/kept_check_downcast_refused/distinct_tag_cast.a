@@ -1,0 +1,9 @@
+// a-check: refused a downcast from Base to Viewed in .a whose checks no proof erases
+// Stage 1 (#q97a1rr) admitted this in .a, since Viewed's tag 'Viewed' is one a Base's kind can fail;
+// stage 2 (#m8dvvmf) refuses it on purpose, as a tag test the program asserts and no proof erases.
+interface Base { readonly kind: 'Holder' | 'Viewed'; }
+interface Viewed extends Base { readonly kind: 'Viewed'; count: number; }
+const raw = { kind: 'Viewed' as const, count: 4 };
+const base: Base = raw;
+const viewed = base as Viewed;
+console.log(`viewed ${viewed.count + 1}`);
