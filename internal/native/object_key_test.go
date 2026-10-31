@@ -209,6 +209,10 @@ func TestObjectKeyMovesWithEachInput(t *testing.T) {
 		t.Fatal(err)
 	}
 	root := t.TempDir()
+	// Every row builds from a copy of the runtime's directory under root, never the runtime cache's own: prefixMaps gives a
+	// directory reached through a link a second map, for its real path, so the cache's directory, linked on some boxes (the
+	// Pupa check's), keys apart from a copy for its arguments alone, which is right and isn't what a row asks.
+	runtime := objectKeyRuntime(t, library, filepath.Join(root, "runtime"), nil)
 	copied := objectKeyRuntime(t, library, filepath.Join(root, "runtime-copied"), nil)
 	edited := objectKeyRuntime(t, library, filepath.Join(root, "runtime-edited"), func(header []byte) []byte { return objectKeyEdited(t, header) })
 	// clang by a link beside a config file of its own, which says nothing: what the compile runs is the same program, but
@@ -226,7 +230,7 @@ func TestObjectKeyMovesWithEachInput(t *testing.T) {
 	flags := Flags(Options{})
 	lowered := slices.Clone(flags)
 	lowered[slices.Index(lowered, "-O2")] = "-O1"
-	base := objectKeyBuild(t, filepath.Join(root, "build-base"), compiler, source, Options{}, flags, library, nil, nil)
+	base := objectKeyBuild(t, filepath.Join(root, "build-base"), compiler, source, Options{}, flags, runtime, nil, nil)
 	if base.keying == nil {
 		t.Fatalf("the program got no key: %v", base.refusal)
 	}
@@ -238,13 +242,13 @@ func TestObjectKeyMovesWithEachInput(t *testing.T) {
 		prepare  func(compile *exec.Cmd)
 		moves    bool
 	}{
-		{"a build directory of its own", compiler, flags, library, nil, false},
+		{"a build directory of its own", compiler, flags, runtime, nil, false},
 		{"the runtime archive's directory copied", compiler, flags, copied, nil, false},
-		{"-O1 for -O2", compiler, lowered, library, nil, true},
-		{"a -D added", compiler, append(slices.Clone(flags), "-DADAMIC_OBJECT_KEY_MUTANT=1"), library, nil, true},
+		{"-O1 for -O2", compiler, lowered, runtime, nil, true},
+		{"a -D added", compiler, append(slices.Clone(flags), "-DADAMIC_OBJECT_KEY_MUTANT=1"), runtime, nil, true},
 		{"one byte of adamic.h", compiler, flags, edited, nil, true},
-		{"clang configured", filepath.Join(configured, "clang"), flags, library, nil, true},
-		{"SOURCE_DATE_EPOCH set", compiler, flags, library, func(compile *exec.Cmd) { compile.Env = append(compile.Env, "SOURCE_DATE_EPOCH=1") }, true},
+		{"clang configured", filepath.Join(configured, "clang"), flags, runtime, nil, true},
+		{"SOURCE_DATE_EPOCH set", compiler, flags, runtime, func(compile *exec.Cmd) { compile.Env = append(compile.Env, "SOURCE_DATE_EPOCH=1") }, true},
 	} {
 		t.Run(row.name, func(t *testing.T) {
 			t.Parallel()
