@@ -154,9 +154,24 @@ void adamic_object_assign(adamic_object *target, const adamic_object *source) {
   if (!adamic_object_present(source, index)) continue;
   adamic_object_check_write(target, name);
   adamic_slot_cache cache = {0};
-  adamic_value *slot = adamic_object_field(target, name, &cache);
+  // The store path, as an assignment's: a static target's own slot, never an inherited one, and
+  // marked initialized (class_static.c).
+  adamic_value *slot = adamic_object_write_field(target, name, &cache);
   adamic_value value = source->slots[index];
-  if (source->shape->references[index]) {
+  // The slot is released and stored as the target holds it. Lowering refuses a name held one way
+  // in the source and another in the target (library_object.go), so a mismatch here is a compiler
+  // bug: released by the source's flag it would free a number's bits or drop a counted pointer.
+  bool reference = target->shape->references[adamic_slot_index(target, slot)];
+  if (reference != source->shape->references[index]) {
+   const char prefix[] = "compiler bug: Object.assign of field ";
+   const char suffix[] = ", held as a reference on one side only";
+   size_t length = sizeof prefix - 1 + strlen(name) + sizeof suffix - 1;
+   char *message = malloc(length + 1);
+   if (message == NULL) adamic_panic("out of memory", sizeof "out of memory" - 1);
+   (void)snprintf(message, length + 1, "%s%s%s", prefix, name, suffix);
+   adamic_panic(message, length);
+  }
+  if (reference) {
    adamic_retain(value.reference);
    adamic_release(slot->reference);
   }
