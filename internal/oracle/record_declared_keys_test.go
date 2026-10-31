@@ -12,8 +12,8 @@ import (
 
 // In .a, a declared property's type can't lie through an index signature (#npqr3sx): Language's roads
 // on #bq3fvdt, each of which tsc accepts and Node runs to print number for outFile, declared string,
-// are refused, and so are a shorthand property, a Readonly<Options> parameter widened (r21's widening
-// without its earlier storage stop) and a literal whose own type declares outFile. Each program's whole
+// are refused, and so are a shorthand property and a Readonly<Options> parameter widened (r21's
+// widening without its earlier storage stop). Each program's whole
 // diagnostic is pinned in its .refused file, and its first line names its refusal. Mutants: admitting
 // a declared property seen through a wider index signature (declaredKeyWidened's first direction)
 // lowers r03 and r07; admitting a dictionary read through a declared property (its second) lowers
@@ -64,8 +64,8 @@ func TestRecordDeclaredKeysAreRefusedInA(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 23 {
-		t.Fatalf("found %d refused programs, want 23", programs)
+	if programs != 22 {
+		t.Fatalf("found %d refused programs, want 22", programs)
 	}
 }
 
@@ -118,7 +118,7 @@ func TestRecordDeclaredKeyStopsArePinned(t *testing.T) {
 			}
 		})
 	}
-	if programs != 29 {
-		t.Fatalf("found %d programs, want 29", programs)
+	if programs != 28 {
+		t.Fatalf("found %d programs, want 28", programs)
 	}
 }

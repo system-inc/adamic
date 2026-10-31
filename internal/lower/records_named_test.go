@@ -79,20 +79,48 @@ if (x instanceof Box) { swap(); console.log(String(x.v)); }`)
 
 func TestNamedRecordRefusals(t *testing.T) {
 	t.Parallel()
+	// Each probe stays not yet in .ts. In .a, the write and the view a declared property's type could
+	// lie through are refused instead (refusedInA, TestNamedRecordLiesAreRefusedInA).
+	for _, probe := range []struct {
+		source, reason string
+		refusedInA     bool
+	}{
+		{`interface R {named?:number[];[key:string]:number[]|string|undefined} function read(r:R):number|undefined {return r.named?.length;}`, "dictionary member narrowed to an object kind", false},
+		{`interface R {named?:number;[key:string]:number|string|undefined} function write(r:R,k:string):void {r[k]="wrong";}`, "named property named", true},
+		{`interface R {named?:number;[key:string]:number|string|undefined} const r:R={}; const view:Record<string,number|string|undefined>=r;`, "seen as", true},
+		{`interface R {readonly named:number;[key:string]:number} const r:R={named:1}; const view:Record<string,number>=r;`, "seen as", false},
+		{`interface R {named:number;[key:string]:number} const fixed={named:1}; const r:R=fixed;`, "seen as", false},
+		{`interface R {named?:number;readonly [key:string]:number|undefined} const r:R={};`, "signature", false},
+		{`interface R {named:number;[key:number]:number} const r:R={named:1};`, "signature", false},
+	} {
+		for _, extension := range []string{".a", ".ts"} {
+			if extension == ".a" && probe.refusedInA {
+				continue
+			}
+			t.Run(extension+" "+probe.source, func(t *testing.T) {
+				_, err := lowerSourceAs(t, probe.source, extension)
+				var ny *NotYet
+				if !errors.As(err, &ny) || !strings.Contains(err.Error(), probe.reason) {
+					t.Fatalf("got %v, want NotYet %s", err, probe.reason)
+				}
+			})
+		}
+	}
+}
+
+// In .a, a write by a key that isn't one literal, and a view through a wider index signature, are
+// refused where a declared property's type could lie (#npqr3sx).
+func TestNamedRecordLiesAreRefusedInA(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct{ source, reason string }{
-		{`interface R {named?:number[];[key:string]:number[]|string|undefined} function read(r:R):number|undefined {return r.named?.length;}`, "dictionary member narrowed to an object kind"},
-		{`interface R {named?:number;[key:string]:number|string|undefined} function write(r:R,k:string):void {r[k]="wrong";}`, "named property named"},
-		{`interface R {named?:number;[key:string]:number|string|undefined} const r:R={}; const view:Record<string,number|string|undefined>=r;`, "seen as"},
-		{`interface R {readonly named:number;[key:string]:number} const r:R={named:1}; const view:Record<string,number>=r;`, "seen as"},
-		{`interface R {named:number;[key:string]:number} const fixed={named:1}; const r:R=fixed;`, "seen as"},
-		{`interface R {named?:number;readonly [key:string]:number|undefined} const r:R={};`, "signature"},
-		{`interface R {named:number;[key:number]:number} const r:R={named:1};`, "signature"},
+		{`interface R {named?:number;[key:string]:number|string|undefined} function write(r:R,k:string):void {r[k]="wrong";}`, "a write into a record with declared properties through a key that is not one literal"},
+		{`interface R {named?:number;[key:string]:number|string|undefined} const r:R={}; const view:Record<string,number|string|undefined>=r;`, "a value with declared properties seen through a wider index signature"},
 	} {
 		t.Run(probe.source, func(t *testing.T) {
 			_, err := lowerSource(t, probe.source)
-			var ny *NotYet
-			if !errors.As(err, &ny) || !strings.Contains(err.Error(), probe.reason) {
-				t.Fatalf("got %v, want NotYet %s", err, probe.reason)
+			var refused *Refused
+			if !errors.As(err, &refused) || !strings.HasPrefix(refused.What, probe.reason) {
+				t.Fatalf("got %v, want refused %s", err, probe.reason)
 			}
 		})
 	}

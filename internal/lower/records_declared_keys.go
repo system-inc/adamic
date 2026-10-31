@@ -18,7 +18,8 @@ import (
 //   - A dictionary seen as Options: its entry under outFile, whatever it holds, is read as a string.
 //     widened holds the dictionary's values against each declared property they'd be read through.
 //   - A write through a key that isn't one literal, options[name] = 3 or { [name]: 3 }, which tsc
-//     checks against the index signature alone.
+//     checks against the index signature alone. It's refused when what it writes doesn't fit every
+//     declared property, since only that can land under one.
 // .ts keeps the checked read instead (recordReadType), which stops loudly at the declared read.
 
 // declaredKeysFix is what each of the three refusals offers.
@@ -58,13 +59,15 @@ func init() {
 	refusalRules.register(1950, "recordDeclaredKeyRefusal", (*lowering).recordDeclaredKeyRefusal)
 }
 
-// declaredKeyWrite refuses a write through a key that isn't one literal into a record whose type
-// declares a property its index signature's values don't fit: an element access written to (by =,
-// a compound assignment, ++, a destructuring target or a for-in or for-of head), or an object
-// literal's computed name, whose entry is written as the literal is made.
+// declaredKeyWrite refuses a write through a key that isn't one literal, into a record with a
+// writable index signature, of a value a declared property can't hold: an element access written to
+// (by =, a compound assignment, ++, a destructuring target or a for-in or for-of head), or an object
+// literal's computed name, whose entry is written as the literal is made into the type it's written
+// into. Where the value written isn't one expression's (a destructuring target, a loop's head), it's
+// whatever the index signature holds.
 func (l *lowering) declaredKeyWrite(node *ast.Node) error {
 	var key *ast.Node
-	var receivers []*checker.Type
+	var receiver, value *checker.Type
 	switch node.Kind {
 	case ast.KindElementAccessExpression:
 		if !ast.IsAssignmentTarget(node) {
@@ -72,36 +75,58 @@ func (l *lowering) declaredKeyWrite(node *ast.Node) error {
 		}
 		access := node.AsElementAccessExpression()
 		key = access.ArgumentExpression
-		receivers = []*checker.Type{l.checker.GetTypeAtLocation(access.Expression)}
+		receiver = l.checker.GetTypeAtLocation(access.Expression)
+		value = l.writtenValue(node)
 	case ast.KindComputedPropertyName:
 		member := node.Parent
 		if member == nil || member.Parent == nil || member.Parent.Kind != ast.KindObjectLiteralExpression || ast.IsAssignmentTarget(member.Parent) {
 			return nil
 		}
-		// The literal is made as the type it's written into, and keeps its own type when nothing is
-		// written for it ({ outFile: 'a', [name]: 3 } is itself a record declaring outFile).
 		key = node.AsComputedPropertyName().Expression
-		receivers = []*checker.Type{l.checker.GetTypeAtLocation(member.Parent)}
-		if contextual := l.checker.GetContextualType(member.Parent, checker.ContextFlagsNone); contextual != nil {
-			receivers = append(receivers, contextual)
+		receiver = l.checker.GetContextualType(member.Parent, checker.ContextFlagsNone)
+		if member.Kind == ast.KindPropertyAssignment {
+			value = l.checker.GetTypeAtLocation(member.AsPropertyAssignment().Initializer)
 		}
 	default:
 		return nil
 	}
-	if l.literalKey(key) {
+	if receiver == nil || l.literalKey(key) {
 		return nil
 	}
-	for _, receiver := range receivers {
-		for _, member := range l.definedMembers(l.checker.GetNonNullableType(receiver)) {
-			for _, info := range l.checker.GetIndexInfosOfType(member) {
-				if info.KeyType().Flags() != checker.TypeFlagsString || info.IsReadonly() {
-					continue
-				}
-				if property := l.declaredNarrower(member, info.ValueType(), nil); property != nil {
-					return &Refused{Where: l.program.Where(node), What: "a write into a record with declared properties through a key that is not one literal, which can store under a declared property what it does not hold (" + l.checker.TypeToString(member) + " written by " + sourceExpression(key) + ": " + property.Name + " is declared " + l.checker.TypeToString(l.checker.GetTypeOfSymbol(property)) + ", and the index signature holds " + l.checker.TypeToString(info.ValueType()) + ")", Fix: declaredKeysFix}
-				}
+	for _, member := range l.definedMembers(l.checker.GetNonNullableType(receiver)) {
+		for _, info := range l.checker.GetIndexInfosOfType(member) {
+			if info.KeyType().Flags() != checker.TypeFlagsString || info.IsReadonly() {
+				continue
+			}
+			written := value
+			if written == nil {
+				written = info.ValueType()
+			}
+			if property := l.declaredNarrower(member, written, nil); property != nil {
+				return &Refused{Where: l.program.Where(node), What: "a write into a record with declared properties through a key that is not one literal, which can store under a declared property what it does not hold (" + l.checker.TypeToString(written) + " written into " + l.checker.TypeToString(member) + " by " + sourceExpression(key) + ": " + property.Name + " is declared " + l.checker.TypeToString(l.checker.GetTypeOfSymbol(property)) + ")", Fix: declaredKeysFix}
 			}
 		}
+	}
+	return nil
+}
+
+// writtenValue is the type of what an assignment or an increment writes into its target, or nil when
+// the target isn't one's: the right side of =, and what a compound assignment or ++ makes.
+func (l *lowering) writtenValue(target *ast.Node) *checker.Type {
+	for target.Parent != nil && target.Parent.Kind == ast.KindParenthesizedExpression {
+		target = target.Parent
+	}
+	parent := target.Parent
+	switch {
+	case parent == nil:
+		return nil
+	case parent.Kind == ast.KindBinaryExpression && parent.AsBinaryExpression().Left == target && ast.IsAssignmentOperator(parent.AsBinaryExpression().OperatorToken.Kind):
+		if parent.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
+			return l.checker.GetTypeAtLocation(parent.AsBinaryExpression().Right)
+		}
+		return l.checker.GetTypeAtLocation(parent)
+	case parent.Kind == ast.KindPrefixUnaryExpression || parent.Kind == ast.KindPostfixUnaryExpression:
+		return l.checker.GetTypeAtLocation(parent)
 	}
 	return nil
 }
