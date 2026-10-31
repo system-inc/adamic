@@ -71,6 +71,10 @@ const (
 // A field the view's source already held is honest through a type it fits, as the cast changed
 // nothing the source guaranteed. Views register as their casts lower, so this is decided once
 // lowering is done.
+//
+// Which reads it weighs is viewReadOf's (view_reads.go): a field read of the NotYet class, and a
+// whole-value reader (encodeJson), which reads every field of its value and of what that holds raw,
+// so it's NotYet when anything in it may come from a view's entry, vouched for or not.
 func (l *lowering) checkViewWidenedReads() error {
 	names := map[string]bool{}
 	for key := range l.result.CheckedFields {
@@ -132,7 +136,7 @@ func (l *lowering) checkViewWidenedReads() error {
 		read, isProperty := node.(ir.Property)
 		// A read with no place in the source is lowering's own, a predicate's tag test, and no read
 		// through a type. A method read counts: a callable field is read raw too.
-		if !isProperty || read.ViewWhere == "" || !names[read.Name] || l.result.CheckedField(read.ViewReceiverTypeID, read.Name) {
+		if !isProperty || read.ViewWhere == "" || !names[read.Name] || viewReadOf(l.result, read) != viewReadNotYet {
 			return true
 		}
 		field := l.viewTypes[read.ViewTypeID]
@@ -165,7 +169,79 @@ func (l *lowering) checkViewWidenedReads() error {
 	for _, function := range l.result.Functions {
 		walk(function.Body, inspect)
 	}
-	return refused
+	if refused != nil {
+		return refused
+	}
+	// A whole-value reader reads every field of the value and of what it holds, through no view and
+	// no type the source vouched for, so nothing a view claimed may be anywhere in it.
+	for _, whole := range l.wholeObjectCopies {
+		if whole.reader == "" {
+			continue
+		}
+		demanded := deepReach(entered, whole.source, func(site int) bool { return site == viewedValueSite || site == viewedFieldSite })
+		if !demanded && len(unentered) != 0 {
+			if graph == nil {
+				var reachUnknown bool
+				graph, viewed, reachUnknown = viewedAllocations(l.result, false)
+				unknown = unknown || reachUnknown
+			}
+			demanded = unknown || deepReach(graph, whole.source, func(site int) bool { return viewed[site] })
+		}
+		if demanded {
+			return l.notYet(whole.node, "a read of every field of a value of type "+l.checker.TypeToString(whole.copied)+" by "+whole.reader+", which may hold a checked view's value")
+		}
+	}
+	return nil
+}
+
+// deepReach says whether a value, or anything its fields, elements and stores hold, may reach a
+// site hit names, or an unknown one.
+func deepReach(graph *allocationFlowGraph, value ir.Expression, hit func(int) bool) bool {
+	index := graph.projectionIndex()
+	seen := map[int]bool{}
+	queue := []ir.Expression{value}
+	for len(queue) != 0 {
+		value := queue[len(queue)-1]
+		queue = queue[:len(queue)-1]
+		reaches := graph.ReachingAllocations(value)
+		if reaches.Unknown {
+			return true
+		}
+		for _, site := range reaches.Sites {
+			if hit(site) {
+				return true
+			}
+			if seen[site] {
+				continue
+			}
+			seen[site] = true
+			if literal, ok := index.records[site]; ok {
+				for _, field := range literal.Fields {
+					if viewAggregate(field.Value) {
+						queue = append(queue, field.Value)
+					}
+				}
+				if literal.Spread != nil {
+					queue = append(queue, literal.Spread)
+				}
+			}
+			if literal, ok := index.arrays[site]; ok {
+				for _, element := range literal.Elements {
+					if viewAggregate(element) {
+						queue = append(queue, element)
+					}
+				}
+			}
+			for _, values := range index.stores[site] {
+				for _, stored := range values {
+					if viewAggregate(stored) {
+						queue = append(queue, stored)
+					}
+				}
+			}
+		}
+	}
+	return false
 }
 
 // narrowedEntries adds to locals each local a read of was narrowed to a type holding target, the
