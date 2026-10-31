@@ -29,8 +29,11 @@ func init() {
 // In .a a downcast whose checks no proof erases is refused, naming the narrowing that says the same thing
 // (item 8 stage 2, #m8dvvmf): union_member casts a discriminated union to a member, interface casts a
 // Node to an Identifier whose tag a Node can fail, and generic casts a generic union to its member inside
-// a generic function. Each program's whole diagnostic is pinned in its .refused file. Mutant:
-// keptCheckDowncastRefusal admitting every cast lowers all three.
+// a generic function. distinct_tag_cast and later_tag are stage 1's admissions (#q97a1rr), reversed on
+// purpose: later_tag's message names kind, the tag .a tests after passing over the vacuous version. Each
+// program's whole diagnostic is pinned in its .refused file. Mutants: keptCheckDowncastRefusal admitting
+// every cast lowers all five; withinLiterals calling every tag vacuous gives distinct_tag_cast and
+// later_tag stage 1's refusal where stage 2's is pinned.
 func TestKeptCheckDowncastsAreRefused(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/kept_check_downcast_refused"
@@ -67,7 +70,7 @@ func TestKeptCheckDowncastsAreRefused(t *testing.T) {
 			}
 		})
 	}
-	if programs != 3 {
-		t.Fatalf("%d programs in %s, want 3: a program added or removed needs this count changed with it", programs, directory)
+	if programs != 5 {
+		t.Fatalf("%d programs in %s, want 5: a program added or removed needs this count changed with it", programs, directory)
 	}
 }

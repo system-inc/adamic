@@ -1,5 +1,6 @@
-// Every Root has version 1, so a test on version proves nothing, but kind can be any string and View
-// declares 'Viewed': .a passes over version and tests kind, which tells a View from another Root.
+// a-check: refused a downcast from Root to View in .a whose checks no proof erases
+// Every Root has version 1, so .a passes over that vacuous test for kind, which a Root can fail. Stage 1
+// (#q97a1rr) admitted the cast on kind; stage 2 (#m8dvvmf) refuses it on purpose, naming kind's narrowing.
 interface Root { readonly version: 1; readonly kind: string; }
 interface View extends Root { readonly version: 1; readonly kind: 'Viewed'; count: number; }
 const raw = { version: 1 as const, kind: 'Viewed', count: 4 };
