@@ -446,7 +446,7 @@ def coverageChanged(tree, change, full):
     return [path for path in git(tree, "-c", "core.quotePath=false", "diff", "--name-only", *revisions).split("\n") if path]
 
 
-# coverageGoStatePathspec is what coverage reads of the tree for a change markdownOnly allows (#gw93f6b, Node's
+# coverageGoStatePathspec is what coverage reads of the tree for a change inertOnly allows (#gw93f6b, Node's
 # ruling): a traced run on Pupa, Oct 29 (Pupa:~/scratch/judge-tools-trace/trace8.txt, a README edit on adamic cad2afb1c7),
 # read whole. go list -deps -test -json ./... (touched() and coverageReduced()) reads go.work and every module it names,
 # cohere's among them, opens each package's .go files and the C-family sources it checks build constraints in, and probes
@@ -459,19 +459,28 @@ coverageGoStatePathspec = ["*.go", ":(glob)**/go.mod", ":(glob)**/go.sum", ":(gl
                            "*.f", "*.F", "*.for", "*.f90", "*.syso", "*.swig", "*.swigcxx", "cohere", "stage3/drivers"]
 
 
-def markdownOnly(tree, tools, change, full):
+# phaseSetupPaths are what every bounded phase reads beside its own inputs (phaseInputs adds them): runPhase's npm setup
+# and this runner and its maps. A change to one never narrows a phase (inertOnly).
+phaseSetupPaths = ["cloud/fast-gate", "cloud/markdown-width/npm-bootstrap.json", "stage3/api/package.json",
+                   "stage3/api/package-lock.json", "go.mod", "go.sum"]
+
+
+def inertOnly(tree, tools, change, full):
     """Whether a phase may key on less than the whole tree for this change, the one test coverage and smoke both ask
-    (#gw93f6b and #q11k6k6, Node's rulings): every changed path a modified Markdown file, its mode a plain file's on both
-    sides, its name ending in a lowercase .md, its first rule in tools' executors.txt inert, and no package embedding it
-    (go list opens an embedded file, and go test compiles its bytes). Such a change touches nothing a census reads, adds or
-    removes nothing go list sees or a walk lists, and names nothing cover() reds on. Anything else, an empty or root
-    change, or a diff or go list that doesn't read, is no."""
-    return markdownOnlyEmbedded(tree, tools, change, full) is not None
+    (#gw93f6b, #q11k6k6 and #cb8bpe7's wall 2, Node's rulings): every changed path a modified file, its mode a plain file's
+    on both sides, its first rule in tools' executors.txt inert, outside the tree's Go state (coverageGoStatePathspec)
+    and the phases' setup (phaseSetupPaths), and no package embedding it (go list opens an embedded file, and go test
+    compiles its bytes). Such a change touches nothing a census reads, adds or removes nothing go list sees or a walk
+    lists, and names nothing cover() reds on. The traces say what each phase reads of such a file (Pupa, Oct 29 and 30:
+    smoke opened no inert file outside the Go state but those a package embeds, and coverage none outside it). Anything
+    else, an empty or root change, or a diff or go list that doesn't read, is no. It's no glob of file types: a README and
+    a log nothing reads are alike."""
+    return inertOnlyChange(tree, tools, change, full) is not None
 
 
-def markdownOnlyEmbedded(tree, tools, change, full):
-    """markdownOnly's answer, with the tree's embedded files (goPackages' map, path to package) when it's yes, which a
-    narrowed key must still hold by content; None when it's no."""
+def inertOnlyChange(tree, tools, change, full):
+    """inertOnly's answer when it's yes, as (embedded, paths): the tree's embedded files (goPackages' map, path to package),
+    which a narrowed key must still hold by content, and the changed paths, sorted; None when it's no."""
     if change is None:
         return None
     try:
@@ -496,10 +505,15 @@ def markdownOnlyEmbedded(tree, tools, change, full):
                 path = fields.pop(0)  # a rename or copy names its source, then the path it makes
             if header[4] != "M" or header[0] != ":100644" or header[1] != "100644":
                 return None
-            if not path.endswith(".md") or firstExecutor(rules, path) != "inert":
+            if firstExecutor(rules, path) != "inert" or any(path == setup or path.startswith(setup + "/") for setup in phaseSetupPaths):
                 return None
             paths.append(path)
         if not paths:
+            return None
+        # The Go state as coverage keys it, listed from the tree, so a path is in it exactly when git says so.
+        goState = set(subprocess.run(["git", "-C", tree, "ls-files", "-z", "--", *coverageGoStatePathspec],
+                                     capture_output=True, text=True, check=True, timeout=120).stdout.split("\0"))
+        if any(path in goState for path in paths):
             return None
         listing = packageGraph(tree)
         if listing.returncode != 0:
@@ -507,12 +521,15 @@ def markdownOnlyEmbedded(tree, tools, change, full):
         embedded = goPackages(tree, listing.stdout)[1]
     except (subprocess.SubprocessError, OSError, ValueError, KeyError):
         return None
-    return None if any(path in embedded for path in paths) else embedded
+    return None if any(path in embedded for path in paths) else (embedded, sorted(paths))
 
 
-def smokeMarkdownOnlyPathspec(tree, embedded):
-    """What smoke reads of the tree for a change markdownOnly allows (#q11k6k6, Node's ruling): every tracked path but the
-    Markdown files no package embeds. A traced run on Pupa, Oct 30 (run.py --phase smoke --complete on a README edit of
+def smokeInertPathspec(tree, embedded, changed):
+    """What smoke reads of the tree for a change inertOnly allows (#q11k6k6 and #cb8bpe7's wall 2, Node's rulings): every
+    tracked path but the Markdown files no package embeds and the change's own other paths, each inert, outside the Go
+    state and embedded by nothing. The Markdown part is exactly what it was for a Markdown-only change, so such a change
+    keys as it did. The change's other paths are left out by name, never every inert file, which would hand git about
+    24,000 exclusions to match each listing against. A traced run on Pupa, Oct 30 (run.py --phase smoke --complete on a README edit of
     adamic cad2afb1c7, Pupa:~/scratch/judge-tools-trace/trace10.txt), read whole: go test ./internal/oracle compiles the
     oracle's closure, cohere's included, and its fixtures run against Node, and of the tree's Markdown it opened only what
     go embeds (internal/load's node_types), beside stats from directory walks and git's index checks; adamic's buildcache
@@ -522,28 +539,29 @@ def smokeMarkdownOnlyPathspec(tree, embedded):
     listed = subprocess.run(["git", "-C", tree, "ls-files", "-z", "--", "*.md"], capture_output=True, text=True, check=True,
                             timeout=120).stdout
     unread = sorted(path for path in listed.split("\0") if path and path not in embedded)
-    return ["*"] + [":(exclude,literal)" + path for path in unread]
+    others = sorted(path for path in changed if not path.endswith(".md"))
+    return ["*"] + [":(exclude,literal)" + path for path in unread + others]
 
 
 def smokeInputs(tree, change, full):
-    embedded = markdownOnlyEmbedded(tree, change["tools"] if change else None, change, full)
-    if embedded is not None:
+    allowed = inertOnlyChange(tree, change["tools"] if change else None, change, full)
+    if allowed is not None:
         try:
-            paths = smokeMarkdownOnlyPathspec(tree, embedded)
+            paths = smokeInertPathspec(tree, *allowed)
         except (subprocess.SubprocessError, OSError):
             paths = None
         if paths is not None:
             # Nothing it reads by name: two Markdown-only changes on one tree's other files decide alike, so they key alike.
             return {"packages": [], "paths": paths, "names": [],
-                    "note": "a Markdown-only change: smoke reads every tracked file but the Markdown no package embeds"}
+                    "note": "an inert change: smoke reads every tracked file but the Markdown no package embeds and the change's own paths"}
     return treeInputs("smoke source programs and their runtime/import reads are not yet bounded")
 
 
 def coverageInputs(tree, unit, full, change):
-    if markdownOnly(tree, change["tools"] if change else None, change, full):
-        # Nothing it judges by name: two Markdown-only changes on one Go state decide alike, so they key alike.
+    if inertOnly(tree, change["tools"] if change else None, change, full):
+        # Nothing it judges by name: two inert changes on one Go state decide alike, so they key alike.
         return {"packages": [], "paths": list(coverageGoStatePathspec), "names": [],
-                "note": "a Markdown-only change: coverage reads the tree's Go, module, driver and census state alone"}
+                "note": "an inert change: coverage reads the tree's Go, module, driver and census state alone"}
     inputs = treeInputs("coverage uses the base diff, package/source census and executor map across the tree")
     if change is None:
         inputs["names"] = []
@@ -562,8 +580,7 @@ def phaseInputs(tree, line, full=False, products=None, change=None):
               treeInputs("phase has no bounded input provider"))
     if "." not in inputs["paths"]:
         # Every phase enters runPhase's npm setup, and runs this runner/config.
-        inputs["paths"] += ["cloud/fast-gate", "cloud/markdown-width/npm-bootstrap.json",
-                            "stage3/api/package.json", "stage3/api/package-lock.json", "go.mod", "go.sum"]
+        inputs["paths"] += phaseSetupPaths
         if full and phase in ("wasi", "catalog", "products"):
             # Same source discovery as wholeProducts. A newly added declaration is
             # visible on the next enumeration. Existing products need a runtime-read audit.

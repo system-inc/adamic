@@ -2942,10 +2942,11 @@ class CoverageNames(unittest.TestCase):
 
 
 class CoverageMarkdownOnly(unittest.TestCase):
-    """Coverage keys on the tree's Go state alone for a change whose every path is a modified Markdown file its map rules
-    inert (#gw93f6b, Node's ruling), by run.markdownOnly alone, which --with-inputs asks; anything else keeps the
-    whole tree and its names. Mutants, each red here: the modified filter dropped; any inert path allowed; the embedded
-    check dropped; cohere left out of the narrowed paths."""
+    """Coverage keys on the tree's Go state alone for a change whose every path is a modified file its map rules inert,
+    outside the Go state and the phases' setup, and embedded by nothing (#gw93f6b and #cb8bpe7's wall 2, Node's rulings),
+    by run.inertOnly alone, which --with-inputs asks; anything else keeps the whole tree and its names. Mutants, each red
+    here: the modified filter dropped; any rule allowed; the embedded check dropped; cohere left out of the narrowed
+    paths; the Go state check dropped; the setup check dropped; Markdown required again."""
 
     def setUp(self):
         scratch = tempfile.TemporaryDirectory()
@@ -2965,9 +2966,14 @@ class CoverageMarkdownOnly(unittest.TestCase):
             "docs/guide.md": "# guide\n",
             "apple/README.md": "# apple\n",
             "stage3/drivers/parser/evidence/probe.py": "print(1)\n",
+            # Files nothing reads (#cb8bpe7's wall 2): a log the map rules inert, a C source it rules inert, and a file no
+            # rule names.
+            "notes/counts.log": "6220\n",
+            "notes/probe.c": "int probe;\n",
+            "tools/unruled.txt": "x\n",
             "cloud/fast-gate/compiler-dependencies.json": '{"version":1,"packages":{}}',
             "cloud/fast-gate/unit-needs.json": '{"version":1,"units":[]}',
-            "cloud/fast-gate/executors.txt": "mode enforce\ndarwin apple/*\ninert *.md\ninert */evidence/*\ninert cloud/*\n",
+            "cloud/fast-gate/executors.txt": "mode enforce\ndarwin apple/*\ninert *.md\ninert */evidence/*\ninert cloud/*\ninert notes/*\n",
         }
         for name, source in sources.items():
             self.write(name, source)
@@ -2999,7 +3005,7 @@ class CoverageMarkdownOnly(unittest.TestCase):
     def readmeOn(self, edit):
         # A Markdown-only change on a Go state the edit made: eligible, so its key is the narrowed one.
         change = self.change(lambda: self.write("README.md", "# probe, edited\n"), self.change(edit)["sha"])
-        self.assertTrue(run.markdownOnly(self.tree, self.tree, change, False))
+        self.assertTrue(run.inertOnly(self.tree, self.tree, change, False))
         return change
 
     def inputs(self, change):
@@ -3014,7 +3020,7 @@ class CoverageMarkdownOnly(unittest.TestCase):
     def test_two_markdown_edits_key_alike_on_the_go_state(self):
         readme = self.change(lambda: self.write("README.md", "# probe, edited\n"))
         guide = self.change(lambda: self.write("docs/guide.md", "# guide, edited\n"))
-        self.assertTrue(run.markdownOnly(self.tree, self.tree, readme, False))
+        self.assertTrue(run.inertOnly(self.tree, self.tree, readme, False))
         self.assertNotIn(".", self.inputs(readme)["paths"])
         self.assertIn("cohere", self.inputs(readme)["paths"])
         self.assertEqual(self.keyed(readme), self.keyed(guide))
@@ -3037,12 +3043,19 @@ class CoverageMarkdownOnly(unittest.TestCase):
             with self.subTest(name):
                 self.assertNotEqual(self.keyed(readme)[2], self.keyed(self.readmeOn(edit))[2])
 
+    def test_an_inert_file_nothing_reads_keys_as_markdown_does(self):
+        # Not a glob of file types (#cb8bpe7's wall 2): a log the map rules inert keys coverage on the Go state alone.
+        readme = self.change(lambda: self.write("README.md", "# probe, edited\n"))
+        log = self.change(lambda: self.write("notes/counts.log", "6224\n"))
+        self.assertTrue(run.inertOnly(self.tree, self.tree, log, False))
+        self.assertEqual(self.keyed(log), self.keyed(readme))
+
     def test_a_go_edit_beside_markdown_moves_the_key(self):
         readme = self.change(lambda: self.write("README.md", "# probe, edited\n"))
         def both():
             self.write("README.md", "# probe, edited\n")
             self.write("go.mod", "module " + run.module + "\ngo 1.24\n\n// edited\n")
-        self.assertFalse(run.markdownOnly(self.tree, self.tree, self.change(both), False))
+        self.assertFalse(run.inertOnly(self.tree, self.tree, self.change(both), False))
         self.assertNotEqual(self.keyed(readme), self.keyed(self.change(both)))
 
     def test_anything_else_keeps_the_whole_tree(self):
@@ -3057,31 +3070,35 @@ class CoverageMarkdownOnly(unittest.TestCase):
             "a mode change": lambda: os.chmod(os.path.join(self.tree, "README.md"), 0o755),
             "a deleted markdown file": lambda: os.remove(os.path.join(self.tree, "docs/guide.md")),
             "a submodule move alone": lambda: realRun(["git", "-C", self.tree, "update-index", "--cacheinfo", "160000,%s,cohere" % self.base], check=True),
+            "an inert file in the Go state": lambda: self.write("notes/probe.c", "int probe = 1;\n"),
+            "a file no rule names": lambda: self.write("tools/unruled.txt", "y\n"),
+            "an inert log beside a go edit": lambda: (self.write("notes/counts.log", "6224\n"), self.write("sub/s.go", "package sub\n\nvar S = 3\n")),
             "nothing": lambda: None,
         }
         for name, edit in cases.items():
             with self.subTest(name):
                 change = self.change(edit)
-                self.assertFalse(run.markdownOnly(self.tree, self.tree, change, False))
+                self.assertFalse(run.inertOnly(self.tree, self.tree, change, False))
                 self.assertEqual(self.inputs(change)["paths"], ["."])
 
     def test_a_diff_that_does_not_read_is_no(self):
         change = {"base": "0" * 40, "sha": self.base, "tools": self.tree}
-        self.assertFalse(run.markdownOnly(self.tree, self.tree, change, False))
-        self.assertFalse(run.markdownOnly(self.tree, self.tree, None, False))
+        self.assertFalse(run.inertOnly(self.tree, self.tree, change, False))
+        self.assertFalse(run.inertOnly(self.tree, self.tree, None, False))
 
     def test_the_whole_gate_reads_the_sha_against_its_first_parent(self):
         readme = self.change(lambda: self.write("README.md", "# probe, edited\n"))
-        self.assertTrue(run.markdownOnly(self.tree, self.tree, dict(readme, base=None), True))
+        self.assertTrue(run.inertOnly(self.tree, self.tree, dict(readme, base=None), True))
         # The cohere commit against the first: a gitlink added, never Markdown.
-        self.assertFalse(run.markdownOnly(self.tree, self.tree, dict(readme, base=None, sha=self.base), True))
+        self.assertFalse(run.inertOnly(self.tree, self.tree, dict(readme, base=None, sha=self.base), True))
 
 
 class SmokeMarkdownOnly(unittest.TestCase):
-    """Smoke keys on every tracked file but the Markdown no package embeds for a change markdownOnly allows (#q11k6k6,
-    Node's ruling), and on the whole tree otherwise. An embedded file stays in the key by content, since go test compiles
+    """Smoke keys on every tracked file but the Markdown no package embeds and the change's own other paths for a change
+    inertOnly allows (#q11k6k6 and #cb8bpe7's wall 2, Node's rulings), and on the whole tree otherwise. An embedded file stays in the key by content, since go test compiles
     its bytes. Mutants, each red here: every Markdown file excluded, embedded ones too; the narrowed paths only the .go
-    files; the narrowing taken for an added Markdown file; an exclusion read as a glob, never literally."""
+    files; the narrowing taken for an added Markdown file; an exclusion read as a glob, never literally; the change's own
+    inert paths kept in the key."""
 
     setUp, write, commit, change, readmeOn = (CoverageMarkdownOnly.setUp, CoverageMarkdownOnly.write, CoverageMarkdownOnly.commit,
                                               CoverageMarkdownOnly.change, CoverageMarkdownOnly.readmeOn)
@@ -3117,6 +3134,18 @@ class SmokeMarkdownOnly(unittest.TestCase):
             with self.subTest(name):
                 self.assertNotEqual(self.keyed(readme)[2], self.keyed(self.readmeOn(edit))[2])
 
+    def test_an_inert_files_edit_leaves_smoke_where_its_base_was(self):
+        # The no-op's proof (#cb8bpe7's wall 2): the change's own inert file is left out by name, so its tree keys smoke as
+        # its base does under the same paths, and a Markdown-only change's paths are exactly what they were.
+        log = self.change(lambda: self.write("notes/counts.log", "6224\n"))
+        paths = self.inputs(log)["paths"]
+        self.assertIn(":(exclude,literal)notes/counts.log", paths)
+        future = self.keyed(log)[2]
+        realRun(["git", "-C", self.tree, "checkout", "-q", "--detach", log["base"]], check=True)
+        self.assertEqual(run.git(self.tree, "ls-files", "-s", "--", *paths), future)
+        readme = self.change(lambda: self.write("README.md", "# probe, edited\n"))
+        self.assertEqual([path for path in self.inputs(readme)["paths"] if path.startswith(":(exclude") and not path.endswith(".md")], [])
+
     def test_an_unembedded_name_that_reads_as_a_glob_never_drops_an_embedded_file(self):
         # docs/a[b].md and docs/a*.md, unembedded, would match the embedded docs/ab.md as globs: each is excluded literally.
         def laid():
@@ -3126,7 +3155,7 @@ class SmokeMarkdownOnly(unittest.TestCase):
             self.write("docs/a*.md", "# not embedded either\n")
         tree = self.change(laid)["sha"]
         readme = self.change(lambda: self.write("README.md", "# probe, edited\n"), tree)
-        self.assertTrue(run.markdownOnly(self.tree, self.tree, readme, False))
+        self.assertTrue(run.inertOnly(self.tree, self.tree, readme, False))
         moved = self.change(lambda: self.write("docs/ab.md", "# embedded, edited\n"), tree)["sha"]
         beside = self.change(lambda: self.write("README.md", "# probe, edited\n"), moved)
         self.assertNotEqual(self.keyed(readme)[2], self.keyed(beside)[2])
@@ -3137,6 +3166,8 @@ class SmokeMarkdownOnly(unittest.TestCase):
 
     def test_anything_else_keeps_the_whole_tree(self):
         for name, edit in {"an added markdown file": lambda: self.write("docs/new.md", "# new\n"),
+                           "a file no rule names": lambda: self.write("tools/unruled.txt", "y\n"),
+                           "an inert file in the Go state": lambda: self.write("notes/probe.c", "int probe = 1;\n"),
                            "an embedded markdown file": lambda: self.write("a/doc.md", "# embedded, edited\n"),
                            "a go source": lambda: self.write("sub/s.go", "package sub\n\nvar S = 2\n"),
                            "nothing": lambda: None}.items():
