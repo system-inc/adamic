@@ -756,11 +756,11 @@ var repositories sync.Map
 
 // A repositoryRun is one reading of a directory's repository, which every asker of that directory waits on (done) and
 // then reads. One that failed (git couldn't list it) is answered to those already waiting and then dropped, so the next
-// asker reads it again: a failure is never kept.
+// asker reads it again: a failure is never kept. One that panicked has no answer at all, so its waiters ask again.
 type repositoryRun struct {
-	done   chan struct{}
-	files  *trackedFiles
-	failed bool
+	done             chan struct{}
+	files            *trackedFiles
+	failed, panicked bool
 }
 
 // listRepository is git's listing of a checkout's index and its dirty files (repositoryAt): a test counts it.
@@ -824,19 +824,48 @@ var statGit = os.Lstat
 // reading. A checkout's reading runs git ls-files and diff-files over its whole repository, and git's diff-files stats
 // every entry of its index in up to 20 threads (preload_index), about 67,000 for cohere/TypeScript, so each of a
 // process's racing askers used to run its own, three in one product test (Builder's trace on #npd568j).
+//
+// A waiter wakes only once the reading's answer is in its run, since a nil answer reads as a directory with no
+// repository, everything tracked: a silent wrong answer. A reading that panics still frees its waiters and is dropped,
+// and each of them asks again rather than take an answer the reading never gave.
 func repositoryAt(directory string) *trackedFiles {
 	key := repositoryKey(directory)
-	run := &repositoryRun{done: make(chan struct{})}
-	if found, loaded := repositories.LoadOrStore(key, run); loaded {
+	for {
+		run := &repositoryRun{done: make(chan struct{})}
+		found, loaded := repositories.LoadOrStore(key, run)
+		if !loaded {
+			return readRepositoryRun(key, directory, run)
+		}
 		waited := found.(*repositoryRun)
+		waitingOnRepository()
 		<-waited.done
-		return waited.files
+		if !waited.panicked {
+			return waited.files
+		}
 	}
+}
+
+// waitingOnRepository is called by an asker of repositoryAt that found another's reading under way, just before it
+// waits on it: a test counts the waiters.
+var waitingOnRepository = func() {}
+
+// readRepositoryRun is run's reading for repositoryAt, which stored run under key. It frees run's waiters only once
+// the answer is in run, and drops a run that failed or panicked first, so a waiter that asks again finds it gone. The
+// free is deferred so that a panic in the reading frees them too, and the panic goes on.
+func readRepositoryRun(key, directory string, run *repositoryRun) *trackedFiles {
+	returned := false
+	defer func() {
+		if !returned {
+			run.panicked = true
+			run.failed = true
+		}
+		if run.failed {
+			repositories.CompareAndDelete(key, run)
+		}
+		close(run.done)
+	}()
 	run.files, run.failed = readRepository(directory)
-	close(run.done)
-	if run.failed {
-		repositories.CompareAndDelete(key, run)
-	}
+	returned = true
 	return run.files
 }
 
