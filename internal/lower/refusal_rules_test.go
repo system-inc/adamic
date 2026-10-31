@@ -34,6 +34,7 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		"1700 predicateArgumentsRefusal",
 		"1800 enumRefusal",
 		"1900 castRefusal",
+		"1950 keptCheckDowncastRefusal",
 		"2000 recordStorageView",
 		"2100 namespaceRefusal",
 		"2200 ambientRefusal",
