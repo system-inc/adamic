@@ -11,7 +11,8 @@ interface Dog extends Animal {
 const dogs: Dog[] = [{ name: 'Rex', bark: () => 'woof' }];
 const kennels: Animal[][] = [];
 Array.prototype.push.call(kennels, dogs);
-kennels[0]?.push({ name: 'Tom' });
+const first = kennels[0];
+if (first !== undefined) first.push({ name: 'Tom' });
 for (const dog of dogs) {
 	console.log(`${dog.name}: ${dog.bark()}`);
 }
