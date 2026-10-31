@@ -496,7 +496,7 @@ func TestTheLibrariesAndThePreludeAreInTheBinary(t *testing.T) {
 func TestAProgramReadingAFileBesideItsSourcesIsRefused(t *testing.T) {
 	t.Parallel()
 	elsewhere := filepath.Join(t.TempDir(), "values.ts")
-	if err := os.WriteFile(elsewhere, []byte("export const value = 1;\n"), 0o644); err != nil {
+	if err := os.WriteFile(elsewhere, []byte("export const value = 'beside';\n"), 0o644); err != nil {
 		t.Fatal(err)
 	}
 	entry := filepath.Join(t.TempDir(), "main.ts")
