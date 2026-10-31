@@ -113,6 +113,36 @@ console.log(String(fs.length));`, "a void-returning function written where"},
 	}
 }
 
+// Until the refusal registry itself judges a delayed write, the value's widened type must be the element
+// type itself, so a rule slotRelation doesn't name can't be skipped (Adamic's ruling on ce1280d9).
+// Language's h7: a fixed object pushed into a Record<string, number>[], whose record write then crashed in
+// map.c natively, and its fill and splice twins. Mutant: the identity check dropped, under which h7 lowers
+// and dies natively.
+func TestDelayedArrayWritesAreTheElementTypeItself(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, write string }{
+		{"h7 push", "push.call(records, named);"},
+		{"h7 fill", "fill.call(records, named);"},
+		{"h7 splice", "splice.apply(records, [0, 0, named]);"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			source := `const push = Array.prototype.push; const fill = Array.prototype.fill; const splice = Array.prototype.splice;
+const named = { a: 1 };
+const records: Record<string, number>[] = [];
+` + probe.write + `
+const first = records[0];
+if (first !== undefined) first["b"] = 2;
+console.log(String(Object.keys(named).length));`
+			_, err := lowerTypeScriptAssertionSource(t, source)
+			var pending *NotYet
+			if !errors.As(err, &pending) || !strings.Contains(err.Error(), "writing a value whose type isn't the receiver's element type itself") {
+				t.Fatalf("want the identity NotYet, got %v", err)
+			}
+		})
+	}
+}
+
 // Writes of the receiver's own element type still lower and agree with Node, through call and apply.
 func TestDelayedArrayWritesOfTheElementsLower(t *testing.T) {
 	t.Parallel()

@@ -403,6 +403,9 @@ func (l *lowering) delayedArrayWritesFit(node, receiver *ast.Node, name string, 
 			if err := l.slotRelation(other, other, l.checker.GetTypeAtLocation(receiver)); err != nil {
 				return err
 			}
+			if inside != element || !l.sameKeeping(inside, element, map[[2]*checker.Type]bool{}) {
+				return l.notYet(other, "a delayed concat of an array whose elements aren't the receiver's element type itself")
+			}
 		}
 		return nil
 	}
@@ -414,6 +417,14 @@ func (l *lowering) delayedArrayWritesFit(node, receiver *ast.Node, name string, 
 		// nominal classes and void widening (Language's must on c8f64485).
 		if err := l.slotRelation(value, value, element); err != nil {
 			return err
+		}
+		// slotRelation names some of the argument site's rules, and a list fails open on the rule it
+		// doesn't name: record storage let a fixed object into a Record<string, number>[] (Language's h7,
+		// a crash in map.c natively). Until the registry itself judges a delayed write (l.slotType), the
+		// value's widened type, its literals at their base type ("c" as string), must be the element type itself,
+		// so no rule's road is open (Adamic's ruling).
+		if widened := checker.Checker_getBaseTypeOfLiteralType(l.checker, l.checker.GetWidenedType(l.checker.GetTypeAtLocation(value))); widened != element || !l.sameKeeping(widened, element, map[[2]*checker.Type]bool{}) {
+			return l.notYet(value, "a delayed "+name+" writing a value whose type isn't the receiver's element type itself")
 		}
 	}
 	return nil
