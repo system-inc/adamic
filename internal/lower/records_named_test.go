@@ -107,7 +107,8 @@ func TestNamedRecordRefusals(t *testing.T) {
 // honest write, a number into number properties, still lowers. The literal's twin, { names: quiet }, is
 // stopped a level up, at the whole literal's initializer through .names, so a construction is held to its
 // twin's kind and rule (the fix it names) rather than to where it's said. Mutants: slotType ignoring the slot a
-// caller set lowers w8, which then prints POINT natively; recordComputedEntry skipped lowers w8's literal.
+// caller set lowers w8, which then prints POINT natively; recordComputedEntry skipped lowers w8's literal;
+// refuseWidening's rules skipped in refuseInSlot's run lowers the invariance and enum pins.
 func TestNamedRecordWritesAreJudgedAsTheirDirectTwins(t *testing.T) {
 	t.Parallel()
 	w8 := `interface Shape { x: number; describe(): string }
@@ -129,9 +130,14 @@ const key = keys[0] ?? "other";
 	}{
 		{"w8", w8, "const places: Places = { names: new Point() };\nplaces[key] = new Other();", "const places: Places = { names: new Point() };\nplaces.names = new Other();", false},
 		{"w10", w10, "const handlers: Handlers = { names: first };\nhandlers[key] = quiet;", "const handlers: Handlers = { names: first };\nhandlers.names = quiet;", false},
-		// An enum's members are a closed union a number seen as it can break, which refuseWidening judges
-		// (widened's enumAssignable), not a check of the write's own (Compiler's probe on 82ae5693).
-		{"an arbitrary number under an enum property", "enum Color { Red, Green }\ntype Bag = { color: Color; [k: string]: Color | number };\nconst keys: string[] = [\"color\", \"other\"];\nconst key = keys[0] ?? \"other\";\nconst n: number = 7;\n", "const bag: Bag = { color: Color.Red };\nbag[key] = n;", "const bag: Bag = { color: Color.Red };\nbag.color = n;", false},
+		// The list's widened and enumAssignable went with it, since the registry judges both at the direct
+		// write (Lower's and Compiler's pins on 82ae5693): a Dog[] under pets: Animal[] could then be written
+		// an Animal the dogs are read as (adamic/invariant-mutable), and a number under kind: Kind.Text
+		// breaks the member's literal (#w7w2asn's slot refusal). Each through a key and through a literal.
+		{"invariance", "class Animal { name = \"a\"; }\nclass Dog extends Animal { bark(): string { return \"woof\"; } }\ntype Kennels = { pets: Animal[]; [k: string]: Animal[] | Dog[] };\nconst keys: string[] = [\"pets\", \"other\"];\nconst key = keys[0] ?? \"other\";\nconst dogs: Dog[] = [];\n", "const kennels: Kennels = { pets: [] };\nkennels[key] = dogs;", "const kennels: Kennels = { pets: [] };\nkennels.pets = dogs;", false},
+		{"invariance construction", "class Animal { name = \"a\"; }\nclass Dog extends Animal { bark(): string { return \"woof\"; } }\ntype Kennels = { pets: Animal[]; [k: string]: Animal[] | Dog[] };\nconst keys: string[] = [\"pets\", \"other\"];\nconst key = keys[0] ?? \"other\";\nconst dogs: Dog[] = [];\n", "const kennels: Kennels = { pets: [], [key]: dogs };", "const kennels: Kennels = { pets: dogs };", true},
+		{"an open enum's member", "enum Kind { Text, Count }\ntype Nodes = { kind: Kind.Text; [k: string]: number };\nconst keys: string[] = [\"kind\", \"other\"];\nconst key = keys[0] ?? \"other\";\nconst n: number = 7;\n", "const nodes: Nodes = { kind: Kind.Text };\nnodes[key] = n;", "const nodes: Nodes = { kind: Kind.Text };\nnodes.kind = n;", false},
+		{"an open enum's member construction", "enum Kind { Text, Count }\ntype Nodes = { kind: Kind.Text; [k: string]: number };\nconst keys: string[] = [\"kind\", \"other\"];\nconst key = keys[0] ?? \"other\";\nconst n: number = 7;\n", "const nodes: Nodes = { kind: Kind.Text, [key]: n };", "const nodes: Nodes = { kind: n };", true},
 		{"w8 construction", w8, "const places: Places = { names: new Point(), [key]: new Other() };", "const places: Places = { names: new Other() };", true},
 		{"w10 construction", w10, "const handlers: Handlers = { names: first, [key]: quiet };", "const handlers: Handlers = { names: quiet };", true},
 	} {
@@ -150,11 +156,6 @@ const key = keys[0] ?? "other";
 				t.Fatalf("the write stopped as %v, want what its direct twin stops as: %v", written, direct)
 			}
 		})
-	}
-	// A literal 7 under color: Color isn't tsc's to relate (its direct twin is a checker error), so it stops at
-	// the write's own relation check, which stays.
-	if _, err := lowerSource(t, "enum Color { Red, Green }\ntype Bag = { color: Color; [k: string]: Color | number };\nconst keys: string[] = [\"color\", \"other\"];\nconst key = keys[0] ?? \"other\";\nconst bag: Bag = { color: Color.Red };\nbag[key] = 7;\nconsole.log('ran');\n"); err == nil || !strings.Contains(err.Error(), "can violate named property color") {
-		t.Fatalf("a literal 7 under an enum property: got %v, want the write's own relation NotYet", err)
 	}
 	if _, err := lowerSource(t, `interface Options { target?: number; required: number; [option: string]: number | undefined }
 function write(options: Options, key: string): void { options[key] = 9; }`); err != nil {
