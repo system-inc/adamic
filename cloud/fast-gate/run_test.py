@@ -1984,7 +1984,7 @@ class ReverseDependencies(unittest.TestCase):
         self.assertNotIn(run.module + "/outer", packages)
         self.assertNotIn(run.module + "/unrelated", packages)
         self.assertEqual(unowned, [])
-        self.assertEqual(self.gate.command.call_args.args[0], ["go", "list", "-deps", "-test", "-json", "./..."])
+        self.assertEqual(self.gate.command.call_args.args[0], run.packageGraphCommand())
 
     def test_test_variants_normalize_to_real_packages(self):
         self.packages[1]["ImportPath"] += " [" + run.module + "/middle.test]"
@@ -3175,6 +3175,67 @@ class SmokeMarkdownOnly(unittest.TestCase):
                 self.assertEqual(self.inputs(self.change(edit))["paths"], ["."])
 
 
+class GoListFieldsHoldEveryRead(unittest.TestCase):
+    """go list writes only run.goListFields, so a field a reader reads that the list leaves out would read as missing, a
+    graph with edges or embeds gone, and fail open. Over a real go list of a tree with every shape the readers meet (a
+    package embedding a file, a test and an external test each embedding one and importing, a main package and its
+    test binary), every field goPackages and goCommandInputs read is in the list, and each reads the same from the list's
+    answer as from go list's whole one. Mutants, red here: a field the readers read left out of the list (Dir, Imports,
+    TestEmbedFiles); a reader reading a field the list doesn't name."""
+
+    def setUp(self):
+        scratch = tempfile.TemporaryDirectory()
+        self.addCleanup(scratch.cleanup)
+        self.tree = scratch.name
+        sources = {
+            "go.mod": "module " + run.module + "\ngo 1.24\n",
+            "a/a.go": 'package a\n\nimport _ "embed"\n\n//go:embed doc.md\nvar Doc string\n',
+            "a/doc.md": "# embedded\n",
+            "a/a_test.go": 'package a\n\nimport (\n\t_ "embed"\n\t"testing"\n\n\t"' + run.module + '/c"\n)\n\n//go:embed test.txt\nvar T string\n\nfunc TestA(t *testing.T) { _ = c.C }\n',
+            "a/test.txt": "t\n",
+            "a/x_test.go": 'package a_test\n\nimport (\n\t_ "embed"\n\t"strings"\n\t"testing"\n)\n\n//go:embed x.txt\nvar X string\n\nfunc TestX(t *testing.T) { _ = strings.ToUpper(X) }\n',
+            "a/x.txt": "x\n",
+            "b/main.go": 'package main\n\nimport "' + run.module + '/a"\n\nfunc main() { _ = a.Doc }\n',
+            "b/main_test.go": 'package main\n\nimport "testing"\n\nfunc TestMain_(t *testing.T) {}\n',
+            "c/c.go": "package c\n\nconst C = 1\n",
+        }
+        for name, source in sources.items():
+            os.makedirs(os.path.dirname(os.path.join(self.tree, name)), exist_ok=True)
+            with open(os.path.join(self.tree, name), "w") as handle:
+                handle.write(source)
+
+    def read(self, graph, packages):
+        """Every field the readers read of graph (go list -deps -test) and packages (go list of ./...), and what they read."""
+        read, records = set(), run.goListRecords
+
+        class Recording(dict):
+            def get(self, key, *default):
+                read.add(key)
+                return dict.get(self, key, *default)
+
+            def __getitem__(self, key):
+                read.add(key)
+                return dict.__getitem__(self, key)
+
+        answer = subprocess.CompletedProcess([], 0, packages, "")
+        with mock.patch.object(run, "goListRecords", side_effect=lambda text: (Recording(record) for record in records(text))), \
+                mock.patch.object(run, "listedGoList", return_value=answer):
+            out = (run.goPackages(self.tree, graph), run.goCommandInputs(self.tree, ["go", "vet", "./..."]),
+                   run.goCommandInputs(self.tree, ["go", "build", "./..."]))
+        return read, out
+
+    def test_the_list_holds_every_field_read(self):
+        listing = lambda *arguments: realRun(["go", "list"] + list(arguments), cwd=self.tree, capture_output=True, text=True, check=True).stdout
+        whole = listing("-deps", "-test", "-json", "./...")
+        read, wholeOut = self.read(whole, listing("-json", "./..."))
+        self.assertTrue({"Dir", "Imports", "TestEmbedFiles", "XTestEmbedFiles", "EmbedFiles", "TestImports", "XTestImports"} <= read, read)
+        self.assertLessEqual(read, set(run.goListFields))
+        _, listedOut = self.read(realRun(run.packageGraphCommand(), cwd=self.tree, capture_output=True, text=True, check=True).stdout,
+                                 realRun(run.goPackageListCommand(["./..."]), cwd=self.tree, capture_output=True, text=True, check=True).stdout)
+        self.assertEqual(listedOut, wholeOut)
+        self.assertTrue(wholeOut[0][1] and wholeOut[0][5], wholeOut[0])  # embeds and test edges were there to lose
+
+
 class GoListRecordsReadInPlace(unittest.TestCase):
     """run.goListRecords reads a go list -json answer as the records it holds, in order, whatever whitespace lies before,
     between and after them, as the loop that sliced off each record did. Mutants, red here: the whitespace after a record
@@ -3211,7 +3272,7 @@ class ListingRunsGoListOnce(unittest.TestCase):
 
     setUp, write, commit, change = (CoverageMarkdownOnly.setUp, CoverageMarkdownOnly.write, CoverageMarkdownOnly.commit,
                                     CoverageMarkdownOnly.change)
-    listings = {"graph": run.packageGraphCommand(), "packages": ["go", "list", "-json", "./..."]}
+    listings = {"graph": run.packageGraphCommand(), "packages": run.goPackageListCommand(["./..."])}
 
     def listed(self, change, shared):
         realRun(["git", "-C", self.tree, "checkout", "-q", "--detach", change["sha"]], check=True)

@@ -229,7 +229,7 @@ def goCommandInputs(tree, command):
     # Import paths, never patterns: the consumer computes each go list -deps closure.
     patterns = [arg for arg in command[2:] if arg.startswith(("./", module))]
     # build's and vet's ask the same listing of ./..., and a listing pass runs it once for both (listedGoList).
-    result = listedGoList(tree, ["go", "list", "-json"] + patterns, 90)
+    result = listedGoList(tree, goPackageListCommand(patterns), 90)
     result.check_returncode()
     packages = set()
     for package in goListRecords(result.stdout):
@@ -346,8 +346,20 @@ def firstExecutor(rules, path):
     return next((name for name, glob in rules if fnmatch.fnmatchcase(path, glob)), None)
 
 
+# goListFields are the fields of a go list record that its readers read, goPackages and goCommandInputs, and all go list
+# writes of one: asked by name, go list leaves out what nothing reads, staleness above all, which it works out against the
+# build cache for every package (about 0.7 s of adamic's package graph on Pupa at load 117, Oct 31). A reader that reads
+# another field names it here, or reads it missing: GoListFieldsHoldEveryRead holds the list to what the readers read.
+goListFields = ["Dir", "EmbedFiles", "ForTest", "ImportPath", "Imports", "Name", "TestEmbedFiles", "TestImports",
+                "XTestEmbedFiles", "XTestImports"]
+
+
+def goPackageListCommand(patterns):
+    return ["go", "list", "-json=" + ",".join(goListFields)] + list(patterns)
+
+
 def packageGraphCommand():
-    return ["go", "list", "-deps", "-test", "-json", "./..."]
+    return ["go", "list", "-deps", "-test", "-json=" + ",".join(goListFields), "./..."]
 
 
 def goPackages(tree, listing):
@@ -427,9 +439,9 @@ def listedGoList(tree, command, timeout, environment=None):
 
 def packageGraph(tree):
     """packageGraphCommand's answer in tree, in the environment the gate runs it in (Gate.spawn's go flags), so touched()
-    in a listing and coverage's and smoke's providers read one listing. The flags move only go list's Stale and
-    StaleReason, which no reader of the listing reads (Pupa, Oct 31, adamic bdbea3709a: the two listings equal but for
-    those lines)."""
+    in a listing and coverage's and smoke's providers read one listing. The flags moved only go list's Stale and
+    StaleReason (Pupa, Oct 31, adamic bdbea3709a: the two listings equal but for those lines), which goListFields no
+    longer asks."""
     return listedGoList(tree, packageGraphCommand(), 300, dict(os.environ, **gateEnvironment))
 
 
