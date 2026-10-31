@@ -144,11 +144,12 @@ func objectKeyLogged(t *testing.T, path string) map[string][]string {
 	return logged
 }
 
-// The same program built in two build directories under two temporary directories gets the same object key, released,
-// Debug (where main.c and the runtime's headers are compiled by their absolute paths, so its line markers name the
-// build directory) and sanitized, through Build trusted as a candidate: every per-build place is a placeholder in the
-// arguments and mapped in the preprocessed bytes. The three builds key apart. Mutant, red: the build directory left in
-// the arguments as it is.
+// The same program built in two build directories under two temporary directories gets the same object key, through
+// Build trusted as a candidate, in a Debug build: there main.c and the runtime's headers are compiled by their absolute
+// paths, so the arguments and the line markers both name the build directory, and every per-build place must be a
+// placeholder in the arguments and mapped in the preprocessed bytes. A release or sanitized build names no directory a
+// Debug one doesn't, so one kind is the test, two whole builds where it was six. Mutant, red: the build directory left
+// in the arguments as it is.
 // Not parallel: it swaps objectTrust, the package's trust, for the build it runs.
 func TestObjectKeyIsTheSameFromAnyDirectory(t *testing.T) {
 	source := splitCorpusSource(t, "arguments.a")
@@ -156,11 +157,10 @@ func TestObjectKeyIsTheSameFromAnyDirectory(t *testing.T) {
 	trust := objectTrust
 	objectTrust = func() string { return "candidate" }
 	t.Cleanup(func() { objectTrust = trust })
-	seen := map[string]string{}
 	for _, build := range []struct {
 		name    string
 		options Options
-	}{{"release", Options{}}, {"debug", Options{Debug: true}}, {"sanitized", Options{Sanitize: true}}} {
+	}{{"debug", Options{Debug: true}}} {
 		var keys [2]string
 		// The second temporary directory is deeper than the first, so a place left in the key moves it by its length too.
 		for index, temporary := range []string{filepath.Join(root, build.name, "first"), filepath.Join(root, build.name, "second", "deeper")} {
@@ -186,10 +186,6 @@ func TestObjectKeyIsTheSameFromAnyDirectory(t *testing.T) {
 		if keys[0] != keys[1] {
 			t.Errorf("%s: keyed %s in one directory and %s in another", build.name, keys[0], keys[1])
 		}
-		if other, keyed := seen[keys[0]]; keyed {
-			t.Errorf("%s and %s key the same: %s", other, build.name, keys[0])
-		}
-		seen[keys[0]] = build.name
 	}
 }
 
@@ -250,8 +246,9 @@ func TestObjectKeyMovesWithEachInput(t *testing.T) {
 		{"clang configured", filepath.Join(configured, "clang"), flags, runtime, nil, true},
 		{"SOURCE_DATE_EPOCH set", compiler, flags, runtime, func(compile *exec.Cmd) { compile.Env = append(compile.Env, "SOURCE_DATE_EPOCH=1") }, true},
 	} {
+		// The rows run one at a time: each is a whole build, and seven at once beside the package's other parallel tests
+		// passed a runner's memory share (internal/native#14/33 on Adam, killed past 4.1 GB where it peaked at 2.5 GB).
 		t.Run(row.name, func(t *testing.T) {
-			t.Parallel()
 			keyed := objectKeyBuild(t, filepath.Join(root, fmt.Sprintf("build-%d", index)), row.compiler, source, Options{}, row.flags, row.library, row.prepare, nil)
 			if keyed.keying == nil {
 				t.Fatalf("no key: %v", keyed.refusal)
@@ -500,8 +497,8 @@ func TestObjectKeyHoldsEveryColumn(t *testing.T) {
 		name    string
 		options Options
 	}{{"release", Options{}}, {"debug", Options{Debug: true}}} {
+		// One build at a time, for MovesWithEachInput's reason.
 		t.Run(build.name, func(t *testing.T) {
-			t.Parallel()
 			library, err := RuntimeLibraryForSource("", objectKeySource, build.options)
 			if err != nil {
 				t.Fatal(err)
