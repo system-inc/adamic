@@ -300,13 +300,8 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 			// Any other host object may be seen through a type only as far as its registration names
 			// the members that type reaches (#8k12t4s); Buffer and Hash are refused whole above.
 			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferType(l.present(own), "Buffer") && !l.nodeBufferType(l.present(own), "Hash") {
-				seenAs := contextual
-				reached := l.nodeHostViewReach(own, contextual, 0, map[[2]*checker.Type]bool{})
-				if declared := l.nodeHostDeclaredArgument(node); reached == "" && declared != nil {
-					seenAs, reached = declared, l.nodeHostViewReach(own, declared, 0, map[[2]*checker.Type]bool{})
-				}
-				if reached != "" {
-					return nil, l.notYet(node, "a host object of type "+l.checker.TypeToString(own)+" seen as "+l.checker.TypeToString(seenAs)+", which reaches "+reached+", a member no host registration names")
+				if reached := l.nodeHostViewReach(own, contextual, 0, map[[2]*checker.Type]bool{}); reached != "" {
+					return nil, l.notYet(node, "a host object of type "+l.checker.TypeToString(own)+" seen as "+l.checker.TypeToString(contextual)+", which reaches "+reached+", a member no host registration names")
 				}
 			}
 			if own := l.contextualGenericType(node, l.checker.GetTypeAtLocation(node)); !l.typedArraySetArgument(node) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) && !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
@@ -316,6 +311,17 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 				return nil, l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(contextual)+" (one keeps something weakly that the other keeps strongly)")
 			} else if tuple, array := l.tupleSeenAsArray(own, contextual, map[[2]*checker.Type]bool{}); tuple != nil {
 				return nil, l.notYet(node, "a "+l.checker.TypeToString(tuple)+" seen as a "+l.checker.TypeToString(array)+" (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]])")
+			}
+		}
+	}
+	// A generic body names its parameter's constraint, not what the call infers, so an argument is
+	// judged against the parameter as declared too, a literal made right there included (#8k12t4s).
+	if err == nil && value.Type().IsReference() {
+		if declared := l.nodeHostDeclaredArgument(node); declared != nil {
+			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferType(l.present(own), "Buffer") && !l.nodeBufferType(l.present(own), "Hash") {
+				if reached := l.nodeHostViewReach(own, declared, 0, map[[2]*checker.Type]bool{}); reached != "" {
+					return nil, l.notYet(node, "a host object of type "+l.checker.TypeToString(own)+" seen as "+l.checker.TypeToString(declared)+", which reaches "+reached+", a member no host registration names")
+				}
 			}
 		}
 	}
