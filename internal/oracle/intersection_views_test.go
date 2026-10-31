@@ -53,7 +53,10 @@ func TestIntersectionViewsStopAtTheRead(t *testing.T) {
 	} {
 		t.Run(stop.name, func(t *testing.T) {
 			t.Parallel()
-			path := filepath.Join(repository, directory+stop.name)
+			path, err := filepath.Abs(filepath.Join(repository, directory+stop.name))
+			if err != nil {
+				t.Fatal(err)
+			}
 			if truth := onNode(t, path); truth.exitCode != 0 || string(truth.stdout) != stop.node {
 				t.Fatalf("Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
