@@ -313,7 +313,7 @@ func (l *lowering) checkedPredicateInferredReference(identifier *ast.Node, symbo
 		return ""
 	case holder.Kind == ast.KindCallExpression || holder.Kind == ast.KindNewExpression:
 		// The value narrows only where a call through it does: through a parameter typed with a predicate.
-		if parameter := l.checker.GetContextualType(reference, checker.ContextFlagsNone); parameter != nil && l.predicateValued(parameter) {
+		if parameter := l.slotType(reference); parameter != nil && l.predicateValued(parameter) {
 			return "passed at " + l.program.Where(reference) + " to a parameter typed with a type predicate"
 		}
 		return ""
