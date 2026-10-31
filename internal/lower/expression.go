@@ -269,10 +269,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 			return nil, l.notYet(node, "a nullable object lookup without separate null/undefined tags")
 		}
 		if contextual := l.slotType(node); contextual != nil {
-			if l.nullableObjectViewHazard(node, contextual) {
-				return nil, l.notYet(node, "sharing nullable object storage with different null/undefined tags; copy values into tagged storage")
-			}
-			if err := l.unknownView(node, l.checker.GetTypeAtLocation(node), contextual); err != nil {
+			if err := l.valueSlotTags(node, contextual); err != nil {
 				return nil, err
 			}
 		}
@@ -288,29 +285,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		}
 	}
 	if literal := ast.SkipParentheses(node).Kind; err == nil && value.Type().IsReference() && literal != ast.KindArrayLiteralExpression && literal != ast.KindObjectLiteralExpression {
-		// The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of
-		// Weak<Box>, and (x: Weak<Box>) => ... as (x: Box) => ...; but one keeps a handle where the
-		// other keeps the target, so the same object, array or function can't be both. A tuple is held
-		// as an object, so it can't be seen as an array either, here or anywhere inside. A literal is
-		// made as the type it's written into, so it never differs.
 		if contextual := l.slotType(node); contextual != nil {
-			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferView(l.present(own), l.present(contextual)) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) {
-				return nil, l.notYet(node, "Buffer or Hash viewed as another object type (native host internal slots)")
-			}
-			// Any other host object may be seen through a type only as far as its registration names
-			// the members that type reaches (#8k12t4s); Buffer and Hash are refused whole above.
-			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferType(l.present(own), "Buffer") && !l.nodeBufferType(l.present(own), "Hash") {
-				if reached := l.nodeHostViewAt(own, contextual); reached != "" {
-					return nil, l.nodeHostViewRefusal(node, own, contextual, reached)
-				}
-			}
-			if own := l.contextualGenericType(node, l.checker.GetTypeAtLocation(node)); !l.typedArraySetArgument(node) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) && !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
-				if l.typedArrayKind(l.checker.GetNonNullableType(own)) != 0 {
-					return nil, l.notYet(node, "a typed array seen through a structural view that loses its buffer representation")
-				}
-				return nil, l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(contextual)+" (one keeps something weakly that the other keeps strongly)")
-			} else if tuple, array := l.tupleSeenAsArray(own, contextual, map[[2]*checker.Type]bool{}); tuple != nil {
-				return nil, l.notYet(node, "a "+l.checker.TypeToString(tuple)+" seen as a "+l.checker.TypeToString(array)+" (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]])")
+			if err := l.valueSlotKeeps(node, contextual); err != nil {
+				return nil, err
 			}
 		}
 	}
@@ -1598,3 +1575,59 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 // Optional booleans have a three-state byte in the function-call ABI.
 // General union arguments still need a representation adapter.
 func argumentSlotless(valueType ir.Type) bool { return valueType == ir.Union }
+
+// valueSlotStops is lowering's own judgment of a value seen as the slot it goes into, beside the refusal
+// registry's: valueSlotTags, and valueSlotKeeps for a value held by reference. expression runs the two
+// halves where it lowers the value, against the value's own slot. A write that can land under a slot it
+// isn't lowered against, a computed-key record write under a declared property, runs both against that
+// slot too (namedWriteStop, #b6m00y7), so one list of these checks serves both.
+func (l *lowering) valueSlotStops(node *ast.Node, slot *checker.Type, reference bool) error {
+	if err := l.valueSlotTags(node, slot); err != nil {
+		return err
+	}
+	if reference {
+		return l.valueSlotKeeps(node, slot)
+	}
+	return nil
+}
+
+// valueSlotTags is a value's null and undefined tags against the slot's, and an unknown view.
+func (l *lowering) valueSlotTags(node *ast.Node, slot *checker.Type) error {
+	if l.nullableObjectViewHazard(node, slot) {
+		return l.notYet(node, "sharing nullable object storage with different null/undefined tags; copy values into tagged storage")
+	}
+	return l.unknownView(node, l.checker.GetTypeAtLocation(node), slot)
+}
+
+// valueSlotKeeps is a value held by reference against the slot it goes into: a Buffer or Hash seen as
+// another type, a host object's view (#8k12t4s), a weak or strong keep, a typed array's buffer and a
+// tuple seen as an array. A literal is made as its slot, so it's never judged here.
+func (l *lowering) valueSlotKeeps(node *ast.Node, slot *checker.Type) error {
+	if literal := ast.SkipParentheses(node).Kind; literal == ast.KindArrayLiteralExpression || literal == ast.KindObjectLiteralExpression {
+		return nil
+	}
+	// The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of
+	// Weak<Box>, and (x: Weak<Box>) => ... as (x: Box) => ...; but one keeps a handle where the
+	// other keeps the target, so the same object, array or function can't be both. A tuple is held
+	// as an object, so it can't be seen as an array either, here or anywhere inside. A literal is
+	// made as the type it's written into, so it never differs.
+	if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferView(l.present(own), l.present(slot)) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) {
+		return l.notYet(node, "Buffer or Hash viewed as another object type (native host internal slots)")
+	}
+	// Any other host object may be seen through a type only as far as its registration names
+	// the members that type reaches (#8k12t4s); Buffer and Hash are refused whole above.
+	if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferType(l.present(own), "Buffer") && !l.nodeBufferType(l.present(own), "Hash") {
+		if reached := l.nodeHostViewAt(own, slot); reached != "" {
+			return l.nodeHostViewRefusal(node, own, slot, reached)
+		}
+	}
+	if own := l.contextualGenericType(node, l.checker.GetTypeAtLocation(node)); !l.typedArraySetArgument(node) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) && !l.sameKeeping(own, slot, map[[2]*checker.Type]bool{}) {
+		if l.typedArrayKind(l.checker.GetNonNullableType(own)) != 0 {
+			return l.notYet(node, "a typed array seen through a structural view that loses its buffer representation")
+		}
+		return l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(slot)+" (one keeps something weakly that the other keeps strongly)")
+	} else if tuple, array := l.tupleSeenAsArray(own, slot, map[[2]*checker.Type]bool{}); tuple != nil {
+		return l.notYet(node, "a "+l.checker.TypeToString(tuple)+" seen as a "+l.checker.TypeToString(array)+" (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]])")
+	}
+	return nil
+}
