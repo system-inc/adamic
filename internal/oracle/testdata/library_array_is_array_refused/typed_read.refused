@@ -1,0 +1,2 @@
+internal/oracle/testdata/library_array_is_array_refused/typed_read.a:13:35: error TS2571: Object is of type 'unknown'.
+internal/oracle/testdata/library_array_is_array_refused/typed_read.a:7:9: error TS4104: The type 'readonly unknown[]' is 'readonly' and cannot be assigned to the mutable type 'string[]'.

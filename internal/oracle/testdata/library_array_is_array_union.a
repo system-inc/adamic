@@ -1,0 +1,26 @@
+// A union member that is already an array keeps its own type through Array.isArray: string[]
+// stays string[] and readonly number[] stays readonly number[], so their elements are read as
+// what they are, and the other side is the string.
+function joined(value: string | string[]): string {
+	if (Array.isArray(value)) return value.map((item) => item.toUpperCase()).join('+');
+	return value.toUpperCase();
+}
+function total(value: string | readonly number[]): number {
+	if (Array.isArray(value)) {
+		let sum = 0;
+		for (const item of value) sum += item;
+		return sum;
+	}
+	return value.length;
+}
+function first(value: string | readonly string[]): string {
+	return Array.isArray(value) ? (value[0] ?? 'none') : value;
+}
+console.log(joined(['a', 'b']));
+console.log(joined('c'));
+console.log(joined([]));
+console.log(String(total([1, 2, 3.5])));
+console.log(String(total('four')));
+console.log(first(['x', 'y']));
+console.log(first([]));
+console.log(first('z'));
