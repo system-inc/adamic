@@ -3,6 +3,7 @@ package lower
 import (
 	"context"
 	"maps"
+	"math"
 	"slices"
 	"strings"
 	"testing"
@@ -14,9 +15,9 @@ import (
 
 // nodeHostSignaturesReach pairs a view's signature with each overload whose result fits the view's
 // result. At run time the arguments choose the overload, not the result (Compiler's should on
-// #8k12t4s), so the pairing is exact only while no registered member has two overloads whose
-// parameters accept each other and whose results differ in the host object they hold with neither
-// result fitting the other: then the view's arguments could pick the one its result left unpaired.
+// #8k12t4s), so the pairing is exact only while no registered member has two overloads that one
+// argument list fits and whose results differ in the host object they hold with neither result
+// fitting the other: then the view's arguments could pick the one its result left unpaired.
 // This holds it, over every registered member with more than one call or construct signature.
 //
 // Two such overloads where the first's result fits the later one's, as realpathSync's and
@@ -35,7 +36,7 @@ func TestNodeRegisteredOverloadsSplitNoHostObject(t *testing.T) {
 		}
 		split, wider := l.nodeOverloadHostSplit(resolved[name])
 		if split != "" {
-			t.Errorf("%s has overloads whose parameters accept each other and whose results differ in holding a host object (%s): pair by parameters in nodeHostSignaturesReach", name, split)
+			t.Errorf("%s has overloads that one argument list fits and whose results differ in holding a host object (%s): pair by parameters in nodeHostSignaturesReach", name, split)
 		}
 		if wider != "" {
 			widened = append(widened, name+" ("+wider+")")
@@ -55,7 +56,13 @@ func TestNodeRegisteredOverloadsFindASplit(t *testing.T) {
 		`declare function split(key: string): number;`,
 		`declare function widen(key: string): number;`,
 		`declare function widen(key: string): number | typeof performance;`,
-		`console.log(String(performance.now() >= 0) + String(typeof split) + String(typeof widen));`,
+		`declare function arity(): typeof performance;`,
+		`declare function arity(key?: string): number;`,
+		`declare function overlap(key: string): typeof performance;`,
+		`declare function overlap(key: string | number): number;`,
+		`declare function apart(key: string): typeof performance;`,
+		`declare function apart(key: number): number;`,
+		`console.log(String(performance.now() >= 0) + typeof split + typeof widen + typeof arity + typeof overlap + typeof apart);`,
 	}, "\n")
 	program, err := load.Load([]string{writeAgreementSource(t, "main.ts", source)})
 	if err != nil {
@@ -70,11 +77,20 @@ func TestNodeRegisteredOverloadsFindASplit(t *testing.T) {
 			declared[statement.Name().Text()] = checked.GetSymbolAtLocation(statement.Name())
 		}
 	}
-	if declared["split"] == nil || declared["widen"] == nil {
-		t.Fatalf("found the declarations %v", slices.Collect(maps.Keys(declared)))
+	for _, name := range []string{"split", "widen", "arity", "overlap", "apart"} {
+		if declared[name] == nil {
+			t.Fatalf("found the declarations %v, not %s", slices.Collect(maps.Keys(declared)), name)
+		}
 	}
-	if split, _ := l.nodeOverloadHostSplit(declared["split"]); !strings.Contains(split, "Performance") {
-		t.Fatalf("want split's two overloads found splitting on Performance, got %q", split)
+	// arity's overloads both take no arguments, and overlap's both take a string, though neither
+	// pair has the same parameters; apart's take nothing in common.
+	for _, name := range []string{"split", "arity", "overlap"} {
+		if split, _ := l.nodeOverloadHostSplit(declared[name]); !strings.Contains(split, "Performance") {
+			t.Fatalf("want %s's two overloads found splitting on Performance, got %q", name, split)
+		}
+	}
+	if split, wider := l.nodeOverloadHostSplit(declared["apart"]); split != "" || wider != "" {
+		t.Fatalf("want apart's two overloads passed over, got split %q, wider %q", split, wider)
 	}
 	if split, wider := l.nodeOverloadHostSplit(declared["widen"]); split != "" || !strings.Contains(wider, "Performance") {
 		t.Fatalf("want widen's two overloads found only widening, got split %q, wider %q", split, wider)
@@ -87,8 +103,8 @@ func (l *lowering) nodeOverloadCount(member *ast.Symbol) int {
 	return len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) + len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct))
 }
 
-// nodeOverloadHostSplit looks at each two overloads of a member, of one kind, whose parameters accept
-// each other (the same count, each type assignable both ways) and whose results differ in the host
+// nodeOverloadHostSplit looks at each two overloads of a member, of one kind, that one argument list
+// fits (nodeParametersAcceptEachOther) and whose results differ in the host
 // object they may hold. It names the first such pair as wider when the earlier overload's result fits
 // the later one's, and as split otherwise; each is "" when there's none.
 func (l *lowering) nodeOverloadHostSplit(member *ast.Symbol) (split, wider string) {
@@ -120,18 +136,46 @@ func (l *lowering) nodeOverloadHostSplit(member *ast.Symbol) (split, wider strin
 	return split, wider
 }
 
-// nodeParametersAcceptEachOther says whether two signatures take the same arguments: as many
-// parameters, each one's type assignable to the other's.
+// nodeParametersAcceptEachOther says whether some one argument list fits both signatures: an
+// argument count both admit, and at each position below it, types with a value in common. It errs
+// toward yes, so the check above fails closed. The fewest arguments both admit is the list with the
+// fewest positions to agree on, so only those are compared; a rest parameter admits any count past
+// its place, and GetTypeAtPosition reads its element there.
 func (l *lowering) nodeParametersAcceptEachOther(one, other *checker.Signature) bool {
-	first, second := one.Parameters(), other.Parameters()
-	if len(first) != len(second) {
+	most := func(signature *checker.Signature) int {
+		if l.checker.HasEffectiveRestParameter(signature) {
+			return math.MaxInt
+		}
+		return len(signature.Parameters())
+	}
+	fewest := max(one.MinArgumentCount(), other.MinArgumentCount())
+	if fewest > min(most(one), most(other)) {
 		return false
 	}
-	for index := range first {
-		a, b := l.checker.GetTypeOfSymbol(first[index]), l.checker.GetTypeOfSymbol(second[index])
-		if !l.checker.IsTypeAssignableTo(a, b) || !l.checker.IsTypeAssignableTo(b, a) {
+	for position := range fewest {
+		if !l.nodeTypesOverlap(l.checker.GetTypeAtPosition(one, position), l.checker.GetTypeAtPosition(other, position)) {
 			return false
 		}
 	}
 	return true
+}
+
+// nodeTypesOverlap says whether two parameter types may share a value: one assignable to the other,
+// or, for a union, any member overlapping the other type. A union's members are read one level
+// down, which is where Node's declarations put their alternatives.
+func (l *lowering) nodeTypesOverlap(one, other *checker.Type) bool {
+	if l.checker.IsTypeAssignableTo(one, other) || l.checker.IsTypeAssignableTo(other, one) {
+		return true
+	}
+	for _, pair := range [][2]*checker.Type{{one, other}, {other, one}} {
+		if pair[0].Flags()&checker.TypeFlagsUnion == 0 {
+			continue
+		}
+		for _, member := range pair[0].Types() {
+			if l.checker.IsTypeAssignableTo(member, pair[1]) || l.checker.IsTypeAssignableTo(pair[1], member) {
+				return true
+			}
+		}
+	}
+	return false
 }
