@@ -149,12 +149,12 @@ func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
 	case ast.KindAsExpression:
 		found = l.optionalValue(node.AsAsExpression().Expression, l.checker.GetTypeAtLocation(node))
 	case ast.KindShorthandPropertyAssignment:
-		target := l.checker.GetContextualType(node.Parent, checker.ContextFlagsNone)
+		target := l.slotType(node.Parent)
 		if target != nil {
 			found = l.optionalValue(node.Name(), l.checker.GetTypeOfPropertyOfType(target, node.Name().Text()))
 		}
 	case ast.KindSpreadAssignment:
-		target := l.checker.GetContextualType(node.Parent, checker.ContextFlagsNone)
+		target := l.slotType(node.Parent)
 		if target == nil {
 			return nil
 		}
@@ -177,7 +177,7 @@ func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
 		}
 		var target *checker.Type
 		if viewSite(node) {
-			target = l.checker.GetContextualType(node, checker.ContextFlagsNone)
+			target = l.slotType(node)
 		}
 		if target == nil {
 			target = l.impliedTarget(node)

@@ -55,7 +55,7 @@ stored:
 	flags := l.checker.GetTypeAtLocation(operand).Flags()
 	if err != nil && (flags == checker.TypeFlagsUndefined || flags == checker.TypeFlagsNull) {
 		of = ir.Object
-		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+		if contextual := l.slotType(node); contextual != nil {
 			if representation, known := l.representation(contextual); known {
 				of = representation
 			}
