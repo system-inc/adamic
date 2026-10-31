@@ -16,6 +16,9 @@ type refusalRule struct {
 	name    string
 	// check refuses node, or prunes it: no later rule sees node and the walk doesn't enter it.
 	check func(l *lowering, node *ast.Node) (prune bool, err error)
+	// function is the rule's own function as it registered, so a test can find its source and walk
+	// what it reaches (TestRefusalRulesReadTheirSlotThroughSlotType).
+	function any
 }
 
 // refusalRegistry holds the rules in ordinal order.
@@ -28,14 +31,14 @@ var refusalRules refusalRegistry
 
 // register adds a rule that refuses a node or lets the walk go on.
 func (registry *refusalRegistry) register(ordinal int, name string, check func(*lowering, *ast.Node) error) {
-	registry.insert(refusalRule{ordinal: ordinal, name: name, check: func(l *lowering, node *ast.Node) (bool, error) {
+	registry.insert(refusalRule{ordinal: ordinal, name: name, function: check, check: func(l *lowering, node *ast.Node) (bool, error) {
 		return false, check(l, node)
 	}})
 }
 
 // registerPruning adds a rule that can also stop the walk at a node without refusing it.
 func (registry *refusalRegistry) registerPruning(ordinal int, name string, check func(*lowering, *ast.Node) (bool, error)) {
-	registry.insert(refusalRule{ordinal: ordinal, name: name, check: check})
+	registry.insert(refusalRule{ordinal: ordinal, name: name, function: check, check: check})
 }
 
 // insert keeps the rules sorted by ordinal, so their order never depends on which file's init ran

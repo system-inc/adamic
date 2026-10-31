@@ -140,7 +140,7 @@ func (l *lowering) acceptsUndefined(node *ast.Node) bool {
 			}
 		}
 	}
-	contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone)
+	contextual := l.slotType(node)
 	return contextual != nil && l.includesUndefined(contextual)
 }
 

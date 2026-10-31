@@ -104,7 +104,7 @@ func (l *lowering) entriesRecordLiteralWalk(literal *ast.Node) bool {
 	if parent == nil || parent.Kind != ast.KindVariableDeclaration || parent.Parent.Flags&ast.NodeFlagsConst == 0 {
 		return false
 	}
-	contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone)
+	contextual := l.slotType(literal)
 	indexed := contextual != nil && len(l.checker.GetIndexInfosOfType(contextual)) != 0
 	modules, err := l.moduleOrder(l.program.Files()[0])
 	if err != nil {

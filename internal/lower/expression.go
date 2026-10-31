@@ -268,7 +268,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		if value.Type() == ir.Object && l.nullableObjectUnion(l.checker.GetTypeAtLocation(node)) && !nullableObjectLookupTypeOf(node, value) {
 			return nil, l.notYet(node, "a nullable object lookup without separate null/undefined tags")
 		}
-		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+		if contextual := l.slotType(node); contextual != nil {
 			if l.nullableObjectViewHazard(node, contextual) {
 				return nil, l.notYet(node, "sharing nullable object storage with different null/undefined tags; copy values into tagged storage")
 			}
@@ -279,7 +279,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	}
 	if err == nil && value.Type() != ir.Weak && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
 		if _, constant := value.(ir.Undefined); !constant {
-			if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+			if contextual := l.slotType(node); contextual != nil {
 				if to, known := l.representation(contextual); known && to != value.Type() && to != ir.Union && (to.IsMaybe() || to.IsReference()) {
 					// Keep the read or call's effects when converting its only possible value.
 					value = ir.Narrow{Value: ir.Box{Value: value}, To: to}
@@ -293,7 +293,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		// other keeps the target, so the same object, array or function can't be both. A tuple is held
 		// as an object, so it can't be seen as an array either, here or anywhere inside. A literal is
 		// made as the type it's written into, so it never differs.
-		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+		if contextual := l.slotType(node); contextual != nil {
 			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferView(l.present(own), l.present(contextual)) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) {
 				return nil, l.notYet(node, "Buffer or Hash viewed as another object type (native host internal slots)")
 			}
@@ -310,7 +310,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	// Anything the check above doesn't see (a tuple inside a literal, or a union around it) is still
 	// not yet: wherever a tuple flows into an array slot, at any depth.
 	if skipped := ast.SkipParentheses(node); err == nil && skipped.Kind != ast.KindSpreadElement {
-		if contextual := l.checker.GetContextualType(skipped, checker.ContextFlagsNone); contextual != nil && l.tupleWhereArrayGoes(l.checker.GetTypeAtLocation(skipped), contextual, 0) {
+		if contextual := l.slotType(skipped); contextual != nil && l.tupleWhereArrayGoes(l.checker.GetTypeAtLocation(skipped), contextual, 0) {
 			return nil, l.notYet(skipped, "a tuple where an array goes (as "+l.checker.TypeToString(contextual)+")")
 		}
 	}

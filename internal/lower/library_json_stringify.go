@@ -86,7 +86,7 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 		if err != nil {
 			return nil, nil, err
 		}
-		proven := l.checker.GetContextualType(n, checker.ContextFlagsNone)
+		proven := l.slotType(n)
 		if l.recordElement(proven) == nil {
 			proven = l.checker.GetTypeAtLocation(n)
 		}

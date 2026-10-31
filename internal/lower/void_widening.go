@@ -61,7 +61,7 @@ func (l *lowering) relationSite(node *ast.Node) (string, *checker.Type, *checker
 	var target *checker.Type
 	name := "relation"
 	if viewSite(node) {
-		target = l.checker.GetContextualType(node, checker.ContextFlagsNone)
+		target = l.slotType(node)
 	}
 	switch parent.Kind {
 	case ast.KindVariableDeclaration, ast.KindParameter, ast.KindPropertyDeclaration:
@@ -87,7 +87,7 @@ func (l *lowering) relationSite(node *ast.Node) (string, *checker.Type, *checker
 		if symbol := l.checker.GetShorthandAssignmentValueSymbol(parent); symbol != nil {
 			source = l.checker.GetTypeOfSymbol(symbol)
 		}
-		if object := l.checker.GetContextualType(parent.Parent, checker.ContextFlagsNone); object != nil {
+		if object := l.slotType(parent.Parent); object != nil {
 			target = l.checker.GetTypeOfPropertyOfType(object, parent.Name().Text())
 		}
 	case ast.KindArrayLiteralExpression:

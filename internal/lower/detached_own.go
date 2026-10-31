@@ -72,7 +72,7 @@ func (l *lowering) detachedOwnRefusal(node *ast.Node) error {
 			Fix: "bind it to a const and use only .call(target, key), or use that call directly"}
 	}
 	if l.isExpression(node) && viewSite(node) {
-		contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone)
+		contextual := l.slotType(node)
 		at := node
 		for at.Parent != nil && at.Parent.Kind == ast.KindParenthesizedExpression {
 			at = at.Parent

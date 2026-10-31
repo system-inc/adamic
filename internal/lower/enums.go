@@ -96,7 +96,7 @@ func (l *lowering) enumObjectView(node *ast.Node) error {
 	if !l.isExpression(node) || node.Kind == ast.KindParenthesizedExpression {
 		return nil
 	}
-	target := l.checker.GetContextualType(node, checker.ContextFlagsNone)
+	target := l.slotType(node)
 	source := l.checker.GetTypeAtLocation(node)
 	if node.Kind == ast.KindAsExpression {
 		target = l.checker.GetTypeAtLocation(node)

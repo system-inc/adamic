@@ -338,7 +338,7 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
 	if err != nil {
 		return nil, true, err
 	}
-	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+	if contextual := l.slotType(node); contextual != nil {
 		expected, proven := l.representation(contextual)
 		if !proven || expected != value.Type() && expected != ir.Maybe(value.Type()) && !(expected == ir.Union && l.writable(contextual) && (value.Type() == ir.String || value.Type() == ir.Number || value.Type() == ir.Boolean || value.Type() == ir.MaybeNumber)) {
 			return nil, true, l.notYet(node, "a delayed library result whose contextual representation is not proven")
