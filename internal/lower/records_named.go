@@ -82,10 +82,19 @@ func (l *lowering) recordNamedWrite(access, value *ast.Node) error {
 		return nil // The checker already applies the named property's write type.
 	}
 	from := l.checker.GetTypeAtLocation(value)
+	// The list below names some of Adamic's slot rules and fails open on those it doesn't: nominal
+	// ancestry let an Other into names: Point, whose method native then ran on it (Language's w8), and
+	// void widening let a () => void into names: () => unknown (w10). Until the registry judges the
+	// write (l.slotType, #b6m00y7), the value's widened type, its literals at their base type, must be
+	// each named property's type itself, as a delayed Array write's must be (delayedArrayWritesFit).
+	widened := checker.Checker_getBaseTypeOfLiteralType(l.checker, l.checker.GetWidenedType(from))
 	for _, property := range l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(a.Expression)) {
 		to := l.checker.GetNonMissingTypeOfSymbol(property)
 		if l.checker.IsReadonlySymbol(property) || !l.checker.IsTypeAssignableTo(from, to) || !l.enumAssignable(from, to) || l.widened(from, to, map[[2]*checker.Type]bool{}) != nil || !l.sameRecordStorage(from, to, map[[2]*checker.Type]bool{}) {
 			return l.notYet(access, "an unrestricted dictionary write that can violate named property "+property.Name+"; use a literal key or a value accepted by every named property")
+		}
+		if widened != to || !l.sameKeeping(widened, to, map[[2]*checker.Type]bool{}) {
+			return l.notYet(access, "an unrestricted dictionary write of a value whose type isn't named property "+property.Name+"'s type itself; use a literal key or a value of exactly that type")
 		}
 	}
 	return nil
