@@ -42,18 +42,13 @@ interface MakeText { readonly make: () => string; }
 function show(m: Make): void { const t: MakeText = m; console.log(t.make()); }
 const w = { make: () => 5 }; show(w);`, "a member typed any (make()) related to string at the initializer site"},
 		// The source expression owns the any (Adamic's ruling, Lower's line): a program local counts whoever
-		// wrote its type, so the program's own any[] seen as string[] counts (q4), and so does a program
-		// parameter Array.isArray narrowed to any[], seen as string[] or passed as one (p2, p8), and a library
-		// result first stored in a program local. Mutant: nearest-property ownership, under which q4, p2 and
-		// p8 lower.
+		// wrote its type, so the program's own any[] seen as string[] counts (q4), and so does a library
+		// result first stored in a program local, which still pins the walk's library-written any. Mutant:
+		// nearest-property ownership, under which q4 lowers. The any[] that Array.isArray narrowed a program
+		// parameter to is gone since C1: p2 and p8 are the checker's (TestAnyMemberRelationC1ClosesP2AndP8).
 		{"program's any element", `const loose: any[] = [5];
 const t: string[] = loose;
 console.log(t[0] ?? "none");`, "a member typed any ([]) related to string at the initializer site"},
-		{"library's any element", `function show(x: unknown): void { if (Array.isArray(x)) { const ys: string[] = x; console.log(ys[0] ?? "none"); } }
-show([5]);`, "a member typed any ([]) related to string at the initializer site"},
-		{"library's any element passed", `function count(ys: readonly string[]): number { return ys.length; }
-function show(x: unknown): void { if (Array.isArray(x)) { console.log(String(count(x))); } }
-show([5]);`, "a member typed any ([]) related to string at the argument site"},
 		// A pruning rule's subtree (a type predicate's) beside it doesn't hide the recorded NotYet (Lower).
 		{"after a pruned sibling", `function isWord(x: unknown): x is string { return typeof x === "string"; }
 function show(n: Loose): void { const h: HasText = n; console.log(h.text); }
@@ -75,6 +70,29 @@ const w = { kind: 9, pos: 1, text: 5 }; show(w);`, "a member typed any (text) re
 			var pending *NotYet
 			if !errors.As(err, &pending) || !strings.Contains(err.Error(), probe.want) {
 				t.Fatalf("want NotYet with %q, got %v", probe.want, err)
+			}
+		})
+	}
+}
+
+// p2 and p8 read an unknown narrowed by Array.isArray as a string[], initialized and passed. Since C1 the
+// prelude's isArray narrows it to readonly unknown[], so the checker rejects both before any relation
+// is walked, pinned by its text.
+func TestAnyMemberRelationC1ClosesP2AndP8(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, source, want string }{
+		{"library's any element", `function show(x: unknown): void { if (Array.isArray(x)) { const ys: string[] = x; console.log(ys[0] ?? "none"); } }
+show([5]);`, "main.ts:3:65: error TS4104: The type 'readonly unknown[]' is 'readonly' and cannot be assigned to the mutable type 'string[]'."},
+		{"library's any element passed", `function count(ys: readonly string[]): number { return ys.length; }
+function show(x: unknown): void { if (Array.isArray(x)) { console.log(String(count(x))); } }
+show([5]);`, "main.ts:4:84: error TS2345: Argument of type 'readonly unknown[]' is not assignable to parameter of type 'readonly string[]'.\n  Type 'unknown' is not assignable to type 'string'."},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := load.Load([]string{writeAgreementSource(t, "main.ts", anyRelationPrelude+probe.source)})
+			var checkError *load.CheckError
+			if !errors.As(err, &checkError) || len(checkError.Diagnostics) != 1 || !strings.HasSuffix(checkError.Diagnostics[0], "/"+probe.want) {
+				t.Fatalf("want the checker's %q, got %v", probe.want, err)
 			}
 		})
 	}
