@@ -12,7 +12,6 @@ import (
 	"slices"
 	"sort"
 	"strings"
-	"sync"
 	"time"
 )
 
@@ -35,8 +34,13 @@ import (
 // reads no environment, never is.
 const objectTrustVariable = "ADAMIC_NATIVE_OBJECT_TRUST"
 
-// objectTrust is objectTrustVariable as this process reads it, once.
-var objectTrust = sync.OnceValue(func() string { return os.Getenv(objectTrustVariable) })
+// objectTrust is objectTrustVariable as this process reads it. It's a function, never a package variable whose
+// initializer reads it: an initializer runs in every build the package links, so runtimeproducts' census would count
+// the read as reached by the runtime archive's build and the lean build, which never key an object
+// (TestTheRuntimeBuildReachesOnlyItsDeclaredFiles, TestTheLeanBuildReachesOnlyItsDeclaredFiles).
+func objectTrust() string {
+	return os.Getenv(objectTrustVariable)
+}
 
 // errUncachedObject is a reason main.c gets no key: its compile reads something the key can't account for.
 var errUncachedObject = errors.New("native: main.c compiles uncached")
