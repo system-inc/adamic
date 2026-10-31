@@ -1,3 +1,4 @@
+// a-check: refused a downcast from Base to JSDoc in .a whose checks no proof erases
 interface JSDocComment { readonly text: string; readonly flags: number; }
 type NodeArray<T> = readonly T[];
 interface Base { readonly kind: string; }

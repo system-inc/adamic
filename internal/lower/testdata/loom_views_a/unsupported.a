@@ -1,4 +1,4 @@
-// a-check: refused checked view read of field label with unsupported representation conversion contract
+// a-check: refused a downcast from Base to View in .a whose checks no proof erases
 interface Base { readonly label: string; }
 interface View extends Base {
     readonly count: number | string;

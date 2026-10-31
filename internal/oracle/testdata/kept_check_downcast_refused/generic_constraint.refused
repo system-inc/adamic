@@ -1,0 +1,1 @@
+internal/oracle/testdata/kept_check_downcast_refused/generic_constraint.a:8:10: Adamic 0.1 refuses a downcast from Shape to Circle in .a whose checks no proof erases; narrow it, as .a writes !: if (shape.kind !== "Circle") panic('why'), or move the file to .ts, where the cast stays a checked cast
