@@ -21,7 +21,8 @@ type BoundaryParameter struct {
 }
 
 // BoundaryStringTable interns metadata literals once per program, independently
-// of the emitted program's constants.
+// of the emitted program's constants. indexes is Values' inverse, rebuilt from them when nil, as it is in a table gob
+// read back.
 type BoundaryStringTable struct {
 	Values  []string
 	indexes map[string]int
@@ -29,7 +30,10 @@ type BoundaryStringTable struct {
 
 func (table *BoundaryStringTable) Intern(text string) int {
 	if table.indexes == nil {
-		table.indexes = map[string]int{}
+		table.indexes = make(map[string]int, len(table.Values))
+		for index, value := range table.Values {
+			table.indexes[value] = index
+		}
 	}
 	if index, ok := table.indexes[text]; ok {
 		return index

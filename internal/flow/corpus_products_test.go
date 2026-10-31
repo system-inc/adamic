@@ -7,7 +7,6 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
-	"sync"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
@@ -15,8 +14,6 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 )
-
-var flowCorpusGobOnce sync.Once
 
 func flowCorpusRemainderProduct(t *testing.T, path string, build bool) string {
 	t.Helper()
@@ -44,7 +41,7 @@ func flowCorpusRemainderProduct(t *testing.T, path string, build bool) string {
 		if err != nil {
 			return err
 		}
-		registerFlowCorpusIR()
+		ir.RegisterGob()
 		file, err := os.Create(filepath.Join(directory, "program.gob"))
 		if err != nil {
 			return err
@@ -68,7 +65,7 @@ func runFlowCorpusRemainderProductsShard(t *testing.T, shard int) {
 func installFlowCorpusRemainderProduct(t *testing.T, path string) {
 	t.Helper()
 	directory := flowCorpusRemainderProduct(t, path, false)
-	registerFlowCorpusIR()
+	ir.RegisterGob()
 	file, err := os.Open(filepath.Join(directory, "program.gob"))
 	if err != nil {
 		t.Fatal(err)
