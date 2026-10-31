@@ -1,0 +1,6 @@
+import process from 'node:process';
+import fs from 'node:fs';
+console.error(`initial ${process.stdout.columns ?? 0}`);
+fs.readFileSync((process.env.COLUMNS_GATE ?? ''), 'utf8');
+await Promise.resolve();
+console.error(`later ${process.stdout.columns ?? 0}`);

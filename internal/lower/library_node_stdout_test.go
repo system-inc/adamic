@@ -2,8 +2,6 @@ package lower
 
 import (
 	"errors"
-	"os"
-	"path/filepath"
 	"strings"
 	"testing"
 )
@@ -42,27 +40,6 @@ func TestNodeStdoutWriteRefusals(t *testing.T) {
 				t.Fatalf("want %s, got %v", one.reason, err)
 			}
 		})
-	}
-}
-
-func TestNodeStdoutTTYRefusals(t *testing.T) {
-	t.Parallel()
-	for _, member := range []string{"columns"} {
-		for _, ext := range []string{"a", "ts"} {
-			t.Run(member+"."+ext, func(t *testing.T) {
-				file := filepath.Join("testdata/stdout/refused", member+"."+ext)
-				source, err := os.ReadFile(file)
-				if err != nil {
-					t.Fatal(err)
-				}
-				_, err = lowerSourceAs(t, string(source), "."+ext)
-				var ny *NotYet
-				want := "Node caches the terminal width and refreshes it on SIGWINCH from the event loop; adamic/host-tty"
-				if !errors.As(err, &ny) || ny.What != want {
-					t.Fatalf("want exact %q, got %v", want, err)
-				}
-			})
-		}
 	}
 }
 
