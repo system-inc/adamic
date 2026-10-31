@@ -90,9 +90,12 @@ func (l *lowering) recordNamedWrite(access, value *ast.Node) error {
 // judged against the named properties of the literal's own type and of the type it's written into.
 // A name strings joined by + make (constantStringKey) is judged as that name alone, so tsc's
 // ["" + "constructor"] beside the keywords it declares (01_scanner_keywords.a) names none of them.
-func (l *lowering) recordComputedEntry(literal, entry *ast.Node) error {
+// A slot boxed as a union (of) is left to its reads: recordReadType checks a declared scalar's tag
+// and stops loudly on a lie, Adamic's .ts ruling for { [name]: 3 } (records_union_lying.ts), and a
+// declared object read from it is not yet. Only an unboxed slot is read as the declared type unchecked.
+func (l *lowering) recordComputedEntry(literal, entry *ast.Node, of ir.Type) error {
 	key := ast.SkipParentheses(entry.Name().AsComputedPropertyName().Expression)
-	if key.Kind == ast.KindStringLiteral || key.Kind == ast.KindNoSubstitutionTemplateLiteral || key.Kind == ast.KindNumericLiteral || entry.Kind != ast.KindPropertyAssignment {
+	if of == ir.Union || key.Kind == ast.KindStringLiteral || key.Kind == ast.KindNoSubstitutionTemplateLiteral || key.Kind == ast.KindNumericLiteral || entry.Kind != ast.KindPropertyAssignment {
 		return nil
 	}
 	var names map[string]bool

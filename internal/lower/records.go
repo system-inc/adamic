@@ -294,7 +294,7 @@ func (l *lowering) recordLiteral(node *ast.Node, t *checker.Type) (ir.Expression
 		var key ir.Expression
 		var err error
 		if name.Kind == ast.KindComputedPropertyName {
-			if err := l.recordComputedEntry(node, p); err != nil {
+			if err := l.recordComputedEntry(node, p, of); err != nil {
 				return nil, err
 			}
 			key, err = l.recordKey(name.AsComputedPropertyName().Expression, false)
