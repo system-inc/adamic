@@ -26,6 +26,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/scanner"
 	"github.com/microsoft/TypeScript/tsc/shim/tsoptions"
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
+	"github.com/microsoft/TypeScript/tsc/shim/vfs"
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/cachedvfs"
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
 	"github.com/system-inc/adamic/internal/buildlog"
@@ -80,7 +81,7 @@ func compilerOptions() *core.CompilerOptions {
 //
 // Each path is an Adamic source: a .ts file or a .a file.
 func Load(paths []string) (*Program, error) {
-	return load(paths, nil, nil)
+	return load(paths, nil, nil, osvfs.FS())
 }
 
 // LoadDisplayed checks paths as Load does, naming each file by display(its name) wherever the program names it: in
@@ -89,17 +90,25 @@ func Load(paths []string) (*Program, error) {
 // the directory that built it (#tqrqx60: landable-13b's estree products named a random build directory, so no two
 // builds of one program were the same bytes). display must keep two names apart when it takes them in apart.
 func LoadDisplayed(paths []string, display func(string) string) (*Program, error) {
-	return load(paths, nil, display)
+	return load(paths, nil, display, osvfs.FS())
+}
+
+// LoadFrom checks paths as LoadDisplayed does, asking disk for every file and directory the checker would ask the
+// machine's file system for: the sources, and every path module resolution looks for. A caller that holds a program's
+// sources itself serves them, and learns every other path the checker asked after: internal/lowered keys a stored
+// lowering by what its resolution looked for.
+func LoadFrom(paths []string, display func(string) string, disk vfs.FS) (*Program, error) {
+	return load(paths, nil, display, disk)
 }
 
 // LoadOverlay checks paths while replacing the named files with source held by the caller. The
 // overlay is read-only and never written to disk; names are absolute or relative to the current
 // directory. This is for tools which test semantics-preserving source adaptations.
 func LoadOverlay(paths []string, overlay map[string]string) (*Program, error) {
-	return load(paths, overlay, nil)
+	return load(paths, overlay, nil, osvfs.FS())
 }
 
-func load(paths []string, overlay map[string]string, display func(string) string) (*Program, error) {
+func load(paths []string, overlay map[string]string, display func(string) string, disk vfs.FS) (*Program, error) {
 	// The load phase's line on $ADAMIC_BUILD_LOG, once a program, whichever of Load's forms called.
 	defer buildlog.Phase("load", time.Now())
 	if len(paths) == 0 {
@@ -115,7 +124,7 @@ func load(paths []string, overlay map[string]string, display func(string) string
 	for name, source := range overlay {
 		normalizedOverlay[currentDirectory.ResolveFile(name)] = source
 	}
-	fs := &sourceFS{FS: osvfs.FS(), overlay: normalizedOverlay, display: display}
+	fs := &sourceFS{FS: disk, overlay: normalizedOverlay, display: display}
 	roots := make([]tspath.RootedFilePath, 0, len(paths)+1)
 	for _, path := range paths {
 		root, err := rootFileName(fs, currentDirectory, path)
