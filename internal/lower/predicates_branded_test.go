@@ -163,8 +163,10 @@ show(v);`, "HasName", "5\n"},
 // What S's view can't hold stays NotYet under its own reason: a false side, since an object test can't
 // be negated (mutant: the guard dropped, and the honest Identifier panics on the false branch); a whole
 // copy of S's value, which #yq6fkp5's rule holds at the copy now that it's on main, so B's own copy scan
-// is gone; a class assignable to S. A subtype of S in the argument's type keeps its own type when
-// narrowed, with fields S's view doesn't check (mutant: a subtype member passed, and both lower). A
+// is gone; a class assignable to S, kept failing closed: an honest instance read through S's view agreed
+// with Node with this rule off (probed on Golem, Nov 1), but no lying instance is pinned yet (mutant: the
+// rule off, and the class lowers). A subtype of S in the argument's type keeps its own type when
+// narrowed, with fields S's view doesn't check (mutant: a subtype member passed, and it lowers). A
 // supertype with a wide kind and no brand keeps the old reason, so the rule is keyed on shape (mutant:
 // the brand test dropped, and Expression lowers).
 func TestBrandedSupertypeStaysNotYet(t *testing.T) {
@@ -221,8 +223,8 @@ function isLateLie(d: Declaration): d is LateBound { return kindOf(d) !== 0; }
 function show(p: PropertyDeclaration): void { if (isLateLie(p)) { console.log(p.name.expressionText); } }
 const p: PropertyDeclaration = { kind: 172, pos: 1, _declarationBrand: undefined, name: { kind: 80, pos: 2, escapedText: "x" } }; show(p);`, "a checked predicate target LateBound that narrows PropertyDeclaration, which isn't its supertype"},
 		// A member assignable to S beside an unrelated one: the checker keeps the first and drops the second,
-		// so the call is NotYet, never a model of which member it drops (Compiler's must on 8c7afca2).
-		// Mutant: a subtype member passed, and the call lowers.
+		// so the call is NotYet, never a model of which member it drops (Compiler's must on 8c7afca2). It's
+		// held by both members now, so passing a subtype member alone still leaves Identifier to stop it.
 		{"unrelated member", `interface Loose extends Declaration { _typeElementBrand: undefined; readonly kind: 174; readonly name: any; }
 function show(x: Loose | Identifier): void { if (isTypeElementLie(x)) { console.log(String(x.pos)); } }
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" }; show(i);`, "a checked predicate target TypeElement that narrows Identifier, which isn't its supertype"},
