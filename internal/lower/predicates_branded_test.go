@@ -326,6 +326,14 @@ show(i);`, walk, false},
 const held: (n: Node) => asserts n is TypeElement = assertElement;
 function show(x: PropertySignature | Identifier): void { held(x); console.log(String(x.typeText)); }
 show(i);`, walk, true},
+		// A claim naming a type parameter narrows by whatever the instance is, and the walk reads calls as
+		// written, so it's NotYet when S could instantiate it and the narrowing isn't the argument's own type.
+		// Mutant: generic claims passed over, and it lowers.
+		{"generic claim", `function isT<T extends Node>(n: Node): n is T { return kindOf(n) !== 0; }
+function show(x: PropertySignature | Identifier): void { if (isTypeElementLie(x)) { console.log("element"); } }
+function g<U extends Node>(x: PropertySignature | Identifier): void { if (isT<U>(x)) { console.log(String(x.pos)); } }
+g<TypeElement>(i);
+show(i);`, "that the generic claim U may be instantiated at", false},
 		{"optional call", `const maybe: ((n: Node) => n is TypeElement) | undefined = isTypeElementLie;
 function show(x: PropertySignature | Identifier): void { if (maybe?.(x)) { console.log(String(x.typeText)); } }
 show(i);`, "a call through ?. (an optional call)", false},
@@ -355,8 +363,9 @@ show(i);`, "a call through ?. (an optional call)", false},
 // tsc's binarySearchKey calls `some(array)`, which claims `readonly T[]` of an argument already typed
 // `readonly T[]`, so the narrowing is the argument's own type whatever T is (computeLineOfPosition and
 // indexOfNode, Correctness's census on 9e4f2184). It lowers and agrees with Node with T at a plain type, at
-// number, and at the branded supertype itself, which is the instance the walk judges. Mutant: the identity
-// test dropped, and T at TypeElement is NotYet as a generic argument.
+// number, and at the branded supertype itself. The walk reads the call as written, a claim naming firstPos's
+// T, and passes it because the argument is the claim's own type. Mutant: that identity test dropped, and the
+// program is NotYet as a generic claim S may instantiate.
 func TestBrandedSupertypeIdentityNarrowingLowers(t *testing.T) {
 	t.Parallel()
 	lowersAndAgreesWithNodeAs(t, brandedPrelude+`function some<T>(array: readonly T[] | undefined): array is readonly T[] { return array !== undefined && array.length > 0; }
