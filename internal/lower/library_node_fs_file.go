@@ -432,12 +432,28 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 	return ir.NodeFSFile{Operation: operation, Arguments: args, Of: of}, true, nil
 }
 
+// dateNow lowers Date.now(), the current time in whole epoch milliseconds, read from the clock new Date()
+// reads.
+func (l *lowering) dateNow(node, callee *ast.Node) (ir.Expression, bool, error) {
+	if callee.Kind != ast.KindPropertyAccessExpression || callee.Name().Text() != "now" || !l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Date") {
+		return nil, false, nil
+	}
+	if arguments := node.AsCallExpression().Arguments; arguments != nil && len(arguments.Nodes) != 0 {
+		return nil, true, l.notYet(node, "Date.now with arguments")
+	}
+	return ir.NodeFSFile{Operation: "time_now", Of: ir.Number}, true, nil
+}
+
 func (l *lowering) nodeFSFileDate(node *ast.Node) (ir.Expression, bool, error) {
 	created := node.AsNewExpression()
 	if !l.isLibraryGlobal(created.Expression, "Date") {
 		return nil, false, nil
 	}
-	if created.Arguments == nil || len(created.Arguments.Nodes) != 1 {
+	if created.Arguments == nil || len(created.Arguments.Nodes) == 0 {
+		// new Date() is the current time, read from the host clock as Date.now reads it.
+		return ir.NodeFSFile{Operation: "date_now", Of: ir.Object}, true, nil
+	}
+	if len(created.Arguments.Nodes) != 1 {
 		return nil, true, l.notYet(node, "Date construction other than a numeric timestamp in the fs file host")
 	}
 	value, err := l.expression(created.Arguments.Nodes[0])
