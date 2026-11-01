@@ -1,0 +1,222 @@
+[
+  {
+    "reason": "Array.isArray on a tuple or an erased object/any/unknown view",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "a branded supertype inside a checked predicate's array target",
+    "A": 2,
+    "B": 2
+  },
+  {
+    "reason": "a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which isn't its supertype",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "a checked predicate target NamedDeclaration that narrows ArrowFunction, which isn't its supertype",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "a checked predicate target TypeNode that narrows undefined, which isn't its supertype",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "a checked predicate target whose base has no required field to check (CompilerOptions & { types: string[]; })",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "a checked predicate target whose check would read past the depth bound (BuilderProgramStateWithDefinedProgram)",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "a checked predicate target whose check would read past the depth bound (CircularBuildOrder)",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "a checked predicate target whose check would read past the depth bound (CommandLineOptionOfCustomType)",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "a checked predicate target whose check would read past the depth bound (IncrementalBundleEmitBuildInfo)",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "a checked view with a callable contract",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "a literal method through a view that erases its receiver",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+    "A": 14,
+    "B": 14
+  },
+  {
+    "reason": "an object with a nullable field viewed as unknown or object (null and undefined slot tags)",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "an unproven predicate argument for parameter callback (argument \"decl => isVariableDeclarationInitializedToRequire(decl)\")",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "an unproven predicate argument for parameter callback (argument \"n => isExportAssignment(n) || isStatement(n) || isVariableDeclaration(n) || isPropertyDeclaration(n) || isParameter(n)\")",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "an unproven predicate argument for parameter f (argument \"helper => !helper.scoped\")",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "an unproven predicate argument for parameter f (argument \"p => isParameterPropertyDeclaration(p, constructor)\")",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "an unproven predicate argument for parameter nodeTest (argument \"isModuleDeclaration\")",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "an unproven predicate argument for parameter predicate (argument \"modifier => !isExportModifier(modifier) && !isDefaultModifier(modifier)\")",
+    "A": 2,
+    "B": 2
+  },
+  {
+    "reason": "an unproven predicate argument for parameter predicate (argument \"predicate\")",
+    "A": 2,
+    "B": 2
+  },
+  {
+    "reason": "an unproven predicate argument for parameter test (argument \"createAssignmentCallback ? isIdentifier : isExpression\")",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "checked predicate membership over an open tag domain",
+    "A": 47,
+    "B": 50
+  },
+  {
+    "reason": "checked predicate overload target AssignmentExpression<AmpersandAmpersandEqualsToken | BarBarEqualsToken | EqualsToken | QuestionQuestionEqualsToken> & ...",
+    "A": 0,
+    "B": 1
+  },
+  {
+    "reason": "checked predicate overload target BinaryExpression & { operatorToken: Token<SyntaxKind.CommaToken>; }",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "checked predicate overload target BindableStaticElementAccessExpression",
+    "A": 0,
+    "B": 2
+  },
+  {
+    "reason": "checked predicate overload target ClassNamedEvaluationHelperBlock",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "checked predicate overload target ClassThisAssignmentBlock",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "checked predicate overload target ElementAccessExpression & Declaration & { readonly argumentExpression: NumericLiteral | StringLiteralLike; } & ...",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "checked predicate overload target ImportClause & { readonly isTypeOnly: true; readonly name: Identifier; }",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "checked predicate overload target ImportEqualsDeclaration & { moduleReference: ExternalModuleReference; }",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "checked predicate overload target JSDocTag",
+    "A": 0,
+    "B": 1
+  },
+  {
+    "reason": "checked predicate overload target LiteralImportTypeNode",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "checked predicate overload target LiteralLikeElementAccessExpression",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "checked predicate overload target NamedDeclaration & { name: DeclarationName; }",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "checked predicate overload target NonIncrementalBuildInfo",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "checked predicate overload target ParameterPropertyDeclaration",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "checked predicate overload target PrefixUnaryExpression & { operand: NumericLiteral; }",
+    "A": 0,
+    "B": 1
+  },
+  {
+    "reason": "checked predicate overload target PrefixUnaryExpression & { operator: SyntaxKind.PlusToken; operand: NumericLiteral; }",
+    "A": 0,
+    "B": 1
+  },
+  {
+    "reason": "checked predicate overload target ReferencedFile",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "checked view field modifiers of type NodeArray<Modifier> | NodeArray<ModifierLike> | undefined",
+    "A": 1,
+    "B": 1
+  },
+  {
+    "reason": "checked view union arm awaits views-v3: array element kind",
+    "A": 0,
+    "B": 1
+  },
+  {
+    "reason": "detached hasOwnProperty through an object view (a value with a different native representation may be hidden by the view)",
+    "A": 1,
+    "B": 1
+  }
+]

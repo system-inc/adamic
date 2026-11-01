@@ -1,0 +1,4979 @@
+{
+  "unit_counts": {
+    "A": 4543,
+    "B": 4543
+  },
+  "lowers": {
+    "A": 2930,
+    "B": 3040
+  },
+  "changed": [
+    {
+      "unit": "src/compiler/binder.ts:350:1",
+      "name": "getModuleInstanceStateWorker",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check",
+        "where": "src/compiler/parser.ts:1253:17",
+        "all_stops": [
+          {
+            "kind": "Refused",
+            "reason": "a cast the runtime can't check",
+            "where": "src/compiler/parser.ts:1253:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/emitter.ts:1147:1",
+      "name": "notImplementedResolver",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a () => never seen as a (node: ElementAccessExpression | EnumMember | PropertyAccessExpression) => string | number | undefined (one keeps something weakly that the other keeps strongly)",
+        "where": "src/compiler/emitter.ts:1172:23",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a () => never seen as a (node: ElementAccessExpression | EnumMember | PropertyAccessExpression) => string | number | undefined (one keeps something weakly that the other keeps strongly)",
+            "where": "src/compiler/emitter.ts:1172:23"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/factory/emitHelpers.ts:1486:1",
+      "name": "isCallToHelper",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1109:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1109:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/factory/nodeChildren.ts:14:1",
+      "name": "getNodeChildren",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "checked view union arm awaits views-v3: array element kind",
+        "where": "src/compiler/factory/nodeChildren.ts:20:16",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "checked view union arm awaits views-v3: array element kind",
+            "where": "src/compiler/factory/nodeChildren.ts:20:16"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/factory/utilities.ts:1008:1",
+      "name": "getPropertyNameOfBindingOrAssignmentElement",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/factory/utilities.ts:1151:1",
+      "name": "isQuestionOrExclamationToken",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/factory/utilities.ts:1159:1",
+      "name": "isReadonlyKeywordOrPlusOrMinusToken",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/factory/utilities.ts:1163:1",
+      "name": "isQuestionOrPlusOrMinusToken",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/factory/utilities.ts:1570:1",
+      "name": "formatIdentifierWorker",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "checked predicate membership over an open tag domain",
+        "where": "src/compiler/factory/utilities.ts:1573:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "checked predicate membership over an open tag domain",
+            "where": "src/compiler/factory/utilities.ts:1573:9"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/factory/utilities.ts:1695:1",
+      "name": "isSyntheticParenthesizedExpression",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/factory/utilities.ts:1701:1",
+      "name": "flattenCommaListWorker",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "checked predicate overload target BinaryExpression & { operatorToken: Token<SyntaxKind.CommaToken>; }",
+        "where": "src/compiler/factory/utilities.ts:607:1",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "checked predicate overload target BinaryExpression & { operatorToken: Token<SyntaxKind.CommaToken>; }",
+            "where": "src/compiler/factory/utilities.ts:607:1"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/factory/utilities.ts:579:1",
+      "name": "isUseStrictPrologue",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/factory/utilities.ts:584:1",
+      "name": "findUseStrictPrologue",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/factory/utilities.ts:599:1",
+      "name": "startsWithUseStrict",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/factory/utilities.ts:607:1",
+      "name": "isCommaExpression",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/factory/utilities.ts:617:1",
+      "name": "isJSDocTypeAssertion",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/factory/utilities.ts:631:1",
+      "name": "isOuterExpression",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/factory/utilities.ts:668:1",
+      "name": "walkUpOuterExpressions",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/factory/utilities.ts:786:1",
+      "name": "getLocalNameForExternalImport",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/factory/utilities.ts:814:1",
+      "name": "getExternalModuleNameLiteral",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/program.ts:936:1",
+      "name": "getModeForUsageLocationWorker",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/program.ts:958:1",
+      "name": "getEmitSyntaxForUsageLocationWorker",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/transformers/classFields.ts:3343:1",
+      "name": "isReservedPrivateName",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/transformers/classFields.ts:3349:1",
+      "name": "isPrivateIdentifierInExpression",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/transformers/classFields.ts:3354:1",
+      "name": "isStaticPropertyDeclaration",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/transformers/declarations/diagnostics.ts:138:1",
+      "name": "canProduceDiagnostics",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/transformers/destructuring.ts:308:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/transformers/destructuring.ts:308:9"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/transformers/destructuring.ts:197:1",
+      "name": "bindingOrAssignmentElementAssignsToName",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "checked predicate membership over an open tag domain",
+        "where": "src/compiler/transformers/destructuring.ts:202:14",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "checked predicate membership over an open tag domain",
+            "where": "src/compiler/transformers/destructuring.ts:202:14"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/transformers/destructuring.ts:218:1",
+      "name": "bindingOrAssignmentElementContainsNonLiteralComputedName",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/transformers/esnext.ts:774:1",
+      "name": "isUsingVariableDeclarationList",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/transformers/typeSerializer.ts:132:1",
+      "name": "createRuntimeTypeSerializer",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a function returning (ConstructorDeclaration & { body: Block; }) | undefined",
+        "where": "src/compiler/utilities.ts:6759:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a function returning (ConstructorDeclaration & { body: Block; }) | undefined",
+            "where": "src/compiler/utilities.ts:6759:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/transformers/utilities.ts:173:1",
+      "name": "getImportNeedsImportDefaultHelper",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/transformers/utilities.ts:179:1",
+      "name": "collectExternalModuleInfo",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a template interpolating an object, an array, a map, a function or undefined",
+        "where": "src/compiler/core.ts:1786:59",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a template interpolating an object, an array, a map, a function or undefined",
+            "where": "src/compiler/core.ts:1786:59"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/transformers/utilities.ts:389:1",
+      "name": "IdentifierNameMap",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a value of type (EmitNode & { autoGenerate: AutoGenerateInfo; }) | (EmitNode & { autoGenerate: AutoGenerateInfo; })",
+        "where": "src/compiler/transformers/utilities.ts:423:34",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a value of type (EmitNode & { autoGenerate: AutoGenerateInfo; }) | (EmitNode & { autoGenerate: AutoGenerateInfo; })",
+            "where": "src/compiler/transformers/utilities.ts:423:34"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/transformers/utilities.ts:441:1",
+      "name": "IdentifierNameMultiMap",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a value of type (EmitNode & { autoGenerate: AutoGenerateInfo; }) | (EmitNode & { autoGenerate: AutoGenerateInfo; })",
+        "where": "src/compiler/transformers/utilities.ts:423:34",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a value of type (EmitNode & { autoGenerate: AutoGenerateInfo; }) | (EmitNode & { autoGenerate: AutoGenerateInfo; })",
+            "where": "src/compiler/transformers/utilities.ts:423:34"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/transformers/utilities.ts:471:1",
+      "name": "isSimpleCopiableExpression",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1109:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1109:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/transformers/utilities.ts:612:1",
+      "name": "isInitializedOrStaticProperty",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/transformers/utilities.ts:618:1",
+      "name": "isStaticPropertyDeclaration",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/transformers/utilities.ts:630:1",
+      "name": "isInitializedProperty",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/transformers/utilities.ts:876:1",
+      "name": "rewriteModuleSpecifier",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "Refused",
+        "reason": "an unproven relation from string to T: the source is not assignable to the target",
+        "where": "src/compiler/utilities.ts:10197:12",
+        "all_stops": [
+          {
+            "kind": "Refused",
+            "reason": "an unproven relation from string to T: the source is not assignable to the target",
+            "where": "src/compiler/utilities.ts:10197:12"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/transformers/utilities.ts:878:1",
+      "name": "rewriteModuleSpecifier",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "Refused",
+        "reason": "an unproven relation from string to T: the source is not assignable to the target",
+        "where": "src/compiler/utilities.ts:10197:12",
+        "all_stops": [
+          {
+            "kind": "Refused",
+            "reason": "an unproven relation from string to T: the source is not assignable to the target",
+            "where": "src/compiler/utilities.ts:10197:12"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/transformers/utilities.ts:880:1",
+      "name": "rewriteModuleSpecifier",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "Refused",
+        "reason": "an unproven relation from string to T: the source is not assignable to the target",
+        "where": "src/compiler/utilities.ts:10197:12",
+        "all_stops": [
+          {
+            "kind": "Refused",
+            "reason": "an unproven relation from string to T: the source is not assignable to the target",
+            "where": "src/compiler/utilities.ts:10197:12"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:10127:1",
+      "name": "getRequiresAtTopOfFile",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "Refused",
+        "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined",
+        "where": "src/compiler/core.ts:656:1",
+        "all_stops": [
+          {
+            "kind": "Refused",
+            "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined",
+            "where": "src/compiler/core.ts:656:1"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:10627:1",
+      "name": "isIdentifierTypeReference",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1109:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1109:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:10751:1",
+      "name": "isPackedElement",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:10760:1",
+      "name": "isPackedArrayLiteral",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:11028:1",
+      "name": "isTypeDeclaration",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a union or optional field read in a program with record storage",
+        "where": "src/compiler/utilities.ts:11040:20",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "where": "src/compiler/utilities.ts:11040:20"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:11051:1",
+      "name": "canHaveExportModifier",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1109:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1109:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:11057:1",
+      "name": "isOptionalJSDocPropertyLikeTag",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:11114:1",
+      "name": "isJSDocSatisfiesExpression",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1034:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1034:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:1142:1",
+      "name": "isAnyPrologueDirective",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:11452:1",
+      "name": "isConstAssertion",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:12033:1",
+      "name": "isPrimitiveLiteralValue",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "checked predicate overload target PrefixUnaryExpression & { operator: SyntaxKind.PlusToken; operand: NumericLiteral; }",
+        "where": "src/compiler/debug.ts:365:5",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "checked predicate overload target PrefixUnaryExpression & { operator: SyntaxKind.PlusToken; operand: NumericLiteral; }",
+            "where": "src/compiler/debug.ts:365:5"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:12059:1",
+      "name": "unwrapParenthesizedExpression",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:12067:1",
+      "name": "hasInferredType",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1109:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1109:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:1295:1",
+      "name": "isExportNamespaceAsDefaultDeclaration",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:1980:1",
+      "name": "getLiteralText",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a union or optional field read in a program with record storage",
+        "where": "src/compiler/utilities.ts:1994:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "where": "src/compiler/utilities.ts:1994:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:2129:1",
+      "name": "isExternalModuleAugmentation",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:2134:1",
+      "name": "isModuleAugmentationExternal",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/factory/nodeFactory.ts:6111:21",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/factory/nodeFactory.ts:6111:21"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:2287:1",
+      "name": "isAnyImportOrBareOrAccessedRequire",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:2292:1",
+      "name": "isAnyImportOrRequireStatement",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:2315:1",
+      "name": "hasPossibleExternalModuleReference",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:2258:13",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:2258:13"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:2320:1",
+      "name": "isAnyImportOrReExport",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:2359:1",
+      "name": "isComputedNonLiteralName",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:2364:1",
+      "name": "tryGetTextOfPropertyName",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a value of type never",
+        "where": "src/compiler/debug.ts:273:33",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a value of type never",
+            "where": "src/compiler/debug.ts:273:33"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:2540:1",
+      "name": "getErrorSpanForNode",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1034:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1034:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:2701:1",
+      "name": "isSuperCall",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:2706:1",
+      "name": "isImportCall",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1109:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1109:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:2724:1",
+      "name": "isLiteralImportTypeNode",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:2884:1",
+      "name": "isPartOfTypeExpressionWithTypeArguments",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:2970:1",
+      "name": "getRestParameterElementType",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3020:1",
+      "name": "isCommonJsExportedExpression",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3027:1",
+      "name": "isCommonJsExportPropertyAssignment",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3033:1",
+      "name": "isValidESSymbolDeclaration",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/transformers/destructuring.ts:308:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/transformers/destructuring.ts:308:9"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3106:1",
+      "name": "getTsConfigObjectLiteralExpression",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3142:1",
+      "name": "getContainingClassStaticBlock",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1034:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1034:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3157:1",
+      "name": "getContainingClassExcludingClassDecorators",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3383:1",
+      "name": "getImmediatelyInvokedFunctionExpression",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3420:1",
+      "name": "isThisInitializedDeclaration",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/transformers/destructuring.ts:308:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/transformers/destructuring.ts:308:9"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3425:1",
+      "name": "isThisInitializedObjectBindingExpression",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3434:1",
+      "name": "getEntityNameFromTypeNode",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1109:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1109:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3549:1",
+      "name": "childIsDecorated",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check",
+        "where": "src/compiler/utilities.ts:3562:26",
+        "all_stops": [
+          {
+            "kind": "Refused",
+            "reason": "a cast the runtime can't check",
+            "where": "src/compiler/utilities.ts:3562:26"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3551:1",
+      "name": "childIsDecorated",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check",
+        "where": "src/compiler/utilities.ts:3562:26",
+        "all_stops": [
+          {
+            "kind": "Refused",
+            "reason": "a cast the runtime can't check",
+            "where": "src/compiler/utilities.ts:3562:26"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3553:1",
+      "name": "childIsDecorated",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check",
+        "where": "src/compiler/utilities.ts:3562:26",
+        "all_stops": [
+          {
+            "kind": "Refused",
+            "reason": "a cast the runtime can't check",
+            "where": "src/compiler/utilities.ts:3562:26"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3631:1",
+      "name": "isExpressionNode",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3768:1",
+      "name": "isNamespaceReexportDeclaration",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3773:1",
+      "name": "isExternalModuleImportEqualsDeclaration",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3784:1",
+      "name": "getExternalModuleRequireArgument",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check",
+        "where": "src/compiler/utilities.ts:3785:77",
+        "all_stops": [
+          {
+            "kind": "Refused",
+            "reason": "a cast the runtime can't check",
+            "where": "src/compiler/utilities.ts:3785:77"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3789:1",
+      "name": "isInternalModuleImportEqualsDeclaration",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3824:1",
+      "name": "isJSDocIndexSignature",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1109:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1109:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3839:1",
+      "name": "isRequireCall",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1109:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1109:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3841:1",
+      "name": "isRequireCall",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1109:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1109:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3843:1",
+      "name": "isRequireCall",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1109:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1109:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3885:1",
+      "name": "getModuleSpecifierOfBareOrAccessedRequire",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a value of type RequireOrImportCall",
+        "where": "src/compiler/utilities.ts:3887:16",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a value of type RequireOrImportCall",
+            "where": "src/compiler/utilities.ts:3887:16"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3898:1",
+      "name": "isVariableDeclarationInitializedWithRequireHelper",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/transformers/destructuring.ts:308:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/transformers/destructuring.ts:308:9"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3922:1",
+      "name": "isAssignmentDeclaration",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1109:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1109:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3931:1",
+      "name": "getEffectiveInitializer",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1109:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1109:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3948:1",
+      "name": "getDeclaredExpandoInitializer",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "checked predicate overload target BindableStaticElementAccessExpression",
+        "where": "src/compiler/utilities.ts:7563:1",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "checked predicate overload target BindableStaticElementAccessExpression",
+            "where": "src/compiler/utilities.ts:7563:1"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3953:1",
+      "name": "hasExpandoValueProperty",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1109:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1109:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3968:1",
+      "name": "getAssignedExpandoInitializer",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "checked predicate overload target BindableStaticElementAccessExpression",
+        "where": "src/compiler/utilities.ts:7563:1",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "checked predicate overload target BindableStaticElementAccessExpression",
+            "where": "src/compiler/utilities.ts:7563:1"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3994:1",
+      "name": "getExpandoInitializer",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "Refused",
+        "reason": "overload 1 of skipParentheses result Expression cannot be served by implementation result Node",
+        "where": "src/compiler/utilities.ts:5041:1",
+        "all_stops": [
+          {
+            "kind": "Refused",
+            "reason": "overload 1 of skipParentheses result Expression cannot be served by implementation result Node",
+            "where": "src/compiler/utilities.ts:5041:1"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:4019:1",
+      "name": "getDefaultedExpandoInitializer",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:4029:1",
+      "name": "isDefaultedExpandoInitializer",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/transformers/destructuring.ts:308:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/transformers/destructuring.ts:308:9"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:4041:1",
+      "name": "getNameOfExpando",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1109:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1109:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:4064:1",
+      "name": "isSameEntityName",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1109:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1109:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:4086:1",
+      "name": "getRightMostAssignedExpression",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:4202:1",
+      "name": "isVoidZero",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:4280:1",
+      "name": "getInitializerOfBinaryExpression",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:4294:1",
+      "name": "isPrototypePropertyAssignment",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:4321:1",
+      "name": "isFunctionSymbol",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/transformers/destructuring.ts:308:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/transformers/destructuring.ts:308:9"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:4427:1",
+      "name": "getNamespaceDeclarationNode",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a value of type never",
+        "where": "src/compiler/debug.ts:273:33",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a value of type never",
+            "where": "src/compiler/debug.ts:273:33"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:4509:1",
+      "name": "getSingleInitializerOfVariableStatementOrPropertyDeclaration",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:4701:1",
+      "name": "ownsJSDocTag",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a value of type HasJSDoc",
+        "where": "src/compiler/utilities.ts:4705:39",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a value of type HasJSDoc",
+            "where": "src/compiler/utilities.ts:4705:39"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:4710:1",
+      "name": "getNextJSDocCommentLocation",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:4767:1",
+      "name": "getEffectiveContainerForJSDocTemplateTag",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "Refused",
+        "reason": "overload 1 of find result U | undefined cannot be served by implementation result T | undefined",
+        "where": "src/compiler/core.ts:162:1",
+        "all_stops": [
+          {
+            "kind": "Refused",
+            "reason": "overload 1 of find result U | undefined cannot be served by implementation result T | undefined",
+            "where": "src/compiler/core.ts:162:1"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:4780:1",
+      "name": "getJSDocOverloadTags",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:4785:1",
+      "name": "getHostSignatureFromJSDoc",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1034:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1034:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:4854:1",
+      "name": "getAssignmentTarget",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check",
+        "where": "src/compiler/utilities.ts:4864:41",
+        "all_stops": [
+          {
+            "kind": "Refused",
+            "reason": "a cast the runtime can't check",
+            "where": "src/compiler/utilities.ts:4864:41"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:4935:1",
+      "name": "isInCompoundLikeAssignment",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:5025:1",
+      "name": "walkUpParenthesizedTypesAndGetParentAndChild",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:5035:1",
+      "name": "skipTypeParentheses",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:5079:1",
+      "name": "getDeclarationFromName",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1109:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1109:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:5112:1",
+      "name": "isLiteralComputedPropertyDeclarationName",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:5189:1",
+      "name": "getPropertyAssignmentAliasLikeExpression",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:5229:1",
+      "name": "getAllSuperTypeNodes",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "Refused",
+        "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined",
+        "where": "src/compiler/core.ts:656:1",
+        "all_stops": [
+          {
+            "kind": "Refused",
+            "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined",
+            "where": "src/compiler/core.ts:656:1"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:5362:1",
+      "name": "isStringOrNumericLiteralLike",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:5367:1",
+      "name": "isSignedNumericLiteral",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:5397:1",
+      "name": "getPropertyNameForPropertyNameNode",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "checked predicate overload target PrefixUnaryExpression & { operand: NumericLiteral; }",
+        "where": "src/compiler/utilities.ts:5367:1",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "checked predicate overload target PrefixUnaryExpression & { operand: NumericLiteral; }",
+            "where": "src/compiler/utilities.ts:5367:1"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:5522:1",
+      "name": "isNamedEvaluationSource",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/transformers/destructuring.ts:308:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/transformers/destructuring.ts:308:9"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:5564:1",
+      "name": "isNamedEvaluation",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "checked predicate overload target AssignmentExpression<AmpersandAmpersandEqualsToken | BarBarEqualsToken | EqualsToken | QuestionQuestionEqualsToken> & ...",
+        "where": "src/compiler/utilities.ts:5522:1",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "checked predicate overload target AssignmentExpression<AmpersandAmpersandEqualsToken | BarBarEqualsToken | EqualsToken | QuestionQuestionEqualsToken> & ...",
+            "where": "src/compiler/utilities.ts:5522:1"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:5637:1",
+      "name": "getExpressionAssociativity",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:5684:1",
+      "name": "getExpressionPrecedence",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:5690:1",
+      "name": "getOperator",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check",
+        "where": "src/compiler/utilities.ts:5695:17",
+        "all_stops": [
+          {
+            "kind": "Refused",
+            "reason": "a cast the runtime can't check",
+            "where": "src/compiler/utilities.ts:5695:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:6509:1",
+      "name": "getExternalModuleNameFromDeclaration",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:6923:1",
+      "name": "isNonTypeAliasTemplate",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:2258:13",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:2258:13"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:7200:1",
+      "name": "isStatic",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1034:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1034:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:7296:1",
+      "name": "getRawJSDocModifierFlagsNoCache",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:7420:1",
+      "name": "isLogicalOrCoalescingAssignmentExpression",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:7430:1",
+      "name": "isLogicalOrCoalescingBinaryExpression",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:7455:1",
+      "name": "tryGetClassImplementingOrExtendingExpressionWithTypeArguments",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:7471:1",
+      "name": "isAssignmentExpression",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:7473:1",
+      "name": "isAssignmentExpression",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:7475:1",
+      "name": "isAssignmentExpression",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:7484:1",
+      "name": "isDestructuringAssignment",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:7500:1",
+      "name": "isEntityNameExpression",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:7563:1",
+      "name": "isPrototypeAccess",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "checked predicate overload target BindableStaticElementAccessExpression",
+        "where": "src/compiler/utilities.ts:4148:1",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "checked predicate overload target BindableStaticElementAccessExpression",
+            "where": "src/compiler/utilities.ts:4148:1"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:7587:1",
+      "name": "isInstanceOfExpression",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:7592:1",
+      "name": "isRightSideOfInstanceofExpression",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:7597:1",
+      "name": "isEmptyObjectLiteral",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:7603:1",
+      "name": "isEmptyArrayLiteral",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:7891:1",
+      "name": "moveRangePastModifiers",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1034:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1034:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:8024:1",
+      "name": "isInitializedVariable",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/transformers/destructuring.ts:308:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/transformers/destructuring.ts:308:9"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:8285:1",
+      "name": "isUMDExportSymbol",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:8290:1",
+      "name": "showModuleSpecifier",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:8325:1",
+      "name": "isObjectTypeDeclaration",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:8420:1",
+      "name": "getLeftmostExpression",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:2042:13",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:2042:13"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilities.ts:8961:1",
+      "name": "walkTreeForJSXTags",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check",
+        "where": "src/compiler/parser.ts:1253:17",
+        "all_stops": [
+          {
+            "kind": "Refused",
+            "reason": "a cast the runtime can't check",
+            "where": "src/compiler/parser.ts:1253:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1004:1",
+      "name": "getAssignedName",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1109:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1109:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1076:1",
+      "name": "getJSDocTypeParameterTagsWorker",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1116:1",
+      "name": "getJSDocImplementsTags",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1239:1",
+      "name": "getJSDocReturnType",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "Refused",
+        "reason": "overload 1 of find result U | undefined cannot be served by implementation result T | undefined",
+        "where": "src/compiler/core.ts:162:1",
+        "all_stops": [
+          {
+            "kind": "Refused",
+            "reason": "overload 1 of find result U | undefined cannot be served by implementation result T | undefined",
+            "where": "src/compiler/core.ts:162:1"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1351:1",
+      "name": "getEffectiveConstraintOfTypeParameter",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1376:1",
+      "name": "isCallChain",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1390:1",
+      "name": "isOptionalChainRoot",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "checked predicate membership over an open tag domain",
+        "where": "src/compiler/utilitiesPublic.ts:1391:38",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "checked predicate membership over an open tag domain",
+            "where": "src/compiler/utilitiesPublic.ts:1391:38"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1399:1",
+      "name": "isExpressionOfOptionalChainRoot",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1416:1",
+      "name": "isOutermostOptionalChain",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1422:1",
+      "name": "isNullishCoalesce",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1426:1",
+      "name": "isConstTypeReference",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1109:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1109:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1437:1",
+      "name": "isNonNullChain",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1532:1",
+      "name": "isImportOrExportSpecifier",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1536:1",
+      "name": "isTypeOnlyImportDeclaration",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a union or optional field read in a program with record storage",
+        "where": "src/compiler/utilitiesPublic.ts:1539:60",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "where": "src/compiler/utilitiesPublic.ts:1539:60"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1550:1",
+      "name": "isTypeOnlyExportDeclaration",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1574:1",
+      "name": "isImportAttributeName",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1109:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1109:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1586:1",
+      "name": "isGeneratedPrivateIdentifier",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1600:1",
+      "name": "isPrivateIdentifierClassElementDeclaration",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1034:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1034:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1752:1",
+      "name": "isAutoAccessorPropertyDeclaration",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1757:1",
+      "name": "isClassInstanceProperty",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/binder.ts:1109:17",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/binder.ts:1109:17"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1778:1",
+      "name": "isModifierLike",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1794:1",
+      "name": "isClassOrTypeElement",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1872:1",
+      "name": "isBindingOrAssignmentElement",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/transformers/destructuring.ts:308:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/transformers/destructuring.ts:308:9"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1884:1",
+      "name": "isBindingOrAssignmentPattern",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1932:1",
+      "name": "isArrayBindingOrAssignmentElement",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1964:1",
+      "name": "isCallLikeOrFunctionLikeExpression",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/parser.ts:6516:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/parser.ts:6516:9"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1968:1",
+      "name": "isCallLikeExpression",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:2059:1",
+      "name": "isUnaryExpressionWithWrite",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:2071:1",
+      "name": "isLiteralTypeLiteral",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:2133:1",
+      "name": "isScopeMarker",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:2143:1",
+      "name": "needsScopeMarker",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:2148:1",
+      "name": "isExternalModuleIndicator",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:2170:1",
+      "name": "isForInitializer",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "where": "src/compiler/transformers/destructuring.ts:192:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "where": "src/compiler/transformers/destructuring.ts:192:9"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:2522:1",
+      "name": "isJSDocCommentContainingNode",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "checked predicate overload target JSDocTag",
+        "where": "src/compiler/utilitiesPublic.ts:2534:1",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "checked predicate overload target JSDocTag",
+            "where": "src/compiler/utilitiesPublic.ts:2534:1"
+          }
+        ]
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:615:1",
+      "name": "isParameterPropertyDeclaration",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:870:1",
+      "name": "symbolName",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:946:1",
+      "name": "isNamedDeclaration",
+      "A": {
+        "status": "stopped",
+        "unit_status": "attempted",
+        "kind": "NotYet",
+        "reason": "a getter in a checked field contract",
+        "where": "src/compiler/sourcemap.ts:474:9",
+        "all_stops": [
+          {
+            "kind": "NotYet",
+            "reason": "a getter in a checked field contract",
+            "where": "src/compiler/sourcemap.ts:474:9"
+          }
+        ]
+      },
+      "B": {
+        "status": "lowers"
+      }
+    }
+  ],
+  "regressions": []
+}

@@ -1,0 +1,255 @@
+{
+  "units": 4018,
+  "totals": {
+    "A": {
+      "wall_seconds": 1266.247781816,
+      "cpu_seconds": 1407.7395539999984
+    },
+    "B": {
+      "wall_seconds": 1415.541359206,
+      "cpu_seconds": 1523.725523000007
+    }
+  },
+  "top20": [
+    {
+      "unit": "src/compiler/utilities.ts:11077:1",
+      "name": "hasTabstop",
+      "A_seconds": 6.002346131,
+      "B_seconds": 28.776078165,
+      "delta_seconds": 22.773732034000002,
+      "ratio": 4.794138414707827,
+      "A_cpu_seconds": 6.008679999999913,
+      "B_cpu_seconds": 29.944924000000356,
+      "A_state": "stopped",
+      "B_state": "stopped"
+    },
+    {
+      "unit": "src/compiler/moduleNameResolver.ts:3242:1",
+      "name": "tryFindNonRelativeModuleNameInCache",
+      "A_seconds": 5.734128088,
+      "B_seconds": 19.870568325,
+      "delta_seconds": 14.136440237,
+      "ratio": 3.4653164387073594,
+      "A_cpu_seconds": 5.747658999999999,
+      "B_cpu_seconds": 17.297304000000054,
+      "A_state": "stopped",
+      "B_state": "stopped"
+    },
+    {
+      "unit": "src/compiler/utilities.ts:11028:1",
+      "name": "isTypeDeclaration",
+      "A_seconds": 0.384586401,
+      "B_seconds": 11.939139009,
+      "delta_seconds": 11.554552608,
+      "ratio": 31.044100826123593,
+      "A_cpu_seconds": 0.38640299999997296,
+      "B_cpu_seconds": 12.01840700000048,
+      "A_state": "stopped",
+      "B_state": "stopped"
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1536:1",
+      "name": "isTypeOnlyImportDeclaration",
+      "A_seconds": 0.493457957,
+      "B_seconds": 8.999892784,
+      "delta_seconds": 8.506434827,
+      "ratio": 18.23841860553887,
+      "A_cpu_seconds": 0.4924519999999575,
+      "B_cpu_seconds": 8.995327000000088,
+      "A_state": "stopped",
+      "B_state": "stopped"
+    },
+    {
+      "unit": "src/compiler/utilities.ts:1980:1",
+      "name": "getLiteralText",
+      "A_seconds": 0.334341842,
+      "B_seconds": 6.9268711849999995,
+      "delta_seconds": 6.592529343,
+      "ratio": 20.71793091634639,
+      "A_cpu_seconds": 0.33595400000012887,
+      "B_cpu_seconds": 6.930127000000084,
+      "A_state": "stopped",
+      "B_state": "stopped"
+    },
+    {
+      "unit": "src/compiler/utilities.ts:8818:1",
+      "name": "compareMessageText",
+      "A_seconds": 10.091850587,
+      "B_seconds": 15.798860316,
+      "delta_seconds": 5.707009729000001,
+      "ratio": 1.5655067601131143,
+      "A_cpu_seconds": 10.361614000000372,
+      "B_cpu_seconds": 9.774415000000317,
+      "A_state": "stopped",
+      "B_state": "stopped"
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1390:1",
+      "name": "isOptionalChainRoot",
+      "A_seconds": 0.682701974,
+      "B_seconds": 5.439510199,
+      "delta_seconds": 4.756808225,
+      "ratio": 7.967620434916158,
+      "A_cpu_seconds": 0.6845020000000659,
+      "B_cpu_seconds": 8.630377000000408,
+      "A_state": "stopped",
+      "B_state": "stopped"
+    },
+    {
+      "unit": "src/compiler/utilities.ts:8940:1",
+      "name": "getDiagnosticMessage",
+      "A_seconds": 6.480468183,
+      "B_seconds": 10.896668758,
+      "delta_seconds": 4.416200575,
+      "ratio": 1.681463198382005,
+      "A_cpu_seconds": 6.491943999999876,
+      "B_cpu_seconds": 10.913136000000122,
+      "A_state": "stopped",
+      "B_state": "stopped"
+    },
+    {
+      "unit": "src/compiler/utilities.ts:3631:1",
+      "name": "isExpressionNode",
+      "A_seconds": 0.532004326,
+      "B_seconds": 4.860739499,
+      "delta_seconds": 4.328735173,
+      "ratio": 9.13665408615493,
+      "A_cpu_seconds": 0.532893999999942,
+      "B_cpu_seconds": 4.867776999999933,
+      "A_state": "stopped",
+      "B_state": "lowers"
+    },
+    {
+      "unit": "src/compiler/utilities.ts:11114:1",
+      "name": "isJSDocSatisfiesExpression",
+      "A_seconds": 0.557411582,
+      "B_seconds": 4.81447349,
+      "delta_seconds": 4.257061908,
+      "ratio": 8.637196724053718,
+      "A_cpu_seconds": 0.5593770000000404,
+      "B_cpu_seconds": 5.459323999999924,
+      "A_state": "stopped",
+      "B_state": "stopped"
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1076:1",
+      "name": "getJSDocTypeParameterTagsWorker",
+      "A_seconds": 1.935509192,
+      "B_seconds": 6.066442569,
+      "delta_seconds": 4.130933377,
+      "ratio": 3.1342876562272615,
+      "A_cpu_seconds": 5.360397999999805,
+      "B_cpu_seconds": 6.2673020000002,
+      "A_state": "stopped",
+      "B_state": "lowers"
+    },
+    {
+      "unit": "src/compiler/utilities.ts:4330:1",
+      "name": "canHaveModuleSpecifier",
+      "A_seconds": 6.234261818,
+      "B_seconds": 10.196283166,
+      "delta_seconds": 3.9620213480000004,
+      "ratio": 1.6355237337900332,
+      "A_cpu_seconds": 6.255157999999938,
+      "B_cpu_seconds": 8.672692000000097,
+      "A_state": "stopped",
+      "B_state": "stopped"
+    },
+    {
+      "unit": "src/compiler/utilities.ts:7592:1",
+      "name": "isRightSideOfInstanceofExpression",
+      "A_seconds": 0.53643794,
+      "B_seconds": 4.467308923,
+      "delta_seconds": 3.930870983,
+      "ratio": 8.327727384457557,
+      "A_cpu_seconds": 0.5383099999999104,
+      "B_cpu_seconds": 4.587858000000324,
+      "A_state": "stopped",
+      "B_state": "lowers"
+    },
+    {
+      "unit": "src/compiler/utilities.ts:10883:1",
+      "name": "hasContextSensitiveParameters",
+      "A_seconds": 0.27011252,
+      "B_seconds": 4.047101791,
+      "delta_seconds": 3.776989271,
+      "ratio": 14.983021856965387,
+      "A_cpu_seconds": 0.27056999999967957,
+      "B_cpu_seconds": 1.8422890000001644,
+      "A_state": "lowers",
+      "B_state": "lowers"
+    },
+    {
+      "unit": "src/compiler/utilities.ts:7455:1",
+      "name": "tryGetClassImplementingOrExtendingExpressionWithTypeArguments",
+      "A_seconds": 0.559665302,
+      "B_seconds": 4.276455774,
+      "delta_seconds": 3.7167904720000005,
+      "ratio": 7.641095059346739,
+      "A_cpu_seconds": 0.556224000000384,
+      "B_cpu_seconds": 4.339212000000316,
+      "A_state": "stopped",
+      "B_state": "lowers"
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1550:1",
+      "name": "isTypeOnlyExportDeclaration",
+      "A_seconds": 0.400882046,
+      "B_seconds": 3.963651176,
+      "delta_seconds": 3.56276913,
+      "ratio": 9.887325250779627,
+      "A_cpu_seconds": 0.39997300000004543,
+      "B_cpu_seconds": 3.968394999999873,
+      "A_state": "stopped",
+      "B_state": "lowers"
+    },
+    {
+      "unit": "src/compiler/utilitiesPublic.ts:1778:1",
+      "name": "isModifierLike",
+      "A_seconds": 2.010920352,
+      "B_seconds": 5.269332915,
+      "delta_seconds": 3.258412563,
+      "ratio": 2.620358837066462,
+      "A_cpu_seconds": 2.1398760000001857,
+      "B_cpu_seconds": 5.298864999999751,
+      "A_state": "stopped",
+      "B_state": "lowers"
+    },
+    {
+      "unit": "src/compiler/utilities.ts:6144:1",
+      "name": "containsInvalidEscapeFlag",
+      "A_seconds": 6.624202984,
+      "B_seconds": 9.870592418,
+      "delta_seconds": 3.2463894339999992,
+      "ratio": 1.4900800053744245,
+      "A_cpu_seconds": 6.638860000000022,
+      "B_cpu_seconds": 9.101884000000155,
+      "A_state": "stopped",
+      "B_state": "stopped"
+    },
+    {
+      "unit": "src/compiler/moduleSpecifiers.ts:433:1",
+      "name": "getLocalModuleSpecifierBetweenFileNames",
+      "A_seconds": 5.551854803,
+      "B_seconds": 8.536763257,
+      "delta_seconds": 2.984908454,
+      "ratio": 1.5376416638970953,
+      "A_cpu_seconds": 5.5600659999998925,
+      "B_cpu_seconds": 12.54561799999999,
+      "A_state": "stopped",
+      "B_state": "stopped"
+    },
+    {
+      "unit": "src/compiler/transformers/typeSerializer.ts:132:1",
+      "name": "createRuntimeTypeSerializer",
+      "A_seconds": 0.766049292,
+      "B_seconds": 3.486715884,
+      "delta_seconds": 2.720666592,
+      "ratio": 4.551555520529089,
+      "A_cpu_seconds": 0.762606999999889,
+      "B_cpu_seconds": 1.7491210000000592,
+      "A_state": "stopped",
+      "B_state": "stopped"
+    }
+  ]
+}

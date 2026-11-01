@@ -1,0 +1,8 @@
+[
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/sourcemap.ts:474:9",
+    "reason": "a getter in a checked field contract",
+    "text": "src/compiler/sourcemap.ts:474:9: stage 0 can't lower a getter in a checked field contract yet"
+  }
+]

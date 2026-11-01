@@ -1,0 +1,21 @@
+{
+  "command": [
+    "timeout",
+    "--signal=TERM",
+    "--kill-after=60s",
+    "90m",
+    "env",
+    "LATENT_FULL=0",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "LATENT_TIMES=/workspace/scratch/A-times.jsonl",
+    "LATENT_PROGRESS_FILE=/workspace/scratch/A-progress.json",
+    "/workspace/scratch/census-A",
+    "/workspace/scratch/tree/src/compiler",
+    "/workspace/scratch/A.jsonl"
+  ],
+  "wall_seconds": 2516.645353964,
+  "peak_rss_kb": 5705864,
+  "user_seconds": 2975.691983,
+  "system_seconds": 56.103346,
+  "exit_code": 0
+}

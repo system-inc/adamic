@@ -1,0 +1,134 @@
+[
+  {
+    "name": "isOptionalJSDocPropertyLikeTag",
+    "unit": "src/compiler/utilities.ts:11057:1",
+    "A": {
+      "status": "stopped",
+      "unit_status": "attempted",
+      "kind": "NotYet",
+      "reason": "a getter in a checked field contract",
+      "where": "src/compiler/sourcemap.ts:474:9",
+      "all_stops": [
+        {
+          "kind": "NotYet",
+          "reason": "a getter in a checked field contract",
+          "where": "src/compiler/sourcemap.ts:474:9"
+        }
+      ]
+    },
+    "B": {
+      "status": "lowers"
+    },
+    "B_narrowed_accessor_reread": false
+  },
+  {
+    "name": "isStatic",
+    "unit": "src/compiler/utilities.ts:7200:1",
+    "A": {
+      "status": "stopped",
+      "unit_status": "attempted",
+      "kind": "NotYet",
+      "reason": "a getter in a checked field contract",
+      "where": "src/compiler/sourcemap.ts:474:9",
+      "all_stops": [
+        {
+          "kind": "NotYet",
+          "reason": "a getter in a checked field contract",
+          "where": "src/compiler/sourcemap.ts:474:9"
+        }
+      ]
+    },
+    "B": {
+      "status": "stopped",
+      "unit_status": "attempted",
+      "kind": "NotYet",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "where": "src/compiler/binder.ts:1034:17",
+      "all_stops": [
+        {
+          "kind": "NotYet",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "where": "src/compiler/binder.ts:1034:17"
+        }
+      ]
+    },
+    "B_narrowed_accessor_reread": false
+  },
+  {
+    "name": "isClassOrTypeElement",
+    "unit": "src/compiler/utilitiesPublic.ts:1794:1",
+    "A": {
+      "status": "stopped",
+      "unit_status": "attempted",
+      "kind": "NotYet",
+      "reason": "a getter in a checked field contract",
+      "where": "src/compiler/sourcemap.ts:474:9",
+      "all_stops": [
+        {
+          "kind": "NotYet",
+          "reason": "a getter in a checked field contract",
+          "where": "src/compiler/sourcemap.ts:474:9"
+        }
+      ]
+    },
+    "B": {
+      "status": "lowers"
+    },
+    "B_narrowed_accessor_reread": false
+  },
+  {
+    "name": "isLiteralTypeLiteral",
+    "unit": "src/compiler/utilitiesPublic.ts:2071:1",
+    "A": {
+      "status": "stopped",
+      "unit_status": "attempted",
+      "kind": "NotYet",
+      "reason": "a getter in a checked field contract",
+      "where": "src/compiler/sourcemap.ts:474:9",
+      "all_stops": [
+        {
+          "kind": "NotYet",
+          "reason": "a getter in a checked field contract",
+          "where": "src/compiler/sourcemap.ts:474:9"
+        }
+      ]
+    },
+    "B": {
+      "status": "lowers"
+    },
+    "B_narrowed_accessor_reread": false
+  },
+  {
+    "name": "notImplementedResolver",
+    "unit": "src/compiler/emitter.ts:1147:1",
+    "A": {
+      "status": "stopped",
+      "unit_status": "attempted",
+      "kind": "NotYet",
+      "reason": "a getter in a checked field contract",
+      "where": "src/compiler/sourcemap.ts:474:9",
+      "all_stops": [
+        {
+          "kind": "NotYet",
+          "reason": "a getter in a checked field contract",
+          "where": "src/compiler/sourcemap.ts:474:9"
+        }
+      ]
+    },
+    "B": {
+      "status": "stopped",
+      "unit_status": "attempted",
+      "kind": "NotYet",
+      "reason": "a () => never seen as a (node: ElementAccessExpression | EnumMember | PropertyAccessExpression) => string | number | undefined (one keeps something weakly that the other keeps strongly)",
+      "where": "src/compiler/emitter.ts:1172:23",
+      "all_stops": [
+        {
+          "kind": "NotYet",
+          "reason": "a () => never seen as a (node: ElementAccessExpression | EnumMember | PropertyAccessExpression) => string | number | undefined (one keeps something weakly that the other keeps strongly)",
+          "where": "src/compiler/emitter.ts:1172:23"
+        }
+      ]
+    },
+    "B_narrowed_accessor_reread": false
+  }
+]

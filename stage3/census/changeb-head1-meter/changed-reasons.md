@@ -1,0 +1,17 @@
+| Reason | A | B | B−A | A examples (up to five) | B examples (up to five) |
+|---|---:|---:|---:|---|---|
+| a () => never seen as a (node: ElementAccessExpression \| EnumMember \| PropertyAccessExpression) => string \| number \| undefined (one keeps something weakly that the other keeps strongly) | 0 | 1 | 1 |  | src/compiler/emitter.ts:1172:23 |
+| a getter in a checked field contract | 1 | 0 | -1 | src/compiler/sourcemap.ts:474:9 |  |
+| a template interpolating an object, an array, a map, a function or undefined | 1 | 2 | 1 | src/compiler/semver.ts:452:37 | src/compiler/core.ts:1786:59<br>src/compiler/semver.ts:452:37 |
+| a union or optional field read in a program with record storage | 74 | 77 | 3 | src/compiler/builder.ts:1197:9<br>src/compiler/builder.ts:1229:45<br>src/compiler/builder.ts:1617:12<br>src/compiler/builder.ts:1631:173<br>src/compiler/builder.ts:608:31 | src/compiler/builder.ts:1197:9<br>src/compiler/builder.ts:1229:45<br>src/compiler/builder.ts:1617:12<br>src/compiler/builder.ts:1631:173<br>src/compiler/builder.ts:608:31 |
+| a value of type (EmitNode & { autoGenerate: AutoGenerateInfo; }) \| (EmitNode & { autoGenerate: AutoGenerateInfo; }) | 1 | 2 | 1 | src/compiler/factory/utilities.ts:1519:26 | src/compiler/factory/utilities.ts:1519:26<br>src/compiler/transformers/utilities.ts:423:34 |
+| a value of type HasJSDoc | 0 | 1 | 1 |  | src/compiler/utilities.ts:4705:39 |
+| a value of type RequireOrImportCall | 0 | 1 | 1 |  | src/compiler/utilities.ts:3887:16 |
+| **CALLOUT** checked predicate membership over an open tag domain | 47 | 50 | 3 | src/compiler/factory/nodeConverters.ts:55:13<br>src/compiler/factory/nodeFactory.ts:7287:20<br>src/compiler/factory/utilities.ts:1024:21<br>src/compiler/factory/utilities.ts:1096:17<br>src/compiler/factory/utilities.ts:1746:27 | src/compiler/factory/nodeConverters.ts:55:13<br>src/compiler/factory/nodeFactory.ts:7287:20<br>src/compiler/factory/utilities.ts:1024:21<br>src/compiler/factory/utilities.ts:1096:17<br>src/compiler/factory/utilities.ts:1573:9 |
+| **CALLOUT** checked predicate overload target AssignmentExpression<AmpersandAmpersandEqualsToken \| BarBarEqualsToken \| EqualsToken \| QuestionQuestionEqualsToken> & ... | 0 | 1 | 1 |  | src/compiler/utilities.ts:5522:1 |
+| **CALLOUT** checked predicate overload target BindableStaticElementAccessExpression | 0 | 2 | 2 |  | src/compiler/utilities.ts:4148:1<br>src/compiler/utilities.ts:7563:1 |
+| **CALLOUT** checked predicate overload target JSDocTag | 0 | 1 | 1 |  | src/compiler/utilitiesPublic.ts:2534:1 |
+| **CALLOUT** checked predicate overload target PrefixUnaryExpression & { operand: NumericLiteral; } | 0 | 1 | 1 |  | src/compiler/utilities.ts:5367:1 |
+| **CALLOUT** checked predicate overload target PrefixUnaryExpression & { operator: SyntaxKind.PlusToken; operand: NumericLiteral; } | 0 | 1 | 1 |  | src/compiler/debug.ts:365:5 |
+| **CALLOUT** checked view union arm awaits views-v3: array element kind | 0 | 1 | 1 |  | src/compiler/factory/nodeChildren.ts:20:16 |
+| writing a checked object field without its source-slot type certificate | 13 | 17 | 4 | src/compiler/binder.ts:1034:17<br>src/compiler/binder.ts:1109:17<br>src/compiler/binder.ts:2258:13<br>src/compiler/binder.ts:638:9<br>src/compiler/builder.ts:326:5 | src/compiler/binder.ts:1034:17<br>src/compiler/binder.ts:1109:17<br>src/compiler/binder.ts:2042:13<br>src/compiler/binder.ts:2258:13<br>src/compiler/binder.ts:638:9 |

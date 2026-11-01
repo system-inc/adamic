@@ -1,0 +1,272 @@
+[
+  {
+    "reason": "a () => never seen as a (node: ElementAccessExpression | EnumMember | PropertyAccessExpression) => string | number | undefined (one keeps something weakly that the other keeps strongly)",
+    "A": 0,
+    "B": 1,
+    "delta": 1,
+    "callout": false,
+    "A_examples": [],
+    "B_examples": [
+      "src/compiler/emitter.ts:1172:23"
+    ],
+    "removed_examples": [],
+    "added_examples": [
+      "src/compiler/emitter.ts:1172:23"
+    ]
+  },
+  {
+    "reason": "a getter in a checked field contract",
+    "A": 1,
+    "B": 0,
+    "delta": -1,
+    "callout": false,
+    "A_examples": [
+      "src/compiler/sourcemap.ts:474:9"
+    ],
+    "B_examples": [],
+    "removed_examples": [
+      "src/compiler/sourcemap.ts:474:9"
+    ],
+    "added_examples": []
+  },
+  {
+    "reason": "a template interpolating an object, an array, a map, a function or undefined",
+    "A": 1,
+    "B": 2,
+    "delta": 1,
+    "callout": false,
+    "A_examples": [
+      "src/compiler/semver.ts:452:37"
+    ],
+    "B_examples": [
+      "src/compiler/core.ts:1786:59",
+      "src/compiler/semver.ts:452:37"
+    ],
+    "removed_examples": [],
+    "added_examples": [
+      "src/compiler/core.ts:1786:59"
+    ]
+  },
+  {
+    "reason": "a union or optional field read in a program with record storage",
+    "A": 74,
+    "B": 77,
+    "delta": 3,
+    "callout": false,
+    "A_examples": [
+      "src/compiler/builder.ts:1197:9",
+      "src/compiler/builder.ts:1229:45",
+      "src/compiler/builder.ts:1617:12",
+      "src/compiler/builder.ts:1631:173",
+      "src/compiler/builder.ts:608:31"
+    ],
+    "B_examples": [
+      "src/compiler/builder.ts:1197:9",
+      "src/compiler/builder.ts:1229:45",
+      "src/compiler/builder.ts:1617:12",
+      "src/compiler/builder.ts:1631:173",
+      "src/compiler/builder.ts:608:31"
+    ],
+    "removed_examples": [],
+    "added_examples": [
+      "src/compiler/utilities.ts:11040:20",
+      "src/compiler/utilities.ts:1994:17",
+      "src/compiler/utilitiesPublic.ts:1539:60"
+    ]
+  },
+  {
+    "reason": "a value of type (EmitNode & { autoGenerate: AutoGenerateInfo; }) | (EmitNode & { autoGenerate: AutoGenerateInfo; })",
+    "A": 1,
+    "B": 2,
+    "delta": 1,
+    "callout": false,
+    "A_examples": [
+      "src/compiler/factory/utilities.ts:1519:26"
+    ],
+    "B_examples": [
+      "src/compiler/factory/utilities.ts:1519:26",
+      "src/compiler/transformers/utilities.ts:423:34"
+    ],
+    "removed_examples": [],
+    "added_examples": [
+      "src/compiler/transformers/utilities.ts:423:34"
+    ]
+  },
+  {
+    "reason": "a value of type HasJSDoc",
+    "A": 0,
+    "B": 1,
+    "delta": 1,
+    "callout": false,
+    "A_examples": [],
+    "B_examples": [
+      "src/compiler/utilities.ts:4705:39"
+    ],
+    "removed_examples": [],
+    "added_examples": [
+      "src/compiler/utilities.ts:4705:39"
+    ]
+  },
+  {
+    "reason": "a value of type RequireOrImportCall",
+    "A": 0,
+    "B": 1,
+    "delta": 1,
+    "callout": false,
+    "A_examples": [],
+    "B_examples": [
+      "src/compiler/utilities.ts:3887:16"
+    ],
+    "removed_examples": [],
+    "added_examples": [
+      "src/compiler/utilities.ts:3887:16"
+    ]
+  },
+  {
+    "reason": "checked predicate membership over an open tag domain",
+    "A": 47,
+    "B": 50,
+    "delta": 3,
+    "callout": true,
+    "A_examples": [
+      "src/compiler/factory/nodeConverters.ts:55:13",
+      "src/compiler/factory/nodeFactory.ts:7287:20",
+      "src/compiler/factory/utilities.ts:1024:21",
+      "src/compiler/factory/utilities.ts:1096:17",
+      "src/compiler/factory/utilities.ts:1746:27"
+    ],
+    "B_examples": [
+      "src/compiler/factory/nodeConverters.ts:55:13",
+      "src/compiler/factory/nodeFactory.ts:7287:20",
+      "src/compiler/factory/utilities.ts:1024:21",
+      "src/compiler/factory/utilities.ts:1096:17",
+      "src/compiler/factory/utilities.ts:1573:9"
+    ],
+    "removed_examples": [],
+    "added_examples": [
+      "src/compiler/factory/utilities.ts:1573:9",
+      "src/compiler/transformers/destructuring.ts:202:14",
+      "src/compiler/utilitiesPublic.ts:1391:38"
+    ]
+  },
+  {
+    "reason": "checked predicate overload target AssignmentExpression<AmpersandAmpersandEqualsToken | BarBarEqualsToken | EqualsToken | QuestionQuestionEqualsToken> & ...",
+    "A": 0,
+    "B": 1,
+    "delta": 1,
+    "callout": true,
+    "A_examples": [],
+    "B_examples": [
+      "src/compiler/utilities.ts:5522:1"
+    ],
+    "removed_examples": [],
+    "added_examples": [
+      "src/compiler/utilities.ts:5522:1"
+    ]
+  },
+  {
+    "reason": "checked predicate overload target BindableStaticElementAccessExpression",
+    "A": 0,
+    "B": 2,
+    "delta": 2,
+    "callout": true,
+    "A_examples": [],
+    "B_examples": [
+      "src/compiler/utilities.ts:4148:1",
+      "src/compiler/utilities.ts:7563:1"
+    ],
+    "removed_examples": [],
+    "added_examples": [
+      "src/compiler/utilities.ts:4148:1",
+      "src/compiler/utilities.ts:7563:1"
+    ]
+  },
+  {
+    "reason": "checked predicate overload target JSDocTag",
+    "A": 0,
+    "B": 1,
+    "delta": 1,
+    "callout": true,
+    "A_examples": [],
+    "B_examples": [
+      "src/compiler/utilitiesPublic.ts:2534:1"
+    ],
+    "removed_examples": [],
+    "added_examples": [
+      "src/compiler/utilitiesPublic.ts:2534:1"
+    ]
+  },
+  {
+    "reason": "checked predicate overload target PrefixUnaryExpression & { operand: NumericLiteral; }",
+    "A": 0,
+    "B": 1,
+    "delta": 1,
+    "callout": true,
+    "A_examples": [],
+    "B_examples": [
+      "src/compiler/utilities.ts:5367:1"
+    ],
+    "removed_examples": [],
+    "added_examples": [
+      "src/compiler/utilities.ts:5367:1"
+    ]
+  },
+  {
+    "reason": "checked predicate overload target PrefixUnaryExpression & { operator: SyntaxKind.PlusToken; operand: NumericLiteral; }",
+    "A": 0,
+    "B": 1,
+    "delta": 1,
+    "callout": true,
+    "A_examples": [],
+    "B_examples": [
+      "src/compiler/debug.ts:365:5"
+    ],
+    "removed_examples": [],
+    "added_examples": [
+      "src/compiler/debug.ts:365:5"
+    ]
+  },
+  {
+    "reason": "checked view union arm awaits views-v3: array element kind",
+    "A": 0,
+    "B": 1,
+    "delta": 1,
+    "callout": true,
+    "A_examples": [],
+    "B_examples": [
+      "src/compiler/factory/nodeChildren.ts:20:16"
+    ],
+    "removed_examples": [],
+    "added_examples": [
+      "src/compiler/factory/nodeChildren.ts:20:16"
+    ]
+  },
+  {
+    "reason": "writing a checked object field without its source-slot type certificate",
+    "A": 13,
+    "B": 17,
+    "delta": 4,
+    "callout": false,
+    "A_examples": [
+      "src/compiler/binder.ts:1034:17",
+      "src/compiler/binder.ts:1109:17",
+      "src/compiler/binder.ts:2258:13",
+      "src/compiler/binder.ts:638:9",
+      "src/compiler/builder.ts:326:5"
+    ],
+    "B_examples": [
+      "src/compiler/binder.ts:1034:17",
+      "src/compiler/binder.ts:1109:17",
+      "src/compiler/binder.ts:2042:13",
+      "src/compiler/binder.ts:2258:13",
+      "src/compiler/binder.ts:638:9"
+    ],
+    "removed_examples": [],
+    "added_examples": [
+      "src/compiler/binder.ts:2042:13",
+      "src/compiler/parser.ts:6516:9",
+      "src/compiler/transformers/destructuring.ts:192:9",
+      "src/compiler/transformers/destructuring.ts:308:9"
+    ]
+  }
+]

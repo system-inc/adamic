@@ -1,0 +1,504 @@
+{
+  "mode": "first-error",
+  "distinct_key": [
+    "kind",
+    "where",
+    "reason",
+    "text"
+  ],
+  "normalization": "remove each adapted tree root from embedded locations in where, reason and text",
+  "files": 79,
+  "before_sites": 2831,
+  "after_sites": 2852,
+  "changed_reasons": [
+    {
+      "reason": "a () => never seen as a (node: ElementAccessExpression | EnumMember | PropertyAccessExpression) => string | number | undefined (one keeps something weakly that the other keeps strongly)",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/emitter.ts:1172:23",
+          "reason": "a () => never seen as a (node: ElementAccessExpression | EnumMember | PropertyAccessExpression) => string | number | undefined (one keeps something weakly that the other keeps strongly)",
+          "text": "src/compiler/emitter.ts:1172:23: stage 0 can't lower a () => never seen as a (node: ElementAccessExpression | EnumMember | PropertyAccessExpression) => string | number | undefined (one keeps something weakly that the other keeps strongly) yet"
+        }
+      ]
+    },
+    {
+      "reason": "a getter in a checked field contract",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "a template interpolating an object, an array, a map, a function or undefined",
+      "before": 1,
+      "after": 2,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1786:59",
+          "reason": "a template interpolating an object, an array, a map, a function or undefined",
+          "text": "src/compiler/core.ts:1786:59: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet"
+        }
+      ]
+    },
+    {
+      "reason": "a union or optional field read in a program with record storage",
+      "before": 74,
+      "after": 77,
+      "delta": 3,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:11040:20",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/utilities.ts:11040:20: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:1994:17",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/utilities.ts:1994:17: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilitiesPublic.ts:1539:60",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/utilitiesPublic.ts:1539:60: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type (EmitNode & { autoGenerate: AutoGenerateInfo; }) | (EmitNode & { autoGenerate: AutoGenerateInfo; })",
+      "before": 1,
+      "after": 2,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/utilities.ts:423:34",
+          "reason": "a value of type (EmitNode & { autoGenerate: AutoGenerateInfo; }) | (EmitNode & { autoGenerate: AutoGenerateInfo; })",
+          "text": "src/compiler/transformers/utilities.ts:423:34: stage 0 can't lower a value of type (EmitNode & { autoGenerate: AutoGenerateInfo; }) | (EmitNode & { autoGenerate: AutoGenerateInfo; }) yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type HasJSDoc",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:4705:39",
+          "reason": "a value of type HasJSDoc",
+          "text": "src/compiler/utilities.ts:4705:39: stage 0 can't lower a value of type HasJSDoc yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type RequireOrImportCall",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:3887:16",
+          "reason": "a value of type RequireOrImportCall",
+          "text": "src/compiler/utilities.ts:3887:16: stage 0 can't lower a value of type RequireOrImportCall yet"
+        }
+      ]
+    },
+    {
+      "reason": "checked predicate membership over an open tag domain",
+      "before": 47,
+      "after": 50,
+      "delta": 3,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/factory/utilities.ts:1573:9",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "src/compiler/factory/utilities.ts:1573:9: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/destructuring.ts:202:14",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "src/compiler/transformers/destructuring.ts:202:14: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilitiesPublic.ts:1391:38",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "src/compiler/utilitiesPublic.ts:1391:38: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      ]
+    },
+    {
+      "reason": "checked predicate overload target AssignmentExpression<AmpersandAmpersandEqualsToken | BarBarEqualsToken | EqualsToken | QuestionQuestionEqualsToken> & ...",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:5522:1",
+          "reason": "checked predicate overload target AssignmentExpression<AmpersandAmpersandEqualsToken | BarBarEqualsToken | EqualsToken | QuestionQuestionEqualsToken> & ...",
+          "text": "src/compiler/utilities.ts:5522:1: stage 0 can't lower checked predicate overload target AssignmentExpression<AmpersandAmpersandEqualsToken | BarBarEqualsToken | EqualsToken | QuestionQuestionEqualsToken> & ... yet"
+        }
+      ]
+    },
+    {
+      "reason": "checked predicate overload target BindableStaticElementAccessExpression",
+      "before": 0,
+      "after": 2,
+      "delta": 2,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:4148:1",
+          "reason": "checked predicate overload target BindableStaticElementAccessExpression",
+          "text": "src/compiler/utilities.ts:4148:1: stage 0 can't lower checked predicate overload target BindableStaticElementAccessExpression yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:7563:1",
+          "reason": "checked predicate overload target BindableStaticElementAccessExpression",
+          "text": "src/compiler/utilities.ts:7563:1: stage 0 can't lower checked predicate overload target BindableStaticElementAccessExpression yet"
+        }
+      ]
+    },
+    {
+      "reason": "checked predicate overload target JSDocTag",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilitiesPublic.ts:2534:1",
+          "reason": "checked predicate overload target JSDocTag",
+          "text": "src/compiler/utilitiesPublic.ts:2534:1: stage 0 can't lower checked predicate overload target JSDocTag yet"
+        }
+      ]
+    },
+    {
+      "reason": "checked predicate overload target PrefixUnaryExpression & { operand: NumericLiteral; }",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:5367:1",
+          "reason": "checked predicate overload target PrefixUnaryExpression & { operand: NumericLiteral; }",
+          "text": "src/compiler/utilities.ts:5367:1: stage 0 can't lower checked predicate overload target PrefixUnaryExpression & { operand: NumericLiteral; } yet"
+        }
+      ]
+    },
+    {
+      "reason": "checked predicate overload target PrefixUnaryExpression & { operator: SyntaxKind.PlusToken; operand: NumericLiteral; }",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/debug.ts:365:5",
+          "reason": "checked predicate overload target PrefixUnaryExpression & { operator: SyntaxKind.PlusToken; operand: NumericLiteral; }",
+          "text": "src/compiler/debug.ts:365:5: stage 0 can't lower checked predicate overload target PrefixUnaryExpression & { operator: SyntaxKind.PlusToken; operand: NumericLiteral; } yet"
+        }
+      ]
+    },
+    {
+      "reason": "checked view union arm awaits views-v3: array element kind",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/factory/nodeChildren.ts:20:16",
+          "reason": "checked view union arm awaits views-v3: array element kind",
+          "text": "src/compiler/factory/nodeChildren.ts:20:16: stage 0 can't lower checked view union arm awaits views-v3: array element kind yet"
+        }
+      ]
+    },
+    {
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "before": 13,
+      "after": 17,
+      "delta": 4,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/binder.ts:2042:13",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "src/compiler/binder.ts:2042:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/parser.ts:6516:9",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "src/compiler/parser.ts:6516:9: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/destructuring.ts:192:9",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "src/compiler/transformers/destructuring.ts:192:9: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+        }
+      ]
+    }
+  ],
+  "new_or_growing": [
+    {
+      "reason": "a () => never seen as a (node: ElementAccessExpression | EnumMember | PropertyAccessExpression) => string | number | undefined (one keeps something weakly that the other keeps strongly)",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/emitter.ts:1172:23",
+          "reason": "a () => never seen as a (node: ElementAccessExpression | EnumMember | PropertyAccessExpression) => string | number | undefined (one keeps something weakly that the other keeps strongly)",
+          "text": "src/compiler/emitter.ts:1172:23: stage 0 can't lower a () => never seen as a (node: ElementAccessExpression | EnumMember | PropertyAccessExpression) => string | number | undefined (one keeps something weakly that the other keeps strongly) yet"
+        }
+      ]
+    },
+    {
+      "reason": "a template interpolating an object, an array, a map, a function or undefined",
+      "before": 1,
+      "after": 2,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1786:59",
+          "reason": "a template interpolating an object, an array, a map, a function or undefined",
+          "text": "src/compiler/core.ts:1786:59: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet"
+        }
+      ]
+    },
+    {
+      "reason": "a union or optional field read in a program with record storage",
+      "before": 74,
+      "after": 77,
+      "delta": 3,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:11040:20",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/utilities.ts:11040:20: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:1994:17",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/utilities.ts:1994:17: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilitiesPublic.ts:1539:60",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/utilitiesPublic.ts:1539:60: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type (EmitNode & { autoGenerate: AutoGenerateInfo; }) | (EmitNode & { autoGenerate: AutoGenerateInfo; })",
+      "before": 1,
+      "after": 2,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/utilities.ts:423:34",
+          "reason": "a value of type (EmitNode & { autoGenerate: AutoGenerateInfo; }) | (EmitNode & { autoGenerate: AutoGenerateInfo; })",
+          "text": "src/compiler/transformers/utilities.ts:423:34: stage 0 can't lower a value of type (EmitNode & { autoGenerate: AutoGenerateInfo; }) | (EmitNode & { autoGenerate: AutoGenerateInfo; }) yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type HasJSDoc",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:4705:39",
+          "reason": "a value of type HasJSDoc",
+          "text": "src/compiler/utilities.ts:4705:39: stage 0 can't lower a value of type HasJSDoc yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type RequireOrImportCall",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:3887:16",
+          "reason": "a value of type RequireOrImportCall",
+          "text": "src/compiler/utilities.ts:3887:16: stage 0 can't lower a value of type RequireOrImportCall yet"
+        }
+      ]
+    },
+    {
+      "reason": "checked predicate membership over an open tag domain",
+      "before": 47,
+      "after": 50,
+      "delta": 3,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/factory/utilities.ts:1573:9",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "src/compiler/factory/utilities.ts:1573:9: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/destructuring.ts:202:14",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "src/compiler/transformers/destructuring.ts:202:14: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilitiesPublic.ts:1391:38",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "src/compiler/utilitiesPublic.ts:1391:38: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      ]
+    },
+    {
+      "reason": "checked predicate overload target AssignmentExpression<AmpersandAmpersandEqualsToken | BarBarEqualsToken | EqualsToken | QuestionQuestionEqualsToken> & ...",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:5522:1",
+          "reason": "checked predicate overload target AssignmentExpression<AmpersandAmpersandEqualsToken | BarBarEqualsToken | EqualsToken | QuestionQuestionEqualsToken> & ...",
+          "text": "src/compiler/utilities.ts:5522:1: stage 0 can't lower checked predicate overload target AssignmentExpression<AmpersandAmpersandEqualsToken | BarBarEqualsToken | EqualsToken | QuestionQuestionEqualsToken> & ... yet"
+        }
+      ]
+    },
+    {
+      "reason": "checked predicate overload target BindableStaticElementAccessExpression",
+      "before": 0,
+      "after": 2,
+      "delta": 2,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:4148:1",
+          "reason": "checked predicate overload target BindableStaticElementAccessExpression",
+          "text": "src/compiler/utilities.ts:4148:1: stage 0 can't lower checked predicate overload target BindableStaticElementAccessExpression yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:7563:1",
+          "reason": "checked predicate overload target BindableStaticElementAccessExpression",
+          "text": "src/compiler/utilities.ts:7563:1: stage 0 can't lower checked predicate overload target BindableStaticElementAccessExpression yet"
+        }
+      ]
+    },
+    {
+      "reason": "checked predicate overload target JSDocTag",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilitiesPublic.ts:2534:1",
+          "reason": "checked predicate overload target JSDocTag",
+          "text": "src/compiler/utilitiesPublic.ts:2534:1: stage 0 can't lower checked predicate overload target JSDocTag yet"
+        }
+      ]
+    },
+    {
+      "reason": "checked predicate overload target PrefixUnaryExpression & { operand: NumericLiteral; }",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:5367:1",
+          "reason": "checked predicate overload target PrefixUnaryExpression & { operand: NumericLiteral; }",
+          "text": "src/compiler/utilities.ts:5367:1: stage 0 can't lower checked predicate overload target PrefixUnaryExpression & { operand: NumericLiteral; } yet"
+        }
+      ]
+    },
+    {
+      "reason": "checked predicate overload target PrefixUnaryExpression & { operator: SyntaxKind.PlusToken; operand: NumericLiteral; }",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/debug.ts:365:5",
+          "reason": "checked predicate overload target PrefixUnaryExpression & { operator: SyntaxKind.PlusToken; operand: NumericLiteral; }",
+          "text": "src/compiler/debug.ts:365:5: stage 0 can't lower checked predicate overload target PrefixUnaryExpression & { operator: SyntaxKind.PlusToken; operand: NumericLiteral; } yet"
+        }
+      ]
+    },
+    {
+      "reason": "checked view union arm awaits views-v3: array element kind",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/factory/nodeChildren.ts:20:16",
+          "reason": "checked view union arm awaits views-v3: array element kind",
+          "text": "src/compiler/factory/nodeChildren.ts:20:16: stage 0 can't lower checked view union arm awaits views-v3: array element kind yet"
+        }
+      ]
+    },
+    {
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "before": 13,
+      "after": 17,
+      "delta": 4,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/binder.ts:2042:13",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "src/compiler/binder.ts:2042:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/parser.ts:6516:9",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "src/compiler/parser.ts:6516:9: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/destructuring.ts:192:9",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "src/compiler/transformers/destructuring.ts:192:9: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+        }
+      ]
+    }
+  ],
+  "raw_sha256": {
+    "before": "759fa5233b6d14079fe3626bd96cea704a8ede7ab9b8ad5f809a8fcd7fbe7209",
+    "after": "14594e7e612712ba6c35a3ae1b20aa544090918b4746938ceb9cb25faa83b12e"
+  }
+}
