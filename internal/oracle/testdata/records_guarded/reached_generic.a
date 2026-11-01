@@ -1,0 +1,9 @@
+// A record passed through a type parameter: the read's receiver is T, judged by its constraint.
+interface Counts { [key: string]: number | string; total: number }
+const counts: Counts = { total: 2 };
+counts["extra"] = "seven";
+function show<T extends { readonly total: number | string }>(seen: T): string {
+	return typeof seen.total === "string" ? "text " + seen.total : "number " + String(seen.total + 1);
+}
+for (const key of Object.keys(counts)) console.log(key);
+console.log(show(counts));

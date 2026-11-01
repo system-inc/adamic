@@ -1,0 +1,13 @@
+// A union holding a record, read for its discriminant: the record is a member, so the read may be of
+// a record. (The narrowed read after it, of Plain, is never reached: this one stops first.)
+interface Opts { [key: string]: number | string | undefined; total: number }
+interface Plain { kind: "plain"; total: number; size?: number }
+const opts: Opts = { total: 2 };
+opts["size"] = 4;
+function read(value: Opts | Plain): string {
+	if (value.kind === "plain") return value.size === undefined ? "none" : String(value.size);
+	return "opts";
+}
+for (const key of Object.keys(opts)) console.log(key);
+console.log(read(opts));
+console.log(read({ kind: "plain", total: 1, size: 3 }));
