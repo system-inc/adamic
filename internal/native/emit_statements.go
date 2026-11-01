@@ -313,6 +313,8 @@ func (e *emitter) writeProperty(statement ir.SetProperty, object, value string) 
 		keptValue = e.keptIn(object, value)
 	}
 	if records {
+		// A record reaches a fixed object's write here; under a name some define hides, the write is
+		// checked and throws on a read-only key, as recordSet's are (ir.Program's RecordWriteMayThrow).
 		e.line("if (adamic_record_is(%s)) {", object)
 		boxed := keptValue
 		if statement.Value.Type() == ir.Number {
@@ -327,7 +329,8 @@ func (e *emitter) writeProperty(statement ir.SetProperty, object, value string) 
 		if statement.Value.Type() == ir.MaybeBoolean {
 			boxed = fmt.Sprintf("((%s).present ? ((%s).boolean ? &adamic_box_true : &adamic_box_false) : NULL)", value, value)
 		}
-		e.line("adamic_record_set(%s, %s, (adamic_value){.reference = %s});", object, e.recordKey(statement.Name), boxed)
+		key := e.recordKey(statement.Name)
+		e.recordSet(object, key, fmt.Sprintf("(adamic_value){.reference = %s}", boxed), key, e.program.RecordWriteMayThrow(statement))
 		e.line("} else {")
 	}
 	slot := e.temporary()

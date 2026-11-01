@@ -1,6 +1,10 @@
-// record.c: own enumerable string properties, using Map's counted ordered hash table.
+// record.c: own string data properties, using Map's counted ordered hash table. Each is enumerable,
+// writable and configurable, but for the attributes Object.defineProperty took away (adamic.h).
 #include "adamic.h"
+#include "graph_regions.h"
 
+#include <math.h>
+#include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -95,8 +99,99 @@ bool adamic_record_has(const adamic_record *record, const adamic_string *key) {
 	return adamic_record_get(record, key) != NULL;
 }
 
+// entry_of is the table entry holding a slot adamic_map_get gave.
+static adamic_map_entry *entry_of(adamic_value *slot) {
+	return (adamic_map_entry *)((char *)slot - offsetof(adamic_map_entry, value));
+}
+
+// let_go releases the key and value a refused write was handed, as adamic_map_set lets go of the
+// key it already has and the value it replaces.
+static void let_go(adamic_map *map, adamic_string *key, adamic_value value) {
+	if (adamic_graph_is(map)) { adamic_graph_drop(map, key); } else { adamic_release(key); }
+	if (map->reference_values) {
+		if (adamic_graph_is(map)) { adamic_graph_drop(map, value.reference); } else { adamic_release(value.reference); }
+	}
+}
+
 void adamic_record_define(adamic_record *record, adamic_string *key, adamic_value value) {
 	adamic_map_set(table(record), (adamic_value){.reference = key}, value);
+}
+
+// same_number is SameValue on numbers: NaN is NaN, and +0 isn't -0.
+static bool same_number(double left, double right) {
+	if (isnan(left) || isnan(right)) {
+		return isnan(left) && isnan(right);
+	}
+	return left == right && signbit(left) == signbit(right);
+}
+
+// same_value is SameValue on two values a record's slots hold. A reference is the same object, or a
+// string, number or boolean of the same value, as a union slot boxes them: JavaScript compares those
+// by value.
+static bool same_value(const adamic_map *map, adamic_record_scalar scalar, adamic_value left, adamic_value right) {
+	if (map->reference_values) {
+		const adamic_heap *a = left.reference;
+		const adamic_heap *b = right.reference;
+		if (a == b) {
+			return true;
+		}
+		if (a == NULL || b == NULL || a->kind != b->kind) {
+			return false;
+		}
+		switch (a->kind) {
+		case adamic_kind_string:
+			return adamic_string_equal((const adamic_string *)a, (const adamic_string *)b);
+		case adamic_kind_number:
+			return same_number(((const adamic_number_box *)a)->number, ((const adamic_number_box *)b)->number);
+		case adamic_kind_boolean:
+			return ((const adamic_boolean_box *)a)->boolean == ((const adamic_boolean_box *)b)->boolean;
+		default:
+			return false;
+		}
+	}
+	switch (scalar) {
+	case adamic_record_booleans:
+		return left.boolean == right.boolean;
+	case adamic_record_maybe_numbers: {
+		adamic_maybe_number a = adamic_maybe_number_unpack(left.number);
+		adamic_maybe_number b = adamic_maybe_number_unpack(right.number);
+		return a.present == b.present && (!a.present || same_number(a.number, b.number));
+	}
+	case adamic_record_numbers:
+		return same_number(left.number, right.number);
+	case adamic_record_references:
+		break;
+	}
+	static const char message[] = "compiler bug: a record of scalars defined as one of references";
+	adamic_panic(message, sizeof message - 1);
+}
+
+bool adamic_record_define_hidden(adamic_record *record, adamic_string *key, adamic_value value, adamic_record_scalar scalar) {
+	adamic_map *map = table(record);
+	adamic_value *slot = adamic_map_get(map, (adamic_value){.reference = key});
+	if (slot != NULL && entry_of(slot)->fixed) {
+		// Node's ValidateAndApplyPropertyDescriptor: a non-configurable, non-writable property takes a
+		// define only of the value it has, which changes nothing.
+		bool same = same_value(map, scalar, *slot, value);
+		let_go(map, key, value);
+		return same;
+	}
+	if (slot != NULL) {
+		// Set finds the same entry and replaces its value there, so the key keeps its place, and it
+		// stays configurable, as the descriptor doesn't say otherwise.
+		adamic_map_entry *entry = entry_of(slot);
+		entry->hidden = true;
+		entry->readonly = true;
+		adamic_map_set(map, (adamic_value){.reference = key}, value);
+		return true;
+	}
+	adamic_map_set(map, (adamic_value){.reference = key}, value);
+	// A key set didn't have goes last, with every attribute the descriptor leaves out false.
+	adamic_map_entry *entry = &map->entries[map->used - 1];
+	entry->hidden = true;
+	entry->readonly = true;
+	entry->fixed = true;
+	return true;
 }
 
 void adamic_record_set(adamic_record *record, adamic_string *key, adamic_value value) {
@@ -111,6 +206,58 @@ bool adamic_record_delete(adamic_record *record, const adamic_string *key) {
 	// JavaScript delete succeeds even when no own property was there.
 	(void)adamic_map_delete(table(record), (adamic_value){.reference = (void *)key});
 	return true;
+}
+
+bool adamic_record_set_checked(adamic_record *record, adamic_string *key, adamic_value value) {
+	if (named(key, "__proto__")) {
+		static const char message[] = "NotYet: record assignment to __proto__ requires the Object.prototype setter; use an own data property";
+		adamic_panic(message, sizeof message - 1);
+	}
+	adamic_map *map = table(record);
+	adamic_value *slot = adamic_map_get(map, (adamic_value){.reference = key});
+	if (slot != NULL && entry_of(slot)->readonly) {
+		let_go(map, key, value);
+		return false;
+	}
+	adamic_map_set(map, (adamic_value){.reference = key}, value);
+	return true;
+}
+
+bool adamic_record_delete_checked(adamic_record *record, const adamic_string *key) {
+	adamic_map *map = table(record);
+	adamic_value *slot = adamic_map_get(map, (adamic_value){.reference = (void *)key});
+	if (slot != NULL && entry_of(slot)->fixed) {
+		return false;
+	}
+	// JavaScript delete succeeds even when no own property was there.
+	(void)adamic_map_delete(map, (adamic_value){.reference = (void *)key});
+	return true;
+}
+
+// The messages are Node's (v24): an assignment to a read-only property, and a delete of a
+// non-configurable one, in strict code, which every module is.
+void adamic_record_refused(const adamic_string *key, bool deleting) {
+	static const char assign_prefix[] = "Cannot assign to read only property '";
+	static const char assign_suffix[] = "' of object '#<Object>'";
+	static const char delete_prefix[] = "Cannot delete property '";
+	static const char delete_suffix[] = "' of #<Object>";
+	const char *prefix = deleting ? delete_prefix : assign_prefix;
+	const char *suffix = deleting ? delete_suffix : assign_suffix;
+	size_t prefix_length = deleting ? sizeof delete_prefix - 1 : sizeof assign_prefix - 1;
+	size_t suffix_length = deleting ? sizeof delete_suffix - 1 : sizeof assign_suffix - 1;
+	adamic_string *text = adamic_string_allocate(prefix_length + key->length + suffix_length);
+	char *bytes = (char *)text->bytes;
+	memcpy(bytes, prefix, prefix_length);
+	memcpy(bytes + prefix_length, key->bytes, key->length);
+	memcpy(bytes + prefix_length + key->length, suffix, suffix_length);
+	adamic_object *error = adamic_error_new(text);
+	adamic_release(text);
+	static const char name[] = "TypeError";
+	adamic_string *type_name = adamic_string_allocate(sizeof name - 1);
+	memcpy((char *)type_name->bytes, name, sizeof name - 1);
+	adamic_release(error->slots[0].reference);
+	error->slots[0].reference = type_name;
+	adamic_thrown = error;
 }
 
 size_t adamic_record_size(const adamic_record *record) {
@@ -155,7 +302,7 @@ adamic_array *adamic_record_keys(const adamic_record *record) {
 	size_t count = 0;
 	for (size_t index = 0; index < map->used; index++) {
 		uint32_t number;
-		if (!map->entries[index].deleted && array_index(map->entries[index].key.reference, &number)) {
+		if (!map->entries[index].deleted && !map->entries[index].hidden && array_index(map->entries[index].key.reference, &number)) {
 			count++;
 		}
 	}
@@ -173,7 +320,7 @@ adamic_array *adamic_record_keys(const adamic_record *record) {
 	for (size_t index = 0; index < map->used; index++) {
 		const adamic_map_entry *entry = &map->entries[index];
 		uint32_t number;
-		if (!entry->deleted && array_index(entry->key.reference, &number)) {
+		if (!entry->deleted && !entry->hidden && array_index(entry->key.reference, &number)) {
 			indices[written++] = (indexed_key){entry->key.reference, number};
 		}
 	}
@@ -187,7 +334,7 @@ adamic_array *adamic_record_keys(const adamic_record *record) {
 	for (size_t index = 0; index < map->used; index++) {
 		const adamic_map_entry *entry = &map->entries[index];
 		uint32_t number;
-		if (!entry->deleted && !array_index(entry->key.reference, &number)) {
+		if (!entry->deleted && !entry->hidden && !array_index(entry->key.reference, &number)) {
 			adamic_array_push(keys, (adamic_value){.reference = adamic_retain(entry->key.reference)});
 		}
 	}

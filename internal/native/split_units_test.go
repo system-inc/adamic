@@ -284,8 +284,8 @@ func TestRetainedSplitCoverage(t *testing.T) {
 		}
 	})
 	t.Run("record_mutants", func(t *testing.T) {
-		if len(recordMutationCases) != 6 {
-			t.Fatalf("got %d record mutants, want 6", len(recordMutationCases))
+		if len(recordMutationCases) != 8 {
+			t.Fatalf("got %d record mutants, want 8", len(recordMutationCases))
 		}
 		seen := map[string]bool{}
 		for _, mutant := range recordMutationCases {

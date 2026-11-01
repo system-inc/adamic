@@ -13,6 +13,9 @@ func (a *analysis) recordCall(c ir.RecordCall) value {
 	case "set":
 		a.write(WriteMapEntry, c.Site, "", args[0], args[2], elementKey)
 		return args[2]
+	case "defineHidden":
+		a.write(WriteMapEntry, c.Site, "", args[0], args[2], elementKey)
+		return value{}
 	case "values":
 		return a.fresh(elementKey, a.load(args[0], elementKey))
 	case "entries":

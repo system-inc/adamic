@@ -197,6 +197,8 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			found = found || !node.Optional
 		case ir.Throw:
 			found = true
+		case ir.RecordCall, ir.RecordCoalesce, ir.SetProperty:
+			found = found || l.result.RecordWriteMayThrow(node)
 		case ir.Defined:
 			found = found || node.Throws()
 		case ir.Call:

@@ -38,6 +38,10 @@ func (e *emitter) recordCall(c ir.RecordCall) string {
 		return "adamicRecordSet(" + args + ")"
 	case "delete":
 		return "((r, k) => delete r[k])(" + args + ")"
+	case "defineHidden":
+		// Node throws the redefinition's TypeError itself, so the call is always true here, and the
+		// caller's throw on false never runs.
+		return "((r, k, v) => (Object.defineProperty(r, k, {enumerable: false, writable: false, value: v}), true))(" + args + ")"
 	case "entries":
 		return "Object.entries(" + args + ").map(adamicTuple)"
 	case "hasOwn", "keys", "values":

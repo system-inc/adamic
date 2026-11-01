@@ -142,6 +142,9 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		}
 		return []ir.Statement{ir.Evaluate{Value: value}}, nil
 	}
+	if statements, handled, err := l.recordDefineStatement(expression); handled {
+		return statements, err
+	}
 	if statements, handled, err := l.conditionalSuper(expression); handled {
 		return statements, err
 	}
