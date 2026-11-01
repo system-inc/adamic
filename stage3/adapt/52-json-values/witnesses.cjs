@@ -76,6 +76,8 @@ assert(details && references);
 const clientSource = parse(after, 'src/harness/client.ts');
 const declarations = nodes(clientSource, n => ts.isFunctionDeclaration(n) && /^adamic(ArrayOf|Is)/.test(n.name?.text || ''));
 let validation = declarations.map(n => n.getText(clientSource)).join('\n');
+if (mutant === 'full-reply-string') validation = validation.replace('typeof value.text === "string" || ', '');
+if (mutant === 'full-reply-invalid') validation = validation.replace('(value.text === undefined || typeof value.text === "string" ||', '(value.text === undefined || true ||');
 if (mutant === 'response') validation = validation.replace('Array.isArray(value) &&', '!Array.isArray(value) &&');
 const checks = Function('ts', js(validation) + '; return {adamicArrayOf, adamicIsCompletionEntryDetails, adamicIsReferencedSymbol};')({...ts, isAdamicJsonObject: object.isAdamicJsonObject});
 const debug = {assert(condition) { assert(condition); }};
@@ -85,7 +87,29 @@ for (const rule of rules.filter(r => r.file === 'src/harness/client.ts' && ['get
     assert.equal(run(rule.after), run(rule.before), 'checked response retains array/item identity');
 }
 
-for (const rule of rules.filter(r => r.file === 'src/harness/harnessLanguageService.ts')) {
+// completionEntryDetails-full keeps service span edits and accepts protocol tag text.
+const detailsRule = rules.find(r => r.file === 'src/harness/client.ts' && r.owner === 'getCompletionEntryDetails' && r.before.includes('Debug.assert'));
+for (const tagText of [undefined, '', 'p1', [], [{text: 'p1', kind: 'text'}]]) {
+    const tags = [{name: 'param', text: tagText}];
+    const span = {start: 0, length: 0};
+    const codeActions = [{description: 'insert', changes: [{fileName: file, textChanges: [{span, newText: 'x'}]}]}];
+    const full = {...details, tags, codeActions};
+    const response = {body: [full]};
+    const run = code => Function('response', 'Debug', ...Object.keys(checks), code)(response, debug, ...Object.values(checks));
+    assert.equal(run(detailsRule.before), full);
+    const checked = run(detailsRule.after);
+    assert.equal(checked, full);
+    assert.equal(checked.tags, tags);
+    assert.equal(checked.tags[0].text, tagText);
+    assert.equal(checked.codeActions, codeActions);
+    assert.equal(checked.codeActions[0].changes[0].textChanges[0].span, span);
+}
+for (const invalid of [null, 1, true, {}, [1], [{text: 'p1', kind: 1}]]) {
+    const response = {body: [{...details, tags: [{name: 'param', text: invalid}]}]};
+    assert.throws(() => Function('response', 'Debug', ...Object.keys(checks), detailsRule.after)(response, debug, ...Object.values(checks)), TypeError);
+}
+
+for (const rule of rules.filter(r => r.file === 'src/harness/harnessLanguageService.ts' && r.before.includes('info.config.message'))) {
     const run = code => {
         const parts = {displayParts: []};
         return Function('ts', 'info', 'parts', 'let customMessage = ""; ' + code + '; return {customMessage, parts};')(
@@ -120,4 +144,4 @@ for (const value of [undefined, {}, [], 0, '', false, 'echo']) {
     const checked = mutant === 'echo' ? echoRule.after.replace('req.arguments === null', 'req.arguments !== null') : echoRule.after;
     assert.deepEqual(echo(checked, value), echo(echoRule.before, value));
 }
-console.log(JSON.stringify({classes: ['object', 'inherited', 'location', 'response', 'plugin', 'localized', 'echo'], beforeAfter: 'pass', mutant: mutant || null}));
+console.log(JSON.stringify({classes: ['object', 'inherited', 'location', 'response', 'plugin', 'localized', 'echo', 'full-reply-string', 'full-reply-invalid'], beforeAfter: 'pass', mutant: mutant || null}));

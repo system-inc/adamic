@@ -1,6 +1,6 @@
 # 52: JSON and config values
 
-**Stopped after the full oracle. This branch is not ready for integration.** A real server completion response contradicts the harness LanguageService return contract; the required true check changes two own callers. See the counterexample below.
+The completion-details read uses the precise harness-local full-reply shape authorized after the reach measurement. It preserves protocol string tags and service numeric-span code actions by identity. All harness flow edits erase to identical JavaScript; the only runtime change in this repair is accepting checked string tag text.
 
 Adamic task r2628wp. Main is `470e16f8315f7a83c5c7b7f6f2a77d8328db0a25`. Upstream is TypeScript 6.0.3 at `050880ce59e30b356b686bd3144efe24f875ebc8`. Number 41 is occupied; the requested next free number is 52. This adaptation changes JavaScript.
 
@@ -40,12 +40,12 @@ Every edit has an exact owner, node kind and before/after text in rules.json. Al
 | Object: commandLineParser raw binding, isSolutionConfig, parseConfig mutation bases; editorServices.ts:2922-2925 | A non-null object or function is checked before indexing. The exact original object is retained, including arrays, function objects and mutations. isSolutionConfig's existing short circuit still runs first. Own config-parser producers return objects. | Primitive values previously boxed or failed later can now throw TypeError at the object check. These are outside the object producer invariant. No such differing own-caller trace is accepted by the oracle. |
 | Inherited: commandLineParser.ts:3469-3471 | Checks the extended raw object and every element before mapping an inherited spec array. Existing string arrays and already-set own specs behave identically. ExtendsResult.compileOnSave becomes unknown internally, preserving raw inherited values rather than coercing them to boolean. | Truthy non-array or non-string inherited specs now throw at the check instead of being treated as array-like data or failing later. Such values are outside the string-spec caller invariant. |
 | Location: server/session.ts:3504,3507 | Checks file, line, offset and optional project/position fields. Valid requests retain argument identity. The documented internal position-only form is normalized privately with line/offset zero; the handler selects position before those fields, preserving its result. The request itself is unchanged. | Malformed requests outside that schema now fail before the handler. Public arbitrary caller compatibility is not claimed. |
-| Response: harness/client.ts:315-316,467 | Checks arrays, required fields and optional fields against the actual completion/reference structures. Checked arrays and items are returned by identity. A missing reference body is still undefined; the private method declaration is corrected to admit it. Witness data comes from stock TypeScript's real language service. | Invalid response bodies now fail before being read or forwarded. The full oracle disproves the claimed completion-details producer invariant: two legal protocol responses contain string tag text. This class is blocked, not accepted. No generic assertion is used to conceal the mismatch. |
+| Response: harness/client.ts:315-316,467 | Checks arrays, required fields and optional fields against the actual completion/reference structures. Checked arrays and items are returned by identity. A missing reference body is still undefined; the private method declaration is corrected to admit it. Witness data comes from stock TypeScript's real language service. | Invalid response bodies now fail before being read or forwarded. CompletionDetailsFull retains service code actions and permits protocol string tags. Its local declaration and check describe that exact full reply; legal string text and display parts are accepted without normalization. |
 | Plugin: harness/harnessLanguageService.ts:630,682 | Checks the config object and its string message at each fixture read. Configured message strings retain their text and timing. | Non-object configs and non-string fixture messages now throw. They are outside the string-message fixture invariant. |
 | Localized: services/services.ts:1656 | Checks the unknown host result and its string-valued dictionary, preserving binding, laziness and identity. Undefined remains allowed. | A non-dictionary or non-string-valued host result now throws instead of being stored unchecked. Own localized-message producers supply string dictionaries. |
 | Echo: testRunner/unittests/tsserver/session.ts:525 | The HandlerResponse contract admits all non-null values or undefined. These values are forwarded unchanged, including primitives, arrays and objects. | Null now fails at this check; previously a null response would fail later in doOutput's metadata read. Null is outside the echo fixture's response invariant. |
 
-`witnesses.cjs` lifts the actual changed fragments and predicates and executes before/after cases in Node. It checks identities as well as values. `proof.cjs` runs one source mutant per class; each must turn its Node witness red. It also checks a half-applied batch and last-file text drift fail without any writes, and verifies idempotence and zero added casts.
+`witnesses.cjs` lifts the actual changed fragments and predicates and executes before/after cases in Node. It checks identities as well as values. `proof.cjs` runs one source mutant per original class plus two mutants of the new tag-text check (reject legal strings, accept invalid text); each must turn its Node witness red. It also checks a half-applied batch and last-file text drift fail without any writes, and verifies idempotence and zero added casts.
 
 ## Public API sanctions
 
@@ -64,37 +64,36 @@ Setup completed successfully with GOPROXY and the requested 1,800-second timeout
 | New native diagnostics after exact location mapping | | 0 |
 | Removed native diagnostics | | 0 |
 | Public explicit any tokens | 37 | 23 |
-| Full oracle passing | 106,366 | 106,362 |
-| Full oracle failing | 1 | 5 |
+| Full oracle passing | 106,366 | 106,366 |
+| Full oracle failing | 1 | 1 |
 | Full oracle pending | 0 | 0 |
 
-The control has only the existing public API acknowledgment failure. With 52, two fourslash-server cases fail and produce two extra tsserver log baselines, for four extra failures. The complete moved-baseline list with 52 is:
+The control and repaired adaptation each have only the standing public API acknowledgment failure. The repaired full oracle has 106,366 passing, 1 failing and 0 pending. Its complete moved-baseline list is:
 
 - `api/typescript.d.ts`
-- `tsserver/fourslashServer/completionEntryDetailAcrossFiles01.js`
-- `tsserver/fourslashServer/completionEntryDetailAcrossFiles02.js`
+
+Neither completion-details server baseline moves. The two previously failing cases retain their exact expected string tags. The fresh full apply and the built oracle tree match byte for byte throughout src. Hand-applied sanctions, the generated declaration and the oracle declaration match byte for byte. The incremental API diff remains 126 lines (+18/-14).
 
 `APISample_parseConfig.errors.txt` does not appear in the adapted full run. The isolated source mutant narrows parseConfigFileTextToJson.config, builds successfully, and turns the targeted compiler oracle red: 5 passing, 1 failing, exactly `APISample_parseConfig.errors.txt` newly produced. Thus the named pinned return is exercised, not merely listed.
 
-## Stop: the completion-details contract is false for own callers
+## Completion-details full reply and harness flows
 
-Both `tests/cases/fourslash/server/completionEntryDetailAcrossFiles01.ts` and `completionEntryDetailAcrossFiles02.ts` pass a real protocol response whose completion details contain:
+The harness requests completionEntryDetails-full. In the adapted control, src/server/session.ts:2578 preserves service code actions with numeric-span edits while mapping tags to protocol strings when displayPartsForJSDoc is false. The protocol.CompletionEntryDetails alias instead describes simplified line/offset code actions. The authorized precise harness-local type is therefore:
 
 ```ts
-tags: [{ name: "param", text: "p1" }]
+export type HarnessCompletionEntryDetails = Omit<CompletionEntryDetails, "tags"> & {
+    tags?: readonly protocol.JSDocTagInfo[];
+};
+export interface HarnessLanguageService extends Omit<LanguageService, "getCompletionEntryDetails"> {
+    getCompletionEntryDetails(...args: Parameters<LanguageService["getCompletionEntryDetails"]>): HarnessCompletionEntryDetails | undefined;
+}
 ```
 
-They explicitly expect that string. The source contracts differ:
+SessionClient implements that interface and declares the precise full-reply return. Native LanguageService remains structurally compatible. The adapter interface, server adapter, fourslash field, memoized proxy, details helper and linked-edit helper carry this local type. The completion baseline result has a type-only observation annotation: tag text is iterable, and its elements may have kind or length. Display parts have kind; string characters have length and no kind, so the original loop retains its exact behavior. The existing proxy assertion stays verbatim, with a variable annotation added. No cast is added, no public declaration is changed by these harness types, and no test expectation is changed.
 
-- `src/server/protocol.ts:1059` permits JSDocTagInfo.text to be a string or display parts. Its CompletionEntryDetails at :2276 replaces the service tag shape with this protocol shape.
-- `src/services/types.ts:1319` permits only SymbolDisplayPart[] for service JSDocTagInfo.text.
-- `src/harness/client.ts:117` declares SessionClient implements LanguageService, and :310 declares its result to be the service CompletionEntryDetails. The original any response body conceals the mismatch.
-- `src/harness/fourslashImpl.ts:1205` compares the returned tags directly against the expected raw string tags. There is no normalization at this read.
+HARNESS-REACH.md lists all 14 edit locations across the three harness files. There are no testRunner flow edits. The declaration-flow proof removes those type edits from the complete source and compares stock emitted JavaScript: all three files match byte for byte with their runtime checks retained. The sole runtime difference in this repair is the string arm of the tag check. The array and property checks accept every legal full-reply tag value and retain all original values, including numeric-span code actions.
 
-The new predicate is truthful to the declared service type, so it rejects those legal protocol values. A predicate accepting the string as SymbolDisplayPart[] would be false. Normalizing to display parts would change the own callers' explicitly expected tags. Merely widening this private method to protocol.CompletionEntryDetails would cease to satisfy its implements LanguageService contract; a separate harness protocol/service contract repair is needed. That broader decision is left to Adamic rather than hidden behind a cast, a changed test expectation or a new exemption.
-
-`counterexample.cjs` uses the actual oracle response and the exact before/after reader fragments: before returns the same object with text "p1"; after throws TypeError. The fixture and result are retained on the evidence branch as `counterexample-response.json` and `counterexample.json`. The positive Node witnesses still cover the seven classes and each class mutant fails, but their service-generated completion sample did not cover this protocol conversion. The full oracle supplies the discriminating counterexample. No passing-oracle or behavioral-equivalence claim is made for this stopped adaptation.
-
+`counterexample.cjs` now pins the previously failing real server response: both before and after return the same object, tags array and string text "p1". Node witnesses additionally cover absent text, empty strings, empty and populated display-part arrays, and nested numeric-span code actions, checking identity throughout. A mutant deleting the string arm rejects the legal full reply. A mutant bypassing the text check accepts malformed values; both make their respective witnesses fail. Invalid null, numeric, boolean, object and malformed-array text is rejected. Such invalid text is outside the legal full-reply shape and is the only new rejection domain discussed here.
 
 The report-only public any inventory after adaptation has 23 tokens on 15 declaration lines, including the two pinned config returns. Outside that list are **21 tokens on 13 lines**:
 

@@ -1,5 +1,5 @@
 'use strict';
-// Reproduce the real protocol value that prevents the checked client from satisfying LanguageService.
+// Pin the previously failing real full reply and retain its original value by identity.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -27,9 +27,12 @@ assert(originalSource.includes(rule.before));
 const run = code => Function('response', 'Debug', ...Object.keys(checks), code)(response, {assert: condition => assert(condition)}, ...Object.values(checks));
 const original = run(rule.before);
 assert.equal(original.tags[0].text, 'p1');
-assert.throws(() => run(rule.after), {name: 'TypeError', message: 'Expected completion details array'});
+const checked = run(rule.after);
+assert.equal(checked, original);
+assert.equal(checked.tags, original.tags);
+assert.equal(checked.tags[0].text, 'p1');
 console.log(JSON.stringify({before: 'returns original protocol value', tagText: original.tags[0].text,
-    tagTextType: typeof original.tags[0].text, after: 'throws TypeError',
+    tagTextType: typeof original.tags[0].text, after: 'returns identical original protocol value',
     declaredServiceShape: 'JSDocTagInfo.text?: SymbolDisplayPart[]',
     actualProtocolShape: 'JSDocTagInfo.text?: string | SymbolDisplayPart[]',
-    status: 'caller counterexample; adaptation is not ready'}, null, 2));
+    status: 'original caller counterexample repaired without normalization'}, null, 2));
