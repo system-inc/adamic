@@ -1,0 +1,47 @@
+from pathlib import Path
+import os,sys,json,subprocess as s,time,hashlib,shutil,signal
+D=Path(__file__).parent;R=Path('/workspace/scratch/adapt-93-main');sys.path.insert(0,str(R/'stage3/lane'));from check import check_results
+A=Path((D/'artifact-path').read_text());records=[]
+for label,tree in [('control',D/'control'),('after',A/'tree')]:
+ # Evict only clean cached pages of our completed job files, not file contents.
+ # Keep the original proof's strict no-memory-pressure-increment guard.
+ seen=set();evicted=0
+ for root in [Path('/workspace/scratch'),Path('/home/agent/.cache')]:
+  for base,dirs,files in os.walk(root,followlinks=False):
+   for name in files:
+    path=Path(base)/name
+    try:
+     stat=path.stat();identity=(stat.st_dev,stat.st_ino)
+     if not path.is_file() or stat.st_size<65536 or identity in seen:continue
+     seen.add(identity)
+     fd=os.open(path,os.O_RDONLY)
+     try:os.posix_fadvise(fd,0,0,os.POSIX_FADV_DONTNEED)
+     finally:os.close(fd)
+     evicted+=1
+    except (OSError,ValueError):pass
+ (D/('cache-pages-'+label+'.json')).write_text(json.dumps(dict(files=evicted,memoryCurrent=Path('/sys/fs/cgroup/memory.current').read_text())))
+ perf=tree/'.parallelperf.json'
+ if perf.exists():
+  assert s.run(['git','-C',str(tree),'ls-files','--error-unmatch','.parallelperf.json'],stdout=s.DEVNULL,stderr=s.DEVNULL).returncode!=0
+  shutil.copyfile(perf,D/(label+'-generated-parallelperf.json'));perf.unlink()
+ out=D/('oracle-'+label);cmd=['bash','stage3/oracle/run.sh',str(tree),str(out),'--workers','8','--limit-seconds','1800'];start=time.monotonic();minimum=shutil.disk_usage(D).free
+ mem=Path('/sys/fs/cgroup/memory.events').read_text()
+ with (D/('oracle-'+label+'.log')).open('w') as f:
+  p=s.Popen(cmd,cwd=R,stdout=f,stderr=s.STDOUT,start_new_session=True)
+  while p.poll() is None:
+   minimum=min(minimum,shutil.disk_usage(D).free)
+   if time.monotonic()-start>2400 or minimum<3*1024**3:
+    os.killpg(p.pid,signal.SIGTERM);p.wait();raise RuntimeError('oracle time/disk bound')
+   time.sleep(1)
+ lane=D/('lane-'+label);lane.mkdir();(lane/'adapted-tree').symlink_to(tree,target_is_directory=True);(lane/'oracle').symlink_to(out,target_is_directory=True)
+ (lane/'execution.json').write_text(json.dumps(dict(platform=dict(os='linux',arch='x64',node=s.check_output(['node','--version'],text=True).strip()),apply_exit=0,oracle_exit=p.returncode,base='470e16f8315f7a83c5c7b7f6f2a77d8328db0a25',adaptation=None if label=='control' else '93-builtin-imports')))
+ verdict=check_results(lane)
+ with (D/('lane-'+label+'.log')).open('w') as f:check=s.run(['python3',str(R/'stage3/lane/check.py'),str(lane)],cwd=R,stdout=f,stderr=s.STDOUT,timeout=180)
+ row=dict(label=label,command=cmd,exit=p.returncode,wall=round(time.monotonic()-start,3),minFreeBytes=minimum,memoryBefore=mem,memoryAfter=Path('/sys/fs/cgroup/memory.events').read_text(),lane=verdict,checkExit=check.returncode)
+ records.append(row);(D/'oracles.json').write_text(json.dumps(records,indent=2));print(json.dumps(row),flush=True)
+ assert check.returncode==0 and verdict['status']=='pass',row
+ assert row['memoryBefore']==row['memoryAfter'],'memory pressure changed'
+ assert p.returncode==1
+assert (D/'oracle-control/baseline.diff').read_bytes()==(D/'oracle-after/baseline.diff').read_bytes()
+assert (D/'control/built/local/typescript.d.ts').read_bytes()==(A/'tree/built/local/typescript.d.ts').read_bytes()
+print('PASS serial comparison',flush=True)

@@ -1,0 +1,25 @@
+from pathlib import Path
+import subprocess as s,time,json,os
+D=Path(__file__).parent;R=Path('/workspace/scratch/adapt-93-main');src=Path('/workspace/scratch/globals-gc-capture/cohere');rows=[]
+def run(name,cmd,limit=300):
+ start=time.monotonic()
+ with (D/(name+'.log')).open('w') as f:p=s.run(list(map(str,cmd)),cwd=R,stdout=f,stderr=s.STDOUT,timeout=limit)
+ row=dict(name=name,command=list(map(str,cmd)),exit=p.returncode,wall=round(time.monotonic()-start,3));rows.append(row);(D/'final-smoke.json').write_text(json.dumps(rows,indent=2));print(row,flush=True);assert p.returncode==0,row
+# Source is a partial clone. Copy its immutable objects by hard link, pin shallow,
+# and check out only the already-complete current tree; upload-pack would request missing history.
+import shutil
+def local_pin(source,dest,label):
+ pin=s.check_output(['git','-C',str(source),'rev-parse','HEAD'],text=True).strip()
+ common=Path(s.check_output(['git','-C',str(source),'rev-parse','--git-common-dir'],text=True).strip())
+ if not common.is_absolute():common=(source/common).resolve()
+ run(label+'-init',['git','init',dest])
+ shutil.copytree(common/'objects',dest/'.git/objects',dirs_exist_ok=True,copy_function=os.link)
+ assert not (dest/'.git/objects/info/alternates').exists()
+ (dest/'.git/shallow').write_text(pin+'\n')
+ run(label+'-pin',['git','-C',dest,'checkout','--detach',pin])
+ return pin
+assert local_pin(src,R/'cohere','cohere')=='06af2e399c6c1fb93fd570b774027942747400b4'
+local_pin(src/'TypeScript',R/'cohere/TypeScript','cohere-typescript')
+run('lane-list-filled',['go','list','./stage3/lane/...'])
+run('lane-final-smoke',['go','test','-count=1','-timeout','5m','./stage3/lane','-run','^TestShard_Stage3LaneFile000$'])
+print('PASS final clean dependency layout and real manifest Go shard',flush=True)
