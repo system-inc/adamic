@@ -310,7 +310,7 @@ show(i);`, "checked predicate membership of a branded supertype on its false bra
 function show(x: PropertySignature | Identifier): void { if (guard(x)) { console.log(String(x.typeText)); } }
 show(i);`, walk, true},
 		{"function-type parameter", `function show(check: (n: Node) => n is TypeElement, x: PropertySignature | Identifier): void { if (check(x)) { console.log(String(x.typeText)); } }
-show(isTypeElementLie, i);`},
+show(isTypeElementLie, i);`, walk, true},
 		{"class method", `class Judge { isElement(n: Node): n is TypeElement { return kindOf(n) !== 0; } }
 const judge = new Judge();
 function show(x: PropertySignature | Identifier): void { if (judge.isElement(x)) { console.log(String(x.typeText)); } }
