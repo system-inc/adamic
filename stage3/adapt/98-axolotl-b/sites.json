@@ -1,0 +1,67 @@
+[
+  {
+    "file": "transformers/es2015.ts",
+    "line": 2803,
+    "column": 38,
+    "function": "visitVariableDeclarationList",
+    "expression": "node.declarations[0]",
+    "occurrence": 1,
+    "total": 1,
+    "parent": "PropertyAccessExpression",
+    "action": "assert",
+    "class": "U-endpoint",
+    "invariant": "The guard node.transformFlags & ContainsBindingPattern holds only when a child declaration carries it: createVariableDeclarationList adds none of its own and its flags are the aggregate of its declarations NodeArray, which is None when empty. The read is dereferenced in place (.name), so absence already throws on Node."
+  },
+  {
+    "file": "transformers/es2015.ts",
+    "line": 3046,
+    "column": 64,
+    "function": "convertForOfStatementHead",
+    "expression": "declarations[0]",
+    "occurrence": 1,
+    "total": 1,
+    "parent": "PropertyAccessExpression",
+    "action": "assert",
+    "class": "U-endpoint",
+    "invariant": "flattenDestructuringBinding (transformers/destructuring.ts) of a binding-pattern declaration, with hoistTempVariables false and a bound value that both callers build as an element or property access (never an Identifier), emits at least one declaration: ensureIdentifier never reuses a non-Identifier and emits its temp through emitBindingOrAssignment, an empty or multi-element pattern takes that temp, and a single-element pattern recurses on its element with an access or helper-call value until an identifier target emits. The read is dereferenced in place (.pos), so absence already throws on Node."
+  },
+  {
+    "file": "transformers/es2015.ts",
+    "line": 4437,
+    "column": 29,
+    "function": "visitTypeScriptClassWrapper",
+    "expression": "funcStatements[classBodyStart]",
+    "occurrence": 2,
+    "total": 2,
+    "parent": "CallExpression",
+    "action": "assert",
+    "class": "U-position",
+    "invariant": "funcStatements is the body of the class IIFE es2015 itself built in visitClassExpression through transformClassBody: an optional __extends expression statement (addExtendsHelperIfNeeded), the constructor function declaration (addConstructor, always), the members, the return statement (always), with hoisted declarations only ever inserted. So length >= 2 and classBodyStart <= 1 here. Not a dereference: on a contract break Node would push undefined where Adamic stops loudly, so this check changes behavior only when the contract breaks."
+  },
+  {
+    "file": "transformers/es2015.ts",
+    "line": 4691,
+    "column": 34,
+    "function": "transformAndSpreadElements",
+    "expression": "segments[0]",
+    "occurrence": 2,
+    "total": 3,
+    "parent": "PropertyAccessExpression",
+    "action": "assert",
+    "class": "U-endpoint",
+    "invariant": "Every caller passes nonempty elements: visitArrayLiteralExpression under some(node.elements, isSpreadElement), the call path under ContainsRestOrSpread, which only a SpreadElement argument can carry onto a call (array literals, calls, news and binding patterns exclude it), and visitNewExpression with void 0 prepended. spanMap over nonempty elements yields at least one nonempty chunk, each mapped to a segment or a nonempty segment array, so flatten is nonempty. The read is dereferenced in place (.kind), so absence already throws on Node."
+  },
+  {
+    "file": "transformers/es2015.ts",
+    "line": 4693,
+    "column": 13,
+    "function": "transformAndSpreadElements",
+    "expression": "segments[0]",
+    "occurrence": 3,
+    "total": 3,
+    "parent": "PropertyAccessExpression",
+    "action": "assert",
+    "class": "U-endpoint",
+    "invariant": "The same nonempty segments as the read two lines above, unmutated between them. The read is dereferenced in place (.expression), so absence already throws on Node."
+  }
+]
