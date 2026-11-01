@@ -1,0 +1,18 @@
+--- sys.nocomments.before.js	2026-11-01 19:58:46.598100788 +0000
++++ sys.nocomments.after.js	2026-11-01 19:58:46.702100794 +0000
+@@ -1,5 +1,5 @@
+ import { AssertionLevel, closeFileWatcher, closeFileWatcherOf, combinePaths, Comparison, contains, containsPath, createGetCanonicalFileName, createMultiMap, Debug, directorySeparator, emptyArray, emptyFileSystemEntries, endsWith, enumerateInsertsAndDeletes, getDirectoryPath, getFallbackOptions, getNormalizedAbsolutePath, getRelativePathFromDirectory, getRelativePathToDirectoryOrUrl, getRootLength, getStringComparer, isArray, isNodeLikeSystem, isString, mapDefined, matchesExclude, matchFiles, memoize, noop, normalizePath, normalizeSlashes, orderedRemoveItem, PollingWatchKind, resolveJSModule, some, startsWith, timestamp, unorderedRemoveItem, WatchDirectoryKind, WatchFileKind, writeFileEnsuringDirectories, } from "./_namespaces/ts.js";
+-import { errorCode } from "./hostErrors.js";
++import { errorCode, propertyOf } from "./hostErrors.js";
+ export function generateDjb2Hash(data) {
+     let acc = 5381;
+     for (let i = 0; i < data.length; i++) {
+@@ -785,7 +785,7 @@
+                 return presentWatcher;
+             }
+             catch (e) {
+-                hitSystemWatcherLimit ||= e.code === "ENOSPC";
++                hitSystemWatcherLimit ||= propertyOf(e, "code") === "ENOSPC";
+                 sysLog(`sysLog:: ${fileOrDirectory}:: Changing to watchFile`);
+                 return watchPresentFileSystemEntryWithFsWatchFile();
+             }

@@ -1,0 +1,18 @@
+--- sys.comments.before.js	2026-11-01 19:58:46.506100782 +0000
++++ sys.comments.after.js	2026-11-01 19:58:46.650100791 +0000
+@@ -1,5 +1,5 @@
+ import { AssertionLevel, closeFileWatcher, closeFileWatcherOf, combinePaths, Comparison, contains, containsPath, createGetCanonicalFileName, createMultiMap, Debug, directorySeparator, emptyArray, emptyFileSystemEntries, endsWith, enumerateInsertsAndDeletes, getDirectoryPath, getFallbackOptions, getNormalizedAbsolutePath, getRelativePathFromDirectory, getRelativePathToDirectoryOrUrl, getRootLength, getStringComparer, isArray, isNodeLikeSystem, isString, mapDefined, matchesExclude, matchFiles, memoize, noop, normalizePath, normalizeSlashes, orderedRemoveItem, PollingWatchKind, resolveJSModule, some, startsWith, timestamp, unorderedRemoveItem, WatchDirectoryKind, WatchFileKind, writeFileEnsuringDirectories, } from "./_namespaces/ts.js";
+-import { errorCode } from "./hostErrors.js";
++import { errorCode, propertyOf } from "./hostErrors.js";
+ /**
+  * djb2 hashing algorithm
+  * http://www.cse.yorku.ca/~oz/hash.html
+@@ -894,7 +894,7 @@
+                 // Catch the exception and use polling instead
+                 // Eg. on linux the number of watches are limited and one could easily exhaust watches and the exception ENOSPC is thrown when creating watcher at that point
+                 // so instead of throwing error, use fs.watchFile
+-                hitSystemWatcherLimit ||= e.code === "ENOSPC";
++                hitSystemWatcherLimit ||= propertyOf(e, "code") === "ENOSPC";
+                 sysLog(`sysLog:: ${fileOrDirectory}:: Changing to watchFile`);
+                 return watchPresentFileSystemEntryWithFsWatchFile();
+             }
