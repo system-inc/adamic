@@ -20,7 +20,7 @@ const adamicReadField = (object, name, expression, optional = false, allowAbsent
     return object[name];
 };
 const adamicPlaceholderNarrow = (value, type, message) => {
-    const valid = type === 1 ? typeof value === "number" : type === 2 ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 ? value !== null && typeof value === "object" && !Array.isArray(value) && !(value instanceof Map) && !ArrayBuffer.isView(value) : type === 5 ? Array.isArray(value) : type === 6 ? value instanceof Map : type === 8 ? typeof value === "function" : false;
+    const valid = type === 1 ? typeof value === "number" : type === 2 ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 || type === 14 ? value !== null && typeof value === "object" && !Array.isArray(value) && !(value instanceof Map) && !ArrayBuffer.isView(value) : type === 5 ? Array.isArray(value) : type === 6 ? value instanceof Map : type === 8 ? typeof value === "function" : false;
     if (!valid) panic(message);
     return value;
 };

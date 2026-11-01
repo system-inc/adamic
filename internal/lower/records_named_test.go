@@ -77,10 +77,67 @@ if (x instanceof Box) { swap(); console.log(String(x.v)); }`)
 	}
 }
 
+// A fixed object or a dictionary read off a union slot is proven by a heap test only when it's the one
+// member of its runtime class in the slot's union (recordSlotMemberUnique): tsc's configFile and paths
+// read so. An array beside other arrays (rootDirs), two fixed objects, two dictionaries and a member whose
+// heap class isn't vouched for (object, which may be either) keep the NotYet.
+func TestNamedRecordHeapMemberReads(t *testing.T) {
+	t.Parallel()
+	options := func(index string) string {
+		return `interface Source { text: string; diagnostics: string[] }
+interface Other { label: string }
+interface Options { configFile?: Source; paths?: { [index: string]: string[] }; rootDirs?: string[]; [option: string]: ` + index + ` }
+`
+	}
+	tscShape := "string | number | boolean | string[] | number[] | { [index: string]: string[] } | Source | undefined"
+	for _, probe := range []struct{ name, source string }{
+		{"configFile", options(tscShape) + "function read(o: Options): string { const file = o.configFile; return file ? file.text : \"none\"; }"},
+		{"paths", options(tscShape) + "function read(o: Options): string { const paths = o.paths; return paths ? Object.keys(paths).join(\",\") : \"none\"; }"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			p, err := lowerSource(t, probe.source)
+			if err != nil {
+				t.Fatal(err)
+			}
+			checked := false
+			for _, f := range p.Functions {
+				if f.Name == "record_declared_member" {
+					narrow, ok := f.Body[len(f.Body)-1].(ir.Return).Value.(ir.Narrow)
+					checked = checked || ok && narrow.Checked
+				}
+			}
+			if !checked {
+				t.Fatal("the declared read skipped the checked heap narrow")
+			}
+		})
+	}
+	// An array read stops under its own reason until the element-checked view lands (#y852c3c).
+	_, err := lowerSource(t, options(tscShape)+"function read(o: Options): number { const roots = o.rootDirs; return roots ? roots.length : 0; }")
+	var arrayStop *NotYet
+	if !errors.As(err, &arrayStop) || !strings.Contains(err.Error(), "a dictionary member narrowed to an array without an element-checked view") {
+		t.Fatalf("an array beside arrays: got %v, want the array NotYet", err)
+	}
+	for _, probe := range []struct{ name, source string }{
+		{"two fixed objects", options("string | string[] | { [index: string]: string[] } | Source | Other | undefined") + "function read(o: Options): string { const file = o.configFile; return file ? file.text : \"none\"; }"},
+		{"two dictionaries", options("string | string[] | { [index: string]: string[] } | { [index: string]: number } | Source | undefined") + "function read(o: Options): string { const paths = o.paths; return paths ? Object.keys(paths).join(\",\") : \"none\"; }"},
+		{"an object member", options("string | string[] | { [index: string]: string[] } | Source | object | undefined") + "function read(o: Options): string { const file = o.configFile; return file ? file.text : \"none\"; }"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSource(t, probe.source)
+			var ny *NotYet
+			if !errors.As(err, &ny) || !strings.Contains(err.Error(), "dictionary member narrowed to an object kind without a checked runtime tag") {
+				t.Fatalf("got %v, want the object-kind NotYet", err)
+			}
+		})
+	}
+}
+
 func TestNamedRecordRefusals(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ source, reason string }{
-		{`interface R {named?:number[];[key:string]:number[]|string|undefined} function read(r:R):number|undefined {return r.named?.length;}`, "dictionary member narrowed to an object kind"},
+		{`interface R {named?:number[];[key:string]:number[]|string|undefined} function read(r:R):number|undefined {return r.named?.length;}`, "dictionary member narrowed to an array without an element-checked view"},
 		{`interface R {named?:number;[key:string]:number|string|undefined} function write(r:R,k:string):void {r[k]="wrong";}`, "named property named"},
 		{`interface R {named?:number;[key:string]:number|string|undefined} const r:R={}; const view:Record<string,number|string|undefined>=r;`, "seen as"},
 		{`interface R {readonly named:number;[key:string]:number} const r:R={named:1}; const view:Record<string,number>=r;`, "seen as"},
@@ -178,7 +235,7 @@ const key = keys[0] ?? "other";
 	}
 	// The reads that hold readGuardedInUnionSlot: a lie under a declared plain object (b8, w8's literal
 	// boxed), array (a8), Map (p8) or dictionary (r8) in a boxed slot is left to its read, which stops as
-	// an object kind with no checked tag. Each goes red if the skip stops naming its kind (the write's
+	// an object kind with no checked tag, or an array with no element-checked view (#y852c3c). Each goes red if the skip stops naming its kind (the write's
 	// stop comes first) or the read stops stopping. A computed method is no data entry, a stop of its own.
 	for _, probe := range []struct{ name, source, reason string }{
 		{"b8 object construction boxed", boxed(w8) + "const places: Places = { names: new Point(), [key]: new Other() };\nconsole.log(places.names.describe().toUpperCase());\n", "narrowed to an object kind without a checked runtime tag"},
@@ -187,7 +244,7 @@ const keys: string[] = ["names", "other"];
 const key = keys[0] ?? "other";
 const lists: Lists = { names: ["a"], [key]: [1, 2] };
 console.log((lists.names[0] ?? "").toUpperCase());
-`, "narrowed to an object kind without a checked runtime tag"},
+`, "narrowed to an array without an element-checked view"},
 		{"p8 map construction boxed", `type Tables = { names: Map<string, string>; [k: string]: Map<string, string> | Map<string, number> | number };
 const keys: string[] = ["names", "other"];
 const key = keys[0] ?? "other";
