@@ -1,0 +1,5 @@
+// Spec: Expandos, `delete`, `Object.defineProperty`, prototype mutation
+// Expect: refused inherited library member iterator
+const values = [1, 2];
+values[Symbol.iterator] = () => [3][Symbol.iterator]();
+console.log(String(values.length));
