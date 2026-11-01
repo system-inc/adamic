@@ -166,7 +166,7 @@ func (l *lowering) brandedCall(call *ast.Node, target *checker.Type) error {
 		return nil
 	}
 	generic := l.mentionsTypeParameter(claim.Type(), map[*checker.Type]bool{})
-	if generic && !l.brandedInstantiable(claim.Type(), target, map[*checker.Type]bool{}) || !generic && !l.brandedHolds(claim.Type(), target, map[*checker.Type]bool{}) {
+	if generic && !l.brandedInstantiable(claim.Type(), target) || !generic && !l.brandedHolds(claim.Type(), target, map[*checker.Type]bool{}) {
 		return nil
 	}
 	if claim.Kind() != checker.TypePredicateKindIdentifier && claim.Kind() != checker.TypePredicateKindAssertsIdentifier {
@@ -193,33 +193,26 @@ func (l *lowering) brandedCall(call *ast.Node, target *checker.Type) error {
 	return l.brandedNarrowing(call, arguments[index], claim.Type())
 }
 
-// brandedInstantiable is whether a type parameter claim names could be instantiated at target: its base
-// constraint admits target, or it has none. visited ends a recursive type on its second visit.
-func (l *lowering) brandedInstantiable(claim, target *checker.Type, visited map[*checker.Type]bool) bool {
-	if visited[claim] {
+// brandedInstantiable is whether claim could be instantiated at a type holding target. A bare type
+// parameter, or a union of them, can be target only when its base constraint admits it, or it has none.
+// A type parameter anywhere else, a reference's or an alias's type argument or an intersection's member,
+// counts as instantiable whatever its constraint: `Tagged<U>` with `U extends number` is the generic
+// branded supertype Tagged<number> at U = number, which S's own constraint test would never see
+// (Compiler's must on 810ce7d9).
+func (l *lowering) brandedInstantiable(claim, target *checker.Type) bool {
+	if claim.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range claim.Types() {
+			if l.brandedInstantiable(member, target) {
+				return true
+			}
+		}
 		return false
 	}
-	visited[claim] = true
-	if claim.Flags()&checker.TypeFlagsInstantiable != 0 {
+	if claim.Flags()&checker.TypeFlagsTypeParameter != 0 {
 		constraint := l.checker.GetBaseConstraintOfType(claim)
 		return constraint == nil || l.checker.IsTypeAssignableTo(target, constraint)
 	}
-	var parts []*checker.Type
-	if claim.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
-		parts = append(parts, claim.Types()...)
-	}
-	if alias := claim.Alias(); alias != nil {
-		parts = append(parts, alias.TypeArguments()...)
-	}
-	if claim.Flags()&checker.TypeFlagsObject != 0 && claim.ObjectFlags()&checker.ObjectFlagsReference != 0 {
-		parts = append(parts, l.checker.GetTypeArguments(claim)...)
-	}
-	for _, part := range parts {
-		if l.brandedInstantiable(part, target, visited) {
-			return true
-		}
-	}
-	return false
+	return l.mentionsTypeParameter(claim, map[*checker.Type]bool{})
 }
 
 // brandedHolds is whether claim is target, or holds it through a union's members or an array's elements,
