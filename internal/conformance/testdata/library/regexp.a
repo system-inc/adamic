@@ -1,0 +1,3 @@
+// Spec: `RegExp` with a constant pattern and flags
+// Expect: lowers
+console.log(`${String(/b+/.test('abbc'))} ${'a-b-c'.replace(/-/g, '+')} ${'x1y22'.split(/[0-9]+/).join(',')}`);
