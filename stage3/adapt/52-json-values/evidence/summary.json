@@ -1,11 +1,145 @@
 {
-  "status": "complete-own-function-pin-correction",
-  "main": "470e16f8315f7a83c5c7b7f6f2a77d8328db0a25",
+  "status": "complete-real-wave6-composition",
+  "main": "80c2d3282e44b527555d59690bb413cc883d2bf2",
+  "branchBase": "470e16f8315f7a83c5c7b7f6f2a77d8328db0a25",
   "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
   "adaptation": 52,
+  "composition": {
+    "wave6": "63b44d41a8fe7e9ee707959b7153190e164148b0",
+    "98d": "d26001bf42d4e6ec74ad41a3c1b96d8832431f88",
+    "main": "80c2d3282e44b527555d59690bb413cc883d2bf2",
+    "scratchComposition": "c9bf0f40cdb8b6a8750f6451244ba8cd3d00dd63",
+    "scratchControl": "44774a40850f5921660aa4e2a1ffb5f354e08dec",
+    "manifestMergeResolution": "Keep wave-6 shard-plan.json, shards.json and shards_generated_test.go in scratch only; keep all other main changes including generator.",
+    "adapterRefusals": [],
+    "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+    "cohere": "06af2e399c6c1fb93fd570b774027942747400b4",
+    "controlCompletedAdapters": [
+      "00-setup",
+      "10-type-imports",
+      "20-optional-declarations",
+      "30-indexed-reads",
+      "31-indexed-reads-checker",
+      "32-indexed-reads-program",
+      "33-indexed-reads-emit",
+      "40-explicit-any",
+      "41-explicit-any-remaining",
+      "42-scanner-any",
+      "43-any-returns",
+      "44-config-generics",
+      "45-regex-captures",
+      "46-fix-pragma-empty-argument",
+      "47-host-errors",
+      "48-memoize",
+      "49-honest-optionals",
+      "50-temporary-scanner-implicit-returns",
+      "51-temporary-scanner-fallthrough",
+      "60-temporary-factory-local-symbol",
+      "61-temporary-factory-type-expression",
+      "62-temporary-tracing-write",
+      "63-temporary-tracing-legend",
+      "64-temporary-parser-range-read",
+      "65-temporary-node-builtins",
+      "70-readonly-views",
+      "71-writable-views",
+      "75-optional-widening",
+      "76-truthful-casts",
+      "78-variance-marker",
+      "79-exit-code",
+      "90-void-widening",
+      "91-patcher-discard",
+      "92-tty-host-results",
+      "95-checker-axolotl-a",
+      "95-checker-axolotl-b",
+      "95-checker-axolotl-c",
+      "95-checker-axolotl-d",
+      "95-checker-axolotl-e",
+      "95-checker-axolotl-f",
+      "95-checker-axolotl-g",
+      "95-checker-axolotl-h",
+      "96-emit-axolotl-a",
+      "96-emit-axolotl-b",
+      "96-emit-axolotl-c",
+      "97-cli-axolotl-a",
+      "97-cli-axolotl-b",
+      "97-cli-axolotl-c",
+      "97-cli-axolotl-d",
+      "98-axolotl-a",
+      "98-axolotl-b",
+      "98-axolotl-d",
+      "99-correctness-axolotl-a",
+      "99-correctness-axolotl-b",
+      "99-correctness-axolotl-e",
+      "99-correctness-axolotl-f",
+      "99-correctness-axolotl-g",
+      "99-correctness-axolotl-h"
+    ],
+    "afterCompletedAdapters": [
+      "00-setup",
+      "10-type-imports",
+      "20-optional-declarations",
+      "30-indexed-reads",
+      "31-indexed-reads-checker",
+      "32-indexed-reads-program",
+      "33-indexed-reads-emit",
+      "40-explicit-any",
+      "41-explicit-any-remaining",
+      "42-scanner-any",
+      "43-any-returns",
+      "44-config-generics",
+      "45-regex-captures",
+      "46-fix-pragma-empty-argument",
+      "47-host-errors",
+      "48-memoize",
+      "49-honest-optionals",
+      "50-temporary-scanner-implicit-returns",
+      "51-temporary-scanner-fallthrough",
+      "52-json-values",
+      "60-temporary-factory-local-symbol",
+      "61-temporary-factory-type-expression",
+      "62-temporary-tracing-write",
+      "63-temporary-tracing-legend",
+      "64-temporary-parser-range-read",
+      "65-temporary-node-builtins",
+      "70-readonly-views",
+      "71-writable-views",
+      "75-optional-widening",
+      "76-truthful-casts",
+      "78-variance-marker",
+      "79-exit-code",
+      "90-void-widening",
+      "91-patcher-discard",
+      "92-tty-host-results",
+      "95-checker-axolotl-a",
+      "95-checker-axolotl-b",
+      "95-checker-axolotl-c",
+      "95-checker-axolotl-d",
+      "95-checker-axolotl-e",
+      "95-checker-axolotl-f",
+      "95-checker-axolotl-g",
+      "95-checker-axolotl-h",
+      "96-emit-axolotl-a",
+      "96-emit-axolotl-b",
+      "96-emit-axolotl-c",
+      "97-cli-axolotl-a",
+      "97-cli-axolotl-b",
+      "97-cli-axolotl-c",
+      "97-cli-axolotl-d",
+      "98-axolotl-a",
+      "98-axolotl-b",
+      "98-axolotl-d",
+      "99-correctness-axolotl-a",
+      "99-correctness-axolotl-b",
+      "99-correctness-axolotl-e",
+      "99-correctness-axolotl-f",
+      "99-correctness-axolotl-g",
+      "99-correctness-axolotl-h"
+    ],
+    "nativeBinarySha256": "782f077d3de767761822b183a74112d69a98de345311e3e7c8885444f9d9be4e"
+  },
   "native": {
-    "before": 112,
-    "after": 112,
+    "before": 8,
+    "after": 8,
     "added": [],
     "removed": [],
     "mapping": "Exact diagnostic text and columns; map only byte-equal source lines with SequenceMatcher; preserve multiplicity."
@@ -17,8 +151,16 @@
   "publicAnyAfter": 22,
   "publicAnyOutsideList": 21,
   "apiMatch": true,
-  "apiSha256": "b8faba99305b76f8f6ea0273807b08dc8ef6b9cada46d563e436f1d943e9a754",
+  "apiSha256": "9868791a1b24cb29cacc482db323ca18ab94a7d32ec7c42b7ba9b958d09e474b",
   "apiDiffLines": 135,
+  "generator": {
+    "rawByteForByte": false,
+    "afterExactUpstreamBundlerFormatterByteForByte": false,
+    "normalizedChangesMatch": true,
+    "sha256": "9868791a1b24cb29cacc482db323ca18ab94a7d32ec7c42b7ba9b958d09e474b",
+    "rawMismatchOwner": "97-cli-axolotl-d member formatting, unchanged by 52",
+    "own52SanctionsMatchWithoutFormatting": true
+  },
   "oracles": {
     "control": {
       "counts": {
@@ -32,13 +174,13 @@
       "phases": {
         "install": {
           "command": [
-            "npm",
-            "ci",
-            "--no-audit",
-            "--no-fund"
+            "cp",
+            "-a",
+            "/workspace/scratch/jv-one-pin/node_modules",
+            "/workspace/scratch/jv-wave6-before/node_modules"
           ],
           "exit": 0,
-          "artifact": "33556870ce59c3396c972fffb611a99b9b2ff39e79c34417a2538f2263772c6a"
+          "artifact": "cd73d9b6905d6401f86da0364084d379f9ea3872e5522ad7c505dda9314d9c5a"
         },
         "build": {
           "command": [
@@ -48,22 +190,22 @@
           ],
           "exit": 0,
           "typecheck_passed": true,
-          "artifact": "33556870ce59c3396c972fffb611a99b9b2ff39e79c34417a2538f2263772c6a"
+          "artifact": "cd73d9b6905d6401f86da0364084d379f9ea3872e5522ad7c505dda9314d9c5a"
         },
         "tests": {
           "command": [
             "node",
-            "/workspace/adamic/stage3/oracle/run-prepared.mjs",
-            "/workspace/scratch/jv-control",
+            "/workspace/scratch/jv-wave6/stage3/oracle/run-prepared.mjs",
+            "/workspace/scratch/jv-wave6-before",
             "--workers=4",
             "--light=false",
             "--no-colors"
           ],
           "exit": 1,
-          "seconds": 359.011
+          "seconds": 353.588
         }
       },
-      "wall_seconds": 359.106
+      "wall_seconds": 353.683
     },
     "after": {
       "counts": {
@@ -79,11 +221,11 @@
           "command": [
             "cp",
             "-a",
-            "jv-control/node_modules",
-            "jv-one-pin/node_modules"
+            "/workspace/scratch/jv-one-pin/node_modules",
+            "/workspace/scratch/jv-wave6-after/node_modules"
           ],
           "exit": 0,
-          "artifact": "beb036b421e945c580d7afa246c16c33144dde1e91b6045619fb9f2155f5fc64"
+          "artifact": "5fb5d8205f0c2302490fe7ab0c8f705d967e9b4df2fb78e571bc27967577d6cd"
         },
         "build": {
           "command": [
@@ -93,23 +235,92 @@
           ],
           "exit": 0,
           "typecheck_passed": true,
-          "artifact": "beb036b421e945c580d7afa246c16c33144dde1e91b6045619fb9f2155f5fc64"
+          "artifact": "5fb5d8205f0c2302490fe7ab0c8f705d967e9b4df2fb78e571bc27967577d6cd"
         },
         "tests": {
           "command": [
             "node",
-            "/workspace/adamic/stage3/oracle/run-prepared.mjs",
-            "/workspace/scratch/jv-one-pin",
+            "/workspace/scratch/jv-wave6/stage3/oracle/run-prepared.mjs",
+            "/workspace/scratch/jv-wave6-after",
             "--workers=4",
             "--light=false",
             "--no-colors"
           ],
           "exit": 1,
-          "seconds": 253.931
+          "seconds": 354.562
         }
       },
-      "wall_seconds": 254.023
+      "wall_seconds": 354.653
     }
+  },
+  "configReturnReadersNotEdited": 0,
+  "checkedDesignDiagnostics": 39,
+  "servicesTransfer": "src/services/services.ts:1656",
+  "exemptions": [
+    "parseConfigFileTextToJson.config"
+  ],
+  "checkMutants": [
+    {
+      "class": "object",
+      "exit": 1
+    },
+    {
+      "class": "inherited",
+      "exit": 1
+    },
+    {
+      "class": "location",
+      "exit": 1
+    },
+    {
+      "class": "response",
+      "exit": 1
+    },
+    {
+      "class": "plugin",
+      "exit": 1
+    },
+    {
+      "class": "localized",
+      "exit": 1
+    },
+    {
+      "class": "echo",
+      "exit": 1
+    },
+    {
+      "class": "full-reply-string",
+      "exit": 1
+    },
+    {
+      "class": "full-reply-invalid",
+      "exit": 1
+    },
+    {
+      "class": "typing-string-map",
+      "exit": 1
+    },
+    {
+      "class": "typing-dependency-keys",
+      "exit": 1
+    },
+    {
+      "class": "typing-name",
+      "exit": 1
+    },
+    {
+      "class": "typing-types",
+      "exit": 1
+    }
+  ],
+  "importComposition": {
+    "imports": 1,
+    "named": true,
+    "HashedSetImported": true,
+    "DocumentSpanFollowedByHashedSet": true,
+    "mutantExit": 1,
+    "mutantRefusal": "2 !== 1",
+    "mutantFilesWritten": 0
   },
   "configReturnMutant": {
     "buildExit": 0,
@@ -117,17 +328,17 @@
     "command": [
       "bash",
       "stage3/oracle/run.sh",
-      "/workspace/scratch/jv-one-pin-mutant",
-      "/workspace/scratch/jv-oracle-one-pin-mutant",
+      "/workspace/scratch/jv-wave6-pinned-mutant",
+      "/workspace/scratch/jv-oracle-wave6-pinned-mutant",
       "--prepared",
       "--workers",
       "1",
-      "--limit-seconds",
-      "180",
       "--runners",
       "compiler",
       "--tests",
-      "APISample_parseConfig"
+      "APISample_parseConfig",
+      "--limit-seconds",
+      "180"
     ],
     "counts": {
       "passing": 5,
@@ -147,37 +358,5 @@
     "actualProtocolShape": "JSDocTagInfo.text?: string | SymbolDisplayPart[]",
     "status": "original caller counterexample repaired without normalization"
   },
-  "configReturnReadersNotEdited": 0,
-  "checkedDesignDiagnostics": 39,
-  "servicesTransfer": "src/services/services.ts:1656",
-  "harnessRepair": {
-    "editLocations": 14,
-    "files": 3,
-    "publicDeclarationChanges": 0,
-    "testRunnerFlowEdits": 0,
-    "newCasts": 0,
-    "onlyJavaScriptChange": "tag string check",
-    "mutants": [
-      "full-reply-string",
-      "full-reply-invalid"
-    ]
-  },
-  "exemptions": [
-    "parseConfigFileTextToJson.config"
-  ],
-  "jsTyping": {
-    "readConfigFileDiagnostics": 10,
-    "parseConfigFileTextToJsonDiagnostics": 0,
-    "newCheckMutants": [
-      "typing-string-map",
-      "typing-dependency-keys",
-      "typing-name",
-      "typing-types"
-    ]
-  },
-  "goTests": [
-    "TestJSONValues52PinnedAnySampleReadsRemain",
-    "TestJSONValues52ExemptionsRequireTheirOwnCall"
-  ],
-  "implementation": "0b5258a949ee4b55303b37ced1e95f06e984c326"
+  "implementation": "a99125a4e0808eeba5dce403d63182dd3293c4b7"
 }

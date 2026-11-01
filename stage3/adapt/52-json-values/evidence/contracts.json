@@ -2,6 +2,7 @@
   "idempotent": true,
   "files": 13,
   "newCasts": 0,
+  "clientTsModuleImports": 1,
   "castCounts": [
     {
       "file": "src/compiler/types.ts",
@@ -152,7 +153,7 @@
   "api": {
     "rows": 16,
     "match": true,
-    "sha256": "b8faba99305b76f8f6ea0273807b08dc8ef6b9cada46d563e436f1d943e9a754"
+    "sha256": "9868791a1b24cb29cacc482db323ca18ab94a7d32ec7c42b7ba9b958d09e474b"
   },
   "publicAny": {
     "beforeTokens": 37,
@@ -292,7 +293,7 @@
           "args"
         ],
         "class": "timer handles and callback tuples",
-        "line": 8492
+        "line": 8544
       },
       {
         "path": [
@@ -301,7 +302,7 @@
           "args"
         ],
         "class": "timer handles and callback tuples",
-        "line": 8492
+        "line": 8544
       },
       {
         "path": [
@@ -309,7 +310,7 @@
           "setTimeout"
         ],
         "class": "timer handles and callback tuples",
-        "line": 8492
+        "line": 8544
       },
       {
         "path": [
@@ -318,7 +319,7 @@
           "timeoutId"
         ],
         "class": "timer handles and callback tuples",
-        "line": 8493
+        "line": 8545
       },
       {
         "path": [
@@ -326,7 +327,7 @@
           "config"
         ],
         "class": "pinned config returns",
-        "line": 9249
+        "line": 9301
       },
       {
         "path": [
@@ -336,7 +337,7 @@
           "args"
         ],
         "class": "timer handles and callback tuples",
-        "line": 9819
+        "line": 9871
       },
       {
         "path": [
@@ -345,7 +346,7 @@
           "args"
         ],
         "class": "timer handles and callback tuples",
-        "line": 9819
+        "line": 9871
       },
       {
         "path": [
@@ -353,7 +354,7 @@
           "setTimeout"
         ],
         "class": "timer handles and callback tuples",
-        "line": 9819
+        "line": 9871
       },
       {
         "path": [
@@ -362,7 +363,7 @@
           "timeoutId"
         ],
         "class": "timer handles and callback tuples",
-        "line": 9821
+        "line": 9873
       },
       {
         "path": [
@@ -370,7 +371,7 @@
           "__bucketKey"
         ],
         "class": "nominal marker slots",
-        "line": 11410
+        "line": 11486
       }
     ]
   }
