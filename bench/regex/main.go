@@ -201,7 +201,7 @@ func run(directory string, buildOnly bool) error {
 		for j := range p.Inputs {
 			fmt.Fprintf(&source, "&input_%d_%d,", id, j)
 		}
-		fmt.Fprintf(&source, "};size_t count=%d;for(size_t k=0;k<100;k++)adamic_regex_test(regex,inputs[k%%count]);struct timespec a,b;size_t sum=0;clock_gettime(CLOCK_MONOTONIC,&a);CALLGRIND_START_INSTRUMENTATION;CALLGRIND_ZERO_STATS;for(size_t k=0;k<calls;k++)sum+=adamic_regex_test(regex,inputs[k%%count]);CALLGRIND_STOP_INSTRUMENTATION;CALLGRIND_DUMP_STATS;clock_gettime(CLOCK_MONOTONIC,&b);printf(\"%%.9f %%zu\\n\",(double)(b.tv_sec-a.tv_sec)+(double)(b.tv_nsec-a.tv_nsec)*1e-9,sum);adamic_release(regex);break;}\n", len(p.Inputs))
+		fmt.Fprintf(&source, "};size_t count=%d;for(size_t k=0;k<100;k++)adamic_regex_test(regex,inputs[k%%count]);struct timespec a,b;size_t sum=0;clock_gettime(CLOCK_MONOTONIC,&a);CALLGRIND_START_INSTRUMENTATION;CALLGRIND_ZERO_STATS;for(size_t k=0;k<calls;k++)sum+=adamic_regex_test(regex,inputs[k%%count]);CALLGRIND_STOP_INSTRUMENTATION;CALLGRIND_DUMP_STATS;clock_gettime(CLOCK_MONOTONIC,&b);struct timespec r;clock_getres(CLOCK_MONOTONIC,&r);printf(\"%%.9f %%zu %%.9f\\n\",(double)(b.tv_sec-a.tv_sec)+(double)(b.tv_nsec-a.tv_nsec)*1e-9,sum,(double)r.tv_sec+(double)r.tv_nsec*1e-9);adamic_release(regex);break;}\n", len(p.Inputs))
 	}
 	source.WriteString("default:return 1;}return 0;}\n")
 	if err = os.WriteFile(filepath.Join(directory, "main.c"), []byte(source.String()), 0644); err != nil {
@@ -212,7 +212,7 @@ func run(directory string, buildOnly bool) error {
 			return err
 		}
 	}
-	js := `const cases=require('./cases.json');if(!process.version.startsWith('v24.'))throw Error('Node 24 required');const p=cases[+process.argv[2]],n=+process.argv[3],r=new RegExp(p.Pattern,p.Flags);for(let k=0;k<10000;k++)r.test(p.Inputs[k%p.Inputs.length]);let sum=0;const start=process.hrtime.bigint();for(let k=0;k<n;k++)sum+=r.test(p.Inputs[k%p.Inputs.length]);console.log(Number(process.hrtime.bigint()-start)/1e9,sum);`
+	js := `const cases=require('./cases.json');if(!process.version.startsWith('v24.'))throw Error('Node 24 required');const p=cases[+process.argv[2]],n=+process.argv[3],r=new RegExp(p.Pattern,p.Flags);for(let k=0;k<10000;k++)r.test(p.Inputs[k%p.Inputs.length]);let sum=0;const start=process.hrtime.bigint();for(let k=0;k<n;k++)sum+=r.test(p.Inputs[k%p.Inputs.length]);const elapsed=Number(process.hrtime.bigint()-start)/1e9;let step=Infinity;for(let k=0;k<1000;k++){const t=process.hrtime.bigint();let u;do{u=process.hrtime.bigint();}while(u===t);step=Math.min(step,Number(u-t)/1e9);}console.log(elapsed,sum,step);`
 	if err = os.WriteFile(filepath.Join(directory, "node.cjs"), []byte(js), 0644); err != nil {
 		return err
 	}
@@ -235,21 +235,17 @@ func run(directory string, buildOnly bool) error {
 				if err != nil {
 					return fmt.Errorf("%s: %v %s", p.Name, err, output)
 				}
-				fields := strings.Fields(string(output))
-				if len(fields) != 2 {
-					return fmt.Errorf("unexpected output %s", output)
-				}
-				seconds, err := strconv.ParseFloat(fields[0], 64)
+				seconds, checksum, err := reading(string(output))
 				if err != nil {
-					return err
+					return fmt.Errorf("%s engine %d: %w", p.Name, engine, err)
 				}
 				if seconds < best[engine] {
 					best[engine] = seconds
 				}
-				if checks[engine] != "" && checks[engine] != fields[1] {
+				if checks[engine] != "" && checks[engine] != checksum {
 					return fmt.Errorf("unstable checksum %s", p.Name)
 				}
-				checks[engine] = fields[1]
+				checks[engine] = checksum
 			}
 		}
 		if checks[0] != checks[1] {
@@ -258,6 +254,28 @@ func run(directory string, buildOnly bool) error {
 		fmt.Printf("%s,%.9f,%.9f,%d,%s\n", p.Name, best[0], best[1], p.Calls, checks[0])
 	}
 	return nil
+}
+
+// reading is one engine's timed run: its seconds, the checksum the loop consumed, and its timer's
+// resolution, all three printed by the engine. A reading at or below that resolution measured
+// nothing (Perry's report gave 0.0 ms in every cell) and is refused, never kept as the fastest.
+func reading(output string) (float64, string, error) {
+	fields := strings.Fields(output)
+	if len(fields) != 3 {
+		return 0, "", fmt.Errorf("want seconds, checksum and timer resolution, got %q", output)
+	}
+	seconds, err := strconv.ParseFloat(fields[0], 64)
+	if err != nil {
+		return 0, "", err
+	}
+	resolution, err := strconv.ParseFloat(fields[2], 64)
+	if err != nil {
+		return 0, "", err
+	}
+	if !(resolution > 0) || !(seconds > resolution) {
+		return 0, "", fmt.Errorf("measured nothing: %.9f s at a timer resolution of %.9f s", seconds, resolution)
+	}
+	return seconds, fields[1], nil
 }
 
 // Construct a positive example from each Go source pattern, before translation.
