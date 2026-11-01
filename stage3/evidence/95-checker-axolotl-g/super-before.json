@@ -1,0 +1,33 @@
+{
+  "text": "/** @type {string} */\nlet key = \"xyz\";\nclass Computed { static [key] = 1; }\nclass Derived extends Computed { static read() { return super.xyz; } }\n",
+  "diagnostics": [],
+  "super": [
+    {
+      "textSpan": {
+        "start": 45,
+        "length": 8
+      },
+      "fileName": "/95g/super.js",
+      "contextSpan": {
+        "start": 39,
+        "length": 36
+      },
+      "displayParts": [
+        {
+          "text": "class",
+          "kind": "keyword"
+        },
+        {
+          "text": " ",
+          "kind": "space"
+        },
+        {
+          "text": "Computed",
+          "kind": "className"
+        }
+      ],
+      "kind": "class"
+    }
+  ],
+  "xyz": "undefined"
+}

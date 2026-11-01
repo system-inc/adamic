@@ -1,14 +1,19 @@
 {
-  "status": "stopped-before-build",
-  "requested": "return symbol with parent unset",
-  "typescriptGo": "nil symbol",
-  "typescriptMain": "nil symbol",
+  "status": "stopped-before-build-at-unsafe-reader",
+  "referenceGate": "Resolved by Correctness: follow Go for an empty declaration list",
+  "reader": "src/services/findAllReferences.ts:580-581 getImplementationReferenceEntries",
   "beforePrograms": 2,
   "beforeDiagnostics": [
     0,
     0
   ],
-  "beforeCrashes": 2,
-  "parentReaderAuditComplete": false,
-  "implementationBuilt": false
+  "originalCrashesBecomeUndefinedInMemory": 2,
+  "serviceRegression": {
+    "before": "undefined",
+    "after": "TypeError reading valueDeclaration",
+    "diagnostics": []
+  },
+  "implementationBuilt": false,
+  "compilerSourcesOrBuildOutputsModified": false,
+  "getSymbolAtLocationCallerAuditComplete": false
 }

@@ -1,0 +1,25 @@
+function getImplementationReferenceEntries(program: Program, cancellationToken: CancellationToken, sourceFiles: readonly SourceFile[], node: Node, position: number): readonly Entry[] | undefined {
+    if (node.kind === SyntaxKind.SourceFile) {
+        return undefined;
+    }
+
+    const checker = program.getTypeChecker();
+    // If invoked directly on a shorthand property assignment, then return
+    // the declaration of the symbol being assigned (not the symbol being assigned to).
+    if (node.parent.kind === SyntaxKind.ShorthandPropertyAssignment) {
+        const result: NodeEntry[] = [];
+        Core.getReferenceEntriesForShorthandPropertyAssignment(node, checker, node => result.push(nodeEntry(node)));
+        return result;
+    }
+    else if (node.kind === SyntaxKind.SuperKeyword || isSuperProperty(node.parent)) {
+        // References to and accesses on the super keyword only have one possible implementation, so no
+        // need to "Find all References"
+        const symbol = checker.getSymbolAtLocation(node)!;
+        return symbol.valueDeclaration && [nodeEntry(symbol.valueDeclaration)];
+    }
+    else {
+        // Perform "Find all References" and retrieve only those that are implementations
+        return getReferenceEntriesForNode(position, node, program, sourceFiles, cancellationToken, { implementations: true, use: FindReferencesUse.References });
+    }
+}
+

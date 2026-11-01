@@ -1,0 +1,8 @@
+Proposed only. Not applied or built; the remaining caller audit is incomplete.
+--- a/src/services/findAllReferences.ts
++++ b/src/services/findAllReferences.ts
+@@
+-        const symbol = checker.getSymbolAtLocation(node)!;
++        const symbol = checker.getSymbolAtLocation(node);
++        if (symbol === undefined) return undefined;
+         return symbol.valueDeclaration && [nodeEntry(symbol.valueDeclaration)];
