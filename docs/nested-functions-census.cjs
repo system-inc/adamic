@@ -1,4 +1,4 @@
-// Classify the pinned census's nested declaration sites against this unit's
+// Classifies the pinned census's nested declaration sites against this unit's
 // structural restrictions. This is not a claim that any corpus file compiles.
 // docs/nested-functions.md shows how to run it, with CENSUS_TYPESCRIPT set to the
 // TypeScript package the census requires.
