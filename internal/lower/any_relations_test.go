@@ -87,10 +87,10 @@ func TestAnyMemberRelationC1ClosesP2AndP8(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, want string }{
 		{"library's any element", `function show(x: unknown): void { if (Array.isArray(x)) { const ys: string[] = x; console.log(ys[0] ?? "none"); } }
-show([5]);`, "main.ts:3:65: error TS4104: The type 'readonly unknown[]' is 'readonly' and cannot be assigned to the mutable type 'string[]'."},
+show([5]);`, "main.ts:4:65: error TS4104: The type 'readonly unknown[]' is 'readonly' and cannot be assigned to the mutable type 'string[]'."},
 		{"library's any element passed", `function count(ys: readonly string[]): number { return ys.length; }
 function show(x: unknown): void { if (Array.isArray(x)) { console.log(String(count(x))); } }
-show([5]);`, "main.ts:4:84: error TS2345: Argument of type 'readonly unknown[]' is not assignable to parameter of type 'readonly string[]'.\n  Type 'unknown' is not assignable to type 'string'."},
+show([5]);`, "main.ts:5:84: error TS2345: Argument of type 'readonly unknown[]' is not assignable to parameter of type 'readonly string[]'.\n  Type 'unknown' is not assignable to type 'string'."},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
