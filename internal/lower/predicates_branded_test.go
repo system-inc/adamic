@@ -440,25 +440,6 @@ const u = tryCast(p, isTypeElement); console.log(u === undefined ? "no" : String
 		})
 	}
 }
-const a = { kind: 171, pos: 1, name: "a", typeText: "t" }; show(a);
-const b = { kind: 172, pos: 2 }; show(b);
-const p: PropertySignature | Node = a;
-const u = tryCast(p, isTypeElement); console.log(u === undefined ? "no" : String(u.name));
-`, ".ts")
-	_, err := lowerTypeScriptAssertionSource(t, brandedPrelude+helpers+`const a = { kind: 171, pos: 1, name: "a", typeText: "t" };
-console.log(String(cast(a as Node, isTypeElement).pos));
-`)
-	var pending *NotYet
-	if !errors.As(err, &pending) || !strings.Contains(err.Error(), "read on the true side as Node & TypeElement") {
-		t.Fatalf("want cast NotYet by its intersection read, got %v", err)
-	}
-	brandedStops(t, brandedPrelude+helpers+`function show(n: Node): void { const e = tryCast(n, isTypeElementLie); console.log(e === undefined ? "no" : String(e.name)); }
-const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);
-`, "adamic: panic: field read failed: e.name matches no member of string | undefined")
-	brandedStops(t, brandedPrelude+helpers+`const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const w: Node = v; const p: PropertySignature | Node = w;
-const u = tryCast(p, isTypeElementLie); console.log(u === undefined ? "no" : String(u.name));
-`, "adamic: panic: field read failed: u.name matches no member of string | undefined")
-}
 
 // A generic helper is judged per instance: pick at Identifier lowers, and pick at TypeElement over the
 // same PropertySignature | Identifier argument is NotYet at its own call, in a program that lowers the
