@@ -11,13 +11,13 @@ const hash = text => crypto.createHash('sha256').update(text).digest('hex');
 function adapt(tree, check = false) {
     assert.equal(ts.version, '6.0.3');
     const name = path.join(tree, inventory.file), before = fs.readFileSync(name, 'utf8');
-    assert([inventory.beforeSha256, inventory.afterSha256].includes(hash(before)), 'uninventoried checker source');
     const program = compiler(tree, ts), checker = program.getTypeChecker();
     const source = program.getSourceFile(name);
     assert(source && !source.parseDiagnostics.length, 'checker must parse');
     const owners = nodes(ts, source, n => ts.isFunctionDeclaration(n) && n.name?.text === inventory.owner);
     assert.equal(owners.length, 1, 'owner count');
     const owner = owners[0];
+    assert([inventory.ownerBeforeSha256, inventory.ownerAfterSha256].includes(hash(owner.getText(source))), 'uninventoried owner: ' + inventory.owner);
     assert.equal(hash(owner.getText(source).replaceAll('parameter!', 'parameter')), inventory.ownerBeforeSha256, 'owner shape moved');
     assert(!owner.modifiers?.length, 'private function must have no modifiers');
     assert.equal(owner.parent.parent.name?.text, 'createTypeChecker', 'private nested owner');
@@ -50,8 +50,11 @@ function adapt(tree, check = false) {
             edits++;
         }
     }
-    assert.equal(hash(changed), inventory.afterSha256, 'only inventoried reads may change');
-    assert.equal(ts.createSourceFile(name, changed, ts.ScriptTarget.Latest, true).parseDiagnostics.length, 0);
+    const changedSource = ts.createSourceFile(name, changed, ts.ScriptTarget.Latest, true);
+    assert.equal(changedSource.parseDiagnostics.length, 0);
+    const changedOwners = nodes(ts, changedSource, n => ts.isFunctionDeclaration(n) && n.name?.text === inventory.owner);
+    assert.equal(changedOwners.length, 1, 'changed owner count');
+    assert.equal(hash(changedOwners[0].getText(changedSource)), inventory.ownerAfterSha256, 'only inventoried owner reads may change');
     for (const removeComments of [false, true]) {
         const options = {fileName: name, compilerOptions: {target: ts.ScriptTarget.ES2024, module: ts.ModuleKind.ESNext, removeComments}};
         assert.equal(ts.transpileModule(before, options).outputText, ts.transpileModule(changed, options).outputText, 'JavaScript changed');
