@@ -140,8 +140,12 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 			if name == "entries" {
 				// The destination's element can be anything the pairs are written into, unknown or a
 				// union of tuples, and only a reference has type arguments: the checker dereferences nil
-				// asking anything else for them (#egxccg8).
-				pair := l.typeArguments(element)
+				// asking anything else for them (#egxccg8). It isn't read through a Weak: entries makes
+				// strong pairs, and tsc lets them into an element of Weak<[string, V]>.
+				var pair []*checker.Type
+				if element.Flags()&checker.TypeFlagsObject != 0 && element.ObjectFlags()&checker.ObjectFlagsReference != 0 {
+					pair = l.checker.GetTypeArguments(element)
+				}
 				if len(pair) != 2 {
 					return refused("tsc's entries must have a proven value type")
 				}

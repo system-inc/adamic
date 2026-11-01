@@ -31,6 +31,11 @@ func TestTypeArgumentsAreReadOnlyFromReferences(t *testing.T) {
 		{"optional tuple of the class", "class Dog {\n    bark = 1;\n}\nfunction find(flag: boolean): [Dog, Dog] | undefined {\n    return flag ? [new Dog(), new Dog()] : undefined;\n}\nconst found = find(true);\nif (found !== undefined) {\n    const [first, second]: [Dog, Dog] = found;\n    console.log(`${first.bark}${second.bark}`);\n}\n", "", "lowers"},
 		{"entries seen as unknown", "const shape = { a: 1, b: 2 };\nconst pairs: readonly unknown[] = Object.entries(shape);\nconsole.log(`${pairs.length}`);\n", ":2:35", "Refused Object.entries: tsc's entries must have a proven value type"},
 		{"entries seen as a union of tuples", "const shape = { a: 1, b: 2 };\nconst pairs: readonly ([string, number] | [string, string])[] = Object.entries(shape);\nconsole.log(`${pairs.length}`);\n", ":2:65", "Refused Object.entries: tsc's entries must have a proven value type"},
+		// tsc lets entries' strong pairs into an element of Weak<[string, V]>, so the pairs are never read
+		// through a Weak: Weak<T> is a union with undefined, and the brand's intersection isn't a
+		// reference either. Read through the Weak, the branded pairs went on to the relation's NotYet.
+		{"entries seen as weak", "import type { Weak } from 'adamic';\nconst shape = { a: 1, b: 2 };\nconst pairs: readonly Weak<[string, number]>[] = Object.entries(shape);\nconsole.log(`${pairs.length}`);\n", ":3:50", "Refused Object.entries: tsc's entries must have a proven value type"},
+		{"entries seen as weakly branded", "import type { WeakBrand } from 'adamic';\nconst shape = { a: 1, b: 2 };\nconst pairs: readonly ([string, number] & WeakBrand)[] = Object.entries(shape);\nconsole.log(`${pairs.length}`);\n", ":3:58", "Refused Object.entries: tsc's entries must have a proven value type"},
 	} {
 		for _, extension := range []string{".ts", ".a"} {
 			t.Run(probe.name+extension, func(t *testing.T) {
