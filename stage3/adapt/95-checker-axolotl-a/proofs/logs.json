@@ -1,0 +1,12 @@
+{
+  "setup": "/tmp/axolotl-setup.log",
+  "apply-before": "/tmp/axolotl-apply-before.log",
+  "census-build": "/tmp/axolotl-census-build.log",
+  "before-census": "/tmp/axolotl-before-census.log",
+  "after-census": "/tmp/axolotl-after-census.log",
+  "mutant-census": "/tmp/axolotl-mutant-census.log",
+  "mutant-verify": "/tmp/axolotl-mutant-verify.log",
+  "after-build": "/tmp/axolotl-after-build.log",
+  "mutants": "/tmp/axolotl-mutants.log",
+  "adapter-check": "/tmp/axolotl-adapter-check.log"
+}
