@@ -1,42 +1,49 @@
 'use strict';
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const Module = require('node:module');
 const ts = require('typescript');
 assert.equal(ts.version, '6.0.3');
-
-const originalParseInt = globalThis.parseInt;
-const numericReads = [];
-let numeric;
-try {
-    globalThis.parseInt = function (value, radix) {
-        numericReads.push({type: typeof value, absent: value === undefined});
-        return originalParseInt(value, radix);
-    };
-    numeric = ts.parseCommandLine(['--maxNodeModuleJsDepth']);
+assert.equal(process.argv.length, 4, 'usage: node witness.cjs <before.ts> <after.ts>');
+const beforeText = fs.readFileSync(process.argv[2], 'utf8');
+const afterText = fs.readFileSync(process.argv[3], 'utf8');
+const beforeCall = 'parseInt(args[i])';
+const afterCall = 'parseInt(String(args[i]))';
+assert.equal(beforeText.split(beforeCall).length - 1, 1);
+assert.equal(afterText, beforeText.replace(beforeCall, afterCall));
+// Exercise the stock library's entire parser with exactly the inventoried call
+// replaced, preserving its real option declarations, validation and diagnostics.
+const file = require.resolve('typescript');
+const libraryText = fs.readFileSync(file, 'utf8');
+assert.equal(libraryText.split(beforeCall).length - 1, 1);
+const library = new Module(file, module);
+library.filename = file;
+library.paths = Module._nodeModulePaths(require('node:path').dirname(file));
+library._compile(libraryText.replace(beforeCall, afterCall), file);
+const repaired = library.exports;
+const rows = [];
+for (const value of [undefined, '12', '12.9', '0x10', 'abc', 'null']) {
+    const args = ['--maxNodeModuleJsDepth', ...(value === undefined ? [] : [value])];
+    const a = ts.parseCommandLine(args);
+    const b = repaired.parseCommandLine(args);
+    assert.deepEqual(b, a);
+    if (value === undefined) {
+        assert(Number.isNaN(b.options.maxNodeModuleJsDepth));
+        assert.deepEqual(b.errors.map(d => d.code), [6044]);
+    }
+    else if (value === 'null') assert.equal(b.options.maxNodeModuleJsDepth, undefined);
+    else assert(Object.is(b.options.maxNodeModuleJsDepth, parseInt(value)));
+    const result = b.options.maxNodeModuleJsDepth;
+    rows.push({args, value: Number.isNaN(result) ? 'NaN' : result === undefined ? 'undefined' : result,
+        errors: b.errors.map(d => ({code: d.code, message: ts.flattenDiagnosticMessageText(d.messageText, '\n')}))});
 }
-finally { globalThis.parseInt = originalParseInt; }
-assert(numericReads.some(read => read.absent));
-assert(Number.isNaN(numeric.options.maxNodeModuleJsDepth));
-assert(numeric.errors.some(error => error.code === 6044));
-
-const args = ['--init', '--outFile', 'null'];
-const parsed = ts.parseCommandLine(args);
+// "null" bypasses the numeric branch, but its two parseInt forms also agree.
+assert(Object.is(parseInt('null'), parseInt(String('null'))));
+const parsed = repaired.parseCommandLine(['--init', '--outFile', 'null']);
 assert.equal(parsed.errors.length, 0);
 assert(Object.hasOwn(parsed.options, 'outFile'));
 assert.equal(parsed.options.outFile, undefined);
-const originalStringify = JSON.stringify;
-const absentStringifyCalls = [];
-let config;
-try {
-    JSON.stringify = function (value, ...rest) {
-        const result = originalStringify.call(JSON, value, ...rest);
-        if (value === undefined) absentStringifyCalls.push({inputType: typeof value, resultType: typeof result});
-        return result;
-    };
-    config = ts.generateTSConfig(parsed.options, '\n');
-}
-finally { JSON.stringify = originalStringify; }
-assert.equal(absentStringifyCalls.length, 1);
+const config = repaired.generateTSConfig(parsed.options, '\n');
 assert(config.includes('"outFile": undefined,'));
-console.log(JSON.stringify({version: ts.version, D031: {args: ['--maxNodeModuleJsDepth'], numericReads,
-    valueIsNaN: true, errors: numeric.errors.map(d => ({code: d.code, message: ts.flattenDiagnosticMessageText(d.messageText, '\n')}))},
-    D036: {args, parseErrors: 0, ownOutFile: true, absentStringifyCalls, emittedLine: config.split('\n').find(line => line.includes('"outFile"'))}}, null, 2));
+console.log(JSON.stringify({version: ts.version, D031: rows, D036: {unasserted: true,
+    parseErrors: 0, emittedLine: config.split('\n').find(line => line.includes('"outFile"'))}}, null, 2));

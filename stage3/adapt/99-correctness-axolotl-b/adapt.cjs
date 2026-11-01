@@ -4,10 +4,10 @@ const path = require('node:path');
 const assert = require('node:assert/strict');
 const ts = require('typescript');
 
-// Both requested presence invariants are false. Validate the exact declined
-// reads, including their unasserted state, and make no writes. See README.md.
+// Make parseInt's existing ToString conversion explicit. The other requested
+// read remains declined and must validate before any write. See README.md.
 const sites = [
-    {function: 'parseOptionValue', expression: 'args[i]', kind: 'element', occurrence: 4, total: 8, parent: 'parseInt(args[i])'},
+    {function: 'parseOptionValue', expression: 'args[i]', kind: 'element', occurrence: 4, total: 8, parent: 'parseInt(args[i])', adaptedParent: 'String(args[i])'},
     {function: 'formatValueOrArray', expression: 'formatSingleValue(value, map)', kind: 'call', occurrence: 1, total: 1, parent: 'return formatSingleValue(value, map);'},
 ];
 
@@ -28,12 +28,10 @@ function isStore(read) {
         || ((ts.isForInStatement(parent) || ts.isForOfStatement(parent)) && parent.initializer === target);
 }
 
-function adapt(tree) {
-    assert.equal(ts.version, '6.0.3');
-    const fileName = path.join(tree, 'src/compiler/commandLineParser.ts');
-    const text = fs.readFileSync(fileName, 'utf8');
+function locate(fileName, text) {
     const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true);
     assert.equal(source.parseDiagnostics.length, 0, 'cannot parse commandLineParser.ts');
+    let edit;
     for (const site of sites) {
         const functions = nodes(source, n => ts.isFunctionDeclaration(n) && n.name?.text === site.function);
         assert.equal(functions.length, 1, `${site.function} moved`);
@@ -43,12 +41,37 @@ function adapt(tree) {
         const read = reads[site.occurrence - 1];
         assert(read && !isStore(read), `${site.function}: declined read became a store`);
         assert(!ts.isNonNullExpression(read.parent), `${site.function}: disproved read was asserted`);
-        assert.equal(read.parent.getText(source), site.parent, `${site.function}: read context drift`);
+        const context = read.parent.getText(source);
+        if (site.adaptedParent) {
+            const adapted = context === site.adaptedParent;
+            assert(context === site.parent || adapted, `${site.function}: read context drift`);
+            const call = adapted ? read.parent.parent : read.parent;
+            assert(ts.isCallExpression(call), 'numeric read left its call');
+            assert.equal(call.getText(source), adapted ? 'parseInt(String(args[i]))' : 'parseInt(args[i])');
+            const statement = call.parent.parent.parent;
+            assert.equal(statement.getText(source), adapted
+                ? 'options[opt.name] = validateJsonOptionValue(opt, parseInt(String(args[i])), errors);'
+                : 'options[opt.name] = validateJsonOptionValue(opt, parseInt(args[i]), errors);');
+            const calls = nodes(functions[0], n => ts.isCallExpression(n) && ts.isIdentifier(n.expression) && n.expression.text === 'parseInt');
+            assert.equal(calls.length, 1, 'numeric parseInt count drift');
+            if (!adapted) edit = {start: read.getStart(source), end: read.end, text: 'String(args[i])'};
+        }
+        else assert.equal(context, site.parent, `${site.function}: read context drift`);
     }
-    // There are no valid edits to plan. Refuse any asserted or partly asserted
-    // input above and validate the unchanged input before returning, without writes.
-    assert.equal(fs.readFileSync(fileName, 'utf8'), text, 'source changed while validating');
-    return {files: 0, assertions: 0, javascriptChanging: false};
+    return edit;
+}
+
+function adapt(tree) {
+    assert.equal(ts.version, '6.0.3');
+    const fileName = path.join(tree, 'src/compiler/commandLineParser.ts');
+    const text = fs.readFileSync(fileName, 'utf8');
+    const edit = locate(fileName, text);
+    const result = edit ? text.slice(0, edit.start) + edit.text + text.slice(edit.end) : text;
+    assert.equal(locate(fileName, result), undefined, 'planned result is not fully adapted');
+    assert.equal(result.length - text.length, edit ? 'String()'.length : 0, 'unplanned source changes');
+    assert.equal(fs.readFileSync(fileName, 'utf8'), text, 'source changed while planning');
+    if (edit) fs.writeFileSync(fileName, result);
+    return {files: edit ? 1 : 0, edits: edit ? 1 : 0, javascriptChanging: true, behaviorChanging: false};
 }
 module.exports = {adapt, sites};
 if (require.main === module) {
