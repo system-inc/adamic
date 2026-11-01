@@ -28,7 +28,6 @@ the run ends.
 """
 
 from concurrent.futures import ThreadPoolExecutor
-import collections
 import fcntl
 import heapq
 import math
@@ -479,84 +478,40 @@ def coverageChanged(tree, change, full):
     return [path for path in git(tree, "-c", "core.quotePath=false", "diff", "--name-only", *revisions).split("\n") if path]
 
 
-# coverageGoStatePathspec is what coverage reads of the tree for a change inertOnly allows (#gw93f6b, Node's
-# ruling): a traced run on Pupa, Oct 29 (Pupa:~/scratch/judge-tools-trace/trace8.txt, a README edit on adamic cad2afb1c7),
-# read whole. go list -deps -test -json ./... (touched() and coverageReduced()) reads go.work and every module it names,
-# cohere's among them, opens each package's .go files and the C-family sources it checks build constraints in, and probes
-# a go.mod in every directory for a nested module; memoryFloors opens every tracked .go file; compilerDependencies opens
-# the stage3/drivers scripts and the tree's compiler-dependencies.json; cover()'s mapChanged reads whether the tree's
-# executors.txt changed. phaseInputs adds cloud/fast-gate (the maps, unit-needs.json among them), npmPackages' stage3/api
-# files, and the root go.mod and go.sum. A change to any of those functions in run.py retraces before this narrows again.
+# coverageGoStatePathspec is what coverage reads of the tree at any change, and what smoke's declaration starts from
+# (#gw93f6b, #gamwqs2, Node's rulings), traced whole on Pupa: at a README edit (Oct 29, adamic cad2afb1c7,
+# Pupa:~/scratch/judge-tools-trace/trace8.txt) and at Go changes (Oct 31, trace-go-coverage-*.txt: Optimizer's
+# internal/lower and catalog change de5c28cc11, and three more), every tracked file coverage opened was in it or the
+# phases' setup. go list -deps -test -json ./... (touched() and coverageReduced()) reads go.work and every module it
+# names, cohere's among them, opens each package's .go files and the C-family sources it checks build constraints in, and
+# probes a go.mod in every directory for a nested module; memoryFloors opens every tracked .go file;
+# compilerDependencies opens the stage3/drivers scripts and the tree's compiler-dependencies.json; cover()'s mapChanged
+# reads whether the tree's executors.txt changed. phaseInputs adds cloud/fast-gate (the maps, unit-needs.json among
+# them), npmPackages' stage3/api files, and the root go.mod and go.sum. A change to any of those functions in run.py
+# retraces before it's trusted again.
 coverageGoStatePathspec = ["*.go", ":(glob)**/go.mod", ":(glob)**/go.sum", ":(glob)**/go.work", ":(glob)**/go.work.sum",
                            "*.c", "*.cc", "*.cpp", "*.cxx", "*.h", "*.hh", "*.hpp", "*.hxx", "*.m", "*.s", "*.S", "*.sx",
                            "*.f", "*.F", "*.for", "*.f90", "*.syso", "*.swig", "*.swigcxx", "cohere", "stage3/drivers"]
 
 
 # phaseSetupPaths are what every bounded phase reads beside its own inputs (phaseInputs adds them): runPhase's npm setup
-# and this runner and its maps. A change to one never narrows a phase (inertOnly).
+# and this runner and its maps.
 phaseSetupPaths = ["cloud/fast-gate", "cloud/markdown-width/npm-bootstrap.json", "stage3/api/package.json",
                    "stage3/api/package-lock.json", "go.mod", "go.sum"]
 
 
-def inertOnly(tree, tools, change, full):
-    """Whether a phase may key on less than the whole tree for this change, the one test coverage and smoke both ask
-    (#gw93f6b, #q11k6k6 and #cb8bpe7's wall 2, Node's rulings): every changed path a modified file, its mode a plain file's
-    on both sides, and one no phase reads (phaseUnreadPath, the per-path test --phase-unread lists by): its first rule in
-    tools' executors.txt inert, outside the tree's Go state (coverageGoStatePathspec) and the phases' setup
-    (phaseSetupPaths), no package embedding it (go list opens an embedded file, and go test compiles its bytes), and no
-    .gitattributes, .a or catalog patch target, which select or feed a phase. Such a change touches nothing a census reads, adds or removes nothing go list sees or a walk
-    lists, and names nothing cover() reds on. The traces say what each phase reads of such a file (Pupa, Oct 29 and 30:
-    smoke opened no inert file outside the Go state but those a package embeds, and coverage none outside it). Anything
-    else, an empty or root change, or a diff or go list that doesn't read, is no. It's no glob of file types: a README and
-    a log nothing reads are alike."""
-    return inertOnlyChange(tree, tools, change, full) is not None
-
-
-def inertOnlyChange(tree, tools, change, full):
-    """inertOnly's answer when it's yes, as (embedded, paths): the tree's embedded files (goPackages' map, path to package),
-    which a narrowed key must still hold by content, and the changed paths, sorted; None when it's no."""
-    if change is None:
-        return None
-    try:
-        revisions = coverageRevisions(tree, change, full)
-        if revisions is None:
-            return None
-        raw = subprocess.run(["git", "-C", tree, "diff", "--raw", "-z", "-M", "--no-abbrev", *revisions],
-                             capture_output=True, text=True, check=True, timeout=120).stdout
-        fields = raw.split("\0")
-        if fields and fields[-1] == "":
-            fields.pop()
-        rules, paths = executorMap(tools)[0], []
-        while fields:
-            header = fields.pop(0).split()
-            # :<old mode> <new mode> <old blob> <new blob> <status>, then one path, or two for a rename or copy.
-            if len(header) != 5 or not header[0].startswith(":") or not fields:
-                return None
-            path = fields.pop(0)
-            if header[4][:1] in ("R", "C"):
-                if not fields:
-                    return None
-                path = fields.pop(0)  # a rename or copy names its source, then the path it makes
-            if header[4] != "M" or not phaseUnreadMode(header[0][1:]) or not phaseUnreadMode(header[1]):
-                return None
-            if firstExecutor(rules, path) != "inert" or phaseSetupPath(path):
-                return None  # asked before the tree's state, so a change that touches anything else costs no go list
-            paths.append(path)
-        if not paths:
-            return None
-        state = phaseReadState(tree, tools)
-        if state is None:
-            return None
-    except (subprocess.SubprocessError, OSError, ValueError, KeyError):
-        return None
-    return (state.embedded, sorted(paths)) if all(phaseUnreadPath(path, state) for path in paths) else None
+# smokeOraclePaths are what smoke reads of the tree beside the Go state and the files its packages embed (#gamwqs2,
+# Node's ruling), traced whole on Pupa (Oct 31, trace-go-smoke-*.txt, at four landed changes, internal/oracle's among
+# them, each with ASAN_OPTIONS=detect_leaks=0 so no test died at its exit under ptrace): go test ./internal/oracle runs
+# its fixtures, under internal/oracle/testdata, against the Node oracle's runtime and hooks in oracle, as wasiInputs
+# names them too, and git reads each .gitattributes beside the tree's files (toolsAttributesPathspec). A change to
+# smoke() or the oracle's runtime reads retraces before it's trusted again.
+smokeOraclePaths = ["oracle", "internal/oracle/testdata"]
 
 
 def phaseUnreadMode(mode):
-    """Whether a file of this git mode can be phase-unread: a plain file, 100644, alone, the one mode test inertOnlyChange
-    holds both sides of a change to and phaseUnread lists by (Node's must on 426b75d6). An inert 100755 file listed
-    unread would be edited by a change inertOnly refuses, so coverage and smoke key on the whole tree and read it: a
-    false green in a lookup that decided it empty."""
+    """Whether a file of this git mode can be phase-unread: a plain file, 100644, alone, as Node ruled on 426b75d6. The
+    phases key a file by its mode and blob (git ls-files -s), and the lookup decides only a plain file modified as one."""
     return mode == "100644"
 
 
@@ -565,53 +520,42 @@ def phaseSetupPath(path):
     return any(path == setup or path.startswith(setup + "/") for setup in phaseSetupPaths)
 
 
-# A PhaseReadState is what decides, path by path, whether any phase reads a modified file (phaseUnreadPath): tools'
-# executor rules in file order, the tree's Go state as coverage keys it, the files a package of the tree embeds (path to
-# package), and the files the bug catalog's undo patches edit (catalog-apply runs for a change to one).
-PhaseReadState = collections.namedtuple("PhaseReadState", ["rules", "goState", "embedded", "catalogTargets"])
-
-
-def phaseReadState(tree, tools):
-    """The tree's PhaseReadState under tools' executor map, or None when go list of the tree doesn't read."""
-    # The Go state as coverage keys it, listed from the tree, so a path is in it exactly when git says so.
-    goState = set(subprocess.run(["git", "-C", tree, "ls-files", "-z", "--", *coverageGoStatePathspec],
-                                 capture_output=True, text=True, check=True, timeout=120).stdout.split("\0"))
-    listing = packageGraph(tree)
-    if listing.returncode != 0:
-        return None
-    targets = set().union(*catalogPatchTargets(tree).values())
-    return PhaseReadState(executorMap(tools)[0], goState, goPackages(tree, listing.stdout)[1], targets)
-
-
-def phaseUnreadPath(path, state):
-    """Whether no phase reads path when it's modified, a plain file on both sides (#nz7hm5j, Node's ruling): the one
-    per-path test inertOnly narrows coverage and smoke by and --phase-unread lists. Its first rule is inert and it's
-    outside the phases' setup, so no executor runs for it and no map reads it; it's outside the Go state, which coverage
-    keys on and build, vet and gofmt read; no package embeds it, since go test compiles an embed's bytes; it's no
-    .gitattributes, which the tools phase reads beside every file it searches; no .a, which a-check runs for wherever it
-    sits; and no file a catalog undo patch edits, which catalog-apply runs for. Smoke excludes such a change's own paths
-    by name. A file that shapes this answer (the Go state, cloud/fast-gate's maps and runner, the catalog's patches, a
-    .gitattributes) fails it itself, so a change to one is never decided by a state read before it."""
-    return (firstExecutor(state.rules, path) == "inert" and not phaseSetupPath(path) and path not in state.goState
-            and path not in state.embedded and os.path.basename(path) != ".gitattributes" and not path.endswith(".a")
-            and path not in state.catalogTargets)
+def phaseSelectsNone(path, rules, catalogTargets):
+    """Whether a change to path alone selects no phase of its own (#nz7hm5j): its first rule in tools' executors.txt is
+    inert, so cover() runs no executor for it (workers, catalog, darwin), it's no .a, which a-check runs for wherever it
+    sits, and no file a catalog undo patch edits, which catalog-apply runs for (catalogPatchTargets)."""
+    return firstExecutor(rules, path) == "inert" and not path.endswith(".a") and path not in catalogTargets
 
 
 def phaseUnread(tree, tools):
-    """Every tracked plain file of tree (phaseUnreadMode) no phase reads when it's modified (phaseUnreadPath), sorted: the
-    set Loom's no-move check matches a change's paths against, kept per base tree and gate tools commit (#nz7hm5j).
-    Raises when the tree's state doesn't read, so a caller never takes a partial set."""
-    state = phaseReadState(tree, tools)
-    if state is None:
-        raise ValueError("go list of %s doesn't read" % tree)
-    listed = subprocess.run(["git", "-C", tree, "ls-files", "-s", "-z"], capture_output=True, text=True, check=True,
-                            timeout=120).stdout
+    """Every tracked plain file of tree (phaseUnreadMode) no phase reads when it alone is modified, sorted: the set Loom's
+    no-move check matches a change's paths against, kept per base tree and gate tools commit (#nz7hm5j). It's derived from
+    the base phases' own declared inputs, the one reading their keys hash (phaseInputs, #tqxm4fa's rule, Node's ruling on
+    #gamwqs2), never from a list of its own: a file is read when a phase's declared paths name it (git ls-files of them,
+    the phases' setup among them), or it sits in the directory of a package a phase declares (its closure is that
+    package's files, so every file there reads as read, beside the files they embed, which smoke names), or a change to it
+    would select a phase of its own (phaseSelectsNone). A phase whose inputs are the whole tree leaves nothing unread.
+    census is the judge's step, never planned; gofmt, the planner's, reads only the change's own .go files, all in the Go
+    state. Raises when a declaration doesn't read, so a caller never takes a partial set."""
+    declared = [phaseInputs(tree, phase)["inputs"] for phase in fastBasePhases if phase != "census"]
+    if any("." in inputs["paths"] for inputs in declared):
+        return []
+    read = set()
+    for inputs in declared:
+        read.update(path for path in git(tree, "ls-files", "-z", "--", *inputs["paths"]).split("\0") if path)
+    listing = packageGraph(tree)
+    if listing.returncode != 0:
+        raise ValueError("go list of %s doesn't read: %s" % (tree, listing.stderr.strip()[:300]))
+    directories = {importPath: directory for directory, importPath in goPackages(tree, listing.stdout)[0].items()}
+    owned = {directories[package] for inputs in declared for package in inputs["packages"] if package in directories}
+    rules, targets = executorMap(tools)[0], set().union(*catalogPatchTargets(tree).values())
     unread = []
-    for entry in listed.split("\0"):
+    for entry in git(tree, "ls-files", "-s", "-z").split("\0"):
         if not entry:
             continue
         mode, path = entry.split(" ", 1)[0], entry.split("\t", 1)[1]
-        if phaseUnreadMode(mode) and phaseUnreadPath(path, state):
+        if phaseUnreadMode(mode) and path not in read and (os.path.dirname(path) or ".") not in owned \
+                and phaseSelectsNone(path, rules, targets):
             unread.append(path)
     return sorted(unread)
 
@@ -627,58 +571,32 @@ def phaseUnreadMain():
     print(json.dumps({"unread": phaseUnread(arguments.tree, arguments.tools)}))
 
 
-def smokeInertPathspec(tree, embedded, changed):
-    """What smoke reads of the tree for a change inertOnly allows (#q11k6k6 and #cb8bpe7's wall 2, Node's rulings): every
-    tracked path but the Markdown files no package embeds and the change's own other paths, each inert, outside the Go
-    state and embedded by nothing. The Markdown part is exactly what it was for a Markdown-only change, so such a change
-    keys as it did. The change's other paths are left out by name, never every inert file, which would hand git about
-    24,000 exclusions to match each listing against. A traced run on Pupa, Oct 30 (run.py --phase smoke --complete on a README edit of
-    adamic cad2afb1c7, Pupa:~/scratch/judge-tools-trace/trace10.txt), read whole: go test ./internal/oracle compiles the
-    oracle's closure, cohere's included, and its fixtures run against Node, and of the tree's Markdown it opened only what
-    go embeds (internal/load's node_types), beside stats from directory walks and git's index checks; adamic's buildcache
-    lists the tracked files to value them (git ls-files -s), never reading a Markdown file nothing keys. An embedded file is
-    kept by content, since go test compiles its bytes. A change to smoke() or the oracle's runtime reads retraces before
-    this narrows again."""
-    listed = subprocess.run(["git", "-C", tree, "ls-files", "-z", "--", "*.md"], capture_output=True, text=True, check=True,
-                            timeout=120).stdout
-    unread = sorted(path for path in listed.split("\0") if path and path not in embedded)
-    others = sorted(path for path in changed if not path.endswith(".md"))
-    return ["*"] + [":(exclude,literal)" + path for path in unread + others]
-
-
 def smokeInputs(tree, change, full):
-    allowed = inertOnlyChange(tree, change["tools"] if change else None, change, full)
-    if allowed is not None:
-        try:
-            paths = smokeInertPathspec(tree, *allowed)
-        except (subprocess.SubprocessError, OSError):
-            paths = None
-        if paths is not None:
-            # Nothing it reads by name: two Markdown-only changes on one tree's other files decide alike, so they key alike.
-            return {"packages": [], "paths": paths, "names": [],
-                    "note": "an inert change: smoke reads every tracked file but the Markdown no package embeds and the change's own paths"}
-    return treeInputs("smoke source programs and their runtime/import reads are not yet bounded")
+    """smoke's declared inputs at any change (#gamwqs2): the Go state, which go test ./internal/oracle compiles, cohere's
+    included; every file a package of the tree embeds, by name, since go test compiles its bytes; the oracle's fixtures and
+    runtime (smokeOraclePaths); and every .gitattributes. Nothing by name: it runs the same fixtures whatever changed. With
+    go list unreadable its embeds can't be named, and it reads the whole tree."""
+    listing = packageGraph(tree)
+    if listing.returncode != 0:
+        return treeInputs("smoke compiles packages whose embeds go list couldn't name")
+    embedded = sorted(goPackages(tree, listing.stdout)[1])
+    return {"packages": [], "paths": coverageGoStatePathspec + smokeOraclePaths + toolsAttributesPathspec + [":(literal)" + path for path in embedded],
+            "names": [], "note": "smoke reads the Go state, what its packages embed, the oracle's fixtures and runtime, and every .gitattributes"}
 
 
 def coverageInputs(tree, unit, full, change):
-    if inertOnly(tree, change["tools"] if change else None, change, full):
-        # Nothing it judges by name: two inert changes on one Go state decide alike, so they key alike.
-        return {"packages": [], "paths": list(coverageGoStatePathspec), "names": [],
-                "note": "an inert change: coverage reads the tree's Go, module, driver and census state alone"}
-    inputs = treeInputs("coverage uses the base diff, package/source census and executor map across the tree")
-    if change is None:
-        inputs["names"] = []
-        inputs["note"] += "; names is empty because the listing had no change to classify (--base for a fast gate, --sha for the whole)"
-    else:
-        # The paths coverage judges, by the one classification cover() decides its red from.
-        inputs["names"] = coverageReduced(tree, change["tools"], coverageChanged(tree, change, full))
-        inputs["note"] += "; names are the changed paths it judges, those neither in a Go package nor inert"
-    return inputs
+    """coverage's declared inputs at any change (#gamwqs2): the Go state (coverageGoStatePathspec), and by name the changed
+    paths it judges, those neither in a Go package nor inert (coverageReduced, the one classification cover() decides its
+    red from): none at a change of inert files alone, and none with no change to classify (--base for a fast gate, --sha
+    for the whole)."""
+    names = [] if change is None else coverageReduced(tree, change["tools"], coverageChanged(tree, change, full))
+    return {"packages": [], "paths": list(coverageGoStatePathspec), "names": names,
+            "note": "coverage reads the tree's Go, module, driver and census state, and judges the changed paths it names"}
 
 
 def catalogPatchTargets(tree):
     """Each bug catalog undo patch's name, in order, and the files it edits (its +++ b/ lines): catalog-apply runs for a
-    change to one of them (Gate.catalogEntriesTouched), so no phase-unread file is one (phaseUnreadPath)."""
+    change to one of them (Gate.catalogEntriesTouched), so no phase-unread file is one (phaseSelectsNone)."""
     directory = os.path.join(tree, "verify/catalog")
     if not os.path.isdir(directory):
         return {}
