@@ -19,7 +19,8 @@ class ApiSanctionGeneratorTests(unittest.TestCase):
     def setUp(self):
         upstream = os.environ.get('ADAMIC_TYPESCRIPT_SOURCE')
         if not upstream:
-            self.skipTest('generator integration needs ADAMIC_TYPESCRIPT_SOURCE pinned git objects')
+            self.fail('ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, '
+                      'the gate input the adapted tree is made from')
         self.upstream = Path(upstream)
         self.scratch = tempfile.TemporaryDirectory(prefix='lane-generator-')
         self.addCleanup(self.scratch.cleanup)
@@ -124,6 +125,42 @@ class ApiSanctionGeneratorTests(unittest.TestCase):
         errors = self.guard(proof, local)
         self.assertTrue(any('missing sanctioned API declaration' in error and
                             'TypeReferenceNode' in error for error in errors), errors)
+
+    def member_row(self):
+        self.row = dict(path=['ModuleResolutionHost', 'getCurrentDirectory'], kind='MethodSignature',
+                        replace='member', before='getCurrentDirectory?(): string;',
+                        after='getCurrentDirectory?: (() => string) | undefined;',
+                        why='Fixture optional method conversion')
+
+    def test_api_sanction_member_applied_and_guard_accepts(self):
+        self.member_row()
+        proof = self.generated()
+        self.assertTrue(self.row['after'] in proof['expected'], 'member conversion was not applied')
+        self.assertEqual(self.guard(proof, proof['expected']), [])
+
+    def test_api_sanction_member_before_requires_full_text(self):
+        self.member_row()
+        self.row['before'] = 'string'
+        result = self.generate()
+        self.assertNotEqual(result.returncode, 0)
+        for text in ('api-sanctions.json row 1', 'getCurrentDirectory?(): string;', 'before "string"'):
+            self.assertIn(text, result.stderr)
+
+    def test_api_sanction_member_undo_is_rejected(self):
+        self.member_row()
+        proof = self.generated()
+        local = proof['expected'].replace(self.row['after'], self.row['before'])
+        self.assertNotEqual(local, proof['expected'])
+        errors = self.guard(proof, local)
+        self.assertTrue(any('missing sanctioned API declaration' in error and
+                            'getCurrentDirectory' in error for error in errors), errors)
+
+    def test_api_sanction_invalid_replace_is_rejected(self):
+        self.row['replace'] = None
+        result = self.generate()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('api-sanctions.json row 1', result.stderr)
+        self.assertIn('invalid sanction', result.stderr)
 
 
 if __name__ == '__main__':
