@@ -526,6 +526,36 @@ func runRecordReadMutant(t *testing.T, unit int) {
 	}
 }
 
+// recordDuration is one timed operation as either side prints it, nine decimals of seconds. A reading
+// at or below the last printed digit, 1 ns, measured nothing (Perry's report gave 0.0 ms in every
+// cell), so it's refused rather than kept as the best of five.
+func recordDuration(field string) (float64, error) {
+	duration, err := strconv.ParseFloat(field, 64)
+	if err != nil {
+		return 0, fmt.Errorf("invalid duration %q", field)
+	}
+	if !(duration > 1e-9) {
+		return 0, fmt.Errorf("measured nothing: %q is at or below the 1 ns both sides print to", field)
+	}
+	return duration, nil
+}
+
+// A timing kept as the best of five is one the clock could see, and a non-number is refused.
+func TestRecordDurationRefusesWhatMeasuredNothing(t *testing.T) {
+	t.Parallel()
+	if duration, err := recordDuration("0.000154732"); err != nil || duration != 0.000154732 {
+		t.Fatalf("a real timing: %v %v", duration, err)
+	}
+	for _, field := range []string{"0.000000000", "0.000000001", "-0.000000500", "NaN"} {
+		if _, err := recordDuration(field); err == nil || !strings.HasPrefix(err.Error(), "measured nothing: ") {
+			t.Fatalf("%q was kept: %v", field, err)
+		}
+	}
+	if _, err := recordDuration("fast"); err == nil {
+		t.Fatal("a non-number was kept")
+	}
+}
+
 // Opt in to observations: timing has no pass threshold on a shared worker. Each of five fresh
 // process pairs executes identical operations and consumes the result; best per operation is logged.
 // Not parallel: measures native and Node process timings, requiring exclusive execution.
@@ -567,9 +597,9 @@ func TestRecordBenchmark(t *testing.T) {
 					t.Fatal("missing benchmark timings")
 				}
 				for operation, field := range fields {
-					duration, err := strconv.ParseFloat(field, 64)
-					if err != nil || duration < 0 || math.IsNaN(duration) {
-						t.Fatalf("invalid duration %q", field)
+					duration, err := recordDuration(field)
+					if err != nil {
+						t.Fatalf("side %d operation %d: %v", side, operation, err)
 					}
 					best[side][operation] = math.Min(best[side][operation], duration)
 				}
