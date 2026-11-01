@@ -1,0 +1,22 @@
+{
+  "undoRead": {
+    "site": "checker.ts:52426:13",
+    "verifierExit": 1,
+    "catcher": "all 13 required read checks must be present: 12 !== 13",
+    "pinExit": 1,
+    "pinCatcher": "uninventoried checker source"
+  },
+  "runtimeReturnMutant": {
+    "change": "private grammar function return false to return true",
+    "erasure": [
+      {
+        "removeComments": false,
+        "caught": true
+      },
+      {
+        "removeComments": true,
+        "caught": true
+      }
+    ]
+  }
+}

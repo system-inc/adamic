@@ -1,0 +1,113 @@
+{
+  "file": "src/compiler/checker.ts",
+  "owner": "checkGrammarIndexSignatureParameters",
+  "beforeSha256": "207c91ad384d14d0cdc1a356e4daba2bbb09b13330d0297cf6ac2232123827f1",
+  "afterSha256": "00b65fd6d9fae144426b563a8fa4cfb84be553f40d85737584493c05c2d9396c",
+  "ownerBeforeSha256": "330d3852b263f13aaca16abbb7a4ba5d4f178cf0a1ee819e637f21d774040062",
+  "sites": [
+    {
+      "occurrence": 1,
+      "total": 13,
+      "expression": "parameter",
+      "parent": "parameter.dotDotDotToken",
+      "line": 52426,
+      "column": 13
+    },
+    {
+      "occurrence": 2,
+      "total": 13,
+      "expression": "parameter",
+      "parent": "parameter.dotDotDotToken",
+      "line": 52427,
+      "column": 39
+    },
+    {
+      "occurrence": 3,
+      "total": 13,
+      "expression": "parameter",
+      "parent": "hasEffectiveModifiers(parameter)",
+      "line": 52429,
+      "column": 35
+    },
+    {
+      "occurrence": 4,
+      "total": 13,
+      "expression": "parameter",
+      "parent": "parameter.name",
+      "line": 52430,
+      "column": 39
+    },
+    {
+      "occurrence": 5,
+      "total": 13,
+      "expression": "parameter",
+      "parent": "parameter.questionToken",
+      "line": 52432,
+      "column": 13
+    },
+    {
+      "occurrence": 6,
+      "total": 13,
+      "expression": "parameter",
+      "parent": "parameter.questionToken",
+      "line": 52433,
+      "column": 39
+    },
+    {
+      "occurrence": 7,
+      "total": 13,
+      "expression": "parameter",
+      "parent": "parameter.initializer",
+      "line": 52435,
+      "column": 13
+    },
+    {
+      "occurrence": 8,
+      "total": 13,
+      "expression": "parameter",
+      "parent": "parameter.name",
+      "line": 52436,
+      "column": 39
+    },
+    {
+      "occurrence": 9,
+      "total": 13,
+      "expression": "parameter",
+      "parent": "parameter.type",
+      "line": 52438,
+      "column": 14
+    },
+    {
+      "occurrence": 10,
+      "total": 13,
+      "expression": "parameter",
+      "parent": "parameter.name",
+      "line": 52439,
+      "column": 39
+    },
+    {
+      "occurrence": 11,
+      "total": 13,
+      "expression": "parameter",
+      "parent": "parameter.type",
+      "line": 52441,
+      "column": 42
+    },
+    {
+      "occurrence": 12,
+      "total": 13,
+      "expression": "parameter",
+      "parent": "parameter.name",
+      "line": 52443,
+      "column": 39
+    },
+    {
+      "occurrence": 13,
+      "total": 13,
+      "expression": "parameter",
+      "parent": "parameter.name",
+      "line": 52446,
+      "column": 39
+    }
+  ]
+}
