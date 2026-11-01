@@ -30,8 +30,31 @@ func TestRecordDefineHiddenAgainstNode(t *testing.T) {
 	graphCompilerWitness(t, recordDefineHiddenSource(t), nil)
 }
 
+// An entries record, kept as a record but seen through fixed views, written through one under a name a define
+// hides on another record. No program on main drives a defined record into a fixed object's write (a record seen
+// as a fixed view is refused, through a union it's not yet, and a generic write is the record's own), so this is
+// the record that reaches writeProperty's record branch, which takes the checked write there, and stores.
+const recordHiddenBesideEntries = `const source: { visible: number; [key: string]: number | string } = { visible: 1 };
+const alias = source;
+alias['late'] = 2;
+alias['visible'] = 3;
+function show(view: { visible: number }): void {
+    view.visible = 4;
+}
+show(source);
+console.log(` + "`${Object.keys(source).join(',')} ${String(source.visible)}`" + `);
+const hidden: Record<string, number> = {};
+Object.defineProperty(hidden, 'visible', { enumerable: false, writable: false, value: 1 });
+console.log(` + "`${String(hidden.visible)} ${String(Object.keys(hidden).length)}`" + `);
+`
+
+func TestRecordDefineHiddenBesideEntriesRecords(t *testing.T) {
+	t.Parallel()
+	graphCompilerWitness(t, recordHiddenBesideEntries, nil)
+}
+
 var (
-	recordWriteCheck  = regexp.MustCompile(`if \(!(adamic_record_set\(.*\))\) adamic_record_refused\(.*, false\);`)
+	recordWriteCheck  = regexp.MustCompile(`if \(!adamic_record_set_checked(\(.*\))\) adamic_record_refused\(.*, false\);`)
 	recordDeleteCheck = regexp.MustCompile(`if \(!\w+\) adamic_record_refused\(.*, true\);`)
 )
 
@@ -40,7 +63,7 @@ var (
 func TestRecordDefineHiddenWriteChecksMutant(t *testing.T) {
 	t.Parallel()
 	graphCompilerWitness(t, recordDefineHiddenSource(t), func(code string) string {
-		return recordDeleteCheck.ReplaceAllString(recordWriteCheck.ReplaceAllString(code, "(void)$1;"), "")
+		return recordDeleteCheck.ReplaceAllString(recordWriteCheck.ReplaceAllString(code, "adamic_record_set$1;"), "")
 	})
 }
 
@@ -72,6 +95,8 @@ catch(error) {
 		// r[key] and delete r[key] are dynamic, and r.hidden names the hidden key; r.plain, delete r.plain and
 		// r.other ??= name none.
 		{"one define", writes + define + "console.log(String(JSON.stringify(r)));\n", 3, 1},
+		// view.visible and alias['visible'] are writeProperty's, each checked in its record branch.
+		{"entries record under a hidden name", recordHiddenBesideEntries, 2, 1},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			path := filepath.Join(t.TempDir(), "main.a")
