@@ -12,7 +12,7 @@ Rows measure incremental edits; total measures the final tree against pristine.
 | 31-indexed-reads-checker | 1 | 394 | 394 |
 | 32-indexed-reads-program | 20 | 132 | 132 |
 | 33-indexed-reads-emit | 16 | 119 | 119 |
-| 40-explicit-any | 17 | 106 | 106 |
+| 40-explicit-any | 18 | 107 | 107 |
 | 41-explicit-any-remaining | 8 | 25 | 22 |
 | 42-scanner-any | 1 | 1 | 1 |
 | 43-any-returns | 2 | 14 | 9 |
@@ -39,4 +39,5 @@ Rows measure incremental edits; total measures the final tree against pristine.
 | 90-void-widening | 7 | 66 | 66 |
 | 91-patcher-discard | 2 | 2 | 2 |
 | 92-tty-host-results | 1 | 2 | 2 |
-| **Total** | 85 | 5525 | 5483 |
+| 93-builtin-imports | 1 | 6 | 3 |
+| **Total** | 85 | 5532 | 5487 |

@@ -1,0 +1,63 @@
+{
+  "status": "pass",
+  "conditions": {
+    "onlyThreeImportsAndInitializers": "pass",
+    "sourceUndoExact": "pass",
+    "transpileBothCommentModes": "pass",
+    "buildsAndPublicAPI": "pass",
+    "sameFullOracleAndBaseline": "pass",
+    "builtCompilerWitness": "pass"
+  },
+  "counts": {
+    "control": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "after": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    }
+  },
+  "baselineDiff": {
+    "byteIdentical": true,
+    "bytes": 51123,
+    "sha256": "6d52cd09811c6846c977ea492071c14325816a631706cc79128c4299b9faa031"
+  },
+  "api": {
+    "byteIdentical": true,
+    "bytes": 590996,
+    "sha256": "b901adcc6ec29e299ec21401b2a155b2b2c14c046ec743fed6ee45679b726d5d"
+  },
+  "scope": {
+    "files": 746,
+    "changed": [
+      "src/compiler/sys.ts"
+    ],
+    "undoRestoresExactBytes": true
+  },
+  "mutants": [
+    "moved target before write",
+    "extra runtime edit",
+    "extra erased type annotation caught only by scope",
+    "extra baseline line"
+  ],
+  "postSuiteIdempotence": 0,
+  "oracleWorkers": 8,
+  "memoryEventsUnchanged": true,
+  "cliOutputs": [
+    {
+      "file": "main.js",
+      "bytes": 198,
+      "sha256": "dec3def62e0b28599368782a5ca138d37f62cbc3477c1756220d0abe9c4a00e3",
+      "byteIdentical": true
+    },
+    {
+      "file": "main.d.ts",
+      "bytes": 90,
+      "sha256": "b1c3e2bab4489c581ac3ee6e4a33b23a32843e81ab0f6d64b604954572f93758",
+      "byteIdentical": true
+    }
+  ]
+}
