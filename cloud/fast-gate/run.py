@@ -585,13 +585,15 @@ def smokeInputs(tree, change, full):
 
 
 def coverageInputs(tree, unit, full, change):
-    """coverage's declared inputs at any change (#gamwqs2): the Go state (coverageGoStatePathspec), and by name the changed
-    paths it judges, those neither in a Go package nor inert (coverageReduced, the one classification cover() decides its
-    red from): none at a change of inert files alone, and none with no change to classify (--base for a fast gate, --sha
-    for the whole)."""
+    """coverage's declared inputs at any change (#gamwqs2): the Go state (coverageGoStatePathspec), and the changed paths it
+    judges, those neither in a Go package nor inert (coverageReduced, the one classification cover() decides its red
+    from), by name and by content: none at a change of inert files alone, and none with no change to classify (--base
+    for a fast gate, --sha for the whole). Their content keys them too because a compare lists the change's base and its
+    tree from the same change, so the names alone are alike on both sides: an edit, an add or a delete of a path no rule
+    covers would leave the key where its base's was, plan nothing, and land with the red coverage owes it unrun."""
     names = [] if change is None else coverageReduced(tree, change["tools"], coverageChanged(tree, change, full))
-    return {"packages": [], "paths": list(coverageGoStatePathspec), "names": names,
-            "note": "coverage reads the tree's Go, module, driver and census state, and judges the changed paths it names"}
+    return {"packages": [], "paths": coverageGoStatePathspec + [":(literal)" + path for path in names], "names": names,
+            "note": "coverage reads the tree's Go, module, driver and census state, and the changed paths it judges"}
 
 
 def catalogPatchTargets(tree):

@@ -2912,12 +2912,13 @@ class CoverageNames(unittest.TestCase):
         changed = [path for path in run.git(self.tree, "diff", "--name-only", self.base + "..." + self.sha).split("\n") if path]
         self.assertEqual(rows["coverage"]["names"], run.coverageReduced(self.tree, self.tree, changed))
         self.assertEqual(rows["coverage"]["names"], ["stray/unruled.txt", "tools/gone.sh", "tools/kept.py"])
-        self.assertEqual(rows["coverage"]["paths"], ["."])
-        self.assertEqual([unit for unit, inputs in rows.items() if "names" in inputs], ["coverage"])
+        # The Go state, and the judged paths by content too (#gamwqs2), never the whole tree.
+        self.assertEqual(rows["coverage"]["paths"], sorted(set(run.coverageGoStatePathspec + [":(literal)" + path for path in rows["coverage"]["names"]] + run.phaseSetupPaths)))
+        self.assertEqual([unit for unit, inputs in rows.items() if inputs.get("names")], ["coverage"])
         # Without a change there is nothing to classify, and the note says so.
         bare = listed()["coverage"]
         self.assertEqual(bare["names"], [])
-        self.assertIn("names is empty", bare["note"])
+        self.assertFalse([path for path in bare["paths"] if path.startswith(":(literal)")])
         # The whole gate's coverage reads the sha against its first parent, and a root commit changes nothing it judges.
         whole = {"base": None, "sha": self.sha, "tools": self.tree}
         self.assertEqual(run.phaseInputs(self.tree, "coverage", True, ([], False), whole)["inputs"]["names"], rows["coverage"]["names"])
@@ -3051,9 +3052,22 @@ class CoverageBounded(unittest.TestCase):
                 ("nothing", lambda: None, [])):
             with self.subTest(name):
                 inputs = self.inputs(self.change(edit))
-                self.assertEqual(inputs["paths"][:len(run.coverageGoStatePathspec)], run.coverageGoStatePathspec)
+                self.assertLessEqual(set(run.coverageGoStatePathspec), set(inputs["paths"]))
                 self.assertNotIn(".", inputs["paths"])
                 self.assertEqual(inputs["names"], names)
+                self.assertEqual([path for path in inputs["paths"] if path.startswith(":(literal)")], [":(literal)" + path for path in names])
+
+    def test_a_path_coverage_judges_moves_its_key_against_its_base(self):
+        # A compare keys the change's tree and its base from the same change, so the names alone are alike on both; the
+        # judged paths' content moves the key, for an edit, an add and a delete alike (#gamwqs2), so coverage runs and reds.
+        for name, edit in (("an edit", lambda: self.write("tools/unruled.txt", "y\n")),
+                           ("an add", lambda: self.write("tools/new.txt", "n\n")),
+                           ("a delete", lambda: os.remove(os.path.join(self.tree, "tools/unruled.txt")))):
+            with self.subTest(name):
+                change = self.change(edit)
+                tip = self.keyed(change)
+                realRun(["git", "-C", self.tree, "checkout", "-q", "--detach", change["base"]], check=True)
+                self.assertNotEqual(run.git(self.tree, "ls-files", "-s", "--", *tip[0]), tip[2])
 
     def test_no_change_names_nothing(self):
         self.assertEqual(run.phaseInputs(self.tree, "coverage", False, None, None)["inputs"]["names"], [])
@@ -3196,6 +3210,7 @@ class PhaseUnreadAgrees(unittest.TestCase):
             self.assertNotIn(shaping, unread)
         self.assertTrue({"README.md", "docs/guide.md", "notes/counts.log"} <= set(unread), unread)
         tracked = [entry.split("\t", 1)[1] for entry in run.git(self.tree, "ls-files", "-s").splitlines() if entry.split(" ", 1)[0] in ("100644", "100755")]
+        overRead = []
         for path in tracked:
             with self.subTest(path):
                 (tipRows, tipRead), (baseRows, baseRead) = self.observed(self.edited(path))
@@ -3204,8 +3219,11 @@ class PhaseUnreadAgrees(unittest.TestCase):
                     self.assertEqual(tipRows, baseRows, "%s: a false green, a phase's inputs moved" % path)
                     for tip, base in zip(tipRead, baseRead):
                         self.assertEqual(tip, base, "%s: a false green, phase %s reads it" % (path, tip[0]))
-                else:
-                    self.assertNotEqual((tipRows, tipRead), (baseRows, baseRead), "%s: an over-read, nothing moved" % path)
+                elif (tipRows, tipRead) == (baseRows, baseRead):
+                    overRead.append(path)
+        # An over-read sends a change to the compare for nothing, a should, never a false green (Node's ruling): here only
+        # the inert executable, which the set leaves out by mode alone, as Node ruled plain files alone.
+        self.assertEqual(overRead, ["notes/tool.log"])
 
 
 class GoListFieldsHoldEveryRead(unittest.TestCase):
