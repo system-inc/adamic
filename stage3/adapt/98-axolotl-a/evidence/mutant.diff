@@ -1,0 +1,4 @@
+2250c2250
+<         const superStatementIndex = superPath[superPathDepth]!;
+---
+>         const superStatementIndex = superPath[superPathDepth];

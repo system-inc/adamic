@@ -1,0 +1,15 @@
+own file totals: 58 / 79
+src/compiler/transformers/es2017.ts own_file_diagnostics 6 own_file fail
+src/compiler/transformers/classFields.ts own_file_diagnostics 6 own_file fail
+   /tmp/ax98/before/src/compiler/transformers/classFields.ts:1835:21: error TS2532: Object is possibly 'undefined'.
+   /tmp/ax98/before/src/compiler/transformers/classFields.ts:2251:45: error TS2538: Type 'undefined' cannot be used as an index type.
+   /tmp/ax98/before/src/compiler/transformers/classFields.ts:2252:97: error TS18048: 'superStatementIndex' is possibly 'undefined'.
+   /tmp/ax98/before/src/compiler/transformers/classFields.ts:2253:27: error TS18048: 'superStatementIndex' is possibly 'undefined'.
+   /tmp/ax98/before/src/compiler/transformers/classFields.ts:2297:52: error TS2345: Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.
+   /tmp/ax98/before/src/compiler/transformers/classFields.ts:2376:56: error TS2345: Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.
+   /tmp/ax98/before/src/compiler/transformers/es2017.ts:599:86: error TS2532: Object is possibly 'undefined'.
+   /tmp/ax98/before/src/compiler/transformers/es2017.ts:764:38: error TS18048: 'outerParameter' is possibly 'undefined'.
+   /tmp/ax98/before/src/compiler/transformers/es2017.ts:765:25: error TS18048: 'originalParameter' is possibly 'undefined'.
+   /tmp/ax98/before/src/compiler/transformers/es2017.ts:765:58: error TS18048: 'originalParameter' is possibly 'undefined'.
+   /tmp/ax98/before/src/compiler/transformers/es2017.ts:767:76: error TS18048: 'outerParameter' is possibly 'undefined'.
+   /tmp/ax98/before/src/compiler/transformers/es2017.ts:770:44: error TS18048: 'outerParameter' is possibly 'undefined'.

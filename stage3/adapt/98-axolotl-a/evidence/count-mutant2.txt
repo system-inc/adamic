@@ -1,0 +1,4 @@
+own file totals: 59 / 79
+src/compiler/transformers/es2017.ts own_file_diagnostics 0 own_file pass
+src/compiler/transformers/classFields.ts own_file_diagnostics 1 own_file fail
+   /tmp/ax98/mutant2/src/compiler/transformers/classFields.ts:2254:28: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Node'.

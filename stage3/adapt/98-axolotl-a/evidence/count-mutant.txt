@@ -1,0 +1,6 @@
+own file totals: 59 / 79
+src/compiler/transformers/es2017.ts own_file_diagnostics 0 own_file pass
+src/compiler/transformers/classFields.ts own_file_diagnostics 3 own_file fail
+   /tmp/ax98/mutant/src/compiler/transformers/classFields.ts:2251:45: error TS2538: Type 'undefined' cannot be used as an index type.
+   /tmp/ax98/mutant/src/compiler/transformers/classFields.ts:2252:97: error TS18048: 'superStatementIndex' is possibly 'undefined'.
+   /tmp/ax98/mutant/src/compiler/transformers/classFields.ts:2253:27: error TS18048: 'superStatementIndex' is possibly 'undefined'.
