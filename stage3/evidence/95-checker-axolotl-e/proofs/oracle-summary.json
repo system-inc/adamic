@@ -1,0 +1,69 @@
+{
+  "status": "fail",
+  "counts": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "wall_seconds": 618.828,
+  "phases": {
+    "install": {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit": 0,
+      "seconds": 2.618
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "seconds": 25.667
+    },
+    "tests": {
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--workers=8",
+        "--lint=false",
+        "--no-colors"
+      ],
+      "exit": 1,
+      "seconds": 590.407
+    }
+  },
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "cause_counts": {
+    "timeout": 0,
+    "baseline-content": 1,
+    "baseline-missing": 0,
+    "exception": 0,
+    "other": 0
+  },
+  "apiProof": {
+    "beforeTextByteIdentical": true,
+    "upstreamSha256": "c967e03c8dbb4770f7e2f0b71b5d13593de679a41cc2b60266c4b69f1342a263",
+    "sanctions": 1,
+    "beforeBuiltBytes": 590996,
+    "afterBuiltBytes": 591008,
+    "beforeBuiltSha256": "b901adcc6ec29e299ec21401b2a155b2b2c14c046ec743fed6ee45679b726d5d",
+    "afterBuiltSha256": "5da131a335eff336ebf9027127820ba0a5cc1056a84a737572b84e36c524bcf1",
+    "delta": [
+      {
+        "declaration": "member:[\"ts\",\"TypeChecker\",\"signatureToSignatureDeclaration\"]#0",
+        "before": "[\"MethodSignature\",[\"Identifier\",\"signatureToSignatureDeclaration\"],[\"Parameter\",[\"Identifier\",\"signature\"],[\"TypeReference\",[\"Identifier\",\"Signature\"]]],[\"Parameter\",[\"Identifier\",\"kind\"],[\"TypeReference\",[\"Identifier\",\"SyntaxKind\"]]],[\"Parameter\",[\"Identifier\",\"enclosingDeclaration\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Node\"]],[\"UndefinedKeyword\"]]],[\"Parameter\",[\"Identifier\",\"flags\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeBuilderFlags\"]],[\"UndefinedKeyword\"]]],[\"UnionType\",[\"IntersectionType\",[\"TypeReference\",[\"Identifier\",\"SignatureDeclaration\"]],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"typeArguments\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]]]]],[\"UndefinedKeyword\"]]]",
+        "after": "[\"MethodSignature\",[\"Identifier\",\"signatureToSignatureDeclaration\"],[\"Parameter\",[\"Identifier\",\"signature\"],[\"TypeReference\",[\"Identifier\",\"Signature\"]]],[\"Parameter\",[\"Identifier\",\"kind\"],[\"TypeReference\",[\"Identifier\",\"SyntaxKind\"]]],[\"Parameter\",[\"Identifier\",\"enclosingDeclaration\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Node\"]],[\"UndefinedKeyword\"]]],[\"Parameter\",[\"Identifier\",\"flags\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeBuilderFlags\"]],[\"UndefinedKeyword\"]]],[\"UnionType\",[\"IntersectionType\",[\"TypeReference\",[\"Identifier\",\"SignatureDeclaration\"]],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"typeArguments\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]],[\"UndefinedKeyword\"]]]]],[\"UndefinedKeyword\"]]]"
+      }
+    ]
+  },
+  "laneAcceptance": "delegated to Correctness wave"
+}
