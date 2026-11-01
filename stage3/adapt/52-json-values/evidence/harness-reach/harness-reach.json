@@ -1,0 +1,162 @@
+[
+  {
+    "file": "src/harness/client.ts",
+    "hunks": [
+      {
+        "beforeLine": 114,
+        "afterLine": 114,
+        "before": [
+          "function adamicIsJSDocTagInfo(value: unknown): value is ts.JSDocTagInfo {"
+        ],
+        "after": [
+          "function adamicIsJSDocTagInfo(value: unknown): value is protocol.JSDocTagInfo {"
+        ]
+      },
+      {
+        "beforeLine": 117,
+        "afterLine": 117,
+        "before": [
+          "        (value.text === undefined || adamicArrayOf(value.text, adamicIsSymbolDisplayPart));"
+        ],
+        "after": [
+          "        (value.text === undefined || typeof value.text === \"string\" || adamicArrayOf(value.text, adamicIsSymbolDisplayPart));"
+        ]
+      },
+      {
+        "beforeLine": 147,
+        "afterLine": 147,
+        "before": [
+          "function adamicIsCompletionEntryDetails(value: unknown): value is ts.CompletionEntryDetails {"
+        ],
+        "after": [
+          "function adamicIsCompletionEntryDetails(value: unknown): value is HarnessCompletionEntryDetails {"
+        ]
+      },
+      {
+        "beforeLine": 232,
+        "afterLine": 232,
+        "before": [
+          "export class SessionClient implements LanguageService {"
+        ],
+        "after": [
+          "export type HarnessCompletionEntryDetails = Omit<CompletionEntryDetails, \"tags\"> & { tags?: readonly protocol.JSDocTagInfo[]; };",
+          "",
+          "export interface HarnessLanguageService extends Omit<LanguageService, \"getCompletionEntryDetails\"> {",
+          "    getCompletionEntryDetails(...args: Parameters<LanguageService[\"getCompletionEntryDetails\"]>): HarnessCompletionEntryDetails | undefined;",
+          "}",
+          "",
+          "export class SessionClient implements HarnessLanguageService {"
+        ]
+      },
+      {
+        "beforeLine": 425,
+        "afterLine": 431,
+        "before": [
+          "    getCompletionEntryDetails(fileName: string, position: number, entryName: string, _options: FormatCodeOptions | FormatCodeSettings | undefined, source: string | undefined, _preferences: UserPreferences | undefined, data: unknown): CompletionEntryDetails {"
+        ],
+        "after": [
+          "    getCompletionEntryDetails(fileName: string, position: number, entryName: string, _options: FormatCodeOptions | FormatCodeSettings | undefined, source: string | undefined, _preferences: UserPreferences | undefined, data: unknown): HarnessCompletionEntryDetails {"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "src/harness/harnessLanguageService.ts",
+    "hunks": [
+      {
+        "beforeLine": 125,
+        "afterLine": 125,
+        "before": [
+          "    getLanguageService(): ts.LanguageService;"
+        ],
+        "after": [
+          "    getLanguageService(): ts.server.HarnessLanguageService;"
+        ]
+      },
+      {
+        "beforeLine": 805,
+        "afterLine": 805,
+        "before": [
+          "    getLanguageService(): ts.LanguageService {"
+        ],
+        "after": [
+          "    getLanguageService(): ts.server.HarnessLanguageService {"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "src/harness/fourslashImpl.ts",
+    "hunks": [
+      {
+        "beforeLine": 246,
+        "afterLine": 246,
+        "before": [
+          "    private languageService: ts.LanguageService;"
+        ],
+        "after": [
+          "    private languageService: ts.server.HarnessLanguageService;"
+        ]
+      },
+      {
+        "beforeLine": 452,
+        "afterLine": 452,
+        "before": [
+          "        function memoWrap(ls: ts.LanguageService, target: TestState): ts.LanguageService {"
+        ],
+        "after": [
+          "        function memoWrap(ls: ts.server.HarnessLanguageService, target: TestState): ts.server.HarnessLanguageService {"
+        ]
+      },
+      {
+        "beforeLine": 460,
+        "afterLine": 460,
+        "before": [
+          "            const proxy = {} as ts.LanguageService;"
+        ],
+        "after": [
+          "            const proxy: ts.server.HarnessLanguageService = {} as ts.LanguageService;"
+        ]
+      },
+      {
+        "beforeLine": 1793,
+        "afterLine": 1793,
+        "before": [
+          "    private getCompletionEntryDetails(entryName: string, source: string | undefined, data: ts.CompletionEntryData | undefined, preferences?: ts.UserPreferences): ts.CompletionEntryDetails | undefined {"
+        ],
+        "after": [
+          "    private getCompletionEntryDetails(entryName: string, source: string | undefined, data: ts.CompletionEntryData | undefined, preferences?: ts.UserPreferences): ts.server.HarnessCompletionEntryDetails | undefined {"
+        ]
+      },
+      {
+        "beforeLine": 2484,
+        "afterLine": 2484,
+        "before": [
+          "        const result = ts.arrayFrom(this.testData.markerPositions.entries(), ([name, marker]) => {"
+        ],
+        "after": [
+          "        const result: {",
+          "            marker: Marker & { name: string; };",
+          "            item: {",
+          "                optionalReplacementSpan?: ts.TextSpan;",
+          "                entries?: (Pick<ts.CompletionEntry, \"name\" | \"kind\" | \"kindModifiers\"> & {",
+          "                    displayParts?: ts.SymbolDisplayPart[];",
+          "                    tags?: readonly { text?: Iterable<{ kind?: string; length?: number; }>; }[];",
+          "                })[];",
+          "            };",
+          "        }[] = ts.arrayFrom(this.testData.markerPositions.entries(), ([name, marker]) => {"
+        ]
+      },
+      {
+        "beforeLine": 3779,
+        "afterLine": 3788,
+        "before": [
+          "        function getLinkedEditingBaselineWorker(activeFile: FourSlashFile, offset: number, languageService: ts.LanguageService) {"
+        ],
+        "after": [
+          "        function getLinkedEditingBaselineWorker(activeFile: FourSlashFile, offset: number, languageService: ts.server.HarnessLanguageService) {"
+        ]
+      }
+    ]
+  }
+]

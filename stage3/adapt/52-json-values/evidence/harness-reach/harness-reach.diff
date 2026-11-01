@@ -1,0 +1,133 @@
+--- before/src/harness/client.ts
++++ scratch/src/harness/client.ts
+@@ -111,10 +111,10 @@
+         typeof value.kind === "string";
+ }
+ 
+-function adamicIsJSDocTagInfo(value: unknown): value is ts.JSDocTagInfo {
++function adamicIsJSDocTagInfo(value: unknown): value is protocol.JSDocTagInfo {
+     return ts.isAdamicJsonObject(value) &&
+         typeof value.name === "string" &&
+-        (value.text === undefined || adamicArrayOf(value.text, adamicIsSymbolDisplayPart));
++        (value.text === undefined || typeof value.text === "string" || adamicArrayOf(value.text, adamicIsSymbolDisplayPart));
+ }
+ 
+ function adamicIsTextChange(value: unknown): value is ts.TextChange {
+@@ -144,7 +144,7 @@
+         (value.commands === undefined || adamicArrayOf(value.commands, adamicIsInstallPackageAction));
+ }
+ 
+-function adamicIsCompletionEntryDetails(value: unknown): value is ts.CompletionEntryDetails {
++function adamicIsCompletionEntryDetails(value: unknown): value is HarnessCompletionEntryDetails {
+     return ts.isAdamicJsonObject(value) &&
+         typeof value.name === "string" &&
+         adamicIsScriptElementKind(value.kind) &&
+@@ -229,7 +229,13 @@
+     return responseBody;
+ }
+ 
+-export class SessionClient implements LanguageService {
++export type HarnessCompletionEntryDetails = Omit<CompletionEntryDetails, "tags"> & { tags?: readonly protocol.JSDocTagInfo[]; };
++
++export interface HarnessLanguageService extends Omit<LanguageService, "getCompletionEntryDetails"> {
++    getCompletionEntryDetails(...args: Parameters<LanguageService["getCompletionEntryDetails"]>): HarnessCompletionEntryDetails | undefined;
++}
++
++export class SessionClient implements HarnessLanguageService {
+     private sequence = 0;
+     private lineMaps = new Map<string, number[]>();
+     private messages = createQueue<string>();
+@@ -422,7 +428,7 @@
+         };
+     }
+ 
+-    getCompletionEntryDetails(fileName: string, position: number, entryName: string, _options: FormatCodeOptions | FormatCodeSettings | undefined, source: string | undefined, _preferences: UserPreferences | undefined, data: unknown): CompletionEntryDetails {
++    getCompletionEntryDetails(fileName: string, position: number, entryName: string, _options: FormatCodeOptions | FormatCodeSettings | undefined, source: string | undefined, _preferences: UserPreferences | undefined, data: unknown): HarnessCompletionEntryDetails {
+         const args: protocol.CompletionDetailsRequestArgs = { ...this.createFileLocationRequestArgs(fileName, position), entryNames: [{ name: entryName, source, data }] };
+ 
+         const request = this.processRequest<protocol.CompletionDetailsRequest>(protocol.CommandTypes.CompletionDetailsFull, args);
+--- before/src/harness/harnessLanguageService.ts
++++ scratch/src/harness/harnessLanguageService.ts
+@@ -122,7 +122,7 @@
+ 
+ export interface LanguageServiceAdapter {
+     getHost(): LanguageServiceAdapterHost;
+-    getLanguageService(): ts.LanguageService;
++    getLanguageService(): ts.server.HarnessLanguageService;
+     getClassifier(): ts.Classifier;
+     getPreProcessedFileInfo(fileName: string, fileContents: string): ts.PreProcessedFileInfo;
+     getLogger(): LoggerWithInMemoryLogs | undefined;
+@@ -802,7 +802,7 @@
+     getHost(): SessionClientHost {
+         return this.host;
+     }
+-    getLanguageService(): ts.LanguageService {
++    getLanguageService(): ts.server.HarnessLanguageService {
+         return this.client;
+     }
+     getClassifier(): ts.Classifier {
+--- before/src/harness/fourslashImpl.ts
++++ scratch/src/harness/fourslashImpl.ts
+@@ -243,7 +243,7 @@
+ export class TestState {
+     // Language service instance
+     private languageServiceAdapterHost: Harness.LanguageService.LanguageServiceAdapterHost;
+-    private languageService: ts.LanguageService;
++    private languageService: ts.server.HarnessLanguageService;
+     private cancellationToken: TestCancellationToken;
+     private assertTextConsistent: ((fileName: string) => void) | undefined;
+ 
+@@ -449,7 +449,7 @@
+         // Open the first file by default
+         this.openFile(0);
+ 
+-        function memoWrap(ls: ts.LanguageService, target: TestState): ts.LanguageService {
++        function memoWrap(ls: ts.server.HarnessLanguageService, target: TestState): ts.server.HarnessLanguageService {
+             const cacheableMembers: (keyof typeof ls)[] = [
+                 "getCompletionEntryDetails",
+                 "getCompletionEntrySymbol",
+@@ -457,7 +457,7 @@
+                 "getReferencesAtPosition",
+                 "getDocumentHighlights",
+             ];
+-            const proxy = {} as ts.LanguageService;
++            const proxy: ts.server.HarnessLanguageService = {} as ts.LanguageService;
+             const keys = ts.getAllKeys(ls);
+             for (const k of keys) {
+                 const key = k as keyof typeof ls;
+@@ -1790,7 +1790,7 @@
+         );
+     }
+ 
+-    private getCompletionEntryDetails(entryName: string, source: string | undefined, data: ts.CompletionEntryData | undefined, preferences?: ts.UserPreferences): ts.CompletionEntryDetails | undefined {
++    private getCompletionEntryDetails(entryName: string, source: string | undefined, data: ts.CompletionEntryData | undefined, preferences?: ts.UserPreferences): ts.server.HarnessCompletionEntryDetails | undefined {
+         if (preferences) {
+             this.configure(preferences);
+         }
+@@ -2481,7 +2481,16 @@
+     }
+ 
+     public baselineCompletions(preferences?: ts.UserPreferences): void {
+-        const result = ts.arrayFrom(this.testData.markerPositions.entries(), ([name, marker]) => {
++        const result: {
++            marker: Marker & { name: string; };
++            item: {
++                optionalReplacementSpan?: ts.TextSpan;
++                entries?: (Pick<ts.CompletionEntry, "name" | "kind" | "kindModifiers"> & {
++                    displayParts?: ts.SymbolDisplayPart[];
++                    tags?: readonly { text?: Iterable<{ kind?: string; length?: number; }>; }[];
++                })[];
++            };
++        }[] = ts.arrayFrom(this.testData.markerPositions.entries(), ([name, marker]) => {
+             this.goToMarker(marker);
+             const completions = this.getCompletionListAtCaret(preferences);
+             return {
+@@ -3776,7 +3785,7 @@
+ 
+         this.baseline("Linked Editing", baselineContent, ".linkedEditing.txt");
+ 
+-        function getLinkedEditingBaselineWorker(activeFile: FourSlashFile, offset: number, languageService: ts.LanguageService) {
++        function getLinkedEditingBaselineWorker(activeFile: FourSlashFile, offset: number, languageService: ts.server.HarnessLanguageService) {
+             const fileName = activeFile.fileName;
+             let baselineContent = `=== ${fileName} ===\n`;
+ 
