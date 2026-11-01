@@ -202,8 +202,91 @@ func (l *lowering) accessorLiteral(node *ast.Node) (ir.Expression, bool, error) 
 	return literal, true, nil
 }
 
-// Property reads and writes become dispatch functions only for names for which this program has
-// accessors. A structural view still invokes the actual descriptor; plain fields keep their load.
+// accessorReach is which allocations own an accessor of each name, judged per allocation over every
+// module by the may-flow graph the lazy view rule reads (view_lazy.go), never by the name alone
+// (Compiler and Lower, Nov 1, #c7w6j0y). It numbers the allocation sites of a copy of the program,
+// so the real program's are still graphFlows' to number (cycles.go).
+type accessorReach struct {
+	graph  *allocationFlowGraph
+	owners map[int]map[string]bool
+}
+
+func newAccessorReach(program *ir.Program) *accessorReach {
+	numbered := *program
+	numbered.Functions = append([]ir.Function(nil), program.Functions...)
+	assignAllocationSites(&numbered)
+	reach := &accessorReach{graph: newAllocationFlowGraph(&numbered), owners: map[int]map[string]bool{}}
+	own := func(node any) bool {
+		literal, isLiteral := node.(ir.ObjectLiteral)
+		if !isLiteral || literal.Class == 0 || len(literal.GraphTypes) == 0 {
+			return true
+		}
+		site := literal.GraphTypes[len(literal.GraphTypes)-1]
+		// An object owns its class's accessors and every base's, as adamic_accessor_find finds them.
+		for class := literal.Class; class != 0; class = program.Classes[class-1].Base {
+			for _, accessor := range program.Classes[class-1].Accessors {
+				if reach.owners[site] == nil {
+					reach.owners[site] = map[string]bool{}
+				}
+				reach.owners[site][accessor.Name] = true
+			}
+		}
+		return true
+	}
+	walk(numbered.Main, own)
+	for _, function := range numbered.Functions {
+		walk(function.Body, own)
+	}
+	return reach
+}
+
+// owner is whether one of the allocations owns an accessor named name. Unknown reach counts as
+// reaching one, so it fails closed.
+func (reach *accessorReach) owner(allocations ir.AllocationSet, name string) bool {
+	if allocations.Unknown {
+		return true
+	}
+	for _, site := range allocations.Sites {
+		if reach.owners[site][name] {
+			return true
+		}
+	}
+	return false
+}
+
+// contractGetters is a view's origin with every getter in the program named as one of its contract's
+// fields. A field read of an object a getter owns reads the getter's slot, never its value, so the
+// view is refused when an allocation owning one of them can reach the origin, through the fields its
+// contract checks too, or when the reach is unknown (Compiler and Lower, Nov 1, #c7w6j0y). Judged
+// once lowering is done, since what reaches the origin is the whole program's to say. A getter no
+// class or accessor literal owns (an interface's) is on no allocation, so no reach brings it.
+type contractGetters struct {
+	origin  ir.Expression
+	getters []*ast.Node
+}
+
+func (l *lowering) refuseReachedContractGetters(reach *accessorReach, owned map[string]bool) error {
+	for _, contract := range l.contractGetters {
+		viewed, unknown := reach.graph.viewedFrom([]ir.Expression{contract.origin}, true)
+		for _, getter := range contract.getters {
+			if !owned[getter.Name().Text()] {
+				continue
+			}
+			reached := unknown
+			for site := range viewed {
+				reached = reached || reach.owners[site][getter.Name().Text()]
+			}
+			if reached {
+				return l.notYet(getter, "a getter in a checked field contract")
+			}
+		}
+	}
+	return nil
+}
+
+// Property reads and writes become dispatch functions only where their receiver can reach an
+// allocation owning an accessor of that name, or its reach is unknown (accessorReach). A structural
+// view still invokes the actual descriptor; plain fields keep their load and their view.
 func (l *lowering) finishAccessors() error {
 	names := map[string]bool{}
 	for _, class := range l.result.Classes {
@@ -213,6 +296,10 @@ func (l *lowering) finishAccessors() error {
 	}
 	if len(names) == 0 {
 		return nil
+	}
+	reach := newAccessorReach(l.result)
+	if err := l.refuseReachedContractGetters(reach, names); err != nil {
+		return err
 	}
 	groups := map[string][]int{}
 	for _, class := range l.result.Classes {
@@ -291,6 +378,9 @@ func (l *lowering) finishAccessors() error {
 			if value.IsNil() {
 				return value
 			}
+			// The receiver as lowering made it, before a read inside it became a dispatcher call
+			// the flow graph has no function for.
+			original := value.Elem().Interface()
 			mapped := transform(value.Elem())
 			node := mapped.Interface()
 			switch expression := node.(type) {
@@ -300,16 +390,27 @@ func (l *lowering) finishAccessors() error {
 					node = expression
 				}
 			case ir.Property:
-				if names[expression.Name] {
+				if names[expression.Name] && reach.owner(reach.graph.ReachingAllocations(original.(ir.Property).Object), expression.Name) {
 					if expression.Optional {
 						failure = &NotYet{Where: l.result.Source, What: "an optional accessor read"}
+						return value
+					}
+					// The dispatcher's fallback is an unchecked load, so a checked read can't go
+					// through it: refuse at the read rather than drop its check (#c7w6j0y).
+					if expression.View != "" && l.result.CheckedField(expression.ViewReceiverTypeID, expression.Name) {
+						failure = &NotYet{Where: expression.ViewWhere, What: "a checked view read whose receiver may own an accessor of the same name"}
 						return value
 					}
 					index := dispatch(expression.Name, expression.Of, false, 0)
 					node = ir.Call{Function: index, Arguments: []ir.Expression{expression.Object}, Returns: expression.Of}
 				}
 			case ir.SetProperty:
-				if names[expression.Name] && !expression.Define {
+				if names[expression.Name] && !expression.Define && reach.owner(reach.graph.ReachingAllocations(original.(ir.SetProperty).Object), expression.Name) {
+					// As a read: the fallback store drops the checked write's conversion.
+					if l.result.CheckedField(expression.ViewReceiverTypeID, expression.Name) {
+						failure = &NotYet{Where: l.result.Source, What: "a checked view write of " + expression.Name + " whose receiver may own an accessor of the same name"}
+						return value
+					}
 					index := dispatch(expression.Name, expression.Value.Type(), true, expression.Site)
 					node = ir.Evaluate{Value: ir.Call{Function: index, Arguments: []ir.Expression{expression.Object, expression.Value}}}
 				}
