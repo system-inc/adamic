@@ -101,6 +101,10 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 		return nil, err
 	}
 	l.instantiated = append(l.instantiated, classType)
+	// Every request is judged, hit or miss, before the table is read (predicates_branded.go).
+	if err := l.brandedRequest("class:"+key, declaration, mapper); err != nil {
+		return nil, err
+	}
 	if existing, isLowered := l.instances[key]; isLowered {
 		for _, this := range existing.thisLocals {
 			l.noteAlso(this, classType)

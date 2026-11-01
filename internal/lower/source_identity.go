@@ -15,6 +15,10 @@ import (
 // moduleStatements is the sole orchestration hook: retain the boundary without
 // changing the statements or their execution order.
 func (l *lowering) moduleStatements(module *ast.SourceFile) ([]ir.Statement, error) {
+	// A module's own calls are judged as a body's are (predicates_branded.go).
+	if err := l.judgeBrandedCalls(module.AsNode()); err != nil {
+		return nil, err
+	}
 	body, err := l.statements(module.Statements.Nodes)
 	if err == nil {
 		l.result.MainModules = append(l.result.MainModules, ir.MainModule{Module: l.modulePath(module), Statements: len(body)})
