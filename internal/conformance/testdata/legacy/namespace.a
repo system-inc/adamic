@@ -1,0 +1,9 @@
+// Spec: a sound qualified-name subset of namespaces is admitted
+// Expect: lowers
+namespace Shapes {
+	export const sides = 4;
+	export function perimeter(length: number): number {
+		return sides * length;
+	}
+}
+console.log(String(Shapes.perimeter(3)));

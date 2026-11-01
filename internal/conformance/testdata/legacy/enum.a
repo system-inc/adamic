@@ -1,0 +1,11 @@
+// Spec: constant-valued numeric and string enums and const enums are admitted
+// Expect: lowers
+enum Color {
+	Red,
+	Green,
+}
+const enum Mode {
+	Fast = 'fast',
+}
+const picked: Color = Color.Green;
+console.log(String(picked) + ' ' + Mode.Fast);
