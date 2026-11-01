@@ -284,10 +284,11 @@ const v = { kind: 9, pos: 1, text: "x" }; show(v);`, "checked predicate overload
 // The checker narrows a call's argument by the claim however the call reaches the predicate, so every
 // path is judged by brandedNarrowing, from the one place they all reach (brandedCalls): a direct call, the
 // predicate held as a value, a function-type parameter, a class method, an arrow, an assertion direct and
-// held, and an optional call (Language's must on 9e4f2184, Compiler's roads on 7530a354). Each narrows a PropertySignature | Identifier argument to PropertySignature, whose typeText
-// S's view doesn't check, so each is NotYet at the call. Mutant: only a direct call judged, as 9e4f2184
-// did, and the roads through anything but a declared function's name lower; with ADAMIC_BRANDED_CALLS_MUTANT=1 each must lower instead and its
-// sanitized native must disagree with Node, which prints undefined.
+// held, and an optional call (Language's must on 9e4f2184, Compiler's roads on 7530a354). Each narrows a
+// PropertySignature | Identifier argument to PropertySignature, whose typeText S's view doesn't check,
+// so each is NotYet at the call. Mutant: only a call through a declared function's name judged, as
+// 9e4f2184 did, and the other roads lower; with ADAMIC_BRANDED_CALLS_MUTANT=1 each of those must lower
+// instead and its sanitized native must disagree with Node, which prints undefined.
 func TestBrandedSupertypeEveryCallPathIsJudged(t *testing.T) {
 	t.Parallel()
 	const lie = `const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
