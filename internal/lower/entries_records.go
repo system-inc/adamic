@@ -277,7 +277,7 @@ func (l *lowering) entriesRecordStorageTypes() []*checker.Type {
 	visit = func(node *ast.Node) bool {
 		if node.Kind == ast.KindObjectLiteralExpression && l.entriesRecordLiteral(node) {
 			l.entriesRecordTypes = append(l.entriesRecordTypes, l.checker.GetTypeAtLocation(node))
-			if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+			if contextual := l.slotType(node); contextual != nil {
 				l.entriesRecordTypes = append(l.entriesRecordTypes, contextual)
 			}
 			parent := node.Parent
