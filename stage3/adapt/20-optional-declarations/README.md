@@ -605,6 +605,18 @@ owner form, actual built API membership and the unchanged adapter's decline
 entries. There are 29 optional-method rows (22 public, seven internal); all
 remain methods. No method-to-property conversion is sanctioned.
 
+That rule is superseded for exactly 19 public members, by name, under Adamic's
+Nov 1 ruling on #axochk: `ModuleResolutionHost` `trace`, `directoryExists`,
+`realpath` and `getDirectories`; `ParseConfigHost.trace`; `CompilerHost`
+`getDefaultLibLocation`, `readDirectory`, `resolveModuleNames`,
+`getModuleResolutionCache`, `resolveTypeReferenceDirectives`,
+`resolveModuleNameLiterals`, `resolveTypeReferenceDirectiveReferences` and
+`createHash`; `ProgramHost` `createHash`, `directoryExists`, `realpath` and
+`getEnvironmentVariable`; and `SolutionBuilderHostBase` `createDirectory` and
+`writeFile`. Adaptation 97d converts them to adaptation 32's
+`x?: { x(…): R; }["x"] | undefined` ([97-cli-axolotl-d](../97-cli-axolotl-d/README.md)).
+The rule still governs every other optional method.
+
 The selected gap is a returned object contextually typed as a single object
 unioned with undefined. `getPropertiesOfType` on that union returned no slots.
 The resolver now selects its single object arm for an object literal directly
