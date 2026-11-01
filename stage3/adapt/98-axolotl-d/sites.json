@@ -1,0 +1,104 @@
+[
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 474,
+    "column": 36,
+    "function": "getPackageJsonTypesVersionsPaths",
+    "expression": "typesVersions[key]",
+    "occurrence": 1,
+    "total": 1,
+    "action": "assert",
+    "class": "U-table",
+    "invariant": "The read is under `for (const key in typesVersions)` and its first statement `if (!hasProperty(typesVersions, key)) continue;`, so key is an own key of a MapLike<MapLike<string[]>> parsed from package.json, whose values are present."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 286,
+    "column": 9,
+    "function": "createResolvedModuleWithFailedLookupLocations",
+    "expression": "isExternalLibraryImport",
+    "occurrence": 1,
+    "total": 1,
+    "action": "assert",
+    "class": "U-parallel",
+    "invariant": "The literal is built only inside `resolved && { ... }`, and every caller passes a boolean whenever resolved is defined: the worker passes result?.value?.resolved with result?.value?.isExternalLibraryImport from tryResolve's SearchResult<{ resolved: Resolved; isExternalLibraryImport: boolean; }>, classicNameResolver passes resolved && resolved.value with resolved?.value && pathContainsNodeModules(resolved.value.path), loadModuleFromGlobalCache passes true, and HandlingSymlink replaces resolved only when it is already defined."
+  },
+  {
+    "file": "types.ts",
+    "line": 8038,
+    "function": "ResolvedModuleFull",
+    "expression": "readonly originalPath?: string",
+    "occurrence": 1,
+    "total": 1,
+    "action": "widen",
+    "class": "present-undefined",
+    "invariant": "@internal. createResolvedModuleWithFailedLookupLocations writes the key always, as `resolved.originalPath === true ? undefined : resolved.originalPath`, so it holds undefined when the resolution came from the cache or had no symlink."
+  },
+  {
+    "file": "types.ts",
+    "line": 8044,
+    "function": "ResolvedModuleFull",
+    "expression": "packageId?: PackageId",
+    "occurrence": 1,
+    "total": 1,
+    "action": "widen",
+    "class": "present-undefined",
+    "invariant": "Public, a declared API difference. createResolvedModuleWithFailedLookupLocations writes `packageId: resolved.packageId` always, and withPackageId (noPackageId included) builds every Resolved with a packageId key that is undefined without package.json name and version."
+  },
+  {
+    "file": "types.ts",
+    "line": 8110,
+    "function": "ResolvedTypeReferenceDirective",
+    "expression": "originalPath?: string",
+    "occurrence": 1,
+    "total": 1,
+    "action": "widen",
+    "class": "present-undefined",
+    "invariant": "@internal. resolveTypeReferenceDirective writes `originalPath` always from `let originalPath: string | undefined`, which stays undefined under preserveSymlinks and when getOriginalAndResolvedFileName finds no symlink."
+  },
+  {
+    "file": "types.ts",
+    "line": 8111,
+    "function": "ResolvedTypeReferenceDirective",
+    "expression": "packageId?: PackageId",
+    "occurrence": 1,
+    "total": 1,
+    "action": "widen",
+    "class": "present-undefined",
+    "invariant": "Public, a declared API difference. resolveTypeReferenceDirective writes `packageId` always, destructured from a Resolved built by withPackageId, which holds undefined without package.json name and version."
+  },
+  {
+    "file": "program.ts",
+    "line": 1023,
+    "function": "ResolutionWithResolvedFileName",
+    "expression": "packageId?: PackageId",
+    "occurrence": 1,
+    "total": 1,
+    "action": "widen",
+    "class": "present-undefined",
+    "invariant": "@internal. Its values are the ResolvedModuleFull and ResolvedTypeReferenceDirective objects themselves (getResolvedModuleFromResolution and getResolvedTypeReferenceDirectiveFromResolution return them unchanged), whose packageId key is present and undefined as above."
+  },
+  {
+    "file": "resolutionCache.ts",
+    "line": 171,
+    "function": "ResolutionWithFailedLookupLocations",
+    "expression": "files?: Set<Path>",
+    "occurrence": 1,
+    "total": 1,
+    "action": "widen",
+    "class": "present-undefined",
+    "invariant": "@internal. stopWatchFailedLookupLocationOfResolution stores `resolution.files = undefined;` when the last file stops using a resolution."
+  },
+  {
+    "file": "sourcemap.ts",
+    "line": 216,
+    "column": 58,
+    "function": "appendSourceMap",
+    "expression": "map.sourcesContent[raw.sourceIndex]",
+    "occurrence": 2,
+    "total": 2,
+    "action": "read-once",
+    "class": "javascript-changing",
+    "invariant": "The element is read once into `content` under the unchanged `map.sourcesContent` guard, then tested and passed, so the value stored is the value tested; a getter that changes between reads now yields the tested string instead of undefined."
+  }
+]
