@@ -183,9 +183,25 @@ func (l *lowering) brandedCall(call *ast.Node, target *checker.Type) error {
 		}
 	}
 	if generic {
-		// An argument of the claim's own type narrows to itself in every instance (brandedNarrowing). Any
-		// other narrowing by a claim S may instantiate depends on the instance, which this walk can't see.
-		if l.checker.GetTypeAtLocation(arguments[index]).Id() == claim.Type().Id() {
+		// An argument of the claim's own type narrows to itself in every instance (brandedNarrowing).
+		argument := l.checker.GetTypeAtLocation(arguments[index])
+		if argument.Id() == claim.Type().Id() {
+			return nil
+		}
+		// A claim each member of the argument's type is a supertype of, as written, narrows to the claim
+		// itself in every instance, so where it's S the value is S, read through S's view: brandedNarrowing's
+		// supertype rule, judged generically. That's tsc's tryCast and cast, whose `test(value)` claims
+		// TOut of a TIn that TOut extends (core.ts:1779, Correctness's census on 810ce7d9). A member also
+		// assignable to the claim, where the checker could keep the member instead, fails closed.
+		members := []*checker.Type{argument}
+		if argument.Flags()&checker.TypeFlagsUnion != 0 {
+			members = argument.Types()
+		}
+		supertypes := true
+		for _, member := range members {
+			supertypes = supertypes && l.checker.IsTypeAssignableTo(claim.Type(), member) && !l.checker.IsTypeAssignableTo(member, claim.Type())
+		}
+		if supertypes {
 			return nil
 		}
 		return l.notYet(call, "a checked predicate target "+l.checker.TypeToString(target)+" that the generic claim "+l.checker.TypeToString(claim.Type())+" may be instantiated at")

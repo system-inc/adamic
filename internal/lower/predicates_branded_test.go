@@ -405,6 +405,25 @@ console.log(String(firstPos(elements)));
 	}
 }
 
+// tsc's tryCast and cast take a predicate as a function type and call it on a value of the type its claim
+// extends: `test(value)` claims TOut of a TIn, with TOut extends TIn. Read as written, TOut is a subtype of
+// every member of the argument's type, so the value narrows to TOut itself in every instance, and where
+// TOut is S it's read through S's view (core.ts:1779, Correctness's census on 810ce7d9). An honest value
+// lowers and agrees with Node, and a lie stops at its first bad read. Mutant: that generic supertype rule
+// dropped, and both are NotYet as a generic claim S may instantiate.
+func TestBrandedSupertypeTryCastIsJudgedGenerically(t *testing.T) {
+	t.Parallel()
+	const tryCast = `function tryCast<TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut | undefined { return value !== undefined && test(value) ? value : undefined; }
+`
+	lowersAndAgreesWithNodeAs(t, brandedPrelude+tryCast+`function show(n: Node): void { const e = tryCast(n, isTypeElement); console.log(e === undefined ? "no" : String(e.pos)); }
+const a = { kind: 171, pos: 1, name: "a", typeText: "t" }; show(a);
+const b = { kind: 80, pos: 2, escapedText: "e" }; show(b);
+`, ".ts")
+	brandedStops(t, brandedPrelude+tryCast+`function show(n: Node): void { const e = tryCast(n, isTypeElementLie); console.log(e === undefined ? "no" : String(e.name)); }
+const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);
+`, "adamic: panic: field read failed: e.name matches no member of string | undefined")
+}
+
 // A member S is assignable to and that's assignable to S keeps its own type when the checker narrows it
 // (getNarrowedType takes a subtype of the candidate as it is), so brandedNarrowing passes it and S's view
 // never sees its reads (Compiler's pin on 9e4f2184): a restatement, an alias of S's shape, and a twin whose
