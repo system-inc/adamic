@@ -1,0 +1,12 @@
+{
+ "before": 114,
+ "after": 109,
+ "new": [],
+ "gone": [
+  "src/compiler/moduleNameResolver.ts:286:9: error TS2322: Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.\n  Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'originalPath' are incompatible.\n      Type 'string | undefined' is not assignable to type 'string'.\n        Type 'undefined' is not assignable to type 'string'.",
+  "src/compiler/moduleNameResolver.ts:474:36: error TS2322: Type 'MapLike<string[]> | undefined' is not assignable to type 'MapLike<string[]>'.\n  Type 'undefined' is not assignable to type 'MapLike<string[]>'.",
+  "src/compiler/moduleNameResolver.ts:627:9: error TS2375: Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'originalPath' are incompatible.\n    Type 'string | undefined' is not assignable to type 'string'.\n      Type 'undefined' is not assignable to type 'string'.",
+  "src/compiler/resolutionCache.ts:1386:9: error TS2412: Type 'undefined' is not assignable to type 'Set<Path>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+  "src/compiler/sourcemap.ts:216:58: error TS2345: Argument of type 'string | null | undefined' is not assignable to parameter of type 'string | null'.\n  Type 'undefined' is not assignable to type 'string | null'."
+ ]
+}

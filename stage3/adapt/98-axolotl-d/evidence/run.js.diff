@@ -1,0 +1,9 @@
+95312,95313c95312,95316
+<           if (map2.sourcesContent && typeof map2.sourcesContent[raw.sourceIndex] === "string") {
+<             setSourceContent(newSourceIndex, map2.sourcesContent[raw.sourceIndex]);
+---
+>           if (map2.sourcesContent) {
+>             const content = map2.sourcesContent[raw.sourceIndex];
+>             if (typeof content === "string") {
+>               setSourceContent(newSourceIndex, content);
+>             }

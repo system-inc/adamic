@@ -1,0 +1,61 @@
+[
+  {
+    "file": "src/compiler/types.ts",
+    "identical": true,
+    "bytes": [
+      139659,
+      139659
+    ]
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "identical": true,
+    "bytes": [
+      231434,
+      231434
+    ]
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "identical": true,
+    "bytes": [
+      64395,
+      64395
+    ]
+  },
+  {
+    "file": "src/compiler/moduleNameResolver.ts",
+    "identical": false,
+    "bytes": [
+      150583,
+      150608
+    ],
+    "line": 114,
+    "before": [
+      "            isExternalLibraryImport,"
+    ],
+    "after": [
+      "            isExternalLibraryImport: isExternalLibraryImport,"
+    ]
+  },
+  {
+    "file": "src/compiler/sourcemap.ts",
+    "identical": false,
+    "bytes": [
+      28424,
+      28503
+    ],
+    "line": 160,
+    "before": [
+      "                    if (map.sourcesContent && typeof map.sourcesContent[raw.sourceIndex] === \"string\") {",
+      "                        setSourceContent(newSourceIndex, map.sourcesContent[raw.sourceIndex]);"
+    ],
+    "after": [
+      "                    if (map.sourcesContent) {",
+      "                        const content = map.sourcesContent[raw.sourceIndex];",
+      "                        if (typeof content === \"string\") {",
+      "                            setSourceContent(newSourceIndex, content);",
+      "                        }"
+    ]
+  }
+]

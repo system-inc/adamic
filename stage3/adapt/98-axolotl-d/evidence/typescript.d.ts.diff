@@ -1,0 +1,8 @@
+7311c7311
+<         packageId?: PackageId;
+---
+>         packageId?: PackageId | undefined;
+7353c7353
+<         packageId?: PackageId;
+---
+>         packageId?: PackageId | undefined;

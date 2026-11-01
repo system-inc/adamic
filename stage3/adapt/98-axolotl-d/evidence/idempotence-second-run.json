@@ -1,0 +1,63 @@
+{
+  "state": "after",
+  "files": [],
+  "edits": 0,
+  "callers": 4,
+  "javascriptChanging": true,
+  "sites": [
+    {
+      "kind": "declaration",
+      "file": "src/compiler/types.ts",
+      "owner": "ResolvedModuleFull",
+      "member": "originalPath"
+    },
+    {
+      "kind": "declaration",
+      "file": "src/compiler/types.ts",
+      "owner": "ResolvedModuleFull",
+      "member": "packageId"
+    },
+    {
+      "kind": "declaration",
+      "file": "src/compiler/types.ts",
+      "owner": "ResolvedTypeReferenceDirective",
+      "member": "originalPath"
+    },
+    {
+      "kind": "declaration",
+      "file": "src/compiler/types.ts",
+      "owner": "ResolvedTypeReferenceDirective",
+      "member": "packageId"
+    },
+    {
+      "kind": "declaration",
+      "file": "src/compiler/program.ts",
+      "owner": "ResolutionWithResolvedFileName",
+      "member": "packageId"
+    },
+    {
+      "kind": "declaration",
+      "file": "src/compiler/resolutionCache.ts",
+      "owner": "ResolutionWithFailedLookupLocations",
+      "member": "files"
+    },
+    {
+      "kind": "required-read",
+      "file": "src/compiler/moduleNameResolver.ts",
+      "function": "getPackageJsonTypesVersionsPaths",
+      "expression": "typesVersions[key]"
+    },
+    {
+      "kind": "required-value",
+      "file": "src/compiler/moduleNameResolver.ts",
+      "function": "createResolvedModuleWithFailedLookupLocations",
+      "expression": "isExternalLibraryImport"
+    },
+    {
+      "kind": "single-read",
+      "file": "src/compiler/sourcemap.ts",
+      "function": "appendSourceMap",
+      "expression": "map.sourcesContent[raw.sourceIndex]"
+    }
+  ]
+}
