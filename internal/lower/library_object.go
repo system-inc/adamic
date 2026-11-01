@@ -138,7 +138,10 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 			}
 			element := arguments[0]
 			if name == "entries" {
-				pair := l.checker.GetTypeArguments(element)
+				// The destination's element can be anything the pairs are written into, unknown or a
+				// union of tuples, and only a reference has type arguments: the checker dereferences nil
+				// asking anything else for them (#egxccg8).
+				pair := l.typeArguments(element)
 				if len(pair) != 2 {
 					return refused("tsc's entries must have a proven value type")
 				}
