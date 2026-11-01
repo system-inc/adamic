@@ -1,0 +1,22 @@
+{
+  "counts": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "wall_seconds": 318.375,
+  "cause_counts": {
+    "timeout": 0,
+    "baseline-content": 1,
+    "baseline-missing": 0,
+    "exception": 0,
+    "other": 0
+  },
+  "stoppedBecause": "memory.events max changed from 0 to 30215",
+  "oom": 0,
+  "oom_kill": 0,
+  "oom_group_kill": 0
+}

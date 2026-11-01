@@ -1,0 +1,10 @@
+{
+  "coordinateMapping": "after commandLineParser.ts lines after 2939: subtract the one inserted line",
+  "before": 112,
+  "after": 112,
+  "added": [],
+  "removed": [],
+  "D036Remaining": [
+    "<TREE>/src/compiler/commandLineParser.ts:2958:13: error TS2322: Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+  ]
+}

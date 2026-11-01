@@ -1,0 +1,23 @@
+{
+  "sourceScope": "only emitOption value/formatting and two templates",
+  "baselineEquals99gInput": true,
+  "javascriptChanging": true,
+  "javascriptBeforeBytes": 161985,
+  "javascriptAfterBytes": 162076,
+  "secondRun": {
+    "files": 0,
+    "edits": 0,
+    "javascriptChanging": true,
+    "behaviorChanging": true
+  },
+  "secondRunNoWrite": true,
+  "refused": [
+    "raw-value-only",
+    "template-only",
+    "wrong-condition",
+    "missing-own-test",
+    "wrong-template-count",
+    "extra-statement"
+  ],
+  "publicApiByteIdentical": true
+}
