@@ -1,0 +1,87 @@
+func (c *Checker) getIndexInfosOfIndexSymbol(indexSymbol *ast.Symbol, siblingSymbols []*ast.Symbol) []*IndexInfo {
+	var indexInfos []*IndexInfo
+	hasComputedStringProperty := false
+	hasComputedNumberProperty := false
+	hasComputedSymbolProperty := false
+	readonlyComputedStringProperty := true
+	readonlyComputedNumberProperty := true
+	readonlyComputedSymbolProperty := true
+	var propertySymbols []*ast.Symbol
+	for _, declaration := range indexSymbol.Declarations() {
+		if ast.IsIndexSignatureDeclaration(declaration) {
+			parameters := declaration.Parameters()
+			returnTypeNode := declaration.Type()
+			if len(parameters) == 1 {
+				typeNode := parameters[0].Type()
+				if typeNode != nil {
+					valueType := c.anyType
+					if returnTypeNode != nil {
+						valueType = c.getTypeFromTypeNode(returnTypeNode)
+					}
+					forEachType(c.getTypeFromTypeNode(typeNode), func(keyType *Type) {
+						if c.isValidIndexKeyType(keyType) && findIndexInfo(indexInfos, keyType) == nil {
+							indexInfo := c.newIndexInfo(keyType, valueType, ast.HasModifier(declaration, ast.ModifierFlagsReadonly), declaration, nil)
+							indexInfos = append(indexInfos, indexInfo)
+						}
+					})
+				}
+			}
+		} else if c.hasLateBindableIndexSignature(declaration) {
+			var declName *ast.Node
+			if ast.IsBinaryExpression(declaration) {
+				declName = declaration.AsBinaryExpression().Left
+			} else {
+				declName = declaration.Name()
+			}
+			var keyType *Type
+			if ast.IsElementAccessExpression(declName) {
+				keyType = c.checkExpressionCached(declName.AsElementAccessExpression().ArgumentExpression)
+			} else {
+				keyType = c.checkComputedPropertyName(declName)
+			}
+			if findIndexInfo(indexInfos, keyType) != nil {
+				continue
+				// Explicit index for key type takes priority
+			}
+			if c.isTypeAssignableTo(keyType, c.stringNumberSymbolType) {
+				if c.isTypeAssignableTo(keyType, c.numberType) {
+					hasComputedNumberProperty = true
+					if !hasReadonlyModifier(declaration) {
+						readonlyComputedNumberProperty = false
+					}
+				} else if c.isTypeAssignableTo(keyType, c.esSymbolType) {
+					hasComputedSymbolProperty = true
+					if !hasReadonlyModifier(declaration) {
+						readonlyComputedSymbolProperty = false
+					}
+				} else {
+					hasComputedStringProperty = true
+					if !hasReadonlyModifier(declaration) {
+						readonlyComputedStringProperty = false
+					}
+				}
+				propertySymbols = append(propertySymbols, declaration.Symbol())
+			}
+		}
+	}
+	if hasComputedStringProperty || hasComputedNumberProperty || hasComputedSymbolProperty {
+		for _, sym := range siblingSymbols {
+			if sym != indexSymbol {
+				propertySymbols = append(propertySymbols, sym)
+			}
+		}
+		// aggregate similar index infos implied to be the same key to the same combined index info
+		if hasComputedStringProperty && findIndexInfo(indexInfos, c.stringType) == nil {
+			indexInfos = append(indexInfos, c.getObjectLiteralIndexInfo(readonlyComputedStringProperty, propertySymbols, c.stringType))
+		}
+		if hasComputedNumberProperty && findIndexInfo(indexInfos, c.numberType) == nil {
+			indexInfos = append(indexInfos, c.getObjectLiteralIndexInfo(readonlyComputedNumberProperty, propertySymbols, c.numberType))
+		}
+		if hasComputedSymbolProperty && findIndexInfo(indexInfos, c.esSymbolType) == nil {
+			indexInfos = append(indexInfos, c.getObjectLiteralIndexInfo(readonlyComputedSymbolProperty, propertySymbols, c.esSymbolType))
+		}
+	}
+	return indexInfos
+}
+
+// NOTE: currently does not make pattern literal indexers, eg `${number}px`

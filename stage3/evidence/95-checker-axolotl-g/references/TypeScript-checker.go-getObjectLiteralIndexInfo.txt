@@ -1,0 +1,20 @@
+func (c *Checker) getObjectLiteralIndexInfo(isReadonly bool, properties []*ast.Symbol, keyType *Type) *IndexInfo {
+	var propTypes []*Type
+	var components []*ast.Node
+	for _, prop := range properties {
+		if keyType == c.stringType && !c.isSymbolWithSymbolName(prop) ||
+			keyType == c.numberType && c.isSymbolWithNumericName(prop) ||
+			keyType == c.esSymbolType && c.isSymbolWithSymbolName(prop) {
+			propTypes = append(propTypes, c.getTypeOfSymbol(prop))
+			if c.isSymbolWithComputedName(prop) {
+				components = append(components, prop.Declarations()[0])
+			}
+		}
+	}
+	unionType := c.undefinedType
+	if len(propTypes) != 0 {
+		unionType = c.getUnionTypeEx(propTypes, UnionReductionSubtype, nil, nil)
+	}
+	return c.newIndexInfo(keyType, unionType, isReadonly, nil /*declaration*/, components)
+}
+
