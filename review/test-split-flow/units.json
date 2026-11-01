@@ -7162,6 +7162,14 @@
   {
     "package": "flow",
     "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_records_literal_branches_a_4a66559784ed",
+    "program": "internal/oracle/testdata/records_literal_branches.a",
+    "path": "../oracle/testdata/records_literal_branches.a",
+    "sha256": "65fbb8a419dc83aed4cd0a3ea932e27a8ff88b9adc93dbd9a0f1c8719772c691"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
     "test": "TestFlowProgram____oracle_testdata_records_named_alias_unready_a_f1905622c0ef",
     "program": "internal/oracle/testdata/records_named_alias_unready.a",
     "path": "../oracle/testdata/records_named_alias_unready.a",
@@ -16990,6 +16998,14 @@
     "program": "internal/oracle/testdata/records_json_replacer_duplicates.a",
     "path": "../oracle/testdata/records_json_replacer_duplicates.a",
     "sha256": "8b01000bbc646e1964fd9dbe2089861ce40b508ce8cd34e41f521a588ffdb91e"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_records_literal_branches_a_4a66559784ed",
+    "program": "internal/oracle/testdata/records_literal_branches.a",
+    "path": "../oracle/testdata/records_literal_branches.a",
+    "sha256": "65fbb8a419dc83aed4cd0a3ea932e27a8ff88b9adc93dbd9a0f1c8719772c691"
   },
   {
     "package": "flow",
@@ -26826,6 +26842,14 @@
   {
     "package": "flow",
     "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_records_literal_branches_a_4a66559784ed",
+    "program": "internal/oracle/testdata/records_literal_branches.a",
+    "path": "../oracle/testdata/records_literal_branches.a",
+    "sha256": "65fbb8a419dc83aed4cd0a3ea932e27a8ff88b9adc93dbd9a0f1c8719772c691"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
     "test": "TestFlowProgram____oracle_testdata_records_named_alias_unready_a_f1905622c0ef",
     "program": "internal/oracle/testdata/records_named_alias_unready.a",
     "path": "../oracle/testdata/records_named_alias_unready.a",
@@ -36654,6 +36678,14 @@
     "program": "internal/oracle/testdata/records_json_replacer_duplicates.a",
     "path": "../oracle/testdata/records_json_replacer_duplicates.a",
     "sha256": "8b01000bbc646e1964fd9dbe2089861ce40b508ce8cd34e41f521a588ffdb91e"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_records_literal_branches_a_4a66559784ed",
+    "program": "internal/oracle/testdata/records_literal_branches.a",
+    "path": "../oracle/testdata/records_literal_branches.a",
+    "sha256": "65fbb8a419dc83aed4cd0a3ea932e27a8ff88b9adc93dbd9a0f1c8719772c691"
   },
   {
     "package": "flow",
@@ -46854,6 +46886,14 @@
     "program": "internal/oracle/testdata/records_json_replacer_duplicates.a",
     "path": "../oracle/testdata/records_json_replacer_duplicates.a",
     "sha256": "8b01000bbc646e1964fd9dbe2089861ce40b508ce8cd34e41f521a588ffdb91e"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_records_literal_branches_a_4a66559784ed",
+    "program": "internal/oracle/testdata/records_literal_branches.a",
+    "path": "../oracle/testdata/records_literal_branches.a",
+    "sha256": "65fbb8a419dc83aed4cd0a3ea932e27a8ff88b9adc93dbd9a0f1c8719772c691"
   },
   {
     "package": "fresh",
