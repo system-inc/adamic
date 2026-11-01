@@ -1,0 +1,9 @@
+{
+  "composition": "main plus 99b plus 99g, then 99h",
+  "before": 112,
+  "after": 111,
+  "added": [],
+  "removed": [
+    "<TREE>/src/compiler/commandLineParser.ts:2958:13: error TS2322: Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+  ]
+}

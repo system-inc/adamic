@@ -1,0 +1,28 @@
+{
+  "sourceRegions": 5,
+  "javascriptChanging": true,
+  "javascriptBeforeBytes": 162084,
+  "javascriptAfterBytes": 162114,
+  "secondRun": {
+    "files": 0,
+    "edits": 0,
+    "javascriptChanging": true,
+    "behaviorChanging": false
+  },
+  "secondRunNoWrite": true,
+  "noNewCastsOrAssertions": {
+    "casts": 43,
+    "assertions": 25
+  },
+  "refusals": [
+    "without-99g",
+    "one-header-only",
+    "templates-only",
+    "array-only",
+    "wrong-return-type",
+    "extra-scalar-call",
+    "non-null-assertion",
+    "wrong-array-default"
+  ],
+  "publicApiByteIdentical": true
+}

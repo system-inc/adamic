@@ -1,0 +1,222 @@
+{
+  "cli": [
+    {
+      "name": "ordinary",
+      "args": [
+        "--init"
+      ],
+      "before": {
+        "bytes": 1120,
+        "initExit": 0,
+        "readbackExit": 0,
+        "exception": null
+      },
+      "after": {
+        "bytes": 1120,
+        "initExit": 0,
+        "readbackExit": 0,
+        "exception": null
+      },
+      "byteIdentical": true
+    },
+    {
+      "name": "strict-false",
+      "args": [
+        "--init",
+        "--strict",
+        "false"
+      ],
+      "before": {
+        "bytes": 1121,
+        "initExit": 0,
+        "readbackExit": 0,
+        "exception": null
+      },
+      "after": {
+        "bytes": 1121,
+        "initExit": 0,
+        "readbackExit": 0,
+        "exception": null
+      },
+      "byteIdentical": true
+    },
+    {
+      "name": "outFile-null",
+      "args": [
+        "--init",
+        "--outFile",
+        "null"
+      ],
+      "before": {
+        "bytes": 1142,
+        "initExit": 0,
+        "readbackExit": 0,
+        "exception": null
+      },
+      "after": {
+        "bytes": 1142,
+        "initExit": 0,
+        "readbackExit": 0,
+        "exception": null
+      },
+      "byteIdentical": true
+    },
+    {
+      "name": "strict-null",
+      "args": [
+        "--init",
+        "--strict",
+        "null"
+      ],
+      "before": {
+        "bytes": 1120,
+        "initExit": 0,
+        "readbackExit": 0,
+        "exception": null
+      },
+      "after": {
+        "bytes": 1120,
+        "initExit": 0,
+        "readbackExit": 0,
+        "exception": null
+      },
+      "byteIdentical": true
+    },
+    {
+      "name": "target-null",
+      "args": [
+        "--init",
+        "--target",
+        "null"
+      ],
+      "before": {
+        "bytes": 1116,
+        "initExit": 0,
+        "readbackExit": 0,
+        "exception": null
+      },
+      "after": {
+        "bytes": 1116,
+        "initExit": 0,
+        "readbackExit": 0,
+        "exception": null
+      },
+      "byteIdentical": true
+    },
+    {
+      "name": "rootDir-null",
+      "args": [
+        "--init",
+        "--rootDir",
+        "null"
+      ],
+      "before": {
+        "bytes": 1114,
+        "initExit": 0,
+        "readbackExit": 0,
+        "exception": null
+      },
+      "after": {
+        "bytes": 1114,
+        "initExit": 0,
+        "readbackExit": 0,
+        "exception": null
+      },
+      "byteIdentical": true
+    },
+    {
+      "name": "lib-null",
+      "args": [
+        "--init",
+        "--lib",
+        "null"
+      ],
+      "before": {
+        "bytes": 1138,
+        "initExit": 0,
+        "readbackExit": 1,
+        "exception": "TypeError: Cannot read properties of undefined (reading 'map')"
+      },
+      "after": {
+        "bytes": 1138,
+        "initExit": 0,
+        "readbackExit": 1,
+        "exception": "TypeError: Cannot read properties of undefined (reading 'map')"
+      },
+      "byteIdentical": true
+    }
+  ],
+  "api": [
+    {
+      "name": "paths-toJSON",
+      "byteIdentical": true,
+      "bytes": 1145
+    },
+    {
+      "name": "plugins-toJSON",
+      "byteIdentical": true,
+      "bytes": 1140
+    },
+    {
+      "name": "plugins-two-undefined",
+      "byteIdentical": true,
+      "bytes": 1142
+    },
+    {
+      "name": "custom-map",
+      "byteIdentical": true,
+      "bytes": 1140
+    },
+    {
+      "name": "array-hole",
+      "byteIdentical": true,
+      "bytes": 1122
+    },
+    {
+      "name": "array-explicit-undefined",
+      "byteIdentical": true,
+      "bytes": 1127
+    },
+    {
+      "name": "own-null",
+      "byteIdentical": true,
+      "bytes": 1120
+    },
+    {
+      "name": "empty-string",
+      "byteIdentical": true,
+      "bytes": 1140
+    },
+    {
+      "name": "zero",
+      "byteIdentical": true,
+      "bytes": 1152
+    },
+    {
+      "name": "empty-array",
+      "byteIdentical": true,
+      "bytes": 1120
+    },
+    {
+      "name": "inherited",
+      "byteIdentical": true,
+      "bytes": 1120
+    }
+  ],
+  "thrown": [
+    {
+      "case": "toJSON-throws",
+      "error": {
+        "name": "Error",
+        "message": "hook failure"
+      }
+    },
+    {
+      "case": "invalid-enum",
+      "error": {
+        "name": "Error",
+        "message": "Debug Failure. No matching value of -12345"
+      }
+    }
+  ]
+}
