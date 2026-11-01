@@ -406,14 +406,12 @@ console.log(String(firstPos(elements)));
 
 // tsc's tryCast and cast take a predicate as a function type and call it on a value of the type its claim
 // extends: `test(value)` claims TOut of a TIn, with TOut extends TIn. Each instance is judged where it's
-// lowered: TIn mentions a type parameter, and the checker's flow type at value's first read on the true
-// side is TOut, the claim itself, so the instance's reads see concrete(TOut), S, through S's view
-// (core.ts:1779, Adamic's ruling on 810ce7d9). tryCast with isTypeElement and isClassElement lowers and
-// agrees with Node, and so does TOut = TypeElement over a PropertySignature | Node, whose PropertySignature
-// the narrowing doesn't keep (Compiler's union pin). A lie through it stops at its first bad read. cast
-// narrows in an if, where the checker gives TIn & TOut, read as Node & TypeElement, an intersection no
-// view covers, so it stays NotYet until a rule for that read is ruled. Mutant: the read compared without
-// concreting, and tryCast is NotYet as a generic argument.
+// lowered (core.ts:1779, Adamic's ruling on 810ce7d9). Both read the value, after `value !== undefined`,
+// as TIn & TOut, which concretes to Node & TypeElement, an intersection no view covers, so both are NotYet
+// at their own call, for isTypeElement and isClassElement alike, and so is TOut = TypeElement over a
+// PropertySignature | Node (Compiler's union pin). Reading S intersected with its supertypes through S's
+// view is its own change after this one (Adamic's ruling, Nov 1), which lowers these. Mutant: the read
+// compared as written, unconcreted, and the reason names the wrong type.
 func TestBrandedSupertypeTryCastIsJudgedPerInstance(t *testing.T) {
 	t.Parallel()
 	const helpers = `interface ClassElement extends Declaration { _classElementBrand: undefined; readonly name?: string; }
@@ -421,9 +419,26 @@ function isClassElement(n: Node): n is ClassElement { const k = kindOf(n); retur
 function tryCast<TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut | undefined { return value !== undefined && test(value) ? value : undefined; }
 function cast<TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut { if (value !== undefined && test(value)) { return value; } throw new Error("Invalid cast"); }
 `
-	lowersAndAgreesWithNodeAs(t, brandedPrelude+helpers+`function show(n: Node): void {
-	const e = tryCast(n, isTypeElement); console.log(e === undefined ? "no" : String(e.pos));
-	const c = tryCast(n, isClassElement); console.log(c === undefined ? "no" : String(c.pos));
+	for _, probe := range []struct{ name, source, want string }{
+		{"tryCast", `function show(n: Node): void { const e = tryCast(n, isTypeElement); console.log(e === undefined ? "no" : String(e.pos)); }
+show({ kind: 171, pos: 1 });`, "read on the true side as Node & TypeElement"},
+		{"tryCast class element", `function show(n: Node): void { const c = tryCast(n, isClassElement); console.log(c === undefined ? "no" : String(c.pos)); }
+show({ kind: 172, pos: 2 });`, "read on the true side as Node & ClassElement"},
+		{"cast", `const a = { kind: 171, pos: 1, name: "a", typeText: "t" };
+console.log(String(cast(a as Node, isTypeElement).pos));`, "read on the true side as Node & TypeElement"},
+		{"union", `const a = { kind: 171, pos: 1, name: "a", typeText: "t" };
+const p: PropertySignature | Node = a;
+const u = tryCast(p, isTypeElement); console.log(u === undefined ? "no" : String(u.name));`, "read on the true side as"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerTypeScriptAssertionSource(t, brandedPrelude+helpers+probe.source)
+			var pending *NotYet
+			if !errors.As(err, &pending) || !strings.Contains(err.Error(), probe.want) {
+				t.Fatalf("want NotYet with %q, got %v", probe.want, err)
+			}
+		})
+	}
 }
 const a = { kind: 171, pos: 1, name: "a", typeText: "t" }; show(a);
 const b = { kind: 172, pos: 2 }; show(b);
