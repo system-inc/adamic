@@ -169,8 +169,10 @@ func accessorReachReads(program *ir.Program, name string) (int, int) {
 				viewed++
 			}
 		case ir.Call:
-			if program.Functions[expression.Function].Name == "property_get:"+name {
-				dispatched++
+			for _, target := range program.CallTargets(expression) {
+				if program.Functions[target].Name == "property_get:"+name {
+					dispatched++
+				}
 			}
 		}
 		return true
