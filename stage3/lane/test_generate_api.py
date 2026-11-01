@@ -236,6 +236,49 @@ class ApiSanctionGeneratorTests(unittest.TestCase):
         self.assertIn('api-sanctions.json row 1', result.stderr)
         self.assertIn('ambiguous or missing proof owner', result.stderr)
 
+    def line_row(self):
+        before = '{\n                stack?: string;\n                message?: string;\n            }'
+        self.row = dict(path=['server', 'ModuleImportResult', 'error'], kind='PropertySignature',
+                        line=2707, before=before, after=before + ' | undefined',
+                        why='Fixture disambiguated failure member')
+
+    def test_api_sanction_line_applied_and_guard_accepts(self):
+        self.line_row()
+        proof = self.generated()
+        self.assertTrue(self.row['after'] in proof['expected'], 'selected member was not widened')
+        self.assertEqual(self.guard(proof, proof['expected']), [])
+
+    def test_api_sanction_ambiguous_path_without_line_is_rejected(self):
+        self.line_row()
+        del self.row['line']
+        result = self.generate()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('ambiguous or missing proof owner', result.stderr)
+        self.assertIn('server,ModuleImportResult,error', result.stderr)
+
+    def test_api_sanction_wrong_line_names_path_and_line(self):
+        self.line_row()
+        self.row['line'] = 2706
+        result = self.generate()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('server,ModuleImportResult,error line 2706', result.stderr)
+        self.assertIn('ambiguous or missing proof owner', result.stderr)
+        # A unique path must also refuse a drifted line, as the hard-coded proofs do.
+        self.row = dict(path=['TypeReferenceNode', 'typeName'], kind='PropertySignature',
+                        line=2706, before='EntityName', after='EntityName | undefined',
+                        why='Fixture unique owner drift')
+        result = self.generate()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('TypeReferenceNode,typeName line 2706', result.stderr)
+
+    def test_api_sanction_non_integer_line_is_rejected(self):
+        self.line_row()
+        self.row['line'] = 2707.5
+        result = self.generate()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('expected a positive integer', result.stderr)
+        self.assertIn('server,ModuleImportResult,error line 2707.5', result.stderr)
+
 
 if __name__ == '__main__':
     unittest.main()

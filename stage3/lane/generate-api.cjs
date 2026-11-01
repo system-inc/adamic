@@ -69,11 +69,16 @@ for (const node of nodes(source, () => true)) {
     byOwnerPath.get(key).push(node);
 }
 function owned(record, select, adaptation, repeatInsert = false) {
-    const matches = (byOwnerPath.get(JSON.stringify(record.path)) || []).filter(select);
-    assert.equal(matches.length, 1, `ambiguous or missing proof owner ${adaptation}: ${record.path}`);
+    const hasLine = Object.hasOwn(record, 'line');
+    assert(!hasLine || (Number.isInteger(record.line) && record.line > 0),
+        `invalid proof owner line ${adaptation}: ${record.path} line ${record.line}; expected a positive integer`);
+    let matches = (byOwnerPath.get(JSON.stringify(record.path)) || []).filter(select);
+    if (hasLine) matches = matches.filter(node =>
+        source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1 === record.line);
+    assert.equal(matches.length, 1,
+        `ambiguous or missing proof owner ${adaptation}: ${record.path}${hasLine ? ' line ' + record.line : ''}`);
     const node = matches[0];
     const line = source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1;
-    if (record.line !== undefined) assert.equal(line, record.line, `proof owner drift ${record.path}`);
     assert(!claimed.has(node) || (repeatInsert && insertionEdits.has(node)), `already claimed proof owner ${adaptation}: ${record.path}`);
     claimed.add(node);
     owners.push({ adaptation, path: record.path, line });
