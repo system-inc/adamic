@@ -1,9 +1,0 @@
-Proposed only. Requires Correctness ruling; not part of adapt.cjs.
---- a/src/compiler/checker.ts
-+++ b/src/compiler/checker.ts
-@@
-                 const relevantTypeParameter = typeParameters[typeArgumentPosition];
-+                if (relevantTypeParameter === undefined) {
-+                    throw new TypeError("Cannot read properties of undefined (reading 'resolvedBaseConstraint')");
-+                }
-                 const constraint = getConstraintOfTypeParameter(relevantTypeParameter);

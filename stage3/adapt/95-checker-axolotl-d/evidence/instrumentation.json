@@ -1,5 +1,0 @@
-{
-  "testProcessesWithAllThreeProbes": 9,
-  "explanation": "One coordinator and eight workers all loaded the instrumented built/local/run.js compiler bundle. Other npm build compiler loads were also observed but had zero hits.",
-  "countsCoverCompletedWorkers": true
-}

@@ -1,6 +1,0 @@
-const first = 1;
-const second = 'two';
-exports.value = first;
-exports.value = second;
-module.exports.other = first;
-module.exports.other = second;
