@@ -1,7 +1,7 @@
 // a-check: refused a downcast to Receiver whose tag test is vacuous
 // Independent lazy array-union projection.
-interface ElementA {readonly kind:1; readonly payload:{readonly label:string}; readonly a:any;}
-interface ElementB {readonly kind:2; readonly payload:{readonly label:string}; readonly b:any;}
+interface ElementA {readonly kind:1; readonly payload:{readonly label:string}; readonly a:unknown;}
+interface ElementB {readonly kind:2; readonly payload:{readonly label:string}; readonly b:unknown;}
 interface Receiver {readonly kind:'Receiver'; readonly elements:readonly ElementA[]|readonly ElementB[];}
 const raw={kind:'Receiver' as const,elements:[]};
 const base:{readonly kind:'Receiver'}=raw;

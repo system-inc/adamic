@@ -1,5 +1,5 @@
-interface Broad {readonly kind:number; readonly payload:{readonly label:string}; readonly opaque:any;}
-interface Narrow {readonly kind:242; readonly payload:{readonly label:string}; readonly other:any;}
+interface Broad {readonly kind:number; readonly payload:{readonly label:string}; readonly opaque:unknown;}
+interface Narrow {readonly kind:242; readonly payload:{readonly label:string}; readonly other:unknown;}
 type Target=Broad|Narrow;
 interface Holder {readonly kind:'Holder';readonly value:Target;}
 class Data {readonly kind=true;readonly payload={label:'ok'};}
