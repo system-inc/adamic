@@ -1,0 +1,6 @@
+// Error.captureStackTrace written.
+import 'node:process';
+Error.captureStackTrace = (target: object): void => {
+	console.log(typeof target);
+};
+console.log('written');

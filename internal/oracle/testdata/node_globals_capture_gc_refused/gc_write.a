@@ -1,0 +1,4 @@
+// global.gc written.
+import 'node:process';
+global.gc = undefined;
+console.log('written');

@@ -1,0 +1,56 @@
+// tsc's two reads of Node's globals, each spelled a second way. Debug.fail tests
+// Error.captureStackTrace, calls it on the error it's about to throw, and throws it; the call only
+// sets the error's stack, which nothing here reads, so what's left is its arguments' effects. sys.ts
+// tests global.gc before calling it, and Node run without --expose-gc, as the oracle is, has none:
+// it reads as undefined. node_globals_gc_call.ts calls it anyway.
+import 'node:process';
+
+let marks = 0;
+
+function mark(): Error {
+	marks++;
+	return new Error('marked');
+}
+
+function fail(message: string): never {
+	const e = new Error(message);
+	if (Error.captureStackTrace) {
+		console.log('capture available');
+		Error.captureStackTrace(e, fail);
+	}
+	throw e;
+}
+
+try {
+	fail('boom');
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(error.message);
+	}
+	console.log(String(error instanceof Error));
+}
+
+// Its arguments are evaluated in order, once each, for their effects.
+Error.captureStackTrace(mark(), mark);
+console.log(String(marks));
+
+// Read as a value, it's one function: truthy, the same at every read, and callable.
+const capture = Error.captureStackTrace;
+if (capture) {
+	console.log('value capture');
+	capture(mark());
+	capture(mark(), fail);
+}
+console.log(String(marks));
+console.log(String(capture === Error.captureStackTrace));
+
+if (global.gc) {
+	global.gc();
+	console.log('collected');
+} else {
+	console.log('no gc');
+}
+console.log(String(!!global.gc) + ' ' + String(!global.gc));
+const collect = global.gc;
+console.log(String(collect === undefined));
+

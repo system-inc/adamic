@@ -1,0 +1,5 @@
+// Error.captureStackTrace called through an optional chain.
+import 'node:process';
+const e = new Error('boom');
+Error.captureStackTrace?.(e);
+console.log(e.message);

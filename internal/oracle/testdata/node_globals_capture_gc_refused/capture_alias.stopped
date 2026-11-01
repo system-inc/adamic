@@ -1,0 +1,1 @@
+internal/oracle/testdata/node_globals_capture_gc_refused/capture_alias.a:5:1: stage 0 can't lower node:globals.ErrorConstructor.captureStackTrace through a receiver other than the global Error (fix: read or call Error.captureStackTrace) yet

@@ -1,0 +1,1 @@
+internal/oracle/testdata/node_globals_capture_gc_refused/capture_slot.a:3:42: stage 0 can't lower node:globals.ErrorConstructor.captureStackTrace as a value in a slot that sees it as (targets: Error[]) => void (fix: let the slot see (targetObject: object, constructorOpt?: Function) => void) yet
