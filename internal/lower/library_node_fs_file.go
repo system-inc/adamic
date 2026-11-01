@@ -437,7 +437,11 @@ func (l *lowering) nodeFSFileDate(node *ast.Node) (ir.Expression, bool, error) {
 	if !l.isLibraryGlobal(created.Expression, "Date") {
 		return nil, false, nil
 	}
-	if created.Arguments == nil || len(created.Arguments.Nodes) != 1 {
+	if created.Arguments == nil || len(created.Arguments.Nodes) == 0 {
+		// new Date() is the current time, read from the host clock as Date.now reads it.
+		return ir.NodeFSFile{Operation: "date_now", Of: ir.Object}, true, nil
+	}
+	if len(created.Arguments.Nodes) != 1 {
 		return nil, true, l.notYet(node, "Date construction other than a numeric timestamp in the fs file host")
 	}
 	value, err := l.expression(created.Arguments.Nodes[0])
