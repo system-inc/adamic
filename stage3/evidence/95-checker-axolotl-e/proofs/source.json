@@ -1,0 +1,27 @@
+{
+  "sourceFiles": 746,
+  "changedFiles": 1,
+  "declarations": 2,
+  "declaredPublicApiChanges": 1,
+  "evidence": {
+    "file": "src/compiler/types.ts",
+    "beforeSha256": "317959d6cd4fac0ad698ff2795e2091d66900d307da9b23c1534ddc8ca1b0732",
+    "afterSha256": "d672081273dec68e2cba66481fdf7d262b67d479f5b33f188c569a4ce5a95850",
+    "crlf": {
+      "before": 10681,
+      "after": 10681
+    },
+    "javascript": [
+      {
+        "removeComments": false,
+        "bytes": 139659,
+        "sha256": "4839bedc439cad06969bad2a3d805a7c0b480f06df73fcff62d2cd0957009fc3"
+      },
+      {
+        "removeComments": true,
+        "bytes": 121398,
+        "sha256": "f041d720cfda4ccb137ffc32198ec3d2fce46dbf13404df737dc637e21290639"
+      }
+    ]
+  }
+}

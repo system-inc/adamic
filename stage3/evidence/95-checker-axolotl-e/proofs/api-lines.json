@@ -1,0 +1,18 @@
+{
+  "baseline": "tests/baselines/reference/api/typescript.d.ts",
+  "upstreamSha256": "c967e03c8dbb4770f7e2f0b71b5d13593de679a41cc2b60266c4b69f1342a263",
+  "declarationLine": 6216,
+  "changedLines": [
+    {
+      "line": 6218,
+      "before": "                typeArguments?: NodeArray<TypeNode>;",
+      "after": "                typeArguments?: NodeArray<TypeNode> | undefined;"
+    }
+  ],
+  "beforeTypeByteIdentical": true,
+  "beforeBytes": 117,
+  "ownerPathOmitsTsNamespace": true,
+  "builtDeclarationLine": 6217,
+  "builtChangedLine": 6219,
+  "builtAfterText": "                typeArguments?: NodeArray<TypeNode> | undefined;"
+}
