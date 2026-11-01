@@ -19,6 +19,31 @@ type generator struct {
 	needed    map[string]bool
 	sortedMap *ast.TypeSpec
 	positions *token.FileSet
+	// The unexported fields of exported IR structs, as Type.field, each one named in irPrivateFields.
+	privateIRFields []string
+}
+
+// How the full latent copy treats each unexported field of an exported IR struct. latentCopyIR copies an IR
+// value by reflection, which can't write an unexported field, so every such field is named here with what the
+// copy does instead, and loadGenerator refuses one that isn't (#fwbnwn3: methodTables arrived Oct 20 and every
+// full-mode unit that copied a Program panicked on it until this table existed).
+type privateIRField int
+
+const (
+	// privateNil: a cache a census never fills; the copy accepts it only nil, and refuses a populated one.
+	privateNil privateIRField = iota
+	// privateEmpty: a cache the IR rebuilds from exported fields when it's nil; the copy starts it empty.
+	privateEmpty
+	// privateShared: an identity compared by pointer; the copy shares the owning pointer, whose value nothing
+	// writes after it's built, rather than making a struct it can't give that identity.
+	privateShared
+)
+
+var irPrivateFields = map[string]privateIRField{
+	"Program.argumentFacts":       privateNil,
+	"Program.methodTables":        privateEmpty,
+	"BoundaryStringTable.indexes": privateEmpty,
+	"GeneratedType.identity":      privateShared,
 }
 
 func printed(n ast.Node) string {
@@ -111,19 +136,41 @@ func loadGenerator(repository, lowerInput string) generator {
 	if err != nil {
 		panic(err)
 	}
+	irPositions := token.NewFileSet()
 	for _, path := range irFiles {
 		if strings.HasSuffix(path, "_test.go") {
 			continue
 		}
-		file, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
+		file, err := parser.ParseFile(irPositions, path, nil, 0)
 		if err != nil {
 			panic(err)
 		}
 		for _, decl := range file.Decls {
 			if group, ok := decl.(*ast.GenDecl); ok {
 				for _, spec := range group.Specs {
-					if spec, ok := spec.(*ast.TypeSpec); ok && spec.Name.Name == "SortedMap" {
+					spec, ok := spec.(*ast.TypeSpec)
+					if !ok {
+						continue
+					}
+					if spec.Name.Name == "SortedMap" {
 						g.sortedMap = spec
+					}
+					// An unexported struct is reached only through an unexported field, which this table names.
+					structure, isStruct := spec.Type.(*ast.StructType)
+					if !isStruct || !spec.Name.IsExported() {
+						continue
+					}
+					for _, field := range structure.Fields.List {
+						for _, id := range field.Names {
+							if id.IsExported() {
+								continue
+							}
+							key := spec.Name.Name + "." + id.Name
+							if _, ok := irPrivateFields[key]; !ok {
+								panic(fmt.Sprintf("%s: state copy: unexported IR field %s isn't named in statecopy's irPrivateFields; say how a latent copy treats it", irPositions.Position(id.Pos()), key))
+							}
+							g.privateIRFields = append(g.privateIRFields, key)
+						}
 					}
 				}
 			}
@@ -205,9 +252,37 @@ func generate(repository, lowerInput string) []byte {
 			fmt.Fprintf(&body, "func latentCopyPointer_%s(value *%s, seen map[any]any) *%s {if value==nil{return nil}; if prior,ok:=seen[value];ok{return prior.(*%s)};result:=new(%s);seen[value]=result; *result=latentCopy_%s(*value,seen);return result}\n", name, name, name, name, name, name)
 		}
 	}
+	// The full copy's answers for unexported IR fields, from irPrivateFields, so the table has one home.
+	keys := make([]string, 0, len(irPrivateFields))
+	for key := range irPrivateFields {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys)
+	body.WriteString("// latentPrivateIRField is whether the full copy leaves an unexported IR field at its zero value.\n")
+	body.WriteString("func latentPrivateIRField(v reflect.Value, index int) bool {field:=v.Type().Field(index).Name;")
+	for _, key := range keys {
+		owner, field, _ := strings.Cut(key, ".")
+		test := "v.Type()==reflect.TypeFor[ir." + owner + "]()&&field==" + fmt.Sprintf("%q", field)
+		switch irPrivateFields[key] {
+		case privateNil:
+			fmt.Fprintf(&body, "if %s {if !v.Field(index).IsNil(){panic(%q)}; return true};", test, "latent state copy: populated IR cache "+key+" is unsupported")
+		case privateEmpty:
+			fmt.Fprintf(&body, "if %s {return true};", test)
+		}
+	}
+	body.WriteString("return false}\n")
+	body.WriteString("// latentSharedIRPointer is whether the full copy shares an IR pointer rather than copying what it points to.\n")
+	body.WriteString("func latentSharedIRPointer(t reflect.Type) bool {")
+	for _, key := range keys {
+		if irPrivateFields[key] == privateShared {
+			owner, _, _ := strings.Cut(key, ".")
+			fmt.Fprintf(&body, "if t==reflect.TypeFor[*ir.%s]() {return true};", owner)
+		}
+	}
+	body.WriteString("return false}\n")
 	// Only imports actually mentioned in generated field types are needed.
 	var header strings.Builder
-	header.WriteString("package lower\nimport(\n")
+	header.WriteString("package lower\nimport(\n\"reflect\"\n")
 	for _, pair := range [][2]string{{"ast", "github.com/microsoft/TypeScript/tsc/shim/ast"}, {"checker", "github.com/microsoft/TypeScript/tsc/shim/checker"}, {"ir", "github.com/system-inc/adamic/internal/ir"}} {
 		if strings.Contains(body.String(), pair[0]+".") {
 			fmt.Fprintf(&header, "%q\n", pair[1])

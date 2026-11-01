@@ -126,3 +126,63 @@ func TestLatentStatecopySharesSourceIdentities(t *testing.T) {
 		t.Fatal("the lowering copier deep-copies sourceIdentities, which every lowering of a latent run shares")
 	}
 }
+
+// An unexported field added to an exported IR struct is refused by name when the copier is generated, so the
+// census refuses once, at its build, instead of panicking in every unit that copies the struct (#fwbnwn3: on
+// Oct 20 Program.methodTables did that to 9,818 of the tsc entry's 10,705 full-mode units). Mutant: the
+// refusal in loadGenerator dropped, so this program generates and the field goes uncopied.
+func TestLatentStatecopyRefusesAnUnnamedPrivateIRField(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	for name, source := range map[string]string{
+		"internal/ir/ir.go":       "package ir; type Program struct {Functions []int; methodTables *int; addedLater map[string]int}",
+		"internal/lower/lower.go": "package lower; type lowering struct {result *ir.Program}",
+	} {
+		path := filepath.Join(root, name)
+		if err := os.MkdirAll(filepath.Dir(path), 0700); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+			t.Fatal(err)
+		}
+	}
+	defer func() {
+		failure := recover()
+		if failure == nil {
+			t.Fatal("an unexported IR field missing from irPrivateFields was not refused")
+		}
+		if text, ok := failure.(string); !ok || !strings.Contains(text, "Program.addedLater") || !strings.Contains(text, "ir.go:1") {
+			t.Fatalf("the refusal must name the field and where it's declared: %v", failure)
+		}
+	}()
+	generate(root, filepath.Join(root, "internal/lower/lower.go"))
+}
+
+// irPrivateFields names exactly the unexported fields of exported IR structs on this tree: none missing, which
+// loadGenerator refuses, and none stale, so the table can't keep a policy for a field the IR dropped. Mutant: an
+// entry for a field internal/ir doesn't declare.
+func TestLatentStatecopyNamesEveryPrivateIRField(t *testing.T) {
+	t.Parallel()
+	// Reads: internal/lower/*.go
+	// Reads: internal/ir/*.go
+	root, err := filepath.Abs("../../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	g := loadGenerator(root, filepath.Join(root, "internal/lower/lower.go"))
+	declared := map[string]bool{}
+	for _, key := range g.privateIRFields {
+		declared[key] = true
+	}
+	for key := range irPrivateFields {
+		if !declared[key] {
+			t.Errorf("irPrivateFields names %s, which internal/ir no longer declares", key)
+		}
+	}
+	generated := string(generate(root, filepath.Join(root, "internal/lower/lower.go")))
+	for _, want := range []string{"func latentPrivateIRField(", "func latentSharedIRPointer(", "reflect.TypeFor[*ir.GeneratedType]()", `field == "methodTables"`} {
+		if !strings.Contains(generated, want) {
+			t.Errorf("the generated copier lacks %s", want)
+		}
+	}
+}
