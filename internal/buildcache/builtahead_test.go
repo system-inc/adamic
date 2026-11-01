@@ -45,3 +45,25 @@ func TestABuiltAheadLookupNeverAuditsAndABuildingOneStillDoes(t *testing.T) {
 		t.Errorf("a listed product looked up with a real build wasn't audited clean: census %q", lines)
 	}
 }
+
+// A product BuiltAhead fetches under a trace, with every fetch sampled for an audit, is fetched and never audited: a
+// find's only build is its refusal, so the audit returned that refusal, bare, for a product the store held (#v08876).
+// A lookup that builds still audits a fetch (TestAnAuditedFetchThatDiffersFromARebuildIsPoisoning).
+// Mutant: the fetch path audits a BuiltAhead lookup (its error is the refusal).
+// Not parallel: points the build cache (ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG) and the store at this test through t.Setenv.
+func TestABuiltAheadFetchUnderATraceIsNeverAudited(t *testing.T) {
+	store, log := shared(t)
+	t.Setenv("ADAMIC_BUILD_AUDIT", "1")
+	t.Setenv("ADAMIC_BUILD_TRACE", t.TempDir())
+	store.put(t, recorded(t), map[string]string{"product": "built"})
+	directory, err := BuiltAhead(thisPackage, errors.New("this package's product not built ahead"))
+	if err != nil {
+		t.Fatalf("a BuiltAhead fetch of a product the store holds: %v, want it fetched", err)
+	}
+	if content, _ := os.ReadFile(filepath.Join(directory, "product")); string(content) != "built" {
+		t.Errorf("fetched %q, want the stored product", content)
+	}
+	if lines, _ := os.ReadFile(log); strings.Contains(string(lines), " audited ") || !strings.Contains(string(lines), " fetched ") {
+		t.Errorf("census %q: want the product fetched and never audited", lines)
+	}
+}
