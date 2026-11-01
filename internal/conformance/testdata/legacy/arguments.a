@@ -1,0 +1,6 @@
+// Spec: every other use of `arguments`, writing `arguments.length` included, is refused
+// Expect: refused arguments other than a read of arguments.length
+function first(): unknown {
+	return arguments[0];
+}
+console.log(String(first()));
