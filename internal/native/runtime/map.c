@@ -197,6 +197,10 @@ void adamic_map_set(adamic_map *map, adamic_value key, adamic_value value) {
 	entry->key = key;
 	entry->value = value;
 	entry->deleted = false;
+	// The slot may be one compaction freed, a record key's with attributes among them.
+	entry->hidden = false;
+	entry->readonly = false;
+	entry->fixed = false;
 	size_t mask = map->bucket_count - 1;
 	size_t bucket = hash_key(map, key) & mask;
 	while (map->buckets[bucket] != 0) {

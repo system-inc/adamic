@@ -86,6 +86,12 @@ type Program struct {
 	// out, and the ones the runtime's loops make (map, the visits, reduce, Array.from, sort), whose
 	// callers test for it after each.
 	ClosuresMayThrow bool
+
+	// HiddenRecordKeys is every key some module defines on a record non-enumerable and read-only
+	// (Object.defineProperty, RecordCall's "defineHidden"), each a string literal there. A record write
+	// or delete that meets such a key throws, as on Node, so one whose key may be one of these tests
+	// for it (RecordWriteMayThrow); in a program without any, none does.
+	HiddenRecordKeys SortedMap[string, bool]
 }
 
 // PlaceholderCheck records one readiness or storage-arm boundary in the checked-sites report.

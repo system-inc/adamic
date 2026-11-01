@@ -337,6 +337,10 @@ func (l *lowering) recordObjectCallArguments(node *ast.Node, name string, args [
 		return nil, false, nil
 	}
 	if name != "keys" && name != "values" && name != "entries" && name != "hasOwn" {
+		if _, _, admitted := l.recordDefineShape(node); admitted {
+			// As a statement, recordDefineStatement lowers it; its result, the object, isn't yet.
+			return nil, true, l.notYet(node, "Object.defineProperty on a record whose result is used")
+		}
 		return nil, true, l.notYet(node, "Object."+name+" on a record")
 	}
 	count := 1
