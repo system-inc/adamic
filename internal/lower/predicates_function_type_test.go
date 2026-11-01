@@ -136,19 +136,20 @@ func TestFunctionTypeClaimKeepsWhatTheCallCantCheck(t *testing.T) {
 	}
 }
 
-// parseTreeSource is getParseTreeNode's generic shape with an optional predicate (tsc's
-// utilitiesPublic.ts:826), followed by calls. tsc's own overloads are left out: their implementation
-// result is refused on its own (overload 2's T | undefined can't be served by Node | undefined), and
-// that would hide the argument's outcome. The first %s fills nodeTest's optional mark, so the optional
-// parameter and its required twin differ only there; the calls start on the same line in both. The body
-// only calls nodeTest, so every producer of it is a proven argument (predicateCallbackCallers).
+// parseTreeSource is getParseTreeNode's shape (tsc's utilitiesPublic.ts:826): a generic overload whose
+// optional predicate the implementation takes as a plain boolean callback, followed by calls. tsc's
+// overload returns T | undefined, which an implementation returning Node | undefined is refused for at
+// the overload, so this one returns Node | undefined and leaves the argument's outcome to read. The first
+// %s fills nodeTest's optional mark, so the optional parameter and its required twin differ only there,
+// and the calls start on the same line in both.
 const parseTreeSource = `interface Node { readonly kind: number; readonly flags: number; readonly original: Node | undefined; }
 interface ModuleDeclaration extends Node { readonly kind: 268; readonly name: string; }
 function isModuleDeclaration(node: Node): node is ModuleDeclaration { return node.kind === 268; }
 function isParseTreeNode(node: Node): boolean { return (node.flags & 16) === 0; }
-function getParseTreeNode<T extends Node>(node: Node | undefined, nodeTest%s: (node: Node) => node is T): T | undefined {
+function getParseTreeNode<T extends Node>(node: Node | undefined, nodeTest%s: (node: Node) => node is T): Node | undefined;
+function getParseTreeNode(node: Node | undefined, nodeTest?: (node: Node) => boolean): Node | undefined {
   while (node !== undefined) {
-    if (isParseTreeNode(node)) { return nodeTest?.(node) ? node : undefined; }
+    if (isParseTreeNode(node)) { return nodeTest === undefined || nodeTest(node) ? node : undefined; }
     node = node.original;
   }
   return undefined;
@@ -169,9 +170,9 @@ const wrapped: ModuleDeclaration = { kind: 268, flags: 16, original: other, name
 func TestOptionalPredicateParameterTakesAProvenArgument(t *testing.T) {
 	t.Parallel()
 	lowersAndAgreesWithNodeAs(t, fmt.Sprintf(parseTreeSource, "?", `const found = getParseTreeNode(synthesized, isModuleDeclaration);
-console.log(found === undefined ? "none" : found.name);
+console.log(found === undefined ? "none" : String(found.kind));
 const unmatched = getParseTreeNode(wrapped, isModuleDeclaration);
-console.log(unmatched === undefined ? "none" : unmatched.name);
+console.log(unmatched === undefined ? "none" : String(unmatched.kind));
 const untested = getParseTreeNode(synthesized);
 console.log(untested === undefined ? "none" : String(untested.kind));
 console.log(String(getParseTreeNode(undefined, isModuleDeclaration) === undefined));`), ".ts")
@@ -196,13 +197,13 @@ func TestOptionalPredicateParameterMatchesItsRequiredTwin(t *testing.T) {
 	}
 	for _, probe := range []struct{ name, calls, typeScript, adamic string }{
 		{"proven", `const found = getParseTreeNode(synthesized, isModuleDeclaration);
-console.log(found === undefined ? "none" : found.name);`, "admitted", "admitted"},
+console.log(found === undefined ? "none" : String(found.kind));`, "admitted", "admitted"},
 		{"lying arrow", `const found = getParseTreeNode(synthesized, (node: Node): node is ModuleDeclaration => true);
-console.log(found === undefined ? "none" : found.name);`, "admitted", `refused: an unproven predicate argument for parameter nodeTest (argument "(node: Node): node is ModuleDeclaration => true")`},
+console.log(found === undefined ? "none" : String(found.kind));`, "admitted", `refused: an unproven predicate argument for parameter nodeTest (argument "(node: Node): node is ModuleDeclaration => true")`},
 		{"reassigned let", `let test = (node: Node): node is ModuleDeclaration => node.kind === 268;
 test = (node: Node): node is ModuleDeclaration => true;
 const found = getParseTreeNode(synthesized, test);
-console.log(found === undefined ? "none" : found.name);`, `refused: an unproven predicate argument for parameter nodeTest (argument "test")`, `refused: an unproven predicate argument for parameter nodeTest (argument "test")`},
+console.log(found === undefined ? "none" : String(found.kind));`, `refused: an unproven predicate argument for parameter nodeTest (argument "test")`, `refused: an unproven predicate argument for parameter nodeTest (argument "test")`},
 	} {
 		for _, mode := range []struct{ extension, want string }{{".ts", probe.typeScript}, {".a", probe.adamic}} {
 			t.Run(probe.name+mode.extension, func(t *testing.T) {
