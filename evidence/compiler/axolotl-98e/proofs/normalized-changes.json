@@ -1,0 +1,12 @@
+[
+ {
+  "declaration": "TypeAliasDeclaration:[\"ts\",\"server\",\"ModuleImportResult\"]#0",
+  "before": "[\"TypeAliasDeclaration\",[\"Identifier\",\"ModuleImportResult\"],[\"UnionType\",[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"module\"],[\"TypeLiteral\"]],[\"PropertySignature\",[\"Identifier\",\"error\"],[\"UndefinedKeyword\"]]],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"module\"],[\"UndefinedKeyword\"]],[\"PropertySignature\",[\"Identifier\",\"error\"],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"stack\"],[\"QuestionToken\"],[\"StringKeyword\"]],[\"PropertySignature\",[\"Identifier\",\"message\"],[\"QuestionToken\"],[\"StringKeyword\"]]]]]]]",
+  "after": "[\"TypeAliasDeclaration\",[\"Identifier\",\"ModuleImportResult\"],[\"UnionType\",[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"module\"],[\"TypeLiteral\"]],[\"PropertySignature\",[\"Identifier\",\"error\"],[\"UndefinedKeyword\"]]],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"module\"],[\"UndefinedKeyword\"]],[\"PropertySignature\",[\"Identifier\",\"error\"],[\"UnknownKeyword\"]]]]]"
+ },
+ {
+  "declaration": "member:[\"ts\",\"System\",\"createSHA256Hash\"]#0",
+  "before": "[\"MethodSignature\",[\"Identifier\",\"createSHA256Hash\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"data\"],[\"StringKeyword\"]],[\"StringKeyword\"]]",
+  "after": "[\"PropertySignature\",[\"Identifier\",\"createSHA256Hash\"],[\"QuestionToken\"],[\"UnionType\",[\"IndexedAccessType\",[\"TypeLiteral\",[\"MethodSignature\",[\"Identifier\",\"createSHA256Hash\"],[\"Parameter\",[\"Identifier\",\"data\"],[\"StringKeyword\"]],[\"StringKeyword\"]]],[\"LiteralType\",[\"StringLiteral\",\"createSHA256Hash\"]]],[\"UndefinedKeyword\"]]]"
+ }
+]

@@ -1,0 +1,27 @@
+--- server_project.ts.comments.before.js	2026-11-01 20:27:34.442203496 +0000
++++ server_project.ts.comments.after.js	2026-11-01 20:27:34.614203506 +0000
+@@ -1,5 +1,5 @@
+ import * as ts from "./_namespaces/ts.js";
+-import { addRange, append, arrayFrom, arrayIsEqualTo, arrayToMap, BuilderState, canJsonReportNoInputFiles, canWatchDirectoryOrFilePath, changeExtension, changesAffectModuleResolution, clearMap, cloneCompilerOptions, closeFileWatcher, closeFileWatcherOf, combinePaths, comparePaths, containsPath, createCacheableExportInfoMap, createLanguageService, createResolutionCache, createSymlinkCache, Debug, directorySeparator, ensureTrailingDirectorySeparator, enumerateInsertsAndDeletes, every, explainFiles, Extension, fileExtensionIs, FileWatcherEventKind, filter, flatMap, forEach, forEachEntry, forEachKey, generateDjb2Hash, getAllowJSCompilerOption, getAutomaticTypeDirectiveNames, getBaseFileName, getCommonSourceDirectoryOfConfig, getDeclarationEmitOutputFilePathWorker, getDefaultCompilerOptions, getDefaultLibFileName, getDefaultLibFilePath, getDirectoryPath, getEffectiveTypeRoots, getEmitDeclarations, getEntrypointsFromPackageJsonInfo, getNormalizedAbsolutePath, getOrUpdate, getOutputDeclarationFileName, getStringComparer, inferredTypesContainingFile, isDeclarationFileName, isExternalModuleNameRelative, isInsideNodeModules, JsTyping, LanguageServiceMode, map, mapDefined, maybeBind, memoize, noop, noopFileWatcher, normalizePath, normalizeSlashes, PackageJsonAutoImportPreference, parsePackageName, PollingInterval, ProgramUpdateLevel, removeFileExtension, resolutionExtensionIsTSOrJson, resolvePackageNameToPackageJson, returnFalse, ScriptKind, some, sortAndDeduplicate, startsWith, stripQuotes, StructureIsReused, ThrottledCancellationToken, timestamp, toPath, toSorted, tracing, updateErrorForNoInputFiles, updateMissingFilePathsWatch, WatchDirectoryFlags, WatchType, } from "./_namespaces/ts.js";
++import { addRange, append, arrayFrom, arrayIsEqualTo, arrayToMap, BuilderState, canJsonReportNoInputFiles, canWatchDirectoryOrFilePath, changeExtension, changesAffectModuleResolution, clearMap, cloneCompilerOptions, closeFileWatcher, closeFileWatcherOf, combinePaths, comparePaths, containsPath, createCacheableExportInfoMap, createLanguageService, createResolutionCache, createSymlinkCache, Debug, directorySeparator, ensureTrailingDirectorySeparator, enumerateInsertsAndDeletes, every, explainFiles, Extension, fileExtensionIs, FileWatcherEventKind, filter, flatMap, forEach, forEachEntry, forEachKey, generateDjb2Hash, getAllowJSCompilerOption, getAutomaticTypeDirectiveNames, getBaseFileName, getCommonSourceDirectoryOfConfig, getDeclarationEmitOutputFilePathWorker, getDefaultCompilerOptions, getDefaultLibFileName, getDefaultLibFilePath, getDirectoryPath, getEffectiveTypeRoots, getEmitDeclarations, getEntrypointsFromPackageJsonInfo, getNormalizedAbsolutePath, getOrUpdate, getOutputDeclarationFileName, getStringComparer, inferredTypesContainingFile, isDeclarationFileName, isExternalModuleNameRelative, isInsideNodeModules, JsTyping, LanguageServiceMode, map, mapDefined, maybeBind, memoize, noop, noopFileWatcher, normalizePath, normalizeSlashes, PackageJsonAutoImportPreference, parsePackageName, PollingInterval, ProgramUpdateLevel, propertyOf, removeFileExtension, resolutionExtensionIsTSOrJson, resolvePackageNameToPackageJson, returnFalse, ScriptKind, some, sortAndDeduplicate, startsWith, stripQuotes, StructureIsReused, ThrottledCancellationToken, timestamp, toPath, toSorted, tracing, updateErrorForNoInputFiles, updateMissingFilePathsWatch, WatchDirectoryFlags, WatchType, } from "./_namespaces/ts.js";
+ import { ActionInvalidate, asNormalizedPath, createModuleSpecifierCache, emptyArray, Errors, getDetailWatchInfo, LogLevel, Msg, nullTypingsInstaller, toNormalizedPath, updateProjectIfDirty, } from "./_namespaces/ts.server.js";
+ export var ProjectKind;
+ (function (ProjectKind) {
+@@ -233,7 +233,7 @@
+                 resolvedModule = result.module;
+                 break;
+             }
+-            const err = result.error.stack || result.error.message || JSON.stringify(result.error);
++            const err = propertyOf(result.error, "stack") || propertyOf(result.error, "message") || JSON.stringify(result.error);
+             (errorLogs ??= []).push(`Failed to load module '${pluginConfigEntry.name}' from ${resolvedPath}: ${err}`);
+         }
+         return { pluginConfigEntry, resolvedModule, errorLogs };
+@@ -257,7 +257,7 @@
+                 resolvedModule = result.module;
+                 break;
+             }
+-            const err = result.error.stack || result.error.message || JSON.stringify(result.error);
++            const err = propertyOf(result.error, "stack") || propertyOf(result.error, "message") || JSON.stringify(result.error);
+             (errorLogs ??= []).push(`Failed to dynamically import module '${pluginConfigEntry.name}' from ${resolvedPath}: ${err}`);
+         }
+         return { pluginConfigEntry, resolvedModule, errorLogs };

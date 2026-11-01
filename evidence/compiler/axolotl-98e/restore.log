@@ -1,0 +1,13 @@
+{
+  "files": 1,
+  "javascriptChanging": true,
+  "evidence": [
+    {
+      "row": 4,
+      "file": "src/server/types.ts",
+      "line": 24,
+      "before": "{ stack?: string; message?: string; }",
+      "after": "unknown"
+    }
+  ]
+}

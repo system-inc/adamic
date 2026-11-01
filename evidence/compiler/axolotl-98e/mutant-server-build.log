@@ -1,0 +1,284 @@
+
+> typescript@6.0.3 build
+> npm run build:compiler && npm run build:tests
+
+
+> typescript@6.0.3 build:compiler
+> hereby local
+
+Using /tmp/a98/e98e/tree/Herebyfile.mjs to run local
+Starting generate-diagnostics
+> /opt/adamic-tools/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Starting lib
+Starting shim-compile-cache-tsc
+Starting shim-compile-cache-tsserver
+Starting shim-compile-cache-typings-installer
+Starting bundle-watch-guard
+Starting build-watch-guard
+Starting generate-types-map
+Finished shim-compile-cache-tsc in 14ms
+Finished shim-compile-cache-tsserver in 15ms
+Finished shim-compile-cache-typings-installer in 15ms
+Finished generate-types-map in 15ms
+Finished bundle-watch-guard in 18ms
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished generate-diagnostics in 101ms
+Starting localize
+Starting bundle-tsc
+Starting build-tsc
+Starting bundle-services
+Starting build-services
+Starting bundle-tsserver
+Starting build-tsserver
+Starting bundle-typings-installer
+Starting build-typings-installer
+Starting copy-built-local-diagnostic-messages
+Finished localize in 1ms
+Finished copy-built-local-diagnostic-messages in 7ms
+Finished lib in 163ms
+Finished bundle-tsserver in 263ms
+Finished bundle-typings-installer in 290ms
+Finished bundle-tsc in 946ms
+Finished bundle-services in 1.1s
+Finished build-watch-guard in 3.1s
+Finished build-tsc in 3s
+Finished build-services in 3s
+Finished build-tsserver in 3s
+Finished build-typings-installer in 3s
+Starting dts-services
+> /opt/adamic-tools/bin/node ./scripts/dtsBundler.mjs --entrypoint ./built/local/typescript/typescript.d.ts --output ./built/local/typescript.d.ts
+Starting lssl
+Finished lssl in 2ms
+Bundling ./built/local/typescript/typescript.d.ts to ./built/local/typescript.d.ts and ./built/local/typescript.internal.d.ts
+Finished dts-services in 2.4s
+Starting dts-lssl
+Finished dts-lssl in 2ms
+Completed local in 5.5s
+
+> typescript@6.0.3 build:tests
+> hereby tests
+
+Using /tmp/a98/e98e/tree/Herebyfile.mjs to run tests
+Starting lib
+Starting generate-diagnostics
+> /opt/adamic-tools/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished generate-diagnostics in 103ms
+Starting bundle-tests
+Starting build-tests
+Finished lib in 166ms
+Finished bundle-tests in 901ms
+src/harness/harnessLanguageService.ts(613,5): error TS2416: Property 'require' in type 'SessionServerHost' is not assignable to the same property in base type 'ServerHost'.
+  Type '(_initialDir: string, _moduleName: string) => ModuleImportResult<{}>' is not assignable to type '(initialPath: string, moduleName: string) => ModuleImportResult'.
+    Type 'ModuleImportResult<{}>' is not assignable to type 'ModuleImportResult'.
+      Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+        Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type '{ module: undefined; error: { stack?: string | undefined; message?: string | undefined; }; }'.
+          Types of property 'error' are incompatible.
+            Type 'unknown' is not assignable to type '{ stack?: string | undefined; message?: string | undefined; }'.
+src/harness/harnessLanguageService.ts(752,52): error TS2345: Argument of type 'SessionServerHost' is not assignable to parameter of type 'ServerHost'.
+  The types returned by 'require(...)' are incompatible between these types.
+    Type 'ModuleImportResult<{}>' is not assignable to type 'ModuleImportResult'.
+      Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+        Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type '{ module: undefined; error: { stack?: string | undefined; message?: string | undefined; }; }'.
+          Types of property 'error' are incompatible.
+            Type 'unknown' is not assignable to type '{ stack?: string | undefined; message?: string | undefined; }'.
+src/harness/harnessLanguageService.ts(754,13): error TS2322: Type 'SessionServerHost' is not assignable to type 'ServerHost'.
+  The types returned by 'require(...)' are incompatible between these types.
+    Type 'ModuleImportResult<{}>' is not assignable to type 'ModuleImportResult'.
+      Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+        Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type '{ module: undefined; error: { stack?: string | undefined; message?: string | undefined; }; }'.
+          Types of property 'error' are incompatible.
+            Type 'unknown' is not assignable to type '{ stack?: string | undefined; message?: string | undefined; }'.
+src/testRunner/unittests/helpers/tsserver.ts(194,18): error TS2430: Interface 'TestSessionOptions' incorrectly extends interface 'SessionOptions'.
+  The types of 'host.require' are incompatible between these types.
+    Type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult) | undefined' is not assignable to type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult) | undefined'.
+      Type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+        Type 'import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type 'import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+          Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+            Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type '{ module: undefined; error: { stack?: string | undefined; message?: string | undefined; }; }'.
+              Types of property 'error' are incompatible.
+                Type 'unknown' is not assignable to type '{ stack?: string | undefined; message?: string | undefined; }'.
+src/testRunner/unittests/helpers/tsserver.ts(215,21): error TS2416: Property 'host' in type 'TestSession' is not assignable to the same property in base type 'Session<string>'.
+  Type 'TestSessionAndServiceHost' is not assignable to type 'ServerHost'.
+    Types of property 'require' are incompatible.
+      Type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult) | undefined' is not assignable to type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult) | undefined'.
+        Type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+          Type 'import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type 'import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+            Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+              Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type '{ module: undefined; error: { stack?: string | undefined; message?: string | undefined; }; }'.
+                Types of property 'error' are incompatible.
+                  Type 'unknown' is not assignable to type '{ stack?: string | undefined; message?: string | undefined; }'.
+src/testRunner/unittests/helpers/tsserver.ts(223,67): error TS2345: Argument of type 'TestServerHost' is not assignable to parameter of type 'ServerHost'.
+  Types of property 'require' are incompatible.
+    Type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult) | undefined' is not assignable to type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult) | undefined'.
+      Type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+        Type 'import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type 'import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+          Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+            Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type '{ module: undefined; error: { stack?: string | undefined; message?: string | undefined; }; }'.
+              Types of property 'error' are incompatible.
+                Type 'unknown' is not assignable to type '{ stack?: string | undefined; message?: string | undefined; }'.
+src/testRunner/unittests/helpers/tsserver.ts(231,15): error TS2345: Argument of type '{ host: TestServerHost; logger: LoggerWithInMemoryLogs; disableAutomaticTypingAcquisition?: boolean | undefined; useCancellationToken?: boolean | number | undefined; regionDiagLineCountThreshold?: number | undefined; ... 20 more ...; typingsInstaller: TestTypingsInstallerAdapter | undefined; }' is not assignable to parameter of type 'SessionOptions'.
+  The types of 'host.require' are incompatible between these types.
+    Type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult) | undefined' is not assignable to type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult) | undefined'.
+      Type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+        Type 'import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type 'import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+          Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+            Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type '{ module: undefined; error: { stack?: string | undefined; message?: string | undefined; }; }'.
+              Types of property 'error' are incompatible.
+                Type 'unknown' is not assignable to type '{ stack?: string | undefined; message?: string | undefined; }'.
+src/testRunner/unittests/helpers/typingsInstaller.ts(184,13): error TS2345: Argument of type 'TestServerHost' is not assignable to parameter of type 'ServerHost'.
+  Types of property 'require' are incompatible.
+    Type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult) | undefined' is not assignable to type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult) | undefined'.
+      Type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+        Type 'import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type 'import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+          Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+            Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type '{ module: undefined; error: { stack?: string | undefined; message?: string | undefined; }; }'.
+              Types of property 'error' are incompatible.
+                Type 'unknown' is not assignable to type '{ stack?: string | undefined; message?: string | undefined; }'.
+src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts(418,5): error TS2416: Property 'require' in type 'TestServerHost' is not assignable to the same property in base type 'ServerHost'.
+  Type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult) | undefined' is not assignable to type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult) | undefined'.
+    Type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+      Type 'import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type 'import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+        Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+          Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type '{ module: undefined; error: { stack?: string | undefined; message?: string | undefined; }; }'.
+            Types of property 'error' are incompatible.
+              Type 'unknown' is not assignable to type '{ stack?: string | undefined; message?: string | undefined; }'.
+src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts(419,5): error TS2416: Property 'importPlugin' in type 'TestServerHost' is not assignable to the same property in base type 'ServerHost'.
+  Type '((root: string, moduleName: string) => Promise<import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult>) | undefined' is not assignable to type '((root: string, moduleName: string) => Promise<import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult>) | undefined'.
+    Type '(root: string, moduleName: string) => Promise<import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult>' is not assignable to type '(root: string, moduleName: string) => Promise<import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult>'.
+      Type 'Promise<import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult>' is not assignable to type 'Promise<import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult>'.
+        Type 'import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type 'import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+          Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+            Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type '{ module: undefined; error: { stack?: string | undefined; message?: string | undefined; }; }'.
+              Types of property 'error' are incompatible.
+                Type 'unknown' is not assignable to type '{ stack?: string | undefined; message?: string | undefined; }'.
+src/testRunner/unittests/services/extract/helpers.ts(8,18): error TS2430: Interface 'TestProjectServiceOptions' incorrectly extends interface 'ProjectServiceOptions'.
+  The types of 'host.require' are incompatible between these types.
+    Type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult) | undefined' is not assignable to type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult) | undefined'.
+      Type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+        Type 'import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type 'import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+          Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+            Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type '{ module: undefined; error: { stack?: string | undefined; message?: string | undefined; }; }'.
+              Types of property 'error' are incompatible.
+                Type 'unknown' is not assignable to type '{ stack?: string | undefined; message?: string | undefined; }'.
+src/testRunner/unittests/services/extract/helpers.ts(19,15): error TS2345: Argument of type '{ cancellationToken: ts.HostCancellationToken; useSingleInferredProject: boolean; useInferredProjectPerProjectRoot: boolean; canUseWatchEvents?: boolean | undefined; ... 12 more ...; logger: Logger; }' is not assignable to parameter of type 'ProjectServiceOptions'.
+  The types of 'host.require' are incompatible between these types.
+    Type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult) | undefined' is not assignable to type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult) | undefined'.
+      Type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+        Type 'import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type 'import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+          Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+            Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type '{ module: undefined; error: { stack?: string | undefined; message?: string | undefined; }; }'.
+              Types of property 'error' are incompatible.
+                Type 'unknown' is not assignable to type '{ stack?: string | undefined; message?: string | undefined; }'.
+src/testRunner/unittests/tsserver/compileOnSave.ts(751,13): error TS2322: Type 'TestServerHost' is not assignable to type 'ServerHost'.
+  Types of property 'require' are incompatible.
+    Type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult) | undefined' is not assignable to type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult) | undefined'.
+      Type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+        Type 'import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type 'import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+          Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+            Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type '{ module: undefined; error: { stack?: string | undefined; message?: string | undefined; }; }'.
+              Types of property 'error' are incompatible.
+                Type 'unknown' is not assignable to type '{ stack?: string | undefined; message?: string | undefined; }'.
+src/testRunner/unittests/tsserver/projects.ts(735,13): error TS2322: Type 'TestServerHost' is not assignable to type 'ServerHost'.
+  Types of property 'require' are incompatible.
+    Type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult) | undefined' is not assignable to type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult) | undefined'.
+      Type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+        Type 'import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type 'import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+          Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+            Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type '{ module: undefined; error: { stack?: string | undefined; message?: string | undefined; }; }'.
+              Types of property 'error' are incompatible.
+                Type 'unknown' is not assignable to type '{ stack?: string | undefined; message?: string | undefined; }'.
+src/testRunner/unittests/tsserver/textStorage.ts(27,47): error TS2345: Argument of type 'TestServerHost' is not assignable to parameter of type 'ServerHost'.
+  Types of property 'require' are incompatible.
+    Type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult) | undefined' is not assignable to type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult) | undefined'.
+      Type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+        Type 'import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type 'import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+          Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+            Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type '{ module: undefined; error: { stack?: string | undefined; message?: string | undefined; }; }'.
+              Types of property 'error' are incompatible.
+                Type 'unknown' is not assignable to type '{ stack?: string | undefined; message?: string | undefined; }'.
+src/testRunner/unittests/tsserver/textStorage.ts(28,47): error TS2345: Argument of type 'TestServerHost' is not assignable to parameter of type 'ServerHost'.
+  Types of property 'require' are incompatible.
+    Type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult) | undefined' is not assignable to type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult) | undefined'.
+      Type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+        Type 'import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type 'import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+          Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+            Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type '{ module: undefined; error: { stack?: string | undefined; message?: string | undefined; }; }'.
+              Types of property 'error' are incompatible.
+                Type 'unknown' is not assignable to type '{ stack?: string | undefined; message?: string | undefined; }'.
+src/testRunner/unittests/tsserver/textStorage.ts(61,47): error TS2345: Argument of type 'TestServerHost' is not assignable to parameter of type 'ServerHost'.
+  Types of property 'require' are incompatible.
+    Type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult) | undefined' is not assignable to type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult) | undefined'.
+      Type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+        Type 'import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type 'import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+          Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+            Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type '{ module: undefined; error: { stack?: string | undefined; message?: string | undefined; }; }'.
+              Types of property 'error' are incompatible.
+                Type 'unknown' is not assignable to type '{ stack?: string | undefined; message?: string | undefined; }'.
+src/testRunner/unittests/tsserver/textStorage.ts(79,47): error TS2345: Argument of type 'TestServerHost' is not assignable to parameter of type 'ServerHost'.
+  Types of property 'require' are incompatible.
+    Type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult) | undefined' is not assignable to type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult) | undefined'.
+      Type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+        Type 'import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type 'import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+          Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+            Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type '{ module: undefined; error: { stack?: string | undefined; message?: string | undefined; }; }'.
+              Types of property 'error' are incompatible.
+                Type 'unknown' is not assignable to type '{ stack?: string | undefined; message?: string | undefined; }'.
+src/testRunner/unittests/tsserver/textStorage.ts(87,47): error TS2345: Argument of type 'TestServerHost' is not assignable to parameter of type 'ServerHost'.
+  Types of property 'require' are incompatible.
+    Type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult) | undefined' is not assignable to type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult) | undefined'.
+      Type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+        Type 'import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type 'import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+          Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+            Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type '{ module: undefined; error: { stack?: string | undefined; message?: string | undefined; }; }'.
+              Types of property 'error' are incompatible.
+                Type 'unknown' is not assignable to type '{ stack?: string | undefined; message?: string | undefined; }'.
+src/testRunner/unittests/tsserver/textStorage.ts(98,47): error TS2345: Argument of type 'TestServerHost' is not assignable to parameter of type 'ServerHost'.
+  Types of property 'require' are incompatible.
+    Type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult) | undefined' is not assignable to type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult) | undefined'.
+      Type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+        Type 'import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type 'import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+          Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+            Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type '{ module: undefined; error: { stack?: string | undefined; message?: string | undefined; }; }'.
+              Types of property 'error' are incompatible.
+                Type 'unknown' is not assignable to type '{ stack?: string | undefined; message?: string | undefined; }'.
+src/testRunner/unittests/tsserver/textStorage.ts(119,47): error TS2345: Argument of type 'TestServerHost' is not assignable to parameter of type 'ServerHost'.
+  Types of property 'require' are incompatible.
+    Type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult) | undefined' is not assignable to type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult) | undefined'.
+      Type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+        Type 'import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type 'import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+          Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+            Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type '{ module: undefined; error: { stack?: string | undefined; message?: string | undefined; }; }'.
+              Types of property 'error' are incompatible.
+                Type 'unknown' is not assignable to type '{ stack?: string | undefined; message?: string | undefined; }'.
+src/testRunner/unittests/tsserver/textStorage.ts(139,47): error TS2345: Argument of type 'TestServerHost' is not assignable to parameter of type 'ServerHost'.
+  Types of property 'require' are incompatible.
+    Type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult) | undefined' is not assignable to type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult) | undefined'.
+      Type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+        Type 'import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type 'import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+          Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+            Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type '{ module: undefined; error: { stack?: string | undefined; message?: string | undefined; }; }'.
+              Types of property 'error' are incompatible.
+                Type 'unknown' is not assignable to type '{ stack?: string | undefined; message?: string | undefined; }'.
+src/testRunner/unittests/tsserver/typingsInstaller.ts(1826,53): error TS2345: Argument of type 'TestServerHost' is not assignable to parameter of type 'ServerHost'.
+  Types of property 'require' are incompatible.
+    Type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult) | undefined' is not assignable to type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult) | undefined'.
+      Type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+        Type 'import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type 'import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+          Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+            Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type '{ module: undefined; error: { stack?: string | undefined; message?: string | undefined; }; }'.
+              Types of property 'error' are incompatible.
+                Type 'unknown' is not assignable to type '{ stack?: string | undefined; message?: string | undefined; }'.
+src/testRunner/unittests/tsserver/watchEnvironment.ts(204,13): error TS2322: Type 'TestServerHost' is not assignable to type 'ServerHost'.
+  Types of property 'require' are incompatible.
+    Type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult) | undefined' is not assignable to type '((initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult) | undefined'.
+      Type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type '(initialPath: string, moduleName: string) => import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+        Type 'import("/tmp/a98/e98e/tree/built/local/compiler/types").ModuleImportResult' is not assignable to type 'import("/tmp/a98/e98e/tree/built/local/server/types").ModuleImportResult'.
+          Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+            Type '{ module: undefined; modulePath?: undefined; error: unknown; }' is not assignable to type '{ module: undefined; error: { stack?: string | undefined; message?: string | undefined; }; }'.
+              Types of property 'error' are incompatible.
+                Type 'unknown' is not assignable to type '{ stack?: string | undefined; message?: string | undefined; }'.
+Error in build-tests in 6.7s
+Error: Process exited with code: 1
+Completed tests with errors in 6.8s
+Failed tasks: build-tests

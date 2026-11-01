@@ -1,0 +1,27 @@
+--- /tmp/a98/e98c/tree/built/local/typescript.d.ts	2026-11-01 20:01:28.050110385 +0000
++++ /tmp/a98/e98e/tree/built/local/typescript.d.ts	2026-11-01 20:25:07.518194762 +0000
+@@ -2704,10 +2704,7 @@
+             error: undefined;
+         } | {
+             module: undefined;
+-            error: {
+-                stack?: string;
+-                message?: string;
+-            };
++            error: unknown;
+         };
+         /** @deprecated Use {@link ModuleImportResult} instead. */
+         type RequireResult = ModuleImportResult;
+@@ -8485,7 +8482,11 @@
+          */
+         createHash?(data: string): string;
+         /** This must be cryptographically secure. Only implement this method using `crypto.createHash("sha256")`. */
+-        createSHA256Hash?(data: string): string;
++        createSHA256Hash?:
++            | {
++                createSHA256Hash(data: string): string;
++            }["createSHA256Hash"]
++            | undefined;
+         getMemoryUsage?(): number;
+         exit(exitCode?: number): number | undefined;
+         realpath?(path: string): string;

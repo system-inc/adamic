@@ -1,0 +1,10 @@
+--- compiler__namespaces_ts.ts.nocomments.before.js	2026-11-01 20:27:34.254203485 +0000
++++ compiler__namespaces_ts.ts.nocomments.after.js	2026-11-01 20:27:34.262203485 +0000
+@@ -6,6 +6,7 @@
+ export * from "../tracing.js";
+ export * from "../types.js";
+ export * from "../sys.js";
++export * from "../hostErrors.js";
+ export * from "../path.js";
+ export * from "../diagnosticInformationMap.generated.js";
+ export * from "../scanner.js";
