@@ -1,0 +1,16 @@
+// Spec: `this` escaping a constructor before every field is set: stored, passed, or a method called on it
+// Expect: refused this escaping a base constructor before derived fields are initialized
+class Base {
+	constructor() {
+		this.describe();
+	}
+	describe(): void {}
+}
+class Derived extends Base {
+	value = 1;
+	override describe(): void {
+		console.log(String(this.value));
+	}
+}
+const made = new Derived();
+console.log(String(made.value));
