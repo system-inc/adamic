@@ -1,0 +1,64 @@
+{
+  "status": "fail",
+  "counts": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "phases": {
+    "install": {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit": 0,
+      "seconds": 2.529
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "seconds": 23.217
+    },
+    "tests": {
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--workers=8",
+        "--lint=false",
+        "--no-colors"
+      ],
+      "exit": 1,
+      "seconds": 324.952
+    }
+  },
+  "wall_seconds": 350.796,
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "cause_counts": {
+    "timeout": 0,
+    "baseline-content": 1,
+    "baseline-missing": 0,
+    "exception": 0,
+    "other": 0
+  },
+  "publicApi": {
+    "built": {
+      "bytes": 590996,
+      "sha256": "b901adcc6ec29e299ec21401b2a155b2b2c14c046ec743fed6ee45679b726d5d",
+      "matchesMain": true
+    },
+    "reference": {
+      "bytes": 588626,
+      "sha256": "f87d6c30da287293aae741711fa94594b75d49e0977cea6bfd5982f90e2bafcf",
+      "matchesMain": true
+    }
+  }
+}

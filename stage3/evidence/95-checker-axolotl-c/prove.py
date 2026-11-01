@@ -14,7 +14,8 @@ import sys
 before, after, census, output = map(Path, sys.argv[1:])
 output.mkdir(parents=True, exist_ok=False)
 here = Path(__file__).resolve().parent
-sites = json.loads((here / 'sites.json').read_text())
+adapter = here.parents[1] / 'adapt/95-checker-axolotl-c'
+sites = json.loads((adapter / 'sites.json').read_text())
 env = dict(os.environ, NODE_PATH=str(here.parents[1] / 'api/node_modules'))
 def run(label, command, expected=0):
     with (output / (label + '.log')).open('w') as log:
@@ -27,10 +28,10 @@ def observe(label, tree):
     run(label,[census,tree / 'src/tsc/tsc.ts',destination])
     return destination
 
-run('source',['node',here / 'verify.cjs',before,after])
-run('idempotence',['node',here / 'adapt.cjs',after])
+run('source',['node',adapter / 'verify.cjs',before,after])
+run('idempotence',['node',adapter / 'adapt.cjs',after])
 assert json.loads((output / 'idempotence.log').read_text())['declarations'] == 0
-run('check',['node',here / 'adapt.cjs','--check',after])
+run('check',['node',adapter / 'adapt.cjs','--check',after])
 before_census, after_census = observe('before',before), observe('after',after)
 # Measure each widening alone, preserving exact bytes and restoring in finally.
 original = {relative:(before / relative).read_bytes() for relative in {r['file'] for r in sites}}
@@ -50,8 +51,8 @@ mutant = output / 'mutant'
 shutil.copytree(after,mutant,ignore=shutil.ignore_patterns('.git','node_modules','built'))
 row = sites[0]
 run('edit-mutant',['node',here / 'edit-one.cjs',mutant,0,'undo'])
-run('mutant-verifier',['node',here / 'verify.cjs',before,mutant],1)
-run('mutant-check',['node',here / 'adapt.cjs','--check',mutant],1)
+run('mutant-verifier',['node',adapter / 'verify.cjs',before,mutant],1)
+run('mutant-check',['node',adapter / 'adapt.cjs','--check',mutant],1)
 mutant_census = observe('mutant',mutant)
 run('census',['python3',here / 'compare-census.py',before_census,after_census,mutant_census])
 # Import only the shared meter normalization without invoking the comparison CLI.

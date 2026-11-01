@@ -2,7 +2,7 @@
 'use strict';
 // Proof inputs only. Never used by the adapter or independent verifier.
 const fs=require('node:fs'), path=require('node:path'), assert=require('node:assert/strict'), ts=require('typescript');
-const [tree,index,direction]=process.argv.slice(2), row=require('./sites.json')[Number(index)];
+const [tree,index,direction]=process.argv.slice(2), row=require('../../adapt/95-checker-axolotl-c/sites.json')[Number(index)];
 assert(row && ['forward','undo'].includes(direction));
 const file=path.join(tree,row.file), text=fs.readFileSync(file,'utf8');
 const source=ts.createSourceFile(file,text,ts.ScriptTarget.Latest,true), owners=[];
