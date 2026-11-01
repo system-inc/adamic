@@ -1,0 +1,16 @@
+// Spec: on a value whose storage is proven a record
+// Expect: lowers
+const hide = (bag: Record<string, number>): void => {
+	Object.defineProperty(bag, 'hidden', { enumerable: false, writable: false, value: 5 });
+};
+const bag: Record<string, number> = { shown: 1 };
+hide(bag);
+console.log(`${Object.keys(bag).join(',')} ${String('hidden' in bag)} ${String(bag['hidden'])}`);
+try {
+	bag['hidden'] = 6;
+	console.log('written');
+}
+catch(error) {
+	if(error instanceof Error) console.log(`${error.name}: ${error.message}`);
+}
+console.log(String(bag['hidden']));

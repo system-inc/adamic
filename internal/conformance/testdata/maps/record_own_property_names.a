@@ -1,0 +1,6 @@
+// Spec: `Object.getOwnPropertyNames` on a record is not built yet
+// Expect: notyet Object.getOwnPropertyNames on a record
+const names = (bag: Record<string, number>): string => Object.getOwnPropertyNames(bag).join(',');
+const bag: Record<string, number> = {};
+bag['a'] = 1;
+console.log(names(bag));

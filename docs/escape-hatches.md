@@ -22,7 +22,7 @@ Accepted by @system_adamic on October 6, 2026. These are language decisions; the
 | x is T | Refused | 327 / 2.449 | Decided: proven predicate body or refused | 0 added runtime |
 | asserts x is T | Refused | 16 / 0.120 | Decided: proven assertion body or refused | 0 added runtime |
 | expando assignment | Checker error | 0 confirmed; 10 candidates / 0.075 | Decided: refused shape addition | 0 |
-| Object.defineProperty | Refused | 2 / 0.015 | Decided: refused | 0 |
+| Object.defineProperty | Refused | 2 / 0.015 | Decided: refused, but for the hidden configFile shape on records, admitted November 1, 2026 (docs/0.1.md, row Expandos) | 0 |
 | Object.assign(existing, ...) | Adding field: NotYet; fixed fields: sound | 1 / 0.007 (target candidate) | Proven fixed-shape writes; refuse additions | O(fields), existing work |
 | bivariant interface methods | Unsafe relation refused | 1,468 / 10.994 method declarations | Decided: proven contravariant relation or refused | 0 |
 | Function type | Call NotYet | 0 / 0 | Decided: refused | 0 |
