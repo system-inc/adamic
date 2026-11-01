@@ -254,8 +254,10 @@ func init() {
 // one would find no field (the runtime stops it: object.c's adamic_refuse_record_fixed_read). In a
 // program with records, such a read lowers only when no record can be its receiver: not one of the
 // types records are made as (rule b), not a type one of them is assignable to (rule c, which covers
-// a record passed through a parameter, a generic or a union member), and not a field a checked view
-// registered, since a record reaches a fixed type through a view (rule a, checkRecordGuardedReads).
+// a record passed through a parameter, a generic or a union member, and the reverse, which covers a
+// record narrowed to a subtype or an intersection), and not a field a checked view registered, since
+// a record reaches a fixed type through a view (rule a, checkRecordGuardedReads). Today (a) and (b)
+// are implied by (c) and have no witness of their own; they are kept so a new entrance fails closed.
 type recordGuardedRead struct {
 	node           *ast.Node
 	receiverTypeID int
@@ -317,6 +319,13 @@ func (l *lowering) recordMayReachDepth(receiver *checker.Type, depth int) bool {
 		}
 		return false
 	}
+	if receiver.Flags()&checker.TypeFlagsIntersection != 0 {
+		for _, member := range receiver.Types() {
+			if l.recordMayReachDepth(member, depth+1) {
+				return true
+			}
+		}
+	}
 	if receiver.Flags()&checker.TypeFlagsInstantiable != 0 {
 		if concrete := l.concrete(receiver); concrete != nil && concrete != receiver {
 			return l.recordMayReachDepth(concrete, depth+1)
@@ -326,8 +335,10 @@ func (l *lowering) recordMayReachDepth(receiver *checker.Type, depth int) bool {
 	if l.enumerationRecordStorageType(receiver) {
 		return true
 	}
+	// Both ways: a record seen as a wider type, and a record narrowed to a narrower one (a predicate,
+	// a discriminant), arrive alike.
 	for _, record := range l.entriesRecordStorageTypes() {
-		if record == receiver || l.checker.IsTypeAssignableTo(record, receiver) {
+		if record == receiver || l.checker.IsTypeAssignableTo(record, receiver) || l.checker.IsTypeAssignableTo(receiver, record) {
 			return true
 		}
 	}

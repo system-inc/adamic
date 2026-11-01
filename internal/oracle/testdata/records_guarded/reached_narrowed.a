@@ -1,0 +1,13 @@
+// A discriminant narrows a union holding a record to Plain, which the record's type isn't assignable
+// to, but Plain is assignable to it: the record may still be the value read.
+interface Opts { [key: string]: number | string | undefined; total: number }
+interface Plain { kind: "plain"; total: number; size?: number }
+const opts: Opts = { total: 2 };
+opts["size"] = 4;
+function read(value: Opts | Plain): string {
+	if (value.kind === "plain") return value.size === undefined ? "none" : String(value.size);
+	return "opts";
+}
+for (const key of Object.keys(opts)) console.log(key);
+console.log(read(opts));
+console.log(read({ kind: "plain", total: 1, size: 3 }));

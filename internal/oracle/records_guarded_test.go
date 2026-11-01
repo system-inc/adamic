@@ -35,10 +35,13 @@ func TestRecordGuardedReadAdmitted(t *testing.T) {
 }
 
 // A read a record may reach stays NotYet: through a type a record's type is assignable to, through
-// a type parameter's constraint, and through ?. on the record's own type.
+// a type parameter's constraint, through ?. on the record's own type, and through a discriminant that
+// narrows a union holding a record to a member narrower than it. The view rule (a) and the storage
+// type rule (b) in entries_records.go are fail-closed extras with no witness of their own: (c)
+// implies both today, so nothing here pins them.
 func TestRecordGuardedReadRefused(t *testing.T) {
 	t.Parallel()
-	for name, where := range map[string]string{"reached_assignable": ":7:16", "reached_generic": ":6:16", "reached_own": ":9:15"} {
+	for name, where := range map[string]string{"reached_assignable": ":7:16", "reached_generic": ":6:16", "reached_own": ":9:15", "reached_narrowed": ":8:9"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_guarded/"+name+".a"))
