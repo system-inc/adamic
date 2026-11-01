@@ -1,0 +1,11 @@
+{
+  "before": 3347,
+  "after": 3346,
+  "removed": [
+    "src/compiler/checker.ts:54261:5: error TS2375: Type '{ getCommonSourceDirectory: () => string; getCurrentDirectory: () => string; getSymlinkCache: (() => SymlinkCache) | undefined; getPackageJsonInfoCache: () => PackageJsonInfoCache | undefined; ... 9 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'ModuleSpecifierResolutionHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'readFile' are incompatible.\n    Type '((fileName: string) => string | undefined) | undefined' is not assignable to type '(path: string) => string | undefined'.\n      Type 'undefined' is not assignable to type '(path: string) => string | undefined'.",
+    "src/services/utilities.ts:2454:5: error TS2375: Type '{ fileExists: (fileName: string) => boolean; getCurrentDirectory: () => string; readFile: ((path: string, encoding?: string | undefined) => string | undefined) | undefined; useCaseSensitiveFileNames: ...; ... 11 more ...; getModeForResolutionAtIndex: ...; }' is not assignable to type 'ModuleSpecifierResolutionHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'readFile' are incompatible.\n    Type '((path: string, encoding?: string | undefined) => string | undefined) | undefined' is not assignable to type '(path: string) => string | undefined'.\n      Type 'undefined' is not assignable to type '(path: string) => string | undefined'."
+  ],
+  "added": [
+    "src/services/utilities.ts:2454:5: error TS2375: Type '{ fileExists: (fileName: string) => boolean; getCurrentDirectory: () => string; readFile: ((path: string, encoding?: string | undefined) => string | undefined) | undefined; useCaseSensitiveFileNames: ...; ... 11 more ...; getModeForResolutionAtIndex: ...; }' is not assignable to type 'ModuleSpecifierResolutionHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'getModuleSpecifierCache' are incompatible.\n    Type '(() => ModuleSpecifierCache) | undefined' is not assignable to type '() => ModuleSpecifierCache'.\n      Type 'undefined' is not assignable to type '() => ModuleSpecifierCache'."
+  ]
+}

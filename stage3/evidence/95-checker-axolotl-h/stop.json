@@ -1,0 +1,17 @@
+{
+  "status": "blocked",
+  "reason": "Newly exposed getModuleSpecifierCache diagnostic at src/services/utilities.ts:2454:5",
+  "outsideOriginalLiteral": true,
+  "strictServicesGateExit": 1,
+  "strictAllSourceGateWouldExit": 1,
+  "selectedSlotsInternal": true,
+  "publicSlotNeeded": false,
+  "shippingBranch": "typescript/axolotl-checker-h",
+  "shippingCommit": "ef4d26a4a38b7890317e1ba71f8ad928fd8588f6",
+  "oracle": "not run after required diagnostic stop",
+  "accepted97b": {
+    "branch": "cli/axolotl-97b",
+    "commit": "27162cab2bb0054b4ed7cad5a9e258f67f8030c1",
+    "ownedGlobalCacheNeededAt54261": true
+  }
+}

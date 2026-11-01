@@ -1,0 +1,4996 @@
+{
+  "baseline": "95a + 97b 27162cab",
+  "candidate": "95a + 95h + 97b",
+  "before": 3341,
+  "after": 3340,
+  "checkerBefore": 17,
+  "checkerAfter": 16,
+  "servicesBefore": 2755,
+  "servicesAfter": 2755,
+  "removed": [
+    "src/compiler/checker.ts:54261:5: error TS2375: Type '{ getCommonSourceDirectory: () => string; getCurrentDirectory: () => string; getSymlinkCache: (() => SymlinkCache) | undefined; getPackageJsonInfoCache: () => PackageJsonInfoCache | undefined; ... 9 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'ModuleSpecifierResolutionHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'readFile' are incompatible.\n    Type '((fileName: string) => string | undefined) | undefined' is not assignable to type '(path: string) => string | undefined'.\n      Type 'undefined' is not assignable to type '(path: string) => string | undefined'.",
+    "src/services/utilities.ts:2454:5: error TS2375: Type '{ fileExists: (fileName: string) => boolean; getCurrentDirectory: () => string; readFile: ((path: string, encoding?: string | undefined) => string | undefined) | undefined; useCaseSensitiveFileNames: ...; ... 11 more ...; getModeForResolutionAtIndex: ...; }' is not assignable to type 'ModuleSpecifierResolutionHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'readFile' are incompatible.\n    Type '((path: string, encoding?: string | undefined) => string | undefined) | undefined' is not assignable to type '(path: string) => string | undefined'.\n      Type 'undefined' is not assignable to type '(path: string) => string | undefined'."
+  ],
+  "added": [
+    "src/services/utilities.ts:2454:5: error TS2375: Type '{ fileExists: (fileName: string) => boolean; getCurrentDirectory: () => string; readFile: ((path: string, encoding?: string | undefined) => string | undefined) | undefined; useCaseSensitiveFileNames: ...; ... 11 more ...; getModeForResolutionAtIndex: ...; }' is not assignable to type 'ModuleSpecifierResolutionHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'getModuleSpecifierCache' are incompatible.\n    Type '(() => ModuleSpecifierCache) | undefined' is not assignable to type '() => ModuleSpecifierCache'.\n      Type 'undefined' is not assignable to type '() => ModuleSpecifierCache'."
+  ],
+  "perFile": [
+    {
+      "file": "src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/_namespaces/ts.performance.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/_namespaces/ts.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/builderPublic.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/builderState.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/builderStatePublic.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "before": 17,
+      "after": 16,
+      "removed": 1,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "before": 5,
+      "after": 5,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "before": 1,
+      "after": 1,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/corePublic.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/diagnosticInformationMap.generated.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/factory/baseNodeFactory.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/factory/emitHelpers.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/factory/emitNode.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/factory/nodeChildren.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/factory/nodeConverters.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/factory/parenthesizerRules.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/factory/utilities.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/factory/utilitiesPublic.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/hostErrors.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "before": 3,
+      "after": 3,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/path.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/performance.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/performanceCore.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "before": 9,
+      "after": 9,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/programDiagnostics.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "before": 1,
+      "after": 1,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/semver.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/sourcemap.ts",
+      "before": 1,
+      "after": 1,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "before": 4,
+      "after": 4,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformer.ts",
+      "before": 6,
+      "after": 6,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "before": 6,
+      "after": 6,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/classThis.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/declarations.ts",
+      "before": 1,
+      "after": 1,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/declarations/diagnostics.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/destructuring.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "before": 5,
+      "after": 5,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/es2016.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/es2017.ts",
+      "before": 6,
+      "after": 6,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/es2019.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/es2020.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/es2021.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "before": 3,
+      "after": 3,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/esnext.ts",
+      "before": 5,
+      "after": 5,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "before": 27,
+      "after": 27,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/jsx.ts",
+      "before": 2,
+      "after": 2,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+      "before": 5,
+      "after": 5,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/taggedTemplate.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/ts.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/typeSerializer.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/tsbuild.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "before": 8,
+      "after": 8,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/utilitiesPublic.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/visitorPublic.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "before": 2,
+      "after": 2,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "before": 8,
+      "after": 8,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/compiler/watchUtilities.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/deprecatedCompat/_namespaces/ts.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/deprecatedCompat/deprecate.ts",
+      "before": 2,
+      "after": 2,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/deprecatedCompat/deprecations.ts",
+      "before": 3,
+      "after": 3,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/_namespaces/FourSlash.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/_namespaces/FourSlashInterface.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/_namespaces/Harness.LanguageService.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/_namespaces/Harness.SourceMapRecorder.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/_namespaces/Harness.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/_namespaces/Utils.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/_namespaces/collections.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/_namespaces/compiler.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/_namespaces/documents.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/_namespaces/evaluator.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/_namespaces/fakes.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/_namespaces/ts.server.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/_namespaces/ts.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/_namespaces/vfs.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/_namespaces/vpath.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/client.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/collectionsImpl.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/compilerImpl.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/documentsUtil.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/evaluatorImpl.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/fakesHosts.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/findUpDir.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/fourslashImpl.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/fourslashInterfaceImpl.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/harnessGlobals.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/harnessIO.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/harnessLanguageService.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/harnessUtils.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/incrementalUtils.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/projectServiceStateLogger.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/runnerbase.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/sourceMapRecorder.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/tsserverLogger.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/typeWriter.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/util.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/vfsUtil.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/vpathUtil.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/harness/watchUtils.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/jsTyping/_namespaces/ts.JsTyping.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/jsTyping/_namespaces/ts.server.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/jsTyping/_namespaces/ts.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/jsTyping/jsTyping.ts",
+      "before": 11,
+      "after": 11,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/jsTyping/shared.ts",
+      "before": 1,
+      "after": 1,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/jsTyping/types.ts",
+      "before": 5,
+      "after": 5,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/decorators.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/decorators.legacy.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/dom.asynciterable.generated.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/dom.generated.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/dom.iterable.generated.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2015.collection.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2015.core.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2015.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2015.full.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2015.generator.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2015.iterable.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2015.promise.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2015.proxy.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2015.reflect.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2015.symbol.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2015.symbol.wellknown.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2016.array.include.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2016.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2016.full.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2016.intl.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2017.arraybuffer.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2017.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2017.date.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2017.full.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2017.intl.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2017.object.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2017.sharedmemory.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2017.string.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2017.typedarrays.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2018.asyncgenerator.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2018.asynciterable.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2018.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2018.full.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2018.intl.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2018.promise.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2018.regexp.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2019.array.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2019.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2019.full.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2019.intl.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2019.object.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2019.string.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2019.symbol.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2020.bigint.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2020.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2020.date.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2020.full.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2020.intl.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2020.number.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2020.promise.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2020.sharedmemory.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2020.string.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2020.symbol.wellknown.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2021.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2021.full.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2021.intl.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2021.promise.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2021.string.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2021.weakref.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2022.array.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2022.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2022.error.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2022.full.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2022.intl.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2022.object.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2022.regexp.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2022.string.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2023.array.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2023.collection.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2023.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2023.full.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2023.intl.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2024.arraybuffer.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2024.collection.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2024.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2024.full.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2024.object.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2024.promise.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2024.regexp.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2024.sharedmemory.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2024.string.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2025.collection.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2025.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2025.float16.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2025.full.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2025.intl.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2025.iterator.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2025.promise.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es2025.regexp.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es5.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/es5.full.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/esnext.array.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/esnext.collection.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/esnext.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/esnext.date.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/esnext.decorators.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/esnext.disposable.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/esnext.error.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/esnext.full.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/esnext.intl.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/esnext.sharedmemory.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/esnext.temporal.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/esnext.typedarrays.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/scripthost.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/webworker.asynciterable.generated.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/webworker.generated.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/webworker.importscripts.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/lib/webworker.iterable.generated.d.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/server/_namespaces/ts.server.protocol.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/server/_namespaces/ts.server.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/server/_namespaces/ts.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "before": 114,
+      "after": 114,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/server/moduleSpecifierCache.ts",
+      "before": 7,
+      "after": 7,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/server/packageJsonCache.ts",
+      "before": 2,
+      "after": 2,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/server/project.ts",
+      "before": 71,
+      "after": 71,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/server/protocol.ts",
+      "before": 15,
+      "after": 15,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/server/scriptInfo.ts",
+      "before": 32,
+      "after": 32,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/server/scriptVersionCache.ts",
+      "before": 35,
+      "after": 35,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/server/session.ts",
+      "before": 110,
+      "after": 110,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/server/types.ts",
+      "before": 10,
+      "after": 10,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/server/typingInstallerAdapter.ts",
+      "before": 19,
+      "after": 19,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/server/utilities.ts",
+      "before": 3,
+      "after": 3,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/server/utilitiesPublic.ts",
+      "before": 6,
+      "after": 6,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.BreakpointResolver.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.CallHierarchy.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.Completions.StringCompletions.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.Completions.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.FindAllReferences.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.GoToDefinition.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.InlayHints.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.JsDoc.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.MapCode.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.NavigateTo.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.NavigationBar.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.OrganizeImports.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.OutliningElementsCollector.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.PasteEdits.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.Rename.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.SignatureHelp.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.SmartSelectionRange.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.SymbolDisplay.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.classifier.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.classifier.v2020.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.codefix.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.formatting.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.preparePasteEdits.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.refactor.addOrRemoveBracesToArrowFunction.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.refactor.convertArrowFunctionOrFunctionExpression.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.refactor.convertParamsToDestructuredObject.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.refactor.convertStringOrTemplateLiteral.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.refactor.convertToOptionalChainExpression.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.refactor.extractSymbol.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.refactor.generateGetAccessorAndSetAccessor.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.refactor.inferFunctionReturnType.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.refactor.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.textChanges.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/_namespaces/ts.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/breakpoints.ts",
+      "before": 52,
+      "after": 52,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/callHierarchy.ts",
+      "before": 45,
+      "after": 45,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/classifier.ts",
+      "before": 63,
+      "after": 63,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/classifier2020.ts",
+      "before": 17,
+      "after": 17,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codeFixProvider.ts",
+      "before": 15,
+      "after": 15,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/addConvertToUnknownForNonOverlappingTypes.ts",
+      "before": 3,
+      "after": 3,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/addEmptyExportDeclaration.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/addMissingAsync.ts",
+      "before": 10,
+      "after": 10,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/addMissingAwait.ts",
+      "before": 14,
+      "after": 14,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/addMissingConst.ts",
+      "before": 5,
+      "after": 5,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/addMissingDeclareProperty.ts",
+      "before": 2,
+      "after": 2,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/addMissingInvocationForDecorator.ts",
+      "before": 1,
+      "after": 1,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/addMissingResolutionModeImportAttribute.ts",
+      "before": 4,
+      "after": 4,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/addNameToNamelessParameter.ts",
+      "before": 4,
+      "after": 4,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/addOptionalPropertyUndefined.ts",
+      "before": 10,
+      "after": 10,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/annotateWithTypeFromJSDoc.ts",
+      "before": 17,
+      "after": 17,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/convertConstToLet.ts",
+      "before": 4,
+      "after": 4,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/convertFunctionToEs6Class.ts",
+      "before": 24,
+      "after": 24,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/convertLiteralTypeToMappedType.ts",
+      "before": 3,
+      "after": 3,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/convertToAsyncFunction.ts",
+      "before": 25,
+      "after": 25,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/convertToEsModule.ts",
+      "before": 31,
+      "after": 31,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/convertToMappedObjectType.ts",
+      "before": 6,
+      "after": 6,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/convertToTypeOnlyExport.ts",
+      "before": 4,
+      "after": 4,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/convertToTypeOnlyImport.ts",
+      "before": 5,
+      "after": 5,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/convertTypedefToType.ts",
+      "before": 12,
+      "after": 12,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/correctQualifiedNameToIndexedAccessType.ts",
+      "before": 3,
+      "after": 3,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/disableJsDiagnostics.ts",
+      "before": 2,
+      "after": 2,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixAddMissingConstraint.ts",
+      "before": 11,
+      "after": 11,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixAddMissingMember.ts",
+      "before": 38,
+      "after": 38,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixAddMissingNewOperator.ts",
+      "before": 3,
+      "after": 3,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixAddMissingParam.ts",
+      "before": 19,
+      "after": 19,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixAddModuleReferTypeMissingTypeof.ts",
+      "before": 2,
+      "after": 2,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixAddVoidToPromise.ts",
+      "before": 12,
+      "after": 12,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixAwaitInSyncFunction.ts",
+      "before": 7,
+      "after": 7,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixCannotFindModule.ts",
+      "before": 3,
+      "after": 3,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixClassDoesntImplementInheritedAbstractMember.ts",
+      "before": 6,
+      "after": 6,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixClassIncorrectlyImplementsInterface.ts",
+      "before": 12,
+      "after": 12,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixClassSuperMustPrecedeThisAccess.ts",
+      "before": 5,
+      "after": 5,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixConstructorForDerivedNeedSuperCall.ts",
+      "before": 2,
+      "after": 2,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixEnableJsxFlag.ts",
+      "before": 1,
+      "after": 1,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixExpectedComma.ts",
+      "before": 2,
+      "after": 2,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixExtendsInterfaceBecomesImplements.ts",
+      "before": 7,
+      "after": 7,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixForgottenThisPropertyAccess.ts",
+      "before": 3,
+      "after": 3,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixImplicitThis.ts",
+      "before": 3,
+      "after": 3,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixImportNonExportedMember.ts",
+      "before": 8,
+      "after": 8,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixIncorrectNamedTupleSyntax.ts",
+      "before": 5,
+      "after": 5,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixInvalidImportSyntax.ts",
+      "before": 10,
+      "after": 10,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixInvalidJsxCharacters.ts",
+      "before": 3,
+      "after": 3,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixJSDocTypes.ts",
+      "before": 23,
+      "after": 23,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixMissingCallParentheses.ts",
+      "before": 4,
+      "after": 4,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixMissingTypeAnnotationOnExports.ts",
+      "before": 43,
+      "after": 43,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixModuleAndTargetOptions.ts",
+      "before": 2,
+      "after": 2,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixNaNEquality.ts",
+      "before": 7,
+      "after": 7,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixNoPropertyAccessFromIndexSignature.ts",
+      "before": 3,
+      "after": 3,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixOverrideModifier.ts",
+      "before": 11,
+      "after": 11,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixPropertyAssignment.ts",
+      "before": 3,
+      "after": 3,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixPropertyOverrideAccessor.ts",
+      "before": 3,
+      "after": 3,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixReturnTypeInAsyncFunction.ts",
+      "before": 4,
+      "after": 4,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixSpelling.ts",
+      "before": 5,
+      "after": 5,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixStrictClassInitialization.ts",
+      "before": 9,
+      "after": 9,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixUnmatchedParameter.ts",
+      "before": 9,
+      "after": 9,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixUnreachableCode.ts",
+      "before": 2,
+      "after": 2,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixUnreferenceableDecoratorMetadata.ts",
+      "before": 7,
+      "after": 7,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixUnusedIdentifier.ts",
+      "before": 18,
+      "after": 18,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/fixUnusedLabel.ts",
+      "before": 1,
+      "after": 1,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/generateAccessors.ts",
+      "before": 17,
+      "after": 17,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/helpers.ts",
+      "before": 59,
+      "after": 59,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/importFixes.ts",
+      "before": 54,
+      "after": 54,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/inferFromUsage.ts",
+      "before": 50,
+      "after": 50,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/removeAccidentalCallParentheses.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/removeUnnecessaryAwait.ts",
+      "before": 4,
+      "after": 4,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/requireInTs.ts",
+      "before": 9,
+      "after": 9,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/returnValueCorrect.ts",
+      "before": 12,
+      "after": 12,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/splitTypeOnlyImport.ts",
+      "before": 4,
+      "after": 4,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/useBigintLiteral.ts",
+      "before": 2,
+      "after": 2,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/useDefaultImport.ts",
+      "before": 5,
+      "after": 5,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/wrapDecoratorInParentheses.ts",
+      "before": 1,
+      "after": 1,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/codefixes/wrapJsxInFragment.ts",
+      "before": 4,
+      "after": 4,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/completions.ts",
+      "before": 157,
+      "after": 157,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/documentHighlights.ts",
+      "before": 29,
+      "after": 29,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/documentRegistry.ts",
+      "before": 8,
+      "after": 8,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/exportInfoMap.ts",
+      "before": 20,
+      "after": 20,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/findAllReferences.ts",
+      "before": 74,
+      "after": 74,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/formatting/formatting.ts",
+      "before": 34,
+      "after": 34,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/formatting/formattingContext.ts",
+      "before": 4,
+      "after": 4,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/formatting/formattingScanner.ts",
+      "before": 5,
+      "after": 5,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/formatting/rule.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/formatting/rules.ts",
+      "before": 8,
+      "after": 8,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/formatting/rulesMap.ts",
+      "before": 5,
+      "after": 5,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/formatting/smartIndenter.ts",
+      "before": 37,
+      "after": 37,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/getEditsForFileRename.ts",
+      "before": 15,
+      "after": 15,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/goToDefinition.ts",
+      "before": 28,
+      "after": 28,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/importTracker.ts",
+      "before": 32,
+      "after": 32,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/inlayHints.ts",
+      "before": 31,
+      "after": 31,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/jsDoc.ts",
+      "before": 51,
+      "after": 51,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/mapCode.ts",
+      "before": 18,
+      "after": 18,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/navigateTo.ts",
+      "before": 13,
+      "after": 13,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/navigationBar.ts",
+      "before": 42,
+      "after": 42,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/organizeImports.ts",
+      "before": 61,
+      "after": 61,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/outliningElementsCollector.ts",
+      "before": 30,
+      "after": 30,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/pasteEdits.ts",
+      "before": 18,
+      "after": 18,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/patternMatcher.ts",
+      "before": 10,
+      "after": 10,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/preProcess.ts",
+      "before": 6,
+      "after": 6,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/preparePasteEdits.ts",
+      "before": 3,
+      "after": 3,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/refactorProvider.ts",
+      "before": 5,
+      "after": 5,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/refactors/addOrRemoveBracesToArrowFunction.ts",
+      "before": 10,
+      "after": 10,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/refactors/convertArrowFunctionOrFunctionExpression.ts",
+      "before": 21,
+      "after": 21,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/refactors/convertExport.ts",
+      "before": 27,
+      "after": 27,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/refactors/convertImport.ts",
+      "before": 18,
+      "after": 18,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/refactors/convertOverloadListToSingleSignature.ts",
+      "before": 62,
+      "after": 62,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/refactors/convertParamsToDestructuredObject.ts",
+      "before": 46,
+      "after": 46,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/refactors/convertStringOrTemplateLiteral.ts",
+      "before": 21,
+      "after": 21,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/refactors/convertToOptionalChainExpression.ts",
+      "before": 20,
+      "after": 20,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/refactors/extractSymbol.ts",
+      "before": 92,
+      "after": 92,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/refactors/extractType.ts",
+      "before": 25,
+      "after": 25,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/refactors/generateGetAccessorAndSetAccessor.ts",
+      "before": 2,
+      "after": 2,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/refactors/helpers.ts",
+      "before": 8,
+      "after": 8,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/refactors/inferFunctionReturnType.ts",
+      "before": 13,
+      "after": 13,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/refactors/inlineVariable.ts",
+      "before": 13,
+      "after": 13,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/refactors/moveToFile.ts",
+      "before": 57,
+      "after": 57,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/refactors/moveToNewFile.ts",
+      "before": 11,
+      "after": 11,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/rename.ts",
+      "before": 15,
+      "after": 15,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/services.ts",
+      "before": 199,
+      "after": 199,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/signatureHelp.ts",
+      "before": 39,
+      "after": 39,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/smartSelection.ts",
+      "before": 8,
+      "after": 8,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/sourcemaps.ts",
+      "before": 7,
+      "after": 7,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/stringCompletions.ts",
+      "before": 41,
+      "after": 41,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/suggestionDiagnostics.ts",
+      "before": 21,
+      "after": 21,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/symbolDisplay.ts",
+      "before": 34,
+      "after": 34,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/textChanges.ts",
+      "before": 78,
+      "after": 78,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/transform.ts",
+      "before": 5,
+      "after": 5,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/transpile.ts",
+      "before": 9,
+      "after": 9,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/types.ts",
+      "before": 38,
+      "after": 38,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/services/utilities.ts",
+      "before": 153,
+      "after": 153,
+      "removed": 1,
+      "added": 1
+    },
+    {
+      "file": "src/testRunner/_namespaces/FourSlash.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/_namespaces/Harness.Parallel.Host.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/_namespaces/Harness.Parallel.Worker.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/_namespaces/Harness.Parallel.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/_namespaces/Harness.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/_namespaces/Utils.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/_namespaces/documents.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/_namespaces/evaluator.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/_namespaces/fakes.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/_namespaces/project.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/_namespaces/ts.server.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/_namespaces/ts.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/_namespaces/vfs.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/_namespaces/vpath.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/compilerRunner.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/fourslashRunner.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/parallel/host.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/parallel/shared.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/parallel/worker.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/projectsRunner.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/runner.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/tests.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/transpileRunner.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/asserts.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/base64.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/builder.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/canWatch.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/comments.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/compilerCore.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/config/commandLineParsing.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/config/configurationExtension.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/config/convertCompilerOptionsFromJson.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/config/convertTypeAcquisitionFromJson.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/config/helpers.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/config/initializeTSConfig.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/config/matchFiles.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/config/showConfig.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/config/tsconfigParsing.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/config/tsconfigParsingWatchOptions.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/convertToBase64.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/customTransforms.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/debugDeprecation.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/diagnosticCollection.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/arraySpread.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/asyncArrow.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/asyncGenerator.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/autoAccessors.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/awaitUsingDeclarations.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/awaiter.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/constEnum.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/destructuring.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/esDecorators.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/esDecoratorsMetadata.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/externalModules.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/forAwaitOf.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/forOf.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/generator.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/objectRest.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/optionalCall.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/superInStaticInitializer.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/templateLiteral.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/updateExpressionInModule.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/usingDeclarations.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/factory.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/helpers.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/alternateResult.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/baseline.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/contents.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/declarationEmit.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/demoProjectReferences.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/extends.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/forceConsistentCasingInFileNames.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/libraryResolution.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/monorepoSymlinkedSiblingPackages.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/noCheck.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/noEmit.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/noEmitOnError.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/projectRoots.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/sampleProjectReferences.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/solutionBuilder.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/transitiveReferences.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/tsc.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/tscWatch.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/tsserver.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/typingsInstaller.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/incrementalParser.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/jsDocParsing.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/jsonParserRecovery.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/moduleResolution.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/parsePseudoBigInt.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/paths.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/printer.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/programApi.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/publicApi.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/regExpScannerRecovery.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/reuseProgramStructure.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/semver.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/services/cancellableLanguageServiceOperations.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/services/colorization.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/services/convertToAsyncFunction.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/services/documentRegistry.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/services/extract/constants.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/services/extract/functions.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/services/extract/helpers.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/services/extract/ranges.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/services/extract/symbolWalker.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/services/hostNewLineSupport.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/services/languageService.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/services/organizeImports.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/services/preProcessFile.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/services/textChanges.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/services/utilities.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/skipJSDocParsing.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/sys/symlinkWatching.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/transform.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/amdModulesWithOut.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/clean.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/commandLine.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/configFileErrors.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/configFileExtends.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/containerOnlyReferenced.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/declarationEmit.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/demo.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/emitDeclarationOnly.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/emptyFiles.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/exitCodeOnBogusFile.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/extends.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/fileDelete.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/graphOrdering.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/inferredTypeFromTransitiveModule.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/javascriptProjectEmit.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/lateBoundSymbol.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/libraryResolution.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/moduleResolution.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/moduleSpecifiers.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/noCheck.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/noEmit.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/noEmitOnError.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/outFile.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/outputPaths.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/publicApi.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/referencesWithRootDirInParent.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/resolveJsonModule.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/roots.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/sample.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/transitiveReferences.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuildWatch/configFileErrors.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuildWatch/demo.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuildWatch/extends.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuildWatch/libraryResolution.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuildWatch/moduleResolution.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuildWatch/noEmit.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuildWatch/noEmitOnError.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuildWatch/programUpdates.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuildWatch/projectsBuilding.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuildWatch/publicApi.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuildWatch/reexport.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuildWatch/roots.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuildWatch/watchEnvironment.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsc/cancellationToken.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsc/commandLine.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsc/composite.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsc/declarationEmit.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsc/extends.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsc/forceConsistentCasingInFileNames.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsc/ignoreConfig.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsc/incremental.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsc/libraryResolution.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsc/listFilesOnly.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsc/moduleResolution.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsc/noCheck.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsc/noEmit.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsc/noEmitOnError.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsc/projectReferences.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsc/projectReferencesConfig.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsc/redirect.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/consoleClearing.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/emit.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/emitAndErrorUpdates.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/extends.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/forceConsistentCasingInFileNames.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/incremental.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/libraryResolution.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/listFilesOnly.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/moduleResolution.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/noEmit.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/noEmitOnError.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/nodeNextWatch.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/programUpdates.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/projectsWithReferences.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/resolutionCache.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/resolveJsonModuleWithIncremental.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/sourceOfProjectReferenceRedirect.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/symlinks.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/watchApi.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/watchEnvironment.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/applyChangesToOpenFiles.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/autoImportProvider.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/auxiliaryProject.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/cancellationToken.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/codeFix.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/compileOnSave.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/completions.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/completionsIncomplete.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/configFileSearch.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/configuredProjects.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/declarationFileMaps.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/documentRegistry.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/duplicatePackages.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/dynamicFiles.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/events/largeFileReferenced.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/events/projectLanguageServiceState.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/events/projectLoading.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/events/projectUpdatedInBackground.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/events/watchEvents.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/exportMapCache.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/extends.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/externalProjects.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/findAllReferences.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/forceConsistentCasingInFileNames.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/formatSettings.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/getApplicableRefactors.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/getEditsForFileRename.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/getExportReferences.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/getFileReferences.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/getMoveToRefactoringFileSuggestions.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/goToDefinition.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/importHelpers.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/inconsistentErrorInEditor.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/inferredProjects.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/inlayHints.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/jsdocTag.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/languageService.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/libraryResolution.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/maxNodeModuleJsDepth.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/metadataInResponse.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/moduleResolution.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/moduleSpecifierCache.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/navTo.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/occurences.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/openFile.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/packageJsonInfo.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/partialSemanticServer.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/pasteEdits.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/plugins.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/pluginsAsync.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/projectErrors.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/projectReferenceCompileOnSave.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/projectReferenceErrors.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/projectReferences.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/projectReferencesSourcemap.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/projectRootFiles.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/projects.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/projectsWithReferences.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/refactors.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/regionDiagnostics.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/reload.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/reloadProjects.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/rename.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/resolutionCache.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/session.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/skipLibCheck.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/smartSelection.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/symLinks.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/symlinkCache.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/syntacticServer.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/syntaxOperations.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/telemetry.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/textStorage.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/typeAquisition.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/typeOnlyImportChains.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/typeReferenceDirectives.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/typingsInstaller.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/versionCache.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/watchEnvironment.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/testRunner/unittests/typeParameterIsPossiblyReferenced.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/tsc/_namespaces/ts.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/tsc/tsc.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/tsserver/common.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/tsserver/nodeServer.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/tsserver/server.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/typescript/_namespaces/ts.server.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/typescript/_namespaces/ts.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/typescript/typescript.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/typingsInstaller/nodeTypingsInstaller.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/typingsInstallerCore/_namespaces/ts.server.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/typingsInstallerCore/_namespaces/ts.server.typingsInstaller.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/typingsInstallerCore/_namespaces/ts.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/typingsInstallerCore/typingsInstaller.ts",
+      "before": 15,
+      "after": 15,
+      "removed": 0,
+      "added": 0
+    },
+    {
+      "file": "src/watchGuard/watchGuard.ts",
+      "before": 0,
+      "after": 0,
+      "removed": 0,
+      "added": 0
+    }
+  ]
+}

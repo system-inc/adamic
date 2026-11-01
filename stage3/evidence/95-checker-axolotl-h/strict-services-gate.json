@@ -1,0 +1,863 @@
+{
+  "before": 3341,
+  "after": 3340,
+  "removed": [
+    "src/compiler/checker.ts:54261:5: error TS2375: Type '{ getCommonSourceDirectory: () => string; getCurrentDirectory: () => string; getSymlinkCache: (() => SymlinkCache) | undefined; getPackageJsonInfoCache: () => PackageJsonInfoCache | undefined; ... 9 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'ModuleSpecifierResolutionHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'readFile' are incompatible.\n    Type '((fileName: string) => string | undefined) | undefined' is not assignable to type '(path: string) => string | undefined'.\n      Type 'undefined' is not assignable to type '(path: string) => string | undefined'.",
+    "src/services/utilities.ts:2454:5: error TS2375: Type '{ fileExists: (fileName: string) => boolean; getCurrentDirectory: () => string; readFile: ((path: string, encoding?: string | undefined) => string | undefined) | undefined; useCaseSensitiveFileNames: ...; ... 11 more ...; getModeForResolutionAtIndex: ...; }' is not assignable to type 'ModuleSpecifierResolutionHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'readFile' are incompatible.\n    Type '((path: string, encoding?: string | undefined) => string | undefined) | undefined' is not assignable to type '(path: string) => string | undefined'.\n      Type 'undefined' is not assignable to type '(path: string) => string | undefined'."
+  ],
+  "added": [
+    "src/services/utilities.ts:2454:5: error TS2375: Type '{ fileExists: (fileName: string) => boolean; getCurrentDirectory: () => string; readFile: ((path: string, encoding?: string | undefined) => string | undefined) | undefined; useCaseSensitiveFileNames: ...; ... 11 more ...; getModeForResolutionAtIndex: ...; }' is not assignable to type 'ModuleSpecifierResolutionHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'getModuleSpecifierCache' are incompatible.\n    Type '(() => ModuleSpecifierCache) | undefined' is not assignable to type '() => ModuleSpecifierCache'.\n      Type 'undefined' is not assignable to type '() => ModuleSpecifierCache'."
+  ],
+  "perFile": [
+    {
+      "file": "src/compiler/checker.ts",
+      "before": 17,
+      "after": 16
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "before": 5,
+      "after": 5
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "before": 1,
+      "after": 1
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "before": 3,
+      "after": 3
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "before": 9,
+      "after": 9
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "before": 1,
+      "after": 1
+    },
+    {
+      "file": "src/compiler/sourcemap.ts",
+      "before": 1,
+      "after": 1
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "before": 4,
+      "after": 4
+    },
+    {
+      "file": "src/compiler/transformer.ts",
+      "before": 6,
+      "after": 6
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "before": 6,
+      "after": 6
+    },
+    {
+      "file": "src/compiler/transformers/declarations.ts",
+      "before": 1,
+      "after": 1
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "before": 5,
+      "after": 5
+    },
+    {
+      "file": "src/compiler/transformers/es2017.ts",
+      "before": 6,
+      "after": 6
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "before": 3,
+      "after": 3
+    },
+    {
+      "file": "src/compiler/transformers/esnext.ts",
+      "before": 5,
+      "after": 5
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "before": 27,
+      "after": 27
+    },
+    {
+      "file": "src/compiler/transformers/jsx.ts",
+      "before": 2,
+      "after": 2
+    },
+    {
+      "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+      "before": 5,
+      "after": 5
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "before": 8,
+      "after": 8
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "before": 2,
+      "after": 2
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "before": 8,
+      "after": 8
+    },
+    {
+      "file": "src/deprecatedCompat/deprecate.ts",
+      "before": 2,
+      "after": 2
+    },
+    {
+      "file": "src/deprecatedCompat/deprecations.ts",
+      "before": 3,
+      "after": 3
+    },
+    {
+      "file": "src/jsTyping/jsTyping.ts",
+      "before": 11,
+      "after": 11
+    },
+    {
+      "file": "src/jsTyping/shared.ts",
+      "before": 1,
+      "after": 1
+    },
+    {
+      "file": "src/jsTyping/types.ts",
+      "before": 5,
+      "after": 5
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "before": 114,
+      "after": 114
+    },
+    {
+      "file": "src/server/moduleSpecifierCache.ts",
+      "before": 7,
+      "after": 7
+    },
+    {
+      "file": "src/server/packageJsonCache.ts",
+      "before": 2,
+      "after": 2
+    },
+    {
+      "file": "src/server/project.ts",
+      "before": 71,
+      "after": 71
+    },
+    {
+      "file": "src/server/protocol.ts",
+      "before": 15,
+      "after": 15
+    },
+    {
+      "file": "src/server/scriptInfo.ts",
+      "before": 32,
+      "after": 32
+    },
+    {
+      "file": "src/server/scriptVersionCache.ts",
+      "before": 35,
+      "after": 35
+    },
+    {
+      "file": "src/server/session.ts",
+      "before": 110,
+      "after": 110
+    },
+    {
+      "file": "src/server/types.ts",
+      "before": 10,
+      "after": 10
+    },
+    {
+      "file": "src/server/typingInstallerAdapter.ts",
+      "before": 19,
+      "after": 19
+    },
+    {
+      "file": "src/server/utilities.ts",
+      "before": 3,
+      "after": 3
+    },
+    {
+      "file": "src/server/utilitiesPublic.ts",
+      "before": 6,
+      "after": 6
+    },
+    {
+      "file": "src/services/breakpoints.ts",
+      "before": 52,
+      "after": 52
+    },
+    {
+      "file": "src/services/callHierarchy.ts",
+      "before": 45,
+      "after": 45
+    },
+    {
+      "file": "src/services/classifier.ts",
+      "before": 63,
+      "after": 63
+    },
+    {
+      "file": "src/services/classifier2020.ts",
+      "before": 17,
+      "after": 17
+    },
+    {
+      "file": "src/services/codeFixProvider.ts",
+      "before": 15,
+      "after": 15
+    },
+    {
+      "file": "src/services/codefixes/addConvertToUnknownForNonOverlappingTypes.ts",
+      "before": 3,
+      "after": 3
+    },
+    {
+      "file": "src/services/codefixes/addMissingAsync.ts",
+      "before": 10,
+      "after": 10
+    },
+    {
+      "file": "src/services/codefixes/addMissingAwait.ts",
+      "before": 14,
+      "after": 14
+    },
+    {
+      "file": "src/services/codefixes/addMissingConst.ts",
+      "before": 5,
+      "after": 5
+    },
+    {
+      "file": "src/services/codefixes/addMissingDeclareProperty.ts",
+      "before": 2,
+      "after": 2
+    },
+    {
+      "file": "src/services/codefixes/addMissingInvocationForDecorator.ts",
+      "before": 1,
+      "after": 1
+    },
+    {
+      "file": "src/services/codefixes/addMissingResolutionModeImportAttribute.ts",
+      "before": 4,
+      "after": 4
+    },
+    {
+      "file": "src/services/codefixes/addNameToNamelessParameter.ts",
+      "before": 4,
+      "after": 4
+    },
+    {
+      "file": "src/services/codefixes/addOptionalPropertyUndefined.ts",
+      "before": 10,
+      "after": 10
+    },
+    {
+      "file": "src/services/codefixes/annotateWithTypeFromJSDoc.ts",
+      "before": 17,
+      "after": 17
+    },
+    {
+      "file": "src/services/codefixes/convertConstToLet.ts",
+      "before": 4,
+      "after": 4
+    },
+    {
+      "file": "src/services/codefixes/convertFunctionToEs6Class.ts",
+      "before": 24,
+      "after": 24
+    },
+    {
+      "file": "src/services/codefixes/convertLiteralTypeToMappedType.ts",
+      "before": 3,
+      "after": 3
+    },
+    {
+      "file": "src/services/codefixes/convertToAsyncFunction.ts",
+      "before": 25,
+      "after": 25
+    },
+    {
+      "file": "src/services/codefixes/convertToEsModule.ts",
+      "before": 31,
+      "after": 31
+    },
+    {
+      "file": "src/services/codefixes/convertToMappedObjectType.ts",
+      "before": 6,
+      "after": 6
+    },
+    {
+      "file": "src/services/codefixes/convertToTypeOnlyExport.ts",
+      "before": 4,
+      "after": 4
+    },
+    {
+      "file": "src/services/codefixes/convertToTypeOnlyImport.ts",
+      "before": 5,
+      "after": 5
+    },
+    {
+      "file": "src/services/codefixes/convertTypedefToType.ts",
+      "before": 12,
+      "after": 12
+    },
+    {
+      "file": "src/services/codefixes/correctQualifiedNameToIndexedAccessType.ts",
+      "before": 3,
+      "after": 3
+    },
+    {
+      "file": "src/services/codefixes/disableJsDiagnostics.ts",
+      "before": 2,
+      "after": 2
+    },
+    {
+      "file": "src/services/codefixes/fixAddMissingConstraint.ts",
+      "before": 11,
+      "after": 11
+    },
+    {
+      "file": "src/services/codefixes/fixAddMissingMember.ts",
+      "before": 38,
+      "after": 38
+    },
+    {
+      "file": "src/services/codefixes/fixAddMissingNewOperator.ts",
+      "before": 3,
+      "after": 3
+    },
+    {
+      "file": "src/services/codefixes/fixAddMissingParam.ts",
+      "before": 19,
+      "after": 19
+    },
+    {
+      "file": "src/services/codefixes/fixAddModuleReferTypeMissingTypeof.ts",
+      "before": 2,
+      "after": 2
+    },
+    {
+      "file": "src/services/codefixes/fixAddVoidToPromise.ts",
+      "before": 12,
+      "after": 12
+    },
+    {
+      "file": "src/services/codefixes/fixAwaitInSyncFunction.ts",
+      "before": 7,
+      "after": 7
+    },
+    {
+      "file": "src/services/codefixes/fixCannotFindModule.ts",
+      "before": 3,
+      "after": 3
+    },
+    {
+      "file": "src/services/codefixes/fixClassDoesntImplementInheritedAbstractMember.ts",
+      "before": 6,
+      "after": 6
+    },
+    {
+      "file": "src/services/codefixes/fixClassIncorrectlyImplementsInterface.ts",
+      "before": 12,
+      "after": 12
+    },
+    {
+      "file": "src/services/codefixes/fixClassSuperMustPrecedeThisAccess.ts",
+      "before": 5,
+      "after": 5
+    },
+    {
+      "file": "src/services/codefixes/fixConstructorForDerivedNeedSuperCall.ts",
+      "before": 2,
+      "after": 2
+    },
+    {
+      "file": "src/services/codefixes/fixEnableJsxFlag.ts",
+      "before": 1,
+      "after": 1
+    },
+    {
+      "file": "src/services/codefixes/fixExpectedComma.ts",
+      "before": 2,
+      "after": 2
+    },
+    {
+      "file": "src/services/codefixes/fixExtendsInterfaceBecomesImplements.ts",
+      "before": 7,
+      "after": 7
+    },
+    {
+      "file": "src/services/codefixes/fixForgottenThisPropertyAccess.ts",
+      "before": 3,
+      "after": 3
+    },
+    {
+      "file": "src/services/codefixes/fixImplicitThis.ts",
+      "before": 3,
+      "after": 3
+    },
+    {
+      "file": "src/services/codefixes/fixImportNonExportedMember.ts",
+      "before": 8,
+      "after": 8
+    },
+    {
+      "file": "src/services/codefixes/fixIncorrectNamedTupleSyntax.ts",
+      "before": 5,
+      "after": 5
+    },
+    {
+      "file": "src/services/codefixes/fixInvalidImportSyntax.ts",
+      "before": 10,
+      "after": 10
+    },
+    {
+      "file": "src/services/codefixes/fixInvalidJsxCharacters.ts",
+      "before": 3,
+      "after": 3
+    },
+    {
+      "file": "src/services/codefixes/fixJSDocTypes.ts",
+      "before": 23,
+      "after": 23
+    },
+    {
+      "file": "src/services/codefixes/fixMissingCallParentheses.ts",
+      "before": 4,
+      "after": 4
+    },
+    {
+      "file": "src/services/codefixes/fixMissingTypeAnnotationOnExports.ts",
+      "before": 43,
+      "after": 43
+    },
+    {
+      "file": "src/services/codefixes/fixModuleAndTargetOptions.ts",
+      "before": 2,
+      "after": 2
+    },
+    {
+      "file": "src/services/codefixes/fixNaNEquality.ts",
+      "before": 7,
+      "after": 7
+    },
+    {
+      "file": "src/services/codefixes/fixNoPropertyAccessFromIndexSignature.ts",
+      "before": 3,
+      "after": 3
+    },
+    {
+      "file": "src/services/codefixes/fixOverrideModifier.ts",
+      "before": 11,
+      "after": 11
+    },
+    {
+      "file": "src/services/codefixes/fixPropertyAssignment.ts",
+      "before": 3,
+      "after": 3
+    },
+    {
+      "file": "src/services/codefixes/fixPropertyOverrideAccessor.ts",
+      "before": 3,
+      "after": 3
+    },
+    {
+      "file": "src/services/codefixes/fixReturnTypeInAsyncFunction.ts",
+      "before": 4,
+      "after": 4
+    },
+    {
+      "file": "src/services/codefixes/fixSpelling.ts",
+      "before": 5,
+      "after": 5
+    },
+    {
+      "file": "src/services/codefixes/fixStrictClassInitialization.ts",
+      "before": 9,
+      "after": 9
+    },
+    {
+      "file": "src/services/codefixes/fixUnmatchedParameter.ts",
+      "before": 9,
+      "after": 9
+    },
+    {
+      "file": "src/services/codefixes/fixUnreachableCode.ts",
+      "before": 2,
+      "after": 2
+    },
+    {
+      "file": "src/services/codefixes/fixUnreferenceableDecoratorMetadata.ts",
+      "before": 7,
+      "after": 7
+    },
+    {
+      "file": "src/services/codefixes/fixUnusedIdentifier.ts",
+      "before": 18,
+      "after": 18
+    },
+    {
+      "file": "src/services/codefixes/fixUnusedLabel.ts",
+      "before": 1,
+      "after": 1
+    },
+    {
+      "file": "src/services/codefixes/generateAccessors.ts",
+      "before": 17,
+      "after": 17
+    },
+    {
+      "file": "src/services/codefixes/helpers.ts",
+      "before": 59,
+      "after": 59
+    },
+    {
+      "file": "src/services/codefixes/importFixes.ts",
+      "before": 54,
+      "after": 54
+    },
+    {
+      "file": "src/services/codefixes/inferFromUsage.ts",
+      "before": 50,
+      "after": 50
+    },
+    {
+      "file": "src/services/codefixes/removeUnnecessaryAwait.ts",
+      "before": 4,
+      "after": 4
+    },
+    {
+      "file": "src/services/codefixes/requireInTs.ts",
+      "before": 9,
+      "after": 9
+    },
+    {
+      "file": "src/services/codefixes/returnValueCorrect.ts",
+      "before": 12,
+      "after": 12
+    },
+    {
+      "file": "src/services/codefixes/splitTypeOnlyImport.ts",
+      "before": 4,
+      "after": 4
+    },
+    {
+      "file": "src/services/codefixes/useBigintLiteral.ts",
+      "before": 2,
+      "after": 2
+    },
+    {
+      "file": "src/services/codefixes/useDefaultImport.ts",
+      "before": 5,
+      "after": 5
+    },
+    {
+      "file": "src/services/codefixes/wrapDecoratorInParentheses.ts",
+      "before": 1,
+      "after": 1
+    },
+    {
+      "file": "src/services/codefixes/wrapJsxInFragment.ts",
+      "before": 4,
+      "after": 4
+    },
+    {
+      "file": "src/services/completions.ts",
+      "before": 157,
+      "after": 157
+    },
+    {
+      "file": "src/services/documentHighlights.ts",
+      "before": 29,
+      "after": 29
+    },
+    {
+      "file": "src/services/documentRegistry.ts",
+      "before": 8,
+      "after": 8
+    },
+    {
+      "file": "src/services/exportInfoMap.ts",
+      "before": 20,
+      "after": 20
+    },
+    {
+      "file": "src/services/findAllReferences.ts",
+      "before": 74,
+      "after": 74
+    },
+    {
+      "file": "src/services/formatting/formatting.ts",
+      "before": 34,
+      "after": 34
+    },
+    {
+      "file": "src/services/formatting/formattingContext.ts",
+      "before": 4,
+      "after": 4
+    },
+    {
+      "file": "src/services/formatting/formattingScanner.ts",
+      "before": 5,
+      "after": 5
+    },
+    {
+      "file": "src/services/formatting/rules.ts",
+      "before": 8,
+      "after": 8
+    },
+    {
+      "file": "src/services/formatting/rulesMap.ts",
+      "before": 5,
+      "after": 5
+    },
+    {
+      "file": "src/services/formatting/smartIndenter.ts",
+      "before": 37,
+      "after": 37
+    },
+    {
+      "file": "src/services/getEditsForFileRename.ts",
+      "before": 15,
+      "after": 15
+    },
+    {
+      "file": "src/services/goToDefinition.ts",
+      "before": 28,
+      "after": 28
+    },
+    {
+      "file": "src/services/importTracker.ts",
+      "before": 32,
+      "after": 32
+    },
+    {
+      "file": "src/services/inlayHints.ts",
+      "before": 31,
+      "after": 31
+    },
+    {
+      "file": "src/services/jsDoc.ts",
+      "before": 51,
+      "after": 51
+    },
+    {
+      "file": "src/services/mapCode.ts",
+      "before": 18,
+      "after": 18
+    },
+    {
+      "file": "src/services/navigateTo.ts",
+      "before": 13,
+      "after": 13
+    },
+    {
+      "file": "src/services/navigationBar.ts",
+      "before": 42,
+      "after": 42
+    },
+    {
+      "file": "src/services/organizeImports.ts",
+      "before": 61,
+      "after": 61
+    },
+    {
+      "file": "src/services/outliningElementsCollector.ts",
+      "before": 30,
+      "after": 30
+    },
+    {
+      "file": "src/services/pasteEdits.ts",
+      "before": 18,
+      "after": 18
+    },
+    {
+      "file": "src/services/patternMatcher.ts",
+      "before": 10,
+      "after": 10
+    },
+    {
+      "file": "src/services/preProcess.ts",
+      "before": 6,
+      "after": 6
+    },
+    {
+      "file": "src/services/preparePasteEdits.ts",
+      "before": 3,
+      "after": 3
+    },
+    {
+      "file": "src/services/refactorProvider.ts",
+      "before": 5,
+      "after": 5
+    },
+    {
+      "file": "src/services/refactors/addOrRemoveBracesToArrowFunction.ts",
+      "before": 10,
+      "after": 10
+    },
+    {
+      "file": "src/services/refactors/convertArrowFunctionOrFunctionExpression.ts",
+      "before": 21,
+      "after": 21
+    },
+    {
+      "file": "src/services/refactors/convertExport.ts",
+      "before": 27,
+      "after": 27
+    },
+    {
+      "file": "src/services/refactors/convertImport.ts",
+      "before": 18,
+      "after": 18
+    },
+    {
+      "file": "src/services/refactors/convertOverloadListToSingleSignature.ts",
+      "before": 62,
+      "after": 62
+    },
+    {
+      "file": "src/services/refactors/convertParamsToDestructuredObject.ts",
+      "before": 46,
+      "after": 46
+    },
+    {
+      "file": "src/services/refactors/convertStringOrTemplateLiteral.ts",
+      "before": 21,
+      "after": 21
+    },
+    {
+      "file": "src/services/refactors/convertToOptionalChainExpression.ts",
+      "before": 20,
+      "after": 20
+    },
+    {
+      "file": "src/services/refactors/extractSymbol.ts",
+      "before": 92,
+      "after": 92
+    },
+    {
+      "file": "src/services/refactors/extractType.ts",
+      "before": 25,
+      "after": 25
+    },
+    {
+      "file": "src/services/refactors/generateGetAccessorAndSetAccessor.ts",
+      "before": 2,
+      "after": 2
+    },
+    {
+      "file": "src/services/refactors/helpers.ts",
+      "before": 8,
+      "after": 8
+    },
+    {
+      "file": "src/services/refactors/inferFunctionReturnType.ts",
+      "before": 13,
+      "after": 13
+    },
+    {
+      "file": "src/services/refactors/inlineVariable.ts",
+      "before": 13,
+      "after": 13
+    },
+    {
+      "file": "src/services/refactors/moveToFile.ts",
+      "before": 57,
+      "after": 57
+    },
+    {
+      "file": "src/services/refactors/moveToNewFile.ts",
+      "before": 11,
+      "after": 11
+    },
+    {
+      "file": "src/services/rename.ts",
+      "before": 15,
+      "after": 15
+    },
+    {
+      "file": "src/services/services.ts",
+      "before": 199,
+      "after": 199
+    },
+    {
+      "file": "src/services/signatureHelp.ts",
+      "before": 39,
+      "after": 39
+    },
+    {
+      "file": "src/services/smartSelection.ts",
+      "before": 8,
+      "after": 8
+    },
+    {
+      "file": "src/services/sourcemaps.ts",
+      "before": 7,
+      "after": 7
+    },
+    {
+      "file": "src/services/stringCompletions.ts",
+      "before": 41,
+      "after": 41
+    },
+    {
+      "file": "src/services/suggestionDiagnostics.ts",
+      "before": 21,
+      "after": 21
+    },
+    {
+      "file": "src/services/symbolDisplay.ts",
+      "before": 34,
+      "after": 34
+    },
+    {
+      "file": "src/services/textChanges.ts",
+      "before": 78,
+      "after": 78
+    },
+    {
+      "file": "src/services/transform.ts",
+      "before": 5,
+      "after": 5
+    },
+    {
+      "file": "src/services/transpile.ts",
+      "before": 9,
+      "after": 9
+    },
+    {
+      "file": "src/services/types.ts",
+      "before": 38,
+      "after": 38
+    },
+    {
+      "file": "src/services/utilities.ts",
+      "before": 153,
+      "after": 153
+    },
+    {
+      "file": "src/typingsInstallerCore/typingsInstaller.ts",
+      "before": 15,
+      "after": 15
+    }
+  ]
+}

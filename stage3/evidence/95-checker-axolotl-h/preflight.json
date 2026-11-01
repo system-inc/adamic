@@ -1,0 +1,177 @@
+{
+  "base": "ef4d26a4a38b7890317e1ba71f8ad928fd8588f6",
+  "factory": "createBasicNodeBuilderModuleSpecifierResolutionHost",
+  "ownerBeforeSha256": "9171aad5d35e92052c682093a2f2b7fb0ad49a63787488f78d0aa74161d9b9b1",
+  "ownerBefore": "function createBasicNodeBuilderModuleSpecifierResolutionHost(host: TypeCheckerHost): ModuleSpecifierResolutionHost {\r\n    return {\r\n        getCommonSourceDirectory: !!(host as Program).getCommonSourceDirectory ? () => (host as Program).getCommonSourceDirectory() : () => \"\",\r\n        getCurrentDirectory: () => host.getCurrentDirectory(),\r\n        getSymlinkCache: maybeBind(host, host.getSymlinkCache),\r\n        getPackageJsonInfoCache: () => host.getPackageJsonInfoCache?.(),\r\n        useCaseSensitiveFileNames: () => host.useCaseSensitiveFileNames(),\r\n        redirectTargetsMap: host.redirectTargetsMap,\r\n        getRedirectFromSourceFile: fileName => host.getRedirectFromSourceFile(fileName),\r\n        isSourceOfProjectReferenceRedirect: fileName => host.isSourceOfProjectReferenceRedirect(fileName),\r\n        fileExists: fileName => host.fileExists(fileName),\r\n        getFileIncludeReasons: () => host.getFileIncludeReasons(),\r\n        readFile: host.readFile ? (fileName => host.readFile!(fileName)) : undefined,\r\n        getDefaultResolutionModeForFile: file => host.getDefaultResolutionModeForFile(file),\r\n        getModeForResolutionAtIndex: (file, index) => host.getModeForResolutionAtIndex(file, index),\r\n        getGlobalTypingsCacheLocation: maybeBind(host, host.getGlobalTypingsCacheLocation),\r\n    };\r\n}",
+  "interfaceOwner": "ModuleSpecifierResolutionHost",
+  "members": [
+    {
+      "name": "getCommonSourceDirectory",
+      "initializer": "!!(host as Program).getCommonSourceDirectory ? () => (host as Program).getCommonSourceDirectory() : () => \"\"",
+      "valueType": "() => string",
+      "mayStoreUndefined": false,
+      "slotOwner": "ModuleSpecifierResolutionHost",
+      "slotFile": "src/compiler/types.ts",
+      "slotLine": 10014,
+      "slotText": "getCommonSourceDirectory(): string;",
+      "internal": true
+    },
+    {
+      "name": "getCurrentDirectory",
+      "initializer": "() => host.getCurrentDirectory()",
+      "valueType": "() => string",
+      "mayStoreUndefined": false,
+      "slotOwner": "ModuleSpecifierResolutionHost",
+      "slotFile": "src/compiler/types.ts",
+      "slotLine": 10000,
+      "slotText": "getCurrentDirectory(): string;",
+      "internal": true
+    },
+    {
+      "name": "getSymlinkCache",
+      "initializer": "maybeBind(host, host.getSymlinkCache)",
+      "valueType": "(() => SymlinkCache) | undefined",
+      "mayStoreUndefined": true,
+      "slotOwner": "ModuleSpecifierResolutionHost",
+      "slotFile": "src/compiler/types.ts",
+      "slotLine": 10004,
+      "slotText": "getSymlinkCache?(): SymlinkCache;",
+      "internal": true
+    },
+    {
+      "name": "getPackageJsonInfoCache",
+      "initializer": "() => host.getPackageJsonInfoCache?.()",
+      "valueType": "() => PackageJsonInfoCache | undefined",
+      "mayStoreUndefined": false,
+      "slotOwner": "ModuleSpecifierResolutionHost",
+      "slotFile": "src/compiler/types.ts",
+      "slotLine": 10006,
+      "slotText": "getPackageJsonInfoCache?(): PackageJsonInfoCache | undefined;",
+      "internal": true
+    },
+    {
+      "name": "useCaseSensitiveFileNames",
+      "initializer": "() => host.useCaseSensitiveFileNames()",
+      "valueType": "() => boolean",
+      "mayStoreUndefined": false,
+      "slotOwner": "ModuleSpecifierResolutionHost",
+      "slotFile": "src/compiler/types.ts",
+      "slotLine": 9998,
+      "slotText": "useCaseSensitiveFileNames(): boolean;",
+      "internal": true
+    },
+    {
+      "name": "redirectTargetsMap",
+      "initializer": "host.redirectTargetsMap",
+      "valueType": "RedirectTargetsMap",
+      "mayStoreUndefined": false,
+      "slotOwner": "ModuleSpecifierResolutionHost",
+      "slotFile": "src/compiler/types.ts",
+      "slotLine": 10010,
+      "slotText": "readonly redirectTargetsMap: RedirectTargetsMap;",
+      "internal": true
+    },
+    {
+      "name": "getRedirectFromSourceFile",
+      "initializer": "fileName => host.getRedirectFromSourceFile(fileName)",
+      "valueType": "(fileName: string) => ResolvedRefAndOutputDts | undefined",
+      "mayStoreUndefined": false,
+      "slotOwner": "ModuleSpecifierResolutionHost",
+      "slotFile": "src/compiler/types.ts",
+      "slotLine": 10011,
+      "slotText": "getRedirectFromSourceFile(fileName: string): ResolvedRefAndOutputDts | undefined;",
+      "internal": true
+    },
+    {
+      "name": "isSourceOfProjectReferenceRedirect",
+      "initializer": "fileName => host.isSourceOfProjectReferenceRedirect(fileName)",
+      "valueType": "(fileName: string) => boolean",
+      "mayStoreUndefined": false,
+      "slotOwner": "ModuleSpecifierResolutionHost",
+      "slotFile": "src/compiler/types.ts",
+      "slotLine": 10012,
+      "slotText": "isSourceOfProjectReferenceRedirect(fileName: string): boolean;",
+      "internal": true
+    },
+    {
+      "name": "fileExists",
+      "initializer": "fileName => host.fileExists(fileName)",
+      "valueType": "(fileName: string) => boolean",
+      "mayStoreUndefined": false,
+      "slotOwner": "ModuleSpecifierResolutionHost",
+      "slotFile": "src/compiler/types.ts",
+      "slotLine": 9999,
+      "slotText": "fileExists(path: string): boolean;",
+      "internal": true
+    },
+    {
+      "name": "getFileIncludeReasons",
+      "initializer": "() => host.getFileIncludeReasons()",
+      "valueType": "() => MultiMap<Path, FileIncludeReason>",
+      "mayStoreUndefined": false,
+      "slotOwner": "ModuleSpecifierResolutionHost",
+      "slotFile": "src/compiler/types.ts",
+      "slotLine": 10013,
+      "slotText": "getFileIncludeReasons(): MultiMap<Path, FileIncludeReason>;",
+      "internal": true
+    },
+    {
+      "name": "readFile",
+      "initializer": "host.readFile ? (fileName => host.readFile!(fileName)) : undefined",
+      "valueType": "((fileName: string) => string | undefined) | undefined",
+      "mayStoreUndefined": true,
+      "slotOwner": "ModuleSpecifierResolutionHost",
+      "slotFile": "src/compiler/types.ts",
+      "slotLine": 10002,
+      "slotText": "readFile?(path: string): string | undefined;",
+      "internal": true
+    },
+    {
+      "name": "getDefaultResolutionModeForFile",
+      "initializer": "file => host.getDefaultResolutionModeForFile(file)",
+      "valueType": "(file: SourceFile) => ResolutionMode",
+      "mayStoreUndefined": false,
+      "slotOwner": "ModuleSpecifierResolutionHost",
+      "slotFile": "src/compiler/types.ts",
+      "slotLine": 10015,
+      "slotText": "getDefaultResolutionModeForFile(sourceFile: SourceFile): ResolutionMode;",
+      "internal": true
+    },
+    {
+      "name": "getModeForResolutionAtIndex",
+      "initializer": "(file, index) => host.getModeForResolutionAtIndex(file, index)",
+      "valueType": "(file: SourceFile, index: number) => ResolutionMode",
+      "mayStoreUndefined": false,
+      "slotOwner": "ModuleSpecifierResolutionHost",
+      "slotFile": "src/compiler/types.ts",
+      "slotLine": 10016,
+      "slotText": "getModeForResolutionAtIndex(file: SourceFile, index: number): ResolutionMode;",
+      "internal": true
+    },
+    {
+      "name": "getGlobalTypingsCacheLocation",
+      "initializer": "maybeBind(host, host.getGlobalTypingsCacheLocation)",
+      "valueType": "(() => string | undefined) | undefined",
+      "mayStoreUndefined": true,
+      "slotOwner": "ModuleSpecifierResolutionHost",
+      "slotFile": "src/compiler/types.ts",
+      "slotLine": 10007,
+      "slotText": "getGlobalTypingsCacheLocation?(): string | undefined;",
+      "internal": true
+    }
+  ],
+  "publicApi": {
+    "file": "tests/baselines/reference/api/typescript.d.ts",
+    "sha256": "c967e03c8dbb4770f7e2f0b71b5d13593de679a41cc2b60266c4b69f1342a263",
+    "bytes": 588452,
+    "interfaceAbsent": true,
+    "symlinkAndGlobalCacheNamesAbsent": true
+  },
+  "selectedFor95h": [
+    "getSymlinkCache",
+    "readFile"
+  ],
+  "suppliedBy97b": [
+    "getGlobalTypingsCacheLocation"
+  ]
+}

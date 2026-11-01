@@ -1,0 +1,18 @@
+{
+  "stack": [
+    "95a",
+    "B",
+    "C",
+    "D",
+    "E",
+    "H candidate",
+    "97b"
+  ],
+  "wholeProgram": 110,
+  "checkerOwnFile": 2,
+  "remainingChecker": [
+    "src/compiler/checker.ts:42849:65: error TS2345: Argument of type 'TypeParameter | undefined' is not assignable to parameter of type 'TypeParameter'.\n  Type 'undefined' is not assignable to type 'TypeParameter'.",
+    "src/compiler/checker.ts:50153:121: error TS2532: Object is possibly 'undefined'."
+  ],
+  "servicesGateStillBlocked": true
+}

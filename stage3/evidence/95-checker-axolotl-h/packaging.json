@@ -1,0 +1,20 @@
+{
+  "candidateOwnedMembers": [
+    "getSymlinkCache",
+    "readFile"
+  ],
+  "noInterfaceHashPin": true,
+  "accepted97bSha256": "0d381b44a39ebfb25195a574f26b98847d829511a8ae4ef2ff23b556a20b4839",
+  "peerVerbatim": true,
+  "relocatedCheck": {
+    "files": 0,
+    "declarations": 0,
+    "literalMembers": 14,
+    "presentUndefinedSlots": [
+      "getSymlinkCache",
+      "readFile",
+      "getGlobalTypingsCacheLocation"
+    ],
+    "javascriptIdentical": true
+  }
+}

@@ -1,0 +1,23 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto'),ts=require(process.env.CENSUS_TYPESCRIPT||'typescript');
+const {compiler,nodes}=require('../../adapt/47-host-errors/adapt.cjs');
+const tree=path.resolve(process.argv[2]),program=compiler(tree,ts),checker=program.getTypeChecker();
+const file=program.getSourceFile(path.join(tree,'src/compiler/checker.ts')),types=program.getSourceFile(path.join(tree,'src/compiler/types.ts'));
+const owners=nodes(ts,file,n=>ts.isFunctionDeclaration(n)&&n.name?.text==='createBasicNodeBuilderModuleSpecifierResolutionHost');assert.equal(owners.length,1);
+const owner=owners[0];assert(!owner.modifiers?.length);
+const literal=owner.body.statements[0].expression;assert(ts.isObjectLiteralExpression(literal)&&literal.properties.length===14);
+const target=checker.getReturnTypeOfSignature(checker.getSignatureFromDeclaration(owner));
+const members=literal.properties.map(node=>{
+ assert(ts.isPropertyAssignment(node));const name=node.name.getText(file),symbol=checker.getPropertyOfType(target,name);assert(symbol?.declarations?.length===1);
+ const declaration=symbol.declarations[0],internal=ts.getJSDocTags(declaration).some(t=>t.tagName.text==='internal')||ts.getJSDocTags(declaration.parent).some(t=>t.tagName.text==='internal');
+ const value=checker.getTypeAtLocation(node.initializer),mayStoreUndefined=!!(value.flags&ts.TypeFlags.Undefined)||value.isUnion()&&value.types.some(t=>!!(t.flags&ts.TypeFlags.Undefined));
+ if(mayStoreUndefined)assert(internal,'public member '+name);
+ const point=declaration.getSourceFile().getLineAndCharacterOfPosition(declaration.getStart());
+ return {name,initializer:node.initializer.getText(file),valueType:checker.typeToString(value,undefined,ts.TypeFormatFlags.NoTruncation),mayStoreUndefined,slotOwner:declaration.parent.name.text,slotFile:path.relative(tree,declaration.getSourceFile().fileName),slotLine:point.line+1,slotText:declaration.getText(),internal};
+});
+assert.deepEqual(members.filter(m=>m.mayStoreUndefined).map(m=>m.name),['getSymlinkCache','readFile','getGlobalTypingsCacheLocation']);
+const host=nodes(ts,types,n=>ts.isInterfaceDeclaration(n)&&n.name.text==='ModuleSpecifierResolutionHost')[0];assert(ts.getJSDocTags(host).some(t=>t.tagName.text==='internal'));
+const baseline=fs.readFileSync(path.resolve(process.argv[3]),'utf8');assert(!baseline.includes('ModuleSpecifierResolutionHost'));assert(!baseline.includes('getSymlinkCache'));assert(!baseline.includes('getGlobalTypingsCacheLocation'));
+const hash=x=>crypto.createHash('sha256').update(x).digest('hex');
+const result={base:'ef4d26a4a38b7890317e1ba71f8ad928fd8588f6',factory:owner.name.text,ownerBeforeSha256:hash(owner.getText(file)),ownerBefore:owner.getText(file),interfaceOwner:'ModuleSpecifierResolutionHost',selectedFor95h:['getSymlinkCache','readFile'],suppliedBy97b:['getGlobalTypingsCacheLocation'],members,publicApi:{file:'tests/baselines/reference/api/typescript.d.ts',sha256:hash(baseline),bytes:Buffer.byteLength(baseline),interfaceAbsent:true,symlinkAndGlobalCacheNamesAbsent:true}};
+fs.writeFileSync(path.resolve(process.argv[4]),JSON.stringify(result,null,2)+'\n');
+console.log(JSON.stringify(members.map(m=>({name:m.name,type:m.valueType,mayStoreUndefined:m.mayStoreUndefined,internal:m.internal})),null,2));
