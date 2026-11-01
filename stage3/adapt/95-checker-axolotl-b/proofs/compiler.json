@@ -1,0 +1,8 @@
+{
+  "baseCommit": "ef4d26a4a38b7890317e1ba71f8ad928fd8588f6",
+  "binary": "/tmp/axolotl-b-census",
+  "binarySha256": "83ea5fabf3c8f2e97ed3916ed4daac54877b671d772c8439231dec1b8577d95b",
+  "command": "go build -o /tmp/axolotl-b-census ./stage3/census/tool",
+  "root": "src/tsc/tsc.ts",
+  "options": "unchanged production internal/load; no overlay"
+}
