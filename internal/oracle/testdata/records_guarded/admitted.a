@@ -1,0 +1,15 @@
+// A program with record storage still reads union and optional fields of a type no record can be:
+// Box has a required field the record's type lacks, so the record is never a Box.
+const counts: Record<string, number> = {};
+counts["a"] = 1;
+interface Box { size?: number; label: string | number }
+const full: Box = { size: 3, label: "x" };
+const empty: Box = { label: 7 };
+function show(box: Box): string {
+	const size = box.size === undefined ? "none" : String(box.size);
+	const label = typeof box.label === "string" ? box.label : String(box.label + 1);
+	return size + " " + label;
+}
+console.log(show(full));
+console.log(show(empty));
+console.log(String(counts["a"]));
