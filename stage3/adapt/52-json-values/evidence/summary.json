@@ -1,5 +1,5 @@
 {
-  "status": "stopped-at-own-caller-contract-counterexample",
+  "status": "complete-authorized-full-reply-repair",
   "main": "470e16f8315f7a83c5c7b7f6f2a77d8328db0a25",
   "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
   "adaptation": 52,
@@ -67,14 +67,12 @@
     },
     "after": {
       "counts": {
-        "passing": 106362,
-        "failing": 5,
+        "passing": 106366,
+        "failing": 1,
         "pending": 0
       },
       "baseline_diffs": [
-        "api/typescript.d.ts",
-        "tsserver/fourslashServer/completionEntryDetailAcrossFiles01.js",
-        "tsserver/fourslashServer/completionEntryDetailAcrossFiles02.js"
+        "api/typescript.d.ts"
       ],
       "phases": {
         "install": {
@@ -82,10 +80,10 @@
             "cp",
             "-a",
             "jv-control/node_modules",
-            "jv-final/node_modules"
+            "jv-repaired/node_modules"
           ],
           "exit": 0,
-          "artifact": "9ebc3eb2dc44152cbc6a4f707a897d4baa7be161772b2b33ab54f4c28f65c5f7"
+          "artifact": "467010da54aa141b1768f4fadb0dcb49f8748404d81429bb4060a0d19b91afb8"
         },
         "build": {
           "command": [
@@ -95,22 +93,22 @@
           ],
           "exit": 0,
           "typecheck_passed": true,
-          "artifact": "9ebc3eb2dc44152cbc6a4f707a897d4baa7be161772b2b33ab54f4c28f65c5f7"
+          "artifact": "467010da54aa141b1768f4fadb0dcb49f8748404d81429bb4060a0d19b91afb8"
         },
         "tests": {
           "command": [
             "node",
             "/workspace/adamic/stage3/oracle/run-prepared.mjs",
-            "/workspace/scratch/jv-final",
+            "/workspace/scratch/jv-repaired",
             "--workers=4",
             "--light=false",
             "--no-colors"
           ],
           "exit": 1,
-          "seconds": 356.15
+          "seconds": 232.935
         }
       },
-      "wall_seconds": 356.268
+      "wall_seconds": 233.025
     }
   },
   "configReturnMutant": {
@@ -144,12 +142,25 @@
     "before": "returns original protocol value",
     "tagText": "p1",
     "tagTextType": "string",
-    "after": "throws TypeError",
+    "after": "returns identical original protocol value",
     "declaredServiceShape": "JSDocTagInfo.text?: SymbolDisplayPart[]",
     "actualProtocolShape": "JSDocTagInfo.text?: string | SymbolDisplayPart[]",
-    "status": "caller counterexample; adaptation is not ready"
+    "status": "original caller counterexample repaired without normalization"
   },
   "configReturnReadersNotEdited": 10,
   "checkedDesignDiagnostics": 29,
-  "servicesTransfer": "src/services/services.ts:1656"
+  "servicesTransfer": "src/services/services.ts:1656",
+  "harnessRepair": {
+    "editLocations": 14,
+    "files": 3,
+    "publicDeclarationChanges": 0,
+    "testRunnerFlowEdits": 0,
+    "newCasts": 0,
+    "onlyJavaScriptChange": "tag string check",
+    "mutants": [
+      "full-reply-string",
+      "full-reply-invalid"
+    ]
+  },
+  "implementation": "c9d79bf83dde67bb31c0e1bf5f42fc13e394ca3b"
 }

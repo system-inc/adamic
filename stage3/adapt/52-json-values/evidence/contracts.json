@@ -1,6 +1,6 @@
 {
   "idempotent": true,
-  "files": 11,
+  "files": 12,
   "newCasts": 0,
   "castCounts": [
     {
@@ -57,6 +57,25 @@
       "file": "src/testRunner/unittests/tsserver/session.ts",
       "before": 17,
       "after": 17
+    },
+    {
+      "file": "src/harness/fourslashImpl.ts",
+      "before": 31,
+      "after": 31
+    }
+  ],
+  "harnessTypeFlowJavaScript": [
+    {
+      "file": "src/harness/client.ts",
+      "identical": true
+    },
+    {
+      "file": "src/harness/harnessLanguageService.ts",
+      "identical": true
+    },
+    {
+      "file": "src/harness/fourslashImpl.ts",
+      "identical": true
     }
   ],
   "refusals": [
@@ -98,6 +117,14 @@
     },
     {
       "class": "echo",
+      "exit": 1
+    },
+    {
+      "class": "full-reply-string",
+      "exit": 1
+    },
+    {
+      "class": "full-reply-invalid",
       "exit": 1
     }
   ],
