@@ -195,12 +195,36 @@ def check_one(repository, catalog, entry, resolved, parent, logs, git_lock):
     return result
 
 
+def cgroup_cpu_max(path=Path("/sys/fs/cgroup/cpu.max")):
+    # Printed for the record only; a box without cgroup v2 (Cloud) has no such file.
+    try:
+        return path.read_text().strip()
+    except FileNotFoundError:
+        return "unavailable"
+
+
+def catalog_drift(repository, catalog, resolved):
+    """The catalog's own files that differ from resolved's: patches and catalog.json are read from this
+    checkout, so a stale or edited one would judge resolved with another commit's patches."""
+    relative = str(catalog.relative_to(repository))
+    changed = git(repository, "diff", "--name-only", resolved, "--", relative,
+                  capture_output=True, text=True, check=True).stdout.split()
+    untracked = git(repository, "ls-files", "--others", "--exclude-standard", "--", relative,
+                    capture_output=True, text=True, check=True).stdout.split()
+    return sorted(set(changed) | set(untracked))
+
+
 def main(commit, entry_number=None, jobs=None):
     total_started = time.monotonic()
     total_load_before = Path("/proc/loadavg").read_text().strip()
     catalog = Path(__file__).resolve().parent
     repository = Path(subprocess.check_output(["git", "-C", str(catalog), "rev-parse", "--show-toplevel"], text=True).strip())
     resolved = subprocess.check_output(["git", "-C", str(repository), "rev-parse", "--verify", commit + "^{commit}"], text=True).strip()
+    drift = catalog_drift(repository, catalog, resolved)
+    if drift:
+        raise SystemExit(f"this checkout's catalog differs from {resolved} in {len(drift)} files ("
+                         + ", ".join(drift[:5]) + "); run from a checkout at that commit, or the result"
+                         " would judge it with another commit's patches")
     entries = sorted(json.loads((catalog / "catalog.json").read_text()), key=lambda entry: entry["number"])
     if entry_number is not None:
         entries = [entry for entry in entries if entry["number"] == entry_number]
@@ -213,7 +237,7 @@ def main(commit, entry_number=None, jobs=None):
     versions = [subprocess.check_output(command, text=True).splitlines()[0]
                 for command in (["go", "version"], ["clang", "--version"], ["node", "--version"])]
     processors = subprocess.check_output(["nproc"], text=True).strip()
-    cpu_max = Path("/sys/fs/cgroup/cpu.max").read_text().strip()
+    cpu_max = cgroup_cpu_max()
     print(f"build flags: commit={resolved}; nproc={processors}; cpu.max={cpu_max}; "
           + "; ".join(versions) + "; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; "
           "native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; "

@@ -1,2 +1,4 @@
 # Keep the uncached validation evidence with the catalog.
 !logs/**/*.log
+# Python bytecode from a test run, which catalog_drift would otherwise read as drift.
+__pycache__/
