@@ -645,7 +645,7 @@ var settingsOverride string
 
 // binarySettings is what the binary was built with that changes what its code does (review 5): tags, ldflags,
 // gcflags, -race, -asan, -msan, GOEXPERIMENT, CGO_ENABLED, the target, and the rest of the build info's settings but
-// the commit, sorted and portable.
+// the commit and coverage (settingsValue), sorted and portable.
 func binarySettings() string {
 	if settingsOverride != "" {
 		return settingsOverride
@@ -659,9 +659,21 @@ func binarySettings() string {
 	return settingsValue(settings)
 }
 
+// coverageSetting is the one setting a test binary built with -cover adds to its build info (go1.27.1: `go test -c
+// -cover -covermode=set -coverpkg=<list>` records `-cover=true` and nothing else beside a plain build's). Coverage
+// counts which blocks ran and changes no output, so a covered and a plain binary make the same products, and a key
+// never holds it: Loom builds its product tests covered (super narrowing, 0.8.876), and a product test that builds
+// its own plain driver, as internal/native's TestProduct_DebugCommandDriver does, then asks under the same key its
+// covered owner settled, never one no build made ("not built ahead"). Only this exact setting is dropped, never a
+// prefix of it, so any other setting a coverage build might name still moves the key.
+const coverageSetting = "-cover=true"
+
 func settingsValue(settings []string) string {
 	var kept []string
 	for _, setting := range settings {
+		if setting == coverageSetting {
+			continue
+		}
 		if !strings.HasPrefix(setting, "vcs") {
 			root, _ := repositoryRoot()
 			kept = append(kept, portable(root, setting))
