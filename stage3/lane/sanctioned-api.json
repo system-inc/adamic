@@ -132,9 +132,49 @@
       "after": "[\"PropertySignature\",[\"Identifier\",\"hasTrailingNewLine\"],[\"QuestionToken\"],[\"UnionType\",[\"BooleanKeyword\"],[\"UndefinedKeyword\"]]]"
     },
     {
+      "declaration": "member:[\"ts\",\"CompilerHost\",\"createHash\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"createHash\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"data\"],[\"StringKeyword\"]],[\"StringKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"createHash\"],[\"QuestionToken\"],[\"UnionType\",[\"IndexedAccessType\",[\"TypeLiteral\",[\"MethodSignature\",[\"Identifier\",\"createHash\"],[\"Parameter\",[\"Identifier\",\"data\"],[\"StringKeyword\"]],[\"StringKeyword\"]]],[\"LiteralType\",[\"StringLiteral\",\"createHash\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"CompilerHost\",\"getDefaultLibLocation\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"getDefaultLibLocation\"],[\"QuestionToken\"],[\"StringKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"getDefaultLibLocation\"],[\"QuestionToken\"],[\"UnionType\",[\"IndexedAccessType\",[\"TypeLiteral\",[\"MethodSignature\",[\"Identifier\",\"getDefaultLibLocation\"],[\"StringKeyword\"]]],[\"LiteralType\",[\"StringLiteral\",\"getDefaultLibLocation\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"CompilerHost\",\"getModuleResolutionCache\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"getModuleResolutionCache\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ModuleResolutionCache\"]],[\"UndefinedKeyword\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"getModuleResolutionCache\"],[\"QuestionToken\"],[\"UnionType\",[\"IndexedAccessType\",[\"TypeLiteral\",[\"MethodSignature\",[\"Identifier\",\"getModuleResolutionCache\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ModuleResolutionCache\"]],[\"UndefinedKeyword\"]]]],[\"LiteralType\",[\"StringLiteral\",\"getModuleResolutionCache\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
       "declaration": "member:[\"ts\",\"CompilerHost\",\"jsDocParsingMode\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"jsDocParsingMode\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"JSDocParsingMode\"]]]",
       "after": "[\"PropertySignature\",[\"Identifier\",\"jsDocParsingMode\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"JSDocParsingMode\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"CompilerHost\",\"readDirectory\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"readDirectory\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"rootDir\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"extensions\"],[\"TypeOperator\",[\"ArrayType\",[\"StringKeyword\"]]]],[\"Parameter\",[\"Identifier\",\"excludes\"],[\"UnionType\",[\"TypeOperator\",[\"ArrayType\",[\"StringKeyword\"]]],[\"UndefinedKeyword\"]]],[\"Parameter\",[\"Identifier\",\"includes\"],[\"TypeOperator\",[\"ArrayType\",[\"StringKeyword\"]]]],[\"Parameter\",[\"Identifier\",\"depth\"],[\"QuestionToken\"],[\"NumberKeyword\"]],[\"ArrayType\",[\"StringKeyword\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"readDirectory\"],[\"QuestionToken\"],[\"UnionType\",[\"IndexedAccessType\",[\"TypeLiteral\",[\"MethodSignature\",[\"Identifier\",\"readDirectory\"],[\"Parameter\",[\"Identifier\",\"rootDir\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"extensions\"],[\"TypeOperator\",[\"ArrayType\",[\"StringKeyword\"]]]],[\"Parameter\",[\"Identifier\",\"excludes\"],[\"UnionType\",[\"TypeOperator\",[\"ArrayType\",[\"StringKeyword\"]]],[\"UndefinedKeyword\"]]],[\"Parameter\",[\"Identifier\",\"includes\"],[\"TypeOperator\",[\"ArrayType\",[\"StringKeyword\"]]]],[\"Parameter\",[\"Identifier\",\"depth\"],[\"QuestionToken\"],[\"NumberKeyword\"]],[\"ArrayType\",[\"StringKeyword\"]]]],[\"LiteralType\",[\"StringLiteral\",\"readDirectory\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"CompilerHost\",\"resolveModuleNameLiterals\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"resolveModuleNameLiterals\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"moduleLiterals\"],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"StringLiteralLike\"]]]]],[\"Parameter\",[\"Identifier\",\"containingFile\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"redirectedReference\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ResolvedProjectReference\"]],[\"UndefinedKeyword\"]]],[\"Parameter\",[\"Identifier\",\"options\"],[\"TypeReference\",[\"Identifier\",\"CompilerOptions\"]]],[\"Parameter\",[\"Identifier\",\"containingSourceFile\"],[\"TypeReference\",[\"Identifier\",\"SourceFile\"]]],[\"Parameter\",[\"Identifier\",\"reusedNames\"],[\"UnionType\",[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"StringLiteralLike\"]]]],[\"UndefinedKeyword\"]]],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"ResolvedModuleWithFailedLookupLocations\"]]]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"resolveModuleNameLiterals\"],[\"QuestionToken\"],[\"UnionType\",[\"IndexedAccessType\",[\"TypeLiteral\",[\"MethodSignature\",[\"Identifier\",\"resolveModuleNameLiterals\"],[\"Parameter\",[\"Identifier\",\"moduleLiterals\"],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"StringLiteralLike\"]]]]],[\"Parameter\",[\"Identifier\",\"containingFile\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"redirectedReference\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ResolvedProjectReference\"]],[\"UndefinedKeyword\"]]],[\"Parameter\",[\"Identifier\",\"options\"],[\"TypeReference\",[\"Identifier\",\"CompilerOptions\"]]],[\"Parameter\",[\"Identifier\",\"containingSourceFile\"],[\"TypeReference\",[\"Identifier\",\"SourceFile\"]]],[\"Parameter\",[\"Identifier\",\"reusedNames\"],[\"UnionType\",[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"StringLiteralLike\"]]]],[\"UndefinedKeyword\"]]],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"ResolvedModuleWithFailedLookupLocations\"]]]]]],[\"LiteralType\",[\"StringLiteral\",\"resolveModuleNameLiterals\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"CompilerHost\",\"resolveModuleNames\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"resolveModuleNames\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"moduleNames\"],[\"ArrayType\",[\"StringKeyword\"]]],[\"Parameter\",[\"Identifier\",\"containingFile\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"reusedNames\"],[\"UnionType\",[\"ArrayType\",[\"StringKeyword\"]],[\"UndefinedKeyword\"]]],[\"Parameter\",[\"Identifier\",\"redirectedReference\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ResolvedProjectReference\"]],[\"UndefinedKeyword\"]]],[\"Parameter\",[\"Identifier\",\"options\"],[\"TypeReference\",[\"Identifier\",\"CompilerOptions\"]]],[\"Parameter\",[\"Identifier\",\"containingSourceFile\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"SourceFile\"]]],[\"ArrayType\",[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ResolvedModule\"]],[\"UndefinedKeyword\"]]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"resolveModuleNames\"],[\"QuestionToken\"],[\"UnionType\",[\"IndexedAccessType\",[\"TypeLiteral\",[\"MethodSignature\",[\"Identifier\",\"resolveModuleNames\"],[\"Parameter\",[\"Identifier\",\"moduleNames\"],[\"ArrayType\",[\"StringKeyword\"]]],[\"Parameter\",[\"Identifier\",\"containingFile\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"reusedNames\"],[\"UnionType\",[\"ArrayType\",[\"StringKeyword\"]],[\"UndefinedKeyword\"]]],[\"Parameter\",[\"Identifier\",\"redirectedReference\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ResolvedProjectReference\"]],[\"UndefinedKeyword\"]]],[\"Parameter\",[\"Identifier\",\"options\"],[\"TypeReference\",[\"Identifier\",\"CompilerOptions\"]]],[\"Parameter\",[\"Identifier\",\"containingSourceFile\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"SourceFile\"]]],[\"ArrayType\",[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ResolvedModule\"]],[\"UndefinedKeyword\"]]]]],[\"LiteralType\",[\"StringLiteral\",\"resolveModuleNames\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"CompilerHost\",\"resolveTypeReferenceDirectiveReferences\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"resolveTypeReferenceDirectiveReferences\"],[\"QuestionToken\"],[\"TypeParameter\",[\"Identifier\",\"T\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"FileReference\"]],[\"StringKeyword\"]]],[\"Parameter\",[\"Identifier\",\"typeDirectiveReferences\"],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"T\"]]]]],[\"Parameter\",[\"Identifier\",\"containingFile\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"redirectedReference\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ResolvedProjectReference\"]],[\"UndefinedKeyword\"]]],[\"Parameter\",[\"Identifier\",\"options\"],[\"TypeReference\",[\"Identifier\",\"CompilerOptions\"]]],[\"Parameter\",[\"Identifier\",\"containingSourceFile\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"SourceFile\"]],[\"UndefinedKeyword\"]]],[\"Parameter\",[\"Identifier\",\"reusedNames\"],[\"UnionType\",[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"T\"]]]],[\"UndefinedKeyword\"]]],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"ResolvedTypeReferenceDirectiveWithFailedLookupLocations\"]]]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"resolveTypeReferenceDirectiveReferences\"],[\"QuestionToken\"],[\"UnionType\",[\"IndexedAccessType\",[\"TypeLiteral\",[\"MethodSignature\",[\"Identifier\",\"resolveTypeReferenceDirectiveReferences\"],[\"TypeParameter\",[\"Identifier\",\"T\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"FileReference\"]],[\"StringKeyword\"]]],[\"Parameter\",[\"Identifier\",\"typeDirectiveReferences\"],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"T\"]]]]],[\"Parameter\",[\"Identifier\",\"containingFile\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"redirectedReference\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ResolvedProjectReference\"]],[\"UndefinedKeyword\"]]],[\"Parameter\",[\"Identifier\",\"options\"],[\"TypeReference\",[\"Identifier\",\"CompilerOptions\"]]],[\"Parameter\",[\"Identifier\",\"containingSourceFile\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"SourceFile\"]],[\"UndefinedKeyword\"]]],[\"Parameter\",[\"Identifier\",\"reusedNames\"],[\"UnionType\",[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"T\"]]]],[\"UndefinedKeyword\"]]],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"ResolvedTypeReferenceDirectiveWithFailedLookupLocations\"]]]]]],[\"LiteralType\",[\"StringLiteral\",\"resolveTypeReferenceDirectiveReferences\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"CompilerHost\",\"resolveTypeReferenceDirectives\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"resolveTypeReferenceDirectives\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"typeReferenceDirectiveNames\"],[\"UnionType\",[\"ArrayType\",[\"StringKeyword\"]],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"FileReference\"]]]]]],[\"Parameter\",[\"Identifier\",\"containingFile\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"redirectedReference\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ResolvedProjectReference\"]],[\"UndefinedKeyword\"]]],[\"Parameter\",[\"Identifier\",\"options\"],[\"TypeReference\",[\"Identifier\",\"CompilerOptions\"]]],[\"Parameter\",[\"Identifier\",\"containingFileMode\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"ResolutionMode\"]]],[\"ArrayType\",[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ResolvedTypeReferenceDirective\"]],[\"UndefinedKeyword\"]]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"resolveTypeReferenceDirectives\"],[\"QuestionToken\"],[\"UnionType\",[\"IndexedAccessType\",[\"TypeLiteral\",[\"MethodSignature\",[\"Identifier\",\"resolveTypeReferenceDirectives\"],[\"Parameter\",[\"Identifier\",\"typeReferenceDirectiveNames\"],[\"UnionType\",[\"ArrayType\",[\"StringKeyword\"]],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"FileReference\"]]]]]],[\"Parameter\",[\"Identifier\",\"containingFile\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"redirectedReference\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ResolvedProjectReference\"]],[\"UndefinedKeyword\"]]],[\"Parameter\",[\"Identifier\",\"options\"],[\"TypeReference\",[\"Identifier\",\"CompilerOptions\"]]],[\"Parameter\",[\"Identifier\",\"containingFileMode\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"ResolutionMode\"]]],[\"ArrayType\",[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ResolvedTypeReferenceDirective\"]],[\"UndefinedKeyword\"]]]]],[\"LiteralType\",[\"StringLiteral\",\"resolveTypeReferenceDirectives\"]]],[\"UndefinedKeyword\"]]]"
     },
     {
       "declaration": "member:[\"ts\",\"CompilerOptions\",\"module\"]#0",
@@ -682,6 +722,26 @@
       "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]],[\"UndefinedKeyword\"]]]"
     },
     {
+      "declaration": "member:[\"ts\",\"ModuleResolutionHost\",\"directoryExists\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"directoryExists\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"directoryName\"],[\"StringKeyword\"]],[\"BooleanKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"directoryExists\"],[\"QuestionToken\"],[\"UnionType\",[\"IndexedAccessType\",[\"TypeLiteral\",[\"MethodSignature\",[\"Identifier\",\"directoryExists\"],[\"Parameter\",[\"Identifier\",\"directoryName\"],[\"StringKeyword\"]],[\"BooleanKeyword\"]]],[\"LiteralType\",[\"StringLiteral\",\"directoryExists\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ModuleResolutionHost\",\"getDirectories\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"getDirectories\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"path\"],[\"StringKeyword\"]],[\"ArrayType\",[\"StringKeyword\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"getDirectories\"],[\"QuestionToken\"],[\"UnionType\",[\"IndexedAccessType\",[\"TypeLiteral\",[\"MethodSignature\",[\"Identifier\",\"getDirectories\"],[\"Parameter\",[\"Identifier\",\"path\"],[\"StringKeyword\"]],[\"ArrayType\",[\"StringKeyword\"]]]],[\"LiteralType\",[\"StringLiteral\",\"getDirectories\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ModuleResolutionHost\",\"realpath\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"realpath\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"path\"],[\"StringKeyword\"]],[\"StringKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"realpath\"],[\"QuestionToken\"],[\"UnionType\",[\"IndexedAccessType\",[\"TypeLiteral\",[\"MethodSignature\",[\"Identifier\",\"realpath\"],[\"Parameter\",[\"Identifier\",\"path\"],[\"StringKeyword\"]],[\"StringKeyword\"]]],[\"LiteralType\",[\"StringLiteral\",\"realpath\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ModuleResolutionHost\",\"trace\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"trace\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"s\"],[\"StringKeyword\"]],[\"VoidKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"trace\"],[\"QuestionToken\"],[\"UnionType\",[\"IndexedAccessType\",[\"TypeLiteral\",[\"MethodSignature\",[\"Identifier\",\"trace\"],[\"Parameter\",[\"Identifier\",\"s\"],[\"StringKeyword\"]],[\"VoidKeyword\"]]],[\"LiteralType\",[\"StringLiteral\",\"trace\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
       "declaration": "member:[\"ts\",\"NamedDeclaration\",\"name\"]#0",
       "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"DeclarationName\"]]]",
       "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"DeclarationName\"]],[\"UndefinedKeyword\"]]]"
@@ -752,6 +812,11 @@
       "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"type\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"TypeNode\"]],[\"UndefinedKeyword\"]]]"
     },
     {
+      "declaration": "member:[\"ts\",\"ParseConfigHost\",\"trace\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"trace\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"s\"],[\"StringKeyword\"]],[\"VoidKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"trace\"],[\"QuestionToken\"],[\"UnionType\",[\"IndexedAccessType\",[\"TypeLiteral\",[\"MethodSignature\",[\"Identifier\",\"trace\"],[\"Parameter\",[\"Identifier\",\"s\"],[\"StringKeyword\"]],[\"VoidKeyword\"]]],[\"LiteralType\",[\"StringLiteral\",\"trace\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
       "declaration": "member:[\"ts\",\"ParsedCommandLine\",\"projectReferences\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"projectReferences\"],[\"QuestionToken\"],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"ProjectReference\"]]]]]",
       "after": "[\"PropertySignature\",[\"Identifier\",\"projectReferences\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"ProjectReference\"]]]],[\"UndefinedKeyword\"]]]"
@@ -790,6 +855,26 @@
       "declaration": "member:[\"ts\",\"PrinterOptions\",\"removeComments\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"removeComments\"],[\"QuestionToken\"],[\"BooleanKeyword\"]]",
       "after": "[\"PropertySignature\",[\"Identifier\",\"removeComments\"],[\"QuestionToken\"],[\"UnionType\",[\"BooleanKeyword\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ProgramHost\",\"createHash\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"createHash\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"data\"],[\"StringKeyword\"]],[\"StringKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"createHash\"],[\"QuestionToken\"],[\"UnionType\",[\"IndexedAccessType\",[\"TypeLiteral\",[\"MethodSignature\",[\"Identifier\",\"createHash\"],[\"Parameter\",[\"Identifier\",\"data\"],[\"StringKeyword\"]],[\"StringKeyword\"]]],[\"LiteralType\",[\"StringLiteral\",\"createHash\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ProgramHost\",\"directoryExists\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"directoryExists\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"path\"],[\"StringKeyword\"]],[\"BooleanKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"directoryExists\"],[\"QuestionToken\"],[\"UnionType\",[\"IndexedAccessType\",[\"TypeLiteral\",[\"MethodSignature\",[\"Identifier\",\"directoryExists\"],[\"Parameter\",[\"Identifier\",\"path\"],[\"StringKeyword\"]],[\"BooleanKeyword\"]]],[\"LiteralType\",[\"StringLiteral\",\"directoryExists\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ProgramHost\",\"getEnvironmentVariable\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"getEnvironmentVariable\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"name\"],[\"StringKeyword\"]],[\"UnionType\",[\"StringKeyword\"],[\"UndefinedKeyword\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"getEnvironmentVariable\"],[\"QuestionToken\"],[\"UnionType\",[\"IndexedAccessType\",[\"TypeLiteral\",[\"MethodSignature\",[\"Identifier\",\"getEnvironmentVariable\"],[\"Parameter\",[\"Identifier\",\"name\"],[\"StringKeyword\"]],[\"UnionType\",[\"StringKeyword\"],[\"UndefinedKeyword\"]]]],[\"LiteralType\",[\"StringLiteral\",\"getEnvironmentVariable\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ProgramHost\",\"realpath\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"realpath\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"path\"],[\"StringKeyword\"]],[\"StringKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"realpath\"],[\"QuestionToken\"],[\"UnionType\",[\"IndexedAccessType\",[\"TypeLiteral\",[\"MethodSignature\",[\"Identifier\",\"realpath\"],[\"Parameter\",[\"Identifier\",\"path\"],[\"StringKeyword\"]],[\"StringKeyword\"]]],[\"LiteralType\",[\"StringLiteral\",\"realpath\"]]],[\"UndefinedKeyword\"]]]"
     },
     {
       "declaration": "member:[\"ts\",\"ProjectReference\",\"circular\"]#0",
@@ -907,6 +992,16 @@
       "after": "[\"PropertySignature\",[\"Identifier\",\"reportErrorSummary\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ReportEmitErrorSummary\"]],[\"UndefinedKeyword\"]]]"
     },
     {
+      "declaration": "member:[\"ts\",\"SolutionBuilderHostBase\",\"createDirectory\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"createDirectory\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"path\"],[\"StringKeyword\"]],[\"VoidKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"createDirectory\"],[\"QuestionToken\"],[\"UnionType\",[\"IndexedAccessType\",[\"TypeLiteral\",[\"MethodSignature\",[\"Identifier\",\"createDirectory\"],[\"Parameter\",[\"Identifier\",\"path\"],[\"StringKeyword\"]],[\"VoidKeyword\"]]],[\"LiteralType\",[\"StringLiteral\",\"createDirectory\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"SolutionBuilderHostBase\",\"writeFile\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"writeFile\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"path\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"data\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"writeByteOrderMark\"],[\"QuestionToken\"],[\"BooleanKeyword\"]],[\"VoidKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"writeFile\"],[\"QuestionToken\"],[\"UnionType\",[\"IndexedAccessType\",[\"TypeLiteral\",[\"MethodSignature\",[\"Identifier\",\"writeFile\"],[\"Parameter\",[\"Identifier\",\"path\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"data\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"writeByteOrderMark\"],[\"QuestionToken\"],[\"BooleanKeyword\"]],[\"VoidKeyword\"]]],[\"LiteralType\",[\"StringLiteral\",\"writeFile\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
       "declaration": "member:[\"ts\",\"SortedArray\",\" __sortedArrayBrand\"]#0",
       "before": "[\"PropertySignature\",[\"StringLiteral\",\" __sortedArrayBrand\"],[\"AnyKeyword\"]]",
       "after": "[\"PropertySignature\",[\"StringLiteral\",\" __sortedArrayBrand\"],[\"UndefinedKeyword\"]]"
@@ -990,6 +1085,11 @@
       "declaration": "member:[\"ts\",\"TypeAliasDeclaration\",\"typeParameters\"]#0",
       "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeParameters\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeParameterDeclaration\"]]]]",
       "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeParameters\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeParameterDeclaration\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"TypeChecker\",\"signatureToSignatureDeclaration\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"signatureToSignatureDeclaration\"],[\"Parameter\",[\"Identifier\",\"signature\"],[\"TypeReference\",[\"Identifier\",\"Signature\"]]],[\"Parameter\",[\"Identifier\",\"kind\"],[\"TypeReference\",[\"Identifier\",\"SyntaxKind\"]]],[\"Parameter\",[\"Identifier\",\"enclosingDeclaration\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Node\"]],[\"UndefinedKeyword\"]]],[\"Parameter\",[\"Identifier\",\"flags\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeBuilderFlags\"]],[\"UndefinedKeyword\"]]],[\"UnionType\",[\"IntersectionType\",[\"TypeReference\",[\"Identifier\",\"SignatureDeclaration\"]],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"typeArguments\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]]]]],[\"UndefinedKeyword\"]]]",
+      "after": "[\"MethodSignature\",[\"Identifier\",\"signatureToSignatureDeclaration\"],[\"Parameter\",[\"Identifier\",\"signature\"],[\"TypeReference\",[\"Identifier\",\"Signature\"]]],[\"Parameter\",[\"Identifier\",\"kind\"],[\"TypeReference\",[\"Identifier\",\"SyntaxKind\"]]],[\"Parameter\",[\"Identifier\",\"enclosingDeclaration\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Node\"]],[\"UndefinedKeyword\"]]],[\"Parameter\",[\"Identifier\",\"flags\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeBuilderFlags\"]],[\"UndefinedKeyword\"]]],[\"UnionType\",[\"IntersectionType\",[\"TypeReference\",[\"Identifier\",\"SignatureDeclaration\"]],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"typeArguments\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]],[\"UndefinedKeyword\"]]]]],[\"UndefinedKeyword\"]]]"
     },
     {
       "declaration": "member:[\"ts\",\"TypeElement\",\"_typeElementBrand\"]#0",
@@ -2906,6 +3006,166 @@
       "line": 8489
     },
     {
+      "adaptation": "adapt/95-checker-axolotl-e/api-sanctions.json row 1 {\"path\":[\"TypeChecker\",\"signatureToSignatureDeclaration\"],\"kind\":\"MethodSignature\",\"before\":\"| SignatureDeclaration & {\\n                typeArguments?: NodeArray<TypeNode>;\\n            }\\n            | undefined\",\"after\":\"| SignatureDeclaration & {\\n                typeArguments?: NodeArray<TypeNode> | undefined;\\n            }\\n            | undefined\",\"why\":\"tsc can return an ArrowFunction whose typeArguments property is present and undefined.\"}",
+      "path": [
+        "TypeChecker",
+        "signatureToSignatureDeclaration"
+      ],
+      "line": 6216
+    },
+    {
+      "adaptation": "adapt/97-cli-axolotl-d/api-sanctions.json row 1 {\"path\":[\"ModuleResolutionHost\",\"trace\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"trace?(s: string): void;\",\"after\":\"trace?: { trace(s: string): void; }[\\\"trace\\\"] | undefined;\",\"why\":\"createCompilerHostFromProgramHost stores maybeBind(host, host.trace) (watch.ts:774), undefined when the program host has no trace\"}",
+      "path": [
+        "ModuleResolutionHost",
+        "trace"
+      ],
+      "line": 7263
+    },
+    {
+      "adaptation": "adapt/97-cli-axolotl-d/api-sanctions.json row 2 {\"path\":[\"ModuleResolutionHost\",\"directoryExists\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"directoryExists?(directoryName: string): boolean;\",\"after\":\"directoryExists?: { directoryExists(directoryName: string): boolean; }[\\\"directoryExists\\\"] | undefined;\",\"why\":\"program.ts:4956 and watchPublic.ts:661 write a saved original directoryExists back, and watch.ts:775 and program.ts:5114 store maybeBind of it; each may be undefined\"}",
+      "path": [
+        "ModuleResolutionHost",
+        "directoryExists"
+      ],
+      "line": 7264
+    },
+    {
+      "adaptation": "adapt/97-cli-axolotl-d/api-sanctions.json row 3 {\"path\":[\"ModuleResolutionHost\",\"realpath\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"realpath?(path: string): string;\",\"after\":\"realpath?: { realpath(path: string): string; }[\\\"realpath\\\"] | undefined;\",\"why\":\"program.ts:471 stores system.realpath && (...), and watch.ts:777 and program.ts:5116 store maybeBind(\u2026, realpath); each may be undefined\"}",
+      "path": [
+        "ModuleResolutionHost",
+        "realpath"
+      ],
+      "line": 7269
+    },
+    {
+      "adaptation": "adapt/97-cli-axolotl-d/api-sanctions.json row 4 {\"path\":[\"ModuleResolutionHost\",\"getDirectories\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"getDirectories?(path: string): string[];\",\"after\":\"getDirectories?: { getDirectories(path: string): string[]; }[\\\"getDirectories\\\"] | undefined;\",\"why\":\"program.ts:4957 writes a saved original getDirectories back, and watch.ts:776 and program.ts:5115 store maybeBind of it; each may be undefined\"}",
+      "path": [
+        "ModuleResolutionHost",
+        "getDirectories"
+      ],
+      "line": 7271
+    },
+    {
+      "adaptation": "adapt/97-cli-axolotl-d/api-sanctions.json row 5 {\"path\":[\"ParseConfigHost\",\"trace\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"trace?(s: string): void;\",\"after\":\"trace?: { trace(s: string): void; }[\\\"trace\\\"] | undefined;\",\"why\":\"parseConfigHostFromCompilerHostLike stores host.trace ? s => host.trace!(s) : undefined (program.ts:5120)\"}",
+      "path": [
+        "ParseConfigHost",
+        "trace"
+      ],
+      "line": 5995
+    },
+    {
+      "adaptation": "adapt/97-cli-axolotl-d/api-sanctions.json row 6 {\"path\":[\"CompilerHost\",\"getDefaultLibLocation\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"getDefaultLibLocation?(): string;\",\"after\":\"getDefaultLibLocation?: { getDefaultLibLocation(): string; }[\\\"getDefaultLibLocation\\\"] | undefined;\",\"why\":\"createCompilerHostFromProgramHost stores maybeBind(host, host.getDefaultLibLocation) (watch.ts:761)\"}",
+      "path": [
+        "CompilerHost",
+        "getDefaultLibLocation"
+      ],
+      "line": 7364
+    },
+    {
+      "adaptation": "adapt/97-cli-axolotl-d/api-sanctions.json row 7 {\"path\":[\"CompilerHost\",\"readDirectory\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"readDirectory?(rootDir: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth?: number): string[];\",\"after\":\"readDirectory?: { readDirectory(rootDir: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth?: number): string[]; }[\\\"readDirectory\\\"] | undefined;\",\"why\":\"createCompilerHostFromProgramHost stores maybeBind(host, host.readDirectory) (watch.ts:780)\"}",
+      "path": [
+        "CompilerHost",
+        "readDirectory"
+      ],
+      "line": 7370
+    },
+    {
+      "adaptation": "adapt/97-cli-axolotl-d/api-sanctions.json row 8 {\"path\":[\"CompilerHost\",\"resolveModuleNames\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"resolveModuleNames?(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile): (ResolvedModule | undefined)[];\",\"after\":\"resolveModuleNames?: { resolveModuleNames(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile): (ResolvedModule | undefined)[]; }[\\\"resolveModuleNames\\\"] | undefined;\",\"why\":\"tsbuildPublic.ts:441 and watchPublic.ts:530 store maybeBind(host, host.resolveModuleNames)\"}",
+      "path": [
+        "CompilerHost",
+        "resolveModuleNames"
+      ],
+      "line": 7372
+    },
+    {
+      "adaptation": "adapt/97-cli-axolotl-d/api-sanctions.json row 9 {\"path\":[\"CompilerHost\",\"getModuleResolutionCache\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"getModuleResolutionCache?(): ModuleResolutionCache | undefined;\",\"after\":\"getModuleResolutionCache?: { getModuleResolutionCache(): ModuleResolutionCache | undefined; }[\\\"getModuleResolutionCache\\\"] | undefined;\",\"why\":\"tsbuildPublic.ts:443 and watchPublic.ts:543 store maybeBind(host, host.getModuleResolutionCache)\"}",
+      "path": [
+        "CompilerHost",
+        "getModuleResolutionCache"
+      ],
+      "line": 7376
+    },
+    {
+      "adaptation": "adapt/97-cli-axolotl-d/api-sanctions.json row 10 {\"path\":[\"CompilerHost\",\"resolveTypeReferenceDirectives\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"resolveTypeReferenceDirectives?(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode): (ResolvedTypeReferenceDirective | undefined)[];\",\"after\":\"resolveTypeReferenceDirectives?: { resolveTypeReferenceDirectives(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode): (ResolvedTypeReferenceDirective | undefined)[]; }[\\\"resolveTypeReferenceDirectives\\\"] | undefined;\",\"why\":\"tsbuildPublic.ts:442 and watchPublic.ts:535 store maybeBind(host, host.resolveTypeReferenceDirectives)\"}",
+      "path": [
+        "CompilerHost",
+        "resolveTypeReferenceDirectives"
+      ],
+      "line": 7382
+    },
+    {
+      "adaptation": "adapt/97-cli-axolotl-d/api-sanctions.json row 11 {\"path\":[\"CompilerHost\",\"resolveModuleNameLiterals\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"resolveModuleNameLiterals?(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: readonly StringLiteralLike[] | undefined): readonly ResolvedModuleWithFailedLookupLocations[];\",\"after\":\"resolveModuleNameLiterals?: { resolveModuleNameLiterals(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: readonly StringLiteralLike[] | undefined): readonly ResolvedModuleWithFailedLookupLocations[]; }[\\\"resolveModuleNameLiterals\\\"] | undefined;\",\"why\":\"tsbuildPublic.ts:438 and watchPublic.ts:529 store maybeBind(host, host.resolveModuleNameLiterals)\"}",
+      "path": [
+        "CompilerHost",
+        "resolveModuleNameLiterals"
+      ],
+      "line": 7383
+    },
+    {
+      "adaptation": "adapt/97-cli-axolotl-d/api-sanctions.json row 12 {\"path\":[\"CompilerHost\",\"resolveTypeReferenceDirectiveReferences\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"resolveTypeReferenceDirectiveReferences?<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: readonly T[] | undefined): readonly ResolvedTypeReferenceDirectiveWithFailedLookupLocations[];\",\"after\":\"resolveTypeReferenceDirectiveReferences?: { resolveTypeReferenceDirectiveReferences<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: readonly T[] | undefined): readonly ResolvedTypeReferenceDirectiveWithFailedLookupLocations[]; }[\\\"resolveTypeReferenceDirectiveReferences\\\"] | undefined;\",\"why\":\"tsbuildPublic.ts:439 and watchPublic.ts:534 store maybeBind(host, host.resolveTypeReferenceDirectiveReferences)\"}",
+      "path": [
+        "CompilerHost",
+        "resolveTypeReferenceDirectiveReferences"
+      ],
+      "line": 7384
+    },
+    {
+      "adaptation": "adapt/97-cli-axolotl-d/api-sanctions.json row 13 {\"path\":[\"CompilerHost\",\"createHash\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"createHash?(data: string): string;\",\"after\":\"createHash?: { createHash(data: string): string; }[\\\"createHash\\\"] | undefined;\",\"why\":\"program.ts:494, watchPublic.ts:125 and watch.ts:779 store maybeBind(system or host, createHash), undefined when it is absent\"}",
+      "path": [
+        "CompilerHost",
+        "createHash"
+      ],
+      "line": 7388
+    },
+    {
+      "adaptation": "adapt/97-cli-axolotl-d/api-sanctions.json row 14 {\"path\":[\"ProgramHost\",\"createHash\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"createHash?(data: string): string;\",\"after\":\"createHash?: { createHash(data: string): string; }[\\\"createHash\\\"] | undefined;\",\"why\":\"createProgramHost stores maybeBind(system, system.createHash) (watch.ts:861)\"}",
+      "path": [
+        "ProgramHost",
+        "createHash"
+      ],
+      "line": 9829
+    },
+    {
+      "adaptation": "adapt/97-cli-axolotl-d/api-sanctions.json row 15 {\"path\":[\"ProgramHost\",\"directoryExists\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"directoryExists?(path: string): boolean;\",\"after\":\"directoryExists?: { directoryExists(path: string): boolean; }[\\\"directoryExists\\\"] | undefined;\",\"why\":\"tsbuildPublic.ts:785 writes back cache.originalDirectoryExists, saved from a host that may not have one (program.ts:527)\"}",
+      "path": [
+        "ProgramHost",
+        "directoryExists"
+      ],
+      "line": 9841
+    },
+    {
+      "adaptation": "adapt/97-cli-axolotl-d/api-sanctions.json row 16 {\"path\":[\"ProgramHost\",\"realpath\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"realpath?(path: string): string;\",\"after\":\"realpath?: { realpath(path: string): string; }[\\\"realpath\\\"] | undefined;\",\"why\":\"createProgramHost stores maybeBind(system, system.realpath) (watch.ts:856)\"}",
+      "path": [
+        "ProgramHost",
+        "realpath"
+      ],
+      "line": 9847
+    },
+    {
+      "adaptation": "adapt/97-cli-axolotl-d/api-sanctions.json row 17 {\"path\":[\"ProgramHost\",\"getEnvironmentVariable\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"getEnvironmentVariable?(name: string): string | undefined;\",\"after\":\"getEnvironmentVariable?: { getEnvironmentVariable(name: string): string | undefined; }[\\\"getEnvironmentVariable\\\"] | undefined;\",\"why\":\"createProgramHost stores maybeBind(system, system.getEnvironmentVariable) (watch.ts:857)\"}",
+      "path": [
+        "ProgramHost",
+        "getEnvironmentVariable"
+      ],
+      "line": 9851
+    },
+    {
+      "adaptation": "adapt/97-cli-axolotl-d/api-sanctions.json row 18 {\"path\":[\"SolutionBuilderHostBase\",\"createDirectory\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"createDirectory?(path: string): void;\",\"after\":\"createDirectory?: { createDirectory(path: string): void; }[\\\"createDirectory\\\"] | undefined;\",\"why\":\"tsbuildPublic.ts:786 writes back cache.originalCreateDirectory, saved from a host that may not have one (program.ts:528)\"}",
+      "path": [
+        "SolutionBuilderHostBase",
+        "createDirectory"
+      ],
+      "line": 9957
+    },
+    {
+      "adaptation": "adapt/97-cli-axolotl-d/api-sanctions.json row 19 {\"path\":[\"SolutionBuilderHostBase\",\"writeFile\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"writeFile?(path: string, data: string, writeByteOrderMark?: boolean): void;\",\"after\":\"writeFile?: { writeFile(path: string, data: string, writeByteOrderMark?: boolean): void; }[\\\"writeFile\\\"] | undefined;\",\"why\":\"tsbuildPublic.ts:787 writes back cache.originalWriteFile, saved from a host that may not have one (program.ts:529)\"}",
+      "path": [
+        "SolutionBuilderHostBase",
+        "writeFile"
+      ],
+      "line": 9962
+    },
+    {
       "adaptation": "75",
       "path": [
         "JsonSourceFile",
@@ -2998,6 +3258,14 @@
     {
       "file": "stage3/adapt/79-exit-code/proofs/api-owner.json",
       "sha256": "37a765a6491e6232bdff3f17f9680d19daac0ba9370b00a94f4849034f831f55"
+    },
+    {
+      "file": "stage3/adapt/95-checker-axolotl-e/api-sanctions.json",
+      "sha256": "5d7e48d39c9dcfb9522b9377e863ed08ec38c9d33fb225fd35081e7a3bb1083a"
+    },
+    {
+      "file": "stage3/adapt/97-cli-axolotl-d/api-sanctions.json",
+      "sha256": "b048e3f0a8fea6baddf3b199fce46fe775084d003f3d1cfd972ba1d284c893bb"
     }
   ],
   "baseline_diffs": [
@@ -3919,6 +4187,15 @@
     "     }\n",
     "     interface TsConfigSourceFile extends JsonSourceFile {\n",
     "         extendedSourceFiles?: string[];\n",
+    "@@ -5992,7 +5993,7 @@\n",
+    "          */\n",
+    "         fileExists(path: string): boolean;\n",
+    "         readFile(path: string): string | undefined;\n",
+    "-        trace?(s: string): void;\n",
+    "+        trace?: { trace(s: string): void; }[\"trace\"] | undefined;\n",
+    "     }\n",
+    "     /**\n",
+    "      * Branded string for keeping track of when we've turned an ambiguous path\n",
     "@@ -6168,7 +6169,7 @@\n",
     "         emitSkipped: boolean;\n",
     "         /** Contains declaration emit diagnostics */\n",
@@ -3928,6 +4205,15 @@
     "     }\n",
     "     interface TypeChecker {\n",
     "         getTypeOfSymbolAtLocation(symbol: Symbol, node: Node): Type;\n",
+    "@@ -6215,7 +6216,7 @@\n",
+    "         /** Note that the resulting nodes cannot be checked. */\n",
+    "         signatureToSignatureDeclaration(signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined):\n",
+    "             | SignatureDeclaration & {\n",
+    "-                typeArguments?: NodeArray<TypeNode>;\n",
+    "+                typeArguments?: NodeArray<TypeNode> | undefined;\n",
+    "             }\n",
+    "             | undefined;\n",
+    "         /** Note that the resulting nodes cannot be checked. */\n",
     "@@ -6533,10 +6534,10 @@\n",
     "     interface Symbol {\n",
     "         flags: SymbolFlags;\n",
@@ -4079,7 +4365,7 @@
     "         raw?: any;\n",
     "         errors: Diagnostic[];\n",
     "         wildcardDirectories?: MapLike<WatchDirectoryFlags>;\n",
-    "@@ -7252,10 +7253,10 @@\n",
+    "@@ -7252,23 +7253,23 @@\n",
     "     interface CreateProgramOptions {\n",
     "         rootNames: readonly string[];\n",
     "         options: CompilerOptions;\n",
@@ -4094,9 +4380,60 @@
     "     }\n",
     "     interface ModuleResolutionHost {\n",
     "         fileExists(fileName: string): boolean;\n",
-    "@@ -7387,7 +7388,7 @@\n",
+    "         readFile(fileName: string): string | undefined;\n",
+    "-        trace?(s: string): void;\n",
+    "-        directoryExists?(directoryName: string): boolean;\n",
+    "+        trace?: { trace(s: string): void; }[\"trace\"] | undefined;\n",
+    "+        directoryExists?: { directoryExists(directoryName: string): boolean; }[\"directoryExists\"] | undefined;\n",
+    "         /**\n",
+    "          * Resolve a symbolic link.\n",
+    "          * @see https://nodejs.org/api/fs.html#fs_fs_realpathsync_path_options\n",
+    "          */\n",
+    "-        realpath?(path: string): string;\n",
+    "+        realpath?: { realpath(path: string): string; }[\"realpath\"] | undefined;\n",
+    "         getCurrentDirectory?(): string;\n",
+    "-        getDirectories?(path: string): string[];\n",
+    "+        getDirectories?: { getDirectories(path: string): string[]; }[\"getDirectories\"] | undefined;\n",
+    "         useCaseSensitiveFileNames?: boolean | (() => boolean) | undefined;\n",
+    "     }\n",
+    "     /**\n",
+    "@@ -7361,33 +7362,33 @@\n",
+    "         getSourceFileByPath?(fileName: string, path: Path, languageVersionOrOptions: ScriptTarget | CreateSourceFileOptions, onError?: (message: string) => void, shouldCreateNewSourceFile?: boolean): SourceFile | undefined;\n",
+    "         getCancellationToken?(): CancellationToken;\n",
+    "         getDefaultLibFileName(options: CompilerOptions): string;\n",
+    "-        getDefaultLibLocation?(): string;\n",
+    "+        getDefaultLibLocation?: { getDefaultLibLocation(): string; }[\"getDefaultLibLocation\"] | undefined;\n",
+    "         writeFile: WriteFileCallback;\n",
+    "         getCurrentDirectory(): string;\n",
+    "         getCanonicalFileName(fileName: string): string;\n",
+    "         useCaseSensitiveFileNames(): boolean;\n",
+    "         getNewLine(): string;\n",
+    "-        readDirectory?(rootDir: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth?: number): string[];\n",
+    "+        readDirectory?: { readDirectory(rootDir: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth?: number): string[]; }[\"readDirectory\"] | undefined;\n",
+    "         /** @deprecated supply resolveModuleNameLiterals instead for resolution that can handle newer resolution modes like nodenext */\n",
+    "-        resolveModuleNames?(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile): (ResolvedModule | undefined)[];\n",
+    "+        resolveModuleNames?: { resolveModuleNames(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile): (ResolvedModule | undefined)[]; }[\"resolveModuleNames\"] | undefined;\n",
+    "         /**\n",
+    "          * Returns the module resolution cache used by a provided `resolveModuleNames` implementation so that any non-name module resolution operations (eg, package.json lookup) can reuse it\n",
+    "          */\n",
+    "-        getModuleResolutionCache?(): ModuleResolutionCache | undefined;\n",
+    "+        getModuleResolutionCache?: { getModuleResolutionCache(): ModuleResolutionCache | undefined; }[\"getModuleResolutionCache\"] | undefined;\n",
+    "         /**\n",
+    "          * @deprecated supply resolveTypeReferenceDirectiveReferences instead for resolution that can handle newer resolution modes like nodenext\n",
+    "          *\n",
+    "          * This method is a companion for 'resolveModuleNames' and is used to resolve 'types' references to actual type declaration files\n",
+    "          */\n",
+    "-        resolveTypeReferenceDirectives?(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode): (ResolvedTypeReferenceDirective | undefined)[];\n",
+    "-        resolveModuleNameLiterals?(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: readonly StringLiteralLike[] | undefined): readonly ResolvedModuleWithFailedLookupLocations[];\n",
+    "-        resolveTypeReferenceDirectiveReferences?<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: readonly T[] | undefined): readonly ResolvedTypeReferenceDirectiveWithFailedLookupLocations[];\n",
+    "+        resolveTypeReferenceDirectives?: { resolveTypeReferenceDirectives(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode): (ResolvedTypeReferenceDirective | undefined)[]; }[\"resolveTypeReferenceDirectives\"] | undefined;\n",
+    "+        resolveModuleNameLiterals?: { resolveModuleNameLiterals(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: readonly StringLiteralLike[] | undefined): readonly ResolvedModuleWithFailedLookupLocations[]; }[\"resolveModuleNameLiterals\"] | undefined;\n",
+    "+        resolveTypeReferenceDirectiveReferences?: { resolveTypeReferenceDirectiveReferences<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: readonly T[] | undefined): readonly ResolvedTypeReferenceDirectiveWithFailedLookupLocations[]; }[\"resolveTypeReferenceDirectiveReferences\"] | undefined;\n",
+    "         getEnvironmentVariable?(name: string): string | undefined;\n",
+    "         /** If provided along with custom resolveModuleNames or resolveTypeReferenceDirectives, used to determine if unchanged file path needs to re-resolve modules/type reference directives */\n",
     "         hasInvalidatedResolutions?(filePath: Path): boolean;\n",
-    "         createHash?(data: string): string;\n",
+    "-        createHash?(data: string): string;\n",
+    "+        createHash?: { createHash(data: string): string; }[\"createHash\"] | undefined;\n",
     "         getParsedCommandLine?(fileName: string): ParsedCommandLine | undefined;\n",
     "-        jsDocParsingMode?: JSDocParsingMode;\n",
     "+        jsDocParsingMode?: JSDocParsingMode | undefined;\n",
@@ -4222,6 +4559,36 @@
     "     }\n",
     "     interface ProgramHost<T extends BuilderProgram> {\n",
     "         /**\n",
+    "@@ -9826,7 +9827,7 @@\n",
+    "         getCurrentDirectory(): string;\n",
+    "         getDefaultLibFileName(options: CompilerOptions): string;\n",
+    "         getDefaultLibLocation?(): string;\n",
+    "-        createHash?(data: string): string;\n",
+    "+        createHash?: { createHash(data: string): string; }[\"createHash\"] | undefined;\n",
+    "         /**\n",
+    "          * Use to check file presence for source files and\n",
+    "          * if resolveModuleNames is not provided (complier is in charge of module resolution) then module files as well\n",
+    "@@ -9838,17 +9839,17 @@\n",
+    "          */\n",
+    "         readFile(path: string, encoding?: string): string | undefined;\n",
+    "         /** If provided, used for module resolution as well as to handle directory structure */\n",
+    "-        directoryExists?(path: string): boolean;\n",
+    "+        directoryExists?: { directoryExists(path: string): boolean; }[\"directoryExists\"] | undefined;\n",
+    "         /** If provided, used in resolutions as well as handling directory structure */\n",
+    "         getDirectories?(path: string): string[];\n",
+    "         /** If provided, used to cache and handle directory structure modifications */\n",
+    "         readDirectory?(path: string, extensions?: readonly string[], exclude?: readonly string[], include?: readonly string[], depth?: number): string[];\n",
+    "         /** Symbol links resolution */\n",
+    "-        realpath?(path: string): string;\n",
+    "+        realpath?: { realpath(path: string): string; }[\"realpath\"] | undefined;\n",
+    "         /** If provided would be used to write log about compilation */\n",
+    "         trace?(s: string): void;\n",
+    "         /** If provided is used to get the environment variable */\n",
+    "-        getEnvironmentVariable?(name: string): string | undefined;\n",
+    "+        getEnvironmentVariable?: { getEnvironmentVariable(name: string): string | undefined; }[\"getEnvironmentVariable\"] | undefined;\n",
+    "         /**\n",
+    "          * @deprecated supply resolveModuleNameLiterals instead for resolution that can handle newer resolution modes like nodenext\n",
+    "          *\n",
     "@@ -9887,9 +9888,9 @@\n",
     "         rootFiles: string[];\n",
     "         /** Compiler options */\n",
@@ -4247,6 +4614,21 @@
     "         /**\n",
     "          * Used to generate source file names from the config file and its include, exclude, files rules\n",
     "          * and also to cache the directory stucture\n",
+    "@@ -9954,12 +9955,12 @@\n",
+    "         line: number;\n",
+    "     }\n",
+    "     interface SolutionBuilderHostBase<T extends BuilderProgram> extends ProgramHost<T> {\n",
+    "-        createDirectory?(path: string): void;\n",
+    "+        createDirectory?: { createDirectory(path: string): void; }[\"createDirectory\"] | undefined;\n",
+    "         /**\n",
+    "          * Should provide create directory and writeFile if done of invalidatedProjects is not invoked with\n",
+    "          * writeFileCallback\n",
+    "          */\n",
+    "-        writeFile?(path: string, data: string, writeByteOrderMark?: boolean): void;\n",
+    "+        writeFile?: { writeFile(path: string, data: string, writeByteOrderMark?: boolean): void; }[\"writeFile\"] | undefined;\n",
+    "         getCustomTransformers?: (project: string) => CustomTransformers | undefined;\n",
+    "         getModifiedTime(fileName: string): Date | undefined;\n",
+    "         setModifiedTime(fileName: string, date: Date): void;\n",
     "@@ -9970,7 +9971,7 @@\n",
     "         afterProgramEmitAndDiagnostics?(program: T): void;\n",
     "     }\n",
