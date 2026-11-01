@@ -252,7 +252,6 @@ func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Typ
 	if l.checker.GetTypeAtLocation(argument).Id() == claim.Id() {
 		return nil
 	}
-	claim = l.concrete(claim)
 	targets := []*checker.Type{claim}
 	if claim.Flags()&checker.TypeFlagsUnion != 0 {
 		targets = claim.Types()
@@ -265,7 +264,7 @@ func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Typ
 	if declared := l.checker.GetTypeAtLocation(argument); l.mentionsTypeParameter(declared, map[*checker.Type]bool{}) {
 		return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(claim)+" over a generic argument "+l.checker.TypeToString(declared)+", which narrows to an intersection no view covers")
 	}
-	source := l.concrete(l.checker.GetTypeAtLocation(argument))
+	source := l.checker.GetTypeAtLocation(argument)
 	members := []*checker.Type{source}
 	if source.Flags()&checker.TypeFlagsUnion != 0 {
 		members = source.Types()
