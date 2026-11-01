@@ -1,0 +1,7 @@
+node.declarations[0] 1/1 2803:38 FunctionDeclaration visitVariableDeclarationList asserted=true PropertyAccessExpression
+declarations[0] 1/1 3046:64 FunctionDeclaration convertForOfStatementHead asserted=true PropertyAccessExpression
+funcStatements[classBodyStart] 1/2 4430:41 FunctionDeclaration visitTypeScriptClassWrapper asserted=false CallExpression
+funcStatements[classBodyStart] 2/2 4437:29 FunctionDeclaration visitTypeScriptClassWrapper asserted=true CallExpression
+segments[0] 1/3 4676:34 FunctionDeclaration transformAndSpreadElements asserted=true VariableDeclaration
+segments[0] 2/3 4691:34 FunctionDeclaration transformAndSpreadElements asserted=true PropertyAccessExpression
+segments[0] 3/3 4693:13 FunctionDeclaration transformAndSpreadElements asserted=true PropertyAccessExpression

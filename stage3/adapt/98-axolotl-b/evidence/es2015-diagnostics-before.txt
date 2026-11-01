@@ -1,0 +1,5 @@
+src/compiler/transformers/es2015.ts:2803:38: error TS2532: Object is possibly 'undefined'.
+src/compiler/transformers/es2015.ts:3046:64: error TS2532: Object is possibly 'undefined'.
+src/compiler/transformers/es2015.ts:4437:29: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+src/compiler/transformers/es2015.ts:4691:34: error TS2532: Object is possibly 'undefined'.
+src/compiler/transformers/es2015.ts:4693:13: error TS2532: Object is possibly 'undefined'.

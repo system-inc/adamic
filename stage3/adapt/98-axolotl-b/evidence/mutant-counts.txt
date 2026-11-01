@@ -1,0 +1,6 @@
+es2015: {'after': 0, 'mutant': 1}
+own file: {'after': '59/79', 'mutant': '58/79'}
+mutant moved vs after {'src/compiler/transformers/es2015.ts': (0, 1)}
+after nonzero 20
+mutant nonzero 21
+/tmp/w/mutant/src/compiler/transformers/es2015.ts:4437:29: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.

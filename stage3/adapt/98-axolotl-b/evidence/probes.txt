@@ -1,0 +1,12 @@
+== partial (only 4437 asserted)
+partially applied: some sites asserted, others not
+exit=1 unchanged=yes
+== doubled
+unexpected parent NonNullExpression, want PropertyAccessExpression: transformers/es2015.ts:4693:13 segments[0]
+exit=1 unchanged=yes
+== drift (extra segments[0])
+site drift (4 occurrences, want 3): transformers/es2015.ts:4691:34 segments[0]
+exit=1 unchanged=yes
+== moved parent (4437 read wrapped)
+unexpected parent ParenthesizedExpression, want CallExpression: transformers/es2015.ts:4437:29 funcStatements[classBodyStart]
+exit=1 unchanged=yes

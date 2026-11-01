@@ -1,0 +1,4 @@
+4437c4437
+<             statements.push(funcStatements[classBodyStart]!);
+---
+>             statements.push(funcStatements[classBodyStart]);

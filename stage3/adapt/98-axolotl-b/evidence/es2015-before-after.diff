@@ -1,0 +1,20 @@
+2803c2803
+<                 && (isBindingPattern(node.declarations[0].name) || isBindingPattern(last(node.declarations).name))
+---
+>                 && (isBindingPattern(node.declarations[0]!.name) || isBindingPattern(last(node.declarations).name))
+3046c3046
+<                 setSourceMapRange(declarationList, createRange(declarations[0].pos, last(declarations).end));
+---
+>                 setSourceMapRange(declarationList, createRange(declarations[0]!.pos, last(declarations).end));
+4437c4437
+<             statements.push(funcStatements[classBodyStart]);
+---
+>             statements.push(funcStatements[classBodyStart]!);
+4691c4691
+<         const startsWithSpread = segments[0].kind !== SpreadSegmentKind.None;
+---
+>         const startsWithSpread = segments[0]!.kind !== SpreadSegmentKind.None;
+4693c4693
+<             segments[0].expression;
+---
+>             segments[0]!.expression;
