@@ -114,9 +114,10 @@ is added, deleted, filtered, or rewritten by adaptation 79.
 
 ## 3. Missing index declaration crashes getSymbolAtLocation
 
-Status: observed 6.0.3 defect; 95g stopped before implementation/build because
-both reference implementations disagree with retaining a parentless symbol.
-Draft issue, not filed. No fork fix or reader-safety proof is claimed.
+Status: observed 6.0.3 defect; Correctness ruled to follow typescript-go and
+TypeScript main and return no symbol for an empty filtered declaration list.
+95g stops before building because the caller audit found an unsafe service
+reader. Draft issue, not filed. No fork fix or reader-safety proof is claimed.
 Upstream: TypeScript 6.0.3, commit 050880ce59e30b356b686bd3144efe24f875ebc8.
 Location: src/compiler/checker.ts:50153, getApplicableIndexSymbol reads
 copy.declarations[0].parent after mapDefined may remove every declaration.
@@ -127,11 +128,15 @@ property access. One applicable index has no declaration; neither aliasSymbol
 nor symbol supplies a parent in the fallback. Before: TypeError reading parent.
 With both noImplicitAny settings the witness has zero compiler diagnostics.
 
-The proposed behavior was to retain the copied symbol with parent unset.
+The resolved behavior is to return undefined before creating the copied symbol.
 Official typescript-go 89d5d5b2849a0db0957065889ca58536fa6d2e4a and TypeScript
 main 6161772c1370bdd4a82f808e6823bd755eb1870d instead create no symbol for an
-empty declaration list and return nil. The reference gate therefore requires
-a new ruling before building. Evidence and the complete runnable Node witness
+empty declaration list and return nil. The behavior now follows these references.
+However, services/findAllReferences.ts:580-581 getImplementationReferenceEntries
+asserts getSymbolAtLocation is present and reads symbol.valueDeclaration. A
+zero-diagnostic super.xyz implementation lookup returns undefined before the
+candidate guard and throws reading valueDeclaration with it. The unit requires
+stopping at this unsafe reader before building. Evidence and the complete runnable Node witness
 are on branch typescript/axolotl-checker-g-evidence under
 stage3/evidence/95-checker-axolotl-g/.
 
@@ -165,11 +170,14 @@ the second statement's PropertyAccessExpression. The retained witness supplies
 these exact files through a compiler host and records every diagnostic and
 stack; it runs against an installed or built typescript.js.
 
-Expected: a non-throwing symbol query; the choice between no symbol and a
-symbol with parent unset awaits Correctness. Actual: TypeError: Cannot read
+Expected: undefined for an empty filtered declaration list, following
+typescript-go and TypeScript main as Correctness ruled. Actual: TypeError: Cannot read
 properties of undefined (reading 'parent') in getApplicableIndexSymbol.
-Suggested upstream direction: handle an empty mapDefined result before reading
-its first declaration. No final fork patch is proposed by this stopped head.
+Suggested upstream direction: handle an empty mapDefined result before creating
+the copied index symbol, and audit callers for undefined. In 6.0.3 the
+super-property implementation lookup consumer needs an explicit absence guard
+before reading valueDeclaration. This prerequisite is not applied by this
+stopped head.
 
 This entry and F's entry independently append to 95a's ledger end. Resolve the
 append conflict when merging second; preserve both issue drafts.
