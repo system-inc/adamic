@@ -1,0 +1,4 @@
+37d36
+< src/compiler/moduleNameResolver.ts:286:9: error TS2322: Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.
+39d37
+< src/compiler/moduleNameResolver.ts:627:9: error TS2375: Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.

@@ -1,0 +1,6 @@
+p3/src/compiler/moduleNameResolver.ts:286:9: error TS2322: Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.
+  Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'isExternalLibraryImport' are incompatible.
+      Type 'boolean | undefined' is not assignable to type 'boolean'.
+        Type 'undefined' is not assignable to type 'boolean'.
+p3/src/compiler/moduleNameResolver.ts:474:36: error TS2322: Type 'MapLike<string[]> | undefined' is not assignable to type 'MapLike<string[]>'.

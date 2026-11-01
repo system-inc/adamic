@@ -1,0 +1,318 @@
+[
+ {
+  "file": "src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/_namespaces/ts.performance.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/_namespaces/ts.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/binder.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/builder.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/builderPublic.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/builderState.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/builderStatePublic.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/checker.ts",
+  "own_file_diagnostics": 30
+ },
+ {
+  "file": "src/compiler/commandLineParser.ts",
+  "own_file_diagnostics": 6
+ },
+ {
+  "file": "src/compiler/core.ts",
+  "own_file_diagnostics": 1
+ },
+ {
+  "file": "src/compiler/corePublic.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/debug.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/diagnosticInformationMap.generated.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/emitter.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/executeCommandLine.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/expressionToTypeNode.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/factory/baseNodeFactory.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/factory/emitHelpers.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/factory/emitNode.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/factory/nodeChildren.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/factory/nodeConverters.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/factory/nodeFactory.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/factory/nodeTests.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/factory/parenthesizerRules.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/factory/utilities.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/factory/utilitiesPublic.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/hostErrors.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/moduleNameResolver.ts",
+  "own_file_diagnostics": 3
+ },
+ {
+  "file": "src/compiler/moduleSpecifiers.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/parser.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/path.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/performance.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/performanceCore.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/program.ts",
+  "own_file_diagnostics": 11
+ },
+ {
+  "file": "src/compiler/programDiagnostics.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/resolutionCache.ts",
+  "own_file_diagnostics": 1
+ },
+ {
+  "file": "src/compiler/scanner.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/semver.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/sourcemap.ts",
+  "own_file_diagnostics": 1
+ },
+ {
+  "file": "src/compiler/symbolWalker.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/sys.ts",
+  "own_file_diagnostics": 4
+ },
+ {
+  "file": "src/compiler/tracing.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/transformer.ts",
+  "own_file_diagnostics": 6
+ },
+ {
+  "file": "src/compiler/transformers/classFields.ts",
+  "own_file_diagnostics": 6
+ },
+ {
+  "file": "src/compiler/transformers/classThis.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/transformers/declarations.ts",
+  "own_file_diagnostics": 1
+ },
+ {
+  "file": "src/compiler/transformers/declarations/diagnostics.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/transformers/destructuring.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/transformers/es2015.ts",
+  "own_file_diagnostics": 5
+ },
+ {
+  "file": "src/compiler/transformers/es2016.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/transformers/es2017.ts",
+  "own_file_diagnostics": 6
+ },
+ {
+  "file": "src/compiler/transformers/es2018.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/transformers/es2019.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/transformers/es2020.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/transformers/es2021.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/transformers/esDecorators.ts",
+  "own_file_diagnostics": 3
+ },
+ {
+  "file": "src/compiler/transformers/esnext.ts",
+  "own_file_diagnostics": 5
+ },
+ {
+  "file": "src/compiler/transformers/generators.ts",
+  "own_file_diagnostics": 27
+ },
+ {
+  "file": "src/compiler/transformers/jsx.ts",
+  "own_file_diagnostics": 2
+ },
+ {
+  "file": "src/compiler/transformers/legacyDecorators.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+  "own_file_diagnostics": 5
+ },
+ {
+  "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/transformers/module/module.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/transformers/module/system.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/transformers/namedEvaluation.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/transformers/taggedTemplate.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/transformers/ts.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/transformers/typeSerializer.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/transformers/utilities.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/tsbuild.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/tsbuildPublic.ts",
+  "own_file_diagnostics": 10
+ },
+ {
+  "file": "src/compiler/types.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/utilities.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/utilitiesPublic.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/visitorPublic.ts",
+  "own_file_diagnostics": 0
+ },
+ {
+  "file": "src/compiler/watch.ts",
+  "own_file_diagnostics": 2
+ },
+ {
+  "file": "src/compiler/watchPublic.ts",
+  "own_file_diagnostics": 10
+ },
+ {
+  "file": "src/compiler/watchUtilities.ts",
+  "own_file_diagnostics": 0
+ }
+]
