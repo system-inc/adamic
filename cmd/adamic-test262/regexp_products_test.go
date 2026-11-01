@@ -24,9 +24,7 @@ func regExpRunnerRuntime(t testing.TB, options native.Options) (string, native.R
 	if err := runtimeproducts.Declared(request); err != nil {
 		t.Fatal(err)
 	}
-	directory, err := buildcache.Get(runtimeproducts.Inputs(request), func(string) error {
-		return fmt.Errorf("RegExp runner runtime not built ahead for options %+v; run TestProduct_RegExpRunner tests first", options)
-	})
+	directory, err := buildcache.BuiltAhead(runtimeproducts.Inputs(request), fmt.Errorf("RegExp runner runtime not built ahead for options %+v; run TestProduct_RegExpRunner tests first", options))
 	if err != nil {
 		t.Fatal(err)
 	}

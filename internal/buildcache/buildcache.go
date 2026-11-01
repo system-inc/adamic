@@ -97,7 +97,7 @@ func handedRoots(paths []string) []string {
 
 // LeanGet is Get for a lean build (LeanProduct).
 func LeanGet(inputs Inputs, build func(directory string) error) (string, error) {
-	directory, _, err := get(inputs, build, leanCalled(1))
+	directory, _, err := get(inputs, build, leanCalled(1), false)
 	return directory, err
 }
 
@@ -173,7 +173,7 @@ var leanCallers = []string{"internal/native/agreementproducts", "internal/native
 
 func product(t testing.TB, inputs Inputs, build func(directory string) error, lean *leanBuild) string {
 	t.Helper()
-	directory, line, err := get(inputs, build, lean)
+	directory, line, err := get(inputs, build, lean, false)
 	if line != "" {
 		t.Log(line)
 	}
@@ -194,7 +194,19 @@ var ErrNotBuilt = errors.New("not built")
 
 // Get is Product for TestMain and tools.
 func Get(inputs Inputs, build func(directory string) error) (string, error) {
-	directory, _, err := get(inputs, build, nil)
+	directory, _, err := get(inputs, build, nil, false)
+	return directory, err
+}
+
+// BuiltAhead looks up inputs' product exactly as Get does and never builds it: on a miss it returns missing, the error a
+// behavior test or its driver gives for a product that wasn't built ahead. A BuiltAhead lookup never audits, neither a listed local
+// hit (ADAMIC_BUILD_AUDIT_KEYS) nor a sampled fetch, since its only build is that refusal, and an audit of a find read
+// as a failed rebuild of a product that was there under its key (#v08876: internal/worker's wasm mutants find the
+// compiler they built a moment before, and Builder's lean check listed it under 0.8.876's rekey). The lookup that
+// builds the product audits it, so a tree still checks what it built. Every lookup whose only build is a "not built
+// ahead" refusal is a BuiltAhead (cmd/adamic-gate/parallelcensus's TestNoLookupThatOnlyRefusesGoesThroughGet).
+func BuiltAhead(inputs Inputs, missing error) (string, error) {
+	directory, _, err := get(inputs, func(string) error { return missing }, nil, true)
 	return directory, err
 }
 
@@ -203,8 +215,8 @@ func Get(inputs Inputs, build func(directory string) error) (string, error) {
 var ErrUntraced = errors.New("ADAMIC_BUILD_STORE=traced builds only under cmd/traced")
 
 // get finds or builds inputs' product; a lean build takes nothing from its caller (LeanProduct), so Settle keys it by its
-// own window, and nil is any other.
-func get(inputs Inputs, build func(directory string) error, lean *leanBuild) (string, string, error) {
+// own window, and nil is any other. finding is a BuiltAhead lookup, whose build only refuses, so it never audits (BuiltAhead).
+func get(inputs Inputs, build func(directory string) error, lean *leanBuild, finding bool) (string, string, error) {
 	started := time.Now()
 	root, err := repositoryRoot()
 	if err != nil {
@@ -262,7 +274,7 @@ func get(inputs Inputs, build func(directory string) error, lean *leanBuild) (st
 	// billed reads, every one a 404).
 	if looked.directory != "" {
 		listed, err := auditListed(nameKey)
-		if err == nil && listed {
+		if err == nil && listed && !finding {
 			err = auditHit(looked.key, inputs.Name, looked.directory, build)
 		}
 		if err != nil {
@@ -280,7 +292,7 @@ func get(inputs Inputs, build func(directory string) error, lean *leanBuild) (st
 					return err
 				}
 				// An audit rebuilds, so it runs only where building may: under a trace.
-				if traceDirectory() != "" && auditing() {
+				if traceDirectory() != "" && !finding && auditing() {
 					outcome = "audited"
 					return audit(key, inputs.Name, scratch, build)
 				}

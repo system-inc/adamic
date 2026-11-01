@@ -64,9 +64,7 @@ func debugProduct(t *testing.T, inputs buildcache.Inputs, build bool, recipe fun
 	if build {
 		return buildcache.Product(t, inputs, recipe)
 	}
-	directory, err := buildcache.Get(inputs, func(string) error {
-		return fmt.Errorf("debug product %s not built ahead; run TestProduct_Debug tests first", inputs.Name)
-	})
+	directory, err := buildcache.BuiltAhead(inputs, fmt.Errorf("debug product %s not built ahead; run TestProduct_Debug tests first", inputs.Name))
 	if err != nil {
 		t.Fatal(err)
 	}
