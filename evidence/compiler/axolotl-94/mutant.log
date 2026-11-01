@@ -1,0 +1,22 @@
+DIFFER  null (.code): plain {"threw":"TypeError","message":"Cannot read properties of null (reading 'code')"}, helper {"type":"undefined"}
+DIFFER  undefined (.code): plain {"threw":"TypeError","message":"Cannot read properties of undefined (reading 'code')"}, helper {"type":"undefined"}
+agree  a string, code (.code): plain {"type":"undefined"}, helper {"type":"undefined"}
+agree  a string, length (.length): plain {"type":"number","value":6}, helper {"type":"number","value":6}
+agree  a number (.code): plain {"type":"undefined"}, helper {"type":"undefined"}
+agree  an object with code ENOSPC (.code): plain {"type":"string","value":"ENOSPC"}, helper {"type":"string","value":"ENOSPC"}
+agree  an object without code (.code): plain {"type":"undefined"}, helper {"type":"undefined"}
+agree  an object with a numeric code (.code): plain {"type":"number","value":28}, helper {"type":"number","value":28}
+agree  a getter-only code (.code): plain {"type":"string","value":"ENOSPC"}, helper {"type":"string","value":"ENOSPC"}
+agree  an inherited code (.code): plain {"type":"string","value":"EMFILE"}, helper {"type":"string","value":"EMFILE"}
+agree  an Error's message (.message): plain {"type":"string","value":"plugin failed"}, helper {"type":"string","value":"plugin failed"}
+agree  an Error's stack is a string (.stack): plain {"type":"string","stackFirstLine":"Error: plugin failed"}, helper {"type":"string","stackFirstLine":"Error: plugin failed"}
+agree  an object with only message (.message): plain {"type":"string","value":"only a message"}, helper {"type":"string","value":"only a message"}
+agree  an object with only message, its stack (.stack): plain {"type":"undefined"}, helper {"type":"undefined"}
+agree  an object with a numeric message (.message): plain {"type":"number","value":42}, helper {"type":"number","value":42}
+agree  an object with neither, its stack (.stack): plain {"type":"undefined"}, helper {"type":"undefined"}
+agree  an object with neither, its message (.message): plain {"type":"undefined"}, helper {"type":"undefined"}
+agree  a function with code (.code): plain {"type":"string","value":"ENOSPC"}, helper {"type":"string","value":"ENOSPC"}
+agree  a proxy (.code): plain {"type":"string","value":"code read through object"}, helper {"type":"string","value":"code read through object"}
+agree  a getter that throws (.code): plain {"threw":"RangeError","message":"getter threw"}, helper {"threw":"RangeError","message":"getter threw"}
+agree  a string's prototype getter sees the primitive (.adamicWitness): plain {"type":"string","value":"string:ENOSPC"}, helper {"type":"string","value":"string:ENOSPC"}
+19 of 21 agree

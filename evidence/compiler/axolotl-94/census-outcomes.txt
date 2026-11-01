@@ -1,0 +1,4 @@
+per-root lowering outcomes that change, main -> with 94:
+  src/compiler/hostErrors.ts ('accepted', None, '') -> ('Refused', 'throwing a TypeError', 'src/compiler/hostErrors.ts:14:15')
+main    {'checker': 77, 'accepted': 2, 'error': 3}
+with 94 {'checker': 77, 'accepted': 1, 'error': 3, 'Refused': 1}
