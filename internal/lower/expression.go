@@ -1564,6 +1564,11 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 			rest := len(parameter.Declarations) > 0 && parameter.Declarations[0].Kind == ast.KindParameter && parameter.Declarations[0].AsParameterDeclaration().DotDotDotToken != nil
 			proven := l.checker.GetTypeOfSymbol(parameter)
 			if rest {
+				// Only a reference has type arguments to read. The checker dereferences nil for a rest
+				// parameter typed as anything else, a union of tuples or a type parameter (#egxccg8).
+				if proven.Flags()&checker.TypeFlagsObject == 0 || proven.ObjectFlags()&checker.ObjectFlagsReference == 0 {
+					return nil, l.notYet(node, "a call through a function value whose rest parameter isn't an array")
+				}
 				elements := l.checker.GetTypeArguments(proven)
 				if len(elements) == 1 {
 					proven = elements[0]
