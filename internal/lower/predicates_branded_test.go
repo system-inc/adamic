@@ -378,7 +378,8 @@ show(element);
 	lowersAndAgreesWithNodeAs(t, brandedPrelude+some+`function firstOf(array: readonly number[]): number { if (!some(array)) { return -1; } const first = array[0]; return first === undefined ? -1 : first; }
 const nodes: Node[] = [{ kind: 80, pos: 6 }];
 console.log(String(firstPos(nodes)));
-console.log(String(firstPos([])));
+const none: Node[] = [];
+console.log(String(firstPos(none)));
 console.log(String(firstOf([7])));
 `, ".ts")
 	_, err := lowerTypeScriptAssertionSource(t, brandedPrelude+some+`const elements: TypeElement[] = [element];
