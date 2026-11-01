@@ -326,6 +326,14 @@ show(i);`, walk, false},
 const held: (n: Node) => asserts n is TypeElement = assertElement;
 function show(x: PropertySignature | Identifier): void { held(x); console.log(String(x.typeText)); }
 show(i);`, walk, true},
+		// A claim naming a type parameter narrows by whatever the instance is, and the walk reads calls as
+		// written, so it's NotYet when S could instantiate it and the narrowing isn't the argument's own type.
+		// Mutant: generic claims passed over, and it lowers.
+		{"generic claim", `function isT<T extends Node>(n: Node): n is T { return kindOf(n) !== 0; }
+function show(n: Node): void { if (isTypeElementLie(n)) { console.log("element"); } }
+function g<U extends Node>(x: PropertySignature | Identifier): void { if (isT<U>(x)) { console.log(String(x.pos)); } }
+g<TypeElement>(i);
+show(i);`, "that the generic claim U may be instantiated at", false},
 		{"optional call", `const maybe: ((n: Node) => n is TypeElement) | undefined = isTypeElementLie;
 function show(x: PropertySignature | Identifier): void { if (maybe?.(x)) { console.log(String(x.typeText)); } }
 show(i);`, "a call through ?. (an optional call)", false},
@@ -349,6 +357,37 @@ show(i);`, "a call through ?. (an optional call)", false},
 				t.Fatalf("want NotYet with %q, got %v", probe.want, err)
 			}
 		})
+	}
+}
+
+// tsc's binarySearchKey calls `some(array)`, which claims `readonly T[]` of an argument already typed
+// `readonly T[]`, so the narrowing is the argument's own type whatever T is (computeLineOfPosition and
+// indexOfNode, Correctness's census on 9e4f2184). With S's view registered in the program, the walk reads
+// the call as written, a claim naming firstPos's T, and passes it because the argument is the claim's own
+// type, so T at Node and at number lowers and agrees with Node, as on main (Adamic's ruling). An empty
+// array isn't run: `some` answering false of one is a lie its checked false side stops, which B doesn't
+// touch for an unbranded T. Mutant: that identity test dropped, and the program is NotYet as a generic
+// claim S may instantiate. At T = TypeElement the instance's claim is an array of S, whose false side the
+// false side's guard keeps NotYet.
+func TestBrandedSupertypeIdentityNarrowingLowers(t *testing.T) {
+	t.Parallel()
+	const some = `function some<T>(array: readonly T[] | undefined): array is readonly T[] { return array !== undefined && array.length > 0; }
+function firstPos<T extends Node>(array: readonly T[]): number { if (!some(array)) { return -1; } const first = array[0]; return first === undefined ? -1 : first.pos; }
+function show(n: Node): void { if (isTypeElementLie(n)) { console.log(String(n.pos)); } }
+const element: TypeElement = { kind: 171, pos: 4, _declarationBrand: undefined, _typeElementBrand: undefined };
+show(element);
+`
+	lowersAndAgreesWithNodeAs(t, brandedPrelude+some+`function firstOf(array: readonly number[]): number { if (!some(array)) { return -1; } const first = array[0]; return first === undefined ? -1 : first; }
+const nodes: Node[] = [{ kind: 80, pos: 6 }];
+console.log(String(firstPos(nodes)));
+console.log(String(firstOf([7])));
+`, ".ts")
+	_, err := lowerTypeScriptAssertionSource(t, brandedPrelude+some+`const elements: TypeElement[] = [element];
+console.log(String(firstPos(elements)));
+`)
+	var pending *NotYet
+	if !errors.As(err, &pending) || !strings.Contains(err.Error(), "checked predicate membership of a branded supertype on its false branch") {
+		t.Fatalf("want T at TypeElement NotYet on the false side, got %v", err)
 	}
 }
 

@@ -126,6 +126,12 @@ func (l *lowering) brandedCalls(target *checker.Type) error {
 	if err, done := proofs.brandedCalls[target]; done {
 		return predicateFailureCopy(err)
 	}
+	// The walk is done once per S, so it reads every call as written, with no instance's mapper: which
+	// instance happens to be lowering when S's view registers says nothing about the calls in other
+	// bodies. A claim naming a type parameter is judged for every instance at once (brandedCall).
+	mapper := l.typeMapper
+	l.typeMapper = nil
+	defer func() { l.typeMapper = mapper }()
 	var err error
 	var visit ast.Visitor
 	visit = func(n *ast.Node) bool {
@@ -156,7 +162,11 @@ func (l *lowering) brandedCall(call *ast.Node, target *checker.Type) error {
 		return nil
 	}
 	claim := predicateOfSignature(l.checker, signature)
-	if claim == nil || claim.Type() == nil || !l.brandedHolds(claim.Type(), target, map[*checker.Type]bool{}) {
+	if claim == nil || claim.Type() == nil {
+		return nil
+	}
+	generic := l.mentionsTypeParameter(claim.Type(), map[*checker.Type]bool{})
+	if generic && !l.brandedInstantiable(claim.Type(), target, map[*checker.Type]bool{}) || !generic && !l.brandedHolds(claim.Type(), target, map[*checker.Type]bool{}) {
 		return nil
 	}
 	if claim.Kind() != checker.TypePredicateKindIdentifier && claim.Kind() != checker.TypePredicateKindAssertsIdentifier {
@@ -172,13 +182,49 @@ func (l *lowering) brandedCall(call *ast.Node, target *checker.Type) error {
 			return l.notYet(call, "a checked predicate target "+l.checker.TypeToString(target)+" claimed of a spread argument")
 		}
 	}
+	if generic {
+		// An argument of the claim's own type narrows to itself in every instance (brandedNarrowing). Any
+		// other narrowing by a claim S may instantiate depends on the instance, which this walk can't see.
+		if l.checker.GetTypeAtLocation(arguments[index]).Id() == claim.Type().Id() {
+			return nil
+		}
+		return l.notYet(call, "a checked predicate target "+l.checker.TypeToString(target)+" that the generic claim "+l.checker.TypeToString(claim.Type())+" may be instantiated at")
+	}
 	return l.brandedNarrowing(call, arguments[index], claim.Type())
 }
 
+// brandedInstantiable is whether a type parameter claim names could be instantiated at target: its base
+// constraint admits target, or it has none. visited ends a recursive type on its second visit.
+func (l *lowering) brandedInstantiable(claim, target *checker.Type, visited map[*checker.Type]bool) bool {
+	if visited[claim] {
+		return false
+	}
+	visited[claim] = true
+	if claim.Flags()&checker.TypeFlagsInstantiable != 0 {
+		constraint := l.checker.GetBaseConstraintOfType(claim)
+		return constraint == nil || l.checker.IsTypeAssignableTo(target, constraint)
+	}
+	var parts []*checker.Type
+	if claim.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		parts = append(parts, claim.Types()...)
+	}
+	if alias := claim.Alias(); alias != nil {
+		parts = append(parts, alias.TypeArguments()...)
+	}
+	if claim.Flags()&checker.TypeFlagsObject != 0 && claim.ObjectFlags()&checker.ObjectFlagsReference != 0 {
+		parts = append(parts, l.checker.GetTypeArguments(claim)...)
+	}
+	for _, part := range parts {
+		if l.brandedInstantiable(part, target, visited) {
+			return true
+		}
+	}
+	return false
+}
+
 // brandedHolds is whether claim is target, or holds it through a union's members or an array's elements,
-// as brandedMembership walks them. visited ends a recursive alias on its second visit.
+// as brandedMembership walks them, read as written. visited ends a recursive alias on its second visit.
 func (l *lowering) brandedHolds(claim, target *checker.Type, visited map[*checker.Type]bool) bool {
-	claim = l.concrete(claim)
 	if claim.Id() == target.Id() {
 		return true
 	}
@@ -206,6 +252,13 @@ func (l *lowering) brandedHolds(claim, target *checker.Type, visited map[*checke
 // branded supertype inside an array target is NotYet, since its elements narrow by the same rule with no
 // call to judge at.
 func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Type) error {
+	// An argument already of the claim's own type narrows to itself, as tsc's `some(array)` claiming
+	// `readonly T[]` of a `readonly T[]` does, whatever T is instantiated at: the result adds no member or
+	// layout the argument didn't give, so there's nothing for a view to check, and it lowers as main does
+	// (Adamic's ruling on 9e4f2184's census, core.ts:1203).
+	if l.checker.GetTypeAtLocation(argument).Id() == claim.Id() {
+		return nil
+	}
 	claim = l.concrete(claim)
 	targets := []*checker.Type{claim}
 	if claim.Flags()&checker.TypeFlagsUnion != 0 {
