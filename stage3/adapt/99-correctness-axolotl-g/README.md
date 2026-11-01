@@ -84,19 +84,19 @@ Both full apply.sh runs passed end to end. The 99g row is one file, four lines a
 | --init --rootDir null | "./src" default | null | 0 / 0 | entire after file byte-identical |
 | --init --target null | "esnext" default | null | 0 / 0 | Go panics and writes no file |
 
-The full [invalid before file](proofs/outFile-before.tsconfig.json.txt), [valid after file](proofs/outFile-after.tsconfig.json.txt) and [Go file](proofs/outFile-go.tsconfig.json.txt) are retained. The invalid line is `"outFile": undefined,`; the after and Go line is `"outFile": null,`. The actual before readback reports:
+The full [invalid before file](https://github.com/system-inc/adamic/blob/7cd9e0ab095a2fdbf9eb260276e35492f1c934e2/stage3/evidence/99-correctness-axolotl-g/proofs/outFile-before.tsconfig.json.txt), [valid after file](https://github.com/system-inc/adamic/blob/7cd9e0ab095a2fdbf9eb260276e35492f1c934e2/stage3/evidence/99-correctness-axolotl-g/proofs/outFile-after.tsconfig.json.txt) and [Go file](https://github.com/system-inc/adamic/blob/7cd9e0ab095a2fdbf9eb260276e35492f1c934e2/stage3/evidence/99-correctness-axolotl-g/proofs/outFile-go.tsconfig.json.txt) are retained. The invalid line is `"outFile": undefined,`; the after and Go line is `"outFile": null,`. The actual before readback reports:
 
 ```text
 tsconfig.json(44,16): error TS5024: Compiler option 'outFile' requires a value of type string.
 ```
 
-The after readback exits 0 with no diagnostic. [witnesses.json](proofs/witnesses.json) records every comparison, all readback exits and diagnostics, API controls, and the mutant's exit 1 with `outFile did not retain null`.
+The after readback exits 0 with no diagnostic. [witnesses.json](https://github.com/system-inc/adamic/blob/7cd9e0ab095a2fdbf9eb260276e35492f1c934e2/stage3/evidence/99-correctness-axolotl-g/proofs/witnesses.json) records every comparison, all readback exits and diagnostics, API controls, and the mutant's exit 1 with `outFile did not retain null`.
 
-Whole-program [measurement](proofs/measurement.json): 79 sorted roots, **112 before and 112 after**, zero additions and zero removals. The single inserted line is mapped back for comparison; full diagnostic strings otherwise match exactly. D036 remains the same TS2322 at after line 2958:13, previously 2957:13. No `!` is added, and 99b's decline validation is not edited.
+Whole-program [measurement](https://github.com/system-inc/adamic/blob/7cd9e0ab095a2fdbf9eb260276e35492f1c934e2/stage3/evidence/99-correctness-axolotl-g/proofs/measurement.json): 79 sorted roots, **112 before and 112 after**, zero additions and zero removals. The single inserted line is mapped back for comparison; full diagnostic strings otherwise match exactly. D036 remains the same TS2322 at after line 2958:13, previously 2957:13. No `!` is added, and 99b's decline validation is not edited.
 
-[Verification](proofs/verification.json) passes all six refusal fixtures, confirms no second-run write and byte-identical public API declarations, and records commandLineParser.ts transpilation at 161985 bytes before and 162076 after. This is intentionally JavaScript-changing.
+[Verification](https://github.com/system-inc/adamic/blob/7cd9e0ab095a2fdbf9eb260276e35492f1c934e2/stage3/evidence/99-correctness-axolotl-g/proofs/verification.json) passes all six refusal fixtures, confirms no second-run write and byte-identical public API declarations, and records commandLineParser.ts transpilation at 161985 bytes before and 162076 after. This is intentionally JavaScript-changing.
 
-The sequential [oracle comparison](proofs/oracle-comparison.json) passes:
+The sequential [oracle comparison](https://github.com/system-inc/adamic/blob/7cd9e0ab095a2fdbf9eb260276e35492f1c934e2/stage3/evidence/99-correctness-axolotl-g/proofs/oracle-comparison.json) passes:
 
 | Oracle | Passing | Failing | Pending | Wrapper seconds |
 | --- | ---: | ---: | ---: | ---: |
@@ -108,3 +108,17 @@ Both install/build phases exit 0. Both test phases exit 1 solely for the sanctio
 **Zero baseline moves.** Both complete baseline diffs are byte-identical at 51123 bytes, SHA-256 `6d52cd09811c6846c977ea492071c14325816a631706cc79128c4299b9faa031`. The only baseline path is the inherited api/typescript.d.ts exception. Public typescript.d.ts bytes match between the actual control and 99g artifacts. All memory-event counters stayed unchanged during both retry suites; oom and kill counters remained zero throughout. The original pressure-affected control result is retained and disclosed above.
 
 Only this adaptation directory and stage3/upstream/LEDGER.md are committed. No lane manifest, baseline, test input, checker option or production compiler implementation is edited.
+
+## Evidence outside the adaptation input key
+
+Proof artifacts are retained on typescript/axolotl-99g-evidence at stage3/evidence/99-correctness-axolotl-g/proofs. The links above pin evidence commit 7cd9e0ab095a2fdbf9eb260276e35492f1c934e2. This adaptation directory contains only adapt.cjs, README.md and the three runnable verification scripts named below. All verification outputs go to scratch, so they do not feed apply's input key.
+
+The retained scripts are run from this directory by the existing prove.py command and may also be invoked directly from the repository root:
+
+```sh
+NODE_PATH="$PWD/stage3/api/node_modules" node stage3/adapt/99-correctness-axolotl-g/witness.cjs /workspace/scratch/99g/before/built/local/typescript.js /workspace/scratch/99g/after/built/local/typescript.js /workspace/scratch/pinned-tsgo /workspace/scratch/99g/witnesses-new > /workspace/scratch/99g-followup/witness.log 2>&1
+NODE_PATH="$PWD/stage3/api/node_modules" node stage3/adapt/99-correctness-axolotl-g/verify.cjs /workspace/scratch/99g/before /workspace/scratch/99g/after /workspace/scratch/99g-followup/verify.json > /workspace/scratch/99g-followup/verify.log 2>&1
+PYTHONDONTWRITEBYTECODE=1 python3 stage3/adapt/99-correctness-axolotl-g/prove.py /workspace/scratch/99g > /workspace/scratch/99g-followup/prove.log 2>&1
+```
+
+D036 remains declined after 99g. The exported internal generateTSConfig API can receive a defined paths object whose toJSON returns undefined. It bypasses the own-undefined guard and reaches the scalar formatSingleValue call with an undefined result. The [complete path review and actual-99g Node witness](https://github.com/system-inc/adamic/blob/7cd9e0ab095a2fdbf9eb260276e35492f1c934e2/stage3/evidence/99-correctness-axolotl-g/README.md) record this remaining counterexample, separately from the ordinary command-line paths. No presence assertion or 112-to-111 claim is added to 99b.
