@@ -634,7 +634,10 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 			return failure()
 		}
 		wanted := contract.AsTypePredicateNode()
-		calls := l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(parameter), checker.SignatureKindCall)
+		// An optional parameter's type is the function or undefined, which has no call signature of its
+		// own. An absent argument is never called, and a present one is exactly the function, so the
+		// claim to prove is the function's (getParseTreeNode's nodeTest, #1w5bve2).
+		calls := l.checker.GetSignaturesOfType(l.withoutUndefined(l.checker.GetTypeOfSymbol(parameter)), checker.SignatureKindCall)
 		var target *checker.Type
 		if len(calls) == 1 {
 			if predicate := predicateOfSignature(l.checker, calls[0]); predicate != nil {

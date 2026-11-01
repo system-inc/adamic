@@ -3,6 +3,7 @@ package lower
 import (
 	"bytes"
 	"errors"
+	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -132,5 +133,91 @@ func TestFunctionTypeClaimKeepsWhatTheCallCantCheck(t *testing.T) {
 	var refused *Refused
 	if !errors.As(err, &refused) || refused.What != "a type predicate whose return is not proven (there is no body proving this parameter)" {
 		t.Errorf("iface_honest in .a: want the claim refused, got %v", err)
+	}
+}
+
+// parseTreeSource is tsc's getParseTreeNode (utilitiesPublic.ts:826), whose generic overload takes an
+// optional predicate, followed by calls. The first %s fills nodeTest's optional mark, so the optional
+// parameter and its required twin differ only there; the calls start on the same line in both.
+const parseTreeSource = `interface Node { readonly kind: number; readonly flags: number; readonly original?: Node; }
+interface ModuleDeclaration extends Node { readonly kind: 268; readonly name: string; }
+function isModuleDeclaration(node: Node): node is ModuleDeclaration { return node.kind === 268; }
+function isParseTreeNode(node: Node): boolean { return (node.flags & 16) === 0; }
+export function getParseTreeNode(node: Node | undefined): Node | undefined;
+export function getParseTreeNode<T extends Node>(node: T | undefined, nodeTest%s: (node: Node) => node is T): T | undefined;
+export function getParseTreeNode(node: Node | undefined, nodeTest?: (node: Node) => boolean): Node | undefined {
+  if (node === undefined || isParseTreeNode(node)) { return node; }
+  node = node.original;
+  while (node !== undefined) {
+    if (isParseTreeNode(node)) { return nodeTest === undefined || nodeTest(node) ? node : undefined; }
+    node = node.original;
+  }
+  return undefined;
+}
+const parsed: ModuleDeclaration = { kind: 268, flags: 0, name: "parsed" };
+const synthesized: ModuleDeclaration = { kind: 268, flags: 16, name: "synthesized", original: parsed };
+const other: Node = { kind: 80, flags: 0 };
+const wrapped: ModuleDeclaration = { kind: 268, flags: 16, name: "wrapped", original: other };
+%s
+`
+
+// An optional predicate parameter takes the same proven argument a required one does (#1w5bve2,
+// transformers/ts.ts:1975's getParseTreeNode(nodeIn, isModuleDeclaration)): its type is the function or
+// undefined, an absent argument is never called, and a present one is the function, whose claim the
+// argument proves. Called with a one-line kind test and with none, it agrees with Node. Mutant: the
+// parameter's call signatures read off the type with undefined left in, which refuses this as "an
+// unproven predicate argument for parameter nodeTest".
+func TestOptionalPredicateParameterTakesAProvenArgument(t *testing.T) {
+	t.Parallel()
+	lowersAndAgreesWithNodeAs(t, fmt.Sprintf(parseTreeSource, "?", `const found = getParseTreeNode(synthesized, isModuleDeclaration);
+console.log(found === undefined ? "none" : found.name);
+const unmatched = getParseTreeNode(wrapped, isModuleDeclaration);
+console.log(unmatched === undefined ? "none" : unmatched.name);
+const plain = getParseTreeNode(wrapped);
+console.log(plain === undefined ? "none" : String(plain.kind));
+console.log(String(getParseTreeNode(undefined, isModuleDeclaration) === undefined));`), ".ts")
+}
+
+// The optional mark changes nothing else: each argument is admitted or refused for an optional
+// parameter exactly as for its required twin, in .ts, where an arrow claiming more than its body
+// proves is a checked closure, and in .a, where it's refused. A let that's reassigned can hold any
+// function of its type, so it's refused in both. Mutant: the fix reverted, where every optional row
+// is refused as an unproven argument and the honest and lying .ts rows stop matching their twins.
+func TestOptionalPredicateParameterMatchesItsRequiredTwin(t *testing.T) {
+	t.Parallel()
+	outcome := func(err error) string {
+		var refused *Refused
+		if errors.As(err, &refused) {
+			return "refused: " + refused.What
+		}
+		if err != nil {
+			return err.Error()
+		}
+		return "admitted"
+	}
+	for _, probe := range []struct{ name, calls, typeScript, adamic string }{
+		{"proven", `const found = getParseTreeNode(synthesized, isModuleDeclaration);
+console.log(found === undefined ? "none" : found.name);`, "admitted", "admitted"},
+		{"lying arrow", `const found = getParseTreeNode(synthesized, (node: Node): node is ModuleDeclaration => true);
+console.log(found === undefined ? "none" : found.name);`, "admitted", `refused: an unproven predicate argument for parameter nodeTest (argument "(node: Node): node is ModuleDeclaration => true")`},
+		{"reassigned let", `let test = (node: Node): node is ModuleDeclaration => node.kind === 268;
+test = (node: Node): node is ModuleDeclaration => true;
+const found = getParseTreeNode(synthesized, test);
+console.log(found === undefined ? "none" : found.name);`, `refused: an unproven predicate argument for parameter nodeTest (argument "test")`, `refused: an unproven predicate argument for parameter nodeTest (argument "test")`},
+	} {
+		for _, mode := range []struct{ extension, want string }{{".ts", probe.typeScript}, {".a", probe.adamic}} {
+			t.Run(probe.name+mode.extension, func(t *testing.T) {
+				t.Parallel()
+				_, optionalErr := lowerSourceAs(t, fmt.Sprintf(parseTreeSource, "?", probe.calls), mode.extension)
+				_, requiredErr := lowerSourceAs(t, fmt.Sprintf(parseTreeSource, "", probe.calls), mode.extension)
+				optional, required := outcome(optionalErr), outcome(requiredErr)
+				if optional != required {
+					t.Fatalf("optional %q, required twin %q; want them to match", optional, required)
+				}
+				if optional != mode.want {
+					t.Fatalf("got %q for both; want %q", optional, mode.want)
+				}
+			})
+		}
 	}
 }
