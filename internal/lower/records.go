@@ -341,6 +341,13 @@ func (l *lowering) recordObjectCallArguments(node *ast.Node, name string, args [
 			// As a statement, recordDefineStatement lowers it; its result, the object, isn't yet.
 			return nil, true, l.notYet(node, "Object.defineProperty on a record whose result is used")
 		}
+		switch name {
+		case "defineProperty", "defineProperties", "getOwnPropertyDescriptor", "getOwnPropertyDescriptors", "getPrototypeOf", "setPrototypeOf", "create":
+			// Descriptors and prototypes on a record are refused as on any object (library_object.go, the
+			// Expandos row): an expando or prototype surgery, never a shape we'll build. Only C4's one
+			// define is admitted, above and in recordDefineStatement (Adamic's ruling on #3xq2xzc).
+			return nil, false, nil
+		}
 		return nil, true, l.notYet(node, "Object."+name+" on a record")
 	}
 	count := 1

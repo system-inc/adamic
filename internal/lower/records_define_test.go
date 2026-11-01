@@ -140,20 +140,27 @@ func TestRecordDefineHiddenRefusals(t *testing.T) {
 		source, reason string
 		notYet         bool
 	}{
-		{record + `Object.defineProperty(r, "h", {enumerable:true, writable:false, value:5});`, "Object.defineProperty on a record", true},
-		{record + `Object.defineProperty(r, "h", {enumerable:false, writable:true, value:5});`, "Object.defineProperty on a record", true},
-		{record + `const no = false; Object.defineProperty(r, "h", {enumerable:no, writable:false, value:5});`, "Object.defineProperty on a record", true},
+		{record + `Object.defineProperty(r, "h", {enumerable:true, writable:false, value:5});`, "property descriptors", false},
+		{record + `Object.defineProperty(r, "h", {enumerable:false, writable:true, value:5});`, "property descriptors", false},
+		{record + `const no = false; Object.defineProperty(r, "h", {enumerable:no, writable:false, value:5});`, "property descriptors", false},
 		{record + `Object.defineProperty(r, "h", {enumerable:false, writable:false, get() { return 5; }});`, "", false},
-		{record + `Object.defineProperty(r, "h", {enumerable:false, writable:false, configurable:false, value:5});`, "Object.defineProperty on a record", true},
-		{record + `Object.defineProperty(r, "h", {enumerable:false, value:5});`, "Object.defineProperty on a record", true},
-		{record + `const value = 5; Object.defineProperty(r, "h", {enumerable:false, writable:false, value});`, "Object.defineProperty on a record", true},
+		{record + `Object.defineProperty(r, "h", {enumerable:false, writable:false, configurable:false, value:5});`, "property descriptors", false},
+		{record + `Object.defineProperty(r, "h", {enumerable:false, value:5});`, "property descriptors", false},
+		{record + `const value = 5; Object.defineProperty(r, "h", {enumerable:false, writable:false, value});`, "property descriptors", false},
 		{record + `const flags = {enumerable:false, writable:false}; Object.defineProperty(r, "h", {...flags, value:5});`, "", false},
-		{record + `const k = "h"; Object.defineProperty(r, k, {enumerable:false, writable:false, value:5});`, "Object.defineProperty on a record", true},
-		{record + "Object.defineProperty(r, `h`, {enumerable:false, writable:false, value:5});", "Object.defineProperty on a record", true},
+		{record + `const k = "h"; Object.defineProperty(r, k, {enumerable:false, writable:false, value:5});`, "property descriptors", false},
+		{record + "Object.defineProperty(r, `h`, {enumerable:false, writable:false, value:5});", "property descriptors", false},
 		{record + `const same = Object.defineProperty(r, "h", {enumerable:false, writable:false, value:5}); console.log(Object.keys(same).join(','));`, "whose result is used", true},
 		{record + `Object.defineProperty(r, "h", {enumerable:false, writable:false, value:'text'});`, "index signature doesn't take", true},
 		{`interface Options {[option:string]: string|number|undefined; configFile?: string} const o:Options={}; Object.defineProperty(o, "configFile", {enumerable:false, writable:false, value:5});`, "named property configFile", true},
 		{record + `console.log(Object.getOwnPropertyNames(r).join(','));`, "Object.getOwnPropertyNames on a record", true},
+		// The rest of the descriptor and prototype family is refused on a record as on any object, by
+		// library_object.go's own refusal; getOwnPropertyNames above is reflection not yet built.
+		{record + `Object.defineProperties(r, {h: {enumerable:false, writable:false, value:5}});`, "property descriptors", false},
+		{record + `console.log(String(Object.getOwnPropertyDescriptor(r, "a")));`, "property descriptors", false},
+		{record + `console.log(String(Object.getOwnPropertyDescriptors(r)));`, "property descriptors", false},
+		{record + `console.log(String(Object.getPrototypeOf(r)));`, "prototypes", false},
+		{record + `Object.setPrototypeOf(r, null);`, "prototypes", false},
 		// Object.assign never reaches a hidden entry through a runtime copy loop: onto a record it's not yet
 		// (records.go admits keys, values, entries and hasOwn only), and from one it's refused, since every
 		// source must be a literal's proven shape (library_object.go). Language's question on #3xq2xzc.
