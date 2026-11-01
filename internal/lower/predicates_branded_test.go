@@ -330,7 +330,7 @@ show(i);`, walk, true},
 		// written, so it's NotYet when S could instantiate it and the narrowing isn't the argument's own type.
 		// Mutant: generic claims passed over, and it lowers.
 		{"generic claim", `function isT<T extends Node>(n: Node): n is T { return kindOf(n) !== 0; }
-function show(x: PropertySignature | Identifier): void { if (isTypeElementLie(x)) { console.log("element"); } }
+function show(n: Node): void { if (isTypeElementLie(n)) { console.log("element"); } }
 function g<U extends Node>(x: PropertySignature | Identifier): void { if (isT<U>(x)) { console.log(String(x.pos)); } }
 g<TypeElement>(i);
 show(i);`, "that the generic claim U may be instantiated at", false},
