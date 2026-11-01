@@ -832,23 +832,33 @@ func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.
 
 // An inferred destructuring context can be the union of the tuple's elements. Compare the
 // positional values with their bound names instead of treating that union as a writable array.
+//
+// A value typed as a union of tuples or arrays is judged member by member. Only a reference has type
+// arguments: the checker dereferences nil asking anything else for them (a union, or a string written
+// as one), so a member that isn't one has no elements to compare here (#egxccg8).
 func (l *lowering) classDestructuredView(node, pattern *ast.Node) error {
 	own := l.checker.GetTypeAtLocation(node)
-	elements := l.checker.GetTypeArguments(own)
-	tuple := checker.IsTupleType(own)
-	for index, binding := range pattern.AsBindingPattern().Elements.Nodes {
-		if binding.Kind == ast.KindOmittedExpression || binding.Name() == nil {
-			continue
-		}
-		if !tuple {
-			index = 0
-		}
-		if index >= len(elements) {
-			continue
-		}
-		target := l.checker.GetTypeAtLocation(binding.Name())
-		if mismatch := l.nominalMismatch(elements[index], target, map[[2]*checker.Type]bool{}); mismatch != nil {
-			return &Refused{Where: l.program.Where(binding), What: "a destructured value without nominal ancestry seen as " + l.checker.TypeToString(mismatch), Fix: "construct that class or a subclass; use an interface for structural values (adamic/nominal-class)"}
+	members := []*checker.Type{own}
+	if own.Flags()&checker.TypeFlagsUnion != 0 {
+		members = own.Types()
+	}
+	for _, member := range members {
+		elements := l.typeArguments(member)
+		tuple := checker.IsTupleType(member)
+		for index, binding := range pattern.AsBindingPattern().Elements.Nodes {
+			if binding.Kind == ast.KindOmittedExpression || binding.Name() == nil {
+				continue
+			}
+			if !tuple {
+				index = 0
+			}
+			if index >= len(elements) {
+				continue
+			}
+			target := l.checker.GetTypeAtLocation(binding.Name())
+			if mismatch := l.nominalMismatch(elements[index], target, map[[2]*checker.Type]bool{}); mismatch != nil {
+				return &Refused{Where: l.program.Where(binding), What: "a destructured value without nominal ancestry seen as " + l.checker.TypeToString(mismatch), Fix: "construct that class or a subclass; use an interface for structural values (adamic/nominal-class)"}
+			}
 		}
 	}
 	return nil
