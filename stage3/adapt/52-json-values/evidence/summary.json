@@ -1,0 +1,155 @@
+{
+  "status": "stopped-at-own-caller-contract-counterexample",
+  "main": "470e16f8315f7a83c5c7b7f6f2a77d8328db0a25",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "adaptation": 52,
+  "native": {
+    "before": 112,
+    "after": 112,
+    "added": [],
+    "removed": [],
+    "mapping": "Exact diagnostic text and columns; map only byte-equal source lines with SequenceMatcher; preserve multiplicity."
+  },
+  "stockProjects": 6,
+  "stockDiagnosticsBefore": 0,
+  "stockDiagnosticsAfter": 0,
+  "publicAnyBefore": 37,
+  "publicAnyAfter": 23,
+  "publicAnyOutsideList": 21,
+  "apiMatch": true,
+  "apiSha256": "183fd0568819d08a0a73e9da116394643c2240cbae3e375ffcf3697dfa722f2f",
+  "apiDiffLines": 126,
+  "oracles": {
+    "control": {
+      "counts": {
+        "passing": 106366,
+        "failing": 1,
+        "pending": 0
+      },
+      "baseline_diffs": [
+        "api/typescript.d.ts"
+      ],
+      "phases": {
+        "install": {
+          "command": [
+            "npm",
+            "ci",
+            "--no-audit",
+            "--no-fund"
+          ],
+          "exit": 0,
+          "artifact": "33556870ce59c3396c972fffb611a99b9b2ff39e79c34417a2538f2263772c6a"
+        },
+        "build": {
+          "command": [
+            "npm",
+            "run",
+            "build"
+          ],
+          "exit": 0,
+          "typecheck_passed": true,
+          "artifact": "33556870ce59c3396c972fffb611a99b9b2ff39e79c34417a2538f2263772c6a"
+        },
+        "tests": {
+          "command": [
+            "node",
+            "/workspace/adamic/stage3/oracle/run-prepared.mjs",
+            "/workspace/scratch/jv-control",
+            "--workers=4",
+            "--light=false",
+            "--no-colors"
+          ],
+          "exit": 1,
+          "seconds": 359.011
+        }
+      },
+      "wall_seconds": 359.106
+    },
+    "after": {
+      "counts": {
+        "passing": 106362,
+        "failing": 5,
+        "pending": 0
+      },
+      "baseline_diffs": [
+        "api/typescript.d.ts",
+        "tsserver/fourslashServer/completionEntryDetailAcrossFiles01.js",
+        "tsserver/fourslashServer/completionEntryDetailAcrossFiles02.js"
+      ],
+      "phases": {
+        "install": {
+          "command": [
+            "cp",
+            "-a",
+            "jv-control/node_modules",
+            "jv-final/node_modules"
+          ],
+          "exit": 0,
+          "artifact": "9ebc3eb2dc44152cbc6a4f707a897d4baa7be161772b2b33ab54f4c28f65c5f7"
+        },
+        "build": {
+          "command": [
+            "npm",
+            "run",
+            "build"
+          ],
+          "exit": 0,
+          "typecheck_passed": true,
+          "artifact": "9ebc3eb2dc44152cbc6a4f707a897d4baa7be161772b2b33ab54f4c28f65c5f7"
+        },
+        "tests": {
+          "command": [
+            "node",
+            "/workspace/adamic/stage3/oracle/run-prepared.mjs",
+            "/workspace/scratch/jv-final",
+            "--workers=4",
+            "--light=false",
+            "--no-colors"
+          ],
+          "exit": 1,
+          "seconds": 356.15
+        }
+      },
+      "wall_seconds": 356.268
+    }
+  },
+  "configReturnMutant": {
+    "buildExit": 0,
+    "oracleExit": 1,
+    "command": [
+      "bash",
+      "stage3/oracle/run.sh",
+      "/workspace/scratch/jv-config-mutant",
+      "/workspace/scratch/jv-oracle-config-mutant",
+      "--prepared",
+      "--workers",
+      "1",
+      "--runners",
+      "compiler",
+      "--tests",
+      "APISample_parseConfig",
+      "--limit-seconds",
+      "180"
+    ],
+    "counts": {
+      "passing": 5,
+      "failing": 1,
+      "pending": 0
+    },
+    "baseline_diffs": [
+      "APISample_parseConfig.errors.txt"
+    ]
+  },
+  "counterexample": {
+    "before": "returns original protocol value",
+    "tagText": "p1",
+    "tagTextType": "string",
+    "after": "throws TypeError",
+    "declaredServiceShape": "JSDocTagInfo.text?: SymbolDisplayPart[]",
+    "actualProtocolShape": "JSDocTagInfo.text?: string | SymbolDisplayPart[]",
+    "status": "caller counterexample; adaptation is not ready"
+  },
+  "configReturnReadersNotEdited": 10,
+  "checkedDesignDiagnostics": 29,
+  "servicesTransfer": "src/services/services.ts:1656"
+}

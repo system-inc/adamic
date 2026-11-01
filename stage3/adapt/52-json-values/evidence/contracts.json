@@ -1,0 +1,337 @@
+{
+  "idempotent": true,
+  "files": 11,
+  "newCasts": 0,
+  "castCounts": [
+    {
+      "file": "src/compiler/types.ts",
+      "before": 1,
+      "after": 1
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "before": 43,
+      "after": 43
+    },
+    {
+      "file": "src/server/protocol.ts",
+      "before": 0,
+      "after": 0
+    },
+    {
+      "file": "src/server/project.ts",
+      "before": 12,
+      "after": 12
+    },
+    {
+      "file": "src/services/types.ts",
+      "before": 0,
+      "after": 0
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "before": 28,
+      "after": 28
+    },
+    {
+      "file": "src/server/session.ts",
+      "before": 42,
+      "after": 42
+    },
+    {
+      "file": "src/services/services.ts",
+      "before": 27,
+      "after": 27
+    },
+    {
+      "file": "src/harness/harnessLanguageService.ts",
+      "before": 5,
+      "after": 5
+    },
+    {
+      "file": "src/harness/client.ts",
+      "before": 14,
+      "after": 14
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/session.ts",
+      "before": 17,
+      "after": 17
+    }
+  ],
+  "refusals": [
+    {
+      "name": "partly adapted batch",
+      "refused": true,
+      "filesWritten": 0
+    },
+    {
+      "name": "last file exact text drift",
+      "refused": true,
+      "filesWritten": 0
+    }
+  ],
+  "mutants": [
+    {
+      "class": "object",
+      "exit": 1
+    },
+    {
+      "class": "inherited",
+      "exit": 1
+    },
+    {
+      "class": "location",
+      "exit": 1
+    },
+    {
+      "class": "response",
+      "exit": 1
+    },
+    {
+      "class": "plugin",
+      "exit": 1
+    },
+    {
+      "class": "localized",
+      "exit": 1
+    },
+    {
+      "class": "echo",
+      "exit": 1
+    }
+  ],
+  "api": {
+    "rows": 15,
+    "match": true,
+    "sha256": "183fd0568819d08a0a73e9da116394643c2240cbae3e375ffcf3697dfa722f2f"
+  },
+  "publicAny": {
+    "beforeTokens": 37,
+    "tokens": 23,
+    "declarationLines": 15,
+    "outsideList": 21,
+    "counts": {
+      "mapped substitution constraint": 1,
+      "opaque compressed host data": 1,
+      "timer handles and callback tuples": 16,
+      "nominal marker slots": 2,
+      "runtime command table": 1,
+      "pinned config returns": 2
+    },
+    "sites": [
+      {
+        "path": [
+          "server",
+          "protocol",
+          "ChangePropertyTypes",
+          "Substitutions"
+        ],
+        "class": "mapped substitution constraint",
+        "line": 41
+      },
+      {
+        "path": [
+          "server",
+          "CompressedData",
+          "data"
+        ],
+        "class": "opaque compressed host data",
+        "line": 2700
+      },
+      {
+        "path": [
+          "server",
+          "ServerHost",
+          "setTimeout",
+          "callback",
+          "args"
+        ],
+        "class": "timer handles and callback tuples",
+        "line": 2718
+      },
+      {
+        "path": [
+          "server",
+          "ServerHost",
+          "setTimeout",
+          "args"
+        ],
+        "class": "timer handles and callback tuples",
+        "line": 2718
+      },
+      {
+        "path": [
+          "server",
+          "ServerHost",
+          "setTimeout"
+        ],
+        "class": "timer handles and callback tuples",
+        "line": 2718
+      },
+      {
+        "path": [
+          "server",
+          "ServerHost",
+          "clearTimeout",
+          "timeoutId"
+        ],
+        "class": "timer handles and callback tuples",
+        "line": 2719
+      },
+      {
+        "path": [
+          "server",
+          "ServerHost",
+          "setImmediate",
+          "callback",
+          "args"
+        ],
+        "class": "timer handles and callback tuples",
+        "line": 2720
+      },
+      {
+        "path": [
+          "server",
+          "ServerHost",
+          "setImmediate",
+          "args"
+        ],
+        "class": "timer handles and callback tuples",
+        "line": 2720
+      },
+      {
+        "path": [
+          "server",
+          "ServerHost",
+          "setImmediate"
+        ],
+        "class": "timer handles and callback tuples",
+        "line": 2720
+      },
+      {
+        "path": [
+          "server",
+          "ServerHost",
+          "clearImmediate",
+          "timeoutId"
+        ],
+        "class": "timer handles and callback tuples",
+        "line": 2721
+      },
+      {
+        "path": [
+          "server",
+          "NormalizedPath",
+          "__normalizedPathTag"
+        ],
+        "class": "nominal marker slots",
+        "line": 2775
+      },
+      {
+        "path": [
+          "server",
+          "CommandNames"
+        ],
+        "class": "runtime command table",
+        "line": 3430
+      },
+      {
+        "path": [
+          "System",
+          "setTimeout",
+          "callback",
+          "args"
+        ],
+        "class": "timer handles and callback tuples",
+        "line": 8492
+      },
+      {
+        "path": [
+          "System",
+          "setTimeout",
+          "args"
+        ],
+        "class": "timer handles and callback tuples",
+        "line": 8492
+      },
+      {
+        "path": [
+          "System",
+          "setTimeout"
+        ],
+        "class": "timer handles and callback tuples",
+        "line": 8492
+      },
+      {
+        "path": [
+          "System",
+          "clearTimeout",
+          "timeoutId"
+        ],
+        "class": "timer handles and callback tuples",
+        "line": 8493
+      },
+      {
+        "path": [
+          "readConfigFile",
+          "config"
+        ],
+        "class": "pinned config returns",
+        "line": 9240
+      },
+      {
+        "path": [
+          "parseConfigFileTextToJson",
+          "config"
+        ],
+        "class": "pinned config returns",
+        "line": 9249
+      },
+      {
+        "path": [
+          "WatchHost",
+          "setTimeout",
+          "callback",
+          "args"
+        ],
+        "class": "timer handles and callback tuples",
+        "line": 9819
+      },
+      {
+        "path": [
+          "WatchHost",
+          "setTimeout",
+          "args"
+        ],
+        "class": "timer handles and callback tuples",
+        "line": 9819
+      },
+      {
+        "path": [
+          "WatchHost",
+          "setTimeout"
+        ],
+        "class": "timer handles and callback tuples",
+        "line": 9819
+      },
+      {
+        "path": [
+          "WatchHost",
+          "clearTimeout",
+          "timeoutId"
+        ],
+        "class": "timer handles and callback tuples",
+        "line": 9821
+      },
+      {
+        "path": [
+          "DocumentRegistryBucketKey",
+          "__bucketKey"
+        ],
+        "class": "nominal marker slots",
+        "line": 11410
+      }
+    ]
+  }
+}

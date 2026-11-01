@@ -1,0 +1,9 @@
+{
+  "before": "returns original protocol value",
+  "tagText": "p1",
+  "tagTextType": "string",
+  "after": "throws TypeError",
+  "declaredServiceShape": "JSDocTagInfo.text?: SymbolDisplayPart[]",
+  "actualProtocolShape": "JSDocTagInfo.text?: string | SymbolDisplayPart[]",
+  "status": "caller counterexample; adaptation is not ready"
+}
