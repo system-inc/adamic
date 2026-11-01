@@ -1,0 +1,67 @@
+B 84fccdc821a3155ae66c8137c2834eaff5c6cb69 internal/lower/predicates_branded.go
+165: // argument: brandedNarrowing decides whether the checker's narrowing of the argument can only give S. The
+166: // checker narrows a call's argument however the call reaches the predicate, directly, through the
+167: // predicate held as a value or a function type, or through a method's claim (Language's must on
+168: // 9e4f2184), and judgeBrandedCalls finds every one of those calls. A claim on this, or one whose argument
+169: // is spread or missing, is NotYet, since no argument node says what the checker narrowed. So is a claim
+170: // over a type parameter the body is lowered without knowing, an unread one or a generic arrow's own: the
+171: // instance a call claims is then unknown, and every instance shares the one body (Adamic's ruling, Nov 1).
+172: func (l *lowering) brandedCall(call *ast.Node) error {
+173: 	signature := l.checker.GetResolvedSignature(call)
+174: 	if signature == nil {
+175: 		return nil
+176: 	}
+177: 	claim := predicateOfSignature(l.checker, signature)
+178: 	if claim == nil || claim.Type() == nil {
+179: 		return nil
+180: 	}
+181: 	if parameter := l.unknownInstance(l.concrete(claim.Type())); parameter != nil {
+182: 		return l.notYet(call, "a checked predicate claim of "+l.checker.TypeToString(l.concrete(claim.Type()))+", over "+l.checker.TypeToString(parameter)+", which this body is lowered without knowing")
+183: 	}
+184: 	if !l.brandedMembership(claim.Type(), map[*checker.Type]bool{}) {
+185: 		return nil
+186: 	}
+187: 	target := l.checker.TypeToString(l.concrete(claim.Type()))
+188: 	if claim.Kind() != checker.TypePredicateKindIdentifier && claim.Kind() != checker.TypePredicateKindAssertsIdentifier {
+189: 		return l.notYet(call, "a checked predicate target "+target+" claimed of this")
+190: 	}
+191: 	index := int(claim.ParameterIndex())
+192: 	arguments := call.AsCallExpression().Arguments.Nodes
+193: 	if index < 0 || index >= len(arguments) {
+194: 		return l.notYet(call, "a checked predicate target "+target+" claimed of a missing argument")
+195: 	}
+196: 	for _, argument := range arguments[:index+1] {
+197: 		if argument.Kind == ast.KindSpreadElement {
+198: 			return l.notYet(call, "a checked predicate target "+target+" claimed of a spread argument")
+199: 		}
+200: 	}
+201: 	return l.brandedNarrowing(call, arguments[index], claim.Type())
+202: }
+203:
+204: // unknownInstance is a type parameter claim still holds once concreted, which the body it's judged in
+205: // doesn't map, or nil. A claim that is a bare type parameter, or a union of them, whose base constraint
+206: // holds only primitives can never be a branded supertype, an object, so it isn't one. A type parameter
+207: // anywhere else, inside a reference or an alias, counts whatever its constraint, since Tagged<U> with
+208: // U extends number is S when S is Tagged<number> (Compiler's must on 810ce7d9).
+209: func (l *lowering) unknownInstance(claim *checker.Type) *checker.Type {
+210: 	if !l.mentionsTypeParameter(claim, map[*checker.Type]bool{}) {
+211: 		return nil
+212: 	}
+213: 	members := []*checker.Type{claim}
+214: 	if claim.Flags()&checker.TypeFlagsUnion != 0 {
+215: 		members = claim.Types()
+216: 	}
+217: 	for _, member := range members {
+218: 		if member.Flags()&checker.TypeFlagsTypeParameter == 0 {
+219: 			return claim
+220: 		}
+221: 		constraint := l.checker.GetBaseConstraintOfType(member)
+222: 		if constraint == nil || !predicatePrimitiveTarget(constraint) {
+223: 			return member
+224: 		}
+225: 	}
+226: 	return nil
+227: }
+228:
+229: // brandedNarrowedRead is the checker's flow type for argument at its first read where the call is known
+230: // to have answered true: the true branch of an if or a conditional, the right of an &&, the statements

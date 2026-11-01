@@ -1,0 +1,229 @@
+{
+  "mode": "first-error",
+  "distinct_key": [
+    "kind",
+    "where",
+    "reason",
+    "text"
+  ],
+  "normalization": "remove each adapted tree root from embedded locations in where, reason and text",
+  "files": 79,
+  "before_sites": 2833,
+  "after_sites": 2831,
+  "changed_reasons": [
+    {
+      "reason": "a branded supertype inside a checked predicate's array target",
+      "before": 0,
+      "after": 2,
+      "delta": 2,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/destructuring.ts:171:14",
+          "reason": "a branded supertype inside a checked predicate's array target",
+          "text": "src/compiler/transformers/destructuring.ts:171:14: stage 0 can't lower a branded supertype inside a checked predicate's array target yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/visitorPublic.ts:548:9",
+          "reason": "a branded supertype inside a checked predicate's array target",
+          "text": "src/compiler/visitorPublic.ts:548:9: stage 0 can't lower a branded supertype inside a checked predicate's array target yet"
+        }
+      ]
+    },
+    {
+      "reason": "a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which isn't its supertype",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:6838:9",
+          "reason": "a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which isn't its supertype",
+          "text": "src/compiler/utilities.ts:6838:9: stage 0 can't lower a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which isn't its supertype yet"
+        }
+      ]
+    },
+    {
+      "reason": "a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1784:32",
+          "reason": "a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression",
+          "text": "src/compiler/core.ts:1784:32: stage 0 can't lower a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression yet"
+        }
+      ]
+    },
+    {
+      "reason": "a checked predicate target NamedDeclaration that narrows ArrowFunction, which isn't its supertype",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilitiesPublic.ts:888:9",
+          "reason": "a checked predicate target NamedDeclaration that narrows ArrowFunction, which isn't its supertype",
+          "text": "src/compiler/utilitiesPublic.ts:888:9: stage 0 can't lower a checked predicate target NamedDeclaration that narrows ArrowFunction, which isn't its supertype yet"
+        }
+      ]
+    },
+    {
+      "reason": "a checked predicate target TypeNode that narrows undefined, which isn't its supertype",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/factory/utilities.ts:626:5",
+          "reason": "a checked predicate target TypeNode that narrows undefined, which isn't its supertype",
+          "text": "src/compiler/factory/utilities.ts:626:5: stage 0 can't lower a checked predicate target TypeNode that narrows undefined, which isn't its supertype yet"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type HasJSDoc",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "checked predicate overload target ClassElement",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "checked predicate overload target JSDocPropertyLikeTag",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "checked predicate overload target LateBoundDeclaration",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "checked predicate overload target LeftHandSideExpression",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "checked predicate overload target LiteralExpression",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "checked predicate overload target TypeElement",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "reading Debug",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    }
+  ],
+  "new_or_growing": [
+    {
+      "reason": "a branded supertype inside a checked predicate's array target",
+      "before": 0,
+      "after": 2,
+      "delta": 2,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/destructuring.ts:171:14",
+          "reason": "a branded supertype inside a checked predicate's array target",
+          "text": "src/compiler/transformers/destructuring.ts:171:14: stage 0 can't lower a branded supertype inside a checked predicate's array target yet"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/visitorPublic.ts:548:9",
+          "reason": "a branded supertype inside a checked predicate's array target",
+          "text": "src/compiler/visitorPublic.ts:548:9: stage 0 can't lower a branded supertype inside a checked predicate's array target yet"
+        }
+      ]
+    },
+    {
+      "reason": "a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which isn't its supertype",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:6838:9",
+          "reason": "a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which isn't its supertype",
+          "text": "src/compiler/utilities.ts:6838:9: stage 0 can't lower a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which isn't its supertype yet"
+        }
+      ]
+    },
+    {
+      "reason": "a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1784:32",
+          "reason": "a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression",
+          "text": "src/compiler/core.ts:1784:32: stage 0 can't lower a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression yet"
+        }
+      ]
+    },
+    {
+      "reason": "a checked predicate target NamedDeclaration that narrows ArrowFunction, which isn't its supertype",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilitiesPublic.ts:888:9",
+          "reason": "a checked predicate target NamedDeclaration that narrows ArrowFunction, which isn't its supertype",
+          "text": "src/compiler/utilitiesPublic.ts:888:9: stage 0 can't lower a checked predicate target NamedDeclaration that narrows ArrowFunction, which isn't its supertype yet"
+        }
+      ]
+    },
+    {
+      "reason": "a checked predicate target TypeNode that narrows undefined, which isn't its supertype",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/factory/utilities.ts:626:5",
+          "reason": "a checked predicate target TypeNode that narrows undefined, which isn't its supertype",
+          "text": "src/compiler/factory/utilities.ts:626:5: stage 0 can't lower a checked predicate target TypeNode that narrows undefined, which isn't its supertype yet"
+        }
+      ]
+    }
+  ],
+  "raw_sha256": {
+    "before": "09c738ed10f17a0b72377dd0acf239991134ea05860882e008046f9f5db03171",
+    "after": "759fa5233b6d14079fe3626bd96cea704a8ede7ab9b8ad5f809a8fcd7fbe7209"
+  }
+}

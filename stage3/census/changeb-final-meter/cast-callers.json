@@ -1,0 +1,1962 @@
+[
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/binder.ts:2337:50",
+    "call_source": "tryCast(node.body, isModuleBlock)",
+    "enclosing_function": "hasExportDeclarations",
+    "unit_where": "src/compiler/binder.ts:509:1",
+    "unit_name": "createBinder",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/binder.ts:3201:45",
+          "reason": "a value of type BindableObjectDefinePropertyCall"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/binder.ts:3201:45",
+          "reason": "a value of type BindableObjectDefinePropertyCall"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/binder.ts:3430:42",
+    "call_source": "cast(node.left, isBindableStaticNameExpression)",
+    "enclosing_function": "bindSpecialPropertyAssignment",
+    "unit_where": "src/compiler/binder.ts:509:1",
+    "unit_name": "createBinder",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/binder.ts:3201:45",
+          "reason": "a value of type BindableObjectDefinePropertyCall"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/binder.ts:3201:45",
+          "reason": "a value of type BindableObjectDefinePropertyCall"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/binder.ts:3906:19",
+    "call_source": "tryCast(container, canHaveLocals)",
+    "enclosing_function": "lookupSymbolForName",
+    "unit_where": "src/compiler/binder.ts:3905:1",
+    "unit_name": "lookupSymbolForName",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/binder.ts:3906:19",
+          "reason": "an optional Map get through a structural receiver"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/binder.ts:3906:19",
+          "reason": "an optional Map get through a structural receiver"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/checker.ts:3123:45",
+    "call_source": "tryCast(current.parent, isPropertyDeclaration)",
+    "enclosing_function": null,
+    "unit_where": "src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/checker.ts:3151:35",
+    "call_source": "tryCast(current.parent, isDecorator)",
+    "enclosing_function": null,
+    "unit_where": "src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/checker.ts:4131:29",
+    "call_source": "tryCast(moduleSymbol.valueDeclaration, canHaveLocals)",
+    "enclosing_function": "reportNonExportedMember",
+    "unit_where": "src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/checker.ts:8053:149",
+    "call_source": "cast(options.name, isIdentifier)",
+    "enclosing_function": "signatureToSignatureDeclarationHelper",
+    "unit_where": "src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/checker.ts:8054:147",
+    "call_source": "cast(options.name, isIdentifier)",
+    "enclosing_function": "signatureToSignatureDeclarationHelper",
+    "unit_where": "src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/checker.ts:9479:78",
+    "call_source": "cast(e.exportClause, isNamedExports)",
+    "enclosing_function": null,
+    "unit_where": "src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/checker.ts:9497:88",
+    "call_source": "cast(e.exportClause, isNamedExports)",
+    "enclosing_function": null,
+    "unit_where": "src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/checker.ts:12269:56",
+    "call_source": "tryCast(exportedMember.valueDeclaration, isNamedDeclaration)",
+    "enclosing_function": null,
+    "unit_where": "src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/checker.ts:12714:30",
+    "call_source": "tryCast(getDeclarationOfKind<PropertyDeclaration>(symbol, SyntaxKind.PropertyDeclaration), isAutoAccessorPropertyDeclaration)",
+    "enclosing_function": "getTypeOfAccessors",
+    "unit_where": "src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/checker.ts:12764:20",
+    "call_source": "tryCast(getDeclarationOfKind<PropertyDeclaration>(symbol, SyntaxKind.PropertyDeclaration), isAutoAccessorPropertyDeclaration)",
+    "enclosing_function": "getWriteTypeOfAccessors",
+    "unit_where": "src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/checker.ts:15673:31",
+    "call_source": "tryCast(singleProp, isTransientSymbol)",
+    "enclosing_function": "createUnionOrIntersectionProperty",
+    "unit_where": "src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/checker.ts:29004:135",
+    "call_source": "tryCast(reference, canHaveFlowNode)",
+    "enclosing_function": "getFlowTypeOfReference",
+    "unit_where": "src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/checker.ts:32291:33",
+    "call_source": "cast(binaryExpression.left, isAccessExpression)",
+    "enclosing_function": "getContextualTypeForAssignmentDeclaration",
+    "unit_where": "src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/checker.ts:32355:28",
+    "call_source": "cast(binaryExpression.left, isAccessExpression)",
+    "enclosing_function": "getContextualTypeForThisPropertyAssignment",
+    "unit_where": "src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/checker.ts:38388:41",
+    "call_source": "tryCast(lastOrUndefined(elements), isBindingElement)",
+    "enclosing_function": "getTupleElementLabelFromBindingElement",
+    "unit_where": "src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/checker.ts:38410:35",
+    "call_source": "tryCast(restSymbol?.valueDeclaration, isParameter)",
+    "enclosing_function": "getTupleElementLabel",
+    "unit_where": "src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/checker.ts:44593:16",
+    "call_source": "tryCast(getRootDeclaration(node), isParameter)",
+    "enclosing_function": "tryGetRootParameterDeclaration",
+    "unit_where": "src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/checker.ts:44749:40",
+    "call_source": "cast(first(name.elements), isBindingElement)",
+    "enclosing_function": "bindingNameText",
+    "unit_where": "src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/checker.ts:48706:129",
+    "call_source": "tryCast(attr.value, isStringLiteralLike)",
+    "enclosing_function": null,
+    "unit_where": "src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/checker.ts:50486:26",
+    "call_source": "cast(expr.parent.parent, isObjectLiteralExpression)",
+    "enclosing_function": "getTypeOfAssignmentPattern",
+    "unit_where": "src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/checker.ts:50492:22",
+    "call_source": "cast(expr.parent, isArrayLiteralExpression)",
+    "enclosing_function": "getTypeOfAssignmentPattern",
+    "unit_where": "src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/checker.ts:50507:64",
+    "call_source": "cast(location.parent.parent, isAssignmentPattern)",
+    "enclosing_function": "getPropertySymbolOfDestructuringAssignment",
+    "unit_where": "src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/checker.ts:51547:79",
+    "call_source": "tryCast(declaration.name, isStringLiteral)",
+    "enclosing_function": "getExternalModuleFileFromDeclaration",
+    "unit_where": "src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/commandLineParser.ts:2207:12",
+    "call_source": "cast(createCompilerDiagnostic(message, ...args).messageText, isString)",
+    "enclosing_function": "getDiagnosticText",
+    "unit_where": "src/compiler/commandLineParser.ts:2206:1",
+    "unit_name": "getDiagnosticText",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/core.ts:1786:59",
+          "reason": "a template interpolating a union with an object, an array, a map or a function in it"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/core.ts:1786:59",
+          "reason": "a template interpolating a union with an object, an array, a map or a function in it"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/emitter.ts:1563:65",
+    "call_source": "cast(node, isSourceFile)",
+    "enclosing_function": "pipelineEmitWithHintWorker",
+    "unit_where": "src/compiler/emitter.ts:1211:1",
+    "unit_name": "createPrinter",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/emitter.ts:2097:14",
+          "reason": "a function returning SortedReadonlyArray<EmitHelper> | undefined"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/emitter.ts:2097:14",
+          "reason": "a function returning SortedReadonlyArray<EmitHelper> | undefined"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/emitter.ts:1564:69",
+    "call_source": "cast(node, isIdentifier)",
+    "enclosing_function": "pipelineEmitWithHintWorker",
+    "unit_where": "src/compiler/emitter.ts:1211:1",
+    "unit_name": "createPrinter",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/emitter.ts:2097:14",
+          "reason": "a function returning SortedReadonlyArray<EmitHelper> | undefined"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/emitter.ts:2097:14",
+          "reason": "a function returning SortedReadonlyArray<EmitHelper> | undefined"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/emitter.ts:1565:69",
+    "call_source": "cast(node, isStringLiteral)",
+    "enclosing_function": "pipelineEmitWithHintWorker",
+    "unit_where": "src/compiler/emitter.ts:1211:1",
+    "unit_name": "createPrinter",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/emitter.ts:2097:14",
+          "reason": "a function returning SortedReadonlyArray<EmitHelper> | undefined"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/emitter.ts:2097:14",
+          "reason": "a function returning SortedReadonlyArray<EmitHelper> | undefined"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/emitter.ts:1566:83",
+    "call_source": "cast(node, isTypeParameterDeclaration)",
+    "enclosing_function": "pipelineEmitWithHintWorker",
+    "unit_where": "src/compiler/emitter.ts:1211:1",
+    "unit_name": "createPrinter",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/emitter.ts:2097:14",
+          "reason": "a function returning SortedReadonlyArray<EmitHelper> | undefined"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/emitter.ts:2097:14",
+          "reason": "a function returning SortedReadonlyArray<EmitHelper> | undefined"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/emitter.ts:1567:93",
+    "call_source": "cast(node, isImportAttributes)",
+    "enclosing_function": "pipelineEmitWithHintWorker",
+    "unit_where": "src/compiler/emitter.ts:1211:1",
+    "unit_name": "createPrinter",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/emitter.ts:2097:14",
+          "reason": "a function returning SortedReadonlyArray<EmitHelper> | undefined"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/emitter.ts:2097:14",
+          "reason": "a function returning SortedReadonlyArray<EmitHelper> | undefined"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/emitter.ts:2926:42",
+    "call_source": "cast(lastSubstitution, isExpression)",
+    "enclosing_function": "maybeEmitExpression",
+    "unit_where": "src/compiler/emitter.ts:1211:1",
+    "unit_name": "createPrinter",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/emitter.ts:2097:14",
+          "reason": "a function returning SortedReadonlyArray<EmitHelper> | undefined"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/emitter.ts:2097:14",
+          "reason": "a function returning SortedReadonlyArray<EmitHelper> | undefined"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/emitter.ts:5681:40",
+    "call_source": "tryCast(node, canHaveLocals)",
+    "enclosing_function": "generateNameForModuleOrEnum",
+    "unit_where": "src/compiler/emitter.ts:1211:1",
+    "unit_name": "createPrinter",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/emitter.ts:2097:14",
+          "reason": "a function returning SortedReadonlyArray<EmitHelper> | undefined"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/emitter.ts:2097:14",
+          "reason": "a function returning SortedReadonlyArray<EmitHelper> | undefined"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/factory/nodeConverters.ts:115:16",
+    "call_source": "cast(element, isExpression)",
+    "enclosing_function": "convertToArrayAssignmentElement",
+    "unit_where": "src/compiler/factory/nodeConverters.ts:41:1",
+    "unit_name": "createNodeConverters",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/factory/nodeConverters.ts:55:13",
+          "reason": "checked predicate membership over an open tag domain"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/factory/nodeConverters.ts:55:13",
+          "reason": "checked predicate membership over an open tag domain"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/factory/nodeConverters.ts:132:16",
+    "call_source": "cast(element, isObjectLiteralElementLike)",
+    "enclosing_function": "convertToObjectAssignmentElement",
+    "unit_where": "src/compiler/factory/nodeConverters.ts:41:1",
+    "unit_name": "createNodeConverters",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/factory/nodeConverters.ts:55:13",
+          "reason": "checked predicate membership over an open tag domain"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/factory/nodeConverters.ts:55:13",
+          "reason": "checked predicate membership over an open tag domain"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/factory/nodeConverters.ts:157:16",
+    "call_source": "cast(node, isObjectLiteralExpression)",
+    "enclosing_function": "convertToObjectAssignmentPattern",
+    "unit_where": "src/compiler/factory/nodeConverters.ts:41:1",
+    "unit_name": "createNodeConverters",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/factory/nodeConverters.ts:55:13",
+          "reason": "checked predicate membership over an open tag domain"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/factory/nodeConverters.ts:55:13",
+          "reason": "checked predicate membership over an open tag domain"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/factory/nodeConverters.ts:170:16",
+    "call_source": "cast(node, isArrayLiteralExpression)",
+    "enclosing_function": "convertToArrayAssignmentPattern",
+    "unit_where": "src/compiler/factory/nodeConverters.ts:41:1",
+    "unit_name": "createNodeConverters",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/factory/nodeConverters.ts:55:13",
+          "reason": "checked predicate membership over an open tag domain"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/factory/nodeConverters.ts:55:13",
+          "reason": "checked predicate membership over an open tag domain"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/factory/nodeConverters.ts:178:16",
+    "call_source": "cast(node, isExpression)",
+    "enclosing_function": "convertToAssignmentElementTarget",
+    "unit_where": "src/compiler/factory/nodeConverters.ts:41:1",
+    "unit_name": "createNodeConverters",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/factory/nodeConverters.ts:55:13",
+          "reason": "checked predicate membership over an open tag domain"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/factory/nodeConverters.ts:55:13",
+          "reason": "checked predicate membership over an open tag domain"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/factory/nodeFactory.ts:2921:87",
+    "call_source": "cast(name, isIdentifier)",
+    "enclosing_function": "updatePropertyAccessExpression",
+    "unit_where": "src/compiler/factory/nodeFactory.ts:492:1",
+    "unit_name": "createNodeFactory",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/factory/nodeFactory.ts:2363:40",
+          "reason": "a rest parameter that isn't an array"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/factory/nodeFactory.ts:2363:40",
+          "reason": "a rest parameter that isn't an array"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/factory/parenthesizerRules.ts:684:48",
+    "call_source": "cast(expression, isLeftHandSideExpression)",
+    "enclosing_function": null,
+    "unit_where": "src/compiler/factory/parenthesizerRules.ts:675:1",
+    "unit_name": "nullParenthesizerRules",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/core.ts:1784:32",
+          "reason": "checked predicate overload target LeftHandSideExpression"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/core.ts:1784:32",
+          "reason": "a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/factory/parenthesizerRules.ts:685:49",
+    "call_source": "cast(expression, isLeftHandSideExpression)",
+    "enclosing_function": null,
+    "unit_where": "src/compiler/factory/parenthesizerRules.ts:675:1",
+    "unit_name": "nullParenthesizerRules",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/core.ts:1784:32",
+          "reason": "checked predicate overload target LeftHandSideExpression"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/core.ts:1784:32",
+          "reason": "a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/factory/parenthesizerRules.ts:686:51",
+    "call_source": "cast(operand, isLeftHandSideExpression)",
+    "enclosing_function": null,
+    "unit_where": "src/compiler/factory/parenthesizerRules.ts:675:1",
+    "unit_name": "nullParenthesizerRules",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/core.ts:1784:32",
+          "reason": "checked predicate overload target LeftHandSideExpression"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/core.ts:1784:32",
+          "reason": "a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/factory/parenthesizerRules.ts:687:50",
+    "call_source": "cast(operand, isUnaryExpression)",
+    "enclosing_function": null,
+    "unit_where": "src/compiler/factory/parenthesizerRules.ts:675:1",
+    "unit_name": "nullParenthesizerRules",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/core.ts:1784:32",
+          "reason": "checked predicate overload target LeftHandSideExpression"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/core.ts:1784:32",
+          "reason": "a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/factory/parenthesizerRules.ts:688:59",
+    "call_source": "cast(nodes, isNodeArray)",
+    "enclosing_function": null,
+    "unit_where": "src/compiler/factory/parenthesizerRules.ts:675:1",
+    "unit_name": "nullParenthesizerRules",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/core.ts:1784:32",
+          "reason": "checked predicate overload target LeftHandSideExpression"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/core.ts:1784:32",
+          "reason": "a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/factory/parenthesizerRules.ts:694:55",
+    "call_source": "cast(nodes, isNodeArray)",
+    "enclosing_function": null,
+    "unit_where": "src/compiler/factory/parenthesizerRules.ts:675:1",
+    "unit_name": "nullParenthesizerRules",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/core.ts:1784:32",
+          "reason": "checked predicate overload target LeftHandSideExpression"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/core.ts:1784:32",
+          "reason": "a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/factory/parenthesizerRules.ts:696:62",
+    "call_source": "cast(nodes, isNodeArray)",
+    "enclosing_function": null,
+    "unit_where": "src/compiler/factory/parenthesizerRules.ts:675:1",
+    "unit_name": "nullParenthesizerRules",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/core.ts:1784:32",
+          "reason": "checked predicate overload target LeftHandSideExpression"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/core.ts:1784:32",
+          "reason": "a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/factory/parenthesizerRules.ts:701:51",
+    "call_source": "cast(nodes, isNodeArray)",
+    "enclosing_function": null,
+    "unit_where": "src/compiler/factory/parenthesizerRules.ts:675:1",
+    "unit_name": "nullParenthesizerRules",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/core.ts:1784:32",
+          "reason": "checked predicate overload target LeftHandSideExpression"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/core.ts:1784:32",
+          "reason": "a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/factory/parenthesizerRules.ts:704:50",
+    "call_source": "cast(nodes, isNodeArray)",
+    "enclosing_function": null,
+    "unit_where": "src/compiler/factory/parenthesizerRules.ts:675:1",
+    "unit_name": "nullParenthesizerRules",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/core.ts:1784:32",
+          "reason": "checked predicate overload target LeftHandSideExpression"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/core.ts:1784:32",
+          "reason": "a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/program.ts:4718:77",
+    "call_source": "tryCast(compilerOptionsProperty.initializer, isObjectLiteralExpression)",
+    "enclosing_function": "getCompilerOptionsObjectLiteralSyntax",
+    "unit_where": "src/compiler/program.ts:1515:1",
+    "unit_name": "createProgram",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/transformers/classFields.ts:455:24",
+    "call_source": "tryCast(node, isModifier)",
+    "enclosing_function": "modifierVisitor",
+    "unit_where": "src/compiler/transformers/classFields.ts:354:1",
+    "unit_name": "transformClassFields",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/transformers/declarations.ts:1831:52",
+    "call_source": "tryCast(n, isModifier)",
+    "enclosing_function": null,
+    "unit_where": "src/compiler/transformers/declarations.ts:259:1",
+    "unit_name": "transformDeclarations",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/transformers/es2015.ts:4377:22",
+    "call_source": "cast(cast(skipOuterExpressions(node.expression), isArrowFunction).body, isBlock)",
+    "enclosing_function": "visitTypeScriptClassWrapper",
+    "unit_where": "src/compiler/transformers/es2015.ts:488:1",
+    "unit_name": "transformES2015",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/transformers/es2015.ts:4377:27",
+    "call_source": "cast(skipOuterExpressions(node.expression), isArrowFunction)",
+    "enclosing_function": "visitTypeScriptClassWrapper",
+    "unit_where": "src/compiler/transformers/es2015.ts:488:1",
+    "unit_name": "transformES2015",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/transformers/es2015.ts:4391:30",
+    "call_source": "cast(first(classStatements), isVariableStatement)",
+    "enclosing_function": "visitTypeScriptClassWrapper",
+    "unit_where": "src/compiler/transformers/es2015.ts:488:1",
+    "unit_name": "transformES2015",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/transformers/es2015.ts:4413:31",
+    "call_source": "tryCast(initializer, isAssignmentExpression)",
+    "enclosing_function": "visitTypeScriptClassWrapper",
+    "unit_where": "src/compiler/transformers/es2015.ts:488:1",
+    "unit_name": "transformES2015",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/transformers/es2015.ts:4415:31",
+    "call_source": "tryCast(initializer.left, isAssignmentExpression)",
+    "enclosing_function": "visitTypeScriptClassWrapper",
+    "unit_where": "src/compiler/transformers/es2015.ts:488:1",
+    "unit_name": "transformES2015",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/transformers/es2015.ts:4419:22",
+    "call_source": "cast(aliasAssignment ? skipOuterExpressions(aliasAssignment.right) : initializer, isCallExpression)",
+    "enclosing_function": "visitTypeScriptClassWrapper",
+    "unit_where": "src/compiler/transformers/es2015.ts:488:1",
+    "unit_name": "transformES2015",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/transformers/es2015.ts:4420:22",
+    "call_source": "cast(skipOuterExpressions(call.expression), isFunctionExpression)",
+    "enclosing_function": "visitTypeScriptClassWrapper",
+    "unit_where": "src/compiler/transformers/es2015.ts:488:1",
+    "unit_name": "transformES2015",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/transformers/es2015.ts:4430:33",
+    "call_source": "tryCast(funcStatements[classBodyStart], isExpressionStatement)",
+    "enclosing_function": "visitTypeScriptClassWrapper",
+    "unit_where": "src/compiler/transformers/es2015.ts:488:1",
+    "unit_name": "transformES2015",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/transformers/es2015.ts:4445:25",
+    "call_source": "cast(variable.name, isIdentifier)",
+    "enclosing_function": "visitTypeScriptClassWrapper",
+    "unit_where": "src/compiler/transformers/es2015.ts:488:1",
+    "unit_name": "transformES2015",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/transformers/es2015.ts:4471:33",
+    "call_source": "tryCast(elementAt(funcStatements, classBodyEnd), isReturnStatement)",
+    "enclosing_function": "visitTypeScriptClassWrapper",
+    "unit_where": "src/compiler/transformers/es2015.ts:488:1",
+    "unit_name": "transformES2015",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/transformers/es2020.ts:92:21",
+    "call_source": "cast(skipPartiallyEmittedExpressions(chain.expression), isOptionalChain)",
+    "enclosing_function": "flattenChain",
+    "unit_where": "src/compiler/transformers/es2020.ts:42:1",
+    "unit_name": "transformES2020",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "Refused",
+      "stops": [
+        {
+          "where": "src/compiler/visitorPublic.ts:587:119",
+          "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "Refused",
+      "stops": [
+        {
+          "where": "src/compiler/visitorPublic.ts:587:119",
+          "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/transformers/esDecorators.ts:1351:89",
+    "call_source": "tryCast(node, isAsyncModifier)",
+    "enclosing_function": null,
+    "unit_where": "src/compiler/transformers/esDecorators.ts:295:1",
+    "unit_name": "transformESDecorators",
+    "A": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    },
+    "B": {
+      "status": "skipped_checker_body",
+      "instantiated": false,
+      "outcome": "skipped_checker_body",
+      "stops": []
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/transformers/namedEvaluation.ts:250:9",
+    "call_source": "cast(injectClassNamedEvaluationHelperBlockIfMissing(context, innerExpression, assignedName), isClassExpression)",
+    "enclosing_function": "finishTransformNamedEvaluation",
+    "unit_where": "src/compiler/transformers/namedEvaluation.ts:236:1",
+    "unit_name": "finishTransformNamedEvaluation",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/transformers/namedEvaluation.ts:238:5",
+          "reason": "a value of type WrappedExpression<AnonymousFunctionDefinition>"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/transformers/namedEvaluation.ts:238:5",
+          "reason": "a value of type WrappedExpression<AnonymousFunctionDefinition>"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "cast",
+    "call_where": "src/compiler/transformers/utilities.ts:304:33",
+    "call_source": "cast(node.exportClause, isNamedExports)",
+    "enclosing_function": "addExportedNamesForExportDeclaration",
+    "unit_where": "src/compiler/transformers/utilities.ts:179:1",
+    "unit_name": "collectExternalModuleInfo",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/sourcemap.ts:474:9",
+          "reason": "a getter in a checked field contract"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/sourcemap.ts:474:9",
+          "reason": "a getter in a checked field contract"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/utilities.ts:3109:16",
+    "call_source": "tryCast(expression, isObjectLiteralExpression)",
+    "enclosing_function": "getTsConfigObjectLiteralExpression",
+    "unit_where": "src/compiler/utilities.ts:3106:1",
+    "unit_name": "getTsConfigObjectLiteralExpression",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/sourcemap.ts:474:9",
+          "reason": "a getter in a checked field contract"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/sourcemap.ts:474:9",
+          "reason": "a getter in a checked field contract"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/utilities.ts:4357:20",
+    "call_source": "tryCast(node.moduleSpecifier, isStringLiteralLike)",
+    "enclosing_function": "tryGetModuleSpecifierFromDeclaration",
+    "unit_where": "src/compiler/utilities.ts:4349:1",
+    "unit_name": "tryGetModuleSpecifierFromDeclaration",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/utilities.ts:4349:54",
+          "reason": "a value of type JSDocImportTag | CanHaveModuleSpecifier"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/utilities.ts:4349:54",
+          "reason": "a value of type JSDocImportTag | CanHaveModuleSpecifier"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/utilities.ts:4359:20",
+    "call_source": "tryCast(tryCast(node.moduleReference, isExternalModuleReference)?.expression, isStringLiteralLike)",
+    "enclosing_function": "tryGetModuleSpecifierFromDeclaration",
+    "unit_where": "src/compiler/utilities.ts:4349:1",
+    "unit_name": "tryGetModuleSpecifierFromDeclaration",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/utilities.ts:4349:54",
+          "reason": "a value of type JSDocImportTag | CanHaveModuleSpecifier"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/utilities.ts:4349:54",
+          "reason": "a value of type JSDocImportTag | CanHaveModuleSpecifier"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/utilities.ts:4359:28",
+    "call_source": "tryCast(node.moduleReference, isExternalModuleReference)",
+    "enclosing_function": "tryGetModuleSpecifierFromDeclaration",
+    "unit_where": "src/compiler/utilities.ts:4349:1",
+    "unit_name": "tryGetModuleSpecifierFromDeclaration",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/utilities.ts:4349:54",
+          "reason": "a value of type JSDocImportTag | CanHaveModuleSpecifier"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/utilities.ts:4349:54",
+          "reason": "a value of type JSDocImportTag | CanHaveModuleSpecifier"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/utilities.ts:4362:20",
+    "call_source": "tryCast(node.parent.moduleSpecifier, isStringLiteralLike)",
+    "enclosing_function": "tryGetModuleSpecifierFromDeclaration",
+    "unit_where": "src/compiler/utilities.ts:4349:1",
+    "unit_name": "tryGetModuleSpecifierFromDeclaration",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/utilities.ts:4349:54",
+          "reason": "a value of type JSDocImportTag | CanHaveModuleSpecifier"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/utilities.ts:4349:54",
+          "reason": "a value of type JSDocImportTag | CanHaveModuleSpecifier"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/utilities.ts:4365:20",
+    "call_source": "tryCast(node.parent.parent.moduleSpecifier, isStringLiteralLike)",
+    "enclosing_function": "tryGetModuleSpecifierFromDeclaration",
+    "unit_where": "src/compiler/utilities.ts:4349:1",
+    "unit_name": "tryGetModuleSpecifierFromDeclaration",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/utilities.ts:4349:54",
+          "reason": "a value of type JSDocImportTag | CanHaveModuleSpecifier"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/utilities.ts:4349:54",
+          "reason": "a value of type JSDocImportTag | CanHaveModuleSpecifier"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/utilities.ts:4367:20",
+    "call_source": "tryCast(node.parent.parent.parent.moduleSpecifier, isStringLiteralLike)",
+    "enclosing_function": "tryGetModuleSpecifierFromDeclaration",
+    "unit_where": "src/compiler/utilities.ts:4349:1",
+    "unit_name": "tryGetModuleSpecifierFromDeclaration",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/utilities.ts:4349:54",
+          "reason": "a value of type JSDocImportTag | CanHaveModuleSpecifier"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/utilities.ts:4349:54",
+          "reason": "a value of type JSDocImportTag | CanHaveModuleSpecifier"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/utilities.ts:4395:20",
+    "call_source": "tryCast(node.parent.parent, isImportTypeNode)",
+    "enclosing_function": "tryGetImportFromModuleSpecifier",
+    "unit_where": "src/compiler/utilities.ts:4381:1",
+    "unit_name": "tryGetImportFromModuleSpecifier",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/utilities.ts:4381:17",
+          "reason": "a function returning AnyValidImportOrReExport | undefined"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/utilities.ts:4381:17",
+          "reason": "a function returning AnyValidImportOrReExport | undefined"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/utilities.ts:4430:41",
+    "call_source": "tryCast(node.importClause.namedBindings, isNamespaceImport)",
+    "enclosing_function": "getNamespaceDeclarationNode",
+    "unit_where": "src/compiler/utilities.ts:4427:1",
+    "unit_name": "getNamespaceDeclarationNode",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/sourcemap.ts:474:9",
+          "reason": "a getter in a checked field contract"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/sourcemap.ts:474:9",
+          "reason": "a getter in a checked field contract"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/utilities.ts:4434:41",
+    "call_source": "tryCast(node.exportClause, isNamespaceExport)",
+    "enclosing_function": "getNamespaceDeclarationNode",
+    "unit_where": "src/compiler/utilities.ts:4427:1",
+    "unit_name": "getNamespaceDeclarationNode",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/sourcemap.ts:474:9",
+          "reason": "a getter in a checked field contract"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/sourcemap.ts:474:9",
+          "reason": "a getter in a checked field contract"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/utilities.ts:4477:18",
+    "call_source": "tryCast(param && param.name, isIdentifier)",
+    "enclosing_function": "isJSDocConstructSignature",
+    "unit_where": "src/compiler/utilities.ts:4475:1",
+    "unit_name": "isJSDocConstructSignature",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/binder.ts:2258:13",
+          "reason": "writing a checked object field without its source-slot type certificate"
+        }
+      ]
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "NotYet",
+      "stops": [
+        {
+          "where": "src/compiler/binder.ts:2258:13",
+          "reason": "writing a checked object field without its source-slot type certificate"
+        }
+      ]
+    }
+  },
+  {
+    "callee": "tryCast",
+    "call_where": "src/compiler/utilitiesPublic.ts:867:20",
+    "call_source": "tryCast(token, isKeyword)",
+    "enclosing_function": "identifierToKeywordKind",
+    "unit_where": "src/compiler/utilitiesPublic.ts:865:1",
+    "unit_name": "identifierToKeywordKind",
+    "A": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "lowers",
+      "stops": []
+    },
+    "B": {
+      "status": "attempted",
+      "instantiated": false,
+      "outcome": "lowers",
+      "stops": []
+    }
+  }
+]

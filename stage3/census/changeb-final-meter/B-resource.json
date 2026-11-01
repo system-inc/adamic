@@ -1,0 +1,15 @@
+{
+  "command": [
+    "timeout",
+    "--kill-after=5s",
+    "5400",
+    "/workspace/scratch/census-B",
+    "/workspace/scratch/tree/src/compiler",
+    "/workspace/scratch/changeb-final-meter/B.jsonl"
+  ],
+  "exit_code": 0,
+  "wall_seconds": 1447.622913995,
+  "peak_rss_kib": 5828264,
+  "user_seconds": 1666.443566,
+  "system_seconds": 13.730322
+}

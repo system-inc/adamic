@@ -1,0 +1,50 @@
+[
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/core.ts:1784:32",
+    "reason": "checked predicate overload target LeftHandSideExpression",
+    "text": "src/compiler/core.ts:1784:32: stage 0 can't lower checked predicate overload target LeftHandSideExpression yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/debug.ts:189:56",
+    "reason": "reading Debug",
+    "text": "src/compiler/debug.ts:189:56: stage 0 can't lower reading Debug yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/emitter.ts:1158:18",
+    "reason": "checked predicate overload target LateBoundDeclaration",
+    "text": "src/compiler/emitter.ts:1158:18: stage 0 can't lower checked predicate overload target LateBoundDeclaration yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/utilitiesPublic.ts:1449:1",
+    "reason": "checked predicate overload target JSDocPropertyLikeTag",
+    "text": "src/compiler/utilitiesPublic.ts:1449:1: stage 0 can't lower checked predicate overload target JSDocPropertyLikeTag yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/utilitiesPublic.ts:1498:1",
+    "reason": "checked predicate overload target LiteralExpression",
+    "text": "src/compiler/utilitiesPublic.ts:1498:1: stage 0 can't lower checked predicate overload target LiteralExpression yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/utilitiesPublic.ts:1732:1",
+    "reason": "checked predicate overload target ClassElement",
+    "text": "src/compiler/utilitiesPublic.ts:1732:1: stage 0 can't lower checked predicate overload target ClassElement yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/utilitiesPublic.ts:1782:1",
+    "reason": "checked predicate overload target TypeElement",
+    "text": "src/compiler/utilitiesPublic.ts:1782:1: stage 0 can't lower checked predicate overload target TypeElement yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/utilitiesPublic.ts:883:11",
+    "reason": "a value of type HasJSDoc",
+    "text": "src/compiler/utilitiesPublic.ts:883:11: stage 0 can't lower a value of type HasJSDoc yet"
+  }
+]

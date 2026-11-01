@@ -1,0 +1,247 @@
+{
+  "units": 4018,
+  "A_seconds": 794.908220186,
+  "B_seconds": 803.547513726,
+  "A_cpu_seconds": 842.7663669999906,
+  "B_cpu_seconds": 849.7858660000027,
+  "noise": {
+    "control_kinds": [
+      "KindExportDeclaration",
+      "KindImportDeclaration",
+      "KindInterfaceDeclaration",
+      "KindTypeAliasDeclaration"
+    ],
+    "units": 1292,
+    "median_absolute_delta_seconds": 0.0062803189999999995,
+    "p95_absolute_delta_seconds": 0.06378993399999999,
+    "median_ratio": 0.9912413503342447,
+    "p05_ratio": 0.6849074148226225,
+    "p95_ratio": 1.410706034188532
+  },
+  "top20": [
+    {
+      "where": "src/compiler/program.ts:4855:1",
+      "name": "getImpliedNodeFormatForEmitWorker",
+      "kind": "KindFunctionDeclaration",
+      "A_seconds": 4.440378769,
+      "B_seconds": 5.85966259,
+      "B_minus_A_seconds": 1.4192838210000005,
+      "ratio": 1.3196312510339365,
+      "A_cpu_seconds": 4.443310999999994,
+      "B_cpu_seconds": 5.478655000000003
+    },
+    {
+      "where": "src/compiler/utilities.ts:11077:1",
+      "name": "hasTabstop",
+      "kind": "KindFunctionDeclaration",
+      "A_seconds": 5.201812543,
+      "B_seconds": 5.985839953,
+      "B_minus_A_seconds": 0.7840274100000002,
+      "ratio": 1.1507219653762906,
+      "A_cpu_seconds": 5.2017869999999675,
+      "B_cpu_seconds": 5.054295000000138
+    },
+    {
+      "where": "src/compiler/utilities.ts:4330:1",
+      "name": "canHaveModuleSpecifier",
+      "kind": "KindFunctionDeclaration",
+      "A_seconds": 4.613271362,
+      "B_seconds": 5.324491252,
+      "B_minus_A_seconds": 0.7112198899999997,
+      "ratio": 1.1541682320832876,
+      "A_cpu_seconds": 4.626694999999927,
+      "B_cpu_seconds": 8.059085000000096
+    },
+    {
+      "where": "src/compiler/utilities.ts:9402:1",
+      "name": "getCompilerOptionValue",
+      "kind": "KindFunctionDeclaration",
+      "A_seconds": 5.120718229,
+      "B_seconds": 5.809007446,
+      "B_minus_A_seconds": 0.6882892169999995,
+      "ratio": 1.134412632411999,
+      "A_cpu_seconds": 5.120518999999831,
+      "B_cpu_seconds": 5.819384000000127
+    },
+    {
+      "where": "src/compiler/utilities.ts:8637:1",
+      "name": "isDiagnosticWithDetachedLocation",
+      "kind": "KindFunctionDeclaration",
+      "A_seconds": 4.955931883,
+      "B_seconds": 5.62127333,
+      "B_minus_A_seconds": 0.6653414470000003,
+      "ratio": 1.1342515318425332,
+      "A_cpu_seconds": 4.963044000000309,
+      "B_cpu_seconds": 5.633517999999867
+    },
+    {
+      "where": "src/compiler/moduleNameResolver.ts:224:1",
+      "name": "createResolvedModuleWithFailedLookupLocationsHandlingSymlink",
+      "kind": "KindFunctionDeclaration",
+      "A_seconds": 4.680548435,
+      "B_seconds": 5.267547754,
+      "B_minus_A_seconds": 0.5869993189999994,
+      "ratio": 1.1254125082032185,
+      "A_cpu_seconds": 4.676151000000004,
+      "B_cpu_seconds": 5.268966999999975
+    },
+    {
+      "where": "src/compiler/moduleNameResolver.ts:3424:1",
+      "name": "useCaseSensitiveFileNames",
+      "kind": "KindFunctionDeclaration",
+      "A_seconds": 4.544434532,
+      "B_seconds": 5.104956043,
+      "B_minus_A_seconds": 0.5605215109999993,
+      "ratio": 1.1233424108220817,
+      "A_cpu_seconds": 5.575468999999998,
+      "B_cpu_seconds": 6.325515999999993
+    },
+    {
+      "where": "src/compiler/utilities.ts:803:1",
+      "name": "projectReferenceIsEqualTo",
+      "kind": "KindFunctionDeclaration",
+      "A_seconds": 4.761494575,
+      "B_seconds": 5.26414254,
+      "B_minus_A_seconds": 0.5026479649999995,
+      "ratio": 1.1055651659542214,
+      "A_cpu_seconds": 4.756678000000193,
+      "B_cpu_seconds": 7.833645999999817
+    },
+    {
+      "where": "src/compiler/utilities.ts:6892:1",
+      "name": "getEffectiveTypeAnnotationNode",
+      "kind": "KindFunctionDeclaration",
+      "A_seconds": 0.313653663,
+      "B_seconds": 0.747478853,
+      "B_minus_A_seconds": 0.43382519,
+      "ratio": 2.383134460635966,
+      "A_cpu_seconds": 0.31288400000016736,
+      "B_cpu_seconds": 2.4812050000000454
+    },
+    {
+      "where": "src/compiler/utilities.ts:11452:1",
+      "name": "isConstAssertion",
+      "kind": "KindFunctionDeclaration",
+      "A_seconds": 0.318406202,
+      "B_seconds": 0.723702812,
+      "B_minus_A_seconds": 0.40529660999999995,
+      "ratio": 2.2728916944902973,
+      "A_cpu_seconds": 0.3184609999998429,
+      "B_cpu_seconds": 2.3301769999998214
+    },
+    {
+      "where": "src/compiler/utilities.ts:8790:1",
+      "name": "compareDiagnosticsSkipRelatedInformation",
+      "kind": "KindFunctionDeclaration",
+      "A_seconds": 5.353258329,
+      "B_seconds": 5.7570049,
+      "B_minus_A_seconds": 0.4037465710000001,
+      "ratio": 1.0754207150461617,
+      "A_cpu_seconds": 5.3514739999998255,
+      "B_cpu_seconds": 9.951770000000124
+    },
+    {
+      "where": "src/compiler/utilities.ts:8685:1",
+      "name": "createFileDiagnostic",
+      "kind": "KindFunctionDeclaration",
+      "A_seconds": 4.847145536,
+      "B_seconds": 5.239931147,
+      "B_minus_A_seconds": 0.39278561099999987,
+      "ratio": 1.0810344166649755,
+      "A_cpu_seconds": 4.857257999999774,
+      "B_cpu_seconds": 5.2501720000000205
+    },
+    {
+      "where": "src/compiler/moduleSpecifiers.ts:433:1",
+      "name": "getLocalModuleSpecifierBetweenFileNames",
+      "kind": "KindFunctionDeclaration",
+      "A_seconds": 4.387612805,
+      "B_seconds": 4.768174308,
+      "B_minus_A_seconds": 0.380561503,
+      "ratio": 1.086735434486453,
+      "A_cpu_seconds": 4.396632000000068,
+      "B_cpu_seconds": 4.4161020000000235
+    },
+    {
+      "where": "src/compiler/sys.ts:1980:1",
+      "name": "KindIfStatement",
+      "kind": "KindIfStatement",
+      "A_seconds": 4.832784222,
+      "B_seconds": 5.186697252,
+      "B_minus_A_seconds": 0.3539130300000002,
+      "ratio": 1.0732317053157272,
+      "A_cpu_seconds": 4.519930999999929,
+      "B_cpu_seconds": 4.765869000000066
+    },
+    {
+      "where": "src/compiler/utilities.ts:6911:1",
+      "name": "getEffectiveReturnTypeNode",
+      "kind": "KindFunctionDeclaration",
+      "A_seconds": 0.281869151,
+      "B_seconds": 0.633361897,
+      "B_minus_A_seconds": 0.351492746,
+      "ratio": 2.2470067928788704,
+      "A_cpu_seconds": 0.2814320000002226,
+      "B_cpu_seconds": 0.2554059999999936
+    },
+    {
+      "where": "src/compiler/transformers/taggedTemplate.ts:101:1",
+      "name": "createTemplateCooked",
+      "kind": "KindFunctionDeclaration",
+      "A_seconds": 4.357138609,
+      "B_seconds": 4.704531812,
+      "B_minus_A_seconds": 0.3473932030000002,
+      "ratio": 1.0797296653088873,
+      "A_cpu_seconds": 4.363316000000168,
+      "B_cpu_seconds": 4.702053000000205
+    },
+    {
+      "where": "src/compiler/moduleNameResolver.ts:2407:1",
+      "name": "getVersionPathsOfPackageJsonInfo",
+      "kind": "KindFunctionDeclaration",
+      "A_seconds": 4.249278291,
+      "B_seconds": 4.572617772,
+      "B_minus_A_seconds": 0.32333948099999965,
+      "ratio": 1.0760927994960543,
+      "A_cpu_seconds": 4.253146000000015,
+      "B_cpu_seconds": 4.565498999999932
+    },
+    {
+      "where": "src/compiler/transformers/destructuring.ts:244:1",
+      "name": "flattenDestructuringBinding",
+      "kind": "KindFunctionDeclaration",
+      "A_seconds": 0.099654237,
+      "B_seconds": 0.391632181,
+      "B_minus_A_seconds": 0.291977944,
+      "ratio": 3.9299099846602608,
+      "A_cpu_seconds": 0.09951599999999416,
+      "B_cpu_seconds": 0.13205900000002657
+    },
+    {
+      "where": "src/compiler/utilitiesPublic.ts:1437:1",
+      "name": "isNonNullChain",
+      "kind": "KindFunctionDeclaration",
+      "A_seconds": 0.316311487,
+      "B_seconds": 0.597261376,
+      "B_minus_A_seconds": 0.28094988899999995,
+      "ratio": 1.8882064058584125,
+      "A_cpu_seconds": 0.3172100000001592,
+      "B_cpu_seconds": 1.6144789999998466
+    },
+    {
+      "where": "src/compiler/program.ts:1339:1",
+      "name": "getImpliedNodeFormatForFile",
+      "kind": "KindFunctionDeclaration",
+      "A_seconds": 4.314717765,
+      "B_seconds": 4.586963744,
+      "B_minus_A_seconds": 0.272245979,
+      "ratio": 1.0630970538115834,
+      "A_cpu_seconds": 4.3114239999998745,
+      "B_cpu_seconds": 6.311519999999973
+    }
+  ],
+  "lowering_A": 2930,
+  "lowering_B": 2930,
+  "regressions": 0,
+  "unknown_instance_units": 0
+}
