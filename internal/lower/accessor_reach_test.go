@@ -115,6 +115,21 @@ func TestSourcemapDecoderShapeAgrees(t *testing.T) {
 	}
 }
 
+// A read whose receiver is a callback's parameter, which the graph can't follow, may reach the
+// getter, so it stays the dispatcher's call and reads the getter's value, not its slot.
+func TestGetterThroughUnknownReceiverAgrees(t *testing.T) {
+	t.Parallel()
+	lowersAndAgreesWithNodeAs(t, `interface Positioned { readonly pos: number; }
+let at = 3;
+const decoder = { get pos() { return at; } };
+const plain = { pos: 5 };
+const all: Positioned[] = [decoder, plain];
+all.forEach((each) => console.log(String(each.pos)));
+at = 4;
+console.log(String(decoder.pos) + " " + String(plain.pos));
+`, ".ts")
+}
+
 // accessorReachReads counts the program's checked ir.Property reads of name and its calls to
 // name's getter dispatcher.
 func accessorReachReads(program *ir.Program, name string) (int, int) {
