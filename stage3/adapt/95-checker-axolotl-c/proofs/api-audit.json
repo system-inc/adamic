@@ -1,0 +1,22 @@
+{
+  "baseline": "tests/baselines/reference/api/typescript.d.ts",
+  "sha256": "c967e03c8dbb4770f7e2f0b71b5d13593de679a41cc2b60266c4b69f1342a263",
+  "bytes": 588452,
+  "absent": [
+    "SymbolLinks",
+    "tupleLabelDeclaration",
+    "ModuleSpecifierResolutionHost",
+    "getTupleElementLabel"
+  ],
+  "internalInterfaces": [
+    "SymbolLinks",
+    "ModuleSpecifierResolutionHost"
+  ],
+  "publicMethodUnchanged": [
+    {
+      "line": 6275,
+      "text": "        getMergedSymbol(symbol: Symbol): Symbol;"
+    }
+  ],
+  "localMergedPrivate": true
+}
