@@ -1,0 +1,84 @@
+{
+  "baseCommit": "80c2d3282e44b527555d59690bb413cc883d2bf2",
+  "apply": {
+    "files": 1,
+    "assertions": 13,
+    "javascriptIdentical": true
+  },
+  "verify": {
+    "sourceFiles": 711,
+    "changedFiles": 1,
+    "assertions": 13,
+    "crlf": {
+      "before": 54434,
+      "after": 54434
+    },
+    "javascript": [
+      {
+        "removeComments": false,
+        "bytes": 2892419,
+        "sha256": "786ee138ff00765ab7c7ea7651de48df32c5981ec2c0810c68e302570d566f6e"
+      },
+      {
+        "removeComments": true,
+        "bytes": 2354716,
+        "sha256": "3664a2f5fb2aba0e839a3153e6ff4d093b530db890b5b2433be6cd38e6e91aac"
+      }
+    ],
+    "publicDeclarationsUnchanged": true
+  },
+  "idempotence": {
+    "files": 0,
+    "assertions": 0,
+    "javascriptIdentical": true
+  },
+  "sameFullMainCheckerBytes": true,
+  "owners": {
+    "before": "330d3852b263f13aaca16abbb7a4ba5d4f178cf0a1ee819e637f21d774040062",
+    "after": "6df447752dc6f810754e8da1f6c1d0f0d5a8cff74ede6e54523ae3cac8ce300b"
+  },
+  "outside": {
+    "mutation": "unrelated getMergedSymbol temporary admits undefined",
+    "beforeFullFileSha256": "ad98c92d7ddf07fcac908a28d373570fa5352c606cfc4d67915e76a1a1b9a0a5",
+    "mutatedFullFileSha256": "a4889d4df805e8a20335ddd1c27cde1e37ef9d0aaf3c2cba2d5386c4ef2df114",
+    "ownerUnchanged": true,
+    "result": {
+      "files": 1,
+      "assertions": 13,
+      "javascriptIdentical": true
+    },
+    "second": {
+      "files": 0,
+      "assertions": 0,
+      "javascriptIdentical": true
+    }
+  },
+  "inside": {
+    "mutation": "private grammar function return false to return true",
+    "exit": 1,
+    "catcher": "uninventoried owner: checkGrammarIndexSignatureParameters",
+    "writes": 0
+  },
+  "existingMutants": {
+    "undoRead": {
+      "site": "checker.ts:52426:13",
+      "verifierExit": 1,
+      "catcher": "all 13 required read checks must be present: 12 !== 13",
+      "pinExit": 1,
+      "pinCatcher": "uninventoried owner: checkGrammarIndexSignatureParameters"
+    },
+    "runtimeReturnMutant": {
+      "change": "private grammar function return false to return true",
+      "erasure": [
+        {
+          "removeComments": false,
+          "caught": true
+        },
+        {
+          "removeComments": true,
+          "caught": true
+        }
+      ]
+    }
+  }
+}
