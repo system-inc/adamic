@@ -1,0 +1,11 @@
+{
+  "file": "src/compiler/checker.ts",
+  "owner": "getTypeArgumentConstraint",
+  "ownerBeforeSha256": "a6a7a6d447206a5f3ef29faaa262da87896415cf97227955dd9ab4be76649bb6",
+  "line": 42849,
+  "column": 65,
+  "code": 2345,
+  "address": "const relevantTypeParameter = typeParameters[typeArgumentPosition]; before getConstraintOfTypeParameter",
+  "fix": "if (relevantTypeParameter === undefined) return undefined;",
+  "javascriptChanging": true
+}
