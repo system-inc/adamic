@@ -281,18 +281,18 @@ const v = { kind: 9, pos: 1, text: "x" }; show(v);`, "checked predicate overload
 	}
 }
 
-// The checker narrows a call's argument by the claim however the call reaches the predicate, so every
-// path is judged by brandedNarrowing, from the one place they all reach (brandedCalls): a direct call, the
-// predicate held as a value, a function-type parameter, a class method, an arrow, an assertion direct and
-// held, and an optional call (Language's must on 9e4f2184, Compiler's roads on 7530a354). Each narrows a
-// PropertySignature | Identifier argument to PropertySignature, whose typeText S's view doesn't check,
-// so each is NotYet at the call, by Identifier, an unrelated member the checker drops, as much as by the
-// subtype. Three are held first by older rules, each pinned by its reason: the
-// direct call by the false side's guard, which runs before S's view registers, the class method as an
-// indirect call, and the optional call as a call main doesn't lower. Mutant: only a call through a declared function's name judged, as
-// 9e4f2184 did, and the four roads marked opened lower; with ADAMIC_BRANDED_CALLS_MUTANT=1 each of those
-// must lower instead and its sanitized native must disagree with Node, which prints undefined (on Golem it
-// stops with "compiler bug: a field the checker proved is there is missing").
+// The checker narrows a call's argument by the claim however the call reaches the predicate, and every
+// call is judged where it's lowered, under its instance (brandedCall, hooked where expression lowers a
+// call): a direct call, the predicate held as a value, a function-type parameter, a class method, an
+// arrow, an assertion direct and held, an optional call, and claims through a generic predicate. Each
+// narrows a PropertySignature | Identifier argument to PropertySignature, whose typeText S's view doesn't
+// check, so each is NotYet at the call, by Identifier, an unrelated member the checker drops, as much as
+// by the subtype. Mutant: the hook dropped, and the roads marked opened lower; with
+// ADAMIC_BRANDED_CALLS_MUTANT=1 each of those must lower instead and its sanitized native must disagree
+// with Node, which prints undefined (on Golem it stops with "compiler bug: a field the checker proved is
+// there is missing"). The others are held then by older rules: the direct call by the false side's guard,
+// the class method as an indirect call, the optional call as a call main doesn't lower, the bare U by
+// main's overload-target rule; the generic branded supertype lowers, and its lie reads only pos.
 func TestBrandedSupertypeEveryCallPathIsJudged(t *testing.T) {
 	t.Parallel()
 	const lie = `const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
@@ -305,7 +305,7 @@ func TestBrandedSupertypeEveryCallPathIsJudged(t *testing.T) {
 		opened             bool
 	}{
 		{"direct", `function show(x: PropertySignature | Identifier): void { if (isTypeElementLie(x)) { console.log(String(x.typeText)); } }
-show(i);`, "checked predicate membership of a branded supertype on its false branch", false},
+show(i);`, walk, false},
 		{"held as a value", `const guard = isTypeElementLie;
 function show(x: PropertySignature | Identifier): void { if (guard(x)) { console.log(String(x.typeText)); } }
 show(i);`, walk, true},
@@ -314,32 +314,25 @@ show(isTypeElementLie, i);`, walk, true},
 		{"class method", `class Judge { isElement(n: Node): n is TypeElement { return kindOf(n) !== 0; } }
 const judge = new Judge();
 function show(x: PropertySignature | Identifier): void { if (judge.isElement(x)) { console.log(String(x.typeText)); } }
-show(i);`, "an indirect call of a checked predicate", false},
+show(i);`, walk, false},
 		{"arrow", `const isElement = (n: Node): n is TypeElement => kindOf(n) !== 0;
 function show(x: PropertySignature | Identifier): void { if (isElement(x)) { console.log(String(x.typeText)); } }
 show(i);`, walk, true},
 		// An assertion narrows after the call statement, with no if around it (Compiler, on 7530a354).
 		{"asserts", `function assertElement(n: Node): asserts n is TypeElement { if (kindOf(n) === 0) { throw new Error("no"); } }
 function show(x: PropertySignature | Identifier): void { assertElement(x); console.log(String(x.typeText)); }
-show(i);`, walk, false},
+show(i);`, walk, true},
 		{"asserts held as a value", `function assertElement(n: Node): asserts n is TypeElement { if (kindOf(n) === 0) { throw new Error("no"); } }
 const held: (n: Node) => asserts n is TypeElement = assertElement;
 function show(x: PropertySignature | Identifier): void { held(x); console.log(String(x.typeText)); }
 show(i);`, walk, true},
-		// A claim naming a type parameter narrows by whatever the instance is, and the walk reads calls as
-		// written, so it's NotYet when S could instantiate it and the narrowing isn't the argument's own type.
-		// With generic claims passed over, this bare U is still held, by main's overload-target rule, so the
-		// generic branded supertype below is the case only the walk holds.
+		// A generic predicate's claim, judged at its instance: U = TypeElement over the same argument.
 		{"generic claim", `function isT<T extends Node>(n: Node): n is T { return kindOf(n) !== 0; }
 function show(n: Node): void { if (isTypeElementLie(n)) { console.log("element"); } }
 function g<U extends Node>(x: PropertySignature | Identifier): void { if (isT<U>(x)) { console.log(String(x.pos)); } }
 g<TypeElement>(i);
-show(i);`, "that the generic claim U may be instantiated at", false},
-		// A generic branded supertype at a type argument the walk can't see: U = number makes the claim
-		// Tagged<number>, S itself, so U's constraint against S says nothing (Compiler's must on 810ce7d9).
-		// Nothing reads value, whose view read main refuses as a generic contract, so only the walk holds it.
-		// Mutants: type arguments judged by their constraint against S, or generic claims passed over, and
-		// it lowers.
+show(i);`, walk, false},
+		// A generic branded supertype, judged at its instance: Tagged<U> at U = number is S itself.
 		{"generic branded supertype", `interface Tagged<V> { readonly kind: number; readonly pos: number; _taggedBrand: undefined; readonly value: V }
 interface Sub extends Tagged<number> { readonly kind: 7; readonly extra: string; }
 function isTagged(n: Node): n is Tagged<number> { return kindOf(n) !== 0; }
@@ -347,10 +340,10 @@ function isTaggedOf<U extends number>(n: Node): n is Tagged<U> { return kindOf(n
 function show(n: Node): void { if (isTagged(n)) { console.log(String(n.pos)); } }
 function g<U extends number>(x: Sub | Identifier): void { if (isTaggedOf<U>(x)) { console.log(String(x.pos)); } }
 show(i);
-g<number>(i);`, "that the generic claim Tagged<U> may be instantiated at", false},
+g<number>(i);`, walk, false},
 		{"optional call", `const maybe: ((n: Node) => n is TypeElement) | undefined = isTypeElementLie;
 function show(x: PropertySignature | Identifier): void { if (maybe?.(x)) { console.log(String(x.typeText)); } }
-show(i);`, "a call through ?. (an optional call)", false},
+show(i);`, walk, false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -406,22 +399,73 @@ console.log(String(firstPos(elements)));
 }
 
 // tsc's tryCast and cast take a predicate as a function type and call it on a value of the type its claim
-// extends: `test(value)` claims TOut of a TIn, with TOut extends TIn. Read as written, TOut is a subtype of
-// every member of the argument's type, so the value narrows to TOut itself in every instance, and where
-// TOut is S it's read through S's view (core.ts:1779, Correctness's census on 810ce7d9). An honest value
-// lowers and agrees with Node, and a lie stops at its first bad read. Mutant: that generic supertype rule
-// dropped, and both are NotYet as a generic claim S may instantiate.
-func TestBrandedSupertypeTryCastIsJudgedGenerically(t *testing.T) {
+// extends: `test(value)` claims TOut of a TIn, with TOut extends TIn. Each instance is judged where it's
+// lowered: TIn mentions a type parameter, and the checker's flow type at value's first read on the true
+// side is TOut, the claim itself as written, so the instance's reads see concrete(TOut), S, through S's
+// view (core.ts:1779, Adamic's ruling on 810ce7d9). tryCast and cast with isTypeElement and isClassElement
+// lower and agree with Node, and so does TOut = TypeElement over a PropertySignature | Node, whose
+// PropertySignature the narrowing doesn't keep (Compiler's union pin). A lie through either stops at its
+// first bad read. Mutant: the as-written test dropped, and g1 to g3 lower; the identity of the flow type
+// dropped, and tryCast is NotYet as a generic argument.
+func TestBrandedSupertypeTryCastIsJudgedPerInstance(t *testing.T) {
 	t.Parallel()
-	const tryCast = `function tryCast<TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut | undefined { return value !== undefined && test(value) ? value : undefined; }
+	const helpers = `interface ClassElement extends Declaration { _classElementBrand: undefined; readonly name?: string; }
+function isClassElement(n: Node): n is ClassElement { const k = kindOf(n); return k === 172 || k === 174; }
+function tryCast<TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut | undefined { return value !== undefined && test(value) ? value : undefined; }
+function cast<TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut { if (value !== undefined && test(value)) { return value; } throw new Error("Invalid cast"); }
 `
-	lowersAndAgreesWithNodeAs(t, brandedPrelude+tryCast+`function show(n: Node): void { const e = tryCast(n, isTypeElement); console.log(e === undefined ? "no" : String(e.pos)); }
+	lowersAndAgreesWithNodeAs(t, brandedPrelude+helpers+`function show(n: Node): void {
+	const e = tryCast(n, isTypeElement); console.log(e === undefined ? "no" : String(e.pos));
+	const c = tryCast(n, isClassElement); console.log(c === undefined ? "no" : String(c.pos));
+}
 const a = { kind: 171, pos: 1, name: "a", typeText: "t" }; show(a);
-const b = { kind: 80, pos: 2, escapedText: "e" }; show(b);
+const b = { kind: 172, pos: 2 }; show(b);
+console.log(String(cast(a as Node, isTypeElement).pos));
+const p: PropertySignature | Node = a;
+const u = tryCast(p, isTypeElement); console.log(u === undefined ? "no" : String(u.name));
 `, ".ts")
-	brandedStops(t, brandedPrelude+tryCast+`function show(n: Node): void { const e = tryCast(n, isTypeElementLie); console.log(e === undefined ? "no" : String(e.name)); }
+	brandedStops(t, brandedPrelude+helpers+`function show(n: Node): void { const e = tryCast(n, isTypeElementLie); console.log(e === undefined ? "no" : String(e.name)); }
 const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);
 `, "adamic: panic: field read failed: e.name matches no member of string | undefined")
+	brandedStops(t, brandedPrelude+helpers+`const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const w: Node = v; const p: PropertySignature | Node = w;
+const u = tryCast(p, isTypeElementLie); console.log(u === undefined ? "no" : String(u.name));
+`, "adamic: panic: field read failed: u.name matches no member of string | undefined")
+}
+
+// A generic helper is judged per instance: pick at Identifier lowers, and pick at TypeElement over the
+// same PropertySignature | Identifier argument is NotYet at its own call, in a program that lowers the
+// Identifier instance first. Mutant: one instance's verdict kept for every instance of the call, and the
+// second program lowers. A helper the program never instantiates isn't judged at all, so a program
+// that registers S and never calls it lowers, unlike under the whole-program walk. A closure made after
+// a stopped call that reads the narrowed argument stops with its function (Compiler's condition).
+func TestBrandedSupertypeIsJudgedWhereItIsLowered(t *testing.T) {
+	t.Parallel()
+	const pick = `function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
+function pick<T extends Node>(x: PropertySignature | Identifier, test: (n: Node) => n is T): string { if (test(x)) { return "yes"; } return "no"; }
+function never<T extends Node>(x: PropertySignature | Identifier, test: (n: Node) => n is T): string { if (test(x)) { return "yes"; } return "no"; }
+function show(n: Node): void { if (isTypeElementLie(n)) { console.log(String(n.pos)); } }
+const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
+show(i);
+console.log(pick(i, isIdentifier));
+`
+	lowersAndAgreesWithNodeAs(t, brandedPrelude+pick, ".ts")
+	for _, probe := range []struct{ name, source string }{
+		{"second instance", pick + `console.log(pick(i, isTypeElementLie));
+`},
+		{"closure after the call", `const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
+function show(x: PropertySignature | Identifier): () => string { if (isTypeElementLie(x)) { return () => x.typeText; } return () => "no"; }
+console.log(show(i)());
+`},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerTypeScriptAssertionSource(t, brandedPrelude+probe.source)
+			var pending *NotYet
+			if !errors.As(err, &pending) || !strings.Contains(err.Error(), "which isn't its supertype") {
+				t.Fatalf("want NotYet at the call, got %v", err)
+			}
+		})
+	}
 }
 
 // A member S is assignable to and that's assignable to S keeps its own type when the checker narrows it

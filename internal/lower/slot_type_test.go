@@ -147,7 +147,7 @@ func TestRefusalRulesReadTheirSlotThroughSlotType(t *testing.T) {
 // something other than the slot an argument goes into, each with what it reads instead. Any other reader
 // asks slotSet first (TestRefusalRulesReadTheirSlotThroughSlotType).
 var signatureReaders = map[string]string{
-	"brandedCall":                       "the callee's type predicate, to judge every call that narrows its argument to a branded supertype",
+	"brandedCall":                       "the callee's type predicate, to judge a call that narrows its argument to a branded supertype",
 	"carrier":                           "the callee's declaration, to follow a predicate's false side into it",
 	"censusCallReturnsUndefined":        "the callee's declaration, to read what it returns",
 	"censusOverloadResult":              "the callee's declaration and type predicate, to pick a census overload",

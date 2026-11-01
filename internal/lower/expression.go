@@ -760,6 +760,11 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindFunctionExpression:
 		return l.functionExpression(node)
 	case ast.KindCallExpression:
+		// A call claiming a branded supertype of its argument is judged here, under the instance being
+		// lowered, whichever way below lowers it (predicates_branded.go).
+		if err := l.brandedCall(node); err != nil {
+			return nil, err
+		}
 		if value, handled, err := l.promiseValue(node); handled {
 			return value, err
 		}

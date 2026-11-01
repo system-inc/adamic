@@ -86,9 +86,6 @@ func (l *lowering) registerBrandedSupertypeViews(node *ast.Node, source, target 
 	if classes := l.brandedClasses(target); len(classes) != 0 {
 		return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(target)+" that class "+l.checker.TypeToString(classes[0])+" is assignable to")
 	}
-	if err := l.brandedCalls(target); err != nil {
-		return err
-	}
 	// The claim's source is what the view vouches for through a wider type, and the value enters the view
 	// wherever a read is narrowed to S, as a tag-proven predicate's view does (view_widened.go).
 	if _, err := l.view(node, nil, source, target); err != nil {
@@ -114,142 +111,108 @@ func (l *lowering) brandedClasses(target *checker.Type) []*checker.Type {
 	return classes
 }
 
-// brandedCalls judges, once per branded supertype S, every call in the program whose resolved signature
-// claims S of an argument, by brandedNarrowing. The checker narrows a call's argument by the claim however
-// the call reaches the predicate: directly, through the predicate held as a value or a function type, or
-// through a method's claim (Language's must on 9e4f2184). Those paths check the claim in different places,
-// and the forwarder's and a closure's check holds no call site at all, so the calls are found here, where
-// S's view is registered, which every path reaches through predicateMembership. A claim on this, or one
-// whose argument is spread or missing, is NotYet, since no argument node says what the checker narrowed.
-func (l *lowering) brandedCalls(target *checker.Type) error {
-	proofs := l.proofs()
-	if err, done := proofs.brandedCalls[target]; done {
-		return predicateFailureCopy(err)
-	}
-	// The walk is done once per S, so it reads every call as written, with no instance's mapper: which
-	// instance happens to be lowering when S's view registers says nothing about the calls in other
-	// bodies. A claim naming a type parameter is judged for every instance at once (brandedCall).
-	mapper := l.typeMapper
-	l.typeMapper = nil
-	defer func() { l.typeMapper = mapper }()
-	var err error
-	var visit ast.Visitor
-	visit = func(n *ast.Node) bool {
-		if err != nil {
-			return true
-		}
-		if n.Kind == ast.KindCallExpression {
-			err = l.brandedCall(n, target)
-		}
-		if err == nil {
-			n.ForEachChild(visit)
-		}
-		return err != nil
-	}
-	for _, file := range l.programFiles() {
-		if file.AsNode().ForEachChild(visit) {
-			break
-		}
-	}
-	proofs.brandedCalls[target] = err
-	return predicateFailureCopy(err)
-}
-
-// brandedCall judges one call by brandedNarrowing when its resolved signature claims a type holding target.
-func (l *lowering) brandedCall(call *ast.Node, target *checker.Type) error {
+// brandedCall judges a call where it's lowered, under the instance being lowered, when its resolved
+// signature claims a type holding a branded supertype S of an argument: brandedNarrowing decides whether
+// the checker's narrowing of the argument can only give S. The checker narrows a call's argument however
+// the call reaches the predicate, directly, through the predicate held as a value or a function type, or
+// through a method's claim (Language's must on 9e4f2184), and every one of those calls is lowered here, so
+// each stops at its own site and only a unit that reaches it stops there (Adamic's and Compiler's ruling on
+// 810ce7d9's census). A claim on this, or one whose argument is spread or missing, is NotYet, since no
+// argument node says what the checker narrowed.
+func (l *lowering) brandedCall(call *ast.Node) error {
 	signature := l.checker.GetResolvedSignature(call)
 	if signature == nil {
 		return nil
 	}
 	claim := predicateOfSignature(l.checker, signature)
-	if claim == nil || claim.Type() == nil {
+	if claim == nil || claim.Type() == nil || !l.brandedMembership(claim.Type(), map[*checker.Type]bool{}) {
 		return nil
 	}
-	generic := l.mentionsTypeParameter(claim.Type(), map[*checker.Type]bool{})
-	if generic && !l.brandedInstantiable(claim.Type(), target) || !generic && !l.brandedHolds(claim.Type(), target, map[*checker.Type]bool{}) {
-		return nil
-	}
+	target := l.checker.TypeToString(l.concrete(claim.Type()))
 	if claim.Kind() != checker.TypePredicateKindIdentifier && claim.Kind() != checker.TypePredicateKindAssertsIdentifier {
-		return l.notYet(call, "a checked predicate target "+l.checker.TypeToString(target)+" claimed of this")
+		return l.notYet(call, "a checked predicate target "+target+" claimed of this")
 	}
 	index := int(claim.ParameterIndex())
 	arguments := call.AsCallExpression().Arguments.Nodes
 	if index < 0 || index >= len(arguments) {
-		return l.notYet(call, "a checked predicate target "+l.checker.TypeToString(target)+" claimed of a missing argument")
+		return l.notYet(call, "a checked predicate target "+target+" claimed of a missing argument")
 	}
 	for _, argument := range arguments[:index+1] {
 		if argument.Kind == ast.KindSpreadElement {
-			return l.notYet(call, "a checked predicate target "+l.checker.TypeToString(target)+" claimed of a spread argument")
+			return l.notYet(call, "a checked predicate target "+target+" claimed of a spread argument")
 		}
-	}
-	if generic {
-		// An argument of the claim's own type narrows to itself in every instance (brandedNarrowing).
-		argument := l.checker.GetTypeAtLocation(arguments[index])
-		if argument.Id() == claim.Type().Id() {
-			return nil
-		}
-		// A claim each member of the argument's type is a supertype of, as written, narrows to the claim
-		// itself in every instance, so where it's S the value is S, read through S's view: brandedNarrowing's
-		// supertype rule, judged generically. That's tsc's tryCast and cast, whose `test(value)` claims
-		// TOut of a TIn that TOut extends (core.ts:1779, Correctness's census on 810ce7d9). A member also
-		// assignable to the claim, where the checker could keep the member instead, fails closed.
-		members := []*checker.Type{argument}
-		if argument.Flags()&checker.TypeFlagsUnion != 0 {
-			members = argument.Types()
-		}
-		supertypes := true
-		for _, member := range members {
-			supertypes = supertypes && l.checker.IsTypeAssignableTo(claim.Type(), member) && !l.checker.IsTypeAssignableTo(member, claim.Type())
-		}
-		if supertypes {
-			return nil
-		}
-		return l.notYet(call, "a checked predicate target "+l.checker.TypeToString(target)+" that the generic claim "+l.checker.TypeToString(claim.Type())+" may be instantiated at")
 	}
 	return l.brandedNarrowing(call, arguments[index], claim.Type())
 }
 
-// brandedInstantiable is whether claim could be instantiated at a type holding target. A bare type
-// parameter, or a union of them, can be target only when its base constraint admits it, or it has none.
-// A type parameter anywhere else, a reference's or an alias's type argument or an intersection's member,
-// counts as instantiable whatever its constraint: `Tagged<U>` with `U extends number` is the generic
-// branded supertype Tagged<number> at U = number, which S's own constraint test would never see
-// (Compiler's must on 810ce7d9).
-func (l *lowering) brandedInstantiable(claim, target *checker.Type) bool {
-	if claim.Flags()&checker.TypeFlagsUnion != 0 {
-		for _, member := range claim.Types() {
-			if l.brandedInstantiable(member, target) {
-				return true
-			}
+// brandedNarrowedRead is the checker's flow type for argument at its first read where the call is known
+// to have answered true: the true branch of an if or a conditional, the right of an &&, the statements
+// after an assertion, through parentheses and a !. It's nil when that region isn't one of those, or holds
+// no read of the argument, which brandedNarrowing takes as unknown.
+func (l *lowering) brandedNarrowedRead(call, argument *ast.Node) *checker.Type {
+	var regions []*ast.Node
+	negated := false
+	node := call
+	for regions == nil {
+		parent := node.Parent
+		if parent == nil {
+			return nil
 		}
-		return false
-	}
-	if claim.Flags()&checker.TypeFlagsTypeParameter != 0 {
-		constraint := l.checker.GetBaseConstraintOfType(claim)
-		return constraint == nil || l.checker.IsTypeAssignableTo(target, constraint)
-	}
-	return l.mentionsTypeParameter(claim, map[*checker.Type]bool{})
-}
-
-// brandedHolds is whether claim is target, or holds it through a union's members or an array's elements,
-// as brandedMembership walks them, read as written. visited ends a recursive alias on its second visit.
-func (l *lowering) brandedHolds(claim, target *checker.Type, visited map[*checker.Type]bool) bool {
-	if claim.Id() == target.Id() {
-		return true
-	}
-	if visited[claim] {
-		return false
-	}
-	visited[claim] = true
-	if claim.Flags()&checker.TypeFlagsUnion != 0 {
-		for _, member := range claim.Types() {
-			if l.brandedHolds(member, target, visited) {
-				return true
+		switch {
+		case parent.Kind == ast.KindParenthesizedExpression:
+		case parent.Kind == ast.KindPrefixUnaryExpression && parent.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken:
+			negated = !negated
+		case parent.Kind == ast.KindBinaryExpression && parent.AsBinaryExpression().OperatorToken.Kind == ast.KindAmpersandAmpersandToken && !negated:
+			if parent.AsBinaryExpression().Left == node {
+				regions = []*ast.Node{parent.AsBinaryExpression().Right}
 			}
+		case parent.Kind == ast.KindConditionalExpression && parent.AsConditionalExpression().Condition == node:
+			regions = []*ast.Node{parent.AsConditionalExpression().WhenTrue}
+			if negated {
+				regions = []*ast.Node{parent.AsConditionalExpression().WhenFalse}
+			}
+		case parent.Kind == ast.KindIfStatement && parent.AsIfStatement().Expression == node:
+			region := parent.AsIfStatement().ThenStatement
+			if negated {
+				region = parent.AsIfStatement().ElseStatement
+			}
+			if region == nil {
+				return nil
+			}
+			regions = []*ast.Node{region}
+		case parent.Kind == ast.KindExpressionStatement && !negated && parent.Parent != nil && parent.Parent.Kind == ast.KindBlock:
+			statements := parent.Parent.AsBlock().Statements.Nodes
+			for position, statement := range statements {
+				if statement == parent {
+					regions = append([]*ast.Node{}, statements[position+1:]...)
+				}
+			}
+			if regions == nil {
+				return nil
+			}
+		default:
+			return nil
 		}
-		return false
+		node = parent
 	}
-	return l.checker.IsArrayType(claim) && l.brandedHolds(l.checker.GetElementTypeOfArrayType(claim), target, visited)
+	var found *checker.Type
+	var visit ast.Visitor
+	visit = func(n *ast.Node) bool {
+		if found != nil {
+			return true
+		}
+		if (n.Kind == ast.KindIdentifier || n.Kind == ast.KindPropertyAccessExpression || n.Kind == ast.KindThisKeyword) && predicateMatchingReference(l.checker, argument, n) {
+			found = l.checker.GetTypeAtLocation(n)
+			return true
+		}
+		return n.ForEachChild(visit)
+	}
+	for _, region := range regions {
+		if visit(region) {
+			break
+		}
+	}
+	return found
 }
 
 // brandedNarrowing keeps a call NotYet unless the checker's narrowing of its argument, on the true
@@ -272,15 +235,25 @@ func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Typ
 	if claim.Flags()&checker.TypeFlagsUnion != 0 {
 		targets = claim.Types()
 	}
-	// The checker narrows the argument's own type, so a type parameter T narrows to T & S, whose
-	// instance is an intersection with an id of its own that no view covers (Language's must on
-	// 7f4b7030). Judging T's constraint would see a supertype and admit it. Any argument that mentions a
-	// type parameter, a generic object like Holder<K> or Readonly<T> included (Language's must on
-	// 4a1fe092), is NotYet, judged as written, since brandedCalls reads every call with no mapper.
-	if declared := l.checker.GetTypeAtLocation(argument); l.mentionsTypeParameter(declared, map[*checker.Type]bool{}) {
-		return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(claim)+" over a generic argument "+l.checker.TypeToString(declared)+", which narrows to an intersection no view covers")
+	// The checker narrows the argument's own type, as written, so a type parameter T narrows to T & S,
+	// whose instance is an intersection with an id of its own that no view covers (Language's must on
+	// 7f4b7030), while tryCast's TIn narrows to its TOut, whose instance is S. Concreted, the two look
+	// alike, so an argument that mentions a type parameter, a generic object like Holder<K> or Readonly<T>
+	// included (Language's must on 4a1fe092), stands only when the checker's flow type at the argument's
+	// first read on the true side is the claim itself, as written: then the instance's reads see
+	// concrete(claim), which is S, through S's view. Anything else, or no such read, is NotYet (Adamic's
+	// ruling on 810ce7d9: the checker is asked, never modelled).
+	if declared := l.checker.GetTypeAtLocation(argument); l.concrete(declared) != declared || l.mentionsTypeParameter(declared, map[*checker.Type]bool{}) {
+		// Only an instance whose claim is S itself stands: an array or a union holding S narrows its
+		// elements or members by rules this read doesn't see.
+		instance := l.concrete(claim)
+		if narrowed := l.brandedNarrowedRead(node, argument); narrowed != nil && narrowed.Id() == claim.Id() && instance.Flags()&checker.TypeFlagsUnion == 0 && !l.checker.IsArrayType(instance) {
+			return nil
+		}
+		return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(l.concrete(claim))+" over a generic argument "+l.checker.TypeToString(declared)+", which narrows to an intersection no view covers")
 	}
-	source := l.checker.GetTypeAtLocation(argument)
+	claim = l.concrete(claim)
+	source := l.concrete(l.checker.GetTypeAtLocation(argument))
 	members := []*checker.Type{source}
 	if source.Flags()&checker.TypeFlagsUnion != 0 {
 		members = source.Types()
