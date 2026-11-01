@@ -158,9 +158,71 @@ func TestLaneCheckPython(t *testing.T) {
 	runPython(t, "stage3/lane", "test_check")
 }
 
-func TestLaneGenerateApiPython(t *testing.T) {
+var generateApiPythonGroups = map[string][]string{
+	"TestLaneGenerateApiReconstructionPython": {
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_applied_and_guard_accepts",
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_undo_is_rejected",
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_member_applied_and_guard_accepts",
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_member_undo_is_rejected",
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_member_before_requires_full_text",
+	},
+	"TestLaneGenerateApiRejectionsPython": {
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_before_mismatch_names_row",
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_ambiguous_owner",
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_missing_owner",
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_duplicate_claim",
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_hard_coded_claim",
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_invalid_replace_is_rejected",
+	},
+}
+
+func TestLaneGenerateApiReconstructionPython(t *testing.T) {
 	t.Parallel()
 	runPython(t, "stage3/lane", "test_generate_api")
+}
+
+func TestLaneGenerateApiRejectionsPython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "stage3/lane", "test_generate_api")
+}
+
+func TestLaneGenerateApiPythonGroupsCoverEveryTestOnce(t *testing.T) {
+	t.Parallel()
+	counts := map[string]int{}
+	for _, names := range generateApiPythonGroups {
+		for _, name := range names {
+			counts[name]++
+		}
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	command := boundedCommand(ctx, filepath.Join(repositoryRoot(t), "stage3/lane"), "python3", "-E", "-S", "-B", "-c", `
+import json, unittest, test_generate_api
+def names(suite):
+    for test in suite:
+        if isinstance(test, unittest.TestSuite):
+            yield from names(test)
+        else:
+            yield test.id()
+print(json.dumps(list(names(unittest.defaultTestLoader.loadTestsFromModule(test_generate_api)))))
+`)
+	output, err := command.CombinedOutput()
+	if err != nil {
+		t.Fatalf("discover generator tests: %v\n%s", err, output)
+	}
+	var discovered []string
+	if err := json.Unmarshal(output, &discovered); err != nil {
+		t.Fatal(err)
+	}
+	for _, name := range discovered {
+		if counts[name] != 1 {
+			t.Errorf("%s covered %d times, want exactly once", name, counts[name])
+		}
+		delete(counts, name)
+	}
+	for name := range counts {
+		t.Errorf("generator group names undiscovered test %s", name)
+	}
 }
 
 func TestLaneTablePython(t *testing.T) {
@@ -235,6 +297,13 @@ func runPython(t *testing.T, directory string, modules ...string) {
 			t.Fatalf("apply wrapper %s has no test names", t.Name())
 		}
 	}
+	if directory == "stage3/lane" && len(modules) == 1 && modules[0] == "test_generate_api" {
+		modules = generateApiPythonGroups[t.Name()]
+		if len(modules) == 0 {
+			t.Fatal("generator wrapper has no test names")
+		}
+	}
+
 	runPythonCommand(t, directory, nil, append([]string{"-m", "unittest"}, modules...)...)
 }
 

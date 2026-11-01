@@ -60,8 +60,15 @@ const source = parse('typescript.d.ts', original);
 const edits = [];
 const owners = [];
 const claimed = new Set();
+// Index the pristine AST once; every proof still filters by its required node kind.
+const byOwnerPath = new Map();
+for (const node of nodes(source, () => true)) {
+    const key = JSON.stringify(ownerPath(node));
+    if (!byOwnerPath.has(key)) byOwnerPath.set(key, []);
+    byOwnerPath.get(key).push(node);
+}
 function owned(record, select, adaptation) {
-    const matches = nodes(source, node => select(node) && JSON.stringify(ownerPath(node)) === JSON.stringify(record.path));
+    const matches = (byOwnerPath.get(JSON.stringify(record.path)) || []).filter(select);
     assert.equal(matches.length, 1, `ambiguous or missing proof owner ${adaptation}: ${record.path}`);
     const node = matches[0];
     const line = source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1;
@@ -210,14 +217,16 @@ for (const directory of fs.readdirSync(path.join(stage, 'adapt'), { withFileType
     for (const [index, row] of rows.entries()) {
         const label = `${relative} row ${index + 1} ${JSON.stringify(row)}`;
         assert(Array.isArray(row.path) && row.path.every(name => typeof name === 'string') &&
-            sanctionKinds.has(row.kind) && typeof row.before === 'string' &&
+            sanctionKinds.has(row.kind) && (!Object.hasOwn(row, 'replace') || row.replace === 'member') &&
+            typeof row.before === 'string' &&
             typeof row.after === 'string' && typeof row.why === 'string' &&
             row.why.length > 0 && !/[\r\n]/.test(row.why), `${label}: invalid sanction`);
         const node = owned(row, node => ts.SyntaxKind[node.kind] === row.kind, label);
-        assert(node.type, `${label}: owner has no type`);
-        assert.equal(node.type.getText(source), row.before,
-            `${label}: upstream type ${JSON.stringify(node.type.getText(source))}; before ${JSON.stringify(row.before)}`);
-        edits.push({ at: node.type.getStart(source), end: node.type.end, text: row.after });
+        const target = row.replace === 'member' ? node : node.type;
+        assert(target, `${label}: owner has no type`);
+        assert.equal(target.getText(source), row.before,
+            `${label}: upstream text ${JSON.stringify(target.getText(source))}; before ${JSON.stringify(row.before)}`);
+        edits.push({ at: target.getStart(source), end: target.end, text: row.after });
     }
     proofPaths.push(relative);
 }
