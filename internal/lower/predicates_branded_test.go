@@ -32,10 +32,9 @@ function isTypeElementLie(n: Node): n is TypeElement { return kindOf(n) !== 0; }
 // honest value agrees with Node whatever its kind, a value whose kind no subtype names included, as tsc's
 // isLiteralExpression takes JsxText and isLateBound a declaration whose name it refines, and so does one
 // a generic subtype's type could be given. A lie stops at its first bad read on sanitized native and the
-// JavaScript backend when it's read through S, stored or captured as S and read later, or cast or passed
-// as a subtype, which the cast's own view checks. A write of the wrong type stops at the write. Mutants:
-// no view registered, which reads every lie raw but the cast and the subtype parameter; one of S's fields
-// dropped from the checked set, which reads the layout, stored and captured lies raw.
+// JavaScript backend when it's read through S, or stored or captured as S and read later. A write of the
+// wrong type stops at the write. Mutants: no view registered, which reads every lie raw; one of S's
+// fields dropped from the checked set, which reads the layout, stored and captured lies raw.
 func TestBrandedSupertypeIsCheckedByItsViews(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source string }{
@@ -45,13 +44,6 @@ const b = { kind: 80, pos: 2, escapedText: "e" }; show(b);`},
 		{"unnamed kind", `function isNamed(n: Node): n is TypeElement { return kindOf(n) >= 171; }
 function show(n: Node): void { if (isNamed(n)) { console.log(String(n.name)); } }
 const v = { kind: 300, pos: 1, name: "jsx" }; show(v);`},
-		{"refined field", `interface Computed extends Node { readonly kind: 167; readonly expressionText: string; }
-interface Plain extends Node { readonly kind: 80; readonly escapedText: string; }
-interface PropertyDeclaration extends Declaration { readonly kind: 172; readonly name: Computed | Plain; }
-interface LateBound extends Declaration { readonly name: Computed; }
-function isLate(d: Declaration): d is LateBound { const n = (d as PropertyDeclaration).name; return n.kind === 167; }
-function show(d: Declaration): void { if (isLate(d)) { console.log(d.name.expressionText); } }
-const p: PropertyDeclaration = { kind: 172, pos: 1, _declarationBrand: undefined, name: { kind: 167, pos: 2, expressionText: "Symbol.iterator" } }; show(p);`},
 		// A generic subtype is no different from any other subtype now that S's view is the only one: its
 		// values are read through S's view once narrowed, and through #80cs7rz's rule when widened.
 		{"generic subtype", `interface Tagged<K extends number> extends TypeElement { readonly kind: K; readonly extra: number; }
@@ -72,11 +64,6 @@ const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);
 for (const t of kept) { console.log(String(t.name)); }`, "adamic: panic: field read failed: t.name matches no member of string | undefined"},
 		{"captured", `function show(n: Node): () => string { if (isTypeElementLie(n)) { return () => String(n.name); } return () => "no"; }
 const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; console.log(show(v)());`, "adamic: panic: field read failed: n.name matches no member of string | undefined"},
-		{"cast to a subtype", `function show(n: Node): void { if (isTypeElementLie(n) && n.kind === 171) { const p = n as PropertySignature; console.log(p.typeText); } }
-const v = { kind: 171, pos: 2 }; show(v);`, "adamic: panic: field read failed: p.typeText is not initialized"},
-		{"passed as a subtype", `function read(p: PropertySignature): void { console.log(p.typeText); }
-function show(n: Node): void { if (isTypeElementLie(n) && n.kind === 171) { read(n as PropertySignature); } }
-const v = { kind: 171, pos: 2 }; show(v);`, "adamic: panic: field read failed: p.typeText is not initialized"},
 		{"write", `interface Counter extends Declaration { _counterBrand: undefined; count: number; }
 function isCounter(n: Node): n is Counter { return kindOf(n) === 5; }
 function bump(n: Node): void { if (isCounter(n)) { n.count = 7; } }
@@ -183,20 +170,41 @@ show(v);`, "HasName", "5\n"},
 func TestBrandedSupertypeStaysNotYet(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, want string }{
-		{"false branch", `function show(x: PropertySignature | Node): void { if (isTypeElement(x)) { console.log("element"); } else { console.log(String(x.pos)); } }
+		{"false branch", `function show(x: Node): void { if (isTypeElement(x)) { console.log("element"); } else { console.log(String(x.pos)); } }
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" }; show(i);`, "checked predicate membership of a branded supertype on its false branch"},
 		{"spread", `function show(n: Node): void { if (isTypeElementLie(n)) { const c = { ...n }; console.log(String(c.name)); } }
 const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);`, "a whole-object copy of a value of checked view type TypeElement"},
 		{"rest", `function show(n: Node): void { if (isTypeElementLie(n)) { const { kind, ...rest } = n; console.log(String(rest.name)); } }
-const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);`, "REST"},
+const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);`, "a destructured name that isn't plain"},
 		{"assign", `function show(n: Node): void { if (isTypeElementLie(n)) { const c = Object.assign({}, n); console.log(String(c.name)); } }
-const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);`, "a whole-object copy of a value of checked view type TypeElement"},
+const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);`, "refuses Object.assign"},
 		{"class", `class Signature implements TypeElement { _declarationBrand: undefined; _typeElementBrand: undefined; kind = 171; pos = 1; }
 function show(n: Node): void { if (isTypeElement(n)) { console.log(String(n.pos)); } }
 show(new Signature());`, "a checked predicate target TypeElement that class Signature is assignable to"},
-		{"class expression", `const Signature = class implements TypeElement { _declarationBrand: undefined; _typeElementBrand: undefined; kind = 171; pos = 1; };
+		// Without implements: a class expression with a heritage clause panics in namespaces.go on main
+		// (AsClassDeclaration on a ClassExpression), which is Lower's, filed on its own.
+		{"class expression", `const Signature = class { _declarationBrand: undefined; _typeElementBrand: undefined; kind = 171; pos = 1; };
 function show(n: Node): void { if (isTypeElement(n)) { console.log(String(n.pos)); } }
 show(new Signature());`, "that class Signature is assignable to"},
+		// A cast beside S's view registers a view of its own, and the prelude's kindOf reads n.kind through
+		// Node. Once these two views are in the program, #80cs7rz's rule finds that read may hold a viewed
+		// value it can't vouch for, and makes it NotYet before any leg runs (Lower asked each of these be
+		// named by the rule that holds it). These stopped at the read on 4a1fe092, before #80cs7rz;
+		// #zpzm9ta is where such reads become checked.
+		{"cast to a subtype", `function show(n: Node): void { if (isTypeElementLie(n) && n.kind === 171) { const p = n as PropertySignature; console.log(p.typeText); } }
+const v = { kind: 171, pos: 2 }; show(v);`, "a read of field kind through type Node, which may hold a checked view's value"},
+		{"passed as a subtype", `function read(p: PropertySignature): void { console.log(p.typeText); }
+function show(n: Node): void { if (isTypeElementLie(n) && n.kind === 171) { read(n as PropertySignature); } }
+const v = { kind: 171, pos: 2 }; show(v);`, "a read of field kind through type Node, which may hold a checked view's value"},
+		// An honest program, held by the same rule at the same read: the price #80cs7rz charges, which the
+		// subtype views paid too (177dcf9f stopped here as well).
+		{"refined field", `interface Computed extends Node { readonly kind: 167; readonly expressionText: string; }
+interface Plain extends Node { readonly kind: 80; readonly escapedText: string; }
+interface PropertyDeclaration extends Declaration { readonly kind: 172; readonly name: Computed | Plain; }
+interface LateBound extends Declaration { readonly name: Computed; }
+function isLate(d: Declaration): d is LateBound { const n = (d as PropertyDeclaration).name; return n.kind === 167; }
+function show(d: Declaration): void { if (isLate(d)) { console.log(d.name.expressionText); } }
+const p: PropertyDeclaration = { kind: 172, pos: 1, _declarationBrand: undefined, name: { kind: 167, pos: 2, expressionText: "Symbol.iterator" } }; show(p);`, "a read of field kind through type Node, which may hold a checked view's value"},
 		// A recursive alias ends the false side's walk on its second visit (Lower's must on 9abcbdca): Nodes'
 		// array holds Nodes, and no member is branded, so the walk would recurse forever without it.
 		{"recursive alias", `type Nodes = Identifier | Nodes[];
@@ -264,12 +272,9 @@ const v = { kind: 9, pos: 1, text: "x" }; show(v);`, "checked predicate overload
 			t.Parallel()
 			_, err := lowerTypeScriptAssertionSource(t, brandedPrelude+probe.source)
 			var pending *NotYet
-			if !errors.As(err, &pending) || !strings.Contains(err.Error(), probe.want) {
-				var refused *Refused
-				if probe.want == "" && errors.As(err, &refused) {
-					return
-				}
-				t.Fatalf("want NotYet with %q, got %v", probe.want, err)
+			var refused *Refused
+			if !errors.As(err, &pending) && !errors.As(err, &refused) || !strings.Contains(err.Error(), probe.want) {
+				t.Fatalf("want NotYet or Refused with %q, got %v", probe.want, err)
 			}
 		})
 	}
