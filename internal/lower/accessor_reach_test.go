@@ -40,7 +40,7 @@ console.log(idText(ident));
 const decoder = decodeMappings("abc");
 let count = 0;
 while (decoder.next()) { count++; }
-console.log(String(decoder.pos), String(count));
+console.log(String(decoder.pos) + " " + String(count));
 `
 
 func TestDecoderGetterBesideCheckedNodeViewAgrees(t *testing.T) {
@@ -59,7 +59,8 @@ func TestDecoderGetterBesideCheckedNodeViewAgrees(t *testing.T) {
 
 // sourcemap.ts:474's own shape, as close to tsc's decodeMappings as a small program allows: getters
 // for pos, state and error over the decoder's locals, next as a function field (an accessor literal
-// takes no method), and its reads at sourcemap.ts:183 and :739, beside a checked Node view.
+// takes no method, so no Symbol.iterator either), its use walking the decoder and reading its error,
+// beside a checked Node view.
 const sourcemapDecoder = accessorReachNodes + `interface Mapping { generatedLine: number; generatedCharacter: number; }
 interface MappingsDecoder {
     readonly pos: number;
@@ -189,7 +190,8 @@ export interface Identifier extends Node { readonly kind: 80; readonly text: str
 let at = 3;
 export const ident = { kind: 80 as const, get pos() { return at; }, text: "x" };
 `,
-		"main.ts": `import { Node, Identifier, ident } from "./nodes";
+		"main.ts": `import type { Node, Identifier } from "./nodes";
+import { ident } from "./nodes";
 function idText(node: Node): string {
     if (node.kind === 80) { const id = node as Identifier; return id.text + "@" + id.pos; }
     return "?";
