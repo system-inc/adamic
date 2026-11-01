@@ -1,0 +1,3 @@
+// Spec: `bigint`, `globalThis` and `Intl` are not built yet
+// Expect: notyet reading globalThis
+console.log(String(typeof globalThis));
