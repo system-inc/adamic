@@ -39,9 +39,8 @@ func (r RecordCoalesce) Type() Type { return r.Element }
 
 // RecordWriteMayThrow says a node can throw because it writes or deletes a record entry that may be
 // a hidden key (HiddenRecordKeys): a record write, ??= or delete whose key is known only as it runs,
-// or is a literal some define hides. A write to a fixed object never meets one: a record seen as a
-// fixed object is refused (lowering's recordStorageView), and Library's #6c4swvt, admitting those
-// views, is the seam that must add the check to native's writeProperty.
+// or is a literal some define hides, and an object write under such a name, which native's
+// writeProperty stores through a record when one arrives there.
 func (p *Program) RecordWriteMayThrow(node any) bool {
 	if len(p.HiddenRecordKeys) == 0 {
 		return false
@@ -51,6 +50,8 @@ func (p *Program) RecordWriteMayThrow(node any) bool {
 		return (node.Method == "set" || node.Method == "delete") && p.mayBeHiddenKey(node.Arguments[1])
 	case RecordCoalesce:
 		return p.mayBeHiddenKey(node.Key)
+	case SetProperty:
+		return p.HiddenRecordKeys[node.Name]
 	}
 	return false
 }

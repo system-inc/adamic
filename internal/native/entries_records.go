@@ -27,7 +27,8 @@ func (e *emitter) recordWrite(statement ir.SetProperty) {
 	value := e.value(statement.Value)
 	e.line("if (%s == NULL) adamic_panic(\"record write on undefined\", sizeof \"record write on undefined\" - 1);", object)
 	e.line("adamic_object_check_data_write(%s, %s);", object, cString(statement.Name))
-	e.line("adamic_record_set(%s, %s, (adamic_value){.reference = %s});", object, e.recordKey(statement.Name), e.kept(value))
+	key := e.recordKey(statement.Name)
+	e.recordSet(object, key, fmt.Sprintf("(adamic_value){.reference = %s}", e.kept(value)), key, e.program.RecordWriteMayThrow(statement))
 }
 
 func (e *emitter) hasRecordStorage() bool {

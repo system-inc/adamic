@@ -945,9 +945,16 @@ adamic_value *adamic_record_get(const adamic_record *record, const adamic_string
 bool adamic_record_has(const adamic_record *record, const adamic_string *key);
 // Every write consumes key and value references, as Map.set does, the ones it refuses included.
 // define creates an own data property even for __proto__; set refuses __proto__ assignment with an
-// explicit NotYet panic, and returns false, storing nothing, when the key is read-only.
+// explicit NotYet panic.
 void adamic_record_define(adamic_record *record, adamic_string *key, adamic_value value);
-bool adamic_record_set(adamic_record *record, adamic_string *key, adamic_value value);
+void adamic_record_set(adamic_record *record, adamic_string *key, adamic_value value);
+// set_checked is set that returns false, storing nothing, when the key is read-only; delete_checked
+// is delete that returns false when the key is fixed. The unchecked ones never meet such a key, so they
+// keep their single lookup: only define_hidden gives an entry an attribute, its key is a string literal
+// there and so in the program's hidden keys (ir.Program's HiddenRecordKeys), and the compiler emits an
+// unchecked write or delete only for a literal key outside that set (ir.Program's RecordWriteMayThrow).
+bool adamic_record_set_checked(adamic_record *record, adamic_string *key, adamic_value value);
+bool adamic_record_delete_checked(adamic_record *record, const adamic_string *key);
 // adamic_record_scalar is what a record's slots hold when they aren't references, for SameValue.
 typedef enum adamic_record_scalar {
 	adamic_record_references,
@@ -962,7 +969,7 @@ typedef enum adamic_record_scalar {
 // it holds (compared as scalar says, unless the record holds references), and otherwise the define
 // returns false, storing nothing, for the caller to throw.
 bool adamic_record_define_hidden(adamic_record *record, adamic_string *key, adamic_value value, adamic_record_scalar scalar);
-// delete returns false when the key is fixed, and true otherwise, a key that isn't there included.
+// delete is always true, a key that isn't there included.
 bool adamic_record_delete(adamic_record *record, const adamic_string *key);
 // refused sets adamic_thrown to the TypeError Node throws for a write of a read-only key or, deleting,
 // a delete of a fixed one, the key borrowed.

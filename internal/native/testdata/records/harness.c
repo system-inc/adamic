@@ -291,7 +291,8 @@ static void own_names(adamic_record *record) {
 	json((adamic_value){.reference = names}, &strings_schema);
 	adamic_release(names);
 }
-// Object.defineProperty's hidden keys, as Node keeps their attributes. A new key is left out of keys
+// Object.defineProperty's hidden keys, as Node keeps their attributes, through the checked writes and
+// deletes the compiler emits wherever a key may be hidden. A new key is left out of keys
 // and iteration, present to own reads, and refused a write, a delete and a define of another value,
 // while a define of the value it has goes through. A key hidden where it stands keeps its place, is
 // refused a write, and stays configurable: it takes another define, and a delete.
@@ -309,21 +310,21 @@ static void hidden(void) {
 	adamic_string *key = text("h");
 	printf("%d %d %.0f\n", adamic_record_has_own(record, key), adamic_record_has(record, key), adamic_record_get(record, key)->number);
 	// Each refusal still takes the key and value it was handed.
-	int written = adamic_record_set(record, adamic_retain(key), (adamic_value){.number = 6});
-	int deleted = adamic_record_delete(record, key);
+	int written = adamic_record_set_checked(record, adamic_retain(key), (adamic_value){.number = 6});
+	int deleted = adamic_record_delete_checked(record, key);
 	int redefined = adamic_record_define_hidden(record, adamic_retain(key), (adamic_value){.number = 7}, adamic_record_numbers);
 	int same = adamic_record_define_hidden(record, adamic_retain(key), (adamic_value){.number = 4}, adamic_record_numbers);
 	printf("%d %d %d %d %.0f\n", written, deleted, redefined, same, adamic_record_get_own(record, key)->number);
 	adamic_release(key);
 	key = text("b");
-	written = adamic_record_set(record, adamic_retain(key), (adamic_value){.number = 8});
+	written = adamic_record_set_checked(record, adamic_retain(key), (adamic_value){.number = 8});
 	redefined = adamic_record_define_hidden(record, adamic_retain(key), (adamic_value){.number = 9}, adamic_record_numbers);
 	double value = adamic_record_get_own(record, key)->number;
-	deleted = adamic_record_delete(record, key);
+	deleted = adamic_record_delete_checked(record, key);
 	printf("%d %d %.0f %d %d\n", written, redefined, value, deleted, adamic_record_has_own(record, key));
 	adamic_release(key);
 	int absent = erase(record, "absent");
-	int visible = adamic_record_set(record, text("c"), (adamic_value){.number = 8});
+	int visible = adamic_record_set_checked(record, text("c"), (adamic_value){.number = 8});
 	printf("%d %d\n", absent, visible);
 	own_names(record);
 	adamic_release(record);

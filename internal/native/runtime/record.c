@@ -194,7 +194,21 @@ bool adamic_record_define_hidden(adamic_record *record, adamic_string *key, adam
 	return true;
 }
 
-bool adamic_record_set(adamic_record *record, adamic_string *key, adamic_value value) {
+void adamic_record_set(adamic_record *record, adamic_string *key, adamic_value value) {
+	if (named(key, "__proto__")) {
+		static const char message[] = "NotYet: record assignment to __proto__ requires the Object.prototype setter; use an own data property";
+		adamic_panic(message, sizeof message - 1);
+	}
+	adamic_record_define(record, key, value);
+}
+
+bool adamic_record_delete(adamic_record *record, const adamic_string *key) {
+	// JavaScript delete succeeds even when no own property was there.
+	(void)adamic_map_delete(table(record), (adamic_value){.reference = (void *)key});
+	return true;
+}
+
+bool adamic_record_set_checked(adamic_record *record, adamic_string *key, adamic_value value) {
 	if (named(key, "__proto__")) {
 		static const char message[] = "NotYet: record assignment to __proto__ requires the Object.prototype setter; use an own data property";
 		adamic_panic(message, sizeof message - 1);
@@ -209,7 +223,7 @@ bool adamic_record_set(adamic_record *record, adamic_string *key, adamic_value v
 	return true;
 }
 
-bool adamic_record_delete(adamic_record *record, const adamic_string *key) {
+bool adamic_record_delete_checked(adamic_record *record, const adamic_string *key) {
 	adamic_map *map = table(record);
 	adamic_value *slot = adamic_map_get(map, (adamic_value){.reference = (void *)key});
 	if (slot != NULL && entry_of(slot)->fixed) {
