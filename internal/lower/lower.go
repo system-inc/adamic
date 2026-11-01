@@ -370,4 +370,7 @@ type lowering struct {
 	writeSites       []writeSite
 	accessorCaptures []accessorCapture
 	accessorNames    map[string]bool
+	// contractGetters is each view's getters of a contract field's name, judged by reach in
+	// finishAccessors (class_accessors.go).
+	contractGetters []contractGetters
 }

@@ -96,7 +96,8 @@ func TestViewWidenedReadNotYet(t *testing.T) {
 // Object.keys and hasOwnProperty read no field's value, and a read through Node of a field Node already held (the
 // source's own pos) reads what the source guaranteed: each lowers and agrees with Node. The whole-object readers
 // (Object.values and Object.entries, String and a template of the object, JSON.stringify), element access and for-in,
-// Object.hasOwn and a getter in the contract stop before they lower, at those rules.
+// and Object.hasOwn stop before they lower, at those rules. A getter in the contract that only an interface declares
+// is on no allocation, so it refuses nothing (#c7w6j0y), and the read through it stops at the widened read's own rule.
 func TestViewWidenedRoadsHeld(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ file, failed string }{
@@ -140,7 +141,7 @@ func TestViewWidenedRoadsHeld(t *testing.T) {
 		{"view_widened_held_element.ts", "5:106", "view member read by element access is not yet checked"},
 		{"view_widened_held_for_in.ts", "5:125", "view member read by element access is not yet checked"},
 		{"view_widened_held_has_own.ts", "5:127", "Object.hasOwn on a shape not proven by a plain literal"},
-		{"view_widened_held_getter.ts", "5:24", "a getter in a checked field contract"},
+		{"view_widened_held_getter.ts", "6:109", "a read of field text through type TextGetter, which may hold a checked view's value"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()
