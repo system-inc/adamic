@@ -17,3 +17,8 @@ for (const noImplicitAny of [false, true]) {
     result.push(row);
 }
 console.log(JSON.stringify(result,null,2));
+if (process.argv.includes('--expect-fixed')) {
+    const assert = require('node:assert/strict');
+    assert.equal(result.length, 2);
+    for (const row of result) { assert.equal(row.result, 'undefined', row.error); assert.deepEqual(row.diagnostics, []); }
+}

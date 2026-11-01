@@ -1,0 +1,14 @@
+interface Dict { [key: string]: number; [key: `x${string}`]: number; }
+declare const dict: Dict;
+dict.xyz;
+declare const literal: { [key: string]: number; [key: `x${string}`]: number };
+literal.xyz;
+declare const intersect: { [key: string]: number } & { [key: `x${string}`]: number };
+intersect.xyz;
+declare const union: { [key: string]: number } | { [key: string]: number };
+union.xyz;
+declare const mapped: { [key in string]: number };
+mapped.xyz;
+declare const tuple: [number, ...number[]];
+tuple.xyz;
+function generic<T extends Dict>(item: T) { item.xyz; }

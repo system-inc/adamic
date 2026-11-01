@@ -1,0 +1,1273 @@
+[
+  {
+    "fixture": "excess.ts",
+    "noImplicitAny": false,
+    "diagnosticOutput": "95d/excess.ts(5,3): error TS2558: Expected 1 type arguments, but got 3.\n95d/excess.ts(6,7): error TS2558: Expected 1 type arguments, but got 3.\n95d/excess.ts(7,3): error TS2635: Type '<T extends string>() => T' has no signatures for which the type argument list is applicable.\n95d/excess.ts(8,16): error TS2635: Type '<T extends string>() => T' has no signatures for which the type argument list is applicable.\n95d/excess.ts(9,12): error TS2314: Generic type 'I<T>' requires 1 type argument(s).\n95d/excess.ts(10,16): error TS2314: Generic type 'Alias' requires 1 type argument(s).\n95d/excess.ts(11,23): error TS2314: Generic type 'C<T>' requires 1 type argument(s).\n95d/excess.ts(12,28): error TS2314: Generic type 'I<T>' requires 1 type argument(s).\n95d/excess.ts(13,3): error TS2558: Expected 1 type arguments, but got 3.\n95d/excess.ts(14,2): error TS1238: Unable to resolve signature of class decorator when called as an expression.\n  This expression is not callable.\n    Type 'String' has no call signatures.\n95d/excess.ts(14,4): error TS2558: Expected 1 type arguments, but got 3.\n",
+    "diagnostics": [
+      2558,
+      2558,
+      2635,
+      2635,
+      2314,
+      2314,
+      2314,
+      2314,
+      2558,
+      1238,
+      2558
+    ],
+    "queries": [
+      {
+        "text": "string"
+      },
+      {
+        "text": "T"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "T"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "T"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "{ value: T }"
+      },
+      {
+        "text": "T"
+      },
+      {
+        "text": "string",
+        "constraint": "string"
+      },
+      {
+        "text": "number",
+        "constraint": "never"
+      },
+      {
+        "text": "boolean",
+        "constraint": "never"
+      },
+      {
+        "text": "string",
+        "constraint": "string"
+      },
+      {
+        "text": "number",
+        "constraint": "never"
+      },
+      {
+        "text": "boolean",
+        "constraint": "never"
+      },
+      {
+        "text": "f<string, number, boolean>"
+      },
+      {
+        "text": "string",
+        "constraint": "string"
+      },
+      {
+        "text": "number",
+        "constraint": "never"
+      },
+      {
+        "text": "boolean",
+        "constraint": "never"
+      },
+      {
+        "text": "f<string, number, boolean>"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "text": "boolean"
+      },
+      {
+        "text": "I<string, number, boolean>"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "text": "boolean"
+      },
+      {
+        "text": "Alias<string, number, boolean>"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "text": "boolean"
+      },
+      {
+        "text": "C<string, number, boolean>"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "text": "boolean"
+      },
+      {
+        "text": "I<string, number, boolean>"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "text": "boolean"
+      },
+      {
+        "text": "string",
+        "constraint": "string"
+      },
+      {
+        "text": "number",
+        "constraint": "never"
+      },
+      {
+        "text": "boolean",
+        "constraint": "never"
+      },
+      {
+        "text": "string",
+        "constraint": "string"
+      },
+      {
+        "text": "number",
+        "constraint": "never"
+      },
+      {
+        "text": "boolean",
+        "constraint": "never"
+      },
+      {
+        "text": "I<string>"
+      },
+      {
+        "text": "string",
+        "constraint": "string"
+      }
+    ]
+  },
+  {
+    "fixture": "excess.ts",
+    "noImplicitAny": true,
+    "diagnosticOutput": "95d/excess.ts(5,3): error TS2558: Expected 1 type arguments, but got 3.\n95d/excess.ts(6,7): error TS2558: Expected 1 type arguments, but got 3.\n95d/excess.ts(7,3): error TS2635: Type '<T extends string>() => T' has no signatures for which the type argument list is applicable.\n95d/excess.ts(8,16): error TS2635: Type '<T extends string>() => T' has no signatures for which the type argument list is applicable.\n95d/excess.ts(9,12): error TS2314: Generic type 'I<T>' requires 1 type argument(s).\n95d/excess.ts(10,16): error TS2314: Generic type 'Alias' requires 1 type argument(s).\n95d/excess.ts(11,23): error TS2314: Generic type 'C<T>' requires 1 type argument(s).\n95d/excess.ts(12,28): error TS2314: Generic type 'I<T>' requires 1 type argument(s).\n95d/excess.ts(13,3): error TS2558: Expected 1 type arguments, but got 3.\n95d/excess.ts(14,2): error TS1238: Unable to resolve signature of class decorator when called as an expression.\n  This expression is not callable.\n    Type 'String' has no call signatures.\n95d/excess.ts(14,4): error TS2558: Expected 1 type arguments, but got 3.\n",
+    "diagnostics": [
+      2558,
+      2558,
+      2635,
+      2635,
+      2314,
+      2314,
+      2314,
+      2314,
+      2558,
+      1238,
+      2558
+    ],
+    "queries": [
+      {
+        "text": "string"
+      },
+      {
+        "text": "T"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "T"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "T"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "{ value: T }"
+      },
+      {
+        "text": "T"
+      },
+      {
+        "text": "string",
+        "constraint": "string"
+      },
+      {
+        "text": "number",
+        "constraint": "never"
+      },
+      {
+        "text": "boolean",
+        "constraint": "never"
+      },
+      {
+        "text": "string",
+        "constraint": "string"
+      },
+      {
+        "text": "number",
+        "constraint": "never"
+      },
+      {
+        "text": "boolean",
+        "constraint": "never"
+      },
+      {
+        "text": "f<string, number, boolean>"
+      },
+      {
+        "text": "string",
+        "constraint": "string"
+      },
+      {
+        "text": "number",
+        "constraint": "never"
+      },
+      {
+        "text": "boolean",
+        "constraint": "never"
+      },
+      {
+        "text": "f<string, number, boolean>"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "text": "boolean"
+      },
+      {
+        "text": "I<string, number, boolean>"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "text": "boolean"
+      },
+      {
+        "text": "Alias<string, number, boolean>"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "text": "boolean"
+      },
+      {
+        "text": "C<string, number, boolean>"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "text": "boolean"
+      },
+      {
+        "text": "I<string, number, boolean>"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "text": "boolean"
+      },
+      {
+        "text": "string",
+        "constraint": "string"
+      },
+      {
+        "text": "number",
+        "constraint": "never"
+      },
+      {
+        "text": "boolean",
+        "constraint": "never"
+      },
+      {
+        "text": "string",
+        "constraint": "string"
+      },
+      {
+        "text": "number",
+        "constraint": "never"
+      },
+      {
+        "text": "boolean",
+        "constraint": "never"
+      },
+      {
+        "text": "I<string>"
+      },
+      {
+        "text": "string",
+        "constraint": "string"
+      }
+    ]
+  },
+  {
+    "fixture": "excess.js",
+    "noImplicitAny": false,
+    "diagnosticOutput": "95d/excess.js(4,12): error TS2314: Generic type 'I' requires 1 type argument(s).\n",
+    "diagnostics": [
+      2314
+    ],
+    "queries": [
+      {
+        "text": "{ value: T }"
+      },
+      {
+        "text": "T"
+      },
+      {
+        "text": "I<string, number, boolean>"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "text": "boolean"
+      },
+      {
+        "text": "C<string, number, boolean>"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number",
+        "error": "TypeError: Cannot read properties of undefined (reading 'resolvedBaseConstraint')",
+        "stack": "TypeError: Cannot read properties of undefined (reading 'resolvedBaseConstraint')\n    at getResolvedBaseConstraint (/workspace/scratch/95d-before/built/local/typescript.js:63569:14)\n    at hasNonCircularBaseConstraint (/workspace/scratch/95d-before/built/local/typescript.js:63566:12)\n    at getConstraintOfTypeParameter (/workspace/scratch/95d-before/built/local/typescript.js:63441:12)\n    at getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:86483:28)\n    at Object.getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:51513:22)\n    at visit (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/controls/fixtures.cjs:26:50)\n    at visitNodes (/workspace/scratch/95d-before/built/local/typescript.js:32576:22)\n    at forEachChildInTypeReference (/workspace/scratch/95d-before/built/local/typescript.js:32674:49)\n    at Object.forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/controls/fixtures.cjs:33:16)"
+      },
+      {
+        "text": "boolean",
+        "error": "TypeError: Cannot read properties of undefined (reading 'resolvedBaseConstraint')",
+        "stack": "TypeError: Cannot read properties of undefined (reading 'resolvedBaseConstraint')\n    at getResolvedBaseConstraint (/workspace/scratch/95d-before/built/local/typescript.js:63569:14)\n    at hasNonCircularBaseConstraint (/workspace/scratch/95d-before/built/local/typescript.js:63566:12)\n    at getConstraintOfTypeParameter (/workspace/scratch/95d-before/built/local/typescript.js:63441:12)\n    at getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:86483:28)\n    at Object.getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:51513:22)\n    at visit (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/controls/fixtures.cjs:26:50)\n    at visitNodes (/workspace/scratch/95d-before/built/local/typescript.js:32576:22)\n    at forEachChildInTypeReference (/workspace/scratch/95d-before/built/local/typescript.js:32674:49)\n    at Object.forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/controls/fixtures.cjs:33:16)"
+      },
+      {
+        "text": "C"
+      },
+      {
+        "text": "C<string, number, boolean>"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number",
+        "error": "TypeError: Cannot read properties of undefined (reading 'resolvedBaseConstraint')",
+        "stack": "TypeError: Cannot read properties of undefined (reading 'resolvedBaseConstraint')\n    at getResolvedBaseConstraint (/workspace/scratch/95d-before/built/local/typescript.js:63569:14)\n    at hasNonCircularBaseConstraint (/workspace/scratch/95d-before/built/local/typescript.js:63566:12)\n    at getConstraintOfTypeParameter (/workspace/scratch/95d-before/built/local/typescript.js:63441:12)\n    at getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:86483:28)\n    at Object.getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:51513:22)\n    at visit (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/controls/fixtures.cjs:26:50)\n    at visitNodes (/workspace/scratch/95d-before/built/local/typescript.js:32576:22)\n    at forEachChildInExpressionWithTypeArguments (/workspace/scratch/95d-before/built/local/typescript.js:32923:51)\n    at Object.forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/controls/fixtures.cjs:33:16)"
+      },
+      {
+        "text": "boolean",
+        "error": "TypeError: Cannot read properties of undefined (reading 'resolvedBaseConstraint')",
+        "stack": "TypeError: Cannot read properties of undefined (reading 'resolvedBaseConstraint')\n    at getResolvedBaseConstraint (/workspace/scratch/95d-before/built/local/typescript.js:63569:14)\n    at hasNonCircularBaseConstraint (/workspace/scratch/95d-before/built/local/typescript.js:63566:12)\n    at getConstraintOfTypeParameter (/workspace/scratch/95d-before/built/local/typescript.js:63441:12)\n    at getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:86483:28)\n    at Object.getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:51513:22)\n    at visit (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/controls/fixtures.cjs:26:50)\n    at visitNodes (/workspace/scratch/95d-before/built/local/typescript.js:32576:22)\n    at forEachChildInExpressionWithTypeArguments (/workspace/scratch/95d-before/built/local/typescript.js:32923:51)\n    at Object.forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/controls/fixtures.cjs:33:16)"
+      }
+    ]
+  },
+  {
+    "fixture": "excess.js",
+    "noImplicitAny": true,
+    "diagnosticOutput": "95d/excess.js(2,28): error TS7008: Member 'value' implicitly has an 'any' type.\n95d/excess.js(4,12): error TS2314: Generic type 'I' requires 1 type argument(s).\n95d/excess.js(6,12): error TS2314: Generic type 'C<T>' requires 1 type argument(s).\n95d/excess.js(8,15): error TS2314: Generic type 'C<T>' requires 1 type argument(s).\n",
+    "diagnostics": [
+      7008,
+      2314,
+      2314,
+      2314
+    ],
+    "queries": [
+      {
+        "text": "{ value: T }"
+      },
+      {
+        "text": "T"
+      },
+      {
+        "text": "I<string, number, boolean>"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "text": "boolean"
+      },
+      {
+        "text": "C<string, number, boolean>"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number",
+        "error": "TypeError: Cannot read properties of undefined (reading 'resolvedBaseConstraint')",
+        "stack": "TypeError: Cannot read properties of undefined (reading 'resolvedBaseConstraint')\n    at getResolvedBaseConstraint (/workspace/scratch/95d-before/built/local/typescript.js:63569:14)\n    at hasNonCircularBaseConstraint (/workspace/scratch/95d-before/built/local/typescript.js:63566:12)\n    at getConstraintOfTypeParameter (/workspace/scratch/95d-before/built/local/typescript.js:63441:12)\n    at getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:86483:28)\n    at Object.getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:51513:22)\n    at visit (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/controls/fixtures.cjs:26:50)\n    at visitNodes (/workspace/scratch/95d-before/built/local/typescript.js:32576:22)\n    at forEachChildInTypeReference (/workspace/scratch/95d-before/built/local/typescript.js:32674:49)\n    at Object.forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/controls/fixtures.cjs:33:16)"
+      },
+      {
+        "text": "boolean",
+        "error": "TypeError: Cannot read properties of undefined (reading 'resolvedBaseConstraint')",
+        "stack": "TypeError: Cannot read properties of undefined (reading 'resolvedBaseConstraint')\n    at getResolvedBaseConstraint (/workspace/scratch/95d-before/built/local/typescript.js:63569:14)\n    at hasNonCircularBaseConstraint (/workspace/scratch/95d-before/built/local/typescript.js:63566:12)\n    at getConstraintOfTypeParameter (/workspace/scratch/95d-before/built/local/typescript.js:63441:12)\n    at getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:86483:28)\n    at Object.getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:51513:22)\n    at visit (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/controls/fixtures.cjs:26:50)\n    at visitNodes (/workspace/scratch/95d-before/built/local/typescript.js:32576:22)\n    at forEachChildInTypeReference (/workspace/scratch/95d-before/built/local/typescript.js:32674:49)\n    at Object.forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/controls/fixtures.cjs:33:16)"
+      },
+      {
+        "text": "C"
+      },
+      {
+        "text": "C<string, number, boolean>"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number",
+        "error": "TypeError: Cannot read properties of undefined (reading 'resolvedBaseConstraint')",
+        "stack": "TypeError: Cannot read properties of undefined (reading 'resolvedBaseConstraint')\n    at getResolvedBaseConstraint (/workspace/scratch/95d-before/built/local/typescript.js:63569:14)\n    at hasNonCircularBaseConstraint (/workspace/scratch/95d-before/built/local/typescript.js:63566:12)\n    at getConstraintOfTypeParameter (/workspace/scratch/95d-before/built/local/typescript.js:63441:12)\n    at getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:86483:28)\n    at Object.getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:51513:22)\n    at visit (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/controls/fixtures.cjs:26:50)\n    at visitNodes (/workspace/scratch/95d-before/built/local/typescript.js:32576:22)\n    at forEachChildInExpressionWithTypeArguments (/workspace/scratch/95d-before/built/local/typescript.js:32923:51)\n    at Object.forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/controls/fixtures.cjs:33:16)"
+      },
+      {
+        "text": "boolean",
+        "error": "TypeError: Cannot read properties of undefined (reading 'resolvedBaseConstraint')",
+        "stack": "TypeError: Cannot read properties of undefined (reading 'resolvedBaseConstraint')\n    at getResolvedBaseConstraint (/workspace/scratch/95d-before/built/local/typescript.js:63569:14)\n    at hasNonCircularBaseConstraint (/workspace/scratch/95d-before/built/local/typescript.js:63566:12)\n    at getConstraintOfTypeParameter (/workspace/scratch/95d-before/built/local/typescript.js:63441:12)\n    at getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:86483:28)\n    at Object.getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:51513:22)\n    at visit (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/controls/fixtures.cjs:26:50)\n    at visitNodes (/workspace/scratch/95d-before/built/local/typescript.js:32576:22)\n    at forEachChildInExpressionWithTypeArguments (/workspace/scratch/95d-before/built/local/typescript.js:32923:51)\n    at Object.forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/controls/fixtures.cjs:33:16)"
+      }
+    ]
+  },
+  {
+    "fixture": "index.ts",
+    "noImplicitAny": false,
+    "diagnosticOutput": "95d/index.ts(13,7): error TS2339: Property 'xyz' does not exist on type '[number, ...number[]]'.\n",
+    "diagnostics": [
+      2339
+    ],
+    "queries": [
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "text": "`x${string}`"
+      },
+      {
+        "text": "string}`"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "text": "Dict"
+      },
+      {
+        "access": "dict.xyz",
+        "symbol": "__index",
+        "type": "Dict",
+        "typeSymbol": "Dict",
+        "members": [
+          "__index"
+        ],
+        "indexes": [
+          {
+            "declaration": true,
+            "key": "string"
+          },
+          {
+            "declaration": true,
+            "key": "`x${string}`"
+          }
+        ]
+      },
+      {
+        "text": "{ [key: string]: number; [key: `x${string}`]: number }"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "text": "`x${string}`"
+      },
+      {
+        "text": "string}`"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "access": "literal.xyz",
+        "symbol": "__index",
+        "type": "{ [key: string]: number; [key: `x${string}`]: number; }",
+        "typeSymbol": "__type",
+        "members": [
+          "__index"
+        ],
+        "indexes": [
+          {
+            "declaration": true,
+            "key": "string"
+          },
+          {
+            "declaration": true,
+            "key": "`x${string}`"
+          }
+        ]
+      },
+      {
+        "text": "{ [key: string]: number } & { [key: `x${string}`]: number }"
+      },
+      {
+        "text": "{ [key: string]: number }"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "text": "{ [key: `x${string}`]: number }"
+      },
+      {
+        "text": "`x${string}`"
+      },
+      {
+        "text": "string}`"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "access": "intersect.xyz",
+        "type": "{ [key: string]: number; } & { [key: `x${string}`]: number; }",
+        "members": [],
+        "indexes": [
+          {
+            "declaration": true,
+            "key": "string"
+          },
+          {
+            "declaration": true,
+            "key": "`x${string}`"
+          }
+        ]
+      },
+      {
+        "text": "{ [key: string]: number } | { [key: string]: number }"
+      },
+      {
+        "text": "{ [key: string]: number }"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "text": "{ [key: string]: number }"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "access": "union.xyz",
+        "type": "{ [key: string]: number; } | { [key: string]: number; }",
+        "members": [],
+        "indexes": [
+          {
+            "declaration": false,
+            "key": "string"
+          }
+        ]
+      },
+      {
+        "text": "{ [key in string]: number }"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "access": "mapped.xyz",
+        "type": "{ [x: string]: number; }",
+        "typeSymbol": "__type",
+        "members": [],
+        "indexes": [
+          {
+            "declaration": false,
+            "key": "string"
+          }
+        ]
+      },
+      {
+        "text": "[number, ...number[]]"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "text": "...number[]"
+      },
+      {
+        "text": "number[]"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "access": "tuple.xyz",
+        "type": "[number, ...number[]]",
+        "members": [
+          "0",
+          "length",
+          "toString",
+          "toLocaleString",
+          "pop",
+          "push",
+          "concat",
+          "join",
+          "reverse",
+          "shift",
+          "slice",
+          "sort",
+          "splice",
+          "unshift",
+          "indexOf",
+          "lastIndexOf",
+          "every",
+          "some",
+          "forEach",
+          "map",
+          "filter",
+          "reduce",
+          "reduceRight",
+          "find",
+          "findIndex",
+          "fill",
+          "copyWithin",
+          "entries",
+          "keys",
+          "values",
+          "includes",
+          "flatMap",
+          "flat",
+          "at",
+          "findLast",
+          "findLastIndex",
+          "toReversed",
+          "toSorted",
+          "toSpliced",
+          "with",
+          "__@iterator@111589",
+          "__@unscopables@111591"
+        ],
+        "indexes": [
+          {
+            "declaration": true,
+            "key": "number"
+          }
+        ]
+      },
+      {
+        "text": "Dict"
+      },
+      {
+        "text": "T"
+      },
+      {
+        "access": "item.xyz",
+        "type": "T",
+        "typeSymbol": "T",
+        "indexes": [
+          {
+            "declaration": true,
+            "key": "string"
+          },
+          {
+            "declaration": true,
+            "key": "`x${string}`"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "fixture": "index.ts",
+    "noImplicitAny": true,
+    "diagnosticOutput": "95d/index.ts(13,7): error TS2339: Property 'xyz' does not exist on type '[number, ...number[]]'.\n",
+    "diagnostics": [
+      2339
+    ],
+    "queries": [
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "text": "`x${string}`"
+      },
+      {
+        "text": "string}`"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "text": "Dict"
+      },
+      {
+        "access": "dict.xyz",
+        "symbol": "__index",
+        "type": "Dict",
+        "typeSymbol": "Dict",
+        "members": [
+          "__index"
+        ],
+        "indexes": [
+          {
+            "declaration": true,
+            "key": "string"
+          },
+          {
+            "declaration": true,
+            "key": "`x${string}`"
+          }
+        ]
+      },
+      {
+        "text": "{ [key: string]: number; [key: `x${string}`]: number }"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "text": "`x${string}`"
+      },
+      {
+        "text": "string}`"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "access": "literal.xyz",
+        "symbol": "__index",
+        "type": "{ [key: string]: number; [key: `x${string}`]: number; }",
+        "typeSymbol": "__type",
+        "members": [
+          "__index"
+        ],
+        "indexes": [
+          {
+            "declaration": true,
+            "key": "string"
+          },
+          {
+            "declaration": true,
+            "key": "`x${string}`"
+          }
+        ]
+      },
+      {
+        "text": "{ [key: string]: number } & { [key: `x${string}`]: number }"
+      },
+      {
+        "text": "{ [key: string]: number }"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "text": "{ [key: `x${string}`]: number }"
+      },
+      {
+        "text": "`x${string}`"
+      },
+      {
+        "text": "string}`"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "access": "intersect.xyz",
+        "type": "{ [key: string]: number; } & { [key: `x${string}`]: number; }",
+        "members": [],
+        "indexes": [
+          {
+            "declaration": true,
+            "key": "string"
+          },
+          {
+            "declaration": true,
+            "key": "`x${string}`"
+          }
+        ]
+      },
+      {
+        "text": "{ [key: string]: number } | { [key: string]: number }"
+      },
+      {
+        "text": "{ [key: string]: number }"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "text": "{ [key: string]: number }"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "access": "union.xyz",
+        "type": "{ [key: string]: number; } | { [key: string]: number; }",
+        "members": [],
+        "indexes": [
+          {
+            "declaration": false,
+            "key": "string"
+          }
+        ]
+      },
+      {
+        "text": "{ [key in string]: number }"
+      },
+      {
+        "text": "string"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "access": "mapped.xyz",
+        "type": "{ [x: string]: number; }",
+        "typeSymbol": "__type",
+        "members": [],
+        "indexes": [
+          {
+            "declaration": false,
+            "key": "string"
+          }
+        ]
+      },
+      {
+        "text": "[number, ...number[]]"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "text": "...number[]"
+      },
+      {
+        "text": "number[]"
+      },
+      {
+        "text": "number"
+      },
+      {
+        "access": "tuple.xyz",
+        "type": "[number, ...number[]]",
+        "members": [
+          "0",
+          "length",
+          "toString",
+          "toLocaleString",
+          "pop",
+          "push",
+          "concat",
+          "join",
+          "reverse",
+          "shift",
+          "slice",
+          "sort",
+          "splice",
+          "unshift",
+          "indexOf",
+          "lastIndexOf",
+          "every",
+          "some",
+          "forEach",
+          "map",
+          "filter",
+          "reduce",
+          "reduceRight",
+          "find",
+          "findIndex",
+          "fill",
+          "copyWithin",
+          "entries",
+          "keys",
+          "values",
+          "includes",
+          "flatMap",
+          "flat",
+          "at",
+          "findLast",
+          "findLastIndex",
+          "toReversed",
+          "toSorted",
+          "toSpliced",
+          "with",
+          "__@iterator@139478",
+          "__@unscopables@139480"
+        ],
+        "indexes": [
+          {
+            "declaration": true,
+            "key": "number"
+          }
+        ]
+      },
+      {
+        "text": "Dict"
+      },
+      {
+        "text": "T"
+      },
+      {
+        "access": "item.xyz",
+        "type": "T",
+        "typeSymbol": "T",
+        "indexes": [
+          {
+            "declaration": true,
+            "key": "string"
+          },
+          {
+            "declaration": true,
+            "key": "`x${string}`"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "fixture": "commonjs.js",
+    "noImplicitAny": false,
+    "diagnosticOutput": "",
+    "diagnostics": [],
+    "queries": [
+      {
+        "access": "exports.value",
+        "symbol": "value",
+        "type": "typeof import(\"/95d/commonjs\")",
+        "typeSymbol": "\"/95d/commonjs\"",
+        "members": [
+          "value",
+          "other"
+        ],
+        "indexes": []
+      },
+      {
+        "access": "exports.value",
+        "symbol": "value",
+        "type": "typeof import(\"/95d/commonjs\")",
+        "typeSymbol": "\"/95d/commonjs\"",
+        "members": [
+          "value",
+          "other"
+        ],
+        "indexes": []
+      },
+      {
+        "access": "module.exports.other",
+        "symbol": "other",
+        "type": "typeof import(\"/95d/commonjs.js\")",
+        "typeSymbol": "exports",
+        "members": [
+          "value",
+          "other"
+        ],
+        "indexes": []
+      },
+      {
+        "access": "module.exports",
+        "symbol": "other",
+        "type": "{ exports: typeof import(\"/95d/commonjs.js\"); }",
+        "typeSymbol": "module",
+        "members": [
+          "exports"
+        ],
+        "indexes": []
+      },
+      {
+        "access": "module.exports.other",
+        "symbol": "other",
+        "type": "typeof import(\"/95d/commonjs.js\")",
+        "typeSymbol": "exports",
+        "members": [
+          "value",
+          "other"
+        ],
+        "indexes": []
+      },
+      {
+        "access": "module.exports",
+        "symbol": "other",
+        "type": "{ exports: typeof import(\"/95d/commonjs.js\"); }",
+        "typeSymbol": "module",
+        "members": [
+          "exports"
+        ],
+        "indexes": []
+      }
+    ]
+  },
+  {
+    "fixture": "commonjs.js",
+    "noImplicitAny": true,
+    "diagnosticOutput": "",
+    "diagnostics": [],
+    "queries": [
+      {
+        "access": "exports.value",
+        "symbol": "value",
+        "type": "typeof import(\"/95d/commonjs\")",
+        "typeSymbol": "\"/95d/commonjs\"",
+        "members": [
+          "value",
+          "other"
+        ],
+        "indexes": []
+      },
+      {
+        "access": "exports.value",
+        "symbol": "value",
+        "type": "typeof import(\"/95d/commonjs\")",
+        "typeSymbol": "\"/95d/commonjs\"",
+        "members": [
+          "value",
+          "other"
+        ],
+        "indexes": []
+      },
+      {
+        "access": "module.exports.other",
+        "symbol": "other",
+        "type": "typeof import(\"/95d/commonjs.js\")",
+        "typeSymbol": "exports",
+        "members": [
+          "value",
+          "other"
+        ],
+        "indexes": []
+      },
+      {
+        "access": "module.exports",
+        "symbol": "other",
+        "type": "{ exports: typeof import(\"/95d/commonjs.js\"); }",
+        "typeSymbol": "module",
+        "members": [
+          "exports"
+        ],
+        "indexes": []
+      },
+      {
+        "access": "module.exports.other",
+        "symbol": "other",
+        "type": "typeof import(\"/95d/commonjs.js\")",
+        "typeSymbol": "exports",
+        "members": [
+          "value",
+          "other"
+        ],
+        "indexes": []
+      },
+      {
+        "access": "module.exports",
+        "symbol": "other",
+        "type": "{ exports: typeof import(\"/95d/commonjs.js\"); }",
+        "typeSymbol": "module",
+        "members": [
+          "exports"
+        ],
+        "indexes": []
+      }
+    ]
+  },
+  {
+    "fixture": "consumer.ts",
+    "noImplicitAny": false,
+    "diagnosticOutput": "",
+    "diagnostics": [],
+    "queries": [
+      {
+        "access": "v.xyz",
+        "error": "TypeError: Cannot read properties of undefined (reading 'parent')",
+        "stack": "TypeError: Cannot read properties of undefined (reading 'parent')\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92151:132)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92224:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at visit (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/controls/fixtures.cjs:30:46)\n    at visitNode2 (/workspace/scratch/95d-before/built/local/typescript.js:32568:18)\n    at forEachChildInExpressionStatement (/workspace/scratch/95d-before/built/local/typescript.js:32798:12)\n    at Object.forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/controls/fixtures.cjs:33:16)\n    at visitNodes (/workspace/scratch/95d-before/built/local/typescript.js:32576:22)"
+      }
+    ]
+  },
+  {
+    "fixture": "consumer.ts",
+    "noImplicitAny": true,
+    "diagnosticOutput": "",
+    "diagnostics": [],
+    "queries": [
+      {
+        "access": "v.xyz",
+        "error": "TypeError: Cannot read properties of undefined (reading 'parent')",
+        "stack": "TypeError: Cannot read properties of undefined (reading 'parent')\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92151:132)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92224:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at visit (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/controls/fixtures.cjs:30:46)\n    at visitNode2 (/workspace/scratch/95d-before/built/local/typescript.js:32568:18)\n    at forEachChildInExpressionStatement (/workspace/scratch/95d-before/built/local/typescript.js:32798:12)\n    at Object.forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/controls/fixtures.cjs:33:16)\n    at visitNodes (/workspace/scratch/95d-before/built/local/typescript.js:32576:22)"
+      }
+    ]
+  },
+  {
+    "fixture": "common-consumer.ts",
+    "noImplicitAny": false,
+    "diagnosticOutput": "",
+    "diagnostics": [],
+    "queries": []
+  },
+  {
+    "fixture": "common-consumer.ts",
+    "noImplicitAny": true,
+    "diagnosticOutput": "",
+    "diagnostics": [],
+    "queries": []
+  },
+  {
+    "fixture": "consumer-present.ts",
+    "noImplicitAny": false,
+    "diagnosticOutput": "",
+    "diagnostics": [],
+    "queries": [
+      {
+        "access": "v.xyz",
+        "symbol": "__index",
+        "type": "{ [key: string]: number; [key: symbol]: number; extra: 2; }",
+        "members": [
+          "__index",
+          "extra"
+        ],
+        "indexes": [
+          {
+            "declaration": true,
+            "key": "string"
+          },
+          {
+            "declaration": true,
+            "key": "symbol"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "fixture": "consumer-present.ts",
+    "noImplicitAny": true,
+    "diagnosticOutput": "",
+    "diagnostics": [],
+    "queries": [
+      {
+        "access": "v.xyz",
+        "symbol": "__index",
+        "type": "{ [key: string]: number; [key: symbol]: number; extra: 2; }",
+        "members": [
+          "__index",
+          "extra"
+        ],
+        "indexes": [
+          {
+            "declaration": true,
+            "key": "string"
+          },
+          {
+            "declaration": true,
+            "key": "symbol"
+          }
+        ]
+      }
+    ]
+  }
+]

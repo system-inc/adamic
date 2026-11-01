@@ -1,19 +1,39 @@
 {
-  "status": "stopped-before-build-at-unsafe-reader",
-  "referenceGate": "Resolved by Correctness: follow Go for an empty declaration list",
-  "reader": "src/services/findAllReferences.ts:580-581 getImplementationReferenceEntries",
-  "beforePrograms": 2,
-  "beforeDiagnostics": [
-    0,
-    0
-  ],
-  "originalCrashesBecomeUndefinedInMemory": 2,
-  "serviceRegression": {
-    "before": "undefined",
-    "after": "TypeError reading valueDeclaration",
-    "diagnostics": []
+  "status": "built-scoped-third-arm-fix",
+  "supersedes": "historical-status-before-scoped.json",
+  "oracle": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0,
+    "onlyBaseline": "api/typescript.d.ts"
   },
-  "implementationBuilt": false,
-  "compilerSourcesOrBuildOutputsModified": false,
-  "getSymbolAtLocationCallerAuditComplete": false
+  "census": {
+    "whole": [
+      131,
+      130
+    ],
+    "checker": [
+      17,
+      16
+    ],
+    "removed": "50153:121 TS2532",
+    "added": 0
+  },
+  "serviceRows": 57,
+  "formerlyCrashingResolved": 27,
+  "movedCrashes": [
+    {
+      "fixture": "original-super",
+      "operation": "implementation",
+      "before": "TypeError: Cannot read properties of undefined (reading 'parent')",
+      "after": "TypeError: Cannot read properties of undefined (reading 'valueDeclaration')"
+    }
+  ],
+  "unchangedSuccessful": 29,
+  "newCrashes": 0,
+  "successfulSuperUnchanged": true,
+  "zeroDeclarationSymbolUnchanged": true,
+  "controlsPrograms": 14,
+  "controlsQueriesUnchanged": 232,
+  "controlsPreviouslyCrashingQueriesResolved": 2
 }

@@ -1,0 +1,863 @@
+[
+  {
+    "file": "src/compiler/builderState.ts",
+    "line": 201,
+    "call": "checker.getSymbolAtLocation(importName)",
+    "owner": "getReferencedFilesFromImportLiteral",
+    "context": "     * Get the module source file and all augmenting files from the import name node from file\n     */\n    function getReferencedFilesFromImportLiteral(checker: TypeChecker, importName: StringLiteralLike): Path[] | undefined {\n        const symbol = checker.getSymbolAtLocation(importName);\n        return symbol && getReferencedFilesFromImportedModuleSymbol(symbol);\n    }\n\n    /**\n     * Gets the path to reference file from file name, it could be resolvedPath if present otherwise path\n     */\n    function getReferencedFileFromFileName(program: Program, fileName: string, sourceFileDirectory: Path, getCanonicalFileName: GetCanonicalFileName): Path {\n        return toPath(program.getRedirectFromSourceFile(fileName)?.outputDts || fileName, sourceFileDirectory, getCanonicalFileName);\n    }"
+  },
+  {
+    "file": "src/compiler/builderState.ts",
+    "line": 254,
+    "call": "checker.getSymbolAtLocation(moduleName)",
+    "owner": "getReferencedFiles",
+    "context": "            const checker = program.getTypeChecker();\n            for (const moduleName of sourceFile.moduleAugmentations) {\n                if (!isStringLiteral(moduleName)) continue;\n                const symbol = checker.getSymbolAtLocation(moduleName);\n                if (!symbol) continue;\n\n                // Add any file other than our own as reference\n                addReferenceFromAmbientModule(symbol);\n            }\n        }\n\n        // From ambient modules\n        for (const ambientModule of program.getTypeChecker().getAmbientModules()) {"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 1697,
+    "call": "getSymbolAtLocation(node, /*ignoreErrors*/ true)",
+    "owner": "(anonymous)",
+    "context": "        getSymbolAtLocation: nodeIn => {\n            const node = getParseTreeNode(nodeIn);\n            // set ignoreErrors: true because any lookups invoked by the API shouldn't cause any new errors\n            return node ? getSymbolAtLocation(node, /*ignoreErrors*/ true) : undefined;\n        },\n        getIndexInfosAtLocation: nodeIn => {\n            const node = getParseTreeNode(nodeIn);\n            return node ? getIndexInfosAtLocation(node) : undefined;\n        },\n        getShorthandAssignmentValueSymbol: nodeIn => {\n            const node = getParseTreeNode(nodeIn);\n            return node ? getShorthandAssignmentValueSymbol(node) : undefined;\n        },"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 6339,
+    "call": "getSymbolAtLocation(node)",
+    "owner": "isUndefinedIdentifierExpression",
+    "context": "            },\n            isOptionalParameter,\n            isUndefinedIdentifierExpression(node: Identifier) {\n                return getSymbolAtLocation(node) === undefinedSymbol;\n            },\n            isEntityNameVisible(context, entityName, shouldComputeAliasToMakeVisible) {\n                return isEntityNameVisible(entityName, context.enclosingDeclaration!, shouldComputeAliasToMakeVisible);\n            },\n            serializeExistingTypeNode(context, typeNode, addUndefined) {\n                return serializeExistingTypeNode(context as NodeBuilderContext, typeNode, !!addUndefined);\n            },\n            serializeReturnTypeForSignature(syntacticContext, signatureDeclaration, symbol) {\n                const context = syntacticContext as NodeBuilderContext;"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 6381,
+    "call": "getSymbolAtLocation(node, /*ignoreErrors*/ true)",
+    "owner": "serializeEntityName",
+    "context": "            },\n            serializeEntityName(syntacticContext, node) {\n                const context = syntacticContext as NodeBuilderContext;\n                const symbol = getSymbolAtLocation(node, /*ignoreErrors*/ true);\n                if (!symbol) return undefined;\n                if (!isValueSymbolAccessible(symbol, context.enclosingDeclaration)) return undefined;\n                return symbolToExpression(symbol, context, SymbolFlags.Value | SymbolFlags.ExportValue);\n            },\n            serializeTypeName(context, node, isTypeOf, typeArguments) {\n                return serializeTypeName(context as NodeBuilderContext, node, isTypeOf, typeArguments);\n            },\n            getJsDocPropertyOverride(syntacticContext, jsDocTypeLiteral, jsDocProperty) {\n                const context = syntacticContext as NodeBuilderContext;"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 20531,
+    "call": "getSymbolAtLocation(node)",
+    "owner": "getTypeFromTypeNodeWorker",
+    "context": "            case SyntaxKind.Identifier as TypeNodeSyntaxKind:\n            case SyntaxKind.QualifiedName as TypeNodeSyntaxKind:\n            case SyntaxKind.PropertyAccessExpression as TypeNodeSyntaxKind:\n                const symbol = getSymbolAtLocation(node);\n                return symbol ? getDeclaredTypeOfSymbol(symbol) : errorType;\n            default:\n                return errorType;\n        }\n    }\n\n    function instantiateList<T, M extends TypeMapper | undefined = TypeMapper>(items: readonly T[], mapper: M, instantiator: (item: T, mapper: M) => T): readonly T[];\n    function instantiateList<T, M extends TypeMapper | undefined = TypeMapper>(items: readonly T[] | undefined, mapper: M, instantiator: (item: T, mapper: M) => T): readonly T[] | undefined;\n    function instantiateList<T, M extends TypeMapper | undefined = TypeMapper>(items: readonly T[] | undefined, mapper: M, instantiator: (item: T, mapper: M) => T): readonly T[] | undefined {"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 36128,
+    "call": "getSymbolAtLocation(tagName)",
+    "owner": "checkTagNameDoesNotExpectTooManyArguments",
+    "context": "                // We will not report errors in this function for fragments, since we do not check them in this function\n                const tagName = (node as JsxOpeningElement | JsxSelfClosingElement).tagName;\n                const diag = createDiagnosticForNode(tagName, Diagnostics.Tag_0_expects_at_least_1_arguments_but_the_JSX_factory_2_provides_at_most_3, entityNameToString(tagName), absoluteMinArgCount, entityNameToString(factory), maxParamCount);\n                const tagNameDeclaration = getSymbolAtLocation(tagName)?.valueDeclaration;\n                if (tagNameDeclaration) {\n                    addRelatedInfo(diag, createDiagnosticForNode(tagNameDeclaration, Diagnostics._0_is_declared_here, entityNameToString(tagName)));\n                }\n                if (errorOutputContainer && errorOutputContainer.skipLogging) {\n                    (errorOutputContainer.errors || (errorOutputContainer.errors = [] as Diagnostic[])).push(diag);\n                }\n                if (!errorOutputContainer.skipLogging) {\n                    diagnostics.add(diag);\n                }"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 36406,
+    "call": "getSymbolAtLocation(decl.parent.parent.expression, /*ignoreErrors*/ true)",
+    "owner": "isPromiseResolveArityError",
+    "context": "        const globalPromiseSymbol = getGlobalPromiseConstructorSymbol(/*reportErrors*/ false);\n        if (!globalPromiseSymbol) return false;\n\n        const constructorSymbol = getSymbolAtLocation(decl.parent.parent.expression, /*ignoreErrors*/ true);\n        return constructorSymbol === globalPromiseSymbol;\n    }\n\n    function getArgumentArityError(node: CallLikeExpression, signatures: readonly Signature[], args: readonly Expression[], headMessage?: DiagnosticMessage) {\n        const spreadIndex = getSpreadArgumentIndex(args);\n        if (spreadIndex > -1) {\n            return createDiagnosticForNode(args[spreadIndex]!, Diagnostics.A_spread_argument_must_either_have_a_tuple_type_or_be_passed_to_a_rest_parameter);\n        }\n        let min = Number.POSITIVE_INFINITY; // smallest parameter count"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 45377,
+    "call": "getSymbolAtLocation(testedNode)",
+    "owner": "helper",
+    "context": "            const testedNode = isIdentifier(location) ? location\n                : isPropertyAccessExpression(location) ? location.name\n                : undefined;\n            const testedSymbol = testedNode && getSymbolAtLocation(testedNode);\n            if (!testedSymbol && !isPromise) {\n                return;\n            }\n\n            const isUsed = testedSymbol && isBinaryExpression(condExpr.parent) && isSymbolUsedInBinaryExpressionChain(condExpr.parent, testedSymbol)\n                || testedSymbol && body && isSymbolUsedInConditionBody(condExpr, body, testedNode, testedSymbol);\n            if (!isUsed) {\n                if (isPromise) {\n                    errorAndMaybeSuggestAwait("
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 45403,
+    "call": "getSymbolAtLocation(childNode)",
+    "owner": "check",
+    "context": "    function isSymbolUsedInConditionBody(expr: Expression, body: Statement | Expression, testedNode: Node, testedSymbol: Symbol): boolean {\n        return !!forEachChild(body, function check(childNode): boolean | undefined {\n            if (isIdentifier(childNode)) {\n                const childSymbol = getSymbolAtLocation(childNode);\n                if (childSymbol && childSymbol === testedSymbol) {\n                    // If the test was a simple identifier, the above check is sufficient\n                    if (isIdentifier(expr) || isIdentifier(testedNode) && isBinaryExpression(testedNode.parent)) {\n                        return true;\n                    }\n                    // Otherwise we need to ensure the symbol is called on the same target\n                    let testedExpression = testedNode.parent;\n                    let childExpression = childNode.parent;\n                    while (testedExpression && childExpression) {"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 45417,
+    "call": "getSymbolAtLocation(testedExpression)",
+    "owner": "check",
+    "context": "                            isIdentifier(testedExpression) && isIdentifier(childExpression) ||\n                            testedExpression.kind === SyntaxKind.ThisKeyword && childExpression.kind === SyntaxKind.ThisKeyword\n                        ) {\n                            return getSymbolAtLocation(testedExpression) === getSymbolAtLocation(childExpression);\n                        }\n                        else if (isPropertyAccessExpression(testedExpression) && isPropertyAccessExpression(childExpression)) {\n                            if (getSymbolAtLocation(testedExpression.name) !== getSymbolAtLocation(childExpression.name)) {\n                                return false;\n                            }\n                            childExpression = childExpression.expression;\n                            testedExpression = testedExpression.expression;\n                        }\n                        else if (isCallExpression(testedExpression) && isCallExpression(childExpression)) {"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 45417,
+    "call": "getSymbolAtLocation(childExpression)",
+    "owner": "check",
+    "context": "                            isIdentifier(testedExpression) && isIdentifier(childExpression) ||\n                            testedExpression.kind === SyntaxKind.ThisKeyword && childExpression.kind === SyntaxKind.ThisKeyword\n                        ) {\n                            return getSymbolAtLocation(testedExpression) === getSymbolAtLocation(childExpression);\n                        }\n                        else if (isPropertyAccessExpression(testedExpression) && isPropertyAccessExpression(childExpression)) {\n                            if (getSymbolAtLocation(testedExpression.name) !== getSymbolAtLocation(childExpression.name)) {\n                                return false;\n                            }\n                            childExpression = childExpression.expression;\n                            testedExpression = testedExpression.expression;\n                        }\n                        else if (isCallExpression(testedExpression) && isCallExpression(childExpression)) {"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 45420,
+    "call": "getSymbolAtLocation(testedExpression.name)",
+    "owner": "check",
+    "context": "                            return getSymbolAtLocation(testedExpression) === getSymbolAtLocation(childExpression);\n                        }\n                        else if (isPropertyAccessExpression(testedExpression) && isPropertyAccessExpression(childExpression)) {\n                            if (getSymbolAtLocation(testedExpression.name) !== getSymbolAtLocation(childExpression.name)) {\n                                return false;\n                            }\n                            childExpression = childExpression.expression;\n                            testedExpression = testedExpression.expression;\n                        }\n                        else if (isCallExpression(testedExpression) && isCallExpression(childExpression)) {\n                            childExpression = childExpression.expression;\n                            testedExpression = testedExpression.expression;\n                        }"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 45420,
+    "call": "getSymbolAtLocation(childExpression.name)",
+    "owner": "check",
+    "context": "                            return getSymbolAtLocation(testedExpression) === getSymbolAtLocation(childExpression);\n                        }\n                        else if (isPropertyAccessExpression(testedExpression) && isPropertyAccessExpression(childExpression)) {\n                            if (getSymbolAtLocation(testedExpression.name) !== getSymbolAtLocation(childExpression.name)) {\n                                return false;\n                            }\n                            childExpression = childExpression.expression;\n                            testedExpression = testedExpression.expression;\n                        }\n                        else if (isCallExpression(testedExpression) && isCallExpression(childExpression)) {\n                            childExpression = childExpression.expression;\n                            testedExpression = testedExpression.expression;\n                        }"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 45444,
+    "call": "getSymbolAtLocation(child)",
+    "owner": "visit",
+    "context": "        while (isBinaryExpression(node) && node.operatorToken.kind === SyntaxKind.AmpersandAmpersandToken) {\n            const isUsed = forEachChild(node.right, function visit(child): boolean | undefined {\n                if (isIdentifier(child)) {\n                    const symbol = getSymbolAtLocation(child);\n                    if (symbol && symbol === testedSymbol) {\n                        return true;\n                    }\n                }\n                return forEachChild(child, visit);\n            });\n            if (isUsed) {\n                return true;\n            }"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 47283,
+    "call": "getSymbolAtLocation(member.name)",
+    "owner": "checkExistingMemberForOverrideModifier",
+    "context": "        reportErrors = true,\n    ): MemberOverrideStatus {\n        const declaredProp = member.name\n                && getSymbolAtLocation(member.name)\n            || getSymbolAtLocation(member);\n        if (!declaredProp) {\n            return MemberOverrideStatus.Ok;\n        }\n\n        return checkMemberForOverrideModifier(\n            node,\n            staticType,\n            baseStaticType,"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 47284,
+    "call": "getSymbolAtLocation(member)",
+    "owner": "checkExistingMemberForOverrideModifier",
+    "context": "    ): MemberOverrideStatus {\n        const declaredProp = member.name\n                && getSymbolAtLocation(member.name)\n            || getSymbolAtLocation(member);\n        if (!declaredProp) {\n            return MemberOverrideStatus.Ok;\n        }\n\n        return checkMemberForOverrideModifier(\n            node,\n            staticType,\n            baseStaticType,\n            baseWithThis,"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 47418,
+    "call": "getSymbolAtLocation(member.name)",
+    "owner": "issueMemberSpecificError",
+    "context": "            if (isStatic(member)) {\n                continue;\n            }\n            const declaredProp = member.name && getSymbolAtLocation(member.name) || getSymbolAtLocation(member);\n            if (declaredProp) {\n                const prop = getPropertyOfType(typeWithThis, declaredProp.escapedName);\n                const baseProp = getPropertyOfType(baseWithThis, declaredProp.escapedName);\n                if (prop && baseProp) {\n                    const rootChain = () =>\n                        chainDiagnosticMessages(\n                            /*details*/ undefined,\n                            Diagnostics.Property_0_in_type_1_is_not_assignable_to_the_same_property_in_base_type_2,\n                            symbolToString(declaredProp),"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 47418,
+    "call": "getSymbolAtLocation(member)",
+    "owner": "issueMemberSpecificError",
+    "context": "            if (isStatic(member)) {\n                continue;\n            }\n            const declaredProp = member.name && getSymbolAtLocation(member.name) || getSymbolAtLocation(member);\n            if (declaredProp) {\n                const prop = getPropertyOfType(typeWithThis, declaredProp.escapedName);\n                const baseProp = getPropertyOfType(baseWithThis, declaredProp.escapedName);\n                if (prop && baseProp) {\n                    const rootChain = () =>\n                        chainDiagnosticMessages(\n                            /*details*/ undefined,\n                            Diagnostics.Property_0_in_type_1_is_not_assignable_to_the_same_property_in_base_type_2,\n                            symbolToString(declaredProp),"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 50153,
+    "call": "getSymbolAtLocation(copy.declarations[0].parent)",
+    "owner": "getApplicableIndexSymbol",
+    "context": "                else {\n                    const copy = createSymbol(SymbolFlags.Signature, InternalSymbolName.Index);\n                    copy.declarations = mapDefined(infos, i => i.declaration);\n                    copy.parent = type.aliasSymbol ? type.aliasSymbol : type.symbol ? type.symbol : getSymbolAtLocation(copy.declarations[0].parent);\n                    symbolLinks.filteredIndexSymbolCache.set(nodeListId, copy);\n                    return copy;\n                }\n            }\n        }\n    }\n\n    /**\n     * Recursively resolve entity names and jsdoc instance references:"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 50318,
+    "call": "getSymbolAtLocation(node.argument.literal, ignoreErrors)",
+    "owner": "getSymbolAtLocation",
+    "context": "            case SyntaxKind.ClassKeyword:\n                return getSymbolOfNode(node.parent);\n            case SyntaxKind.ImportType:\n                return isLiteralImportTypeNode(node) ? getSymbolAtLocation(node.argument.literal, ignoreErrors) : undefined;\n\n            case SyntaxKind.ExportKeyword:\n                return isExportAssignment(node.parent) ? Debug.checkDefined(node.parent.symbol) : undefined;\n\n            case SyntaxKind.ImportKeyword:\n                if (isMetaProperty(node.parent) && node.parent.name.escapedText === \"defer\") {\n                    return undefined;\n                }\n                // falls through"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 50417,
+    "call": "getSymbolAtLocation(node)",
+    "owner": "getTypeOfNode",
+    "context": "        }\n\n        if (isTypeDeclarationName(node)) {\n            const symbol = getSymbolAtLocation(node);\n            return symbol ? getDeclaredTypeOfSymbol(symbol) : errorType;\n        }\n\n        if (isBindingElement(node)) {\n            return getTypeForVariableLikeDeclaration(node, /*includeOptionality*/ true, CheckMode.Normal) || errorType;\n        }\n\n        if (isDeclaration(node)) {\n            // In this case, we call getSymbolOfNode instead of getSymbolAtLocation because it is a declaration"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 50432,
+    "call": "getSymbolAtLocation(node)",
+    "owner": "getTypeOfNode",
+    "context": "        }\n\n        if (isDeclarationNameOrImportPropertyName(node)) {\n            const symbol = getSymbolAtLocation(node);\n            if (symbol) {\n                return getTypeOfSymbol(symbol);\n            }\n            return errorType;\n        }\n\n        if (isBindingPattern(node)) {\n            return getTypeForVariableLikeDeclaration(node.parent, /*includeOptionality*/ true, CheckMode.Normal) || errorType;\n        }"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 50444,
+    "call": "getSymbolAtLocation(node)",
+    "owner": "getTypeOfNode",
+    "context": "        }\n\n        if (isInRightSideOfImportOrExportAssignment(node as Identifier)) {\n            const symbol = getSymbolAtLocation(node);\n            if (symbol) {\n                const declaredType = getDeclaredTypeOfSymbol(symbol);\n                return !isErrorType(declaredType) ? declaredType : getTypeOfSymbol(symbol);\n            }\n        }\n\n        if (isMetaProperty(node.parent) && node.parent.keywordToken === node.kind) {\n            return checkMetaPropertyKeyword(node.parent);\n        }"
+  },
+  {
+    "file": "src/compiler/moduleSpecifiers.ts",
+    "line": 908,
+    "call": "checker.getSymbolAtLocation(exportAssignment)",
+    "owner": "(anonymous)",
+    "context": "        ) return;\n        const exportAssignment = (topNamespace.parent.parent.symbol.exports?.get(\"export=\" as __String)?.valueDeclaration as ExportAssignment)?.expression as PropertyAccessExpression | Identifier;\n        if (!exportAssignment) return;\n        const exportSymbol = checker.getSymbolAtLocation(exportAssignment);\n        if (!exportSymbol) return;\n        const originalExportSymbol = exportSymbol?.flags & SymbolFlags.Alias ? checker.getAliasedSymbol(exportSymbol) : exportSymbol;\n        if (originalExportSymbol === d.symbol) return topNamespace.parent.parent;\n\n        function getTopNamespace(namespaceDeclaration: ModuleDeclaration) {\n            while (namespaceDeclaration.flags & NodeFlags.NestedNamespace) {\n                namespaceDeclaration = namespaceDeclaration.parent as ModuleDeclaration;\n            }\n            return namespaceDeclaration;"
+  },
+  {
+    "file": "src/harness/fourslashImpl.ts",
+    "line": 1296,
+    "call": "this.getChecker().getSymbolAtLocation(node)",
+    "owner": "verifySymbolAtLocation",
+    "context": "\n    public verifySymbolAtLocation(startRange: Range, declarationRanges: Range[]): void {\n        const node = this.goToAndGetNode(startRange);\n        const symbol = this.getChecker().getSymbolAtLocation(node)!;\n        if (!symbol) {\n            this.raiseError(\"Could not get symbol at location\");\n        }\n        this.verifySymbol(symbol, declarationRanges);\n    }\n\n    public symbolsInScope(range: Range): ts.Symbol[] {\n        const node = this.goToAndGetNode(range);\n        return this.getChecker().getSymbolsInScope(node, ts.SymbolFlags.Value | ts.SymbolFlags.Type | ts.SymbolFlags.Namespace);"
+  },
+  {
+    "file": "src/harness/typeWriter.ts",
+    "line": 307,
+    "call": "this.checker.getSymbolAtLocation(node)",
+    "owner": "writeTypeOrSymbol",
+    "context": "                underline,\n            };\n        }\n        const symbol = this.checker.getSymbolAtLocation(node);\n        if (!symbol) {\n            return;\n        }\n        let symbolString = \"Symbol(\" + this.checker.symbolToString(symbol, node.parent);\n        if (symbol.declarations) {\n            let count = 0;\n            for (const declaration of symbol.declarations) {\n                if (count >= 5) {\n                    symbolString += ` ... and ${symbol.declarations.length - count} more`;"
+  },
+  {
+    "file": "src/server/session.ts",
+    "line": 1798,
+    "call": "program.getTypeChecker().getSymbolAtLocation(initialNode)",
+    "owner": "tryRefineDefinition",
+    "context": "                return undefined;\n            }\n            const initialNode = getTouchingPropertyName(program.getSourceFile(file)!, position);\n            const symbol = program.getTypeChecker().getSymbolAtLocation(initialNode);\n            const importSpecifier = symbol && getDeclarationOfKind<ImportSpecifier>(symbol, SyntaxKind.ImportSpecifier);\n            if (!importSpecifier) return undefined;\n\n            const nameToSearch = importSpecifier.propertyName?.text || importSpecifier.name.text;\n            return searchForDeclaration(nameToSearch, fileToSearch, noDtsProgram);\n        }\n\n        function searchForDeclaration(declarationName: string, fileToSearch: SourceFile, noDtsProgram: Program) {\n            const matches = FindAllReferences.Core.getTopMostDeclarationNamesInFile(declarationName, fileToSearch);"
+  },
+  {
+    "file": "src/server/session.ts",
+    "line": 1809,
+    "call": "noDtsProgram.getTypeChecker().getSymbolAtLocation(match)",
+    "owner": "(anonymous)",
+    "context": "        function searchForDeclaration(declarationName: string, fileToSearch: SourceFile, noDtsProgram: Program) {\n            const matches = FindAllReferences.Core.getTopMostDeclarationNamesInFile(declarationName, fileToSearch);\n            return mapDefined(matches, match => {\n                const symbol = noDtsProgram.getTypeChecker().getSymbolAtLocation(match);\n                const decl = getDeclarationFromName(match);\n                if (symbol && decl) {\n                    // I think the last argument to this is supposed to be the start node, but it doesn't seem important.\n                    // Callers internal to GoToDefinition already get confused about this.\n                    return GoToDefinition.createDefinitionInfo(decl, noDtsProgram.getTypeChecker(), symbol, decl, /*unverified*/ true);\n                }\n            });\n        }\n    }"
+  },
+  {
+    "file": "src/services/callHierarchy.ts",
+    "line": 210,
+    "call": "typeChecker.getSymbolAtLocation(location)",
+    "owner": "getSymbolOfCallHierarchyDeclaration",
+    "context": "/** Gets the symbol for a call hierarchy declaration. */\nfunction getSymbolOfCallHierarchyDeclaration(typeChecker: TypeChecker, node: Exclude<CallHierarchyDeclaration, ClassStaticBlockDeclaration>) {\n    const location = getCallHierarchyDeclarationReferenceNode(node);\n    return location && typeChecker.getSymbolAtLocation(location);\n}\n\n/** Gets the text and range for the name of a call hierarchy declaration. */\nfunction getCallHierarchyItemName(program: Program, node: CallHierarchyDeclaration): { text: string; pos: number; end: number; } {\n    if (isSourceFile(node)) {\n        return { text: node.fileName, pos: 0, end: 0 };\n    }\n\n    if ((isFunctionDeclaration(node) || isClassDeclaration(node)) && !isNamedDeclaration(node)) {"
+  },
+  {
+    "file": "src/services/callHierarchy.ts",
+    "line": 231,
+    "call": "typeChecker.getSymbolAtLocation(node.parent)",
+    "owner": "getCallHierarchyItemName",
+    "context": "        const pos = skipTrivia(sourceFile.text, moveRangePastModifiers(node).pos);\n        const end = pos + 6; /* \"static\".length */\n        const typeChecker = program.getTypeChecker();\n        const symbol = typeChecker.getSymbolAtLocation(node.parent);\n        const prefix = symbol ? `${typeChecker.symbolToString(symbol, node.parent)} ` : \"\";\n        return { text: `${prefix}static {}`, pos, end };\n    }\n\n    const declName = isAssignedExpression(node) ? node.parent.name :\n        Debug.checkDefined(getNameOfDeclaration(node), \"Expected call hierarchy item to have a name\");\n\n    let text = isIdentifier(declName) ? idText(declName) :\n        isStringOrNumericLiteralLike(declName) ? declName.text :"
+  },
+  {
+    "file": "src/services/callHierarchy.ts",
+    "line": 247,
+    "call": "typeChecker.getSymbolAtLocation(declName)",
+    "owner": "getCallHierarchyItemName",
+    "context": "        undefined;\n    if (text === undefined) {\n        const typeChecker = program.getTypeChecker();\n        const symbol = typeChecker.getSymbolAtLocation(declName);\n        if (symbol) {\n            text = typeChecker.symbolToString(symbol, node);\n        }\n    }\n    if (text === undefined) {\n        // get the text from printing the node on a single line without comments...\n        const printer = createPrinterWithRemoveCommentsOmitTrailingSemicolon();\n        text = usingSingleLineStringWriter(writer => printer.writeNode(EmitHint.Unspecified, node, node.getSourceFile(), writer));\n    }"
+  },
+  {
+    "file": "src/services/callHierarchy.ts",
+    "line": 400,
+    "call": "typeChecker.getSymbolAtLocation(location)",
+    "owner": "resolveCallHierarchyDeclaration",
+    "context": "            return location.initializer;\n        }\n        if (!followingSymbol) {\n            let symbol = typeChecker.getSymbolAtLocation(location);\n            if (symbol) {\n                if (symbol.flags & SymbolFlags.Alias) {\n                    symbol = typeChecker.getAliasedSymbol(symbol);\n                }\n                if (symbol.valueDeclaration) {\n                    followingSymbol = true;\n                    location = symbol.valueDeclaration;\n                    continue;\n                }"
+  },
+  {
+    "file": "src/services/classifier.ts",
+    "line": 589,
+    "call": "typeChecker.getSymbolAtLocation(node)",
+    "owner": "cb",
+    "context": "        // could possibly resolve to a type name.  This makes classification run\n        // in a third of the time it would normally take.\n        if (isIdentifier(node) && !nodeIsMissing(node) && classifiableNames.has(node.escapedText)) {\n            const symbol = typeChecker.getSymbolAtLocation(node);\n            const type = symbol && classifySymbol(symbol, getMeaningFromLocation(node), typeChecker);\n            if (type) {\n                pushClassification(node.getStart(sourceFile), node.getEnd(), type);\n            }\n        }\n\n        node.forEachChild(cb);\n    });\n    return { spans, endOfLineState: EndOfLineState.None };"
+  },
+  {
+    "file": "src/services/classifier2020.ts",
+    "line": 151,
+    "call": "typeChecker.getSymbolAtLocation(node)",
+    "owner": "visit",
+    "context": "        }\n\n        if (isIdentifier(node) && !inJSXElement && !inImportClause(node) && !isInfinityOrNaNString(node.escapedText)) {\n            let symbol = typeChecker.getSymbolAtLocation(node);\n            if (symbol) {\n                if (symbol.flags & SymbolFlags.Alias) {\n                    symbol = typeChecker.getAliasedSymbol(symbol);\n                }\n                let typeIdx = classifySymbol(symbol, getMeaningFromLocation(node));\n                if (typeIdx !== undefined) {\n                    let modifierSet = 0;\n                    if (node.parent) {\n                        const parentIsDeclaration = isBindingElement(node.parent) || tokenFromDeclarationMapping.get(node.parent.kind) === typeIdx;"
+  },
+  {
+    "file": "src/services/codefixes/addMissingAwait.ts",
+    "line": 184,
+    "call": "checker.getSymbolAtLocation(identifier)",
+    "owner": "findAwaitableInitializers",
+    "context": "    let isCompleteFix = identifiers.isCompleteFix;\n    let initializers: AwaitableInitializer[] | undefined;\n    for (const identifier of identifiers.identifiers) {\n        const symbol = checker.getSymbolAtLocation(identifier);\n        if (!symbol) {\n            continue;\n        }\n\n        const declaration = tryCast(symbol.valueDeclaration, isVariableDeclaration);\n        const variableName = declaration && tryCast(declaration.name, isIdentifier);\n        const variableStatement = getAncestor(declaration, SyntaxKind.VariableStatement);\n        if (\n            !declaration || !variableStatement ||"
+  },
+  {
+    "file": "src/services/codefixes/addMissingAwait.ts",
+    "line": 298,
+    "call": "checker.getSymbolAtLocation(side)",
+    "owner": "makeChange",
+    "context": "    if (isBinaryExpression(insertionSite)) {\n        for (const side of [insertionSite.left, insertionSite.right]) {\n            if (fixedDeclarations && isIdentifier(side)) {\n                const symbol = checker.getSymbolAtLocation(side);\n                if (symbol && fixedDeclarations.has(getSymbolId(symbol))) {\n                    continue;\n                }\n            }\n            const type = checker.getTypeAtLocation(side);\n            const newNode = checker.getPromisedTypeOfPromise(type) ? factory.createAwaitExpression(side) : side;\n            changeTracker.replaceNode(sourceFile, side, newNode);\n        }\n    }"
+  },
+  {
+    "file": "src/services/codefixes/addMissingAwait.ts",
+    "line": 310,
+    "call": "checker.getSymbolAtLocation(insertionSite.parent.expression)",
+    "owner": "makeChange",
+    "context": "    }\n    else if (errorCode === propertyAccessCode && isPropertyAccessExpression(insertionSite.parent)) {\n        if (fixedDeclarations && isIdentifier(insertionSite.parent.expression)) {\n            const symbol = checker.getSymbolAtLocation(insertionSite.parent.expression);\n            if (symbol && fixedDeclarations.has(getSymbolId(symbol))) {\n                return;\n            }\n        }\n        changeTracker.replaceNode(\n            sourceFile,\n            insertionSite.parent.expression,\n            factory.createParenthesizedExpression(factory.createAwaitExpression(insertionSite.parent.expression)),\n        );"
+  },
+  {
+    "file": "src/services/codefixes/addMissingAwait.ts",
+    "line": 324,
+    "call": "checker.getSymbolAtLocation(insertionSite)",
+    "owner": "makeChange",
+    "context": "    }\n    else if (contains(callableConstructableErrorCodes, errorCode) && isCallOrNewExpression(insertionSite.parent)) {\n        if (fixedDeclarations && isIdentifier(insertionSite)) {\n            const symbol = checker.getSymbolAtLocation(insertionSite);\n            if (symbol && fixedDeclarations.has(getSymbolId(symbol))) {\n                return;\n            }\n        }\n        changeTracker.replaceNode(sourceFile, insertionSite, factory.createParenthesizedExpression(factory.createAwaitExpression(insertionSite)));\n        insertLeadingSemicolonIfNeeded(changeTracker, insertionSite, sourceFile);\n    }\n    else {\n        if (fixedDeclarations && isVariableDeclaration(insertionSite.parent) && isIdentifier(insertionSite.parent.name)) {"
+  },
+  {
+    "file": "src/services/codefixes/addMissingAwait.ts",
+    "line": 334,
+    "call": "checker.getSymbolAtLocation(insertionSite.parent.name)",
+    "owner": "makeChange",
+    "context": "    }\n    else {\n        if (fixedDeclarations && isVariableDeclaration(insertionSite.parent) && isIdentifier(insertionSite.parent.name)) {\n            const symbol = checker.getSymbolAtLocation(insertionSite.parent.name);\n            if (symbol && !tryAddToSet(fixedDeclarations, getSymbolId(symbol))) {\n                return;\n            }\n        }\n        changeTracker.replaceNode(sourceFile, insertionSite, factory.createAwaitExpression(insertionSite));\n    }\n}\n\nfunction insertLeadingSemicolonIfNeeded(changeTracker: textChanges.ChangeTracker, beforeNode: Node, sourceFile: SourceFile) {"
+  },
+  {
+    "file": "src/services/codefixes/addMissingConst.ts",
+    "line": 105,
+    "call": "checker.getSymbolAtLocation(identifier)",
+    "owner": "arrayElementCouldBeVariableDeclaration",
+    "context": "    const identifier = isIdentifier(expression) ? expression :\n        isAssignmentExpression(expression, /*excludeCompoundAssignment*/ true) && isIdentifier(expression.left) ? expression.left :\n        undefined;\n    return !!identifier && !checker.getSymbolAtLocation(identifier);\n}\n\nfunction isPossiblyPartOfCommaSeperatedInitializer(node: Node): boolean {\n    switch (node.kind) {\n        case SyntaxKind.Identifier:\n        case SyntaxKind.BinaryExpression:\n        case SyntaxKind.CommaToken:\n            return true;\n        default:"
+  },
+  {
+    "file": "src/services/codefixes/addMissingConst.ts",
+    "line": 130,
+    "call": "checker.getSymbolAtLocation(expression.left)",
+    "owner": "expressionCouldBeVariableDeclaration",
+    "context": "\n    return expression.operatorToken.kind === SyntaxKind.EqualsToken\n        && isIdentifier(expression.left)\n        && !checker.getSymbolAtLocation(expression.left);\n}\n"
+  },
+  {
+    "file": "src/services/codefixes/addOptionalPropertyUndefined.ts",
+    "line": 93,
+    "call": "checker.getSymbolAtLocation(errorNode.parent.expression)",
+    "owner": "getSourceTarget",
+    "context": "        return { source: errorNode.parent.initializer, target: errorNode.parent.name };\n    }\n    else if (isCallExpression(errorNode.parent)) {\n        const n = checker.getSymbolAtLocation(errorNode.parent.expression);\n        if (!n?.valueDeclaration || !isFunctionLikeKind(n.valueDeclaration.kind)) return undefined;\n        if (!isExpression(errorNode)) return undefined;\n        const i = errorNode.parent.arguments.indexOf(errorNode);\n        if (i === -1) return undefined;\n        const name = (n.valueDeclaration as any as SignatureDeclaration).parameters[i].name;\n        if (isIdentifier(name)) return { source: errorNode, target: name };\n    }\n    else if (\n        isPropertyAssignment(errorNode.parent) && isIdentifier(errorNode.parent.name) ||"
+  },
+  {
+    "file": "src/services/codefixes/convertConstToLet.ts",
+    "line": 63,
+    "call": "checker.getSymbolAtLocation(getTokenAtPosition(sourceFile, pos))",
+    "owner": "getInfo",
+    "context": "\nfunction getInfo(sourceFile: SourceFile, pos: number, program: Program): Info | undefined {\n    const checker = program.getTypeChecker();\n    const symbol = checker.getSymbolAtLocation(getTokenAtPosition(sourceFile, pos));\n    if (symbol === undefined) return;\n\n    const declaration = tryCast(symbol?.valueDeclaration?.parent, isVariableDeclarationList);\n    if (declaration === undefined) return;\n\n    const constToken = findChildOfKind<Token<SyntaxKind.ConstKeyword>>(declaration, SyntaxKind.ConstKeyword, sourceFile);\n    if (constToken === undefined) return;\n\n    return { symbol, token: constToken };"
+  },
+  {
+    "file": "src/services/codefixes/convertFunctionToEs6Class.ts",
+    "line": 83,
+    "call": "checker.getSymbolAtLocation(getTokenAtPosition(sourceFile, position))",
+    "owner": "doChange",
+    "context": "});\n\nfunction doChange(changes: textChanges.ChangeTracker, sourceFile: SourceFile, position: number, checker: TypeChecker, preferences: UserPreferences, compilerOptions: CompilerOptions): void {\n    const ctorSymbol = checker.getSymbolAtLocation(getTokenAtPosition(sourceFile, position))!;\n    if (!ctorSymbol || !ctorSymbol.valueDeclaration || !(ctorSymbol.flags & (SymbolFlags.Function | SymbolFlags.Variable))) {\n        // Bad input\n        return undefined;\n    }\n\n    const ctorDeclaration = ctorSymbol.valueDeclaration;\n    if (isFunctionDeclaration(ctorDeclaration) || isFunctionExpression(ctorDeclaration)) {\n        changes.replaceNode(sourceFile, ctorDeclaration, createClassFromFunction(ctorDeclaration));\n    }"
+  },
+  {
+    "file": "src/services/codefixes/convertToAsyncFunction.ts",
+    "line": 300,
+    "call": "checker.getSymbolAtLocation(node)",
+    "owner": "visit",
+    "context": "            forEachChild(node, visit);\n            return;\n        }\n        const symbol = checker.getSymbolAtLocation(node);\n        if (symbol) {\n            const type = checker.getTypeAtLocation(node);\n            // Note - the choice of the last call signature is arbitrary\n            const lastCallSignature = getLastCallSignature(type, checker);\n            const symbolIdString = getSymbolId(symbol).toString();\n\n            // If the identifier refers to a function, we want to add the new synthesized variable for the declaration. Example:\n            //   fetch('...').then(response => { ... })\n            // will eventually become"
+  },
+  {
+    "file": "src/services/codefixes/convertToAsyncFunction.ts",
+    "line": 345,
+    "call": "checker.getSymbolAtLocation(original.name)",
+    "owner": "(anonymous)",
+    "context": "\n    return getSynthesizedDeepCloneWithReplacements(nodeToRename, /*includeTrivia*/ true, original => {\n        if (isBindingElement(original) && isIdentifier(original.name) && isObjectBindingPattern(original.parent)) {\n            const symbol = checker.getSymbolAtLocation(original.name);\n            const renameInfo = symbol && identsToRenameMap.get(String(getSymbolId(symbol)));\n            if (renameInfo && renameInfo.text !== (original.name || original.propertyName).getText()) {\n                return factory.createBindingElement(\n                    original.dotDotDotToken,\n                    original.propertyName || original.name,\n                    renameInfo,\n                    original.initializer,\n                );\n            }"
+  },
+  {
+    "file": "src/services/codefixes/convertToAsyncFunction.ts",
+    "line": 357,
+    "call": "checker.getSymbolAtLocation(original)",
+    "owner": "(anonymous)",
+    "context": "            }\n        }\n        else if (isIdentifier(original)) {\n            const symbol = checker.getSymbolAtLocation(original);\n            const renameInfo = symbol && identsToRenameMap.get(String(getSymbolId(symbol)));\n            if (renameInfo) {\n                return factory.createIdentifier(renameInfo.text);\n            }\n        }\n    });\n}\n\nfunction getNewNameIfConflict(name: Identifier, originalNames: ReadonlyMap<string, Symbol[]>): SynthIdentifier {"
+  },
+  {
+    "file": "src/services/codefixes/convertToAsyncFunction.ts",
+    "line": 413,
+    "call": "checker.getSymbolAtLocation(node)",
+    "owner": "isNullOrUndefined",
+    "context": "function isNullOrUndefined({ checker }: Transformer, node: Expression) {\n    if (node.kind === SyntaxKind.NullKeyword) return true;\n    if (isIdentifier(node) && !isGeneratedIdentifier(node) && idText(node) === \"undefined\") {\n        const symbol = checker.getSymbolAtLocation(node);\n        return !symbol || checker.isUndefinedSymbol(symbol);\n    }\n    return false;\n}\n\nfunction createUniqueSynthName(prevArgName: SynthIdentifier): SynthIdentifier {\n    const renamedPrevArg = factory.createUniqueName(prevArgName.identifier.text, GeneratedIdentifierFlags.Optimistic);\n    return createSynthIdentifier(renamedPrevArg);\n}"
+  },
+  {
+    "file": "src/services/codefixes/convertToAsyncFunction.ts",
+    "line": 881,
+    "call": "transformer.checker.getSymbolAtLocation(node)",
+    "owner": "getSymbol",
+    "context": "    }\n\n    function getSymbol(node: Node): Symbol | undefined {\n        return tryCast(node, canHaveSymbol)?.symbol ?? transformer.checker.getSymbolAtLocation(node);\n    }\n\n    function getOriginalNode(node: Node): Node {\n        return node.original ? node.original : node;\n    }\n}\n\nfunction isEmptyBindingName(bindingName: SynthBindingName | undefined): boolean {\n    if (!bindingName) {"
+  },
+  {
+    "file": "src/services/codefixes/convertToEsModule.ts",
+    "line": 398,
+    "call": "checker.getSymbolAtLocation(reExported)",
+    "owner": "convertReExportAll",
+    "context": "function convertReExportAll(reExported: StringLiteralLike, checker: TypeChecker): [readonly Statement[], ModuleExportsChanged] {\n    // `module.exports = require(\"x\");` ==> `export * from \"x\"; export { default } from \"x\";`\n    const moduleSpecifier = reExported.text;\n    const moduleSymbol = checker.getSymbolAtLocation(reExported);\n    const exports = moduleSymbol ? moduleSymbol.exports! : emptyMap as ReadonlyCollection<__String>;\n    return exports.has(InternalSymbolName.ExportEquals) ? [[reExportDefault(moduleSpecifier)], true] :\n        !exports.has(InternalSymbolName.Default) ? [[reExportStar(moduleSpecifier)], false] :\n        // If there's some non-default export, must include both `export *` and `export default`.\n        exports.size > 1 ? [[reExportStar(moduleSpecifier), reExportDefault(moduleSpecifier)], true] : [[reExportDefault(moduleSpecifier)], true];\n}\nfunction reExportStar(moduleSpecifier: string): ExportDeclaration {\n    return makeExportDeclaration(/*exportSpecifiers*/ undefined, moduleSpecifier);\n}"
+  },
+  {
+    "file": "src/services/codefixes/convertToEsModule.ts",
+    "line": 529,
+    "call": "checker.getSymbolAtLocation(name)",
+    "owner": "convertSingleIdentifierImport",
+    "context": " * - Converts uses like `x.y()` to `y()` and uses a named import.\n */\nfunction convertSingleIdentifierImport(name: Identifier, moduleSpecifier: StringLiteralLike, checker: TypeChecker, identifiers: Identifiers, quotePreference: QuotePreference): ConvertedImports {\n    const nameSymbol = checker.getSymbolAtLocation(name);\n    // Maps from module property name to name actually used. (The same if there isn't shadowing.)\n    const namedBindingsNames = new Map<string, string>();\n    // True if there is some non-property use like `x()` or `f(x)`.\n    let needDefaultImport = false;\n    let useSitesToUnqualify: Map<Node, Node> | undefined;\n\n    for (const use of identifiers.original.get(name.text)!) {\n        if (checker.getSymbolAtLocation(use) !== nameSymbol || use === name) {\n            // This was a use of a different symbol with the same name, due to shadowing. Ignore."
+  },
+  {
+    "file": "src/services/codefixes/convertToEsModule.ts",
+    "line": 537,
+    "call": "checker.getSymbolAtLocation(use)",
+    "owner": "convertSingleIdentifierImport",
+    "context": "    let useSitesToUnqualify: Map<Node, Node> | undefined;\n\n    for (const use of identifiers.original.get(name.text)!) {\n        if (checker.getSymbolAtLocation(use) !== nameSymbol || use === name) {\n            // This was a use of a different symbol with the same name, due to shadowing. Ignore.\n            continue;\n        }\n\n        const { parent } = use;\n        if (isPropertyAccessExpression(parent)) {\n            const { name: { text: propertyName } } = parent;\n            if (propertyName === \"default\") {\n                needDefaultImport = true;"
+  },
+  {
+    "file": "src/services/codefixes/convertToTypeOnlyImport.ts",
+    "line": 107,
+    "call": "checker.getSymbolAtLocation(usage)",
+    "owner": "(anonymous)",
+    "context": "    const checker = program.getTypeChecker();\n    for (const specifier of nonTypeOnlySpecifiers) {\n        const isUsedAsValue = FindAllReferences.Core.eachSymbolReferenceInFile(specifier.name, checker, sourceFile, usage => {\n            const symbol = checker.getSymbolAtLocation(usage);\n            return !!symbol && checker.symbolIsValue(symbol) || !isValidTypeOnlyAliasUseSite(usage);\n        });\n        if (isUsedAsValue) {\n            return false;\n        }\n    }\n    // No other specifiers are used as values, so we can convert the whole import\n    return true;\n}"
+  },
+  {
+    "file": "src/services/codefixes/fixAddMissingMember.ts",
+    "line": 805,
+    "call": "checker.getSymbolAtLocation(superElement.expression)",
+    "owner": "getAllSupers",
+    "context": "    const res: ClassLikeDeclaration[] = [];\n    while (decl) {\n        const superElement = getClassExtendsHeritageElement(decl);\n        const superSymbol = superElement && checker.getSymbolAtLocation(superElement.expression);\n        if (!superSymbol) break;\n        const symbol = superSymbol.flags & SymbolFlags.Alias ? checker.getAliasedSymbol(superSymbol) : superSymbol;\n        const superDecl = symbol.declarations && find(symbol.declarations, isClassLike);\n        if (!superDecl) break;\n        res.push(superDecl);\n        decl = superDecl;\n    }\n    return res;\n}"
+  },
+  {
+    "file": "src/services/codefixes/fixAddVoidToPromise.ts",
+    "line": 59,
+    "call": "checker.getSymbolAtLocation(node)",
+    "owner": "makeChange",
+    "context": "    if (!isIdentifier(node) || !isCallExpression(node.parent) || node.parent.expression !== node || node.parent.arguments.length !== 0) return;\n\n    const checker = program.getTypeChecker();\n    const symbol = checker.getSymbolAtLocation(node);\n\n    // decl should be `new Promise((<decl>) => {})`\n    const decl = symbol?.valueDeclaration;\n    if (!decl || !isParameter(decl) || !isNewExpression(decl.parent.parent)) return;\n\n    // no need to make this change if we have already seen this parameter.\n    if (seen?.has(decl)) return;\n    seen?.add(decl);\n"
+  },
+  {
+    "file": "src/services/codefixes/fixPropertyOverrideAccessor.ts",
+    "line": 70,
+    "call": "checker.getSymbolAtLocation(expression)",
+    "owner": "doChange",
+    "context": "        const baseTypeNode = getEffectiveBaseTypeNode(containingClass);\n        if (!baseTypeNode) return;\n        const expression = skipParentheses(baseTypeNode.expression);\n        const base = isClassExpression(expression) ? expression.symbol : checker.getSymbolAtLocation(expression);\n        if (!base) return;\n        const baseType = checker.getDeclaredTypeOfSymbol(base);\n        const baseProp = checker.getPropertyOfType(baseType, unescapeLeadingUnderscores(getTextOfPropertyName(node.name)));\n        if (!baseProp || !baseProp.valueDeclaration) return;\n\n        startPosition = baseProp.valueDeclaration.pos;\n        endPosition = baseProp.valueDeclaration.end;\n        file = getSourceFileOfNode(baseProp.valueDeclaration);\n    }"
+  },
+  {
+    "file": "src/services/codefixes/fixSpelling.ts",
+    "line": 113,
+    "call": "checker.getSymbolAtLocation(parent.left)",
+    "owner": "getInfo",
+    "context": "        suggestedSymbol = checker.getSuggestedSymbolForNonexistentProperty(node, receiverType);\n    }\n    else if (isQualifiedName(parent) && parent.right === node) {\n        const symbol = checker.getSymbolAtLocation(parent.left);\n        if (symbol && symbol.flags & SymbolFlags.Module) {\n            suggestedSymbol = checker.getSuggestedSymbolForNonexistentModule(parent.right, symbol);\n        }\n    }\n    else if (isImportSpecifier(parent) && parent.name === node) {\n        Debug.assertNode(node, isIdentifier, \"Expected an identifier for spelling (import)\");\n        const importDeclaration = findAncestor(node, isImportDeclaration)!;\n        const resolvedSourceFile = getResolvedSourceFileFromImportDeclaration(context, importDeclaration, sourceFile);\n        if (resolvedSourceFile && resolvedSourceFile.symbol) {"
+  },
+  {
+    "file": "src/services/codefixes/fixUnreferenceableDecoratorMetadata.ts",
+    "line": 59,
+    "call": "checker.getSymbolAtLocation(identifier)",
+    "owner": "getImportDeclaration",
+    "context": "    if (!identifier || identifier.parent.kind !== SyntaxKind.TypeReference) return;\n\n    const checker = program.getTypeChecker();\n    const symbol = checker.getSymbolAtLocation(identifier);\n    return find(symbol?.declarations || emptyArray, or(isImportClause, isImportSpecifier, isImportEqualsDeclaration) as (n: Node) => n is ImportClause | ImportSpecifier | ImportEqualsDeclaration);\n}\n\n// Converts the import declaration of the offending import to a type-only import,\n// only if it can be done without affecting other imported names. If the conversion\n// cannot be done cleanly, we could offer to *extract* the offending import to a\n// new type-only import declaration, but honestly I doubt anyone will ever use this\n// codefix at all, so it's probably not worth the lines of code.\nfunction doTypeOnlyImportChange(changes: textChanges.ChangeTracker, sourceFile: SourceFile, importDeclaration: ImportClause | ImportSpecifier | ImportEqualsDeclaration, program: Program) {"
+  },
+  {
+    "file": "src/services/codefixes/importFixes.ts",
+    "line": 1185,
+    "call": "checker.getSymbolAtLocation(moduleSpecifier)",
+    "owner": "createExistingImportMap",
+    "context": "            }\n        }\n        else if (i.kind === SyntaxKind.ImportDeclaration || i.kind === SyntaxKind.ImportEqualsDeclaration || i.kind === SyntaxKind.JSDocImportTag) {\n            const moduleSymbol = checker.getSymbolAtLocation(moduleSpecifier);\n            if (moduleSymbol) {\n                (importMap ||= createMultiMap()).add(getSymbolId(moduleSymbol), i);\n            }\n        }\n    }\n\n    return {\n        getImportsForExportInfo: ({ moduleSymbol, exportKind, targetFlags, symbol }: SymbolExportInfo | FutureSymbolExportInfo): readonly FixAddToExistingImportInfo[] => {\n            const matchingDeclarations = importMap?.get(getSymbolId(moduleSymbol));"
+  },
+  {
+    "file": "src/services/codefixes/importFixes.ts",
+    "line": 1494,
+    "call": "checker.getSymbolAtLocation(token)",
+    "owner": "getUmdSymbol",
+    "context": "}\nfunction getUmdSymbol(token: Node, checker: TypeChecker): Symbol | undefined {\n    // try the identifier to see if it is the umd symbol\n    const umdSymbol = isIdentifier(token) ? checker.getSymbolAtLocation(token) : undefined;\n    if (isUMDExportSymbol(umdSymbol)) return umdSymbol;\n\n    // The error wasn't for the symbolAtLocation, it was for the JSX tag itself, which needs access to e.g. `React`.\n    const { parent } = token;\n    if ((isJsxOpeningLikeElement(parent) && parent.tagName === token) || isJsxOpeningFragment(parent)) {\n        const parentSymbol = checker.resolveName(checker.getJsxNamespace(parent), isJsxOpeningLikeElement(parent) ? token : parent, SymbolFlags.Value, /*excludeGlobals*/ false);\n        if (isUMDExportSymbol(parentSymbol)) {\n            return parentSymbol;\n        }"
+  },
+  {
+    "file": "src/services/codefixes/inferFromUsage.ts",
+    "line": 253,
+    "call": "program.getTypeChecker().getSymbolAtLocation(token)",
+    "owner": "doChange",
+    "context": "            return undefined;\n\n        case Diagnostics.Variable_0_implicitly_has_an_1_type.code: {\n            const symbol = program.getTypeChecker().getSymbolAtLocation(token);\n            if (symbol && symbol.valueDeclaration && isVariableDeclaration(symbol.valueDeclaration) && markSeen(symbol.valueDeclaration)) {\n                annotateVariableDeclaration(changes, importAdder, getSourceFileOfNode(symbol.valueDeclaration), symbol.valueDeclaration, program, host, cancellationToken);\n                importAdder.writeFixes(changes);\n                return symbol.valueDeclaration;\n            }\n            return undefined;\n        }\n    }\n"
+  },
+  {
+    "file": "src/services/completions.ts",
+    "line": 3609,
+    "call": "typeChecker.getSymbolAtLocation(tagName)",
+    "owner": "getCompletionData",
+    "context": "    }\n    else if (isStartingCloseTag) {\n        const tagName = (contextToken.parent.parent as JsxElement).openingElement.tagName;\n        const tagSymbol = typeChecker.getSymbolAtLocation(tagName);\n        if (tagSymbol) {\n            symbols = [tagSymbol];\n        }\n        completionKind = CompletionKind.Global;\n        keywordFilters = KeywordCompletionFilters.None;\n    }\n    else {\n        // For JavaScript or TypeScript, if we're not after a dot, then just try to get the\n        // global symbols in scope.  These results should be valid for either language as"
+  },
+  {
+    "file": "src/services/completions.ts",
+    "line": 3723,
+    "call": "typeChecker.getSymbolAtLocation(node)",
+    "owner": "getTypeScriptMemberSymbols",
+    "context": "                isNewIdentifierLocation = true;\n                defaultCommitCharacters = [];\n            }\n            let symbol = typeChecker.getSymbolAtLocation(node);\n            if (symbol) {\n                symbol = skipAlias(symbol, typeChecker);\n                if (symbol.flags & (SymbolFlags.Module | SymbolFlags.Enum)) {\n                    // Extract module or enum members\n                    const exportedSymbols = typeChecker.getExportsOfModule(symbol);\n                    Debug.assertEachIsDefined(exportedSymbols, \"getExportsOfModule() should all be defined\");\n                    const isValidValueAccess = (symbol: Symbol) => typeChecker.isValidPropertyAccess(isImportType ? node as ImportTypeNode : (node.parent as PropertyAccessExpression), symbol.name);\n                    const isValidTypeAccess = (symbol: Symbol) => symbolCanBeReferencedAtTypeLocation(symbol, typeChecker);\n                    const isValidAccess: (symbol: Symbol) => boolean = isNamespaceName"
+  },
+  {
+    "file": "src/services/completions.ts",
+    "line": 3849,
+    "call": "typeChecker.getSymbolAtLocation(leftMostName)",
+    "owner": "addPropertySymbol",
+    "context": "        const computedPropertyName = firstDefined(symbol.declarations, decl => tryCast(getNameOfDeclaration(decl), isComputedPropertyName));\n        if (computedPropertyName) {\n            const leftMostName = getLeftMostName(computedPropertyName.expression); // The completion is for `Symbol`, not `iterator`.\n            const nameSymbol = leftMostName && typeChecker.getSymbolAtLocation(leftMostName);\n            // If this is nested like for `namespace N { export const sym = Symbol(); }`, we'll add the completion for `N`.\n            const firstAccessibleSymbol = nameSymbol && getFirstSymbolInChain(nameSymbol, contextToken, typeChecker);\n            const firstAccessibleSymbolId = firstAccessibleSymbol && getSymbolId(firstAccessibleSymbol);\n            if (firstAccessibleSymbolId && addToSeen(seenPropertySymbols, firstAccessibleSymbolId)) {\n                const index = symbols.length;\n                symbols.push(firstAccessibleSymbol);\n\n                // Symbol completions should have lower priority since they represent computed property access\n                symbolToSortTextMap[getSymbolId(firstAccessibleSymbol)] = SortText.GlobalsOrKeywords;"
+  },
+  {
+    "file": "src/services/completions.ts",
+    "line": 4664,
+    "call": "typeChecker.getSymbolAtLocation(moduleSpecifier)",
+    "owner": "tryGetImportOrExportClauseCompletionSymbols",
+    "context": "            isNewIdentifierLocation = true;\n            return namedImportsOrExports.kind === SyntaxKind.NamedImports ? GlobalsSearch.Fail : GlobalsSearch.Continue;\n        }\n        const moduleSpecifierSymbol = typeChecker.getSymbolAtLocation(moduleSpecifier); // TODO: GH#18217\n        if (!moduleSpecifierSymbol) {\n            isNewIdentifierLocation = true;\n            return GlobalsSearch.Fail;\n        }\n\n        completionKind = CompletionKind.MemberLike;\n        isNewIdentifierLocation = false;\n        const exports = typeChecker.getExportsAndPropertiesOfModule(moduleSpecifierSymbol);\n        const existing = new Set((namedImportsOrExports.elements as NodeArray<ImportOrExportSpecifier>).filter(n => !isCurrentlyEditingNode(n)).map(n => moduleExportNameTextEscaped(n.propertyName || n.name)));"
+  },
+  {
+    "file": "src/services/completions.ts",
+    "line": 5183,
+    "call": "typeChecker.getSymbolAtLocation(expression)",
+    "owner": "setMembersDeclaredBySpreadAssignment",
+    "context": "\n    function setMembersDeclaredBySpreadAssignment(declaration: SpreadAssignment | JsxSpreadAttribute, membersDeclaredBySpreadAssignment: Set<string>) {\n        const expression = declaration.expression;\n        const symbol = typeChecker.getSymbolAtLocation(expression);\n        const type = symbol && typeChecker.getTypeOfSymbolAtLocation(symbol, expression);\n        const properties = type && (type as ObjectType).properties;\n        if (properties) {\n            properties.forEach(property => {\n                membersDeclaredBySpreadAssignment.add(property.name);\n            });\n        }\n    }\n"
+  },
+  {
+    "file": "src/services/findAllReferences.ts",
+    "line": 515,
+    "call": "checker.getSymbolAtLocation(adjustedNode)",
+    "owner": "findReferencedSymbols",
+    "context": "    const checker = program.getTypeChecker();\n    // Unless the starting node is a declaration (vs e.g. JSDoc), don't attempt to compute isDefinition\n    const adjustedNode = Core.getAdjustedNode(node, options);\n    const symbol = isDefinitionForReference(adjustedNode) ? checker.getSymbolAtLocation(adjustedNode) : undefined;\n    return !referencedSymbols || !referencedSymbols.length ? undefined : mapDefined<SymbolAndEntries, ReferencedSymbol>(referencedSymbols, ({ definition, references }) =>\n        // Only include referenced symbols that have a valid definition.\n        definition && {\n            definition: checker.runWithCancellationToken(cancellationToken, checker => definitionToReferencedSymbolDefinitionInfo(definition, checker, node)),\n            references: references.map(r => toReferencedSymbolEntry(r, symbol)),\n        });\n}\n\nfunction isDefinitionForReference(node: Node): boolean {"
+  },
+  {
+    "file": "src/services/findAllReferences.ts",
+    "line": 580,
+    "call": "checker.getSymbolAtLocation(node)",
+    "owner": "getImplementationReferenceEntries",
+    "context": "    else if (node.kind === SyntaxKind.SuperKeyword || isSuperProperty(node.parent)) {\n        // References to and accesses on the super keyword only have one possible implementation, so no\n        // need to \"Find all References\"\n        const symbol = checker.getSymbolAtLocation(node)!;\n        return symbol.valueDeclaration && [nodeEntry(symbol.valueDeclaration)];\n    }\n    else {\n        // Perform \"Find all References\" and retrieve only those that are implementations\n        return getReferenceEntriesForNode(position, node, program, sourceFiles, cancellationToken, { implementations: true, use: FindReferencesUse.References });\n    }\n}\n\n/** @internal */"
+  },
+  {
+    "file": "src/services/findAllReferences.ts",
+    "line": 650,
+    "call": "checker.getSymbolAtLocation(node)",
+    "owner": "(anonymous)",
+    "context": "            }\n            case DefinitionKind.This: {\n                const { node } = def;\n                const symbol = checker.getSymbolAtLocation(node);\n                const displayParts = symbol && SymbolDisplay.getSymbolDisplayPartsDocumentationAndSymbolKind(\n                            checker,\n                            symbol,\n                            node.getSourceFile(),\n                            getContainerNode(node),\n                            node,\n                        ).displayParts || [textPart(\"this\")];\n                return { ...getFileAndTextSpanFromNode(node), name: \"this\", kind: ScriptElementKind.variableElement, displayParts };\n            }"
+  },
+  {
+    "file": "src/services/findAllReferences.ts",
+    "line": 793,
+    "call": "checker.getSymbolAtLocation(originalNode)",
+    "owner": "getPrefixAndSuffixText",
+    "context": "        }\n        else if (isImportSpecifier(parent) && !parent.propertyName) {\n            // If the original symbol was using this alias, just rename the alias.\n            const originalSymbol = isExportSpecifier(originalNode.parent) ? checker.getExportSpecifierLocalTargetSymbol(originalNode.parent) : checker.getSymbolAtLocation(originalNode);\n            return contains(originalSymbol!.declarations, parent) ? { prefixText: name + \" as \" } : emptyOptions;\n        }\n        else if (isExportSpecifier(parent) && !parent.propertyName) {\n            // If the symbol for the node is same as declared node symbol use prefix text\n            return originalNode === entry.node || checker.getSymbolAtLocation(originalNode) === checker.getSymbolAtLocation(entry.node) ?\n                { prefixText: name + \" as \" } :\n                { suffixText: \" as \" + name };\n        }\n    }"
+  },
+  {
+    "file": "src/services/findAllReferences.ts",
+    "line": 798,
+    "call": "checker.getSymbolAtLocation(originalNode)",
+    "owner": "getPrefixAndSuffixText",
+    "context": "        }\n        else if (isExportSpecifier(parent) && !parent.propertyName) {\n            // If the symbol for the node is same as declared node symbol use prefix text\n            return originalNode === entry.node || checker.getSymbolAtLocation(originalNode) === checker.getSymbolAtLocation(entry.node) ?\n                { prefixText: name + \" as \" } :\n                { suffixText: \" as \" + name };\n        }\n    }\n\n    // If the node is a numerical indexing literal, then add quotes around the property access.\n    if (entry.kind !== EntryKind.Span && isNumericLiteral(entry.node) && isAccessExpression(entry.node.parent)) {\n        const quote = getQuoteFromPreference(quotePreference);\n        return { prefixText: quote, suffixText: quote };"
+  },
+  {
+    "file": "src/services/findAllReferences.ts",
+    "line": 798,
+    "call": "checker.getSymbolAtLocation(entry.node)",
+    "owner": "getPrefixAndSuffixText",
+    "context": "        }\n        else if (isExportSpecifier(parent) && !parent.propertyName) {\n            // If the symbol for the node is same as declared node symbol use prefix text\n            return originalNode === entry.node || checker.getSymbolAtLocation(originalNode) === checker.getSymbolAtLocation(entry.node) ?\n                { prefixText: name + \" as \" } :\n                { suffixText: \" as \" + name };\n        }\n    }\n\n    // If the node is a numerical indexing literal, then add quotes around the property access.\n    if (entry.kind !== EntryKind.Span && isNumericLiteral(entry.node) && isAccessExpression(entry.node.parent)) {\n        const quote = getQuoteFromPreference(quotePreference);\n        return { prefixText: quote, suffixText: quote };"
+  },
+  {
+    "file": "src/services/findAllReferences.ts",
+    "line": 828,
+    "call": "checker.getSymbolAtLocation(isDeclaration(node) && node.name ? node.name : node)",
+    "owner": "implementationKindDisplayParts",
+    "context": "}\n\nfunction implementationKindDisplayParts(node: Node, checker: TypeChecker): { kind: ScriptElementKind; displayParts: SymbolDisplayPart[]; } {\n    const symbol = checker.getSymbolAtLocation(isDeclaration(node) && node.name ? node.name : node);\n    if (symbol) {\n        return getDefinitionKindAndDisplayParts(symbol, checker, node);\n    }\n    else if (node.kind === SyntaxKind.ObjectLiteralExpression) {\n        return {\n            kind: ScriptElementKind.interfaceElement,\n            displayParts: [punctuationPart(SyntaxKind.OpenParenToken), textPart(\"object literal\"), punctuationPart(SyntaxKind.CloseParenToken)],\n        };\n    }"
+  },
+  {
+    "file": "src/services/findAllReferences.ts",
+    "line": 1015,
+    "call": "checker.getSymbolAtLocation(isConstructorDeclaration(node) && node.parent.name || node)",
+    "owner": "getReferencedSymbolsForNode",
+    "context": "\n        const checker = program.getTypeChecker();\n        // constructors should use the class symbol, detected by name, if present\n        const symbol = checker.getSymbolAtLocation(isConstructorDeclaration(node) && node.parent.name || node);\n\n        // Could not find a symbol e.g. unknown identifier\n        if (!symbol) {\n            // String literal might be a property (and thus have a symbol), so do this here rather than in getReferencedSymbolsSpecial.\n            if (!options.implementations && isStringLiteralLike(node)) {\n                if (isModuleSpecifierLike(node)) {\n                    const fileIncludeReasons = program.getFileIncludeReasons();\n                    const referencedFileName = program.getResolvedModuleFromModuleSpecifier(node)?.resolvedModule?.resolvedFileName;\n                    const referencedFile = referencedFileName ? program.getSourceFile(referencedFileName) : undefined;"
+  },
+  {
+    "file": "src/services/findAllReferences.ts",
+    "line": 1579,
+    "call": "checker.getSymbolAtLocation(node)",
+    "owner": "eachExportReference",
+    "context": "        for (const indirectUser of indirectUsers) {\n            for (const node of getPossibleSymbolReferenceNodes(indirectUser, isDefaultExport ? \"default\" : exportName)) {\n                // Import specifiers should be handled by importSearches\n                const symbol = checker.getSymbolAtLocation(node);\n                const hasExportAssignmentDeclaration = some(symbol?.declarations, d => tryCast(d, isExportAssignment) ? true : false);\n                if (isIdentifier(node) && !isImportOrExportSpecifier(node.parent) && (symbol === exportSymbol || hasExportAssignmentDeclaration)) {\n                    cb(node);\n                }\n            }\n        }\n    }\n\n    function shouldAddSingleReference(singleRef: Identifier | StringLiteral, state: State): boolean {"
+  },
+  {
+    "file": "src/services/findAllReferences.ts",
+    "line": 1708,
+    "call": "checker.getSymbolAtLocation(definition)",
+    "owner": "eachSymbolReferenceInFile",
+    "context": "    export function eachSymbolReferenceInFile<T>(definition: Identifier, checker: TypeChecker, sourceFile: SourceFile, cb: (token: Identifier) => T, searchContainer: Node = sourceFile): T | undefined {\n        const symbol = isParameterPropertyDeclaration(definition.parent, definition.parent.parent)\n            ? first(checker.getSymbolsOfParameterPropertyDeclaration(definition.parent, definition.text))\n            : checker.getSymbolAtLocation(definition);\n        if (!symbol) return undefined;\n        for (const token of getPossibleSymbolReferenceNodes(sourceFile, symbol.name, searchContainer)) {\n            if (!isIdentifier(token) || token === definition || token.escapedText !== definition.escapedText) continue;\n            const referenceSymbol = checker.getSymbolAtLocation(token)!;\n            if (\n                referenceSymbol === symbol\n                || checker.getShorthandAssignmentValueSymbol(token.parent) === symbol\n                || isExportSpecifier(token.parent) && getLocalSymbolForExportSpecifier(token, referenceSymbol, token.parent, checker) === symbol\n            ) {"
+  },
+  {
+    "file": "src/services/findAllReferences.ts",
+    "line": 1712,
+    "call": "checker.getSymbolAtLocation(token)",
+    "owner": "eachSymbolReferenceInFile",
+    "context": "        if (!symbol) return undefined;\n        for (const token of getPossibleSymbolReferenceNodes(sourceFile, symbol.name, searchContainer)) {\n            if (!isIdentifier(token) || token === definition || token.escapedText !== definition.escapedText) continue;\n            const referenceSymbol = checker.getSymbolAtLocation(token)!;\n            if (\n                referenceSymbol === symbol\n                || checker.getShorthandAssignmentValueSymbol(token.parent) === symbol\n                || isExportSpecifier(token.parent) && getLocalSymbolForExportSpecifier(token, referenceSymbol, token.parent, checker) === symbol\n            ) {\n                const res = cb(token);\n                if (res) return res;\n            }\n        }"
+  },
+  {
+    "file": "src/services/findAllReferences.ts",
+    "line": 1757,
+    "call": "checker.getSymbolAtLocation(signature.name)",
+    "owner": "someSignatureUsage",
+    "context": "    ): boolean {\n        if (!signature.name || !isIdentifier(signature.name)) return false;\n\n        const symbol = Debug.checkDefined(checker.getSymbolAtLocation(signature.name));\n\n        for (const sourceFile of sourceFiles) {\n            for (const name of getPossibleSymbolReferenceNodes(sourceFile, symbol.name)) {\n                if (!isIdentifier(name) || name === signature.name || name.escapedText !== signature.name.escapedText) continue;\n                const called = climbPastPropertyAccess(name);\n                const call = isCallExpression(called.parent) && called.parent.expression === called ? called.parent : undefined;\n                const referenceSymbol = checker.getSymbolAtLocation(name);\n                if (referenceSymbol && checker.getRootSymbols(referenceSymbol).some(s => s === symbol)) {\n                    if (cb(name, call)) {"
+  },
+  {
+    "file": "src/services/findAllReferences.ts",
+    "line": 1764,
+    "call": "checker.getSymbolAtLocation(name)",
+    "owner": "someSignatureUsage",
+    "context": "                if (!isIdentifier(name) || name === signature.name || name.escapedText !== signature.name.escapedText) continue;\n                const called = climbPastPropertyAccess(name);\n                const call = isCallExpression(called.parent) && called.parent.expression === called ? called.parent : undefined;\n                const referenceSymbol = checker.getSymbolAtLocation(name);\n                if (referenceSymbol && checker.getRootSymbols(referenceSymbol).some(s => s === symbol)) {\n                    if (cb(name, call)) {\n                        return true;\n                    }\n                }\n            }\n        }\n        return false;\n    }"
+  },
+  {
+    "file": "src/services/findAllReferences.ts",
+    "line": 1930,
+    "call": "state.checker.getSymbolAtLocation(referenceLocation)",
+    "owner": "getReferencesAtLocation",
+    "context": "\n        if (!hasMatchingMeaning(referenceLocation, state)) return;\n\n        let referenceSymbol = state.checker.getSymbolAtLocation(referenceLocation);\n        if (!referenceSymbol) {\n            return;\n        }\n\n        const parent = referenceLocation.parent;\n        if (isImportSpecifier(parent) && parent.propertyName === referenceLocation) {\n            // This is added through `singleReferences` in ImportsResult. If we happen to see it again, don't add it again.\n            return;\n        }"
+  },
+  {
+    "file": "src/services/findAllReferences.ts",
+    "line": 2761,
+    "call": "checker.getSymbolAtLocation(node)",
+    "owner": "getReferenceEntriesForShorthandPropertyAssignment",
+    "context": "    }\n\n    export function getReferenceEntriesForShorthandPropertyAssignment(node: Node, checker: TypeChecker, addReference: (node: Node) => void): void {\n        const refSymbol = checker.getSymbolAtLocation(node)!;\n        const shorthandSymbol = checker.getShorthandAssignmentValueSymbol(refSymbol.valueDeclaration);\n\n        if (shorthandSymbol) {\n            for (const declaration of shorthandSymbol.getDeclarations()!) {\n                if (getMeaningFromDeclaration(declaration) & SemanticMeaning.Value) {\n                    addReference(declaration);\n                }\n            }\n        }"
+  },
+  {
+    "file": "src/services/getEditsForFileRename.ts",
+    "line": 203,
+    "call": "program.getTypeChecker().getSymbolAtLocation(importLiteral)",
+    "owner": "(anonymous)",
+    "context": "            const newAbsolute = oldToNew(oldAbsolute);\n            return newAbsolute === undefined ? undefined : ensurePathIsNonModuleName(getRelativePathFromDirectory(newImportFromDirectory, newAbsolute, getCanonicalFileName));\n        }, importLiteral => {\n            const importedModuleSymbol = program.getTypeChecker().getSymbolAtLocation(importLiteral);\n            // No need to update if it's an ambient module^M\n            if (importedModuleSymbol?.declarations && importedModuleSymbol.declarations.some(d => isAmbientModule(d))) return undefined;\n\n            const toImport = oldFromNew !== undefined\n                // If we're at the new location (file was already renamed), need to redo module resolution starting from the old location.\n                // TODO:GH#18217\n                ? getSourceFileToImportFromResolved(importLiteral, resolveModuleName(importLiteral.text, oldImportFromPath, program.getCompilerOptions(), host as ModuleResolutionHost), oldToNew, allFiles)\n                : getSourceFileToImport(importedModuleSymbol, importLiteral, sourceFile, program, host, oldToNew);\n"
+  },
+  {
+    "file": "src/services/goToDefinition.ts",
+    "line": 344,
+    "call": "typeChecker.getSymbolAtLocation(expression)",
+    "owner": "getDefinitionFromOverriddenMember",
+    "context": "    const baseTypeNode = getEffectiveBaseTypeNode(baseDeclaration);\n    if (!baseTypeNode) return;\n    const expression = skipParentheses(baseTypeNode.expression);\n    const base = isClassExpression(expression) ? expression.symbol : typeChecker.getSymbolAtLocation(expression);\n    if (!base) return;\n    const baseType = hasStaticModifier(classElement) ? typeChecker.getTypeOfSymbol(base) : typeChecker.getDeclaredTypeOfSymbol(base);\n    let baseProp: Symbol | undefined;\n\n    if (isComputedPropertyName(classElement.name)) {\n        const prop = typeChecker.getSymbolAtLocation(classElement.name);\n\n        if (!prop) {\n            return;"
+  },
+  {
+    "file": "src/services/goToDefinition.ts",
+    "line": 350,
+    "call": "typeChecker.getSymbolAtLocation(classElement.name)",
+    "owner": "getDefinitionFromOverriddenMember",
+    "context": "    let baseProp: Symbol | undefined;\n\n    if (isComputedPropertyName(classElement.name)) {\n        const prop = typeChecker.getSymbolAtLocation(classElement.name);\n\n        if (!prop) {\n            return;\n        }\n\n        if (isKnownSymbol(prop)) {\n            baseProp = find(typeChecker.getPropertiesOfType(baseType), s => s.escapedName === prop.escapedName);\n        }\n        else {"
+  },
+  {
+    "file": "src/services/goToDefinition.ts",
+    "line": 559,
+    "call": "checker.getSymbolAtLocation(node)",
+    "owner": "getSymbol",
+    "context": "}\n\nfunction getSymbol(node: Node, checker: TypeChecker, stopAtAlias: boolean | undefined) {\n    const symbol = checker.getSymbolAtLocation(node);\n    // If this is an alias, and the request came at the declaration location\n    // get the aliased symbol instead. This allows for goto def on an import e.g.\n    //   import {A, B} from \"mod\";\n    // to jump to the implementation directly.\n    let failedAliasResolution = false;\n    if (symbol?.declarations && symbol.flags & SymbolFlags.Alias && !stopAtAlias && shouldSkipAlias(node, symbol.declarations[0])) {\n        const aliased = checker.getAliasedSymbol(symbol);\n        if (aliased.declarations) {\n            return { symbol: aliased };"
+  },
+  {
+    "file": "src/services/importTracker.ts",
+    "line": 398,
+    "call": "checker.getSymbolAtLocation(name)",
+    "owner": "handleImport",
+    "context": "        // If a default import has the same name as the default export, allow to rename it.\n        // Given `import f` and `export default function f`, we will rename both, but for `import g` we will rename just that.\n        if (name && (exportKind === ExportKind.Default || exportKind === ExportKind.ExportEquals) && (!isForRename || name.escapedText === symbolEscapedNameNoDefault(exportSymbol))) {\n            const defaultImportAlias = checker.getSymbolAtLocation(name)!;\n            addSearch(name, defaultImportAlias);\n        }\n    }\n\n    /**\n     * `import x = require(\"./x\")` or `import * as x from \"./x\"`.\n     * An `export =` may be imported by this syntax, so it may be a direct import.\n     * If it's not a direct import, it will be in `indirectUsers`, so we don't have to do anything here.\n     */"
+  },
+  {
+    "file": "src/services/importTracker.ts",
+    "line": 411,
+    "call": "checker.getSymbolAtLocation(importName)",
+    "owner": "handleNamespaceImportLike",
+    "context": "    function handleNamespaceImportLike(importName: Identifier): void {\n        // Don't rename an import that already has a different name than the export.\n        if (exportKind === ExportKind.ExportEquals && (!isForRename || isNameMatch(importName.escapedText))) {\n            addSearch(importName, checker.getSymbolAtLocation(importName)!);\n        }\n    }\n\n    function searchForNamedImport(namedBindings: NamedImportsOrExports | undefined): void {\n        if (!namedBindings) {\n            return;\n        }\n\n        for (const element of namedBindings.elements) {"
+  },
+  {
+    "file": "src/services/importTracker.ts",
+    "line": 433,
+    "call": "checker.getSymbolAtLocation(name)",
+    "owner": "searchForNamedImport",
+    "context": "                // But do rename `foo` in ` { default as foo }` if that's the original export name.\n                if (!isForRename || moduleExportNameTextEscaped(name) === exportSymbol.escapedName) {\n                    // Search locally for `bar`.\n                    addSearch(name, checker.getSymbolAtLocation(name)!);\n                }\n            }\n            else {\n                const localSymbol = element.kind === SyntaxKind.ExportSpecifier && element.propertyName\n                    ? checker.getExportSpecifierLocalTargetSymbol(element)! // For re-exporting under a different name, we want to get the re-exported symbol.\n                    : checker.getSymbolAtLocation(name)!;\n                addSearch(name, localSymbol);\n            }\n        }"
+  },
+  {
+    "file": "src/services/importTracker.ts",
+    "line": 439,
+    "call": "checker.getSymbolAtLocation(name)",
+    "owner": "searchForNamedImport",
+    "context": "            else {\n                const localSymbol = element.kind === SyntaxKind.ExportSpecifier && element.propertyName\n                    ? checker.getExportSpecifierLocalTargetSymbol(element)! // For re-exporting under a different name, we want to get the re-exported symbol.\n                    : checker.getSymbolAtLocation(name)!;\n                addSearch(name, localSymbol);\n            }\n        }\n    }\n\n    function isNameMatch(name: __String): boolean {\n        // Use name of \"default\" even in `export =` case because we may have allowSyntheticDefaultImports\n        return name === exportSymbol.escapedName || exportKind !== ExportKind.Named && name === InternalSymbolName.Default;\n    }"
+  },
+  {
+    "file": "src/services/importTracker.ts",
+    "line": 453,
+    "call": "checker.getSymbolAtLocation(name)",
+    "owner": "findNamespaceReExports",
+    "context": "\n/** Returns 'true' is the namespace 'name' is re-exported from this module, and 'false' if it is only used locally. */\nfunction findNamespaceReExports(sourceFileLike: SourceFileLike, name: Identifier, checker: TypeChecker): boolean {\n    const namespaceImportSymbol = checker.getSymbolAtLocation(name);\n\n    return !!forEachPossibleImportOrExportStatement(sourceFileLike, statement => {\n        if (!isExportDeclaration(statement)) return;\n        const { exportClause, moduleSpecifier } = statement;\n        return !moduleSpecifier && exportClause && isNamedExports(exportClause) &&\n            exportClause.elements.some(element => checker.getExportSpecifierLocalTargetSymbol(element) === namespaceImportSymbol);\n    });\n}\n"
+  },
+  {
+    "file": "src/services/importTracker.ts",
+    "line": 493,
+    "call": "checker.getSymbolAtLocation(moduleSpecifier)",
+    "owner": "(anonymous)",
+    "context": "        }\n\n        forEachImport(referencingFile, (importDecl, moduleSpecifier) => {\n            const moduleSymbol = checker.getSymbolAtLocation(moduleSpecifier);\n            if (moduleSymbol === searchModuleSymbol) {\n                refs.push(nodeIsSynthesized(importDecl) ? { kind: \"implicit\", literal: moduleSpecifier, referencingFile } : { kind: \"import\", literal: moduleSpecifier });\n            }\n        });\n    }\n    return refs;\n}\n\n/** Returns a map from a module symbol Id to all import statements that directly reference the module. */"
+  },
+  {
+    "file": "src/services/importTracker.ts",
+    "line": 509,
+    "call": "checker.getSymbolAtLocation(moduleSpecifier)",
+    "owner": "(anonymous)",
+    "context": "    for (const sourceFile of sourceFiles) {\n        if (cancellationToken) cancellationToken.throwIfCancellationRequested();\n        forEachImport(sourceFile, (importDecl, moduleSpecifier) => {\n            const moduleSymbol = checker.getSymbolAtLocation(moduleSpecifier);\n            if (moduleSymbol) {\n                const id = getSymbolId(moduleSymbol).toString();\n                let imports = map.get(id);\n                if (!imports) {\n                    map.set(id, imports = []);\n                }\n                imports.push(importDecl);\n            }\n        });"
+  },
+  {
+    "file": "src/services/importTracker.ts",
+    "line": 610,
+    "call": "checker.getSymbolAtLocation(exportNode.name)",
+    "owner": "getExport",
+    "context": "                        return undefined;\n                    }\n\n                    const lhsSymbol = checker.getSymbolAtLocation(exportNode.name)!;\n                    return { kind: ImportExport.Import, symbol: lhsSymbol };\n                }\n                else {\n                    return exportInfo(symbol, getExportKindForDeclaration(exportNode));\n                }\n            }\n            else if (isNamespaceExport(parent)) {\n                return exportInfo(symbol, ExportKind.Named);\n            }"
+  },
+  {
+    "file": "src/services/importTracker.ts",
+    "line": 660,
+    "call": "checker.getSymbolAtLocation(getNameOfAccessExpression(cast(node.left, isAccessExpression)))",
+    "owner": "getSpecialPropertyExport",
+    "context": "                    return undefined;\n            }\n\n            const sym = useLhsSymbol ? checker.getSymbolAtLocation(getNameOfAccessExpression(cast(node.left, isAccessExpression))) : symbol;\n            return sym && exportInfo(sym, kind);\n        }\n    }\n\n    function getImport(): ImportedSymbol | undefined {\n        const isImport = isNodeImport(node);\n        if (!isImport) return undefined;\n\n        // A symbol being imported is always an alias. So get what that aliases to find the local symbol."
+  },
+  {
+    "file": "src/services/importTracker.ts",
+    "line": 771,
+    "call": "checker.getSymbolAtLocation(declaration)",
+    "owner": "skipExportSpecifierSymbol",
+    "context": "            }\n            else if (isPropertyAccessExpression(declaration) && isModuleExportsAccessExpression(declaration.expression) && !isPrivateIdentifier(declaration.name)) {\n                // Export of form 'module.exports.propName = expr';\n                return checker.getSymbolAtLocation(declaration)!;\n            }\n            else if (\n                isShorthandPropertyAssignment(declaration)\n                && isBinaryExpression(declaration.parent.parent)\n                && getAssignmentDeclarationKind(declaration.parent.parent) === AssignmentDeclarationKind.ModuleExports\n            ) {\n                return checker.getExportSpecifierLocalTargetSymbol(declaration.name)!;\n            }\n        }"
+  },
+  {
+    "file": "src/services/navigateTo.ts",
+    "line": 121,
+    "call": "checker.getSymbolAtLocation((declaration as ImportClause | ImportSpecifier | ImportEqualsDeclaration).name!)",
+    "owner": "shouldKeepItem",
+    "context": "        case SyntaxKind.ImportClause:\n        case SyntaxKind.ImportSpecifier:\n        case SyntaxKind.ImportEqualsDeclaration:\n            const importer = checker.getSymbolAtLocation((declaration as ImportClause | ImportSpecifier | ImportEqualsDeclaration).name!)!; // TODO: GH#18217\n            const imported = checker.getAliasedSymbol(importer);\n            return importer.escapedName !== imported.escapedName\n                && !imported.declarations?.every(d => shouldExcludeFile(d.getSourceFile(), excludeLibFiles, singleCurrentFile, program));\n        default:\n            return true;\n    }\n}\n\nfunction tryAddSingleDeclarationName(declaration: Declaration, containers: string[]): boolean {"
+  },
+  {
+    "file": "src/services/refactors/convertExport.ts",
+    "line": 141,
+    "call": "checker.getSymbolAtLocation(id)",
+    "owner": "(anonymous)",
+    "context": "    }\n\n    const noSymbolError = (id: Node) =>\n        (isIdentifier(id) && checker.getSymbolAtLocation(id)) ? undefined\n            : { error: getLocaleSpecificMessage(Diagnostics.Can_only_convert_named_export) };\n\n    switch (exportNode.kind) {\n        case SyntaxKind.FunctionDeclaration:\n        case SyntaxKind.ClassDeclaration:\n        case SyntaxKind.InterfaceDeclaration:\n        case SyntaxKind.EnumDeclaration:\n        case SyntaxKind.TypeAliasDeclaration:\n        case SyntaxKind.ModuleDeclaration: {"
+  },
+  {
+    "file": "src/services/refactors/convertExport.ts",
+    "line": 227,
+    "call": "checker.getSymbolAtLocation(exportName)",
+    "owner": "changeImports",
+    "context": "\nfunction changeImports(program: Program, { wasDefault, exportName, exportingModuleSymbol }: ExportInfo, changes: textChanges.ChangeTracker, cancellationToken: CancellationToken | undefined): void {\n    const checker = program.getTypeChecker();\n    const exportSymbol = Debug.checkDefined(checker.getSymbolAtLocation(exportName), \"Export name should resolve to a symbol\");\n    FindAllReferences.Core.eachExportReference(program.getSourceFiles(), checker, cancellationToken, exportSymbol, exportingModuleSymbol, exportName.text, wasDefault, ref => {\n        if (exportName === ref) return;\n        const importingSourceFile = ref.getSourceFile();\n        if (wasDefault) {\n            changeDefaultToNamedImport(importingSourceFile, ref, changes, exportName.text);\n        }\n        else {\n            changeNamedToDefaultImport(importingSourceFile, ref, changes);\n        }"
+  },
+  {
+    "file": "src/services/refactors/convertImport.ts",
+    "line": 220,
+    "call": "checker.getSymbolAtLocation(namedImport.name)",
+    "owner": "(anonymous)",
+    "context": "\n    const toConvertSymbols = new Set<Symbol>();\n    toConvert.elements.forEach(namedImport => {\n        const symbol = checker.getSymbolAtLocation(namedImport.name);\n        if (symbol) {\n            toConvertSymbols.add(symbol);\n        }\n    });\n    const preferredName = moduleSpecifier && isStringLiteral(moduleSpecifier) ? moduleSpecifierToValidIdentifier(moduleSpecifier.text, ScriptTarget.ESNext) : \"module\";\n    function hasNamespaceNameConflict(namedImport: ImportSpecifier): boolean {\n        // We need to check if the preferred namespace name (`preferredName`) we'd like to use in the refactored code will present a name conflict.\n        // A name conflict means that, in a scope where we would like to use the preferred namespace name, there already exists a symbol with that name in that scope.\n        // We are going to use the namespace name in the scopes the named imports being refactored are referenced,"
+  },
+  {
+    "file": "src/services/refactors/convertParamsToDestructuredObject.ts",
+    "line": 321,
+    "call": "checker.getSymbolAtLocation(node)",
+    "owner": "getSymbolTargetAtLocation",
+    "context": "    }\n\n    function getSymbolTargetAtLocation(node: Node) {\n        const symbol = checker.getSymbolAtLocation(node);\n        return symbol && getSymbolTarget(symbol, checker);\n    }\n}\n\n/**\n * Gets the symbol for the contextual type of the node if it is not a union or intersection.\n */\nfunction getSymbolForContextualType(node: Node, checker: TypeChecker): Symbol | undefined {\n    const element = getContainingObjectLiteralElement(node);"
+  },
+  {
+    "file": "src/services/refactors/extractSymbol.ts",
+    "line": 2146,
+    "call": "checker.getSymbolAtLocation(node)",
+    "owner": "checkForUsedDeclarations",
+    "context": "        // Otherwise check and recurse.\n        const sym = isIdentifier(node)\n            ? getSymbolReferencedByIdentifier(node)\n            : checker.getSymbolAtLocation(node);\n        if (sym) {\n            const decl = find(visibleDeclarationsInExtractedRange, d => d.symbol === sym);\n            if (decl) {\n                if (isVariableDeclaration(decl)) {\n                    const idString = decl.symbol.id.toString();\n                    if (!exposedVariableSymbolSet.has(idString)) {\n                        exposedVariableDeclarations.push(decl);\n                        exposedVariableSymbolSet.set(idString, true);\n                    }"
+  },
+  {
+    "file": "src/services/refactors/extractSymbol.ts",
+    "line": 2176,
+    "call": "checker.getSymbolAtLocation(identifier)",
+    "owner": "getSymbolReferencedByIdentifier",
+    "context": "        // (since the name is a declaration and will be included in the extracted range).\n        return identifier.parent && isShorthandPropertyAssignment(identifier.parent) && identifier.parent.name === identifier\n            ? checker.getShorthandAssignmentValueSymbol(identifier.parent)\n            : checker.getSymbolAtLocation(identifier);\n    }\n\n    function tryReplaceWithQualifiedNameOrPropertyAccess(symbol: Symbol | undefined, scopeDecl: Node, isTypeNode: boolean): PropertyAccessExpression | EntityName | undefined {\n        if (!symbol) {\n            return undefined;\n        }\n        const decls = symbol.getDeclarations();\n        if (decls && decls.some(d => d.parent === scopeDecl)) {\n            return factory.createIdentifier(symbol.name);"
+  },
+  {
+    "file": "src/services/refactors/moveToFile.ts",
+    "line": 348,
+    "call": "checker.getSymbolAtLocation(moduleSpecifierFromImport(importNode))",
+    "owner": "(anonymous)",
+    "context": "        if (sourceFile === oldFile) continue;\n        for (const statement of sourceFile.statements) {\n            forEachImportInStatement(statement, importNode => {\n                if (checker.getSymbolAtLocation(moduleSpecifierFromImport(importNode)) !== oldFile.symbol) return;\n\n                const shouldMove = (name: Identifier): boolean => {\n                    const symbol = isBindingElement(name.parent)\n                        ? getPropertySymbolFromBindingElement(checker, name.parent as ObjectBindingElementWithoutPropertyName)\n                        : skipAlias(checker.getSymbolAtLocation(name)!, checker);\n                    return !!symbol && movedSymbols.has(symbol);\n                };\n                deleteUnusedImports(sourceFile, importNode, changes, shouldMove); // These will be changed to imports from the new file\n"
+  },
+  {
+    "file": "src/services/refactors/moveToFile.ts",
+    "line": 353,
+    "call": "checker.getSymbolAtLocation(name)",
+    "owner": "(anonymous)",
+    "context": "                const shouldMove = (name: Identifier): boolean => {\n                    const symbol = isBindingElement(name.parent)\n                        ? getPropertySymbolFromBindingElement(checker, name.parent as ObjectBindingElementWithoutPropertyName)\n                        : skipAlias(checker.getSymbolAtLocation(name)!, checker);\n                    return !!symbol && movedSymbols.has(symbol);\n                };\n                deleteUnusedImports(sourceFile, importNode, changes, shouldMove); // These will be changed to imports from the new file\n\n                const pathToTargetFileWithExtension = resolvePath(getDirectoryPath(getNormalizedAbsolutePath(oldFile.fileName, program.getCurrentDirectory())), targetFileName);\n\n                // no self-imports\n\n                if (getStringComparer(!program.useCaseSensitiveFileNames())(pathToTargetFileWithExtension, sourceFile.fileName) === Comparison.EqualTo) return;"
+  },
+  {
+    "file": "src/services/refactors/moveToFile.ts",
+    "line": 405,
+    "call": "checker.getSymbolAtLocation(ref.parent.name)",
+    "owner": "(anonymous)",
+    "context": "    FindAllReferences.Core.eachSymbolReferenceInFile(oldImportId, checker, sourceFile, ref => {\n        if (!isPropertyAccessExpression(ref.parent)) return;\n        needUniqueName = needUniqueName || !!checker.resolveName(preferredNewNamespaceName, ref, SymbolFlags.All, /*excludeGlobals*/ true);\n        if (movedSymbols.has(checker.getSymbolAtLocation(ref.parent.name)!)) {\n            toChange.push(ref);\n        }\n    });\n\n    if (toChange.length) {\n        const newNamespaceName = needUniqueName ? getUniqueName(preferredNewNamespaceName, sourceFile) : preferredNewNamespaceName;\n        for (const ref of toChange) {\n            changes.replaceNode(sourceFile, ref, factory.createIdentifier(newNamespaceName));\n        }"
+  },
+  {
+    "file": "src/services/refactors/moveToFile.ts",
+    "line": 882,
+    "call": "checker.getSymbolAtLocation(decl.expression.left)",
+    "owner": "(anonymous)",
+    "context": "\n    for (const statement of toMove) {\n        forEachTopLevelDeclaration(statement, decl => {\n            movedSymbols.add(Debug.checkDefined(isExpressionStatement(decl) ? checker.getSymbolAtLocation(decl.expression.left) : decl.symbol, \"Need a symbol here\"));\n        });\n    }\n\n    const unusedImportsFromOldFile = new Set<Symbol>();\n    for (const statement of toMove) {\n        forEachReference(statement, checker, enclosingRange, (symbol, isValidTypeOnlyUseSite) => {\n            if (!some(symbol.declarations)) {\n                return;\n            }"
+  },
+  {
+    "file": "src/services/refactors/moveToFile.ts",
+    "line": 968,
+    "call": "checker.getSymbolAtLocation(node)",
+    "owner": "cb",
+    "context": "            if (enclosingRange && !rangeContainsRange(enclosingRange, node)) {\n                return;\n            }\n            const sym = checker.getSymbolAtLocation(node);\n            if (sym) onReference(sym, isValidTypeOnlyAliasUseSite(node));\n        }\n        else {\n            node.forEachChild(cb);\n        }\n    });\n}\n\nfunction forEachTopLevelDeclaration<T>(statement: Statement, cb: (node: TopLevelDeclaration) => T): T | undefined {"
+  },
+  {
+    "file": "src/services/refactors/moveToFile.ts",
+    "line": 1129,
+    "call": "checker.getSymbolAtLocation(e.propertyName || e.name)",
+    "owner": "getExistingLocals",
+    "context": "            declaration.importClause.namedBindings && isNamedImports(declaration.importClause.namedBindings)\n        ) {\n            for (const e of declaration.importClause.namedBindings.elements) {\n                const symbol = checker.getSymbolAtLocation(e.propertyName || e.name);\n                if (symbol) {\n                    existingLocals.add(skipAlias(symbol, checker));\n                }\n            }\n        }\n        if (isVariableDeclarationInitializedToRequire(declaration.parent) && isObjectBindingPattern(declaration.parent.name)) {\n            for (const e of declaration.parent.name.elements) {\n                const symbol = checker.getSymbolAtLocation(e.propertyName || e.name);\n                if (symbol) {"
+  },
+  {
+    "file": "src/services/refactors/moveToFile.ts",
+    "line": 1137,
+    "call": "checker.getSymbolAtLocation(e.propertyName || e.name)",
+    "owner": "getExistingLocals",
+    "context": "        }\n        if (isVariableDeclarationInitializedToRequire(declaration.parent) && isObjectBindingPattern(declaration.parent.name)) {\n            for (const e of declaration.parent.name.elements) {\n                const symbol = checker.getSymbolAtLocation(e.propertyName || e.name);\n                if (symbol) {\n                    existingLocals.add(skipAlias(symbol, checker));\n                }\n            }\n        }\n    }\n\n    for (const statement of statements) {\n        forEachReference(statement, checker, /*enclosingRange*/ undefined, s => {"
+  },
+  {
+    "file": "src/services/rename.ts",
+    "line": 74,
+    "call": "typeChecker.getSymbolAtLocation(node)",
+    "owner": "getRenameInfoForNode",
+    "context": "    program: Program,\n    preferences: UserPreferences,\n): RenameInfo | undefined {\n    const symbol = typeChecker.getSymbolAtLocation(node);\n    if (!symbol) {\n        if (isStringLiteralLike(node)) {\n            const type = getContextualTypeFromParentOrAncestorTypeNode(node, typeChecker);\n            if (\n                type && ((type.flags & TypeFlags.StringLiteral) || (\n                    (type.flags & TypeFlags.Union) && every((type as UnionType).types, type => !!(type.flags & TypeFlags.StringLiteral))\n                ))\n            ) {\n                return getRenameInfoSuccess(node.text, node.text, ScriptElementKind.string, \"\", node, sourceFile);"
+  },
+  {
+    "file": "src/services/services.ts",
+    "line": 2011,
+    "call": "checker.getSymbolAtLocation(refNode)",
+    "owner": "getSymbolForProgram",
+    "context": "                    if (knownSymbolSpans.has(ref)) {\n                        const refNode = getNodeForSpan(ref);\n                        Debug.assertIsDefined(refNode);\n                        return checker.getSymbolAtLocation(refNode);\n                    }\n                    const mappedSpan = getMappedDocumentSpan(ref, sourceMapper, maybeBind(host, host.fileExists));\n                    if (mappedSpan && knownSymbolSpans.has(mappedSpan)) {\n                        const refNode = getNodeForSpan(mappedSpan);\n                        if (refNode) {\n                            return checker.getSymbolAtLocation(refNode);\n                        }\n                    }\n                }"
+  },
+  {
+    "file": "src/services/services.ts",
+    "line": 2017,
+    "call": "checker.getSymbolAtLocation(refNode)",
+    "owner": "getSymbolForProgram",
+    "context": "                    if (mappedSpan && knownSymbolSpans.has(mappedSpan)) {\n                        const refNode = getNodeForSpan(mappedSpan);\n                        if (refNode) {\n                            return checker.getSymbolAtLocation(refNode);\n                        }\n                    }\n                }\n            }\n\n            return undefined;\n        }\n\n        function getNodeForSpan(docSpan: DocumentSpan): Node | undefined {"
+  },
+  {
+    "file": "src/services/services.ts",
+    "line": 3568,
+    "call": "checker.getSymbolAtLocation(node)",
+    "owner": "getSymbolAtLocationForQuickInfo",
+    "context": "            return first(properties);\n        }\n    }\n    return checker.getSymbolAtLocation(node);\n}\n\n/**\n * Gets all symbols for one property. Does not get symbols for every property.\n *\n * @internal\n */\nexport function getPropertySymbolsFromContextualType(node: ObjectLiteralElementWithName, checker: TypeChecker, contextualType: Type, unionSymbolOk: boolean): readonly Symbol[] {\n    contextualType = contextualType.getNonNullableType();"
+  },
+  {
+    "file": "src/services/signatureHelp.ts",
+    "line": 199,
+    "call": "checker.getSymbolAtLocation(called)",
+    "owner": "getCandidateOrTypeInfo",
+    "context": "            const candidates = getPossibleGenericSignatures(called, argumentCount, checker);\n            if (candidates.length !== 0) return { kind: CandidateOrTypeKind.Candidate, candidates, resolvedSignature: first(candidates) };\n\n            const symbol = checker.getSymbolAtLocation(called);\n            return symbol && { kind: CandidateOrTypeKind.Type, symbol };\n        }\n        case InvocationKind.Contextual:\n            return { kind: CandidateOrTypeKind.Candidate, candidates: [invocation.signature], resolvedSignature: invocation.signature };\n        default:\n            return Debug.assertNever(invocation);\n    }\n}\n"
+  },
+  {
+    "file": "src/services/signatureHelp.ts",
+    "line": 656,
+    "call": "typeChecker.getSymbolAtLocation(getExpressionFromInvocation(invocation))",
+    "owner": "createSignatureHelpItems",
+    "context": "    useFullPrefix?: boolean,\n): SignatureHelpItems {\n    const enclosingDeclaration = getEnclosingDeclarationFromInvocation(invocation);\n    const callTargetSymbol = invocation.kind === InvocationKind.Contextual ? invocation.symbol : (typeChecker.getSymbolAtLocation(getExpressionFromInvocation(invocation)) || useFullPrefix && resolvedSignature.declaration?.symbol);\n    const callTargetDisplayParts = callTargetSymbol ? symbolToDisplayParts(typeChecker, callTargetSymbol, useFullPrefix ? sourceFile : undefined, /*meaning*/ undefined) : emptyArray;\n    const items = map(candidates, candidateSignature => getSignatureHelpItem(candidateSignature, callTargetDisplayParts, isTypeParameterList, typeChecker, enclosingDeclaration, sourceFile));\n\n    let selectedItemIndex = 0;\n    let itemsSeen = 0;\n    for (let i = 0; i < items.length; i++) {\n        const item = items[i];\n        if (candidates[i] === resolvedSignature) {\n            selectedItemIndex = itemsSeen;"
+  },
+  {
+    "file": "src/services/stringCompletions.ts",
+    "line": 499,
+    "call": "typeChecker.getSymbolAtLocation(moduleSpecifier)",
+    "owner": "getStringLiteralCompletionEntries",
+    "context": "            const namedImportsOrExports = specifier.parent;\n            const { moduleSpecifier } = namedImportsOrExports.kind === SyntaxKind.NamedImports ? namedImportsOrExports.parent.parent : namedImportsOrExports.parent;\n            if (!moduleSpecifier) return;\n            const moduleSpecifierSymbol = typeChecker.getSymbolAtLocation(moduleSpecifier); // TODO: GH#18217\n            if (!moduleSpecifierSymbol) return;\n            const exports = typeChecker.getExportsAndPropertiesOfModule(moduleSpecifierSymbol);\n            const existing = new Set(namedImportsOrExports.elements.map(n => moduleExportNameTextEscaped(n.propertyName || n.name)));\n            const uniques = exports.filter(e => e.escapedName !== InternalSymbolName.Default && !existing.has(e.escapedName));\n            return { kind: StringLiteralCompletionKind.Properties, symbols: uniques, hasIndexSignature: false };\n        case SyntaxKind.BinaryExpression:\n            if ((parent as BinaryExpression).operatorToken.kind === SyntaxKind.InKeyword) {\n                const type = typeChecker.getTypeAtLocation((parent as BinaryExpression).right);\n                const properties = type.isUnion() ? typeChecker.getAllPossiblePropertiesOfTypes(type.types) : type.getApparentProperties();"
+  },
+  {
+    "file": "src/services/suggestionDiagnostics.ts",
+    "line": 276,
+    "call": "checker.getSymbolAtLocation(arg)",
+    "owner": "isFixablePromiseArgument",
+    "context": "            return true;\n        case SyntaxKind.Identifier:\n        case SyntaxKind.PropertyAccessExpression: {\n            const symbol = checker.getSymbolAtLocation(arg);\n            if (!symbol) {\n                return false;\n            }\n            return checker.isUndefinedSymbol(symbol) ||\n                some(skipAlias(symbol, checker).declarations, d => isFunctionLike(d) || hasInitializer(d) && !!d.initializer && isFunctionLike(d.initializer));\n        }\n        default:\n            return false;\n    }"
+  },
+  {
+    "file": "src/services/symbolDisplay.ts",
+    "line": 660,
+    "call": "typeChecker.getSymbolAtLocation(importEqualsDeclaration.moduleReference)",
+    "owner": "(anonymous)",
+    "context": "                    displayParts.push(punctuationPart(SyntaxKind.CloseParenToken));\n                }\n                else {\n                    const internalAliasSymbol = typeChecker.getSymbolAtLocation(importEqualsDeclaration.moduleReference);\n                    if (internalAliasSymbol) {\n                        displayParts.push(spacePart());\n                        displayParts.push(operatorPart(SyntaxKind.EqualsToken));\n                        displayParts.push(spacePart());\n                        addFullSymbolName(internalAliasSymbol, enclosingDeclaration);\n                    }\n                }\n                return true;\n            }"
+  },
+  {
+    "file": "src/services/symbolDisplay.ts",
+    "line": 773,
+    "call": "typeChecker.getSymbolAtLocation((declaration.parent as BinaryExpression).right)",
+    "owner": "getSymbolDisplayPartsDocumentationAndSymbolKindWorker",
+    "context": "                    continue;\n                }\n\n                const rhsSymbol = typeChecker.getSymbolAtLocation((declaration.parent as BinaryExpression).right);\n                if (!rhsSymbol) {\n                    continue;\n                }\n\n                documentation = rhsSymbol.getDocumentationComment(typeChecker);\n                tags = rhsSymbol.getJsDocTags(typeChecker);\n                if (documentation.length > 0) {\n                    break;\n                }"
+  },
+  {
+    "file": "src/services/utilities.ts",
+    "line": 2984,
+    "call": "checker?.getSymbolAtLocation(link.name)",
+    "owner": "buildLinkParts",
+    "context": "        }\n    }\n    else {\n        const symbol = checker?.getSymbolAtLocation(link.name);\n        const targetSymbol = symbol && checker ? getSymbolTarget(symbol, checker) : undefined;\n        const suffix = findLinkNameEnd(link.text);\n        const name = getTextOfNode(link.name) + link.text.slice(0, suffix);\n        const text = skipSeparatorFromLinkText(link.text.slice(suffix));\n        const decl = targetSymbol?.valueDeclaration || targetSymbol?.declarations?.[0];\n        if (decl) {\n            parts.push(linkNamePart(name, decl));\n            if (text) parts.push(linkTextPart(text));\n        }"
+  },
+  {
+    "file": "src/services/utilities.ts",
+    "line": 4123,
+    "call": "checker.getSymbolAtLocation(clause.expression)",
+    "owner": "newCaseClauseTracker",
+    "context": "                }\n            }\n            else {\n                const symbol = checker.getSymbolAtLocation(clause.expression);\n                if (symbol && symbol.valueDeclaration && isEnumMember(symbol.valueDeclaration)) {\n                    const enumValue = checker.getConstantValue(symbol.valueDeclaration);\n                    if (enumValue !== undefined) {\n                        addValue(enumValue);\n                    }\n                }\n            }\n        }\n    }"
+  },
+  {
+    "file": "src/testRunner/unittests/programApi.ts",
+    "line": 218,
+    "call": "typeChecker.getSymbolAtLocation((sourceFile.statements[0] as ts.ImportDeclaration).moduleSpecifier)",
+    "owner": "(anonymous)",
+    "context": "\n        const sourceFile = program.getSourceFile(\"main.ts\")!;\n        const typeChecker = program.getTypeChecker();\n        typeChecker.getSymbolAtLocation((sourceFile.statements[0] as ts.ImportDeclaration).moduleSpecifier);\n        assert.isEmpty(program.getSemanticDiagnostics());\n    });\n});\n\ndescribe(\"unittests:: programApi:: CompilerOptions relative paths\", () => {\n    it(\"resolves relative paths by getCurrentDirectory\", () => {\n        const main = new documents.TextDocument(\"/main.ts\", 'import \"module\";');\n        const mod = new documents.TextDocument(\"/lib/module.ts\", \"declare const foo: any;\");\n"
+  }
+]

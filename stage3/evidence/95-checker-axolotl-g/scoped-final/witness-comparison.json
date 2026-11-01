@@ -1,0 +1,17 @@
+{
+  "services": 57,
+  "resolved": 27,
+  "unchangedSuccessful": 29,
+  "moved": [
+    [
+      "original-super",
+      "implementation",
+      "TypeError: Cannot read properties of undefined (reading 'parent')",
+      "TypeError: Cannot read properties of undefined (reading 'valueDeclaration')"
+    ]
+  ],
+  "newCrashes": 0,
+  "controlsUnchanged": 232,
+  "controlsResolved": 2,
+  "originalFixed": 2
+}

@@ -1,0 +1,856 @@
+[
+  {
+    "fixture": "original",
+    "operation": "quickInfo",
+    "diagnostics": [],
+    "result": {
+      "kind": "",
+      "kindModifiers": "",
+      "textSpan": {
+        "start": 36,
+        "length": 3
+      },
+      "displayParts": [
+        {
+          "text": "Computed",
+          "kind": "className"
+        }
+      ],
+      "documentation": [],
+      "tags": []
+    },
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at getSymbolAtLocationForQuickInfo (/workspace/scratch/95d-before/built/local/typescript.js:154820:18)\n    at Object.getQuickInfoAtPosition (/workspace/scratch/95d-before/built/local/typescript.js:153878:20)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:11:34\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original",
+    "operation": "definition",
+    "diagnostics": [],
+    "result": [],
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at getSymbol (/workspace/scratch/95d-before/built/local/typescript.js:175425:26)\n    at Object.getDefinitionAtPosition (/workspace/scratch/95d-before/built/local/typescript.js:175126:43)\n    at Object.getDefinitionAtPosition2 [as getDefinitionAtPosition] (/workspace/scratch/95d-before/built/local/typescript.js:153982:38)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:12:35\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original",
+    "operation": "definitionAndSpan",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at getSymbol (/workspace/scratch/95d-before/built/local/typescript.js:175425:26)\n    at getDefinitionAtPosition (/workspace/scratch/95d-before/built/local/typescript.js:175126:43)\n    at Object.getDefinitionAndBoundSpan (/workspace/scratch/95d-before/built/local/typescript.js:175409:23)\n    at Object.getDefinitionAndBoundSpan2 [as getDefinitionAndBoundSpan] (/workspace/scratch/95d-before/built/local/typescript.js:153986:38)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:13:42\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original",
+    "operation": "typeDefinition",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at getSymbol (/workspace/scratch/95d-before/built/local/typescript.js:175425:26)\n    at Object.getTypeDefinitionAtPosition (/workspace/scratch/95d-before/built/local/typescript.js:175380:43)\n    at Object.getTypeDefinitionAtPosition2 [as getTypeDefinitionAtPosition] (/workspace/scratch/95d-before/built/local/typescript.js:153990:38)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:14:39\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original",
+    "operation": "implementation",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at Object.getReferencedSymbolsForNode (/workspace/scratch/95d-before/built/local/typescript.js:173658:28)\n    at getReferenceEntriesForNode (/workspace/scratch/95d-before/built/local/typescript.js:173332:30)\n    at getImplementationReferenceEntries (/workspace/scratch/95d-before/built/local/typescript.js:173325:12)\n    at Object.getImplementationsAtPosition (/workspace/scratch/95d-before/built/local/typescript.js:173291:19)\n    at Object.getImplementationAtPosition (/workspace/scratch/95d-before/built/local/typescript.js:153994:41)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:15:39\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original",
+    "operation": "findReferences",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at Object.getReferencedSymbolsForNode (/workspace/scratch/95d-before/built/local/typescript.js:173658:28)\n    at Object.findReferencedSymbols (/workspace/scratch/95d-before/built/local/typescript.js:173273:34)\n    at Object.findReferences (/workspace/scratch/95d-before/built/local/typescript.js:154036:41)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:16:39\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original",
+    "operation": "references",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at Object.getReferencedSymbolsForNode (/workspace/scratch/95d-before/built/local/typescript.js:173658:28)\n    at Object.findReferenceOrRenameEntries (/workspace/scratch/95d-before/built/local/typescript.js:173329:34)\n    at getReferencesWorker2 (/workspace/scratch/95d-before/built/local/typescript.js:154032:41)\n    at Object.getReferencesAtPosition (/workspace/scratch/95d-before/built/local/typescript.js:154027:12)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:17:35\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original",
+    "operation": "renameInfo",
+    "diagnostics": [],
+    "result": {
+      "canRename": false,
+      "localizedErrorMessage": "You cannot rename this element."
+    },
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at getRenameInfoForNode (/workspace/scratch/95d-before/built/local/typescript.js:178116:30)\n    at Object.getRenameInfo (/workspace/scratch/95d-before/built/local/typescript.js:178108:24)\n    at Object.getRenameInfo2 [as getRenameInfo] (/workspace/scratch/95d-before/built/local/typescript.js:154569:30)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:18:35\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original",
+    "operation": "renameLocations",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at Object.getReferencedSymbolsForNode (/workspace/scratch/95d-before/built/local/typescript.js:173658:28)\n    at Object.findReferenceOrRenameEntries (/workspace/scratch/95d-before/built/local/typescript.js:173329:34)\n    at getReferencesWorker2 (/workspace/scratch/95d-before/built/local/typescript.js:154032:41)\n    at Object.findRenameLocations (/workspace/scratch/95d-before/built/local/typescript.js:154022:14)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:19:40\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original",
+    "operation": "highlights",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at Object.getReferencedSymbolsForNode (/workspace/scratch/95d-before/built/local/typescript.js:173658:28)\n    at Object.getReferenceEntriesForNode (/workspace/scratch/95d-before/built/local/typescript.js:173332:30)\n    at getSemanticDocumentHighlights (/workspace/scratch/95d-before/built/local/typescript.js:144188:59)\n    at Object.getDocumentHighlights (/workspace/scratch/95d-before/built/local/typescript.js:144176:12)\n    at Object.getDocumentHighlights (/workspace/scratch/95d-before/built/local/typescript.js:154002:31)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:20:35\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original",
+    "operation": "signatureHelp",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original",
+    "operation": "completions",
+    "diagnostics": [],
+    "result": {
+      "flags": 0,
+      "isGlobalCompletion": false,
+      "isMemberCompletion": true,
+      "isNewIdentifierLocation": true,
+      "optionalReplacementSpan": {
+        "start": 36,
+        "length": 3
+      },
+      "entries": [
+        {
+          "name": "apply",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "arguments",
+          "kind": "property",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "bind",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "call",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "caller",
+          "kind": "property",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "extra",
+          "kind": "property",
+          "kindModifiers": "",
+          "sortText": "11"
+        },
+        {
+          "name": "length",
+          "kind": "property",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "name",
+          "kind": "property",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "prototype",
+          "kind": "property",
+          "kindModifiers": "",
+          "sortText": "11"
+        },
+        {
+          "name": "toString",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        }
+      ],
+      "defaultCommitCharacters": []
+    },
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original",
+    "operation": "completionDetails",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original",
+    "operation": "semanticClassifications",
+    "diagnostics": [],
+    "result": [
+      {
+        "textSpan": {
+          "start": 7,
+          "length": 1
+        },
+        "classificationType": "module name"
+      }
+    ],
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original",
+    "operation": "semanticClassifications2020",
+    "diagnostics": [],
+    "result": {
+      "spans": [],
+      "endOfLineState": 0
+    },
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at visit (/workspace/scratch/95d-before/built/local/typescript.js:152353:32)\n    at visitNode2 (/workspace/scratch/95d-before/built/local/typescript.js:32568:18)\n    at forEachChildInPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:32728:96)\n    at forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/scratch/95d-before/built/local/typescript.js:152399:5)\n    at visitNode2 (/workspace/scratch/95d-before/built/local/typescript.js:32568:18)\n    at forEachChildInExpressionStatement (/workspace/scratch/95d-before/built/local/typescript.js:32798:12)\n    at forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/scratch/95d-before/built/local/typescript.js:152399:5)\n    at visitNodes (/workspace/scratch/95d-before/built/local/typescript.js:32576:22)\n    at forEachChildInSourceFile (/workspace/scratch/95d-before/built/local/typescript.js:32789:12)\n    at forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/scratch/95d-before/built/local/typescript.js:152399:5)\n    at collectTokens (/workspace/scratch/95d-before/built/local/typescript.js:152402:3)\n    at getSemanticTokens (/workspace/scratch/95d-before/built/local/typescript.js:152324:5)\n    at getEncodedSemanticClassifications2 (/workspace/scratch/95d-before/built/local/typescript.js:152314:12)\n    at Object.getEncodedSemanticClassifications3 [as getEncodedSemanticClassifications] (/workspace/scratch/95d-before/built/local/typescript.js:154124:14)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:25:55\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original",
+    "operation": "prepareCallHierarchy",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at Object.resolveCallHierarchyDeclaration (/workspace/scratch/95d-before/built/local/typescript.js:155550:32)\n    at Object.prepareCallHierarchy (/workspace/scratch/95d-before/built/local/typescript.js:154632:51)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:26:45\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original",
+    "operation": "incomingCalls",
+    "diagnostics": [],
+    "result": [],
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at Object.resolveCallHierarchyDeclaration (/workspace/scratch/95d-before/built/local/typescript.js:155550:32)\n    at Object.provideCallHierarchyIncomingCalls (/workspace/scratch/95d-before/built/local/typescript.js:154638:62)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:27:38\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original",
+    "operation": "outgoingCalls",
+    "diagnostics": [],
+    "result": [],
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at Object.resolveCallHierarchyDeclaration (/workspace/scratch/95d-before/built/local/typescript.js:155550:32)\n    at Object.provideCallHierarchyOutgoingCalls (/workspace/scratch/95d-before/built/local/typescript.js:154644:62)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:28:38\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original",
+    "operation": "refactors",
+    "diagnostics": [],
+    "result": [],
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original-super",
+    "operation": "quickInfo",
+    "diagnostics": [],
+    "result": {
+      "kind": "",
+      "kindModifiers": "",
+      "textSpan": {
+        "start": 89,
+        "length": 3
+      },
+      "displayParts": [
+        {
+          "text": "Computed",
+          "kind": "className"
+        }
+      ],
+      "documentation": [],
+      "tags": []
+    },
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at getSymbolAtLocationForQuickInfo (/workspace/scratch/95d-before/built/local/typescript.js:154820:18)\n    at Object.getQuickInfoAtPosition (/workspace/scratch/95d-before/built/local/typescript.js:153878:20)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:11:34\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original-super",
+    "operation": "definition",
+    "diagnostics": [],
+    "result": [],
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at getSymbol (/workspace/scratch/95d-before/built/local/typescript.js:175425:26)\n    at Object.getDefinitionAtPosition (/workspace/scratch/95d-before/built/local/typescript.js:175126:43)\n    at Object.getDefinitionAtPosition2 [as getDefinitionAtPosition] (/workspace/scratch/95d-before/built/local/typescript.js:153982:38)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:12:35\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original-super",
+    "operation": "definitionAndSpan",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at getSymbol (/workspace/scratch/95d-before/built/local/typescript.js:175425:26)\n    at getDefinitionAtPosition (/workspace/scratch/95d-before/built/local/typescript.js:175126:43)\n    at Object.getDefinitionAndBoundSpan (/workspace/scratch/95d-before/built/local/typescript.js:175409:23)\n    at Object.getDefinitionAndBoundSpan2 [as getDefinitionAndBoundSpan] (/workspace/scratch/95d-before/built/local/typescript.js:153986:38)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:13:42\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original-super",
+    "operation": "typeDefinition",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at getSymbol (/workspace/scratch/95d-before/built/local/typescript.js:175425:26)\n    at Object.getTypeDefinitionAtPosition (/workspace/scratch/95d-before/built/local/typescript.js:175380:43)\n    at Object.getTypeDefinitionAtPosition2 [as getTypeDefinitionAtPosition] (/workspace/scratch/95d-before/built/local/typescript.js:153990:38)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:14:39\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original-super",
+    "operation": "implementation",
+    "diagnostics": [],
+    "error": "TypeError: Cannot read properties of undefined (reading 'valueDeclaration')",
+    "stack": "TypeError: Cannot read properties of undefined (reading 'valueDeclaration')\n    at getImplementationReferenceEntries (/workspace/scratch/95d-before/built/local/typescript.js:173323:19)\n    at Object.getImplementationsAtPosition (/workspace/scratch/95d-before/built/local/typescript.js:173291:19)\n    at Object.getImplementationAtPosition (/workspace/scratch/95d-before/built/local/typescript.js:153994:41)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:15:39\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at getImplementationReferenceEntries (/workspace/scratch/95d-before/built/local/typescript.js:173322:28)\n    at Object.getImplementationsAtPosition (/workspace/scratch/95d-before/built/local/typescript.js:173291:19)\n    at Object.getImplementationAtPosition (/workspace/scratch/95d-before/built/local/typescript.js:153994:41)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:15:39\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original-super",
+    "operation": "findReferences",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at Object.getReferencedSymbolsForNode (/workspace/scratch/95d-before/built/local/typescript.js:173658:28)\n    at Object.findReferencedSymbols (/workspace/scratch/95d-before/built/local/typescript.js:173273:34)\n    at Object.findReferences (/workspace/scratch/95d-before/built/local/typescript.js:154036:41)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:16:39\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original-super",
+    "operation": "references",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at Object.getReferencedSymbolsForNode (/workspace/scratch/95d-before/built/local/typescript.js:173658:28)\n    at Object.findReferenceOrRenameEntries (/workspace/scratch/95d-before/built/local/typescript.js:173329:34)\n    at getReferencesWorker2 (/workspace/scratch/95d-before/built/local/typescript.js:154032:41)\n    at Object.getReferencesAtPosition (/workspace/scratch/95d-before/built/local/typescript.js:154027:12)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:17:35\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original-super",
+    "operation": "renameInfo",
+    "diagnostics": [],
+    "result": {
+      "canRename": false,
+      "localizedErrorMessage": "You cannot rename this element."
+    },
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at getRenameInfoForNode (/workspace/scratch/95d-before/built/local/typescript.js:178116:30)\n    at Object.getRenameInfo (/workspace/scratch/95d-before/built/local/typescript.js:178108:24)\n    at Object.getRenameInfo2 [as getRenameInfo] (/workspace/scratch/95d-before/built/local/typescript.js:154569:30)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:18:35\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original-super",
+    "operation": "renameLocations",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at Object.getReferencedSymbolsForNode (/workspace/scratch/95d-before/built/local/typescript.js:173658:28)\n    at Object.findReferenceOrRenameEntries (/workspace/scratch/95d-before/built/local/typescript.js:173329:34)\n    at getReferencesWorker2 (/workspace/scratch/95d-before/built/local/typescript.js:154032:41)\n    at Object.findRenameLocations (/workspace/scratch/95d-before/built/local/typescript.js:154022:14)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:19:40\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original-super",
+    "operation": "highlights",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at Object.getReferencedSymbolsForNode (/workspace/scratch/95d-before/built/local/typescript.js:173658:28)\n    at Object.getReferenceEntriesForNode (/workspace/scratch/95d-before/built/local/typescript.js:173332:30)\n    at getSemanticDocumentHighlights (/workspace/scratch/95d-before/built/local/typescript.js:144188:59)\n    at Object.getDocumentHighlights (/workspace/scratch/95d-before/built/local/typescript.js:144176:12)\n    at Object.getDocumentHighlights (/workspace/scratch/95d-before/built/local/typescript.js:154002:31)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:20:35\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original-super",
+    "operation": "signatureHelp",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original-super",
+    "operation": "completions",
+    "diagnostics": [],
+    "result": {
+      "flags": 0,
+      "isGlobalCompletion": false,
+      "isMemberCompletion": true,
+      "isNewIdentifierLocation": true,
+      "optionalReplacementSpan": {
+        "start": 89,
+        "length": 3
+      },
+      "entries": [
+        {
+          "name": "apply",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "arguments",
+          "kind": "property",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "bind",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "call",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "caller",
+          "kind": "property",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "extra",
+          "kind": "property",
+          "kindModifiers": "",
+          "sortText": "11"
+        },
+        {
+          "name": "length",
+          "kind": "property",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "name",
+          "kind": "property",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "prototype",
+          "kind": "property",
+          "kindModifiers": "",
+          "sortText": "11"
+        },
+        {
+          "name": "toString",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        }
+      ],
+      "defaultCommitCharacters": []
+    },
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original-super",
+    "operation": "completionDetails",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original-super",
+    "operation": "semanticClassifications",
+    "diagnostics": [],
+    "result": [
+      {
+        "textSpan": {
+          "start": 7,
+          "length": 1
+        },
+        "classificationType": "module name"
+      },
+      {
+        "textSpan": {
+          "start": 40,
+          "length": 7
+        },
+        "classificationType": "class name"
+      }
+    ],
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original-super",
+    "operation": "semanticClassifications2020",
+    "diagnostics": [],
+    "result": {
+      "spans": [
+        40,
+        7,
+        257,
+        67,
+        4,
+        3075
+      ],
+      "endOfLineState": 0
+    },
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at visit (/workspace/scratch/95d-before/built/local/typescript.js:152353:32)\n    at visitNode2 (/workspace/scratch/95d-before/built/local/typescript.js:32568:18)\n    at forEachChildInPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:32728:96)\n    at forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/scratch/95d-before/built/local/typescript.js:152399:5)\n    at visitNode2 (/workspace/scratch/95d-before/built/local/typescript.js:32568:18)\n    at forEachChildInReturnStatement (/workspace/scratch/95d-before/built/local/typescript.js:32821:12)\n    at forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/scratch/95d-before/built/local/typescript.js:152399:5)\n    at visitNodes (/workspace/scratch/95d-before/built/local/typescript.js:32576:22)\n    at forEachChildInBlock (/workspace/scratch/95d-before/built/local/typescript.js:33046:10)\n    at forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/scratch/95d-before/built/local/typescript.js:152399:5)\n    at visitNode2 (/workspace/scratch/95d-before/built/local/typescript.js:32568:18)\n    at forEachChildInMethodDeclaration (/workspace/scratch/95d-before/built/local/typescript.js:32647:354)\n    at forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/scratch/95d-before/built/local/typescript.js:152399:5)\n    at visitNodes (/workspace/scratch/95d-before/built/local/typescript.js:32576:22)\n    at forEachChildInClassDeclarationOrExpression (/workspace/scratch/95d-before/built/local/typescript.js:33052:195)\n    at forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/scratch/95d-before/built/local/typescript.js:152399:5)\n    at visitNodes (/workspace/scratch/95d-before/built/local/typescript.js:32576:22)\n    at forEachChildInSourceFile (/workspace/scratch/95d-before/built/local/typescript.js:32789:12)\n    at forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/scratch/95d-before/built/local/typescript.js:152399:5)\n    at collectTokens (/workspace/scratch/95d-before/built/local/typescript.js:152402:3)\n    at getSemanticTokens (/workspace/scratch/95d-before/built/local/typescript.js:152324:5)\n    at getEncodedSemanticClassifications2 (/workspace/scratch/95d-before/built/local/typescript.js:152314:12)\n    at Object.getEncodedSemanticClassifications3 [as getEncodedSemanticClassifications] (/workspace/scratch/95d-before/built/local/typescript.js:154124:14)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:25:55\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original-super",
+    "operation": "prepareCallHierarchy",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at Object.resolveCallHierarchyDeclaration (/workspace/scratch/95d-before/built/local/typescript.js:155550:32)\n    at Object.prepareCallHierarchy (/workspace/scratch/95d-before/built/local/typescript.js:154632:51)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:26:45\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original-super",
+    "operation": "incomingCalls",
+    "diagnostics": [],
+    "result": [],
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at Object.resolveCallHierarchyDeclaration (/workspace/scratch/95d-before/built/local/typescript.js:155550:32)\n    at Object.provideCallHierarchyIncomingCalls (/workspace/scratch/95d-before/built/local/typescript.js:154638:62)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:27:38\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original-super",
+    "operation": "outgoingCalls",
+    "diagnostics": [],
+    "result": [],
+    "scopedExitStacks": [
+      "Error: scoped no-symbol exit\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92156:63)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92233:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at Object.resolveCallHierarchyDeclaration (/workspace/scratch/95d-before/built/local/typescript.js:155550:32)\n    at Object.provideCallHierarchyOutgoingCalls (/workspace/scratch/95d-before/built/local/typescript.js:154644:62)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:28:38\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/scoped-hook.cjs:21:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    ]
+  },
+  {
+    "fixture": "original-super",
+    "operation": "refactors",
+    "diagnostics": [],
+    "result": [],
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "quickInfo",
+    "diagnostics": [],
+    "result": {
+      "kind": "index",
+      "kindModifiers": "",
+      "textSpan": {
+        "start": 138,
+        "length": 3
+      },
+      "displayParts": [
+        {
+          "text": "(",
+          "kind": "punctuation"
+        },
+        {
+          "text": "index",
+          "kind": "text"
+        },
+        {
+          "text": ")",
+          "kind": "punctuation"
+        },
+        {
+          "text": " ",
+          "kind": "space"
+        },
+        {
+          "text": "Computed",
+          "kind": "className"
+        },
+        {
+          "text": "[",
+          "kind": "punctuation"
+        },
+        {
+          "text": "]",
+          "kind": "punctuation"
+        },
+        {
+          "text": ":",
+          "kind": "punctuation"
+        },
+        {
+          "text": " ",
+          "kind": "space"
+        },
+        {
+          "text": "Computed",
+          "kind": "className"
+        }
+      ],
+      "documentation": []
+    },
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "definition",
+    "diagnostics": [],
+    "result": [],
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "definitionAndSpan",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "typeDefinition",
+    "diagnostics": [],
+    "result": [
+      {
+        "fileName": "/95g/super.js",
+        "textSpan": {
+          "start": 45,
+          "length": 8
+        },
+        "kind": "class",
+        "name": "Computed",
+        "containerName": "",
+        "contextSpan": {
+          "start": 39,
+          "length": 36
+        },
+        "isLocal": false,
+        "isAmbient": false,
+        "unverified": false,
+        "failedAliasResolution": false
+      }
+    ],
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "implementation",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "findReferences",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "references",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "renameInfo",
+    "diagnostics": [],
+    "result": {
+      "canRename": false,
+      "localizedErrorMessage": "You cannot rename this element."
+    },
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "renameLocations",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "highlights",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "signatureHelp",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "completions",
+    "diagnostics": [],
+    "result": {
+      "flags": 0,
+      "isGlobalCompletion": false,
+      "isMemberCompletion": true,
+      "isNewIdentifierLocation": true,
+      "optionalReplacementSpan": {
+        "start": 138,
+        "length": 3
+      },
+      "entries": [
+        {
+          "name": "apply",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "arguments",
+          "kind": "property",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "bind",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "call",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "caller",
+          "kind": "property",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "length",
+          "kind": "property",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "name",
+          "kind": "property",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "prototype",
+          "kind": "property",
+          "kindModifiers": "",
+          "sortText": "11"
+        },
+        {
+          "name": "toString",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        }
+      ],
+      "defaultCommitCharacters": []
+    },
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "completionDetails",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "semanticClassifications",
+    "diagnostics": [],
+    "result": [
+      {
+        "textSpan": {
+          "start": 45,
+          "length": 8
+        },
+        "classificationType": "class name"
+      },
+      {
+        "textSpan": {
+          "start": 82,
+          "length": 7
+        },
+        "classificationType": "class name"
+      },
+      {
+        "textSpan": {
+          "start": 98,
+          "length": 8
+        },
+        "classificationType": "class name"
+      }
+    ],
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "semanticClassifications2020",
+    "diagnostics": [],
+    "result": {
+      "spans": [
+        26,
+        3,
+        2049,
+        45,
+        8,
+        257,
+        64,
+        3,
+        2048,
+        82,
+        7,
+        257,
+        98,
+        8,
+        256,
+        116,
+        4,
+        3075
+      ],
+      "endOfLineState": 0
+    },
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "prepareCallHierarchy",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "incomingCalls",
+    "diagnostics": [],
+    "result": [],
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "outgoingCalls",
+    "diagnostics": [],
+    "result": [],
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "refactors",
+    "diagnostics": [],
+    "result": [],
+    "scopedExitStacks": []
+  }
+]

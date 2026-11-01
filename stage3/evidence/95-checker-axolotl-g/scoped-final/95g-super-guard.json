@@ -1,0 +1,36 @@
+{
+  "text": "/** @type {string} */\nlet key = \"xyz\";\nclass Computed { static [key] = 1; }\nclass Derived extends Computed { static read() { return super.xyz; } }\n",
+  "diagnostics": [],
+  "super": [
+    {
+      "textSpan": {
+        "start": 45,
+        "length": 8
+      },
+      "fileName": "/95g/super.js",
+      "contextSpan": {
+        "start": 39,
+        "length": 36
+      },
+      "displayParts": [
+        {
+          "text": "class",
+          "kind": "keyword"
+        },
+        {
+          "text": " ",
+          "kind": "space"
+        },
+        {
+          "text": "Computed",
+          "kind": "className"
+        }
+      ],
+      "kind": "class"
+    }
+  ],
+  "xyz": {
+    "error": "TypeError: Cannot read properties of undefined (reading 'valueDeclaration')",
+    "stack": "TypeError: Cannot read properties of undefined (reading 'valueDeclaration')\n    at getImplementationReferenceEntries (/workspace/scratch/95d-before/built/local/typescript.js:173315:19)\n    at Object.getImplementationsAtPosition (/workspace/scratch/95d-before/built/local/typescript.js:173283:19)\n    at Object.getImplementationAtPosition (/workspace/scratch/95d-before/built/local/typescript.js:153986:41)\n    at Object.<anonymous> (/workspace/scratch/95g-audit/super-witness.cjs:19:33)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)\n    at Module._compile (/workspace/scratch/95g-audit/empty-guard-hook.cjs:10:20)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)"
+  }
+}

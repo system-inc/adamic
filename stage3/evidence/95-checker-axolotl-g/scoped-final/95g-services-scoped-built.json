@@ -1,0 +1,800 @@
+[
+  {
+    "fixture": "original",
+    "operation": "quickInfo",
+    "diagnostics": [],
+    "result": {
+      "kind": "",
+      "kindModifiers": "",
+      "textSpan": {
+        "start": 36,
+        "length": 3
+      },
+      "displayParts": [
+        {
+          "text": "Computed",
+          "kind": "className"
+        }
+      ],
+      "documentation": [],
+      "tags": []
+    },
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original",
+    "operation": "definition",
+    "diagnostics": [],
+    "result": [],
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original",
+    "operation": "definitionAndSpan",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original",
+    "operation": "typeDefinition",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original",
+    "operation": "implementation",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original",
+    "operation": "findReferences",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original",
+    "operation": "references",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original",
+    "operation": "renameInfo",
+    "diagnostics": [],
+    "result": {
+      "canRename": false,
+      "localizedErrorMessage": "You cannot rename this element."
+    },
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original",
+    "operation": "renameLocations",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original",
+    "operation": "highlights",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original",
+    "operation": "signatureHelp",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original",
+    "operation": "completions",
+    "diagnostics": [],
+    "result": {
+      "flags": 0,
+      "isGlobalCompletion": false,
+      "isMemberCompletion": true,
+      "isNewIdentifierLocation": true,
+      "optionalReplacementSpan": {
+        "start": 36,
+        "length": 3
+      },
+      "entries": [
+        {
+          "name": "apply",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "arguments",
+          "kind": "property",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "bind",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "call",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "caller",
+          "kind": "property",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "extra",
+          "kind": "property",
+          "kindModifiers": "",
+          "sortText": "11"
+        },
+        {
+          "name": "length",
+          "kind": "property",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "name",
+          "kind": "property",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "prototype",
+          "kind": "property",
+          "kindModifiers": "",
+          "sortText": "11"
+        },
+        {
+          "name": "toString",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        }
+      ],
+      "defaultCommitCharacters": []
+    },
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original",
+    "operation": "completionDetails",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original",
+    "operation": "semanticClassifications",
+    "diagnostics": [],
+    "result": [
+      {
+        "textSpan": {
+          "start": 7,
+          "length": 1
+        },
+        "classificationType": "module name"
+      }
+    ],
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original",
+    "operation": "semanticClassifications2020",
+    "diagnostics": [],
+    "result": {
+      "spans": [],
+      "endOfLineState": 0
+    },
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original",
+    "operation": "prepareCallHierarchy",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original",
+    "operation": "incomingCalls",
+    "diagnostics": [],
+    "result": [],
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original",
+    "operation": "outgoingCalls",
+    "diagnostics": [],
+    "result": [],
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original",
+    "operation": "refactors",
+    "diagnostics": [],
+    "result": [],
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original-super",
+    "operation": "quickInfo",
+    "diagnostics": [],
+    "result": {
+      "kind": "",
+      "kindModifiers": "",
+      "textSpan": {
+        "start": 89,
+        "length": 3
+      },
+      "displayParts": [
+        {
+          "text": "Computed",
+          "kind": "className"
+        }
+      ],
+      "documentation": [],
+      "tags": []
+    },
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original-super",
+    "operation": "definition",
+    "diagnostics": [],
+    "result": [],
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original-super",
+    "operation": "definitionAndSpan",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original-super",
+    "operation": "typeDefinition",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original-super",
+    "operation": "implementation",
+    "diagnostics": [],
+    "error": "TypeError: Cannot read properties of undefined (reading 'valueDeclaration')",
+    "stack": "TypeError: Cannot read properties of undefined (reading 'valueDeclaration')\n    at getImplementationReferenceEntries (/workspace/scratch/95g-fresh/built/local/typescript.js:173322:19)\n    at Object.getImplementationsAtPosition (/workspace/scratch/95g-fresh/built/local/typescript.js:173290:19)\n    at Object.getImplementationAtPosition (/workspace/scratch/95g-fresh/built/local/typescript.js:153993:41)\n    at /workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:15:39\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/service-matrix.cjs:43:25)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original-super",
+    "operation": "findReferences",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original-super",
+    "operation": "references",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original-super",
+    "operation": "renameInfo",
+    "diagnostics": [],
+    "result": {
+      "canRename": false,
+      "localizedErrorMessage": "You cannot rename this element."
+    },
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original-super",
+    "operation": "renameLocations",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original-super",
+    "operation": "highlights",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original-super",
+    "operation": "signatureHelp",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original-super",
+    "operation": "completions",
+    "diagnostics": [],
+    "result": {
+      "flags": 0,
+      "isGlobalCompletion": false,
+      "isMemberCompletion": true,
+      "isNewIdentifierLocation": true,
+      "optionalReplacementSpan": {
+        "start": 89,
+        "length": 3
+      },
+      "entries": [
+        {
+          "name": "apply",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "arguments",
+          "kind": "property",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "bind",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "call",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "caller",
+          "kind": "property",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "extra",
+          "kind": "property",
+          "kindModifiers": "",
+          "sortText": "11"
+        },
+        {
+          "name": "length",
+          "kind": "property",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "name",
+          "kind": "property",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "prototype",
+          "kind": "property",
+          "kindModifiers": "",
+          "sortText": "11"
+        },
+        {
+          "name": "toString",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        }
+      ],
+      "defaultCommitCharacters": []
+    },
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original-super",
+    "operation": "completionDetails",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original-super",
+    "operation": "semanticClassifications",
+    "diagnostics": [],
+    "result": [
+      {
+        "textSpan": {
+          "start": 7,
+          "length": 1
+        },
+        "classificationType": "module name"
+      },
+      {
+        "textSpan": {
+          "start": 40,
+          "length": 7
+        },
+        "classificationType": "class name"
+      }
+    ],
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original-super",
+    "operation": "semanticClassifications2020",
+    "diagnostics": [],
+    "result": {
+      "spans": [
+        40,
+        7,
+        257,
+        67,
+        4,
+        3075
+      ],
+      "endOfLineState": 0
+    },
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original-super",
+    "operation": "prepareCallHierarchy",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original-super",
+    "operation": "incomingCalls",
+    "diagnostics": [],
+    "result": [],
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original-super",
+    "operation": "outgoingCalls",
+    "diagnostics": [],
+    "result": [],
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "original-super",
+    "operation": "refactors",
+    "diagnostics": [],
+    "result": [],
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "quickInfo",
+    "diagnostics": [],
+    "result": {
+      "kind": "index",
+      "kindModifiers": "",
+      "textSpan": {
+        "start": 138,
+        "length": 3
+      },
+      "displayParts": [
+        {
+          "text": "(",
+          "kind": "punctuation"
+        },
+        {
+          "text": "index",
+          "kind": "text"
+        },
+        {
+          "text": ")",
+          "kind": "punctuation"
+        },
+        {
+          "text": " ",
+          "kind": "space"
+        },
+        {
+          "text": "Computed",
+          "kind": "className"
+        },
+        {
+          "text": "[",
+          "kind": "punctuation"
+        },
+        {
+          "text": "]",
+          "kind": "punctuation"
+        },
+        {
+          "text": ":",
+          "kind": "punctuation"
+        },
+        {
+          "text": " ",
+          "kind": "space"
+        },
+        {
+          "text": "Computed",
+          "kind": "className"
+        }
+      ],
+      "documentation": []
+    },
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "definition",
+    "diagnostics": [],
+    "result": [],
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "definitionAndSpan",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "typeDefinition",
+    "diagnostics": [],
+    "result": [
+      {
+        "fileName": "/95g/super.js",
+        "textSpan": {
+          "start": 45,
+          "length": 8
+        },
+        "kind": "class",
+        "name": "Computed",
+        "containerName": "",
+        "contextSpan": {
+          "start": 39,
+          "length": 36
+        },
+        "isLocal": false,
+        "isAmbient": false,
+        "unverified": false,
+        "failedAliasResolution": false
+      }
+    ],
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "implementation",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "findReferences",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "references",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "renameInfo",
+    "diagnostics": [],
+    "result": {
+      "canRename": false,
+      "localizedErrorMessage": "You cannot rename this element."
+    },
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "renameLocations",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "highlights",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "signatureHelp",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "completions",
+    "diagnostics": [],
+    "result": {
+      "flags": 0,
+      "isGlobalCompletion": false,
+      "isMemberCompletion": true,
+      "isNewIdentifierLocation": true,
+      "optionalReplacementSpan": {
+        "start": 138,
+        "length": 3
+      },
+      "entries": [
+        {
+          "name": "apply",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "arguments",
+          "kind": "property",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "bind",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "call",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "caller",
+          "kind": "property",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "length",
+          "kind": "property",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "name",
+          "kind": "property",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        },
+        {
+          "name": "prototype",
+          "kind": "property",
+          "kindModifiers": "",
+          "sortText": "11"
+        },
+        {
+          "name": "toString",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        }
+      ],
+      "defaultCommitCharacters": []
+    },
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "completionDetails",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "semanticClassifications",
+    "diagnostics": [],
+    "result": [
+      {
+        "textSpan": {
+          "start": 45,
+          "length": 8
+        },
+        "classificationType": "class name"
+      },
+      {
+        "textSpan": {
+          "start": 82,
+          "length": 7
+        },
+        "classificationType": "class name"
+      },
+      {
+        "textSpan": {
+          "start": 98,
+          "length": 8
+        },
+        "classificationType": "class name"
+      }
+    ],
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "semanticClassifications2020",
+    "diagnostics": [],
+    "result": {
+      "spans": [
+        26,
+        3,
+        2049,
+        45,
+        8,
+        257,
+        64,
+        3,
+        2048,
+        82,
+        7,
+        257,
+        98,
+        8,
+        256,
+        116,
+        4,
+        3075
+      ],
+      "endOfLineState": 0
+    },
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "prepareCallHierarchy",
+    "diagnostics": [],
+    "result": "undefined",
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "incomingCalls",
+    "diagnostics": [],
+    "result": [],
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "outgoingCalls",
+    "diagnostics": [],
+    "result": [],
+    "scopedExitStacks": []
+  },
+  {
+    "fixture": "successful-super",
+    "operation": "refactors",
+    "diagnostics": [],
+    "result": [],
+    "scopedExitStacks": []
+  }
+]

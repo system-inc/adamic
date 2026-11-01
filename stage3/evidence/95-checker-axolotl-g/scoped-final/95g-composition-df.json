@@ -1,0 +1,30 @@
+[
+  {
+    "baseOrder": "bcg",
+    "head": "d",
+    "exit": 0,
+    "stdout": "{\n  \"files\": 1,\n  \"assertions\": 1,\n  \"ownerBeforeSha256\": \"57faba456412535bb02760aad9cdbcf7569cc83624729da3f6ddf40b6ac5a80c\",\n  \"javascriptIdentical\": true\n}\n",
+    "stderr": ""
+  },
+  {
+    "baseOrder": "bcg",
+    "head": "f",
+    "exit": 0,
+    "stdout": "{\n  \"files\": 1,\n  \"edits\": 1,\n  \"javascriptChanging\": true\n}\n",
+    "stderr": ""
+  },
+  {
+    "baseOrder": "gcb",
+    "head": "f",
+    "exit": 0,
+    "stdout": "{\n  \"files\": 1,\n  \"edits\": 1,\n  \"javascriptChanging\": true\n}\n",
+    "stderr": ""
+  },
+  {
+    "baseOrder": "gcb",
+    "head": "d",
+    "exit": 0,
+    "stdout": "{\n  \"files\": 1,\n  \"assertions\": 1,\n  \"ownerBeforeSha256\": \"57faba456412535bb02760aad9cdbcf7569cc83624729da3f6ddf40b6ac5a80c\",\n  \"javascriptIdentical\": true\n}\n",
+    "stderr": ""
+  }
+]

@@ -1,0 +1,9 @@
+/** @template T */
+class C { /** @type {T} */ value; }
+/** @template T @typedef {{ value: T }} I */
+/** @type {I<string, number, boolean>} */
+let ref;
+/** @type {C<string, number, boolean>} */
+let cls;
+/** @extends {C<string, number, boolean>} */
+class Derived extends C {}

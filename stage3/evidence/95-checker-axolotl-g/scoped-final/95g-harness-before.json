@@ -1,0 +1,7 @@
+{
+  "methodSource": "public verifySymbolAtLocation(startRange: Range, declarationRanges: Range[]): void {\r\n        const node = this.goToAndGetNode(startRange);\r\n        const symbol = this.getChecker().getSymbolAtLocation(node)!;\r\n        if (!symbol) {\r\n            this.raiseError(\"Could not get symbol at location\");\r\n        }\r\n        this.verifySymbol(symbol, declarationRanges);\r\n    }",
+  "diagnostics": [],
+  "calls": [],
+  "error": "TypeError: Cannot read properties of undefined (reading 'parent')",
+  "stack": "TypeError: Cannot read properties of undefined (reading 'parent')\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92151:132)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92224:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at Object.verifySymbolAtLocation (evalmachine.<anonymous>:5:42)\n    at Object.<anonymous> (/workspace/scratch/95g-evidence-work/stage3/evidence/95-checker-axolotl-g/harness-caller.cjs:17:44)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)"
+}

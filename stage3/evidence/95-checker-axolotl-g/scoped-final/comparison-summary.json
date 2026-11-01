@@ -1,0 +1,19 @@
+{
+  "serviceRows": 57,
+  "formerlyCrashingResolved": 27,
+  "movedCrashes": [
+    {
+      "fixture": "original-super",
+      "operation": "implementation",
+      "before": "TypeError: Cannot read properties of undefined (reading 'parent')",
+      "after": "TypeError: Cannot read properties of undefined (reading 'valueDeclaration')"
+    }
+  ],
+  "unchangedSuccessful": 29,
+  "newCrashes": 0,
+  "successfulSuperUnchanged": true,
+  "zeroDeclarationSymbolUnchanged": true,
+  "controlsPrograms": 14,
+  "controlsQueriesUnchanged": 232,
+  "controlsPreviouslyCrashingQueriesResolved": 2
+}

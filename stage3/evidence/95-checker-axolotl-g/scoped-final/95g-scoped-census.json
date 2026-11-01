@@ -1,0 +1,19 @@
+{
+  "before": {
+    "wholeProgram": 131,
+    "checkerOwnFile": 17
+  },
+  "after": {
+    "wholeProgram": 130,
+    "checkerOwnFile": 16
+  },
+  "mutant": {
+    "wholeProgram": 131,
+    "checkerOwnFile": 17
+  },
+  "removed": [
+    "src/compiler/checker.ts:50153:121: error TS2532: Object is possibly 'undefined'."
+  ],
+  "added": [],
+  "coordinateMapping": "The scoped branch replacement adds ten CRLFs and shifts later checker.ts primary locations by ten; map them back before comparing full diagnostic sets."
+}
