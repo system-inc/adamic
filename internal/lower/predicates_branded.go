@@ -206,6 +206,13 @@ func (l *lowering) brandedHolds(claim, target *checker.Type, visited map[*checke
 // branded supertype inside an array target is NotYet, since its elements narrow by the same rule with no
 // call to judge at.
 func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Type) error {
+	// An argument already of the claim's own type narrows to itself, as tsc's `some(array)` claiming
+	// `readonly T[]` of a `readonly T[]` does, whatever T is instantiated at: the result adds no member or
+	// layout the argument didn't give, so there's nothing for a view to check, and it lowers as main does
+	// (Adamic's ruling on 9e4f2184's census, core.ts:1203).
+	if l.checker.GetTypeAtLocation(argument).Id() == claim.Id() {
+		return nil
+	}
 	claim = l.concrete(claim)
 	targets := []*checker.Type{claim}
 	if claim.Flags()&checker.TypeFlagsUnion != 0 {

@@ -352,6 +352,28 @@ show(i);`, "a call through ?. (an optional call)", false},
 	}
 }
 
+// tsc's binarySearchKey calls `some(array)`, which claims `readonly T[]` of an argument already typed
+// `readonly T[]`, so the narrowing is the argument's own type whatever T is (computeLineOfPosition and
+// indexOfNode, Correctness's census on 9e4f2184). It lowers and agrees with Node with T at a plain type, at
+// number, and at the branded supertype itself, which is the instance the walk judges. Mutant: the identity
+// test dropped, and T at TypeElement is NotYet as a generic argument.
+func TestBrandedSupertypeIdentityNarrowingLowers(t *testing.T) {
+	t.Parallel()
+	lowersAndAgreesWithNodeAs(t, brandedPrelude+`function some<T>(array: readonly T[] | undefined): array is readonly T[] { return array !== undefined && array.length > 0; }
+function firstPos<T extends Node>(array: readonly T[]): number { if (!some(array)) { return -1; } return array[0].pos; }
+function firstOf(array: readonly number[]): number { if (!some(array)) { return -1; } return array[0]; }
+function show(n: Node): void { if (isTypeElementLie(n)) { console.log(String(n.pos)); } }
+const element: TypeElement = { kind: 171, pos: 4, _declarationBrand: undefined, _typeElementBrand: undefined };
+show(element);
+const elements: TypeElement[] = [element];
+console.log(String(firstPos(elements)));
+const nodes: Node[] = [{ kind: 80, pos: 6 }];
+console.log(String(firstPos(nodes)));
+console.log(String(firstOf([7])));
+console.log(String(firstPos([])));
+`, ".ts")
+}
+
 // A member S is assignable to and that's assignable to S keeps its own type when the checker narrows it
 // (getNarrowedType takes a subtype of the candidate as it is), so brandedNarrowing passes it and S's view
 // never sees its reads (Compiler's pin on 9e4f2184): a restatement, an alias of S's shape, and a twin whose
