@@ -2,6 +2,9 @@ package ir
 
 // RecordCall operates on own string data entries. Arguments are evaluated in order.
 // Element is the representation stored in each slot; Returns includes missing reads.
+// "defineHidden" is Object.defineProperty(record, key, { enumerable: false, writable: false, value })
+// with record, key and value its arguments: it returns false, storing nothing, when the key is hidden
+// already, for the caller to throw.
 type RecordCall struct {
 	Method    string
 	Arguments []Expression
@@ -33,3 +36,30 @@ type RecordCoalesce struct {
 }
 
 func (r RecordCoalesce) Type() Type { return r.Element }
+
+// RecordWriteMayThrow says a node can throw because it writes or deletes a record entry that may be
+// a hidden key (HiddenRecordKeys): a record write, ??= or delete whose key is known only as it runs,
+// or is a literal some define hides. A write to a fixed object never meets one: a record seen as a
+// fixed object is refused (lowering's recordStorageView), and Library's #6c4swvt, admitting those
+// views, is the seam that must add the check to native's writeProperty.
+func (p *Program) RecordWriteMayThrow(node any) bool {
+	if len(p.HiddenRecordKeys) == 0 {
+		return false
+	}
+	switch node := node.(type) {
+	case RecordCall:
+		return (node.Method == "set" || node.Method == "delete") && p.mayBeHiddenKey(node.Arguments[1])
+	case RecordCoalesce:
+		return p.mayBeHiddenKey(node.Key)
+	}
+	return false
+}
+
+// mayBeHiddenKey says a record key may be one some define hides: a literal one is exactly when a
+// define names it, and any other may be.
+func (p *Program) mayBeHiddenKey(key Expression) bool {
+	if constant, literal := key.(StringConstant); literal {
+		return p.HiddenRecordKeys[p.Strings[constant.Index]]
+	}
+	return true
+}

@@ -1,0 +1,171 @@
+// Object.defineProperty(record, key, { enumerable: false, writable: false, value }), as tsc's commandLineParser
+// hides options.configFile, with the attributes Node gives it. A new key is left out of Object.keys, values, JSON,
+// for...in and spread, seen by in and the own-key tests, and refused a write, a delete and a define of another
+// value, while a define of the same value goes through. A key that was there stays configurable.
+interface SourceFileLike {
+    fileName: string;
+}
+interface CompilerOptions {
+    target?: number;
+    configFile?: SourceFileLike;
+    [option: string]: number | string | SourceFileLike | undefined;
+}
+
+// tsc's own test (core.ts hasProperty), through the alias it keeps.
+const hasOwnProperty = Object.prototype.hasOwnProperty;
+function hiddenName(): string {
+    return ['hid', 'den'].join('');
+}
+
+const options: CompilerOptions = { target: 99, outDir: 'built' };
+const configFile: SourceFileLike = { fileName: 'tsconfig.json' };
+Object.defineProperty(options, 'configFile', { enumerable: false, writable: false, value: configFile });
+console.log(`${typeof options.configFile}:${'configFile' in options}:${Object.hasOwn(options, 'configFile')}`);
+console.log(Object.keys(options).join(','));
+const other: SourceFileLike = { fileName: 'other.json' };
+try {
+    options.configFile = other;
+    console.log('written');
+}
+catch(error) {
+    if(error instanceof Error) console.log(`${error.name}: ${error.message}`);
+}
+try {
+    Object.defineProperty(options, 'configFile', { enumerable: false, writable: false, value: configFile });
+    console.log('the same object again');
+}
+catch(error) {
+    if(error instanceof Error) console.log(`${error.name}: ${error.message}`);
+}
+try {
+    Object.defineProperty(options, 'configFile', { enumerable: false, writable: false, value: other });
+    console.log('another object');
+}
+catch(error) {
+    if(error instanceof Error) console.log(`${error.name}: ${error.message}`);
+}
+
+// The value read back, and the same array when the value is one.
+const counts: Record<string, number> = { a: 1, b: 2 };
+Object.defineProperty(counts, 'hidden', { enumerable: false, writable: false, value: 5 });
+counts.c = 3;
+console.log(String(counts.hidden));
+const lists: Record<string, number[]> = {};
+const list = [1, 2];
+Object.defineProperty(lists, 'main', { value: list, enumerable: false, writable: false });
+const read = lists.main;
+console.log(`${String(read === list)} ${String(Object.keys(lists).length)}`);
+
+// Every enumeration leaves it out.
+console.log(Object.keys(counts).join(','));
+console.log(Object.values(counts).join(','));
+console.log(JSON.stringify(counts));
+const visited: string[] = [];
+for(const name in counts) visited.push(name);
+console.log(visited.join(','));
+const copy: Record<string, number> = { ...counts };
+console.log(`${JSON.stringify(copy)} ${String('hidden' in copy)}`);
+
+// Every own-key test sees it.
+console.log(
+    `${String('hidden' in counts)} ${String(Object.hasOwn(counts, 'hidden'))} ${String(hasOwnProperty.call(counts, 'hidden'))}`,
+);
+
+// A write through a key only known as it runs, a delete and a define of another value all throw and leave it as
+// it was; a define of the value it holds goes through.
+const key = hiddenName();
+try {
+    counts[key] = 6;
+    console.log('written');
+}
+catch(error) {
+    if(error instanceof Error) console.log(`${error.name}: ${error.message}`);
+}
+try {
+    delete counts[key];
+    console.log('deleted');
+}
+catch(error) {
+    if(error instanceof Error) console.log(`${error.name}: ${error.message}`);
+}
+try {
+    Object.defineProperty(counts, 'hidden', { enumerable: false, writable: false, value: 7 });
+    console.log('redefined');
+}
+catch(error) {
+    if(error instanceof Error) console.log(`${error.name}: ${error.message}`);
+}
+try {
+    Object.defineProperty(counts, 'hidden', { enumerable: false, writable: false, value: 5 });
+    console.log('the same value again');
+}
+catch(error) {
+    if(error instanceof Error) console.log(`${error.name}: ${error.message}`);
+}
+console.log(`${String(counts[key])} ${Object.keys(counts).join(',')}`);
+counts.c = 30;
+delete counts.a;
+console.log(JSON.stringify(counts));
+
+// SameValue: NaN is NaN, -0 isn't +0, and strings are compared by what they hold.
+const numbers: Record<string, number> = {};
+Object.defineProperty(numbers, 'nan', { enumerable: false, writable: false, value: Number.NaN });
+Object.defineProperty(numbers, 'zero', { enumerable: false, writable: false, value: 0 });
+try {
+    Object.defineProperty(numbers, 'nan', { enumerable: false, writable: false, value: Number.NaN });
+    console.log('NaN again');
+}
+catch(error) {
+    if(error instanceof Error) console.log(`${error.name}: ${error.message}`);
+}
+try {
+    Object.defineProperty(numbers, 'zero', { enumerable: false, writable: false, value: -0 });
+    console.log('-0 for +0');
+}
+catch(error) {
+    if(error instanceof Error) console.log(`${error.name}: ${error.message}`);
+}
+const names: Record<string, string> = {};
+Object.defineProperty(names, 'name', { enumerable: false, writable: false, value: ['a', 'b'].join('') });
+try {
+    Object.defineProperty(names, 'name', { enumerable: false, writable: false, value: ['a', 'b'].join('') });
+    console.log('an equal string again');
+}
+catch(error) {
+    if(error instanceof Error) console.log(`${error.name}: ${error.message}`);
+}
+
+// A key hidden where it stands keeps the others in their order and is read-only, but stays configurable: it takes
+// a define of another value, and a delete.
+const order: Record<string, number> = { a: 1, b: 2, c: 3 };
+Object.defineProperty(order, 'b', { enumerable: false, writable: false, value: 20 });
+order.d = 4;
+console.log(`${Object.keys(order).join(',')} ${String(order.b)}`);
+try {
+    order.b = 21;
+    console.log('written');
+}
+catch(error) {
+    if(error instanceof Error) console.log(`${error.name}: ${error.message}`);
+}
+Object.defineProperty(order, 'b', { enumerable: false, writable: false, value: 22 });
+console.log(String(order.b));
+delete order.b;
+console.log(`${String('b' in order)} ${Object.keys(order).join(',')}`);
+
+// Growth: hidden first, then 40 keys, half of them deleted, and one more.
+const grown: Record<string, number> = {};
+Object.defineProperty(grown, 'early', { enumerable: false, writable: false, value: -1 });
+for(let index = 0; index < 40; index++) grown[`k${String(index)}`] = index;
+for(let index = 0; index < 40; index += 2) delete grown[`k${String(index)}`];
+grown.late = 40;
+console.log(`${Object.keys(grown).join(',')} ${String(grown.early)}`);
+
+// Hidden after 40 keys that are all deleted: compaction moves it down and leaves its old slot behind the live
+// entries, and the 40th key added after lands in that slot, which must not come up hidden.
+const reused: Record<string, number> = {};
+for(let index = 0; index < 40; index++) reused[`k${String(index)}`] = index;
+Object.defineProperty(reused, 'hidden', { enumerable: false, writable: false, value: 40 });
+for(let index = 0; index < 40; index++) delete reused[`k${String(index)}`];
+for(let index = 0; index < 40; index++) reused[`n${String(index)}`] = index;
+console.log(`${Object.keys(reused).join(',')} ${String(reused.hidden)}`);

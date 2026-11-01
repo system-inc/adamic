@@ -313,6 +313,7 @@ func (e *emitter) writeProperty(statement ir.SetProperty, object, value string) 
 		keptValue = e.keptIn(object, value)
 	}
 	if records {
+		// A record seen as a fixed object is refused; Library's #6c4swvt, admitting one, must add the read-only check here.
 		e.line("if (adamic_record_is(%s)) {", object)
 		boxed := keptValue
 		if statement.Value.Type() == ir.Number {

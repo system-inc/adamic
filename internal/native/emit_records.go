@@ -24,10 +24,19 @@ func (e *emitter) recordCall(call ir.RecordCall) string {
 		return e.own(call.Returns, fmt.Sprintf("%s == NULL ? NULL : adamic_retain(%s->reference)", slot, slot))
 	case "set":
 		value := e.snapshot(call.Element, args[2])
-		e.line("adamic_record_set(%s, %s, %s);", args[0], retained(args[1]), held(call.Element, value))
+		e.recordSet(fmt.Sprintf("adamic_record_set(%s, %s, %s)", args[0], retained(args[1]), held(call.Element, value)), args[1], e.program.RecordWriteMayThrow(call))
 		return value
 	case "delete":
-		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_record_delete(%s, %s)", args[0], args[1]))
+		deleted := e.snapshot(ir.Boolean, fmt.Sprintf("adamic_record_delete(%s, %s)", args[0], args[1]))
+		if e.program.RecordWriteMayThrow(call) {
+			// A fixed key's delete throws: strict code never sees false.
+			e.line("if (!%s) adamic_record_refused(%s, true);", deleted, args[1])
+			e.checkThrown()
+		}
+		return deleted
+	case "defineHidden":
+		// The record takes key and value, the ones it refuses too; the caller throws on false.
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_record_define_hidden(%s, %s, %s, %s)", args[0], retained(args[1]), held(call.Element, args[2]), recordScalar(call.Element)))
 	case "has":
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_record_has(%s, %s)", args[1], args[0]))
 	case "hasOwn":
@@ -116,7 +125,13 @@ func (e *emitter) recordCoalesce(c ir.RecordCoalesce) string {
 	if c.Element.IsReference() {
 		e.line("\t%s = adamic_retain(%s);", result, result)
 	}
-	e.line("\tadamic_record_set(%s, %s, %s);", record, retained(key), held(c.Element, result))
+	write := fmt.Sprintf("adamic_record_set(%s, %s, %s)", record, retained(key), held(c.Element, result))
+	checked := e.program.RecordWriteMayThrow(c)
+	if checked {
+		e.line("\tif (!%s) adamic_record_refused(%s, false);", write, key)
+	} else {
+		e.line("\t%s;", write)
+	}
 	for i := len(owned) - 1; i >= 0; i-- {
 		e.line("\tadamic_release(%s);", owned[i])
 	}
@@ -124,5 +139,33 @@ func (e *emitter) recordCoalesce(c ir.RecordCoalesce) string {
 	if c.Element.IsReference() {
 		e.owned = append(e.owned, result)
 	}
+	if checked {
+		e.checkThrown()
+	}
 	return result
+}
+
+// recordSet emits a record write, a call to adamic_record_set. A checked one, whose key may be one
+// the program hides (ir.Program's RecordWriteMayThrow), is refused on a read-only key, and throws
+// Node's TypeError naming key, the C of the key's string, borrowed; any other is the bare call.
+func (e *emitter) recordSet(write, key string, checked bool) {
+	if !checked {
+		e.line("%s;", write)
+		return
+	}
+	e.line("if (!%s) adamic_record_refused(%s, false);", write, key)
+	e.checkThrown()
+}
+
+// recordScalar is how adamic_record_define_hidden compares what a record of element's slots holds.
+func recordScalar(element ir.Type) string {
+	switch element {
+	case ir.Number:
+		return "adamic_record_numbers"
+	case ir.MaybeNumber:
+		return "adamic_record_maybe_numbers"
+	case ir.Boolean:
+		return "adamic_record_booleans"
+	}
+	return "adamic_record_references"
 }

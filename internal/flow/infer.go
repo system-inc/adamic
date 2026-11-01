@@ -415,6 +415,9 @@ func (n *inference) value(expression ir.Expression) shape {
 		case "set":
 			n.store(operands[0], operands[2])
 			return operands[2]
+		case "defineHidden":
+			n.store(operands[0], operands[2])
+			return shape{}
 		case "delete":
 			n.store(operands[0], shape{})
 			return shape{}

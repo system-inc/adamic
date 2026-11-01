@@ -835,7 +835,17 @@ typedef struct adamic_map_entry {
 	adamic_value key;
 	adamic_value value;
 	bool deleted;
+	// A record key's attributes as Object.defineProperty leaves them (record.c), each false for an
+	// ordinary data property and for every Map entry: hidden is enumerable false, which keys leaves out;
+	// readonly is writable false, which a write is refused; fixed is configurable false, which a delete
+	// and a define of another value are refused.
+	bool hidden;
+	bool readonly;
+	bool fixed;
 } adamic_map_entry;
+// The attributes sit in the padding after deleted, so an entry is no bigger: wasm32 aligns a double
+// to 8 bytes too, so it's 24 bytes there as on 64-bit hosts.
+_Static_assert(sizeof(adamic_map_entry) == 24, "a map entry is two values and its flags");
 
 typedef struct adamic_map {
 	adamic_heap heap;
@@ -933,13 +943,33 @@ bool adamic_record_has_own(const adamic_record *record, const adamic_string *key
 // NULL/false. The member-name check runs only on a miss; an own value is always borrowed.
 adamic_value *adamic_record_get(const adamic_record *record, const adamic_string *key);
 bool adamic_record_has(const adamic_record *record, const adamic_string *key);
-// Both writes consume key and value references, as Map.set does. define creates an own data
-// property even for __proto__; set refuses __proto__ assignment with an explicit NotYet panic.
+// Every write consumes key and value references, as Map.set does, the ones it refuses included.
+// define creates an own data property even for __proto__; set refuses __proto__ assignment with an
+// explicit NotYet panic, and returns false, storing nothing, when the key is read-only.
 void adamic_record_define(adamic_record *record, adamic_string *key, adamic_value value);
-void adamic_record_set(adamic_record *record, adamic_string *key, adamic_value value);
+bool adamic_record_set(adamic_record *record, adamic_string *key, adamic_value value);
+// adamic_record_scalar is what a record's slots hold when they aren't references, for SameValue.
+typedef enum adamic_record_scalar {
+	adamic_record_references,
+	adamic_record_numbers,
+	adamic_record_maybe_numbers,
+	adamic_record_booleans,
+} adamic_record_scalar;
+// define_hidden is Object.defineProperty(record, key, { enumerable: false, writable: false, value }),
+// as Node does it. A new key is hidden, read-only and fixed. A key already there and not fixed keeps
+// its place and takes the value, hidden and read-only, and stays configurable, as Node keeps the
+// attributes a descriptor leaves out. A fixed key is left as it is when value is SameValue to the one
+// it holds (compared as scalar says, unless the record holds references), and otherwise the define
+// returns false, storing nothing, for the caller to throw.
+bool adamic_record_define_hidden(adamic_record *record, adamic_string *key, adamic_value value, adamic_record_scalar scalar);
+// delete returns false when the key is fixed, and true otherwise, a key that isn't there included.
 bool adamic_record_delete(adamic_record *record, const adamic_string *key);
+// refused sets adamic_thrown to the TypeError Node throws for a write of a read-only key or, deleting,
+// a delete of a fixed one, the key borrowed.
+void adamic_record_refused(const adamic_string *key, bool deleting);
 size_t adamic_record_size(const adamic_record *record);
 // keys returns an owned array in own-key order: array indices ascending, then insertion order.
+// Hidden keys, the non-enumerable ones, are left out.
 adamic_array *adamic_record_keys(const adamic_record *record);
 // Iteration snapshots keys, holds record and keys, skips deleted keys, and reads current values.
 // New keys are not visited. next returns borrowed key/value pairs; release ends iteration.

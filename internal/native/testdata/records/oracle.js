@@ -12,6 +12,33 @@ function pairs(r) {
 function define(r, k, v) {
   Object.defineProperty(r, k, {value:v, writable:true, enumerable:true, configurable:true});
 }
+// A hidden key is Object.defineProperty's non-enumerable, read-only one. Its refusals throw only in
+// strict code, which every module is, so they're run strict, each a 1 when it went through.
+function hidden() {
+  'use strict';
+  const tried = (f) => { try { f(); return 1; } catch (error) { if (!(error instanceof TypeError)) throw error; return 0; } };
+  const hide = (r, k, v) => tried(() => Object.defineProperty(r, k, {enumerable:false, writable:false, value:v}));
+  const names = (r) => console.log(JSON.stringify(Object.getOwnPropertyNames(r)));
+  const r = {};
+  define(r,'a',1); define(r,'b',2); define(r,'c',3);
+  const added = hide(r,'h',4), inPlace = hide(r,'b',5);
+  console.log(added, inPlace);
+  snapshot(r); names(r); pairs(r);
+  console.log(+Object.hasOwn(r,'h'), +('h' in r), r.h);
+  const written = tried(() => { r.h = 6; }), deleted = tried(() => { delete r.h; }), redefined = hide(r,'h',7), same = hide(r,'h',4);
+  console.log(written, deleted, redefined, same, r.h);
+  const bWritten = tried(() => { r.b = 8; }), bRedefined = hide(r,'b',9), bValue = r.b, bDeleted = tried(() => { delete r.b; });
+  console.log(bWritten, bRedefined, bValue, bDeleted, +Object.hasOwn(r,'b'));
+  const absent = +delete r.absent, visible = tried(() => { r.c = 8; });
+  console.log(absent, visible);
+  names(r);
+  const grown = {};
+  for (let i=0;i<40;i++) define(grown,`k${i}`,i);
+  hide(grown,'h',40);
+  for (let i=0;i<40;i++) delete grown[`k${i}`];
+  for (let i=0;i<40;i++) define(grown,`n${i}`,i);
+  snapshot(grown); names(grown);
+}
 if (mode === 'semantics') {
   const r = {};
   snapshot(r);
@@ -98,6 +125,8 @@ if (mode === 'semantics') {
   const r={};
   define(r,'10',0); define(r,'2',1);
   snapshot(r);
+} else if (mode === 'hidden') {
+  hidden();
 } else if (mode === 'bench' || mode === 'workload') {
   const n=Number(process.argv[3]), r={};
   const now=()=>Number(process.hrtime.bigint())/1e9;
