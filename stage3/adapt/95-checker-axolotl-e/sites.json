@@ -1,0 +1,20 @@
+[
+  {
+    "overload": 0,
+    "ownerBeforeSha256": "d8a532f43efa975240998e2fe5db1599d5570f9e6e3bc2cfec3c9de437eb7139",
+    "ownerBefore": "signatureToSignatureDeclaration(signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined): SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; } | undefined;",
+    "before": "NodeArray<TypeNode>",
+    "after": "NodeArray<TypeNode> | undefined",
+    "typeBefore": "NodeArray<TypeNode>",
+    "typeAfter": "NodeArray<TypeNode> | undefined"
+  },
+  {
+    "overload": 1,
+    "ownerBeforeSha256": "6ede77967fc46b225887e595f1238ef2c844ca0e51baa12fcfbf590378410557",
+    "ownerBefore": "signatureToSignatureDeclaration(signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined, internalFlags?: InternalNodeBuilderFlags | undefined, tracker?: SymbolTracker): SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; } | undefined;",
+    "before": "NodeArray<TypeNode>",
+    "after": "NodeArray<TypeNode> | undefined",
+    "typeBefore": "NodeArray<TypeNode>",
+    "typeAfter": "NodeArray<TypeNode> | undefined"
+  }
+]
