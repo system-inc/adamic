@@ -253,11 +253,12 @@ function show<K extends number>(n: Holder<K>): void { if (isTypeElementLie(n)) {
 const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const v: Holder<number> = w; show(v);`, "over a generic argument Holder<K>"},
 		{"generic readonly argument", `function show<T extends Node>(n: Readonly<T>): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
 const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const v: Node = w; show(v);`, "over a generic argument Readonly<T>"},
-		// An anonymous object holding a type parameter: mentionsTypeParameter doesn't walk members (Language's
-		// g7 on 59d9c44b, a should), but the instance's mapper makes a new type of it, so the generic rule
-		// holds it, by its read. It's safe either way, so this pins the reason it has.
+		// An anonymous object holding a type parameter is held by the related-member rule, not the generic
+		// one, since mentionsTypeParameter doesn't walk members (Language's g7 on 59d9c44b, a should), and K,
+		// read from no reference or signature, is unread, so no mapper makes a new type of it. It's safe
+		// either way, so this pins the reason it has, and a later loosening of either rule shows here.
 		{"generic anonymous argument", `function show<K extends number>(n: { readonly kind: K; readonly pos: number }): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
-const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(w);`, "over a generic argument {"},
+const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(w);`, "which isn't its supertype"},
 		// A member typed any is no brand (Adamic's correction on #tmdhz1d: #bw3xg7c refuses any), so a
 		// supertype whose only brand-like member is any keeps the old reason. Mutant: any taken as a brand
 		// again, and it lowers.
@@ -291,9 +292,10 @@ const v = { kind: 9, pos: 1, text: "x" }; show(v);`, "checked predicate overload
 // by the subtype. Mutant: the walk dropped, and the roads marked opened lower; with
 // ADAMIC_BRANDED_CALLS_MUTANT=1 each of those must lower instead and its sanitized native must disagree
 // with Node, which prints undefined (on Golem it stops with "compiler bug: a field the checker proved is
-// there is missing"). The others are held then by older rules: the direct call by the false side's guard,
-// the class method as an indirect call, the optional call as a call main doesn't lower, the bare U by
-// main's overload-target rule; the generic branded supertype lowers, and its lie reads only pos.
+// there is missing"). The others are held then by older rules: the direct call by the false side's guard
+// and the optional call as a call main doesn't lower. The class method is held by the indirect-call rule
+// whichever way, since that rule runs before any body is lowered, and the two generic claims by the unread
+// rule, since U stands nowhere in g's signature.
 func TestBrandedSupertypeEveryCallPathIsJudged(t *testing.T) {
 	t.Parallel()
 	const lie = `const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
@@ -316,7 +318,7 @@ show(isTypeElementLie, i);`, walk, true},
 		{"class method", `class Judge { isElement(n: Node): n is TypeElement { return kindOf(n) !== 0; } }
 const judge = new Judge();
 function show(x: PropertySignature | Identifier): void { if (judge.isElement(x)) { console.log(String(x.typeText)); } }
-show(i);`, walk, false},
+show(i);`, "an indirect call of a checked predicate", false},
 		{"arrow", `const isElement = (n: Node): n is TypeElement => kindOf(n) !== 0;
 function show(x: PropertySignature | Identifier): void { if (isElement(x)) { console.log(String(x.typeText)); } }
 show(i);`, walk, true},

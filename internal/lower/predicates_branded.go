@@ -330,10 +330,15 @@ func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Typ
 	// elements by rules this read doesn't see, and no read found says nothing, so both are NotYet.
 	if declared := l.checker.GetTypeAtLocation(argument); l.concrete(declared) != declared || l.mentionsTypeParameter(declared, map[*checker.Type]bool{}) {
 		instance := l.concrete(claim)
-		if narrowed := l.brandedNarrowedRead(node, argument); narrowed != nil && l.concrete(narrowed).Id() == instance.Id() && instance.Flags()&checker.TypeFlagsUnion == 0 && !l.checker.IsArrayType(instance) {
+		narrowed := l.brandedNarrowedRead(node, argument)
+		if narrowed == nil {
+			return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(instance)+" over a generic argument "+l.checker.TypeToString(declared)+", with no read of it on the true side")
+		}
+		read := l.concrete(narrowed)
+		if read.Id() == instance.Id() && instance.Flags()&checker.TypeFlagsUnion == 0 && !l.checker.IsArrayType(instance) {
 			return nil
 		}
-		return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(instance)+" over a generic argument "+l.checker.TypeToString(declared)+", whose reads on the true side aren't seen as "+l.checker.TypeToString(instance)+" alone")
+		return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(instance)+" over a generic argument "+l.checker.TypeToString(declared)+", read on the true side as "+l.checker.TypeToString(read))
 	}
 	claim = l.concrete(claim)
 	source := l.concrete(l.checker.GetTypeAtLocation(argument))
