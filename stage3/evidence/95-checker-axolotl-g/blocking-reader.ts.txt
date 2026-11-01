@@ -22,4 +22,3 @@ function getImplementationReferenceEntries(program: Program, cancellationToken: 
         return getReferenceEntriesForNode(position, node, program, sourceFiles, cancellationToken, { implementations: true, use: FindReferencesUse.References });
     }
 }
-
