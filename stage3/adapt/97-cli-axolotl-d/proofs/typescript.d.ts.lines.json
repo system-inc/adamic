@@ -1,0 +1,173 @@
+[
+  {
+    "path": [
+      "ModuleResolutionHost",
+      "trace"
+    ],
+    "line": 7263,
+    "before": "trace?(s: string): void;",
+    "after": "trace?: { trace(s: string): void; }[\"trace\"] | undefined;"
+  },
+  {
+    "path": [
+      "ModuleResolutionHost",
+      "directoryExists"
+    ],
+    "line": 7264,
+    "before": "directoryExists?(directoryName: string): boolean;",
+    "after": "directoryExists?: { directoryExists(directoryName: string): boolean; }[\"directoryExists\"] | undefined;"
+  },
+  {
+    "path": [
+      "ModuleResolutionHost",
+      "realpath"
+    ],
+    "line": 7269,
+    "before": "realpath?(path: string): string;",
+    "after": "realpath?: { realpath(path: string): string; }[\"realpath\"] | undefined;"
+  },
+  {
+    "path": [
+      "ModuleResolutionHost",
+      "getDirectories"
+    ],
+    "line": 7271,
+    "before": "getDirectories?(path: string): string[];",
+    "after": "getDirectories?: { getDirectories(path: string): string[]; }[\"getDirectories\"] | undefined;"
+  },
+  {
+    "path": [
+      "ParseConfigHost",
+      "trace"
+    ],
+    "line": 5995,
+    "before": "trace?(s: string): void;",
+    "after": "trace?: { trace(s: string): void; }[\"trace\"] | undefined;"
+  },
+  {
+    "path": [
+      "CompilerHost",
+      "getDefaultLibLocation"
+    ],
+    "line": 7364,
+    "before": "getDefaultLibLocation?(): string;",
+    "after": "getDefaultLibLocation?: { getDefaultLibLocation(): string; }[\"getDefaultLibLocation\"] | undefined;"
+  },
+  {
+    "path": [
+      "CompilerHost",
+      "readDirectory"
+    ],
+    "line": 7370,
+    "before": "readDirectory?(rootDir: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth?: number): string[];",
+    "after": "readDirectory?: { readDirectory(rootDir: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth?: number): string[]; }[\"readDirectory\"] | undefined;"
+  },
+  {
+    "path": [
+      "CompilerHost",
+      "resolveModuleNames"
+    ],
+    "line": 7372,
+    "before": "resolveModuleNames?(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile): (ResolvedModule | undefined)[];",
+    "after": "resolveModuleNames?: { resolveModuleNames(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile): (ResolvedModule | undefined)[]; }[\"resolveModuleNames\"] | undefined;"
+  },
+  {
+    "path": [
+      "CompilerHost",
+      "getModuleResolutionCache"
+    ],
+    "line": 7376,
+    "before": "getModuleResolutionCache?(): ModuleResolutionCache | undefined;",
+    "after": "getModuleResolutionCache?: { getModuleResolutionCache(): ModuleResolutionCache | undefined; }[\"getModuleResolutionCache\"] | undefined;"
+  },
+  {
+    "path": [
+      "CompilerHost",
+      "resolveTypeReferenceDirectives"
+    ],
+    "line": 7382,
+    "before": "resolveTypeReferenceDirectives?(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode): (ResolvedTypeReferenceDirective | undefined)[];",
+    "after": "resolveTypeReferenceDirectives?: { resolveTypeReferenceDirectives(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode): (ResolvedTypeReferenceDirective | undefined)[]; }[\"resolveTypeReferenceDirectives\"] | undefined;"
+  },
+  {
+    "path": [
+      "CompilerHost",
+      "resolveModuleNameLiterals"
+    ],
+    "line": 7383,
+    "before": "resolveModuleNameLiterals?(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: readonly StringLiteralLike[] | undefined): readonly ResolvedModuleWithFailedLookupLocations[];",
+    "after": "resolveModuleNameLiterals?: { resolveModuleNameLiterals(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: readonly StringLiteralLike[] | undefined): readonly ResolvedModuleWithFailedLookupLocations[]; }[\"resolveModuleNameLiterals\"] | undefined;"
+  },
+  {
+    "path": [
+      "CompilerHost",
+      "resolveTypeReferenceDirectiveReferences"
+    ],
+    "line": 7384,
+    "before": "resolveTypeReferenceDirectiveReferences?<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: readonly T[] | undefined): readonly ResolvedTypeReferenceDirectiveWithFailedLookupLocations[];",
+    "after": "resolveTypeReferenceDirectiveReferences?: { resolveTypeReferenceDirectiveReferences<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: readonly T[] | undefined): readonly ResolvedTypeReferenceDirectiveWithFailedLookupLocations[]; }[\"resolveTypeReferenceDirectiveReferences\"] | undefined;"
+  },
+  {
+    "path": [
+      "CompilerHost",
+      "createHash"
+    ],
+    "line": 7388,
+    "before": "createHash?(data: string): string;",
+    "after": "createHash?: { createHash(data: string): string; }[\"createHash\"] | undefined;"
+  },
+  {
+    "path": [
+      "ProgramHost",
+      "createHash"
+    ],
+    "line": 9829,
+    "before": "createHash?(data: string): string;",
+    "after": "createHash?: { createHash(data: string): string; }[\"createHash\"] | undefined;"
+  },
+  {
+    "path": [
+      "ProgramHost",
+      "directoryExists"
+    ],
+    "line": 9841,
+    "before": "directoryExists?(path: string): boolean;",
+    "after": "directoryExists?: { directoryExists(path: string): boolean; }[\"directoryExists\"] | undefined;"
+  },
+  {
+    "path": [
+      "ProgramHost",
+      "realpath"
+    ],
+    "line": 9847,
+    "before": "realpath?(path: string): string;",
+    "after": "realpath?: { realpath(path: string): string; }[\"realpath\"] | undefined;"
+  },
+  {
+    "path": [
+      "ProgramHost",
+      "getEnvironmentVariable"
+    ],
+    "line": 9851,
+    "before": "getEnvironmentVariable?(name: string): string | undefined;",
+    "after": "getEnvironmentVariable?: { getEnvironmentVariable(name: string): string | undefined; }[\"getEnvironmentVariable\"] | undefined;"
+  },
+  {
+    "path": [
+      "SolutionBuilderHostBase",
+      "createDirectory"
+    ],
+    "line": 9957,
+    "before": "createDirectory?(path: string): void;",
+    "after": "createDirectory?: { createDirectory(path: string): void; }[\"createDirectory\"] | undefined;"
+  },
+  {
+    "path": [
+      "SolutionBuilderHostBase",
+      "writeFile"
+    ],
+    "line": 9962,
+    "before": "writeFile?(path: string, data: string, writeByteOrderMark?: boolean): void;",
+    "after": "writeFile?: { writeFile(path: string, data: string, writeByteOrderMark?: boolean): void; }[\"writeFile\"] | undefined;"
+  }
+]
