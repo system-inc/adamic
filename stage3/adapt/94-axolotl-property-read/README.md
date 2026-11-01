@@ -11,9 +11,8 @@ Input: microsoft/TypeScript v6.0.3, commit
 `050880ce59e30b356b686bd3144efe24f875ebc8`. Adamic base: main at
 `4d63c0a6093d84d7f1927e159d2bb7543e91577c`.
 
-This needs a ruling before it lands: Adamic's lowering accepted
-hostErrors.ts before 94 and refuses it after, at the TypeError the ruling asks
-for. See "What Adamic's lowering says" below.
+94 lands after Lower's fix that admits `throw new TypeError`; until then
+stage 0 refuses the helper. See "What Adamic's lowering says" below.
 
 ## The helper
 
@@ -138,24 +137,18 @@ The census also records each root's lowering outcome. hostErrors.ts was
 what a catch takes is unknown, and an Error is what it can be sure of`. No other
 root's outcome moves; accepted roots go from 2 to 1.
 
-docs/0.1.md's exceptions row says otherwise: ruled October 19, any value may
-be thrown, and until the runtime carries an arbitrary thrown value a thrown
-non-Error is NotYet, never refused. Stage 0's lowerer still refuses it
-(internal/lower/exceptions.go:58, held by lower_test.go's "throwing a string"
-and "throwing a number" rows), so the census reports Refused where the ruling
-promises NotYet. That disagreement is Lower's and Diagnostics', not this
-head's. Either way the helper does not lower today. The ruling asked for the
-TypeError type and message both, so this adaptation carries the ruling as
-written and reports the outcome rather than changing the thrown type to Error.
+docs/0.1.md's exceptions row says otherwise: ruAdamic's ruling (a): `throw new TypeError` is admitted at lowering, and the
+helper keeps the TypeError, type and message both. docs/0.1.md's exceptions
+row already says any value may be thrown. The refusal at
+internal/lower/exceptions.go:58 is Lower's gap, and Lower is fixing it. 94
+stacks on Lower's fix, so on the meter hostErrors.ts goes from accepted to
+accepted and never reads refused. The Refused outcome above was measured on
+main before that fix, and is kept as the record of the gap.
 
-The same row names `e.code` "through the one errorCode helper". propertyOf is
-a second way to read a caught value's property, with the plain read's
-semantics where errorCode filters to strings; whether both stand is also a
-ruling, not this head's.
+47's errorCode stays only where 47 used it. Every new caught-property read
+goes through propertyOf. Retiring errorCode is a later Should.
 
-## Reproduction
-
-From the Adamic repository with the setup environment sourced, the TypeScript
+h the setup environment sourced, the TypeScript
 6.0.3 checkout in ADAMIC_TYPESCRIPT_SOURCE, and stage3/api installed from its
 lockfile. Use fresh output paths.
 
