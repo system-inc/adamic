@@ -52,8 +52,8 @@ excludes that value. The returned host also explicitly stores an optional
 `getGlobalTypingsCacheLocation` callback. Those two further slot widenings were
 not among the four requested declarations. The shipping adapter leaves out the
 host repair and retains its original diagnostic. This is three removals, not
-the requested four. [proofs/initial-scope.json](proofs/initial-scope.json) keeps
-the exact failed candidate difference; [proofs/deferred-host.json](proofs/deferred-host.json)
+the requested four. [proofs/initial-scope.json](https://github.com/system-inc/adamic/blob/typescript/axolotl-checker-c-evidence/stage3/evidence/95-checker-axolotl-c/proofs/initial-scope.json) keeps
+the exact failed candidate difference; [proofs/deferred-host.json](https://github.com/system-inc/adamic/blob/typescript/axolotl-checker-c-evidence/stage3/evidence/95-checker-axolotl-c/proofs/deferred-host.json)
 records the attempted readFile repair, not a shipping edit.
 
 The shipping census is **131 to 128 whole-program, 17 to 14 checker own-file**.
@@ -96,7 +96,9 @@ patch table's incremental row is `95-checker-axolotl-c | 2 | 3 | 3`.
 The independent source verifier passes on that output, its fresh census has
 exactly the same 128 diagnostics as the standalone proof, and a second adapter
 run makes zero edits. No patch table or lane source is edited in the repository.
-At the remote branch check, 95b and 95d do not exist; 95c applies on 95a alone.
+95c applies on 95a alone. The initial remote check found neither 95b nor 95d;
+both were subsequently published. The evidence branch records the exact B/D
+refs, both application orders, and combined B/C/D/E source comparisons.
 
 The original four-edit investigation tree's standalone default oracle completed
 in 432.065s: install 0 (5.195s), build 0 (23.207s), tests 1 (403.573s).
@@ -105,8 +107,17 @@ acknowledgement test fails. Its built API hash is main's
 `b901adcc6ec29e299ec21401b2a155b2b2c14c046ec743fed6ee45679b726d5d`;
 the accepted reference is main's
 `f87d6c30da287293aae741711fa94594b75d49e0977cea6bfd5982f90e2bafcf`.
-There is no new public API delta. The exact three-repair shipping tree's oracle
-is running separately; its completed evidence will be added before the final report.
+There is no new public API delta. The exact three-repair shipping tree's oracle also completed: **106,366
+passing, 1 failing, 0 pending**, in **350.796s**. Install exits 0 (2.529s),
+build exits 0 (23.217s), tests exit 1 (324.952s), solely for the same standing
+Public APIs acknowledgement failure. Both public API hashes equal main's
+recorded bytes. There are no new baseline differences, timeouts, or exceptions.
+
+Evidence and proof helper scripts live only on
+[`typescript/axolotl-checker-c-evidence`](https://github.com/system-inc/adamic/tree/typescript/axolotl-checker-c-evidence/stage3/evidence/95-checker-axolotl-c).
+The shipping adaptation contains only adapt.cjs, verify.cjs, sites.json and
+this README, as every file in it feeds apply's input key. Run the proof-helper
+command from the evidence branch; run apply from the shipping branch.
 
 Commands (all test output is logged):
 
@@ -117,7 +128,7 @@ export ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/95-upstream
 go build -o /workspace/scratch/95-census ./stage3/census/tool > /tmp/95-census-build.log 2>&1
 bash stage3/apply.sh /workspace/scratch/95c-final > /tmp/95c-final-apply.log 2>&1
 # BEFORE is the independent 95a-only end-to-end apply tree.
-python3 stage3/adapt/95-checker-axolotl-c/prove.py /workspace/scratch/95a-tree /workspace/scratch/95c-three /workspace/scratch/95-census /workspace/scratch/95c-three-proofs > /tmp/95c-three-prove.log 2>&1
+python3 stage3/evidence/95-checker-axolotl-c/prove.py /workspace/scratch/95a-tree /workspace/scratch/95c-three /workspace/scratch/95-census /workspace/scratch/95c-three-proofs > /tmp/95c-three-prove.log 2>&1
 node stage3/adapt/95-checker-axolotl-c/verify.cjs /workspace/scratch/95a-tree /workspace/scratch/95c-final > /tmp/95c-final-source.json 2>&1
 node stage3/adapt/95-checker-axolotl-c/adapt.cjs /workspace/scratch/95c-final > /tmp/95c-final-idempotence.json 2>&1
 /workspace/scratch/95-census /workspace/scratch/95c-final/src/tsc/tsc.ts /workspace/scratch/95c-final-census.jsonl > /tmp/95c-final-census.log 2>&1
