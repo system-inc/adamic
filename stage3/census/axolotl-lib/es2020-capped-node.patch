@@ -1,0 +1,28 @@
+diff --git a/internal/load/load.go b/internal/load/load.go
+index 92addd0d2..17924bc53 100644
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -70,8 +70,8 @@ func compilerOptions() *core.CompilerOptions {
+ 		// no import is a script to the checker, and its top-level names collide with the prelude's.
+ 		ModuleDetection:  core.ModuleDetectionKindForce,
+ 		ModuleResolution: core.ModuleResolutionKindBundler,
+-		Target:           core.ScriptTargetES2024,
+-		Lib:              []string{"lib.es2024.d.ts"},
++		Target:           core.ScriptTargetES2020,
++		Lib:              []string{"lib.es2020.d.ts"},
+ 		Types:            []string{},
+ 	}
+ }
+diff --git a/internal/load/node_library_fs.go b/internal/load/node_library_fs.go
+index aee48b0ee..b5295ff8e 100644
+--- a/internal/load/node_library_fs.go
++++ b/internal/load/node_library_fs.go
+@@ -50,6 +50,8 @@ func (s *nodeLibraryFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
+ 		}
+ 		file := strings.TrimPrefix(name, "node_types/node_modules/@types/node/")
+ 		text, err := CorrectNodeHostAxioms(file, string(data))
++		text = strings.ReplaceAll(text, `/// <reference lib="esnext.disposable" />`, "")
++		text = strings.ReplaceAll(text, `/// <reference lib="esnext.float16" />`, "")
+ 		return text, err == nil
+ 	}
+ 	if callerNodeTypes(path.AsString()) {

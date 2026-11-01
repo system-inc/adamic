@@ -1,0 +1,45 @@
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/load"
+	"os"
+)
+
+func main() {
+	p, e := load.LatentLoad([]string{os.Args[1]})
+	if e != nil {
+		panic(e)
+	}
+	enc := json.NewEncoder(os.Stdout)
+	enc.Encode(map[string]any{"diagnostics": p.LatentDiagnostics(), "target": p.CompilerProgram().Options().Target, "lib": p.CompilerProgram().Options().Lib})
+	seen := map[*ast.Symbol]bool{}
+	for _, f := range p.CompilerProgram().GetSourceFiles() {
+		enc.Encode(map[string]any{"file": p.FileName(f), "declaration": f.IsDeclarationFile})
+		c, release := p.Checker(context.Background(), f)
+		var visit ast.Visitor
+		visit = func(n *ast.Node) bool {
+			if n.Kind == ast.KindInterfaceDeclaration && n.Name().Text() == "Set" {
+				s := c.GetSymbolAtLocation(n.Name())
+				if s != nil && !seen[s] {
+					seen[s] = true
+					for _, d := range s.Declarations {
+						enc.Encode(map[string]any{"set_declaration": p.Where(d), "kind": d.Kind.String()})
+						if d.Kind != ast.KindInterfaceDeclaration {
+							continue
+						}
+						for _, m := range d.Members() {
+							enc.Encode(map[string]any{"set_member": p.Where(m), "text": ast.GetSourceFileOfNode(m).Text()[m.Pos():m.End()]})
+						}
+					}
+				}
+			}
+			n.ForEachChild(visit)
+			return false
+		}
+		f.AsNode().ForEachChild(visit)
+		release()
+	}
+}

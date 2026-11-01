@@ -1,0 +1,29 @@
+{
+  "main": "7b9c0fe7e52cfe9cdeb774107389bd6870f41423",
+  "cohere": "06af2e399c6c1fb93fd570b774027942747400b4",
+  "typescript_go": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "upstream_typescript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "setup_exit_code": 0,
+  "apply_exit_code": 0,
+  "adapted_tree": "/workspace/scratch/axolotl/adapted",
+  "scratch_worktree": "/workspace/scratch/axolotl/compiler",
+  "latent_full": 0,
+  "latent_assert_no_output": 1,
+  "source_manifest_recorded_utc": "2026-11-01T16:21:04.890845+00:00",
+  "source_changes_committed": false,
+  "branch": "typescript/axolotl-lib",
+  "measurement_scheduling": "baseline first; remaining variants concurrent; capped latent pass paused for memory headroom until baseline completes",
+  "declaration_probe_capped_overlay_matches_worktree": true,
+  "measurement_exit_codes": {
+    "main": 0,
+    "es2020": 0,
+    "es2020-capped-node": 0
+  },
+  "report_validation": {
+    "source_files_per_latent_variant": 79,
+    "main_and_es2020_diagnostic_sets_identical": true,
+    "main_and_es2020_latent_sites_identical": true,
+    "all_variants_error_sites": 0,
+    "all_variants_panic_sites": 0
+  }
+}

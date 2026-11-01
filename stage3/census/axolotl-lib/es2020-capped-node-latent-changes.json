@@ -1,0 +1,63 @@
+{
+  "reason_rows": [
+    {
+      "kind": "NotYet",
+      "reason": "a function returning Timeout",
+      "before": 0,
+      "after": 1,
+      "removed_examples": [],
+      "added_examples": [
+        "src/compiler/sys.ts:51:18"
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a function without a body",
+      "before": 2,
+      "after": 0,
+      "removed_examples": [
+        "src/compiler/sys.ts:51:1",
+        "src/compiler/sys.ts:52:1"
+      ],
+      "added_examples": []
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type Timeout | undefined",
+      "before": 0,
+      "after": 1,
+      "removed_examples": [],
+      "added_examples": [
+        "src/compiler/sys.ts:52:31"
+      ]
+    }
+  ],
+  "removed_sites": [
+    [
+      "NotYet",
+      "src/compiler/sys.ts:51:1",
+      "a function without a body",
+      "src/compiler/sys.ts:51:1: stage 0 can't lower a function without a body yet"
+    ],
+    [
+      "NotYet",
+      "src/compiler/sys.ts:52:1",
+      "a function without a body",
+      "src/compiler/sys.ts:52:1: stage 0 can't lower a function without a body yet"
+    ]
+  ],
+  "added_sites": [
+    [
+      "NotYet",
+      "src/compiler/sys.ts:51:18",
+      "a function returning Timeout",
+      "src/compiler/sys.ts:51:18: stage 0 can't lower a function returning Timeout yet"
+    ],
+    [
+      "NotYet",
+      "src/compiler/sys.ts:52:31",
+      "a value of type Timeout | undefined",
+      "src/compiler/sys.ts:52:31: stage 0 can't lower a value of type Timeout | undefined yet"
+    ]
+  ]
+}
