@@ -16,11 +16,18 @@ import (
 // widening without its earlier storage stop). So is each write of a value a declared property it can
 // land under can't hold: a literal whose own type declares outFile, a computed key folded to
 // "outFile", undefined and a number | undefined written under a required number, and a union value
-// one member of which misfits. Each program's whole diagnostic is pinned in its .refused file, and its
-// first line names its refusal. Mutants, each alone: admitting a declared property seen through a
-// wider index signature (declaredKeyWidened's first direction) turns r03, r07, r26 and v01 red;
-// admitting a dictionary read through a declared property (its second) turns r05, r15 and r16 red;
-// admitting the write (declaredKeyWrite's refusal dropped) turns r01, r02 and v06 red.
+// one member of which misfits. So is a record bound as a type argument to a type parameter its view
+// reaches through, Language's roads on 41717bcc: Options as T extends Dict, by a generic function's
+// parameter (n05), its return (n26), an explicit put<Options> (n27), a generic class's field (n28), a
+// generic arrow (g01), a class's extends clause (g02) and a generic class taken as a value by a
+// construct type that instantiates it (g04), and a Dict as T extends Options (g03). A view
+// through a conditional names the branch's type, not the conditional's (n24). Each program's whole
+// diagnostic is pinned in its .refused file, and its first line names its refusal. Mutants, each
+// alone: admitting a declared property seen through a wider index signature (declaredKeyWidened's
+// first direction) turns r03, r07, r26 and v01 red; admitting a dictionary read through a declared
+// property (its second) turns r05, r15 and r16 red; admitting the write (declaredKeyWrite's refusal
+// dropped) turns r01, r02 and v06 red; leaving the type arguments unjudged (declaredKeyBindings
+// dropped) turns n05 red.
 func TestRecordDeclaredKeysAreRefusedInA(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/record_declared_keys_refused"
@@ -71,8 +78,8 @@ func TestRecordDeclaredKeysAreRefusedInA(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 27 {
-		t.Fatalf("found %d refused programs, want 27", programs)
+	if programs != 36 {
+		t.Fatalf("found %d refused programs, want 36", programs)
 	}
 }
 
@@ -88,7 +95,8 @@ func TestRecordDeclaredKeysAreRefusedInA(t *testing.T) {
 // at its record operation, since tsc infers its target and source apart and no relation sees Dict as
 // Options, and r21 at its Readonly<Options> view's storage gap, a line before its widening: both fail
 // closed. In .ts, every road keeps the stop it had before the .a refusal: the storage views, the named
-// write and the optional widening stop where they did. Each program that lowers agrees with Node on
+// write and the optional widening stop where they did, and the type-argument roads too, whose .a
+// twins are refused. Each program that lowers agrees with Node on
 // release and sanitized native and on the JavaScript backend. Mutant: the key folding dropped
 // (writtenNames judging a folded key as any name) refuses the scanner's shape here.
 func TestRecordDeclaredKeyStopsArePinned(t *testing.T) {
@@ -140,7 +148,7 @@ func TestRecordDeclaredKeyStopsArePinned(t *testing.T) {
 			}
 		})
 	}
-	if programs != 47 {
-		t.Fatalf("found %d programs, want 47", programs)
+	if programs != 56 {
+		t.Fatalf("found %d programs, want 56", programs)
 	}
 }

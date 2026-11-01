@@ -50,6 +50,10 @@ type widening struct {
 	// dictionary is set, the source's index signature holds source where the target reads it as target.
 	declaredKey string
 	dictionary  bool
+
+	// viewed is the value seen, when it's one branch of a conditional whose own type tsc reduced to
+	// the wider side (flag ? options : dict is a Dict), so a refusal can name it.
+	viewed *checker.Type
 }
 
 // widened finds the first mutable slot at which a value of type from, seen as type to, could be
@@ -677,6 +681,9 @@ func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual 
 		conditional := node.AsConditionalExpression()
 		for _, branch := range []*ast.Node{conditional.WhenTrue, conditional.WhenFalse} {
 			if found := l.freshOrWidened(branch, l.checker.GetTypeAtLocation(branch), contextual); found != nil {
+				if found.viewed == nil {
+					found.viewed = l.checker.GetTypeAtLocation(branch)
+				}
 				return found
 			}
 		}

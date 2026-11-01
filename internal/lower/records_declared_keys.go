@@ -3,6 +3,7 @@ package lower
 import (
 	"errors"
 	"reflect"
+	"slices"
 	"strconv"
 	"strings"
 
@@ -24,15 +25,19 @@ import (
 //     property, so the value is judged as written into it: refused when a declared property can't
 //     take it (declaredKeyMisfit), and otherwise as recordNamedWrite judges it, by the whole registry
 //     with the property's type as its slot (namedWriteStop), refused or not yet as that says.
+//   - A type argument: Options bound to T extends Dict is seen as Dict wherever the generic's body
+//     sees T, which no view site outside it shows (Language's n05 on #npqr3sx). Each binding is
+//     judged against its constraint as a view is (declaredKeyBindings).
 // .ts keeps the checked read instead (recordReadType), which stops loudly at the declared read.
 
-// declaredKeysFix is what each of the three refusals offers.
+// declaredKeysFix is what each of the refusals offers.
 const declaredKeysFix = "give the record no declared keys, or write the declared property by its name"
 
 // recordDeclaredKeyRefusal refuses, in .a, a write that can store a wider value under a declared
-// property through the index signature, and a view widened finds reaching one. It runs before
-// recordStorageView (2000), whose not yet would otherwise name the same view a storage gap, and
-// refuses only these views: every other view keeps the stop it had.
+// property through the index signature, and a view widened finds reaching one, a type argument bound
+// to its constraint included. It runs before recordStorageView (2000), whose not yet would otherwise
+// name the same view a storage gap, and refuses only these views: every other view keeps the stop it
+// had.
 func (l *lowering) recordDeclaredKeyRefusal(node *ast.Node) error {
 	if !strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a") {
 		return nil
@@ -42,6 +47,9 @@ func (l *lowering) recordDeclaredKeyRefusal(node *ast.Node) error {
 	}
 	l.declaredKeys = true
 	defer func() { l.declaredKeys = false }()
+	if err := l.declaredKeyBindings(node); err != nil {
+		return err
+	}
 	if source, target := l.recordViewSite(node); source != nil {
 		// recordStorageView's own site and its own relation: the whole value seen as the slot, a
 		// fresh array's elements and all, so the view is named where that rule would name it.
@@ -281,8 +289,182 @@ func (l *lowering) libraryIndexSignature(proven *checker.Type) bool {
 	return false
 }
 
-// declaredKeyRefusal is a declared-key widening's refusal: one reason for each direction.
+// declaredKeyBindings judges each type argument node binds against its type parameter's constraint, as
+// instantiated there, by the declared-key rule both ways (widened, with declaredKeys set), keeping only
+// a declared-key finding: Opts bound to T extends Dict lets the generic see Opts as Dict, write a
+// number under name through it, and return or keep it so (Language's n05, n26, n27 and n28). The
+// bindings are a call's or a new's, inferred or written, read from its resolved signature, which
+// reaches generic arrows and methods too; a class's extends clause's; and a generic function's or
+// class's, instantiated as the value its slot takes (declaredKeyValueBindings).
+func (l *lowering) declaredKeyBindings(node *ast.Node) error {
+	switch node.Kind {
+	case ast.KindCallExpression, ast.KindNewExpression, ast.KindTaggedTemplateExpression:
+		return l.declaredKeySignatureBindings(node, l.checker.GetResolvedSignature(node))
+	case ast.KindExpressionWithTypeArguments:
+		clause := node.Parent
+		if clause == nil || clause.Kind != ast.KindHeritageClause || clause.AsHeritageClause().Token != ast.KindExtendsKeyword || clause.Parent == nil || !ast.IsClassLike(clause.Parent) {
+			return nil
+		}
+		return l.declaredKeyBaseBindings(node, clause.Parent)
+	}
+	if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) || ast.IsDeclarationName(node) {
+		return nil
+	}
+	if node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.AsPropertyAccessExpression().Name() == node {
+		return nil // The access is the value, never the name it reads.
+	}
+	return l.declaredKeyValueBindings(node)
+}
+
+// declaredKeyValueBindings judges a generic function or class written as a value where its slot's type
+// instantiates it, as contextualGenericSignature instantiates a function value: const make: new (held:
+// Options) => Store<Options> = Store binds Store's T to Options with no call or new to judge it at. One
+// left generic, with no slot or a generic one, binds nothing until it's called or constructed, and is
+// judged then. One whose instantiation can't be read, since it or its slot has more than one signature,
+// fails closed under a constraint with a writable string index signature (declaredKeyUnread).
+func (l *lowering) declaredKeyValueBindings(node *ast.Node) error {
+	own := l.checker.GetTypeAtLocation(node)
+	for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
+		signatures := l.checker.GetSignaturesOfType(own, kind)
+		var parameters []*checker.Type
+		for _, signature := range signatures {
+			parameters = append(parameters, signature.TypeParameters()...)
+		}
+		if len(parameters) == 0 {
+			continue
+		}
+		contextual := l.concrete(l.slotType(node))
+		if contextual == nil {
+			continue
+		}
+		slots := l.checker.GetSignaturesOfType(l.withoutUndefined(contextual), kind)
+		if len(slots) == 0 || len(slots) == 1 && len(slots[0].TypeParameters()) > 0 {
+			continue
+		}
+		if len(signatures) == 1 && len(slots) == 1 {
+			if resolved := instantiateSignatureInContextOf(l.checker, signatures[0], slots[0], nil, nil); resolved != nil {
+				if err := l.declaredKeySignatureBindings(node, resolved); err != nil {
+					return err
+				}
+				continue
+			}
+		}
+		if err := l.declaredKeyUnread(node, parameters); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// declaredKeySignatureBindings judges the bindings an instantiated signature made: its target's type
+// parameters, each as its mapper maps it, which the checker keeps unexported and classGenericCall reads
+// the same way. A signature that isn't an instantiation binds nothing. One whose bindings can't be read
+// fails closed under a constraint that has a writable string index signature (declaredKeyUnread).
+func (l *lowering) declaredKeySignatureBindings(node *ast.Node, signature *checker.Signature) error {
+	if signature == nil {
+		return nil
+	}
+	if len(signature.TypeParameters()) > 0 {
+		return l.declaredKeyUnread(node, signature.TypeParameters())
+	}
+	target := signature.Target()
+	if target == nil || len(target.TypeParameters()) == 0 {
+		return nil
+	}
+	field := reflect.ValueOf(signature).Elem().FieldByName("mapper")
+	if !field.IsValid() || field.Kind() != reflect.Pointer || field.IsNil() {
+		return l.declaredKeyUnread(node, target.TypeParameters())
+	}
+	mapper := (*typeMapper)(field.UnsafePointer())
+	for _, parameter := range target.TypeParameters() {
+		constraint := l.checker.GetConstraintOfTypeParameter(parameter)
+		if constraint == nil {
+			continue
+		}
+		if err := l.declaredKeyTypeArgument(node, parameter, instantiateType(l.checker, parameter, mapper), instantiateType(l.checker, constraint, mapper)); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// declaredKeyBaseBindings judges the type arguments a class's extends clause (node) binds to its base
+// class's type parameters, as the base type the checker resolved for the class carries them.
+func (l *lowering) declaredKeyBaseBindings(node *ast.Node, class *ast.Node) error {
+	symbol := l.checker.GetSymbolOfDeclaration(class)
+	if symbol == nil {
+		return nil
+	}
+	for _, base := range l.checker.GetBaseTypes(l.checker.GetDeclaredTypeOfSymbol(symbol)) {
+		if base.Symbol() == nil {
+			continue
+		}
+		parameters := l.checker.GetLocalTypeParametersOfClassOrInterfaceOrTypeAlias(base.Symbol())
+		if len(parameters) == 0 {
+			continue
+		}
+		if base.ObjectFlags()&checker.ObjectFlagsReference == 0 || base.Target() == nil {
+			return l.declaredKeyUnread(node, parameters)
+		}
+		// The generic class's own reference carries its type parameters where the base carries what
+		// they're bound to, outer ones first, so each local parameter is found by its place there.
+		declared, given := l.checker.GetTypeArguments(base.Target()), l.checker.GetTypeArguments(base)
+		arguments := make([]*checker.Type, len(parameters))
+		for index, parameter := range parameters {
+			place := slices.Index(declared, parameter)
+			if place < 0 || place >= len(given) {
+				return l.declaredKeyUnread(node, parameters)
+			}
+			arguments[index] = given[place]
+		}
+		mapper := newTypeMapper(parameters, arguments)
+		for index, parameter := range parameters {
+			constraint := l.checker.GetConstraintOfTypeParameter(parameter)
+			if constraint == nil {
+				continue
+			}
+			if err := l.declaredKeyTypeArgument(node, parameter, arguments[index], instantiateType(l.checker, constraint, mapper)); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+// declaredKeyUnread stops, not yet, a binding whose type arguments can't be read when one of the type
+// parameters is constrained to a writable string index signature, since what it binds could be a record
+// with declared properties seen through it.
+func (l *lowering) declaredKeyUnread(node *ast.Node, parameters []*checker.Type) error {
+	for _, parameter := range parameters {
+		if constraint := l.checker.GetConstraintOfTypeParameter(parameter); constraint != nil && l.recordElement(l.checker.GetBaseConstraintOfType(constraint)) != nil {
+			return l.notYet(node, "a generic instantiation whose type argument for "+l.checker.TypeToString(parameter)+", constrained to "+l.checker.TypeToString(constraint)+", can't be read")
+		}
+	}
+	return nil
+}
+
+// declaredKeyTypeArgument refuses argument bound to parameter when, seen as its constraint, a declared
+// property is reached through an index signature, in either direction (declaredKeyWidened through
+// widened). Any other finding is no declared-key one, and is left to the rules that judge it.
+func (l *lowering) declaredKeyTypeArgument(node *ast.Node, parameter, argument, constraint *checker.Type) error {
+	found := l.widened(argument, constraint, map[[2]*checker.Type]bool{})
+	if found == nil || found.declaredKey == "" {
+		return nil
+	}
+	bound := l.checker.TypeToString(argument) + " as " + l.checker.TypeToString(parameter) + ", constrained to " + l.checker.TypeToString(constraint)
+	if found.dictionary {
+		return &Refused{Where: l.program.Where(node), What: "a dictionary bound as a type argument whose constraint reads it through a declared property narrower than its values (" + bound + ": " + found.declaredKey + " is declared " + l.checker.TypeToString(found.target) + ", and the index signature holds " + l.checker.TypeToString(found.source) + ")", Fix: declaredKeysFix}
+	}
+	return &Refused{Where: l.program.Where(node), What: "a type argument with declared properties bound to a type parameter constrained to a wider index signature, which can write under a declared property what it does not hold (" + bound + ": " + found.declaredKey + " is declared " + l.checker.TypeToString(found.source) + ", and the index signature holds " + l.checker.TypeToString(found.target) + ")", Fix: declaredKeysFix}
+}
+
+// declaredKeyRefusal is a declared-key widening's refusal: one reason for each direction. A view found
+// in one branch of a conditional names that branch's type (viewed), not the conditional's own, which
+// tsc reduced to the wider side (Language's n24).
 func (l *lowering) declaredKeyRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {
+	if found.viewed != nil {
+		own = found.viewed
+	}
 	if found.dictionary {
 		return &Refused{Where: l.program.Where(node), What: "a dictionary read through a declared property narrower than its values (" + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ": " + found.declaredKey + " is declared " + l.checker.TypeToString(found.target) + ", and the index signature holds " + l.checker.TypeToString(found.source) + ")", Fix: declaredKeysFix}
 	}

@@ -108,13 +108,16 @@ func TestNamedRecordRefusals(t *testing.T) {
 	}
 }
 
-// In .a, a write by a key that isn't one literal, and a view through a wider index signature, are
-// refused where a declared property's type could lie (#npqr3sx).
+// In .a, a write by a key that isn't one literal, a view through a wider index signature, and a type
+// argument whose constraint is such a view, either way, are refused where a declared property's type
+// could lie (#npqr3sx).
 func TestNamedRecordLiesAreRefusedInA(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ source, reason string }{
 		{`interface R {named?:number;[key:string]:number|string|undefined} function write(r:R,k:string):void {r[k]="wrong";}`, "a write into a record with declared properties through a key that is not one literal"},
 		{`interface R {named?:number;[key:string]:number|string|undefined} const r:R={}; const view:Record<string,number|string|undefined>=r;`, "a value with declared properties seen through a wider index signature"},
+		{`interface R {named?:number;[key:string]:number|string|undefined} type D={[key:string]:number|string|undefined}; function put<T extends D>(t:T,k:string):void {const w:D=t; w[k]="wrong";} const r:R={}; put(r,"named");`, "a type argument with declared properties bound to a type parameter constrained to a wider index signature"},
+		{`interface R {named?:number;[key:string]:number|string|undefined} type D={[key:string]:number|string|undefined}; function read<T extends R>(t:T):number|undefined {return t.named;} const d:D={}; read(d);`, "a dictionary bound as a type argument whose constraint reads it through a declared property narrower than its values"},
 	} {
 		t.Run(probe.source, func(t *testing.T) {
 			_, err := lowerSource(t, probe.source)

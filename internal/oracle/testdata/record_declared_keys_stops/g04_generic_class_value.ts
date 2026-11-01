@@ -1,0 +1,14 @@
+interface Options { outFile?: string; [name: string]: string | number | undefined; }
+type Dict = { [name: string]: string | number | undefined };
+function key(): string { return 'outFile'; }
+const name: string = key();
+class Store<T extends Dict> {
+    held: T;
+    constructor(held: T) { this.held = held; }
+    put(value: number): void { const wide: Dict = this.held; wide[name] = value; }
+}
+const make: new (held: Options) => Store<Options> = Store;
+const options: Options = {};
+const store = new make(options);
+store.put(3);
+console.log(typeof options.outFile);
