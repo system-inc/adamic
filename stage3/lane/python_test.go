@@ -160,6 +160,8 @@ func TestLaneCheckPython(t *testing.T) {
 
 var generateApiPythonGroups = map[string][]string{
 	"TestLaneGenerateApiReconstructionPython": {
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_line_applied_and_guard_accepts",
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_ambiguous_path_without_line_is_rejected",
 		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_applied_and_guard_accepts",
 		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_undo_is_rejected",
 		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_member_applied_and_guard_accepts",
@@ -170,6 +172,8 @@ var generateApiPythonGroups = map[string][]string{
 		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_function_return_applied_and_guard_accepts",
 	},
 	"TestLaneGenerateApiRejectionsPython": {
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_wrong_line_names_path_and_line",
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_non_integer_line_is_rejected",
 		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_before_mismatch_names_row",
 		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_ambiguous_owner",
 		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_missing_owner",

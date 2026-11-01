@@ -49,7 +49,7 @@ NODE_PATH="$PWD/stage3/api/node_modules" \
   > /tmp/lane-generate.log 2>&1
 ```
 
-Generation also reads each `stage3/adapt/*/api-sanctions.json` in sorted directory order, validates exact upstream owner types (or whole members with `"replace": "member"`), rejects duplicate claims, and hashes these inputs. `"insert": "after"` adds new interfaces or type aliases after a namespace-level declaration.
+An optional positive integer `line` selects an owner among matching paths and kinds. Generation also reads each `stage3/adapt/*/api-sanctions.json` in sorted directory order, validates exact upstream owner types (or whole members with `"replace": "member"`), rejects duplicate claims, and hashes these inputs. `"insert": "after"` adds new interfaces or type aliases after a namespace-level declaration.
 
 The argument is the pinned TypeScript checkout. Generation reads pinned
 Git objects, rather than trusting modified checkout files. The reconstruction
