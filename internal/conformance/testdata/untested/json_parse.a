@@ -1,0 +1,4 @@
+// Spec: `JSON`
+// Expect: refused its result's type can't be proven from the text
+const parse = (text: string): unknown => JSON.parse(text);
+console.log(String(parse('1')));
