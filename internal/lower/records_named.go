@@ -45,6 +45,13 @@ func (l *lowering) recordReadType(node *ast.Node, read ir.Expression, here *chec
 		name = "string"
 	case ir.Closure:
 		name = "function"
+	case ir.Object, ir.Record:
+		return l.recordReadHeapMember(node, read, here, to)
+	case ir.Array:
+		// Arrays of different element types share one heap kind, and walking the elements proves nothing
+		// once another alias pushes into it, so an array read waits on an element-checked view, ruled on
+		// #3xq2xzc and built in Baobab (#y852c3c): tsc's typeRoots, rootDirs, moduleSuffixes and types.
+		return nil, l.notYet(node, "a dictionary member narrowed to an array without an element-checked view")
 	default:
 		return nil, l.notYet(node, "a dictionary member narrowed to an object kind without a checked runtime tag")
 	}
@@ -56,8 +63,7 @@ func (l *lowering) recordReadType(node *ast.Node, read ir.Expression, here *chec
 	}
 	// A write through the index signature, by a computed key or through a wider alias, can leave any
 	// member of the slot's union under a declared key. The stop names the read and what it found.
-	file := ast.GetSourceFileOfNode(node)
-	expression := file.Text()[scanner.GetTokenPosOfNode(node, file, false):node.End()]
+	expression := recordReadExpression(node)
 	declared := l.checker.TypeToString(l.checker.GetNonNullableType(here))
 	found := ir.Conditional{Condition: ir.IsNull{Value: value}, WhenTrue: ir.StringConstant{Index: l.constant("null")}, WhenNot: ir.TypeOf{Value: value}, Of: ir.String}
 	message := ir.Concat{Parts: []ir.Expression{
@@ -68,6 +74,79 @@ func (l *lowering) recordReadType(node *ast.Node, read ir.Expression, here *chec
 	b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: message}}})
 	return b.finish("record_declared_member", ir.Narrow{Value: value, To: to}), nil
 }
+
+// recordReadExpression is the read's source text, as a stop names it.
+func recordReadExpression(node *ast.Node) string {
+	file := ast.GetSourceFileOfNode(node)
+	return file.Text()[scanner.GetTokenPosOfNode(node, file, false):node.End()]
+}
+
+// recordReadHeapMember is recordReadType's read of a fixed object or a dictionary out of a slot boxed as
+// a union. typeof says object for both, and for an array and a Map, so no tag names the member. But every
+// value in the slot is one of the slot union's members (the checker's assignability at each write, with
+// recordStorageView refusing a fixed object seen as a record and back), so a heap test proves the declared
+// member when no other member of the slot's union has its runtime class: a fixed object is a non-null
+// object heap that isn't a record, a dictionary one that is (ir.Narrow's checked arms). tsc's
+// CompilerOptions reads configFile?: TsConfigSourceFile and paths?: MapLike<string[]> this way, beside
+// arrays, scalars and null. Two members of one class, an array's four, a member whose runtime class
+// isn't known, or a declared type that admits null (which the checked arm stops on) keep the NotYet.
+func (l *lowering) recordReadHeapMember(node *ast.Node, read ir.Expression, here *checker.Type, to ir.Type) (ir.Expression, error) {
+	declared := l.concrete(l.checker.GetNonNullableType(here))
+	if l.includesNull(here) || !l.recordSlotMemberUnique(recordReceiver(node), declared, to) {
+		return nil, l.notYet(node, "a dictionary member narrowed to an object kind without a checked runtime tag")
+	}
+	b := l.libraryArrayBuilder([]ir.Expression{read})
+	value := b.read(b.parameters[0])
+	if l.includesUndefined(here) {
+		b.body = append(b.body, ir.If{Condition: ir.IsUndefined{Value: value}, Then: []ir.Statement{ir.Return{Value: ir.Undefined{Of: to}}}})
+	}
+	named := l.checker.TypeToString(declared)
+	// A write through the index signature, by a computed key or through a wider alias, can leave any
+	// member of the slot's union under a declared key. The stop names the read and what it found.
+	message := "field read failed: " + recordReadExpression(node) + " is not a " + named + "; expected " + named + ", found another member of the index signature's union, which a computed-key or index-signature write may have stored"
+	return b.finish("record_declared_member", ir.Narrow{Value: value, To: to, Checked: true, Message: message}), nil
+}
+
+// recordSlotMemberUnique is whether declared is the only member of receiver's index signature value
+// union whose runtime class is to's, nullish members aside. Every member's representation must be one
+// whose heap kind is its own: a Union (unknown, object, {}) could be anything, a Closure from the
+// library's Function could be a class constructor, an object kind with an index signature may be
+// enumeration storage, and the rest (a Promise, a typed array, a Weak) aren't vouched for here.
+func (l *lowering) recordSlotMemberUnique(receiver *ast.Node, declared *checker.Type, to ir.Type) bool {
+	infos := l.checker.GetIndexInfosOfType(l.concrete(l.checker.GetTypeAtLocation(receiver)))
+	if len(infos) != 1 || infos[0].KeyType().Flags() != checker.TypeFlagsString {
+		return false
+	}
+	if to == ir.Object && len(l.checker.GetIndexInfosOfType(declared)) != 0 {
+		return false
+	}
+	var unique *checker.Type
+	for _, member := range l.definedMembers(l.concrete(infos[0].ValueType())) {
+		if member.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0 {
+			continue
+		}
+		of, known := l.representation(member)
+		if !known || !recordSlotHeapClasses[of] {
+			return false
+		}
+		if of == ir.Object && len(l.checker.GetIndexInfosOfType(member)) != 0 || of == ir.Closure && len(l.checker.GetSignaturesOfType(member, checker.SignatureKindCall)) == 0 {
+			return false
+		}
+		if of != to {
+			continue
+		}
+		if unique != nil {
+			return false
+		}
+		unique = member
+	}
+	return unique != nil && (unique == declared || l.checker.IsTypeAssignableTo(unique, declared) && l.checker.IsTypeAssignableTo(declared, unique) && l.sameRecordStorage(unique, declared, map[[2]*checker.Type]bool{}) && l.sameRecordStorage(declared, unique, map[[2]*checker.Type]bool{}))
+}
+
+// recordSlotHeapClasses is each representation recordSlotMemberUnique tells apart at runtime: a scalar by
+// its box, a string, an array, a Map and a closure by their heap kinds, and a fixed object from a
+// dictionary by its shape.
+var recordSlotHeapClasses = map[ir.Type]bool{ir.Number: true, ir.Boolean: true, ir.String: true, ir.Array: true, ir.Map: true, ir.Closure: true, ir.Object: true, ir.Record: true}
 
 // An unrestricted key can hit a narrower named slot. Preserve that slot's
 // contract instead of trusting the checker's permissive index assignment.
@@ -139,9 +218,11 @@ func (l *lowering) recordComputedEntry(literal, entry *ast.Node, of ir.Type) err
 // readGuardedInUnionSlot is each representation whose declared read from a slot boxed as a union is
 // proven to stop on a lie, each by a pin in TestNamedRecordWritesAreJudgedAsTheirDirectTwins. A number,
 // string or boolean is read through recordReadType's exact tag check, which stops loudly
-// (records_union_lying.ts is Adamic's .ts witness). A plain object, an array, a Map and a dictionary
-// have no checked tag, so their read is not yet: Language's b8, a8 and p8, and r8, the MapLike that
-// records_union_options.ts, tsc's commandLineParser shape, declares. A function's tag says only
+// (records_union_lying.ts is Adamic's .ts witness). A plain object or a dictionary that's the one
+// member of its heap class in the slot's union is read through a checked heap narrow
+// (recordReadHeapMember), which stops on the other class; beside another of its class it has no
+// checked tag, and neither has an array or a Map, so their read is not yet: Language's b8, a8 and p8,
+// and r8, the MapLike that records_union_options.ts, tsc's commandLineParser shape, declares. A function's tag says only
 // "function", so it's judged (b10), as is any representation not here.
 var readGuardedInUnionSlot = map[ir.Type]bool{ir.Number: true, ir.String: true, ir.Boolean: true, ir.Object: true, ir.Array: true, ir.Map: true, ir.Record: true}
 

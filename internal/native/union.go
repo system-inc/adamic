@@ -48,15 +48,24 @@ func (e *emitter) box(value ir.Expression) string {
 
 // narrow emits a union the checker proved to be one member, as that member. A number or a boolean is
 // read out of its box now, as JavaScript reads the variable; a reference is the union's, borrowed.
+// A checked arm stops unless the heap is that member's class. A fixed object and a dictionary share
+// the object kind, so their shape tells them apart: a fixed object is one that isn't a record.
 func (e *emitter) narrow(narrow ir.Narrow) string {
 	value := e.value(narrow.Value)
 	if narrow.Checked {
-		kinds := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "map", ir.Closure: "closure"}
+		kinds := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Record: "object", ir.Array: "array", ir.Map: "map", ir.Closure: "closure"}
 		kind, supported := kinds[narrow.To.Present()]
 		if !supported {
 			panic("compiler bug: unsupported placeholder present arm")
 		}
-		e.line("if (%s == NULL || %s == &adamic_null || %s->kind != adamic_kind_%s) adamic_panic(%s, %d);", value, value, value, kind, cString(narrow.Message), len(narrow.Message))
+		shape := ""
+		switch narrow.To.Present() {
+		case ir.Object:
+			shape = fmt.Sprintf(" || adamic_record_is((const adamic_object *)%s)", value)
+		case ir.Record:
+			shape = fmt.Sprintf(" || !adamic_record_is((const adamic_object *)%s)", value)
+		}
+		e.line("if (%s == NULL || %s == &adamic_null || %s->kind != adamic_kind_%s%s) adamic_panic(%s, %d);", value, value, value, kind, shape, cString(narrow.Message), len(narrow.Message))
 	}
 	switch narrow.To {
 	case ir.Number:
