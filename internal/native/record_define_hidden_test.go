@@ -68,10 +68,10 @@ catch(error) {
 		name, source    string
 		checks, defines int
 	}{
-		{"no define", writes + "console.log(JSON.stringify(r));\n", 0, 0},
+		{"no define", writes + "console.log(String(JSON.stringify(r)));\n", 0, 0},
 		// r[key] and delete r[key] are dynamic, and r.hidden names the hidden key; r.plain, delete r.plain and
 		// r.other ??= name none.
-		{"one define", writes + define + "console.log(JSON.stringify(r));\n", 3, 1},
+		{"one define", writes + define + "console.log(String(JSON.stringify(r)));\n", 3, 1},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			path := filepath.Join(t.TempDir(), "main.a")

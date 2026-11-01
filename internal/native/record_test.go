@@ -448,8 +448,9 @@ var recordMutationCases = []struct {
 	{"overwrite-key-leaked", "map.c", "adamic_release(key.reference);", "(void)key;", "references", "LeakSanitizer"},
 	{"stored-key-freed", "record.c", "adamic_map_set(table(record), (adamic_value){.reference = key}, value);", "adamic_map_set(table(record), (adamic_value){.reference = key}, value);\n\tadamic_release(key);", "semantics", "AddressSanitizer: heap-use-after-free"},
 	{"own-slot-null-read", "record.c", "return adamic_map_get(table(record), (adamic_value){.reference = (void *)key});", "adamic_value *missing = NULL;\n\tvolatile double observed = missing->number;\n\t(void)observed;\n\treturn adamic_map_get(table(record), (adamic_value){.reference = (void *)key});", "prototypes", "runtime error: member access within null pointer"},
-	// A new entry in a slot compaction freed keeps the attributes of the key that was there.
-	{"attributes-kept-in-a-reused-slot", "map.c", "\t// The slot may be one compaction freed, a record key's with attributes among them.\n\tentry->hidden = false;\n\tentry->readonly = false;\n\tentry->fixed = false;\n", "", "hidden", "Node"},
+	// A new entry keeps whatever its slot held: stale attributes in a slot compaction freed, and in a fresh one
+	// the sanitized allocator's fill, which UBSan stops at the first attribute read, before the reuse case.
+	{"attributes-not-reset", "map.c", "\t// The slot may be one compaction freed, a record key's with attributes among them.\n\tentry->hidden = false;\n\tentry->readonly = false;\n\tentry->fixed = false;\n", "", "hidden", "runtime error: load of value"},
 	{"hidden-keys-listed", "record.c", "if (!entry->deleted && !entry->hidden && !array_index(entry->key.reference, &number)) {", "if (!entry->deleted && !array_index(entry->key.reference, &number)) {", "hidden", "Node"},
 }
 

@@ -62,7 +62,7 @@ console.log(`${String(read === list)} ${String(Object.keys(lists).length)}`);
 // Every enumeration leaves it out.
 console.log(Object.keys(counts).join(','));
 console.log(Object.values(counts).join(','));
-console.log(JSON.stringify(counts));
+console.log(String(JSON.stringify(counts)));
 const visited: string[] = [];
 for(const name in counts) visited.push(name);
 console.log(visited.join(','));
@@ -108,7 +108,7 @@ catch(error) {
 console.log(`${String(counts[key])} ${Object.keys(counts).join(',')}`);
 counts.c = 30;
 delete counts.a;
-console.log(JSON.stringify(counts));
+console.log(String(JSON.stringify(counts)));
 
 // SameValue: NaN is NaN, -0 isn't +0, and strings are compared by what they hold.
 const numbers: Record<string, number> = {};
