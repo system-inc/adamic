@@ -170,7 +170,11 @@ show(v);`, "HasName", "5\n"},
 func TestBrandedSupertypeStaysNotYet(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, want string }{
-		{"false branch", `function show(x: Node): void { if (isTypeElement(x)) { console.log("element"); } else { console.log(String(x.pos)); } }
+		// The false side narrows only when a member of the argument's type is assignable to S, and every such
+		// member but one S is also assignable to (a restatement) is NotYet at the call by brandedNarrowing, so
+		// a restatement is how the false side's guard is reached.
+		{"false branch", `interface Restated extends TypeElement {}
+function show(x: Restated | Node): void { if (isTypeElement(x)) { console.log("element"); } else { console.log(String(x.pos)); } }
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" }; show(i);`, "checked predicate membership of a branded supertype on its false branch"},
 		{"spread", `function show(n: Node): void { if (isTypeElementLie(n)) { const c = { ...n }; console.log(String(c.name)); } }
 const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);`, "a whole-object copy of a value of checked view type TypeElement"},
