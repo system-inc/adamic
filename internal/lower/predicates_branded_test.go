@@ -328,7 +328,8 @@ function show(x: PropertySignature | Identifier): void { held(x); console.log(St
 show(i);`, walk, true},
 		// A claim naming a type parameter narrows by whatever the instance is, and the walk reads calls as
 		// written, so it's NotYet when S could instantiate it and the narrowing isn't the argument's own type.
-		// Mutant: generic claims passed over, and it lowers.
+		// With generic claims passed over, this bare U is still held, by main's overload-target rule, so the
+		// generic branded supertype below is the case only the walk holds.
 		{"generic claim", `function isT<T extends Node>(n: Node): n is T { return kindOf(n) !== 0; }
 function show(n: Node): void { if (isTypeElementLie(n)) { console.log("element"); } }
 function g<U extends Node>(x: PropertySignature | Identifier): void { if (isT<U>(x)) { console.log(String(x.pos)); } }
@@ -337,7 +338,8 @@ show(i);`, "that the generic claim U may be instantiated at", false},
 		// A generic branded supertype at a type argument the walk can't see: U = number makes the claim
 		// Tagged<number>, S itself, so U's constraint against S says nothing (Compiler's must on 810ce7d9).
 		// Nothing reads value, whose view read main refuses as a generic contract, so only the walk holds it.
-		// Mutant: type arguments judged by their constraint against S, and it lowers.
+		// Mutants: type arguments judged by their constraint against S, or generic claims passed over, and
+		// it lowers.
 		{"generic branded supertype", `interface Tagged<V> { readonly kind: number; readonly pos: number; _taggedBrand: undefined; readonly value: V }
 interface Sub extends Tagged<number> { readonly kind: 7; readonly extra: string; }
 function isTagged(n: Node): n is Tagged<number> { return kindOf(n) !== 0; }
