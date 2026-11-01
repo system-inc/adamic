@@ -42,6 +42,13 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 		return nil
 	}
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		// A value enters a union that names its own type as that member, so no other member's field is
+		// hidden from it. Seeing the union as another member later is a view of its own, checked there.
+		for _, member := range target.Types() {
+			if member == source {
+				return nil
+			}
+		}
 		for _, member := range target.Types() {
 			if l.checker.IsTypeAssignableTo(source, member) {
 				if found := l.optionalWidened(source, member, skip, visited); found != nil {
