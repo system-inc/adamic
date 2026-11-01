@@ -1,0 +1,4 @@
+../scratch/jv-harness-reach/src/harness/fourslashImpl.ts(1205,50): error TS2345: Argument of type 'readonly JSDocTagInfo[] | undefined' is not assignable to parameter of type 'JSDocTagInfo[] | undefined'.
+  The type 'readonly JSDocTagInfo[]' is 'readonly' and cannot be assigned to the mutable type 'JSDocTagInfo[]'.
+../scratch/jv-harness-reach/src/harness/fourslashImpl.ts(2520,34): error TS2339: Property 'kind' does not exist on type 'string | SymbolDisplayPart'.
+  Property 'kind' does not exist on type 'string'.

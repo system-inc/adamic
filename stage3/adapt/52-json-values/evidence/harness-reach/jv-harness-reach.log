@@ -1,0 +1,38 @@
+../scratch/jv-harness-reach/src/harness/fourslashImpl.ts(1205,50): error TS2345: Argument of type 'readonly JSDocTagInfo[] | undefined' is not assignable to parameter of type 'JSDocTagInfo[] | JSDocTagInfo[] | undefined'.
+  Type 'readonly JSDocTagInfo[]' is not assignable to type 'JSDocTagInfo[] | JSDocTagInfo[] | undefined'.
+    The type 'readonly JSDocTagInfo[]' is 'readonly' and cannot be assigned to the mutable type 'JSDocTagInfo[]'.
+../scratch/jv-harness-reach/src/harness/fourslashImpl.ts(2511,31): error TS2339: Property 'displayParts' does not exist on type '{ name: string; kind: ScriptElementKind; kindModifiers?: string | undefined; sortText: string; insertText?: string | undefined; filterText?: string | undefined; ... 12 more ...; commitCharacters?: string[] | undefined; } | { ...; } | { ...; }'.
+  Property 'displayParts' does not exist on type '{ name: string; kind: ScriptElementKind; kindModifiers?: string | undefined; sortText: string; insertText?: string | undefined; filterText?: string | undefined; isSnippet?: true | undefined; ... 11 more ...; commitCharacters?: string[] | undefined; }'.
+../scratch/jv-harness-reach/src/harness/fourslashImpl.ts(2512,37): error TS2339: Property 'displayParts' does not exist on type '{ name: string; kind: ScriptElementKind; kindModifiers?: string | undefined; sortText: string; insertText?: string | undefined; filterText?: string | undefined; ... 12 more ...; commitCharacters?: string[] | undefined; } | { ...; } | { ...; }'.
+  Property 'displayParts' does not exist on type '{ name: string; kind: ScriptElementKind; kindModifiers?: string | undefined; sortText: string; insertText?: string | undefined; filterText?: string | undefined; isSnippet?: true | undefined; ... 11 more ...; commitCharacters?: string[] | undefined; }'.
+../scratch/jv-harness-reach/src/harness/fourslashImpl.ts(2512,54): error TS7006: Parameter 'p' implicitly has an 'any' type.
+../scratch/jv-harness-reach/src/harness/fourslashImpl.ts(2518,41): error TS2339: Property 'tags' does not exist on type '{ name: string; kind: ScriptElementKind; kindModifiers?: string | undefined; sortText: string; insertText?: string | undefined; filterText?: string | undefined; ... 12 more ...; commitCharacters?: string[] | undefined; } | { ...; } | { ...; }'.
+  Property 'tags' does not exist on type '{ name: string; kind: ScriptElementKind; kindModifiers?: string | undefined; sortText: string; insertText?: string | undefined; filterText?: string | undefined; isSnippet?: true | undefined; ... 11 more ...; commitCharacters?: string[] | undefined; }'.
+../scratch/jv-harness-reach/src/harness/fourslashImpl.ts(3362,37): error TS2345: Argument of type 'CodeAction[] | CodeAction[]' is not assignable to parameter of type 'readonly CodeAction[]'.
+  Type 'CodeAction[]' is not assignable to type 'readonly CodeAction[]'.
+    Type 'import("/workspace/scratch/jv-harness-reach/built/local/server/protocol").CodeAction' is not assignable to type 'import("/workspace/scratch/jv-harness-reach/built/local/services/types").CodeAction'.
+      Types of property 'changes' are incompatible.
+        Type 'FileCodeEdits[]' is not assignable to type 'FileTextChanges[]'.
+          Type 'FileCodeEdits' is not assignable to type 'FileTextChanges'.
+            Types of property 'textChanges' are incompatible.
+              Type 'CodeEdit[]' is not assignable to type 'readonly TextChange[]'.
+                Property 'span' is missing in type 'CodeEdit' but required in type 'TextChange'.
+../scratch/jv-harness-reach/src/harness/fourslashImpl.ts(3369,62): error TS2345: Argument of type 'CodeAction[] | CodeAction[]' is not assignable to parameter of type 'readonly CodeAction[] | undefined'.
+  Type 'CodeAction[]' is not assignable to type 'readonly CodeAction[]'.
+    Type 'import("/workspace/scratch/jv-harness-reach/built/local/server/protocol").CodeAction' is not assignable to type 'import("/workspace/scratch/jv-harness-reach/built/local/services/types").CodeAction'.
+      Types of property 'changes' are incompatible.
+        Type 'FileCodeEdits[]' is not assignable to type 'FileTextChanges[]'.
+          Type 'FileCodeEdits' is not assignable to type 'FileTextChanges'.
+            Types of property 'textChanges' are incompatible.
+              Type 'CodeEdit[]' is not assignable to type 'readonly TextChange[]'.
+                Property 'span' is missing in type 'CodeEdit' but required in type 'TextChange'.
+../scratch/jv-harness-reach/src/harness/fourslashImpl.ts(3708,87): error TS2339: Property 'span' does not exist on type 'TextChange | CodeEdit'.
+  Property 'span' does not exist on type 'CodeEdit'.
+../scratch/jv-harness-reach/src/harness/fourslashImpl.ts(3708,102): error TS2339: Property 'span' does not exist on type 'TextChange | CodeEdit'.
+  Property 'span' does not exist on type 'CodeEdit'.
+../scratch/jv-harness-reach/src/harness/fourslashImpl.ts(3711,83): error TS2339: Property 'span' does not exist on type 'TextChange | CodeEdit'.
+  Property 'span' does not exist on type 'CodeEdit'.
+../scratch/jv-harness-reach/src/harness/fourslashImpl.ts(3711,166): error TS2339: Property 'span' does not exist on type 'TextChange | CodeEdit'.
+  Property 'span' does not exist on type 'CodeEdit'.
+../scratch/jv-harness-reach/src/harness/fourslashImpl.ts(3711,196): error TS2339: Property 'span' does not exist on type 'TextChange | CodeEdit'.
+  Property 'span' does not exist on type 'CodeEdit'.
