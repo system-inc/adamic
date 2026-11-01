@@ -1,0 +1,57 @@
+{
+  "previous_evidence_commit": "9c5c120c371ab16049225693108fd5446d0ebc84",
+  "A": "141ad1d244d6a2d9c5403858086d505dfdef5fd5",
+  "B": "65146f1eff049a8ce9a35fe67c842f79bbe1407c",
+  "resolved_by": "git fetch origin optimizer/branded-supertype-road2; git rev-parse 65146f1e^{commit}",
+  "TypeScript_source": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "cohere": "06af2e399c6c1fb93fd570b774027942747400b4",
+  "cohere_TypeScript": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "main_binary_reused": true,
+  "shared_tree_reused": true,
+  "same_box": true,
+  "main_ledger_identical_to_previous_pair": true,
+  "checker_headers_identical": true,
+  "unit_eligibility_identical": true,
+  "input_hashes_unchanged": true,
+  "recorder_backport": false,
+  "binary_sha256": {
+    "A": "10371fb48fc2df1b6f414584ed0ec2c0f2320be156b2c11282c97b85561a4382",
+    "B": "3d9f5b617d133e6aec47d41d3ddefac3416731f5e72dd0a8249ef618c100c91e"
+  },
+  "raw_sha256": {
+    "A-times.jsonl": "3077c77518fa78a3a5bc65dd347b8e301c4827262627524427370af5d0a32c09",
+    "A.jsonl": "5170a75faa095748dee71f6638c538778abd790cf95887fb27321328f0c68bcd",
+    "B-times.jsonl": "dc497a46c12fa2ad581ea32bcf0495cf67637d7692431b4752cd6b1681233f97",
+    "B.jsonl": "d8ffef171a03dc9a66d3e231ccab0a41c92c361911fb7e3f5d1ba9c59fb3f29e"
+  },
+  "stock_TypeScript_js_sha256": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39",
+  "overlay_sha256": {
+    "internal_load_latent_hook.go": "34747889ceef90621e27315daef974795840ff5a22cd17b33fe72d5caa50fbd6",
+    "internal_load_load.go": "09ed256da9beedc908843e89d042e8a501521fc5d9c25a6ebfa4e57261a47b25",
+    "internal_lower_expression.go": "bcbb0ddda51b45f13bf5a7f2e40d06812ac701b6e3c9e93056de85b157eca8c0",
+    "internal_lower_functions.go": "c309196b29f03726104acb77f1686eaa1acf6e2e1888e5d66ea4f9db34fea80d",
+    "internal_lower_generic.go": "9e3ceab72d994a0f6924cc6bb8988d873333f529b3836f9bd19193a62cbe4613",
+    "internal_lower_latent_full.go": "c995c98d33bf55ab66d21a8b0ddbad719dab6a4b4964c1c1cd0b571924baf38e",
+    "internal_lower_latent_hook.go": "89bdef957f419b6157c63df7be463700af65ff996f97dc4a8e70ad34d5106b1b",
+    "internal_lower_latent_piece.go": "ae04c70b5cd7c746e9f2ffdd61147ab8d92056bea29342b5be9feee4fd84afee",
+    "internal_lower_latent_progress.go": "bdb2684110c5e6c160909c0d36cf975778a9b8f8f46273df8b3d75729be494c3",
+    "internal_lower_latent_replay.go": "95bed77aa80a1938670d50bf2165ed632fe714b70217546a19462d09424bde9a",
+    "internal_lower_latent_speculative.go": "6aaff04313f0cb40c37138703db4f6192e8e34135259b11cc6f334a68e4b52ab",
+    "internal_lower_latent_state.go": "369555a814721688c959625be730973cec339360c9b0ff38c839e6592992f6d4",
+    "internal_lower_latent_timing.go": "080b7937b2ec03c1837ec639a7916056fbf2c439f5491c321fc972899f41ad3f",
+    "internal_lower_latent_units.go": "3a62c5d1ed30fefbc38b5a3f64b1e69bd881a44a743573f3ffa24ff6221cea38",
+    "internal_lower_locals.go": "2a4e9b0612825b911196f1ae8e7a4c2f0c358840c65c64968e8ec092e1a90474",
+    "internal_lower_lower.go": "d7d3ba1db635a36bc91ef64c6d97136a65abe2caa61216b2264c55640f0b87ab",
+    "internal_lower_refusals.go": "31068cee83a79a11a0ecf96c68363b9dfa31d3e7bb668482b6a80d4a55d5c635",
+    "internal_lower_statements.go": "aae3923e9b6870b987dadbbc6826bd856c2f773737b7bfddc2cbe118a2e18869",
+    "overlay.json": "16542e12470f089097ee5e6a5903b0f29ea7aed5a624a4480f2ab98d2f1e1b6e",
+    "stage3_census_latent_replay_worker_main.go": "d86ce314147e65c3fd081a3509974b8d4056b39b86c244fe47579d7ab7e03b34",
+    "stage3_census_latent_tool_main.go": "faf918e10243fd8d5c5ad3e5c2d12ff434f66e69e685366105ba6cf59ae5a7c3"
+  },
+  "tool_versions": {
+    "go": "go version go1.27.1 linux/amd64",
+    "node": "v24.19.0",
+    "python": "Python 3.12.14"
+  },
+  "compiler_worktree_tracked_changes": ""
+}

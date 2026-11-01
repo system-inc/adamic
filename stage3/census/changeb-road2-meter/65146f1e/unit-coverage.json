@@ -1,0 +1,20 @@
+{
+  "A": {
+    "total_units": 4543,
+    "statuses": {
+      "attempted": 4017,
+      "deferred_generic_instantiation": 498,
+      "skipped_checker_body": 28
+    },
+    "attempted_without_lowering_finding": 2930
+  },
+  "B": {
+    "total_units": 4543,
+    "statuses": {
+      "attempted": 4017,
+      "deferred_generic_instantiation": 498,
+      "skipped_checker_body": 28
+    },
+    "attempted_without_lowering_finding": 2930
+  }
+}

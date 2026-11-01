@@ -1,0 +1,92 @@
+{
+  "typescriptVersion": "6.0.3",
+  "sourceRoot": "/workspace/scratch/tree",
+  "config": "/workspace/scratch/tree/src/compiler/tsconfig.json",
+  "options": {
+    "rootDir": "/workspace/scratch/tree/src",
+    "outDir": "/workspace/scratch/tree/built/local",
+    "pretty": true,
+    "lib": [
+      "lib.es2020.d.ts"
+    ],
+    "target": 7,
+    "module": 199,
+    "moduleResolution": 99,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "isolatedDeclarations": true,
+    "strict": true,
+    "strictBindCallApply": false,
+    "useUnknownInCatchVariables": false,
+    "noImplicitOverride": true,
+    "skipLibCheck": true,
+    "alwaysStrict": true,
+    "preserveConstEnums": true,
+    "newLine": 1,
+    "types": [
+      "node"
+    ],
+    "configFilePath": "/workspace/scratch/tree/src/compiler/tsconfig.json",
+    "noEmit": true,
+    "typeRoots": [
+      "/workspace/adamic/stage3/api/node_modules/@types"
+    ]
+  },
+  "files": 79,
+  "definition": "Calls resolving to core.ts some; generic first-argument type contains an instantiable type through union/intersection, alias arguments or reference arguments, matching mentionsTypeParameter. Includes one-argument predicate and two-argument boolean overloads separately. This is a source-site inventory, independent of census eligibility and first-error truncation; guard exposure is not proof the call stops.",
+  "coreDeclarations": [
+    "src/compiler/core.ts:614:1",
+    "src/compiler/core.ts:616:1",
+    "src/compiler/core.ts:618:1"
+  ],
+  "allSomeCalls": 305,
+  "genericArgumentCalls": 1,
+  "genericPredicateCalls": 1,
+  "genericBooleanCalls": 0,
+  "diagnostics": {
+    "options": [],
+    "syntactic": 0,
+    "semantic": 1,
+    "semanticDetails": [
+      {
+        "code": 2307,
+        "where": "src/compiler/sys.ts:1598:69",
+        "message": "Cannot find module 'source-map-support' or its corresponding type declarations."
+      }
+    ]
+  },
+  "sites": [
+    {
+      "where": "src/compiler/core.ts:1203:10",
+      "file": "src/compiler/core.ts",
+      "line": 1203,
+      "call": "some(array)",
+      "argument": "array",
+      "argumentType": "readonly T[]",
+      "argumentCount": 1,
+      "generic": true,
+      "genericComponents": [
+        {
+          "route": "argument.typeArgument[0]",
+          "type": "T",
+          "flags": 524288,
+          "typeParameter": true
+        }
+      ],
+      "resolvedDeclaration": "src/compiler/core.ts:614:1",
+      "resolvedSignature": "(array: readonly T[] | undefined): array is readonly T[]",
+      "predicate": {
+        "kind": 1,
+        "parameterIndex": 0,
+        "type": "readonly T[]"
+      },
+      "identity": {
+        "resolvedFromCore": true,
+        "symbolFromCore": true
+      }
+    }
+  ]
+}

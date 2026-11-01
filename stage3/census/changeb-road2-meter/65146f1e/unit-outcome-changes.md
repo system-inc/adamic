@@ -1,0 +1,8 @@
+| Unit | Name | A first stop | B first stop |
+| --- | --- | --- | --- |
+| src/compiler/emitter.ts:1147:1 |  | NotYet at src/compiler/emitter.ts:1158:18: checked predicate overload target LateBoundDeclaration | NotYet at src/compiler/checker.ts:7626:37: a checked predicate target LateBoundDeclaration that narrows ClassElement & { name: ComputedPropertyName; }, which isn't its supertype |
+| src/compiler/factory/parenthesizerRules.ts:675:1 |  | NotYet at src/compiler/core.ts:1784:32: checked predicate overload target LeftHandSideExpression | NotYet at src/compiler/core.ts:1784:32: a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} &#124; null), which narrows to an intersection no view covers |
+| src/compiler/utilities.ts:11057:1 | isOptionalJSDocPropertyLikeTag | NotYet at src/compiler/utilitiesPublic.ts:1449:1: checked predicate overload target JSDocPropertyLikeTag | NotYet at src/compiler/sourcemap.ts:474:9: a getter in a checked field contract |
+| src/compiler/utilities.ts:7200:1 | isStatic | NotYet at src/compiler/utilitiesPublic.ts:1732:1: checked predicate overload target ClassElement | NotYet at src/compiler/sourcemap.ts:474:9: a getter in a checked field contract |
+| src/compiler/utilitiesPublic.ts:1794:1 | isClassOrTypeElement | NotYet at src/compiler/utilitiesPublic.ts:1782:1: checked predicate overload target TypeElement | NotYet at src/compiler/sourcemap.ts:474:9: a getter in a checked field contract |
+| src/compiler/utilitiesPublic.ts:2071:1 | isLiteralTypeLiteral | NotYet at src/compiler/utilitiesPublic.ts:1498:1: checked predicate overload target LiteralExpression | NotYet at src/compiler/sourcemap.ts:474:9: a getter in a checked field contract |
