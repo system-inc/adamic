@@ -2,8 +2,11 @@
 // hides options.configFile, with the attributes Node gives it. A new key is left out of Object.keys, values, JSON,
 // for...in and spread, seen by in and the own-key tests, and refused a write, a delete and a define of another
 // value, while a define of the same value goes through. A key that was there stays configurable.
+// lines keeps a source file from being seen as the options, as tsc's TsConfigSourceFile can't be, so writing one
+// into them can't close a cycle (adamic/cycle-capable).
 interface SourceFileLike {
     fileName: string;
+    lines: number[];
 }
 interface CompilerOptions {
     target?: number;
@@ -18,11 +21,11 @@ function hiddenName(): string {
 }
 
 const options: CompilerOptions = { target: 99, outDir: 'built' };
-const configFile: SourceFileLike = { fileName: 'tsconfig.json' };
+const configFile: SourceFileLike = { fileName: 'tsconfig.json', lines: [1] };
 Object.defineProperty(options, 'configFile', { enumerable: false, writable: false, value: configFile });
 console.log(`${typeof options.configFile}:${'configFile' in options}:${Object.hasOwn(options, 'configFile')}`);
 console.log(Object.keys(options).join(','));
-const other: SourceFileLike = { fileName: 'other.json' };
+const other: SourceFileLike = { fileName: 'other.json', lines: [] };
 try {
     options.configFile = other;
     console.log('written');

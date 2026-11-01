@@ -33,7 +33,7 @@ func TestRecordDefineHiddenLowers(t *testing.T) {
 	for _, source := range []string{
 		`const r:Record<string,number>={a:1}; Object.defineProperty(r, "h", {enumerable:false, writable:false, value:5}); console.log(String(r['h']));`,
 		`const r:Record<string,number>={}; Object.defineProperty(r, "h", {value:5, "writable":false, enumerable:(false)});`,
-		`interface Source {fileName:string} interface Options {[option:string]: number|string|Source|undefined; configFile?: Source} const options:Options={target:1}; const file:Source={fileName:'tsconfig.json'}; Object.defineProperty(options, "configFile", {enumerable:false, writable:false, value:file});`,
+		`interface Source {fileName:string; lines:number[]} interface Options {[option:string]: number|string|Source|undefined; configFile?: Source} const options:Options={target:1}; const file:Source={fileName:'tsconfig.json', lines:[]}; Object.defineProperty(options, "configFile", {enumerable:false, writable:false, value:file});`,
 		`function hide(r:Record<string,number[]>, list:number[]):void { Object.defineProperty(r, "main", {enumerable:false, writable:false, value:list}); } hide({}, [1]);`,
 	} {
 		t.Run(source, func(t *testing.T) {
