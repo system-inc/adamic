@@ -1,0 +1,18 @@
+// a-check: refused a Loose seen as Pick<Options, "target"> (fixed objects and records have different storage; copy explicitly)
+type OptionValue = string | number | boolean | undefined;
+interface Options {
+	module?: number;
+	target?: number;
+	strict?: boolean;
+	noImplicitAny?: boolean;
+	[option: string]: OptionValue;
+}
+interface Loose {
+	module?: string;
+	target?: number;
+	[option: string]: string | number | undefined;
+}
+const loose: Loose = { module: 'esnext', target: 1 };
+const view: Pick<Options, 'target'> = loose;
+const back: Options = view;
+console.log(String(back.module));

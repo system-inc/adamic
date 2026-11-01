@@ -52,6 +52,38 @@ func (l *lowering) finitePartialRecordElement(t *checker.Type) *checker.Type {
 	return value
 }
 
+// pickedRecordBase is the record a Pick of its literal keys is stored as: the view adds no storage, so
+// its picked fields are the record's named slots, a record passes into it unchanged, and anything
+// stored as the Pick is stored as the whole record, its named contracts included.
+func (l *lowering) pickedRecordBase(t *checker.Type) *checker.Type {
+	if t == nil || t.Flags()&checker.TypeFlagsObject == 0 {
+		return nil
+	}
+	picked := l.recordUtilityAlias(t, "Pick")
+	if picked == nil {
+		return nil
+	}
+	alias := picked.Alias()
+	if alias == nil || alias.Symbol().Name != "Pick" || !l.librarySymbol(alias.Symbol()) || len(alias.TypeArguments()) != 2 {
+		return nil
+	}
+	keys := l.concrete(alias.TypeArguments()[1])
+	members := []*checker.Type{keys}
+	if keys.Flags()&checker.TypeFlagsUnion != 0 {
+		members = keys.Types()
+	}
+	for _, key := range members {
+		if key.Flags()&checker.TypeFlagsStringLiteral == 0 {
+			return nil
+		}
+	}
+	base := l.concrete(alias.TypeArguments()[0])
+	if l.recordElement(base) == nil {
+		return nil
+	}
+	return base
+}
+
 // Resolve program aliases through the checker, retaining the library origin proof.
 // Generic alias arguments must be substituted before inspecting the mapped type.
 func (l *lowering) recordUtilityAlias(t *checker.Type, name string) *checker.Type {
