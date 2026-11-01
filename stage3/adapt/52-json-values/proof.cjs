@@ -6,7 +6,7 @@ const os = require('node:os');
 const crypto = require('node:crypto');
 const {spawnSync} = require('node:child_process');
 const ts = require('typescript');
-const {adapt, rules} = require('./adapt.cjs');
+const {adapt, locate, rules} = require('./adapt.cjs');
 const [before, after, evidence] = process.argv.slice(2).map(p => path.resolve(p));
 assert.equal(ts.version, '6.0.3');
 fs.mkdirSync(evidence, {recursive: true});
@@ -24,6 +24,21 @@ function casts(tree, file) {
 }
 const castCounts = files.map(file => ({file, before: casts(before, file), after: casts(after, file)}));
 for (const row of castCounts) assert.equal(row.after, row.before, `new cast: ${row.file}`);
+// Erase only the new harness flow edits, keeping every runtime check in place.
+const harnessTypeFlowJavaScript = [];
+for (const file of ['src/harness/client.ts', 'src/harness/harnessLanguageService.ts', 'src/harness/fourslashImpl.ts']) {
+    const actualSource = fs.readFileSync(path.join(after, file), 'utf8');
+    let erased = actualSource;
+    const edits = rules.filter(row => row.file === file && row.why.startsWith('Carry the precise full completion reply')).map(row => {
+        const found = locate(file, actualSource, row);
+        assert.equal(found.state, 'after');
+        return {start: found.start, end: found.start + row.after.length, text: row.before};
+    });
+    for (const edit of edits.sort((a, b) => b.start - a.start)) erased = erased.slice(0, edit.start) + edit.text + erased.slice(edit.end);
+    const emit = text => ts.transpileModule(text, {compilerOptions: {target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext, removeComments: true}}).outputText;
+    assert.equal(emit(actualSource), emit(erased), `harness declaration edit changed JavaScript: ${file}`);
+    harnessTypeFlowJavaScript.push({file, identical: true});
+}
 const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'json-values-contract-'));
 function reset() {
     for (const file of files) {fs.mkdirSync(path.dirname(path.join(scratch, file)), {recursive: true});fs.copyFileSync(path.join(before, file), path.join(scratch, file));}
@@ -47,7 +62,7 @@ let result = spawnSync(process.execPath, [witnesses, before, after], {encoding: 
 fs.writeFileSync(path.join(evidence, 'witnesses.log'), result.stdout + result.stderr);
 assert.equal(result.status, 0, result.stderr);
 const mutants = [];
-for (const check of ['object', 'inherited', 'location', 'response', 'plugin', 'localized', 'echo']) {
+for (const check of ['object', 'inherited', 'location', 'response', 'plugin', 'localized', 'echo', 'full-reply-string', 'full-reply-invalid']) {
     result = spawnSync(process.execPath, [witnesses, before, after, check], {encoding: 'utf8'});
     fs.writeFileSync(path.join(evidence, `mutant-${check}.log`), result.stdout + result.stderr);
     assert.notEqual(result.status, 0, `${check} mutant passed`);
@@ -97,7 +112,7 @@ const api = ts.createSourceFile('typescript.d.ts', actual, ts.ScriptTarget.Lates
     ts.forEachChild(node, visit);
 })(api);
 const counts = {}; for (const row of any) counts[row.class] = (counts[row.class] || 0) + 1;
-const report = {idempotent: true, files: files.length, newCasts: 0, castCounts, refusals, mutants,
+const report = {idempotent: true, files: files.length, newCasts: 0, castCounts, harnessTypeFlowJavaScript, refusals, mutants,
     api: {rows: sanctions.length, match: true, sha256: hash(actual)}, publicAny: {beforeTokens: all.filter(node => node.kind === ts.SyntaxKind.AnyKeyword).length, tokens: any.length, declarationLines: new Set(any.map(row => row.line)).size, outsideList: any.length - counts['pinned config returns'], counts, sites: any}};
 fs.writeFileSync(path.join(evidence, 'contracts.json'), JSON.stringify(report, null, 2) + '\n');
 fs.rmSync(scratch, {recursive: true});

@@ -1,6 +1,6 @@
 # Completion-details harness reach
 
-Main remains `470e16f8315f7a83c5c7b7f6f2a77d8328db0a25`. Adaptation implementation remains `d3aeaecadaef1fdf57640ea14ca56458c5c5f4b5`. This is a scratch measurement, not a built repair. The 10 jsTyping readers stay unchanged as ruled.
+Main remains `470e16f8315f7a83c5c7b7f6f2a77d8328db0a25`. The reach was measured against prior implementation `d3aeaecadaef1fdf57640ea14ca56458c5c5f4b5`. This records the scratch reach measurement subsequently authorized and implemented in rules.json. The 10 jsTyping readers stay unchanged as ruled.
 
 ## A second full-reply distinction
 
@@ -10,7 +10,7 @@ Main remains `470e16f8315f7a83c5c7b7f6f2a77d8328db0a25`. Adaptation implementati
 
 The literal protocol return and a common native/protocol service interface produced 12 stock diagnostics, all in src/harness/fourslashImpl.ts: 1205, 2511, 2512 (two), 2518, 3362, 3369, 3708 (two), 3711 (three). No public declaration or testRunner edit was made.
 
-## Measured alternative, awaiting the shape decision
+## Measured and authorized precise full-reply shape
 
 This harness-local type accurately describes the full reply while admitting every legal protocol tag value:
 
@@ -37,4 +37,4 @@ The result annotation exposes only what baselineCompletions reads. Its tag text 
 
 Stock TypeScript 6.0.3 `tsc -b src --force --pretty false`, retaining all upstream project options, exits 0 for this scratch alternative. Its compiler log is empty. Emitted JavaScript for the adapters and fourslash is byte-identical. Client JavaScript is byte-identical after accounting for exactly the added string arm in the tag guard. No expectation, public source declaration, adaptation rule or testRunner source was edited.
 
-This is within the requested size and harness boundary, but it differs from the explicitly requested protocol.CompletionEntryDetails return. The shape decision was requested before implementing that alternative. The adaptation and full oracle have not been rerun or claimed clean. The previous oracle result remains the stopped result in README.md. Evidence retains both reach runs, the exact scratch diff, and the emitted-JavaScript comparison.
+This is within the requested size and harness boundary. The user authorized the precise full-reply shape after this measurement. It is now implemented in the adaptation, with identity witnesses and two new check mutants. README.md records the final measurements and oracle result. Evidence retains both historical reach runs and the final proof.
