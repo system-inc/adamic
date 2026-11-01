@@ -111,3 +111,65 @@ two consumers using `typeof result === "object"`. Compiler JavaScript stays
 byte-identical. The full unchanged upstream suite and its exact passing count
 are the condition on accepting the harness changes; no test or baseline input
 is added, deleted, filtered, or rewritten by adaptation 79.
+
+## 3. Missing index declaration crashes getSymbolAtLocation
+
+Status: observed 6.0.3 defect; 95g stopped before implementation/build because
+both reference implementations disagree with retaining a parentless symbol.
+Draft issue, not filed. No fork fix or reader-safety proof is claimed.
+Upstream: TypeScript 6.0.3, commit 050880ce59e30b356b686bd3144efe24f875ebc8.
+Location: src/compiler/checker.ts:50153, getApplicableIndexSymbol reads
+copy.declarations[0].parent after mapDefined may remove every declaration.
+
+Node counterexample: an augmented CommonJS export of a class with a broad
+computed static index, then getSymbolAtLocation of a consumer's indexed
+property access. One applicable index has no declaration; neither aliasSymbol
+nor symbol supplies a parent in the fallback. Before: TypeError reading parent.
+With both noImplicitAny settings the witness has zero compiler diagnostics.
+
+The proposed behavior was to retain the copied symbol with parent unset.
+Official typescript-go 89d5d5b2849a0db0957065889ca58536fa6d2e4a and TypeScript
+main 6161772c1370bdd4a82f808e6823bd755eb1870d instead create no symbol for an
+empty declaration list and return nil. The reference gate therefore requires
+a new ruling before building. Evidence and the complete runnable Node witness
+are on branch typescript/axolotl-checker-g-evidence under
+stage3/evidence/95-checker-axolotl-g/.
+
+### Draft GitHub issue
+
+Title: getSymbolAtLocation crashes on a declaration-free computed static index in TypeScript 6.0.3
+
+Version: TypeScript 6.0.3 on Node 24.19.0. The current Go implementations have
+an empty-declaration guard and return no symbol.
+
+Save exported.js:
+
+```js
+/** @type {string} */
+let key = 'xyz';
+class Computed { static [key] = 1; }
+module.exports = /** @type {typeof Computed} */ (class {});
+module.exports.extra = 2;
+```
+
+Save consumer.ts:
+
+```ts
+import v = require('./exported');
+v.xyz;
+```
+
+Create a program containing consumer.ts using allowJs, checkJs, noEmit and
+CommonJS module resolution. Obtain its checker and call getSymbolAtLocation on
+the second statement's PropertyAccessExpression. The retained witness supplies
+these exact files through a compiler host and records every diagnostic and
+stack; it runs against an installed or built typescript.js.
+
+Expected: a non-throwing symbol query; the choice between no symbol and a
+symbol with parent unset awaits Correctness. Actual: TypeError: Cannot read
+properties of undefined (reading 'parent') in getApplicableIndexSymbol.
+Suggested upstream direction: handle an empty mapDefined result before reading
+its first declaration. No final fork patch is proposed by this stopped head.
+
+This entry and F's entry independently append to 95a's ledger end. Resolve the
+append conflict when merging second; preserve both issue drafts.
