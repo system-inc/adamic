@@ -82,7 +82,8 @@ func (l *lowering) registerBrandedSupertypeViews(node *ast.Node, target *checker
 	if err := l.brandedSpreads(covered); err != nil {
 		return err
 	}
-	if _, err := l.view(node, nil, target); err != nil {
+	// No source to vouch from: S's view and its subtypes' check every field they read (#80cs7rz).
+	if _, err := l.view(node, nil, nil, target); err != nil {
 		return err
 	}
 	for _, subtype := range l.brandedSubtypes(target) {
@@ -92,7 +93,7 @@ func (l *lowering) registerBrandedSupertypeViews(node *ast.Node, target *checker
 		if subtype.generic {
 			return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(target)+" that generic "+l.checker.TypeToString(subtype.declared)+" is assignable to")
 		}
-		if _, err := l.view(node, nil, subtype.declared); err != nil {
+		if _, err := l.view(node, nil, nil, subtype.declared); err != nil {
 			return err
 		}
 	}
