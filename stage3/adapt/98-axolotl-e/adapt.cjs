@@ -151,6 +151,28 @@ function plan(tree, ts) {
         }
         results.push({ fileName: file.fileName, before: file.text, after });
     }
+    // The barrel now exports 47's errorCode and errorMessage too. Every read 98-e adds goes through
+    // propertyOf: no inserted or replaced text names either, project.ts names neither after, and
+    // each edited file outside sys.ts keeps its count of references to each. Files 98-e does not
+    // edit are unchanged, so their counts are too.
+    const barrelOnly = /\b(errorCode|errorMessage)\b/;
+    for (const changes of edits.values()) {
+        for (const change of changes) assert(!barrelOnly.test(change.text), `98-e's edit names ${change.text.match(barrelOnly)?.[0]}: new reads go through propertyOf`);
+    }
+    const references = (fileName, text) => {
+        const counts = { errorCode: 0, errorMessage: 0 };
+        (function visit(node) {
+            if (ts.isIdentifier(node) && Object.hasOwn(counts, node.text)) counts[node.text]++;
+            ts.forEachChild(node, visit);
+        })(ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true));
+        return counts;
+    };
+    for (const result of results) {
+        if (result.fileName === sys.fileName) continue;
+        assert.deepEqual(references(result.fileName, result.after), references(result.fileName, result.before), `${path.relative(tree, result.fileName)} gains a reference to errorCode or errorMessage`);
+    }
+    const projectAfter = one(results.filter(result => result.fileName === project.fileName), "planned project.ts");
+    assert.deepEqual(references(projectAfter.fileName, projectAfter.after), { errorCode: 0, errorMessage: 0 }, "project.ts names errorCode or errorMessage");
     return { results, evidence };
 }
 

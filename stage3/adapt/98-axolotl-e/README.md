@@ -82,6 +82,12 @@ d.ts gains the three as @internal declarations; the public d.ts gains nothing
 (below). If the barrel should carry propertyOf alone, the bundler is what
 would need to change.
 
+So no new caller reaches errorCode or errorMessage through the barrel, the
+adapter refuses a plan in which any inserted or replaced text names either,
+in which project.ts names either, or in which an edited file other than
+sys.ts changes its count of references to either; every read 98-e adds goes
+through propertyOf.
+
 ## Row 5: sys.ts 1524:15, System.createSHA256Hash (admitted by name)
 
 Widening row 4 stops the TS2322 on nodeSystem's require property, and the
