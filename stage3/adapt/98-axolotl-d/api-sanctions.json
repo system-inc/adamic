@@ -1,0 +1,16 @@
+[
+  {
+    "path": ["ResolvedModuleFull", "packageId"],
+    "kind": "PropertySignature",
+    "before": "PackageId",
+    "after": "PackageId | undefined",
+    "why": "createResolvedModuleWithFailedLookupLocations always writes packageId: resolved.packageId, which withPackageId leaves undefined when package.json has no string name and version."
+  },
+  {
+    "path": ["ResolvedTypeReferenceDirective", "packageId"],
+    "kind": "PropertySignature",
+    "before": "PackageId",
+    "after": "PackageId | undefined",
+    "why": "resolveTypeReferenceDirective always writes packageId, destructured from a Resolved that withPackageId leaves undefined when package.json has no string name and version."
+  }
+]
