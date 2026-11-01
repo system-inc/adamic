@@ -1,0 +1,21 @@
+{
+  "undoTupleRead": {
+    "verifierExit": 1,
+    "catcher": "all eight required-read edits must be present: 7 !== 8",
+    "adapterCheckExit": 1,
+    "adapterCatcher": "required assertion missing: reportIncompatibleStack:1",
+    "restoredDiagnostics": 2
+  },
+  "javascriptChangingArgument": {
+    "erasure": [
+      {
+        "removeComments": false,
+        "caught": true
+      },
+      {
+        "removeComments": true,
+        "caught": true
+      }
+    ]
+  }
+}
