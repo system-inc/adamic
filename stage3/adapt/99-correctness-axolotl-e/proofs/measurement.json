@@ -1,0 +1,9 @@
+{
+  "before": 144,
+  "after": 143,
+  "removed": [
+    "TREE/src/compiler/transformers/declarations.ts:1678:110: error TS2345: Argument of type 'ExpressionWithTypeArguments | undefined' is not assignable to parameter of type 'DeclarationDiagnosticProducing'.\n  Type 'undefined' is not assignable to type 'DeclarationDiagnosticProducing'.\n"
+  ],
+  "added": [],
+  "roots": 79
+}

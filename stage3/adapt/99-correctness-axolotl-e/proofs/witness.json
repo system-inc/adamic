@@ -1,0 +1,65 @@
+{
+  "malformed": {
+    "outputText": "declare const C_base: any;\nexport declare class C extends C_base {\n}\nexport {};\n",
+    "diagnostics": [
+      {
+        "file": "input.ts",
+        "start": 23,
+        "length": 3,
+        "category": 1,
+        "code": 9021,
+        "message": "Extends clause can't contain an expression with --isolatedDeclarations."
+      }
+    ]
+  },
+  "program": {
+    "output": "declare const C_base: any;\nexport declare class C extends C_base {\n}\nexport {};\n",
+    "diagnostics": [
+      {
+        "code": 2304,
+        "message": "Cannot find name 'f'."
+      },
+      {
+        "code": 1172,
+        "message": "'extends' clause already seen."
+      }
+    ],
+    "emitSkipped": false
+  },
+  "reduced": {
+    "outputText": "declare const C_base: number;\ndeclare class C extends C_base {\n}\n",
+    "diagnostics": []
+  },
+  "reducedProgram": {
+    "output": "declare const C_base: number;\ndeclare class C extends C_base {\n}\n",
+    "diagnostics": [
+      {
+        "code": 2507,
+        "message": "Type '0' is not a constructor function type."
+      },
+      {
+        "code": 1172,
+        "message": "'extends' clause already seen."
+      }
+    ],
+    "emitSkipped": false
+  },
+  "numericControl": {
+    "outputText": "declare const C_base: number;\ndeclare class C extends C_base {\n}\n",
+    "diagnostics": []
+  },
+  "ordinary": {
+    "outputText": "declare const C_base: new () => {};\nexport declare class C extends C_base {\n}\nexport {};\n",
+    "diagnostics": [
+      {
+        "file": "input.ts",
+        "start": 59,
+        "length": 3,
+        "category": 1,
+        "code": 9021,
+        "message": "Extends clause can't contain an expression with --isolatedDeclarations."
+      }
+    ]
+  },
+  "ordinaryByteIdentical": true
+}

@@ -1,0 +1,19 @@
+[
+  {
+    code: 2507,
+    start: 16,
+    message: "Type '0' is not a constructor function type."
+  },
+  { code: 1172, start: 18, message: "'extends' clause already seen." }
+]
+TypeError: Cannot read properties of undefined (reading 'kind')
+    at isVariableDeclaration (/workspace/adamic/stage3/api/node_modules/typescript/lib/typescript.js:31127:15)
+    at createGetSymbolAccessibilityDiagnosticForNode (/workspace/adamic/stage3/api/node_modules/typescript/lib/typescript.js:118660:7)
+    at /workspace/adamic/stage3/api/node_modules/typescript/lib/typescript.js:120451:50
+    at map (/workspace/adamic/stage3/api/node_modules/typescript/lib/typescript.js:2495:19)
+    at transformTopLevelDeclaration (/workspace/adamic/stage3/api/node_modules/typescript/lib/typescript.js:120448:60)
+    at visitDeclarationStatements (/workspace/adamic/stage3/api/node_modules/typescript/lib/typescript.js:120128:20)
+    at visitArrayWorker (/workspace/adamic/stage3/api/node_modules/typescript/lib/typescript.js:95772:49)
+    at visitNodes2 (/workspace/adamic/stage3/api/node_modules/typescript/lib/typescript.js:95743:19)
+    at transformRoot (/workspace/adamic/stage3/api/node_modules/typescript/lib/typescript.js:119351:26)
+    at transformation (/workspace/adamic/stage3/api/node_modules/typescript/lib/typescript.js:120868:14)

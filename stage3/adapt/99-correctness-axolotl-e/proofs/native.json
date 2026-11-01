@@ -1,0 +1,16 @@
+[
+  {
+    "input": "export class C extends f() extends {}",
+    "exit": 2,
+    "stdout": "input.ts(1,24): error TS2304: Cannot find name 'f'.\ninput.ts(1,28): error TS1172: 'extends' clause already seen.\n",
+    "stderr": "",
+    "declaration": "declare const C_base: any;\nexport declare class C extends C_base {\n}\nexport {};\n"
+  },
+  {
+    "input": "class C extends 0 extends {}",
+    "exit": 2,
+    "stdout": "input.ts(1,17): error TS2507: Type '0' is not a constructor function type.\ninput.ts(1,19): error TS1172: 'extends' clause already seen.\n",
+    "stderr": "",
+    "declaration": "declare const C_base: 0;\ndeclare class C extends C_base {\n}\n"
+  }
+]

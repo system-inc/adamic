@@ -1,0 +1,17 @@
+/workspace/adamic/stage3/api/node_modules/typescript/lib/_tsc.js:123693
+      throw e;
+      ^
+
+TypeError: Cannot read properties of undefined (reading 'kind')
+    at isVariableDeclaration (/workspace/adamic/stage3/api/node_modules/typescript/lib/_tsc.js:26911:15)
+    at createGetSymbolAccessibilityDiagnosticForNode (/workspace/adamic/stage3/api/node_modules/typescript/lib/_tsc.js:113843:7)
+    at /workspace/adamic/stage3/api/node_modules/typescript/lib/_tsc.js:115634:50
+    at map (/workspace/adamic/stage3/api/node_modules/typescript/lib/_tsc.js:196:19)
+    at transformTopLevelDeclaration (/workspace/adamic/stage3/api/node_modules/typescript/lib/_tsc.js:115631:60)
+    at visitDeclarationStatements (/workspace/adamic/stage3/api/node_modules/typescript/lib/_tsc.js:115311:20)
+    at visitArrayWorker (/workspace/adamic/stage3/api/node_modules/typescript/lib/_tsc.js:91137:49)
+    at visitNodes2 (/workspace/adamic/stage3/api/node_modules/typescript/lib/_tsc.js:91108:19)
+    at transformRoot (/workspace/adamic/stage3/api/node_modules/typescript/lib/_tsc.js:114534:26)
+    at transformation (/workspace/adamic/stage3/api/node_modules/typescript/lib/_tsc.js:116051:14)
+
+Node.js v24.19.0

@@ -1,0 +1,113 @@
+{
+  "runs": [
+    {
+      "label": "before",
+      "counts": {
+        "passing": 106366,
+        "failing": 1,
+        "pending": 0
+      },
+      "phases": {
+        "install": {
+          "command": [
+            "npm",
+            "ci",
+            "--no-audit",
+            "--no-fund"
+          ],
+          "exit": 0,
+          "seconds": 5.119
+        },
+        "build": {
+          "command": [
+            "npm",
+            "run",
+            "build"
+          ],
+          "exit": 0,
+          "seconds": 24.781
+        },
+        "tests": {
+          "command": [
+            "npm",
+            "test",
+            "--",
+            "--workers=4",
+            "--lint=false",
+            "--no-colors"
+          ],
+          "exit": 1,
+          "seconds": 359.438
+        }
+      },
+      "wallSeconds": 389.424,
+      "sanctionedApi": {
+        "reference_declarations": 28,
+        "composed_declarations": 223,
+        "sanctioned_declarations": 223,
+        "added_lines": 195,
+        "removed_lines": 194
+      }
+    },
+    {
+      "label": "after",
+      "counts": {
+        "passing": 106366,
+        "failing": 1,
+        "pending": 0
+      },
+      "phases": {
+        "install": {
+          "command": [
+            "npm",
+            "ci",
+            "--no-audit",
+            "--no-fund"
+          ],
+          "exit": 0,
+          "seconds": 2.58
+        },
+        "build": {
+          "command": [
+            "npm",
+            "run",
+            "build"
+          ],
+          "exit": 0,
+          "seconds": 23.931
+        },
+        "tests": {
+          "command": [
+            "npm",
+            "test",
+            "--",
+            "--workers=4",
+            "--lint=false",
+            "--no-colors"
+          ],
+          "exit": 1,
+          "seconds": 352.599
+        }
+      },
+      "wallSeconds": 379.2,
+      "sanctionedApi": {
+        "reference_declarations": 28,
+        "composed_declarations": 223,
+        "sanctioned_declarations": 223,
+        "added_lines": 195,
+        "removed_lines": 194
+      }
+    }
+  ],
+  "baseline": {
+    "moved": false,
+    "byteIdentical": true,
+    "bytes": 51123,
+    "sha256": "6d52cd09811c6846c977ea492071c14325816a631706cc79128c4299b9faa031"
+  },
+  "api": {
+    "byteIdentical": true,
+    "bytes": 590996,
+    "sha256": "b901adcc6ec29e299ec21401b2a155b2b2c14c046ec743fed6ee45679b726d5d"
+  }
+}

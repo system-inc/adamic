@@ -1,0 +1,100 @@
+735: func (tx *DeclarationTransformer) transformHeritageClause(clause *ast.HeritageClause) *ast.Node {
+736: 	retainedClauses := core.Filter(clause.Types.Nodes, func(t *ast.HeritageClauseElement) bool {
+737: 		name := ast.GetHeritageClauseElementName(t)
+738: 		return ast.IsEntityName(name) || ast.IsEntityNameExpression(name) ||
+739: 			(clause.Token == ast.KindExtendsKeyword && ast.IsExpressionWithTypeArguments(t) && t.Expression().Kind == ast.KindNullKeyword)
+740: 	})
+741: 	if len(retainedClauses) == 0 {
+742: 		return nil // elide empty clause
+743: 	}
+744: 	if len(retainedClauses) == len(clause.Types.Nodes) {
+745: 		return tx.Visitor().VisitEachChild(clause.AsNode())
+746: 	}
+747: 	return tx.Factory().UpdateHeritageClause(
+748: 		clause,
+749: 		clause.Token,
+750: 		tx.Visitor().VisitNodes(tx.Factory().NewNodeList(retainedClauses)),
+751: 	)
+752: }
+753:
+754: func (tx *DeclarationTransformer) transformImportTypeNode(input *ast.ImportTypeNode) *ast.Node {
+2010: 	extendsClause := getEffectiveBaseTypeNode(input.AsNode())
+2011:
+2012: 	if extendsClause != nil && !ast.IsEntityNameExpression(extendsClause.AsExpressionWithTypeArguments().Expression) && extendsClause.AsExpressionWithTypeArguments().Expression.Kind != ast.KindNullKeyword {
+2013: 		tx.tracker.ReportInferenceFallback(extendsClause.AsExpressionWithTypeArguments().Expression) // Add an isolated declarations error on this extends clause
+2014: 		oldId := "default"
+2015: 		if ast.NodeIsPresent(input.Name()) && ast.IsIdentifier(input.Name()) && len(input.Name().Text()) > 0 {
+2016: 			oldId = input.Name().Text()
+2017: 		}
+2018: 		newId := tx.Factory().NewUniqueNameEx(oldId+"_base", printer.AutoGenerateOptions{Flags: printer.GeneratedIdentifierFlagsOptimistic})
+2019: 		tx.state.getSymbolAccessibilityDiagnostic = func(_ printer.SymbolAccessibilityResult) *SymbolAccessibilityDiagnostic {
+2020: 			return &SymbolAccessibilityDiagnostic{
+2021: 				diagnosticMessage: diagnostics.X_extends_clause_of_exported_class_0_has_or_is_using_private_name_1,
+2022: 				errorNode:         extendsClause,
+2023: 				typeName:          input.Name(),
+2024: 			}
+2025: 		}
+2026:
+2027: 		varDecl := tx.Factory().NewVariableDeclaration(
+2028: 			newId,
+2029: 			nil,
+2030: 			tx.resolver.CreateTypeOfExpression(tx.EmitContext(), extendsClause.Expression(), input.AsNode(), declarationEmitNodeBuilderFlags, declarationEmitInternalNodeBuilderFlags, tx.tracker),
+2031: 			nil,
+2032: 		)
+2033: 		var mods *ast.ModifierList
+2034: 		if tx.needsDeclare {
+2035: 			mods = tx.Factory().NewModifierList([]*ast.Node{tx.Factory().NewModifier(ast.KindDeclareKeyword)})
+2036: 		}
+2037: 		statement := tx.Factory().NewVariableStatement(
+2038: 			mods,
+2039: 			tx.Factory().NewVariableDeclarationList(tx.Factory().NewNodeList([]*ast.Node{varDecl}), ast.NodeFlagsConst),
+2040: 		)
+2041: 		newHeritageClause := tx.Factory().UpdateHeritageClause(
+2042: 			extendsClause.Parent.AsHeritageClause(),
+2043: 			extendsClause.Parent.AsHeritageClause().Token,
+2044: 			tx.Factory().NewNodeList([]*ast.Node{
+2045: 				tx.Factory().UpdateExpressionWithTypeArguments(
+2046: 					extendsClause.AsExpressionWithTypeArguments(),
+2047: 					newId,
+2048: 					tx.Visitor().VisitNodes(extendsClause.AsExpressionWithTypeArguments().TypeArguments),
+2049: 				),
+2050: 			}),
+2051: 		)
+2052: 		retainedHeritageClauses := tx.Visitor().VisitNodes(input.HeritageClauses) // should just be `implements`
+2053: 		heritageList := []*ast.Node{
+2054: 			newHeritageClause,
+2055: 		}
+2056: 		if retainedHeritageClauses != nil && len(retainedHeritageClauses.Nodes) > 0 {
+2057: 			heritageList = append(heritageList, retainedHeritageClauses.Nodes...)
+2058: 		}
+2059: 		heritageClauses := tx.Factory().NewNodeList(heritageList)
+2060:
+2061: 		return tx.Factory().NewSyntaxList([]*ast.Node{
+2062: 			statement,
+2063: 			tx.Factory().UpdateClassDeclaration(
+2064: 				input,
+2065: 				modifiers,
+2066: 				input.Name(),
+2067: 				typeParameters,
+2068: 				heritageClauses,
+2069: 				members,
+2070: 			),
+2071: 		})
+2072: 	}
+2073:
+2074: 	return tx.Factory().UpdateClassDeclaration(
+2075: 		input,
+2076: 		modifiers,
+2077: 		input.Name(),
+2078: 		typeParameters,
+2079: 		tx.Visitor().VisitNodes(input.HeritageClauses),
+2080: 		members,
+2081: 	)
+2082: }
+2083:
+2084: func (tx *DeclarationTransformer) visitThisPropertyAssignments(node *ast.Node) *ast.Node {
+2085: 	var thisTarget *ast.Node
+2086: 	isStatic := false
+2087: 	thisContainer := ast.GetThisContainer(node, false, false)
+2088: 	thisTarget = thisContainer.Parent
+2089: 	if thisTarget == nil {
