@@ -445,7 +445,8 @@ func (l *lowering) branchesStoredAs(source *ast.Node, target *checker.Type) (sto
 		}
 		ownParameters, viewedParameters := own[0].Parameters(), viewed[0].Parameters()
 		for i := 0; i < len(ownParameters) && i < len(viewedParameters); i++ {
-			if !l.sameRecordStorage(l.checker.GetTypeOfSymbol(ownParameters[i]), l.checker.GetTypeOfSymbol(viewedParameters[i]), map[[2]*checker.Type]bool{}) {
+			// A caller passes the viewed parameter's value into the arrow's own: that's the flow.
+			if !l.sameRecordStorage(l.checker.GetTypeOfSymbol(viewedParameters[i]), l.checker.GetTypeOfSymbol(ownParameters[i]), map[[2]*checker.Type]bool{}) {
 				return false, true
 			}
 		}
