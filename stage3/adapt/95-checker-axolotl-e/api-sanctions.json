@@ -1,0 +1,12 @@
+[
+  {
+    "path": [
+      "TypeChecker",
+      "signatureToSignatureDeclaration"
+    ],
+    "kind": "MethodSignature",
+    "before": "| SignatureDeclaration & {\n                typeArguments?: NodeArray<TypeNode>;\n            }\n            | undefined",
+    "after": "| SignatureDeclaration & {\n                typeArguments?: NodeArray<TypeNode> | undefined;\n            }\n            | undefined",
+    "why": "tsc can return an ArrowFunction whose typeArguments property is present and undefined."
+  }
+]
