@@ -1,0 +1,509 @@
+{
+  "typescript": "6.0.3",
+  "rows": [
+    {
+      "owner": "ParsedCommandLine",
+      "key": "raw",
+      "declaration": {
+        "file": "src/compiler/types.ts",
+        "line": 7716,
+        "column": 5,
+        "text": "raw?: any;",
+        "type": "any"
+      },
+      "references": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 7716,
+          "column": 5,
+          "text": "raw?: any;",
+          "type": "any",
+          "isWrite": false,
+          "isDefinition": true
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 3104,
+          "column": 9,
+          "text": "return {\r\n        options,\r\n        watchOptions,\r\n        fileNames: getFileNames(basePathForFileNames),\r\n        projectReferences: getProjectReferences(basePathForFileNames),\r\n        typeAcquisition: parsedConfig.typeAcquisition || getDefaultTypeAcquisition(),\r\n        raw,\r\n        errors,\r\n        // Wildcard directories (provided as part of a wildcard path) are stored in a\r\n        // file map that marks whether it was a regular wildcard match (with a `*` or `?` token),\r\n        // or a recursive directory. This information is used by filesystem watchers to monitor for\r\n        // new entries in these paths.\r\n        wildcardDirectories: getWildcardDirectories(configFileSpecs, basePathForFileNames, host.useCaseSensitiveFileNames),\r\n        compileOnSave: !!raw.compileOnSave,\r\n    };",
+          "type": "any",
+          "isWrite": true,
+          "isDefinition": false
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 3355,
+          "column": 28,
+          "text": "return !config.fileNames.length &&\r\n        hasProperty(config.raw, \"references\");",
+          "type": "any",
+          "isWrite": false,
+          "isDefinition": false
+        },
+        {
+          "file": "src/compiler/watchPublic.ts",
+          "line": 979,
+          "column": 95,
+          "text": "canConfigFileJsonReportNoInputFiles = canJsonReportNoInputFiles(configFileParseResult.raw);",
+          "type": "any",
+          "isWrite": false,
+          "isDefinition": false
+        },
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "line": 1245,
+          "column": 50,
+          "text": "updateErrorForNoInputFiles(\r\n                config.fileNames,\r\n                project,\r\n                config.options.configFile!.configFileSpecs!,\r\n                config.errors,\r\n                canJsonReportNoInputFiles(config.raw),\r\n            );",
+          "type": "any",
+          "isWrite": false,
+          "isDefinition": false
+        }
+      ],
+      "contextualWrites": [
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 3104,
+          "column": 9,
+          "text": "return {\r\n        options,\r\n        watchOptions,\r\n        fileNames: getFileNames(basePathForFileNames),\r\n        projectReferences: getProjectReferences(basePathForFileNames),\r\n        typeAcquisition: parsedConfig.typeAcquisition || getDefaultTypeAcquisition(),\r\n        raw,\r\n        errors,\r\n        // Wildcard directories (provided as part of a wildcard path) are stored in a\r\n        // file map that marks whether it was a regular wildcard match (with a `*` or `?` token),\r\n        // or a recursive directory. This information is used by filesystem watchers to monitor for\r\n        // new entries in these paths.\r\n        wildcardDirectories: getWildcardDirectories(configFileSpecs, basePathForFileNames, host.useCaseSensitiveFileNames),\r\n        compileOnSave: !!raw.compileOnSave,\r\n    };",
+          "type": "any"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "owner": "readConfigFile",
+      "key": "config",
+      "declaration": {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2267,
+        "column": 101,
+        "text": "config?: any;",
+        "type": "any"
+      },
+      "references": [
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 2267,
+          "column": 101,
+          "text": "config?: any;",
+          "type": "any",
+          "isWrite": false,
+          "isDefinition": true
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 2269,
+          "column": 99,
+          "text": "return isString(textOrDiagnostic) ? parseConfigFileTextToJson(fileName, textOrDiagnostic) : { config: {}, error: textOrDiagnostic };",
+          "type": "{}",
+          "isWrite": true,
+          "isDefinition": false
+        }
+      ],
+      "contextualWrites": [
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 2269,
+          "column": 99,
+          "text": "return isString(textOrDiagnostic) ? parseConfigFileTextToJson(fileName, textOrDiagnostic) : { config: {}, error: textOrDiagnostic };",
+          "type": "{}"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "owner": "parseConfigFileTextToJson",
+      "key": "config",
+      "declaration": {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2277,
+        "column": 82,
+        "text": "config?: any;",
+        "type": "any"
+      },
+      "references": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 7797,
+          "column": 34,
+          "text": "result = looseResult.config;",
+          "type": "any",
+          "isWrite": false,
+          "isDefinition": false
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 2277,
+          "column": 82,
+          "text": "config?: any;",
+          "type": "any",
+          "isWrite": false,
+          "isDefinition": true
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 2280,
+          "column": 9,
+          "text": "return {\r\n        config: convertConfigFileToObject(jsonSourceFile, jsonSourceFile.parseDiagnostics, /*jsonConversionNotifier*/ undefined),\r\n        error: jsonSourceFile.parseDiagnostics.length ? jsonSourceFile.parseDiagnostics[0] : undefined,\r\n    };",
+          "type": "AdamicJsonRecoveryObject",
+          "isWrite": true,
+          "isDefinition": false
+        }
+      ],
+      "contextualWrites": [
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 2280,
+          "column": 9,
+          "text": "return {\r\n        config: convertConfigFileToObject(jsonSourceFile, jsonSourceFile.parseDiagnostics, /*jsonConversionNotifier*/ undefined),\r\n        error: jsonSourceFile.parseDiagnostics.length ? jsonSourceFile.parseDiagnostics[0] : undefined,\r\n    };",
+          "type": "AdamicJsonRecoveryObject"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "owner": "ParsedTsconfig",
+      "key": "raw",
+      "declaration": {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3382,
+        "column": 5,
+        "text": "raw: any;",
+        "type": "any"
+      },
+      "references": [
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 3080,
+          "column": 13,
+          "text": "const { raw } = parsedConfig;",
+          "type": "any",
+          "isWrite": true,
+          "isDefinition": false
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 3382,
+          "column": 5,
+          "text": "raw: any;",
+          "type": "any",
+          "isWrite": false,
+          "isDefinition": true
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 3425,
+          "column": 18,
+          "text": "return { raw: json || convertToObject(sourceFile!, errors) };",
+          "type": "any",
+          "isWrite": true,
+          "isDefinition": false
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 3449,
+          "column": 39,
+          "text": "ownConfig.raw.include = result.include;",
+          "type": "any",
+          "isWrite": false,
+          "isDefinition": false
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 3450,
+          "column": 39,
+          "text": "ownConfig.raw.exclude = result.exclude;",
+          "type": "any",
+          "isWrite": false,
+          "isDefinition": false
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 3451,
+          "column": 37,
+          "text": "ownConfig.raw.files = result.files;",
+          "type": "any",
+          "isWrite": false,
+          "isDefinition": false
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 3453,
+          "column": 23,
+          "text": "if (ownConfig.raw.compileOnSave === undefined && result.compileOnSave) ownConfig.raw.compileOnSave = result.compileOnSave;",
+          "type": "any",
+          "isWrite": false,
+          "isDefinition": false
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 3453,
+          "column": 90,
+          "text": "ownConfig.raw.compileOnSave = result.compileOnSave;",
+          "type": "any",
+          "isWrite": false,
+          "isDefinition": false
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 3466,
+          "column": 47,
+          "text": "const extendsRaw = extendedConfig.raw;",
+          "type": "any",
+          "isWrite": false,
+          "isDefinition": false
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 3469,
+          "column": 31,
+          "text": "if (ownConfig.raw[propertyName]) return;",
+          "type": "any",
+          "isWrite": false,
+          "isDefinition": false
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 3519,
+          "column": 14,
+          "text": "return { raw: json, options, watchOptions, typeAcquisition, extendedConfigPath };",
+          "type": "any",
+          "isWrite": true,
+          "isDefinition": false
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 3600,
+          "column": 14,
+          "text": "return { raw: json, options, watchOptions, typeAcquisition, extendedConfigPath };",
+          "type": "AdamicJsonRecoveryObject",
+          "isWrite": true,
+          "isDefinition": false
+        }
+      ],
+      "contextualWrites": [
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 3425,
+          "column": 18,
+          "text": "return { raw: json || convertToObject(sourceFile!, errors) };",
+          "type": "any"
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 3519,
+          "column": 14,
+          "text": "return { raw: json, options, watchOptions, typeAcquisition, extendedConfigPath };",
+          "type": "any"
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 3600,
+          "column": 14,
+          "text": "return { raw: json, options, watchOptions, typeAcquisition, extendedConfigPath };",
+          "type": "AdamicJsonRecoveryObject"
+        }
+      ],
+      "aliases": [
+        {
+          "declaration": {
+            "file": "src/compiler/commandLineParser.ts",
+            "line": 3080,
+            "column": 13,
+            "text": "const { raw } = parsedConfig;",
+            "type": "any"
+          },
+          "uses": [
+            {
+              "file": "src/compiler/commandLineParser.ts",
+              "line": 3080,
+              "column": 13,
+              "text": "const { raw } = parsedConfig;",
+              "type": "any"
+            },
+            {
+              "file": "src/compiler/commandLineParser.ts",
+              "line": 3111,
+              "column": 26,
+              "text": "return {\r\n        options,\r\n        watchOptions,\r\n        fileNames: getFileNames(basePathForFileNames),\r\n        projectReferences: getProjectReferences(basePathForFileNames),\r\n        typeAcquisition: parsedConfig.typeAcquisition || getDefaultTypeAcquisition(),\r\n        raw,\r\n        errors,\r\n        // Wildcard directories (provided as part of a wildcard path) are stored in a\r\n        // file map that marks whether it was a regular wildcard match (with a `*` or `?` token),\r\n        // or a recursive directory. This information is used by filesystem watchers to monitor for\r\n        // new entries in these paths.\r\n        wildcardDirectories: getWildcardDirectories(configFileSpecs, basePathForFileNames, host.useCaseSensitiveFileNames),\r\n        compileOnSave: !!raw.compileOnSave,\r\n    };",
+              "type": "any"
+            },
+            {
+              "file": "src/compiler/commandLineParser.ts",
+              "line": 3119,
+              "column": 44,
+              "text": "const hasExtends = hasProperty(raw, \"extends\");",
+              "type": "any"
+            },
+            {
+              "file": "src/compiler/commandLineParser.ts",
+              "line": 3197,
+              "column": 75,
+              "text": "if (shouldReportNoInputFiles(fileNames, canJsonReportNoInputFiles(raw), resolutionStack)) {\r\n            errors.push(getErrorForNoInputFiles(configFileSpecs, configFileName));\r\n        }",
+              "type": "any"
+            },
+            {
+              "file": "src/compiler/commandLineParser.ts",
+              "line": 3234,
+              "column": 25,
+              "text": "if (hasProperty(raw, prop) && !isNullOrUndefined(raw[prop])) {\r\n            if (isArray(raw[prop])) {\r\n                const result = raw[prop] as T[];\r\n                if (!sourceFile && !every(result, validateElement)) {\r\n                    errors.push(createCompilerDiagnostic(Diagnostics.Compiler_option_0_requires_a_value_of_type_1, prop, elementTypeName));\r\n                }\r\n                return result;\r\n            }\r\n            else {\r\n                createCompilerDiagnosticOnlyIfJson(Diagnostics.Compiler_option_0_requires_a_value_of_type_1, prop, \"Array\");\r\n                return \"not-array\";\r\n            }\r\n        }",
+              "type": "any"
+            },
+            {
+              "file": "src/compiler/commandLineParser.ts",
+              "line": 3234,
+              "column": 58,
+              "text": "if (hasProperty(raw, prop) && !isNullOrUndefined(raw[prop])) {\r\n            if (isArray(raw[prop])) {\r\n                const result = raw[prop] as T[];\r\n                if (!sourceFile && !every(result, validateElement)) {\r\n                    errors.push(createCompilerDiagnostic(Diagnostics.Compiler_option_0_requires_a_value_of_type_1, prop, elementTypeName));\r\n                }\r\n                return result;\r\n            }\r\n            else {\r\n                createCompilerDiagnosticOnlyIfJson(Diagnostics.Compiler_option_0_requires_a_value_of_type_1, prop, \"Array\");\r\n                return \"not-array\";\r\n            }\r\n        }",
+              "type": "any"
+            },
+            {
+              "file": "src/compiler/commandLineParser.ts",
+              "line": 3235,
+              "column": 25,
+              "text": "if (isArray(raw[prop])) {\r\n                const result = raw[prop] as T[];\r\n                if (!sourceFile && !every(result, validateElement)) {\r\n                    errors.push(createCompilerDiagnostic(Diagnostics.Compiler_option_0_requires_a_value_of_type_1, prop, elementTypeName));\r\n                }\r\n                return result;\r\n            }\r\n            else {\r\n                createCompilerDiagnosticOnlyIfJson(Diagnostics.Compiler_option_0_requires_a_value_of_type_1, prop, \"Array\");\r\n                return \"not-array\";\r\n            }",
+              "type": "any"
+            },
+            {
+              "file": "src/compiler/commandLineParser.ts",
+              "line": 3236,
+              "column": 32,
+              "text": "const result = raw[prop] as T[];",
+              "type": "any"
+            }
+          ]
+        },
+        {
+          "declaration": {
+            "file": "src/compiler/commandLineParser.ts",
+            "line": 3466,
+            "column": 19,
+            "text": "const extendsRaw = extendedConfig.raw;",
+            "type": "any"
+          },
+          "uses": [
+            {
+              "file": "src/compiler/commandLineParser.ts",
+              "line": 3466,
+              "column": 19,
+              "text": "const extendsRaw = extendedConfig.raw;",
+              "type": "any"
+            },
+            {
+              "file": "src/compiler/commandLineParser.ts",
+              "line": 3470,
+              "column": 21,
+              "text": "if (extendsRaw[propertyName]) {\r\n                    result[propertyName] = map(extendsRaw[propertyName], (path: string) =>\r\n                        startsWithConfigDirTemplate(path) || isRootedDiskPath(path) ?\r\n                            path :\r\n                            combinePaths(\r\n                                relativeDifference ||= convertToRelativePath(getDirectoryPath(extendedConfigPath), basePath, createGetCanonicalFileName(host.useCaseSensitiveFileNames)),\r\n                                path,\r\n                            ));\r\n                }",
+              "type": "any"
+            },
+            {
+              "file": "src/compiler/commandLineParser.ts",
+              "line": 3471,
+              "column": 48,
+              "text": "result[propertyName] = map(extendsRaw[propertyName], (path: string) =>\r\n                        startsWithConfigDirTemplate(path) || isRootedDiskPath(path) ?\r\n                            path :\r\n                            combinePaths(\r\n                                relativeDifference ||= convertToRelativePath(getDirectoryPath(extendedConfigPath), basePath, createGetCanonicalFileName(host.useCaseSensitiveFileNames)),\r\n                                path,\r\n                            ));",
+              "type": "any"
+            },
+            {
+              "file": "src/compiler/commandLineParser.ts",
+              "line": 3483,
+              "column": 17,
+              "text": "if (extendsRaw.compileOnSave !== undefined) {\r\n                result.compileOnSave = extendsRaw.compileOnSave;\r\n            }",
+              "type": "any"
+            },
+            {
+              "file": "src/compiler/commandLineParser.ts",
+              "line": 3484,
+              "column": 40,
+              "text": "result.compileOnSave = extendsRaw.compileOnSave;",
+              "type": "any"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "owner": "SolutionBuilderState",
+      "key": "timerToBuildInvalidatedProject",
+      "declaration": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 424,
+        "column": 5,
+        "text": "timerToBuildInvalidatedProject: any;",
+        "type": "any"
+      },
+      "references": [
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "line": 424,
+          "column": 5,
+          "text": "timerToBuildInvalidatedProject: any;",
+          "type": "any",
+          "isWrite": false,
+          "isDefinition": true
+        },
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "line": 545,
+          "column": 9,
+          "text": "const state: SolutionBuilderState<T> = {\r\n        host,\r\n        hostWithWatch,\r\n        parseConfigFileHost: parseConfigHostFromCompilerHostLike(host),\r\n        write: maybeBind(host, host.trace),\r\n\r\n        // State of solution\r\n        options,\r\n        baseCompilerOptions,\r\n        rootNames,\r\n        baseWatchOptions,\r\n\r\n        resolvedConfigFilePaths: new Map(),\r\n        configFileCache: new Map(),\r\n        projectStatus: new Map(),\r\n        extendedConfigCache: new Map(),\r\n        buildInfoCache: new Map(),\r\n        outputTimeStamps: new Map(),\r\n\r\n        builderPrograms: new Map(),\r\n        diagnostics: new Map(),\r\n        projectPendingBuild: new Map(),\r\n        projectErrorsReported: new Map(),\r\n\r\n        compilerHost,\r\n        moduleResolutionCache,\r\n        typeReferenceDirectiveResolutionCache,\r\n        libraryResolutionCache,\r\n\r\n        // Mutable state\r\n        buildOrder: undefined,\r\n        readFileWithCache: f => host.readFile(f),\r\n        projectCompilerOptions: baseCompilerOptions,\r\n        cache: undefined,\r\n        allProjectBuildPending: true,\r\n        needsSummary: true,\r\n        watchAllProjectsPending: watch,\r\n\r\n        // Watch state\r\n        watch,\r\n        allWatchedWildcardDirectories: new Map(),\r\n        allWatchedInputFiles: new Map(),\r\n        allWatchedConfigFiles: new Map(),\r\n        allWatchedExtendedConfigFiles: new Map(),\r\n        allWatchedPackageJsonFiles: new Map(),\r\n        filesWatched: new Map(),\r\n\r\n        lastCachedPackageJsonLookups: new Map(),\r\n\r\n        timerToBuildInvalidatedProject: undefined,\r\n        reportFileChangeDetected: false,\r\n        watchFile,\r\n        watchDirectory,\r\n        writeLog,\r\n    };",
+          "type": "undefined",
+          "isWrite": true,
+          "isDefinition": false
+        },
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "line": 2065,
+          "column": 15,
+          "text": "if (state.timerToBuildInvalidatedProject) {\r\n        hostWithWatch.clearTimeout(state.timerToBuildInvalidatedProject);\r\n    }",
+          "type": "any",
+          "isWrite": false,
+          "isDefinition": false
+        },
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "line": 2066,
+          "column": 42,
+          "text": "hostWithWatch.clearTimeout(state.timerToBuildInvalidatedProject);",
+          "type": "any",
+          "isWrite": false,
+          "isDefinition": false
+        },
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "line": 2068,
+          "column": 11,
+          "text": "state.timerToBuildInvalidatedProject = hostWithWatch.setTimeout(buildNextInvalidatedProject, time, \"timerToBuildInvalidatedProject\", state, changeDetected);",
+          "type": "any",
+          "isWrite": true,
+          "isDefinition": false
+        },
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "line": 2080,
+          "column": 11,
+          "text": "state.timerToBuildInvalidatedProject = undefined;",
+          "type": "any",
+          "isWrite": true,
+          "isDefinition": false
+        },
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "line": 2094,
+          "column": 23,
+          "text": "if (state.timerToBuildInvalidatedProject) return;",
+          "type": "any",
+          "isWrite": false,
+          "isDefinition": false
+        }
+      ],
+      "contextualWrites": [
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "line": 545,
+          "column": 9,
+          "text": "const state: SolutionBuilderState<T> = {\r\n        host,\r\n        hostWithWatch,\r\n        parseConfigFileHost: parseConfigHostFromCompilerHostLike(host),\r\n        write: maybeBind(host, host.trace),\r\n\r\n        // State of solution\r\n        options,\r\n        baseCompilerOptions,\r\n        rootNames,\r\n        baseWatchOptions,\r\n\r\n        resolvedConfigFilePaths: new Map(),\r\n        configFileCache: new Map(),\r\n        projectStatus: new Map(),\r\n        extendedConfigCache: new Map(),\r\n        buildInfoCache: new Map(),\r\n        outputTimeStamps: new Map(),\r\n\r\n        builderPrograms: new Map(),\r\n        diagnostics: new Map(),\r\n        projectPendingBuild: new Map(),\r\n        projectErrorsReported: new Map(),\r\n\r\n        compilerHost,\r\n        moduleResolutionCache,\r\n        typeReferenceDirectiveResolutionCache,\r\n        libraryResolutionCache,\r\n\r\n        // Mutable state\r\n        buildOrder: undefined,\r\n        readFileWithCache: f => host.readFile(f),\r\n        projectCompilerOptions: baseCompilerOptions,\r\n        cache: undefined,\r\n        allProjectBuildPending: true,\r\n        needsSummary: true,\r\n        watchAllProjectsPending: watch,\r\n\r\n        // Watch state\r\n        watch,\r\n        allWatchedWildcardDirectories: new Map(),\r\n        allWatchedInputFiles: new Map(),\r\n        allWatchedConfigFiles: new Map(),\r\n        allWatchedExtendedConfigFiles: new Map(),\r\n        allWatchedPackageJsonFiles: new Map(),\r\n        filesWatched: new Map(),\r\n\r\n        lastCachedPackageJsonLookups: new Map(),\r\n\r\n        timerToBuildInvalidatedProject: undefined,\r\n        reportFileChangeDetected: false,\r\n        watchFile,\r\n        watchDirectory,\r\n        writeLog,\r\n    };",
+          "type": "undefined"
+        }
+      ],
+      "aliases": []
+    }
+  ]
+}

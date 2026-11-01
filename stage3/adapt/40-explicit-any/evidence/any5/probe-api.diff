@@ -1,0 +1,11 @@
+--- control/typescript.d.ts
++++ probe/typescript.d.ts
+@@ -9246,7 +9246,7 @@
+      * @param jsonText The text of the config file
+      */
+     function parseConfigFileTextToJson(fileName: string, jsonText: string): {
+-        config?: any;
++        config?: AdamicJsonRecoveryObject;
+         error?: Diagnostic | undefined;
+     };
+     /**

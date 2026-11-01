@@ -1,0 +1,146 @@
+[
+  {
+    "owner": "ParsedCommandLine",
+    "key": "raw",
+    "replacement": "unknown",
+    "addedDiagnostics": [
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3355,
+        "code": 2345,
+        "message": "Argument of type 'unknown' is not assignable to parameter of type 'object'."
+      }
+    ],
+    "baselineCount": 0,
+    "total": 1
+  },
+  {
+    "owner": "readConfigFile",
+    "key": "config",
+    "replacement": "unknown",
+    "addedDiagnostics": [],
+    "baselineCount": 0,
+    "total": 0
+  },
+  {
+    "owner": "parseConfigFileTextToJson",
+    "key": "config",
+    "replacement": "unknown",
+    "addedDiagnostics": [],
+    "baselineCount": 0,
+    "total": 0
+  },
+  {
+    "owner": "ParsedTsconfig",
+    "key": "raw",
+    "replacement": "unknown",
+    "addedDiagnostics": [
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3111,
+        "code": 18046,
+        "message": "'raw' is of type 'unknown'."
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3119,
+        "code": 2345,
+        "message": "Argument of type 'unknown' is not assignable to parameter of type 'object'."
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3234,
+        "code": 2345,
+        "message": "Argument of type 'unknown' is not assignable to parameter of type 'object'."
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3234,
+        "code": 18046,
+        "message": "'raw' is of type 'unknown'."
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3235,
+        "code": 18046,
+        "message": "'raw' is of type 'unknown'."
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3236,
+        "code": 18046,
+        "message": "'raw' is of type 'unknown'."
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3449,
+        "code": 18046,
+        "message": "'ownConfig.raw' is of type 'unknown'."
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3450,
+        "code": 18046,
+        "message": "'ownConfig.raw' is of type 'unknown'."
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3451,
+        "code": 18046,
+        "message": "'ownConfig.raw' is of type 'unknown'."
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3453,
+        "code": 18046,
+        "message": "'ownConfig.raw' is of type 'unknown'."
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3453,
+        "code": 18046,
+        "message": "'ownConfig.raw' is of type 'unknown'."
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3469,
+        "code": 18046,
+        "message": "'ownConfig.raw' is of type 'unknown'."
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3470,
+        "code": 18046,
+        "message": "'extendsRaw' is of type 'unknown'."
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3471,
+        "code": 18046,
+        "message": "'extendsRaw' is of type 'unknown'."
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3483,
+        "code": 18046,
+        "message": "'extendsRaw' is of type 'unknown'."
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3484,
+        "code": 18046,
+        "message": "'extendsRaw' is of type 'unknown'."
+      }
+    ],
+    "baselineCount": 0,
+    "total": 16
+  },
+  {
+    "owner": null,
+    "key": "timerToBuildInvalidatedProject",
+    "replacement": "unknown",
+    "addedDiagnostics": [],
+    "baselineCount": 0,
+    "total": 0
+  }
+]

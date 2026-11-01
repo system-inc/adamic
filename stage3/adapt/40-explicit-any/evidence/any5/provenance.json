@@ -1,0 +1,55 @@
+{
+  "status": "stopped-before-implementation",
+  "main": "de5c28cc11d8a12a76cefb13e2bb1c78a2bb4585",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "typescript": "6.0.3",
+  "node": "v24.19.0",
+  "commands": [
+    {
+      "command": "export GOPROXY='https://proxy.golang.org|direct'; timeout --kill-after=60s 1800 bash cloud/setup.sh > /workspace/scratch/setup.log 2>&1",
+      "exit": 143,
+      "note": "Terminated task-owned process group after the API blocker; setup did not finish."
+    },
+    {
+      "command": "ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/adapt40-upstream bash stage3/apply.sh /workspace/scratch/adapt40-control",
+      "exit": 0
+    },
+    {
+      "command": "node /workspace/scratch/adapt40-measure.cjs /workspace/scratch/adapt40-control",
+      "exit": 0
+    },
+    {
+      "command": "node /workspace/scratch/adapt40-candidates.cjs /workspace/scratch/adapt40-control",
+      "exit": 0,
+      "note": "Repeated after dependency install; retained zero-diagnostic control only."
+    },
+    {
+      "command": "npm run build --prefix /workspace/scratch/adapt40-control",
+      "exit": 0
+    },
+    {
+      "command": "npm run build --prefix /workspace/scratch/adapt40-probe",
+      "exit": 1,
+      "note": "Both config members set to AdamicJsonRecoveryObject."
+    },
+    {
+      "command": "npm run build --prefix /workspace/scratch/adapt40-probe",
+      "exit": 0,
+      "note": "Only parseConfigFileTextToJson.config set to AdamicJsonRecoveryObject; readConfigFile.config restored to any."
+    },
+    {
+      "command": "node /workspace/scratch/adapt40-public-check.cjs",
+      "exit": 0,
+      "note": "Control public API checks cleanly; probe emits TS2304; all 10 JavaScript artifacts identical."
+    },
+    {
+      "command": "python3 -B stage3/lane/generate_shards.py --check",
+      "exit": 0
+    }
+  ],
+  "oracle": "not run",
+  "implementation": "none",
+  "sanction_changes": 0,
+  "pin_changes": 0,
+  "undo_retype_mutant": "not run"
+}

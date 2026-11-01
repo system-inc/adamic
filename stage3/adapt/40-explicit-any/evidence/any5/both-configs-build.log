@@ -1,0 +1,64 @@
+
+> typescript@6.0.3 build
+> npm run build:compiler && npm run build:tests
+
+
+> typescript@6.0.3 build:compiler
+> hereby local
+
+Using /workspace/scratch/adapt40-probe/Herebyfile.mjs to run local
+Starting generate-diagnostics
+> /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Starting lib
+Starting shim-compile-cache-tsc
+Starting shim-compile-cache-tsserver
+Starting shim-compile-cache-typings-installer
+Starting bundle-watch-guard
+Starting build-watch-guard
+Starting generate-types-map
+Finished shim-compile-cache-typings-installer in 13ms
+Finished shim-compile-cache-tsserver in 14ms
+Finished shim-compile-cache-tsc in 14ms
+Finished generate-types-map in 15ms
+Finished bundle-watch-guard in 18ms
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished generate-diagnostics in 115ms
+Starting localize
+Starting bundle-tsc
+Starting build-tsc
+Starting bundle-services
+Starting build-services
+Starting bundle-tsserver
+Starting build-tsserver
+Starting bundle-typings-installer
+Starting build-typings-installer
+Starting copy-built-local-diagnostic-messages
+Finished localize in 1ms
+Finished copy-built-local-diagnostic-messages in 7ms
+Finished bundle-tsserver in 49ms
+Finished bundle-typings-installer in 49ms
+Finished lib in 185ms
+Finished build-watch-guard in 291ms
+Finished bundle-tsc in 1.1s
+Finished bundle-services in 1.2s
+src/jsTyping/jsTyping.ts(81,43): error TS2345: Argument of type 'AdamicJsonRecoveryObject | undefined' is not assignable to parameter of type '{ [s: string]: string; } | ArrayLike<string>'.
+  Type 'undefined' is not assignable to type '{ [s: string]: string; } | ArrayLike<string>'.
+src/jsTyping/jsTyping.ts(88,47): error TS2345: Argument of type 'string | number | true | AdamicJsonRecoveryObject | AdamicJsonRecoveryValue[]' is not assignable to parameter of type '{ [s: string]: string; } | ArrayLike<string>'.
+  Type 'number' is not assignable to type '{ [s: string]: string; } | ArrayLike<string>'.
+src/jsTyping/jsTyping.ts(214,44): error TS18048: 'manifest' is possibly 'undefined'.
+src/jsTyping/jsTyping.ts(214,67): error TS18048: 'manifest' is possibly 'undefined'.
+src/jsTyping/jsTyping.ts(214,93): error TS18048: 'manifest' is possibly 'undefined'.
+src/jsTyping/jsTyping.ts(214,124): error TS18048: 'manifest' is possibly 'undefined'.
+src/jsTyping/jsTyping.ts(214,152): error TS2345: Argument of type '<T>(map: MapLike<T>) => string[]' is not assignable to parameter of type '(x: AdamicJsonRecoveryValue | undefined, i: number) => string | readonly string[] | undefined'.
+  Types of parameters 'map' and 'x' are incompatible.
+    Type 'AdamicJsonRecoveryValue | undefined' is not assignable to type 'MapLike<AdamicJsonRecoveryValue | undefined>'.
+      Type 'undefined' is not assignable to type 'MapLike<AdamicJsonRecoveryValue | undefined>'.
+src/jsTyping/jsTyping.ts(215,32): error TS2345: Argument of type 'readonly {}[]' is not assignable to parameter of type 'readonly string[]'.
+  Type '{}' is not assignable to type 'string'.
+src/jsTyping/jsTyping.ts(245,86): error TS2345: Argument of type '{}' is not assignable to parameter of type 'string'.
+src/jsTyping/jsTyping.ts(271,19): error TS2322: Type 'AdamicJsonRecoveryObject | undefined' is not assignable to type 'PackageJson'.
+  Type 'undefined' is not assignable to type 'PackageJson'.
+Error in build-tsc in 17s
+Error: Process exited with code: 2
+Completed local with errors in 17.2s
+Failed tasks: build-services, build-tsc, build-tsserver, build-typings-installer

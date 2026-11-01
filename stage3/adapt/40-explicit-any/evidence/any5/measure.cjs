@@ -1,0 +1,20 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),ts=require('typescript');
+const tree=process.argv[2];
+const configFile=path.join(tree,'src/compiler/tsconfig.json');
+const read=ts.readConfigFile(configFile,ts.sys.readFile);
+const config=ts.parseJsonConfigFileContent(read.config,ts.sys,path.dirname(configFile),{},configFile);
+const host={getCompilationSettings:()=>config.options,getScriptFileNames:()=>config.fileNames,getScriptVersion:()=> '0',getScriptSnapshot:f=>fs.existsSync(f)?ts.ScriptSnapshot.fromString(fs.readFileSync(f,'utf8')):undefined,getCurrentDirectory:()=>tree,getDefaultLibFileName:o=>ts.getDefaultLibFilePath(o),fileExists:ts.sys.fileExists,readFile:ts.sys.readFile,readDirectory:ts.sys.readDirectory};
+const service=ts.createLanguageService(host),program=service.getProgram(),checker=program.getTypeChecker();
+const targets=[['types.ts','ParsedCommandLine','raw'],['commandLineParser.ts','readConfigFile','config'],['commandLineParser.ts','parseConfigFileTextToJson','config'],['commandLineParser.ts','ParsedTsconfig','raw'],['tsbuildPublic.ts','SolutionBuilderState','timerToBuildInvalidatedProject']];
+const walk=(n,f)=>{f(n);ts.forEachChild(n,c=>walk(c,f));};
+const owner=n=>{for(let p=n.parent;p;p=p.parent)if(p.name&&(ts.isInterfaceDeclaration(p)||ts.isFunctionDeclaration(p)||ts.isClassDeclaration(p)))return p.name.text;};
+const describe=n=>{const sf=n.getSourceFile(),pos=sf.getLineAndCharacterOfPosition(n.getStart(sf));let p=n;while(p.parent&&!ts.isStatement(p)&&!ts.isPropertySignature(p))p=p.parent;return {file:path.relative(tree,sf.fileName),line:pos.line+1,column:pos.character+1,text:p.getText(sf),type:checker.typeToString(checker.getTypeAtLocation(n),n,ts.TypeFormatFlags.NoTruncation)};};
+const rows=[];
+for(const [file,enclosing,key]of targets){const sf=program.getSourceFile(path.join(tree,'src/compiler',file)),found=[];walk(sf,n=>{if((ts.isPropertySignature(n)||ts.isPropertyDeclaration(n))&&n.name?.text===key&&(owner(n)===enclosing||key==='timerToBuildInvalidatedProject'))found.push(n);});if(found.length!==1)throw Error(JSON.stringify([file,enclosing,key,found.length]));const d=found[0],symbol=checker.getSymbolAtLocation(d.name),refs=service.findReferences(sf.fileName,d.name.getStart(sf))||[];const references=refs.flatMap(g=>g.references).filter(r=>r.fileName.startsWith(path.join(tree,'src/compiler'))).map(r=>{const source=program.getSourceFile(r.fileName);let exact;walk(source,n=>{if(n.getStart(source)===r.textSpan.start&&n.end===r.textSpan.start+r.textSpan.length)exact=n;});return {...describe(exact),isWrite:r.isWriteAccess,isDefinition:r.isDefinition};});const contextualWrites=[];for(const source of program.getSourceFiles().filter(s=>s.fileName.startsWith(path.join(tree,'src/compiler')))){walk(source,n=>{if(!ts.isObjectLiteralExpression(n))return;const type=checker.getContextualType(n);const s=type?.getProperty(key);if(s!==symbol&&!s?.declarations?.includes(d))return;for(const p of n.properties)if(p.name?.getText(source)===key)contextualWrites.push(describe(p));});}const aliases=[];
+if(enclosing==='ParsedTsconfig')for(const source of program.getSourceFiles().filter(s=>s.fileName.startsWith(path.join(tree,'src/compiler'))))walk(source,n=>{
+if((ts.isVariableDeclaration(n)&&n.initializer&&ts.isPropertyAccessExpression(n.initializer)&&checker.getSymbolAtLocation(n.initializer.name)===symbol)||
+(ts.isBindingElement(n)&&n.name.getText(source)==='raw'&&ts.isObjectBindingPattern(n.parent)&&n.parent.parent.initializer&&checker.getTypeAtLocation(n.parent.parent.initializer).getProperty('raw')===symbol)){
+const local=checker.getSymbolAtLocation(n.name),uses=[];for(const sf2 of program.getSourceFiles().filter(s=>s.fileName.startsWith(path.join(tree,'src/compiler'))))walk(sf2,x=>{if(ts.isIdentifier(x)&&checker.getSymbolAtLocation(x)===local)uses.push(describe(x));});aliases.push({declaration:describe(n),uses});}});
+rows.push({owner:enclosing,key,declaration:describe(d),references,contextualWrites,aliases});}
+console.log(JSON.stringify({typescript:ts.version,rows},null,2));
