@@ -24,6 +24,10 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 	if weak := l.weakTarget(target); weak != nil {
 		target = weak
 	}
+	// A Pick of a record holds the whole record (records_partial.go), so none of its fields is hidden.
+	if base := l.pickedRecordBase(source); base != nil {
+		source = base
+	}
 	// Only an accepted assignment is a widening. Function rest parameters and checked
 	// downcasts can pair unrelated types; those belong to their own relation rules.
 	if skip == nil && !l.checker.IsTypeAssignableTo(source, target) {
