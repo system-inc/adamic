@@ -286,7 +286,8 @@ const v = { kind: 9, pos: 1, text: "x" }; show(v);`, "checked predicate overload
 // predicate held as a value, a function-type parameter, a class method, an arrow, an assertion direct and
 // held, and an optional call (Language's must on 9e4f2184, Compiler's roads on 7530a354). Each narrows a
 // PropertySignature | Identifier argument to PropertySignature, whose typeText S's view doesn't check,
-// so each is NotYet at the call. Three are held first by older rules, each pinned by its reason: the
+// so each is NotYet at the call, by Identifier, an unrelated member the checker drops, as much as by the
+// subtype. Three are held first by older rules, each pinned by its reason: the
 // direct call by the false side's guard, which runs before S's view registers, the class method as an
 // indirect call, and the optional call as a call main doesn't lower. Mutant: only a call through a declared function's name judged, as
 // 9e4f2184 did, and the other roads lower; with ADAMIC_BRANDED_CALLS_MUTANT=1 each of those must lower
@@ -295,7 +296,9 @@ func TestBrandedSupertypeEveryCallPathIsJudged(t *testing.T) {
 	t.Parallel()
 	const lie = `const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
 `
-	const walk = "a checked predicate target TypeElement that narrows PropertySignature, which isn't its supertype"
+	// brandedNarrowing names the first member that isn't a supertype, PropertySignature or Identifier by the
+	// union's order, so the pin holds the reason's own words.
+	const walk = "which isn't its supertype"
 	for _, probe := range []struct{ name, source, want string }{
 		{"direct", `function show(x: PropertySignature | Identifier): void { if (isTypeElementLie(x)) { console.log(String(x.typeText)); } }
 show(i);`, "checked predicate membership of a branded supertype on its false branch"},
