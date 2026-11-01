@@ -106,9 +106,14 @@ func TestNamedRecordRefusals(t *testing.T) {
 // () => unknown (w10). A record literal's computed name is the same write, made as the literal is. An
 // honest write, a number into number properties, still lowers. The literal's twin, { names: quiet }, is
 // stopped a level up, at the whole literal's initializer through .names, so a construction is held to its
-// twin's kind and rule (the fix it names) rather than to where it's said. Mutants: slotType ignoring the slot a
-// caller set lowers w8, which then prints POINT natively; recordComputedEntry skipped lowers w8's literal;
-// refuseWidening's rules skipped in refuseInSlot's run lowers the invariance and enum pins.
+// twin's kind and rule (the fix it names) rather than to where it's said. Language's w12 to w14 reach the
+// same write through an alias, a chained assignment and a parameter. In a slot boxed by a number in the
+// index, a declared property is left to its read only when that read is proven to stop on a lie
+// (readGuardedInUnionSlot): w10's literal there (b10) is judged, since a function's tag says only
+// "function", and a plain object's (b8), an array's (a8), a Map's (p8) and a dictionary's (r8) reads stop.
+// Mutants: slotType ignoring the slot a caller set lowers w8, which then prints POINT natively;
+// recordComputedEntry skipped lowers w8's literal and b10; refuseWidening's rules skipped in refuseInSlot's
+// run lowers the invariance and enum pins.
 func TestNamedRecordWritesAreJudgedAsTheirDirectTwins(t *testing.T) {
 	t.Parallel()
 	w8 := `interface Shape { x: number; describe(): string }
@@ -124,6 +129,10 @@ const quiet: () => void = () => "ab" + String(keys.length);
 const first = (): unknown => undefined;
 const key = keys[0] ?? "other";
 `
+	// The same shapes in a slot boxed by a number in the index.
+	boxed := func(source string) string {
+		return strings.Replace(strings.Replace(source, "[k: string]: Point | Shape }", "[k: string]: Point | Shape | number }", 1), "[k: string]: () => void }", "[k: string]: (() => void) | number }", 1)
+	}
 	for _, probe := range []struct {
 		name, source, write, direct string
 		byRule                      bool
@@ -146,6 +155,10 @@ const key = keys[0] ?? "other";
 		{"a node host object", "import { performance } from \"node:perf_hooks\";\ntype Clock = { now(): number };\ntype View = { now(): number; eventLoopUtilization(): { readonly idle: number } };\ntype Places = { names: View; [k: string]: Clock };\nconst keys: string[] = [\"names\"];\nconst key = keys[0] ?? \"names\";\nconst initial: View = { now: () => 1, eventLoopUtilization: () => ({ idle: 1 }) };\nconst places: Places = { names: initial };\n", "places[key] = performance;\nconsole.log(String(places.names.eventLoopUtilization().idle >= 0));", "places.names = performance;\nconsole.log(String(places.names.eventLoopUtilization().idle >= 0));", false},
 		{"w8 construction", w8, "const places: Places = { names: new Point(), [key]: new Other() };", "const places: Places = { names: new Other() };", true},
 		{"w10 construction", w10, "const handlers: Handlers = { names: first, [key]: quiet };", "const handlers: Handlers = { names: quiet };", true},
+		{"w12 alias receiver", w8, "const places: Places = { names: new Point() };\nconst both: Places[] = [places];\nconst slot = both[0];\nif (slot !== undefined) slot[key] = new Other();", "const places: Places = { names: new Point() };\nconst both: Places[] = [places];\nconst slot = both[0];\nif (slot !== undefined) slot.names = new Other();", false},
+		{"w13 chained", w8, "const places: Places = { names: new Point() };\nlet spare: Point | Shape = new Point();\nspare = places[key] = new Other();", "const places: Places = { names: new Point() };\nlet spare: Point | Shape = new Point();\nspare = places.names = new Other();", false},
+		{"w14 parameter", w8, "const places: Places = { names: new Point() };\nconst write = (target: Places, at: string): void => { target[at] = new Other(); };\nwrite(places, key);", "const places: Places = { names: new Point() };\nconst write = (target: Places, at: string): void => { target.names = new Other(); };\nwrite(places, key);", false},
+		{"w10 construction boxed", boxed(w10), "const handlers: Handlers = { names: first, [key]: quiet };", "const handlers: Handlers = { names: quiet };", true},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -160,6 +173,42 @@ const key = keys[0] ?? "other";
 			}
 			if !same {
 				t.Fatalf("the write stopped as %v, want what its direct twin stops as: %v", written, direct)
+			}
+		})
+	}
+	// The reads that hold readGuardedInUnionSlot: a lie under a declared plain object (b8, w8's literal
+	// boxed), array (a8), Map (p8) or dictionary (r8) in a boxed slot is left to its read, which stops as
+	// an object kind with no checked tag. Each goes red if the skip stops naming its kind (the write's
+	// stop comes first) or the read stops stopping. A computed method is no data entry, a stop of its own.
+	for _, probe := range []struct{ name, source, reason string }{
+		{"b8 object construction boxed", boxed(w8) + "const places: Places = { names: new Point(), [key]: new Other() };\nconsole.log(places.names.describe().toUpperCase());\n", "narrowed to an object kind without a checked runtime tag"},
+		{"a8 array construction boxed", `type Lists = { names: string[]; [k: string]: string[] | number[] | number };
+const keys: string[] = ["names", "other"];
+const key = keys[0] ?? "other";
+const lists: Lists = { names: ["a"], [key]: [1, 2] };
+console.log((lists.names[0] ?? "").toUpperCase());
+`, "narrowed to an object kind without a checked runtime tag"},
+		{"p8 map construction boxed", `type Tables = { names: Map<string, string>; [k: string]: Map<string, string> | Map<string, number> | number };
+const keys: string[] = ["names", "other"];
+const key = keys[0] ?? "other";
+const tables: Tables = { names: new Map<string, string>([["a", "b"]]), [key]: new Map<string, number>([["a", 1]]) };
+console.log((tables.names.get("a") ?? "").toUpperCase());
+`, "narrowed to an object kind without a checked runtime tag"},
+		{"r8 dictionary construction boxed", `interface MapLike<T> { [index: string]: T; }
+type Tables = { names: MapLike<string>; [k: string]: MapLike<string> | MapLike<number> | number };
+const keys: string[] = ["names", "other"];
+const key = keys[0] ?? "other";
+const tables: Tables = { names: { a: "b" }, [key]: { a: 1 } };
+console.log((tables.names["a"] ?? "").toUpperCase());
+`, "narrowed to an object kind without a checked runtime tag"},
+		{"w10 computed method", w10 + "const handlers: Handlers = { names: first, [key]() { return \"x\"; } };\nconsole.log('ran');\n", "a record literal member other than a data entry"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSource(t, probe.source)
+			var ny *NotYet
+			if !errors.As(err, &ny) || !strings.Contains(err.Error(), probe.reason) {
+				t.Fatalf("got %v, want the NotYet %s", err, probe.reason)
 			}
 		})
 	}
