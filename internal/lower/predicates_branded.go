@@ -40,14 +40,17 @@ func (l *lowering) brandedSupertype(target *checker.Type) bool {
 	return false
 }
 
-// brandedSupertypeViews registers S's view and its subtypes' once, keeping the error that stopped them.
-func (l *lowering) brandedSupertypeViews(node *ast.Node, target *checker.Type) error {
+// brandedSupertypeViews registers S's view and its subtypes' once for each source the claim is made
+// from, keeping the error that stopped them: what a view vouches for through a wider type is what its
+// source already held (view_widened.go), so a source is part of the registration.
+func (l *lowering) brandedSupertypeViews(node *ast.Node, source, target *checker.Type) error {
 	proofs := l.proofs()
-	if err, done := proofs.brandedViews[target]; done {
+	key := [2]*checker.Type{source, target}
+	if err, done := proofs.brandedViews[key]; done {
 		return predicateFailureCopy(err)
 	}
-	err := l.registerBrandedSupertypeViews(node, target)
-	proofs.brandedViews[target] = err
+	err := l.registerBrandedSupertypeViews(node, source, target)
+	proofs.brandedViews[key] = err
 	return predicateFailureCopy(err)
 }
 
@@ -74,7 +77,7 @@ func (l *lowering) brandedMembership(target *checker.Type, visited map[*checker.
 	return target.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(target) && l.fieldLiteral(target, "kind") == nil && l.brandedSupertype(target)
 }
 
-func (l *lowering) registerBrandedSupertypeViews(node *ast.Node, target *checker.Type) error {
+func (l *lowering) registerBrandedSupertypeViews(node *ast.Node, source, target *checker.Type) error {
 	covered := []*checker.Type{target}
 	for _, subtype := range l.brandedSubtypes(target) {
 		covered = append(covered, subtype.declared)
@@ -82,10 +85,12 @@ func (l *lowering) registerBrandedSupertypeViews(node *ast.Node, target *checker
 	if err := l.brandedSpreads(covered); err != nil {
 		return err
 	}
-	// No source to vouch from: S's view and its subtypes' check every field they read (#80cs7rz).
-	if _, err := l.view(node, nil, nil, target); err != nil {
+	// The claim's source is what the views vouch for through a wider type, and the value enters each view
+	// wherever a read is narrowed to its target, as a tag-proven predicate's view does (view_widened.go).
+	if _, err := l.view(node, nil, source, target); err != nil {
 		return err
 	}
+	l.viewSources[len(l.viewSources)-1].narrows = true
 	for _, subtype := range l.brandedSubtypes(target) {
 		if isClassInstance(subtype.declared) {
 			return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(target)+" that class "+l.checker.TypeToString(subtype.declared)+" is assignable to")
@@ -93,9 +98,10 @@ func (l *lowering) registerBrandedSupertypeViews(node *ast.Node, target *checker
 		if subtype.generic {
 			return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(target)+" that generic "+l.checker.TypeToString(subtype.declared)+" is assignable to")
 		}
-		if _, err := l.view(node, nil, nil, subtype.declared); err != nil {
+		if _, err := l.view(node, nil, source, subtype.declared); err != nil {
 			return err
 		}
+		l.viewSources[len(l.viewSources)-1].narrows = true
 	}
 	return nil
 }
