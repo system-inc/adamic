@@ -2,6 +2,8 @@
 
 The completion-details read uses the precise harness-local full-reply shape authorized after the reach measurement. It preserves protocol string tags and service numeric-span code actions by identity. All harness flow edits erase to identical JavaScript; the only runtime change in this repair is accepting checked string tag text.
 
+The latest accepted-head integration is recorded in [COMPOSITION.md](COMPOSITION.md): wave 6 plus 52 and 98-d, merged with main for the generator. It replaces the second harness import with named specifiers and verifies the actual 99f composition. The original-main measurements below remain historical.
+
 Adamic task r2628wp. Main is `470e16f8315f7a83c5c7b7f6f2a77d8328db0a25`. Upstream is TypeScript 6.0.3 at `050880ce59e30b356b686bd3144efe24f875ebc8`. Number 41 is occupied; the requested next free number is 52. This adaptation changes JavaScript.
 
 Fifteen public declaration lines lose any. Three caller inputs, both raw members, five protocol slots, plugin config and its change hook, and the localized-messages hook become unknown. convertToObject returns `AdamicJsonRecoveryValue | undefined`. readConfigFile.config becomes AdamicJsonRecoveryObject. The two existing adaptation-43 definitions become public, preserving their names and recursive domain:
@@ -56,9 +58,9 @@ Every edit has an exact owner, node kind and before/after text in rules.json. Al
 
 api-sanctions.json has 15 replacement rows and one insertion row containing both full definitions. convertToObject uses kind FunctionDeclaration with exact upstream return type `any`. The insertion anchors after ParseConfigFileHost, kind InterfaceDeclaration, which is where the actual upstream declaration bundler places these definitions. No whole-member workaround or generator modification is used.
 
-Until typescript/api-sanctions-2 lands, proof.cjs applies the rows by hand to a scratch copy of the control declaration, using each row's owner and exact type, and inserts the definitions on new lines at the anchor indentation. The reconstruction matches the generated artifact and the oracle's local api/typescript.d.ts byte for byte (SHA-256 `b8faba99305b76f8f6ea0273807b08dc8ef6b9cada46d563e436f1d943e9a754`). These future rows are not claimed to be consumed by main's current generator; this is the authorized scratch comparison.
+On the original main base, before typescript/api-sanctions-2 landed, proof.cjs applied the rows by hand to a scratch copy of the control declaration, using each row's owner and exact type, and inserts the definitions on new lines at the anchor indentation. The reconstruction matches the generated artifact and the oracle's local api/typescript.d.ts byte for byte (SHA-256 `b8faba99305b76f8f6ea0273807b08dc8ef6b9cada46d563e436f1d943e9a754`). That was the authorized scratch comparison on the original base. The composed current-main generator now consumes these rows; COMPOSITION.md records its direct 52 byte match and the inherited 97d layout discrepancy in the full raw generator output; the lane's normalized declaration comparison agrees.
 
-## Measurements
+## Original-main measurements
 
 Setup completed successfully with GOPROXY and the requested 1,800-second timeout; its log is on the evidence branch. Control and final full apply run all adaptations in order. Stock checks retain upstream options; no typecheck is skipped. The native measurement uses 99a's 79 sorted src/compiler roots, fixed checker options and prelude. Its comparison preserves full messages, columns and multiplicity; it maps locations only through unchanged source lines, so inserted checks do not manufacture new diagnostic identities.
 

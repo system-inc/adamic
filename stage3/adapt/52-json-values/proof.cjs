@@ -13,6 +13,10 @@ fs.mkdirSync(evidence, {recursive: true});
 const hash = value => crypto.createHash('sha256').update(value).digest('hex');
 const files = [...new Set(rules.map(r => r.file))];
 const digests = tree => Object.fromEntries(files.map(file => [file, hash(fs.readFileSync(path.join(tree, file)))]));
+const client = ts.createSourceFile('client.ts', fs.readFileSync(path.join(after, 'src/harness/client.ts'), 'utf8'), ts.ScriptTarget.Latest, true);
+const clientImports = client.statements.filter(node => ts.isImportDeclaration(node) && node.moduleSpecifier.text === './_namespaces/ts.js');
+assert.equal(clientImports.length, 1, '99f requires exactly one import from the ts module');
+assert(ts.isNamedImports(clientImports[0].importClause.namedBindings));
 const original = digests(after);
 assert.equal(adapt(after).files, 0);
 assert.deepEqual(digests(after), original);
@@ -112,7 +116,7 @@ const api = ts.createSourceFile('typescript.d.ts', actual, ts.ScriptTarget.Lates
     ts.forEachChild(node, visit);
 })(api);
 const counts = {}; for (const row of any) counts[row.class] = (counts[row.class] || 0) + 1;
-const report = {idempotent: true, files: files.length, newCasts: 0, castCounts, harnessTypeFlowJavaScript, refusals, mutants,
+const report = {idempotent: true, files: files.length, newCasts: 0, clientTsModuleImports: clientImports.length, castCounts, harnessTypeFlowJavaScript, refusals, mutants,
     api: {rows: sanctions.length, match: true, sha256: hash(actual)}, publicAny: {beforeTokens: all.filter(node => node.kind === ts.SyntaxKind.AnyKeyword).length, tokens: any.length, declarationLines: new Set(any.map(row => row.line)).size, outsideList: any.length - counts['pinned config returns'], counts, sites: any}};
 fs.writeFileSync(path.join(evidence, 'contracts.json'), JSON.stringify(report, null, 2) + '\n');
 fs.rmSync(scratch, {recursive: true});
