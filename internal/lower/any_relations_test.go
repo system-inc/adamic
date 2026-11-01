@@ -11,7 +11,11 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
-const anyRelationPrelude = `interface Loose { readonly kind: number; readonly pos: number; readonly text: any; }
+// The any is the program's own, through Box<any>: a member written as T, instantiated any. A member the
+// program declares any is refused where it's declared (refuseAnyMember, step 2), so a relation pin built on
+// one would stop there and test nothing of the relation (Adamic's ruling on #tmdhz1d).
+const anyRelationPrelude = `interface Box<T> { readonly kind: number; readonly pos: number; readonly text: T; }
+type Loose = Box<any>;
 interface HasText { readonly text: string; }
 `
 
@@ -60,7 +64,8 @@ show({ visible: 1 });`, "a member typed any ([][1]) related to number at the ini
 		// on dab38125): a local typed any, and a function returning any.
 		{"local typed any", `const x: any = 5; const s: string = x; console.log(String(s.length));`, "a value of type any"},
 		{"function returning any", `function f(): any { return 5; } const s: string = f(); console.log(String(s.length));`, "a function returning any"},
-		{"cast then widened", `interface LitL { readonly kind: 9; readonly pos: number; readonly text: any; }
+		{"cast then widened", `interface LitBox<T> { readonly kind: 9; readonly pos: number; readonly text: T; }
+type LitL = LitBox<any>;
 function show(n: Loose): void { if (n.kind === 9) { const l = n as LitL; const h: HasText = l; console.log(h.text); } }
 const w = { kind: 9, pos: 1, text: 5 }; show(w);`, "a member typed any (text) related to string at the initializer site"},
 	} {
