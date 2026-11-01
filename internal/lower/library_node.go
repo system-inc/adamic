@@ -26,7 +26,13 @@ func (l *lowering) nodeLibraryMember(node *ast.Node) string {
 	if node.Kind == ast.KindNewExpression {
 		node = ast.SkipParentheses(node.AsNewExpression().Expression)
 	}
-	symbol := l.symbol(node)
+	return nodeLibraryName(l.symbol(node))
+}
+
+// nodeLibraryName is the name a Node library declaration is registered by: its module, the classes
+// and interfaces it's declared in, and its own name, as node:perf_hooks.Performance.timeOrigin. It's
+// empty for a symbol no Node library file declares, or a module.
+func nodeLibraryName(symbol *ast.Symbol) string {
 	if symbol == nil {
 		return ""
 	}
