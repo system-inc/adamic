@@ -336,12 +336,13 @@ g<TypeElement>(i);
 show(i);`, "that the generic claim U may be instantiated at", false},
 		// A generic branded supertype at a type argument the walk can't see: U = number makes the claim
 		// Tagged<number>, S itself, so U's constraint against S says nothing (Compiler's must on 810ce7d9).
+		// Nothing reads value, whose view read main refuses as a generic contract, so only the walk holds it.
 		// Mutant: type arguments judged by their constraint against S, and it lowers.
 		{"generic branded supertype", `interface Tagged<V> { readonly kind: number; readonly pos: number; _taggedBrand: undefined; readonly value: V }
 interface Sub extends Tagged<number> { readonly kind: 7; readonly extra: string; }
 function isTagged(n: Node): n is Tagged<number> { return kindOf(n) !== 0; }
 function isTaggedOf<U extends number>(n: Node): n is Tagged<U> { return kindOf(n) !== 0; }
-function show(n: Node): void { if (isTagged(n)) { console.log(String(n.value)); } }
+function show(n: Node): void { if (isTagged(n)) { console.log(String(n.pos)); } }
 function g<U extends number>(x: Sub | Identifier): void { if (isTaggedOf<U>(x)) { console.log(String(x.pos)); } }
 show(i);
 g<number>(i);`, "that the generic claim Tagged<U> may be instantiated at", false},
