@@ -1,0 +1,15 @@
+{
+  "undo": "readFile only; keep three other H members and all 97b changes",
+  "verifierExit": 1,
+  "adapterCheckExit": 1,
+  "observations": {
+    "tsc": {
+      "wholeProgram": 125,
+      "exactlyRestoresBefore": true
+    },
+    "typescript": {
+      "wholeProgram": 3341,
+      "exactlyRestoresBefore": true
+    }
+  }
+}

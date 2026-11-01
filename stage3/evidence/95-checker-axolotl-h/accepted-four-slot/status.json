@@ -1,0 +1,19 @@
+{
+  "status": "accepted",
+  "shippingCommit": "1be494854",
+  "base": "ef4d26a4a38b7890317e1ba71f8ad928fd8588f6",
+  "accepted97b": "27162cab2bb0054b4ed7cad5a9e258f67f8030c1",
+  "ownedSlots": [
+    "getSymlinkCache",
+    "readFile",
+    "getModuleSpecifierCache",
+    "getNearestAncestorDirectoryWithPackageJson"
+  ],
+  "publicApiChanging": false,
+  "addedDiagnostics": 0,
+  "oracleCounts": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  }
+}

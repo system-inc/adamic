@@ -1,0 +1,14 @@
+{
+  "interface": "ModuleSpecifierResolutionHost",
+  "internalOwner": true,
+  "members": [
+    "getSymlinkCache",
+    "readFile",
+    "getModuleSpecifierCache",
+    "getNearestAncestorDirectoryWithPackageJson"
+  ],
+  "publicInterfaceAbsent": true,
+  "baseline": "tests/baselines/reference/api/typescript.d.ts",
+  "baselineSha256": "c967e03c8dbb4770f7e2f0b71b5d13593de679a41cc2b60266c4b69f1342a263",
+  "otherUndefinedDestinationsAlreadyAdmitUndefined": true
+}

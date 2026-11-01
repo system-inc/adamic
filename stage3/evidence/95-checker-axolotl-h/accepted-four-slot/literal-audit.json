@@ -1,0 +1,1623 @@
+{
+  "literalCount": 5,
+  "literals": [
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 54261,
+      "owner": "createBasicNodeBuilderModuleSpecifierResolutionHost",
+      "contextualType": "ModuleSpecifierResolutionHost",
+      "ownerBeforeSha256": "9171aad5d35e92052c682093a2f2b7fb0ad49a63787488f78d0aa74161d9b9b1",
+      "literalSha256": "3f47dd64f51c5c74ad8263d40713a28e424f4d28859e714238b8a2417cbae3d7",
+      "members": [
+        {
+          "name": "getCommonSourceDirectory",
+          "initializer": "!!(host as Program).getCommonSourceDirectory ? () => (host as Program).getCommonSourceDirectory() : () => \"\"",
+          "valueType": "() => string",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getCommonSourceDirectory(): string;"
+        },
+        {
+          "name": "getCurrentDirectory",
+          "initializer": "() => host.getCurrentDirectory()",
+          "valueType": "() => string",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getCurrentDirectory(): string;"
+        },
+        {
+          "name": "getSymlinkCache",
+          "initializer": "maybeBind(host, host.getSymlinkCache)",
+          "valueType": "(() => SymlinkCache) | undefined",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getSymlinkCache?(): SymlinkCache;"
+        },
+        {
+          "name": "getPackageJsonInfoCache",
+          "initializer": "() => host.getPackageJsonInfoCache?.()",
+          "valueType": "() => PackageJsonInfoCache | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getPackageJsonInfoCache?(): PackageJsonInfoCache | undefined;"
+        },
+        {
+          "name": "useCaseSensitiveFileNames",
+          "initializer": "() => host.useCaseSensitiveFileNames()",
+          "valueType": "() => boolean",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "useCaseSensitiveFileNames(): boolean;"
+        },
+        {
+          "name": "redirectTargetsMap",
+          "initializer": "host.redirectTargetsMap",
+          "valueType": "RedirectTargetsMap",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "readonly redirectTargetsMap: RedirectTargetsMap;"
+        },
+        {
+          "name": "getRedirectFromSourceFile",
+          "initializer": "fileName => host.getRedirectFromSourceFile(fileName)",
+          "valueType": "(fileName: string) => ResolvedRefAndOutputDts | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getRedirectFromSourceFile(fileName: string): ResolvedRefAndOutputDts | undefined;"
+        },
+        {
+          "name": "isSourceOfProjectReferenceRedirect",
+          "initializer": "fileName => host.isSourceOfProjectReferenceRedirect(fileName)",
+          "valueType": "(fileName: string) => boolean",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "isSourceOfProjectReferenceRedirect(fileName: string): boolean;"
+        },
+        {
+          "name": "fileExists",
+          "initializer": "fileName => host.fileExists(fileName)",
+          "valueType": "(fileName: string) => boolean",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "fileExists(path: string): boolean;"
+        },
+        {
+          "name": "getFileIncludeReasons",
+          "initializer": "() => host.getFileIncludeReasons()",
+          "valueType": "() => MultiMap<Path, FileIncludeReason>",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getFileIncludeReasons(): MultiMap<Path, FileIncludeReason>;"
+        },
+        {
+          "name": "readFile",
+          "initializer": "host.readFile ? (fileName => host.readFile!(fileName)) : undefined",
+          "valueType": "((fileName: string) => string | undefined) | undefined",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "readFile?(path: string): string | undefined;"
+        },
+        {
+          "name": "getDefaultResolutionModeForFile",
+          "initializer": "file => host.getDefaultResolutionModeForFile(file)",
+          "valueType": "(file: SourceFile) => ResolutionMode",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getDefaultResolutionModeForFile(sourceFile: SourceFile): ResolutionMode;"
+        },
+        {
+          "name": "getModeForResolutionAtIndex",
+          "initializer": "(file, index) => host.getModeForResolutionAtIndex(file, index)",
+          "valueType": "(file: SourceFile, index: number) => ResolutionMode",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getModeForResolutionAtIndex(file: SourceFile, index: number): ResolutionMode;"
+        },
+        {
+          "name": "getGlobalTypingsCacheLocation",
+          "initializer": "maybeBind(host, host.getGlobalTypingsCacheLocation)",
+          "valueType": "(() => string | undefined) | undefined",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getGlobalTypingsCacheLocation?: { getGlobalTypingsCacheLocation(): string | undefined; }[\"getGlobalTypingsCacheLocation\"] | undefined;"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1876,
+      "owner": "createProgram",
+      "contextualType": "Program",
+      "ownerBeforeSha256": "505bb77211eb4818ad15ed0701812c6c51eb06059becdd73923a5f3e73b69152",
+      "literalSha256": "0abf62afe4c9c99de5dd8c5483f94367343f526bbff0456fb2509d6b9584734f",
+      "members": [
+        {
+          "name": "getRootFileNames",
+          "initializer": "() => rootNames",
+          "valueType": "() => readonly string[]",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getRootFileNames(): readonly string[];"
+        },
+        {
+          "name": "getSourceFile",
+          "initializer": "getSourceFile",
+          "valueType": "(fileName: string) => SourceFile | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "ScriptReferenceHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getSourceFile(fileName: string): SourceFile | undefined;"
+        },
+        {
+          "name": "getSourceFileByPath",
+          "initializer": "getSourceFileByPath",
+          "valueType": "(path: Path) => SourceFile | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "ScriptReferenceHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getSourceFileByPath(path: Path): SourceFile | undefined;"
+        },
+        {
+          "name": "getSourceFiles",
+          "initializer": "() => files",
+          "valueType": "() => SourceFile[]",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getSourceFiles(): readonly SourceFile[];"
+        },
+        {
+          "name": "getMissingFilePaths",
+          "initializer": "() => missingFileNames",
+          "valueType": "() => Map<Path, string>",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getMissingFilePaths(): Map<Path, string>;"
+        },
+        {
+          "name": "getModuleResolutionCache",
+          "initializer": "() => moduleResolutionCache",
+          "valueType": "() => ModuleResolutionCache | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getModuleResolutionCache(): ModuleResolutionCache | undefined;"
+        },
+        {
+          "name": "getFilesByNameMap",
+          "initializer": "() => filesByName",
+          "valueType": "() => Map<Path, false | SourceFile | undefined>",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getFilesByNameMap(): Map<Path, SourceFile | false | undefined>;"
+        },
+        {
+          "name": "getCompilerOptions",
+          "initializer": "() => options",
+          "valueType": "() => CompilerOptions",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "ScriptReferenceHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getCompilerOptions(): CompilerOptions;"
+        },
+        {
+          "name": "getSyntacticDiagnostics",
+          "initializer": "getSyntacticDiagnostics",
+          "valueType": "(sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly DiagnosticWithLocation[]",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getSyntacticDiagnostics(sourceFile?: SourceFile, cancellationToken?: CancellationToken): readonly DiagnosticWithLocation[];"
+        },
+        {
+          "name": "getOptionsDiagnostics",
+          "initializer": "getOptionsDiagnostics",
+          "valueType": "() => SortedReadonlyArray<Diagnostic>",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getOptionsDiagnostics(cancellationToken?: CancellationToken): readonly Diagnostic[];"
+        },
+        {
+          "name": "getGlobalDiagnostics",
+          "initializer": "getGlobalDiagnostics",
+          "valueType": "() => SortedReadonlyArray<Diagnostic>",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getGlobalDiagnostics(cancellationToken?: CancellationToken): readonly Diagnostic[];"
+        },
+        {
+          "name": "getSemanticDiagnostics",
+          "initializer": "getSemanticDiagnostics",
+          "valueType": "(sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined, nodesToCheck?: Node[] | undefined) => readonly Diagnostic[]",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getSemanticDiagnostics(sourceFile?: SourceFile, cancellationToken?: CancellationToken): readonly Diagnostic[];"
+        },
+        {
+          "name": "getCachedSemanticDiagnostics",
+          "initializer": "getCachedSemanticDiagnostics",
+          "valueType": "(sourceFile: SourceFile) => readonly Diagnostic[] | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getCachedSemanticDiagnostics(sourceFile: SourceFile): readonly Diagnostic[] | undefined;"
+        },
+        {
+          "name": "getSuggestionDiagnostics",
+          "initializer": "getSuggestionDiagnostics",
+          "valueType": "(sourceFile: SourceFile, cancellationToken: CancellationToken) => readonly DiagnosticWithLocation[]",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getSuggestionDiagnostics(sourceFile: SourceFile, cancellationToken?: CancellationToken): readonly DiagnosticWithLocation[];"
+        },
+        {
+          "name": "getDeclarationDiagnostics",
+          "initializer": "getDeclarationDiagnostics",
+          "valueType": "(sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly DiagnosticWithLocation[]",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getDeclarationDiagnostics(sourceFile?: SourceFile, cancellationToken?: CancellationToken): readonly DiagnosticWithLocation[];"
+        },
+        {
+          "name": "getBindAndCheckDiagnostics",
+          "initializer": "getBindAndCheckDiagnostics",
+          "valueType": "(sourceFile: SourceFile, cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[]",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getBindAndCheckDiagnostics(sourceFile: SourceFile, cancellationToken?: CancellationToken): readonly Diagnostic[];"
+        },
+        {
+          "name": "getProgramDiagnostics",
+          "initializer": "getProgramDiagnostics",
+          "valueType": "(sourceFile: SourceFile) => readonly Diagnostic[]",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getProgramDiagnostics(sourceFile: SourceFile, cancellationToken?: CancellationToken): readonly Diagnostic[];"
+        },
+        {
+          "name": "getTypeChecker",
+          "initializer": "getTypeChecker",
+          "valueType": "() => TypeChecker",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getTypeChecker(): TypeChecker;"
+        },
+        {
+          "name": "getClassifiableNames",
+          "initializer": "getClassifiableNames",
+          "valueType": "() => Set<__String>",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getClassifiableNames(): Set<__String>;"
+        },
+        {
+          "name": "getCommonSourceDirectory",
+          "initializer": "getCommonSourceDirectory",
+          "valueType": "() => string",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getCommonSourceDirectory(): string;"
+        },
+        {
+          "name": "emit",
+          "initializer": "emit",
+          "valueType": "(sourceFile?: SourceFile | undefined, writeFileCallback?: WriteFileCallback | undefined, cancellationToken?: CancellationToken | undefined, emitOnly?: boolean | EmitOnly | undefined, transformers?: CustomTransformers | undefined, forceDtsEmit?: boolean | undefined, skipBuildInfo?: boolean | undefined) => EmitResult",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "emit(targetSourceFile?: SourceFile, writeFile?: WriteFileCallback, cancellationToken?: CancellationToken, emitOnlyDtsFiles?: boolean, customTransformers?: CustomTransformers): EmitResult;"
+        },
+        {
+          "name": "getCurrentDirectory",
+          "initializer": "() => currentDirectory",
+          "valueType": "() => string",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getCurrentDirectory(): string;"
+        },
+        {
+          "name": "getNodeCount",
+          "initializer": "() => getTypeChecker().getNodeCount()",
+          "valueType": "() => number",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getNodeCount(): number;"
+        },
+        {
+          "name": "getIdentifierCount",
+          "initializer": "() => getTypeChecker().getIdentifierCount()",
+          "valueType": "() => number",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getIdentifierCount(): number;"
+        },
+        {
+          "name": "getSymbolCount",
+          "initializer": "() => getTypeChecker().getSymbolCount()",
+          "valueType": "() => number",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getSymbolCount(): number;"
+        },
+        {
+          "name": "getTypeCount",
+          "initializer": "() => getTypeChecker().getTypeCount()",
+          "valueType": "() => number",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getTypeCount(): number;"
+        },
+        {
+          "name": "getInstantiationCount",
+          "initializer": "() => getTypeChecker().getInstantiationCount()",
+          "valueType": "() => number",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getInstantiationCount(): number;"
+        },
+        {
+          "name": "getRelationCacheSizes",
+          "initializer": "() => getTypeChecker().getRelationCacheSizes()",
+          "valueType": "() => { assignable: number; identity: number; subtype: number; strictSubtype: number; }",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getRelationCacheSizes(): { assignable: number; identity: number; subtype: number; strictSubtype: number; };"
+        },
+        {
+          "name": "getFileProcessingDiagnostics",
+          "initializer": "() => programDiagnostics.getFileProcessingDiagnostics()",
+          "valueType": "() => FilePreprocessingDiagnostics[] | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getFileProcessingDiagnostics(): FilePreprocessingDiagnostics[] | undefined;"
+        },
+        {
+          "name": "getAutomaticTypeDirectiveNames",
+          "initializer": "() => automaticTypeDirectiveNames!",
+          "valueType": "() => string[]",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getAutomaticTypeDirectiveNames(): string[];"
+        },
+        {
+          "name": "getAutomaticTypeDirectiveResolutions",
+          "initializer": "() => automaticTypeDirectiveResolutions",
+          "valueType": "() => ModeAwareCache<ResolvedTypeReferenceDirectiveWithFailedLookupLocations>",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getAutomaticTypeDirectiveResolutions(): ModeAwareCache<ResolvedTypeReferenceDirectiveWithFailedLookupLocations>;"
+        },
+        {
+          "name": "isSourceFileFromExternalLibrary",
+          "initializer": "isSourceFileFromExternalLibrary",
+          "valueType": "(file: SourceFile) => boolean",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "isSourceFileFromExternalLibrary(file: SourceFile): boolean;"
+        },
+        {
+          "name": "isSourceFileDefaultLibrary",
+          "initializer": "isSourceFileDefaultLibrary",
+          "valueType": "(file: SourceFile) => boolean",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "isSourceFileDefaultLibrary(file: SourceFile): boolean;"
+        },
+        {
+          "name": "getModeForUsageLocation",
+          "initializer": "getModeForUsageLocation",
+          "valueType": "(file: SourceFile, usage: StringLiteralLike) => ResolutionMode",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getModeForUsageLocation(file: SourceFile, usage: StringLiteralLike): ResolutionMode;"
+        },
+        {
+          "name": "getEmitSyntaxForUsageLocation",
+          "initializer": "getEmitSyntaxForUsageLocation",
+          "valueType": "(file: SourceFile, usage: StringLiteralLike) => ResolutionMode",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "TypeCheckerHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getEmitSyntaxForUsageLocation(file: SourceFile, usage: StringLiteralLike): ResolutionMode;"
+        },
+        {
+          "name": "getModeForResolutionAtIndex",
+          "initializer": "getModeForResolutionAtIndex",
+          "valueType": "(file: SourceFile, index: number) => ResolutionMode",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getModeForResolutionAtIndex(file: SourceFile, index: number): ResolutionMode;"
+        },
+        {
+          "name": "getSourceFileFromReference",
+          "initializer": "getSourceFileFromReference",
+          "valueType": "(referencingFile: SourceFile, ref: FileReference) => SourceFile | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getSourceFileFromReference(referencingFile: SourceFile, ref: FileReference): SourceFile | undefined;"
+        },
+        {
+          "name": "getLibFileFromReference",
+          "initializer": "getLibFileFromReference",
+          "valueType": "(ref: FileReference) => SourceFile | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getLibFileFromReference(ref: FileReference): SourceFile | undefined;"
+        },
+        {
+          "name": "sourceFileToPackageName",
+          "initializer": "sourceFileToPackageName",
+          "valueType": "Map<Path, string>",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "sourceFileToPackageName: Map<Path, string>;"
+        },
+        {
+          "name": "redirectTargetsMap",
+          "initializer": "redirectTargetsMap",
+          "valueType": "MultiMap<Path, string>",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "redirectTargetsMap: MultiMap<Path, string>;"
+        },
+        {
+          "name": "usesUriStyleNodeCoreModules",
+          "initializer": "usesUriStyleNodeCoreModules",
+          "valueType": "boolean | undefined",
+          "mayStoreUndefined": true,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "readonly usesUriStyleNodeCoreModules: boolean | undefined;"
+        },
+        {
+          "name": "resolvedModules",
+          "initializer": "resolvedModules",
+          "valueType": "Map<Path, ModeAwareCache<ResolvedModuleWithFailedLookupLocations>> | undefined",
+          "mayStoreUndefined": true,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "resolvedModules: Map<Path, ModeAwareCache<ResolvedModuleWithFailedLookupLocations>> | undefined;"
+        },
+        {
+          "name": "resolvedTypeReferenceDirectiveNames",
+          "initializer": "resolvedTypeReferenceDirectiveNames",
+          "valueType": "Map<Path, ModeAwareCache<ResolvedTypeReferenceDirectiveWithFailedLookupLocations>> | undefined",
+          "mayStoreUndefined": true,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "resolvedTypeReferenceDirectiveNames: Map<Path, ModeAwareCache<ResolvedTypeReferenceDirectiveWithFailedLookupLocations>> | undefined;"
+        },
+        {
+          "name": "resolvedLibReferences",
+          "initializer": "resolvedLibReferences",
+          "valueType": "Map<string, LibResolution<ResolvedModuleWithFailedLookupLocations>> | undefined",
+          "mayStoreUndefined": true,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "resolvedLibReferences: Map<string, LibResolution> | undefined;"
+        },
+        {
+          "name": "getProgramDiagnosticsContainer",
+          "initializer": "() => programDiagnostics",
+          "valueType": "() => ProgramDiagnostics",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getProgramDiagnosticsContainer: () => ProgramDiagnostics;"
+        },
+        {
+          "name": "getResolvedModule",
+          "initializer": "getResolvedModule",
+          "valueType": "(file: SourceFile, moduleName: string, mode: ResolutionMode) => ResolvedModuleWithFailedLookupLocations | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getResolvedModule(f: SourceFile, moduleName: string, mode: ResolutionMode): ResolvedModuleWithFailedLookupLocations | undefined;"
+        },
+        {
+          "name": "getResolvedModuleFromModuleSpecifier",
+          "initializer": "getResolvedModuleFromModuleSpecifier",
+          "valueType": "(moduleSpecifier: StringLiteralLike, sourceFile?: SourceFile | undefined) => ResolvedModuleWithFailedLookupLocations | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getResolvedModuleFromModuleSpecifier(moduleSpecifier: StringLiteralLike, sourceFile?: SourceFile): ResolvedModuleWithFailedLookupLocations | undefined;"
+        },
+        {
+          "name": "getResolvedTypeReferenceDirective",
+          "initializer": "getResolvedTypeReferenceDirective",
+          "valueType": "(file: SourceFile, typeDirectiveName: string, mode: ResolutionMode) => ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getResolvedTypeReferenceDirective(f: SourceFile, typeDirectiveName: string, mode: ResolutionMode): ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined;"
+        },
+        {
+          "name": "getResolvedTypeReferenceDirectiveFromTypeReferenceDirective",
+          "initializer": "getResolvedTypeReferenceDirectiveFromTypeReferenceDirective",
+          "valueType": "(typeRef: FileReference, sourceFile: SourceFile) => ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getResolvedTypeReferenceDirectiveFromTypeReferenceDirective(typedRef: FileReference, sourceFile: SourceFile): ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined;"
+        },
+        {
+          "name": "forEachResolvedModule",
+          "initializer": "forEachResolvedModule",
+          "valueType": "(callback: (resolution: ResolvedModuleWithFailedLookupLocations, moduleName: string, mode: ResolutionMode, filePath: Path) => void, file?: SourceFile | undefined) => void",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "forEachResolvedModule(\r\n        callback: (resolution: ResolvedModuleWithFailedLookupLocations, moduleName: string, mode: ResolutionMode, filePath: Path) => void,\r\n        file?: SourceFile,\r\n    ): void;"
+        },
+        {
+          "name": "forEachResolvedTypeReferenceDirective",
+          "initializer": "forEachResolvedTypeReferenceDirective",
+          "valueType": "(callback: (resolution: ResolvedTypeReferenceDirectiveWithFailedLookupLocations, moduleName: string, mode: ResolutionMode, filePath: Path) => void, file?: SourceFile | undefined) => void",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "forEachResolvedTypeReferenceDirective(\r\n        callback: (resolution: ResolvedTypeReferenceDirectiveWithFailedLookupLocations, moduleName: string, mode: ResolutionMode, filePath: Path) => void,\r\n        file?: SourceFile,\r\n    ): void;"
+        },
+        {
+          "name": "getCurrentPackagesMap",
+          "initializer": "() => packageMap",
+          "valueType": "() => Map<string, boolean> | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getCurrentPackagesMap(): Map<string, boolean> | undefined;"
+        },
+        {
+          "name": "typesPackageExists",
+          "initializer": "typesPackageExists",
+          "valueType": "(packageName: string) => boolean",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "TypeCheckerHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "typesPackageExists(packageName: string): boolean;"
+        },
+        {
+          "name": "packageBundlesTypes",
+          "initializer": "packageBundlesTypes",
+          "valueType": "(packageName: string) => boolean",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "TypeCheckerHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "packageBundlesTypes(packageName: string): boolean;"
+        },
+        {
+          "name": "isEmittedFile",
+          "initializer": "isEmittedFile",
+          "valueType": "(file: string) => boolean",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "isEmittedFile(file: string): boolean;"
+        },
+        {
+          "name": "getConfigFileParsingDiagnostics",
+          "initializer": "getConfigFileParsingDiagnostics",
+          "valueType": "() => readonly Diagnostic[]",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getConfigFileParsingDiagnostics(): readonly Diagnostic[];"
+        },
+        {
+          "name": "getProjectReferences",
+          "initializer": "getProjectReferences",
+          "valueType": "() => readonly ProjectReference[] | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getProjectReferences(): readonly ProjectReference[] | undefined;"
+        },
+        {
+          "name": "getResolvedProjectReferences",
+          "initializer": "getResolvedProjectReferences",
+          "valueType": "() => readonly (ResolvedProjectReference | undefined)[] | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getResolvedProjectReferences(): readonly (ResolvedProjectReference | undefined)[] | undefined;"
+        },
+        {
+          "name": "getRedirectFromSourceFile",
+          "initializer": "getRedirectFromSourceFile",
+          "valueType": "(fileName: string) => ResolvedRefAndOutputDts | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getRedirectFromSourceFile(fileName: string): ResolvedRefAndOutputDts | undefined;"
+        },
+        {
+          "name": "getResolvedProjectReferenceByPath",
+          "initializer": "getResolvedProjectReferenceByPath",
+          "valueType": "(projectReferencePath: Path) => ResolvedProjectReference | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getResolvedProjectReferenceByPath(projectReferencePath: Path): ResolvedProjectReference | undefined;"
+        },
+        {
+          "name": "forEachResolvedProjectReference",
+          "initializer": "forEachResolvedProjectReference",
+          "valueType": "<T>(cb: (resolvedProjectReference: ResolvedProjectReference) => T | undefined) => T | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "forEachResolvedProjectReference<T>(cb: (resolvedProjectReference: ResolvedProjectReference) => T | undefined): T | undefined;"
+        },
+        {
+          "name": "isSourceOfProjectReferenceRedirect",
+          "initializer": "isSourceOfProjectReferenceRedirect",
+          "valueType": "(fileName: string) => boolean",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "isSourceOfProjectReferenceRedirect(fileName: string): boolean;"
+        },
+        {
+          "name": "getRedirectFromOutput",
+          "initializer": "getRedirectFromOutput",
+          "valueType": "(path: Path) => ResolvedRefAndSource | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getRedirectFromOutput(filePath: Path): ResolvedRefAndSource | undefined;"
+        },
+        {
+          "name": "getCompilerOptionsForFile",
+          "initializer": "getCompilerOptionsForFile",
+          "valueType": "(file: SourceFile) => CompilerOptions",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getCompilerOptionsForFile(file: SourceFile): CompilerOptions;"
+        },
+        {
+          "name": "getDefaultResolutionModeForFile",
+          "initializer": "getDefaultResolutionModeForFile",
+          "valueType": "(sourceFile: SourceFile) => ResolutionMode",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getDefaultResolutionModeForFile(sourceFile: SourceFile): ResolutionMode;"
+        },
+        {
+          "name": "getEmitModuleFormatOfFile",
+          "initializer": "getEmitModuleFormatOfFile",
+          "valueType": "(sourceFile: SourceFile) => ModuleKind",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getEmitModuleFormatOfFile(sourceFile: SourceFile): ModuleKind;"
+        },
+        {
+          "name": "getImpliedNodeFormatForEmit",
+          "initializer": "getImpliedNodeFormatForEmit",
+          "valueType": "(sourceFile: SourceFile) => ResolutionMode",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getImpliedNodeFormatForEmit(sourceFile: SourceFile): ResolutionMode;"
+        },
+        {
+          "name": "shouldTransformImportCall",
+          "initializer": "shouldTransformImportCall",
+          "valueType": "(sourceFile: SourceFile) => boolean",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "shouldTransformImportCall(sourceFile: SourceFile): boolean;"
+        },
+        {
+          "name": "emitBuildInfo",
+          "initializer": "emitBuildInfo",
+          "valueType": "(writeFileCallback?: WriteFileCallback | undefined) => EmitResult",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "emitBuildInfo(writeFile?: WriteFileCallback, cancellationToken?: CancellationToken): EmitResult;"
+        },
+        {
+          "name": "fileExists",
+          "initializer": "fileExists",
+          "valueType": "(file: string) => boolean",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "fileExists(fileName: string): boolean;"
+        },
+        {
+          "name": "readFile",
+          "initializer": "readFile",
+          "valueType": "(fileName: string) => string | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "readFile?(path: string): string | undefined;"
+        },
+        {
+          "name": "directoryExists",
+          "initializer": "directoryExists",
+          "valueType": "((path: string) => boolean) | undefined",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "directoryExists?: { directoryExists(path: string): boolean; }[\"directoryExists\"] | undefined;"
+        },
+        {
+          "name": "getSymlinkCache",
+          "initializer": "getSymlinkCache",
+          "valueType": "() => SymlinkCache",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getSymlinkCache?(): SymlinkCache;"
+        },
+        {
+          "name": "realpath",
+          "initializer": "host.realpath?.bind(host)",
+          "valueType": "((path: string) => string) | undefined",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "realpath?: { realpath(path: string): string; }[\"realpath\"] | undefined;"
+        },
+        {
+          "name": "useCaseSensitiveFileNames",
+          "initializer": "() => host.useCaseSensitiveFileNames()",
+          "valueType": "() => boolean",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "useCaseSensitiveFileNames(): boolean;"
+        },
+        {
+          "name": "getCanonicalFileName",
+          "initializer": "getCanonicalFileName",
+          "valueType": "(fileName: string) => string",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getCanonicalFileName: GetCanonicalFileName;"
+        },
+        {
+          "name": "getFileIncludeReasons",
+          "initializer": "() => programDiagnostics.getFileReasons()",
+          "valueType": "() => MultiMap<Path, FileIncludeReason>",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getFileIncludeReasons(): MultiMap<Path, FileIncludeReason>;"
+        },
+        {
+          "name": "structureIsReused",
+          "initializer": "structureIsReused",
+          "valueType": "StructureIsReused",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "readonly structureIsReused: StructureIsReused;"
+        },
+        {
+          "name": "writeFile",
+          "initializer": "writeFile",
+          "valueType": "(fileName: string, text: string, writeByteOrderMark: boolean, onError?: ((message: string) => void) | undefined, sourceFiles?: readonly SourceFile[] | undefined, data?: WriteFileCallbackData | undefined) => void",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "writeFile: WriteFileCallback;"
+        },
+        {
+          "name": "getGlobalTypingsCacheLocation",
+          "initializer": "maybeBind(host, host.getGlobalTypingsCacheLocation)",
+          "valueType": "(() => string | undefined) | undefined",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getGlobalTypingsCacheLocation?: { getGlobalTypingsCacheLocation(): string | undefined; }[\"getGlobalTypingsCacheLocation\"] | undefined;"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 2599,
+      "owner": "getEmitHost",
+      "contextualType": "EmitHost",
+      "ownerBeforeSha256": "cdf72d661d43306e9bf07a30681c65ef26ef550ca372d7e2a5b3960123249e60",
+      "literalSha256": "028ffb4ab62ff8fb5549816d55f3a68475fd8bc8d732a734b804ab94da3b8011",
+      "members": [
+        {
+          "name": "getCanonicalFileName",
+          "initializer": "getCanonicalFileName",
+          "valueType": "(fileName: string) => string",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "EmitHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getCanonicalFileName(fileName: string): string;"
+        },
+        {
+          "name": "getCommonSourceDirectory",
+          "initializer": "program.getCommonSourceDirectory",
+          "valueType": "() => string",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "EmitHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getCommonSourceDirectory(): string;"
+        },
+        {
+          "name": "getCompilerOptions",
+          "initializer": "program.getCompilerOptions",
+          "valueType": "() => CompilerOptions",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "ScriptReferenceHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getCompilerOptions(): CompilerOptions;"
+        },
+        {
+          "name": "getCurrentDirectory",
+          "initializer": "() => currentDirectory",
+          "valueType": "() => string",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "EmitHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getCurrentDirectory(): string;"
+        },
+        {
+          "name": "getSourceFile",
+          "initializer": "program.getSourceFile",
+          "valueType": "(fileName: string) => SourceFile | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "ScriptReferenceHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getSourceFile(fileName: string): SourceFile | undefined;"
+        },
+        {
+          "name": "getSourceFileByPath",
+          "initializer": "program.getSourceFileByPath",
+          "valueType": "(path: Path) => SourceFile | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "ScriptReferenceHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getSourceFileByPath(path: Path): SourceFile | undefined;"
+        },
+        {
+          "name": "getSourceFiles",
+          "initializer": "program.getSourceFiles",
+          "valueType": "() => readonly SourceFile[]",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "EmitHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getSourceFiles(): readonly SourceFile[];"
+        },
+        {
+          "name": "isSourceFileFromExternalLibrary",
+          "initializer": "isSourceFileFromExternalLibrary",
+          "valueType": "(file: SourceFile) => boolean",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "SourceFileMayBeEmittedHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "isSourceFileFromExternalLibrary(file: SourceFile): boolean;"
+        },
+        {
+          "name": "getRedirectFromSourceFile",
+          "initializer": "getRedirectFromSourceFile",
+          "valueType": "(fileName: string) => ResolvedRefAndOutputDts | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getRedirectFromSourceFile(fileName: string): ResolvedRefAndOutputDts | undefined;"
+        },
+        {
+          "name": "isSourceOfProjectReferenceRedirect",
+          "initializer": "isSourceOfProjectReferenceRedirect",
+          "valueType": "(fileName: string) => boolean",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "isSourceOfProjectReferenceRedirect(fileName: string): boolean;"
+        },
+        {
+          "name": "getSymlinkCache",
+          "initializer": "getSymlinkCache",
+          "valueType": "() => SymlinkCache",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getSymlinkCache?(): SymlinkCache;"
+        },
+        {
+          "name": "writeFile",
+          "initializer": "writeFileCallback || writeFile",
+          "valueType": "WriteFileCallback",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "EmitHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "writeFile: WriteFileCallback;"
+        },
+        {
+          "name": "isEmitBlocked",
+          "initializer": "isEmitBlocked",
+          "valueType": "(emitFileName: string) => boolean",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "EmitHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "isEmitBlocked(emitFileName: string): boolean;"
+        },
+        {
+          "name": "shouldTransformImportCall",
+          "initializer": "shouldTransformImportCall",
+          "valueType": "(sourceFile: SourceFile) => boolean",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "EmitHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "shouldTransformImportCall(sourceFile: SourceFile): boolean;"
+        },
+        {
+          "name": "getEmitModuleFormatOfFile",
+          "initializer": "getEmitModuleFormatOfFile",
+          "valueType": "(sourceFile: SourceFile) => ModuleKind",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "EmitHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getEmitModuleFormatOfFile(sourceFile: SourceFile): ModuleKind;"
+        },
+        {
+          "name": "getDefaultResolutionModeForFile",
+          "initializer": "getDefaultResolutionModeForFile",
+          "valueType": "(sourceFile: SourceFile) => ResolutionMode",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getDefaultResolutionModeForFile(sourceFile: SourceFile): ResolutionMode;"
+        },
+        {
+          "name": "getModeForResolutionAtIndex",
+          "initializer": "getModeForResolutionAtIndex",
+          "valueType": "(file: SourceFile, index: number) => ResolutionMode",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getModeForResolutionAtIndex(file: SourceFile, index: number): ResolutionMode;"
+        },
+        {
+          "name": "readFile",
+          "initializer": "f => host.readFile(f)",
+          "valueType": "(f: string) => string | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "readFile?(path: string): string | undefined;"
+        },
+        {
+          "name": "fileExists",
+          "initializer": "f => {\r\n                // Use local caches\r\n                const path = toPath(f);\r\n                if (getSourceFileByPath(path)) return true;\r\n                if (missingFileNames.has(path)) return false;\r\n                // Before falling back to the host\r\n                return host.fileExists(f);\r\n            }",
+          "valueType": "(f: string) => boolean",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "fileExists(path: string): boolean;"
+        },
+        {
+          "name": "realpath",
+          "initializer": "maybeBind(host, host.realpath)",
+          "valueType": "((path: string) => string) | undefined",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "realpath?: { realpath(path: string): string; }[\"realpath\"] | undefined;"
+        },
+        {
+          "name": "useCaseSensitiveFileNames",
+          "initializer": "() => host.useCaseSensitiveFileNames()",
+          "valueType": "() => boolean",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "EmitHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "useCaseSensitiveFileNames(): boolean;"
+        },
+        {
+          "name": "getBuildInfo",
+          "initializer": "() => program.getBuildInfo?.()",
+          "valueType": "() => BuildInfo | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "EmitHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getBuildInfo(): BuildInfo | undefined;"
+        },
+        {
+          "name": "getSourceFileFromReference",
+          "initializer": "(file, ref) => program.getSourceFileFromReference(file, ref)",
+          "valueType": "(file: SourceFile, ref: FileReference) => SourceFile | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "EmitHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getSourceFileFromReference: Program[\"getSourceFileFromReference\"];"
+        },
+        {
+          "name": "redirectTargetsMap",
+          "initializer": "redirectTargetsMap",
+          "valueType": "MultiMap<Path, string>",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "EmitHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "readonly redirectTargetsMap: RedirectTargetsMap;"
+        },
+        {
+          "name": "getFileIncludeReasons",
+          "initializer": "program.getFileIncludeReasons",
+          "valueType": "() => MultiMap<Path, FileIncludeReason>",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getFileIncludeReasons(): MultiMap<Path, FileIncludeReason>;"
+        },
+        {
+          "name": "createHash",
+          "initializer": "maybeBind(host, host.createHash)",
+          "valueType": "((data: string) => string) | undefined",
+          "mayStoreUndefined": true,
+          "hostMember": false,
+          "destinationOwner": "EmitHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "createHash?: { createHash(data: string): string; }[\"createHash\"] | undefined;"
+        },
+        {
+          "name": "getModuleResolutionCache",
+          "initializer": "() => program.getModuleResolutionCache()",
+          "valueType": "() => ModuleResolutionCache | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getModuleResolutionCache?(): ModuleResolutionCache | undefined;"
+        },
+        {
+          "name": "trace",
+          "initializer": "maybeBind(host, host.trace)",
+          "valueType": "((s: string) => void) | undefined",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "trace?: { trace(s: string): void; }[\"trace\"] | undefined;"
+        },
+        {
+          "name": "getGlobalTypingsCacheLocation",
+          "initializer": "program.getGlobalTypingsCacheLocation",
+          "valueType": "(() => string | undefined) | undefined",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getGlobalTypingsCacheLocation?: { getGlobalTypingsCacheLocation(): string | undefined; }[\"getGlobalTypingsCacheLocation\"] | undefined;"
+        }
+      ]
+    },
+    {
+      "file": "src/services/utilities.ts",
+      "line": 2454,
+      "owner": "createModuleSpecifierResolutionHost",
+      "contextualType": "ModuleSpecifierResolutionHost",
+      "ownerBeforeSha256": "c20af1d143fe1b2e2580b3a8946686ae865c8815e8ce9e2df74558d67c61e738",
+      "literalSha256": "f70c25bafecbb93f0313c628727623d4646a18c6d90fc8b103bde7bf4c98a9ee",
+      "members": [
+        {
+          "name": "fileExists",
+          "initializer": "fileName => program.fileExists(fileName)",
+          "valueType": "(fileName: string) => boolean",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "fileExists(path: string): boolean;"
+        },
+        {
+          "name": "getCurrentDirectory",
+          "initializer": "() => host.getCurrentDirectory()",
+          "valueType": "() => string",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getCurrentDirectory(): string;"
+        },
+        {
+          "name": "readFile",
+          "initializer": "maybeBind(host, host.readFile)",
+          "valueType": "((path: string, encoding?: string | undefined) => string | undefined) | undefined",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "readFile?(path: string): string | undefined;"
+        },
+        {
+          "name": "useCaseSensitiveFileNames",
+          "initializer": "maybeBind(host, host.useCaseSensitiveFileNames) || program.useCaseSensitiveFileNames",
+          "valueType": "() => boolean",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "useCaseSensitiveFileNames(): boolean;"
+        },
+        {
+          "name": "getSymlinkCache",
+          "initializer": "maybeBind(host, host.getSymlinkCache) || program.getSymlinkCache",
+          "valueType": "((files?: readonly SourceFile[] | undefined) => SymlinkCache) | undefined",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getSymlinkCache?(): SymlinkCache;"
+        },
+        {
+          "name": "getModuleSpecifierCache",
+          "initializer": "maybeBind(host, host.getModuleSpecifierCache)",
+          "valueType": "(() => ModuleSpecifierCache) | undefined",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getModuleSpecifierCache?(): ModuleSpecifierCache;"
+        },
+        {
+          "name": "getPackageJsonInfoCache",
+          "initializer": "() => program.getModuleResolutionCache()?.getPackageJsonInfoCache()",
+          "valueType": "() => PackageJsonInfoCache | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getPackageJsonInfoCache?(): PackageJsonInfoCache | undefined;"
+        },
+        {
+          "name": "getGlobalTypingsCacheLocation",
+          "initializer": "maybeBind(host, host.getGlobalTypingsCacheLocation)",
+          "valueType": "(() => string | undefined) | undefined",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getGlobalTypingsCacheLocation?: { getGlobalTypingsCacheLocation(): string | undefined; }[\"getGlobalTypingsCacheLocation\"] | undefined;"
+        },
+        {
+          "name": "redirectTargetsMap",
+          "initializer": "program.redirectTargetsMap",
+          "valueType": "MultiMap<Path, string>",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "readonly redirectTargetsMap: RedirectTargetsMap;"
+        },
+        {
+          "name": "getRedirectFromSourceFile",
+          "initializer": "fileName => program.getRedirectFromSourceFile(fileName)",
+          "valueType": "(fileName: string) => ResolvedRefAndOutputDts | undefined",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getRedirectFromSourceFile(fileName: string): ResolvedRefAndOutputDts | undefined;"
+        },
+        {
+          "name": "isSourceOfProjectReferenceRedirect",
+          "initializer": "fileName => program.isSourceOfProjectReferenceRedirect(fileName)",
+          "valueType": "(fileName: string) => boolean",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "isSourceOfProjectReferenceRedirect(fileName: string): boolean;"
+        },
+        {
+          "name": "getNearestAncestorDirectoryWithPackageJson",
+          "initializer": "maybeBind(host, host.getNearestAncestorDirectoryWithPackageJson)",
+          "valueType": "((fileName: string) => string | undefined) | undefined",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getNearestAncestorDirectoryWithPackageJson?(fileName: string, rootDir?: string): string | undefined;"
+        },
+        {
+          "name": "getFileIncludeReasons",
+          "initializer": "() => program.getFileIncludeReasons()",
+          "valueType": "() => MultiMap<Path, FileIncludeReason>",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getFileIncludeReasons(): MultiMap<Path, FileIncludeReason>;"
+        },
+        {
+          "name": "getCommonSourceDirectory",
+          "initializer": "() => program.getCommonSourceDirectory()",
+          "valueType": "() => string",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getCommonSourceDirectory(): string;"
+        },
+        {
+          "name": "getDefaultResolutionModeForFile",
+          "initializer": "file => program.getDefaultResolutionModeForFile(file)",
+          "valueType": "(file: SourceFile) => ResolutionMode",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getDefaultResolutionModeForFile(sourceFile: SourceFile): ResolutionMode;"
+        },
+        {
+          "name": "getModeForResolutionAtIndex",
+          "initializer": "(file, index) => program.getModeForResolutionAtIndex(file, index)",
+          "valueType": "(file: SourceFile, index: number) => ResolutionMode",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "destinationFile": "src/compiler/types.ts",
+          "declaration": "getModeForResolutionAtIndex(file: SourceFile, index: number): ResolutionMode;"
+        }
+      ]
+    },
+    {
+      "file": "src/services/utilities.ts",
+      "line": 2476,
+      "owner": "getModuleSpecifierResolverHost",
+      "contextualType": "(ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined",
+      "ownerBeforeSha256": "0a0c40e0f2c8ab8b6f55d3b49ff7bef3612118bd6fee5fa994274f1f8c3e1587",
+      "literalSha256": "c6b41e2350e47927775701c51425a9bfa8c59370da2f7256321afc533deb3a0e",
+      "members": [
+        {
+          "spread": "createModuleSpecifierResolutionHost(program, host)"
+        },
+        {
+          "name": "getCommonSourceDirectory",
+          "initializer": "() => program.getCommonSourceDirectory()",
+          "valueType": "() => string",
+          "mayStoreUndefined": false,
+          "hostMember": false
+        }
+      ]
+    }
+  ],
+  "undefinedHostSlots": [
+    {
+      "name": "getSymlinkCache",
+      "owner": "ModuleSpecifierResolutionHost",
+      "internal": true,
+      "optional": true,
+      "before": "getSymlinkCache?(): SymlinkCache;",
+      "writers": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 54261,
+          "owner": "createBasicNodeBuilderModuleSpecifierResolutionHost"
+        },
+        {
+          "file": "src/services/utilities.ts",
+          "line": 2454,
+          "owner": "createModuleSpecifierResolutionHost"
+        }
+      ],
+      "ownerBeforeSha256": "1756e4552f82717dfb34cf345fc83541879e3b24ef483a11b0fefae07e6e8a29",
+      "owner97": false,
+      "declaredWriteType": "() => SymlinkCache"
+    },
+    {
+      "name": "readFile",
+      "owner": "ModuleSpecifierResolutionHost",
+      "internal": true,
+      "optional": true,
+      "before": "readFile?(path: string): string | undefined;",
+      "writers": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 54261,
+          "owner": "createBasicNodeBuilderModuleSpecifierResolutionHost"
+        },
+        {
+          "file": "src/services/utilities.ts",
+          "line": 2454,
+          "owner": "createModuleSpecifierResolutionHost"
+        }
+      ],
+      "ownerBeforeSha256": "7b7853052041eef6258c303e96d1bea65f42bdaace0e0258f7164098fa435e43",
+      "owner97": false,
+      "declaredWriteType": "(path: string) => string | undefined"
+    },
+    {
+      "name": "getGlobalTypingsCacheLocation",
+      "owner": "ModuleSpecifierResolutionHost",
+      "internal": true,
+      "optional": true,
+      "before": "getGlobalTypingsCacheLocation?: { getGlobalTypingsCacheLocation(): string | undefined; }[\"getGlobalTypingsCacheLocation\"] | undefined;",
+      "writers": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 54261,
+          "owner": "createBasicNodeBuilderModuleSpecifierResolutionHost"
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 1876,
+          "owner": "createProgram"
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 2599,
+          "owner": "getEmitHost"
+        },
+        {
+          "file": "src/services/utilities.ts",
+          "line": 2454,
+          "owner": "createModuleSpecifierResolutionHost"
+        }
+      ],
+      "ownerBeforeSha256": "be9cae2efe8235f23f47c88d49083d3b07f9576693ebf376f89f6b59ac692764",
+      "owner97": true,
+      "declaredWriteType": "(() => string | undefined) | undefined"
+    },
+    {
+      "name": "directoryExists",
+      "owner": "ModuleSpecifierResolutionHost",
+      "internal": true,
+      "optional": true,
+      "before": "directoryExists?: { directoryExists(path: string): boolean; }[\"directoryExists\"] | undefined;",
+      "writers": [
+        {
+          "file": "src/compiler/program.ts",
+          "line": 1876,
+          "owner": "createProgram"
+        }
+      ],
+      "ownerBeforeSha256": "568ee935caaa5b0df0da67488b943958e32365e368747832d688e7164fb2abfc",
+      "owner97": true,
+      "declaredWriteType": "((path: string) => boolean) | undefined"
+    },
+    {
+      "name": "realpath",
+      "owner": "ModuleSpecifierResolutionHost",
+      "internal": true,
+      "optional": true,
+      "before": "realpath?: { realpath(path: string): string; }[\"realpath\"] | undefined;",
+      "writers": [
+        {
+          "file": "src/compiler/program.ts",
+          "line": 1876,
+          "owner": "createProgram"
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 2599,
+          "owner": "getEmitHost"
+        }
+      ],
+      "ownerBeforeSha256": "d3a22fdd19c824d7263e6e87d6b5693140241d14d95e86d0322b0fb05de99f41",
+      "owner97": true,
+      "declaredWriteType": "((path: string) => string) | undefined"
+    },
+    {
+      "name": "trace",
+      "owner": "ModuleSpecifierResolutionHost",
+      "internal": true,
+      "optional": true,
+      "before": "trace?: { trace(s: string): void; }[\"trace\"] | undefined;",
+      "writers": [
+        {
+          "file": "src/compiler/program.ts",
+          "line": 2599,
+          "owner": "getEmitHost"
+        }
+      ],
+      "ownerBeforeSha256": "272173dda2ca232a154a92873b4d3ae517071f3867065803d28c911d0b8d1686",
+      "owner97": true,
+      "declaredWriteType": "((s: string) => void) | undefined"
+    },
+    {
+      "name": "getModuleSpecifierCache",
+      "owner": "ModuleSpecifierResolutionHost",
+      "internal": true,
+      "optional": true,
+      "before": "getModuleSpecifierCache?(): ModuleSpecifierCache;",
+      "writers": [
+        {
+          "file": "src/services/utilities.ts",
+          "line": 2454,
+          "owner": "createModuleSpecifierResolutionHost"
+        }
+      ],
+      "ownerBeforeSha256": "82ce11c6ac55bb89079c9ae8b7eb39d796f981092bb9137a8a76c8e68ef29eda",
+      "owner97": false,
+      "declaredWriteType": "() => ModuleSpecifierCache"
+    },
+    {
+      "name": "getNearestAncestorDirectoryWithPackageJson",
+      "owner": "ModuleSpecifierResolutionHost",
+      "internal": true,
+      "optional": true,
+      "before": "getNearestAncestorDirectoryWithPackageJson?(fileName: string, rootDir?: string): string | undefined;",
+      "writers": [
+        {
+          "file": "src/services/utilities.ts",
+          "line": 2454,
+          "owner": "createModuleSpecifierResolutionHost"
+        }
+      ],
+      "ownerBeforeSha256": "63249d0d4f2e2d362154c2fe74c978389a3f7f72c704015e84c028ceed2c404a",
+      "owner97": false,
+      "declaredWriteType": "(fileName: string, rootDir?: string | undefined) => string | undefined"
+    }
+  ]
+}
