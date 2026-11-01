@@ -80,7 +80,8 @@ logs live only on branch `typescript/axolotl-checker-f-evidence`, under
 directory contains only adapt.cjs, verify.cjs, sites.json and this README.
 
 The upstream issue draft is appended to stage3/upstream/LEDGER.md. F and G
-both start from 95a and append at its end; G records its reference-gate stop.
+both start from 95a and append at its end; G now ships the scoped third-arm
+index-symbol fix under Correctness's final ruling.
 Whoever merges second must resolve the append conflict. No issue has been sent upstream.
 
 Pinned evidence commit: `c136950ba70522ca7211de5a10e01c99806b5e6a`.
