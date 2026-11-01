@@ -1,6 +1,6 @@
 --- a/internal/lower/object.go
 +++ b/internal/lower/object.go
-@@ -536,18 +536,7 @@
+@@ -641,18 +641,7 @@
  				read := l.readObjectField(node, ir.Property{Object: object, Name: name, Of: ir.Union, Optional: optional, Class: l.classOf(node)})
  				return l.checkedBoxedScalarField(node, read, of), nil
  			}
@@ -19,4 +19,4 @@
 +
  		}
  		if (of == ir.Union || of.IsMaybe()) && l.entriesProgramHasRecords() {
- 			return nil, l.notYet(node, "a union or optional field read in a program with record storage")
+ 			receiver := l.checker.GetTypeAtLocation(access.Expression)
