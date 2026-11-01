@@ -1,0 +1,5 @@
+// Spec: It's its primitive at run time, and a cast that adds it is erased
+// Expect: lowers
+type Count = number & { readonly _count: undefined };
+const count = 5 as Count;
+console.log(String(count + 1));
