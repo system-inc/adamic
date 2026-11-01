@@ -1,0 +1,4 @@
+// Spec: `eval`, `new Function`, the `Function` type
+// Expect: refused calling through the unchecked Function type
+const make = new Function('return 2');
+console.log(String(make()));
