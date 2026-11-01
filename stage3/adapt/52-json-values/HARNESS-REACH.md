@@ -1,6 +1,6 @@
 # Completion-details harness reach
 
-Main remains `470e16f8315f7a83c5c7b7f6f2a77d8328db0a25`. The reach was measured against prior implementation `d3aeaecadaef1fdf57640ea14ca56458c5c5f4b5`. This records the scratch reach measurement subsequently authorized and implemented in rules.json. The 10 jsTyping readers stay unchanged as ruled.
+Main remains `470e16f8315f7a83c5c7b7f6f2a77d8328db0a25`. The reach was measured against prior implementation `d3aeaecadaef1fdf57640ea14ca56458c5c5f4b5`. This records the scratch reach measurement subsequently authorized and implemented in rules.json. The jsTyping readers were unchanged at this historical harness measurement. The later own-pin correction checks all ten readConfigFile readers, as recorded in README.md.
 
 ## A second full-reply distinction
 

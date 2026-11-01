@@ -398,5 +398,93 @@
     "before": "        function getLinkedEditingBaselineWorker(activeFile: FourSlashFile, offset: number, languageService: ts.LanguageService) {\r\n",
     "after": "        function getLinkedEditingBaselineWorker(activeFile: FourSlashFile, offset: number, languageService: ts.server.HarnessLanguageService) {\r\n",
     "why": "Carry the precise full completion reply through harness consumers, preserving emitted JavaScript and original values."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "readConfigFile",
+    "kind": "FunctionDeclaration",
+    "before": "config?: any;",
+    "after": "config?: AdamicJsonRecoveryObject;",
+    "why": "Only parseConfigFileTextToJson has a judged pin; expose the actual readConfigFile recovery object."
+  },
+  {
+    "file": "src/jsTyping/jsTyping.ts",
+    "owner": "",
+    "kind": "SourceFile",
+    "before": "    CharacterCodes,",
+    "after": "    CharacterCodes,\r\n    checkedAdamicJsonObject,",
+    "why": "Check optional recovery objects before their jsTyping reads."
+  },
+  {
+    "file": "src/jsTyping/jsTyping.ts",
+    "owner": "",
+    "kind": "SourceFile",
+    "before": "    hasJSFileExtension,",
+    "after": "    hasJSFileExtension,\r\n    isAdamicJsonObject,",
+    "why": "Check dictionaries and dependency maps at their reads."
+  },
+  {
+    "file": "src/jsTyping/jsTyping.ts",
+    "owner": "",
+    "kind": "SourceFile",
+    "before": "interface PackageJson {\r\n    dependencies?: MapLike<string>;\r\n    devDependencies?: MapLike<string>;\r\n    name?: string;\r\n    optionalDependencies?: MapLike<string>;\r\n    peerDependencies?: MapLike<string>;\r\n    types?: string;\r\n    typings?: string;\r\n}",
+    "after": "interface PackageJson {\r\n    name?: unknown;\r\n    types?: unknown;\r\n    typings?: unknown;\r\n}",
+    "why": "Describe only the package fields this consumer reads and check each used string at the read."
+  },
+  {
+    "file": "src/jsTyping/jsTyping.ts",
+    "owner": "",
+    "kind": "SourceFile",
+    "before": "/** @internal */\r\nexport function loadSafeList(",
+    "after": "function isAdamicTypingStringMap(value: unknown): value is MapLike<string> | string {\r\n    return typeof value === \"string\" || isAdamicJsonObject(value) && Object.values(value).every(entry => typeof entry === \"string\");\r\n}\r\n\r\nfunction checkedAdamicTypingStringMap(value: unknown): MapLike<string> | string {\r\n    if (!isAdamicTypingStringMap(value)) throw new TypeError(\"Expected typing string map\");\r\n    return value;\r\n}\r\n\r\nfunction adamicTypingDependencyKeys(value: unknown): string[] {\r\n    if (isAdamicJsonObject(value)) return getOwnKeys(value);\r\n    return typeof value === \"string\" ? Object.keys(value) : [];\r\n}\r\n\r\n/** @internal */\r\nexport function loadSafeList(",
+    "why": "Check the exact map values consumed by Object.entries and retain the old for-in behavior for primitive dependency maps."
+  },
+  {
+    "file": "src/jsTyping/jsTyping.ts",
+    "owner": "loadSafeList",
+    "kind": "FunctionDeclaration",
+    "before": "Object.entries<string>(result.config)",
+    "after": "Object.entries<string>(checkedAdamicTypingStringMap(result.config))",
+    "why": "Check the safe-list string dictionary before constructing its map."
+  },
+  {
+    "file": "src/jsTyping/jsTyping.ts",
+    "owner": "loadTypesMap",
+    "kind": "FunctionDeclaration",
+    "before": "Object.entries<string>(result.config.simpleMap)",
+    "after": "Object.entries<string>(checkedAdamicTypingStringMap(result.config.simpleMap))",
+    "why": "Check a truthy simpleMap only when the original branch reads its entries."
+  },
+  {
+    "file": "src/jsTyping/jsTyping.ts",
+    "owner": "getTypingNames",
+    "kind": "FunctionDeclaration",
+    "before": "manifest = readConfigFile(manifestPath, path => host.readFile(path)).config;",
+    "after": "manifest = checkedAdamicJsonObject(readConfigFile(manifestPath, path => host.readFile(path)).config);",
+    "why": "Check the manifest object before its dependency property reads."
+  },
+  {
+    "file": "src/jsTyping/jsTyping.ts",
+    "owner": "getTypingNames",
+    "kind": "FunctionDeclaration",
+    "before": "manifest.peerDependencies], getOwnKeys);",
+    "after": "manifest.peerDependencies], adamicTypingDependencyKeys);",
+    "why": "Check dependency objects before getOwnKeys, preserving string indices and empty primitive/missing cases."
+  },
+  {
+    "file": "src/jsTyping/jsTyping.ts",
+    "owner": "getTypingNames",
+    "kind": "FunctionDeclaration",
+    "before": "const manifest: PackageJson = result.config;",
+    "after": "const manifest: PackageJson = checkedAdamicJsonObject(result.config);",
+    "why": "Check the package object and keep its fields unknown until their actual reads."
+  },
+  {
+    "file": "src/jsTyping/jsTyping.ts",
+    "owner": "getTypingNames",
+    "kind": "FunctionDeclaration",
+    "before": "            if (!manifest.name) {\r\n                continue;\r\n            }\r\n            const ownTypes = manifest.types || manifest.typings;\r\n            if (ownTypes) {",
+    "after": "            if (!manifest.name) {\r\n                continue;\r\n            }\r\n            if (typeof manifest.name !== \"string\") throw new TypeError(\"Expected package name string\");\r\n            const ownTypes = manifest.types || manifest.typings;\r\n            if (ownTypes) {\r\n                if (typeof ownTypes !== \"string\") throw new TypeError(\"Expected package types string\");",
+    "why": "Check only truthy package names and the selected truthy types/typings path, preserving existing falsey branches."
   }
 ]

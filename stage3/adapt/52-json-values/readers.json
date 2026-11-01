@@ -257,8 +257,9 @@
     "designLine": 81,
     "designColumn": 43,
     "code": 2345,
-    "class": "pinned config return",
-    "policy": "No adapter check under ruling 2: both config returns stay any; native checks apply at use."
+    "class": "typing map",
+    "policy": "Checked at the read: string entries, dependency keys, checked manifest objects and truthy package name/path strings; no jsTyping site is pinned by parseConfigFileTextToJson.",
+    "producer": "readConfigFile"
   },
   {
     "project": "jsTyping",
@@ -266,8 +267,9 @@
     "designLine": 88,
     "designColumn": 47,
     "code": 2345,
-    "class": "pinned config return",
-    "policy": "No adapter check under ruling 2: both config returns stay any; native checks apply at use."
+    "class": "typing map",
+    "policy": "Checked at the read: string entries, dependency keys, checked manifest objects and truthy package name/path strings; no jsTyping site is pinned by parseConfigFileTextToJson.",
+    "producer": "readConfigFile"
   },
   {
     "project": "jsTyping",
@@ -275,8 +277,9 @@
     "designLine": 214,
     "designColumn": 44,
     "code": 18048,
-    "class": "pinned config return",
-    "policy": "No adapter check under ruling 2: both config returns stay any; native checks apply at use."
+    "class": "typing manifest",
+    "policy": "Checked at the read: string entries, dependency keys, checked manifest objects and truthy package name/path strings; no jsTyping site is pinned by parseConfigFileTextToJson.",
+    "producer": "readConfigFile"
   },
   {
     "project": "jsTyping",
@@ -284,8 +287,9 @@
     "designLine": 214,
     "designColumn": 67,
     "code": 18048,
-    "class": "pinned config return",
-    "policy": "No adapter check under ruling 2: both config returns stay any; native checks apply at use."
+    "class": "typing manifest",
+    "policy": "Checked at the read: string entries, dependency keys, checked manifest objects and truthy package name/path strings; no jsTyping site is pinned by parseConfigFileTextToJson.",
+    "producer": "readConfigFile"
   },
   {
     "project": "jsTyping",
@@ -293,8 +297,9 @@
     "designLine": 214,
     "designColumn": 93,
     "code": 18048,
-    "class": "pinned config return",
-    "policy": "No adapter check under ruling 2: both config returns stay any; native checks apply at use."
+    "class": "typing manifest",
+    "policy": "Checked at the read: string entries, dependency keys, checked manifest objects and truthy package name/path strings; no jsTyping site is pinned by parseConfigFileTextToJson.",
+    "producer": "readConfigFile"
   },
   {
     "project": "jsTyping",
@@ -302,8 +307,9 @@
     "designLine": 214,
     "designColumn": 124,
     "code": 18048,
-    "class": "pinned config return",
-    "policy": "No adapter check under ruling 2: both config returns stay any; native checks apply at use."
+    "class": "typing manifest",
+    "policy": "Checked at the read: string entries, dependency keys, checked manifest objects and truthy package name/path strings; no jsTyping site is pinned by parseConfigFileTextToJson.",
+    "producer": "readConfigFile"
   },
   {
     "project": "jsTyping",
@@ -311,8 +317,9 @@
     "designLine": 214,
     "designColumn": 152,
     "code": 2345,
-    "class": "pinned config return",
-    "policy": "No adapter check under ruling 2: both config returns stay any; native checks apply at use."
+    "class": "typing manifest",
+    "policy": "Checked at the read: string entries, dependency keys, checked manifest objects and truthy package name/path strings; no jsTyping site is pinned by parseConfigFileTextToJson.",
+    "producer": "readConfigFile"
   },
   {
     "project": "jsTyping",
@@ -320,8 +327,9 @@
     "designLine": 215,
     "designColumn": 32,
     "code": 2345,
-    "class": "pinned config return",
-    "policy": "No adapter check under ruling 2: both config returns stay any; native checks apply at use."
+    "class": "typing manifest",
+    "policy": "Checked at the read: string entries, dependency keys, checked manifest objects and truthy package name/path strings; no jsTyping site is pinned by parseConfigFileTextToJson.",
+    "producer": "readConfigFile"
   },
   {
     "project": "jsTyping",
@@ -329,8 +337,9 @@
     "designLine": 245,
     "designColumn": 86,
     "code": 2345,
-    "class": "pinned config return",
-    "policy": "No adapter check under ruling 2: both config returns stay any; native checks apply at use."
+    "class": "typing manifest",
+    "policy": "Checked at the read: string entries, dependency keys, checked manifest objects and truthy package name/path strings; no jsTyping site is pinned by parseConfigFileTextToJson.",
+    "producer": "readConfigFile"
   },
   {
     "project": "jsTyping",
@@ -338,8 +347,9 @@
     "designLine": 271,
     "designColumn": 19,
     "code": 2322,
-    "class": "pinned config return",
-    "policy": "No adapter check under ruling 2: both config returns stay any; native checks apply at use."
+    "class": "typing manifest",
+    "policy": "Checked at the read: string entries, dependency keys, checked manifest objects and truthy package name/path strings; no jsTyping site is pinned by parseConfigFileTextToJson.",
+    "producer": "readConfigFile"
   },
   {
     "project": "testRunner",

@@ -62,7 +62,7 @@ let result = spawnSync(process.execPath, [witnesses, before, after], {encoding: 
 fs.writeFileSync(path.join(evidence, 'witnesses.log'), result.stdout + result.stderr);
 assert.equal(result.status, 0, result.stderr);
 const mutants = [];
-for (const check of ['object', 'inherited', 'location', 'response', 'plugin', 'localized', 'echo', 'full-reply-string', 'full-reply-invalid']) {
+for (const check of ['object', 'inherited', 'location', 'response', 'plugin', 'localized', 'echo', 'full-reply-string', 'full-reply-invalid', 'typing-string-map', 'typing-dependency-keys', 'typing-name', 'typing-types']) {
     result = spawnSync(process.execPath, [witnesses, before, after, check], {encoding: 'utf8'});
     fs.writeFileSync(path.join(evidence, `mutant-${check}.log`), result.stdout + result.stderr);
     assert.notEqual(result.status, 0, `${check} mutant passed`);
