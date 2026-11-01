@@ -575,7 +575,11 @@ def smokeInputs(tree, change, full):
     """smoke's declared inputs at any change (#gamwqs2): the Go state, which go test ./internal/oracle compiles, cohere's
     included; every file a package of the tree embeds, by name, since go test compiles its bytes; the oracle's fixtures and
     runtime (smokeOraclePaths); and every .gitattributes. Nothing by name: it runs the same fixtures whatever changed. With
-    go list unreadable its embeds can't be named, and it reads the whole tree."""
+    go list unreadable its embeds can't be named, and it reads the whole tree. Its only reads outside this, in every trace,
+    are git's index refresh (diff-files, status), which reads a file whose stat moved since its index was written to say
+    whether the checkout is clean: that answers nothing whatever the file holds only because the runner's checkout of the
+    tree is clean when smoke starts (Node's named residual on #gamwqs2), so a runner that hands smoke a dirty checkout
+    breaks this declaration."""
     listing = packageGraph(tree)
     if listing.returncode != 0:
         return treeInputs("smoke compiles packages whose embeds go list couldn't name")
