@@ -1,4 +1,4 @@
-Mutant evidence for #he8tysb head 1's exact-source scope proof.
+Mutant evidence for #he8tysb head 1 revision's exact-source scope proof.
 
 The with-93 tree gets one extra edit to a private ambient declaration:
 
@@ -16,18 +16,18 @@ No malformed TypeScript or build error is used to kill it.
 
 Command (stage3/api/node_modules on NODE_PATH, Node v24.19.0):
 
-    node stage3/adapt/93-builtin-imports/proofs/scope-mutant.cjs /workspace/scratch/adapt-93-proof/control /workspace/scratch/adapt-93-proof/after
+    node stage3/adapt/93-builtin-imports/proofs/scope-mutant.cjs /workspace/scratch/adapt-93-revision-proof/control /workspace/scratch/adapt-93-revision-proof/after
 
 Exit 1. Exact observed lines:
 
     PASS TestBuiltinTranspileScope: the extra type-only edit is invisible in both JavaScript comparisons
-    AssertionError [ERR_ASSERTION]: TestBuiltinSourceScope: edit outside the three imports and initializers
-        at TestBuiltinSourceScope (/workspace/scratch/adapt-93/stage3/adapt/93-builtin-imports/proofs/check.cjs:22:9)
+    AssertionError [ERR_ASSERTION]: TestBuiltinSourceScope: edit outside the three imports and removed declarations
+        at TestBuiltinSourceScope (/workspace/scratch/adapt-93/stage3/adapt/93-builtin-imports/proofs/check.cjs:26:9)
 
 The script restores the exact saved bytes in finally, including on this failure.
 Restored command:
 
-    node stage3/adapt/93-builtin-imports/proofs/check.cjs /workspace/scratch/adapt-93-proof/control /workspace/scratch/adapt-93-proof/after /workspace/scratch/adapt-93/stage3/adapt/93-builtin-imports/proofs/checks.json
+    node stage3/adapt/93-builtin-imports/proofs/check.cjs /workspace/scratch/adapt-93-revision-proof/control /workspace/scratch/adapt-93-revision-proof/after /workspace/scratch/adapt-93/stage3/adapt/93-builtin-imports/proofs/checks.json
 
 Exit 0: 746 files inventoried, only sys.ts changed, exact undo, both JavaScript
 comparisons pass. Raw output is in logs/scope-only-mutant.log.gz and

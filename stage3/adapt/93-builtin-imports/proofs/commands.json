@@ -5,14 +5,14 @@
       "git",
       "clone",
       "--shared",
-      "/workspace/scratch/adapt-93-proof/upstream",
-      "/workspace/scratch/adapt-93-proof/after"
+      "/workspace/scratch/adapt-93-revision-proof/upstream",
+      "/workspace/scratch/adapt-93-revision-proof/after"
     ],
     "cwd": "/workspace/scratch/adapt-93",
     "exit": 0,
-    "seconds": 14.003,
+    "seconds": 6.002,
     "limit": 600,
-    "minFreeBytes": 9989509120
+    "minFreeBytes": 6704390144
   },
   {
     "name": "after-apply",
@@ -20,96 +20,111 @@
       "python3",
       "/workspace/scratch/adapt-93/stage3/apply.py",
       "--adapt-checkout",
-      "/workspace/scratch/adapt-93-proof/after"
+      "/workspace/scratch/adapt-93-revision-proof/after"
     ],
     "cwd": "/workspace/scratch/adapt-93",
     "exit": 0,
-    "seconds": 164.061,
+    "seconds": 166.059,
     "limit": 1800,
-    "minFreeBytes": 9928278016
+    "minFreeBytes": 6675746816
   },
   {
     "name": "checks",
     "command": [
       "node",
       "/workspace/scratch/adapt-93/stage3/adapt/93-builtin-imports/proofs/check.cjs",
-      "/workspace/scratch/adapt-93-proof/control",
-      "/workspace/scratch/adapt-93-proof/after",
+      "/workspace/scratch/adapt-93-revision-proof/control",
+      "/workspace/scratch/adapt-93-revision-proof/after",
       "/workspace/scratch/adapt-93/stage3/adapt/93-builtin-imports/proofs/checks.json"
     ],
     "cwd": "/workspace/scratch/adapt-93",
     "exit": 0,
     "seconds": 1.001,
     "limit": 300,
-    "minFreeBytes": 9927401472
+    "minFreeBytes": 6674915328
+  },
+  {
+    "name": "bindings",
+    "command": [
+      "node",
+      "/workspace/scratch/adapt-93/stage3/adapt/93-builtin-imports/proofs/bindings.cjs",
+      "/workspace/scratch/adapt-93-revision-proof/control",
+      "/workspace/scratch/adapt-93-revision-proof/after",
+      "/workspace/scratch/adapt-93/stage3/adapt/93-builtin-imports/proofs/bindings.json"
+    ],
+    "cwd": "/workspace/scratch/adapt-93",
+    "exit": 0,
+    "seconds": 7.002,
+    "limit": 300,
+    "minFreeBytes": 6674907136
   },
   {
     "name": "idempotence",
     "command": [
       "node",
       "/workspace/scratch/adapt-93/stage3/adapt/93-builtin-imports/adapt.cjs",
-      "/workspace/scratch/adapt-93-proof/after"
+      "/workspace/scratch/adapt-93-revision-proof/after"
     ],
     "cwd": "/workspace/scratch/adapt-93",
     "exit": 0,
-    "seconds": 2.001,
+    "seconds": 3.005,
     "limit": 180,
-    "minFreeBytes": 9927208960
+    "minFreeBytes": 6674903040
   },
   {
     "name": "idempotence-no-write",
     "command": [
       "node",
       "/workspace/scratch/adapt-93/stage3/adapt/93-builtin-imports/adapt.cjs",
-      "/workspace/scratch/adapt-93-proof/after"
+      "/workspace/scratch/adapt-93-revision-proof/after"
     ],
     "cwd": "/workspace/scratch/adapt-93",
     "exit": 0,
-    "seconds": 2.001,
+    "seconds": 3.001,
     "limit": 180,
-    "minFreeBytes": 9927200768
+    "minFreeBytes": 6674898944
   },
   {
     "name": "moved-target-mutant",
     "command": [
       "node",
       "/workspace/scratch/adapt-93/stage3/adapt/93-builtin-imports/adapt.cjs",
-      "/workspace/scratch/adapt-93-proof/after"
+      "/workspace/scratch/adapt-93-revision-proof/after"
     ],
     "cwd": "/workspace/scratch/adapt-93",
     "exit": 1,
-    "seconds": 2.001,
+    "seconds": 1.001,
     "limit": 180,
-    "minFreeBytes": 9927200768
+    "minFreeBytes": 6674894848
   },
   {
     "name": "scope-mutant",
     "command": [
       "node",
       "/workspace/scratch/adapt-93/stage3/adapt/93-builtin-imports/proofs/check.cjs",
-      "/workspace/scratch/adapt-93-proof/control",
-      "/workspace/scratch/adapt-93-proof/after"
+      "/workspace/scratch/adapt-93-revision-proof/control",
+      "/workspace/scratch/adapt-93-revision-proof/after"
     ],
     "cwd": "/workspace/scratch/adapt-93",
     "exit": 1,
-    "seconds": 1.004,
+    "seconds": 1.001,
     "limit": 300,
-    "minFreeBytes": 9927196672
+    "minFreeBytes": 6674890752
   },
   {
     "name": "restored-checks",
     "command": [
       "node",
       "/workspace/scratch/adapt-93/stage3/adapt/93-builtin-imports/proofs/check.cjs",
-      "/workspace/scratch/adapt-93-proof/control",
-      "/workspace/scratch/adapt-93-proof/after",
+      "/workspace/scratch/adapt-93-revision-proof/control",
+      "/workspace/scratch/adapt-93-revision-proof/after",
       "/workspace/scratch/adapt-93/stage3/adapt/93-builtin-imports/proofs/checks.json"
     ],
     "cwd": "/workspace/scratch/adapt-93",
     "exit": 0,
     "seconds": 1.001,
     "limit": 300,
-    "minFreeBytes": 9927163904
+    "minFreeBytes": 6674857984
   },
   {
     "name": "control-install",
@@ -119,11 +134,11 @@
       "--no-audit",
       "--no-fund"
     ],
-    "cwd": "/workspace/scratch/adapt-93-proof/control",
+    "cwd": "/workspace/scratch/adapt-93-revision-proof/control",
     "exit": 0,
-    "seconds": 6.012,
+    "seconds": 6.004,
     "limit": 600,
-    "minFreeBytes": 9745014784
+    "minFreeBytes": 6491353088
   },
   {
     "name": "control-build",
@@ -132,11 +147,11 @@
       "run",
       "build"
     ],
-    "cwd": "/workspace/scratch/adapt-93-proof/control",
+    "cwd": "/workspace/scratch/adapt-93-revision-proof/control",
     "exit": 0,
-    "seconds": 24.011,
+    "seconds": 24.023,
     "limit": 1200,
-    "minFreeBytes": 9618870272
+    "minFreeBytes": 6366568448
   },
   {
     "name": "after-install",
@@ -146,11 +161,11 @@
       "--no-audit",
       "--no-fund"
     ],
-    "cwd": "/workspace/scratch/adapt-93-proof/after",
+    "cwd": "/workspace/scratch/adapt-93-revision-proof/after",
     "exit": 0,
     "seconds": 3.001,
     "limit": 600,
-    "minFreeBytes": 9455554560
+    "minFreeBytes": 6202060800
   },
   {
     "name": "after-build",
@@ -159,23 +174,23 @@
       "run",
       "build"
     ],
-    "cwd": "/workspace/scratch/adapt-93-proof/after",
+    "cwd": "/workspace/scratch/adapt-93-revision-proof/after",
     "exit": 0,
-    "seconds": 24.017,
+    "seconds": 24.011,
     "limit": 1200,
-    "minFreeBytes": 9359392768
+    "minFreeBytes": 6107090944
   },
   {
     "name": "scope-only-mutant",
     "command": [
       "node",
       "/workspace/scratch/adapt-93/stage3/adapt/93-builtin-imports/proofs/scope-mutant.cjs",
-      "/workspace/scratch/adapt-93-proof/control",
-      "/workspace/scratch/adapt-93-proof/after"
+      "/workspace/scratch/adapt-93-revision-proof/control",
+      "/workspace/scratch/adapt-93-revision-proof/after"
     ],
     "cwd": "/workspace/scratch/adapt-93",
     "exit": 1,
-    "seconds": 0.616,
+    "seconds": 0.667,
     "limit": 180
   },
   {
@@ -183,13 +198,13 @@
     "command": [
       "node",
       "/workspace/scratch/adapt-93/stage3/adapt/93-builtin-imports/proofs/check.cjs",
-      "/workspace/scratch/adapt-93-proof/control",
-      "/workspace/scratch/adapt-93-proof/after",
+      "/workspace/scratch/adapt-93-revision-proof/control",
+      "/workspace/scratch/adapt-93-revision-proof/after",
       "/workspace/scratch/adapt-93/stage3/adapt/93-builtin-imports/proofs/checks.json"
     ],
     "cwd": "/workspace/scratch/adapt-93",
     "exit": 0,
-    "seconds": 0.565,
+    "seconds": 0.673,
     "limit": 180
   },
   {
@@ -197,14 +212,26 @@
     "command": [
       "node",
       "/workspace/scratch/adapt-93/stage3/adapt/93-builtin-imports/proofs/built-witness.cjs",
-      "/workspace/scratch/adapt-93-proof/control",
-      "/workspace/scratch/adapt-93-proof/after",
-      "/workspace/scratch/adapt-93-proof/project",
+      "/workspace/scratch/adapt-93-revision-proof/control",
+      "/workspace/scratch/adapt-93-revision-proof/after",
+      "/workspace/scratch/adapt-93-revision-proof/project",
       "/workspace/scratch/adapt-93/stage3/adapt/93-builtin-imports/proofs/built-witness.json"
     ],
     "cwd": "/workspace/scratch/adapt-93",
     "exit": 0,
-    "seconds": 1.272,
+    "seconds": 1.441,
+    "limit": 180
+  },
+  {
+    "name": "lane-after-restored",
+    "command": [
+      "python3",
+      "/workspace/scratch/adapt-93/stage3/lane/check.py",
+      "/workspace/scratch/adapt-93-revision-proof/lane-after"
+    ],
+    "cwd": "/workspace/scratch/adapt-93",
+    "exit": 0,
+    "seconds": 0.874,
     "limit": 180
   },
   {
@@ -212,14 +239,14 @@
     "command": [
       "node",
       "/workspace/scratch/adapt-93/stage3/adapt/93-builtin-imports/proofs/built-witness.cjs",
-      "/workspace/scratch/adapt-93-proof/control",
-      "/workspace/scratch/adapt-93-proof/after",
-      "/workspace/scratch/adapt-93-proof/project",
+      "/workspace/scratch/adapt-93-revision-proof/control",
+      "/workspace/scratch/adapt-93-revision-proof/after",
+      "/workspace/scratch/adapt-93-revision-proof/project",
       "/workspace/scratch/adapt-93/stage3/adapt/93-builtin-imports/proofs/built-witness.json"
     ],
     "cwd": "/workspace/scratch/adapt-93",
     "exit": 0,
-    "seconds": 1.777,
+    "seconds": 1.274,
     "limit": 180
   }
 ]

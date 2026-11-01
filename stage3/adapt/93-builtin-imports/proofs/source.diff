@@ -1,13 +1,10 @@
 --- a/src/compiler/sys.ts
 +++ b/src/compiler/sys.ts
 @@ -49,0 +50,3 @@
-+import * as adamicNodeFs93 from "node:fs";
-+import * as adamicNodePath93 from "node:path";
-+import * as adamicNodeOs93 from "node:os";
-@@ -1471,3 +1474,3 @@
++import * as _fs from "node:fs";
++import * as _path from "node:path";
++import * as _os from "node:os";
+@@ -1471,3 +1473,0 @@
 -        const _fs: typeof import("fs") = require("fs");
 -        const _path: typeof import("path") = require("path");
 -        const _os = require("os");
-+        const _fs: typeof import("fs") = adamicNodeFs93;
-+        const _path: typeof import("path") = adamicNodePath93;
-+        const _os = adamicNodeOs93;

@@ -39,5 +39,5 @@ Rows measure incremental edits; total measures the final tree against pristine.
 | 90-void-widening | 7 | 66 | 66 |
 | 91-patcher-discard | 2 | 2 | 2 |
 | 92-tty-host-results | 1 | 2 | 2 |
-| 93-builtin-imports | 1 | 6 | 3 |
-| **Total** | 85 | 5532 | 5487 |
+| 93-builtin-imports | 1 | 3 | 3 |
+| **Total** | 85 | 5529 | 5487 |

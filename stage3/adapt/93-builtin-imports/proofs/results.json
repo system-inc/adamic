@@ -1,7 +1,7 @@
 {
   "status": "pass",
   "conditions": {
-    "onlyThreeImportsAndInitializers": "pass",
+    "onlyThreeImportsAndDeclarationRemovals": "pass",
     "sourceUndoExact": "pass",
     "transpileBothCommentModes": "pass",
     "buildsAndPublicAPI": "pass",
@@ -37,11 +37,94 @@
     ],
     "undoRestoresExactBytes": true
   },
+  "bindings": {
+    "before": {
+      "qualifiedUses": 27,
+      "qualifiedUseLines": 22,
+      "sites": [
+        {
+          "local": "_fs",
+          "module": "node:fs",
+          "qualifiedUses": 19,
+          "bareUses": 0,
+          "otherDeclarations": 0,
+          "allUsesResolveToBinding": true
+        },
+        {
+          "local": "_path",
+          "module": "node:path",
+          "qualifiedUses": 6,
+          "bareUses": 0,
+          "otherDeclarations": 0,
+          "allUsesResolveToBinding": true
+        },
+        {
+          "local": "_os",
+          "module": "node:os",
+          "qualifiedUses": 2,
+          "bareUses": 0,
+          "otherDeclarations": 0,
+          "allUsesResolveToBinding": true
+        }
+      ]
+    },
+    "after": {
+      "qualifiedUses": 27,
+      "qualifiedUseLines": 22,
+      "sites": [
+        {
+          "local": "_fs",
+          "module": "node:fs",
+          "qualifiedUses": 19,
+          "bareUses": 0,
+          "otherDeclarations": 0,
+          "allUsesResolveToBinding": true
+        },
+        {
+          "local": "_path",
+          "module": "node:path",
+          "qualifiedUses": 6,
+          "bareUses": 0,
+          "otherDeclarations": 0,
+          "allUsesResolveToBinding": true
+        },
+        {
+          "local": "_os",
+          "module": "node:os",
+          "qualifiedUses": 2,
+          "bareUses": 0,
+          "otherDeclarations": 0,
+          "allUsesResolveToBinding": true
+        }
+      ]
+    },
+    "mutants": [
+      {
+        "name": "module collision",
+        "message": "collision or bare namespace use: _path",
+        "caught": true
+      },
+      {
+        "name": "enclosing shadow",
+        "message": "collision or bare namespace use: _fs",
+        "caught": true
+      },
+      {
+        "name": "bare namespace value",
+        "message": "collision or bare namespace use: _os",
+        "caught": true
+      }
+    ]
+  },
+  "controlReused": false,
   "mutants": [
     "moved target before write",
     "extra runtime edit",
     "extra erased type annotation caught only by scope",
-    "extra baseline line"
+    "extra baseline line",
+    "module collision",
+    "enclosing shadow",
+    "bare namespace value"
   ],
   "postSuiteIdempotence": 0,
   "oracleWorkers": 8,

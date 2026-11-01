@@ -3,7 +3,7 @@
 from pathlib import Path
 import os,sys,json,subprocess as s,time,hashlib,gzip,shutil,signal
 sys.dont_write_bytecode=True
-repo=Path(__file__).resolve().parents[4];proof=Path(__file__).resolve().parent;scratch=Path(os.environ.get('BUILTIN_PROOF_SCRATCH','/workspace/scratch/adapt-93-proof'))
+repo=Path(__file__).resolve().parents[4];proof=Path(__file__).resolve().parent;scratch=Path(os.environ.get('BUILTIN_PROOF_SCRATCH','/workspace/scratch/adapt-93-revision-proof'))
 assert json.loads((proof/'preparation.json').read_text())['status']=='pass'
 os.environ.update(NODE_PATH=str(repo/'stage3/api/node_modules'),NODE_OPTIONS='--max-old-space-size=3072',npm_config_cache=str(scratch/'npm-cache'),HOME=str(scratch/'home'),TMPDIR=str(scratch/'tmp'))
 (scratch/'tmp').mkdir(exist_ok=True)
@@ -39,7 +39,7 @@ for label in (['after'] if resume else ['control','after']):
    time.sleep(1)
   r=s.CompletedProcess(command,child.returncode)
  report=json.loads((out/'report.json').read_text());after=Path('/sys/fs/cgroup/memory.events').read_text();lane=scratch/('lane-'+label);lane.mkdir();(lane/'adapted-tree').symlink_to(tree,target_is_directory=True);(lane/'oracle').symlink_to(out,target_is_directory=True)
- execution={'platform':{'os':'linux','arch':'x64','node':s.check_output(['node','--version'],text=True).strip()},'apply_exit':0,'oracle_exit':r.returncode,'base':'7b9c0fe7e52cfe9cdeb774107389bd6870f41423','adaptation':None if label=='control' else '93-builtin-imports'}
+ execution={'platform':{'os':'linux','arch':'x64','node':s.check_output(['node','--version'],text=True).strip()},'apply_exit':0,'oracle_exit':r.returncode,'base':'c4fe7a014b6ff3fc7abf77c69ac29ab7ea04477c' if label=='control' else '7b9c0fe7e52cfe9cdeb774107389bd6870f41423','revisionParent':'bfe98353b7e58dabcaa642b0f9c1f9c007944b48','adaptation':None if label=='control' else '93-builtin-imports'}
  (lane/'execution.json').write_text(json.dumps(execution,indent=2)+'\n');verdict=check_results(lane)
  row={'label':label,'command':command,'exit':r.returncode,'seconds':round(time.monotonic()-start,3),'counts':report.get('counts'),'minFreeBytes':minimum,'memoryBefore':memory,'memoryAfter':after,'lane':verdict}
  records.append(row);(proof/'oracle-progress.json').write_text(json.dumps(records,indent=2)+'\n');(proof/('oracle-'+label+'.json')).write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({'label':label,'counts':report.get('counts'),'lane':verdict['status'],'seconds':row['seconds']}),flush=True)
@@ -55,7 +55,7 @@ try:
  diff.write_bytes(new+b'\nextra baseline mutant\n');errors,_=api_check(scratch/'lane-after',sanctioned);assert any('baseline.diff does not exactly describe' in e for e in errors)
  (proof/'baseline-mutant.json').write_text(json.dumps({'caught':True,'errors':errors},indent=2)+'\n')
 finally:diff.write_bytes(new)
-# Verify the actual built-and-tested source retains the six-edit scope.
+# Verify the actual built-and-tested source retains the imports-and-declarations scope.
 check=proof/'check.cjs'
 expression=f"const p=require({str(check)!r});console.log(JSON.stringify({{scope:p.TestBuiltinSourceScope({str(scratch/'control')!r},{str(scratch/'after')!r}),transpile:p.TestBuiltinTranspileScope({str(scratch/'control')!r},{str(scratch/'after')!r})}}))"
 with (proof/'post-suite-scope.json').open('w') as output:s.run(['node','-e',expression],stdout=output,check=True,timeout=60)

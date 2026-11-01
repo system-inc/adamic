@@ -1,17 +1,27 @@
 {
-  "task": "#he8tysb head 1",
+  "task": "#he8tysb head 1 revision",
   "base": "7b9c0fe7e52cfe9cdeb774107389bd6870f41423",
+  "revisionParent": "bfe98353b7e58dabcaa642b0f9c1f9c007944b48",
+  "controlMain": "c4fe7a014b6ff3fc7abf77c69ac29ab7ea04477c",
+  "controlReused": false,
+  "resourceCleanup": {
+    "removed": [
+      "/workspace/scratch/adapt-93-proof/control",
+      "/workspace/scratch/adapt-93-proof/after"
+    ],
+    "freeBytes": 8126906368
+  },
   "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
-  "control": "complete main adaptation set, excluding only 93",
+  "control": "fresh current-main c4fe7a014b control; stage3 inputs unchanged since 7b9c0fe7e; no prior control observation reused",
   "applyExit": {
     "control": 0,
     "after": 0
   },
   "applySnapshots": {
     "before": "fed52b9cd7a0de69999b88217ffaa92153e57175",
-    "after": "51d0c285c95c8f2d5637e4b31a41710494275efb"
+    "after": "ad6043d79e8159e64cda01174176c7819da457bc"
   },
-  "applyNumstat": "6\t3\tsrc/compiler/sys.ts\n",
+  "applyNumstat": "3\t3\tsrc/compiler/sys.ts\n",
   "sourceFiles": 746,
   "roots": {
     "control": [
@@ -499,7 +509,7 @@
       },
       {
         "file": "src/compiler/sys.ts",
-        "sha256": "5d911d20c5b4b5625db146b1710c7acd5849be85ee2cf6497db7f17540663b84"
+        "sha256": "be2c80c35536b9d0a05a66df61b5f229155325353caf0718da64f459754ea121"
       },
       {
         "file": "src/compiler/tracing.ts",

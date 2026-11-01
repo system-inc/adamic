@@ -1,6 +1,6 @@
 from pathlib import Path
 import os,subprocess as s,time,json,hashlib,shutil,signal,difflib
-R=Path(__file__).resolve().parents[4];D=Path(os.environ.get('BUILTIN_PROOF_SCRATCH','/workspace/scratch/adapt-93-proof'));P=Path(__file__).resolve().parent
+R=Path(__file__).resolve().parents[4];D=Path(os.environ.get('BUILTIN_PROOF_SCRATCH','/workspace/scratch/adapt-93-revision-proof'));P=Path(__file__).resolve().parent
 env=dict(os.environ,NODE_PATH=str(R/'stage3/api/node_modules'),NODE_OPTIONS='--max-old-space-size=3072',PYTHONDONTWRITEBYTECODE='1',npm_config_cache=str(D/'npm-cache'))
 records=[]
 def run(name,cmd,cwd=R,expected=0,limit=600):
@@ -19,12 +19,11 @@ def run(name,cmd,cwd=R,expected=0,limit=600):
  return row
 # Pin the fully adapted main input, retaining its exact newline bytes.
 f=D/'control/src/compiler/sys.ts';before=f.read_bytes();after=before
-for module,name in [('fs','adamicNodeFs93'),('path','adamicNodePath93'),('os','adamicNodeOs93')]:
- needle=f'require("{module}")'.encode();assert after.count(needle)==1;after=after.replace(needle,name.encode())
-# Main's final import is the hostErrors helper. Use its exact complete line.
-needle=b'import { errorCode } from "./hostErrors.js";';assert after.count(needle)==1
 nl=b'\r\n' if b'\r\n' in before else b'\n'
-imports=b''.join(nl+f'import * as {name} from "node:{module}";'.encode() for module,name in [('fs','adamicNodeFs93'),('path','adamicNodePath93'),('os','adamicNodeOs93')])
+for declaration in ['const _fs: typeof import("fs") = require("fs");','const _path: typeof import("path") = require("path");','const _os = require("os");']:
+ needle=b'        '+declaration.encode()+nl;assert after.count(needle)==1;after=after.replace(needle,b'')
+needle=b'import { errorCode } from "./hostErrors.js";';assert after.count(needle)==1
+imports=b''.join(nl+f'import * as {name} from "node:{module}";'.encode() for module,name in [('fs','_fs'),('path','_path'),('os','_os')])
 after=after.replace(needle,needle+imports)
 h=lambda b:hashlib.sha256(b).hexdigest()
 (P/'targets.json').write_text(json.dumps([dict(file='src/compiler/sys.ts',beforeSha256=h(before),afterSha256=h(after))],indent=2)+'\n')
@@ -36,6 +35,7 @@ shutil.copyfile(D/'after/patch-set.md',P/'patch-set.md')
 shutil.copyfile(D/'control/patch-set.md',P/'patch-set-control.md')
 shutil.copyfile(D/'logs/control-apply.log',P/'logs/control-apply.log')
 run('checks',['node',P/'check.cjs',D/'control',D/'after',P/'checks.json'],limit=300)
+run('bindings',['node',P/'bindings.cjs',D/'control',D/'after',P/'bindings.json'],limit=300)
 run('idempotence',['node',P.parent/'adapt.cjs',D/'after'],limit=180)
 assert json.loads((P/'logs/idempotence.log').read_text())['files']==0
 file=D/'after/src/compiler/sys.ts';saved=file.read_bytes();stamp=file.stat().st_mtime_ns
@@ -48,7 +48,7 @@ try:
  run('moved-target-mutant',['node',P.parent/'adapt.cjs',D/'after'],expected=1,limit=180)
  assert file.read_bytes()==saved+b'\n' and file.stat().st_mtime_ns==stamp
 finally:file.write_bytes(saved)
-# A real extra runtime edit: outside the sanctioned imports and initializers.
+# A real extra runtime edit: outside the sanctioned imports and removed declarations.
 try:
  needle=b'return process.stdout.columns ?? 0;';assert saved.count(needle)==1
  file.write_bytes(saved.replace(needle,b'return process.stdout.columns ?? 1;'))

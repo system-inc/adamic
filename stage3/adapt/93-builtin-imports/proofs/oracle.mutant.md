@@ -1,11 +1,11 @@
-Mutant evidence for #he8tysb head 1's oracle baseline guard, following 92.
+Mutant evidence for #he8tysb head 1 revision's oracle baseline guard, following 92.
 
 Mutant: append an extra line to the actual completed baseline.diff without
 changing either API snapshot. The command that executed the probe was:
 
-    BUILTIN_PROOF_RESUME_AFTER=1 python3 stage3/adapt/93-builtin-imports/proofs/oracles.py
+    BUILTIN_PROOF_SCRATCH=/workspace/scratch/adapt-93-revision-proof python3 stage3/adapt/93-builtin-imports/proofs/oracles.py
 
-The full serial recipe also runs this probe without the resume switch.
+Both complete fresh suites precede this probe; no previous control is reused.
 It calls the unmodified stage3/lane/check.py api_check, exactly as 92 did.
 The observed red is:
 
@@ -14,7 +14,7 @@ The observed red is:
 baseline-mutant.json records that rejection. The driver restores the exact
 original bytes in finally. Restored command:
 
-    python3 stage3/lane/check.py /workspace/scratch/adapt-93-proof/lane-after
+    python3 stage3/lane/check.py /workspace/scratch/adapt-93-revision-proof/lane-after
 
 Exit 0, exact verdict:
 
