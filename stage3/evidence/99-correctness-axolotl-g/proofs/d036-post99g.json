@@ -1,0 +1,26 @@
+{
+  "version": "6.0.3",
+  "lane": "exported internal API",
+  "option": "paths",
+  "ownOptionValueType": "object",
+  "guardBypassedBecauseValueIsDefined": true,
+  "toJSONCalls": 1,
+  "stringify": [
+    {
+      "inputType": "object",
+      "resultType": "undefined",
+      "stack": "Error\n    at JSON.stringify (/workspace/adamic/stage3/evidence/99-correctness-axolotl-g/proofs/d036-post99g.cjs:27:104)\n    at formatSingleValue (/workspace/scratch/99g/after/built/local/typescript.js:43247:17)\n    at formatValueOrArray (/workspace/scratch/99g/after/built/local/typescript.js:43240:14)\n    at emitOption (/workspace/scratch/99g/after/built/local/typescript.js:43225:89)\n    at Object.generateTSConfig (/workspace/scratch/99g/after/built/local/typescript.js:43202:7)\n    at Object.<anonymous> (/workspace/adamic/stage3/evidence/99-correctness-axolotl-g/proofs/d036-post99g.cjs:30:17)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)"
+    }
+  ],
+  "emittedLine": "    \"paths\": undefined,",
+  "assertionDeclined": true,
+  "arrayCallback": {
+    "observed": [
+      {
+        "resultType": "undefined",
+        "stack": "Error\n    at JSON.stringify (/workspace/adamic/stage3/evidence/99-correctness-axolotl-g/proofs/d036-post99g.cjs:44:85)\n    at formatSingleValue (/workspace/scratch/99g/after/built/local/typescript.js:43247:17)\n    at /workspace/scratch/99g/after/built/local/typescript.js:43238:35\n    at Array.map (<anonymous>)\n    at formatValueOrArray (/workspace/scratch/99g/after/built/local/typescript.js:43238:24)\n    at emitOption (/workspace/scratch/99g/after/built/local/typescript.js:43225:89)\n    at Object.generateTSConfig (/workspace/scratch/99g/after/built/local/typescript.js:43202:7)\n    at Object.<anonymous> (/workspace/adamic/stage3/evidence/99-correctness-axolotl-g/proofs/d036-post99g.cjs:47:23)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)"
+      }
+    ],
+    "emittedLine": "    \"plugins\": [],"
+  }
+}
