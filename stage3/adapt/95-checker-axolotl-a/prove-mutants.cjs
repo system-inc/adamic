@@ -11,7 +11,7 @@ assert.equal(verify.status, 1);
 assert(verify.stderr.includes('all 13 required read checks must be present') && verify.stderr.includes('12 !== 13'));
 const pin = cp.spawnSync(process.execPath, [path.join(unit, 'adapt.cjs'), '--check', mutant], {encoding: 'utf8'});
 assert.equal(pin.status, 1);
-assert(pin.stderr.includes('uninventoried checker source'));
+assert(pin.stderr.includes('uninventoried owner: checkGrammarIndexSignatureParameters'));
 const start = source.indexOf('function checkGrammarIndexSignatureParameters(');
 const end = source.indexOf('function checkGrammarIndexSignature(', start);
 assert(start >= 0 && end > start);
@@ -28,4 +28,4 @@ for (const removeComments of [false, true]) {
 }
 console.log(JSON.stringify({undoRead: {site: 'checker.ts:52426:13', verifierExit: verify.status,
     catcher: 'all 13 required read checks must be present: 12 !== 13', pinExit: pin.status,
-    pinCatcher: 'uninventoried checker source'}, runtimeReturnMutant: {change: 'private grammar function return false to return true', erasure}}, null, 2));
+    pinCatcher: 'uninventoried owner: checkGrammarIndexSignatureParameters'}, runtimeReturnMutant: {change: 'private grammar function return false to return true', erasure}}, null, 2));

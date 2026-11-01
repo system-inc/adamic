@@ -1,6 +1,6 @@
 # 95: required index-signature parameter reads
 
-Head A removes exactly 13 checker diagnostics: checker.ts own-file 30 to 17,
+Original 95a evidence removes 13 checker diagnostics: checker.ts own-file 30 to 17,
 tsc entry whole-program 144 to 131, with no added diagnostic anywhere.
 Stock TypeScript 6.0.3 emits byte-identical checker JavaScript, with comments
 retained and removed. Only 13 reads in one private nested function change.
@@ -36,7 +36,8 @@ is included. No optional chain, default, hoist or initializer assertion is added
 Adaptation 90 pins checker.ts's full source hash. 95 runs after 90, so 90's
 pin is checked before any 95 edit. Neither 90 nor its pin is changed. Rerun 95
 on its own output for idempotence; do not rerun 90 on a tree already changed
-by a later adaptation. 95's before hash is exactly 90's checker after hash.
+by a later adaptation. 95 itself pins only its private owner's before/after
+text, allowing unrelated checker functions to change independently.
 
 ## Adapter contract
 
@@ -45,8 +46,9 @@ TypeScript 6.0.3 parses current text and resolves the saved local symbol.
 The adapter requires one private function under `createTypeChecker`, the exact
 absence-handling initializer, the exactly-one guard and its two returns,
 13 symbol-identical reads, their ordered parsed parent contexts, and the exact
-`ParameterDeclaration | undefined` type at each operand. Full before/after
-source hashes and a normalized owner hash refuse any uninventoried shape.
+`ParameterDeclaration | undefined` type at each operand. Exact before/after
+owner-text hashes and the normalized owner hash refuse any uninventoried owner
+shape; there is no checker.ts whole-file acceptance pin.
 Lines and columns in sites.json are documentation, never edit addresses.
 
 All edits are planned and parsed, both stock JavaScript comparisons pass,
@@ -57,8 +59,10 @@ CRLF without a source printer. Only checker.ts is written. A second run reports
 `verify.cjs` independently compares all 711 source files, requires exactly the
 13 assertion spellings in the private function and otherwise identical source,
 checks CRLF counts, and compares complete stock transpileModule JavaScript.
-It does not call the adapter's edit planner. Before/after checker hashes and
-all 13 parsed addresses are in [sites.json](sites.json).
+It does not call the adapter's edit planner. Before/after owner hashes and
+all 13 parsed addresses are in [sites.json](sites.json). Its prefix/suffix and
+other-source comparisons require a given adaptation run to change only its
+owner; they are not fixed full-file acceptance pins.
 
 ## Diagnostic proof and mutant
 
@@ -84,7 +88,9 @@ differences, including all 13 exact locations and no added diagnostic:
 The isolated mutant undoes only the first `parameter!.dotDotDotToken` read,
 restoring TS18048 at checker.ts:52426:13. The independent verifier exits 1:
 `all 13 required read checks must be present`, `12 !== 13`. The adapter's
-own check also exits 1 for `uninventoried checker source`. The real census
+own check now exits 1 for `uninventoried owner:
+checkGrammarIndexSignatureParameters`; the historical artifact records the
+former whole-file catcher. The real census
 restores exactly that original diagnostic, with every other finding unchanged.
 
 A separate in-memory mutant changes the private grammar function's final
@@ -126,7 +132,7 @@ The commands below record the historical run; its first control apply ran
 before directory 95 existed. To reproduce a control now, run full apply into
 a fresh directory, copy that tree, and restore only checker.ts from apply's
 `refs/stage3/95-checker-axolotl-a-before` Git tree into the control. The copy
-then has exactly the control source hash in sites.json. For example:
+then has the exact before-owner text hash in sites.json. For example:
 
 ```sh
 git -C CONTROL_COPY show refs/stage3/95-checker-axolotl-a-before:src/compiler/checker.ts > CONTROL_COPY/src/compiler/checker.ts
@@ -208,3 +214,61 @@ The older pre-brand-retype 51,093-byte diff is not used as today's expected hash
 counts, exits and byte comparisons. Compressed phase logs and the complete
 baseline diff are beside them. No lane acceptance predicate is run or changed;
 Loom's Correctness wave supplies that proof.
+
+
+## Owner-pin repair on main 80c2d3282
+
+The follow-up branch `typescript/axolotl-checker-a-pin` starts at main
+`80c2d3282e44b527555d59690bb413cc883d2bf2`, with 95a and 95b already merged.
+Only this adaptation directory changes. The two checker.ts full-file acceptance
+checks and their manifest entries are removed. The adapter instead requires
+the parsed owner's text to match its before or after hash, then reparses the
+planned result and requires the after-owner hash before any write.
+
+All other checks remain: stock 6.0.3, exactly one named owner inside
+createTypeChecker, its normalized text, private modifiers, unchanged initializer,
+exact guard text, both invalid-arity returns, symbol-bound read inventory,
+ordered contexts, every read's type, syntax, stock JavaScript identity in both
+comments modes, and the final unchanged-input check before one write.
+verify.cjs has no fixed full-file pin and is unchanged. The existing mutant
+runner's expected rejection text is updated to the owner guard.
+
+The before/after owner hashes are:
+
+- Before: `330d3852b263f13aaca16abbb7a4ba5d4f178cf0a1ee819e637f21d774040062`.
+- After: `6df447752dc6f810754e8da1f6c1d0f0d5a8cff74ede6e54523ae3cac8ce300b`.
+
+New proof artifacts and reproducible proof tooling are on the separate branch
+`typescript/axolotl-checker-a-pin-evidence`; no new proof log or result file is
+added here. Existing proof artifacts above remain historical records of 95a.
+No Loom submission is made. This repair changes adapter acceptance scope, not
+the thirteen source edits or emitted compiler JavaScript.
+
+
+The repair's full apply passes in **213 seconds** on the pinned main tip.
+Restoring only the owner's before text in that completed tree, while retaining
+95b and all later adaptations, gives **67 whole-program / 21 checker.ts
+own-file diagnostics**. Applying the repaired adapter gives **54 / 8**:
+exactly the same 13 historical parameter diagnostics disappear, with **0 added
+anywhere**. The census uses the real production loader, unchanged options and
+src/tsc/tsc.ts entry, counting the matching root/aggregate observations once.
+
+The adapter reports **1 file / 13 assertions**, its output is byte-identical
+to the completed main checker, and a second run reports **0 / 0**. The unchanged
+independent verifier passes over all **711 source files**. Stock JavaScript
+remains byte-identical at **2,892,419 bytes** with comments and **2,354,716 bytes**
+without; CRLF counts remain **54,434**.
+
+The outside-owner mutant widens only getMergedSymbol's temporary to
+`Symbol | undefined`. It changes checker.ts's full-file hash while leaving the
+owner text intact: the repaired adapter applies all **13** checks, preserves
+that unrelated edit, and reruns with **0** edits. The inside-owner mutant changes
+its final `return false` to `return true`: the owner guard refuses it with
+**exit 1 / 0 writes**. The pre-existing one-read mutant runner also passes its
+rejection controls with the updated owner-guard catcher.
+
+The evidence branch retains the commands, proof tooling, raw census observations
+and logs. Setup completed in **57.936 seconds**, with **nproc=5**. This small
+acceptance-pin repair does not rerun the full oracle or native compiler gate;
+its generated checker bytes and exact source-edit behavior are unchanged.
+Neither branch submits anything to Loom.
