@@ -1,0 +1,6 @@
+// Spec: Any other brand, whether on an object or carrying a member that isn't phantom, can only be made by an unchecked cast, which is refused in `.a`
+// Expect: refused a cast the runtime can't check
+type Id = { readonly value: number } & { readonly _id: undefined };
+const raw = { value: 5 };
+const id = raw as Id;
+console.log(String(id.value));

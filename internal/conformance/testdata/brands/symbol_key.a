@@ -1,0 +1,5 @@
+// Spec: A symbol-keyed member is never phantom
+// Expect: refused a primitive brand member keyed by a symbol
+type Name = string & { readonly [Symbol.asyncIterator]: undefined };
+const name = 'abc' as Name;
+console.log(name);

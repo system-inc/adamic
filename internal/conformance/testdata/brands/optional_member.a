@@ -1,0 +1,5 @@
+// Spec: It's its primitive at run time, and a cast that adds it is erased
+// Expect: lowers
+type Name = string & { readonly _name?: undefined };
+const name = 'abc' as Name;
+console.log(name.toUpperCase());

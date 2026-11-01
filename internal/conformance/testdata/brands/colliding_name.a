@@ -1,0 +1,5 @@
+// Spec: A brand member named like one of the primitive's own is refused
+// Expect: refused a primitive brand member length that exists on the primitive
+type Name = string & { readonly length: undefined };
+const name = 'abc' as Name;
+console.log(name);
