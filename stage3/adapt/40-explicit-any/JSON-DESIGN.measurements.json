@@ -1,0 +1,537 @@
+{
+  "main": "c74051ffc5ee94f4b7f732b1532cb219032b183d",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "checker": "6.0.3",
+  "public_members": 16,
+  "setup": {
+    "exit": 0,
+    "seconds": 410.207,
+    "log": "/workspace/scratch/setup.log"
+  },
+  "apply": {
+    "exit": 0,
+    "log": "/workspace/scratch/apply-retry.log"
+  },
+  "preparation": [
+    {
+      "label": "control-final-build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "seconds": 31.772
+    },
+    {
+      "label": "inventory-final",
+      "command": [
+        "node",
+        "/workspace/scratch/inventory.cjs",
+        "/workspace/scratch/json-control"
+      ],
+      "exit": 0,
+      "seconds": 19.172
+    },
+    {
+      "label": "control-stock-build",
+      "command": [
+        "node",
+        "/workspace/adamic/stage3/api/node_modules/typescript/lib/tsc.js",
+        "-b",
+        "src",
+        "--force",
+        "--pretty",
+        "false"
+      ],
+      "exit": 0,
+      "seconds": 19.806
+    },
+    {
+      "label": "control-project-checks",
+      "command": [
+        "python3",
+        "/workspace/scratch/check-projects.py",
+        "/workspace/scratch/json-control",
+        "control"
+      ],
+      "exit": 0,
+      "seconds": 6.145
+    },
+    {
+      "label": "propose",
+      "command": [
+        "node",
+        "/workspace/scratch/propose.cjs",
+        "/workspace/scratch/json-probe"
+      ],
+      "exit": 0,
+      "seconds": 0.711
+    },
+    {
+      "label": "probe-project-checks",
+      "command": [
+        "python3",
+        "/workspace/scratch/check-projects.py",
+        "/workspace/scratch/json-probe",
+        "probe"
+      ],
+      "exit": 0,
+      "seconds": 23.161
+    },
+    {
+      "label": "probe-standard-build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 1,
+      "seconds": 0.224
+    },
+    {
+      "label": "probe-declaration-emit",
+      "command": [
+        "node",
+        "/workspace/adamic/stage3/api/node_modules/typescript/lib/tsc.js",
+        "-b",
+        "src/typescript",
+        "--force",
+        "--noCheck",
+        "--pretty",
+        "false"
+      ],
+      "exit": 0,
+      "seconds": 3.877
+    },
+    {
+      "label": "probe-dts-bundle",
+      "command": [
+        "node",
+        "scripts/dtsBundler.mjs",
+        "--entrypoint",
+        "built/local/typescript/typescript.d.ts",
+        "--output",
+        "built/local/typescript.d.ts"
+      ],
+      "exit": 0,
+      "seconds": 2.53
+    },
+    {
+      "label": "probe-runtime-build",
+      "command": [
+        "node",
+        "node_modules/hereby/bin/hereby.js",
+        "local",
+        "--no-typecheck"
+      ],
+      "exit": 1,
+      "seconds": 16.045
+    },
+    {
+      "label": "probe-harness-build",
+      "command": [
+        "npm",
+        "run",
+        "build:tests:notypecheck"
+      ],
+      "exit": 0,
+      "seconds": 0.92
+    }
+  ],
+  "normal_proposal_build_retry": {
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit": 1,
+    "log": "/workspace/scratch/probe-standard-build-retry.log",
+    "note": "After restoring copied package symlinks, normal build fails on reader diagnostics."
+  },
+  "stock_project_commands": {
+    "control": [
+      {
+        "project": "compiler",
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/lib/tsc.js",
+          "-p",
+          "src/compiler",
+          "--pretty",
+          "false"
+        ],
+        "exit": 0
+      },
+      {
+        "project": "jsTyping",
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/lib/tsc.js",
+          "-p",
+          "src/jsTyping",
+          "--pretty",
+          "false"
+        ],
+        "exit": 0
+      },
+      {
+        "project": "services",
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/lib/tsc.js",
+          "-p",
+          "src/services",
+          "--pretty",
+          "false"
+        ],
+        "exit": 0
+      },
+      {
+        "project": "typingsInstallerCore",
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/lib/tsc.js",
+          "-p",
+          "src/typingsInstallerCore",
+          "--pretty",
+          "false"
+        ],
+        "exit": 0
+      },
+      {
+        "project": "deprecatedCompat",
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/lib/tsc.js",
+          "-p",
+          "src/deprecatedCompat",
+          "--pretty",
+          "false"
+        ],
+        "exit": 0
+      },
+      {
+        "project": "server",
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/lib/tsc.js",
+          "-p",
+          "src/server",
+          "--pretty",
+          "false"
+        ],
+        "exit": 0
+      },
+      {
+        "project": "harness",
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/lib/tsc.js",
+          "-p",
+          "src/harness",
+          "--pretty",
+          "false"
+        ],
+        "exit": 0
+      },
+      {
+        "project": "typescript",
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/lib/tsc.js",
+          "-p",
+          "src/typescript",
+          "--pretty",
+          "false"
+        ],
+        "exit": 0
+      }
+    ],
+    "probe": [
+      {
+        "project": "compiler",
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/lib/tsc.js",
+          "-p",
+          "src/compiler",
+          "--pretty",
+          "false"
+        ],
+        "exit": 2
+      },
+      {
+        "project": "jsTyping",
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/lib/tsc.js",
+          "-p",
+          "src/jsTyping",
+          "--pretty",
+          "false"
+        ],
+        "exit": 2
+      },
+      {
+        "project": "services",
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/lib/tsc.js",
+          "-p",
+          "src/services",
+          "--pretty",
+          "false"
+        ],
+        "exit": 0
+      },
+      {
+        "project": "typingsInstallerCore",
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/lib/tsc.js",
+          "-p",
+          "src/typingsInstallerCore",
+          "--pretty",
+          "false"
+        ],
+        "exit": 0
+      },
+      {
+        "project": "deprecatedCompat",
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/lib/tsc.js",
+          "-p",
+          "src/deprecatedCompat",
+          "--pretty",
+          "false"
+        ],
+        "exit": 0
+      },
+      {
+        "project": "server",
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/lib/tsc.js",
+          "-p",
+          "src/server",
+          "--pretty",
+          "false"
+        ],
+        "exit": 2
+      },
+      {
+        "project": "harness",
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/lib/tsc.js",
+          "-p",
+          "src/harness",
+          "--pretty",
+          "false"
+        ],
+        "exit": 2
+      },
+      {
+        "project": "typescript",
+        "command": [
+          "node",
+          "/workspace/adamic/stage3/api/node_modules/typescript/lib/tsc.js",
+          "-p",
+          "src/typescript",
+          "--pretty",
+          "false"
+        ],
+        "exit": 0
+      }
+    ]
+  },
+  "additional_test_runner_commands": [
+    {
+      "tree": "control",
+      "project": "testRunner",
+      "command": [
+        "node",
+        "/workspace/adamic/stage3/api/node_modules/typescript/lib/tsc.js",
+        "-p",
+        "src/testRunner",
+        "--pretty",
+        "false"
+      ],
+      "exit": 0
+    },
+    {
+      "tree": "probe",
+      "project": "testRunner",
+      "command": [
+        "node",
+        "/workspace/adamic/stage3/api/node_modules/typescript/lib/tsc.js",
+        "-p",
+        "src/testRunner",
+        "--pretty",
+        "false"
+      ],
+      "exit": 2
+    }
+  ],
+  "new_errors_by_project": {
+    "compiler": 17,
+    "services": 0,
+    "server": 6,
+    "harness": 5,
+    "jsTyping": 10,
+    "typingsInstallerCore": 0,
+    "deprecatedCompat": 0,
+    "typescript": 0,
+    "testRunner": 1
+  },
+  "new_errors_by_file": {
+    "src/compiler/commandLineParser.ts": 17,
+    "src/server/editorServices.ts": 4,
+    "src/server/session.ts": 2,
+    "src/harness/client.ts": 3,
+    "src/harness/harnessLanguageService.ts": 2,
+    "src/jsTyping/jsTyping.ts": 10,
+    "src/testRunner/unittests/tsserver/session.ts": 1
+  },
+  "api": {
+    "unified_diff_lines": 144,
+    "added": 20,
+    "removed": 16,
+    "sha256_control": "b901adcc6ec29e299ec21401b2a155b2b2c14c046ec743fed6ee45679b726d5d",
+    "sha256_probe": "91fb8bb47b82c5dafb460fc1346c5826d20da5c96f40c998ada6ed21f9a12fff",
+    "sha256_diff": "27f840f97c9f33f8e084c11038aafd0e7e1ee46a7e313fb2a6e9f9831290d0fa",
+    "local_baselines_equal_bundled_artifacts": true
+  },
+  "identical_javascript_artifacts": {
+    "local/_tsc.js": "79bcbfbafff1a9ddd610fe5d26a7768873c5729e5a0c08fc2c3b1d1d033396ab",
+    "local/_tsserver.js": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+    "local/_typingsInstaller.js": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+    "local/run.js": "1eed519036d0027dc08682167aa9f3e6c854d3a9f1afcea7a9f3f45d83578112",
+    "local/tsc.js": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+    "local/tsserver.js": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+    "local/tsserverlibrary.js": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+    "local/typescript.js": "0507db5ebfe951ed4ffe2b3215843bfc9c77ecc1bc1331dda15e99727c1b026b",
+    "local/typingsInstaller.js": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+    "local/watchGuard.js": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88"
+  },
+  "oracles": {
+    "control": {
+      "counts": {
+        "passing": 106366,
+        "failing": 1,
+        "pending": 0
+      },
+      "status": "fail",
+      "phases": {
+        "install": {
+          "command": [
+            "npm",
+            "ci",
+            "--no-audit",
+            "--no-fund"
+          ],
+          "exit": 0,
+          "artifact": "33556870ce59c3396c972fffb611a99b9b2ff39e79c34417a2538f2263772c6a"
+        },
+        "build": {
+          "command": [
+            "npm",
+            "run",
+            "build"
+          ],
+          "exit": 0,
+          "typecheck_passed": true,
+          "note": "Control normal build; proposal standard build rejected readers, emitted separately with noCheck and bundled without typecheck.",
+          "artifact": "33556870ce59c3396c972fffb611a99b9b2ff39e79c34417a2538f2263772c6a"
+        },
+        "tests": {
+          "command": [
+            "node",
+            "/workspace/adamic/stage3/oracle/run-prepared.mjs",
+            "/workspace/scratch/json-control",
+            "--workers=4",
+            "--light=false",
+            "--no-colors"
+          ],
+          "exit": 1,
+          "seconds": 382.858
+        }
+      },
+      "wall_seconds": 382.946,
+      "baseline_diffs": [
+        "api/typescript.d.ts"
+      ],
+      "workers": 4,
+      "runners": "all",
+      "tests": null
+    },
+    "probe": {
+      "counts": {
+        "passing": 106365,
+        "failing": 2,
+        "pending": 0
+      },
+      "status": "fail",
+      "phases": {
+        "install": {
+          "command": [
+            "copy",
+            "control/node_modules",
+            "probe/node_modules",
+            "preserve-symlinks"
+          ],
+          "exit": 0,
+          "artifact": "c16b0405c1c2fb0a137e2f432582764fbb45315487184561c163b36de5d0fff8"
+        },
+        "build": {
+          "command": [
+            "scratch declaration emission and upstream bundle tasks"
+          ],
+          "exit": 0,
+          "typecheck_passed": false,
+          "note": "Control normal build; proposal standard build rejected readers, emitted separately with noCheck and bundled without typecheck.",
+          "artifact": "c16b0405c1c2fb0a137e2f432582764fbb45315487184561c163b36de5d0fff8"
+        },
+        "tests": {
+          "command": [
+            "node",
+            "/workspace/adamic/stage3/oracle/run-prepared.mjs",
+            "/workspace/scratch/json-probe",
+            "--workers=4",
+            "--light=false",
+            "--no-colors"
+          ],
+          "exit": 1,
+          "seconds": 381.251
+        }
+      },
+      "wall_seconds": 381.339,
+      "baseline_diffs": [
+        "APISample_parseConfig.errors.txt",
+        "api/typescript.d.ts"
+      ],
+      "workers": 4,
+      "runners": "all",
+      "tests": null
+    }
+  },
+  "other_baselines_moved": [
+    "APISample_parseConfig.errors.txt"
+  ],
+  "public_api_checks": {
+    "typescript": "6.0.3",
+    "options": {
+      "strict": true,
+      "noEmit": true,
+      "target": 7,
+      "module": 199,
+      "moduleResolution": 99,
+      "types": [],
+      "skipLibCheck": false
+    },
+    "control": [],
+    "probe": []
+  }
+}

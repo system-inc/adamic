@@ -1,0 +1,40 @@
+project	file	line	column	code	message
+compiler	src/compiler/commandLineParser.ts	3109	26	18046	'raw' is of type 'unknown'.
+compiler	src/compiler/commandLineParser.ts	3117	44	2345	Argument of type 'unknown' is not assignable to parameter of type 'object'.
+compiler	src/compiler/commandLineParser.ts	3232	25	2345	Argument of type 'unknown' is not assignable to parameter of type 'object'.
+compiler	src/compiler/commandLineParser.ts	3232	58	18046	'raw' is of type 'unknown'.
+compiler	src/compiler/commandLineParser.ts	3233	25	18046	'raw' is of type 'unknown'.
+compiler	src/compiler/commandLineParser.ts	3234	32	18046	'raw' is of type 'unknown'.
+compiler	src/compiler/commandLineParser.ts	3353	21	2345	Argument of type 'unknown' is not assignable to parameter of type 'object'.
+compiler	src/compiler/commandLineParser.ts	3447	29	18046	'ownConfig.raw' is of type 'unknown'.
+compiler	src/compiler/commandLineParser.ts	3448	29	18046	'ownConfig.raw' is of type 'unknown'.
+compiler	src/compiler/commandLineParser.ts	3449	27	18046	'ownConfig.raw' is of type 'unknown'.
+compiler	src/compiler/commandLineParser.ts	3451	13	18046	'ownConfig.raw' is of type 'unknown'.
+compiler	src/compiler/commandLineParser.ts	3451	80	18046	'ownConfig.raw' is of type 'unknown'.
+compiler	src/compiler/commandLineParser.ts	3467	21	18046	'ownConfig.raw' is of type 'unknown'.
+compiler	src/compiler/commandLineParser.ts	3468	21	18046	'extendsRaw' is of type 'unknown'.
+compiler	src/compiler/commandLineParser.ts	3469	48	18046	'extendsRaw' is of type 'unknown'.
+compiler	src/compiler/commandLineParser.ts	3481	17	18046	'extendsRaw' is of type 'unknown'.
+compiler	src/compiler/commandLineParser.ts	3482	40	18046	'extendsRaw' is of type 'unknown'.
+server	src/server/editorServices.ts	2922	43	18046	'parsedCommandLine.raw' is of type 'unknown'.
+server	src/server/editorServices.ts	2923	41	18046	'parsedCommandLine.raw' is of type 'unknown'.
+server	src/server/editorServices.ts	2924	43	18046	'parsedCommandLine.raw' is of type 'unknown'.
+server	src/server/editorServices.ts	2925	43	18046	'parsedCommandLine.raw' is of type 'unknown'.
+server	src/server/session.ts	3504	65	2345	Argument of type 'unknown' is not assignable to parameter of type 'FileLocationRequestArgs'.
+server	src/server/session.ts	3507	65	2345	Argument of type 'unknown' is not assignable to parameter of type 'FileLocationRequestArgs'.
+harness	src/harness/client.ts	315	22	18046	'response.body' is of type 'unknown'.
+harness	src/harness/client.ts	316	16	18046	'response.body' is of type 'unknown'.
+harness	src/harness/client.ts	467	9	2322	Type 'unknown' is not assignable to type 'ReferencedSymbol[]'.
+harness	src/harness/harnessLanguageService.ts	630	65	18046	'info.config' is of type 'unknown'.
+harness	src/harness/harnessLanguageService.ts	682	45	18046	'info.config' is of type 'unknown'.
+jsTyping	src/jsTyping/jsTyping.ts	81	43	2345	Argument of type 'AdamicJsonRecoveryObject | undefined' is not assignable to parameter of type '{ [s: string]: string; } | ArrayLike<string>'.   Type 'undefined' is not assignable to type '{ [s: string]: string; } | ArrayLike<string>'.
+jsTyping	src/jsTyping/jsTyping.ts	88	47	2345	Argument of type 'string | number | true | AdamicJsonRecoveryObject | AdamicJsonRecoveryValue[]' is not assignable to parameter of type '{ [s: string]: string; } | ArrayLike<string>'.   Type 'number' is not assignable to type '{ [s: string]: string; } | ArrayLike<string>'.
+jsTyping	src/jsTyping/jsTyping.ts	214	44	18048	'manifest' is possibly 'undefined'.
+jsTyping	src/jsTyping/jsTyping.ts	214	67	18048	'manifest' is possibly 'undefined'.
+jsTyping	src/jsTyping/jsTyping.ts	214	93	18048	'manifest' is possibly 'undefined'.
+jsTyping	src/jsTyping/jsTyping.ts	214	124	18048	'manifest' is possibly 'undefined'.
+jsTyping	src/jsTyping/jsTyping.ts	214	152	2345	Argument of type '<T>(map: MapLike<T>) => string[]' is not assignable to parameter of type '(x: AdamicJsonRecoveryValue | undefined, i: number) => string | readonly string[] | undefined'.   Types of parameters 'map' and 'x' are incompatible.     Type 'AdamicJsonRecoveryValue | undefined' is not assignable to type 'MapLike<AdamicJsonRecoveryValue | undefined>'.       Type 'undefined' is not assignable to type 'MapLike<AdamicJsonRecoveryValue | undefined>'.
+jsTyping	src/jsTyping/jsTyping.ts	215	32	2345	Argument of type 'readonly {}[]' is not assignable to parameter of type 'readonly string[]'.   Type '{}' is not assignable to type 'string'.
+jsTyping	src/jsTyping/jsTyping.ts	245	86	2345	Argument of type '{}' is not assignable to parameter of type 'string'.
+jsTyping	src/jsTyping/jsTyping.ts	271	19	2322	Type 'AdamicJsonRecoveryObject | undefined' is not assignable to type 'PackageJson'.   Type 'undefined' is not assignable to type 'PackageJson'.
+testRunner	src/testRunner/unittests/tsserver/session.ts	525	45	2345	Argument of type '(req: ts.server.protocol.Request) => { response: unknown; responseRequired: true; }' is not assignable to parameter of type '(request: Request) => HandlerResponse'.   Call signature return types '{ response: unknown; responseRequired: true; }' and 'HandlerResponse' are incompatible.     The types of 'response' are incompatible between these types.       Type 'unknown' is not assignable to type '{} | undefined'.
