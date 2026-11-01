@@ -154,6 +154,11 @@ func TestRecordDefineHiddenRefusals(t *testing.T) {
 		{record + `Object.defineProperty(r, "h", {enumerable:false, writable:false, value:'text'});`, "index signature doesn't take", true},
 		{`interface Options {[option:string]: string|number|undefined; configFile?: string} const o:Options={}; Object.defineProperty(o, "configFile", {enumerable:false, writable:false, value:5});`, "named property configFile", true},
 		{record + `console.log(Object.getOwnPropertyNames(r).join(','));`, "Object.getOwnPropertyNames on a record", true},
+		// Object.assign never reaches a hidden entry through a runtime copy loop: onto a record it's not yet
+		// (records.go admits keys, values, entries and hasOwn only), and from one it's refused, since every
+		// source must be a literal's proven shape (library_object.go). Language's question on #3xq2xzc.
+		{record + `Object.defineProperty(r, "h", {enumerable:false, writable:false, value:5}); Object.assign(r, {h: 6});`, "Object.assign on a record", true},
+		{record + `Object.defineProperty(r, "h", {enumerable:false, writable:false, value:5}); const target = {h: 0}; Object.assign(target, r);`, "", false},
 		{`const fixed = {a: 1}; Object.defineProperty(fixed, "h", {enumerable:false, writable:false, value:5});`, "Object.defineProperty", false},
 		{`function hide(r:{[k:string]:unknown}):void { Object.defineProperty(r, "h", {enumerable:false, writable:false, value:5}); } const fixed = {a: 1}; hide(fixed);`, "", false},
 	} {
