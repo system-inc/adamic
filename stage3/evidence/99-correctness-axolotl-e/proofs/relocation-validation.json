@@ -1,0 +1,23 @@
+{
+  "applyExit": 0,
+  "applyCommand": "ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/upstream bash stage3/apply.sh /workspace/scratch/99e-slim-after",
+  "inputKey": "8b4afc40012a38957e09c4187cc46d715c53bc5863ec77650271797a0b680383",
+  "adaptationFiles": [
+    "README.md",
+    "adapt.cjs"
+  ],
+  "sourceFilesCompared": 746,
+  "allSourceBytesEqualToPreviouslyVerifiedTree": true,
+  "adapterUnchanged": true,
+  "ledgerUnchanged": true,
+  "secondRun": {
+    "result": {
+      "files": 0,
+      "edits": 0,
+      "javascriptChanging": true
+    },
+    "writeCalls": 0,
+    "bytesUnchanged": true
+  },
+  "fixCommit": "5957341ec6b275035552c5da5c77fd124418d051"
+}
