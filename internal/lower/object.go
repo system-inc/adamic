@@ -655,7 +655,11 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			}
 		}
 		if (of == ir.Union || of.IsMaybe()) && l.entriesProgramHasRecords() {
-			return nil, l.notYet(node, "a union or optional field read in a program with record storage")
+			receiver := l.checker.GetTypeAtLocation(access.Expression)
+			if l.recordMayReach(receiver) {
+				return nil, l.notYet(node, "a union or optional field read in a program with record storage")
+			}
+			l.recordGuardedReads = append(l.recordGuardedReads, recordGuardedRead{node: node, receiverTypeID: l.viewReceiverTypeID(receiver), name: name})
 		}
 		if of.IsMaybe() && optional {
 			// box?.size is number | undefined because box may be; the field itself is what's stored.

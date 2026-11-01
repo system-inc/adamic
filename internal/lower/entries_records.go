@@ -249,3 +249,99 @@ func (l *lowering) enumerationIndexedWriteRefusal(node *ast.Node) error {
 func init() {
 	refusalRules.register(600, "enumerationIndexedWriteRefusal", (*lowering).enumerationIndexedWriteRefusal)
 }
+
+// A record is a table behind one slot, never a fixed shape, so a plain union or maybe field read of
+// one would find no field (the runtime stops it: object.c's adamic_refuse_record_fixed_read). In a
+// program with records, such a read lowers only when no record can be its receiver: not one of the
+// types records are made as (rule b), not a type one of them is assignable to (rule c, which covers
+// a record passed through a parameter, a generic or a union member), and not a field a checked view
+// registered, since a record reaches a fixed type through a view (rule a, checkRecordGuardedReads).
+type recordGuardedRead struct {
+	node           *ast.Node
+	receiverTypeID int
+	name           string
+}
+
+// entriesRecordStorageTypes are the types the program's record literals are made as: the literal's own,
+// its contextual type and its variable's declared type.
+func (l *lowering) entriesRecordStorageTypes() []*checker.Type {
+	if l.entriesRecordTypesKnown {
+		return l.entriesRecordTypes
+	}
+	l.entriesRecordTypesKnown = true
+	modules, err := l.moduleOrder(l.program.Files()[0])
+	if err != nil {
+		return nil
+	}
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindObjectLiteralExpression && l.entriesRecordLiteral(node) {
+			l.entriesRecordTypes = append(l.entriesRecordTypes, l.checker.GetTypeAtLocation(node))
+			if contextual := l.slotType(node); contextual != nil {
+				l.entriesRecordTypes = append(l.entriesRecordTypes, contextual)
+			}
+			parent := node.Parent
+			for parent != nil && (parent.Kind == ast.KindAsExpression || parent.Kind == ast.KindParenthesizedExpression) {
+				parent = parent.Parent
+			}
+			if parent != nil && parent.Kind == ast.KindVariableDeclaration {
+				l.entriesRecordTypes = append(l.entriesRecordTypes, l.checker.GetTypeAtLocation(parent.Name()))
+			}
+		}
+		return node.ForEachChild(visit)
+	}
+	for _, module := range modules {
+		module.AsNode().ForEachChild(visit)
+	}
+	return l.entriesRecordTypes
+}
+
+// recordMayReach says whether a record could be the receiver of a field read whose receiver has
+// this type. Unknown fails closed: an unconstrained type parameter, any and unknown may be a record.
+func (l *lowering) recordMayReach(receiver *checker.Type) bool {
+	return l.recordMayReachDepth(receiver, 0)
+}
+
+func (l *lowering) recordMayReachDepth(receiver *checker.Type, depth int) bool {
+	if receiver == nil || depth > 8 {
+		return true
+	}
+	if receiver.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0 {
+		return true
+	}
+	if receiver.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range receiver.Types() {
+			if member.Flags()&checker.TypeFlagsNullable == 0 && l.recordMayReachDepth(member, depth+1) {
+				return true
+			}
+		}
+		return false
+	}
+	if receiver.Flags()&checker.TypeFlagsInstantiable != 0 {
+		if concrete := l.concrete(receiver); concrete != nil && concrete != receiver {
+			return l.recordMayReachDepth(concrete, depth+1)
+		}
+		return l.recordMayReachDepth(l.checker.GetBaseConstraintOfType(receiver), depth+1)
+	}
+	if l.enumerationRecordStorageType(receiver) {
+		return true
+	}
+	for _, record := range l.entriesRecordStorageTypes() {
+		if record == receiver || l.checker.IsTypeAssignableTo(record, receiver) {
+			return true
+		}
+	}
+	return false
+}
+
+// checkRecordGuardedReads runs once lowering has registered every checked view: a read admitted
+// beside records stays NotYet when a view registered its field, since that's how a record reaches
+// a fixed type the checker can't otherwise see.
+func (l *lowering) checkRecordGuardedReads() error {
+	for _, read := range l.recordGuardedReads {
+		if l.result.CheckedField(read.receiverTypeID, read.name) {
+			return l.notYet(read.node, "a union or optional field read in a program with record storage")
+		}
+	}
+	return nil
+}
