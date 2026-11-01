@@ -364,7 +364,8 @@ show(i);`, "a call through ?. (an optional call)", false},
 // `readonly T[]`, so the narrowing is the argument's own type whatever T is (computeLineOfPosition and
 // indexOfNode, Correctness's census on 9e4f2184). With S's view registered in the program, the walk reads
 // the call as written, a claim naming firstPos's T, and passes it because the argument is the claim's own
-// type, so T at Node and at number lowers and agrees with Node, as on main (Adamic's ruling). Mutant: that
+// type, so T at Node and at number lowers and agrees with Node, as on main (Adamic's ruling). An empty
+// array isn't run: `some` answering false of one is a lie its checked false side stops, on main too. Mutant: that
 // identity test dropped, and the program is NotYet as a generic claim S may instantiate. At T = TypeElement
 // the instance's claim is an array of S, whose false side the false side's guard keeps NotYet.
 func TestBrandedSupertypeIdentityNarrowingLowers(t *testing.T) {
@@ -378,8 +379,6 @@ show(element);
 	lowersAndAgreesWithNodeAs(t, brandedPrelude+some+`function firstOf(array: readonly number[]): number { if (!some(array)) { return -1; } const first = array[0]; return first === undefined ? -1 : first; }
 const nodes: Node[] = [{ kind: 80, pos: 6 }];
 console.log(String(firstPos(nodes)));
-const none: Node[] = [];
-console.log(String(firstPos(none)));
 console.log(String(firstOf([7])));
 `, ".ts")
 	_, err := lowerTypeScriptAssertionSource(t, brandedPrelude+some+`const elements: TypeElement[] = [element];
