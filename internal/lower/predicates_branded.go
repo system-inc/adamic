@@ -86,6 +86,9 @@ func (l *lowering) registerBrandedSupertypeViews(node *ast.Node, source, target 
 	if classes := l.brandedClasses(target); len(classes) != 0 {
 		return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(target)+" that class "+l.checker.TypeToString(classes[0])+" is assignable to")
 	}
+	if err := l.brandedCalls(target); err != nil {
+		return err
+	}
 	// The claim's source is what the view vouches for through a wider type, and the value enters the view
 	// wherever a read is narrowed to S, as a tag-proven predicate's view does (view_widened.go).
 	if _, err := l.view(node, nil, source, target); err != nil {
@@ -111,7 +114,90 @@ func (l *lowering) brandedClasses(target *checker.Type) []*checker.Type {
 	return classes
 }
 
-// brandedNarrowing keeps a direct call NotYet unless the checker's narrowing of its argument, on the true
+// brandedCalls judges, once per branded supertype S, every call in the program whose resolved signature
+// claims S of an argument, by brandedNarrowing. The checker narrows a call's argument by the claim however
+// the call reaches the predicate: directly, through the predicate held as a value or a function type, or
+// through a method's claim (Language's must on 9e4f2184). Those paths check the claim in different places,
+// and the forwarder's and a closure's check holds no call site at all, so the calls are found here, where
+// S's view is registered, which every path reaches through predicateMembership. A claim on this, or one
+// whose argument is spread or missing, is NotYet, since no argument node says what the checker narrowed.
+func (l *lowering) brandedCalls(target *checker.Type) error {
+	proofs := l.proofs()
+	if err, done := proofs.brandedCalls[target]; done {
+		return predicateFailureCopy(err)
+	}
+	var err error
+	var visit ast.Visitor
+	visit = func(n *ast.Node) bool {
+		if err != nil {
+			return true
+		}
+		if n.Kind == ast.KindCallExpression {
+			err = l.brandedCall(n, target)
+		}
+		if err == nil {
+			n.ForEachChild(visit)
+		}
+		return err != nil
+	}
+	for _, file := range l.programFiles() {
+		if file.AsNode().ForEachChild(visit) {
+			break
+		}
+	}
+	proofs.brandedCalls[target] = err
+	return predicateFailureCopy(err)
+}
+
+// brandedCall judges one call by brandedNarrowing when its resolved signature claims a type holding target.
+func (l *lowering) brandedCall(call *ast.Node, target *checker.Type) error {
+	signature := l.checker.GetResolvedSignature(call)
+	if signature == nil {
+		return nil
+	}
+	claim := predicateOfSignature(l.checker, signature)
+	if claim == nil || claim.Type() == nil || !l.brandedHolds(claim.Type(), target, map[*checker.Type]bool{}) {
+		return nil
+	}
+	if claim.Kind() != checker.TypePredicateKindIdentifier && claim.Kind() != checker.TypePredicateKindAssertsIdentifier {
+		return l.notYet(call, "a checked predicate target "+l.checker.TypeToString(target)+" claimed of this")
+	}
+	index := int(claim.ParameterIndex())
+	arguments := call.AsCallExpression().Arguments.Nodes
+	if index < 0 || index >= len(arguments) {
+		return l.notYet(call, "a checked predicate target "+l.checker.TypeToString(target)+" claimed of a missing argument")
+	}
+	for _, argument := range arguments[:index+1] {
+		if argument.Kind == ast.KindSpreadElement {
+			return l.notYet(call, "a checked predicate target "+l.checker.TypeToString(target)+" claimed of a spread argument")
+		}
+	}
+	return l.brandedNarrowing(call, arguments[index], claim.Type())
+}
+
+// brandedHolds is whether claim is target, or holds it through a union's members or an array's elements,
+// as brandedMembership walks them. visited ends a recursive alias on its second visit.
+func (l *lowering) brandedHolds(claim, target *checker.Type, visited map[*checker.Type]bool) bool {
+	claim = l.concrete(claim)
+	if claim.Id() == target.Id() {
+		return true
+	}
+	if visited[claim] {
+		return false
+	}
+	visited[claim] = true
+	if claim.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range claim.Types() {
+			if l.brandedHolds(member, target, visited) {
+				return true
+			}
+		}
+		return false
+	}
+	return l.checker.IsArrayType(claim) && l.brandedHolds(l.checker.GetElementTypeOfArrayType(claim), target, visited)
+}
+
+// brandedNarrowing keeps a call NotYet unless the checker's narrowing of its argument, on the true
 // side, can only give S (Compiler's musts on 9abcbdca and 8c7afca2). Every member of the argument's type
 // must be a supertype of S, which narrows to S. Any other member is NotYet, never modelled: a subtype of
 // S keeps its own type, whose fields S's view doesn't check and whose value no entry of S's names, and

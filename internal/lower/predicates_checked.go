@@ -528,11 +528,6 @@ func (l *lowering) checkedPredicateResult(call *ast.CallExpression, value ir.Exp
 	sourceName := "missing argument"
 	if index >= 0 && index < len(call.Arguments.Nodes) {
 		sourceName = l.checker.TypeToString(l.checker.GetTypeAtLocation(call.Arguments.Nodes[index]))
-		if claim.Type() != nil && !proven {
-			if err := l.brandedNarrowing(call.AsNode(), call.Arguments.Nodes[index], claim.Type()); err != nil {
-				return nil, err
-			}
-		}
 	}
 	targetName := "truthy"
 	if claim.Type() != nil {
