@@ -1,0 +1,7 @@
+// Spec: an unawaited async task, `void` of one included, is refused
+// Expect: refused an unawaited async task
+async function wait(): Promise<void> {
+	await Promise.resolve();
+	console.log('waited');
+}
+wait();

@@ -1,0 +1,6 @@
+// Spec: Async generators are refused
+// Expect: refused an async generator function
+async function* numbers(): AsyncGenerator<number> {
+	yield 1;
+}
+for await (const value of numbers()) console.log(String(value));
