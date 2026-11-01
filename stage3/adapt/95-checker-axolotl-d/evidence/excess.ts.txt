@@ -1,0 +1,17 @@
+declare function f<T extends string>(): T;
+declare class C<T extends string> { value: T }
+interface I<T extends string> { value: T }
+type Alias<T extends string> = { value: T };
+f<string, number, boolean>();
+new C<string, number, boolean>();
+f<string, number, boolean>;
+const inst = f<string, number, boolean>;
+type Ref = I<string, number, boolean>;
+type Aliased = Alias<string, number, boolean>;
+class Derived extends C<string, number, boolean> {}
+interface Extended extends I<string, number, boolean> {}
+f<string, number, boolean>`tag`;
+@f<string, number, boolean>()
+class Decorated {}
+
+type Valid = I<string>;

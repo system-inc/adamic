@@ -1,0 +1,201 @@
+{
+  "counts": {
+    "42849:present": 6,
+    "42849:absent": 8,
+    "50153:absent": 2,
+    "12034:present": 4,
+    "50153:present": 2
+  },
+  "samples": {
+    "42849:present": [
+      {
+        "test": "excess.ts:noImplicitAny=false",
+        "detail": {
+          "file": "/95d/excess.ts",
+          "text": "I<string>",
+          "position": 0,
+          "arity": 1
+        },
+        "stack": "Error\n    at global.__95d (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/observe.cjs:13:67)\n    at getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:86483:64)\n    at Object.getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:51513:22)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:26:50)\n    at visitNodes (/workspace/scratch/95d-before/built/local/typescript.js:32576:22)\n    at forEachChildInTypeReference (/workspace/scratch/95d-before/built/local/typescript.js:32674:49)\n    at Object.forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:33:16)\n    at visitNode2 (/workspace/scratch/95d-before/built/local/typescript.js:32568:18)\n    at forEachChildInTypeAliasDeclaration (/workspace/scratch/95d-before/built/local/typescript.js:32859:144)"
+      },
+      {
+        "test": "excess.ts:noImplicitAny=true",
+        "detail": {
+          "file": "/95d/excess.ts",
+          "text": "I<string>",
+          "position": 0,
+          "arity": 1
+        },
+        "stack": "Error\n    at global.__95d (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/observe.cjs:13:67)\n    at getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:86483:64)\n    at Object.getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:51513:22)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:26:50)\n    at visitNodes (/workspace/scratch/95d-before/built/local/typescript.js:32576:22)\n    at forEachChildInTypeReference (/workspace/scratch/95d-before/built/local/typescript.js:32674:49)\n    at Object.forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:33:16)\n    at visitNode2 (/workspace/scratch/95d-before/built/local/typescript.js:32568:18)\n    at forEachChildInTypeAliasDeclaration (/workspace/scratch/95d-before/built/local/typescript.js:32859:144)"
+      },
+      {
+        "test": "excess.js:noImplicitAny=false",
+        "detail": {
+          "file": "/95d/excess.js",
+          "text": "C<string, number, boolean>",
+          "position": 0,
+          "arity": 1
+        },
+        "stack": "Error\n    at global.__95d (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/observe.cjs:13:67)\n    at getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:86483:64)\n    at Object.getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:51513:22)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:26:50)\n    at visitNodes (/workspace/scratch/95d-before/built/local/typescript.js:32576:22)\n    at forEachChildInTypeReference (/workspace/scratch/95d-before/built/local/typescript.js:32674:49)\n    at Object.forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:33:16)\n    at visitNode2 (/workspace/scratch/95d-before/built/local/typescript.js:32568:18)\n    at forEachChildInOptionalRestOrJSDocParameterModifier (/workspace/scratch/95d-before/built/local/typescript.js:33064:10)"
+      }
+    ],
+    "42849:absent": [
+      {
+        "test": "excess.js:noImplicitAny=false",
+        "detail": {
+          "file": "/95d/excess.js",
+          "text": "C<string, number, boolean>",
+          "position": 1,
+          "arity": 1
+        },
+        "stack": "Error\n    at global.__95d (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/observe.cjs:13:67)\n    at getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:86483:64)\n    at Object.getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:51513:22)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:26:50)\n    at visitNodes (/workspace/scratch/95d-before/built/local/typescript.js:32576:22)\n    at forEachChildInTypeReference (/workspace/scratch/95d-before/built/local/typescript.js:32674:49)\n    at Object.forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:33:16)\n    at visitNode2 (/workspace/scratch/95d-before/built/local/typescript.js:32568:18)\n    at forEachChildInOptionalRestOrJSDocParameterModifier (/workspace/scratch/95d-before/built/local/typescript.js:33064:10)"
+      },
+      {
+        "test": "excess.js:noImplicitAny=false",
+        "detail": {
+          "file": "/95d/excess.js",
+          "text": "C<string, number, boolean>",
+          "position": 2,
+          "arity": 1
+        },
+        "stack": "Error\n    at global.__95d (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/observe.cjs:13:67)\n    at getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:86483:64)\n    at Object.getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:51513:22)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:26:50)\n    at visitNodes (/workspace/scratch/95d-before/built/local/typescript.js:32576:22)\n    at forEachChildInTypeReference (/workspace/scratch/95d-before/built/local/typescript.js:32674:49)\n    at Object.forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:33:16)\n    at visitNode2 (/workspace/scratch/95d-before/built/local/typescript.js:32568:18)\n    at forEachChildInOptionalRestOrJSDocParameterModifier (/workspace/scratch/95d-before/built/local/typescript.js:33064:10)"
+      },
+      {
+        "test": "excess.js:noImplicitAny=false",
+        "detail": {
+          "file": "/95d/excess.js",
+          "text": "C<string, number, boolean>",
+          "position": 1,
+          "arity": 1
+        },
+        "stack": "Error\n    at global.__95d (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/observe.cjs:13:67)\n    at getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:86483:64)\n    at Object.getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:51513:22)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:26:50)\n    at visitNodes (/workspace/scratch/95d-before/built/local/typescript.js:32576:22)\n    at forEachChildInExpressionWithTypeArguments (/workspace/scratch/95d-before/built/local/typescript.js:32923:51)\n    at Object.forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:33:16)\n    at visitNode2 (/workspace/scratch/95d-before/built/local/typescript.js:32568:18)\n    at forEachChildInJSDocAugmentsTag (/workspace/scratch/95d-before/built/local/typescript.js:32991:48)"
+      },
+      {
+        "test": "excess.js:noImplicitAny=false",
+        "detail": {
+          "file": "/95d/excess.js",
+          "text": "C<string, number, boolean>",
+          "position": 2,
+          "arity": 1
+        },
+        "stack": "Error\n    at global.__95d (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/observe.cjs:13:67)\n    at getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:86483:64)\n    at Object.getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:51513:22)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:26:50)\n    at visitNodes (/workspace/scratch/95d-before/built/local/typescript.js:32576:22)\n    at forEachChildInExpressionWithTypeArguments (/workspace/scratch/95d-before/built/local/typescript.js:32923:51)\n    at Object.forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:33:16)\n    at visitNode2 (/workspace/scratch/95d-before/built/local/typescript.js:32568:18)\n    at forEachChildInJSDocAugmentsTag (/workspace/scratch/95d-before/built/local/typescript.js:32991:48)"
+      },
+      {
+        "test": "excess.js:noImplicitAny=true",
+        "detail": {
+          "file": "/95d/excess.js",
+          "text": "C<string, number, boolean>",
+          "position": 1,
+          "arity": 1
+        },
+        "stack": "Error\n    at global.__95d (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/observe.cjs:13:67)\n    at getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:86483:64)\n    at Object.getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:51513:22)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:26:50)\n    at visitNodes (/workspace/scratch/95d-before/built/local/typescript.js:32576:22)\n    at forEachChildInTypeReference (/workspace/scratch/95d-before/built/local/typescript.js:32674:49)\n    at Object.forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:33:16)\n    at visitNode2 (/workspace/scratch/95d-before/built/local/typescript.js:32568:18)\n    at forEachChildInOptionalRestOrJSDocParameterModifier (/workspace/scratch/95d-before/built/local/typescript.js:33064:10)"
+      },
+      {
+        "test": "excess.js:noImplicitAny=true",
+        "detail": {
+          "file": "/95d/excess.js",
+          "text": "C<string, number, boolean>",
+          "position": 2,
+          "arity": 1
+        },
+        "stack": "Error\n    at global.__95d (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/observe.cjs:13:67)\n    at getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:86483:64)\n    at Object.getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:51513:22)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:26:50)\n    at visitNodes (/workspace/scratch/95d-before/built/local/typescript.js:32576:22)\n    at forEachChildInTypeReference (/workspace/scratch/95d-before/built/local/typescript.js:32674:49)\n    at Object.forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:33:16)\n    at visitNode2 (/workspace/scratch/95d-before/built/local/typescript.js:32568:18)\n    at forEachChildInOptionalRestOrJSDocParameterModifier (/workspace/scratch/95d-before/built/local/typescript.js:33064:10)"
+      },
+      {
+        "test": "excess.js:noImplicitAny=true",
+        "detail": {
+          "file": "/95d/excess.js",
+          "text": "C<string, number, boolean>",
+          "position": 1,
+          "arity": 1
+        },
+        "stack": "Error\n    at global.__95d (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/observe.cjs:13:67)\n    at getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:86483:64)\n    at Object.getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:51513:22)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:26:50)\n    at visitNodes (/workspace/scratch/95d-before/built/local/typescript.js:32576:22)\n    at forEachChildInExpressionWithTypeArguments (/workspace/scratch/95d-before/built/local/typescript.js:32923:51)\n    at Object.forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:33:16)\n    at visitNode2 (/workspace/scratch/95d-before/built/local/typescript.js:32568:18)\n    at forEachChildInJSDocAugmentsTag (/workspace/scratch/95d-before/built/local/typescript.js:32991:48)"
+      },
+      {
+        "test": "excess.js:noImplicitAny=true",
+        "detail": {
+          "file": "/95d/excess.js",
+          "text": "C<string, number, boolean>",
+          "position": 2,
+          "arity": 1
+        },
+        "stack": "Error\n    at global.__95d (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/observe.cjs:13:67)\n    at getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:86483:64)\n    at Object.getTypeArgumentConstraint (/workspace/scratch/95d-before/built/local/typescript.js:51513:22)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:26:50)\n    at visitNodes (/workspace/scratch/95d-before/built/local/typescript.js:32576:22)\n    at forEachChildInExpressionWithTypeArguments (/workspace/scratch/95d-before/built/local/typescript.js:32923:51)\n    at Object.forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:33:16)\n    at visitNode2 (/workspace/scratch/95d-before/built/local/typescript.js:32568:18)\n    at forEachChildInJSDocAugmentsTag (/workspace/scratch/95d-before/built/local/typescript.js:32991:48)"
+      }
+    ],
+    "50153:absent": [
+      {
+        "test": "consumer.ts:noImplicitAny=false",
+        "detail": {
+          "infos": 1,
+          "declarations": 0
+        },
+        "stack": "Error\n    at global.__95d (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/observe.cjs:13:67)\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92151:118)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92224:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:30:46)\n    at visitNode2 (/workspace/scratch/95d-before/built/local/typescript.js:32568:18)\n    at forEachChildInExpressionStatement (/workspace/scratch/95d-before/built/local/typescript.js:32798:12)\n    at Object.forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:33:16)"
+      },
+      {
+        "test": "consumer.ts:noImplicitAny=true",
+        "detail": {
+          "infos": 1,
+          "declarations": 0
+        },
+        "stack": "Error\n    at global.__95d (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/observe.cjs:13:67)\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92151:118)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92224:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:30:46)\n    at visitNode2 (/workspace/scratch/95d-before/built/local/typescript.js:32568:18)\n    at forEachChildInExpressionStatement (/workspace/scratch/95d-before/built/local/typescript.js:32798:12)\n    at Object.forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:33:16)"
+      }
+    ],
+    "12034:present": [
+      {
+        "test": "common-consumer.ts:noImplicitAny=false",
+        "detail": {
+          "file": "/95d/commonjs.js",
+          "declarations": 2
+        },
+        "stack": "Error\n    at global.__95d (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/observe.cjs:13:67)\n    at getFlowTypeFromCommonJSExport (/workspace/scratch/95d-before/built/local/typescript.js:60843:33)\n    at getTypeOfAlias (/workspace/scratch/95d-before/built/local/typescript.js:61530:184)\n    at getTypeOfSymbol (/workspace/scratch/95d-before/built/local/typescript.js:61625:14)\n    at getNarrowedTypeOfSymbol (/workspace/scratch/95d-before/built/local/typescript.js:76656:18)\n    at checkIdentifier (/workspace/scratch/95d-before/built/local/typescript.js:76807:16)\n    at checkExpressionWorker (/workspace/scratch/95d-before/built/local/typescript.js:85676:16)\n    at checkExpression (/workspace/scratch/95d-before/built/local/typescript.js:85619:32)\n    at checkExpressionStatement (/workspace/scratch/95d-before/built/local/typescript.js:88277:5)\n    at checkSourceElementWorker (/workspace/scratch/95d-before/built/local/typescript.js:91356:16)"
+      },
+      {
+        "test": "common-consumer.ts:noImplicitAny=false",
+        "detail": {
+          "file": "/95d/commonjs.js",
+          "declarations": 2
+        },
+        "stack": "Error\n    at global.__95d (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/observe.cjs:13:67)\n    at getFlowTypeFromCommonJSExport (/workspace/scratch/95d-before/built/local/typescript.js:60843:33)\n    at getTypeOfAlias (/workspace/scratch/95d-before/built/local/typescript.js:61530:184)\n    at getTypeOfSymbol (/workspace/scratch/95d-before/built/local/typescript.js:61625:14)\n    at getNarrowedTypeOfSymbol (/workspace/scratch/95d-before/built/local/typescript.js:76656:18)\n    at checkIdentifier (/workspace/scratch/95d-before/built/local/typescript.js:76807:16)\n    at checkExpressionWorker (/workspace/scratch/95d-before/built/local/typescript.js:85676:16)\n    at checkExpression (/workspace/scratch/95d-before/built/local/typescript.js:85619:32)\n    at checkExpressionStatement (/workspace/scratch/95d-before/built/local/typescript.js:88277:5)\n    at checkSourceElementWorker (/workspace/scratch/95d-before/built/local/typescript.js:91356:16)"
+      },
+      {
+        "test": "common-consumer.ts:noImplicitAny=true",
+        "detail": {
+          "file": "/95d/commonjs.js",
+          "declarations": 2
+        },
+        "stack": "Error\n    at global.__95d (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/observe.cjs:13:67)\n    at getFlowTypeFromCommonJSExport (/workspace/scratch/95d-before/built/local/typescript.js:60843:33)\n    at getTypeOfAlias (/workspace/scratch/95d-before/built/local/typescript.js:61530:184)\n    at getTypeOfSymbol (/workspace/scratch/95d-before/built/local/typescript.js:61625:14)\n    at getNarrowedTypeOfSymbol (/workspace/scratch/95d-before/built/local/typescript.js:76656:18)\n    at checkIdentifier (/workspace/scratch/95d-before/built/local/typescript.js:76807:16)\n    at checkExpressionWorker (/workspace/scratch/95d-before/built/local/typescript.js:85676:16)\n    at checkExpression (/workspace/scratch/95d-before/built/local/typescript.js:85619:32)\n    at checkExpressionStatement (/workspace/scratch/95d-before/built/local/typescript.js:88277:5)\n    at checkSourceElementWorker (/workspace/scratch/95d-before/built/local/typescript.js:91356:16)"
+      }
+    ],
+    "50153:present": [
+      {
+        "test": "consumer-present.ts:noImplicitAny=false",
+        "detail": {
+          "infos": 1,
+          "declarations": 1
+        },
+        "stack": "Error\n    at global.__95d (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/observe.cjs:13:67)\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92151:118)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92224:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:30:46)\n    at visitNode2 (/workspace/scratch/95d-before/built/local/typescript.js:32568:18)\n    at forEachChildInExpressionStatement (/workspace/scratch/95d-before/built/local/typescript.js:32798:12)\n    at Object.forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:33:16)"
+      },
+      {
+        "test": "consumer-present.ts:noImplicitAny=true",
+        "detail": {
+          "infos": 1,
+          "declarations": 1
+        },
+        "stack": "Error\n    at global.__95d (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/observe.cjs:13:67)\n    at getApplicableIndexSymbol (/workspace/scratch/95d-before/built/local/typescript.js:92151:118)\n    at getSymbolOfNameOrPropertyAccessExpression (/workspace/scratch/95d-before/built/local/typescript.js:92098:36)\n    at getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:92224:18)\n    at Object.getSymbolAtLocation (/workspace/scratch/95d-before/built/local/typescript.js:51268:21)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:30:46)\n    at visitNode2 (/workspace/scratch/95d-before/built/local/typescript.js:32568:18)\n    at forEachChildInExpressionStatement (/workspace/scratch/95d-before/built/local/typescript.js:32798:12)\n    at Object.forEachChild (/workspace/scratch/95d-before/built/local/typescript.js:33089:35)\n    at visit (/workspace/adamic/stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs:33:16)"
+      }
+    ]
+  },
+  "patched": [
+    {
+      "filename": "/workspace/scratch/95d-before/built/local/typescript.js",
+      "site": "12034"
+    },
+    {
+      "filename": "/workspace/scratch/95d-before/built/local/typescript.js",
+      "site": "42849"
+    },
+    {
+      "filename": "/workspace/scratch/95d-before/built/local/typescript.js",
+      "site": "50153"
+    }
+  ]
+}

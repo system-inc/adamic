@@ -1,0 +1,18 @@
+Proposed only. Requires Correctness ruling; not part of adapt.cjs.
+--- a/src/compiler/checker.ts
++++ b/src/compiler/checker.ts
+@@
+-                    copy.parent = type.aliasSymbol ? type.aliasSymbol : type.symbol ? type.symbol : getSymbolAtLocation(copy.declarations[0].parent);
++                    if (type.aliasSymbol) {
++                        copy.parent = type.aliasSymbol;
++                    }
++                    else if (type.symbol) {
++                        copy.parent = type.symbol;
++                    }
++                    else {
++                        const declaration = copy.declarations[0];
++                        if (declaration === undefined) {
++                            throw new TypeError("Cannot read properties of undefined (reading 'parent')");
++                        }
++                        copy.parent = getSymbolAtLocation(declaration.parent);
++                    }

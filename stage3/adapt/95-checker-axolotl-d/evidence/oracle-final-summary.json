@@ -1,0 +1,67 @@
+{
+  "rawStatus": "fail",
+  "counts": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "wallSeconds": 350.495,
+  "phases": {
+    "install": {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit": 0,
+      "seconds": 2.409
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "seconds": 24.999
+    },
+    "tests": {
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--workers=8",
+        "--lint=false",
+        "--no-colors"
+      ],
+      "exit": 1,
+      "seconds": 322.998
+    }
+  },
+  "failedTests": [
+    "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+  ],
+  "baselineDiffs": [
+    "api/typescript.d.ts"
+  ],
+  "newBaselineDifferences": 0,
+  "baselineDiffBytes": 51123,
+  "baselineDiffSha256": "6d52cd09811c6846c977ea492071c14325816a631706cc79128c4299b9faa031",
+  "apis": [
+    {
+      "file": "built/local/typescript.d.ts",
+      "bytes": 590996,
+      "sha256": "b901adcc6ec29e299ec21401b2a155b2b2c14c046ec743fed6ee45679b726d5d",
+      "matchesMain": true
+    },
+    {
+      "file": "tests/baselines/reference/api/typescript.d.ts",
+      "bytes": 588626,
+      "sha256": "f87d6c30da287293aae741711fa94594b75d49e0977cea6bfd5982f90e2bafcf",
+      "matchesMain": true
+    }
+  ],
+  "sourceFilesMatchFreshApply": 711,
+  "lane": "run as part of a Correctness wave"
+}

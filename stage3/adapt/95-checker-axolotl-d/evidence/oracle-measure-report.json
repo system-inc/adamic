@@ -1,0 +1,59 @@
+{
+  "tree": "/workspace/scratch/95d-before",
+  "nproc": 5,
+  "workers": 8,
+  "runners": "compiler",
+  "tests": null,
+  "node": "v24.19.0",
+  "phases": {
+    "install": {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit": 0,
+      "seconds": 5.985
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "seconds": 24.757
+    },
+    "tests": {
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--workers=8",
+        "--lint=false",
+        "--no-colors",
+        "--runners=compiler"
+      ],
+      "exit": 0,
+      "seconds": 182.66
+    }
+  },
+  "status": "pass",
+  "counts": {
+    "passing": 89838,
+    "failing": 0,
+    "pending": 0
+  },
+  "baseline_diffs": [],
+  "failures": [],
+  "cause_counts": {
+    "timeout": 0,
+    "baseline-content": 0,
+    "baseline-missing": 0,
+    "exception": 0,
+    "other": 0
+  },
+  "baseline_previews": [],
+  "wall_seconds": 213.414
+}

@@ -1,0 +1,15 @@
+{
+  "before": {
+    "wholeProgram": 130,
+    "checkerOwnFile": 17
+  },
+  "afterFresh": {
+    "wholeProgram": 129,
+    "checkerOwnFile": 16
+  },
+  "removed": [
+    "src/compiler/checker.ts:12034:30: error TS18048: 'file' is possibly 'undefined'."
+  ],
+  "added": [],
+  "explanation": "Upstream npm dependencies are installed in both. Their source-map-support package removes the one missing-module diagnostic present in dependency-free controls."
+}

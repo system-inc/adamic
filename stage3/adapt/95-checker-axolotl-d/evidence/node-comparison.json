@@ -1,0 +1,70 @@
+{
+  "node": "v24.19.0",
+  "built": false,
+  "comparison": "all diagnostics and query results, including caught error name and message",
+  "exactQueryResultsEqual": true,
+  "uncaughtStacksCompared": false,
+  "absences": [
+    {
+      "fixture": "excess.js",
+      "noImplicitAny": false,
+      "text": "number",
+      "error": "TypeError: Cannot read properties of undefined (reading 'resolvedBaseConstraint')"
+    },
+    {
+      "fixture": "excess.js",
+      "noImplicitAny": false,
+      "text": "boolean",
+      "error": "TypeError: Cannot read properties of undefined (reading 'resolvedBaseConstraint')"
+    },
+    {
+      "fixture": "excess.js",
+      "noImplicitAny": false,
+      "text": "number",
+      "error": "TypeError: Cannot read properties of undefined (reading 'resolvedBaseConstraint')"
+    },
+    {
+      "fixture": "excess.js",
+      "noImplicitAny": false,
+      "text": "boolean",
+      "error": "TypeError: Cannot read properties of undefined (reading 'resolvedBaseConstraint')"
+    },
+    {
+      "fixture": "excess.js",
+      "noImplicitAny": true,
+      "text": "number",
+      "error": "TypeError: Cannot read properties of undefined (reading 'resolvedBaseConstraint')"
+    },
+    {
+      "fixture": "excess.js",
+      "noImplicitAny": true,
+      "text": "boolean",
+      "error": "TypeError: Cannot read properties of undefined (reading 'resolvedBaseConstraint')"
+    },
+    {
+      "fixture": "excess.js",
+      "noImplicitAny": true,
+      "text": "number",
+      "error": "TypeError: Cannot read properties of undefined (reading 'resolvedBaseConstraint')"
+    },
+    {
+      "fixture": "excess.js",
+      "noImplicitAny": true,
+      "text": "boolean",
+      "error": "TypeError: Cannot read properties of undefined (reading 'resolvedBaseConstraint')"
+    },
+    {
+      "fixture": "consumer.ts",
+      "noImplicitAny": false,
+      "access": "v.xyz",
+      "error": "TypeError: Cannot read properties of undefined (reading 'parent')"
+    },
+    {
+      "fixture": "consumer.ts",
+      "noImplicitAny": true,
+      "access": "v.xyz",
+      "error": "TypeError: Cannot read properties of undefined (reading 'parent')"
+    }
+  ],
+  "fixturePrograms": 14
+}

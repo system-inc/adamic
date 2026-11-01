@@ -1,0 +1,5 @@
+/** @type {string} */
+let key = 'xyz';
+class Computed { static [key] = 1; }
+module.exports = /** @type {typeof Computed} */ (class {});
+module.exports.extra = 2;
