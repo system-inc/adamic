@@ -1,0 +1,8 @@
+// A record laundered through any to a fixed type. Today any stops it; the day any is refused or
+// relates, the read of x must still stop before it reads past the record's slot.
+const r: { [k: string]: number | undefined } = {};
+r["x"] = 1;
+const a: any = r;
+const f: { x?: number } = a;
+for (const key of Object.keys(r)) console.log(key);
+console.log(f.x === undefined ? "none" : String(f.x));

@@ -1,0 +1,9 @@
+// A predicate narrowing a record to a subtype. Today the predicate itself stops; the day it lowers,
+// the read of extra must stop at the guard instead (both directions of rule c).
+interface Opts { [key: string]: number | string; total: number }
+interface SubOpts extends Opts { extra?: number | string }
+const opts: Opts = { total: 2 };
+opts["extra"] = "seven";
+function isSub(r: Opts): r is SubOpts { return "extra" in r; }
+for (const key of Object.keys(opts)) console.log(key);
+if (isSub(opts)) console.log(opts.extra === undefined ? "none" : String(opts.extra));

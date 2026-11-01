@@ -3,6 +3,7 @@ package oracle
 import (
 	"errors"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/lower"
@@ -53,6 +54,35 @@ func TestRecordGuardedReadRefused(t *testing.T) {
 			var notYet *lower.NotYet
 			if !errors.As(err, &notYet) || notYet.What != recordGuardedReason || notYet.Where != path+where {
 				t.Fatalf("want NotYet %q at %s, got %v", recordGuardedReason, where, err)
+			}
+		})
+	}
+}
+
+// Two ways a record could reach a union or maybe read are stopped earlier today: a predicate that
+// narrows a record to a subtype (the narrower direction of rule c's only road in), and a record
+// laundered through any. Each pins its current stop. When one moves, because predicates or any start
+// to lower, this goes red, and that fixture belongs with the reached_ ones, stopped at the read.
+func TestRecordGuardedReadStopsEarlier(t *testing.T) {
+	t.Parallel()
+	for name, want := range map[string]struct{ where, what string }{
+		"early_predicate": {":7:41", "a type predicate whose return is not proven"},
+		"early_any":       {":5:7", "a value of type any"},
+	} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_guarded/"+name+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			_, err = lowered(t, path)
+			var refused *lower.Refused
+			var notYet *lower.NotYet
+			switch {
+			case errors.As(err, &refused) && refused.Where == path+want.where && strings.HasPrefix(refused.What, want.what):
+			case errors.As(err, &notYet) && notYet.Where == path+want.where && strings.HasPrefix(notYet.What, want.what):
+			default:
+				t.Fatalf("want the earlier stop %q at %s, got %v", want.what, want.where, err)
 			}
 		})
 	}
