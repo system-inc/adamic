@@ -1,0 +1,49 @@
+[
+  {
+    "file": "src/compiler/checker.ts",
+    "owner": "getMergedSymbol",
+    "ownerOccurrence": 2,
+    "ownerCount": 3,
+    "kind": "VariableDeclaration",
+    "name": "merged",
+    "nested": true,
+    "before": "merged: Symbol",
+    "after": "merged: Symbol | undefined",
+    "ownerBeforeSha256": "fd0ff189c86f27e3689f11c89fc5dc8b510f45efbbcb691a94bacac66503a994",
+    "typeBefore": "Symbol",
+    "line": 5310,
+    "column": 13,
+    "typeAfter": "Symbol | undefined"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "owner": "SymbolLinks",
+    "ownerOccurrence": 0,
+    "ownerCount": 1,
+    "kind": "PropertySignature",
+    "name": "tupleLabelDeclaration",
+    "before": "tupleLabelDeclaration?: NamedTupleMember | ParameterDeclaration;",
+    "after": "tupleLabelDeclaration?: NamedTupleMember | ParameterDeclaration | undefined;",
+    "ownerBeforeSha256": "fb65137820d645f1ad589c2d4f1d86c29c689c0d8839780c5b0afa9657a1210b",
+    "typeBefore": "NamedTupleMember | ParameterDeclaration | undefined",
+    "line": 6102,
+    "column": 5,
+    "typeAfter": "NamedTupleMember | ParameterDeclaration | undefined"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "owner": "getTupleElementLabel",
+    "ownerOccurrence": 1,
+    "ownerCount": 3,
+    "kind": "Parameter",
+    "name": "elementFlags",
+    "nested": true,
+    "before": "elementFlags: ElementFlags",
+    "after": "elementFlags: ElementFlags | undefined",
+    "ownerBeforeSha256": "357e1ce1376a032a71e5803fd30a3c51d79ae1bd2fc3e9ec1b45471956c6186f",
+    "typeBefore": "ElementFlags",
+    "line": 38407,
+    "column": 106,
+    "typeAfter": "ElementFlags | undefined"
+  }
+]
