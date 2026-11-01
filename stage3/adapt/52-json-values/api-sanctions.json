@@ -152,6 +152,16 @@
     "why": "Adamic r2628wp: the JSON AST converter produces the recursive recovery value domain or undefined."
   },
   {
+    "path": [
+      "readConfigFile",
+      "config"
+    ],
+    "kind": "PropertySignature",
+    "before": "any",
+    "after": "AdamicJsonRecoveryObject",
+    "why": "APISample_parseConfig calls only parseConfigFileTextToJson; readConfigFile has no judged public-any pin."
+  },
+  {
     "insert": "after",
     "path": [
       "ParseConfigFileHost"

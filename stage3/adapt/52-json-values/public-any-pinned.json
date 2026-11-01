@@ -1,15 +1,6 @@
 [
   {
     "path": [
-      "readConfigFile",
-      "config"
-    ],
-    "kind": "PropertySignature",
-    "baseline": "APISample_parseConfig.errors.txt",
-    "read": "config.config[\"compilerOptions\"]"
-  },
-  {
-    "path": [
       "parseConfigFileTextToJson",
       "config"
     ],

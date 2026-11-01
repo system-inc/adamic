@@ -144,4 +144,44 @@ for (const value of [undefined, {}, [], 0, '', false, 'echo']) {
     const checked = mutant === 'echo' ? echoRule.after.replace('req.arguments === null', 'req.arguments !== null') : echoRule.after;
     assert.deepEqual(echo(checked, value), echo(echoRule.before, value));
 }
-console.log(JSON.stringify({classes: ['object', 'inherited', 'location', 'response', 'plugin', 'localized', 'echo', 'full-reply-string', 'full-reply-invalid'], beforeAfter: 'pass', mutant: mutant || null}));
+// Run the checked jsTyping map readers and compare original behavior in Node.
+const typingFile = 'src/jsTyping/jsTyping.ts';
+let typingMaps = fn(after, typingFile, 'isAdamicTypingStringMap') + '\n' + fn(after, typingFile, 'checkedAdamicTypingStringMap');
+if (mutant === 'typing-string-map') typingMaps = typingMaps.replace('typeof entry === "string"', 'typeof entry === "number"');
+const getOwnKeys = Function('hasOwnProperty', js(fn(before, 'src/compiler/core.ts', 'getOwnKeys')) + ';return getOwnKeys;')(Object.prototype.hasOwnProperty);
+let dependencyKeys = fn(after, typingFile, 'adamicTypingDependencyKeys');
+if (mutant === 'typing-dependency-keys') dependencyKeys = dependencyKeys.replace('if (isAdamicJsonObject(value))', 'if (false && isAdamicJsonObject(value))');
+const checkedKeys = Function('isAdamicJsonObject', 'getOwnKeys', js(dependencyKeys) + ';return adamicTypingDependencyKeys;')(object.isAdamicJsonObject, getOwnKeys);
+for (const value of [undefined, null, false, true, 0, 23, '', 'abc', [], ['x'], {}, {dep: '^1', optional: null}]) {
+    assert.deepEqual(checkedKeys(value), getOwnKeys(value), 'dependency enumeration retains the old primitive and missing behavior');
+}
+function typingReader(root, name, config) {
+    const readConfigFile = () => ({config});
+    const code = (root === after ? typingMaps : '') + '\n' + fn(root, typingFile, name);
+    return Function('isAdamicJsonObject', 'readConfigFile', js(code) + `;return ${name};`)(object.isAdamicJsonObject, readConfigFile)({readFile() {}}, '/map.json');
+}
+for (const value of [{}, {jquery: 'jquery', angular: 'angular'}, ['a', 'b']]) {
+    assert.deepEqual(typingReader(after, 'loadSafeList', value), typingReader(before, 'loadSafeList', value));
+}
+for (const simpleMap of [undefined, null, false, 0, '', 'ab', [], ['a'], {}, {jquery: 'jquery'}]) {
+    const config = {simpleMap};
+    assert.deepEqual(typingReader(after, 'loadTypesMap', config), typingReader(before, 'loadTypesMap', config));
+}
+for (const value of [{bad: 1}, {bad: null}, {bad: {}}]) {
+    assert.throws(() => typingReader(after, 'loadSafeList', value), TypeError);
+}
+const packageRule = rules.find(r => r.file === typingFile && r.before.includes('if (!manifest.name)'));
+assert(packageRule);
+function packageRead(code, manifest) {
+    return Function('manifest', 'for (const once of [0]) {\n' + code + '\nreturn {name: manifest.name, ownTypes};\n}\nreturn {name: manifest.name, ownTypes};\n}\nreturn undefined;')(manifest);
+}
+let packageCheck = packageRule.after;
+if (mutant === 'typing-name') packageCheck = packageCheck.replace('typeof manifest.name !== "string"', 'typeof manifest.name !== "number"');
+if (mutant === 'typing-types') packageCheck = packageCheck.replace('typeof ownTypes !== "string"', 'typeof ownTypes !== "number"');
+for (const manifest of [{}, {name: null}, {name: false}, {name: 0}, {name: ''}, {name: 'pkg'}, {name: 'pkg', types: 'a.d.ts'}, {name: 'pkg', types: '', typings: 'b.d.ts'}, {name: 'pkg', types: false, typings: null}]) {
+    assert.deepEqual(packageRead(packageCheck, manifest), packageRead(packageRule.before, manifest));
+}
+assert.throws(() => packageRead(packageCheck, {name: 1}), TypeError);
+assert.throws(() => packageRead(packageCheck, {name: 'pkg', types: {}}), TypeError);
+
+console.log(JSON.stringify({classes: ['object', 'inherited', 'location', 'response', 'plugin', 'localized', 'echo', 'full-reply-string', 'full-reply-invalid', 'typing-string-map', 'typing-dependency-keys', 'typing-name', 'typing-types'], beforeAfter: 'pass', mutant: mutant || null}));
