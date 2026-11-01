@@ -59,12 +59,15 @@ const original = pinned('tests/baselines/reference/api/typescript.d.ts');
 const source = parse('typescript.d.ts', original);
 const edits = [];
 const owners = [];
+const claimed = new Set();
 function owned(record, select, adaptation) {
     const matches = nodes(source, node => select(node) && JSON.stringify(ownerPath(node)) === JSON.stringify(record.path));
-    assert.equal(matches.length, 1, `ambiguous proof owner ${record.path}`);
+    assert.equal(matches.length, 1, `ambiguous or missing proof owner ${adaptation}: ${record.path}`);
     const node = matches[0];
     const line = source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1;
     if (record.line !== undefined) assert.equal(line, record.line, `proof owner drift ${record.path}`);
+    assert(!claimed.has(node), `already claimed proof owner ${adaptation}: ${record.path}`);
+    claimed.add(node);
     owners.push({ adaptation, path: record.path, line });
     return node;
 }
@@ -195,6 +198,30 @@ assert.equal(exitProof.after, 'number | undefined');
 edits.push({ at: exitOwner.type.getStart(source), end: exitOwner.type.end, text: exitProof.after });
 proofPaths.push(exitProofPath);
 assert.equal(new Set(owners.map(owner => owner.line)).size, 222, 'sanctioned owner line sets overlap');
+
+// Each adaptation may certify additional existing public type owners.
+const sanctionKinds = new Set(['PropertySignature', 'PropertyDeclaration', 'Parameter', 'MethodSignature']);
+for (const directory of fs.readdirSync(path.join(stage, 'adapt'), { withFileTypes: true })
+    .filter(entry => entry.isDirectory()).map(entry => entry.name).sort()) {
+    const relative = `adapt/${directory}/api-sanctions.json`;
+    if (!fs.existsSync(path.join(stage, relative))) continue;
+    const rows = proof(relative);
+    assert(Array.isArray(rows), `${relative}: expected an array`);
+    for (const [index, row] of rows.entries()) {
+        const label = `${relative} row ${index + 1} ${JSON.stringify(row)}`;
+        assert(Array.isArray(row.path) && row.path.every(name => typeof name === 'string') &&
+            sanctionKinds.has(row.kind) && typeof row.before === 'string' &&
+            typeof row.after === 'string' && typeof row.why === 'string' &&
+            row.why.length > 0 && !/[\r\n]/.test(row.why), `${label}: invalid sanction`);
+        const node = owned(row, node => ts.SyntaxKind[node.kind] === row.kind, label);
+        assert(node.type, `${label}: owner has no type`);
+        assert.equal(node.type.getText(source), row.before,
+            `${label}: upstream type ${JSON.stringify(node.type.getText(source))}; before ${JSON.stringify(row.before)}`);
+        edits.push({ at: node.type.getStart(source), end: node.type.end, text: row.after });
+    }
+    proofPaths.push(relative);
+}
+
 let prerequisite = original;
 for (const edit of edits.sort((a, b) => b.at - a.at)) {
     prerequisite = prerequisite.slice(0, edit.at) + edit.text + prerequisite.slice(edit.end ?? edit.at);

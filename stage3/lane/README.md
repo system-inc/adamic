@@ -49,6 +49,8 @@ NODE_PATH="$PWD/stage3/api/node_modules" \
   > /tmp/lane-generate.log 2>&1
 ```
 
+Generation also reads each `stage3/adapt/*/api-sanctions.json` in sorted directory order, validates exact upstream owner types, rejects duplicate claims, and hashes these inputs.
+
 The argument is the pinned TypeScript checkout. Generation reads pinned
 Git objects, rather than trusting modified checkout files. The reconstruction
 uses these adaptations' mechanical proof data:

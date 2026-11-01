@@ -158,6 +158,11 @@ func TestLaneCheckPython(t *testing.T) {
 	runPython(t, "stage3/lane", "test_check")
 }
 
+func TestLaneGenerateApiPython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "stage3/lane", "test_generate_api")
+}
+
 func TestLaneTablePython(t *testing.T) {
 	t.Parallel()
 	runPython(t, "stage3/lane", "test_table")
