@@ -1,0 +1,4 @@
+// Spec: `bigint`, `globalThis` and `Intl` are not built yet
+// Expect: notyet a value of type 10n
+const big = 10n;
+console.log(String(big));
