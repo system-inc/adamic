@@ -14,7 +14,7 @@ const helper = `
 /** @internal */
 export function propertyOf(value: unknown, key: string): unknown {
     if (value === null || value === undefined) {
-        throw new TypeError(\`Cannot read properties of \${String(value)} (reading '\${key}')\`);
+        throw new TypeError(\`Cannot read properties of \${value === null ? "null" : "undefined"} (reading '\${key}')\`);
     }
     return Reflect.get(Object(value), key, value);
 }

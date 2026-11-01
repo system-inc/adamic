@@ -10,7 +10,7 @@ const assert = require("node:assert/strict");
 const ts = require(process.env.CENSUS_TYPESCRIPT || "typescript");
 
 const guard = `    if (value === null || value === undefined) {
-        throw new TypeError(\`Cannot read properties of \${String(value)} (reading '\${key}')\`);
+        throw new TypeError(\`Cannot read properties of \${value === null ? "null" : "undefined"} (reading '\${key}')\`);
     }
 `;
 

@@ -22,7 +22,7 @@ Plain TypeScript, no cast, no any, no non-null assertion:
 /** @internal */
 export function propertyOf(value: unknown, key: string): unknown {
     if (value === null || value === undefined) {
-        throw new TypeError(`Cannot read properties of ${String(value)} (reading '${key}')`);
+        throw new TypeError(`Cannot read properties of ${value === null ? "null" : "undefined"} (reading '${key}')`);
     }
     return Reflect.get(Object(value), key, value);
 }
@@ -30,7 +30,8 @@ export function propertyOf(value: unknown, key: string): unknown {
 
 A plain read `value.key` throws TypeError on null and undefined, with the
 message V8 gives; Node 24.22.2 gives `Cannot read properties of null (reading
-'code')` for `null.code`, and the helper builds the same text. Any other value
+'code')` for `null.code`, and the helper builds the same text without calling
+String(). Any other value
 is read through its object wrapper, `Object(value)`, which is the value itself
 for an object or a function. The original value is passed as the receiver, so
 a getter sees the same `this` a plain read gives it, a primitive included, and
@@ -131,24 +132,33 @@ hostErrors.ts changes, and that file only gains a function nobody calls yet.
 
 ## What Adamic's lowering says
 
-The census also records each root's lowering outcome. hostErrors.ts was
-`accepted` on main and is `Refused` with 94, at hostErrors.ts:14:15, reason
-`throwing a TypeError`, fix `throw an Error: throw new Error(String(value));
-what a catch takes is unknown, and an Error is what it can be sure of`. No other
-root's outcome moves; accepted roots go from 2 to 1.
-
-docs/0.1.md's exceptions row says otherwise: ruAdamic's ruling (a): `throw new TypeError` is admitted at lowering, and the
+Adamic's ruling (a): `throw new TypeError` is admitted at lowering, and the
 helper keeps the TypeError, type and message both. docs/0.1.md's exceptions
-row already says any value may be thrown. The refusal at
-internal/lower/exceptions.go:58 is Lower's gap, and Lower is fixing it. 94
-stacks on Lower's fix, so on the meter hostErrors.ts goes from accepted to
-accepted and never reads refused. The Refused outcome above was measured on
-main before that fix, and is kept as the record of the gap.
+row already says any value may be thrown. Lower admits it in #bbhwj30, and 94
+stacks on that fix.
+
+The helper builds its message without String(): the null and undefined
+branch writes `value === null ? "null" : "undefined"`, the same text on Node
+(the null and undefined witnesses hold it), because Lower cannot lower
+String() of a value that is null or undefined. The message no longer converts.
+
+What remains is the read: Reflect.get with a receiver is Lower's next cut.
+Until it lands, the ruling expects hostErrors.ts to read NotYet on the meter,
+never Refused.
+
+Measured here, with the census built at main `4d63c0a6`, without #bbhwj30:
+hostErrors.ts was `accepted` before 94 and is `Refused` with it, at
+hostErrors.ts:14:15, `throwing a TypeError` (internal/lower/exceptions.go:58).
+No other root's outcome moves. That is the gap #bbhwj30 closes; this head has
+not measured a census with #bbhwj30 in it, so the NotYet outcome above is the
+ruling's, not an observation.
 
 47's errorCode stays only where 47 used it. Every new caught-property read
 goes through propertyOf. Retiring errorCode is a later Should.
 
-h the setup environment sourced, the TypeScript
+## Reproduction
+
+From the Adamic repository with the setup environment sourced, the TypeScript
 6.0.3 checkout in ADAMIC_TYPESCRIPT_SOURCE, and stage3/api installed from its
 lockfile. Use fresh output paths.
 
