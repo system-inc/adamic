@@ -1,9 +1,14 @@
 package lower
 
 import (
+	"context"
 	"errors"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // A member the program declares any is refused where it's declared, with its fix (#tmdhz1d, step 2,
@@ -53,5 +58,38 @@ show({ items: [5] });`)
 	var pending *NotYet
 	if !errors.As(err, &pending) || !strings.Contains(err.Error(), "a member typed any (items[]) related to string") {
 		t.Fatalf("a nested any: want step 1's relation NotYet, got %v", err)
+	}
+}
+
+// tsc's four members typed any whose type its public JSON API fixes are NotYet, each naming its file and
+// member and that step 3's JSON design types it (#3f4rr76), and every other member typed any is Refused
+// (Adamic's ruling on #tmdhz1d, Nov 1). A fifth member typed any in the same file is Refused, and so is
+// one of the four's names in a file of another name. Mutant: a site dropped from anyMemberAllowance, under
+// which its pin is Refused.
+func TestAnyMemberAllowanceIsTheFourJSONSites(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, file, source, want string }{
+		{"ParsedCommandLine.raw", "types.ts", "export interface ParsedCommandLine { raw?: any; }\n", "NotYet: a member typed any (types.ts ParsedCommandLine.raw) that step 3's JSON design types (#3f4rr76)"},
+		{"readConfigFile.config", "commandLineParser.ts", "export function readConfigFile(fileName: string): { config?: any } { return { config: fileName }; }\n", "NotYet: a member typed any (commandLineParser.ts readConfigFile.config) that step 3's JSON design types (#3f4rr76)"},
+		{"parseConfigFileTextToJson.config", "commandLineParser.ts", "export function parseConfigFileTextToJson(jsonText: string): { config?: any } { return { config: jsonText }; }\n", "NotYet: a member typed any (commandLineParser.ts parseConfigFileTextToJson.config) that step 3's JSON design types (#3f4rr76)"},
+		{"ParsedTsconfig.raw", "commandLineParser.ts", "export interface ParsedTsconfig { raw: any; }\n", "NotYet: a member typed any (commandLineParser.ts ParsedTsconfig.raw) that step 3's JSON design types (#3f4rr76)"},
+		{"a fifth member", "types.ts", "export interface ParsedCommandLine { raw?: any; other?: any; }\n", "Refused: a member typed any (other, declared)"},
+		{"another file", "main.ts", "export interface ParsedCommandLine { raw?: any; }\n", "Refused: a member typed any (raw, declared)"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			file := filepath.Join(t.TempDir(), probe.file)
+			if err := os.WriteFile(file, []byte(probe.source+"console.log('ran');\n"), 0o644); err != nil {
+				t.Fatal(err)
+			}
+			program, err := load.Load([]string{file})
+			if err != nil {
+				t.Fatal(err)
+			}
+			_, err = Lower(context.Background(), program)
+			if err == nil || !strings.HasPrefix(stoppedFor(err), probe.want) {
+				t.Fatalf("want %q, got %v", probe.want, err)
+			}
+		})
 	}
 }
