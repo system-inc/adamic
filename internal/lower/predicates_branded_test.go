@@ -281,6 +281,133 @@ const v = { kind: 9, pos: 1, text: "x" }; show(v);`, "checked predicate overload
 	}
 }
 
+// The checker narrows a call's argument by the claim however the call reaches the predicate, so every
+// path is judged by brandedNarrowing, from the one place they all reach (brandedCalls): a direct call, the
+// predicate held as a value, a function-type parameter, a class method, an arrow, an assertion direct and
+// held, and an optional call (Language's must on 9e4f2184, Compiler's roads on 7530a354). Each narrows a
+// PropertySignature | Identifier argument to PropertySignature, whose typeText S's view doesn't check,
+// so each is NotYet at the call, by Identifier, an unrelated member the checker drops, as much as by the
+// subtype. Three are held first by older rules, each pinned by its reason: the
+// direct call by the false side's guard, which runs before S's view registers, the class method as an
+// indirect call, and the optional call as a call main doesn't lower. Mutant: only a call through a declared function's name judged, as
+// 9e4f2184 did, and the four roads marked opened lower; with ADAMIC_BRANDED_CALLS_MUTANT=1 each of those
+// must lower instead and its sanitized native must disagree with Node, which prints undefined (on Golem it
+// stops with "compiler bug: a field the checker proved is there is missing").
+func TestBrandedSupertypeEveryCallPathIsJudged(t *testing.T) {
+	t.Parallel()
+	const lie = `const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
+`
+	// brandedNarrowing names the first member that isn't a supertype, PropertySignature or Identifier by the
+	// union's order, so the pin holds the reason's own words.
+	const walk = "which isn't its supertype"
+	for _, probe := range []struct {
+		name, source, want string
+		opened             bool
+	}{
+		{"direct", `function show(x: PropertySignature | Identifier): void { if (isTypeElementLie(x)) { console.log(String(x.typeText)); } }
+show(i);`, "checked predicate membership of a branded supertype on its false branch", false},
+		{"held as a value", `const guard = isTypeElementLie;
+function show(x: PropertySignature | Identifier): void { if (guard(x)) { console.log(String(x.typeText)); } }
+show(i);`, walk, true},
+		{"function-type parameter", `function show(check: (n: Node) => n is TypeElement, x: PropertySignature | Identifier): void { if (check(x)) { console.log(String(x.typeText)); } }
+show(isTypeElementLie, i);`, walk, true},
+		{"class method", `class Judge { isElement(n: Node): n is TypeElement { return kindOf(n) !== 0; } }
+const judge = new Judge();
+function show(x: PropertySignature | Identifier): void { if (judge.isElement(x)) { console.log(String(x.typeText)); } }
+show(i);`, "an indirect call of a checked predicate", false},
+		{"arrow", `const isElement = (n: Node): n is TypeElement => kindOf(n) !== 0;
+function show(x: PropertySignature | Identifier): void { if (isElement(x)) { console.log(String(x.typeText)); } }
+show(i);`, walk, true},
+		// An assertion narrows after the call statement, with no if around it (Compiler, on 7530a354).
+		{"asserts", `function assertElement(n: Node): asserts n is TypeElement { if (kindOf(n) === 0) { throw new Error("no"); } }
+function show(x: PropertySignature | Identifier): void { assertElement(x); console.log(String(x.typeText)); }
+show(i);`, walk, false},
+		{"asserts held as a value", `function assertElement(n: Node): asserts n is TypeElement { if (kindOf(n) === 0) { throw new Error("no"); } }
+const held: (n: Node) => asserts n is TypeElement = assertElement;
+function show(x: PropertySignature | Identifier): void { held(x); console.log(String(x.typeText)); }
+show(i);`, walk, true},
+		{"optional call", `const maybe: ((n: Node) => n is TypeElement) | undefined = isTypeElementLie;
+function show(x: PropertySignature | Identifier): void { if (maybe?.(x)) { console.log(String(x.typeText)); } }
+show(i);`, "a call through ?. (an optional call)", false},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			program, err := lowerTypeScriptAssertionSource(t, brandedPrelude+lie+probe.source)
+			if os.Getenv("ADAMIC_BRANDED_CALLS_MUTANT") == "1" && probe.opened {
+				if err != nil {
+					t.Fatalf("the mutant must admit the program: %v", err)
+				}
+				code, out, errs := brandedNative(t, program)
+				if code == 0 && out == "undefined\n" {
+					t.Fatalf("the mutant's sanitized native agrees with Node: %q", out)
+				}
+				t.Logf("the mutant admits it: sanitized native exit %d, stdout %q, stderr %.300q where Node prints undefined", code, out, errs)
+				return
+			}
+			var pending *NotYet
+			if !errors.As(err, &pending) || !strings.Contains(err.Error(), probe.want) {
+				t.Fatalf("want NotYet with %q, got %v", probe.want, err)
+			}
+		})
+	}
+}
+
+// A member S is assignable to and that's assignable to S keeps its own type when the checker narrows it
+// (getNarrowedType takes a subtype of the candidate as it is), so brandedNarrowing passes it and S's view
+// never sees its reads (Compiler's pin on 9e4f2184): a restatement, an alias of S's shape, and a twin whose
+// name is any, each called directly and through the predicate held as a value. A direct call's false side
+// narrows such a member to never, so it stops at the false side's guard; held as a value, only the true side
+// is checked, so the read runs. Each is held to never read raw: a program lowers and agrees with Node, or stops at exit 70
+// with a located failure on sanitized native and the JavaScript backend, or is NotYet. The restatement and
+// the alias can only hold a lie a cast of its own put there, which that cast's view checks; the twin holds
+// one by plain assignment.
+func TestBrandedSupertypeMutualMemberNeverReadsRaw(t *testing.T) {
+	t.Parallel()
+	const mutual = `interface Restated extends TypeElement {}
+type Shape = { readonly kind: number; readonly pos: number; _declarationBrand: undefined; _typeElementBrand: undefined; readonly name?: string };
+interface Twin { readonly kind: number; readonly pos: number; _declarationBrand: undefined; _typeElementBrand: undefined; readonly name?: any }
+`
+	// Each probe declares only the function it calls, so one probe's stop can't hide another's read.
+	const direct = `function via(x: T): string { if (isTypeElementLie(x)) { return String(x.name); } return "no"; }
+`
+	const held = `const guard = isTypeElementLie;
+function via(x: T): string { if (guard(x)) { return String(x.name); } return "no"; }
+`
+	for _, probe := range []struct{ name, via, of, source string }{
+		{"restatement honest", direct, "Restated", `const r: Restated = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a" }; console.log(via(r));`},
+		{"restatement through a cast", direct, "Restated", `const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const n: Node = w; console.log(via(n as Restated));`},
+		{"alias honest", direct, "Shape", `const r: Shape = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a" }; console.log(via(r));`},
+		{"alias through a cast", direct, "Shape", `const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const n: Node = w; console.log(via(n as Shape));`},
+		{"twin", direct, "Twin", `const t: Twin = { kind: 80, pos: 2, _declarationBrand: undefined, _typeElementBrand: undefined, name: 5 }; console.log(via(t));`},
+		// Held as a value, the claim's false side isn't checked, so the true side's read is what runs.
+		{"held restatement honest", held, "Restated", `const r: Restated = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a" }; console.log(via(r));`},
+		{"held restatement through a cast", held, "Restated", `const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const n: Node = w; console.log(via(n as Restated));`},
+		{"held alias honest", held, "Shape", `const r: Shape = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a" }; console.log(via(r));`},
+		{"held alias through a cast", held, "Shape", `const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const n: Node = w; console.log(via(n as Shape));`},
+		{"held twin", held, "Twin", `const t: Twin = { kind: 80, pos: 2, _declarationBrand: undefined, _typeElementBrand: undefined, name: 5 }; console.log(via(t));`},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			source := brandedPrelude + mutual + strings.ReplaceAll(probe.via, "x: T", "x: "+probe.of) + probe.source
+			program, err := lowerTypeScriptAssertionSource(t, source)
+			var pending *NotYet
+			var refused *Refused
+			if errors.As(err, &pending) || errors.As(err, &refused) {
+				t.Logf("stops before it lowers: %v", err)
+				return
+			}
+			if err != nil {
+				t.Fatal(err)
+			}
+			if !strings.Contains(probe.name, "honest") {
+				brandedStopsProgram(t, program, "adamic: panic: ")
+				return
+			}
+			lowersAndAgreesWithNodeAs(t, source, ".ts")
+		})
+	}
+}
+
 // brandedStops lowers a .ts program and runs it on sanitized native and the JavaScript backend, each of
 // which must stop at exit 70 with nothing printed and stderr starting with the located failure.
 func brandedStops(t *testing.T, source, stderr string) {
@@ -289,6 +416,13 @@ func brandedStops(t *testing.T, source, stderr string) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	brandedStopsProgram(t, program, stderr)
+}
+
+// brandedStopsProgram runs a lowered program on sanitized native and the JavaScript backend, each of which
+// must stop at exit 70 with nothing printed and stderr starting with stderr.
+func brandedStopsProgram(t *testing.T, program *ir.Program, stderr string) {
+	t.Helper()
 	directory := t.TempDir()
 	binary := filepath.Join(directory, "native")
 	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
