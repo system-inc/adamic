@@ -369,7 +369,7 @@ Each is two rulings that can't both hold. Where code on main decides it, that is
 22. **The higher-rank restriction isn't in the spec.** R-T74 (Oct 9) records the higher-rank slot refusal as a language restriction "in docs/0.1.md"; it isn't there.
 23. **The optional-widening class exemption admits a lie.** docs/optional-widening/REPORT.md:183-197 (Oct 7, still open): `class Derived extends Base { y = 'wrong' }` seen as `Base`, then as `{ x: number; y?: number }`, is accepted; Node prints `string`, native panics `compiler bug: a numeric field holds a reference`. R-T49's whole-program clause should catch it; the doc says it needs a separate ruling. **Resolved October 19 by @system_adamic:** refused by stage 0 as cohere refuses it (#k4kwp9v); an exemption that depends on whether a subclass exists elsewhere would make legality non-local.
 24. **Index-signature misses.** docs/index-signatures.md:24-25 (Oct 6): `Record<string, number>` assignable to `{ a?: number }` miscompiles on the optional-field miss path, and a dynamic-key write can put a string into `strict?: boolean`. The fixes were ruled; no doc records them landing and no test was found.
-25. **The spec's refusal table is stale.** docs/0.1.md still lists as refused: getters and setters, `extends`/`super`/`abstract`, `enum`/`namespace`/parameter properties ("Never"), `async`, `throw`/`try`, comma and `void` (now admitted in What's in), `arguments` ("Never"), index signatures and `Record<string, T>`. Each was later opened by a ruling above. A reader of the spec alone gets the wrong answer for each.
+25. **The spec's refusal table is stale.** docs/0.1.md still lists as refused: getters and setters, `extends`/`super`/`abstract`, `enum`/`namespace`/parameter properties ("Never"), `async`, `throw`/`try`, comma and `void` (now admitted in What's in), `arguments` ("Never"), index signatures and `Record<string, T>`. Each was later opened by a ruling above. A reader of the spec alone gets the wrong answer for each. **Partly resolved November 1 by Language:** the getters and setters row (opened October 6) and the `arguments` row (`arguments.length` read alone, October 7) now say what was ruled, each pinned in conformance (classes/accessors.a; legacy/arguments_length.a, legacy/arguments.a), and `for...in` left the Expandos row by @system_adamic's ruling of November 1 (grown/for_in_*.a). Still stale: `extends`/`super`/`abstract`, `enum`/`namespace`/parameter properties, `async`, and the library row's `RegExp` and `Set`. Main also shows `eval`, `symbol`, `bigint`, `WeakRef`, array `length` writes and tuple length-changing methods as NotYet where the table says refused.
 
 ## Rulings with no test
 
@@ -382,7 +382,7 @@ Every current Refuse or Check ruling whose test column is NONE. A refusal here c
 5. Refuse: length-changing tuple methods and a mutable tuple as a mutable array (#ktyqy3c, Oct 18; only a NotYet is pinned).
 6. Refuse: `adamic/single-spread` in stage 0 (implemented at internal/lower/object.go:29; cohere only). **Pinned:** internal/conformance/testdata/untested/single_spread.a (Oct 22).
 7. Refuse: expandos, function expandos included, and tsc's `MultiMap` expando.
-8. Refuse: `eval` and `new Function`.
+8. Refuse: `eval` and `new Function`. **Pinned for `new Function`:** internal/conformance/testdata/untested/new_function.a (Nov 1). `eval` is still a NotYet in stage 0 ("reading eval"), owed as a refusal.
 9. Refuse: `any` in stage 0 as a Refused (stage 0 has only a NotYet; cohere only).
 10. Refuse: the `Function` type in stage 0 (cohere only). **Pinned:** internal/conformance/testdata/legacy/function_type.a (Oct 23).
 11. Refuse: class/interface declaration merging in stage 0 (cohere only).
@@ -421,7 +421,7 @@ Every current Refuse or Check ruling whose test column is NONE. A refusal here c
 44. Check: callback contravariance checked per invocation in .ts.
 45. Check: class/interface merging, a read of a never-initialized field in .ts.
 46. Check: a narrowing a call may have broken, checked at each use in .ts (only the record case is pinned).
-47. Check: `JSON.parse` boundary check (main refuses instead).
+47. Check: `JSON.parse` boundary check (main refuses instead). **Main's refusal pinned:** internal/conformance/testdata/untested/json_parse.a (Nov 1); the check itself is a later design.
 48. Check: a non-object iterator result or non-callable `next` in .ts.
 49. Check: a present non-callable value in an optional call in .ts (main pins a NotYet).
 50. Check: a non-UTF-8 path converted to string without the lossy form.
