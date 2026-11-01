@@ -136,28 +136,27 @@ func TestFunctionTypeClaimKeepsWhatTheCallCantCheck(t *testing.T) {
 	}
 }
 
-// parseTreeSource is tsc's getParseTreeNode (utilitiesPublic.ts:826), whose generic overload takes an
-// optional predicate, followed by calls. The first %s fills nodeTest's optional mark, so the optional
-// parameter and its required twin differ only there; the calls start on the same line in both.
-const parseTreeSource = `interface Node { readonly kind: number; readonly flags: number; readonly original?: Node; }
+// parseTreeSource is getParseTreeNode's generic shape with an optional predicate (tsc's
+// utilitiesPublic.ts:826), followed by calls. tsc's own overloads are left out: their implementation
+// result is refused on its own (overload 2's T | undefined can't be served by Node | undefined), and
+// that would hide the argument's outcome. The first %s fills nodeTest's optional mark, so the optional
+// parameter and its required twin differ only there; the calls start on the same line in both. The body
+// only calls nodeTest, so every producer of it is a proven argument (predicateCallbackCallers).
+const parseTreeSource = `interface Node { readonly kind: number; readonly flags: number; readonly original: Node | undefined; }
 interface ModuleDeclaration extends Node { readonly kind: 268; readonly name: string; }
 function isModuleDeclaration(node: Node): node is ModuleDeclaration { return node.kind === 268; }
 function isParseTreeNode(node: Node): boolean { return (node.flags & 16) === 0; }
-export function getParseTreeNode(node: Node | undefined): Node | undefined;
-export function getParseTreeNode<T extends Node>(node: T | undefined, nodeTest%s: (node: Node) => node is T): T | undefined;
-export function getParseTreeNode(node: Node | undefined, nodeTest?: (node: Node) => boolean): Node | undefined {
-  if (node === undefined || isParseTreeNode(node)) { return node; }
-  node = node.original;
+function getParseTreeNode<T extends Node>(node: Node | undefined, nodeTest%s: (node: Node) => node is T): T | undefined {
   while (node !== undefined) {
-    if (isParseTreeNode(node)) { return nodeTest === undefined || nodeTest(node) ? node : undefined; }
+    if (isParseTreeNode(node)) { return nodeTest?.(node) ? node : undefined; }
     node = node.original;
   }
   return undefined;
 }
-const parsed: ModuleDeclaration = { kind: 268, flags: 0, name: "parsed" };
-const synthesized: ModuleDeclaration = { kind: 268, flags: 16, name: "synthesized", original: parsed };
-const other: Node = { kind: 80, flags: 0 };
-const wrapped: ModuleDeclaration = { kind: 268, flags: 16, name: "wrapped", original: other };
+const parsed: ModuleDeclaration = { kind: 268, flags: 0, original: undefined, name: "parsed" };
+const synthesized: ModuleDeclaration = { kind: 268, flags: 16, original: parsed, name: "synthesized" };
+const other: Node = { kind: 80, flags: 0, original: undefined };
+const wrapped: ModuleDeclaration = { kind: 268, flags: 16, original: other, name: "wrapped" };
 %s
 `
 
@@ -173,8 +172,8 @@ func TestOptionalPredicateParameterTakesAProvenArgument(t *testing.T) {
 console.log(found === undefined ? "none" : found.name);
 const unmatched = getParseTreeNode(wrapped, isModuleDeclaration);
 console.log(unmatched === undefined ? "none" : unmatched.name);
-const plain = getParseTreeNode(wrapped);
-console.log(plain === undefined ? "none" : String(plain.kind));
+const untested = getParseTreeNode(synthesized);
+console.log(untested === undefined ? "none" : String(untested.kind));
 console.log(String(getParseTreeNode(undefined, isModuleDeclaration) === undefined));`), ".ts")
 }
 
