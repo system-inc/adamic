@@ -17,6 +17,8 @@ func TestRecordForms(t *testing.T) {
 		`const r:Record<string,number>={}; for(const k in r) { console.log(k); }`,
 		`interface Node {links:Record<string,Node>} const r:Record<string,Node>={}; r['fresh']={links:{}};`,
 		`function show(r:Record<string,number>|null):void {console.log(String(r === null));} show(null); show({x:1});`,
+		`const r:Record<string,string>={}; console.log(r && 'value');`,
+		`let t:{[index:string]:string}|undefined; function m(k:string,f:string):string {return t && t[k] || f;} console.log(m('a','b'));`,
 	} {
 		t.Run(source, func(t *testing.T) {
 			_, err := lowerSource(t, source)
@@ -34,7 +36,7 @@ func TestRecordRefusals(t *testing.T) {
 	}{
 		{`import type {Weak} from 'adamic'; interface Item {name:string} const r:Record<string,Weak<Item>>={};`, "slot representation", true},
 		{`function show(r:Record<string,number>|null):void {console.log(String(JSON.stringify(r)));}`, "JSON.stringify object references", true},
-		{`const r:Record<string,string>={}; console.log(r && 'value');`, "logical record operand", true},
+		{`const r:Record<string,string>={}; console.log(String(r && 1));`, "logical record operand converted to number", true},
 		{`interface R { readonly [key:string]:number } const r:R={};`, "signature", true},
 		{`interface R { [key:number]:number } const r:R={};`, "signature", true},
 		{`const r:Record<string,()=>string>={}; console.log(r.toString());`, "toString", false},
