@@ -1,0 +1,6 @@
+// Spec: except `arguments.length` read alone in a non-arrow function
+// Expect: lowers
+function count(first?: number, second?: number): number {
+	return arguments.length + (first ?? 0) + (second ?? 0);
+}
+console.log(String(count()) + ' ' + String(count(10)));
