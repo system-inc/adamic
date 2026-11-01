@@ -365,9 +365,10 @@ show(i);`, "a call through ?. (an optional call)", false},
 // indexOfNode, Correctness's census on 9e4f2184). With S's view registered in the program, the walk reads
 // the call as written, a claim naming firstPos's T, and passes it because the argument is the claim's own
 // type, so T at Node and at number lowers and agrees with Node, as on main (Adamic's ruling). An empty
-// array isn't run: `some` answering false of one is a lie its checked false side stops, on main too. Mutant: that
-// identity test dropped, and the program is NotYet as a generic claim S may instantiate. At T = TypeElement
-// the instance's claim is an array of S, whose false side the false side's guard keeps NotYet.
+// array isn't run: `some` answering false of one is a lie its checked false side stops, which B doesn't
+// touch for an unbranded T. Mutant: that identity test dropped, and the program is NotYet as a generic
+// claim S may instantiate. At T = TypeElement the instance's claim is an array of S, whose false side the
+// false side's guard keeps NotYet.
 func TestBrandedSupertypeIdentityNarrowingLowers(t *testing.T) {
 	t.Parallel()
 	const some = `function some<T>(array: readonly T[] | undefined): array is readonly T[] { return array !== undefined && array.length > 0; }
