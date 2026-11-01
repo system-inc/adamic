@@ -1,7 +1,9 @@
 package lower
 
 import (
+	"bytes"
 	"go/ast"
+	"go/format"
 	"go/parser"
 	"go/token"
 	"os"
@@ -163,4 +165,45 @@ var signatureReaders = map[string]string{
 	"recordInterveningMutation":         "the callee's declaration, to look for a write in its body",
 	"recordPrototypeKey":                "the callee's declaration, to follow an argument into its parameter's key",
 	"speculativeCast":                   "the callee's callback parameter, to recognize tsc's speculation helpers by shape",
+}
+
+// refuseNode walks a value as refuse walks a module, by a copy of refuse's visit closure, since refuse
+// keeps its own whole for the latent census to rewrite (stage3/census/latent/refusalrewrite). The two
+// closures must print the same, so the copy can never become a second walk with its own rules.
+func TestRefuseNodeWalksAsRefuseDoes(t *testing.T) {
+	t.Parallel()
+	files := token.NewFileSet()
+	file, err := parser.ParseFile(files, "refusals.go", nil, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	visits := map[string]string{}
+	for _, declaration := range file.Decls {
+		function, isFunction := declaration.(*ast.FuncDecl)
+		if !isFunction || function.Body == nil || function.Name.Name != "refuse" && function.Name.Name != "refuseNode" {
+			continue
+		}
+		ast.Inspect(function.Body, func(node ast.Node) bool {
+			assignment, isAssignment := node.(*ast.AssignStmt)
+			if !isAssignment || len(assignment.Lhs) != 1 || len(assignment.Rhs) != 1 {
+				return true
+			}
+			if name, isName := assignment.Lhs[0].(*ast.Ident); isName && name.Name == "visit" {
+				if literal, isLiteral := assignment.Rhs[0].(*ast.FuncLit); isLiteral {
+					var printed bytes.Buffer
+					if err := format.Node(&printed, files, literal); err != nil {
+						t.Fatal(err)
+					}
+					visits[function.Name.Name] = printed.String()
+				}
+			}
+			return true
+		})
+	}
+	if visits["refuse"] == "" || visits["refuseNode"] == "" {
+		t.Fatalf("found visit closures in %d of refuse and refuseNode, want both", len(visits))
+	}
+	if visits["refuse"] != visits["refuseNode"] {
+		t.Fatalf("refuseNode's walk differs from refuse's:\n%s\nwant:\n%s", visits["refuseNode"], visits["refuse"])
+	}
 }

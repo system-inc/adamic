@@ -93,11 +93,30 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		return contractError
 	}
 	var found error
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if found != nil {
+			return true
+		}
+		if branch := l.literalCallableBranch(node); branch != nil {
+			return visit(branch)
+		}
+		// Each rule registers from its own file (refusal_rules.go); the first that refuses a node wins.
+		for _, rule := range refusalRules.rules {
+			prune, err := rule.check(l, node)
+			if err != nil {
+				found = err
+				return true
+			}
+			if prune {
+				return false
+			}
+		}
+		node.ForEachChild(visit)
+		return false
+	}
 	l.refusal.deferred = nil
-	module.AsNode().ForEachChild(func(node *ast.Node) bool {
-		found = l.refuseNode(node)
-		return found != nil
-	})
+	module.AsNode().ForEachChild(visit)
 	if found == nil {
 		found = l.refusal.deferred
 	}
@@ -105,7 +124,9 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 }
 
 // refuseNode runs refuse's per-node rules over node and everything under it, in refuse's order, and
-// returns the first refusal. A deferred stop is left in l.refusal.deferred for the caller.
+// returns the first refusal. A deferred stop is left in l.refusal.deferred for the caller. Its walk is a
+// copy of refuse's own, which stays whole in refuse because the latent census rewrites refuse's walk
+// (stage3/census/latent/refusalrewrite); TestRefuseNodeWalksAsRefuseDoes holds the copy identical.
 func (l *lowering) refuseNode(root *ast.Node) error {
 	var found error
 	var visit ast.Visitor
