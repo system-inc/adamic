@@ -162,6 +162,80 @@ class ApiSanctionGeneratorTests(unittest.TestCase):
         self.assertIn('api-sanctions.json row 1', result.stderr)
         self.assertIn('invalid sanction', result.stderr)
 
+    def insert_row(self):
+        self.row = dict(insert='after', path=['TextRange'], kind='InterfaceDeclaration',
+                        text='type LaneInsertedValue = string;\ninterface LaneInsertedRecord { value: LaneInsertedValue; }',
+                        why='Fixture public declarations')
+
+    def test_api_sanction_insert_applied_and_guard_accepts(self):
+        self.insert_row()
+        second = dict(self.row, text='type LaneInsertedSecond = LaneInsertedRecord;')
+        result = self.generate([self.row, second])
+        self.assertEqual(result.returncode, 0, result.stderr)
+        proof = json.loads(result.stdout)
+        for line in self.row['text'].splitlines() + [second['text']]:
+            self.assertTrue('\n    ' + line in proof['expected'], 'insert missing or incorrectly indented')
+        self.assertLess(proof['expected'].index('type LaneInsertedValue'),
+                        proof['expected'].index('type LaneInsertedSecond'))
+        self.assertEqual(self.guard(proof, proof['expected']), [])
+
+    def test_api_sanction_insert_undo_is_rejected(self):
+        self.insert_row()
+        proof = self.generated()
+        inserted = '\n' + '\n'.join('    ' + line for line in self.row['text'].splitlines())
+        local = proof['expected'].replace(inserted, '')
+        self.assertNotEqual(local, proof['expected'])
+        errors = self.guard(proof, local)
+        self.assertTrue(any('missing sanctioned API declaration' in error and
+                            'LaneInserted' in error for error in errors), errors)
+
+    def test_api_sanction_insert_non_declaration_is_rejected(self):
+        self.insert_row()
+        for text in ('const laneInserted = 1;', 'interface {', ''):
+            with self.subTest(text=text):
+                self.row['text'] = text
+                result = self.generate()
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn('api-sanctions.json row 1', result.stderr)
+                self.assertIn('only interface or type alias declarations', result.stderr)
+
+    def test_api_sanction_insert_existing_name_is_rejected(self):
+        self.insert_row()
+        self.row['text'] = 'type TextRange = string;'
+        result = self.generate()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('insert name already exists: TextRange', result.stderr)
+        self.insert_row()
+        result = self.generate([self.row, self.row])
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('api-sanctions.json row 2', result.stderr)
+        self.assertIn('insert name already exists: LaneInsertedValue', result.stderr)
+
+    def test_api_sanction_insert_invalid_fields_are_rejected(self):
+        for field in ('before', 'replace'):
+            with self.subTest(field=field):
+                self.insert_row()
+                self.row[field] = 'member'
+                result = self.generate()
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn('api-sanctions.json row 1', result.stderr)
+                self.assertIn('invalid insert sanction', result.stderr)
+
+    def test_api_sanction_function_return_applied_and_guard_accepts(self):
+        self.row = dict(path=['convertToObject'], kind='FunctionDeclaration', before='any',
+                        after='AdamicJsonRecoveryValue | undefined', why='Fixture function return')
+        proof = self.generated()
+        self.assertTrue('): AdamicJsonRecoveryValue | undefined;' in proof['expected'])
+        self.assertEqual(self.guard(proof, proof['expected']), [])
+
+    def test_api_sanction_overloaded_function_is_rejected(self):
+        self.row = dict(path=['getOriginalNode'], kind='FunctionDeclaration', before='Node',
+                        after='Node | undefined', why='Fixture overloaded function')
+        result = self.generate()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('api-sanctions.json row 1', result.stderr)
+        self.assertIn('ambiguous or missing proof owner', result.stderr)
+
 
 if __name__ == '__main__':
     unittest.main()

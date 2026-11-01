@@ -165,6 +165,9 @@ var generateApiPythonGroups = map[string][]string{
 		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_member_applied_and_guard_accepts",
 		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_member_undo_is_rejected",
 		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_member_before_requires_full_text",
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_insert_applied_and_guard_accepts",
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_insert_undo_is_rejected",
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_function_return_applied_and_guard_accepts",
 	},
 	"TestLaneGenerateApiRejectionsPython": {
 		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_before_mismatch_names_row",
@@ -173,6 +176,10 @@ var generateApiPythonGroups = map[string][]string{
 		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_duplicate_claim",
 		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_hard_coded_claim",
 		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_invalid_replace_is_rejected",
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_insert_non_declaration_is_rejected",
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_insert_existing_name_is_rejected",
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_insert_invalid_fields_are_rejected",
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_overloaded_function_is_rejected",
 	},
 }
 
