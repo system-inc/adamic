@@ -332,11 +332,15 @@ func (l *lowering) nodeHostViewRefusal(node *ast.Node, own, view *checker.Type, 
 
 // nodeHostDeclaredArgument is the type an argument's parameter is declared as, before the call
 // instantiates it: a generic body names the members of its constraint, not of what the call
-// infers, so the argument is judged against that too. Nil for what isn't a call's argument.
+// infers, so the argument is judged against that too. Nil for what isn't a call's argument. A value
+// given a slot by a caller (slotSet) is judged against that slot, not the call's parameter (#b6m00y7).
 func (l *lowering) nodeHostDeclaredArgument(node *ast.Node) *checker.Type {
 	outer := node
 	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
 		outer = outer.Parent
+	}
+	if l.slotSet(outer) {
+		return l.slotType(outer)
 	}
 	call := outer.Parent
 	if call == nil || call.Kind != ast.KindCallExpression && call.Kind != ast.KindNewExpression {

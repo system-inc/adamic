@@ -123,6 +123,87 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 	return found
 }
 
+// refuseNode runs refuse's per-node rules over node and everything under it, in refuse's order, and
+// returns the first refusal. A deferred stop is left in l.refusal.deferred for the caller. Its walk is a
+// copy of refuse's own, which stays whole in refuse because the latent census rewrites refuse's walk
+// (stage3/census/latent/refusalrewrite); TestRefuseNodeWalksAsRefuseDoes holds the copy identical.
+func (l *lowering) refuseNode(root *ast.Node) error {
+	var found error
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if found != nil {
+			return true
+		}
+		if branch := l.literalCallableBranch(node); branch != nil {
+			return visit(branch)
+		}
+		// Each rule registers from its own file (refusal_rules.go); the first that refuses a node wins.
+		for _, rule := range refusalRules.rules {
+			prune, err := rule.check(l, node)
+			if err != nil {
+				found = err
+				return true
+			}
+			if prune {
+				return false
+			}
+		}
+		node.ForEachChild(visit)
+		return false
+	}
+	visit(root)
+	return found
+}
+
+// refuseInSlot judges a value written into a slot the checker doesn't give it, such as a delayed Array
+// write's element, whose parameter lib types any: the slot is set as the value's (slotType), and the
+// whole registry runs over the value as refuse's walk runs it over a value the checker does give one
+// (#b6m00y7). It only judges: the slot is unset after, so a caller can judge one value against several
+// slots, and lowering builds the value as it did. Before any rule runs, every part of the value is read
+// for its slot: a function written in place where the slot reaches is NotYet, since the checker typed
+// its parameters by lib's any, and so is any part the slot reaches but Adamic can't read off it, whether
+// or not a rule would have asked for that part's slot.
+func (l *lowering) refuseInSlot(value *ast.Node, slot *checker.Type) error {
+	if l.slots.explicit == nil {
+		l.slots.explicit = map[*ast.Node]*checker.Type{}
+	}
+	previous, had := l.slots.explicit[value]
+	l.slots.explicit[value] = slot
+	defer func() {
+		if had {
+			l.slots.explicit[value] = previous
+		} else {
+			delete(l.slots.explicit, value)
+		}
+	}()
+	var stop error
+	var read ast.Visitor
+	read = func(node *ast.Node) bool {
+		_, carried, readable := l.carriedSlot(node)
+		switch {
+		case !carried:
+		case node.Kind == ast.KindArrowFunction || node.Kind == ast.KindFunctionExpression || node.Kind == ast.KindClassExpression || node.Kind == ast.KindMethodDeclaration || node.Kind == ast.KindGetAccessor || node.Kind == ast.KindSetAccessor:
+			stop = l.notYet(node, "a function written in place in a value written where the checker gives it no slot (lib types it any, so its parameters were typed any); bind it to a typed const first")
+			return true
+		case !readable && l.isExpression(node):
+			stop = l.notYet(node, "a part of a value written where the checker gives it no slot, whose own slot can't be read off the one it's written into")
+			return true
+		}
+		return node.ForEachChild(read)
+	}
+	if read(value) {
+		return stop
+	}
+	deferred := l.refusal.deferred
+	l.refusal.deferred = nil
+	err := l.refuseNode(value)
+	if err == nil {
+		err = l.refusal.deferred
+	}
+	l.refusal.deferred = deferred
+	return err
+}
+
 // syntaxRefusal refuses the constructs refusals names by kind.
 func (l *lowering) syntaxRefusal(node *ast.Node) error {
 	// The index signature clause is dead, since refusals names no index signature; it's kept for order.
