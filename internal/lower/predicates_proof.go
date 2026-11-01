@@ -92,6 +92,13 @@ func (l *lowering) provePredicate(node *ast.Node) (predicateProof, error) {
 type predicateProofs struct {
 	declarations []*ast.Node
 	modes        map[string]*predicateFixedPoint
+	// brandedViews is each branded supertype's views, registered once with the error that stopped them,
+	// brandedSubtypes the declared types assignable to it, declaredTypes the types they're found among,
+	// and files the program's files they're declared in (predicates_branded.go).
+	brandedViews    map[*checker.Type]error
+	brandedSubtypes map[*checker.Type][]declaredType
+	declaredTypes   []declaredType
+	files           []*ast.SourceFile
 }
 
 // predicateFixedPoint is one mode's verifier run to its end: every declaration's summary, or the error its verify gave
@@ -105,8 +112,17 @@ type predicateFixedPoint struct {
 
 // predicateFixedPoint returns mode field's fixed point, running it the first time it's asked.
 func (l *lowering) predicateFixedPoint(field string) *predicateFixedPoint {
+	l.proofs()
+	if point, ok := l.predicateProofs.modes[field]; ok {
+		return point
+	}
+	return l.runPredicateFixedPoint(field)
+}
+
+// proofs is the lowering's predicateProofs, its declarations found the first time it's asked.
+func (l *lowering) proofs() *predicateProofs {
 	if l.predicateProofs == nil {
-		proofs := &predicateProofs{modes: map[string]*predicateFixedPoint{}}
+		proofs := &predicateProofs{modes: map[string]*predicateFixedPoint{}, brandedViews: map[*checker.Type]error{}, brandedSubtypes: map[*checker.Type][]declaredType{}}
 		var visit ast.Visitor
 		visit = func(n *ast.Node) bool {
 			if ast.IsFunctionLike(n) && n.Type() != nil && n.Type().Kind == ast.KindTypePredicate && n.Body() != nil {
@@ -120,9 +136,11 @@ func (l *lowering) predicateFixedPoint(field string) *predicateFixedPoint {
 		}
 		l.predicateProofs = proofs
 	}
-	if point, ok := l.predicateProofs.modes[field]; ok {
-		return point
-	}
+	return l.predicateProofs
+}
+
+// runPredicateFixedPoint runs mode field's verifier to its fixed point and keeps it.
+func (l *lowering) runPredicateFixedPoint(field string) *predicateFixedPoint {
 	v := &predicateVerifier{l: l, field: field, summaries: map[*ast.Node][]predicateTruth{}}
 	if field == "" {
 		v.cells = []string{"string", "number", "boolean", "undefined", "object", "function", "symbol", "bigint"}
@@ -916,6 +934,13 @@ func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, sour
 			if known {
 				return nil, ir.Binary{Operator: ir.And, Left: censusCondition(value), Right: equal(ir.Property{Object: value, Name: "kind", Of: of, View: "predicate argument.kind", ViewType: l.checker.TypeToString(tag)}, literal)}, nil
 			}
+		} else if l.brandedSupertype(target) {
+			// No kind set can say which kinds a branded supertype holds (#c7w6j0y, ruled Oct 31), so the call
+			// checks only that the value is an object, and the views check every field where it's read.
+			if err := l.brandedSupertypeViews(node, target); err != nil {
+				return nil, nil, err
+			}
+			return nil, censusCondition(value), nil
 		}
 	}
 	if cause := l.checkedPredicateTargetCause(target); cause != "" {
