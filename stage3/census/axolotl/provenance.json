@@ -1,0 +1,20 @@
+{
+  "main": "a23ba096388ceb3774b94d2db70009316d90b0cf",
+  "go": "go version go1.27.1 linux/amd64",
+  "node": "v24.19.0",
+  "submodules": [
+    " 06af2e399c6c1fb93fd570b774027942747400b4 cohere (06af2e39)",
+    " d92d9bfee114c80be2c375d72edae966176e3a4f cohere/TypeScript (d92d9bfee1)"
+  ],
+  "input_sha256": {
+    "internal/load/load.go": "0685807b05041e1d67e91c960c0ebc062b49d69504fe9d8a69a0d5465b9815f9",
+    "internal/load/prelude.d.ts": "8184b9b3af06c17e310762870eb48ee60a24a5d56be4c3257e1e057b16e9a768",
+    "internal/load/node_library.go": "34097b41d4a286349f4d974dfedf761c2e479aa650bb2f0857800647f6d487e3",
+    "stage3/meter/report.py": "0d10eebd8f3cd5f8b115fc7ae1a7892bbdce81426a914c8d1cdd7f9cb875d8e8",
+    "stage3/meter/twice-daily.sh": "dcfdce7d4ad566a9395825c9840a17a51621f247a3393d48bcad4a1316a933b4",
+    "stage3/census/tool/main.go": "880aa1edadc80d654c05ea63e8cc3e9acf55880970a9c93eb3ec2e86abbc9a97",
+    "stage3/apply.py": "8f5b9fac51c349fc0e6d75574b1e5ff4ab1f32cf2c90e512c98938812de770d2",
+    "stage3/source.json": "8b967aeb018f3173cf65efe8746a48513b5b997bd6c899a2d5044735e20113a9"
+  },
+  "scratch_program_sha256": "fad61c7c9a786069f35f524ce6aedea81e5aad90b1aa2da64cec6f1fb421cb62"
+}
