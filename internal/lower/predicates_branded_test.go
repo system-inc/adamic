@@ -286,44 +286,47 @@ const v = { kind: 9, pos: 1, text: "x" }; show(v);`, "checked predicate overload
 // predicate held as a value, a function-type parameter, a class method, an arrow, an assertion direct and
 // held, and an optional call (Language's must on 9e4f2184, Compiler's roads on 7530a354). Each narrows a
 // PropertySignature | Identifier argument to PropertySignature, whose typeText S's view doesn't check,
-// so each is NotYet at the call. Mutant: only a call through a declared function's name judged, as
+// so each is NotYet at the call. Three are held first by older rules, each pinned by its reason: the
+// direct call by the false side's guard, which runs before S's view registers, the class method as an
+// indirect call, and the optional call as a call main doesn't lower. Mutant: only a call through a declared function's name judged, as
 // 9e4f2184 did, and the other roads lower; with ADAMIC_BRANDED_CALLS_MUTANT=1 each of those must lower
 // instead and its sanitized native must disagree with Node, which prints undefined.
 func TestBrandedSupertypeEveryCallPathIsJudged(t *testing.T) {
 	t.Parallel()
 	const lie = `const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
 `
-	for _, probe := range []struct{ name, source string }{
+	const walk = "a checked predicate target TypeElement that narrows PropertySignature, which isn't its supertype"
+	for _, probe := range []struct{ name, source, want string }{
 		{"direct", `function show(x: PropertySignature | Identifier): void { if (isTypeElementLie(x)) { console.log(String(x.typeText)); } }
-show(i);`},
+show(i);`, "checked predicate membership of a branded supertype on its false branch"},
 		{"held as a value", `const guard = isTypeElementLie;
 function show(x: PropertySignature | Identifier): void { if (guard(x)) { console.log(String(x.typeText)); } }
-show(i);`},
+show(i);`, walk},
 		{"function-type parameter", `function show(check: (n: Node) => n is TypeElement, x: PropertySignature | Identifier): void { if (check(x)) { console.log(String(x.typeText)); } }
 show(isTypeElementLie, i);`},
 		{"class method", `class Judge { isElement(n: Node): n is TypeElement { return kindOf(n) !== 0; } }
 const judge = new Judge();
 function show(x: PropertySignature | Identifier): void { if (judge.isElement(x)) { console.log(String(x.typeText)); } }
-show(i);`},
+show(i);`, "an indirect call of a checked predicate"},
 		{"arrow", `const isElement = (n: Node): n is TypeElement => kindOf(n) !== 0;
 function show(x: PropertySignature | Identifier): void { if (isElement(x)) { console.log(String(x.typeText)); } }
-show(i);`},
+show(i);`, walk},
 		// An assertion narrows after the call statement, with no if around it (Compiler, on 7530a354).
 		{"asserts", `function assertElement(n: Node): asserts n is TypeElement { if (kindOf(n) === 0) { throw new Error("no"); } }
 function show(x: PropertySignature | Identifier): void { assertElement(x); console.log(String(x.typeText)); }
-show(i);`},
+show(i);`, walk},
 		{"asserts held as a value", `function assertElement(n: Node): asserts n is TypeElement { if (kindOf(n) === 0) { throw new Error("no"); } }
 const held: (n: Node) => asserts n is TypeElement = assertElement;
 function show(x: PropertySignature | Identifier): void { held(x); console.log(String(x.typeText)); }
-show(i);`},
+show(i);`, walk},
 		{"optional call", `const maybe: ((n: Node) => n is TypeElement) | undefined = isTypeElementLie;
 function show(x: PropertySignature | Identifier): void { if (maybe?.(x)) { console.log(String(x.typeText)); } }
-show(i);`},
+show(i);`, "a call through ?. (an optional call)"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			program, err := lowerTypeScriptAssertionSource(t, brandedPrelude+lie+probe.source)
-			if os.Getenv("ADAMIC_BRANDED_CALLS_MUTANT") == "1" {
+			if os.Getenv("ADAMIC_BRANDED_CALLS_MUTANT") == "1" && probe.want == walk {
 				if err != nil {
 					t.Fatalf("the mutant must admit the program: %v", err)
 				}
@@ -335,8 +338,8 @@ show(i);`},
 				return
 			}
 			var pending *NotYet
-			if !errors.As(err, &pending) || !strings.Contains(err.Error(), "a checked predicate target TypeElement that narrows") || !strings.Contains(err.Error(), "which isn't its supertype") {
-				t.Fatalf("want NotYet at the call, got %v", err)
+			if !errors.As(err, &pending) || !strings.Contains(err.Error(), probe.want) {
+				t.Fatalf("want NotYet with %q, got %v", probe.want, err)
 			}
 		})
 	}
