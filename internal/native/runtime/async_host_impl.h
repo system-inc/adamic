@@ -85,7 +85,8 @@ static void host_default_wake(void) {
 static void host_default_wait(void) {
     /* The queue is the predicate. A byte published before poll stays readable. */
     host_lock();
-    bool ready = host_completions != NULL || host_requests == NULL;
+    int timeout = timer_wait_ms();
+    bool ready = host_completions != NULL || (host_requests == NULL && timeout < 0);
     host_unlock();
     if (ready || adamic_host_stdout_refresh_pending()) return;
     struct pollfd descriptors[2] = {
@@ -93,7 +94,10 @@ static void host_default_wait(void) {
         {.fd = adamic_host_stdout_wake_descriptor(), .events = POLLIN}
     };
     int result;
-    do { result = poll(descriptors, 2, -1); } while (result == -1 && errno == EINTR);
+    do {
+        result = poll(descriptors, 2, timeout);
+        if (result == -1 && errno == EINTR) timeout = timer_wait_ms();
+    } while (result == -1 && errno == EINTR);
     if (result < 0 || ((descriptors[0].revents | descriptors[1].revents) & (POLLERR | POLLNVAL))) abort();
 }
 #endif
