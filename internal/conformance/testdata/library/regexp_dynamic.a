@@ -1,0 +1,4 @@
+// Spec: A regex with a nonconstant pattern is not built yet
+// Expect: notyet RegExp with a nonconstant pattern
+const source: string = ['b', '+'].join('');
+console.log(String(new RegExp(source).test('abbc')));
