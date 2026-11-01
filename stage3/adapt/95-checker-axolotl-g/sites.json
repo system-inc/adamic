@@ -1,0 +1,12 @@
+{
+  "file": "src/compiler/checker.ts",
+  "owner": "getApplicableIndexSymbol",
+  "ownerBeforeSha256": "35b9308f3edbb3ae332535bd198677d3cfba0044bd1588e327cb98d9b2a4eaeb",
+  "line": 50153,
+  "column": 121,
+  "code": 2532,
+  "before": "copy.parent = type.aliasSymbol ? type.aliasSymbol : type.symbol ? type.symbol : getSymbolAtLocation(copy.declarations[0].parent);",
+  "after": "if (type.aliasSymbol) {\r\n                        copy.parent = type.aliasSymbol;\r\n                    }\r\n                    else if (type.symbol) {\r\n                        copy.parent = type.symbol;\r\n                    }\r\n                    else {\r\n                        const declaration = copy.declarations[0];\r\n                        if (declaration === undefined) return undefined;\r\n                        copy.parent = getSymbolAtLocation(declaration.parent);\r\n                    }",
+  "javascriptChanging": true,
+  "coordinateDelta": 10
+}
