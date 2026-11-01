@@ -40,12 +40,17 @@ func (l *lowering) brandedSupertype(target *checker.Type) bool {
 	return false
 }
 
+// brandedViewKey is a claim's source and its branded supertype, as brandedViews keys them. It's a named
+// struct, not a [2]*checker.Type, so the latent census's state copy (stage3/census/latent/statecopy)
+// copies it field by field, as it copies nodeHostViewKey.
+type brandedViewKey struct{ source, target *checker.Type }
+
 // brandedSupertypeViews registers S's view and its subtypes' once for each source the claim is made
 // from, keeping the error that stopped them: what a view vouches for through a wider type is what its
 // source already held (view_widened.go), so a source is part of the registration.
 func (l *lowering) brandedSupertypeViews(node *ast.Node, source, target *checker.Type) error {
 	proofs := l.proofs()
-	key := [2]*checker.Type{source, target}
+	key := brandedViewKey{source, target}
 	if err, done := proofs.brandedViews[key]; done {
 		return predicateFailureCopy(err)
 	}
