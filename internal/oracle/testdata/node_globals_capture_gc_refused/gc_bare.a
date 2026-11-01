@@ -1,0 +1,3 @@
+// gc by its bare name, without global.
+import 'node:process';
+console.log(typeof gc);

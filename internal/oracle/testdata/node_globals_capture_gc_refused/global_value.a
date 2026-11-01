@@ -1,0 +1,4 @@
+// global itself as a value.
+import 'node:process';
+const host = global;
+console.log(String(host === globalThis));

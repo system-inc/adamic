@@ -1,0 +1,6 @@
+// gc through globalThis, a receiver other than the global identifier.
+import 'node:process';
+if (globalThis.gc) {
+	globalThis.gc();
+}
+console.log('done');
