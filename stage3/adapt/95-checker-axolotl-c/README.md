@@ -96,7 +96,9 @@ patch table's incremental row is `95-checker-axolotl-c | 2 | 3 | 3`.
 The independent source verifier passes on that output, its fresh census has
 exactly the same 128 diagnostics as the standalone proof, and a second adapter
 run makes zero edits. No patch table or lane source is edited in the repository.
-At the remote branch check, 95b and 95d do not exist; 95c applies on 95a alone.
+95c applies on 95a alone. The initial remote check found neither 95b nor 95d;
+both were subsequently published. The evidence branch records the exact B/D
+refs, both application orders, and combined B/C/D/E source comparisons.
 
 The original four-edit investigation tree's standalone default oracle completed
 in 432.065s: install 0 (5.195s), build 0 (23.207s), tests 1 (403.573s).
