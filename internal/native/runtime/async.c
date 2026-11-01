@@ -1,3 +1,7 @@
+// Timers use the POSIX monotonic clock, including strict C11 builds without -pthread.
+#if defined(__linux__)
+#define _POSIX_C_SOURCE 200809L
+#endif
 #include "async.h"
 #include "host_runtime.h"
 #include <assert.h>
@@ -152,9 +156,12 @@ static void abandon(adamic_async_promise *promise, bool cancelling) {
 /* Low-level subscription cancellation only. Source cancellation/finally is not implemented. */
 void adamic_async_cancel(adamic_async_promise *promise) { abandon(promise, true); }
 static void drain_jobs(void);
+static int timer_wait_ms(void);
 #include "async_host_impl.h"
+#include "timers_impl.h"
 
 void adamic_async_teardown(void) {
+    timer_shutdown();
     host_shutdown();
     while (subscriptions != NULL) abandon(subscriptions->promise, false);
 }
@@ -174,10 +181,21 @@ void adamic_async_run(void) {
     if (host_started) host_loop_thread();
     drain_jobs();
     for (;;) {
-        if (!host_live()) break;
+        if (!host_live() && !timer_live()) break;
         adamic_host_stdout_refresh();
+        /* A timer phase takes the deadlines ready at this turn. An interval
+         * rearmed during a slow callback waits for another turn, so ready host
+         * completions cannot starve behind that same interval. */
+        double turn_time = timers == NULL ? 0 : timer_now();
+        for (;;) {
+            bool due = false;
+            for (timer_entry *entry = timers; entry != NULL; entry = entry->next)
+                if (entry->deadline <= turn_time) { due = true; break; }
+            if (!due || !timer_dispatch()) break;
+            drain_jobs();
+        }
         adamic_host_process_completions();
-        if (!host_live()) break;
+        if (!host_live() && !timer_live()) break;
         host_wait_hook();
     }
     adamic_async_teardown();

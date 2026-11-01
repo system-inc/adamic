@@ -398,7 +398,7 @@ func TestNodeProcessRawWriteFileModeMutant(t *testing.T) {
 	}
 	runtimeSource := string(data)
 	prefix := ""
-	for _, name := range []string{"adamic_start", "adamic_write_line", "adamic_write_raw", "adamic_output_flush", "adamic_panic", "adamic_invariant", "adamic_unreachable", "adamic_process_exit_now", "adamic_host_stdout_start", "adamic_host_stdout_is_tty", "adamic_host_stdout_columns", "adamic_host_stdout_wake_descriptor", "adamic_host_stdout_refresh_pending", "adamic_host_stdout_refresh"} {
+	for _, name := range []string{"adamic_start", "adamic_write_line", "adamic_write_raw", "adamic_output_flush", "adamic_panic", "adamic_invariant", "adamic_unreachable", "adamic_process_exit_now", "adamic_host_stdout_start", "adamic_host_stdout_is_tty", "adamic_host_stdout_columns", "adamic_host_stdout_wake_descriptor", "adamic_host_stdout_refresh_pending", "adamic_host_stdout_refresh", "adamic_timers_provider", "adamic_timer_start", "adamic_timer_cancel", "adamic_timer_unref"} {
 		prefix += "#define " + name + " raw_file_probe_" + name + "\n"
 	}
 	harness := `
