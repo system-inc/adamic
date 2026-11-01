@@ -4,17 +4,17 @@
   "command": [
     "bash",
     "stage3/oracle/run.sh",
-    "/workspace/scratch/jv-config-mutant",
-    "/workspace/scratch/jv-oracle-config-mutant",
+    "/workspace/scratch/jv-one-pin-mutant",
+    "/workspace/scratch/jv-oracle-one-pin-mutant",
     "--prepared",
     "--workers",
     "1",
+    "--limit-seconds",
+    "180",
     "--runners",
     "compiler",
     "--tests",
-    "APISample_parseConfig",
-    "--limit-seconds",
-    "180"
+    "APISample_parseConfig"
   ],
   "counts": {
     "passing": 5,

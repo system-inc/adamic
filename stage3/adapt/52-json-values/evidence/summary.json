@@ -1,5 +1,5 @@
 {
-  "status": "complete-authorized-full-reply-repair",
+  "status": "complete-own-function-pin-correction",
   "main": "470e16f8315f7a83c5c7b7f6f2a77d8328db0a25",
   "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
   "adaptation": 52,
@@ -14,11 +14,11 @@
   "stockDiagnosticsBefore": 0,
   "stockDiagnosticsAfter": 0,
   "publicAnyBefore": 37,
-  "publicAnyAfter": 23,
+  "publicAnyAfter": 22,
   "publicAnyOutsideList": 21,
   "apiMatch": true,
-  "apiSha256": "183fd0568819d08a0a73e9da116394643c2240cbae3e375ffcf3697dfa722f2f",
-  "apiDiffLines": 126,
+  "apiSha256": "b8faba99305b76f8f6ea0273807b08dc8ef6b9cada46d563e436f1d943e9a754",
+  "apiDiffLines": 135,
   "oracles": {
     "control": {
       "counts": {
@@ -80,10 +80,10 @@
             "cp",
             "-a",
             "jv-control/node_modules",
-            "jv-repaired/node_modules"
+            "jv-one-pin/node_modules"
           ],
           "exit": 0,
-          "artifact": "467010da54aa141b1768f4fadb0dcb49f8748404d81429bb4060a0d19b91afb8"
+          "artifact": "beb036b421e945c580d7afa246c16c33144dde1e91b6045619fb9f2155f5fc64"
         },
         "build": {
           "command": [
@@ -93,22 +93,22 @@
           ],
           "exit": 0,
           "typecheck_passed": true,
-          "artifact": "467010da54aa141b1768f4fadb0dcb49f8748404d81429bb4060a0d19b91afb8"
+          "artifact": "beb036b421e945c580d7afa246c16c33144dde1e91b6045619fb9f2155f5fc64"
         },
         "tests": {
           "command": [
             "node",
             "/workspace/adamic/stage3/oracle/run-prepared.mjs",
-            "/workspace/scratch/jv-repaired",
+            "/workspace/scratch/jv-one-pin",
             "--workers=4",
             "--light=false",
             "--no-colors"
           ],
           "exit": 1,
-          "seconds": 232.935
+          "seconds": 253.931
         }
       },
-      "wall_seconds": 233.025
+      "wall_seconds": 254.023
     }
   },
   "configReturnMutant": {
@@ -117,17 +117,17 @@
     "command": [
       "bash",
       "stage3/oracle/run.sh",
-      "/workspace/scratch/jv-config-mutant",
-      "/workspace/scratch/jv-oracle-config-mutant",
+      "/workspace/scratch/jv-one-pin-mutant",
+      "/workspace/scratch/jv-oracle-one-pin-mutant",
       "--prepared",
       "--workers",
       "1",
+      "--limit-seconds",
+      "180",
       "--runners",
       "compiler",
       "--tests",
-      "APISample_parseConfig",
-      "--limit-seconds",
-      "180"
+      "APISample_parseConfig"
     ],
     "counts": {
       "passing": 5,
@@ -147,8 +147,8 @@
     "actualProtocolShape": "JSDocTagInfo.text?: string | SymbolDisplayPart[]",
     "status": "original caller counterexample repaired without normalization"
   },
-  "configReturnReadersNotEdited": 10,
-  "checkedDesignDiagnostics": 29,
+  "configReturnReadersNotEdited": 0,
+  "checkedDesignDiagnostics": 39,
   "servicesTransfer": "src/services/services.ts:1656",
   "harnessRepair": {
     "editLocations": 14,
@@ -162,5 +162,22 @@
       "full-reply-invalid"
     ]
   },
-  "implementation": "c9d79bf83dde67bb31c0e1bf5f42fc13e394ca3b"
+  "exemptions": [
+    "parseConfigFileTextToJson.config"
+  ],
+  "jsTyping": {
+    "readConfigFileDiagnostics": 10,
+    "parseConfigFileTextToJsonDiagnostics": 0,
+    "newCheckMutants": [
+      "typing-string-map",
+      "typing-dependency-keys",
+      "typing-name",
+      "typing-types"
+    ]
+  },
+  "goTests": [
+    "TestJSONValues52PinnedAnySampleReadsRemain",
+    "TestJSONValues52ExemptionsRequireTheirOwnCall"
+  ],
+  "implementation": "0b5258a949ee4b55303b37ced1e95f06e984c326"
 }

@@ -1,7 +1,0 @@
-{
-  "reusedConfigReturnMutant": true,
-  "compilerSourceIdenticalToPreviouslyProvedCandidate": true,
-  "compilerFiles": 79,
-  "mutantResult": "jv-config-mutant.json",
-  "reason": "The authorized repair changes only three harness source files; the exempt returns and all compiler readers are byte-identical."
-}

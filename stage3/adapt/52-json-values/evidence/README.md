@@ -1,16 +1,20 @@
 # JSON values evidence
 
-Implementation commit: c9d79bf83dde67bb31c0e1bf5f42fc13e394ca3b. Base main: 470e16f8315f7a83c5c7b7f6f2a77d8328db0a25.
+Implementation commit: 0b5258a949ee4b55303b37ced1e95f06e984c326. Base main: 470e16f8315f7a83c5c7b7f6f2a77d8328db0a25.
 
-Status: complete after the authorized precise full-reply harness repair.
+Status: complete after correcting the unowned readConfigFile exemption.
 
-- summary.json records the final measurements: 106,366 passing, one standing API acknowledgment failure, zero pending, with only api/typescript.d.ts moving.
-- contracts.json records idempotence, no-write refusals, zero added casts, identical emitted JavaScript for the three harness declaration flows, nine red mutants and exact API reconstruction.
-- measurement.json records all six stock projects clean and the native diagnostic multiset unchanged at 112 before and after.
-- oracle-api-match.json records byte-identical reconstructed, generated and oracle declarations, and absence of the config error baseline.
-- full-apply-source-match.json records exact source equality between a fresh end-to-end apply and the built, measured oracle tree.
-- counterexample-response.json is the original real full reply. counterexample.json now proves that it is returned unchanged, including its string tag text.
-- config-mutant-reuse.json proves that the unchanged compiler sources retain the existing red config-return mutant result in jv-config-mutant.json.
-- full-reply-proofs.tar.gz contains final full apply/build logs, stock and native measurements, all nine mutant logs, oracle logs/report, reconstructed declaration, the prepared artifact hash manifest and command scripts.
+- summary.json records 106,366 passing, one standing API acknowledgment failure, zero pending, and only api/typescript.d.ts moving. APISample_parseConfig.errors.txt is absent.
+- contracts.json records idempotence, no-write refusals, zero added casts, unchanged harness type-flow JavaScript, thirteen red mutants and exact API reconstruction.
+- measurement.json records six stock projects clean and native diagnostics unchanged at 112, with no additions or removals.
+- oracle-api-match.json records byte-identical hand-applied sanctions, generated and oracle declarations. api-diff-counts.json records 135 diff lines (+19/-15).
+- full-apply-source-match.json records exact source equality between the fresh end-to-end apply and the built oracle tree.
+- harness-repair-unchanged.json proves the previously approved three-file harness repair stays byte-identical.
+- jv-config-mutant.json records the freshly rebuilt parseConfigFileTextToJson return mutant and its targeted oracle: 5 passing, 1 failing, exactly APISample_parseConfig.errors.txt moves.
+- own-pin-proofs.tar.gz contains final apply/build logs, both parallel Go test results, stock and native measurements, all thirteen mutant logs, the narrowed-return-only diagnostic probe, both fresh oracle reports and logs, reconstructed declaration, API diff, artifact hash manifests and oracle command script.
 
-proofs.tar.gz and harness-reach/ retain historical stopped-run evidence and the scratch reach measurement. Their stopped counts are superseded by summary.json and full-reply-proofs.tar.gz. The control and isolated config-return mutant remain applicable. No test expectation or baseline was accepted to hide a difference. The two completion-details baselines do not move in the final run.
+The single public-any exemption is parseConfigFileTextToJson.config. The Go test requires both its own ts.parseConfigFileTextToJson( call and its exact unchecked read; the maximum list length is one and zero is permitted. A second parallel test proves another function cannot borrow that call/read, and that the call or read alone is insufficient.
+
+All ten design jsTyping diagnostics come from readConfigFile and now have real checks; there are no parseConfigFileTextToJson readers in jsTyping. Public explicit any falls from 37 to 22, with 21 outside the one-entry list. The excluded classes remain report-only.
+
+proofs.tar.gz, full-reply-proofs.tar.gz and harness-reach/ retain historical measurements. Their earlier counts and two-entry exemption rationale are superseded by summary.json and own-pin-proofs.tar.gz. No baseline or test expectation was accepted to suppress a difference.

@@ -1,6 +1,6 @@
 {
   "idempotent": true,
-  "files": 12,
+  "files": 13,
   "newCasts": 0,
   "castCounts": [
     {
@@ -62,6 +62,11 @@
       "file": "src/harness/fourslashImpl.ts",
       "before": 31,
       "after": 31
+    },
+    {
+      "file": "src/jsTyping/jsTyping.ts",
+      "before": 0,
+      "after": 0
     }
   ],
   "harnessTypeFlowJavaScript": [
@@ -126,17 +131,33 @@
     {
       "class": "full-reply-invalid",
       "exit": 1
+    },
+    {
+      "class": "typing-string-map",
+      "exit": 1
+    },
+    {
+      "class": "typing-dependency-keys",
+      "exit": 1
+    },
+    {
+      "class": "typing-name",
+      "exit": 1
+    },
+    {
+      "class": "typing-types",
+      "exit": 1
     }
   ],
   "api": {
-    "rows": 15,
+    "rows": 16,
     "match": true,
-    "sha256": "183fd0568819d08a0a73e9da116394643c2240cbae3e375ffcf3697dfa722f2f"
+    "sha256": "b8faba99305b76f8f6ea0273807b08dc8ef6b9cada46d563e436f1d943e9a754"
   },
   "publicAny": {
     "beforeTokens": 37,
-    "tokens": 23,
-    "declarationLines": 15,
+    "tokens": 22,
+    "declarationLines": 14,
     "outsideList": 21,
     "counts": {
       "mapped substitution constraint": 1,
@@ -144,7 +165,7 @@
       "timer handles and callback tuples": 16,
       "nominal marker slots": 2,
       "runtime command table": 1,
-      "pinned config returns": 2
+      "pinned config returns": 1
     },
     "sites": [
       {
@@ -298,14 +319,6 @@
         ],
         "class": "timer handles and callback tuples",
         "line": 8493
-      },
-      {
-        "path": [
-          "readConfigFile",
-          "config"
-        ],
-        "class": "pinned config returns",
-        "line": 9240
       },
       {
         "path": [
