@@ -283,10 +283,10 @@ const v = { kind: 9, pos: 1, text: "x" }; show(v);`, "checked predicate overload
 
 // The checker narrows a call's argument by the claim however the call reaches the predicate, so every
 // path is judged by brandedNarrowing, from the one place they all reach (brandedCalls): a direct call, the
-// predicate held as a value, a function-type parameter, a class method and an arrow (Language's must on
-// 9e4f2184). Each narrows a PropertySignature | Identifier argument to PropertySignature, whose typeText
+// predicate held as a value, a function-type parameter, a class method, an arrow, an assertion direct and
+// held, and an optional call (Language's must on 9e4f2184, Compiler's roads on 7530a354). Each narrows a PropertySignature | Identifier argument to PropertySignature, whose typeText
 // S's view doesn't check, so each is NotYet at the call. Mutant: only a direct call judged, as 9e4f2184
-// did, and the other four lower; with ADAMIC_BRANDED_CALLS_MUTANT=1 each must lower instead and its
+// did, and the roads through anything but a declared function's name lower; with ADAMIC_BRANDED_CALLS_MUTANT=1 each must lower instead and its
 // sanitized native must disagree with Node, which prints undefined.
 func TestBrandedSupertypeEveryCallPathIsJudged(t *testing.T) {
 	t.Parallel()
@@ -306,6 +306,17 @@ function show(x: PropertySignature | Identifier): void { if (judge.isElement(x))
 show(i);`},
 		{"arrow", `const isElement = (n: Node): n is TypeElement => kindOf(n) !== 0;
 function show(x: PropertySignature | Identifier): void { if (isElement(x)) { console.log(String(x.typeText)); } }
+show(i);`},
+		// An assertion narrows after the call statement, with no if around it (Compiler, on 7530a354).
+		{"asserts", `function assertElement(n: Node): asserts n is TypeElement { if (kindOf(n) === 0) { throw new Error("no"); } }
+function show(x: PropertySignature | Identifier): void { assertElement(x); console.log(String(x.typeText)); }
+show(i);`},
+		{"asserts held as a value", `function assertElement(n: Node): asserts n is TypeElement { if (kindOf(n) === 0) { throw new Error("no"); } }
+const held: (n: Node) => asserts n is TypeElement = assertElement;
+function show(x: PropertySignature | Identifier): void { held(x); console.log(String(x.typeText)); }
+show(i);`},
+		{"optional call", `const maybe: ((n: Node) => n is TypeElement) | undefined = isTypeElementLie;
+function show(x: PropertySignature | Identifier): void { if (maybe?.(x)) { console.log(String(x.typeText)); } }
 show(i);`},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
