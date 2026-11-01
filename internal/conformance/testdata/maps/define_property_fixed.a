@@ -1,0 +1,5 @@
+// Spec: Expandos, `delete`, `Object.defineProperty`, prototype mutation
+// Expect: refused property descriptors can change the presence, type or access behavior of fields
+const point = { x: 1 };
+Object.defineProperty(point, 'y', { enumerable: false, writable: false, value: 2 });
+console.log(String(point.x));
