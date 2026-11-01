@@ -355,7 +355,9 @@ show(i);`, "a call through ?. (an optional call)", false},
 // A member S is assignable to and that's assignable to S keeps its own type when the checker narrows it
 // (getNarrowedType takes a subtype of the candidate as it is), so brandedNarrowing passes it and S's view
 // never sees its reads (Compiler's pin on 9e4f2184): a restatement, an alias of S's shape, and a twin whose
-// name is any. Each is held to never read raw: a program lowers and agrees with Node, or stops at exit 70
+// name is any, each called directly and through the predicate held as a value. A direct call's false side
+// narrows such a member to never, so it stops at the false side's guard; held as a value, only the true side
+// is checked, so the read runs. Each is held to never read raw: a program lowers and agrees with Node, or stops at exit 70
 // with a located failure on sanitized native and the JavaScript backend, or is NotYet. The restatement and
 // the alias can only hold a lie a cast of its own put there, which that cast's view checks; the twin holds
 // one by plain assignment.
@@ -367,6 +369,10 @@ interface Twin { readonly kind: number; readonly pos: number; _declarationBrand:
 function viaRestated(x: Restated): string { if (isTypeElementLie(x)) { return String(x.name); } return "no"; }
 function viaShape(x: Shape): string { if (isTypeElementLie(x)) { return String(x.name); } return "no"; }
 function viaTwin(x: Twin): string { if (isTypeElementLie(x)) { return String(x.name); } return "no"; }
+const guard = isTypeElementLie;
+function heldRestated(x: Restated): void { if (guard(x)) { console.log(String(x.name)); } }
+function heldShape(x: Shape): void { if (guard(x)) { console.log(String(x.name)); } }
+function heldTwin(x: Twin): void { if (guard(x)) { console.log(String(x.name)); } }
 `
 	for _, probe := range []struct{ name, source string }{
 		{"restatement honest", `const r: Restated = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a" }; console.log(viaRestated(r));`},
@@ -374,6 +380,12 @@ function viaTwin(x: Twin): string { if (isTypeElementLie(x)) { return String(x.n
 		{"alias honest", `const r: Shape = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a" }; console.log(viaShape(r));`},
 		{"alias through a cast", `const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const n: Node = w; console.log(viaShape(n as Shape));`},
 		{"twin", `const t: Twin = { kind: 80, pos: 2, _declarationBrand: undefined, _typeElementBrand: undefined, name: 5 }; console.log(viaTwin(t));`},
+		// Held as a value, the claim's false side isn't checked, so the true side's read is what runs.
+		{"held restatement honest", `const r: Restated = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a" }; heldRestated(r);`},
+		{"held restatement through a cast", `const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const n: Node = w; heldRestated(n as Restated);`},
+		{"held alias honest", `const r: Shape = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a" }; heldShape(r);`},
+		{"held alias through a cast", `const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const n: Node = w; heldShape(n as Shape);`},
+		{"held twin", `const t: Twin = { kind: 80, pos: 2, _declarationBrand: undefined, _typeElementBrand: undefined, name: 5 }; heldTwin(t);`},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
