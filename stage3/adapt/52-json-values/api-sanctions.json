@@ -1,0 +1,163 @@
+[
+  {
+    "path": [
+      "server",
+      "protocol",
+      "Request",
+      "arguments"
+    ],
+    "kind": "PropertySignature",
+    "before": "any",
+    "after": "unknown",
+    "why": "Adamic r2628wp: check caller values at use instead of publishing any."
+  },
+  {
+    "path": [
+      "server",
+      "protocol",
+      "Event",
+      "body"
+    ],
+    "kind": "PropertySignature",
+    "before": "any",
+    "after": "unknown",
+    "why": "Adamic r2628wp: check caller values at use instead of publishing any."
+  },
+  {
+    "path": [
+      "server",
+      "protocol",
+      "Response",
+      "body"
+    ],
+    "kind": "PropertySignature",
+    "before": "any",
+    "after": "unknown",
+    "why": "Adamic r2628wp: check caller values at use instead of publishing any."
+  },
+  {
+    "path": [
+      "server",
+      "protocol",
+      "ConfigurePluginRequestArguments",
+      "configuration"
+    ],
+    "kind": "PropertySignature",
+    "before": "any",
+    "after": "unknown",
+    "why": "Adamic r2628wp: check caller values at use instead of publishing any."
+  },
+  {
+    "path": [
+      "server",
+      "protocol",
+      "TelemetryEventBody",
+      "payload"
+    ],
+    "kind": "PropertySignature",
+    "before": "any",
+    "after": "unknown",
+    "why": "Adamic r2628wp: check caller values at use instead of publishing any."
+  },
+  {
+    "path": [
+      "server",
+      "PluginCreateInfo",
+      "config"
+    ],
+    "kind": "PropertySignature",
+    "before": "any",
+    "after": "unknown",
+    "why": "Adamic r2628wp: check caller values at use instead of publishing any."
+  },
+  {
+    "path": [
+      "server",
+      "PluginModule",
+      "onConfigurationChanged",
+      "config"
+    ],
+    "kind": "Parameter",
+    "before": "any",
+    "after": "unknown",
+    "why": "Adamic r2628wp: check caller values at use instead of publishing any."
+  },
+  {
+    "path": [
+      "ParsedCommandLine",
+      "raw"
+    ],
+    "kind": "PropertySignature",
+    "before": "any",
+    "after": "unknown",
+    "why": "Adamic r2628wp: check caller values at use instead of publishing any."
+  },
+  {
+    "path": [
+      "ParsedTsconfig",
+      "raw"
+    ],
+    "kind": "PropertySignature",
+    "before": "any",
+    "after": "unknown",
+    "why": "Adamic r2628wp: check caller values at use instead of publishing any."
+  },
+  {
+    "path": [
+      "parseJsonConfigFileContent",
+      "json"
+    ],
+    "kind": "Parameter",
+    "before": "any",
+    "after": "unknown",
+    "why": "Adamic r2628wp: check caller values at use instead of publishing any."
+  },
+  {
+    "path": [
+      "convertCompilerOptionsFromJson",
+      "jsonOptions"
+    ],
+    "kind": "Parameter",
+    "before": "any",
+    "after": "unknown",
+    "why": "Adamic r2628wp: check caller values at use instead of publishing any."
+  },
+  {
+    "path": [
+      "convertTypeAcquisitionFromJson",
+      "jsonOptions"
+    ],
+    "kind": "Parameter",
+    "before": "any",
+    "after": "unknown",
+    "why": "Adamic r2628wp: check caller values at use instead of publishing any."
+  },
+  {
+    "path": [
+      "LanguageServiceHost",
+      "getLocalizedDiagnosticMessages"
+    ],
+    "kind": "MethodSignature",
+    "before": "any",
+    "after": "unknown",
+    "why": "Adamic r2628wp: check caller values at use instead of publishing any."
+  },
+  {
+    "path": [
+      "convertToObject"
+    ],
+    "kind": "FunctionDeclaration",
+    "before": "any",
+    "after": "AdamicJsonRecoveryValue | undefined",
+    "why": "Adamic r2628wp: the JSON AST converter produces the recursive recovery value domain or undefined."
+  },
+  {
+    "insert": "after",
+    "path": [
+      "ParseConfigFileHost"
+    ],
+    "kind": "InterfaceDeclaration",
+    "text": "type AdamicJsonRecoveryValue = string | number | boolean | null | AdamicJsonRecoveryValue[] | AdamicJsonRecoveryObject;\ninterface AdamicJsonRecoveryObject {\n    [key: string]: AdamicJsonRecoveryValue | undefined;\n}",
+    "why": "Adamic r2628wp: publish adaptation 43 recovery definitions at the declaration bundler position."
+  }
+]
