@@ -1,6 +1,6 @@
 # Devirtualization coverage
 
-Base: origin/main e8ba3d5. Inspected git diff ceb29f7 fe522c5 and both commit messages, all changed compiler and test files, docs/devirtualize.md and bench/devirtualize.a. The branch changes native emission only.
+Base: origin/main e8ba3d5. Inspected git diff ceb29f7 fe522c5 and both commit messages, all changed compiler and test files, docs/devirtualize.md and bench/devirtualize.a. That branch changed native emission only.
 
 | Condition or value | Existing oracle evidence | Added evidence |
 | --- | --- | --- |
