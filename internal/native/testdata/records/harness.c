@@ -280,6 +280,77 @@ static void two_indices(void) {
 	snapshot(record);
 	adamic_release(record);
 }
+// own_names is Object.getOwnPropertyNames, hidden keys included, for a record none of whose keys is an
+// array index: its live entries in insertion order.
+static void own_names(adamic_record *record) {
+	const adamic_map *map = record->slots[0].reference;
+	adamic_array *names = adamic_array_new(map->count, true);
+	for (size_t index = 0; index < map->used; index++) {
+		if (!map->entries[index].deleted) adamic_array_push(names, (adamic_value){.reference = adamic_retain(map->entries[index].key.reference)});
+	}
+	json((adamic_value){.reference = names}, &strings_schema);
+	adamic_release(names);
+}
+// Object.defineProperty's hidden keys, as Node keeps their attributes, through the checked writes and
+// deletes the compiler emits wherever a key may be hidden. A new key is left out of keys
+// and iteration, present to own reads, and refused a write, a delete and a define of another value,
+// while a define of the value it has goes through. A key hidden where it stands keeps its place, is
+// refused a write, and stays configurable: it takes another define, and a delete.
+static void hidden(void) {
+	adamic_record *record = adamic_record_new(false);
+	put(record, "a", 1);
+	put(record, "b", 2);
+	put(record, "c", 3);
+	int added = adamic_record_define_hidden(record, text("h"), (adamic_value){.number = 4}, adamic_record_numbers);
+	int in_place = adamic_record_define_hidden(record, text("b"), (adamic_value){.number = 5}, adamic_record_numbers);
+	printf("%d %d\n", added, in_place);
+	snapshot(record);
+	own_names(record);
+	pairs(record);
+	adamic_string *key = text("h");
+	printf("%d %d %.0f\n", adamic_record_has_own(record, key), adamic_record_has(record, key), adamic_record_get(record, key)->number);
+	// Each refusal still takes the key and value it was handed.
+	int written = adamic_record_set_checked(record, adamic_retain(key), (adamic_value){.number = 6});
+	int deleted = adamic_record_delete_checked(record, key);
+	int redefined = adamic_record_define_hidden(record, adamic_retain(key), (adamic_value){.number = 7}, adamic_record_numbers);
+	int same = adamic_record_define_hidden(record, adamic_retain(key), (adamic_value){.number = 4}, adamic_record_numbers);
+	printf("%d %d %d %d %.0f\n", written, deleted, redefined, same, adamic_record_get_own(record, key)->number);
+	adamic_release(key);
+	key = text("b");
+	written = adamic_record_set_checked(record, adamic_retain(key), (adamic_value){.number = 8});
+	redefined = adamic_record_define_hidden(record, adamic_retain(key), (adamic_value){.number = 9}, adamic_record_numbers);
+	double value = adamic_record_get_own(record, key)->number;
+	deleted = adamic_record_delete_checked(record, key);
+	printf("%d %d %.0f %d %d\n", written, redefined, value, deleted, adamic_record_has_own(record, key));
+	adamic_release(key);
+	int absent = erase(record, "absent");
+	int visible = adamic_record_set_checked(record, text("c"), (adamic_value){.number = 8});
+	printf("%d %d\n", absent, visible);
+	own_names(record);
+	adamic_release(record);
+	// The hidden key comes after 40 keys deleted, so compaction moves it down and leaves its old slot
+	// behind the live entries; the 40th key added after lands in that slot, and must not come up hidden.
+	record = adamic_record_new(false);
+	for (int index = 0; index < 40; index++) {
+		char bytes[32];
+		(void)snprintf(bytes, sizeof bytes, "k%d", index);
+		put(record, bytes, index);
+	}
+	(void)adamic_record_define_hidden(record, text("h"), (adamic_value){.number = 40}, adamic_record_numbers);
+	for (int index = 0; index < 40; index++) {
+		char bytes[32];
+		(void)snprintf(bytes, sizeof bytes, "k%d", index);
+		(void)erase(record, bytes);
+	}
+	for (int index = 0; index < 40; index++) {
+		char bytes[32];
+		(void)snprintf(bytes, sizeof bytes, "n%d", index);
+		put(record, bytes, index);
+	}
+	snapshot(record);
+	own_names(record);
+	adamic_release(record);
+}
 static double now(void) {
 	struct timespec time;
 	if (clock_gettime(CLOCK_MONOTONIC, &time) != 0) abort();
@@ -354,6 +425,7 @@ int main(int argc, char **argv) {
 	else if (strcmp(argv[1], "iteration") == 0) iteration();
 	else if (strcmp(argv[1], "numeric") == 0) numeric(100000);
 	else if (strcmp(argv[1], "two-indices") == 0) two_indices();
+	else if (strcmp(argv[1], "hidden") == 0) hidden();
 	else if (strcmp(argv[1], "workload") == 0 || strcmp(argv[1], "bench") == 0) {
 		if (argc != 3) return 2;
 		workload((size_t)strtoull(argv[2], NULL, 10), strcmp(argv[1], "bench") == 0);
