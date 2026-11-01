@@ -1,0 +1,32 @@
+{
+  "refs": {
+    "b": "408f8cb16c4e97ca51997d5a340a0b1826b66ba9",
+    "d": "c6c2c01e6b0ebfe7fd8b767119c489a1843cdbc5"
+  },
+  "orders": [
+    {
+      "forward": "bc",
+      "reverse": "cb",
+      "sourceFiles": 746,
+      "sourcesByteIdentical": true
+    },
+    {
+      "forward": "dc",
+      "reverse": "cd",
+      "sourceFiles": 746,
+      "sourcesByteIdentical": true
+    },
+    {
+      "forward": "ce",
+      "reverse": "ec",
+      "sourceFiles": 746,
+      "sourcesByteIdentical": true
+    },
+    {
+      "forward": "bcde",
+      "reverse": "edcb",
+      "sourceFiles": 746,
+      "sourcesByteIdentical": true
+    }
+  ]
+}
