@@ -1,15 +1,18 @@
 package lower
 
 import (
+	"bytes"
 	"context"
 	"errors"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 // Accessor names are judged by what can reach what, never program-wide by name (Compiler and Lower,
@@ -46,6 +49,7 @@ console.log(String(decoder.pos) + " " + String(count));
 func TestDecoderGetterBesideCheckedNodeViewAgrees(t *testing.T) {
 	t.Parallel()
 	program := lowersAndAgreesWithNodeAs(t, decoderBesideNodeView, ".ts")
+	accessorReachNative(t, program, "x@3\n3 2\n")
 	// What behavior can't observe: the Node's pos read keeps its check. Node prints the same
 	// whether the read is checked, unchecked or dispatched, since the value is a plain field.
 	viewed, dispatched := accessorReachReads(program, "pos")
@@ -109,6 +113,7 @@ console.log(isSourceMapping(decodeMappings("A,B;C")));
 func TestSourcemapDecoderShapeAgrees(t *testing.T) {
 	t.Parallel()
 	program := lowersAndAgreesWithNodeAs(t, sourcemapDecoder, ".ts")
+	accessorReachNative(t, program, "x@3\n1:1 at 5\n")
 	// What behavior can't observe: the Node's pos read keeps its check (as above).
 	if viewed, _ := accessorReachReads(program, "pos"); viewed != 1 {
 		t.Fatalf("want the Node pos read kept as one checked ir.Property, got %d", viewed)
@@ -116,10 +121,11 @@ func TestSourcemapDecoderShapeAgrees(t *testing.T) {
 }
 
 // A read whose receiver is a callback's parameter, which the graph can't follow, may reach the
-// getter, so it stays the dispatcher's call and reads the getter's value, not its slot.
+// getter, so it stays the dispatcher's call and reads the getter's value, not its slot, while a
+// read of a literal no getter owns keeps its plain load.
 func TestGetterThroughUnknownReceiverAgrees(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNodeAs(t, `interface Positioned { readonly pos: number; }
+	program := lowersAndAgreesWithNodeAs(t, `interface Positioned { readonly pos: number; }
 let at = 3;
 const decoder = { get pos() { return at; } };
 const plain = { pos: 5 };
@@ -128,6 +134,28 @@ all.forEach((each) => console.log(String(each.pos)));
 at = 4;
 console.log(String(decoder.pos) + " " + String(plain.pos));
 `, ".ts")
+	accessorReachNative(t, program, "3\n5\n4 5\n")
+}
+
+// accessorReachNative builds program natively, under the sanitizers as getter_structural_read_test.go
+// does, and wants want on its stdout, what Node prints: the JavaScript backend's property read
+// runs a getter itself, so it can't tell a slot load from the dispatcher's call, and native can.
+func accessorReachNative(t *testing.T, program *ir.Program, want string) {
+	t.Helper()
+	binary := filepath.Join(t.TempDir(), "native")
+	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	command := exec.Command(binary)
+	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
+	var out, errs bytes.Buffer
+	command.Stdout, command.Stderr = &out, &errs
+	if err := command.Run(); err != nil {
+		t.Fatalf("native: %v, stdout %q stderr %q", err, out.String(), errs.String())
+	}
+	if out.String() != want || errs.Len() != 0 {
+		t.Fatalf("native: stdout %q stderr %q; want %q, as Node prints", out.String(), errs.String(), want)
+	}
 }
 
 // accessorReachReads counts the program's checked ir.Property reads of name and its calls to
