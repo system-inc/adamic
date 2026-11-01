@@ -1,0 +1,25 @@
+{
+  "status": "pass",
+  "idempotent": true,
+  "anyToUnknown": true,
+  "mutants": [
+    {
+      "name": "wrong-type",
+      "rejected": true,
+      "beforeWrite": true,
+      "error": "unreviewed timer type"
+    },
+    {
+      "name": "extra-read",
+      "rejected": true,
+      "beforeWrite": true,
+      "error": "timer host call moved\n+ actual - expected\n\n+ 'console.log'\n- 'hostWithWatch.clearTimeout'\n"
+    },
+    {
+      "name": "changed-registration",
+      "rejected": true,
+      "beforeWrite": true,
+      "error": "timer use inventory moved\n+ actual - expected\n... Skipped lines\n\n  [\n    {\n      expression: 'hostWithWatch.clearTimeout(state.timerToBuildInvalidatedProject)',\n      function: 'scheduleBuildInvalidatedProject',\n      role: 'cancel'\n...\n    {\n+     expression: 'state.timerToBuildInvalidatedProject = hostWithWatch.setTimeout(buildNextInvalidatedProject, time + 1, \"timerToBuildInvalidatedProject\", state, changeDetected)',\n-     expression: 'state.timerToBuildInvalidatedProject = hostWithWatch.setTimeout(buildNextInvalidatedProject, time, \"timerToBuildInvalidatedProject\", state, changeDetected)',\n      function: 'scheduleBuildInvalidatedProject',\n      inputType: 'any',\n      role: 'register'\n    },\n    {\n"
+    }
+  ]
+}

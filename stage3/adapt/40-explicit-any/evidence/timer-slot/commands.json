@@ -1,0 +1,143 @@
+{
+  "status": "pass",
+  "main": "de5c28cc11d8a12a76cefb13e2bb1c78a2bb4585",
+  "parent": "f160842e52675fe42ad442cfe80d71b93351b44f",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "typescript_api": "6.0.3",
+  "node": "v24.19.0",
+  "control_apply": {
+    "command": "ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/adapt40-upstream bash stage3/apply.sh /workspace/scratch/adapt40-timer-control",
+    "exit": 0
+  },
+  "preparation": [
+    {
+      "name": "control-build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "seconds": 25.658002186999965
+    },
+    {
+      "name": "retyped-apply",
+      "command": [
+        "bash",
+        "stage3/apply.sh",
+        "/workspace/scratch/adapt40-timer-retyped"
+      ],
+      "exit": 0,
+      "seconds": 189.71788815100012
+    },
+    {
+      "name": "retyped-build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "seconds": 25.551978671999905
+    },
+    {
+      "name": "own-90",
+      "command": [
+        "node",
+        "stage3/adapt/90-void-widening/adapt.cjs",
+        "/workspace/scratch/adapt40-timer-retyped"
+      ],
+      "exit": 0,
+      "seconds": 9.996933091000074
+    },
+    {
+      "name": "own-91",
+      "command": [
+        "node",
+        "stage3/adapt/91-patcher-discard/adapt.cjs",
+        "/workspace/scratch/adapt40-timer-retyped"
+      ],
+      "exit": 0,
+      "seconds": 2.0909399719998873
+    },
+    {
+      "name": "own-92",
+      "command": [
+        "node",
+        "stage3/adapt/92-tty-host-results/adapt.cjs",
+        "/workspace/scratch/adapt40-timer-retyped"
+      ],
+      "exit": 0,
+      "seconds": 1.4238181779999195
+    },
+    {
+      "name": "idempotence",
+      "command": [
+        "node",
+        "stage3/adapt/40-explicit-any/adapt.cjs",
+        "/workspace/scratch/adapt40-timer-retyped"
+      ],
+      "exit": 1,
+      "seconds": 1.8745827309999186
+    }
+  ],
+  "class_idempotence": {
+    "command": "require(\"./stage3/adapt/40-explicit-any/classes.cjs\").applyTimerSlots(RETYPE_TREE)",
+    "exit": 0,
+    "files": 0
+  },
+  "scope_emission": {
+    "command": "NODE_PATH=stage3/api/node_modules node compare.cjs CONTROL RETYPED REPO",
+    "exit": 0
+  },
+  "guard_mutants": {
+    "command": "NODE_PATH=stage3/api/node_modules node mutants.cjs REPO RETYPED FRESH_SCRATCH",
+    "exit": 0,
+    "rejected_before_write": 3
+  },
+  "lane_tests": {
+    "command": "python3 -B -m unittest discover -s stage3/lane -p 'test_*.py' -v",
+    "exit": 0,
+    "tests": 72
+  },
+  "oracles": [
+    {
+      "command": "NODE_OPTIONS=--max-old-space-size=1400 python3 -B /workspace/scratch/adapt40-timer-shards.py /workspace/scratch/adapt40-timer-control /workspace/scratch/adapt40-timer-oracle-control-accepted",
+      "exit": 0,
+      "units": 398
+    },
+    {
+      "command": "NODE_OPTIONS=--max-old-space-size=1400 python3 -B /workspace/scratch/adapt40-timer-shards.py /workspace/scratch/adapt40-timer-retyped /workspace/scratch/adapt40-timer-oracle-retyped-accepted",
+      "exit": 0,
+      "units": 398
+    }
+  ],
+  "oracle_comparison": {
+    "command": "python3 -B compare-oracles.py REPO CONTROL_RESULTS RETYPED_RESULTS EVIDENCE",
+    "exit": 0,
+    "test_identities_with_multiplicity": 106367
+  },
+  "generated_shards": {
+    "command": "python3 -B stage3/lane/generate_shards.py --check",
+    "exit": 0
+  },
+  "api_generation": {
+    "command": "NODE_PATH=stage3/api/node_modules python3 -B stage3/lane/generate-api.py PINNED_UPSTREAM --output TEMP; cmp stage3/lane/sanctioned-api.json TEMP",
+    "exit": 0,
+    "only_change_from_main": "class-rules.json proof hash"
+  },
+  "post_oracle": {
+    "exit": 0,
+    "source_files_per_tree": 746,
+    "javascript_per_tree": 10,
+    "declarations_per_tree": 715
+  },
+  "explorations": [
+    "The final preparation entry reran all of adaptation 40 after later adapters and exited 1 at the old brand line-number guard. Control has the same guard failure. The required new class is directly idempotent.",
+    "An initial strict-helper check incorrectly expected zero diagnostics. The paired check proves the same 140 diagnostics with no additions.",
+    "The first control oracle launch rejected the build-time node_modules link before tests; fresh accepted phases remove only those links and execute every manifest command."
+  ],
+  "public_api_diff": [],
+  "timer_state_public": false,
+  "later_source_pin_changes": []
+}

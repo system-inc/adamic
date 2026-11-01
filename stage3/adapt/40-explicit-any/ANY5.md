@@ -1,5 +1,7 @@
 # Five any members: stopped at the public config type
 
+Follow-up: `timerToBuildInvalidatedProject` is now done as `unknown`; see [TIMER-SLOT.md](TIMER-SLOT.md). The stopped-probe findings below remain historical.
+
 Main: `de5c28cc11d8a12a76cefb13e2bb1c78a2bb4585`. Upstream TypeScript:
 `050880ce59e30b356b686bd3144efe24f875ebc8`, version 6.0.3. Branch:
 `typescript/adapt40-any5`. No retype is implemented in this change.

@@ -1,19 +1,19 @@
-# Explicit any classification: 74 done, 136 remaining
+# Explicit any classification: 75 done, 135 remaining
 
-Sites 138 (filesystem entry classification) and 58 (array predicate input) are done.
+Sites 138 (filesystem entry classification), 58 (array predicate input), and 143 (opaque solution-builder timer slot) are done.
 The original census remains below for traceability.
 
 
-The original disjoint classification below describes the 207-token census after the first three owner edits, not the original 210-token census. Brands (36), enum display (23), diagnostics (6), the array predicate input (1), filesystem entry classification (1), and Error host members (4) are now done, as recorded in PROGRESS.md and ERROR-HOST.md: 74 tokens removed in total, 136 remaining. The location sections retain original site IDs for traceability. Every token has an ID and exact file:line:column in evidence/classification.json. Multiple tokens on one line remain separate sites. The counts below are semantic patterns; erased syntax is an independent axis, not a catch-all class. All suggested types remain proposals until checked against owners and consumers. A type-only candidate is not a completed proof.
+The original disjoint classification below describes the 207-token census after the first three owner edits, not the original 210-token census. Brands (36), enum display (23), diagnostics (6), the array predicate input (1), filesystem entry classification (1), Error host members (4), and the opaque solution-builder timer slot (1) are now done, as recorded in PROGRESS.md, ERROR-HOST.md, and TIMER-SLOT.md: 75 tokens removed in total, 135 remaining. The location sections retain original site IDs for traceability. Every token has an ID and exact file:line:column in evidence/classification.json. Multiple tokens on one line remain separate sites. The counts below are semantic patterns; erased syntax is an independent axis, not a catch-all class. All suggested types remain proposals until checked against owners and consumers. A type-only candidate is not a completed proof.
 
-Completed classes: brands 36, enum display 23, diagnostics 6, array predicate input 1, filesystem entry classification 1, Error host members 4, plus the earlier three core owners: 74 of 210 tokens done.
+Completed classes: brands 36, enum display 23, diagnostics 6, array predicate input 1, filesystem entry classification 1, Error host members 4, opaque timer slot 1, plus the earlier three core owners: 75 of 210 tokens done.
 
 Remaining classes:
 
 | Pattern | Tokens | Proposed rule |
 | --- | ---: | --- |
 | JSON and config value pipeline | 38 | Unknown plus checked narrowing at genuinely untyped JSON/API boundaries; propagate validated recursive JSON/config value types through the internal pipeline. |
-| Timer handles and variadic timer forwarding | 16 | Generic parameters for the host timer handle and argument tuple, carried together through registration, storage, callback and cancellation declarations. |
+| Timer handles and variadic timer forwarding | 15 | Generic parameters for the host timer handle and argument tuple, carried together through registration, storage, callback and cancellation declarations. |
 | Incomplete runtime constructors and storage initialization | 11 | Decline until constructor return and staged initialization contracts are modeled at their owners. |
 | Generic enumerable copy and metadata copy | 10 | Decline until enumerable copy results and writable key relationships have an owner contract. |
 | Standard runtime feature probes | 4 | Real type: existing Array, String and Error APIs, with optional host availability declared at their owners where older runtimes omit the API. |
@@ -41,7 +41,7 @@ Remaining classes:
 | Resolution result update | 1 | Real type: declare the mutable resolvedModule result field at its actual owner. |
 | Unused scanner reduction state | 1 | Real type: undefined, the state passed by both getLeadingCommentRanges and getTrailingCommentRanges. |
 
-Original total: 207 tokens, 28 files, 33 disjoint classes. The remaining table excludes completed classes and the four completed Error sites: 136 tokens in 28 classes. No token remains unclassified.
+Original total: 207 tokens, 28 files, 33 disjoint classes. The remaining table excludes completed classes and the four completed Error sites: 135 tokens in 28 classes. No token remains unclassified.
 
 ## Decision
 
@@ -178,9 +178,9 @@ Locations:
 - 91: `src/compiler/emitter.ts:5790:147`
 - 106: `src/compiler/program.ts:3526:50`
 
-### Timer handles and variadic timer forwarding (16)
+### Timer handles and variadic timer forwarding (1 done, 15 remaining)
 
-Includes five callback/rest argument tokens and eleven opaque timer handle tokens. System and WatchHost timer contracts are host-polymorphic; forwarding an opaque handle does not justify unknown plus invented runtime narrowing. A blanket Node timer type would exclude other supported hosts.
+The original 16 sites include five callback/rest argument tokens and eleven opaque timer handle tokens. Site 143 is now done with unknown: its reads only test truthiness or forward to the host any-input clearTimeout. See [TIMER-SLOT.md](TIMER-SLOT.md). The other 15 sites remain. System and WatchHost timer contracts are host-polymorphic; forwarding an opaque handle does not justify unknown plus invented runtime narrowing. A blanket Node timer type would exclude other supported hosts.
 
 Rule: Generic parameters for the host timer handle and argument tuple, carried together through registration, storage, callback and cancellation declarations.
 
@@ -194,7 +194,7 @@ Locations:
 - 133: `src/compiler/sys.ts:1440:74`
 - 134: `src/compiler/sys.ts:1440:82`
 - 135: `src/compiler/sys.ts:1441:30`
-- 143: `src/compiler/tsbuildPublic.ts:424:37`
+- 143 (done): `src/compiler/tsbuildPublic.ts:424:37`
 - 200: `src/compiler/watchPublic.ts:169:37`
 - 201: `src/compiler/watchPublic.ts:169:74`
 - 202: `src/compiler/watchPublic.ts:169:82`

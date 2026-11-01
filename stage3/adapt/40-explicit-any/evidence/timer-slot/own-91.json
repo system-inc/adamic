@@ -1,0 +1,26 @@
+{
+  "files": 0,
+  "javascriptChanging": true,
+  "sites": [
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "owner": "createNodeFactory",
+      "registry": "nodeFactoryPatchers",
+      "argument": "factory",
+      "type": "NodeFactory",
+      "line": 1164,
+      "before": "forEach(nodeFactoryPatchers, fn => fn(factory));",
+      "after": "forEach(nodeFactoryPatchers, fn => { fn(factory); });"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "owner": "setObjectAllocator",
+      "registry": "objectAllocatorPatchers",
+      "argument": "objectAllocator",
+      "type": "ObjectAllocator",
+      "line": 8582,
+      "before": "forEach(objectAllocatorPatchers, fn => fn(objectAllocator));",
+      "after": "forEach(objectAllocatorPatchers, fn => { fn(objectAllocator); });"
+    }
+  ]
+}

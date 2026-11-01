@@ -184,3 +184,8 @@ function applyDiagnosticDeclarations(tree) {
     for(const [file,text]of texts)fs.writeFileSync(file,text);
 }
 module.exports.applyDiagnosticDeclarations=applyDiagnosticDeclarations;
+
+function applyTimerSlots(tree) {
+    return require('./timer-slot.cjs').apply(tree, rules['opaque-timer-slot']);
+}
+module.exports.applyTimerSlots = applyTimerSlots;

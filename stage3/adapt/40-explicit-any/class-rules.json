@@ -540,5 +540,53 @@
       "owner": "error",
       "key": "arg0"
     }
+  ],
+  "opaque-timer-slot": [
+    {
+      "id": 143,
+      "file": "src/compiler/tsbuildPublic.ts",
+      "owner": "SolutionBuilderState",
+      "key": "timerToBuildInvalidatedProject",
+      "replacement": "unknown",
+      "uses": [
+        {
+          "role": "initialize",
+          "function": "createSolutionBuilderState",
+          "expression": "timerToBuildInvalidatedProject: undefined"
+        },
+        {
+          "role": "truthiness",
+          "function": "scheduleBuildInvalidatedProject",
+          "expression": "state.timerToBuildInvalidatedProject"
+        },
+        {
+          "role": "cancel",
+          "function": "scheduleBuildInvalidatedProject",
+          "expression": "hostWithWatch.clearTimeout(state.timerToBuildInvalidatedProject)"
+        },
+        {
+          "role": "register",
+          "function": "scheduleBuildInvalidatedProject",
+          "expression": "state.timerToBuildInvalidatedProject = hostWithWatch.setTimeout(buildNextInvalidatedProject, time, \"timerToBuildInvalidatedProject\", state, changeDetected)",
+          "inputType": "any"
+        },
+        {
+          "role": "reset",
+          "function": "buildNextInvalidatedProjectWorker",
+          "expression": "state.timerToBuildInvalidatedProject = undefined"
+        },
+        {
+          "role": "truthiness",
+          "function": "buildNextInvalidatedProjectWorker",
+          "expression": "state.timerToBuildInvalidatedProject"
+        }
+      ],
+      "labels": [
+        {
+          "function": "scheduleBuildInvalidatedProject",
+          "expression": "hostWithWatch.setTimeout(buildNextInvalidatedProject, time, \"timerToBuildInvalidatedProject\", state, changeDetected)"
+        }
+      ]
+    }
   ]
 }

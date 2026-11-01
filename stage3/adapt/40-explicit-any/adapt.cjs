@@ -62,3 +62,5 @@ require('./classes.cjs').applyDiagnosticDeclarations(path.resolve(process.argv[2
 require('./classes.cjs').applyEnums(path.resolve(process.argv[2]), 'filesystem');
 
 require('./error-host.cjs').apply(path.resolve(process.argv[2]));
+
+require('./classes.cjs').applyTimerSlots(path.resolve(process.argv[2]));

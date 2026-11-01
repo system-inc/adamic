@@ -1,0 +1,46 @@
+{
+  "status": "pass",
+  "manifest_sha256": "a18bb3e8de63d8e1ff7d2c3f57bad4c366fc63f8ea359b45dfefa4915bb43083",
+  "control": {
+    "units": 398,
+    "tests": 106367,
+    "counts": {
+      "pass": 106366,
+      "fail": 1,
+      "skip": 0
+    },
+    "failed_tests": [
+      "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+    ],
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ],
+    "maximum_seconds": 11.55320435900012,
+    "wall_seconds": 717.4877591499999,
+    "concurrency": 4
+  },
+  "retyped": {
+    "units": 398,
+    "tests": 106367,
+    "counts": {
+      "pass": 106366,
+      "fail": 1,
+      "skip": 0
+    },
+    "failed_tests": [
+      "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+    ],
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ],
+    "maximum_seconds": 11.440010051000172,
+    "wall_seconds": 716.5350672650002,
+    "concurrency": 4
+  },
+  "identities_equal": true,
+  "multiplicity_checked": true,
+  "api_baseline_diff_identical": true,
+  "api_baseline_diff_sha256": "6d52cd09811c6846c977ea492071c14325816a631706cc79128c4299b9faa031",
+  "public_api_diff": [],
+  "timer_state_public": false
+}

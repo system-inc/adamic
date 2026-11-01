@@ -1,0 +1,37 @@
+{
+  "retyped_file": "src/compiler/tsbuildPublic.ts",
+  "pin_changes_required": false,
+  "later_pins": [
+    {
+      "adaptation": "90-void-widening",
+      "manifest": "stage3/adapt/90-void-widening/targets.json",
+      "files": [
+        "src/compiler/binder.ts",
+        "src/compiler/checker.ts",
+        "src/compiler/emitter.ts",
+        "src/compiler/parser.ts",
+        "src/compiler/program.ts",
+        "src/compiler/symbolWalker.ts",
+        "src/compiler/transformers/es2017.ts"
+      ],
+      "overlap": []
+    },
+    {
+      "adaptation": "91-patcher-discard",
+      "manifest": "stage3/adapt/91-patcher-discard/proofs/targets.json",
+      "files": [
+        "src/compiler/factory/nodeFactory.ts",
+        "src/compiler/utilities.ts"
+      ],
+      "overlap": []
+    },
+    {
+      "adaptation": "92-tty-host-results",
+      "manifest": "stage3/adapt/92-tty-host-results/proofs/targets.json",
+      "files": [
+        "src/compiler/sys.ts"
+      ],
+      "overlap": []
+    }
+  ]
+}
