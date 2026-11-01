@@ -185,7 +185,9 @@ func (l *lowering) mentionsTypeParameter(t *checker.Type, visited map[*checker.T
 }
 
 // declaredClasses is every class the program's files declare or write as an expression, anywhere, a
-// function's local ones included, as its instance type, found once.
+// function's local ones included, as its instance type, found once. A class expression has no pin: on
+// main every one panics in the namespace walks (namespaces.go:271, namespaces_call_graph.go:84) before
+// this runs, which is Lower's #nkxtfkq, so it's here to fail closed once that's fixed.
 func (l *lowering) declaredClasses() []*checker.Type {
 	proofs := l.proofs()
 	if proofs.classes != nil {

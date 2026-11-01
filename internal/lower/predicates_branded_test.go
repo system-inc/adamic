@@ -185,13 +185,6 @@ const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);`, "refuses O
 		{"class", `class Signature implements TypeElement { _declarationBrand: undefined; _typeElementBrand: undefined; kind = 171; pos = 1; }
 function show(n: Node): void { if (isTypeElement(n)) { console.log(String(n.pos)); } }
 show(new Signature());`, "a checked predicate target TypeElement that class Signature is assignable to"},
-		// Written inside a function: a class expression at the top level panics in namespaces.go's walk on
-		// main (AsClassDeclaration on a ClassExpression), which is Lower's #nkxtfkq. Mutant: class
-		// expressions left out of declaredClasses, and it lowers.
-		{"class expression", `function make() { return class { _declarationBrand: undefined; _typeElementBrand: undefined; kind = 171; pos = 1; }; }
-const Signature = make();
-function show(n: Node): void { if (isTypeElement(n)) { console.log(String(n.pos)); } }
-show(new Signature());`, "that class"},
 		// A cast beside S's view registers a view of its own, and the prelude's kindOf reads n.kind through
 		// Node. Once these two views are in the program, #80cs7rz's rule finds that read may hold a viewed
 		// value it can't vouch for, and makes it NotYet before any leg runs (Lower asked each of these be
