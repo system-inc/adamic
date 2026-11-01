@@ -1,0 +1,6 @@
+// Spec: Over an array, a string, a class instance or anything with a prototype chain
+// Expect: notyet for...in over an array
+const values = [1, 2];
+let keys = '';
+for (const key in values) keys += key;
+console.log(keys);

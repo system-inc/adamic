@@ -1,0 +1,13 @@
+// Spec: canonical array-index keys ascending and then insertion order, as Node does
+// Expect: lowers
+const keysOf = (bag: Record<string, number>): string => {
+	let keys = '';
+	for (const key in bag) keys += key;
+	return keys;
+};
+const bag: Record<string, number> = {};
+bag['b'] = 1;
+bag['2'] = 2;
+bag['a'] = 3;
+bag['1'] = 4;
+console.log(keysOf(bag));

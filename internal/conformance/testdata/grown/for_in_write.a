@@ -1,0 +1,10 @@
+// Spec: a key added mid-loop isn't visited, and a value read is the current one
+// Expect: lowers
+const bag: Record<string, number> = { a: 1, b: 2 };
+let seen = '';
+for (const key in bag) {
+	bag['b'] = 10;
+	bag['z'] = 9;
+	seen += key + String(bag[key] ?? 0) + ' ';
+}
+console.log(seen + Object.keys(bag).join(','));
