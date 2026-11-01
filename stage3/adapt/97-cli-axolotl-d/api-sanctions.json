@@ -4,7 +4,8 @@
       "ModuleResolutionHost",
       "trace"
     ],
-    "kind": "PropertySignature",
+    "kind": "MethodSignature",
+    "replace": "member",
     "before": "trace?(s: string): void;",
     "after": "trace?: { trace(s: string): void; }[\"trace\"] | undefined;",
     "why": "createCompilerHostFromProgramHost stores maybeBind(host, host.trace) (watch.ts:774), undefined when the program host has no trace"
@@ -14,7 +15,8 @@
       "ModuleResolutionHost",
       "directoryExists"
     ],
-    "kind": "PropertySignature",
+    "kind": "MethodSignature",
+    "replace": "member",
     "before": "directoryExists?(directoryName: string): boolean;",
     "after": "directoryExists?: { directoryExists(directoryName: string): boolean; }[\"directoryExists\"] | undefined;",
     "why": "program.ts:4956 and watchPublic.ts:661 write a saved original directoryExists back, and watch.ts:775 and program.ts:5114 store maybeBind of it; each may be undefined"
@@ -24,7 +26,8 @@
       "ModuleResolutionHost",
       "realpath"
     ],
-    "kind": "PropertySignature",
+    "kind": "MethodSignature",
+    "replace": "member",
     "before": "realpath?(path: string): string;",
     "after": "realpath?: { realpath(path: string): string; }[\"realpath\"] | undefined;",
     "why": "program.ts:471 stores system.realpath && (...), and watch.ts:777 and program.ts:5116 store maybeBind(…, realpath); each may be undefined"
@@ -34,7 +37,8 @@
       "ModuleResolutionHost",
       "getDirectories"
     ],
-    "kind": "PropertySignature",
+    "kind": "MethodSignature",
+    "replace": "member",
     "before": "getDirectories?(path: string): string[];",
     "after": "getDirectories?: { getDirectories(path: string): string[]; }[\"getDirectories\"] | undefined;",
     "why": "program.ts:4957 writes a saved original getDirectories back, and watch.ts:776 and program.ts:5115 store maybeBind of it; each may be undefined"
@@ -44,7 +48,8 @@
       "ParseConfigHost",
       "trace"
     ],
-    "kind": "PropertySignature",
+    "kind": "MethodSignature",
+    "replace": "member",
     "before": "trace?(s: string): void;",
     "after": "trace?: { trace(s: string): void; }[\"trace\"] | undefined;",
     "why": "parseConfigHostFromCompilerHostLike stores host.trace ? s => host.trace!(s) : undefined (program.ts:5120)"
@@ -54,7 +59,8 @@
       "CompilerHost",
       "getDefaultLibLocation"
     ],
-    "kind": "PropertySignature",
+    "kind": "MethodSignature",
+    "replace": "member",
     "before": "getDefaultLibLocation?(): string;",
     "after": "getDefaultLibLocation?: { getDefaultLibLocation(): string; }[\"getDefaultLibLocation\"] | undefined;",
     "why": "createCompilerHostFromProgramHost stores maybeBind(host, host.getDefaultLibLocation) (watch.ts:761)"
@@ -64,7 +70,8 @@
       "CompilerHost",
       "readDirectory"
     ],
-    "kind": "PropertySignature",
+    "kind": "MethodSignature",
+    "replace": "member",
     "before": "readDirectory?(rootDir: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth?: number): string[];",
     "after": "readDirectory?: { readDirectory(rootDir: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth?: number): string[]; }[\"readDirectory\"] | undefined;",
     "why": "createCompilerHostFromProgramHost stores maybeBind(host, host.readDirectory) (watch.ts:780)"
@@ -74,7 +81,8 @@
       "CompilerHost",
       "resolveModuleNames"
     ],
-    "kind": "PropertySignature",
+    "kind": "MethodSignature",
+    "replace": "member",
     "before": "resolveModuleNames?(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile): (ResolvedModule | undefined)[];",
     "after": "resolveModuleNames?: { resolveModuleNames(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile): (ResolvedModule | undefined)[]; }[\"resolveModuleNames\"] | undefined;",
     "why": "tsbuildPublic.ts:441 and watchPublic.ts:530 store maybeBind(host, host.resolveModuleNames)"
@@ -84,7 +92,8 @@
       "CompilerHost",
       "getModuleResolutionCache"
     ],
-    "kind": "PropertySignature",
+    "kind": "MethodSignature",
+    "replace": "member",
     "before": "getModuleResolutionCache?(): ModuleResolutionCache | undefined;",
     "after": "getModuleResolutionCache?: { getModuleResolutionCache(): ModuleResolutionCache | undefined; }[\"getModuleResolutionCache\"] | undefined;",
     "why": "tsbuildPublic.ts:443 and watchPublic.ts:543 store maybeBind(host, host.getModuleResolutionCache)"
@@ -94,7 +103,8 @@
       "CompilerHost",
       "resolveTypeReferenceDirectives"
     ],
-    "kind": "PropertySignature",
+    "kind": "MethodSignature",
+    "replace": "member",
     "before": "resolveTypeReferenceDirectives?(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode): (ResolvedTypeReferenceDirective | undefined)[];",
     "after": "resolveTypeReferenceDirectives?: { resolveTypeReferenceDirectives(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode): (ResolvedTypeReferenceDirective | undefined)[]; }[\"resolveTypeReferenceDirectives\"] | undefined;",
     "why": "tsbuildPublic.ts:442 and watchPublic.ts:535 store maybeBind(host, host.resolveTypeReferenceDirectives)"
@@ -104,7 +114,8 @@
       "CompilerHost",
       "resolveModuleNameLiterals"
     ],
-    "kind": "PropertySignature",
+    "kind": "MethodSignature",
+    "replace": "member",
     "before": "resolveModuleNameLiterals?(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: readonly StringLiteralLike[] | undefined): readonly ResolvedModuleWithFailedLookupLocations[];",
     "after": "resolveModuleNameLiterals?: { resolveModuleNameLiterals(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: readonly StringLiteralLike[] | undefined): readonly ResolvedModuleWithFailedLookupLocations[]; }[\"resolveModuleNameLiterals\"] | undefined;",
     "why": "tsbuildPublic.ts:438 and watchPublic.ts:529 store maybeBind(host, host.resolveModuleNameLiterals)"
@@ -114,7 +125,8 @@
       "CompilerHost",
       "resolveTypeReferenceDirectiveReferences"
     ],
-    "kind": "PropertySignature",
+    "kind": "MethodSignature",
+    "replace": "member",
     "before": "resolveTypeReferenceDirectiveReferences?<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: readonly T[] | undefined): readonly ResolvedTypeReferenceDirectiveWithFailedLookupLocations[];",
     "after": "resolveTypeReferenceDirectiveReferences?: { resolveTypeReferenceDirectiveReferences<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: readonly T[] | undefined): readonly ResolvedTypeReferenceDirectiveWithFailedLookupLocations[]; }[\"resolveTypeReferenceDirectiveReferences\"] | undefined;",
     "why": "tsbuildPublic.ts:439 and watchPublic.ts:534 store maybeBind(host, host.resolveTypeReferenceDirectiveReferences)"
@@ -124,7 +136,8 @@
       "CompilerHost",
       "createHash"
     ],
-    "kind": "PropertySignature",
+    "kind": "MethodSignature",
+    "replace": "member",
     "before": "createHash?(data: string): string;",
     "after": "createHash?: { createHash(data: string): string; }[\"createHash\"] | undefined;",
     "why": "program.ts:494, watchPublic.ts:125 and watch.ts:779 store maybeBind(system or host, createHash), undefined when it is absent"
@@ -134,7 +147,8 @@
       "ProgramHost",
       "createHash"
     ],
-    "kind": "PropertySignature",
+    "kind": "MethodSignature",
+    "replace": "member",
     "before": "createHash?(data: string): string;",
     "after": "createHash?: { createHash(data: string): string; }[\"createHash\"] | undefined;",
     "why": "createProgramHost stores maybeBind(system, system.createHash) (watch.ts:861)"
@@ -144,7 +158,8 @@
       "ProgramHost",
       "directoryExists"
     ],
-    "kind": "PropertySignature",
+    "kind": "MethodSignature",
+    "replace": "member",
     "before": "directoryExists?(path: string): boolean;",
     "after": "directoryExists?: { directoryExists(path: string): boolean; }[\"directoryExists\"] | undefined;",
     "why": "tsbuildPublic.ts:785 writes back cache.originalDirectoryExists, saved from a host that may not have one (program.ts:527)"
@@ -154,7 +169,8 @@
       "ProgramHost",
       "realpath"
     ],
-    "kind": "PropertySignature",
+    "kind": "MethodSignature",
+    "replace": "member",
     "before": "realpath?(path: string): string;",
     "after": "realpath?: { realpath(path: string): string; }[\"realpath\"] | undefined;",
     "why": "createProgramHost stores maybeBind(system, system.realpath) (watch.ts:856)"
@@ -164,7 +180,8 @@
       "ProgramHost",
       "getEnvironmentVariable"
     ],
-    "kind": "PropertySignature",
+    "kind": "MethodSignature",
+    "replace": "member",
     "before": "getEnvironmentVariable?(name: string): string | undefined;",
     "after": "getEnvironmentVariable?: { getEnvironmentVariable(name: string): string | undefined; }[\"getEnvironmentVariable\"] | undefined;",
     "why": "createProgramHost stores maybeBind(system, system.getEnvironmentVariable) (watch.ts:857)"
@@ -174,7 +191,8 @@
       "SolutionBuilderHostBase",
       "createDirectory"
     ],
-    "kind": "PropertySignature",
+    "kind": "MethodSignature",
+    "replace": "member",
     "before": "createDirectory?(path: string): void;",
     "after": "createDirectory?: { createDirectory(path: string): void; }[\"createDirectory\"] | undefined;",
     "why": "tsbuildPublic.ts:786 writes back cache.originalCreateDirectory, saved from a host that may not have one (program.ts:528)"
@@ -184,7 +202,8 @@
       "SolutionBuilderHostBase",
       "writeFile"
     ],
-    "kind": "PropertySignature",
+    "kind": "MethodSignature",
+    "replace": "member",
     "before": "writeFile?(path: string, data: string, writeByteOrderMark?: boolean): void;",
     "after": "writeFile?: { writeFile(path: string, data: string, writeByteOrderMark?: boolean): void; }[\"writeFile\"] | undefined;",
     "why": "tsbuildPublic.ts:787 writes back cache.originalWriteFile, saved from a host that may not have one (program.ts:529)"

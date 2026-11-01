@@ -1,5 +1,7 @@
 # 97d: public host methods say they hold undefined
 
+**Evidence:** every `proofs/` path below lives on the branch `cli/axolotl-97d-evidence` (f34705d4), at `stage3/adapt/97-cli-axolotl-d/proofs/`, not in this directory, because every file here feeds apply's input key (Correctness, #axochk).
+
 Axolotl (#axolotl), task #qg1ry2t. This adaptation is byte-identical in JavaScript. It is a declared public API change: 19 public optional methods become optional properties in typescript.d.ts, under Adamic's Nov 1 ruling on #axochk. It also carries 3 internal cascade owners. It edits src/compiler/types.ts, watchPublic.ts, tsbuildPublic.ts and program.ts, and runs after 97b, whose 11 members it requires.
 
 lane: run as part of the Axolotl wave Correctness cuts it into; Loom's run of that wave is the lane's proof.
