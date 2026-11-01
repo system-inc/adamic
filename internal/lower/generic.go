@@ -100,6 +100,11 @@ func (l *lowering) instantiateFunctionSignature(call *ast.Node, declaration *ast
 		substitution[parameterType] = held
 		key += "," + l.genericTypeKey(concrete)
 	}
+	// Every request is judged, hit or miss, before the table is read: a body shared by requests that
+	// differ, an unread parameter's, is judged with that parameter unmapped (predicates_branded.go).
+	if err := l.brandedRequest(key, declaration, l.instanceMapper(declaration, concreteTypes)); err != nil {
+		return 0, err
+	}
 	if existing, isLowered := l.genericInstances[key]; isLowered {
 		return existing, nil
 	}
@@ -140,16 +145,7 @@ func (l *lowering) instantiateFunctionSignature(call *ast.Node, declaration *ast
 		}
 		l.closures = append(append([]int{}, outerClosures...), index)
 	}
-	sources, targets := []*checker.Type{}, []*checker.Type{}
-	for _, parameter := range declaration.TypeParameters() {
-		parameterType := l.checker.GetTypeAtLocation(parameter.Name())
-		if concrete, ok := concreteTypes[parameterType]; ok {
-			sources, targets = append(sources, parameterType), append(targets, concrete)
-		}
-	}
-	if len(sources) > 0 {
-		l.typeMapper = newTypeMapper(sources, targets)
-	}
+	l.typeMapper = l.instanceMapper(declaration, concreteTypes)
 	if err := l.refuseInstantiatedMutation(declaration); err != nil {
 		return 0, err
 	}
@@ -170,6 +166,22 @@ func (l *lowering) instantiateFunctionSignature(call *ast.Node, declaration *ast
 		return 0, err
 	}
 	return index, nil
+}
+
+// instanceMapper is the type mapper an instance's body is lowered under: each type parameter read back
+// mapped to what it stands for, or, when none is, the mapper in force.
+func (l *lowering) instanceMapper(declaration *ast.Node, concreteTypes map[*checker.Type]*checker.Type) *typeMapper {
+	sources, targets := []*checker.Type{}, []*checker.Type{}
+	for _, parameter := range declaration.TypeParameters() {
+		parameterType := l.checker.GetTypeAtLocation(parameter.Name())
+		if concrete, ok := concreteTypes[parameterType]; ok {
+			sources, targets = append(sources, parameterType), append(targets, concrete)
+		}
+	}
+	if len(sources) == 0 {
+		return l.typeMapper
+	}
+	return newTypeMapper(sources, targets)
 }
 
 // genericTypeKey is the shared identity key for class and function type arguments.
