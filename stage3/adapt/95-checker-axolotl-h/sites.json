@@ -1,0 +1,1079 @@
+{
+  "interfaceOwner": "ModuleSpecifierResolutionHost",
+  "slots": [
+    {
+      "name": "getSymlinkCache",
+      "before": "getSymlinkCache?(): SymlinkCache;",
+      "after": "getSymlinkCache?: { getSymlinkCache(): SymlinkCache; }[\"getSymlinkCache\"] | undefined;",
+      "ownerBeforeSha256": "1756e4552f82717dfb34cf345fc83541879e3b24ef483a11b0fefae07e6e8a29",
+      "readType": "(() => SymlinkCache) | undefined"
+    },
+    {
+      "name": "readFile",
+      "before": "readFile?(path: string): string | undefined;",
+      "after": "readFile?: { readFile(path: string): string | undefined; }[\"readFile\"] | undefined;",
+      "ownerBeforeSha256": "7b7853052041eef6258c303e96d1bea65f42bdaace0e0258f7164098fa435e43",
+      "readType": "((path: string) => string | undefined) | undefined"
+    },
+    {
+      "name": "getModuleSpecifierCache",
+      "before": "getModuleSpecifierCache?(): ModuleSpecifierCache;",
+      "after": "getModuleSpecifierCache?: { getModuleSpecifierCache(): ModuleSpecifierCache; }[\"getModuleSpecifierCache\"] | undefined;",
+      "ownerBeforeSha256": "82ce11c6ac55bb89079c9ae8b7eb39d796f981092bb9137a8a76c8e68ef29eda",
+      "readType": "(() => ModuleSpecifierCache) | undefined"
+    },
+    {
+      "name": "getNearestAncestorDirectoryWithPackageJson",
+      "before": "getNearestAncestorDirectoryWithPackageJson?(fileName: string, rootDir?: string): string | undefined;",
+      "after": "getNearestAncestorDirectoryWithPackageJson?: { getNearestAncestorDirectoryWithPackageJson(fileName: string, rootDir?: string): string | undefined; }[\"getNearestAncestorDirectoryWithPackageJson\"] | undefined;",
+      "ownerBeforeSha256": "63249d0d4f2e2d362154c2fe74c978389a3f7f72c704015e84c028ceed2c404a",
+      "readType": "((fileName: string, rootDir?: string | undefined) => string | undefined) | undefined"
+    }
+  ],
+  "externalSlots": [
+    {
+      "name": "getGlobalTypingsCacheLocation",
+      "adaptation": "97-cli-axolotl-b",
+      "commit": "27162cab2bb0054b4ed7cad5a9e258f67f8030c1"
+    },
+    {
+      "name": "directoryExists",
+      "adaptation": "97-cli-axolotl-b",
+      "commit": "27162cab2bb0054b4ed7cad5a9e258f67f8030c1"
+    },
+    {
+      "name": "realpath",
+      "adaptation": "97-cli-axolotl-b",
+      "commit": "27162cab2bb0054b4ed7cad5a9e258f67f8030c1"
+    },
+    {
+      "name": "trace",
+      "adaptation": "97-cli-axolotl-b",
+      "commit": "27162cab2bb0054b4ed7cad5a9e258f67f8030c1"
+    }
+  ],
+  "literals": [
+    {
+      "file": "src/compiler/checker.ts",
+      "owner": "createBasicNodeBuilderModuleSpecifierResolutionHost",
+      "ownerBeforeSha256": "9171aad5d35e92052c682093a2f2b7fb0ad49a63787488f78d0aa74161d9b9b1",
+      "literalSha256": "3f47dd64f51c5c74ad8263d40713a28e424f4d28859e714238b8a2417cbae3d7",
+      "members": [
+        {
+          "name": "getCommonSourceDirectory",
+          "initializer": "!!(host as Program).getCommonSourceDirectory ? () => (host as Program).getCommonSourceDirectory() : () => \"\"",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "getCurrentDirectory",
+          "initializer": "() => host.getCurrentDirectory()",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "getSymlinkCache",
+          "initializer": "maybeBind(host, host.getSymlinkCache)",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "getPackageJsonInfoCache",
+          "initializer": "() => host.getPackageJsonInfoCache?.()",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "useCaseSensitiveFileNames",
+          "initializer": "() => host.useCaseSensitiveFileNames()",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "redirectTargetsMap",
+          "initializer": "host.redirectTargetsMap",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "getRedirectFromSourceFile",
+          "initializer": "fileName => host.getRedirectFromSourceFile(fileName)",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "isSourceOfProjectReferenceRedirect",
+          "initializer": "fileName => host.isSourceOfProjectReferenceRedirect(fileName)",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "fileExists",
+          "initializer": "fileName => host.fileExists(fileName)",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "getFileIncludeReasons",
+          "initializer": "() => host.getFileIncludeReasons()",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "readFile",
+          "initializer": "host.readFile ? (fileName => host.readFile!(fileName)) : undefined",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "getDefaultResolutionModeForFile",
+          "initializer": "file => host.getDefaultResolutionModeForFile(file)",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "getModeForResolutionAtIndex",
+          "initializer": "(file, index) => host.getModeForResolutionAtIndex(file, index)",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "getGlobalTypingsCacheLocation",
+          "initializer": "maybeBind(host, host.getGlobalTypingsCacheLocation)",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "owner": "createProgram",
+      "ownerBeforeSha256": "505bb77211eb4818ad15ed0701812c6c51eb06059becdd73923a5f3e73b69152",
+      "literalSha256": "0abf62afe4c9c99de5dd8c5483f94367343f526bbff0456fb2509d6b9584734f",
+      "members": [
+        {
+          "name": "getRootFileNames",
+          "initializer": "() => rootNames",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getSourceFile",
+          "initializer": "getSourceFile",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "ScriptReferenceHost"
+        },
+        {
+          "name": "getSourceFileByPath",
+          "initializer": "getSourceFileByPath",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "ScriptReferenceHost"
+        },
+        {
+          "name": "getSourceFiles",
+          "initializer": "() => files",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getMissingFilePaths",
+          "initializer": "() => missingFileNames",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getModuleResolutionCache",
+          "initializer": "() => moduleResolutionCache",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getFilesByNameMap",
+          "initializer": "() => filesByName",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getCompilerOptions",
+          "initializer": "() => options",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "ScriptReferenceHost"
+        },
+        {
+          "name": "getSyntacticDiagnostics",
+          "initializer": "getSyntacticDiagnostics",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getOptionsDiagnostics",
+          "initializer": "getOptionsDiagnostics",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getGlobalDiagnostics",
+          "initializer": "getGlobalDiagnostics",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getSemanticDiagnostics",
+          "initializer": "getSemanticDiagnostics",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getCachedSemanticDiagnostics",
+          "initializer": "getCachedSemanticDiagnostics",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getSuggestionDiagnostics",
+          "initializer": "getSuggestionDiagnostics",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getDeclarationDiagnostics",
+          "initializer": "getDeclarationDiagnostics",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getBindAndCheckDiagnostics",
+          "initializer": "getBindAndCheckDiagnostics",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getProgramDiagnostics",
+          "initializer": "getProgramDiagnostics",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getTypeChecker",
+          "initializer": "getTypeChecker",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getClassifiableNames",
+          "initializer": "getClassifiableNames",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getCommonSourceDirectory",
+          "initializer": "getCommonSourceDirectory",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "emit",
+          "initializer": "emit",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getCurrentDirectory",
+          "initializer": "() => currentDirectory",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getNodeCount",
+          "initializer": "() => getTypeChecker().getNodeCount()",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getIdentifierCount",
+          "initializer": "() => getTypeChecker().getIdentifierCount()",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getSymbolCount",
+          "initializer": "() => getTypeChecker().getSymbolCount()",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getTypeCount",
+          "initializer": "() => getTypeChecker().getTypeCount()",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getInstantiationCount",
+          "initializer": "() => getTypeChecker().getInstantiationCount()",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getRelationCacheSizes",
+          "initializer": "() => getTypeChecker().getRelationCacheSizes()",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getFileProcessingDiagnostics",
+          "initializer": "() => programDiagnostics.getFileProcessingDiagnostics()",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getAutomaticTypeDirectiveNames",
+          "initializer": "() => automaticTypeDirectiveNames!",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getAutomaticTypeDirectiveResolutions",
+          "initializer": "() => automaticTypeDirectiveResolutions",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "isSourceFileFromExternalLibrary",
+          "initializer": "isSourceFileFromExternalLibrary",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "isSourceFileDefaultLibrary",
+          "initializer": "isSourceFileDefaultLibrary",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getModeForUsageLocation",
+          "initializer": "getModeForUsageLocation",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getEmitSyntaxForUsageLocation",
+          "initializer": "getEmitSyntaxForUsageLocation",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "TypeCheckerHost"
+        },
+        {
+          "name": "getModeForResolutionAtIndex",
+          "initializer": "getModeForResolutionAtIndex",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getSourceFileFromReference",
+          "initializer": "getSourceFileFromReference",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getLibFileFromReference",
+          "initializer": "getLibFileFromReference",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "sourceFileToPackageName",
+          "initializer": "sourceFileToPackageName",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "redirectTargetsMap",
+          "initializer": "redirectTargetsMap",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "usesUriStyleNodeCoreModules",
+          "initializer": "usesUriStyleNodeCoreModules",
+          "mayStoreUndefined": true,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "resolvedModules",
+          "initializer": "resolvedModules",
+          "mayStoreUndefined": true,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "resolvedTypeReferenceDirectiveNames",
+          "initializer": "resolvedTypeReferenceDirectiveNames",
+          "mayStoreUndefined": true,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "resolvedLibReferences",
+          "initializer": "resolvedLibReferences",
+          "mayStoreUndefined": true,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getProgramDiagnosticsContainer",
+          "initializer": "() => programDiagnostics",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getResolvedModule",
+          "initializer": "getResolvedModule",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getResolvedModuleFromModuleSpecifier",
+          "initializer": "getResolvedModuleFromModuleSpecifier",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getResolvedTypeReferenceDirective",
+          "initializer": "getResolvedTypeReferenceDirective",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getResolvedTypeReferenceDirectiveFromTypeReferenceDirective",
+          "initializer": "getResolvedTypeReferenceDirectiveFromTypeReferenceDirective",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "forEachResolvedModule",
+          "initializer": "forEachResolvedModule",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "forEachResolvedTypeReferenceDirective",
+          "initializer": "forEachResolvedTypeReferenceDirective",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getCurrentPackagesMap",
+          "initializer": "() => packageMap",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "typesPackageExists",
+          "initializer": "typesPackageExists",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "TypeCheckerHost"
+        },
+        {
+          "name": "packageBundlesTypes",
+          "initializer": "packageBundlesTypes",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "TypeCheckerHost"
+        },
+        {
+          "name": "isEmittedFile",
+          "initializer": "isEmittedFile",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getConfigFileParsingDiagnostics",
+          "initializer": "getConfigFileParsingDiagnostics",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getProjectReferences",
+          "initializer": "getProjectReferences",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getResolvedProjectReferences",
+          "initializer": "getResolvedProjectReferences",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getRedirectFromSourceFile",
+          "initializer": "getRedirectFromSourceFile",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getResolvedProjectReferenceByPath",
+          "initializer": "getResolvedProjectReferenceByPath",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "forEachResolvedProjectReference",
+          "initializer": "forEachResolvedProjectReference",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "isSourceOfProjectReferenceRedirect",
+          "initializer": "isSourceOfProjectReferenceRedirect",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getRedirectFromOutput",
+          "initializer": "getRedirectFromOutput",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getCompilerOptionsForFile",
+          "initializer": "getCompilerOptionsForFile",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getDefaultResolutionModeForFile",
+          "initializer": "getDefaultResolutionModeForFile",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getEmitModuleFormatOfFile",
+          "initializer": "getEmitModuleFormatOfFile",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getImpliedNodeFormatForEmit",
+          "initializer": "getImpliedNodeFormatForEmit",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "shouldTransformImportCall",
+          "initializer": "shouldTransformImportCall",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "emitBuildInfo",
+          "initializer": "emitBuildInfo",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "fileExists",
+          "initializer": "fileExists",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "readFile",
+          "initializer": "readFile",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "directoryExists",
+          "initializer": "directoryExists",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "getSymlinkCache",
+          "initializer": "getSymlinkCache",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "realpath",
+          "initializer": "host.realpath?.bind(host)",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "useCaseSensitiveFileNames",
+          "initializer": "() => host.useCaseSensitiveFileNames()",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getCanonicalFileName",
+          "initializer": "getCanonicalFileName",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getFileIncludeReasons",
+          "initializer": "() => programDiagnostics.getFileReasons()",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "structureIsReused",
+          "initializer": "structureIsReused",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "writeFile",
+          "initializer": "writeFile",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "Program"
+        },
+        {
+          "name": "getGlobalTypingsCacheLocation",
+          "initializer": "maybeBind(host, host.getGlobalTypingsCacheLocation)",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "owner": "getEmitHost",
+      "ownerBeforeSha256": "cdf72d661d43306e9bf07a30681c65ef26ef550ca372d7e2a5b3960123249e60",
+      "literalSha256": "028ffb4ab62ff8fb5549816d55f3a68475fd8bc8d732a734b804ab94da3b8011",
+      "members": [
+        {
+          "name": "getCanonicalFileName",
+          "initializer": "getCanonicalFileName",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "EmitHost"
+        },
+        {
+          "name": "getCommonSourceDirectory",
+          "initializer": "program.getCommonSourceDirectory",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "EmitHost"
+        },
+        {
+          "name": "getCompilerOptions",
+          "initializer": "program.getCompilerOptions",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "ScriptReferenceHost"
+        },
+        {
+          "name": "getCurrentDirectory",
+          "initializer": "() => currentDirectory",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "EmitHost"
+        },
+        {
+          "name": "getSourceFile",
+          "initializer": "program.getSourceFile",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "ScriptReferenceHost"
+        },
+        {
+          "name": "getSourceFileByPath",
+          "initializer": "program.getSourceFileByPath",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "ScriptReferenceHost"
+        },
+        {
+          "name": "getSourceFiles",
+          "initializer": "program.getSourceFiles",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "EmitHost"
+        },
+        {
+          "name": "isSourceFileFromExternalLibrary",
+          "initializer": "isSourceFileFromExternalLibrary",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "SourceFileMayBeEmittedHost"
+        },
+        {
+          "name": "getRedirectFromSourceFile",
+          "initializer": "getRedirectFromSourceFile",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "isSourceOfProjectReferenceRedirect",
+          "initializer": "isSourceOfProjectReferenceRedirect",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "getSymlinkCache",
+          "initializer": "getSymlinkCache",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "writeFile",
+          "initializer": "writeFileCallback || writeFile",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "EmitHost"
+        },
+        {
+          "name": "isEmitBlocked",
+          "initializer": "isEmitBlocked",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "EmitHost"
+        },
+        {
+          "name": "shouldTransformImportCall",
+          "initializer": "shouldTransformImportCall",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "EmitHost"
+        },
+        {
+          "name": "getEmitModuleFormatOfFile",
+          "initializer": "getEmitModuleFormatOfFile",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "EmitHost"
+        },
+        {
+          "name": "getDefaultResolutionModeForFile",
+          "initializer": "getDefaultResolutionModeForFile",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "getModeForResolutionAtIndex",
+          "initializer": "getModeForResolutionAtIndex",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "readFile",
+          "initializer": "f => host.readFile(f)",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "fileExists",
+          "initializer": "f => {\r\n                // Use local caches\r\n                const path = toPath(f);\r\n                if (getSourceFileByPath(path)) return true;\r\n                if (missingFileNames.has(path)) return false;\r\n                // Before falling back to the host\r\n                return host.fileExists(f);\r\n            }",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "realpath",
+          "initializer": "maybeBind(host, host.realpath)",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "useCaseSensitiveFileNames",
+          "initializer": "() => host.useCaseSensitiveFileNames()",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "EmitHost"
+        },
+        {
+          "name": "getBuildInfo",
+          "initializer": "() => program.getBuildInfo?.()",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "EmitHost"
+        },
+        {
+          "name": "getSourceFileFromReference",
+          "initializer": "(file, ref) => program.getSourceFileFromReference(file, ref)",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "EmitHost"
+        },
+        {
+          "name": "redirectTargetsMap",
+          "initializer": "redirectTargetsMap",
+          "mayStoreUndefined": false,
+          "hostMember": false,
+          "destinationOwner": "EmitHost"
+        },
+        {
+          "name": "getFileIncludeReasons",
+          "initializer": "program.getFileIncludeReasons",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "createHash",
+          "initializer": "maybeBind(host, host.createHash)",
+          "mayStoreUndefined": true,
+          "hostMember": false,
+          "destinationOwner": "EmitHost"
+        },
+        {
+          "name": "getModuleResolutionCache",
+          "initializer": "() => program.getModuleResolutionCache()",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "trace",
+          "initializer": "maybeBind(host, host.trace)",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "getGlobalTypingsCacheLocation",
+          "initializer": "program.getGlobalTypingsCacheLocation",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        }
+      ]
+    },
+    {
+      "file": "src/services/utilities.ts",
+      "owner": "createModuleSpecifierResolutionHost",
+      "ownerBeforeSha256": "c20af1d143fe1b2e2580b3a8946686ae865c8815e8ce9e2df74558d67c61e738",
+      "literalSha256": "f70c25bafecbb93f0313c628727623d4646a18c6d90fc8b103bde7bf4c98a9ee",
+      "members": [
+        {
+          "name": "fileExists",
+          "initializer": "fileName => program.fileExists(fileName)",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "getCurrentDirectory",
+          "initializer": "() => host.getCurrentDirectory()",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "readFile",
+          "initializer": "maybeBind(host, host.readFile)",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "useCaseSensitiveFileNames",
+          "initializer": "maybeBind(host, host.useCaseSensitiveFileNames) || program.useCaseSensitiveFileNames",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "getSymlinkCache",
+          "initializer": "maybeBind(host, host.getSymlinkCache) || program.getSymlinkCache",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "getModuleSpecifierCache",
+          "initializer": "maybeBind(host, host.getModuleSpecifierCache)",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "getPackageJsonInfoCache",
+          "initializer": "() => program.getModuleResolutionCache()?.getPackageJsonInfoCache()",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "getGlobalTypingsCacheLocation",
+          "initializer": "maybeBind(host, host.getGlobalTypingsCacheLocation)",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "redirectTargetsMap",
+          "initializer": "program.redirectTargetsMap",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "getRedirectFromSourceFile",
+          "initializer": "fileName => program.getRedirectFromSourceFile(fileName)",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "isSourceOfProjectReferenceRedirect",
+          "initializer": "fileName => program.isSourceOfProjectReferenceRedirect(fileName)",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "getNearestAncestorDirectoryWithPackageJson",
+          "initializer": "maybeBind(host, host.getNearestAncestorDirectoryWithPackageJson)",
+          "mayStoreUndefined": true,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "getFileIncludeReasons",
+          "initializer": "() => program.getFileIncludeReasons()",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "getCommonSourceDirectory",
+          "initializer": "() => program.getCommonSourceDirectory()",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "getDefaultResolutionModeForFile",
+          "initializer": "file => program.getDefaultResolutionModeForFile(file)",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        },
+        {
+          "name": "getModeForResolutionAtIndex",
+          "initializer": "(file, index) => program.getModeForResolutionAtIndex(file, index)",
+          "mayStoreUndefined": false,
+          "hostMember": true,
+          "destinationOwner": "ModuleSpecifierResolutionHost"
+        }
+      ]
+    },
+    {
+      "file": "src/services/utilities.ts",
+      "owner": "getModuleSpecifierResolverHost",
+      "ownerBeforeSha256": "0a0c40e0f2c8ab8b6f55d3b49ff7bef3612118bd6fee5fa994274f1f8c3e1587",
+      "literalSha256": "c6b41e2350e47927775701c51425a9bfa8c59370da2f7256321afc533deb3a0e",
+      "members": [
+        {
+          "spread": "createModuleSpecifierResolutionHost(program, host)"
+        },
+        {
+          "name": "getCommonSourceDirectory",
+          "initializer": "() => program.getCommonSourceDirectory()",
+          "mayStoreUndefined": false,
+          "hostMember": false
+        }
+      ]
+    }
+  ]
+}
