@@ -1,0 +1,11 @@
+// Counts is record storage and assignable to Seen, so a union read of Seen may read a record.
+interface Counts { [key: string]: number | string; total: number }
+const counts: Counts = { total: 2 };
+counts["extra"] = "seven";
+interface Seen { readonly total: number | string }
+function show(seen: Seen): string {
+	return typeof seen.total === "string" ? "text " + seen.total : "number " + String(seen.total + 1);
+}
+for (const key of Object.keys(counts)) console.log(key);
+console.log(show(counts));
+console.log(show({ total: "x" }));

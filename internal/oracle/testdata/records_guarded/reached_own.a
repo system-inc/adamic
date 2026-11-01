@@ -1,0 +1,6 @@
+// The record's own declared optional field, read off the record itself.
+interface Counts { [key: string]: number | string | undefined; total: number; note?: string }
+const counts: Counts = { total: 2 };
+counts["extra"] = "seven";
+for (const key of Object.keys(counts)) console.log(key);
+console.log(counts.note === undefined ? "none" : counts.note);

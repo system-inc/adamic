@@ -128,6 +128,9 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 	if err := lowering.checkAccessorSpreads(); err != nil {
 		return nil, err
 	}
+	if err := lowering.checkRecordGuardedReads(); err != nil {
+		return nil, err
+	}
 	if err := flow.NormalizeAsync(lowering.result); err != nil {
 		where := entry.AsNode()
 		var located *flow.AsyncError
@@ -360,6 +363,12 @@ type lowering struct {
 	entriesRecords             map[*ast.Node]bool
 	entriesProgramRecords      bool
 	entriesProgramRecordsKnown bool
+	// entriesRecordTypes, once entriesRecordTypesKnown, are the types the program's records are made
+	// as, and recordGuardedReads the union and maybe field reads admitted beside them, each checked
+	// again once every view is registered (entries_records.go).
+	entriesRecordTypes      []*checker.Type
+	entriesRecordTypesKnown bool
+	recordGuardedReads      []recordGuardedRead
 
 	// typeMapper is what the type parameters of the instantiation being lowered, and of those it's
 	// inside, stand for; instantiated is every class type an instantiation was made for (instantiate.go).
