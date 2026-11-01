@@ -1,0 +1,15 @@
+DIFFER  thrown null, hit false: original {"threw":"TypeError","message":"Cannot read properties of null (reading 'code')"}, adapted {"value":false}
+agree  thrown null, hit true: original {"value":true}, adapted {"value":true}
+DIFFER  thrown undefined, hit false: original {"threw":"TypeError","message":"Cannot read properties of undefined (reading 'code')"}, adapted {"value":false}
+agree  thrown undefined, hit true: original {"value":true}, adapted {"value":true}
+agree  a thrown string, hit false: original {"value":false}, adapted {"value":false}
+agree  a thrown string, hit true: original {"value":true}, adapted {"value":true}
+agree  a thrown object with code ENOSPC, hit false: original {"value":true}, adapted {"value":true}
+agree  a thrown object with code ENOSPC, hit true: original {"value":true}, adapted {"value":true}
+agree  a thrown object with code EMFILE, hit false: original {"value":false}, adapted {"value":false}
+agree  a thrown object with code EMFILE, hit true: original {"value":true}, adapted {"value":true}
+agree  a thrown object without code, hit false: original {"value":false}, adapted {"value":false}
+agree  a thrown object without code, hit true: original {"value":true}, adapted {"value":true}
+agree  a getter-only code, hit false: original {"value":true}, adapted {"value":true}
+agree  a getter-only code, hit true: original {"value":true}, adapted {"value":true}
+12 of 14 agree
