@@ -1,0 +1,7 @@
+// Spec: `Promise.all`, adopting a returned Promise and thenables are not built yet
+// Expect: notyet Promise.all
+async function both(): Promise<number> {
+	const [first, second] = await Promise.all([Promise.resolve(1), Promise.resolve(2)]);
+	return first + second;
+}
+console.log(String(await both()));

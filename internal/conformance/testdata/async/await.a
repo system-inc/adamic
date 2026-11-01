@@ -1,0 +1,8 @@
+// Spec: `async` functions and `await` lower to compiler-generated state machines
+// Expect: lowers
+async function double(value: number): Promise<number> {
+	await Promise.resolve();
+	return value * 2;
+}
+const result = await double(21);
+console.log(String(result));
