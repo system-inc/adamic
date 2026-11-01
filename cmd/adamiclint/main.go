@@ -9,6 +9,7 @@ import (
 	"github.com/system-inc/adamic/internal/adamiclint/waitdelay"
 )
 
+// main hands go vet the three analyzers; each rule and its tests live in its own package under internal/adamiclint.
 func main() {
 	unitchecker.Main(waitdelay.Analyzer, repowalk.Analyzer, parallel.Analyzer)
 }
