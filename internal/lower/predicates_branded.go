@@ -259,11 +259,10 @@ func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Typ
 	}
 	// The checker narrows the argument's own type, so a type parameter T narrows to T & S, whose
 	// instance is an intersection with an id of its own that no view covers (Language's must on
-	// 7f4b7030). Judging concrete(T) would see a supertype and admit it. Any type the instance changes
-	// mentions a type parameter, a generic object like Holder<K> or Readonly<T> included (Language's
-	// must on 4a1fe092), so that's the test, not the type's own flags. A body lowered with no mapper
-	// leaves the type as it is, so mentionsTypeParameter names the parameter there too.
-	if declared := l.checker.GetTypeAtLocation(argument); l.concrete(declared) != declared || l.mentionsTypeParameter(declared, map[*checker.Type]bool{}) {
+	// 7f4b7030). Judging T's constraint would see a supertype and admit it. Any argument that mentions a
+	// type parameter, a generic object like Holder<K> or Readonly<T> included (Language's must on
+	// 4a1fe092), is NotYet, judged as written, since brandedCalls reads every call with no mapper.
+	if declared := l.checker.GetTypeAtLocation(argument); l.mentionsTypeParameter(declared, map[*checker.Type]bool{}) {
 		return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(claim)+" over a generic argument "+l.checker.TypeToString(declared)+", which narrows to an intersection no view covers")
 	}
 	source := l.concrete(l.checker.GetTypeAtLocation(argument))
