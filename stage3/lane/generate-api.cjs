@@ -60,6 +60,7 @@ const source = parse('typescript.d.ts', original);
 const edits = [];
 const owners = [];
 const claimed = new Set();
+const insertionEdits = new Map();
 // Index the pristine AST once; every proof still filters by its required node kind.
 const byOwnerPath = new Map();
 for (const node of nodes(source, () => true)) {
@@ -67,13 +68,13 @@ for (const node of nodes(source, () => true)) {
     if (!byOwnerPath.has(key)) byOwnerPath.set(key, []);
     byOwnerPath.get(key).push(node);
 }
-function owned(record, select, adaptation) {
+function owned(record, select, adaptation, repeatInsert = false) {
     const matches = (byOwnerPath.get(JSON.stringify(record.path)) || []).filter(select);
     assert.equal(matches.length, 1, `ambiguous or missing proof owner ${adaptation}: ${record.path}`);
     const node = matches[0];
     const line = source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1;
     if (record.line !== undefined) assert.equal(line, record.line, `proof owner drift ${record.path}`);
-    assert(!claimed.has(node), `already claimed proof owner ${adaptation}: ${record.path}`);
+    assert(!claimed.has(node) || (repeatInsert && insertionEdits.has(node)), `already claimed proof owner ${adaptation}: ${record.path}`);
     claimed.add(node);
     owners.push({ adaptation, path: record.path, line });
     return node;
@@ -88,8 +89,10 @@ for (const record of attribution.owners) {
 }
 // Resolve the reviewed source brands exactly as adaptation 30's composed proof does.
 const brandPaths = new Set();
+const brandSources = new Map();
 for (const rule of rules.brands) {
-    const file = parse(rule.file, pinned(rule.file));
+    if (!brandSources.has(rule.file)) brandSources.set(rule.file, parse(rule.file, pinned(rule.file)));
+    const file = brandSources.get(rule.file);
     const matches = nodes(file, node => property(node) && node.name.text === rule.key &&
         file.getLineAndCharacterOfPosition(node.getStart(file)).line + 1 === rule.line);
     assert.equal(matches.length, 1, `reviewed brand owner ${rule.file}:${rule.line}`);
@@ -207,7 +210,70 @@ proofPaths.push(exitProofPath);
 assert.equal(new Set(owners.map(owner => owner.line)).size, 222, 'sanctioned owner line sets overlap');
 
 // Each adaptation may certify additional existing public type owners.
-const sanctionKinds = new Set(['PropertySignature', 'PropertyDeclaration', 'Parameter', 'MethodSignature']);
+const sanctionKinds = new Set(['PropertySignature', 'PropertyDeclaration', 'Parameter', 'MethodSignature', 'FunctionDeclaration']);
+const sanctionEdits = [];
+const anchorKinds = new Set(['InterfaceDeclaration', 'TypeAliasDeclaration', 'FunctionDeclaration']);
+function namespaceKey(block) {
+    const names = [];
+    for (let node = block; node; node = node.parent) {
+        if (ts.isModuleDeclaration(node)) names.unshift(node.name.text);
+    }
+    return JSON.stringify(names);
+}
+const namespaceNames = new Map();
+function namespaceNameSet(block) {
+    const key = namespaceKey(block);
+    if (!namespaceNames.has(key)) namespaceNames.set(key, new Set());
+    return namespaceNames.get(key);
+}
+function rememberName(name, names) {
+    if (!name) return;
+    if (ts.isIdentifier(name) || ts.isStringLiteral(name)) names.add(name.text);
+    else if (ts.isBindingPattern(name)) {
+        for (const element of name.elements) if (ts.isBindingElement(element)) rememberName(element.name, names);
+    }
+}
+for (const block of nodes(source, node => ts.isSourceFile(node) || ts.isModuleBlock(node))) {
+    const names = namespaceNameSet(block);
+    for (const statement of block.statements) {
+        rememberName(statement.name, names);
+        if (ts.isVariableStatement(statement)) {
+            for (const declaration of statement.declarationList.declarations) rememberName(declaration.name, names);
+        }
+        if (ts.isImportDeclaration(statement) && statement.importClause) {
+            rememberName(statement.importClause.name, names);
+            const bindings = statement.importClause.namedBindings;
+            if (bindings && ts.isNamespaceImport(bindings)) rememberName(bindings.name, names);
+            else if (bindings) for (const element of bindings.elements) rememberName(element.name, names);
+        }
+    }
+}
+function insertDeclarations(row, label) {
+    assert(anchorKinds.has(row.kind) && row.insert === 'after' &&
+        !Object.hasOwn(row, 'before') && !Object.hasOwn(row, 'replace') &&
+        typeof row.text === 'string', `${label}: invalid insert sanction`);
+    const anchor = owned(row, node => ts.SyntaxKind[node.kind] === row.kind, label, true);
+    assert(ts.isSourceFile(anchor.parent) || ts.isModuleBlock(anchor.parent), `${label}: insert anchor must be namespace-level`);
+    const fragment = ts.createSourceFile('insert.d.ts', row.text, ts.ScriptTarget.Latest, true);
+    assert(fragment.parseDiagnostics.length === 0 && fragment.statements.length > 0 &&
+        fragment.statements.every(node => ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node)),
+        `${label}: insert text must contain only interface or type alias declarations`);
+    const names = namespaceNameSet(anchor.parent);
+    for (const declaration of fragment.statements) {
+        assert(!names.has(declaration.name.text), `${label}: insert name already exists: ${declaration.name.text}`);
+        names.add(declaration.name.text);
+    }
+    const lineStart = source.getPositionOfLineAndCharacter(source.getLineAndCharacterOfPosition(anchor.getStart(source)).line, 0);
+    const indent = original.slice(lineStart, anchor.getStart(source)).match(/^\s*/)[0];
+    const text = '\n' + row.text.split(/\r?\n/).map(line => indent + line).join('\n');
+    if (insertionEdits.has(anchor)) insertionEdits.get(anchor).text += text;
+    else {
+        const edit = { at: anchor.end, text };
+        insertionEdits.set(anchor, edit);
+        sanctionEdits.push(edit);
+        edits.push(edit);
+    }
+}
 for (const directory of fs.readdirSync(path.join(stage, 'adapt'), { withFileTypes: true })
     .filter(entry => entry.isDirectory()).map(entry => entry.name).sort()) {
     const relative = `adapt/${directory}/api-sanctions.json`;
@@ -217,16 +283,21 @@ for (const directory of fs.readdirSync(path.join(stage, 'adapt'), { withFileType
     for (const [index, row] of rows.entries()) {
         const label = `${relative} row ${index + 1} ${JSON.stringify(row)}`;
         assert(Array.isArray(row.path) && row.path.every(name => typeof name === 'string') &&
-            sanctionKinds.has(row.kind) && (!Object.hasOwn(row, 'replace') || row.replace === 'member') &&
-            typeof row.before === 'string' &&
-            typeof row.after === 'string' && typeof row.why === 'string' &&
-            row.why.length > 0 && !/[\r\n]/.test(row.why), `${label}: invalid sanction`);
+            typeof row.why === 'string' && row.why.length > 0 && !/[\r\n]/.test(row.why), `${label}: invalid sanction`);
+        if (Object.hasOwn(row, 'insert')) {
+            insertDeclarations(row, label);
+            continue;
+        }
+        assert(sanctionKinds.has(row.kind) && (!Object.hasOwn(row, 'replace') || row.replace === 'member') &&
+            typeof row.before === 'string' && typeof row.after === 'string', `${label}: invalid sanction`);
         const node = owned(row, node => ts.SyntaxKind[node.kind] === row.kind, label);
         const target = row.replace === 'member' ? node : node.type;
         assert(target, `${label}: owner has no type`);
         assert.equal(target.getText(source), row.before,
             `${label}: upstream text ${JSON.stringify(target.getText(source))}; before ${JSON.stringify(row.before)}`);
-        edits.push({ at: target.getStart(source), end: target.end, text: row.after });
+        const edit = { at: target.getStart(source), end: target.end, text: row.after };
+        sanctionEdits.push(edit);
+        edits.push(edit);
     }
     proofPaths.push(relative);
 }
@@ -250,7 +321,16 @@ for (const addition of optional.additions) {
 }
 // Adaptation 75's own guard must remove exactly that member and reproduce the prerequisite.
 const additions = require('../adapt/75-optional-widening/api-additions.cjs')(prerequisite, expected);
-assert.deepEqual(additions, optional.additions);
+// Keep 75's exact line proof, projected through only the new sanctioned edits.
+const additionProof = optional.additions.map(addition => {
+    const matches = nodes(source, node => ts.isInterfaceDeclaration(node) && node.name.text === addition.owner);
+    assert.equal(matches.length, 1, 'original optional addition owner');
+    const lines = text => (text.match(/\n/g) || []).length;
+    const shift = sanctionEdits.filter(edit => edit.at < matches[0].end).reduce((sum, edit) =>
+        sum + lines(edit.text) - lines(original.slice(edit.at, edit.end ?? edit.at)), 0);
+    return { ...addition, line: addition.line + shift };
+});
+assert.deepEqual(additions, additionProof);
 console.log(JSON.stringify({ source_commit: pin, original, expected, normalized_changes: require('./normalize-api.cjs').changes(original, expected), counts: { '20': 189, '30': 0, '32': publicHandoffs.length + propertyHosts, '33': 0, '40': 28, '70': 1, '75': 1, '79': 1 },
     excluded_method_conversions: excludedMethods,
     owners: [...owners, ...additions.map(addition => ({ adaptation: '75', path: [addition.owner, addition.property], line: addition.line }))],
