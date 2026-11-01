@@ -1,0 +1,31 @@
+// new Map(pairs) where pairs is an array of [key, value] tuples or undefined, as tsc's
+// getBuildInfoFileVersionMap passes program.resolvedRoot: Node makes an empty Map from undefined,
+// and a Map of the pairs otherwise, each set in order so a repeated key keeps its last value.
+type FileId = number & { __fileIdBrand: undefined };
+type ResolvedRoot = [resolved: FileId, root: FileId];
+interface BuildInfo {
+	resolvedRoot: readonly ResolvedRoot[] | undefined;
+}
+function info(roots: readonly ResolvedRoot[] | undefined): BuildInfo {
+	return { resolvedRoot: roots };
+}
+function describe(program: BuildInfo): string {
+	const resolvedRoots = new Map(program.resolvedRoot);
+	let text = `${resolvedRoots.size}:`;
+	resolvedRoots.forEach((root, resolved) => {
+		text += ` ${resolved}->${root}`;
+	});
+	return text;
+}
+const id = (value: number): FileId => value as FileId;
+console.log(describe(info([[id(1), id(2)], [id(3), id(4)]])));
+console.log(describe(info(undefined)));
+console.log(describe(info([])));
+console.log(describe(info([[id(5), id(6)], [id(5), id(7)]])));
+function names(entries: readonly [string, string][] | undefined): string {
+	const byName = new Map(entries);
+	byName.set('added', 'later');
+	return `${byName.size} ${byName.get('a') ?? 'none'} ${byName.get('added')}`;
+}
+console.log(names([['a', 'first'], ['b', 'second']]));
+console.log(names(undefined));

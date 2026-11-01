@@ -4242,6 +4242,14 @@
   {
     "package": "flow",
     "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_library_map_from_optional_pairs_a_cdd82ab72db6",
+    "program": "internal/oracle/testdata/library_map_from_optional_pairs.a",
+    "path": "../oracle/testdata/library_map_from_optional_pairs.a",
+    "sha256": "f7e141f670cc661e9452e762050855e0f0f8361d6719bf93205b39fa439b38cb"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
     "test": "TestFlowProgram____oracle_testdata_library_map_set_a_f4d220f1355d",
     "program": "internal/oracle/testdata/library_map_set.a",
     "path": "../oracle/testdata/library_map_set.a",
@@ -14070,6 +14078,14 @@
     "program": "internal/oracle/testdata/library_globals_typeof.a",
     "path": "../oracle/testdata/library_globals_typeof.a",
     "sha256": "026a8605a697fe642b54a5fab826ae97d3a4360da90640cb7ff8eea6ba2991c5"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_library_map_from_optional_pairs_a_cdd82ab72db6",
+    "program": "internal/oracle/testdata/library_map_from_optional_pairs.a",
+    "path": "../oracle/testdata/library_map_from_optional_pairs.a",
+    "sha256": "f7e141f670cc661e9452e762050855e0f0f8361d6719bf93205b39fa439b38cb"
   },
   {
     "package": "flow",
@@ -23906,6 +23922,14 @@
   {
     "package": "flow",
     "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_library_map_from_optional_pairs_a_cdd82ab72db6",
+    "program": "internal/oracle/testdata/library_map_from_optional_pairs.a",
+    "path": "../oracle/testdata/library_map_from_optional_pairs.a",
+    "sha256": "f7e141f670cc661e9452e762050855e0f0f8361d6719bf93205b39fa439b38cb"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
     "test": "TestFlowProgram____oracle_testdata_library_map_set_a_f4d220f1355d",
     "program": "internal/oracle/testdata/library_map_set.a",
     "path": "../oracle/testdata/library_map_set.a",
@@ -33734,6 +33758,14 @@
     "program": "internal/oracle/testdata/library_globals_typeof.a",
     "path": "../oracle/testdata/library_globals_typeof.a",
     "sha256": "026a8605a697fe642b54a5fab826ae97d3a4360da90640cb7ff8eea6ba2991c5"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_library_map_from_optional_pairs_a_cdd82ab72db6",
+    "program": "internal/oracle/testdata/library_map_from_optional_pairs.a",
+    "path": "../oracle/testdata/library_map_from_optional_pairs.a",
+    "sha256": "f7e141f670cc661e9452e762050855e0f0f8361d6719bf93205b39fa439b38cb"
   },
   {
     "package": "flow",
@@ -43910,6 +43942,14 @@
     "program": "internal/oracle/testdata/library_globals_typeof.a",
     "path": "../oracle/testdata/library_globals_typeof.a",
     "sha256": "026a8605a697fe642b54a5fab826ae97d3a4360da90640cb7ff8eea6ba2991c5"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_library_map_from_optional_pairs_a_cdd82ab72db6",
+    "program": "internal/oracle/testdata/library_map_from_optional_pairs.a",
+    "path": "../oracle/testdata/library_map_from_optional_pairs.a",
+    "sha256": "f7e141f670cc661e9452e762050855e0f0f8361d6719bf93205b39fa439b38cb"
   },
   {
     "package": "fresh",

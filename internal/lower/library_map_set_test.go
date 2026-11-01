@@ -50,3 +50,32 @@ func TestLibraryMapSetIteratorCopyTypesRefused(t *testing.T) {
 		}
 	}
 }
+
+// A generator gives [key, value] pairs, but generator functions are refused, so new Map from one names
+// generators rather than calling its pairs something else (tsc's mapIterator and mapDefinedIterator
+// sources, #assd1cf). Any other iterable keeps the old reason. Mutant: the generator branch dropped, and
+// the first source says it isn't pairs.
+func TestNewMapFromAGeneratorNamesGenerators(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, source, reason string }{
+		{"generator", `function collect(source: Generator<readonly [string, number], undefined, unknown>): number {
+	return new Map(source).size;
+}
+console.log('built');
+`, "new Map from a generator's pairs"},
+		{"iterable", `function collect(source: Iterable<readonly [number, number]>): number {
+	return new Map(source).size;
+}
+console.log(String(collect([[1, 2]])));
+`, "new Map from something that isn't [key, value] pairs"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSource(t, probe.source)
+			var notYet *NotYet
+			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.reason) {
+				t.Fatalf("want %q, got %v", probe.reason, err)
+			}
+		})
+	}
+}
