@@ -407,12 +407,13 @@ console.log(String(firstPos(elements)));
 // tsc's tryCast and cast take a predicate as a function type and call it on a value of the type its claim
 // extends: `test(value)` claims TOut of a TIn, with TOut extends TIn. Each instance is judged where it's
 // lowered: TIn mentions a type parameter, and the checker's flow type at value's first read on the true
-// side is TOut, the claim itself as written, so the instance's reads see concrete(TOut), S, through S's
-// view (core.ts:1779, Adamic's ruling on 810ce7d9). tryCast and cast with isTypeElement and isClassElement
-// lower and agree with Node, and so does TOut = TypeElement over a PropertySignature | Node, whose
-// PropertySignature the narrowing doesn't keep (Compiler's union pin). A lie through either stops at its
-// first bad read. Mutant: the as-written test dropped, and g1 to g3 lower; the identity of the flow type
-// dropped, and tryCast is NotYet as a generic argument.
+// side is TOut, the claim itself, so the instance's reads see concrete(TOut), S, through S's view
+// (core.ts:1779, Adamic's ruling on 810ce7d9). tryCast with isTypeElement and isClassElement lowers and
+// agrees with Node, and so does TOut = TypeElement over a PropertySignature | Node, whose PropertySignature
+// the narrowing doesn't keep (Compiler's union pin). A lie through it stops at its first bad read. cast
+// narrows in an if, where the checker gives TIn & TOut, read as Node & TypeElement, an intersection no
+// view covers, so it stays NotYet until a rule for that read is ruled. Mutant: the read compared without
+// concreting, and tryCast is NotYet as a generic argument.
 func TestBrandedSupertypeTryCastIsJudgedPerInstance(t *testing.T) {
 	t.Parallel()
 	const helpers = `interface ClassElement extends Declaration { _classElementBrand: undefined; readonly name?: string; }
@@ -426,10 +427,16 @@ function cast<TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value:
 }
 const a = { kind: 171, pos: 1, name: "a", typeText: "t" }; show(a);
 const b = { kind: 172, pos: 2 }; show(b);
-console.log(String(cast(a as Node, isTypeElement).pos));
 const p: PropertySignature | Node = a;
 const u = tryCast(p, isTypeElement); console.log(u === undefined ? "no" : String(u.name));
 `, ".ts")
+	_, err := lowerTypeScriptAssertionSource(t, brandedPrelude+helpers+`const a = { kind: 171, pos: 1, name: "a", typeText: "t" };
+console.log(String(cast(a as Node, isTypeElement).pos));
+`)
+	var pending *NotYet
+	if !errors.As(err, &pending) || !strings.Contains(err.Error(), "read on the true side as Node & TypeElement") {
+		t.Fatalf("want cast NotYet by its intersection read, got %v", err)
+	}
 	brandedStops(t, brandedPrelude+helpers+`function show(n: Node): void { const e = tryCast(n, isTypeElementLie); console.log(e === undefined ? "no" : String(e.name)); }
 const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);
 `, "adamic: panic: field read failed: e.name matches no member of string | undefined")
