@@ -1,0 +1,30 @@
+{
+  "before": {
+    "wholeProgram": 131,
+    "checkerOwnFile": 17
+  },
+  "after": {
+    "wholeProgram": 122,
+    "checkerOwnFile": 8
+  },
+  "mutant": {
+    "wholeProgram": 124,
+    "checkerOwnFile": 10
+  },
+  "removed": [
+    "src/compiler/checker.ts:17946:29: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.\n      Type 'undefined' is not assignable to type 'Type'.",
+    "src/compiler/checker.ts:19044:25: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.\n      Type 'undefined' is not assignable to type 'Type'.",
+    "src/compiler/checker.ts:20595:32: error TS2722: Cannot invoke an object which is possibly 'undefined'.",
+    "src/compiler/checker.ts:22498:29: error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.",
+    "src/compiler/checker.ts:22498:32: error TS2488: Type '[message: DiagnosticMessage, ...args: (string | number | boolean | readonly string[] | SourceFile | undefined)[]] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.",
+    "src/compiler/checker.ts:43517:20: error TS2412: Type 'Type | undefined' is not assignable to type 'Type' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'Type'.",
+    "src/compiler/checker.ts:46114:128: error TS2345: Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.\n  Type 'undefined' is not assignable to type 'Type'.",
+    "src/compiler/checker.ts:46114:208: error TS2345: Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.\n  Type 'undefined' is not assignable to type 'Type'.",
+    "src/compiler/checker.ts:46128:128: error TS2345: Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.\n  Type 'undefined' is not assignable to type 'Type'."
+  ],
+  "added": [],
+  "mutantRestored": [
+    "src/compiler/checker.ts:22498:29: error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.",
+    "src/compiler/checker.ts:22498:32: error TS2488: Type '[message: DiagnosticMessage, ...args: (string | number | boolean | readonly string[] | SourceFile | undefined)[]] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator."
+  ]
+}

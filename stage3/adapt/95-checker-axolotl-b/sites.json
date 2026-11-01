@@ -1,0 +1,452 @@
+{
+  "sites": [
+    {
+      "owner": "createNormalizedTupleType",
+      "expression": "elementTypes[unionIndex]",
+      "occurrence": 1,
+      "total": 1,
+      "type": "Type | undefined",
+      "binding": "elementTypes",
+      "bindingOwner": "createNormalizedTupleType",
+      "parent": "mapType(elementTypes[unionIndex], t => createNormalizedTupleType(target, replaceElement(elementTypes, unionIndex, t)))",
+      "line": 17946,
+      "column": 29,
+      "shape": "union:symbol:Type|undefined"
+    },
+    {
+      "owner": "getTemplateLiteralType",
+      "expression": "types[unionIndex]",
+      "occurrence": 1,
+      "total": 1,
+      "type": "Type | undefined",
+      "binding": "types",
+      "bindingOwner": "getTemplateLiteralType",
+      "parent": "mapType(types[unionIndex], t => getTemplateLiteralType(texts, replaceElement(types, unionIndex, t)))",
+      "line": 19044,
+      "column": 25,
+      "shape": "union:symbol:Type|undefined"
+    },
+    {
+      "owner": "getMappedType",
+      "expression": "targets[i]",
+      "occurrence": 2,
+      "total": 2,
+      "type": "(() => Type) | undefined",
+      "binding": "targets",
+      "bindingOwner": "getMappedType",
+      "parent": "targets[i]()",
+      "line": 20595,
+      "column": 32,
+      "shape": "union:callback:symbol:Type|undefined"
+    },
+    {
+      "owner": "reportIncompatibleStack",
+      "expression": "stack[0]",
+      "occurrence": 1,
+      "total": 1,
+      "type": "[message: DiagnosticMessage, ...args: (string | number | boolean | readonly string[] | SourceFile | undefined)[]] | undefined",
+      "binding": "stack",
+      "bindingOwner": "reportIncompatibleStack",
+      "parent": "...stack[0]",
+      "line": 22498,
+      "column": 32,
+      "shape": "union:tuple:symbol:DiagnosticMessage,union:array:string|false|number|string|symbol:SourceFile|true|undefined|undefined"
+    },
+    {
+      "owner": "getPromisedTypeOfPromise",
+      "expression": "getTypeArguments(type as GenericType)[0]",
+      "occurrence": 1,
+      "total": 1,
+      "type": "Type | undefined",
+      "binding": "getTypeArguments",
+      "bindingOwner": "getTypeArguments",
+      "parent": "typeAsPromise.promisedTypeOfPromise = getTypeArguments(type as GenericType)[0]",
+      "line": 43517,
+      "column": 58,
+      "shape": "union:symbol:Type|undefined"
+    },
+    {
+      "owner": "getIterationTypesOfIterableFast",
+      "expression": "yieldType",
+      "occurrence": 1,
+      "total": 2,
+      "type": "Type | undefined",
+      "binding": "yieldType",
+      "bindingOwner": "getIterationTypesOfIterableFast",
+      "parent": "resolver.resolveIterationType(yieldType, /*errorNode*/ undefined)",
+      "line": 46114,
+      "column": 128,
+      "shape": "union:symbol:Type|undefined"
+    },
+    {
+      "owner": "getIterationTypesOfIterableFast",
+      "expression": "returnType",
+      "occurrence": 1,
+      "total": 2,
+      "type": "Type | undefined",
+      "binding": "returnType",
+      "bindingOwner": "getIterationTypesOfIterableFast",
+      "parent": "resolver.resolveIterationType(returnType, /*errorNode*/ undefined)",
+      "line": 46114,
+      "column": 208,
+      "shape": "union:symbol:Type|undefined"
+    },
+    {
+      "owner": "getIterationTypesOfIterableFast",
+      "expression": "yieldType",
+      "occurrence": 2,
+      "total": 2,
+      "type": "Type | undefined",
+      "binding": "yieldType",
+      "bindingOwner": "getIterationTypesOfIterableFast",
+      "parent": "resolver.resolveIterationType(yieldType, /*errorNode*/ undefined)",
+      "line": 46128,
+      "column": 128,
+      "shape": "union:symbol:Type|undefined"
+    }
+  ],
+  "owners": [
+    {
+      "name": "createNormalizedTupleType",
+      "beforeSha256": "826185a52e364ae7337f738324224679412d18c62989a7521e94a72a182a5d91",
+      "afterSha256": "9cca00a218f86aa76ccc2fbfa9cfb15dd5cfc0df3e2aecde6a3a6a915c20b6af"
+    },
+    {
+      "name": "getTemplateLiteralType",
+      "beforeSha256": "8352b4eb10fb237cb9e6a2572925af3c0ed9211b1f10eee0993f2583d67a5e53",
+      "afterSha256": "bc996a6e00cae19b68eb2709cf607c2211039511031ffa852e562ab9ffd7203f"
+    },
+    {
+      "name": "getMappedType",
+      "beforeSha256": "85414d26777c334861150243e020fc49f952bc4512a0d157ed6dbb52827cf474",
+      "afterSha256": "0438249b8a32a01e6a488c3bc3bd8058d77e48d3e72da56f4a4829ae8c6c86c0"
+    },
+    {
+      "name": "reportIncompatibleStack",
+      "beforeSha256": "fd500830ac343dad9a7a2d7b180098c72e03d2773de02153934d5fec38b2a3af",
+      "afterSha256": "9b9d01de6576c191a04c8e16dec298a9dcdcc31781c07b8ba58331f605074d2f"
+    },
+    {
+      "name": "getPromisedTypeOfPromise",
+      "beforeSha256": "f177e50b220dce3583c95655fa4cef403f5e19bf1fa05753755ac0016e252b93",
+      "afterSha256": "643fe78e0eeafb81d8c432fee901802b9c8deda9b440a82c6160735e9f4684aa"
+    },
+    {
+      "name": "getIterationTypesOfIterableFast",
+      "beforeSha256": "3341cddd7825aafd545ce24f89b049c902d3a92bc04527e31dba7ba0d7a8edbf",
+      "afterSha256": "35e0997620c2fe1e9e95db57b207eaf59cf6ece4c9f5b96d15a88076788d7516"
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "makeDeferredTypeMapper",
+      "sha256": "8c4ff55ed811f8454bc5068046d2a4d8d5d1bd97f60c28b4fb7de09a1fee88c4"
+    },
+    {
+      "name": "getInferredTypeParameterConstraint",
+      "sha256": "6e206e0869f7eb133c3808c636ebb19119fce54c6a05feb5add9dfce8ecbe39a"
+    },
+    {
+      "name": "makeFixingMapperForContext",
+      "sha256": "469403d091440d7c455f9d7bef3521715ac7efb6f2bab8efd492ff485f95856c"
+    },
+    {
+      "name": "makeNonFixingMapperForContext",
+      "sha256": "429fb0cbb62bc51ad6259c3570b9cffbaf4483a8b1a76af3102e5add33253fba"
+    },
+    {
+      "name": "getGlobalPromiseType",
+      "sha256": "5f43ba3c07203efdb9a8ec6e1155cac1bfe88360724a90fb68bfc27c39c8fa70"
+    },
+    {
+      "name": "getTypeOfGlobalSymbol",
+      "sha256": "9573b64f39e8470d8647ef6858b448404621006c5cd9b0b4446b747aab47079b"
+    },
+    {
+      "name": "getGlobalType",
+      "sha256": "d205a7b114623b9a1bf24a932d548ef0245380c7724e040e9a8459c8af79aff2"
+    },
+    {
+      "name": "getTypeArguments",
+      "sha256": "c42bc3b30369a29bade4d1bf968960581c119c559b32a99eef8b8a2f504ca993"
+    },
+    {
+      "name": "getEffectiveTypeArguments",
+      "sha256": "ef5e66245a7155147e022d870faec5b22e5e723ebf68b59597e721f6e700551d"
+    },
+    {
+      "name": "fillMissingTypeArguments",
+      "sha256": "9f1bfad96f094ce63a21514a466db5ca903666a64bb92591abc53a785225789d"
+    },
+    {
+      "name": "isReferenceToType",
+      "sha256": "06ab8a505952a64a0157ab7f2f233d771b89765229dbb428d269bfdfc14c38e7"
+    },
+    {
+      "name": "isReferenceToSomeType",
+      "sha256": "a5b9025d326eefd77300152c9673b95189e0513e668e6825222cc29e79f29d05"
+    },
+    {
+      "name": "getIterationTypesOfIterableWorker",
+      "sha256": "76751a119afb77b8a5f9c675fd043ce614582f79e79b228429e3f2aa700a5ff7"
+    },
+    {
+      "name": "getGlobalBuiltinTypes",
+      "sha256": "59529c255046a0c3142527a0ba6dcaec573d93218c4b959d0cd38306ba20144c"
+    },
+    {
+      "name": "getGlobalBuiltinIteratorTypes",
+      "sha256": "512074a54b46a2843534109907db63f2be6ac9671e5b51da45194b50e38f682d"
+    },
+    {
+      "name": "getGlobalBuiltinAsyncIteratorTypes",
+      "sha256": "3cf52d09c634abc97b6c0b1ee71c1b6b4abd188924f4a506e8a45042ddc12e08"
+    },
+    {
+      "name": "getGlobalIterableType",
+      "sha256": "d5beda17f009fccf027a5e598eef41b2ea8406bc09d681e02d5d3c9b5f9fd59c"
+    },
+    {
+      "name": "getGlobalIterableIteratorType",
+      "sha256": "a73a5f7d62373efe875af24a1d42a6c75308816ca3ff0c65cdf8d2e926074519"
+    },
+    {
+      "name": "getGlobalIteratorObjectType",
+      "sha256": "1fd933a046de1b8c229e5f2a46cda9295572a11d4cb224269c5ed4cce6e4fdc4"
+    },
+    {
+      "name": "getGlobalGeneratorType",
+      "sha256": "e3b36cd3664914d268b1ace94dea4d76e96b7daee8abe8f622ca81992532c7d4"
+    },
+    {
+      "name": "getGlobalAsyncIterableType",
+      "sha256": "c21c68ac371cc63bf3a9a17517f939912b1b5e600874d7d79a3d5940e054c45b"
+    },
+    {
+      "name": "getGlobalAsyncIterableIteratorType",
+      "sha256": "a212f6c75d917fa7fa684a7cf39b81b889e17297da99e1905e56f1e783678860"
+    },
+    {
+      "name": "getGlobalAsyncIteratorObjectType",
+      "sha256": "a0a17cb45ff3873a5be04ed8a0fb88e5d4024c9026534b56ec0905a4cfa9fcc2"
+    },
+    {
+      "name": "getGlobalAsyncGeneratorType",
+      "sha256": "2fd0d634e7aef3ad9a0785d2c5dc47daccbec95c22f117ff9db15d25d7a5ff57"
+    },
+    {
+      "name": "createPromiseType",
+      "sha256": "7f8bd3ea9a0ab08d9fe4c5ca3105d5465318ad48f1b9021c0f9ec44f9feee595"
+    },
+    {
+      "name": "createPromiseLikeType",
+      "sha256": "19170179fb8fe15e6fb00c9c60c2bb4d6119d0743d6316cdba42de6f86f749af"
+    },
+    {
+      "name": "createTypeFromGenericGlobalType",
+      "sha256": "0b193139941ed16186a93f2138ee9a79dbb924c780e83fdcf2c63cc086969705"
+    },
+    {
+      "name": "getTypeFromClassOrInterfaceReference",
+      "sha256": "4ed5025259f043a90bdc9ecd059b043687e5a9e92afefba9559603615700da8c"
+    },
+    {
+      "name": "getTypeFromArrayOrTupleTypeNode",
+      "sha256": "d8334f16e79e88b1272d196c32564a4afe7fa452de391eaf9b04fd5efb8945fb"
+    },
+    {
+      "name": "createNormalizedTypeReference",
+      "sha256": "f77271a2022769b3475fe6dd425cd650ccf1e1c8065ac225480eb8179ba77351"
+    },
+    {
+      "name": "createTypeReference",
+      "sha256": "b6a7d58fabcd0c7d688ebfd7bba733143bff2bb4dbbce2c7185a37777044284e"
+    },
+    {
+      "name": "createDeferredTypeReference",
+      "sha256": "683d23c5fa999709d726984ac847dedc8ada12717c5b5ff6e13ab70328a872b0"
+    },
+    {
+      "name": "cloneTypeReference",
+      "sha256": "94235e9d42564e2d954fbfa0b6de3d21aa8486cba0dff8e9a472e3a0a9761cd5"
+    },
+    {
+      "name": "tryCreateTypeReference",
+      "sha256": "fefc5bbc2dfac208c48a9678cd6a6cb76b943e6063cba72f3dae4c2439f3ee59"
+    },
+    {
+      "name": "checkCrossProductUnion",
+      "sha256": "73f683f3abe03c14c3f8efb66db9e17638e8542fe756ea69ee1bb70b17192c7f"
+    },
+    {
+      "name": "getCrossProductUnionSize",
+      "sha256": "d2b587898fde12562787a6bd5a1d19707dfe1f51073d833945e92cf8fef1070c"
+    }
+  ],
+  "variables": [
+    {
+      "name": "emptyGenericType",
+      "sha256": "c75f8383c2768149f96700327aecf4663030922e779473faf46cabbbe73b72a2"
+    },
+    {
+      "name": "syncIterationTypesResolver",
+      "sha256": "6c7ce50d1baf470e0a8c583291037cc090b69171bdee4a10576d64d35ef2feaa"
+    },
+    {
+      "name": "asyncIterationTypesResolver",
+      "sha256": "c08c75097dd97f29207bf2a54e115bbf9b5b7ca5d75bab8d4a7158409fc02272"
+    }
+  ],
+  "mapperCallers": [
+    {
+      "owner": "getInferredTypeParameterConstraint",
+      "text": "makeDeferredTypeMapper(\r\n                                        typeParameters,\r\n                                        typeParameters.map((_, index) => () => {\r\n                                            return getEffectiveTypeArgumentAtIndex(typeReference, typeParameters, index);\r\n                                        }),\r\n                                    )"
+    },
+    {
+      "owner": "makeFixingMapperForContext",
+      "text": "makeDeferredTypeMapper(\r\n            map(context.inferences, i => i.typeParameter),\r\n            map(context.inferences, (inference, i) => () => {\r\n                if (!inference.isFixed) {\r\n                    // Before we commit to a particular inference (and thus lock out any further inferences),\r\n                    // we infer from any intra-expression inference sites we have collected.\r\n                    inferFromIntraExpressionSites(context);\r\n                    clearCachedInferences(context.inferences);\r\n                    inference.isFixed = true;\r\n                }\r\n                return getInferredType(context, i);\r\n            }),\r\n        )"
+    },
+    {
+      "owner": "makeNonFixingMapperForContext",
+      "text": "makeDeferredTypeMapper(\r\n            map(context.inferences, i => i.typeParameter),\r\n            map(context.inferences, (_, i) => () => {\r\n                return getInferredType(context, i);\r\n            }),\r\n        )"
+    }
+  ],
+  "referenceCalls": [
+    {
+      "name": "createTypeReference",
+      "references": 16,
+      "calls": [
+        {
+          "owner": "createTypeChecker",
+          "text": "createTypeReference(type, [anyType, anyType, anyType])"
+        },
+        {
+          "owner": "getTypeOfPrototypeProperty",
+          "text": "createTypeReference(classType as GenericType, map(classType.typeParameters, _ => anyType))"
+        },
+        {
+          "owner": "getTypeWithThisArgument",
+          "text": "createTypeReference(target, concatenate(typeArguments, [thisArgument || target.thisType!]))"
+        },
+        {
+          "owner": "tryCreateTypeReference",
+          "text": "createTypeReference(target, typeArguments)"
+        },
+        {
+          "owner": "getTypeFromClassOrInterfaceReference",
+          "text": "createTypeReference(type as GenericType, typeArguments)"
+        },
+        {
+          "owner": "createTypeFromGenericGlobalType",
+          "text": "createTypeReference(genericGlobalType, typeArguments)"
+        },
+        {
+          "owner": "createNormalizedTypeReference",
+          "text": "createTypeReference(target, typeArguments)"
+        },
+        {
+          "owner": "createNormalizedTupleType",
+          "text": "createTypeReference(target, elementTypes)"
+        },
+        {
+          "owner": "createNormalizedTupleType",
+          "text": "createTypeReference(tupleTarget, expandedTypes)"
+        },
+        {
+          "owner": "getNormalizedType",
+          "text": "createTypeReference((type as TypeReference).target, getTypeArguments(type as TypeReference))"
+        },
+        {
+          "owner": "createMarkerType",
+          "text": "createTypeReference(type as GenericType, instantiateTypes((type as GenericType).typeParameters, mapper))"
+        },
+        {
+          "owner": "getWidenedTypeWithContext",
+          "text": "createTypeReference(type.target, sameMap(getTypeArguments(type), getWidenedType))"
+        },
+        {
+          "owner": "instantiateAliasOrInterfaceWithDefaults",
+          "text": "createTypeReference(declaredManagedType as GenericType, args)"
+        },
+        {
+          "owner": "createPromiseType",
+          "text": "createTypeReference(globalPromiseType, [promisedType])"
+        },
+        {
+          "owner": "createPromiseLikeType",
+          "text": "createTypeReference(globalPromiseLikeType, [promisedType])"
+        }
+      ]
+    },
+    {
+      "name": "createDeferredTypeReference",
+      "references": 4,
+      "calls": [
+        {
+          "owner": "getTypeFromClassOrInterfaceReference",
+          "text": "createDeferredTypeReference(type as GenericType, node as TypeReferenceNode, /*mapper*/ undefined)"
+        },
+        {
+          "owner": "getTypeFromArrayOrTupleTypeNode",
+          "text": "createDeferredTypeReference(target, node, /*mapper*/ undefined)"
+        },
+        {
+          "owner": "getObjectTypeInstantiation",
+          "text": "createDeferredTypeReference((type as DeferredTypeReference).target, (type as DeferredTypeReference).node, newMapper, newAliasSymbol, newAliasTypeArguments)"
+        }
+      ]
+    },
+    {
+      "name": "tryCreateTypeReference",
+      "references": 9,
+      "calls": [
+        {
+          "owner": "createClassDecoratorContextType",
+          "text": "tryCreateTypeReference(getGlobalClassDecoratorContextType(/*reportErrors*/ true), [classType])"
+        },
+        {
+          "owner": "createClassMethodDecoratorContextType",
+          "text": "tryCreateTypeReference(getGlobalClassMethodDecoratorContextType(/*reportErrors*/ true), [thisType, valueType])"
+        },
+        {
+          "owner": "createClassGetterDecoratorContextType",
+          "text": "tryCreateTypeReference(getGlobalClassGetterDecoratorContextType(/*reportErrors*/ true), [thisType, valueType])"
+        },
+        {
+          "owner": "createClassSetterDecoratorContextType",
+          "text": "tryCreateTypeReference(getGlobalClassSetterDecoratorContextType(/*reportErrors*/ true), [thisType, valueType])"
+        },
+        {
+          "owner": "createClassAccessorDecoratorContextType",
+          "text": "tryCreateTypeReference(getGlobalClassAccessorDecoratorContextType(/*reportErrors*/ true), [thisType, valueType])"
+        },
+        {
+          "owner": "createClassFieldDecoratorContextType",
+          "text": "tryCreateTypeReference(getGlobalClassFieldDecoratorContextType(/*reportErrors*/ true), [thisType, valueType])"
+        },
+        {
+          "owner": "createClassAccessorDecoratorTargetType",
+          "text": "tryCreateTypeReference(getGlobalClassAccessorDecoratorTargetType(/*reportErrors*/ true), [thisType, valueType])"
+        },
+        {
+          "owner": "createClassAccessorDecoratorResultType",
+          "text": "tryCreateTypeReference(getGlobalClassAccessorDecoratorResultType(/*reportErrors*/ true), [thisType, valueType])"
+        }
+      ]
+    },
+    {
+      "name": "getIterationTypesOfIterableFast",
+      "references": 3,
+      "calls": [
+        {
+          "owner": "getIterationTypesOfIterableWorker",
+          "text": "getIterationTypesOfIterableFast(type, asyncIterationTypesResolver)"
+        },
+        {
+          "owner": "getIterationTypesOfIterableWorker",
+          "text": "getIterationTypesOfIterableFast(type, syncIterationTypesResolver)"
+        }
+      ]
+    }
+  ]
+}

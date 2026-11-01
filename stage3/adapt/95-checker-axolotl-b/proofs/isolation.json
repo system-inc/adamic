@@ -1,0 +1,24 @@
+{
+  "unrelatedWholeFileChangeAccepted": {
+    "beforeSha256": "00b65fd6d9fae144426b563a8fa4cfb84be553f40d85737584493c05c2d9396c",
+    "unrelatedSha256": "aea05ac967dc319ee9e04318df29bbdd1bfe28241c1fd3cd64f39fa11d678f24",
+    "first": {
+      "files": 1,
+      "assertions": 8,
+      "owners": 6,
+      "javascriptIdentical": true
+    },
+    "second": {
+      "files": 0,
+      "assertions": 0,
+      "owners": 6,
+      "javascriptIdentical": true
+    }
+  },
+  "brokenMapperFactory": {
+    "mutation": "drop first target callback",
+    "caught": true,
+    "catcher": "caller/arity dependency moved: makeDeferredTypeMapper",
+    "writes": 0
+  }
+}
