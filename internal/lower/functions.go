@@ -173,8 +173,14 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		}
 		if declared.DotDotDotToken != nil {
 			proven := l.concrete(l.checker.GetTypeAtLocation(parameter.Name()))
+			// Only an array reference has type arguments to read. The checker dereferences nil for
+			// anything else, such as the union of tuples tsc's createConstructorTypeNode takes as
+			// Parameters<typeof createConstructorTypeNode1 | typeof createConstructorTypeNode2> (#egxccg8).
+			if !l.checker.IsArrayType(proven) {
+				return l.notYet(parameter, "a rest parameter that isn't an array")
+			}
 			elements := l.checker.GetTypeArguments(proven)
-			if !l.checker.IsArrayType(proven) || len(elements) != 1 {
+			if len(elements) != 1 {
 				return l.notYet(parameter, "a rest parameter that isn't an array")
 			}
 			element, known := l.representation(elements[0])
