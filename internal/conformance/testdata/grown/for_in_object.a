@@ -1,0 +1,6 @@
+// Spec: `for...in` over a proven fixed plain object or a record
+// Expect: lowers
+const bag = { b: 1, a: 2 };
+let keys = '';
+for (const key in bag) keys += key;
+console.log(keys);
