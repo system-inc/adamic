@@ -79,20 +79,48 @@ if (x instanceof Box) { swap(); console.log(String(x.v)); }`)
 
 func TestNamedRecordRefusals(t *testing.T) {
 	t.Parallel()
+	// Each probe stays not yet in .ts. In .a, the write and the view a declared property's type could
+	// lie through are refused instead (refusedInA, TestNamedRecordLiesAreRefusedInA).
+	for _, probe := range []struct {
+		source, reason string
+		refusedInA     bool
+	}{
+		{`interface R {named?:number[];[key:string]:number[]|string|undefined} function read(r:R):number|undefined {return r.named?.length;}`, "dictionary member narrowed to an object kind", false},
+		{`interface R {named?:number;[key:string]:number|string|undefined} function write(r:R,k:string):void {r[k]="wrong";}`, "named property named", true},
+		{`interface R {named?:number;[key:string]:number|string|undefined} const r:R={}; const view:Record<string,number|string|undefined>=r;`, "seen as", true},
+		{`interface R {readonly named:number;[key:string]:number} const r:R={named:1}; const view:Record<string,number>=r;`, "seen as", false},
+		{`interface R {named:number;[key:string]:number} const fixed={named:1}; const r:R=fixed;`, "seen as", false},
+		{`interface R {named?:number;readonly [key:string]:number|undefined} const r:R={};`, "signature", false},
+		{`interface R {named:number;[key:number]:number} const r:R={named:1};`, "signature", false},
+	} {
+		for _, extension := range []string{".a", ".ts"} {
+			if extension == ".a" && probe.refusedInA {
+				continue
+			}
+			t.Run(extension+" "+probe.source, func(t *testing.T) {
+				_, err := lowerSourceAs(t, probe.source, extension)
+				var ny *NotYet
+				if !errors.As(err, &ny) || !strings.Contains(err.Error(), probe.reason) {
+					t.Fatalf("got %v, want NotYet %s", err, probe.reason)
+				}
+			})
+		}
+	}
+}
+
+// In .a, a write by a key that isn't one literal, and a view through a wider index signature, are
+// refused where a declared property's type could lie (#npqr3sx).
+func TestNamedRecordLiesAreRefusedInA(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct{ source, reason string }{
-		{`interface R {named?:number[];[key:string]:number[]|string|undefined} function read(r:R):number|undefined {return r.named?.length;}`, "dictionary member narrowed to an object kind"},
-		{`interface R {named?:number;[key:string]:number|string|undefined} function write(r:R,k:string):void {r[k]="wrong";}`, "named property named"},
-		{`interface R {named?:number;[key:string]:number|string|undefined} const r:R={}; const view:Record<string,number|string|undefined>=r;`, "seen as"},
-		{`interface R {readonly named:number;[key:string]:number} const r:R={named:1}; const view:Record<string,number>=r;`, "seen as"},
-		{`interface R {named:number;[key:string]:number} const fixed={named:1}; const r:R=fixed;`, "seen as"},
-		{`interface R {named?:number;readonly [key:string]:number|undefined} const r:R={};`, "signature"},
-		{`interface R {named:number;[key:number]:number} const r:R={named:1};`, "signature"},
+		{`interface R {named?:number;[key:string]:number|string|undefined} function write(r:R,k:string):void {r[k]="wrong";}`, "a write into a record with declared properties through a key that is not one literal"},
+		{`interface R {named?:number;[key:string]:number|string|undefined} const r:R={}; const view:Record<string,number|string|undefined>=r;`, "a value with declared properties seen through a wider index signature"},
 	} {
 		t.Run(probe.source, func(t *testing.T) {
 			_, err := lowerSource(t, probe.source)
-			var ny *NotYet
-			if !errors.As(err, &ny) || !strings.Contains(err.Error(), probe.reason) {
-				t.Fatalf("got %v, want NotYet %s", err, probe.reason)
+			var refused *Refused
+			if !errors.As(err, &refused) || !strings.HasPrefix(refused.What, probe.reason) {
+				t.Fatalf("got %v, want refused %s", err, probe.reason)
 			}
 		})
 	}
@@ -111,9 +139,10 @@ func TestNamedRecordRefusals(t *testing.T) {
 // index, a declared property is left to its read only when that read is proven to stop on a lie
 // (readGuardedInUnionSlot): w10's literal there (b10) is judged, since a function's tag says only
 // "function", and a plain object's (b8), an array's (a8), a Map's (p8) and a dictionary's (r8) reads stop.
-// Mutants: slotType ignoring the slot a caller set lowers w8, which then prints POINT natively;
-// recordComputedEntry skipped lowers w8's literal and b10; refuseWidening's rules skipped in refuseInSlot's
-// run lowers the invariance and enum pins.
+// Each row stops so in .a and .ts alike: in .a the declared-key write judges the value by the same
+// registry first (records_declared_keys.go). Mutants: slotType ignoring the slot a caller set lowers
+// w8, which then prints POINT natively; recordComputedEntry skipped lowers w8's literal and b10 in .ts;
+// refuseWidening's rules skipped in refuseInSlot's run lowers the invariance and enum pins.
 func TestNamedRecordWritesAreJudgedAsTheirDirectTwins(t *testing.T) {
 	t.Parallel()
 	w8 := `interface Shape { x: number; describe(): string }
@@ -160,61 +189,71 @@ const key = keys[0] ?? "other";
 		{"w14 parameter", w8, "const places: Places = { names: new Point() };\nconst write = (target: Places, at: string): void => { target[at] = new Other(); };\nwrite(places, key);", "const places: Places = { names: new Point() };\nconst write = (target: Places, at: string): void => { target.names = new Other(); };\nwrite(places, key);", false},
 		{"w10 construction boxed", boxed(w10), "const handlers: Handlers = { names: first, [key]: quiet };", "const handlers: Handlers = { names: quiet };", true},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, written := lowerSource(t, probe.source+probe.write+"\nconsole.log('ran');\n")
-			_, direct := lowerSource(t, probe.source+probe.direct+"\nconsole.log('ran');\n")
-			if direct == nil {
-				t.Fatalf("the direct twin %q lowers, so it proves nothing about the write", probe.direct)
-			}
-			same := written != nil && stoppedFor(written) == stoppedFor(direct)
-			if probe.byRule {
-				same = written != nil && ruleOf(written) == ruleOf(direct)
-			}
-			if !same {
-				t.Fatalf("the write stopped as %v, want what its direct twin stops as: %v", written, direct)
-			}
-		})
+		for _, extension := range []string{".a", ".ts"} {
+			t.Run(probe.name+" "+extension, func(t *testing.T) {
+				t.Parallel()
+				_, written := lowerSourceAs(t, probe.source+probe.write+"\nconsole.log('ran');\n", extension)
+				_, direct := lowerSourceAs(t, probe.source+probe.direct+"\nconsole.log('ran');\n", extension)
+				if direct == nil {
+					t.Fatalf("the direct twin %q lowers, so it proves nothing about the write", probe.direct)
+				}
+				same := written != nil && stoppedFor(written) == stoppedFor(direct)
+				if probe.byRule {
+					same = written != nil && ruleOf(written) == ruleOf(direct)
+				}
+				if !same {
+					t.Fatalf("the write stopped as %v, want what its direct twin stops as: %v", written, direct)
+				}
+			})
+		}
 	}
-	// The reads that hold readGuardedInUnionSlot: a lie under a declared plain object (b8, w8's literal
-	// boxed), array (a8), Map (p8) or dictionary (r8) in a boxed slot is left to its read, which stops as
-	// an object kind with no checked tag. Each goes red if the skip stops naming its kind (the write's
-	// stop comes first) or the read stops stopping. A computed method is no data entry, a stop of its own.
-	for _, probe := range []struct{ name, source, reason string }{
-		{"b8 object construction boxed", boxed(w8) + "const places: Places = { names: new Point(), [key]: new Other() };\nconsole.log(places.names.describe().toUpperCase());\n", "narrowed to an object kind without a checked runtime tag"},
+	// The reads that hold readGuardedInUnionSlot, in .ts: a lie under a declared plain object (b8, w8's
+	// literal boxed), array (a8), Map (p8) or dictionary (r8) in a boxed slot is left to its read, which
+	// stops as an object kind with no checked tag. Each goes red if the skip stops naming its kind (the
+	// write's stop comes first) or the read stops stopping. A computed method is no data entry, a stop
+	// of its own. In .a the declared-key write comes first and refuses each by the fix inA names: b8 by
+	// its direct twin's nominal rule, the others as a value names can't take, and the computed method,
+	// whose function is no one expression's value, is not yet.
+	for _, probe := range []struct{ name, source, reason, inA string }{
+		{"b8 object construction boxed", boxed(w8) + "const places: Places = { names: new Point(), [key]: new Other() };\nconsole.log(places.names.describe().toUpperCase());\n", "narrowed to an object kind without a checked runtime tag", "Refused: construct that class or a subclass; use an interface for structural values (adamic/nominal-class)"},
 		{"a8 array construction boxed", `type Lists = { names: string[]; [k: string]: string[] | number[] | number };
 const keys: string[] = ["names", "other"];
 const key = keys[0] ?? "other";
 const lists: Lists = { names: ["a"], [key]: [1, 2] };
 console.log((lists.names[0] ?? "").toUpperCase());
-`, "narrowed to an object kind without a checked runtime tag"},
+`, "narrowed to an object kind without a checked runtime tag", "Refused: " + declaredKeysFix},
 		{"p8 map construction boxed", `type Tables = { names: Map<string, string>; [k: string]: Map<string, string> | Map<string, number> | number };
 const keys: string[] = ["names", "other"];
 const key = keys[0] ?? "other";
 const tables: Tables = { names: new Map<string, string>([["a", "b"]]), [key]: new Map<string, number>([["a", 1]]) };
 console.log((tables.names.get("a") ?? "").toUpperCase());
-`, "narrowed to an object kind without a checked runtime tag"},
+`, "narrowed to an object kind without a checked runtime tag", "Refused: " + declaredKeysFix},
 		{"r8 dictionary construction boxed", `interface MapLike<T> { [index: string]: T; }
 type Tables = { names: MapLike<string>; [k: string]: MapLike<string> | MapLike<number> | number };
 const keys: string[] = ["names", "other"];
 const key = keys[0] ?? "other";
 const tables: Tables = { names: { a: "b" }, [key]: { a: 1 } };
 console.log((tables.names["a"] ?? "").toUpperCase());
-`, "narrowed to an object kind without a checked runtime tag"},
-		{"w10 computed method", w10 + "const handlers: Handlers = { names: first, [key]() { return \"x\"; } };\nconsole.log('ran');\n", "a record literal member other than a data entry"},
+`, "narrowed to an object kind without a checked runtime tag", "Refused: " + declaredKeysFix},
+		{"w10 computed method", w10 + "const handlers: Handlers = { names: first, [key]() { return \"x\"; } };\nconsole.log('ran');\n", "a record literal member other than a data entry", "NotYet: a write into a record with declared properties through a key that is not one literal, of no one expression's value, whose type isn't declared property names's type itself"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			_, err := lowerSource(t, probe.source)
+			_, err := lowerSourceAs(t, probe.source, ".ts")
 			var ny *NotYet
 			if !errors.As(err, &ny) || !strings.Contains(err.Error(), probe.reason) {
 				t.Fatalf("got %v, want the NotYet %s", err, probe.reason)
 			}
+			if _, err := lowerSource(t, probe.source); err == nil || ruleOf(err) != probe.inA {
+				t.Fatalf("in .a: got %v, want %s", err, probe.inA)
+			}
 		})
 	}
-	if _, err := lowerSource(t, `interface Options { target?: number; required: number; [option: string]: number | undefined }
-function write(options: Options, key: string): void { options[key] = 9; }`); err != nil {
-		t.Fatalf("an honest write: %v", err)
+	for _, extension := range []string{".a", ".ts"} {
+		if _, err := lowerSourceAs(t, `interface Options { target?: number; required: number; [option: string]: number | undefined }
+function write(options: Options, key: string): void { options[key] = 9; }`, extension); err != nil {
+			t.Fatalf("an honest write in %s: %v", extension, err)
+		}
 	}
 	// A computed name strings joined by + make is judged as that name: tsc's ["" + "constructor"] beside
 	// the keywords its literal declares names none of them (01_scanner_keywords.a's shape).
