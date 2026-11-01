@@ -1,0 +1,160 @@
+{
+  "typescript": "6.0.3",
+  "node": "v24.14.1",
+  "before": [
+    "function enableSubstitution(kind: SyntaxKind) {\r\n        Debug.assert(state < TransformationState.Completed, \"Cannot modify the transformation context after transformation has completed.\");\r\n        enabledSyntaxKindFeatures[kind] |= SyntaxKindFeatureFlags.Substitution;\r\n    }",
+    "function enableEmitNotification(kind: SyntaxKind) {\r\n        Debug.assert(state < TransformationState.Completed, \"Cannot modify the transformation context after transformation has completed.\");\r\n        enabledSyntaxKindFeatures[kind] |= SyntaxKindFeatureFlags.EmitNotifications;\r\n    }"
+  ],
+  "after": [
+    "function enableSubstitution(kind: SyntaxKind) {\r\n        Debug.assert(state < TransformationState.Completed, \"Cannot modify the transformation context after transformation has completed.\");\r\n        enabledSyntaxKindFeatures[kind] = (enabledSyntaxKindFeatures[kind] ?? 0) | SyntaxKindFeatureFlags.Substitution;\r\n    }",
+    "function enableEmitNotification(kind: SyntaxKind) {\r\n        Debug.assert(state < TransformationState.Completed, \"Cannot modify the transformation context after transformation has completed.\");\r\n        enabledSyntaxKindFeatures[kind] = (enabledSyntaxKindFeatures[kind] ?? 0) | SyntaxKindFeatureFlags.EmitNotifications;\r\n    }"
+  ],
+  "scenarios": [
+    {
+      "scenario": "unset bit",
+      "calls": [
+        [
+          "enableSubstitution",
+          1
+        ],
+        [
+          "enableEmitNotification",
+          2
+        ]
+      ],
+      "result": {
+        "keys": [
+          "1",
+          "2"
+        ],
+        "values": [
+          null,
+          1,
+          2,
+          null
+        ],
+        "read": [
+          [
+            false,
+            false
+          ],
+          [
+            true,
+            false
+          ],
+          [
+            false,
+            true
+          ],
+          [
+            false,
+            false
+          ]
+        ]
+      }
+    },
+    {
+      "scenario": "same bit already set",
+      "calls": [
+        [
+          "enableSubstitution",
+          1
+        ],
+        [
+          "enableSubstitution",
+          1
+        ],
+        [
+          "enableEmitNotification",
+          2
+        ],
+        [
+          "enableEmitNotification",
+          2
+        ]
+      ],
+      "result": {
+        "keys": [
+          "1",
+          "2"
+        ],
+        "values": [
+          null,
+          1,
+          2,
+          null
+        ],
+        "read": [
+          [
+            false,
+            false
+          ],
+          [
+            true,
+            false
+          ],
+          [
+            false,
+            true
+          ],
+          [
+            false,
+            false
+          ]
+        ]
+      }
+    },
+    {
+      "scenario": "other bit already set",
+      "calls": [
+        [
+          "enableEmitNotification",
+          1
+        ],
+        [
+          "enableSubstitution",
+          1
+        ],
+        [
+          "enableSubstitution",
+          2
+        ],
+        [
+          "enableEmitNotification",
+          2
+        ]
+      ],
+      "result": {
+        "keys": [
+          "1",
+          "2"
+        ],
+        "values": [
+          null,
+          3,
+          3,
+          null
+        ],
+        "read": [
+          [
+            false,
+            false
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            true
+          ],
+          [
+            false,
+            false
+          ]
+        ]
+      }
+    }
+  ],
+  "agree": true
+}
