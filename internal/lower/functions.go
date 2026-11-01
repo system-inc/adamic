@@ -250,6 +250,10 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 	if declaration.Body() == nil {
 		return l.notYet(declaration, "a function without a body")
 	}
+	// Every call in a body is judged when the body is lowered, under its own mapper (predicates_branded.go).
+	if err := l.judgeBrandedCalls(declaration); err != nil {
+		return err
+	}
 	function := l.result.Functions[index]
 	if !function.Closure {
 		// A function declaration, a method or a constructor has its body lowered where a use of it is first met,
