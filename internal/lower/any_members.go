@@ -41,10 +41,10 @@ func (l *lowering) refuseAnyMember(node *ast.Node) error {
 // than Refused, and every other member typed any is Refused (Adamic's ruling on #tmdhz1d, Nov 1). A NotYet
 // trusts nothing: each still stops. The list goes in the change that lands step 3's JSON design.
 var anyMemberAllowance = map[string]bool{
-	"types.ts ParsedCommandLine.raw":                     true,
+	"types.ts ParsedCommandLine.raw":                        true,
 	"commandLineParser.ts readConfigFile.config":            true,
 	"commandLineParser.ts parseConfigFileTextToJson.config": true,
-	"commandLineParser.ts ParsedTsconfig.raw":              true,
+	"commandLineParser.ts ParsedTsconfig.raw":               true,
 }
 
 // anyMemberSite is a member's file, its enclosing declaration and its name, as anyMemberAllowance keys it.
