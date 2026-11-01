@@ -15,16 +15,22 @@ on 95a as the head-specific instruction requires. Pinned TypeScript 6.0.3:
 added. No public API line, lane, other adaptation, patch table, fixture registry,
 meter or Go source is edited. The patch table under evidence is generated output.
 
+Proof artifacts, fixtures and supporting scripts live on the separate
+`typescript/axolotl-checker-d-evidence` branch under
+`stage3/evidence/95-checker-axolotl-d/`. This adaptation directory contains
+only adapt.cjs, verify.cjs, sites.json and README.md; every file here feeds
+apply's input key. The commands below refer to this evidence checkout.
+
 ## Runtime measurements
 
 The built adapted 95a compiler is instrumented in scratch by
-[evidence/observe.cjs](evidence/observe.cjs). Its Node compile hook inserts a
+[evidence/observe.cjs](../../evidence/95-checker-axolotl-d/observe.cjs). Its Node compile hook inserts a
 value-preserving observation at each original read, leaving the built files
 on disk and all compiler source unchanged. Every patch spelling must occur
 exactly once per loaded bundle. It records present/undefined, fixture or test
 context, relevant source metadata, and stacks. Process-exit files cover all
 workers; zero-hit processes and patched bundle addresses are retained in
-[evidence/oracle-observations.json.gz](evidence/oracle-observations.json.gz).
+[evidence/oracle-observations.json.gz](../../evidence/95-checker-axolotl-d/oracle-observations.json.gz).
 No instrumented compiler is committed. The hook is not used by adapt.cjs.
 
 | Read | Compiler/conformance present / absent | Final fixtures present / absent | Total present / absent | Disposition |
@@ -33,9 +39,9 @@ No instrumented compiler is committed. The hook is not used by adapt.cjs.
 | 42849 relevantTypeParameter | 0 / 0 | 6 / 8 | 6 / 8 | Explicit absence proposal only |
 | 50153 first declaration in fallback | 0 / 0 | 2 / 2 | 2 / 2 | Explicit absence proposal only |
 
-[evidence/measurements.json](evidence/measurements.json) contains these exact
+[evidence/measurements.json](../../evidence/95-checker-axolotl-d/measurements.json) contains these exact
 counts. Counts exclude exploratory runs and proposal runs. Each absence is
-attributed in [evidence/fixture-observation.json](evidence/fixture-observation.json):
+attributed in [evidence/fixture-observation.json](../../evidence/95-checker-axolotl-d/fixture-observation.json):
 
 - 42849: excess.js, arguments two and three of C<string, number, boolean>,
   in JSDoc @type and @extends, with noImplicitAny false and true. Eight hits;
@@ -51,10 +57,10 @@ fixture runner explicitly walks TypeNodes, including JSDoc, and asks the built
 checker's getTypeArgumentConstraint and getSymbolAtLocation APIs. Raw fixture
 sources are `.ts.txt` and `.js.txt`, not Adamic programs. All 14 fixture program
 observations and their diagnostics/queries are retained. Search attempts and
-unreached shapes are in [evidence/exploration.md](evidence/exploration.md).
+unreached shapes are in [evidence/exploration.md](../../evidence/95-checker-axolotl-d/exploration.md).
 
 Per-read notes name the observation, code explanation, and disposition:
-[12034](evidence/12034.md), [42849](evidence/42849.md), [50153](evidence/50153.md).
+[12034](../../evidence/95-checker-axolotl-d/12034.md), [42849](../../evidence/95-checker-axolotl-d/42849.md), [50153](../../evidence/95-checker-axolotl-d/50153.md).
 
 ## Required-value invariant and adapter
 
@@ -101,7 +107,7 @@ Following 95a's compare-census.py, compare-census.py normalizes root paths,
 requires root and aggregate observations to match, counts one, and counts
 checker diagnostics only by the primary file location. Full sets are compared,
 not only totals. The dependency-free control exactly reproduces 95a's complete
-after set: [evidence/reproduction.json](evidence/reproduction.json).
+after set: [evidence/reproduction.json](../../evidence/95-checker-axolotl-d/reproduction.json).
 
 | Tree | Whole program | checker.ts own file |
 | --- | ---: | ---: |
@@ -110,7 +116,7 @@ after set: [evidence/reproduction.json](evidence/reproduction.json).
 | One-edit reversion mutant | 131 | 17 |
 
 Removed: `src/compiler/checker.ts:12034:30 TS18048: 'file' is possibly 'undefined'.`
-Added anywhere: **0**. [evidence/census.json](evidence/census.json) and compressed
+Added anywhere: **0**. [evidence/census.json](../../evidence/95-checker-axolotl-d/census.json) and compressed
 raw census observations retain the complete proof. Installing upstream npm
 dependencies removes the unrelated existing sys.ts:1598:69 TS2307 for
 source-map-support; this explains the initial post-install baseline 130/17,
@@ -130,28 +136,28 @@ Stock transpileModule checker JavaScript is byte-identical in both modes:
 | Retained | 2,892,419 | `786ee138ff00765ab7c7ea7651de48df32c5981ec2c0810c68e302570d566f6e` |
 | Removed | 2,354,716 | `3664a2f5fb2aba0e839a3153e6ff4d093b530db890b5b2433be6cd38e6e91aac` |
 
-[evidence/source.json](evidence/source.json) records the first comparison;
-[evidence/final-source.json](evidence/final-source.json) independently checks the
+[evidence/source.json](../../evidence/95-checker-axolotl-d/source.json) records the first comparison;
+[evidence/final-source.json](../../evidence/95-checker-axolotl-d/final-source.json) independently checks the
 fresh full apply output against the same control. Both have one changed file
 out of 711 and exactly one assertion. Fresh apply exits 0, with incremental
 row `95-checker-axolotl-d | 1 | 1 | 1`; its rerun also edits nothing.
 
 ## Unbuilt JavaScript proposals
 
-[evidence/proposed-42849.diff.txt](evidence/proposed-42849.diff.txt) explicitly
+[evidence/proposed-42849.diff.txt](../../evidence/95-checker-axolotl-d/proposed-42849.diff.txt) explicitly
 throws on an absent type parameter.
-[evidence/proposed-50153.diff.txt](evidence/proposed-50153.diff.txt) retains the
+[evidence/proposed-50153.diff.txt](../../evidence/95-checker-axolotl-d/proposed-50153.diff.txt) retains the
 ordered aliasSymbol/symbol/fallback branches, checks a saved first declaration
 only in the fallback, and explicitly throws when it is absent. Each preserves
 the observed caught TypeError name and message instead of replacing the crash
 with a result. Neither proposal is part of adapt.cjs or any built source tree.
 
-[evidence/proposal.cjs](evidence/proposal.cjs) evaluates those branches in memory
+[evidence/proposal.cjs](../../evidence/95-checker-axolotl-d/proposal.cjs) evaluates those branches in memory
 in the existing Node build, without building or writing a compiler file.
 Every diagnostic and query result in all 14 final fixture programs is equal
 before and after, including all eight excess-argument errors, both empty-list
 errors, and the populated-list controls. Exact outputs and comparison scope are
-in [evidence/node-comparison.json](evidence/node-comparison.json). Throw sites and
+in [evidence/node-comparison.json](../../evidence/95-checker-axolotl-d/node-comparison.json). Throw sites and
 stack frames move: uncaught stderr/stack identity is not claimed. These are
 reviewable proposals pending a ruling, not approved behavior-preserving native
 adaptations. No native build, diagnostic-removal claim or oracle acceptance is
@@ -185,7 +191,7 @@ node stage3/adapt/95-checker-axolotl-d/adapt.cjs AFTER > /tmp/95d-idempotence.lo
 node stage3/adapt/95-checker-axolotl-d/verify.cjs CONTROL MUTANT > /tmp/95d-mutant-verify.log 2>&1
 node stage3/adapt/95-checker-axolotl-d/adapt.cjs --check MUTANT > /tmp/95d-mutant-check.log 2>&1
 /workspace/scratch/95d-census MUTANT/src/tsc/tsc.ts MUTANT.jsonl > /tmp/95d-mutant-census.log 2>&1
-python3 stage3/adapt/95-checker-axolotl-d/compare-census.py BEFORE.jsonl AFTER.jsonl MUTANT.jsonl > /tmp/95d-census-comparison.json 2>&1
+python3 stage3/evidence/95-checker-axolotl-d/compare-census.py BEFORE.jsonl AFTER.jsonl MUTANT.jsonl > /tmp/95d-census-comparison.json 2>&1
 bash stage3/apply.sh /workspace/scratch/95d-fresh > /tmp/95d-apply-fresh.log 2>&1
 ```
 
@@ -198,14 +204,14 @@ Do not rerun 90 on a tree already edited by 95.
 export OBSERVE_TREE=/workspace/scratch/95d-before
 mkdir -p /workspace/scratch/95d-observations
 OBSERVE_OUT=/workspace/scratch/95d-observations \
-NODE_OPTIONS="--require=$PWD/stage3/adapt/95-checker-axolotl-d/evidence/observe.cjs" \
+NODE_OPTIONS="--require=$PWD/stage3/evidence/95-checker-axolotl-d/observe.cjs" \
 timeout --kill-after=20s 880 bash stage3/oracle/run.sh "$OBSERVE_TREE" /workspace/scratch/95d-oracle-measure --runners=compiler --limit-seconds 720 > /tmp/95d-oracle-measure.log 2>&1
 mkdir -p /workspace/scratch/95d-clean-observations
 OBSERVE_OUT=/workspace/scratch/95d-clean-observations \
-NODE_OPTIONS="--require=$PWD/stage3/adapt/95-checker-axolotl-d/evidence/observe.cjs" \
-node stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs "$OBSERVE_TREE" > /tmp/95d-fixtures-clean-before.json 2>&1
-NODE_OPTIONS="--require=$PWD/stage3/adapt/95-checker-axolotl-d/evidence/proposal.cjs" \
-node stage3/adapt/95-checker-axolotl-d/evidence/fixtures.cjs "$OBSERVE_TREE" > /tmp/95d-fixtures-clean-proposed.json 2>&1
+NODE_OPTIONS="--require=$PWD/stage3/evidence/95-checker-axolotl-d/observe.cjs" \
+node stage3/evidence/95-checker-axolotl-d/fixtures.cjs "$OBSERVE_TREE" > /tmp/95d-fixtures-clean-before.json 2>&1
+NODE_OPTIONS="--require=$PWD/stage3/evidence/95-checker-axolotl-d/proposal.cjs" \
+node stage3/evidence/95-checker-axolotl-d/fixtures.cjs "$OBSERVE_TREE" > /tmp/95d-fixtures-clean-proposed.json 2>&1
 timeout --kill-after=20s 880 bash stage3/oracle/run.sh /workspace/scratch/95d-fresh /workspace/scratch/95d-oracle-final --limit-seconds 720 > /tmp/95d-oracle-final.log 2>&1
 ```
 
@@ -229,7 +235,7 @@ is fail, solely for `unittests:: Public APIs for typescript.d.ts should be
 acknowledged when they change`. Baseline differences: one existing API file;
 new baseline differences: **0**. Timeouts and exceptions: **0**.
 
-[evidence/oracle-final-summary.json](evidence/oracle-final-summary.json) checks
+[evidence/oracle-final-summary.json](../../evidence/95-checker-axolotl-d/oracle-final-summary.json) checks
 both declaration artifacts against main's recorded bytes:
 
 - Built/local API: 590,996 bytes, SHA-256
@@ -247,5 +253,5 @@ The post-install fresh census is **129 whole-program, 16 checker own-file**,
 compared with **130 and 17** on the installed 95a tree. It independently removes
 only row 12034, with nothing added. The dependency-free 131 to 130 comparison
 above reproduces 95a's original environment exactly. Both complete paired sets
-are retained in [evidence/installed-census.json](evidence/installed-census.json)
+are retained in [evidence/installed-census.json](../../evidence/95-checker-axolotl-d/installed-census.json)
 and its compressed observations.
