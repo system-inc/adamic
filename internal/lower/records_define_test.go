@@ -41,7 +41,8 @@ func TestRecordDefineHiddenLowers(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			if keys := definedHidden(program); len(keys) != 1 {
+			keys := definedHidden(program)
+			if len(keys) != 1 {
 				t.Fatalf("want one defineHidden, got %v", keys)
 			}
 			if !program.HiddenRecordKeys[keys[0]] {
