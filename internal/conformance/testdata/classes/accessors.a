@@ -1,0 +1,14 @@
+// Spec: instance getters and setters are admitted, lowered as calls in the IR
+// Expect: lowers
+class Box {
+	private stored = 1;
+	get value(): number {
+		return this.stored;
+	}
+	set value(next: number) {
+		this.stored = next;
+	}
+}
+const box = new Box();
+box.value = 5;
+console.log(String(box.value));
