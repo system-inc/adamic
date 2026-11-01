@@ -1,0 +1,270 @@
+{
+  "node": "v24.22.2",
+  "typescript": "6.0.3",
+  "mutant": false,
+  "cases": 21,
+  "failed": [],
+  "results": [
+    {
+      "name": "null",
+      "key": "code",
+      "plain": {
+        "threw": "TypeError",
+        "message": "Cannot read properties of null (reading 'code')"
+      },
+      "helper": {
+        "threw": "TypeError",
+        "message": "Cannot read properties of null (reading 'code')"
+      },
+      "agree": true
+    },
+    {
+      "name": "undefined",
+      "key": "code",
+      "plain": {
+        "threw": "TypeError",
+        "message": "Cannot read properties of undefined (reading 'code')"
+      },
+      "helper": {
+        "threw": "TypeError",
+        "message": "Cannot read properties of undefined (reading 'code')"
+      },
+      "agree": true
+    },
+    {
+      "name": "a string, code",
+      "key": "code",
+      "plain": {
+        "type": "undefined"
+      },
+      "helper": {
+        "type": "undefined"
+      },
+      "agree": true
+    },
+    {
+      "name": "a string, length",
+      "key": "length",
+      "plain": {
+        "type": "number",
+        "value": 6
+      },
+      "helper": {
+        "type": "number",
+        "value": 6
+      },
+      "agree": true
+    },
+    {
+      "name": "a number",
+      "key": "code",
+      "plain": {
+        "type": "undefined"
+      },
+      "helper": {
+        "type": "undefined"
+      },
+      "agree": true
+    },
+    {
+      "name": "an object with code ENOSPC",
+      "key": "code",
+      "plain": {
+        "type": "string",
+        "value": "ENOSPC"
+      },
+      "helper": {
+        "type": "string",
+        "value": "ENOSPC"
+      },
+      "agree": true
+    },
+    {
+      "name": "an object without code",
+      "key": "code",
+      "plain": {
+        "type": "undefined"
+      },
+      "helper": {
+        "type": "undefined"
+      },
+      "agree": true
+    },
+    {
+      "name": "an object with a numeric code",
+      "key": "code",
+      "plain": {
+        "type": "number",
+        "value": 28
+      },
+      "helper": {
+        "type": "number",
+        "value": 28
+      },
+      "agree": true
+    },
+    {
+      "name": "a getter-only code",
+      "key": "code",
+      "plain": {
+        "type": "string",
+        "value": "ENOSPC"
+      },
+      "helper": {
+        "type": "string",
+        "value": "ENOSPC"
+      },
+      "agree": true
+    },
+    {
+      "name": "an inherited code",
+      "key": "code",
+      "plain": {
+        "type": "string",
+        "value": "EMFILE"
+      },
+      "helper": {
+        "type": "string",
+        "value": "EMFILE"
+      },
+      "agree": true
+    },
+    {
+      "name": "an Error's message",
+      "key": "message",
+      "plain": {
+        "type": "string",
+        "value": "plugin failed"
+      },
+      "helper": {
+        "type": "string",
+        "value": "plugin failed"
+      },
+      "agree": true
+    },
+    {
+      "name": "an Error's stack is a string",
+      "key": "stack",
+      "plain": {
+        "type": "string",
+        "stackFirstLine": "Error: plugin failed"
+      },
+      "helper": {
+        "type": "string",
+        "stackFirstLine": "Error: plugin failed"
+      },
+      "agree": true
+    },
+    {
+      "name": "an object with only message",
+      "key": "message",
+      "plain": {
+        "type": "string",
+        "value": "only a message"
+      },
+      "helper": {
+        "type": "string",
+        "value": "only a message"
+      },
+      "agree": true
+    },
+    {
+      "name": "an object with only message, its stack",
+      "key": "stack",
+      "plain": {
+        "type": "undefined"
+      },
+      "helper": {
+        "type": "undefined"
+      },
+      "agree": true
+    },
+    {
+      "name": "an object with a numeric message",
+      "key": "message",
+      "plain": {
+        "type": "number",
+        "value": 42
+      },
+      "helper": {
+        "type": "number",
+        "value": 42
+      },
+      "agree": true
+    },
+    {
+      "name": "an object with neither, its stack",
+      "key": "stack",
+      "plain": {
+        "type": "undefined"
+      },
+      "helper": {
+        "type": "undefined"
+      },
+      "agree": true
+    },
+    {
+      "name": "an object with neither, its message",
+      "key": "message",
+      "plain": {
+        "type": "undefined"
+      },
+      "helper": {
+        "type": "undefined"
+      },
+      "agree": true
+    },
+    {
+      "name": "a function with code",
+      "key": "code",
+      "plain": {
+        "type": "string",
+        "value": "ENOSPC"
+      },
+      "helper": {
+        "type": "string",
+        "value": "ENOSPC"
+      },
+      "agree": true
+    },
+    {
+      "name": "a proxy",
+      "key": "code",
+      "plain": {
+        "type": "string",
+        "value": "code read through object"
+      },
+      "helper": {
+        "type": "string",
+        "value": "code read through object"
+      },
+      "agree": true
+    },
+    {
+      "name": "a getter that throws",
+      "key": "code",
+      "plain": {
+        "threw": "RangeError",
+        "message": "getter threw"
+      },
+      "helper": {
+        "threw": "RangeError",
+        "message": "getter threw"
+      },
+      "agree": true
+    },
+    {
+      "name": "a string's prototype getter sees the primitive",
+      "key": "adamicWitness",
+      "plain": {
+        "type": "string",
+        "value": "string:ENOSPC"
+      },
+      "helper": {
+        "type": "string",
+        "value": "string:ENOSPC"
+      },
+      "agree": true
+    }
+  ]
+}
