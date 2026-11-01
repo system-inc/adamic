@@ -20,9 +20,7 @@ func flowCorpusRemainderProduct(t *testing.T, path string, build bool) string {
 	files := append(compilerinputs.Lowering(), "dedication")
 	inputs := buildcache.Inputs{Name: "flow corpus lowering " + filepath.ToSlash(path), Files: files, Toolchain: []string{runtime.Version()}}
 	if !build {
-		directory, err := buildcache.Get(inputs, func(string) error {
-			return fmt.Errorf("flow corpus lowering not built ahead; run TestProduct_FlowCorpusRemainder tests first")
-		})
+		directory, err := buildcache.BuiltAhead(inputs, fmt.Errorf("flow corpus lowering not built ahead; run TestProduct_FlowCorpusRemainder tests first"))
 		if err != nil {
 			t.Fatal(err)
 		}

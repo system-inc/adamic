@@ -54,9 +54,7 @@ func commandRuntime(request native.RuntimeRequest) (string, error) {
 	}
 	// Even an ordinary developer test must build products ahead. A cache miss must
 	// never compile C inside a behavior test, including its driver subprocesses.
-	return buildcache.Get(commandRuntimeInputs(request), func(string) error {
-		return fmt.Errorf("cmd/adamic: runtime product not built ahead for features %v with options %+v; run TestProduct_CommandRuntime tests first", request.Features, request.Options)
-	})
+	return buildcache.BuiltAhead(commandRuntimeInputs(request), fmt.Errorf("cmd/adamic: runtime product not built ahead for features %v with options %+v; run TestProduct_CommandRuntime tests first", request.Features, request.Options))
 }
 
 // The shared package owns the identity, so readers and builders cannot drift apart.
