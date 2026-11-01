@@ -79,7 +79,7 @@ let validation = declarations.map(n => n.getText(clientSource)).join('\n');
 if (mutant === 'full-reply-string') validation = validation.replace('typeof value.text === "string" || ', '');
 if (mutant === 'full-reply-invalid') validation = validation.replace('(value.text === undefined || typeof value.text === "string" ||', '(value.text === undefined || true ||');
 if (mutant === 'response') validation = validation.replace('Array.isArray(value) &&', '!Array.isArray(value) &&');
-const checks = Function('ts', js(validation) + '; return {adamicArrayOf, adamicIsCompletionEntryDetails, adamicIsReferencedSymbol};')({...ts, isAdamicJsonObject: object.isAdamicJsonObject});
+const checks = Function('isAdamicJsonObject', js(validation) + '; return {adamicArrayOf, adamicIsCompletionEntryDetails, adamicIsReferencedSymbol};')(object.isAdamicJsonObject);
 const debug = {assert(condition) { assert(condition); }};
 for (const rule of rules.filter(r => r.file === 'src/harness/client.ts' && ['getCompletionEntryDetails', 'findReferences'].includes(r.owner) && r.before.includes('return'))) {
     const response = {body: rule.owner === 'findReferences' ? references : [details]};

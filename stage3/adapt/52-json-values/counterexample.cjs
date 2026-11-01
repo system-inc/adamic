@@ -19,7 +19,7 @@ const predicate = compiler.statements.find(node => ts.isFunctionDeclaration(node
 assert(predicate);
 const emit = text => ts.transpileModule(text, {compilerOptions: {target: ts.ScriptTarget.ES2020}}).outputText;
 const isAdamicJsonObject = Function(emit(predicate.getText(compiler).replace(/^export /, '')) + '; return isAdamicJsonObject;')();
-const checks = Function('ts', emit(helpers.join('\n')) + '; return {adamicArrayOf, adamicIsCompletionEntryDetails};')({isAdamicJsonObject});
+const checks = Function('isAdamicJsonObject', emit(helpers.join('\n')) + '; return {adamicArrayOf, adamicIsCompletionEntryDetails};')(isAdamicJsonObject);
 const rule = rules.find(row => row.owner === 'getCompletionEntryDetails' && row.file === 'src/harness/client.ts');
 assert(rule);
 const originalSource = fs.readFileSync(path.join(before, rule.file), 'utf8');
