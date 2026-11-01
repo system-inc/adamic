@@ -1,0 +1,12 @@
+// Spec: `protected` is tsc's compile-time access rule and erases at run time
+// Expect: lowers
+class Base {
+	protected count = 1;
+}
+class Derived extends Base {
+	bump(): number {
+		this.count += 1;
+		return this.count;
+	}
+}
+console.log(String(new Derived().bump()));

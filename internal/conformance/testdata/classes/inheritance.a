@@ -1,0 +1,18 @@
+// Spec: Nominal class hierarchies: `extends`, `super(...)` and `super.method(...)`, abstract classes and methods
+// Expect: lowers
+abstract class Shape {
+	abstract area(): number;
+	describe(): string {
+		return "area " + String(this.area());
+	}
+}
+class Square extends Shape {
+	constructor(private readonly side: number) {
+		super();
+	}
+	area(): number {
+		return this.side * this.side;
+	}
+}
+const shape: Shape = new Square(3);
+console.log(shape.describe() + " " + String(shape instanceof Square));
