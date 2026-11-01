@@ -1,6 +1,10 @@
-// The record's own declared optional field, read off the record itself.
-interface Counts { [key: string]: number | string | undefined; total: number; note?: string }
+// The record's own storage type, read through ?. so the read is number | undefined: the receiver's
+// union member is the type records are made as.
+interface Counts { [key: string]: number | string; total: number }
 const counts: Counts = { total: 2 };
 counts["extra"] = "seven";
+function pick(present: boolean): Counts | undefined { return present ? counts : undefined; }
 for (const key of Object.keys(counts)) console.log(key);
-console.log(counts.note === undefined ? "none" : counts.note);
+const chosen = pick(true);
+const total = chosen?.total;
+console.log(total === undefined ? "none" : String(total + 1));
