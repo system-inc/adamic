@@ -362,25 +362,32 @@ show(i);`, "a call through ?. (an optional call)", false},
 
 // tsc's binarySearchKey calls `some(array)`, which claims `readonly T[]` of an argument already typed
 // `readonly T[]`, so the narrowing is the argument's own type whatever T is (computeLineOfPosition and
-// indexOfNode, Correctness's census on 9e4f2184). It lowers and agrees with Node with T at a plain type, at
-// number, and at the branded supertype itself. The walk reads the call as written, a claim naming firstPos's
-// T, and passes it because the argument is the claim's own type. Mutant: that identity test dropped, and the
-// program is NotYet as a generic claim S may instantiate.
+// indexOfNode, Correctness's census on 9e4f2184). With S's view registered in the program, the walk reads
+// the call as written, a claim naming firstPos's T, and passes it because the argument is the claim's own
+// type, so T at Node and at number lowers and agrees with Node, as on main (Adamic's ruling). Mutant: that
+// identity test dropped, and the program is NotYet as a generic claim S may instantiate. At T = TypeElement
+// the instance's claim is an array of S, whose false side the false side's guard keeps NotYet.
 func TestBrandedSupertypeIdentityNarrowingLowers(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNodeAs(t, brandedPrelude+`function some<T>(array: readonly T[] | undefined): array is readonly T[] { return array !== undefined && array.length > 0; }
+	const some = `function some<T>(array: readonly T[] | undefined): array is readonly T[] { return array !== undefined && array.length > 0; }
 function firstPos<T extends Node>(array: readonly T[]): number { if (!some(array)) { return -1; } const first = array[0]; return first === undefined ? -1 : first.pos; }
-function firstOf(array: readonly number[]): number { if (!some(array)) { return -1; } const first = array[0]; return first === undefined ? -1 : first; }
 function show(n: Node): void { if (isTypeElementLie(n)) { console.log(String(n.pos)); } }
 const element: TypeElement = { kind: 171, pos: 4, _declarationBrand: undefined, _typeElementBrand: undefined };
 show(element);
-const elements: TypeElement[] = [element];
-console.log(String(firstPos(elements)));
+`
+	lowersAndAgreesWithNodeAs(t, brandedPrelude+some+`function firstOf(array: readonly number[]): number { if (!some(array)) { return -1; } const first = array[0]; return first === undefined ? -1 : first; }
 const nodes: Node[] = [{ kind: 80, pos: 6 }];
 console.log(String(firstPos(nodes)));
-console.log(String(firstOf([7])));
 console.log(String(firstPos([])));
+console.log(String(firstOf([7])));
 `, ".ts")
+	_, err := lowerTypeScriptAssertionSource(t, brandedPrelude+some+`const elements: TypeElement[] = [element];
+console.log(String(firstPos(elements)));
+`)
+	var pending *NotYet
+	if !errors.As(err, &pending) || !strings.Contains(err.Error(), "checked predicate membership of a branded supertype on its false branch") {
+		t.Fatalf("want T at TypeElement NotYet on the false side, got %v", err)
+	}
 }
 
 // A member S is assignable to and that's assignable to S keeps its own type when the checker narrows it
