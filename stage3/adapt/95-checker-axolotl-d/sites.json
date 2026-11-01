@@ -1,0 +1,33 @@
+{
+  "file": "src/compiler/checker.ts",
+  "locationsAreDocumentationOnly": true,
+  "sites": [
+    {
+      "line": 12034,
+      "column": 30,
+      "owner": "getFlowTypeFromCommonJSExport",
+      "action": "assert producer symbol.declarations![0]",
+      "present": 11,
+      "absent": 0,
+      "ownerBeforeSha256": "57faba456412535bb02760aad9cdbcf7569cc83624729da3f6ddf40b6ac5a80c"
+    },
+    {
+      "line": 42849,
+      "column": 65,
+      "owner": "getTypeArgumentConstraint",
+      "action": "unbuilt explicit-absence proposal",
+      "present": 6,
+      "absent": 8,
+      "ownerBeforeSha256": "a6a7a6d447206a5f3ef29faaa262da87896415cf97227955dd9ab4be76649bb6"
+    },
+    {
+      "line": 50153,
+      "column": 121,
+      "owner": "getApplicableIndexSymbol",
+      "action": "unbuilt explicit-absence proposal",
+      "present": 2,
+      "absent": 2,
+      "ownerBeforeSha256": "35b9308f3edbb3ae332535bd198677d3cfba0044bd1588e327cb98d9b2a4eaeb"
+    }
+  ]
+}
