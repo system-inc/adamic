@@ -261,8 +261,8 @@ console.log(show(Clock));
 // is written, at its receiver, as a checked read's is at the read.
 func TestCheckedWriteThroughAccessorRewriteIsLocated(t *testing.T) {
 	t.Parallel()
-	_, err := lowerTypeScriptAssertionSource(t, `interface Node { kind: number; pos: number; }
-interface Identifier extends Node { kind: 80; text: string; }
+	_, err := lowerTypeScriptAssertionSource(t, `interface Node { readonly kind: number; pos: number; }
+interface Identifier extends Node { readonly kind: 80; readonly text: string; }
 function idText(node: Node): string { if (node.kind === 80) { const id = node as Identifier; return id.text; } return "?"; }
 const ident = { kind: 80 as const, pos: 3, text: "x" };
 console.log(idText(ident));
