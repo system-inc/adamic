@@ -369,8 +369,8 @@ show(i);`, "a call through ?. (an optional call)", false},
 func TestBrandedSupertypeIdentityNarrowingLowers(t *testing.T) {
 	t.Parallel()
 	lowersAndAgreesWithNodeAs(t, brandedPrelude+`function some<T>(array: readonly T[] | undefined): array is readonly T[] { return array !== undefined && array.length > 0; }
-function firstPos<T extends Node>(array: readonly T[]): number { if (!some(array)) { return -1; } return array[0].pos; }
-function firstOf(array: readonly number[]): number { if (!some(array)) { return -1; } return array[0]; }
+function firstPos<T extends Node>(array: readonly T[]): number { if (!some(array)) { return -1; } const first = array[0]; return first === undefined ? -1 : first.pos; }
+function firstOf(array: readonly number[]): number { if (!some(array)) { return -1; } const first = array[0]; return first === undefined ? -1 : first; }
 function show(n: Node): void { if (isTypeElementLie(n)) { console.log(String(n.pos)); } }
 const element: TypeElement = { kind: 171, pos: 4, _declarationBrand: undefined, _typeElementBrand: undefined };
 show(element);
