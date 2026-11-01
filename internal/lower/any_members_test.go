@@ -73,7 +73,7 @@ func TestAnyMemberAllowanceIsTheFourJSONSites(t *testing.T) {
 		{"readConfigFile.config", "commandLineParser.ts", "export function readConfigFile(fileName: string): { config?: any } { return { config: fileName }; }\n", "NotYet: a member typed any (commandLineParser.ts readConfigFile.config) that step 3's JSON design types (#3f4rr76)"},
 		{"parseConfigFileTextToJson.config", "commandLineParser.ts", "export function parseConfigFileTextToJson(jsonText: string): { config?: any } { return { config: jsonText }; }\n", "NotYet: a member typed any (commandLineParser.ts parseConfigFileTextToJson.config) that step 3's JSON design types (#3f4rr76)"},
 		{"ParsedTsconfig.raw", "commandLineParser.ts", "export interface ParsedTsconfig { raw: any; }\n", "NotYet: a member typed any (commandLineParser.ts ParsedTsconfig.raw) that step 3's JSON design types (#3f4rr76)"},
-		{"a fifth member", "types.ts", "export interface ParsedCommandLine { raw?: any; other?: any; }\n", "Refused: a member typed any (other, declared)"},
+		{"a fifth member", "types.ts", "export interface ParsedCommandLine { other?: any; raw?: any; }\n", "Refused: a member typed any (other, declared)"},
 		{"another file", "main.ts", "export interface ParsedCommandLine { raw?: any; }\n", "Refused: a member typed any (raw, declared)"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
