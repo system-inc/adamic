@@ -224,6 +224,60 @@ ids.forEach((id) => console.log(String(id.pos)));
 	}
 }
 
+// A class's static getter lives on the class value, whose object is an allocation with the static
+// class's layout and accessors (class_static.go's staticDeclaration), so the class value seen
+// through a checked contract naming pos reaches an owner: a cast's view stays NotYet at the getter,
+// as the old scan by name had it, and so does a checked predicate's, whose origin is unknown.
+func TestStaticGetterInCheckedContractStaysNotYet(t *testing.T) {
+	t.Parallel()
+	prelude := `interface Positioned { readonly kind: number; readonly pos: number; }
+interface Clocked extends Positioned { readonly kind: 1; }
+class Clock { static kind = 1; static get pos(): number { return 3; } }
+`
+	for _, probe := range []struct{ name, source string }{
+		{"cast of a parameter", prelude + `function show(value: Positioned): string { if (value.kind === 1) { const c = value as Clocked; return String(c.pos); } return "?"; }
+console.log(show(Clock));
+`},
+		{"cast of the class value", prelude + `const c = Clock as Positioned as Clocked;
+console.log(String(c.pos));
+`},
+		{"checked predicate", prelude + `function isClocked(value: Positioned): value is Clocked { return value.kind === 1; }
+function show(value: Positioned): string { if (isClocked(value)) { return String(value.pos); } return "?"; }
+console.log(show(Clock));
+`},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerTypeScriptAssertionSource(t, probe.source)
+			var notYet *NotYet
+			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "a getter in a checked field contract") || !strings.HasSuffix(notYet.Where, "main.ts:3:32") {
+				t.Fatalf("want NotYet at the static getter, main.ts:3:32, got %v", err)
+			}
+		})
+	}
+}
+
+// A checked write the accessor rewrite would route through the setter dispatcher is NotYet where it
+// is written, at its receiver, as a checked read's is at the read.
+func TestCheckedWriteThroughAccessorRewriteIsLocated(t *testing.T) {
+	t.Parallel()
+	_, err := lowerTypeScriptAssertionSource(t, `interface Node { kind: number; pos: number; }
+interface Identifier extends Node { kind: 80; text: string; }
+function idText(node: Node): string { if (node.kind === 80) { const id = node as Identifier; return id.text; } return "?"; }
+const ident = { kind: 80 as const, pos: 3, text: "x" };
+console.log(idText(ident));
+let at = 3;
+const decoder = { get pos() { return at; }, set pos(value: number) { at = value; } };
+console.log(String(decoder.pos));
+const ids: Identifier[] = [ident];
+ids.forEach((id) => { id.pos = 4; });
+`)
+	var notYet *NotYet
+	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "a checked view write of pos whose receiver may own an accessor of the same name") || !strings.HasSuffix(notYet.Where, "main.ts:10:23") {
+		t.Fatalf("want the checked write NotYet at main.ts:10:23, got %v", err)
+	}
+}
+
 // The getter's owner is judged per allocation over every module: a literal with get pos in another
 // module, reaching the viewed value through an import, stays NotYet.
 func TestGetterInAnotherModuleReachingViewStaysNotYet(t *testing.T) {

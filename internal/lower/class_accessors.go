@@ -406,9 +406,14 @@ func (l *lowering) finishAccessors() error {
 				}
 			case ir.SetProperty:
 				if names[expression.Name] && !expression.Define && reach.owner(reach.graph.ReachingAllocations(original.(ir.SetProperty).Object), expression.Name) {
-					// As a read: the fallback store drops the checked write's conversion.
+					// As a read: the fallback store drops the checked write's conversion. The write is
+					// located at its receiver when lowering recorded its site (fresh.go's writeSite).
 					if l.result.CheckedField(expression.ViewReceiverTypeID, expression.Name) {
-						failure = &NotYet{Where: l.result.Source, What: "a checked view write of " + expression.Name + " whose receiver may own an accessor of the same name"}
+						where := l.result.Source
+						if expression.Site > 0 && expression.Site <= len(l.writeSites) {
+							where = l.program.Where(l.writeSites[expression.Site-1].node)
+						}
+						failure = &NotYet{Where: where, What: "a checked view write of " + expression.Name + " whose receiver may own an accessor of the same name"}
 						return value
 					}
 					index := dispatch(expression.Name, expression.Value.Type(), true, expression.Site)
