@@ -1,0 +1,45 @@
+src/compiler/transformers/es2017.ts:599:86: error TS2532: Object is possibly 'undefined'.
+src/compiler/transformers/es2017.ts:764:38: error TS18048: 'outerParameter' is possibly 'undefined'.
+src/compiler/transformers/es2017.ts:765:25: error TS18048: 'originalParameter' is possibly 'undefined'.
+src/compiler/transformers/es2017.ts:765:58: error TS18048: 'originalParameter' is possibly 'undefined'.
+src/compiler/transformers/es2017.ts:767:76: error TS18048: 'outerParameter' is possibly 'undefined'.
+src/compiler/transformers/es2017.ts:770:44: error TS18048: 'outerParameter' is possibly 'undefined'.
+src/compiler/transformers/classFields.ts:1835:21: error TS2532: Object is possibly 'undefined'.
+src/compiler/transformers/classFields.ts:2251:45: error TS2538: Type 'undefined' cannot be used as an index type.
+src/compiler/transformers/classFields.ts:2252:97: error TS18048: 'superStatementIndex' is possibly 'undefined'.
+src/compiler/transformers/classFields.ts:2253:27: error TS18048: 'superStatementIndex' is possibly 'undefined'.
+src/compiler/transformers/classFields.ts:2297:52: error TS2345: Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.
+src/compiler/transformers/classFields.ts:2376:56: error TS2345: Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.
+src/compiler/transformers/es2015.ts:2803:38: error TS2532: Object is possibly 'undefined'.
+src/compiler/transformers/es2015.ts:3046:64: error TS2532: Object is possibly 'undefined'.
+src/compiler/transformers/es2015.ts:4437:29: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.
+src/compiler/transformers/es2015.ts:4691:34: error TS2532: Object is possibly 'undefined'.
+src/compiler/transformers/es2015.ts:4693:13: error TS2532: Object is possibly 'undefined'.
+src/compiler/sys.ts:1281:43: error TS18046: 'e' is of type 'unknown'.
+src/compiler/sys.ts:1598:69: error TS2307: Cannot find module 'source-map-support' or its corresponding type declarations.
+src/compiler/sys.ts:1617:13: error TS2322: Type '(baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type '(baseDir: string, moduleName: string) => ModuleImportResult'.
+  Type '{ module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+    Type '{ module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+      Type '{ module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type '{ module: undefined; modulePath?: undefined; error: { stack?: string; message?: string; }; }'.
+        Types of property 'error' are incompatible.
+          Type 'unknown' is not assignable to type '{ stack?: string; message?: string; }'.
+src/compiler/sys.ts:1708:56: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string | ArrayBufferView<ArrayBufferLike>'.
+  Type 'undefined' is not assignable to type 'string | ArrayBufferView<ArrayBufferLike>'.
+src/compiler/moduleNameResolver.ts:286:9: error TS2322: Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.
+  Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'originalPath' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/compiler/moduleNameResolver.ts:474:36: error TS2322: Type 'MapLike<string[]> | undefined' is not assignable to type 'MapLike<string[]>'.
+  Type 'undefined' is not assignable to type 'MapLike<string[]>'.
+src/compiler/moduleNameResolver.ts:627:9: error TS2375: Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'originalPath' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/compiler/resolutionCache.ts:1386:9: error TS2412: Type 'undefined' is not assignable to type 'Set<Path>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+src/compiler/sourcemap.ts:216:58: error TS2345: Argument of type 'string | null | undefined' is not assignable to parameter of type 'string | null'.
+  Type 'undefined' is not assignable to type 'string | null'.
+src/compiler/core.ts:1637:11: error TS2740: Type '{ has(element: TElement): boolean; add(element: TElement): Set<TElement>; delete(element: TElement): boolean; clear(): void; ... 6 more ...; [Symbol.toStringTag]: string; }' is missing the following properties from type 'Set<TElement>': union, intersection, difference, symmetricDifference, and 3 more.
