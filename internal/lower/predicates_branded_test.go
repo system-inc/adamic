@@ -366,30 +366,29 @@ func TestBrandedSupertypeMutualMemberNeverReadsRaw(t *testing.T) {
 	const mutual = `interface Restated extends TypeElement {}
 type Shape = { readonly kind: number; readonly pos: number; _declarationBrand: undefined; _typeElementBrand: undefined; readonly name?: string };
 interface Twin { readonly kind: number; readonly pos: number; _declarationBrand: undefined; _typeElementBrand: undefined; readonly name?: any }
-function viaRestated(x: Restated): string { if (isTypeElementLie(x)) { return String(x.name); } return "no"; }
-function viaShape(x: Shape): string { if (isTypeElementLie(x)) { return String(x.name); } return "no"; }
-function viaTwin(x: Twin): string { if (isTypeElementLie(x)) { return String(x.name); } return "no"; }
-const guard = isTypeElementLie;
-function heldRestated(x: Restated): void { if (guard(x)) { console.log(String(x.name)); } }
-function heldShape(x: Shape): void { if (guard(x)) { console.log(String(x.name)); } }
-function heldTwin(x: Twin): void { if (guard(x)) { console.log(String(x.name)); } }
 `
-	for _, probe := range []struct{ name, source string }{
-		{"restatement honest", `const r: Restated = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a" }; console.log(viaRestated(r));`},
-		{"restatement through a cast", `const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const n: Node = w; console.log(viaRestated(n as Restated));`},
-		{"alias honest", `const r: Shape = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a" }; console.log(viaShape(r));`},
-		{"alias through a cast", `const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const n: Node = w; console.log(viaShape(n as Shape));`},
-		{"twin", `const t: Twin = { kind: 80, pos: 2, _declarationBrand: undefined, _typeElementBrand: undefined, name: 5 }; console.log(viaTwin(t));`},
+	// Each probe declares only the function it calls, so one probe's stop can't hide another's read.
+	const direct = `function via(x: T): string { if (isTypeElementLie(x)) { return String(x.name); } return "no"; }
+`
+	const held = `const guard = isTypeElementLie;
+function via(x: T): string { if (guard(x)) { return String(x.name); } return "no"; }
+`
+	for _, probe := range []struct{ name, via, of, source string }{
+		{"restatement honest", direct, "Restated", `const r: Restated = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a" }; console.log(via(r));`},
+		{"restatement through a cast", direct, "Restated", `const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const n: Node = w; console.log(via(n as Restated));`},
+		{"alias honest", direct, "Shape", `const r: Shape = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a" }; console.log(via(r));`},
+		{"alias through a cast", direct, "Shape", `const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const n: Node = w; console.log(via(n as Shape));`},
+		{"twin", direct, "Twin", `const t: Twin = { kind: 80, pos: 2, _declarationBrand: undefined, _typeElementBrand: undefined, name: 5 }; console.log(via(t));`},
 		// Held as a value, the claim's false side isn't checked, so the true side's read is what runs.
-		{"held restatement honest", `const r: Restated = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a" }; heldRestated(r);`},
-		{"held restatement through a cast", `const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const n: Node = w; heldRestated(n as Restated);`},
-		{"held alias honest", `const r: Shape = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a" }; heldShape(r);`},
-		{"held alias through a cast", `const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const n: Node = w; heldShape(n as Shape);`},
-		{"held twin", `const t: Twin = { kind: 80, pos: 2, _declarationBrand: undefined, _typeElementBrand: undefined, name: 5 }; heldTwin(t);`},
+		{"held restatement honest", held, "Restated", `const r: Restated = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a" }; console.log(via(r));`},
+		{"held restatement through a cast", held, "Restated", `const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const n: Node = w; console.log(via(n as Restated));`},
+		{"held alias honest", held, "Shape", `const r: Shape = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a" }; console.log(via(r));`},
+		{"held alias through a cast", held, "Shape", `const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const n: Node = w; console.log(via(n as Shape));`},
+		{"held twin", held, "Twin", `const t: Twin = { kind: 80, pos: 2, _declarationBrand: undefined, _typeElementBrand: undefined, name: 5 }; console.log(via(t));`},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			source := brandedPrelude + mutual + probe.source
+			source := brandedPrelude + mutual + strings.ReplaceAll(probe.via, "x: T", "x: "+probe.of) + probe.source
 			program, err := lowerTypeScriptAssertionSource(t, source)
 			var pending *NotYet
 			var refused *Refused
