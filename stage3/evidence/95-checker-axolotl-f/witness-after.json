@@ -1,0 +1,1099 @@
+{
+  "observations": [
+    {
+      "fixture": "excess.js",
+      "noImplicitAny": false,
+      "diagnosticOutput": "95f/excess.js(4,12): error TS2314: Generic type 'I' requires 1 type argument(s).\n",
+      "diagnostics": [
+        {
+          "code": 2314,
+          "file": "/95f/excess.js",
+          "start": 111,
+          "length": 26,
+          "message": "Generic type 'I' requires 1 type argument(s)."
+        }
+      ],
+      "queries": [
+        {
+          "text": "{ value: T }",
+          "parent": "{{ value: T }}",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "T",
+          "parent": "value: T",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "I<string, number, boolean>",
+          "parent": "{I<string, number, boolean>}",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "I<string, number, boolean>",
+          "position": 0,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "number",
+          "parent": "I<string, number, boolean>",
+          "position": 1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "boolean",
+          "parent": "I<string, number, boolean>",
+          "position": 2,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "C<string, number, boolean>",
+          "parent": "{C<string, number, boolean>}",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "C<string, number, boolean>",
+          "position": 0,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "number",
+          "parent": "C<string, number, boolean>",
+          "position": 1,
+          "candidate": true,
+          "result": "undefined"
+        },
+        {
+          "text": "boolean",
+          "parent": "C<string, number, boolean>",
+          "position": 2,
+          "candidate": true,
+          "result": "undefined"
+        },
+        {
+          "text": "C",
+          "parent": "extends C",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "C<string, number, boolean>",
+          "parent": "@extends {C<string, number, boolean>}",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "C<string, number, boolean>",
+          "position": 0,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "number",
+          "parent": "C<string, number, boolean>",
+          "position": 1,
+          "candidate": true,
+          "result": "undefined"
+        },
+        {
+          "text": "boolean",
+          "parent": "C<string, number, boolean>",
+          "position": 2,
+          "candidate": true,
+          "result": "undefined"
+        }
+      ]
+    },
+    {
+      "fixture": "excess.js",
+      "noImplicitAny": true,
+      "diagnosticOutput": "95f/excess.js(2,28): error TS7008: Member 'value' implicitly has an 'any' type.\n95f/excess.js(4,12): error TS2314: Generic type 'I' requires 1 type argument(s).\n95f/excess.js(6,12): error TS2314: Generic type 'C<T>' requires 1 type argument(s).\n95f/excess.js(8,15): error TS2314: Generic type 'C<T>' requires 1 type argument(s).\n",
+      "diagnostics": [
+        {
+          "code": 7008,
+          "file": "/95f/excess.js",
+          "start": 46,
+          "length": 5,
+          "message": "Member 'value' implicitly has an 'any' type."
+        },
+        {
+          "code": 2314,
+          "file": "/95f/excess.js",
+          "start": 111,
+          "length": 26,
+          "message": "Generic type 'I' requires 1 type argument(s)."
+        },
+        {
+          "code": 2314,
+          "file": "/95f/excess.js",
+          "start": 162,
+          "length": 26,
+          "message": "Generic type 'C<T>' requires 1 type argument(s)."
+        },
+        {
+          "code": 2314,
+          "file": "/95f/excess.js",
+          "start": 216,
+          "length": 26,
+          "message": "Generic type 'C<T>' requires 1 type argument(s)."
+        }
+      ],
+      "queries": [
+        {
+          "text": "{ value: T }",
+          "parent": "{{ value: T }}",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "T",
+          "parent": "value: T",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "I<string, number, boolean>",
+          "parent": "{I<string, number, boolean>}",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "I<string, number, boolean>",
+          "position": 0,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "number",
+          "parent": "I<string, number, boolean>",
+          "position": 1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "boolean",
+          "parent": "I<string, number, boolean>",
+          "position": 2,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "C<string, number, boolean>",
+          "parent": "{C<string, number, boolean>}",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "C<string, number, boolean>",
+          "position": 0,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "number",
+          "parent": "C<string, number, boolean>",
+          "position": 1,
+          "candidate": true,
+          "result": "undefined"
+        },
+        {
+          "text": "boolean",
+          "parent": "C<string, number, boolean>",
+          "position": 2,
+          "candidate": true,
+          "result": "undefined"
+        },
+        {
+          "text": "C",
+          "parent": "extends C",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "C<string, number, boolean>",
+          "parent": "@extends {C<string, number, boolean>}",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "C<string, number, boolean>",
+          "position": 0,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "number",
+          "parent": "C<string, number, boolean>",
+          "position": 1,
+          "candidate": true,
+          "result": "undefined"
+        },
+        {
+          "text": "boolean",
+          "parent": "C<string, number, boolean>",
+          "position": 2,
+          "candidate": true,
+          "result": "undefined"
+        }
+      ]
+    },
+    {
+      "fixture": "excess.ts",
+      "noImplicitAny": false,
+      "diagnosticOutput": "95f/excess.ts(5,3): error TS2558: Expected 1 type arguments, but got 3.\n95f/excess.ts(6,7): error TS2558: Expected 1 type arguments, but got 3.\n95f/excess.ts(7,3): error TS2635: Type '<T extends string>() => T' has no signatures for which the type argument list is applicable.\n95f/excess.ts(8,16): error TS2635: Type '<T extends string>() => T' has no signatures for which the type argument list is applicable.\n95f/excess.ts(9,12): error TS2314: Generic type 'I<T>' requires 1 type argument(s).\n95f/excess.ts(10,16): error TS2314: Generic type 'Alias' requires 1 type argument(s).\n95f/excess.ts(11,23): error TS2314: Generic type 'C<T>' requires 1 type argument(s).\n95f/excess.ts(12,28): error TS2314: Generic type 'I<T>' requires 1 type argument(s).\n95f/excess.ts(13,3): error TS2558: Expected 1 type arguments, but got 3.\n95f/excess.ts(14,2): error TS1238: Unable to resolve signature of class decorator when called as an expression.\n  This expression is not callable.\n    Type 'String' has no call signatures.\n95f/excess.ts(14,4): error TS2558: Expected 1 type arguments, but got 3.\n",
+      "diagnostics": [
+        {
+          "code": 2558,
+          "file": "/95f/excess.ts",
+          "start": 180,
+          "length": 23,
+          "message": "Expected 1 type arguments, but got 3."
+        },
+        {
+          "code": 2558,
+          "file": "/95f/excess.ts",
+          "start": 214,
+          "length": 23,
+          "message": "Expected 1 type arguments, but got 3."
+        },
+        {
+          "code": 2635,
+          "file": "/95f/excess.ts",
+          "start": 244,
+          "length": 23,
+          "message": "Type '<T extends string>() => T' has no signatures for which the type argument list is applicable."
+        },
+        {
+          "code": 2635,
+          "file": "/95f/excess.ts",
+          "start": 285,
+          "length": 23,
+          "message": "Type '<T extends string>() => T' has no signatures for which the type argument list is applicable."
+        },
+        {
+          "code": 2314,
+          "file": "/95f/excess.ts",
+          "start": 322,
+          "length": 26,
+          "message": "Generic type 'I<T>' requires 1 type argument(s)."
+        },
+        {
+          "code": 2314,
+          "file": "/95f/excess.ts",
+          "start": 365,
+          "length": 30,
+          "message": "Generic type 'Alias' requires 1 type argument(s)."
+        },
+        {
+          "code": 2314,
+          "file": "/95f/excess.ts",
+          "start": 419,
+          "length": 26,
+          "message": "Generic type 'C<T>' requires 1 type argument(s)."
+        },
+        {
+          "code": 2314,
+          "file": "/95f/excess.ts",
+          "start": 476,
+          "length": 26,
+          "message": "Generic type 'I<T>' requires 1 type argument(s)."
+        },
+        {
+          "code": 2558,
+          "file": "/95f/excess.ts",
+          "start": 508,
+          "length": 23,
+          "message": "Expected 1 type arguments, but got 3."
+        },
+        {
+          "code": 1238,
+          "file": "/95f/excess.ts",
+          "start": 540,
+          "length": 28,
+          "message": "Unable to resolve signature of class decorator when called as an expression.\n  This expression is not callable.\n    Type 'String' has no call signatures."
+        },
+        {
+          "code": 2558,
+          "file": "/95f/excess.ts",
+          "start": 542,
+          "length": 23,
+          "message": "Expected 1 type arguments, but got 3."
+        }
+      ],
+      "queries": [
+        {
+          "text": "string",
+          "parent": "T extends string",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "T",
+          "parent": "declare function f<T extends string>(): T;",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "T extends string",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "T",
+          "parent": "value: T",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "T extends string",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "T",
+          "parent": "value: T",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "T extends string",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "{ value: T }",
+          "parent": "type Alias<T extends string> = { value: T };",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "T",
+          "parent": "value: T",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "f<string, number, boolean>()",
+          "position": 0,
+          "candidate": false,
+          "result": "string"
+        },
+        {
+          "text": "number",
+          "parent": "f<string, number, boolean>()",
+          "position": 1,
+          "candidate": false,
+          "result": "never"
+        },
+        {
+          "text": "boolean",
+          "parent": "f<string, number, boolean>()",
+          "position": 2,
+          "candidate": false,
+          "result": "never"
+        },
+        {
+          "text": "string",
+          "parent": "new C<string, number, boolean>()",
+          "position": 0,
+          "candidate": false,
+          "result": "string"
+        },
+        {
+          "text": "number",
+          "parent": "new C<string, number, boolean>()",
+          "position": 1,
+          "candidate": false,
+          "result": "never"
+        },
+        {
+          "text": "boolean",
+          "parent": "new C<string, number, boolean>()",
+          "position": 2,
+          "candidate": false,
+          "result": "never"
+        },
+        {
+          "text": "f<string, number, boolean>",
+          "parent": "f<string, number, boolean>;",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "f<string, number, boolean>",
+          "position": 0,
+          "candidate": false,
+          "result": "string"
+        },
+        {
+          "text": "number",
+          "parent": "f<string, number, boolean>",
+          "position": 1,
+          "candidate": false,
+          "result": "never"
+        },
+        {
+          "text": "boolean",
+          "parent": "f<string, number, boolean>",
+          "position": 2,
+          "candidate": false,
+          "result": "never"
+        },
+        {
+          "text": "f<string, number, boolean>",
+          "parent": "inst = f<string, number, boolean>",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "f<string, number, boolean>",
+          "position": 0,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "number",
+          "parent": "f<string, number, boolean>",
+          "position": 1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "boolean",
+          "parent": "f<string, number, boolean>",
+          "position": 2,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "I<string, number, boolean>",
+          "parent": "type Ref = I<string, number, boolean>;",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "I<string, number, boolean>",
+          "position": 0,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "number",
+          "parent": "I<string, number, boolean>",
+          "position": 1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "boolean",
+          "parent": "I<string, number, boolean>",
+          "position": 2,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "Alias<string, number, boolean>",
+          "parent": "type Aliased = Alias<string, number, boolean>;",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "Alias<string, number, boolean>",
+          "position": 0,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "number",
+          "parent": "Alias<string, number, boolean>",
+          "position": 1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "boolean",
+          "parent": "Alias<string, number, boolean>",
+          "position": 2,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "C<string, number, boolean>",
+          "parent": "extends C<string, number, boolean>",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "C<string, number, boolean>",
+          "position": 0,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "number",
+          "parent": "C<string, number, boolean>",
+          "position": 1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "boolean",
+          "parent": "C<string, number, boolean>",
+          "position": 2,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "I<string, number, boolean>",
+          "parent": "extends I<string, number, boolean>",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "I<string, number, boolean>",
+          "position": 0,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "number",
+          "parent": "I<string, number, boolean>",
+          "position": 1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "boolean",
+          "parent": "I<string, number, boolean>",
+          "position": 2,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "f<string, number, boolean>`tag`",
+          "position": 0,
+          "candidate": false,
+          "result": "string"
+        },
+        {
+          "text": "number",
+          "parent": "f<string, number, boolean>`tag`",
+          "position": 1,
+          "candidate": false,
+          "result": "never"
+        },
+        {
+          "text": "boolean",
+          "parent": "f<string, number, boolean>`tag`",
+          "position": 2,
+          "candidate": false,
+          "result": "never"
+        },
+        {
+          "text": "string",
+          "parent": "f<string, number, boolean>()",
+          "position": 0,
+          "candidate": false,
+          "result": "string"
+        },
+        {
+          "text": "number",
+          "parent": "f<string, number, boolean>()",
+          "position": 1,
+          "candidate": false,
+          "result": "never"
+        },
+        {
+          "text": "boolean",
+          "parent": "f<string, number, boolean>()",
+          "position": 2,
+          "candidate": false,
+          "result": "never"
+        },
+        {
+          "text": "I<string>",
+          "parent": "type Valid = I<string>;",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "I<string>",
+          "position": 0,
+          "candidate": false,
+          "result": "string"
+        }
+      ]
+    },
+    {
+      "fixture": "excess.ts",
+      "noImplicitAny": true,
+      "diagnosticOutput": "95f/excess.ts(5,3): error TS2558: Expected 1 type arguments, but got 3.\n95f/excess.ts(6,7): error TS2558: Expected 1 type arguments, but got 3.\n95f/excess.ts(7,3): error TS2635: Type '<T extends string>() => T' has no signatures for which the type argument list is applicable.\n95f/excess.ts(8,16): error TS2635: Type '<T extends string>() => T' has no signatures for which the type argument list is applicable.\n95f/excess.ts(9,12): error TS2314: Generic type 'I<T>' requires 1 type argument(s).\n95f/excess.ts(10,16): error TS2314: Generic type 'Alias' requires 1 type argument(s).\n95f/excess.ts(11,23): error TS2314: Generic type 'C<T>' requires 1 type argument(s).\n95f/excess.ts(12,28): error TS2314: Generic type 'I<T>' requires 1 type argument(s).\n95f/excess.ts(13,3): error TS2558: Expected 1 type arguments, but got 3.\n95f/excess.ts(14,2): error TS1238: Unable to resolve signature of class decorator when called as an expression.\n  This expression is not callable.\n    Type 'String' has no call signatures.\n95f/excess.ts(14,4): error TS2558: Expected 1 type arguments, but got 3.\n",
+      "diagnostics": [
+        {
+          "code": 2558,
+          "file": "/95f/excess.ts",
+          "start": 180,
+          "length": 23,
+          "message": "Expected 1 type arguments, but got 3."
+        },
+        {
+          "code": 2558,
+          "file": "/95f/excess.ts",
+          "start": 214,
+          "length": 23,
+          "message": "Expected 1 type arguments, but got 3."
+        },
+        {
+          "code": 2635,
+          "file": "/95f/excess.ts",
+          "start": 244,
+          "length": 23,
+          "message": "Type '<T extends string>() => T' has no signatures for which the type argument list is applicable."
+        },
+        {
+          "code": 2635,
+          "file": "/95f/excess.ts",
+          "start": 285,
+          "length": 23,
+          "message": "Type '<T extends string>() => T' has no signatures for which the type argument list is applicable."
+        },
+        {
+          "code": 2314,
+          "file": "/95f/excess.ts",
+          "start": 322,
+          "length": 26,
+          "message": "Generic type 'I<T>' requires 1 type argument(s)."
+        },
+        {
+          "code": 2314,
+          "file": "/95f/excess.ts",
+          "start": 365,
+          "length": 30,
+          "message": "Generic type 'Alias' requires 1 type argument(s)."
+        },
+        {
+          "code": 2314,
+          "file": "/95f/excess.ts",
+          "start": 419,
+          "length": 26,
+          "message": "Generic type 'C<T>' requires 1 type argument(s)."
+        },
+        {
+          "code": 2314,
+          "file": "/95f/excess.ts",
+          "start": 476,
+          "length": 26,
+          "message": "Generic type 'I<T>' requires 1 type argument(s)."
+        },
+        {
+          "code": 2558,
+          "file": "/95f/excess.ts",
+          "start": 508,
+          "length": 23,
+          "message": "Expected 1 type arguments, but got 3."
+        },
+        {
+          "code": 1238,
+          "file": "/95f/excess.ts",
+          "start": 540,
+          "length": 28,
+          "message": "Unable to resolve signature of class decorator when called as an expression.\n  This expression is not callable.\n    Type 'String' has no call signatures."
+        },
+        {
+          "code": 2558,
+          "file": "/95f/excess.ts",
+          "start": 542,
+          "length": 23,
+          "message": "Expected 1 type arguments, but got 3."
+        }
+      ],
+      "queries": [
+        {
+          "text": "string",
+          "parent": "T extends string",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "T",
+          "parent": "declare function f<T extends string>(): T;",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "T extends string",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "T",
+          "parent": "value: T",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "T extends string",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "T",
+          "parent": "value: T",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "T extends string",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "{ value: T }",
+          "parent": "type Alias<T extends string> = { value: T };",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "T",
+          "parent": "value: T",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "f<string, number, boolean>()",
+          "position": 0,
+          "candidate": false,
+          "result": "string"
+        },
+        {
+          "text": "number",
+          "parent": "f<string, number, boolean>()",
+          "position": 1,
+          "candidate": false,
+          "result": "never"
+        },
+        {
+          "text": "boolean",
+          "parent": "f<string, number, boolean>()",
+          "position": 2,
+          "candidate": false,
+          "result": "never"
+        },
+        {
+          "text": "string",
+          "parent": "new C<string, number, boolean>()",
+          "position": 0,
+          "candidate": false,
+          "result": "string"
+        },
+        {
+          "text": "number",
+          "parent": "new C<string, number, boolean>()",
+          "position": 1,
+          "candidate": false,
+          "result": "never"
+        },
+        {
+          "text": "boolean",
+          "parent": "new C<string, number, boolean>()",
+          "position": 2,
+          "candidate": false,
+          "result": "never"
+        },
+        {
+          "text": "f<string, number, boolean>",
+          "parent": "f<string, number, boolean>;",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "f<string, number, boolean>",
+          "position": 0,
+          "candidate": false,
+          "result": "string"
+        },
+        {
+          "text": "number",
+          "parent": "f<string, number, boolean>",
+          "position": 1,
+          "candidate": false,
+          "result": "never"
+        },
+        {
+          "text": "boolean",
+          "parent": "f<string, number, boolean>",
+          "position": 2,
+          "candidate": false,
+          "result": "never"
+        },
+        {
+          "text": "f<string, number, boolean>",
+          "parent": "inst = f<string, number, boolean>",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "f<string, number, boolean>",
+          "position": 0,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "number",
+          "parent": "f<string, number, boolean>",
+          "position": 1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "boolean",
+          "parent": "f<string, number, boolean>",
+          "position": 2,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "I<string, number, boolean>",
+          "parent": "type Ref = I<string, number, boolean>;",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "I<string, number, boolean>",
+          "position": 0,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "number",
+          "parent": "I<string, number, boolean>",
+          "position": 1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "boolean",
+          "parent": "I<string, number, boolean>",
+          "position": 2,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "Alias<string, number, boolean>",
+          "parent": "type Aliased = Alias<string, number, boolean>;",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "Alias<string, number, boolean>",
+          "position": 0,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "number",
+          "parent": "Alias<string, number, boolean>",
+          "position": 1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "boolean",
+          "parent": "Alias<string, number, boolean>",
+          "position": 2,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "C<string, number, boolean>",
+          "parent": "extends C<string, number, boolean>",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "C<string, number, boolean>",
+          "position": 0,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "number",
+          "parent": "C<string, number, boolean>",
+          "position": 1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "boolean",
+          "parent": "C<string, number, boolean>",
+          "position": 2,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "I<string, number, boolean>",
+          "parent": "extends I<string, number, boolean>",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "I<string, number, boolean>",
+          "position": 0,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "number",
+          "parent": "I<string, number, boolean>",
+          "position": 1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "boolean",
+          "parent": "I<string, number, boolean>",
+          "position": 2,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "f<string, number, boolean>`tag`",
+          "position": 0,
+          "candidate": false,
+          "result": "string"
+        },
+        {
+          "text": "number",
+          "parent": "f<string, number, boolean>`tag`",
+          "position": 1,
+          "candidate": false,
+          "result": "never"
+        },
+        {
+          "text": "boolean",
+          "parent": "f<string, number, boolean>`tag`",
+          "position": 2,
+          "candidate": false,
+          "result": "never"
+        },
+        {
+          "text": "string",
+          "parent": "f<string, number, boolean>()",
+          "position": 0,
+          "candidate": false,
+          "result": "string"
+        },
+        {
+          "text": "number",
+          "parent": "f<string, number, boolean>()",
+          "position": 1,
+          "candidate": false,
+          "result": "never"
+        },
+        {
+          "text": "boolean",
+          "parent": "f<string, number, boolean>()",
+          "position": 2,
+          "candidate": false,
+          "result": "never"
+        },
+        {
+          "text": "I<string>",
+          "parent": "type Valid = I<string>;",
+          "position": -1,
+          "candidate": false,
+          "result": "undefined"
+        },
+        {
+          "text": "string",
+          "parent": "I<string>",
+          "position": 0,
+          "candidate": false,
+          "result": "string"
+        }
+      ]
+    }
+  ],
+  "candidates": 8,
+  "throws": 0
+}

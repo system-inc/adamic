@@ -1,0 +1,19 @@
+{
+  "before": {
+    "wholeProgram": 131,
+    "checkerOwnFile": 17
+  },
+  "after": {
+    "wholeProgram": 130,
+    "checkerOwnFile": 16
+  },
+  "mutant": {
+    "wholeProgram": 131,
+    "checkerOwnFile": 17
+  },
+  "removed": [
+    "src/compiler/checker.ts:42849:65: error TS2345: Argument of type 'TypeParameter | undefined' is not assignable to parameter of type 'TypeParameter'.\n  Type 'undefined' is not assignable to type 'TypeParameter'."
+  ],
+  "added": [],
+  "coordinateMapping": "The single inserted CRLF shifts later checker.ts primary locations by one; map them back before comparing full diagnostic sets."
+}

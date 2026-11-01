@@ -1,0 +1,74 @@
+func (c *Checker) getTypeArgumentConstraint(node *ast.Node) *Type {
+	var typeArgumentPosition int = -1
+	if ast.HasTypeArguments(node.Parent) {
+		typeArgs := node.Parent.TypeArguments()
+		for i, arg := range typeArgs {
+			if arg == node {
+				typeArgumentPosition = i
+				break
+			}
+		}
+	}
+
+	if typeArgumentPosition >= 0 {
+		// The node could be a type argument of a call, a `new` expression, a decorator, an
+		// instantiation expression, or a generic type instantiation.
+
+		if ast.IsCallLikeExpression(node.Parent) {
+			return c.getTypeParameterConstraintForPositionAcrossSignatures(
+				c.getUninstantiatedSignatures(node.Parent),
+				typeArgumentPosition,
+			)
+		}
+
+		if ast.IsDecorator(node.Parent.Parent) {
+			return c.getTypeParameterConstraintForPositionAcrossSignatures(
+				c.getUninstantiatedSignatures(node.Parent.Parent),
+				typeArgumentPosition,
+			)
+		}
+
+		if ast.IsExpressionWithTypeArguments(node.Parent) && ast.IsExpressionStatement(node.Parent.Parent) {
+			uninstantiatedType := c.checkExpression(node.Parent.Expression())
+
+			callConstraint := c.getTypeParameterConstraintForPositionAcrossSignatures(
+				c.getSignaturesOfType(uninstantiatedType, SignatureKindCall),
+				typeArgumentPosition,
+			)
+			constructConstraint := c.getTypeParameterConstraintForPositionAcrossSignatures(
+				c.getSignaturesOfType(uninstantiatedType, SignatureKindConstruct),
+				typeArgumentPosition,
+			)
+
+			// An instantiation expression instantiates both call and construct signatures, so
+			// if both exist type arguments must be assignable to both constraints.
+			if constructConstraint.flags&TypeFlagsNever != 0 {
+				return callConstraint
+			}
+			if callConstraint.flags&TypeFlagsNever != 0 {
+				return constructConstraint
+			}
+			return c.getIntersectionType([]*Type{callConstraint, constructConstraint})
+		}
+
+		if ast.IsTypeReferenceType(node.Parent) {
+			typeParameters := c.getTypeParametersForTypeReferenceOrImport(node.Parent)
+			if len(typeParameters) == 0 {
+				return nil
+			}
+			if typeArgumentPosition >= len(typeParameters) {
+				return nil
+			}
+			relevantTypeParameter := typeParameters[typeArgumentPosition]
+			constraint := c.getConstraintOfTypeParameter(relevantTypeParameter)
+			if constraint != nil {
+				return c.instantiateType(
+					constraint,
+					newTypeMapper(typeParameters, c.getEffectiveTypeArguments(node.Parent, typeParameters)),
+				)
+			}
+		}
+	}
+	return nil
+}
+

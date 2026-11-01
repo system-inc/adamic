@@ -1,0 +1,57 @@
+{
+  "uses": [
+    {
+      "file": "src/services/stringCompletions.ts",
+      "line": 531,
+      "text": "return { kind: StringLiteralCompletionKind.Types, types: getStringLiteralTypes(typeChecker.getTypeArgumentConstraint(typeArgument)), isNewIdentifier: false };"
+    },
+    {
+      "file": "src/services/completions.ts",
+      "line": 5776,
+      "text": "const constraint = checker.getTypeArgumentConstraint(node);"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 5464,
+      "text": "/** @internal */ getTypeArgumentConstraint(node: TypeNode): Type | undefined;"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1901,
+      "text": "getTypeArgumentConstraint: nodeIn => {"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1903,
+      "text": "return node && getTypeArgumentConstraint(node);"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 42802,
+      "text": "function getTypeArgumentConstraint(node: TypeNode): Type | undefined {"
+    },
+    {
+      "file": "src/services/codefixes/fixAddMissingConstraint.ts",
+      "line": 141,
+      "text": "return checker.getTypeArgumentConstraint(node.parent);"
+    }
+  ],
+  "undefinedHandling": [
+    {
+      "caller": "checker.ts API wrapper",
+      "handling": "forwards optional result; types.ts Type | undefined"
+    },
+    {
+      "caller": "fixAddMissingConstraint.ts tryGetConstraintType -> getInfo",
+      "handling": "logical OR with diagnostic-message fallback"
+    },
+    {
+      "caller": "completions.ts getConstraintOfTypeArgumentProperty",
+      "handling": "if (constraint) return constraint; otherwise search parent and propagate undefined"
+    },
+    {
+      "caller": "stringCompletions.ts fromUnionableLiteralType -> getStringLiteralTypes",
+      "handling": "if (!type) return emptyArray"
+    }
+  ]
+}
