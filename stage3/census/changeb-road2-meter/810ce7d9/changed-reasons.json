@@ -1,0 +1,218 @@
+[
+  {
+    "kind": "NotYet",
+    "reason": "a checked predicate target ClassElement that the generic claim TOut may be instantiated at",
+    "A": 0,
+    "B": 1,
+    "delta": 1,
+    "examples": {
+      "A": [],
+      "B": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1779:35",
+          "reason": "a checked predicate target ClassElement that the generic claim TOut may be instantiated at",
+          "text": "src/compiler/core.ts:1779:35: stage 0 can't lower a checked predicate target ClassElement that the generic claim TOut may be instantiated at yet"
+        }
+      ]
+    }
+  },
+  {
+    "kind": "NotYet",
+    "reason": "a checked predicate target JSDocPropertyLikeTag that the generic claim TOut may be instantiated at",
+    "A": 0,
+    "B": 1,
+    "delta": 1,
+    "examples": {
+      "A": [],
+      "B": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1779:35",
+          "reason": "a checked predicate target JSDocPropertyLikeTag that the generic claim TOut may be instantiated at",
+          "text": "src/compiler/core.ts:1779:35: stage 0 can't lower a checked predicate target JSDocPropertyLikeTag that the generic claim TOut may be instantiated at yet"
+        }
+      ]
+    }
+  },
+  {
+    "kind": "NotYet",
+    "reason": "a checked predicate target LateBoundDeclaration that the generic claim TOut may be instantiated at",
+    "A": 0,
+    "B": 1,
+    "delta": 1,
+    "examples": {
+      "A": [],
+      "B": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1779:35",
+          "reason": "a checked predicate target LateBoundDeclaration that the generic claim TOut may be instantiated at",
+          "text": "src/compiler/core.ts:1779:35: stage 0 can't lower a checked predicate target LateBoundDeclaration that the generic claim TOut may be instantiated at yet"
+        }
+      ]
+    }
+  },
+  {
+    "kind": "NotYet",
+    "reason": "a checked predicate target LeftHandSideExpression that the generic claim TOut may be instantiated at",
+    "A": 0,
+    "B": 1,
+    "delta": 1,
+    "examples": {
+      "A": [],
+      "B": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1779:35",
+          "reason": "a checked predicate target LeftHandSideExpression that the generic claim TOut may be instantiated at",
+          "text": "src/compiler/core.ts:1779:35: stage 0 can't lower a checked predicate target LeftHandSideExpression that the generic claim TOut may be instantiated at yet"
+        }
+      ]
+    }
+  },
+  {
+    "kind": "NotYet",
+    "reason": "a checked predicate target LiteralExpression that the generic claim TOut may be instantiated at",
+    "A": 0,
+    "B": 1,
+    "delta": 1,
+    "examples": {
+      "A": [],
+      "B": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1779:35",
+          "reason": "a checked predicate target LiteralExpression that the generic claim TOut may be instantiated at",
+          "text": "src/compiler/core.ts:1779:35: stage 0 can't lower a checked predicate target LiteralExpression that the generic claim TOut may be instantiated at yet"
+        }
+      ]
+    }
+  },
+  {
+    "kind": "NotYet",
+    "reason": "a checked predicate target TypeElement that the generic claim TOut may be instantiated at",
+    "A": 0,
+    "B": 1,
+    "delta": 1,
+    "examples": {
+      "A": [],
+      "B": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1779:35",
+          "reason": "a checked predicate target TypeElement that the generic claim TOut may be instantiated at",
+          "text": "src/compiler/core.ts:1779:35: stage 0 can't lower a checked predicate target TypeElement that the generic claim TOut may be instantiated at yet"
+        }
+      ]
+    }
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target ClassElement",
+    "A": 1,
+    "B": 0,
+    "delta": -1,
+    "examples": {
+      "A": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilitiesPublic.ts:1732:1",
+          "reason": "checked predicate overload target ClassElement",
+          "text": "src/compiler/utilitiesPublic.ts:1732:1: stage 0 can't lower checked predicate overload target ClassElement yet"
+        }
+      ],
+      "B": []
+    }
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target JSDocPropertyLikeTag",
+    "A": 1,
+    "B": 0,
+    "delta": -1,
+    "examples": {
+      "A": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilitiesPublic.ts:1449:1",
+          "reason": "checked predicate overload target JSDocPropertyLikeTag",
+          "text": "src/compiler/utilitiesPublic.ts:1449:1: stage 0 can't lower checked predicate overload target JSDocPropertyLikeTag yet"
+        }
+      ],
+      "B": []
+    }
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target LateBoundDeclaration",
+    "A": 1,
+    "B": 0,
+    "delta": -1,
+    "examples": {
+      "A": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/emitter.ts:1158:18",
+          "reason": "checked predicate overload target LateBoundDeclaration",
+          "text": "src/compiler/emitter.ts:1158:18: stage 0 can't lower checked predicate overload target LateBoundDeclaration yet"
+        }
+      ],
+      "B": []
+    }
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target LeftHandSideExpression",
+    "A": 1,
+    "B": 0,
+    "delta": -1,
+    "examples": {
+      "A": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1784:32",
+          "reason": "checked predicate overload target LeftHandSideExpression",
+          "text": "src/compiler/core.ts:1784:32: stage 0 can't lower checked predicate overload target LeftHandSideExpression yet"
+        }
+      ],
+      "B": []
+    }
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target LiteralExpression",
+    "A": 1,
+    "B": 0,
+    "delta": -1,
+    "examples": {
+      "A": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilitiesPublic.ts:1498:1",
+          "reason": "checked predicate overload target LiteralExpression",
+          "text": "src/compiler/utilitiesPublic.ts:1498:1: stage 0 can't lower checked predicate overload target LiteralExpression yet"
+        }
+      ],
+      "B": []
+    }
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target TypeElement",
+    "A": 1,
+    "B": 0,
+    "delta": -1,
+    "examples": {
+      "A": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilitiesPublic.ts:1782:1",
+          "reason": "checked predicate overload target TypeElement",
+          "text": "src/compiler/utilitiesPublic.ts:1782:1: stage 0 can't lower checked predicate overload target TypeElement yet"
+        }
+      ],
+      "B": []
+    }
+  }
+]

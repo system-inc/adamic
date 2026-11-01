@@ -1,0 +1,231 @@
+{
+  "mode": "first-error",
+  "distinct_key": [
+    "kind",
+    "where",
+    "reason",
+    "text"
+  ],
+  "normalization": "remove each adapted tree root from embedded locations in where, reason and text",
+  "files": 79,
+  "before_sites": 2767,
+  "after_sites": 2767,
+  "changed_reasons": [
+    {
+      "reason": "a checked predicate target ClassElement that the generic claim TOut may be instantiated at",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1779:35",
+          "reason": "a checked predicate target ClassElement that the generic claim TOut may be instantiated at",
+          "text": "src/compiler/core.ts:1779:35: stage 0 can't lower a checked predicate target ClassElement that the generic claim TOut may be instantiated at yet"
+        }
+      ]
+    },
+    {
+      "reason": "a checked predicate target JSDocPropertyLikeTag that the generic claim TOut may be instantiated at",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1779:35",
+          "reason": "a checked predicate target JSDocPropertyLikeTag that the generic claim TOut may be instantiated at",
+          "text": "src/compiler/core.ts:1779:35: stage 0 can't lower a checked predicate target JSDocPropertyLikeTag that the generic claim TOut may be instantiated at yet"
+        }
+      ]
+    },
+    {
+      "reason": "a checked predicate target LateBoundDeclaration that the generic claim TOut may be instantiated at",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1779:35",
+          "reason": "a checked predicate target LateBoundDeclaration that the generic claim TOut may be instantiated at",
+          "text": "src/compiler/core.ts:1779:35: stage 0 can't lower a checked predicate target LateBoundDeclaration that the generic claim TOut may be instantiated at yet"
+        }
+      ]
+    },
+    {
+      "reason": "a checked predicate target LeftHandSideExpression that the generic claim TOut may be instantiated at",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1779:35",
+          "reason": "a checked predicate target LeftHandSideExpression that the generic claim TOut may be instantiated at",
+          "text": "src/compiler/core.ts:1779:35: stage 0 can't lower a checked predicate target LeftHandSideExpression that the generic claim TOut may be instantiated at yet"
+        }
+      ]
+    },
+    {
+      "reason": "a checked predicate target LiteralExpression that the generic claim TOut may be instantiated at",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1779:35",
+          "reason": "a checked predicate target LiteralExpression that the generic claim TOut may be instantiated at",
+          "text": "src/compiler/core.ts:1779:35: stage 0 can't lower a checked predicate target LiteralExpression that the generic claim TOut may be instantiated at yet"
+        }
+      ]
+    },
+    {
+      "reason": "a checked predicate target TypeElement that the generic claim TOut may be instantiated at",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1779:35",
+          "reason": "a checked predicate target TypeElement that the generic claim TOut may be instantiated at",
+          "text": "src/compiler/core.ts:1779:35: stage 0 can't lower a checked predicate target TypeElement that the generic claim TOut may be instantiated at yet"
+        }
+      ]
+    },
+    {
+      "reason": "checked predicate overload target ClassElement",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "checked predicate overload target JSDocPropertyLikeTag",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "checked predicate overload target LateBoundDeclaration",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "checked predicate overload target LeftHandSideExpression",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "checked predicate overload target LiteralExpression",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "checked predicate overload target TypeElement",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    }
+  ],
+  "new_or_growing": [
+    {
+      "reason": "a checked predicate target ClassElement that the generic claim TOut may be instantiated at",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1779:35",
+          "reason": "a checked predicate target ClassElement that the generic claim TOut may be instantiated at",
+          "text": "src/compiler/core.ts:1779:35: stage 0 can't lower a checked predicate target ClassElement that the generic claim TOut may be instantiated at yet"
+        }
+      ]
+    },
+    {
+      "reason": "a checked predicate target JSDocPropertyLikeTag that the generic claim TOut may be instantiated at",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1779:35",
+          "reason": "a checked predicate target JSDocPropertyLikeTag that the generic claim TOut may be instantiated at",
+          "text": "src/compiler/core.ts:1779:35: stage 0 can't lower a checked predicate target JSDocPropertyLikeTag that the generic claim TOut may be instantiated at yet"
+        }
+      ]
+    },
+    {
+      "reason": "a checked predicate target LateBoundDeclaration that the generic claim TOut may be instantiated at",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1779:35",
+          "reason": "a checked predicate target LateBoundDeclaration that the generic claim TOut may be instantiated at",
+          "text": "src/compiler/core.ts:1779:35: stage 0 can't lower a checked predicate target LateBoundDeclaration that the generic claim TOut may be instantiated at yet"
+        }
+      ]
+    },
+    {
+      "reason": "a checked predicate target LeftHandSideExpression that the generic claim TOut may be instantiated at",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1779:35",
+          "reason": "a checked predicate target LeftHandSideExpression that the generic claim TOut may be instantiated at",
+          "text": "src/compiler/core.ts:1779:35: stage 0 can't lower a checked predicate target LeftHandSideExpression that the generic claim TOut may be instantiated at yet"
+        }
+      ]
+    },
+    {
+      "reason": "a checked predicate target LiteralExpression that the generic claim TOut may be instantiated at",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1779:35",
+          "reason": "a checked predicate target LiteralExpression that the generic claim TOut may be instantiated at",
+          "text": "src/compiler/core.ts:1779:35: stage 0 can't lower a checked predicate target LiteralExpression that the generic claim TOut may be instantiated at yet"
+        }
+      ]
+    },
+    {
+      "reason": "a checked predicate target TypeElement that the generic claim TOut may be instantiated at",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1779:35",
+          "reason": "a checked predicate target TypeElement that the generic claim TOut may be instantiated at",
+          "text": "src/compiler/core.ts:1779:35: stage 0 can't lower a checked predicate target TypeElement that the generic claim TOut may be instantiated at yet"
+        }
+      ]
+    }
+  ],
+  "raw_sha256": {
+    "before": "5170a75faa095748dee71f6638c538778abd790cf95887fb27321328f0c68bcd",
+    "after": "16a7c7f74bb513763dcb4878369c174b12adb48a15f7c7311f567d0e83d884e2"
+  }
+}

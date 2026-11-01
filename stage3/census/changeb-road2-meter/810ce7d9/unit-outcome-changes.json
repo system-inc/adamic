@@ -1,0 +1,134 @@
+[
+  {
+    "where": "src/compiler/emitter.ts:1147:1",
+    "name": "",
+    "A_status": "attempted",
+    "B_status": "attempted",
+    "A_stops": [
+      [
+        "NotYet",
+        "src/compiler/emitter.ts:1158:18",
+        "checked predicate overload target LateBoundDeclaration",
+        "src/compiler/emitter.ts:1158:18: stage 0 can't lower checked predicate overload target LateBoundDeclaration yet"
+      ]
+    ],
+    "B_stops": [
+      [
+        "NotYet",
+        "src/compiler/core.ts:1779:35",
+        "a checked predicate target LateBoundDeclaration that the generic claim TOut may be instantiated at",
+        "src/compiler/core.ts:1779:35: stage 0 can't lower a checked predicate target LateBoundDeclaration that the generic claim TOut may be instantiated at yet"
+      ]
+    ]
+  },
+  {
+    "where": "src/compiler/factory/parenthesizerRules.ts:675:1",
+    "name": "",
+    "A_status": "attempted",
+    "B_status": "attempted",
+    "A_stops": [
+      [
+        "NotYet",
+        "src/compiler/core.ts:1784:32",
+        "checked predicate overload target LeftHandSideExpression",
+        "src/compiler/core.ts:1784:32: stage 0 can't lower checked predicate overload target LeftHandSideExpression yet"
+      ]
+    ],
+    "B_stops": [
+      [
+        "NotYet",
+        "src/compiler/core.ts:1779:35",
+        "a checked predicate target LeftHandSideExpression that the generic claim TOut may be instantiated at",
+        "src/compiler/core.ts:1779:35: stage 0 can't lower a checked predicate target LeftHandSideExpression that the generic claim TOut may be instantiated at yet"
+      ]
+    ]
+  },
+  {
+    "where": "src/compiler/utilities.ts:11057:1",
+    "name": "isOptionalJSDocPropertyLikeTag",
+    "A_status": "attempted",
+    "B_status": "attempted",
+    "A_stops": [
+      [
+        "NotYet",
+        "src/compiler/utilitiesPublic.ts:1449:1",
+        "checked predicate overload target JSDocPropertyLikeTag",
+        "src/compiler/utilitiesPublic.ts:1449:1: stage 0 can't lower checked predicate overload target JSDocPropertyLikeTag yet"
+      ]
+    ],
+    "B_stops": [
+      [
+        "NotYet",
+        "src/compiler/core.ts:1779:35",
+        "a checked predicate target JSDocPropertyLikeTag that the generic claim TOut may be instantiated at",
+        "src/compiler/core.ts:1779:35: stage 0 can't lower a checked predicate target JSDocPropertyLikeTag that the generic claim TOut may be instantiated at yet"
+      ]
+    ]
+  },
+  {
+    "where": "src/compiler/utilities.ts:7200:1",
+    "name": "isStatic",
+    "A_status": "attempted",
+    "B_status": "attempted",
+    "A_stops": [
+      [
+        "NotYet",
+        "src/compiler/utilitiesPublic.ts:1732:1",
+        "checked predicate overload target ClassElement",
+        "src/compiler/utilitiesPublic.ts:1732:1: stage 0 can't lower checked predicate overload target ClassElement yet"
+      ]
+    ],
+    "B_stops": [
+      [
+        "NotYet",
+        "src/compiler/core.ts:1779:35",
+        "a checked predicate target ClassElement that the generic claim TOut may be instantiated at",
+        "src/compiler/core.ts:1779:35: stage 0 can't lower a checked predicate target ClassElement that the generic claim TOut may be instantiated at yet"
+      ]
+    ]
+  },
+  {
+    "where": "src/compiler/utilitiesPublic.ts:1794:1",
+    "name": "isClassOrTypeElement",
+    "A_status": "attempted",
+    "B_status": "attempted",
+    "A_stops": [
+      [
+        "NotYet",
+        "src/compiler/utilitiesPublic.ts:1782:1",
+        "checked predicate overload target TypeElement",
+        "src/compiler/utilitiesPublic.ts:1782:1: stage 0 can't lower checked predicate overload target TypeElement yet"
+      ]
+    ],
+    "B_stops": [
+      [
+        "NotYet",
+        "src/compiler/core.ts:1779:35",
+        "a checked predicate target TypeElement that the generic claim TOut may be instantiated at",
+        "src/compiler/core.ts:1779:35: stage 0 can't lower a checked predicate target TypeElement that the generic claim TOut may be instantiated at yet"
+      ]
+    ]
+  },
+  {
+    "where": "src/compiler/utilitiesPublic.ts:2071:1",
+    "name": "isLiteralTypeLiteral",
+    "A_status": "attempted",
+    "B_status": "attempted",
+    "A_stops": [
+      [
+        "NotYet",
+        "src/compiler/utilitiesPublic.ts:1498:1",
+        "checked predicate overload target LiteralExpression",
+        "src/compiler/utilitiesPublic.ts:1498:1: stage 0 can't lower checked predicate overload target LiteralExpression yet"
+      ]
+    ],
+    "B_stops": [
+      [
+        "NotYet",
+        "src/compiler/core.ts:1779:35",
+        "a checked predicate target LiteralExpression that the generic claim TOut may be instantiated at",
+        "src/compiler/core.ts:1779:35: stage 0 can't lower a checked predicate target LiteralExpression that the generic claim TOut may be instantiated at yet"
+      ]
+    ]
+  }
+]

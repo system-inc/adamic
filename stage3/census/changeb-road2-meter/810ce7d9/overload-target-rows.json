@@ -1,0 +1,92 @@
+[
+  {
+    "target": "ClassElement",
+    "reason": "checked predicate overload target ClassElement",
+    "A": 1,
+    "A_sites": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/utilitiesPublic.ts:1732:1",
+        "reason": "checked predicate overload target ClassElement",
+        "text": "src/compiler/utilitiesPublic.ts:1732:1: stage 0 can't lower checked predicate overload target ClassElement yet"
+      }
+    ],
+    "B": 0,
+    "B_sites": []
+  },
+  {
+    "target": "JSDocPropertyLikeTag",
+    "reason": "checked predicate overload target JSDocPropertyLikeTag",
+    "A": 1,
+    "A_sites": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/utilitiesPublic.ts:1449:1",
+        "reason": "checked predicate overload target JSDocPropertyLikeTag",
+        "text": "src/compiler/utilitiesPublic.ts:1449:1: stage 0 can't lower checked predicate overload target JSDocPropertyLikeTag yet"
+      }
+    ],
+    "B": 0,
+    "B_sites": []
+  },
+  {
+    "target": "LateBoundDeclaration",
+    "reason": "checked predicate overload target LateBoundDeclaration",
+    "A": 1,
+    "A_sites": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/emitter.ts:1158:18",
+        "reason": "checked predicate overload target LateBoundDeclaration",
+        "text": "src/compiler/emitter.ts:1158:18: stage 0 can't lower checked predicate overload target LateBoundDeclaration yet"
+      }
+    ],
+    "B": 0,
+    "B_sites": []
+  },
+  {
+    "target": "LeftHandSideExpression",
+    "reason": "checked predicate overload target LeftHandSideExpression",
+    "A": 1,
+    "A_sites": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1784:32",
+        "reason": "checked predicate overload target LeftHandSideExpression",
+        "text": "src/compiler/core.ts:1784:32: stage 0 can't lower checked predicate overload target LeftHandSideExpression yet"
+      }
+    ],
+    "B": 0,
+    "B_sites": []
+  },
+  {
+    "target": "LiteralExpression",
+    "reason": "checked predicate overload target LiteralExpression",
+    "A": 1,
+    "A_sites": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/utilitiesPublic.ts:1498:1",
+        "reason": "checked predicate overload target LiteralExpression",
+        "text": "src/compiler/utilitiesPublic.ts:1498:1: stage 0 can't lower checked predicate overload target LiteralExpression yet"
+      }
+    ],
+    "B": 0,
+    "B_sites": []
+  },
+  {
+    "target": "TypeElement",
+    "reason": "checked predicate overload target TypeElement",
+    "A": 1,
+    "A_sites": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/utilitiesPublic.ts:1782:1",
+        "reason": "checked predicate overload target TypeElement",
+        "text": "src/compiler/utilitiesPublic.ts:1782:1: stage 0 can't lower checked predicate overload target TypeElement yet"
+      }
+    ],
+    "B": 0,
+    "B_sites": []
+  }
+]

@@ -1,0 +1,22 @@
+| Unit | Name | A seconds | B seconds | B−A seconds | B/A |
+| --- | --- | --- | --- | --- | --- |
+| src/compiler/utilities.ts:8637:1 | isDiagnosticWithDetachedLocation | 2.998630 | 3.732919 | +0.734289 | 1.2449 |
+| src/compiler/utilities.ts:7420:1 | isLogicalOrCoalescingAssignmentExpression | 0.227124 | 0.777624 | +0.550501 | 3.4238 |
+| src/compiler/utilitiesPublic.ts:1574:1 | isImportAttributeName | 0.240740 | 0.789454 | +0.548714 | 3.2793 |
+| src/compiler/factory/utilities.ts:617:1 | isJSDocTypeAssertion | 0.236151 | 0.675739 | +0.439588 | 2.8615 |
+| src/compiler/program.ts:1339:1 | getImpliedNodeFormatForFile | 2.966513 | 3.388797 | +0.422285 | 1.1424 |
+| src/compiler/utilities.ts:8936:1 | getDiagnosticCode | 3.080465 | 3.407695 | +0.327230 | 1.1062 |
+| src/compiler/utilitiesPublic.ts:1570:1 | isStringTextContainingNode | 0.082519 | 0.358817 | +0.276298 | 4.3483 |
+| src/compiler/utilities.ts:2078:1 | isAmbientModule | 0.196363 | 0.465117 | +0.268754 | 2.3687 |
+| src/compiler/utilitiesPublic.ts:1581:1 | isGeneratedIdentifier | 0.210123 | 0.458904 | +0.248781 | 2.1840 |
+| src/compiler/utilities.ts:3551:1 | childIsDecorated | 0.148825 | 0.389293 | +0.240468 | 2.6158 |
+| src/compiler/factory/emitHelpers.ts:148:1 | createEmitHelperFactory | 0.495784 | 0.731271 | +0.235486 | 1.4750 |
+| src/compiler/utilitiesPublic.ts:1562:1 | isTypeOnlyImportOrExportDeclaration | 0.074645 | 0.295996 | +0.221351 | 3.9654 |
+| src/compiler/factory/nodeTests.ts:652:1 | isTemplateExpression | 0.049490 | 0.263265 | +0.213776 | 5.3196 |
+| src/compiler/utilitiesPublic.ts:1550:1 | isTypeOnlyExportDeclaration | 0.166813 | 0.379132 | +0.212319 | 2.2728 |
+| src/compiler/transformers/typeSerializer.ts:132:1 | createRuntimeTypeSerializer | 0.354528 | 0.563296 | +0.208768 | 1.5889 |
+| src/compiler/parser.ts:476:1 | isAnExternalModuleIndicatorNode | 0.201467 | 0.406669 | +0.205202 | 2.0185 |
+| src/compiler/utilities.ts:3549:1 | childIsDecorated | 0.147959 | 0.351712 | +0.203753 | 2.3771 |
+| src/compiler/transformers/classThis.ts:72:1 | isClassThisAssignmentBlock | 0.202301 | 0.389131 | +0.186830 | 1.9235 |
+| src/compiler/utilities.ts:2481:1 | createDiagnosticMessageChainFromDiagnostic | 3.058159 | 3.240439 | +0.182280 | 1.0596 |
+| src/compiler/utilities.ts:5009:1 | walkUpParenthesizedTypes | 0.060949 | 0.227932 | +0.166983 | 3.7397 |

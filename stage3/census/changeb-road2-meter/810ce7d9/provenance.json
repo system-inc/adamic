@@ -1,0 +1,86 @@
+{
+  "previous_evidence_commit": "d299479dc9a530314191221b8b112b5315964b70",
+  "A": "54412bc063f205c452ef6839c19ec01662327f7c",
+  "B": "810ce7d9ced9105f188a6171cc384a61f62c70ac",
+  "old_base": "141ad1d244d6a2d9c5403858086d505dfdef5fd5",
+  "submit_commits_above_base": 3,
+  "adaptations_changed": false,
+  "adapted_tree_rebuilt": false,
+  "adapted_tree_original_compiler": "141ad1d244d6a2d9c5403858086d505dfdef5fd5",
+  "TypeScript_source": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "cohere": "06af2e399c6c1fb93fd570b774027942747400b4",
+  "cohere_TypeScript": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "same_box": true,
+  "control_ledger_identical_to_prior_controls": true,
+  "checker_headers_identical": true,
+  "unit_eligibility_identical": true,
+  "input_hashes_unchanged": true,
+  "recorder_backport": false,
+  "binary_sha256": {
+    "A": "10371fb48fc2df1b6f414584ed0ec2c0f2320be156b2c11282c97b85561a4382",
+    "B": "22fc2f107f11c96a3bfb9b86fbfc6080d002f8fc2bfa3c118fa304b426686c0e"
+  },
+  "raw_sha256": {
+    "A-times.jsonl": "fe73fbd3b22cbaccf234c0cc3ecdd225bcb835770dcc009e06d2f75923c04e42",
+    "A.jsonl": "5170a75faa095748dee71f6638c538778abd790cf95887fb27321328f0c68bcd",
+    "B-times.jsonl": "d7622892270d86478f3622e6f44793476fef7808f38e014c8cb3a1cd5f8c6fc7",
+    "B.jsonl": "16a7c7f74bb513763dcb4878369c174b12adb48a15f7c7311f567d0e83d884e2"
+  },
+  "overlay_sha256": {
+    "A": {
+      "internal_load_latent_hook.go": "34747889ceef90621e27315daef974795840ff5a22cd17b33fe72d5caa50fbd6",
+      "internal_load_load.go": "09ed256da9beedc908843e89d042e8a501521fc5d9c25a6ebfa4e57261a47b25",
+      "internal_lower_expression.go": "bcbb0ddda51b45f13bf5a7f2e40d06812ac701b6e3c9e93056de85b157eca8c0",
+      "internal_lower_functions.go": "c309196b29f03726104acb77f1686eaa1acf6e2e1888e5d66ea4f9db34fea80d",
+      "internal_lower_generic.go": "9e3ceab72d994a0f6924cc6bb8988d873333f529b3836f9bd19193a62cbe4613",
+      "internal_lower_latent_full.go": "c995c98d33bf55ab66d21a8b0ddbad719dab6a4b4964c1c1cd0b571924baf38e",
+      "internal_lower_latent_hook.go": "89bdef957f419b6157c63df7be463700af65ff996f97dc4a8e70ad34d5106b1b",
+      "internal_lower_latent_piece.go": "ae04c70b5cd7c746e9f2ffdd61147ab8d92056bea29342b5be9feee4fd84afee",
+      "internal_lower_latent_progress.go": "bdb2684110c5e6c160909c0d36cf975778a9b8f8f46273df8b3d75729be494c3",
+      "internal_lower_latent_replay.go": "95bed77aa80a1938670d50bf2165ed632fe714b70217546a19462d09424bde9a",
+      "internal_lower_latent_speculative.go": "6aaff04313f0cb40c37138703db4f6192e8e34135259b11cc6f334a68e4b52ab",
+      "internal_lower_latent_state.go": "26ee69892d0052a926c7d6a88f9beb4f4ae0005f1fc41382989b7fc93dda99a1",
+      "internal_lower_latent_timing.go": "080b7937b2ec03c1837ec639a7916056fbf2c439f5491c321fc972899f41ad3f",
+      "internal_lower_latent_units.go": "3a62c5d1ed30fefbc38b5a3f64b1e69bd881a44a743573f3ffa24ff6221cea38",
+      "internal_lower_locals.go": "2a4e9b0612825b911196f1ae8e7a4c2f0c358840c65c64968e8ec092e1a90474",
+      "internal_lower_lower.go": "d7d3ba1db635a36bc91ef64c6d97136a65abe2caa61216b2264c55640f0b87ab",
+      "internal_lower_refusals.go": "31068cee83a79a11a0ecf96c68363b9dfa31d3e7bb668482b6a80d4a55d5c635",
+      "internal_lower_statements.go": "aae3923e9b6870b987dadbbc6826bd856c2f773737b7bfddc2cbe118a2e18869",
+      "overlay.json": "562fd83feec1737316197654fe996d1ec6b74ede5d69b7646b939c23c25e3523",
+      "stage3_census_latent_replay_worker_main.go": "d86ce314147e65c3fd081a3509974b8d4056b39b86c244fe47579d7ab7e03b34",
+      "stage3_census_latent_tool_main.go": "faf918e10243fd8d5c5ad3e5c2d12ff434f66e69e685366105ba6cf59ae5a7c3"
+    },
+    "B": {
+      "internal_load_latent_hook.go": "34747889ceef90621e27315daef974795840ff5a22cd17b33fe72d5caa50fbd6",
+      "internal_load_load.go": "09ed256da9beedc908843e89d042e8a501521fc5d9c25a6ebfa4e57261a47b25",
+      "internal_lower_expression.go": "bcbb0ddda51b45f13bf5a7f2e40d06812ac701b6e3c9e93056de85b157eca8c0",
+      "internal_lower_functions.go": "c309196b29f03726104acb77f1686eaa1acf6e2e1888e5d66ea4f9db34fea80d",
+      "internal_lower_generic.go": "9e3ceab72d994a0f6924cc6bb8988d873333f529b3836f9bd19193a62cbe4613",
+      "internal_lower_latent_full.go": "c995c98d33bf55ab66d21a8b0ddbad719dab6a4b4964c1c1cd0b571924baf38e",
+      "internal_lower_latent_hook.go": "89bdef957f419b6157c63df7be463700af65ff996f97dc4a8e70ad34d5106b1b",
+      "internal_lower_latent_piece.go": "ae04c70b5cd7c746e9f2ffdd61147ab8d92056bea29342b5be9feee4fd84afee",
+      "internal_lower_latent_progress.go": "bdb2684110c5e6c160909c0d36cf975778a9b8f8f46273df8b3d75729be494c3",
+      "internal_lower_latent_replay.go": "95bed77aa80a1938670d50bf2165ed632fe714b70217546a19462d09424bde9a",
+      "internal_lower_latent_speculative.go": "6aaff04313f0cb40c37138703db4f6192e8e34135259b11cc6f334a68e4b52ab",
+      "internal_lower_latent_state.go": "369555a814721688c959625be730973cec339360c9b0ff38c839e6592992f6d4",
+      "internal_lower_latent_timing.go": "080b7937b2ec03c1837ec639a7916056fbf2c439f5491c321fc972899f41ad3f",
+      "internal_lower_latent_units.go": "3a62c5d1ed30fefbc38b5a3f64b1e69bd881a44a743573f3ffa24ff6221cea38",
+      "internal_lower_locals.go": "2a4e9b0612825b911196f1ae8e7a4c2f0c358840c65c64968e8ec092e1a90474",
+      "internal_lower_lower.go": "d7d3ba1db635a36bc91ef64c6d97136a65abe2caa61216b2264c55640f0b87ab",
+      "internal_lower_refusals.go": "31068cee83a79a11a0ecf96c68363b9dfa31d3e7bb668482b6a80d4a55d5c635",
+      "internal_lower_statements.go": "aae3923e9b6870b987dadbbc6826bd856c2f773737b7bfddc2cbe118a2e18869",
+      "overlay.json": "e0fb616caabca408af5798ca5de1947d4f115dfeadca3a591e559ca4d6eaeedb",
+      "stage3_census_latent_replay_worker_main.go": "d86ce314147e65c3fd081a3509974b8d4056b39b86c244fe47579d7ab7e03b34",
+      "stage3_census_latent_tool_main.go": "faf918e10243fd8d5c5ad3e5c2d12ff434f66e69e685366105ba6cf59ae5a7c3"
+    }
+  },
+  "tool_versions": {
+    "go": "go version go1.27.1 linux/amd64",
+    "node": "v24.19.0",
+    "python": "Python 3.12.14"
+  },
+  "compiler_worktree_tracked_changes": {
+    "A": "",
+    "B": ""
+  }
+}
