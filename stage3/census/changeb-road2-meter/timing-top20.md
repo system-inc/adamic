@@ -1,0 +1,22 @@
+| Unit | Name | A seconds | B seconds | B−A seconds | B/A |
+| --- | --- | --- | --- | --- | --- |
+| src/compiler/tsbuildPublic.ts:287:1 | createBuilderStatusReporter | 3.035316 | 4.136769 | +1.101453 | 1.3629 |
+| src/compiler/utilities.ts:8719:1 | createCompilerDiagnostic | 3.197958 | 4.116030 | +0.918073 | 1.2871 |
+| src/compiler/utilities.ts:11077:1 | hasTabstop | 3.018035 | 3.787199 | +0.769164 | 1.2549 |
+| src/compiler/utilities.ts:4330:1 | canHaveModuleSpecifier | 3.432711 | 4.189353 | +0.756642 | 1.2204 |
+| src/compiler/utilities.ts:8936:1 | getDiagnosticCode | 3.409376 | 4.084975 | +0.675599 | 1.1982 |
+| src/compiler/utilities.ts:8685:1 | createFileDiagnostic | 3.025085 | 3.491728 | +0.466644 | 1.1543 |
+| src/compiler/utilitiesPublic.ts:1376:1 | isCallChain | 0.218988 | 0.649207 | +0.430219 | 2.9646 |
+| src/compiler/watch.ts:193:1 | createWatchStatusReporter | 3.054229 | 3.420530 | +0.366302 | 1.1199 |
+| src/compiler/utilities.ts:7082:1 | writeCommentRange | 0.179874 | 0.527614 | +0.347740 | 2.9332 |
+| src/compiler/utilities.ts:803:1 | projectReferenceIsEqualTo | 3.418482 | 3.754979 | +0.336497 | 1.0984 |
+| src/compiler/utilitiesPublic.ts:2170:1 | isForInitializer | 0.253735 | 0.572950 | +0.319214 | 2.2581 |
+| src/compiler/factory/utilities.ts:1181:1 | isMultiplicativeOperatorOrHigher | 0.360824 | 0.677613 | +0.316789 | 1.8780 |
+| src/compiler/builder.ts:1621:1 | computeSignatureWithDiagnostics | 3.259396 | 3.538110 | +0.278714 | 1.0855 |
+| src/compiler/transformers/taggedTemplate.ts:101:1 | createTemplateCooked | 3.131592 | 3.390949 | +0.259357 | 1.0828 |
+| src/compiler/program.ts:5190:1 | getModuleNameStringLiteralAt | 0.110289 | 0.368616 | +0.258327 | 3.3423 |
+| src/compiler/utilitiesPublic.ts:1351:1 | getEffectiveConstraintOfTypeParameter | 0.249255 | 0.458149 | +0.208894 | 1.8381 |
+| src/compiler/transformers/utilities.ts:729:1 | getAllDecoratorsOfAccessors | 0.258921 | 0.465921 | +0.207000 | 1.7995 |
+| src/compiler/moduleNameResolver.ts:1406:1 | resolveModuleName | 3.574702 | 3.777078 | +0.202376 | 1.0566 |
+| src/compiler/resolutionCache.ts:532:1 | resolveModuleNameUsingGlobalCache | 0.103751 | 0.300793 | +0.197043 | 2.8992 |
+| src/compiler/utilities.ts:810:1 | moduleResolutionIsEqualTo | 3.270619 | 3.454027 | +0.183408 | 1.0561 |

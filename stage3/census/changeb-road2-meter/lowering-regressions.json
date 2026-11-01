@@ -1,0 +1,32 @@
+[
+  {
+    "where": "src/compiler/scanner.ts:520:1",
+    "name": "computeLineOfPosition",
+    "A_status": "attempted",
+    "B_status": "attempted",
+    "A_stops": [],
+    "B_stops": [
+      [
+        "NotYet",
+        "src/compiler/core.ts:1203:10",
+        "a checked predicate target readonly number[] over a generic argument readonly T[], which narrows to an intersection no view covers",
+        "src/compiler/core.ts:1203:10: stage 0 can't lower a checked predicate target readonly number[] over a generic argument readonly T[], which narrows to an intersection no view covers yet"
+      ]
+    ]
+  },
+  {
+    "where": "src/compiler/utilities.ts:1351:1",
+    "name": "indexOfNode",
+    "A_status": "attempted",
+    "B_status": "attempted",
+    "A_stops": [],
+    "B_stops": [
+      [
+        "NotYet",
+        "src/compiler/core.ts:1203:10",
+        "a checked predicate target readonly Node[] over a generic argument readonly T[], which narrows to an intersection no view covers",
+        "src/compiler/core.ts:1203:10: stage 0 can't lower a checked predicate target readonly Node[] over a generic argument readonly T[], which narrows to an intersection no view covers yet"
+      ]
+    ]
+  }
+]

@@ -1,0 +1,186 @@
+[
+  {
+    "where": "src/compiler/emitter.ts:1147:1",
+    "name": "",
+    "A_status": "attempted",
+    "B_status": "attempted",
+    "A_stops": [
+      [
+        "NotYet",
+        "src/compiler/emitter.ts:1158:18",
+        "checked predicate overload target LateBoundDeclaration",
+        "src/compiler/emitter.ts:1158:18: stage 0 can't lower checked predicate overload target LateBoundDeclaration yet"
+      ]
+    ],
+    "B_stops": [
+      [
+        "NotYet",
+        "src/compiler/sourcemap.ts:474:9",
+        "a getter in a checked field contract",
+        "src/compiler/sourcemap.ts:474:9: stage 0 can't lower a getter in a checked field contract yet"
+      ]
+    ]
+  },
+  {
+    "where": "src/compiler/factory/parenthesizerRules.ts:675:1",
+    "name": "",
+    "A_status": "attempted",
+    "B_status": "attempted",
+    "A_stops": [
+      [
+        "NotYet",
+        "src/compiler/core.ts:1784:32",
+        "checked predicate overload target LeftHandSideExpression",
+        "src/compiler/core.ts:1784:32: stage 0 can't lower checked predicate overload target LeftHandSideExpression yet"
+      ]
+    ],
+    "B_stops": [
+      [
+        "NotYet",
+        "src/compiler/sourcemap.ts:474:9",
+        "a getter in a checked field contract",
+        "src/compiler/sourcemap.ts:474:9: stage 0 can't lower a getter in a checked field contract yet"
+      ]
+    ]
+  },
+  {
+    "where": "src/compiler/scanner.ts:520:1",
+    "name": "computeLineOfPosition",
+    "A_status": "attempted",
+    "B_status": "attempted",
+    "A_stops": [],
+    "B_stops": [
+      [
+        "NotYet",
+        "src/compiler/core.ts:1203:10",
+        "a checked predicate target readonly number[] over a generic argument readonly T[], which narrows to an intersection no view covers",
+        "src/compiler/core.ts:1203:10: stage 0 can't lower a checked predicate target readonly number[] over a generic argument readonly T[], which narrows to an intersection no view covers yet"
+      ]
+    ]
+  },
+  {
+    "where": "src/compiler/utilities.ts:11057:1",
+    "name": "isOptionalJSDocPropertyLikeTag",
+    "A_status": "attempted",
+    "B_status": "attempted",
+    "A_stops": [
+      [
+        "NotYet",
+        "src/compiler/utilitiesPublic.ts:1449:1",
+        "checked predicate overload target JSDocPropertyLikeTag",
+        "src/compiler/utilitiesPublic.ts:1449:1: stage 0 can't lower checked predicate overload target JSDocPropertyLikeTag yet"
+      ]
+    ],
+    "B_stops": [
+      [
+        "NotYet",
+        "src/compiler/sourcemap.ts:474:9",
+        "a getter in a checked field contract",
+        "src/compiler/sourcemap.ts:474:9: stage 0 can't lower a getter in a checked field contract yet"
+      ]
+    ]
+  },
+  {
+    "where": "src/compiler/utilities.ts:1351:1",
+    "name": "indexOfNode",
+    "A_status": "attempted",
+    "B_status": "attempted",
+    "A_stops": [],
+    "B_stops": [
+      [
+        "NotYet",
+        "src/compiler/core.ts:1203:10",
+        "a checked predicate target readonly Node[] over a generic argument readonly T[], which narrows to an intersection no view covers",
+        "src/compiler/core.ts:1203:10: stage 0 can't lower a checked predicate target readonly Node[] over a generic argument readonly T[], which narrows to an intersection no view covers yet"
+      ]
+    ]
+  },
+  {
+    "where": "src/compiler/utilities.ts:6832:1",
+    "name": "getAllAccessorDeclarations",
+    "A_status": "attempted",
+    "B_status": "attempted",
+    "A_stops": [
+      [
+        "NotYet",
+        "src/compiler/sourcemap.ts:474:9",
+        "a getter in a checked field contract",
+        "src/compiler/sourcemap.ts:474:9: stage 0 can't lower a getter in a checked field contract yet"
+      ]
+    ],
+    "B_stops": [
+      [
+        "NotYet",
+        "src/compiler/utilities.ts:6838:9",
+        "a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which isn't its supertype",
+        "src/compiler/utilities.ts:6838:9: stage 0 can't lower a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which isn't its supertype yet"
+      ]
+    ]
+  },
+  {
+    "where": "src/compiler/utilities.ts:7200:1",
+    "name": "isStatic",
+    "A_status": "attempted",
+    "B_status": "attempted",
+    "A_stops": [
+      [
+        "NotYet",
+        "src/compiler/utilitiesPublic.ts:1732:1",
+        "checked predicate overload target ClassElement",
+        "src/compiler/utilitiesPublic.ts:1732:1: stage 0 can't lower checked predicate overload target ClassElement yet"
+      ]
+    ],
+    "B_stops": [
+      [
+        "NotYet",
+        "src/compiler/sourcemap.ts:474:9",
+        "a getter in a checked field contract",
+        "src/compiler/sourcemap.ts:474:9: stage 0 can't lower a getter in a checked field contract yet"
+      ]
+    ]
+  },
+  {
+    "where": "src/compiler/utilitiesPublic.ts:1794:1",
+    "name": "isClassOrTypeElement",
+    "A_status": "attempted",
+    "B_status": "attempted",
+    "A_stops": [
+      [
+        "NotYet",
+        "src/compiler/utilitiesPublic.ts:1782:1",
+        "checked predicate overload target TypeElement",
+        "src/compiler/utilitiesPublic.ts:1782:1: stage 0 can't lower checked predicate overload target TypeElement yet"
+      ]
+    ],
+    "B_stops": [
+      [
+        "NotYet",
+        "src/compiler/sourcemap.ts:474:9",
+        "a getter in a checked field contract",
+        "src/compiler/sourcemap.ts:474:9: stage 0 can't lower a getter in a checked field contract yet"
+      ]
+    ]
+  },
+  {
+    "where": "src/compiler/utilitiesPublic.ts:2071:1",
+    "name": "isLiteralTypeLiteral",
+    "A_status": "attempted",
+    "B_status": "attempted",
+    "A_stops": [
+      [
+        "NotYet",
+        "src/compiler/utilitiesPublic.ts:1498:1",
+        "checked predicate overload target LiteralExpression",
+        "src/compiler/utilitiesPublic.ts:1498:1: stage 0 can't lower checked predicate overload target LiteralExpression yet"
+      ]
+    ],
+    "B_stops": [
+      [
+        "NotYet",
+        "src/compiler/sourcemap.ts:474:9",
+        "a getter in a checked field contract",
+        "src/compiler/sourcemap.ts:474:9: stage 0 can't lower a getter in a checked field contract yet"
+      ]
+    ]
+  }
+]

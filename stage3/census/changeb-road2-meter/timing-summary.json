@@ -1,0 +1,28 @@
+{
+  "totals": {
+    "A": {
+      "wall_seconds": 536.176347859,
+      "cpu_seconds": 573.8048029999961,
+      "units": 4017
+    },
+    "B": {
+      "wall_seconds": 540.628952965,
+      "cpu_seconds": 577.6737049999987,
+      "units": 4017
+    }
+  },
+  "noise": {
+    "definition": "Same-outcome import/interface/type-alias units: no runtime branded-predicate lowering path. Shared registration, GC and scheduling remain in these measurements.",
+    "n": 1215,
+    "median_signed_delta_seconds": 0.0005139779999999983,
+    "median_absolute_delta_seconds": 0.003046199999999999,
+    "p90_absolute_delta_seconds": 0.029212893000000004,
+    "median_ratio": 1.0105852520285024,
+    "p10_ratio": 0.7417683646730417,
+    "p90_ratio": 1.3508239663480346
+  },
+  "unpaired": {
+    "A": [],
+    "B": []
+  }
+}

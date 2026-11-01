@@ -1,0 +1,4 @@
+| Unit | Name | B status | B stops |
+| --- | --- | --- | --- |
+| src/compiler/scanner.ts:520:1 | computeLineOfPosition | attempted | [["NotYet", "src/compiler/core.ts:1203:10", "a checked predicate target readonly number[] over a generic argument readonly T[], which narrows to an intersection no view covers", "src/compiler/core.ts:1203:10: stage 0 can't lower a checked predicate target readonly number[] over a generic argument readonly T[], which narrows to an intersection no view covers yet"]] |
+| src/compiler/utilities.ts:1351:1 | indexOfNode | attempted | [["NotYet", "src/compiler/core.ts:1203:10", "a checked predicate target readonly Node[] over a generic argument readonly T[], which narrows to an intersection no view covers", "src/compiler/core.ts:1203:10: stage 0 can't lower a checked predicate target readonly Node[] over a generic argument readonly T[], which narrows to an intersection no view covers yet"]] |

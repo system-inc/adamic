@@ -1,0 +1,147 @@
+{
+  "mode": "first-error",
+  "distinct_key": [
+    "kind",
+    "where",
+    "reason",
+    "text"
+  ],
+  "normalization": "remove each adapted tree root from embedded locations in where, reason and text",
+  "files": 79,
+  "before_sites": 2767,
+  "after_sites": 2764,
+  "changed_reasons": [
+    {
+      "reason": "a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which isn't its supertype",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:6838:9",
+          "reason": "a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which isn't its supertype",
+          "text": "src/compiler/utilities.ts:6838:9: stage 0 can't lower a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which isn't its supertype yet"
+        }
+      ]
+    },
+    {
+      "reason": "a checked predicate target readonly Node[] over a generic argument readonly T[], which narrows to an intersection no view covers",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1203:10",
+          "reason": "a checked predicate target readonly Node[] over a generic argument readonly T[], which narrows to an intersection no view covers",
+          "text": "src/compiler/core.ts:1203:10: stage 0 can't lower a checked predicate target readonly Node[] over a generic argument readonly T[], which narrows to an intersection no view covers yet"
+        }
+      ]
+    },
+    {
+      "reason": "a checked predicate target readonly number[] over a generic argument readonly T[], which narrows to an intersection no view covers",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1203:10",
+          "reason": "a checked predicate target readonly number[] over a generic argument readonly T[], which narrows to an intersection no view covers",
+          "text": "src/compiler/core.ts:1203:10: stage 0 can't lower a checked predicate target readonly number[] over a generic argument readonly T[], which narrows to an intersection no view covers yet"
+        }
+      ]
+    },
+    {
+      "reason": "checked predicate overload target ClassElement",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "checked predicate overload target JSDocPropertyLikeTag",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "checked predicate overload target LateBoundDeclaration",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "checked predicate overload target LeftHandSideExpression",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "checked predicate overload target LiteralExpression",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    },
+    {
+      "reason": "checked predicate overload target TypeElement",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    }
+  ],
+  "new_or_growing": [
+    {
+      "reason": "a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which isn't its supertype",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:6838:9",
+          "reason": "a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which isn't its supertype",
+          "text": "src/compiler/utilities.ts:6838:9: stage 0 can't lower a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which isn't its supertype yet"
+        }
+      ]
+    },
+    {
+      "reason": "a checked predicate target readonly Node[] over a generic argument readonly T[], which narrows to an intersection no view covers",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1203:10",
+          "reason": "a checked predicate target readonly Node[] over a generic argument readonly T[], which narrows to an intersection no view covers",
+          "text": "src/compiler/core.ts:1203:10: stage 0 can't lower a checked predicate target readonly Node[] over a generic argument readonly T[], which narrows to an intersection no view covers yet"
+        }
+      ]
+    },
+    {
+      "reason": "a checked predicate target readonly number[] over a generic argument readonly T[], which narrows to an intersection no view covers",
+      "before": 0,
+      "after": 1,
+      "delta": 1,
+      "examples": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1203:10",
+          "reason": "a checked predicate target readonly number[] over a generic argument readonly T[], which narrows to an intersection no view covers",
+          "text": "src/compiler/core.ts:1203:10: stage 0 can't lower a checked predicate target readonly number[] over a generic argument readonly T[], which narrows to an intersection no view covers yet"
+        }
+      ]
+    }
+  ],
+  "raw_sha256": {
+    "before": "5170a75faa095748dee71f6638c538778abd790cf95887fb27321328f0c68bcd",
+    "after": "79c0d3b7aac4b7bf4ab2e03497a51fd9ed2c3884a587253e8b650a0bd00171ac"
+  }
+}
