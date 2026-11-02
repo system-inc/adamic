@@ -1,0 +1,6 @@
+// a-check: refused a delete from a record through a key that is not one literal, which can remove a required declared property (delete options[key] on Options by key: required is declared number, not optional)
+interface Options { target?: number; required: number; [option: string]: number | undefined; }
+function dropRequired(options: Options, key: string): void { delete options[key]; }
+const options: Options = { required: 4 };
+dropRequired(options, "required");
+console.log(typeof options.required);
