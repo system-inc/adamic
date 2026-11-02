@@ -1,0 +1,16 @@
+// A write through a nested intersection's view is checked as the field's read is, and reads back.
+interface Node { readonly kind: number; }
+interface LiteralTypeNode extends Node { readonly kind: 201; readonly literal: number; token: string | number; flags: number; }
+interface ImportTypeNode extends Node { readonly kind: 205; readonly argument: Node; }
+interface LiteralImportTypeNode extends ImportTypeNode { readonly argument: LiteralTypeNode & { readonly literal: 11; readonly token: string; readonly text: string }; }
+function bump(node: Node): string {
+    if (node.kind === 205) {
+        const imported = node as LiteralImportTypeNode;
+        imported.argument.flags = imported.argument.flags + 1;
+        return `${imported.argument.flags}`;
+    }
+    return "other";
+}
+const raw = { kind: 205, argument: { kind: 201, literal: 11, token: "fs", text: "node:fs", flags: 2 } };
+console.log(bump(raw));
+console.log(String(raw.argument.flags));
