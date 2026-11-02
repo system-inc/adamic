@@ -1,0 +1,9 @@
+// Object.getOwnPropertyDescriptor of a caught Error through a structural view, a road that already stops.
+try {
+	throw new Error('m');
+} catch (e) {
+	if (e instanceof Error) {
+		const o: { message: string } = e;
+		console.log(`${Object.getOwnPropertyDescriptor(o, 'message') === undefined}`);
+	}
+}

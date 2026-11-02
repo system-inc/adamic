@@ -1,0 +1,10 @@
+// A detached hasOwnProperty through a view of an Error the runtime made.
+import { readFileSync } from 'node:fs';
+try {
+	readFileSync('/no/such', 'utf8');
+} catch (e) {
+	if (e instanceof Error) {
+		const o: { message: string } = e;
+		console.log(`${Object.prototype.hasOwnProperty.call(o, 'message')}`);
+	}
+}
