@@ -20,7 +20,8 @@ import (
 // reaches through, Language's roads on 41717bcc: Options as T extends Dict, by a generic function's
 // parameter (n05), its return (n26), an explicit put<Options> (n27), a generic class's field (n28), a
 // generic arrow (g01), a class's extends clause (g02) and a generic class taken as a value by a
-// construct type that instantiates it (g04), and a Dict as T extends Options (g03). A view
+// construct type that instantiates it (g04) or returned by a call into a slot that does (g05), and a Dict
+// as T extends Options (g03). A view
 // through a conditional names the branch's type, not the conditional's (n24). Each program's whole
 // diagnostic is pinned in its .refused file, and its first line names its refusal. Mutants, each
 // alone: admitting a declared property seen through a wider index signature (declaredKeyWidened's
@@ -78,8 +79,8 @@ func TestRecordDeclaredKeysAreRefusedInA(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 36 {
-		t.Fatalf("found %d refused programs, want 36", programs)
+	if programs != 37 {
+		t.Fatalf("found %d refused programs, want 37", programs)
 	}
 }
 
@@ -148,7 +149,7 @@ func TestRecordDeclaredKeyStopsArePinned(t *testing.T) {
 			}
 		})
 	}
-	if programs != 56 {
-		t.Fatalf("found %d programs, want 56", programs)
+	if programs != 57 {
+		t.Fatalf("found %d programs, want 57", programs)
 	}
 }

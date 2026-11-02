@@ -295,11 +295,15 @@ func (l *lowering) libraryIndexSignature(proven *checker.Type) bool {
 // number under name through it, and return or keep it so (Language's n05, n26, n27 and n28). The
 // bindings are a call's or a new's, inferred or written, read from its resolved signature, which
 // reaches generic arrows and methods too; a class's extends clause's; and a generic function's or
-// class's, instantiated as the value its slot takes (declaredKeyValueBindings).
+// class's, instantiated as the value its slot takes (declaredKeyValueBindings), a call's result included.
 func (l *lowering) declaredKeyBindings(node *ast.Node) error {
 	switch node.Kind {
 	case ast.KindCallExpression, ast.KindNewExpression, ast.KindTaggedTemplateExpression:
-		return l.declaredKeySignatureBindings(node, l.checker.GetResolvedSignature(node))
+		// The bindings the call makes, then the value it yields, which may itself be a generic function
+		// its slot instantiates: const put: (target: Options) => void = maker() (g05).
+		if err := l.declaredKeySignatureBindings(node, l.checker.GetResolvedSignature(node)); err != nil {
+			return err
+		}
 	case ast.KindExpressionWithTypeArguments:
 		clause := node.Parent
 		if clause == nil || clause.Kind != ast.KindHeritageClause || clause.AsHeritageClause().Token != ast.KindExtendsKeyword || clause.Parent == nil || !ast.IsClassLike(clause.Parent) {
