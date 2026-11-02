@@ -78,7 +78,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/taste/06_localized_message.a:6:12: stage 0 can't lower a logical record operand converted to string without a proven result representation yet"}
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "07_compact.a",
