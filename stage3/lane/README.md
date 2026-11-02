@@ -179,7 +179,7 @@ inventory and original IPC observation behavior.
 
 The follow-up [manifest contract](SHARD_CONTRACT.md) supersedes the whole-file
 blocker for this lane. `shards.json` uses the exact developer-tools version-1
-schema. Its 377 commands share a verified artifact by inputs hash, give each
+schema. Its 398 commands share a verified artifact by inputs hash, give each
 watcher case an exact upstream `--tests` grep, and keep the same expected counts
 and Public APIs sanction. The original run.sh remains available; its optional
 `--artifact` mode supplies the same-tree unsharded reference measurement.
@@ -194,3 +194,45 @@ unsharded lane rather than acting as a parallel unit with undeclared dependencie
 [SHARDS_10S_REPORT.md](SHARDS_10S_REPORT.md) records the current smaller plan,
 serial product-path measurements, executed union, CPU-load experiments and mutants.
 The older shared-artifact measurement path is reported separately.
+
+## Hashes from the checkout
+
+The old committed artifact key was box-specific: `artifact.input_key()` hashes
+stage3 files outside lane/ and oracle/, plus the box's Node, npm, Git and Python
+versions and its platform. Another box cannot be expected to reproduce that key.
+The gate product path (`STAGE3_ADAPTED_TREE`) never compared it:
+`shard.py:adapted_inputs` returns the product tree after checking the built harness,
+API parser digest and runtime, without calling `shared_artifact`.
+
+The committed plan now holds only unit definitions, assignments, expectations,
+API digest and runtime. It has no artifact key or unit inputs hashes, and
+`shards.json` commands take no `--inputs-hash`. Shared-artifact runners compute the
+current artifact key with `artifact.input_key()`. Product units with
+`STAGE3_ADAPTED_TREE` use the fixed identity `stage3-adapted-tree` and do not probe
+npm or other tool versions: the product and gate planner own their input identity.
+Both paths hash `digest(dict(artifact=key, api=plan['api_digest'], runtime=runtime_hash(), unit=unit))`.
+Reports retain both computed values. A handed shared artifact must still have
+exactly this checkout's key and inputs, successful producer phases, and verified
+payload and API bytes. Merge computes the current key and unit hashes itself.
+Loom and Operations declare reads of adaptation inputs, pinned TypeScript and
+stage3/api to rerun units when those inputs change; no cloud/ or loom changes
+are part of this change.
+
+Prepare a shared artifact outside test units, then measure its commands:
+
+```sh
+python3 -B stage3/lane/prepare_shards.py /absolute/cache > /absolute/prepare.log 2>&1
+STAGE3_ARTIFACT=/absolute/cache/KEY \
+  python3 -B stage3/lane/measure_shards.py /absolute/new-results --concurrency 1 \
+  > /absolute/shards.log 2>&1
+```
+
+For the gate product path, set `STAGE3_ADAPTED_TREE=/absolute/product/tree`
+instead. Use the gate-built product, which omits node_modules; the runner links
+the pinned stage3/typescript install into each private view.
+
+Regenerate the plan with `python3 -B stage3/lane/shard_plan.py /absolute/cache/KEY`
+and the Go declarations with `python3 -B stage3/lane/generate_shards.py`.
+Adaptation edits alone leave all three generated files byte-identical.
+`prove_hash_mutants.py` runs the three retained hash mutants against named tests
+without modifying production files. See HASH_FROM_TREE_REPORT.md for validation.

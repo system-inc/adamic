@@ -10,7 +10,7 @@ import subprocess
 import sys
 import time
 
-from shard_plan import LANE, digest, runtime_hash
+from shard_plan import LANE, runtime_hash
 
 
 def main():
@@ -23,17 +23,15 @@ def main():
     parser.add_argument('--unit', help=argparse.SUPPRESS)
     args = parser.parse_args()
     plan = json.loads(args.plan.read_text())
-    # Saved main definitions use today's verified artifact and runtime, without changing their tasks.
-    runtime = runtime_hash()
+    # Saved definitions use today's runtime without changing their tasks.
+    plan.pop('artifact', None)
     for unit in plan['units']:
-        definition = {key: value for key, value in unit.items() if key != 'inputs_hash'}
-        unit['inputs_hash'] = digest(dict(artifact=plan['artifact'], api=plan['api_digest'],
-                                         runtime=runtime, unit=definition))
-    plan['runtime'] = runtime
+        unit.pop('inputs_hash', None)
+    plan['runtime'] = runtime_hash()
     if args.unit:
         from shard import run_unit
         unit = next(row for row in plan['units'] if row['name'] == args.unit)
-        return run_unit(unit['name'], args.results.resolve(), unit['inputs_hash'], plan=plan)
+        return run_unit(unit['name'], args.results.resolve(), plan=plan)
     if args.concurrency < 1 or args.load < 0:
         parser.error('concurrency must be positive and load nonnegative')
     units = plan['units']

@@ -2,22 +2,23 @@
 """Prove the executed union and apply the original verdict to the same-tree whole run."""
 import argparse
 import json
-import os
 from pathlib import Path
-import sys
+from artifact import input_key
 from check import check_results
-from shard_plan import LANE, load_plan, names_digest
-sys.path.append(str(LANE.parent))
-from caches import cache_root
+from shard_plan import LANE, load_plan, names_digest, runtime_hash, unit_inputs_hash
 
 
 def merge(results, whole, plan=None):
     plan = plan or load_plan()
+    key, _ = input_key()
+    runtime = runtime_hash()
     errors, records, reports = [], [], []
+    if runtime != plan['runtime']:
+        errors.append('shard harness inputs changed; regenerate the manifest')
     for unit in plan['units']:
         report = json.loads((results / unit['name'] / 'report.json').read_text())
         reports.append(report)
-        if report['name'] != unit['name'] or report['inputs_hash'] != unit['inputs_hash'] or report['artifact'] != plan['artifact']:
+        if report['name'] != unit['name'] or report['inputs_hash'] != unit_inputs_hash(unit, plan, key, runtime) or report['artifact'] != key:
             errors.append('unit input identity mismatch: ' + unit['name'])
         if report['status'] != 'pass' or report['counts'] != unit['expect'] or report['seconds'] >= 30:
             errors.append('unit verdict rejected: ' + unit['name'])
@@ -31,7 +32,7 @@ def merge(results, whole, plan=None):
             errors.append('unit evidence counts mismatch: ' + unit['name'])
         records.extend(observed)
     execution = json.loads((whole / 'execution.json').read_text())
-    if execution.get('artifact') != plan['artifact']:
+    if execution.get('artifact') != key:
         errors.append('unsharded lane did not run on the same hashed artifact')
     profile = [json.loads(line) for line in (whole / 'whole-tasks.jsonl').read_text().splitlines()]
     whole_records = [dict(record, task=row['task'], status=status) for row in profile
@@ -58,7 +59,7 @@ def merge(results, whole, plan=None):
         errors.extend('unsharded lane: ' + message for message in whole_verdict['errors'])
     return dict(status='fail' if errors else 'pass', errors=errors, counts=counts,
                 whole_counts=whole_counts, units=len(reports), tests=len(records),
-                artifact=plan['artifact'], failed_tests=failures, baseline_diffs=paths,
+                artifact=key, failed_tests=failures, baseline_diffs=paths,
                 whole_verdict=whole_verdict['status'])
 
 
@@ -69,8 +70,6 @@ if __name__ == '__main__':
     parser.add_argument('--output', type=Path)
     args = parser.parse_args()
     plan = load_plan()
-    artifact = Path(os.environ.get('STAGE3_ARTIFACT') or cache_root() / 'adamic-stage3-artifacts' / plan['artifact'])
-    os.environ['TSC_ADAPT_TYPESCRIPT'] = str(artifact / 'api')
     try:
         report = merge(args.results.resolve(), args.whole.resolve(), plan)
     except (OSError, ValueError, KeyError) as error:
