@@ -1,0 +1,13 @@
+{
+  "wholeProgram": {
+    "before": 54,
+    "after": 53,
+    "mutant": 54
+  },
+  "removed": [
+    "TREE/src/compiler/commandLineParser.ts:2301:91: error TS18046: 'e' is of type 'unknown'."
+  ],
+  "added": [],
+  "mutantRestoresExactBeforeMultiset": true,
+  "normalization": "Tree roots replaced; after/mutant commandLineParser positions after the added import map back one line; columns and complete elaboration chains retained."
+}

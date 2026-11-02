@@ -1,0 +1,84 @@
+{
+  "node": "v24.19.0",
+  "rows": [
+    {
+      "value": "Error",
+      "before": {
+        "diagnostic": "Cannot read file 'config.json': read failed."
+      },
+      "after": {
+        "diagnostic": "Cannot read file 'config.json': read failed."
+      }
+    },
+    {
+      "value": "message only",
+      "before": {
+        "diagnostic": "Cannot read file 'config.json': only message."
+      },
+      "after": {
+        "diagnostic": "Cannot read file 'config.json': only message."
+      }
+    },
+    {
+      "value": "string",
+      "before": {
+        "throws": "Error",
+        "message": "Debug Failure."
+      },
+      "after": {
+        "diagnostic": "Cannot read file 'config.json': undefined."
+      }
+    },
+    {
+      "value": "number",
+      "before": {
+        "throws": "Error",
+        "message": "Debug Failure."
+      },
+      "after": {
+        "diagnostic": "Cannot read file 'config.json': undefined."
+      }
+    },
+    {
+      "value": "{}",
+      "before": {
+        "throws": "Error",
+        "message": "Debug Failure."
+      },
+      "after": {
+        "diagnostic": "Cannot read file 'config.json': undefined."
+      }
+    },
+    {
+      "value": "numeric message",
+      "before": {
+        "diagnostic": "Cannot read file 'config.json': 42."
+      },
+      "after": {
+        "diagnostic": "Cannot read file 'config.json': 42."
+      }
+    },
+    {
+      "value": "null",
+      "before": {
+        "throws": "TypeError",
+        "message": "Cannot read properties of null (reading 'message')"
+      },
+      "after": {
+        "throws": "TypeError",
+        "message": "Cannot read properties of null (reading 'message')"
+      }
+    },
+    {
+      "value": "undefined",
+      "before": {
+        "throws": "TypeError",
+        "message": "Cannot read properties of undefined (reading 'message')"
+      },
+      "after": {
+        "throws": "TypeError",
+        "message": "Cannot read properties of undefined (reading 'message')"
+      }
+    }
+  ]
+}

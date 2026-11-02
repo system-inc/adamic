@@ -1,0 +1,45 @@
+{
+  "main": "80c2d3282e44b527555d59690bb413cc883d2bf2",
+  "helper94": "8a7cd267b434efa0a60d481529a1256cc3c92a19",
+  "codeCommit": "cc2bfae014073a16ba9c54712f67b372e2c76429",
+  "measurementMainPlus94": "8ea8c394ff40e7078675445a7a9afb7a816aaf24",
+  "adamicBinarySha256": "782f077d3de767761822b183a74112d69a98de345311e3e7c8885444f9d9be4e",
+  "primaryOracleIsMainTip": true,
+  "additionalDeliveryBaseControlRun": true,
+  "primaryAndControlApiBaselineDiffBytesEqual": true,
+  "typeCodeCounts": {
+    "before": {
+      "18048": 1,
+      "2322": 7,
+      "2412": 24,
+      "2345": 6,
+      "2532": 1,
+      "2375": 9,
+      "18046": 4,
+      "2740": 1,
+      "2307": 1
+    },
+    "after": {
+      "18048": 1,
+      "2322": 7,
+      "2412": 24,
+      "2345": 6,
+      "2532": 1,
+      "2375": 9,
+      "2740": 1,
+      "18046": 3,
+      "2307": 1
+    },
+    "mutant": {
+      "18048": 1,
+      "2322": 7,
+      "2412": 24,
+      "2345": 6,
+      "2532": 1,
+      "2375": 9,
+      "18046": 4,
+      "2740": 1,
+      "2307": 1
+    }
+  }
+}

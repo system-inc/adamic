@@ -1,0 +1,35 @@
+{
+  "idempotent": true,
+  "results": [
+    {
+      "kind": "missing helper",
+      "refused": true,
+      "noWrite": true
+    },
+    {
+      "kind": "changed helper",
+      "refused": true,
+      "noWrite": true
+    },
+    {
+      "kind": "import only",
+      "refused": true,
+      "noWrite": true
+    },
+    {
+      "kind": "call only",
+      "refused": true,
+      "noWrite": true
+    },
+    {
+      "kind": "catch drift",
+      "refused": true,
+      "noWrite": true
+    },
+    {
+      "kind": "duplicate imports",
+      "refused": true,
+      "noWrite": true
+    }
+  ]
+}
