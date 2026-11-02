@@ -396,3 +396,10 @@
 `stdout_tty_impl.h:stdout_width:1`
 `stdout_tty_impl.h:stdout_winch_pending:1`
 `stdout_tty_impl.h:stdout_winch_pipe:1`
+
+# Native timer registrations own callbacks and reference arguments. The loop
+# thread alone starts, cancels, dispatches and drops them; identities never reuse.
+`runtime-file:timers.h`
+`runtime-file:timers_impl.h`
+`timers_impl.h:timers:1`
+`timers_impl.h:timer_next_identity:1`
