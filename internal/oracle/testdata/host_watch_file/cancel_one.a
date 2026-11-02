@@ -1,0 +1,12 @@
+import * as fs from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+const directory = fs.mkdtempSync(join(tmpdir(), 'adamic-watch-'));
+const file = join(directory, 'watched');
+function first(_curr: fs.Stats, _prev: fs.Stats): void { console.log('wrong first'); fs.unwatchFile(file); fs.rmSync(directory, {recursive:true, force:true}); }
+function second(_curr: fs.Stats, _prev: fs.Stats): void {
+ console.log('second'); fs.unwatchFile(file); fs.rmSync(directory, {recursive:true, force:true});
+}
+fs.watchFile(file, {persistent:true, interval:10}, first);
+fs.watchFile(file, {persistent:true, interval:1000}, second);
+fs.unwatchFile(file, first);

@@ -14,6 +14,16 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 		args[i] = e.value(argument)
 	}
 	code := fmt.Sprintf("adamic_fs_file_%s(%s)", call.Operation, strings.Join(args, ", "))
+	if call.Operation == "host_watch_file" {
+		code = "adamic_fs_file_watch(" + strings.Join(args, ", ") + ")"
+	}
+	if call.Operation == "host_unwatch_file" {
+		callback := "NULL"
+		if len(args) == 2 {
+			callback = args[1]
+		}
+		code = "adamic_fs_file_unwatch(" + args[0] + ", " + callback + ")"
+	}
 	if call.Operation == "host_join" {
 		array := "NULL"
 		if len(args) != 0 {

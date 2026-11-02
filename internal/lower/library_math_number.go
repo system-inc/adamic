@@ -55,6 +55,11 @@ func (l *lowering) libraryNumber(node *ast.Node) (ir.Expression, error) {
 		return value, nil
 	case ir.Boolean, ir.String, ir.MaybeNumber, ir.MaybeBoolean:
 	case ir.Object, ir.Array:
+		// Stats.mtime is the runtime's real Date. Bind only this host conversion;
+		// other object protocols still require their own represented ToPrimitive.
+		if l.nodeLibraryMember(node) == "node:fs.StatsBase.mtime" {
+			return ir.NodeFSFile{Operation: "date_time", Arguments: []ir.Expression{value}, Of: ir.Number}, nil
+		}
 		return l.censusNumberObject(node, value)
 	case ir.Union:
 		if !l.writable(l.checker.GetTypeAtLocation(node)) {

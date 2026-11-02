@@ -76,3 +76,14 @@ func TestWasmPurityRefusesStdoutColumnsReads(t *testing.T) {
 		}
 	}
 }
+
+func TestWasmPurityRefusesStatPolling(t *testing.T) {
+	t.Parallel()
+	for _, operation := range []string{"watch_file", "unwatch_file"} {
+		builds := 0
+		err := BuildWith("testdata/wasm/host_"+operation+".a", filepath.Join(t.TempDir(), "worker"), Options{Wasm: []string{"hostPolling"}, BuildWasm: func(string, string, string, []string) error { builds++; return fmt.Errorf("unexpected Wasm build") }})
+		if err == nil || builds != 0 || !strings.Contains(err.Error(), "impure: host operation host_"+operation) {
+			t.Fatalf("want located host polling refusal before build, got %v", err)
+		}
+	}
+}
