@@ -1,0 +1,33 @@
+from pathlib import Path
+import os,json,subprocess as s,time,signal,shutil,sys
+D=Path(__file__).parent;R=Path('/workspace/scratch/adapt-93-main');A=Path((D/'artifact-path').read_text());saved=D/'oracle-after-artifact';A.rename(saved)
+link=D/'lane-after/adapted-tree';link.unlink();link.symlink_to(saved/'tree',target_is_directory=True)
+records=[]
+def run(name,cmd,limit=600,env=None):
+ start=time.monotonic();minimum=shutil.disk_usage(D).free
+ with (D/(name+'.log')).open('w') as f:
+  p=s.Popen(list(map(str,cmd)),cwd=R,env=env,stdout=f,stderr=s.STDOUT,start_new_session=True)
+  while p.poll() is None:
+   minimum=min(minimum,shutil.disk_usage(D).free)
+   if time.monotonic()-start>limit or minimum<3*1024**3:
+    os.killpg(p.pid,signal.SIGTERM);p.wait();raise RuntimeError('time/disk bound')
+   time.sleep(1)
+ row=dict(name=name,command=list(map(str,cmd)),exit=p.returncode,wall=round(time.monotonic()-start,3),minFreeBytes=minimum);records.append(row);(D/'final-artifact.json').write_text(json.dumps(records,indent=2));print(row,flush=True);assert p.returncode==0,row
+run('archived-after-lane',['python3','stage3/lane/check.py',D/'lane-after'],180)
+run('prepare-restored',['python3','stage3/lane/prepare_shards.py',D/'artifacts'],1800)
+new=json.loads((D/'prepare-restored.log').read_text());assert Path(new['artifact'])==A
+# A real ignored install directory, with package-directory links. No files are added to the broad artifact input set.
+modules=R/'stage3/typescript/node_modules';assert modules.is_symlink();modules.unlink();modules.mkdir()
+for item in (A/'tree/node_modules').iterdir():
+ if item.is_dir():(modules/item.name).symlink_to(item,target_is_directory=True)
+sys.path.insert(0,str(R/'stage3/lane'));from artifact import input_key
+assert input_key()[0]==new['key']
+unit=next(u for u in json.loads((R/'stage3/lane/shard-plan.json').read_text())['units'] if u['name']=='stage3-lane-file-000')
+run('unit-final',['python3','stage3/lane/shard.py',unit['name'],D/'unit-final','--inputs-hash',unit['inputs_hash']],env=dict(os.environ,STAGE3_ARTIFACT=str(A)))
+run('verify-final-artifact',['python3','stage3/lane/prepare_shards.py',D/'artifacts'])
+assert json.loads((D/'verify-final-artifact.log').read_text())['cache_hit'] is True
+# Return the uninitialized submodule to its original state; lane has no cohere imports.
+assert (R/'cohere').is_symlink();(R/'cohere').unlink();(R/'cohere').mkdir()
+run('lane-list',['go','list','./stage3/lane/...'])
+assert input_key()[0]==new['key']
+print('PASS final immutable artifact verified and dependency links cleaned',flush=True)

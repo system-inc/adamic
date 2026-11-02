@@ -1,0 +1,31 @@
+from pathlib import Path
+import subprocess as s,time,json,shutil,os,signal,sys,gzip
+D=Path(__file__).parent;R=Path('/workspace/scratch/adapt-93-tip');records=[]
+def run(name,cmd,limit=1800,want=0,env=None):
+ start=time.monotonic();minimum=shutil.disk_usage(D).free
+ with (D/(name+'.log')).open('w') as f:
+  p=s.Popen(list(map(str,cmd)),cwd=R,env=env,stdout=f,stderr=s.STDOUT,start_new_session=True)
+  while p.poll() is None:
+   minimum=min(minimum,shutil.disk_usage(D).free)
+   if minimum<3*1024**3 or time.monotonic()-start>limit:os.killpg(p.pid,signal.SIGTERM);p.wait();raise RuntimeError((name,'disk/time guard'))
+   time.sleep(1)
+ row=dict(name=name,command=list(map(str,cmd)),exit=p.returncode,wall=round(time.monotonic()-start,3),minFreeBytes=minimum);records.append(row);(D/'manifest.json').write_text(json.dumps(records,indent=2));print(row,flush=True);assert p.returncode==want,row
+run('prepare-artifact',['python3','-B','stage3/lane/prepare_shards.py',D/'artifacts'])
+ready=json.loads((D/'prepare-artifact.log').read_text());A=Path(ready['artifact']);(D/'artifact-path').write_text(str(A));env=dict(os.environ,STAGE3_ARTIFACT=str(A));old=json.loads((R/'stage3/lane/shard-plan.json').read_text());(D/'main-plan.json').write_text(json.dumps(old,indent=2));unit=next(u for u in old['units'] if u['name']=='stage3-lane-file-000');old_hash=unit['inputs_hash']
+run('unit-main-manifest',['python3','-B','stage3/lane/shard.py',unit['name'],D/'unit-main-manifest','--inputs-hash',old_hash],want=1,env=env)
+e=R/'stage3/lane/evidence/case-shards/tests-and-units.jsonl.gz';saved=e.read_bytes()
+run('regenerate-plan',['python3','-B','stage3/lane/shard_plan.py',A]);assert gzip.decompress(saved)==gzip.decompress(e.read_bytes());e.write_bytes(saved)
+run('generate-go',['python3','-B','stage3/lane/generate_shards.py'])
+new=json.loads((R/'stage3/lane/shard-plan.json').read_text());assert len(new['units'])==len(old['units'])==398
+for a,b in zip(old['units'],new['units']):assert {k:v for k,v in a.items() if k!='inputs_hash'}=={k:v for k,v in b.items() if k!='inputs_hash'};assert a['inputs_hash']!=b['inputs_hash']
+unit=next(u for u in new['units'] if u['name']=='stage3-lane-file-000')
+run('unit-old-hash',['python3','-B','stage3/lane/shard.py',unit['name'],D/'unit-old-hash','--inputs-hash',old_hash],want=1,env=env)
+run('unit-regenerated',['python3','-B','stage3/lane/shard.py',unit['name'],D/'unit-regenerated','--inputs-hash',unit['inputs_hash']],env=env)
+run('verify-artifact',['python3','-B','stage3/lane/prepare_shards.py',D/'artifacts']);assert json.loads((D/'verify-artifact.log').read_text())['cache_hit']
+modules=R/'stage3/typescript/node_modules';modules.mkdir()
+for item in (A/'tree/node_modules').iterdir():
+ if item.is_dir():(modules/item.name).symlink_to(item,target_is_directory=True)
+sys.path.insert(0,str(R/'stage3/lane'));from artifact import input_key
+assert input_key()[0]==new['artifact']==ready['key']
+(D/'regeneration.json').write_text(json.dumps(dict(artifact=new['artifact'],oldArtifact=old['artifact'],unit=unit,oldHash=old_hash,units=398,definitionsUnchanged=True,allHashesChanged=True),indent=2))
+print('PASS regenerated manifests and immutable artifact verified',flush=True)

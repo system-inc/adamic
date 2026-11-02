@@ -1,0 +1,14 @@
+from pathlib import Path
+import subprocess as s,time,json,os,signal,shutil
+D=Path(__file__).parent;R=Path('/workspace/scratch/adapt-93-tip');rows=[]
+for name,cmd,limit in [('built-witness',['node','stage3/adapt/93-builtin-imports/proofs/built-witness.cjs',D/'control',D/'after',D/'project',D/'node-witness.json'],180),('verify-final-artifact',['python3','-B','stage3/lane/prepare_shards.py',D/'artifacts'],600)]:
+ start=time.monotonic()
+ with (D/(name+'.log')).open('w') as f:
+  p=s.Popen(list(map(str,cmd)),cwd=R,stdout=f,stderr=s.STDOUT,start_new_session=True)
+  while p.poll() is None:
+   if time.monotonic()-start>limit or shutil.disk_usage(D).free<3*1024**3:os.killpg(p.pid,signal.SIGTERM);p.wait();raise RuntimeError((name,'time/disk bound'))
+   time.sleep(1)
+ row=dict(name=name,command=list(map(str,cmd)),exit=p.returncode,wall=round(time.monotonic()-start,3));rows.append(row);(D/'final-checks.json').write_text(json.dumps(rows,indent=2));print(row,flush=True);assert p.returncode==0,row
+assert json.loads((D/'verify-final-artifact.log').read_text())['cache_hit']
+assert not s.check_output(['git','diff','d3efff7b','--','stage3/adapt/93-builtin-imports','stage3/lane/evidence/adapt-93-main'],cwd=R)
+print('PASS final artifact integrity, Node witness, and carried-source equivalence',flush=True)

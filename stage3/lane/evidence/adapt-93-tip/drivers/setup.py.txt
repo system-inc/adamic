@@ -1,0 +1,7 @@
+from pathlib import Path
+import shutil,os,subprocess as s
+D=Path(__file__).parent;R=Path('/workspace/scratch/adapt-93-tip');C=Path('/workspace/scratch/adapt-93-tip-control');source=Path('/workspace/scratch/globals-gc-value/cohere')
+for root in [R,C]:shutil.copytree('/workspace/adamic/stage3/api/node_modules',root/'stage3/api/node_modules',symlinks=True,copy_function=os.link)
+def pin(src,dst):
+ commit=s.check_output(['git','-C',str(src),'rev-parse','HEAD'],text=True).strip();common=Path(s.check_output(['git','-C',str(src),'rev-parse','--git-common-dir'],text=True).strip());common=common if common.is_absolute() else (src/common).resolve();s.run(['git','init',str(dst)],check=True);shutil.copytree(common/'objects',dst/'.git/objects',dirs_exist_ok=True,copy_function=os.link);assert not (dst/'.git/objects/info/alternates').exists();(dst/'.git/shallow').write_text(commit+'\n');s.run(['git','-C',str(dst),'checkout','--detach',commit],check=True)
+pin(source,R/'cohere');pin(source/'TypeScript',R/'cohere/TypeScript')

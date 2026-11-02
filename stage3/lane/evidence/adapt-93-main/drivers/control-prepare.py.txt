@@ -1,0 +1,14 @@
+import os,subprocess as s,pathlib,time,json,shutil,signal
+D=pathlib.Path('/workspace/scratch/adapt-93-main-report'); R=pathlib.Path('/workspace/scratch/globals-gc-capture-main-control')
+if not (R/'stage3/api/node_modules').exists():shutil.copytree('/workspace/adamic/stage3/api/node_modules',R/'stage3/api/node_modules',symlinks=True,copy_function=os.link)
+records=[]
+for name,cmd,limit in [('control-clone',['git','clone','--shared','/workspace/scratch/adapt-93-proof/upstream',str(D/'control')],600),('control-apply',['python3',str(R/'stage3/apply.py'),'--adapt-checkout',str(D/'control')],1800)]:
+ start=time.monotonic()
+ with (D/(name+'.log')).open('w') as f:
+  p=s.Popen(cmd,cwd=R,stdout=f,stderr=s.STDOUT,start_new_session=True)
+  while p.poll() is None:
+   if time.monotonic()-start>limit or shutil.disk_usage(D).free<3*1024**3:
+    os.killpg(p.pid,signal.SIGTERM);p.wait();raise RuntimeError('time/disk bound')
+   time.sleep(1)
+ records.append(dict(name=name,exit=p.returncode,seconds=time.monotonic()-start));(D/'control-prepare.json').write_text(json.dumps(records,indent=2))
+ if p.returncode:raise RuntimeError(records[-1])

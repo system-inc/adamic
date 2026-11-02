@@ -1,0 +1,49 @@
+import os,sys,json,time,subprocess as s,shutil,signal,gzip,hashlib
+from pathlib import Path
+D=Path(__file__).parent; R=Path('/workspace/scratch/adapt-93-main'); records=[]
+def run(name,cmd,limit=600,want=0,env=None):
+ start=time.monotonic(); minimum=shutil.disk_usage(D).free
+ with (D/(name+'.log')).open('w') as out:
+  p=s.Popen(list(map(str,cmd)),cwd=R,env=env,stdout=out,stderr=s.STDOUT,start_new_session=True)
+  while p.poll() is None:
+   minimum=min(minimum,shutil.disk_usage(D).free)
+   if time.monotonic()-start>limit or minimum<3*1024**3:
+    os.killpg(p.pid,signal.SIGTERM);p.wait();raise RuntimeError((name,'time/disk bound',minimum))
+   time.sleep(1)
+ row=dict(name=name,command=list(map(str,cmd)),exit=p.returncode,seconds=round(time.monotonic()-start,3),minFreeBytes=minimum)
+ records.append(row);(D/'finish-prepare.json').write_text(json.dumps(records,indent=2)); print(row,flush=True)
+ if want is not None:assert p.returncode==want,row
+ return p.returncode
+# This is the official --write-table path, not a textual conflict resolution.
+run('write-table',['bash','stage3/apply.sh',D/'table-tree','--write-table'],1800)
+shutil.copyfile(R/'stage3/patch-set.md',D/'patch-set-with93.md')
+shutil.rmtree(D/'table-tree')
+# Keep first producer logs but discard its artifact, whose key predates the regenerated table.
+for a in (D/'artifacts').iterdir():
+ if a.is_dir():
+  for f in a.glob('*.log'):shutil.copyfile(f,D/('first-'+f.name))
+  shutil.rmtree(a)
+run('prepare-final',['python3','stage3/lane/prepare_shards.py',D/'artifacts'],1800)
+prepared=json.loads((D/'prepare-final.log').read_text()); A=Path(prepared['artifact']); (D/'artifact-path').write_text(str(A))
+env=dict(os.environ,STAGE3_ARTIFACT=str(A)); plan=json.loads((R/'stage3/lane/shard-plan.json').read_text()); old=plan
+unit=next(u for u in plan['units'] if u['name']=='stage3-lane-file-000')
+run('unit-before-regeneration',['python3','stage3/lane/shard.py',unit['name'],D/'unit-before','--inputs-hash',unit['inputs_hash']],want=1,env=env)
+# The CLI is the repository's generator. Its evidence listing is logically invariant; restore only its gzip timestamp.
+evidence=R/'stage3/lane/evidence/case-shards/tests-and-units.jsonl.gz'; saved=evidence.read_bytes()
+run('regenerate-plan',['python3','stage3/lane/shard_plan.py',A])
+assert gzip.decompress(saved)==gzip.decompress(evidence.read_bytes()),'inventory changed'
+evidence.write_bytes(saved)
+run('generate-go',['python3','stage3/lane/generate_shards.py'])
+plan=json.loads((R/'stage3/lane/shard-plan.json').read_text())
+assert len(plan['units'])==398
+for a,b in zip(old['units'],plan['units']):assert {k:v for k,v in a.items() if k!='inputs_hash'}=={k:v for k,v in b.items() if k!='inputs_hash'}
+assert all(a['inputs_hash']!=b['inputs_hash'] for a,b in zip(old['units'],plan['units']))
+unit=next(u for u in plan['units'] if u['name']=='stage3-lane-file-000')
+run('unit-after-regeneration',['python3','stage3/lane/shard.py',unit['name'],D/'unit-after','--inputs-hash',unit['inputs_hash']],env=env)
+# Install link is not traversed by artifact.py's rglob; hold that fact explicitly.
+sys.path.insert(0,str(R/'stage3/lane'));from artifact import input_key
+key=input_key()[0]
+(R/'stage3/typescript/node_modules').symlink_to(A/'tree/node_modules',target_is_directory=True)
+assert input_key()[0]==key==prepared['key']
+(D/'regeneration.json').write_text(json.dumps(dict(artifact=prepared['key'],units=398,allHashesChanged=True,unit=unit),indent=2))
+print('READY',flush=True)

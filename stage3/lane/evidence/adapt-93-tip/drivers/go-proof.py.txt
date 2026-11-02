@@ -1,0 +1,20 @@
+from pathlib import Path
+import subprocess as s,time,os,json,shutil,signal
+D=Path(__file__).parent;R=Path('/workspace/scratch/adapt-93-tip');rows=[]
+for label,args,limit in [('lane-product',['go','test','-json','-count=1','-timeout','30m','./stage3/lane','-run','^TestProduct_Stage3AdaptedTree$'],1800),('lane-whole',['go','test','-json','-count=1','-timeout','60m','./stage3/lane/...'],3600)]:
+ start=time.monotonic();minimum=shutil.disk_usage(D).free
+ with (D/(label+'.jsonl')).open('w') as f:
+  p=s.Popen(args,cwd=R,stdout=f,stderr=s.STDOUT,start_new_session=True)
+  while p.poll() is None:
+   minimum=min(minimum,shutil.disk_usage(D).free)
+   if time.monotonic()-start>limit or minimum<3*1024**3:
+    os.killpg(p.pid,signal.SIGTERM);p.wait();raise RuntimeError('go time/disk bound')
+   time.sleep(1)
+ events=[]
+ for line in (D/(label+'.jsonl')).read_text().splitlines():
+  try:events.append(json.loads(line))
+  except ValueError:pass
+ top=[e for e in events if e.get('Test') and '/' not in e['Test'] and e.get('Action') in ('pass','fail','skip')]
+ row=dict(label=label,command=args,exit=p.returncode,wall=round(time.monotonic()-start,3),minFreeBytes=minimum,counts={a:sum(e['Action']==a for e in top) for a in ('pass','fail','skip')},failures=[e['Test'] for e in top if e['Action']=='fail'])
+ rows.append(row);(D/'go-proof.json').write_text(json.dumps(rows,indent=2));print(row,flush=True)
+ if p.returncode:raise RuntimeError(row)

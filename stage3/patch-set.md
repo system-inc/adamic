@@ -12,7 +12,7 @@ Rows measure incremental edits; total measures the final tree against pristine.
 | 31-indexed-reads-checker | 1 | 394 | 394 |
 | 32-indexed-reads-program | 20 | 132 | 132 |
 | 33-indexed-reads-emit | 16 | 119 | 119 |
-| 40-explicit-any | 17 | 106 | 106 |
+| 40-explicit-any | 18 | 107 | 107 |
 | 41-explicit-any-remaining | 8 | 25 | 22 |
 | 42-scanner-any | 1 | 1 | 1 |
 | 43-any-returns | 2 | 14 | 9 |
@@ -39,4 +39,14 @@ Rows measure incremental edits; total measures the final tree against pristine.
 | 90-void-widening | 7 | 66 | 66 |
 | 91-patcher-discard | 2 | 2 | 2 |
 | 92-tty-host-results | 1 | 2 | 2 |
-| **Total** | 85 | 5525 | 5483 |
+| 93-builtin-imports | 1 | 3 | 3 |
+| 95-checker-axolotl-a | 1 | 13 | 13 |
+| 95-checker-axolotl-b | 1 | 7 | 7 |
+| 96-emit-axolotl-a | 1 | 14 | 14 |
+| 96-emit-axolotl-b | 1 | 2 | 2 |
+| 96-emit-axolotl-c | 1 | 19 | 19 |
+| 97-cli-axolotl-a | 1 | 1 | 1 |
+| 98-axolotl-a | 2 | 8 | 8 |
+| 98-axolotl-b | 1 | 5 | 5 |
+| 99-correctness-axolotl-a | 4 | 12 | 12 |
+| **Total** | 85 | 5610 | 5568 |

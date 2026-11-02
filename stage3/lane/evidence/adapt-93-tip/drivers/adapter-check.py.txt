@@ -1,0 +1,20 @@
+from pathlib import Path
+import subprocess as s,os,json,hashlib,time
+D=Path(__file__).parent;R=Path('/workspace/scratch/adapt-93-tip');A=D/'after';P=R/'stage3/adapt/93-builtin-imports'; target=A/'src/compiler/sys.ts'; saved=target.read_bytes();before=(D/'control/src/compiler/sys.ts').read_bytes();h=lambda b:hashlib.sha256(b).hexdigest();pins=json.loads((P/'proofs/targets.json').read_text())[0]
+assert h(saved)==pins['afterSha256'];assert h(before)==pins['beforeSha256']
+def run(name,cmd,want=0):
+ with (D/(name+'.log')).open('w') as f:p=s.run(list(map(str,cmd)),cwd=R,stdout=f,stderr=s.STDOUT,timeout=180)
+ assert p.returncode==want,(name,p.returncode)
+stamp=target.stat().st_mtime_ns
+run('adapter-rerun',['node',P/'adapt.cjs',A]);assert json.loads((D/'adapter-rerun.log').read_text())['files']==0
+assert target.read_bytes()==saved and target.stat().st_mtime_ns==stamp
+try:
+ target.write_bytes(saved+b'\n');stamp=target.stat().st_mtime_ns
+ run('moved-target',['node',P/'adapt.cjs',A],1)
+ assert 'target source moved: sys.ts' in (D/'moved-target.log').read_text()
+ assert target.read_bytes()==saved+b'\n' and target.stat().st_mtime_ns==stamp
+finally:target.write_bytes(saved)
+run('source-scope-transpile',['node',P/'proofs/check.cjs',D/'control',A,D/'source-scope-transpile.json'])
+run('bindings',['node',P/'proofs/bindings.cjs',D/'control',A,D/'bindings.json'])
+(D/'adapter-check.json').write_text(json.dumps(dict(beforeSha256=h(before),afterSha256=h(saved),pinsUnchanged=True,zeroWriteRerun=True,movedTargetRejectedBeforeWrite=True),indent=2))
+print('PASS pinned hashes, zero-write rerun, moved-target rejection, source scope, transpile, bindings')

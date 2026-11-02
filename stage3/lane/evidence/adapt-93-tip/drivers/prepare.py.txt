@@ -1,0 +1,25 @@
+from pathlib import Path
+import os,subprocess as s,time,json,shutil,signal,concurrent.futures,threading
+D=Path(__file__).parent;R=Path('/workspace/scratch/adapt-93-tip');C=Path('/workspace/scratch/adapt-93-tip-control');records=[];lock=threading.Lock()
+def run(name,cmd,cwd,limit=1800):
+ start=time.monotonic();minimum=shutil.disk_usage(D).free
+ with (D/(name+'.log')).open('w') as f:
+  p=s.Popen(list(map(str,cmd)),cwd=cwd,stdout=f,stderr=s.STDOUT,start_new_session=True)
+  while p.poll() is None:
+   minimum=min(minimum,shutil.disk_usage(D).free)
+   if minimum<3*1024**3 or time.monotonic()-start>limit:
+    os.killpg(p.pid,signal.SIGTERM);p.wait();raise RuntimeError((name,'disk/time bound'))
+   time.sleep(1)
+ row=dict(name=name,command=list(map(str,cmd)),cwd=str(cwd),exit=p.returncode,wall=round(time.monotonic()-start,3),minFreeBytes=minimum)
+ with lock:records.append(row);(D/'preparation.json').write_text(json.dumps(records,indent=2));print(row,flush=True)
+ assert p.returncode==0,row
+ return row
+def control():
+ run('control-clone',['git','clone','--shared','/workspace/scratch/adapt-93-proof/upstream',D/'control'],C,600)
+ run('control-apply',['python3','stage3/apply.py','--adapt-checkout',D/'control'],C)
+with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
+ a=pool.submit(run,'with93-official-apply',['bash','stage3/apply.sh',D/'after','--write-table'],R)
+ b=pool.submit(control)
+ a.result();b.result()
+shutil.copyfile(D/'after/patch-set.md',D/'patch-set-with93.md');shutil.copyfile(D/'control/patch-set.md',D/'patch-set-main.md')
+print('PASS official tables and source trees ready',flush=True)
