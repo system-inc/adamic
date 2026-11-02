@@ -457,15 +457,18 @@ const u = tryCast(p, isTypeElement); console.log(u === undefined ? "no" : String
 	}
 }
 
-// A generic argument narrows to T & S, which concretes to the instance's own intersection. At T = Node, or
-// another supertype of S, it's S intersected only with supertypes of S, read through S's view, so an
-// honest value agrees with Node and a lie stops at the read (Language's g1 at Node, and its g4 at
-// Holder<number>, Adamic's ruling, Nov 1). At T = PropertySignature, a subtype of S, at T = Identifier,
-// which S isn't assignable to, and at T = Named, whose name is required where S's is optional, the
-// intersection holds a member that isn't a supertype, so the call stays NotYet. Mutants: any member let
-// through, and g1 at PropertySignature, Identifier and Named lower; comparability in place of
-// assignability, and g1 at Named lowers; the reads not routed to S's view, and the honest g1 is NotYet as
-// a widened read.
+// A generic argument narrows to T & S, which concretes to the instance's own intersection. At T = Node,
+// Declaration, or another supertype of S whose every field is S's, it's S intersected only with supertypes
+// of S, read through S's view, so an honest value agrees with Node and a lie stops at the read (Language's
+// g1 at Node, and its g4 at Holder<number>, Adamic's ruling, Nov 1). At T = PropertySignature, a subtype
+// of S, at T = Identifier, which S isn't assignable to, and at T = Named, whose name is required where
+// S's is optional, the intersection holds a member that isn't a supertype, so the call stays NotYet. So
+// it does at T = Lettered, whose optional a S lacks, and at T = Bag, whose index
+// signature is no property of S's (brandedSupertypeMember, ruled Nov 2). Mutants: any member let through,
+// and g1 at PropertySignature, Identifier and Named lower; comparability in place of assignability, and
+// g1 at Named lowers; the reads not routed to S's view, and the honest g1 is NotYet as a widened read; the
+// property-subset test dropped, and g1 at Lettered lowers; the signature test dropped, and g1 at Bag
+// lowers.
 func TestBrandedSupertypeGenericIntersection(t *testing.T) {
 	t.Parallel()
 	const g1 = `function show<T extends Node>(n: T): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
@@ -483,17 +486,30 @@ const x = { kind: 80, pos: 3 }; const y: Node = x; show(y);
 		{"g4 at Holder<number>", `interface Holder<K extends number> { readonly kind: K; readonly pos: number; }
 function show<K extends number>(n: Holder<K>): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
 const v: Holder<number> = w; show(v);`},
+		{"g1 at Declaration", `function show<T extends Declaration>(n: T): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
+const d = { kind: 80, pos: 2, _declarationBrand: undefined, name: 5 }; const v: Declaration = d; show(v);`},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			brandedStops(t, brandedPrelude+lie+probe.source, "adamic: panic: field read failed: n.name matches no member of string | undefined")
 		})
 	}
+	// Lettered's a is optional, so TypeElement, which lacks it, is assignable to Lettered. On 021e43f3 the
+	// honest g1 at Lettered lowered and read x.a raw through TypeElement's id, unchecked (Pupa, Nov 2). A
+	// lying a can't be given a Lettered today: method bivariance, JSON.parse, a cast through unknown and
+	// any are each refused before this rule is reached, so the honest program is the pin.
+	const lettered = `interface Lettered extends Node { readonly a?: string; }
+function show<T extends Lettered>(x: T): void { if (isTypeElementLie(x)) { console.log(String(x.a)); } }
+`
 	for _, probe := range []struct{ name, source, want string }{
 		{"g1 at PropertySignature", g1 + `const p: PropertySignature = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a", typeText: "t" }; show(p);`, "read on the true side as PropertySignature & TypeElement"},
 		{"g1 at Identifier", g1 + `const i: Identifier = { kind: 80, pos: 2, escapedText: "e" }; show(i);`, "read on the true side as Identifier & TypeElement"},
 		{"g1 at Named", `interface Named extends Node { readonly name: string; }
 ` + g1 + `const m: Named = { kind: 80, pos: 2, name: "m" }; show(m);`, "read on the true side as Named & TypeElement"},
+		{"g1 at Lettered", lettered + `const w = { kind: 80, pos: 2, a: "x" }; const v: Lettered = w; show(v);`, "read on the true side as Lettered & TypeElement"},
+		{"g1 at Bag", `interface Bag extends Node { [k: string]: unknown; }
+function show<T extends Bag>(n: T): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
+const b: Bag = { kind: 80, pos: 2 }; show(b);`, "read on the true side as Bag & TypeElement"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()

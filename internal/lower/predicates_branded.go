@@ -372,7 +372,8 @@ func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Typ
 // to it by the checker's strict assignability, never comparability, which takes an optional field for a
 // required one: target's view would check that field as maybe absent while the read types it as present.
 // A member typed any or unknown adds nothing. A member that's still a type parameter, one the body is
-// lowered without mapping, or anything else, is no supertype, so the read stays NotYet.
+// lowered without mapping, or anything else, is no supertype, so the read stays NotYet. And a member
+// must hold only target's fields (brandedSupertypeMember), or the premise fails.
 func (l *lowering) brandedIntersection(read, target *checker.Type) bool {
 	if read.Flags()&checker.TypeFlagsIntersection == 0 {
 		return false
@@ -383,11 +384,32 @@ func (l *lowering) brandedIntersection(read, target *checker.Type) bool {
 		case member.Id() == target.Id():
 			found = true
 		case member.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0:
-		case l.mentionsTypeParameter(member, map[*checker.Type]bool{}) || !l.checker.IsTypeAssignableTo(target, member):
+		case l.mentionsTypeParameter(member, map[*checker.Type]bool{}) || !l.brandedSupertypeMember(member, target):
 			return false
 		}
 	}
 	return found
+}
+
+// brandedSupertypeMember is whether member is a supertype of target the ruling's argument holds for:
+// target strictly assignable to it, and every property it has, optional and inherited ones included, a
+// property of target by name whose type in target is strictly assignable to member's. Assignability alone
+// isn't that: a member's optional field target lacks, as Lettered's `a?: string` over TypeElement, keeps
+// target assignable while its read, routed to target's id, is a field no view of target checks, so it was
+// read raw, unchecked, where 021e43f3 lowered it (Lower's must, ruled (a) by Compiler, Lower and
+// Language, Nov 2). A member with an index signature, or a call or construct signature, never counts:
+// neither is a property, and either could route a read through target's id raw (Compiler, Nov 2).
+func (l *lowering) brandedSupertypeMember(member, target *checker.Type) bool {
+	if !l.checker.IsTypeAssignableTo(target, member) || len(l.checker.GetIndexInfosOfType(member)) != 0 || len(l.checker.GetSignaturesOfType(member, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(member, checker.SignatureKindConstruct)) != 0 {
+		return false
+	}
+	for _, property := range l.checker.GetPropertiesOfType(member) {
+		own := l.checker.GetPropertyOfType(target, property.Name)
+		if own == nil || !l.checker.IsTypeAssignableTo(l.checker.GetTypeOfSymbol(own), l.checker.GetTypeOfSymbol(property)) {
+			return false
+		}
+	}
+	return true
 }
 
 // brandedIntersectionReceiver is the branded supertype S a receiver of S intersected only with supertypes
