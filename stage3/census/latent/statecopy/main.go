@@ -46,6 +46,111 @@ var irPrivateFields = map[string]privateIRField{
 	"GeneratedType.identity":      privateShared,
 }
 
+// Every production lowering field has an explicit census policy. Requiring a policy
+// for all fields also catches new memos whose names do not say "cache" or "Known".
+// unitSnapshot delegates to the typed copier (which shares checker/program identities).
+// programFact is a proven program answer, computed once and installed on every base;
+// these scalar fields still copy by value during statement rollback. No
+// checker-type memo is carried by this policy. Program-literal verdict maps
+// retain their owned typed copies in each unit and statement snapshot.
+type loweringFieldPolicy uint8
+
+const (
+	unitSnapshot loweringFieldPolicy = iota
+	programFact
+	sharedIdentity
+	nilQuery
+)
+
+var loweringFieldPolicies = map[string]loweringFieldPolicy{
+	"accessorCaptures":           unitSnapshot,
+	"accessorNames":              unitSnapshot,
+	"alwaysUndefined":            unitSnapshot,
+	"assignedSymbols":            unitSnapshot,
+	"asyncPayloadFailures":       unitSnapshot,
+	"asyncSites":                 unitSnapshot,
+	"caught":                     unitSnapshot,
+	"checker":                    unitSnapshot,
+	"classGenericInstances":      unitSnapshot,
+	"classNode":                  unitSnapshot,
+	"classType":                  unitSnapshot,
+	"classes":                    unitSnapshot,
+	"closureRecords":             unitSnapshot,
+	"closures":                   unitSnapshot,
+	"cycleTypes":                 unitSnapshot,
+	"cyclicModules":              unitSnapshot,
+	"debug":                      unitSnapshot,
+	"derivedAncestors":           unitSnapshot,
+	"entriesProgramRecords":      programFact,
+	"entriesProgramRecordsKnown": programFact,
+	"entriesRecordTypes":         unitSnapshot,
+	"entriesRecordTypesKnown":    unitSnapshot,
+	"entriesRecords":             programFact,
+	"entry":                      unitSnapshot,
+	"forwarderValues":            unitSnapshot,
+	"forwarders":                 unitSnapshot,
+	"function":                   unitSnapshot,
+	"functionIndex":              unitSnapshot,
+	"functions":                  unitSnapshot,
+	"genericDepth":               unitSnapshot,
+	"genericInstances":           unitSnapshot,
+	"genericVoidVerdicts":        unitSnapshot,
+	"generics":                   unitSnapshot,
+	"graphDynamicSite":           unitSnapshot,
+	"graphViewSite":              unitSnapshot,
+	"hasMovedParallelMap":        unitSnapshot,
+	"impliedTargetQuery":         nilQuery,
+	"initializing":               unitSnapshot,
+	"instance":                   unitSnapshot,
+	"instances":                  unitSnapshot,
+	"instantiated":               unitSnapshot,
+	"librarySpreads":             unitSnapshot,
+	"localAlso":                  unitSnapshot,
+	"localNodes":                 unitSnapshot,
+	"localTypes":                 unitSnapshot,
+	"locals":                     unitSnapshot,
+	"moveSites":                  unitSnapshot,
+	"narrowedFields":             unitSnapshot,
+	"narrowedReads":              unitSnapshot,
+	"nodeHostHolders":            unitSnapshot,
+	"nodeHostViews":              unitSnapshot,
+	"objectIntersections":        unitSnapshot,
+	"omittedOptionals":           unitSnapshot,
+	"parallelMoveDemand":         unitSnapshot,
+	"predicateFalse":             unitSnapshot,
+	"predicateProofs":            unitSnapshot,
+	"privateOwners":              unitSnapshot,
+	"program":                    unitSnapshot,
+	"programCandidates":          unitSnapshot,
+	"programDiscovery":           unitSnapshot,
+	"programPlan":                unitSnapshot,
+	"provenModuleReads":          unitSnapshot,
+	"recordGuardedReads":         unitSnapshot,
+	"refusal":                    unitSnapshot,
+	"result":                     unitSnapshot,
+	"signed":                     unitSnapshot,
+	"slots":                      unitSnapshot,
+	"sourceIdentities":           sharedIdentity,
+	"sourceModules":              unitSnapshot,
+	"staticGlobals":              unitSnapshot,
+	"statics":                    unitSnapshot,
+	"strings":                    unitSnapshot,
+	"substitution":               unitSnapshot,
+	"this":                       unitSnapshot,
+	"tries":                      unitSnapshot,
+	"typeMapper":                 unitSnapshot,
+	"unlowerable":                unitSnapshot,
+	"unsetUntil":                 unitSnapshot,
+	"untaggedCallableTargets":    unitSnapshot,
+	"viewSources":                unitSnapshot,
+	"viewTypes":                  unitSnapshot,
+	"voidBound":                  unitSnapshot,
+	"voidHolders":                unitSnapshot,
+	"voidMessageMethods":         unitSnapshot,
+	"wholeObjectCopies":          unitSnapshot,
+	"writeSites":                 unitSnapshot,
+}
+
 func printed(n ast.Node) string {
 	var b bytes.Buffer
 	if err := format.Node(&b, token.NewFileSet(), n); err != nil {
@@ -251,6 +356,41 @@ func generate(repository, lowerInput string) []byte {
 			body.WriteString("return result}\n")
 			fmt.Fprintf(&body, "func latentCopyPointer_%s(value *%s, seen map[any]any) *%s {if value==nil{return nil}; if prior,ok:=seen[value];ok{return prior.(*%s)};result:=new(%s);seen[value]=result; *result=latentCopy_%s(*value,seen);return result}\n", name, name, name, name, name, name)
 		}
+	}
+	// Capture/install only the fields explicitly marked as carried program facts.
+	// The ordinary typed snapshot above retains these scalars through rollback.
+	facts := []string{}
+	for _, field := range g.types["lowering"].(*ast.StructType).Fields.List {
+		for _, id := range field.Names {
+			if loweringFieldPolicies[id.Name] == programFact {
+				if ty := printed(field.Type); ty != "bool" && ty != "map[*ast.Node]bool" {
+					panic("state copy: program fact " + id.Name + " needs an audited carry")
+				}
+				facts = append(facts, id.Name)
+			}
+		}
+	}
+	sort.Strings(facts)
+	if len(facts) > 0 {
+		body.WriteString("type latentProgramFacts struct {")
+		for _, name := range facts {
+			for _, field := range g.types["lowering"].(*ast.StructType).Fields.List {
+				for _, id := range field.Names {
+					if id.Name == name {
+						fmt.Fprintf(&body, "%s %s;", name, printed(field.Type))
+					}
+				}
+			}
+		}
+		body.WriteString("}\nfunc latentCaptureProgramFacts(value *lowering) latentProgramFacts { return latentProgramFacts{")
+		for _, field := range facts {
+			fmt.Fprintf(&body, "%s:value.%s,", field, field)
+		}
+		body.WriteString("}}\nfunc (value *lowering) latentApplyProgramFacts(facts latentProgramFacts) {")
+		for _, field := range facts {
+			fmt.Fprintf(&body, "value.%s=facts.%s;", field, field)
+		}
+		body.WriteString("}\n")
 	}
 	// The full copy's answers for unexported IR fields, from irPrivateFields, so the table has one home.
 	keys := make([]string, 0, len(irPrivateFields))

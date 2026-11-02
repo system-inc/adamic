@@ -1,0 +1,68 @@
+File: profile-census
+Build ID: 7bc7e7235e9ab5341dcec6b8dc6ba81541c1bc96
+Type: cpu
+Time: 2026-11-02 06:40:00 UTC
+Duration: 269.16s, Total samples = 334.32s (124.21%)
+Showing nodes accounting for 334.32s, 100% of 334.32s total
+----------------------------------------------------------+-------------
+      flat  flat%   sum%        cum   cum%   calls calls% + context
+----------------------------------------------------------+-------------
+                                            90.10s 99.93% |   github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes
+                                            87.35s 96.88% |   github.com/microsoft/TypeScript/tsc/internal/ast.visit
+    31.47s  9.41%  9.41%     90.16s 26.97%                | github.com/system-inc/adamic/internal/lower.(*lowering).entriesRecordLiteralWalk.func1
+                                            90.04s 99.87% |   github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+                                             8.65s  9.59% |   github.com/system-inc/adamic/internal/lower.(*lowering).entriesLiteralOrigin
+                                             1.31s  1.45% |   github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).AsBinaryExpression (inline)
+                                             0.18s   0.2% |   github.com/microsoft/TypeScript/tsc/internal/ast.SkipParentheses
+                                             0.12s  0.13% |   runtime.asyncPreempt
+                                             0.11s  0.12% |   github.com/microsoft/TypeScript/tsc/internal/ast.IsAssignmentOperator
+                                             0.04s 0.044% |   github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).AsPropertyAccessExpression (inline)
+                                             0.02s 0.022% |   github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).AsElementAccessExpression (inline)
+----------------------------------------------------------+-------------
+                                           110.83s 99.45% |   github.com/microsoft/TypeScript/tsc/internal/ast.visit
+                                           106.86s 95.89% |   github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes
+     0.29s 0.087%  9.50%    111.44s 33.33%                | github.com/system-inc/adamic/internal/lower.(*lowering).entriesProgramRecordsWalk.func1
+                                           110.73s 99.36% |   github.com/system-inc/adamic/internal/lower.(*lowering).entriesRecordLiteral
+                                           108.33s 97.21% |   github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+                                             0.01s 0.009% |   runtime.asyncPreempt
+----------------------------------------------------------+-------------
+                                           111.43s 99.28% |   github.com/system-inc/adamic/internal/lower.(*lowering).entriesRecordLiteral
+     0.01s 0.003%  9.50%    112.24s 33.57%                | github.com/system-inc/adamic/internal/lower.(*lowering).entriesRecordLiteralWalk
+                                            82.90s 73.86% |   github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+                                            29.28s 26.09% |   github.com/system-inc/adamic/internal/lower.(*lowering).moduleOrder
+                                             0.02s 0.018% |   github.com/system-inc/adamic/internal/lower.(*lowering).slotType
+                                             0.02s 0.018% |   github.com/system-inc/adamic/internal/lower.latentProbeWalk.func1
+                                             0.01s 0.0089% |   github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).GetIndexInfosOfType
+----------------------------------------------------------+-------------
+                                           109.56s 96.94% |   github.com/system-inc/adamic/internal/lower.(*lowering).value
+     0.01s 0.003%  9.51%    113.02s 33.81%                | github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue
+                                            60.91s 53.89% |   github.com/system-inc/adamic/internal/lower.(*lowering).property
+                                            58.56s 51.81% |   github.com/system-inc/adamic/internal/lower.(*lowering).expression (inline)
+                                            54.07s 47.84% |   github.com/system-inc/adamic/internal/lower.(*lowering).callOrMethod
+                                            10.45s  9.25% |   github.com/system-inc/adamic/internal/lower.(*lowering).conditional
+                                             9.40s  8.32% |   github.com/system-inc/adamic/internal/lower.(*lowering).prefix
+                                             8.15s  7.21% |   github.com/system-inc/adamic/internal/lower.(*lowering).objectLiteral
+                                             7.15s  6.33% |   github.com/system-inc/adamic/internal/lower.(*lowering).cast
+                                             6.84s  6.05% |   github.com/system-inc/adamic/internal/lower.(*lowering).closure
+                                             0.78s  0.69% |   github.com/system-inc/adamic/internal/lower.(*lowering).functionValue
+                                             0.50s  0.44% |   github.com/system-inc/adamic/internal/lower.(*lowering).template
+                                             0.31s  0.27% |   github.com/system-inc/adamic/internal/lower.(*lowering).genericFunctionValue
+                                             0.23s   0.2% |   github.com/system-inc/adamic/internal/lower.(*lowering).nonNull
+                                             0.22s  0.19% |   github.com/system-inc/adamic/internal/lower.(*lowering).builtin
+                                             0.13s  0.12% |   github.com/system-inc/adamic/internal/lower.(*lowering).coalesce
+                                             0.09s  0.08% |   github.com/system-inc/adamic/internal/lower.(*lowering).arrayLiteral
+                                             0.05s 0.044% |   github.com/system-inc/adamic/internal/lower.(*lowering).newExpression
+                                             0.03s 0.027% |   github.com/system-inc/adamic/internal/lower.(*lowering).processValue
+                                             0.02s 0.018% |   github.com/system-inc/adamic/internal/lower.(*lowering).staticClassRead
+                                             0.01s 0.0088% |   github.com/system-inc/adamic/internal/lower.(*lowering).assignmentValue
+                                             0.01s 0.0088% |   github.com/system-inc/adamic/internal/lower.(*lowering).enumExpression
+                                             0.01s 0.0088% |   github.com/system-inc/adamic/internal/lower.(*lowering).local
+                                             0.01s 0.0088% |   github.com/system-inc/adamic/internal/lower.(*lowering).nodeFSDirectoryValue
+                                             0.01s 0.0088% |   github.com/system-inc/adamic/internal/lower.(*lowering).recordExpression
+                                             0.01s 0.0088% |   github.com/system-inc/adamic/internal/lower.(*lowering).typedArrayExpression
+----------------------------------------------------------+-------------
+                                            57.34s 96.92% |   github.com/system-inc/adamic/internal/lower.(*lowering).entriesProgramHasRecords
+         0     0%  9.51%     59.16s 17.70%                | github.com/system-inc/adamic/internal/lower.(*lowering).entriesProgramRecordsWalk
+                                            58.92s 99.59% |   github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+                                             0.24s  0.41% |   github.com/system-inc/adamic/internal/lower.(*lowering).moduleOrder
+----------------------------------------------------------+-------------

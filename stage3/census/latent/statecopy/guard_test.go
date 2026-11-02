@@ -186,3 +186,49 @@ func TestLatentStatecopyNamesEveryPrivateIRField(t *testing.T) {
 		}
 	}
 }
+
+// An exhaustive root-field policy catches a new memo even if it uses no naming
+// convention. Deleting a carried field from the table fails before generating a
+// census, instead of silently returning to one program walk per unit.
+func TestLatentCarryFactsRequiresEveryLoweringFieldPolicy(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs("../../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	g := loadGenerator(root, filepath.Join(root, "internal/lower/lower.go"))
+	declared := map[string]bool{}
+	generated := string(generate(root, filepath.Join(root, "internal/lower/lower.go")))
+	for _, field := range g.types["lowering"].(*ast.StructType).Fields.List {
+		for _, id := range field.Names {
+			declared[id.Name] = true
+			policy, ok := loweringFieldPolicies[id.Name]
+			if !ok {
+				t.Errorf("lowering.%s has no census memo/copy policy", id.Name)
+				continue
+			}
+			switch policy {
+			case unitSnapshot, sharedIdentity, nilQuery:
+			case programFact:
+				if printed(field.Type) == "map[*ast.Node]bool" && !strings.Contains(generated, "result."+id.Name+" = func(value map[*ast.Node]bool)") {
+					t.Errorf("lowering.%s lost its owned snapshot map copy", id.Name)
+				}
+				if ty := printed(field.Type); ty != "bool" && ty != "map[*ast.Node]bool" {
+					t.Errorf("lowering.%s: unaudited program fact type %s", id.Name, ty)
+				}
+				for _, assignment := range []string{id.Name + ": value." + id.Name, "value." + id.Name + " = facts." + id.Name} {
+					if !strings.Contains(generated, assignment) {
+						t.Errorf("lowering.%s is dropped from program fact capture/install: %s", id.Name, assignment)
+					}
+				}
+			default:
+				t.Errorf("lowering.%s has unknown census policy %d", id.Name, policy)
+			}
+		}
+	}
+	for name := range loweringFieldPolicies {
+		if !declared[name] {
+			t.Errorf("lowering.%s has a stale census memo/copy policy", name)
+		}
+	}
+}
