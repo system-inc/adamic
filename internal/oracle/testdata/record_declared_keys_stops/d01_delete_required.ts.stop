@@ -1,0 +1,1 @@
+internal/oracle/testdata/record_declared_keys_stops/d01_delete_required.ts:2:62: stage 0 can't lower a delete from a record through a key that is not one literal, which can remove a required declared property (delete options[key] on Options by key: required is declared number, not optional) yet

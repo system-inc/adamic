@@ -34,6 +34,12 @@ import (
 // dropped) turns r01, r02 and v06 red; leaving the type arguments unjudged (declaredKeyBindings
 // dropped) turns n05 red. Admitting a dictionary read through a declared property also turns n29, n30 and
 // n31 red.
+// A delete through a key that isn't one literal, of a required declared property it can remove, is
+// refused too (#p9jj9jg): by a string key, the road records_named_operations.a ran (d01), and by a
+// "target" | "required" one (d02). Mutant: recordDeclaredDeleteRefusal returning nil turns d01 and d02
+// red. The same delete through a receiver typed T extends Options (d03) never reaches that rule:
+// deleteRefusal refuses a delete whose receiver isn't a record target first, so the generic road is
+// pinned refused by its words.
 func TestRecordDeclaredKeysAreRefusedInA(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/record_declared_keys_refused"
@@ -84,8 +90,8 @@ func TestRecordDeclaredKeysAreRefusedInA(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 40 {
-		t.Fatalf("found %d refused programs, want 40", programs)
+	if programs != 43 {
+		t.Fatalf("found %d refused programs, want 43", programs)
 	}
 }
 
@@ -104,7 +110,10 @@ func TestRecordDeclaredKeysAreRefusedInA(t *testing.T) {
 // write and the optional widening stop where they did, and the type-argument roads too, whose .a
 // twins are refused. Each program that lowers agrees with Node on
 // release and sanitized native and on the JavaScript backend. Mutant: the key folding dropped
-// (writtenNames judging a folded key as any name) refuses the scanner's shape here.
+// (writtenNames judging a folded key as any name) refuses the scanner's shape here. In .ts, d01's delete
+// of a required declared property through a string key is not yet (#p9jj9jg), and c01's deletes, by a
+// "target" | "extra" key and by the optional target's name, lower in both, since neither can remove a
+// required one. Mutant: recordDeclaredDeleteRefusal returning nil turns d01 red.
 func TestRecordDeclaredKeyStopsArePinned(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/record_declared_keys_stops"
@@ -154,7 +163,7 @@ func TestRecordDeclaredKeyStopsArePinned(t *testing.T) {
 			}
 		})
 	}
-	if programs != 57 {
-		t.Fatalf("found %d programs, want 57", programs)
+	if programs != 60 {
+		t.Fatalf("found %d programs, want 60", programs)
 	}
 }
