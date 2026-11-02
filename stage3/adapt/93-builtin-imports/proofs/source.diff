@@ -1,0 +1,10 @@
+--- a/src/compiler/sys.ts
++++ b/src/compiler/sys.ts
+@@ -49,0 +50,3 @@
++import * as _fs from "node:fs";
++import * as _path from "node:path";
++import * as _os from "node:os";
+@@ -1471,3 +1473,0 @@
+-        const _fs: typeof import("fs") = require("fs");
+-        const _path: typeof import("path") = require("path");
+-        const _os = require("os");
