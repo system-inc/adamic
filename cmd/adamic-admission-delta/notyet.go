@@ -86,8 +86,12 @@ func readRuntimeNotYetStops(path string) (runtimeNotYetStopList, error) {
 		if !taskReference.MatchString(stop.RulingTask) || !taskReference.MatchString(stop.LiftingTask) || stop.LiftingTask == stop.RulingTask {
 			return list, fmt.Errorf("run-time NotYet needs its ruling task and the task that lifts it: %s", hash)
 		}
-		if _, allowed := runtimeNotYetForm(stop.Stderr); !allowed {
+		form, allowed := runtimeNotYetForm(stop.Stderr)
+		if !allowed {
 			return list, fmt.Errorf("run-time NotYet stop message is not a ruled form: %s", hash)
+		}
+		if stop.RulingTask != runtimeNotYetForms[form] {
+			return list, fmt.Errorf("run-time NotYet ruling task %s is not its form's ruling %s: %s", stop.RulingTask, runtimeNotYetForms[form], hash)
 		}
 	}
 	return list, nil

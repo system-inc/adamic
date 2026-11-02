@@ -59,8 +59,9 @@ func TestRuntimeNotYetContentHash(t *testing.T) {
 }
 
 // Each entry names its ruling and the task that lifts it, and says one allowlisted form: the tool refuses
-// the list otherwise, not only review. Mutant: readRuntimeNotYetStops without the allowlist check accepts
-// "off the allowlist".
+// the list otherwise, not only review, and its ruling is the one that made its form. Mutants:
+// readRuntimeNotYetStops without the allowlist check accepts "off the allowlist", and without the
+// ruling's comparison accepts "another ruling".
 func TestRuntimeNotYetRulingMetadata(t *testing.T) {
 	t.Parallel()
 	source, stop, list := runtimeNotYetFixture(t)
@@ -74,6 +75,7 @@ func TestRuntimeNotYetRulingMetadata(t *testing.T) {
 		"no lifting task":           func(s *runtimeNotYetStop, _ *runtimeNotYetStopList) { s.LiftingTask = "" },
 		"lifting task unreferenced": func(s *runtimeNotYetStop, _ *runtimeNotYetStopList) { s.LiftingTask = "2ear8zk" },
 		"lifted by its ruling":      func(s *runtimeNotYetStop, _ *runtimeNotYetStopList) { s.LiftingTask = s.RulingTask },
+		"another ruling":            func(s *runtimeNotYetStop, _ *runtimeNotYetStopList) { s.RulingTask = "#abc1234" },
 		"no path":                   func(s *runtimeNotYetStop, _ *runtimeNotYetStopList) { s.Path = "" },
 		"path outside":              func(s *runtimeNotYetStop, _ *runtimeNotYetStopList) { s.Path = "../input.a" },
 		"off the allowlist": func(s *runtimeNotYetStop, _ *runtimeNotYetStopList) {
@@ -168,8 +170,9 @@ func TestRuntimeNotYetExactStop(t *testing.T) {
 
 // runtimeNotYetCommand runs the command on the fixture with a compiler whose backends both stop as the
 // entry says after printing before, or, when stale, run to the end as Node does. Node's oracle runs the
-// source to the end, and the JavaScript backend's output, marked STOP, stops as native does.
-func runtimeNotYetCommand(t *testing.T, stale, alreadyAccepted bool, args ...string) observation {
+// source to the end, and the JavaScript backend's output, marked STOP, stops as native does. rewrite, when
+// given, rewrites the list before it's committed.
+func runtimeNotYetCommand(t *testing.T, stale, alreadyAccepted bool, rewrite func(*runtimeNotYetStopList), args ...string) observation {
 	t.Helper()
 	dir, _, base, head := commandFixture(t)
 	source, stop, list := runtimeNotYetFixture(t)
@@ -193,6 +196,9 @@ func runtimeNotYetCommand(t *testing.T, stale, alreadyAccepted bool, args ...str
 		if err := os.WriteFile(filepath.Join(dir, path), []byte(data), 0755); err != nil {
 			t.Fatal(err)
 		}
+	}
+	if rewrite != nil {
+		rewrite(&list)
 	}
 	writeRuntimeNotYetList(t, filepath.Join(dir, "cloud/admission-corpus/runtime-notyet-stops.json"), list)
 	if _, err := git(dir, "add", "corpus/input.a", "oracle/node.mjs", "cloud/admission-corpus/runtime-notyet-stops.json"); err != nil {
@@ -223,7 +229,7 @@ func runtimeNotYetReport(t *testing.T, o observation) report {
 // ruled_runtime_stops with its path, and in the line ruled run-time stops: N.
 func TestRuntimeNotYetCommandAccepted(t *testing.T) {
 	t.Parallel()
-	o := runtimeNotYetCommand(t, false, false, "--json")
+	o := runtimeNotYetCommand(t, false, false, nil, "--json")
 	r := runtimeNotYetReport(t, o)
 	if o.Exit != 0 || r.Verdict != "pass" || r.RuledRuntimeStops != 1 || len(r.RuledRuntimeStopPaths) != 1 || r.RuledRuntimeStopPaths[0] != "corpus/input.a" || r.RuntimeNotYetCount != 1 {
 		t.Fatal("ruled run-time stop not counted", o, r)
@@ -240,7 +246,7 @@ func TestRuntimeNotYetCommandAccepted(t *testing.T) {
 // The human run says the same line.
 func TestRuntimeNotYetCommandHumanLine(t *testing.T) {
 	t.Parallel()
-	o := runtimeNotYetCommand(t, false, false)
+	o := runtimeNotYetCommand(t, false, false, nil)
 	if o.Exit != 0 || !strings.Contains(o.Stdout, "verdict: pass\n") || !strings.Contains("\n"+o.Stderr, "\nruled run-time stops: 1\n") {
 		t.Fatal("human run did not say its ruled run-time stops", o)
 	}
@@ -250,7 +256,7 @@ func TestRuntimeNotYetCommandHumanLine(t *testing.T) {
 // changes.
 func TestRuntimeNotYetCommandAlreadyAccepted(t *testing.T) {
 	t.Parallel()
-	o := runtimeNotYetCommand(t, false, true, "--json")
+	o := runtimeNotYetCommand(t, false, true, nil, "--json")
 	r := runtimeNotYetReport(t, o)
 	if o.Exit != 0 || r.Verdict != "pass" || r.Programs[0].Class != "accepted-by-both" || !r.Programs[0].Sampled || !r.Programs[0].NotYetRelated || r.RuledRuntimeStops != 1 {
 		t.Fatal("already-admitted listed stop not validated", o, r)
@@ -262,13 +268,59 @@ func TestRuntimeNotYetCommandAlreadyAccepted(t *testing.T) {
 func TestRuntimeNotYetCommandStale(t *testing.T) {
 	t.Parallel()
 	for _, alreadyAccepted := range []bool{false, true} {
-		o := runtimeNotYetCommand(t, true, alreadyAccepted, "--json")
+		o := runtimeNotYetCommand(t, true, alreadyAccepted, nil, "--json")
 		r := runtimeNotYetReport(t, o)
 		if o.Exit != 1 || r.Verdict != "fail" || len(r.StaleRuntimeStops) != 1 || r.StaleRuntimeStops[0] != "corpus/input.a" || r.RuledRuntimeStops != 0 || r.Programs[0].RuledRuntimeStop || r.Programs[0].Agree == nil || !*r.Programs[0].Agree {
 			t.Fatal("stale listed stop passed", alreadyAccepted, o, r)
 		}
 		if !strings.Contains("\n"+o.Stderr, "\nruled run-time stops: 0\n") {
 			t.Fatal("zero not said", o)
+		}
+	}
+}
+
+// orphanRuntimeNotYet lists the stop under bytes no program holds, at path: an edit of the listed program
+// when path holds other bytes, a program not landed yet when nothing is there.
+func orphanRuntimeNotYet(path string) func(*runtimeNotYetStopList) {
+	return func(list *runtimeNotYetStopList) {
+		orphaned := map[string]runtimeNotYetStop{}
+		for _, stop := range list.Stops {
+			stop.Path = path
+			orphaned[contentHash([]byte("an earlier program\n"))] = stop
+		}
+		list.Stops = orphaned
+	}
+}
+
+// A listed program edited in place leaves its entry matching nothing: a run holding every corpus fails it
+// as stale, though the edit itself agrees with Node. Mutant: the run without its edited-path check passes.
+func TestRuntimeNotYetCommandEdited(t *testing.T) {
+	t.Parallel()
+	o := runtimeNotYetCommand(t, true, false, orphanRuntimeNotYet("corpus/input.a"), "--json")
+	r := runtimeNotYetReport(t, o)
+	if o.Exit != 1 || r.Verdict != "fail" || len(r.StaleRuntimeStops) != 1 || r.StaleRuntimeStops[0] != "corpus/input.a" || len(r.PendingRuntimeStops) != 0 || r.Programs[0].Agree == nil || !*r.Programs[0].Agree {
+		t.Fatal("edited listed program left its entry unnoticed", o, r)
+	}
+}
+
+// A listed program not landed at head passes, said as pending, so the list can land before its programs.
+func TestRuntimeNotYetCommandPending(t *testing.T) {
+	t.Parallel()
+	o := runtimeNotYetCommand(t, true, false, orphanRuntimeNotYet("corpus/landing.a"), "--json")
+	r := runtimeNotYetReport(t, o)
+	if o.Exit != 0 || r.Verdict != "pass" || len(r.PendingRuntimeStops) != 1 || r.PendingRuntimeStops[0] != "corpus/landing.a" || len(r.StaleRuntimeStops) != 0 || r.RuntimeNotYetCount != 1 {
+		t.Fatal("unlanded listed program not said as pending", o, r)
+	}
+}
+
+// A sharded run can't know what another shard held, so it judges no entry nothing held.
+func TestRuntimeNotYetCommandShardDoesNotJudge(t *testing.T) {
+	t.Parallel()
+	for _, path := range []string{"corpus/input.a", "corpus/landing.a"} {
+		o := runtimeNotYetCommand(t, true, false, orphanRuntimeNotYet(path), "--json", "--shard", "1/2")
+		r := runtimeNotYetReport(t, o)
+		if o.Exit != 0 || r.Verdict != "partial" || r.CompleteCorpus || len(r.StaleRuntimeStops) != 0 || len(r.PendingRuntimeStops) != 0 {
+			t.Fatal("sharded run judged an entry nothing held", path, o, r)
 		}
 	}
 }
