@@ -78,7 +78,11 @@ def file_assignment(tasks, target_seconds=9.0):
                         calibration_sha256=hashlib.sha256(ledger_path.read_bytes()).hexdigest())
 
 
-def build_plan(artifact, api_digest):
+def unit_inputs_hash(unit, plan, artifact, runtime):
+    return digest(dict(artifact=artifact, api=plan['api_digest'], runtime=runtime, unit=unit))
+
+
+def build_plan(api_digest):
     evidence = LANE / 'evidence/shards'
     with gzip.open(evidence / 'candidate-plan.json.gz', 'rt') as stream:
         old = json.load(stream)
@@ -138,15 +142,13 @@ def build_plan(artifact, api_digest):
         unit['expect']['pass'] = unit['expect'].pop('pass_')
         unit['names_digest'] = names_digest(records)
         unit['baseline_diffs'] = ['api/typescript.d.ts'] if unit['name'] == 'stage3-lane-byte-comparisons' else []
-        unit['inputs_hash'] = digest(dict(artifact=artifact, api=api_digest, runtime=runtime, unit=unit))
-    return dict(version=1, artifact=artifact, api_digest=api_digest, runtime=runtime,
+    return dict(version=1, api_digest=api_digest, runtime=runtime,
                 planning=planning, counts={'pass': 106366, 'fail': 1, 'skip': 0}, units=sorted(units.values(), key=lambda row: row['name'])), tests
 
 
 def gate_manifest(plan):
     return dict(version=1, units=[dict(name=unit['name'], command=[
-        'python3', 'stage3/lane/shard.py', unit['name'], '$STAGE3_RESULTS',
-        '--inputs-hash', unit['inputs_hash']], expect=unit['expect']) for unit in plan['units']])
+        'python3', 'stage3/lane/shard.py', unit['name'], '$STAGE3_RESULTS'], expect=unit['expect']) for unit in plan['units']])
 
 
 def load_plan():
@@ -158,9 +160,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('artifact', type=Path)
     args = parser.parse_args()
-    ready = json.loads((args.artifact / 'ready.json').read_text())
     api = json.loads((args.artifact / 'shards-ready.json').read_text())
-    plan, tests = build_plan(ready['key'], api['api_digest'])
+    plan, tests = build_plan(api['api_digest'])
     (LANE / 'shard-plan.json').write_text(json.dumps(plan, indent=2) + '\n')
     (LANE / 'shards.json').write_text(json.dumps(gate_manifest(plan), indent=2) + '\n')
     listing = LANE / 'evidence/case-shards'
