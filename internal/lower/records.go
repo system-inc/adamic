@@ -305,11 +305,11 @@ func (l *lowering) recordLiteral(node *ast.Node, t *checker.Type) (ir.Expression
 			if p.Kind == ast.KindPropertyAssignment && name.Text() == "__proto__" {
 				return nil, l.notYet(p, "a prototype-setting record literal")
 			}
-			if name.Kind == ast.KindNumericLiteral {
-				key, err = l.recordKey(name, false)
-			} else {
-				key = ir.StringConstant{Index: l.constant(name.Text())}
-			}
+			// A numeric name is the key its number's canonical string is, as JavaScript's ToPropertyKey
+			// makes it: the scanner keeps a numeric literal's text as that string already (jsnum's
+			// String, so 0x1F is "31", 1e3 is "1000" and 1.50 is "1.5"). Its name never goes through
+			// l.expression, where the checker reads a property name as its property's type, not a number.
+			key = ir.StringConstant{Index: l.constant(name.Text())}
 		}
 		if err != nil {
 			return nil, err

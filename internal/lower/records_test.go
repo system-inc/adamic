@@ -19,6 +19,7 @@ func TestRecordForms(t *testing.T) {
 		`function show(r:Record<string,number>|null):void {console.log(String(r === null));} show(null); show({x:1});`,
 		`const r:Record<string,string>={}; console.log(r && 'value');`,
 		`let t:{[index:string]:string}|undefined; function m(k:string,f:string):string {return t && t[k] || f;} console.log(m('a','b'));`,
+		`interface Recovery { b: number; [key: string]: number | string } const r: Recovery = { b: 1, 2: "two", 0x1F: 3 }; console.log(Object.keys(r).join(','));`,
 	} {
 		t.Run(source, func(t *testing.T) {
 			_, err := lowerSource(t, source)
