@@ -674,6 +674,37 @@ const mv: Mut = v; show(mv);`, "name"},
 	}
 }
 
+// A union or optional field read in a program with record storage is NotYet when a view registered its
+// field (rule a, checkRecordGuardedReads), and the guard asks the id the read is checked under: a read
+// through Sized & Node is routed to Sized's view, so it's held as one through Sized is. Asking the raw id,
+// 148e6df3 lowered the routed read where the plain one stopped (Lower's must, probed on Pupa, Nov 2).
+// Mutant: the record guard back on the raw id, and the routed reads lower.
+func TestBrandedSupertypeRecordGuardIsRouted(t *testing.T) {
+	t.Parallel()
+	const records = `const counts: Record<string, number> = {};
+counts["a"] = 1;
+interface Sized extends Declaration { _sizedBrand: undefined; readonly size?: number; readonly label: string | number; }
+function isSizedLie(n: Node): n is Sized { return kindOf(n) !== 0; }
+`
+	const body = ` { if (isSizedLie(n)) { console.log(n.size === undefined ? "none" : String(n.size)); console.log(String(n.label)); } }
+`
+	for _, probe := range []struct{ name, show, value string }{
+		{"plain honest", "function show(n: Node): void", `{ kind: 80, pos: 2, size: 3, label: "x" }`},
+		{"plain lying", "function show(n: Node): void", `{ kind: 80, pos: 2, size: "big", label: true }`},
+		{"routed honest", "function show<T extends Node>(n: T): void", `{ kind: 80, pos: 2, size: 3, label: "x" }`},
+		{"routed lying", "function show<T extends Node>(n: T): void", `{ kind: 80, pos: 2, size: "big", label: true }`},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerTypeScriptAssertionSource(t, brandedPrelude+records+probe.show+body+"const w = "+probe.value+"; const v: Node = w; show(v);\nconsole.log(String(counts[\"a\"]));\n")
+			var pending *NotYet
+			if !errors.As(err, &pending) || pending.What != "a union or optional field read in a program with record storage" {
+				t.Fatalf("want NotYet at the n.size read, held by record storage, got %v", err)
+			}
+		})
+	}
+}
+
 // A generic helper is judged per instance: pick at Identifier lowers, and pick at TypeElement over the
 // same PropertySignature | Identifier argument is NotYet at its own call, in a program that lowers the
 // Identifier instance first. Mutant: one judgment kept for every instance of a declaration, and the second

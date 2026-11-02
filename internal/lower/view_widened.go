@@ -320,7 +320,7 @@ func (l *lowering) viewLie(view viewSource) viewLie {
 	}
 	for _, property := range l.checker.GetPropertiesOfType(view.target) {
 		var held *ast.Symbol
-		if source != nil && !l.result.CheckedField(l.viewReceiverTypeID(source), property.Name) {
+		if source != nil && !l.result.CheckedField(l.viewFieldReceiverTypeID(nil, source), property.Name) {
 			held = l.checker.GetPropertyOfType(source, property.Name)
 		}
 		if held == nil {

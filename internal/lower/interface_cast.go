@@ -115,7 +115,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, source, target *che
 		}
 		// An accessor slot still needs a conversion the checked read boundary can't emit. An
 		// optional slot or receiver is emission's to judge, at the read (unemittableCheckedViewRead).
-		if part.Kind == ast.KindPropertyAccessExpression && l.checkedViewReceiverField(l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression), part.Name().Text()) {
+		if part.Kind == ast.KindPropertyAccessExpression && l.checkedViewReceiverField(part, l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression), part.Name().Text()) {
 			access := part.AsPropertyAccessExpression()
 			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
 				field := l.checker.GetSymbolAtLocation(part.Name())
@@ -124,7 +124,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, source, target *che
 				}
 			}
 		}
-		if part.Kind == ast.KindPropertyAccessExpression && l.checkedViewReceiverField(l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression), part.Name().Text()) && ast.IsAssignmentTarget(part) {
+		if part.Kind == ast.KindPropertyAccessExpression && l.checkedViewReceiverField(part, l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression), part.Name().Text()) && ast.IsAssignmentTarget(part) {
 			if symbol := l.checker.GetSymbolAtLocation(part.Name()); symbol != nil {
 				of, _ := l.representation(l.checker.GetTypeOfSymbol(symbol))
 				if of == ir.Object {
@@ -319,7 +319,7 @@ func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *check
 				}
 			}
 		}
-		if part.Kind == ast.KindPropertyAccessExpression && l.checkedViewReceiverField(l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression), part.Name().Text()) {
+		if part.Kind == ast.KindPropertyAccessExpression && l.checkedViewReceiverField(part, l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression), part.Name().Text()) {
 			access := part.AsPropertyAccessExpression()
 			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
 				field := l.checker.GetSymbolAtLocation(part.Name())
@@ -368,13 +368,29 @@ func (l *lowering) viewReceiverTypeID(receiver *checker.Type) int {
 	return l.viewTypeID(l.viewReceiver(receiver))
 }
 
+// viewFieldReceiverTypeID is the one place the id a field read is checked under is
+// decided, for the read lowering emits and for every guard that asks whether that
+// read is checked (record storage's, the alias refusals, a destructured view, a
+// view's lie, a whole copy), so a guard can't ask an id the read isn't checked
+// under (Lower, Nov 2). A read takes viewReadReceiverTypeID's routed id. An
+// assignment target takes the raw viewReceiverTypeID its write uses, the read half
+// of a compound or logical assignment included. A nil node is a read with no
+// access of its own: a destructured binding, a view's source, a copied value.
+// TestViewReceiverCallersAreClassified holds every caller to a role.
+func (l *lowering) viewFieldReceiverTypeID(node *ast.Node, receiver *checker.Type) int {
+	if node != nil && ast.IsAssignmentTarget(node) {
+		return l.viewReceiverTypeID(receiver)
+	}
+	return l.viewReadReceiverTypeID(receiver)
+}
+
 // viewReadReceiverTypeID is a field read's receiver id, viewReceiverTypeID's but
 // with a branded supertype intersected only with its supertypes read as that
 // supertype (brandedIntersectionReceiver). Only a read is routed: a write keeps
 // its receiver's own id, since a write routed to S's checked write checked the
 // slot S's view keys, which a value admitted as S needn't have, and stopped where
-// Node wrote (Language's y4, Optimizer's ruling, Nov 2). The read half of a
-// compound or logical assignment is the write's, so it keeps the write's id too.
+// Node wrote (Language's y4, Optimizer's ruling, Nov 2). Only
+// viewFieldReceiverTypeID calls it.
 func (l *lowering) viewReadReceiverTypeID(receiver *checker.Type) int {
 	return l.viewTypeID(l.brandedIntersectionReceiver(l.viewReceiver(receiver)))
 }
@@ -400,16 +416,18 @@ func (l *lowering) viewTypeID(named *checker.Type) int {
 }
 
 // A union receiver can carry a checked member's allocation. Preserve that
-// boundary for its common field without marking unrelated receiver types.
-func (l *lowering) checkedViewReceiverField(receiver *checker.Type, name string) bool {
-	id := l.viewReceiverTypeID(receiver)
+// boundary for its common field without marking unrelated receiver types. Node
+// is the access asked about, or nil for a read with none, and decides the id as
+// its read is checked under (viewFieldReceiverTypeID).
+func (l *lowering) checkedViewReceiverField(node *ast.Node, receiver *checker.Type, name string) bool {
+	id := l.viewFieldReceiverTypeID(node, receiver)
 	if l.result.CheckedField(id, name) {
 		return true
 	}
 	receiver = l.checker.GetNonNullableType(l.concrete(receiver))
 	if receiver.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range receiver.Types() {
-			if l.checkedViewReceiverField(member, name) {
+			if l.checkedViewReceiverField(node, member, name) {
 				l.result.CheckedFields[ir.CheckedFieldKey(id, name)] = true
 				return true
 			}
