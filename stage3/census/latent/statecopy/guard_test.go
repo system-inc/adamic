@@ -186,3 +186,83 @@ func TestLatentStatecopyNamesEveryPrivateIRField(t *testing.T) {
 		}
 	}
 }
+
+// The independent audited contract prevents accidentally dropping a carried memo
+// from the generator's table. Unrelated lowering fields are intentionally ignored.
+func carryFactGuardGaps(root, lowerInput string) []string {
+	audited := map[string]string{
+		"entriesRecords":             "map[*ast.Node]bool",
+		"entriesProgramRecords":      "bool",
+		"entriesProgramRecordsKnown": "bool",
+	}
+	g := loadGenerator(root, lowerInput)
+	declared := map[string]string{}
+	for _, field := range g.types["lowering"].(*ast.StructType).Fields.List {
+		for _, id := range field.Names {
+			declared[id.Name] = printed(field.Type)
+		}
+	}
+	gaps := []string{}
+	for name, want := range audited {
+		if policy, ok := loweringFieldPolicies[name]; !ok || policy != programFact {
+			gaps = append(gaps, "carried lowering."+name+" is missing from the programFact table")
+		}
+		if got, ok := declared[name]; !ok {
+			gaps = append(gaps, "carried lowering."+name+" no longer exists")
+		} else if got != want {
+			gaps = append(gaps, "carried lowering."+name+" type changed: got "+got+", audited "+want)
+		}
+	}
+	for name := range loweringFieldPolicies {
+		if _, ok := audited[name]; !ok {
+			gaps = append(gaps, "unaudited carried lowering."+name)
+		}
+	}
+	// A type mutant must report its field, rather than panic in generation.
+	if len(gaps) > 0 {
+		return gaps
+	}
+	generated := string(generate(root, lowerInput))
+	for name, ty := range audited {
+		if ty == "map[*ast.Node]bool" && !strings.Contains(generated, "result."+name+" = func(value map[*ast.Node]bool)") {
+			gaps = append(gaps, "carried lowering."+name+" lost its owned snapshot map copy")
+		}
+		for _, assignment := range []string{name + ": value." + name, "value." + name + " = facts." + name} {
+			if !strings.Contains(generated, assignment) {
+				gaps = append(gaps, "carried lowering."+name+" is dropped from capture/install: "+assignment)
+			}
+		}
+	}
+	return gaps
+}
+
+func TestLatentCarryFactsAuditedFields(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs("../../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, gap := range carryFactGuardGaps(root, filepath.Join(root, "internal/lower/lower.go")) {
+		t.Error(gap)
+	}
+}
+
+func TestLatentCarryFactsIgnoresUncarriedFields(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs("../../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	input, err := os.ReadFile(filepath.Join(root, "internal/lower/lower.go"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "lower.go")
+	source := strings.Replace(string(input), "type lowering struct {", "type lowering struct {\n futureMemo bool", 1)
+	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+		t.Fatal(err)
+	}
+	if gaps := carryFactGuardGaps(root, path); len(gaps) > 0 {
+		t.Fatalf("an unrelated lowering field must retain the default unit snapshot: %v", gaps)
+	}
+}

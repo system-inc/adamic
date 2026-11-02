@@ -1,0 +1,5 @@
+--- FAIL: TestLatentCarryFactsAuditedFields (0.05s)
+    guard_test.go:246: carried lowering.entriesProgramRecordsKnown type changed: got int, audited bool
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/census/latent/statecopy	0.057s
+FAIL

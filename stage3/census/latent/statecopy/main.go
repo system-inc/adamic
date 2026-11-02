@@ -46,6 +46,19 @@ var irPrivateFields = map[string]privateIRField{
 	"GeneratedType.identity":      privateShared,
 }
 
+// Only audited program facts are listed. Every unlisted field keeps the normal
+// typed unit snapshot; adding a lowering field does not require a carry decision.
+// Maps remain owned copies in each unit and statement snapshot.
+type loweringFieldPolicy uint8
+
+const programFact loweringFieldPolicy = 1
+
+var loweringFieldPolicies = map[string]loweringFieldPolicy{
+	"entriesRecords":             programFact,
+	"entriesProgramRecords":      programFact,
+	"entriesProgramRecordsKnown": programFact,
+}
+
 func printed(n ast.Node) string {
 	var b bytes.Buffer
 	if err := format.Node(&b, token.NewFileSet(), n); err != nil {
@@ -251,6 +264,41 @@ func generate(repository, lowerInput string) []byte {
 			body.WriteString("return result}\n")
 			fmt.Fprintf(&body, "func latentCopyPointer_%s(value *%s, seen map[any]any) *%s {if value==nil{return nil}; if prior,ok:=seen[value];ok{return prior.(*%s)};result:=new(%s);seen[value]=result; *result=latentCopy_%s(*value,seen);return result}\n", name, name, name, name, name, name)
 		}
+	}
+	// Capture/install only the fields explicitly marked as carried program facts.
+	// The ordinary typed snapshot above retains these scalars through rollback.
+	facts := []string{}
+	for _, field := range g.types["lowering"].(*ast.StructType).Fields.List {
+		for _, id := range field.Names {
+			if loweringFieldPolicies[id.Name] == programFact {
+				if ty := printed(field.Type); ty != "bool" && ty != "map[*ast.Node]bool" {
+					panic("state copy: program fact " + id.Name + " needs an audited carry")
+				}
+				facts = append(facts, id.Name)
+			}
+		}
+	}
+	sort.Strings(facts)
+	if len(facts) > 0 {
+		body.WriteString("type latentProgramFacts struct {")
+		for _, name := range facts {
+			for _, field := range g.types["lowering"].(*ast.StructType).Fields.List {
+				for _, id := range field.Names {
+					if id.Name == name {
+						fmt.Fprintf(&body, "%s %s;", name, printed(field.Type))
+					}
+				}
+			}
+		}
+		body.WriteString("}\nfunc latentCaptureProgramFacts(value *lowering) latentProgramFacts { return latentProgramFacts{")
+		for _, field := range facts {
+			fmt.Fprintf(&body, "%s:value.%s,", field, field)
+		}
+		body.WriteString("}}\nfunc (value *lowering) latentApplyProgramFacts(facts latentProgramFacts) {")
+		for _, field := range facts {
+			fmt.Fprintf(&body, "value.%s=facts.%s;", field, field)
+		}
+		body.WriteString("}\n")
 	}
 	// The full copy's answers for unexported IR fields, from irPrivateFields, so the table has one home.
 	keys := make([]string, 0, len(irPrivateFields))

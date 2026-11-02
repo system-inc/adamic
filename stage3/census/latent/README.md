@@ -289,3 +289,27 @@ generics and cross-file callers in legacy, full and speculative modes. It kills
 missing-gap-list, deferred-as-attempted and deferred-bytes-as-examined mutants.
 `prove_identity.py REPOSITORY OUTPUT BASE` compares overlay-off C and JavaScript
 bytes against the given compiler base and proves both comparisons can fail.
+
+
+## Bound full-mode measurements by file
+
+`LATENT_ONLY_FILE=/absolute/path/to/file.ts LATENT_FULL=1` selects one exact
+`program.FileName` for attempts and its refusal scan. The source-directory argument
+still loads the complete program and preserves its checker diagnostics, declarations,
+and sibling bindings. Run separate invocations for a subset of files; this filter
+is not a first-error-mode selector.
+
+Full mode computes the program's record Boolean and per-literal verdict map once
+on a disposable snapshot of the first registered file base and installs them on
+every file base before unit copies.
+The typed copier retains scalar values and owned map snapshots; module-read proofs
+are established at the first eligible query, including after rollback. The explicit
+`statecopy.loweringFieldPolicies` table names only the three carried fields;
+unlisted fields keep ordinary unit snapshots. Its guard audits their presence,
+types, capture/install and owned map copying. The main-source AST body fingerprints
+in `overlaytext` require the subset byte-identity proof to be re-run when the four
+record-query bodies change. Checker-type storage slices remain unit-local.
+
+[Carry-facts evidence](evidence/carry-facts/report.md) proves byte identity on
+binder, emitter, and utilities only and includes the unfiltered all-files command
+for a box with more memory.

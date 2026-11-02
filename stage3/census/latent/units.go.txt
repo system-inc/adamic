@@ -4,10 +4,10 @@ package lower
 import (
 	"context"
 	"fmt"
-	"os"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
+	"os"
 )
 
 type latentCandidate struct {
@@ -113,8 +113,12 @@ func latentFull(ctx context.Context, program *load.Program, emit func(LatentFile
 }
 
 func latentFullSelected(ctx context.Context, program *load.Program, emit func(LatentFile), selection *latentReplaySelection) {
+	var facts *latentProgramFacts
+
 	for _, file := range program.Files() {
-		if selected := os.Getenv("LATENT_ONLY_FILE"); selected != "" && program.FileName(file) != selected { continue }
+		if selected := os.Getenv("LATENT_ONLY_FILE"); selected != "" && program.FileName(file) != selected {
+			continue
+		}
 		if selection != nil && file != selection.file {
 			continue
 		}
@@ -141,6 +145,19 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
 		base.noteAccessorNames(program.Files())
 		base.latentRegister(program.Files())
 		base.latentRegisterNested(program.Files())
+		// Discover on a disposable registered snapshot. Carry only proven answers; establish
+		// module read proofs at the original first ask, never merely at unit entry.
+		if facts == nil {
+			// Use the same registered context as units, then discard the probe's
+			// module-read effects so they still begin at each unit's first ask.
+			probe := base.latentSnapshot()
+			probe.entriesProgramHasRecords()
+			captured := latentCaptureProgramFacts(probe)
+			facts = &captured
+		}
+		base.latentApplyProgramFacts(*facts)
+		base.latentProgramRecordsPending = true
+
 		for _, candidate := range latentCandidates(program, file) {
 			node := candidate.node
 			if selection != nil && node != selection.node {
