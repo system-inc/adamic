@@ -39,7 +39,7 @@ def main():
         report_file = root / unit['name'] / 'report.json'
         report = json.loads(report_file.read_text()) if report_file.exists() else {}
         return dict(name=unit['name'], seconds=seconds, exit=code, status=report.get('status', 'missing'),
-                    counts=report.get('counts'), errors=report.get('errors'), inputs_hash=unit['command'][-1])
+                    counts=report.get('counts'), errors=report.get('errors'), inputs_hash=report.get('inputs_hash'), artifact=report.get('artifact'))
     started = time.monotonic(); rows = []
     with ThreadPoolExecutor(max_workers=args.concurrency) as pool:
         jobs = [pool.submit(run, unit) for unit in units]
