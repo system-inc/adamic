@@ -10,12 +10,16 @@
 
 _Thread_local adamic_object *adamic_thrown;
 
+// Every Error's shape names these, the host errors' too, which is how a run-time key read knows an
+// Error (adamic.h).
+const adamic_methods adamic_error_methods = {0, NULL, NULL};
+
 static const char *const error_names[] = {"name", "message"};
 static const bool error_references[] = {true, true};
 static const adamic_field_kind error_kinds[] = {adamic_field_reference, adamic_field_reference};
-static const adamic_shape error_shape = {2, error_names, error_references, NULL, error_kinds};
+static const adamic_shape error_shape = {2, error_names, error_references, &adamic_error_methods, error_kinds};
 static const char *const absent_message_names[] = {"name", "#message"};
-static const adamic_shape absent_message_shape = {2, absent_message_names, error_references, NULL, error_kinds};
+static const adamic_shape absent_message_shape = {2, absent_message_names, error_references, &adamic_error_methods, error_kinds};
 static adamic_string empty_message = ADAMIC_STRING("");
 static adamic_string error_name = ADAMIC_STRING("Error");
 
@@ -66,27 +70,49 @@ adamic_primitive adamic_ordinary_to_primitive(adamic_heap *receiver, enum adamic
 	return empty;
 }
 
+bool adamic_error_is(const adamic_object *object) {
+	return object->shape->methods == &adamic_error_methods;
+}
+
 // Public lookup sees Error.prototype.message without creating an own property.
 const char *adamic_error_field_name(const adamic_object *object, const char *name) {
 	return object->shape == &absent_message_shape && strcmp(name, "message") == 0 ? "#message" : name;
 }
 
-_Noreturn void adamic_uncaught(void) {
-	// String(error), as Node's runner reports an error nothing caught (Error.prototype.toString): the
-	// name and the message joined by ": " when both are there, and whichever one is when the other is
-	// empty.
+// error_text is String(error) for an Error, as Node's Error.prototype.toString makes it of the name and
+// the message: the two joined by ": " when both are there, and whichever one is when the other is empty.
+// It returns the text's length, writing the text into bytes too unless bytes is NULL. It counts nothing,
+// neither an allocation nor a retain, so adamic_uncaught prints it without moving the counts a counted
+// run reports where it stops.
+static size_t error_text(const adamic_object *error, char *bytes) {
 	static adamic_slot_cache name_cache, message_cache;
-	const adamic_string *name = adamic_object_field(adamic_thrown, "name", &name_cache)->reference;
-	const adamic_string *message = adamic_object_field(adamic_thrown, "message", &message_cache)->reference;
+	const adamic_string *name = adamic_object_field(error, "name", &name_cache)->reference;
+	const adamic_string *message = adamic_object_field(error, "message", &message_cache)->reference;
 	size_t separator = name->length > 0 && message->length > 0 ? 2 : 0;
-	size_t length = name->length + separator + message->length;
+	if (bytes != NULL) {
+		memcpy(bytes, name->bytes, name->length);
+		memcpy(bytes + name->length, ": ", separator);
+		memcpy(bytes + name->length + separator, message->bytes, message->length);
+	}
+	return name->length + separator + message->length;
+}
+
+adamic_string *adamic_error_to_string(const adamic_object *error) {
+	adamic_string *text = adamic_string_allocate(error_text(error, NULL));
+	error_text(error, (char *)text->bytes);
+	return text;
+}
+
+_Noreturn void adamic_uncaught(void) {
+	// String(error), as Node's runner reports an error nothing caught. The text is error_text's in a
+	// buffer of its own, since adamic_error_to_string's string would be one more allocation in the counts
+	// every uncaught fixture records.
+	size_t length = error_text(adamic_thrown, NULL);
 	char *text = malloc(length + 1);
 	if (text == NULL) {
 		static const char out_of_memory[] = "out of memory";
 		adamic_panic(out_of_memory, sizeof out_of_memory - 1);
 	}
-	memcpy(text, name->bytes, name->length);
-	memcpy(text + name->length, ": ", separator);
-	memcpy(text + name->length + separator, message->bytes, message->length);
+	error_text(adamic_thrown, text);
 	adamic_panic(text, length);
 }
