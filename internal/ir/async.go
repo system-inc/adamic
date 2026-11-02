@@ -54,6 +54,8 @@ func (t *GeneratedType) RuntimeBreaksCycles() bool {
 	return t != nil && (t.identity == asyncFrameIdentity || t.identity == asyncPromiseIdentity || t.identity == asyncReactionIdentity)
 }
 
+// HasPromises selects the scheduler and conservative async ownership. Retained
+// host watchers need that same loop even without an explicit Promise expression.
 func (p *Program) HasPromises() bool {
 	if p.HasAsync() {
 		return true
@@ -71,13 +73,16 @@ func (p *Program) HasPromises() bool {
 	return containsPromise(reflect.ValueOf(p.Main))
 }
 
-// Promise expressions can occur without a Promise local or return signature,
+// Promise expressions and loop-backed host operations can occur without a Promise local or return signature,
 // for example under typeof. Walk the ordinary IR operands, not checker metadata.
 func containsPromise(value reflect.Value) bool {
 	if !value.IsValid() {
 		return false
 	}
 	if value.CanInterface() {
+		if call, ok := value.Interface().(NodeFSFile); ok && call.Operation == "host_watch_file" {
+			return true
+		}
 		if expression, ok := value.Interface().(Expression); ok && expression.Type() == Promise {
 			return true
 		}

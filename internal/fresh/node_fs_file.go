@@ -2,12 +2,16 @@ package fresh
 
 import "github.com/system-inc/adamic/internal/ir"
 
-// nodeFSFile evaluates borrowed arguments in order. The synchronous host keeps
-// none of them, writes no reference into them, and returns independently owned
+// nodeFSFile evaluates arguments in order. A watcher retains its listener;
+// conservatively let its reachable values escape. Other host calls borrow
+// without retaining or storing references and return independently owned
 // Stats/Date objects or primitive values. Stats.mtime is independently owned too.
 func (a *analysis) nodeFSFile(expression ir.NodeFSFile) value {
 	for _, argument := range expression.Arguments {
-		a.value(argument)
+		held := a.value(argument)
+		if expression.Operation == "host_watch_file" {
+			a.state.escape(held)
+		}
 	}
 	if expression.Operation == "stat" {
 		mtime := a.fresh(anyField, value{})

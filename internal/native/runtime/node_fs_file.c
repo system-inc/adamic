@@ -1,5 +1,8 @@
 // Linux is the gate of record. The filesystem owns descriptor offsets and paths;
 // the host owns only temporary buffers and returned counted values.
+#if defined(__linux__) && !defined(_DEFAULT_SOURCE)
+#define _DEFAULT_SOURCE
+#endif
 #define _XOPEN_SOURCE 700
 #define _POSIX_C_SOURCE 200809L
 #define _DARWIN_C_SOURCE
@@ -466,6 +469,23 @@ static const bool stat_refs[] = {false, false, true, false, true};
 static const adamic_field_kind stat_kinds[] = {adamic_field_number, adamic_field_number, adamic_field_reference, adamic_field_number, adamic_field_reference};
 static const adamic_shape stat_shape = {5, stat_fields, stat_refs, NULL, stat_kinds};
 
+static adamic_object *file_stat_value(const struct stat *information) {
+#ifdef __APPLE__
+    double atime = (double)information->st_atimespec.tv_sec * 1000 + (double)information->st_atimespec.tv_nsec / 1000000;
+    double mtime = (double)information->st_mtimespec.tv_sec * 1000 + (double)information->st_mtimespec.tv_nsec / 1000000;
+#else
+    double atime = (double)information->st_atim.tv_sec * 1000 + (double)information->st_atim.tv_nsec / 1000000;
+    double mtime = (double)information->st_mtim.tv_sec * 1000 + (double)information->st_mtim.tv_nsec / 1000000;
+#endif
+    adamic_object *result = adamic_object_new(&stat_shape);
+    result->slots[0].number = (double)information->st_size;
+    result->slots[1].number = mtime;
+    result->slots[2].reference = adamic_fs_file_date_new(floor(mtime + 0.5));
+    result->slots[3].number = (double)information->st_mode;
+    result->slots[4].reference = adamic_fs_file_date_new(floor(atime + 0.5));
+    return result;
+}
+
 adamic_object *adamic_fs_file_stat(const adamic_string *path, bool throw_if_missing) {
     adamic_output_flush();
     char *name = path_bytes(path, true);
@@ -484,20 +504,7 @@ adamic_object *adamic_fs_file_stat(const adamic_string *path, bool throw_if_miss
         return NULL;
     }
     free(name);
-#ifdef __APPLE__
-    double atime = (double)information.st_atimespec.tv_sec * 1000 + (double)information.st_atimespec.tv_nsec / 1000000;
-    double mtime = (double)information.st_mtimespec.tv_sec * 1000 + (double)information.st_mtimespec.tv_nsec / 1000000;
-#else
-    double atime = (double)information.st_atim.tv_sec * 1000 + (double)information.st_atim.tv_nsec / 1000000;
-    double mtime = (double)information.st_mtim.tv_sec * 1000 + (double)information.st_mtim.tv_nsec / 1000000;
-#endif
-    adamic_object *result = adamic_object_new(&stat_shape);
-    result->slots[0].number = (double)information.st_size;
-    result->slots[1].number = mtime;
-    result->slots[2].reference = adamic_fs_file_date_new(floor(mtime + 0.5));
-    result->slots[3].number = (double)information.st_mode;
-    result->slots[4].reference = adamic_fs_file_date_new(floor(atime + 0.5));
-    return result;
+    return file_stat_value(&information);
 }
 
 bool adamic_fs_file_is_stats(const adamic_object *information) { return information->shape == &stat_shape; }
@@ -735,3 +742,5 @@ double adamic_fs_file_utimes(const adamic_string *path,double atime,double mtime
 double adamic_fs_file_utimes_dates(const adamic_string *path,const adamic_object *atime,const adamic_object *mtime) {return fs_utimes(path,adamic_fs_file_date_time(atime)/1000,adamic_fs_file_date_time(mtime)/1000,true,true);}
 double adamic_fs_file_utimes_atime_date(const adamic_string *path,const adamic_object *atime,double mtime) {return fs_utimes(path,adamic_fs_file_date_time(atime)/1000,mtime,true,false);}
 double adamic_fs_file_utimes_mtime_date(const adamic_string *path,double atime,const adamic_object *mtime) {return fs_utimes(path,atime,adamic_fs_file_date_time(mtime)/1000,false,true);}
+
+#include "node_watch_file_impl.h"
