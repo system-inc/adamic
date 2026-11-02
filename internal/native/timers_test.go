@@ -177,19 +177,15 @@ func (runtime timerRuntime) build(code, output string, options native.Options) e
 	if err != nil {
 		return err
 	}
-	if err := native.BuildWithRuntimeForTest(code, output, options, library); err != nil {
+	if err := native.BuildWithRuntime(code, output, options, library); err != nil {
 		return fmt.Errorf("mutant must compile: %w", err)
 	}
 	return nil
 }
 
-// buildBare is the probe build this file used before #landing90: the source written beside the output and compiled
+// timerBuildBare is the probe build this file used before #landing90: the source written beside the output and compiled
 // by a bare clang. It stays only as the pin's mutant.
-func (runtime timerRuntime) buildBare(code, output string, options native.Options) error {
-	library, err := native.RuntimeLibrary(runtime.directory, options)
-	if err != nil {
-		return err
-	}
+func timerBuildBare(code, output string, options native.Options, library string) error {
 	source := output + ".c"
 	if err := os.WriteFile(source, []byte(code), 0600); err != nil {
 		return err
@@ -204,8 +200,8 @@ func (runtime timerRuntime) buildBare(code, output string, options native.Option
 	return nil
 }
 
-// timerMutantTwice builds one mutant's sanitized probe twice, each from its own copy of the mutated runtime into its
-// own directory, as two boxes or two staging directories would, and returns both binaries' bytes.
+// timerMutantTwice builds one mutant runtime, then links its sanitized probe into two output directories.
+// RuntimeLibrary already maps the runtime directory; the pin varies the probe's build and output directories.
 func timerMutantTwice(t *testing.T, bare bool) ([]byte, []byte) {
 	t.Helper()
 	mutation := timerMutations[5]
@@ -213,15 +209,20 @@ func timerMutantTwice(t *testing.T, bare bool) ([]byte, []byte) {
 		t.Fatalf("timerMutations[5] is %s, want unref-ignored", mutation.name)
 	}
 	options := native.Options{Sanitize: true, Count: true}
+	runtime := timerMutant(t, mutation.file, mutation.before, mutation.after)
+	library, err := native.RuntimeLibrary(runtime.directory, options)
+	if err != nil {
+		t.Fatal(err)
+	}
+	build := native.BuildWithRuntime
+	if bare {
+		build = timerBuildBare
+	}
+	code := timerHarness(t)
 	var built [2][]byte
 	for index := range built {
-		runtime := timerMutant(t, mutation.file, mutation.before, mutation.after)
 		output := filepath.Join(t.TempDir(), "probe")
-		build := runtime.build
-		if bare {
-			build = runtime.buildBare
-		}
-		if err := build(timerHarness(t), output, options); err != nil {
+		if err := build(code, output, options, library); err != nil {
 			t.Fatal(err)
 		}
 		data, err := os.ReadFile(output)
