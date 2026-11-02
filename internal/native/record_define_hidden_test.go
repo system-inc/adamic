@@ -1,13 +1,18 @@
 package native_test
 
 import (
+	"bytes"
 	"context"
+	"errors"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"regexp"
 	"strings"
 	"testing"
+	"time"
 
+	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -65,6 +70,139 @@ func TestRecordDefineHiddenWriteChecksMutant(t *testing.T) {
 	graphCompilerWitness(t, recordDefineHiddenSource(t), func(code string) string {
 		return recordDeleteCheck.ReplaceAllString(recordWriteCheck.ReplaceAllString(code, "adamic_record_set$1;"), "")
 	})
+}
+
+// recordUncaughtWitness holds a program that ends on a throw nothing catches to source Node, which
+// oracle/node.mjs reports as Adamic's panic: String(error) on one stderr line, and exit 70. The JavaScript
+// backend and native under ASan and UBSan must exit with Node's code and write its stdout and stderr. A
+// program that ends so holds what it held, which isn't a leak, so leak detection is off, as in the oracle's
+// own comparison. Given a mutant of the C, native must disagree with Node instead.
+func recordUncaughtWitness(t *testing.T, source string, mutant func(string) string) {
+	t.Helper()
+	directory := t.TempDir()
+	path := filepath.Join(directory, "main.a")
+	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+		t.Fatal(err)
+	}
+	type ran struct {
+		stdout, stderr []byte
+		exitCode       int
+	}
+	run := func(environment []string, name string, arguments ...string) ran {
+		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+		defer cancel()
+		command := exec.CommandContext(ctx, name, arguments...)
+		command.Env = append(os.Environ(), environment...)
+		var stdout, stderr bytes.Buffer
+		command.Stdout = &stdout
+		command.Stderr = &stderr
+		var exited *exec.ExitError
+		if err := command.Run(); err != nil && !errors.As(err, &exited) {
+			t.Fatalf("running %s: %v", name, err)
+		}
+		return ran{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+	}
+	truth := run(nil, "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", path)
+	if truth.exitCode != 70 {
+		t.Fatalf("source Node did not end on an uncaught throw: exit %d\n%s\n%s", truth.exitCode, truth.stdout, truth.stderr)
+	}
+	agrees := func(got ran) bool {
+		return got.exitCode == truth.exitCode && bytes.Equal(got.stdout, truth.stdout) && bytes.Equal(got.stderr, truth.stderr)
+	}
+	checked, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lower.LowerWithOptions(context.Background(), checked, lower.Options{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	js := filepath.Join(directory, "main.mjs")
+	if err := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); err != nil {
+		t.Fatal(err)
+	}
+	if got := run(nil, "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", js); !agrees(got) {
+		t.Fatalf("JavaScript: exit %d %q %q, Node exit %d %q %q", got.exitCode, got.stdout, got.stderr, truth.exitCode, truth.stdout, truth.stderr)
+	}
+	code := native.C(program)
+	if mutant != nil {
+		changed := mutant(code)
+		if changed == code {
+			t.Fatal("mutant did not change C")
+		}
+		code = changed
+	}
+	binary := filepath.Join(directory, "native")
+	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	got := run([]string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
+	if mutant != nil {
+		if agrees(got) {
+			t.Fatal("mutant survived: native agrees with Node")
+		}
+		t.Logf("caught: native exit %d %q %q, Node exit %d %q %q", got.exitCode, got.stdout, got.stderr, truth.exitCode, truth.stdout, truth.stderr)
+		return
+	}
+	if !agrees(got) {
+		t.Fatalf("native: exit %d %q %q, Node exit %d %q %q", got.exitCode, got.stdout, got.stderr, truth.exitCode, truth.stdout, truth.stderr)
+	}
+}
+
+// A write to a hidden key that nothing catches: Node ends on its TypeError. The write is in a function, through
+// a key known only as it runs, so the throw leaves the function, and main's call to it is what tests for it
+// (RecordWriteMayThrow, through lowering's exceptions fixpoint) and ends the program as Node does.
+const recordHiddenUncaught = `const settings: Record<string, number> = { size: 1 };
+Object.defineProperty(settings, 'locked', { enumerable: false, writable: false, value: 2 });
+function update(key: string, value: number): void {
+    settings[key] = value;
+}
+update('size', 3);
+console.log(` + "`${String(settings.size)} ${String(settings.locked)}`" + `);
+update(['loc', 'ked'].join(''), 4);
+console.log('not reached');
+`
+
+func TestRecordDefineHiddenUncaughtAgainstNode(t *testing.T) {
+	t.Parallel()
+	recordUncaughtWitness(t, recordHiddenUncaught, nil)
+}
+
+// Mutant: the uncaught write's check dropped from the C, so the write is refused without a throw and the
+// program runs on. Node's exit code and stderr must catch it.
+func TestRecordDefineHiddenUncaughtMutant(t *testing.T) {
+	t.Parallel()
+	recordUncaughtWitness(t, recordHiddenUncaught, func(code string) string {
+		return recordWriteCheck.ReplaceAllString(code, "adamic_record_set$1;")
+	})
+}
+
+// A define in main.a, and a write through a key known only as it runs in a function library.a exports and
+// main.a calls, inside a try. Imports are lowered before the module that imports them, so the write is lowered
+// before the define names its key: it's the exceptions fixpoint, once every module is lowered, that makes the
+// library's function one that can throw, and main's call one that tests for it.
+const recordHiddenLibrary = `export function store(record: Record<string, number>, key: string, value: number): void {
+    record[key] = value;
+}
+`
+
+const recordHiddenAcrossModules = `import { store } from './library.a';
+const counts: Record<string, number> = { a: 1 };
+Object.defineProperty(counts, 'hidden', { enumerable: false, writable: false, value: 5 });
+store(counts, 'a', 2);
+try {
+    store(counts, ['hid', 'den'].join(''), 6);
+    console.log('written');
+}
+catch(error) {
+    if(error instanceof Error) console.log(` + "`${error.name}: ${error.message}`" + `);
+}
+console.log(` + "`${String(counts.hidden)} ${JSON.stringify(counts)}`" + `);
+`
+
+func TestRecordDefineHiddenAcrossModulesAgainstNode(t *testing.T) {
+	t.Parallel()
+	graphCompilerModulesWitness(t, recordHiddenAcrossModules, map[string]string{"library.a": recordHiddenLibrary}, nil)
 }
 
 // A record write or delete is checked only when its key may be hidden: one known only as it runs, or a literal
