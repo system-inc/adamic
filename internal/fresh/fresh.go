@@ -1425,6 +1425,10 @@ func (a *analysis) value(expression ir.Expression) value {
 		return value{}
 	case ir.DynamicProperty:
 		return a.load(a.value(expression.Object), expression.Name)
+	case ir.DynamicKeyedProperty:
+		// It may call a class getter by whatever name the key holds, so it's taken as a call, which
+		// lets its operands escape and its result be anything outside.
+		return a.call(a.operands(expression), expression.Type())
 	case ir.HasAccessor:
 		a.value(expression.Object)
 		return value{}

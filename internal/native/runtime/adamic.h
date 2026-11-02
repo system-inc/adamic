@@ -600,6 +600,23 @@ extern adamic_heap adamic_null;
 void adamic_register_shape_types(adamic_shape_types *metadata);
 bool adamic_has_property(const adamic_heap *object, const char *name);
 adamic_heap *adamic_dynamic_property(adamic_heap *object, const char *name);
+// adamic_keyed_class is what a run-time key read needs of a class that adamic_class doesn't carry: whether
+// an object literal made it, whose accessors the read stops at, and the names its methods table holds,
+// inherited ones included, which it stops at too. The emitter writes one row for each class, from the
+// same IR class the JavaScript backend's helper reads, only into a program that has the read, so a
+// program without it emits the C it did.
+typedef struct adamic_keyed_class {
+	const adamic_class *class;
+	bool literal;
+	const char *const *method_names;
+	size_t method_count;
+} adamic_keyed_class;
+
+// adamic_dynamic_property_keyed is Reflect.get(Object(object), key, object) for an object lowering
+// proved neither null nor undefined: an own data slot, a record's own key or a class getter, owned,
+// and a loud stop wherever the representation can't answer as Node does. The key is compared by its
+// content, whatever string it is. classes are the program's rows, count of them.
+adamic_heap *adamic_dynamic_property_keyed(adamic_heap *object, const adamic_string *key, const adamic_keyed_class *classes, size_t count);
 
 // adamic_object_field finds a field by name. The checker proved the field is there. Where this place in
 // the program last saw the same shape, the field is where it was then, which is inline, since it's
@@ -943,8 +960,12 @@ bool adamic_map_delete(adamic_map *map, adamic_value key);
 typedef adamic_object adamic_record;
 typedef adamic_object adamic_record_iterator;
 
-adamic_record *adamic_record_new(bool reference_values);
+// A record's values are of one adamic_field_kind, named at allocation and kept by its shape
+// (record.c): counted references, numbers or booleans, a number or a boolean possibly packed with
+// undefined (adamic_maybe_number_pack, adamic_maybe_boolean_pack).
+adamic_record *adamic_record_new(adamic_field_kind values);
 bool adamic_record_is(const adamic_object *object);
+adamic_field_kind adamic_record_values(const adamic_record *record);
 adamic_value adamic_record_view(const adamic_record *, const char *, unsigned char, const char *, const char *);
 // Own lookup returns a borrowed slot, NULL for absence (including an inherited name).
 adamic_value *adamic_record_get_own(const adamic_record *record, const adamic_string *key);

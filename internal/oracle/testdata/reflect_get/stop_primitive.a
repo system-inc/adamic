@@ -1,0 +1,7 @@
+// A primitive receiver stops loudly, on both backends alike (Adamic's amended ruling on #zhgxzjg):
+// answering it needs each primitive's whole prototype. Node prints 6.
+import { propertyOf } from './hostErrors.ts';
+
+console.log('before');
+const length = propertyOf('ENOSPC', 'length');
+console.log(typeof length);

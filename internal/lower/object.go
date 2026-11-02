@@ -806,6 +806,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if value, known, err := l.processValue(node); known {
 		return value, true, err
 	}
+	if value, known, err := l.reflectGet(node); known {
+		return value, true, err
+	}
 	if value, known, err := l.nodeFSDirectoryCall(node); known {
 		return value, true, err
 	}

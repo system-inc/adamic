@@ -1,0 +1,6 @@
+// An array stops on both backends, before any key is judged. Node prints 2.
+import { propertyOf } from './hostErrors.ts';
+
+console.log('before');
+const value = propertyOf(['a', 'b'], 'length');
+console.log(typeof value);
