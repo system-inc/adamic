@@ -31,6 +31,12 @@ func (l *lowering) inProperty(node *ast.Node) (ir.Expression, error) {
 	if strings.ContainsRune(key.Text(), 0) {
 		return nil, l.notYet(key, "in with a NUL key (native shape names)")
 	}
+	// Natively a class's privates and an Error's inherited message (#message) are slots under # names,
+	// and the JavaScript backend keeps privates as # string keys, but on Node no string key reaches a
+	// private: "#message" in error is false there.
+	if strings.HasPrefix(key.Text(), "#") {
+		return nil, l.notYet(key, "in with a key starting with # (native private and inherited-message slot names)")
+	}
 	// "key" in value narrows a union of object types to the members that declare the key, and any
 	// object carrying that key passes, so the narrowed member's fields would be read on trust. The
 	// sound use is presence on an unknown or single object type, where reads stay dynamic.
