@@ -5986,6 +5986,14 @@
   {
     "package": "flow",
     "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_node_fs_file_date_now_a_1e4f557ed452",
+    "program": "internal/oracle/testdata/node_fs_file_date_now.a",
+    "path": "../oracle/testdata/node_fs_file_date_now.a",
+    "sha256": "74c17d747974b171115b6f7bf43429168f67ecbde1ddc98290aa5f8fe33af87b"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
     "test": "TestFlowProgram____oracle_testdata_node_fs_file_mkdir_a_b27dc23fc728",
     "program": "internal/oracle/testdata/node_fs_file_mkdir.a",
     "path": "../oracle/testdata/node_fs_file_mkdir.a",
@@ -15854,6 +15862,14 @@
     "program": "internal/oracle/testdata/node_fs_file_date.a",
     "path": "../oracle/testdata/node_fs_file_date.a",
     "sha256": "389fe201a98af7f7189848eb2d14a581cf977a47498106e44ac9ae8d908038d9"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_node_fs_file_date_now_a_1e4f557ed452",
+    "program": "internal/oracle/testdata/node_fs_file_date_now.a",
+    "path": "../oracle/testdata/node_fs_file_date_now.a",
+    "sha256": "74c17d747974b171115b6f7bf43429168f67ecbde1ddc98290aa5f8fe33af87b"
   },
   {
     "package": "flow",
@@ -25730,6 +25746,14 @@
   {
     "package": "flow",
     "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_node_fs_file_date_now_a_1e4f557ed452",
+    "program": "internal/oracle/testdata/node_fs_file_date_now.a",
+    "path": "../oracle/testdata/node_fs_file_date_now.a",
+    "sha256": "74c17d747974b171115b6f7bf43429168f67ecbde1ddc98290aa5f8fe33af87b"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
     "test": "TestFlowProgram____oracle_testdata_node_fs_file_mkdir_a_b27dc23fc728",
     "program": "internal/oracle/testdata/node_fs_file_mkdir.a",
     "path": "../oracle/testdata/node_fs_file_mkdir.a",
@@ -35598,6 +35622,14 @@
     "program": "internal/oracle/testdata/node_fs_file_date.a",
     "path": "../oracle/testdata/node_fs_file_date.a",
     "sha256": "389fe201a98af7f7189848eb2d14a581cf977a47498106e44ac9ae8d908038d9"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_node_fs_file_date_now_a_1e4f557ed452",
+    "program": "internal/oracle/testdata/node_fs_file_date_now.a",
+    "path": "../oracle/testdata/node_fs_file_date_now.a",
+    "sha256": "74c17d747974b171115b6f7bf43429168f67ecbde1ddc98290aa5f8fe33af87b"
   },
   {
     "package": "flow",
@@ -45822,6 +45854,14 @@
     "program": "internal/oracle/testdata/node_fs_file_date.a",
     "path": "../oracle/testdata/node_fs_file_date.a",
     "sha256": "389fe201a98af7f7189848eb2d14a581cf977a47498106e44ac9ae8d908038d9"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_node_fs_file_date_now_a_1e4f557ed452",
+    "program": "internal/oracle/testdata/node_fs_file_date_now.a",
+    "path": "../oracle/testdata/node_fs_file_date_now.a",
+    "sha256": "74c17d747974b171115b6f7bf43429168f67ecbde1ddc98290aa5f8fe33af87b"
   },
   {
     "package": "fresh",

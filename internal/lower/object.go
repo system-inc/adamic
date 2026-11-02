@@ -795,10 +795,12 @@ var mathFunctions = map[string]int{
 	"exp": 1, "expm1": 1, "log": 1, "log1p": 1, "log2": 1, "log10": 1, "cbrt": 1, "hypot": -1,
 }
 
-// refusedRandom refuses Math.random for good in 0.1: a program's output would no longer be a function
-// of its source, and the oracle compares it with Node's byte for byte (docs/0.1.md).
+// refusedRandom stops Math.random until it's built: from the OS's entropy, with V8's range, under the
+// oracle discipline the current time follows (a fixture prints facts about it, never the value). Ruled
+// November 1, 2026: determinism is how we test, not what the language is, so this is not yet, not a
+// refusal (docs/0.1.md).
 func refusedRandom(l *lowering, node *ast.Node) error {
-	return &Refused{Where: l.program.Where(node), What: "Math.random", Fix: "0.1 programs are deterministic, so the oracle can hold them to Node; compute the values you need, with a generator of your own seeded by a constant"}
+	return l.notYet(node, "Math.random")
 }
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
@@ -847,6 +849,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		return lowered, true, err
 	}
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+	if value, known, err := l.dateNow(node, callee); known {
+		return value, true, err
+	}
 	// The global parseInt and parseFloat are Number's, the same functions.
 	if l.isLibraryGlobal(callee, "parseInt") || l.isLibraryGlobal(callee, "parseFloat") {
 		return l.numberCall(node, callee.Text())

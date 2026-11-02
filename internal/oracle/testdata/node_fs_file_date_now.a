@@ -1,0 +1,7 @@
+const before = Date.now();
+const first = new Date();
+const second = new Date;
+const after = Date.now();
+const later = new Date(first.getTime() + 1);
+console.log(`${second.getTime() >= first.getTime()} ${first.getTime() > 1700000000000} ${Number.isInteger(first.getTime())} ${later.getTime() - first.getTime()}`);
+console.log(`${before <= first.getTime() && second.getTime() <= after} ${Number.isInteger(before) && Number.isInteger(after)}`);
