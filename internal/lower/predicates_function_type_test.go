@@ -332,3 +332,27 @@ console.log(String(visitArrayWorker(nodes, test, 0, 4).length));`, `refused: an 
 		}
 	}
 }
+
+// Only undefined is looked through: an implementation taking the callback or null, with undefined or
+// without, isn't a plain callback, and the overload's claim stays refused as before (#1w5bve2, Lower's
+// should on block 1). An argument of null reaches the body, which must test for it, so a widening that
+// takes null out too goes red here instead of opening the parameter silently. Mutant: plainCallbackType
+// looking through null as through undefined, which admits every row.
+func TestOverloadPredicateOverNullableCallbackStaysRefused(t *testing.T) {
+	t.Parallel()
+	for _, implementation := range []struct{ name, test, guard string }{
+		{"null", "((node: Node) => boolean) | null", "test !== null && test(node)"},
+		{"null or undefined", "((node: Node) => boolean) | null | undefined", "test !== null && test !== undefined && test(node)"},
+	} {
+		for _, extension := range []string{".ts", ".a"} {
+			t.Run(implementation.name+extension, func(t *testing.T) {
+				t.Parallel()
+				_, err := lowerSourceAs(t, fmt.Sprintf(visitArraySource, implementation.test, implementation.guard, `console.log(String(visitArrayWorker(nodes, isIdentifier, 0, 4).length));`), extension)
+				var refused *Refused
+				if !errors.As(err, &refused) || refused.What != "a type predicate whose return is not proven (there is no body proving this parameter)" {
+					t.Fatalf("want the overload's claim refused, got %v", err)
+				}
+			})
+		}
+	}
+}
