@@ -122,7 +122,7 @@ func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
 		}
 	}
 	if !isClassInstance(proven) && !l.isStaticType(proven) && !l.hasAccessorStorage(proven) {
-		if l.isLibraryType(proven, "RegExp", "Error") || l.includesUndefined(proven) {
+		if l.isLibraryType(proven, "RegExp") || l.includesUndefined(proven) {
 			return l.objectCall(node, "keys")
 		}
 		for _, property := range l.checker.GetPropertiesOfType(proven) {

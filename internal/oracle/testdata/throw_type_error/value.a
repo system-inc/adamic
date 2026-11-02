@@ -1,0 +1,5 @@
+// A TypeError held in a const and never thrown: its name and message read as a caught one's do
+// (#bbhwj30).
+const made = new TypeError('value');
+console.log(made.name);
+console.log(made.message);
