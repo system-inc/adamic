@@ -1,0 +1,14 @@
+// A method's name stops on both backends: a class's methods are its table's, not fields. Node prints
+// function.
+import { propertyOf } from './hostErrors.ts';
+
+class Thing {
+	label = 'thing';
+	describe(): string {
+		return this.label;
+	}
+}
+const thing = new Thing();
+console.log(thing.describe());
+const value = propertyOf(thing, 'describe');
+console.log(typeof value);

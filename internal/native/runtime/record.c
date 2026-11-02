@@ -16,7 +16,15 @@
 static const char *const record_names[] = {"0"};
 static const bool record_references[] = {true};
 static const adamic_field_kind record_kinds[] = {adamic_field_reference};
-static const adamic_shape record_shape = {1, record_names, record_references, NULL, record_kinds};
+// One wrapper shape for each adamic_field_kind the record's values have, alike in layout, so the shape
+// says whether its table holds counted references, numbers (number | undefined packed) or booleans
+// (boolean | undefined packed) without a header bit, a slot or a field offset of its own: a run-time
+// key read boxes a value by it (adamic_dynamic_property_keyed). The three are alike in content and told
+// apart by address alone, so a linker's identical-data folding (--icf=all, -fmerge-all-constants) would
+// read every record as one kind; the records harness makes one of each and reads its kind back.
+static const adamic_shape record_number_shape = {1, record_names, record_references, NULL, record_kinds};
+static const adamic_shape record_boolean_shape = {1, record_names, record_references, NULL, record_kinds};
+static const adamic_shape record_reference_shape = {1, record_names, record_references, NULL, record_kinds};
 static const char *const iteration_names[] = {"0", "1", "key"};
 static const bool iteration_references[] = {true, true, false};
 static const adamic_field_kind iteration_kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_number};
@@ -26,9 +34,14 @@ static adamic_map *table(const adamic_record *record) {
 	return record->slots[0].reference;
 }
 
-adamic_record *adamic_record_new(bool reference_values) {
-	adamic_record *record = adamic_object_new(&record_shape);
-	record->slots[0].reference = adamic_map_new(true, reference_values);
+adamic_record *adamic_record_new(adamic_field_kind values) {
+	const adamic_shape *shape = values == adamic_field_number ? &record_number_shape : values == adamic_field_boolean ? &record_boolean_shape : values == adamic_field_reference ? &record_reference_shape : NULL;
+	if (shape == NULL) {
+		static const char message[] = "compiler bug: a record of unknown value kind";
+		adamic_panic(message, sizeof message - 1);
+	}
+	adamic_record *record = adamic_object_new(shape);
+	record->slots[0].reference = adamic_map_new(true, values == adamic_field_reference);
 	return record;
 }
 
@@ -366,7 +379,17 @@ bool adamic_record_iterator_next(adamic_record_iterator *iterator, adamic_string
 	return false;
 }
 
-bool adamic_record_is(const adamic_object *object) { return object->shape == &record_shape; }
+bool adamic_record_is(const adamic_object *object) {
+	return object->shape == &record_number_shape || object->shape == &record_boolean_shape || object->shape == &record_reference_shape;
+}
+
+adamic_field_kind adamic_record_values(const adamic_record *record) {
+	if (record->shape == &record_number_shape) return adamic_field_number;
+	if (record->shape == &record_boolean_shape) return adamic_field_boolean;
+	if (record->shape == &record_reference_shape) return adamic_field_reference;
+	static const char message[] = "compiler bug: a record of unknown value kind";
+	adamic_panic(message, sizeof message - 1);
+}
 
 adamic_value adamic_record_view(const adamic_record *record, const char *name, unsigned char wanted, const char *type, const char *expression) {
  adamic_string key = {{0, adamic_kind_string, 0}, strlen(name), name, 0, NULL, NULL, 0};

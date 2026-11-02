@@ -37,6 +37,7 @@ var viewChecks = []viewReadExample{
 	{ir.ObjectCall{Method: "values", Checked: true}, "checks each value against the declared element at run time"},
 	{ir.ObjectCall{Method: "entries", Checked: true}, "checks each value against the declared element at run time"},
 	{ir.DynamicProperty{}, "a dynamic read of an unknown or a Function, by the allocation's own runtime shape, never a type's claim"},
+	{ir.DynamicKeyedProperty{}, "a run-time key read of an unknown, by the allocation's own runtime shape, never a type's claim"},
 }
 
 // viewNotYet read fields raw, and are NotYet where their operand may hold a viewed value.

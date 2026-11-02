@@ -1,0 +1,7 @@
+// An Error's stack stops on both backends: Node gives every error one, and the native Error has none.
+// Node prints string.
+import { propertyOf } from './hostErrors.ts';
+
+console.log('before');
+const value = propertyOf(new Error('failed'), 'stack');
+console.log(typeof value);

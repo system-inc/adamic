@@ -70,7 +70,7 @@ static void pairs(adamic_record *record) {
 	adamic_release(iterator);
 }
 static void semantics(void) {
-	adamic_record *record = adamic_record_new(false);
+	adamic_record *record = adamic_record_new(adamic_field_number);
 	snapshot(record);
 	const char *names[] = {"10", "2", "-1", "01", "4294967295", "1.5", "-0", "0", "4294967294", "1e0", "", "toString", "constructor", "__proto__", "hasOwnProperty", "世界🌍", "é"};
 	for (size_t index = 0; index < sizeof names / sizeof names[0]; index++) put(record, names[index], (double)index);
@@ -86,7 +86,7 @@ static void semantics(void) {
 	snapshot(record);
 	pairs(record);
 	// Spread into another record defines __proto__ as a data property.
-	adamic_record *copy = adamic_record_new(false);
+	adamic_record *copy = adamic_record_new(adamic_field_number);
 	adamic_record_iterator *iterator = adamic_record_iterate(record);
 	adamic_string *key;
 	adamic_value value;
@@ -102,7 +102,7 @@ static void semantics(void) {
 	adamic_release(copy);
 }
 static void prototypes(void) {
-	adamic_record *record = adamic_record_new(false);
+	adamic_record *record = adamic_record_new(adamic_field_number);
 	const char *names[] = {"constructor", "__defineGetter__", "__defineSetter__", "hasOwnProperty", "__lookupGetter__", "__lookupSetter__", "isPrototypeOf", "propertyIsEnumerable", "toString", "valueOf", "__proto__", "toLocaleString", "missing", "", "toStringX"};
 	for (size_t index = 0; index < sizeof names / sizeof names[0]; index++) {
 		adamic_string *key = text(names[index]);
@@ -121,7 +121,7 @@ static void prototypes(void) {
 	adamic_release(record);
 }
 static void reads(void) {
-	adamic_record *record = adamic_record_new(false);
+	adamic_record *record = adamic_record_new(adamic_field_number);
 	put(record, "hit", 42);
 	put(record, "toString", 7);
 	const char *hits[] = {"hit", "toString"};
@@ -143,7 +143,7 @@ static void reads(void) {
 	}
 	adamic_release(record);
 	// An own undefined is present, even under a prototype-member name.
-	record = adamic_record_new(true);
+	record = adamic_record_new(adamic_field_reference);
 	adamic_string *key = text("toString");
 	adamic_record_define(record, adamic_retain(key), (adamic_value){.reference = NULL});
 	adamic_value *value = adamic_record_get(record, key);
@@ -159,7 +159,7 @@ static void reads(void) {
 }
 
 static void missing_member(const char *operation, const char *name) {
-	adamic_record *record = adamic_record_new(false);
+	adamic_record *record = adamic_record_new(adamic_field_number);
 	adamic_string *key = text(name);
 	if (strcmp(operation, "missing-get") == 0) {
 		printf("%d\n", adamic_record_get(record, key) != NULL);
@@ -171,7 +171,7 @@ static void missing_member(const char *operation, const char *name) {
 }
 
 static void references(void) {
-	adamic_record *record = adamic_record_new(true);
+	adamic_record *record = adamic_record_new(adamic_field_reference);
 	for (size_t index = 0; index < 10000; index++) {
 		// Both key and value are fresh counted strings. Immortal literals would hide a leak.
 		adamic_record_set(record, text("same"), (adamic_value){.reference = text("value")});
@@ -187,7 +187,7 @@ static void references(void) {
 	adamic_release(held);
 	adamic_release(keys);
 	// Compaction and repeated rehashing, with a snapshot alive across deletions.
-	record = adamic_record_new(true);
+	record = adamic_record_new(adamic_field_reference);
 	for (int round = 0; round < 10; round++) {
 		for (int index = 0; index < 1000; index++) {
 			char bytes[32];
@@ -205,14 +205,14 @@ static void references(void) {
 	printf("%zu\n", adamic_record_size(record));
 	adamic_release(record);
 	// Presence is independent of a reference value being undefined.
-	record = adamic_record_new(true);
+	record = adamic_record_new(adamic_field_reference);
 	key = text("undefined");
 	adamic_record_set(record, adamic_retain(key), (adamic_value){.reference = NULL});
 	printf("%d %d %d\n", adamic_record_has_own(record, key), adamic_record_get_own(record, key) != NULL, adamic_record_get_own(record, key)->reference == NULL);
 	adamic_release(key);
 	adamic_release(record);
 	// Scalar flags never read the unspecified bytes of a boolean as a number.
-	record = adamic_record_new(false);
+	record = adamic_record_new(adamic_field_boolean);
 	key = text("flag");
 	adamic_record_set(record, adamic_retain(key), (adamic_value){.boolean = true});
 	printf("%d\n", adamic_record_get_own(record, key)->boolean);
@@ -223,7 +223,7 @@ static void references(void) {
 	// Records nested as values must use iterative heap cleanup, not recursive destructors.
 	adamic_record *chain = NULL;
 	for (size_t index = 0; index < 100000; index++) {
-		adamic_record *next = adamic_record_new(true);
+		adamic_record *next = adamic_record_new(adamic_field_reference);
 		adamic_record_define(next, text("next"), (adamic_value){.reference = chain});
 		chain = next;
 	}
@@ -231,7 +231,7 @@ static void references(void) {
 	puts("chain released");
 }
 static void iteration(void) {
-	adamic_record *record = adamic_record_new(false);
+	adamic_record *record = adamic_record_new(adamic_field_number);
 	put(record, "10", 10); put(record, "2", 2); put(record, "a", 1); put(record, "b", 2);
 	adamic_record_iterator *iterator = adamic_record_iterate(record);
 	adamic_record_iterator *second = adamic_record_iterate(record);
@@ -253,7 +253,7 @@ static void iteration(void) {
 	adamic_release(second);
 }
 static void numeric(size_t count) {
-	adamic_record *record = adamic_record_new(false);
+	adamic_record *record = adamic_record_new(adamic_field_number);
 	for (size_t index = count; index > 0; index--) {
 		char bytes[32];
 		(void)snprintf(bytes, sizeof bytes, "%zu", index * 3);
@@ -274,7 +274,7 @@ static void numeric(size_t count) {
 }
 // Exactly two index keys, inserted out of order: the smallest count that needs the index sort.
 static void two_indices(void) {
-	adamic_record *record = adamic_record_new(false);
+	adamic_record *record = adamic_record_new(adamic_field_number);
 	put(record, "10", 0);
 	put(record, "2", 1);
 	snapshot(record);
@@ -297,7 +297,7 @@ static void own_names(adamic_record *record) {
 // while a define of the value it has goes through. A key hidden where it stands keeps its place, is
 // refused a write, and stays configurable: it takes another define, and a delete.
 static void hidden(void) {
-	adamic_record *record = adamic_record_new(false);
+	adamic_record *record = adamic_record_new(adamic_field_number);
 	put(record, "a", 1);
 	put(record, "b", 2);
 	put(record, "c", 3);
@@ -330,7 +330,7 @@ static void hidden(void) {
 	adamic_release(record);
 	// The hidden key comes after 40 keys deleted, so compaction moves it down and leaves its old slot
 	// behind the live entries; the 40th key added after lands in that slot, and must not come up hidden.
-	record = adamic_record_new(false);
+	record = adamic_record_new(adamic_field_number);
 	for (int index = 0; index < 40; index++) {
 		char bytes[32];
 		(void)snprintf(bytes, sizeof bytes, "k%d", index);
@@ -357,7 +357,7 @@ static double now(void) {
 	return (double)time.tv_sec + (double)time.tv_nsec / 1e9;
 }
 static void workload(size_t count, bool benchmark) {
-	adamic_record *record = adamic_record_new(false);
+	adamic_record *record = adamic_record_new(adamic_field_number);
 	double start = now();
 	for (size_t index = 0; index < count; index++) {
 		char bytes[32];
@@ -431,7 +431,7 @@ int main(int argc, char **argv) {
 		workload((size_t)strtoull(argv[2], NULL, 10), strcmp(argv[1], "bench") == 0);
 	} else if (strcmp(argv[1], "fixed-optional-read") == 0 || strcmp(argv[1], "fixed-read") == 0 || strcmp(argv[1], "uniform-read") == 0) {
 		// A record reaching a fixed object's read: an optional field would otherwise read undefined.
-		adamic_record *record = adamic_record_new(false);
+		adamic_record *record = adamic_record_new(adamic_field_number);
 		put(record, "total", 2);
 		adamic_slot_cache cache = {0};
 		if (strcmp(argv[1], "uniform-read") == 0) {
@@ -443,8 +443,19 @@ int main(int argc, char **argv) {
 			printf("%s\n", adamic_object_maybe_number(record, "0", &cache).present ? "found" : "undefined");
 		}
 		adamic_release(record);
+	} else if (strcmp(argv[1], "value-kinds") == 0) {
+		// The three record shapes are told apart by address alone (record.c): one of each reads its kind
+		// back, which a linker folding identical constants would break.
+		static const char *const names[] = {[adamic_field_number] = "number", [adamic_field_boolean] = "boolean", [adamic_field_reference] = "reference"};
+		const adamic_field_kind kinds[] = {adamic_field_number, adamic_field_boolean, adamic_field_reference};
+		for (size_t index = 0; index < sizeof kinds / sizeof kinds[0]; index++) {
+			adamic_record *record = adamic_record_new(kinds[index]);
+			printf("%s%s", index == 0 ? "" : " ", names[adamic_record_values(record)]);
+			adamic_release(record);
+		}
+		putchar('\n');
 	} else if (strcmp(argv[1], "proto-assignment") == 0) {
-		adamic_record *record = adamic_record_new(false);
+		adamic_record *record = adamic_record_new(adamic_field_number);
 		adamic_record_set(record, text("__proto__"), (adamic_value){.number = 42});
 		adamic_release(record);
 	} else return 2;
