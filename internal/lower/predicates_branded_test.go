@@ -621,11 +621,17 @@ function show(n: Node): void { if (isTypeElementLie(n)) { console.log(nameOf(n))
 // intersection's own id, since S's checked write checks a slot a value admitted as S needn't have: routed,
 // Language's y4 stopped at x.name = "w" with "<write>.name is not initialized" on both backends where Node
 // prints w (Optimizer's ruling, Nov 2). Mut's name is optional and Branded's value has none, or has "a".
-// Unrouted, the write is a plain one, the read after it is checked through TypeElement's view, and both
-// agree with Node, printing w (Pupa, Nov 2). A required field, MutCount's count over Counted, is no
-// different: the write stays a plain one and the read after it is checked. Neither is the widened NotYet,
-// since checkViewWidenedReads weighs reads, never writes (Pupa, Nov 2). Mutant: the four write sites
-// routed again, and y4 stops at the write.
+// Unrouted, the write is a plain one and the read after it is checked through TypeElement's view. Each y4
+// is NotYet, or lowers and agrees with Node on the JavaScript backend and sanitized native both, since
+// lowersAndAgreesWithNodeAs runs only the JavaScript backend. Today y4 without a name lowers, the
+// JavaScript backend prints w, and native panics with "compiler bug: a field the checker proved is there
+// is missing": main's missing slot for an optional field an intersection-typed literal is made without,
+// which needs no predicate (`type Branded = Mut & { brand: undefined }`, Lower's, under the two-hour rule;
+// Language, Nov 2). That row skips while main's own witness still panics so, and fails on any other native
+// outcome than agreement, so it never passes on a native panic and goes green once Lower's fix lands. A
+// required field, MutCount's count over Counted, always has its slot, and agrees on both backends. None
+// is the widened NotYet, since checkViewWidenedReads weighs reads, never writes (Pupa, Nov 2). Mutant:
+// the four write sites routed again, and y4 stops at the write.
 func TestBrandedSupertypeWriteIsNotRouted(t *testing.T) {
 	t.Parallel()
 	const y4 = `interface Mut extends Node { name?: string; }
@@ -637,16 +643,45 @@ function isCountedLie(n: Node): n is Counted { return kindOf(n) !== 0; }
 interface MutCount extends Node { count: number; }
 function show<T extends MutCount>(x: T): void { if (isCountedLie(x)) { x.count = 7; console.log(String(x.count)); } }
 `
-	for _, probe := range []struct{ name, source, field string }{
+	// main's missing-slot bug with no predicate: native panics where Node prints w while it's there.
+	const missingSlot = "adamic: panic: compiler bug: a field the checker proved is there is missing"
+	const witness = `interface Mut extends Node { name?: string; }
+type Branded = Mut & { brand: undefined };
+const v: Branded = { kind: 1, pos: 1, brand: undefined }; v.name = "w"; console.log(String(v.name));
+`
+	for _, probe := range []struct {
+		name, source, field, node string
+		notYet                    bool
+	}{
 		{"y4", y4 + `const v: Branded = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined };
-const mv: Mut = v; show(mv);`, "name"},
+const mv: Mut = v; show(mv);`, "name", "w\n", true},
 		{"y4 holding a name", y4 + `const v: Branded = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a" };
-const mv: Mut = v; show(mv);`, "name"},
-		{"required field", counted + `const w = { kind: 5, pos: 1, count: 3 }; const m: MutCount = w; show(m);`, "count"},
+const mv: Mut = v; show(mv);`, "name", "w\n", true},
+		{"required field", counted + `const w = { kind: 5, pos: 1, count: 3 }; const m: MutCount = w; show(m);`, "count", "7\n", false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			program := lowersAndAgreesWithNodeAs(t, brandedPrelude+probe.source, ".ts")
+			source := brandedPrelude + probe.source
+			if probe.notYet {
+				_, err := lowerTypeScriptAssertionSource(t, source)
+				var pending *NotYet
+				if errors.As(err, &pending) {
+					return
+				}
+			}
+			program := lowersAndAgreesWithNodeAs(t, source, ".ts")
+			if code, out, errs := brandedNative(t, program); code != 0 || out != probe.node || errs != "" {
+				if probe.notYet && code == 70 && out == "" && strings.HasPrefix(errs, missingSlot) {
+					witnessed, err := lowerTypeScriptAssertionSource(t, brandedPrelude+witness)
+					if err != nil {
+						t.Fatalf("main's missing-slot witness doesn't lower: %v", err)
+					}
+					if code, _, errs := brandedNative(t, witnessed); code == 70 && strings.HasPrefix(errs, missingSlot) {
+						t.Skipf("sanitized native panics at the write with main's missing-slot bug, which its own witness still shows: %q", errs)
+					}
+				}
+				t.Fatalf("sanitized native exit %d, stdout %q, stderr %.300q where Node prints %q", code, out, errs, probe.node)
+			}
 			reads, writes := 0, 0
 			inspect := func(node any) bool {
 				if read, ok := node.(ir.Property); ok && read.Name == probe.field {
@@ -669,6 +704,37 @@ const mv: Mut = v; show(mv);`, "name"},
 			}
 			if reads != 1 || writes != 1 {
 				t.Fatalf("want one read and one write of %s, found %d and %d", probe.field, reads, writes)
+			}
+		})
+	}
+}
+
+// A union or optional field read in a program with record storage is NotYet when a view registered its
+// field (rule a, checkRecordGuardedReads), and the guard asks the id the read is checked under: a read
+// through Sized & Node is routed to Sized's view, so it's held as one through Sized is. Asking the raw id,
+// 148e6df3 lowered the routed read where the plain one stopped (Lower's must, probed on Pupa, Nov 2).
+// Mutant: the record guard back on the raw id, and the routed reads lower.
+func TestBrandedSupertypeRecordGuardIsRouted(t *testing.T) {
+	t.Parallel()
+	const records = `const counts: Record<string, number> = {};
+counts["a"] = 1;
+interface Sized extends Declaration { _sizedBrand: undefined; readonly size?: number; readonly label: string | number; }
+function isSizedLie(n: Node): n is Sized { return kindOf(n) !== 0; }
+`
+	const body = ` { if (isSizedLie(n)) { console.log(n.size === undefined ? "none" : String(n.size)); console.log(String(n.label)); } }
+`
+	for _, probe := range []struct{ name, show, value string }{
+		{"plain honest", "function show(n: Node): void", `{ kind: 80, pos: 2, size: 3, label: "x" }`},
+		{"plain lying", "function show(n: Node): void", `{ kind: 80, pos: 2, size: "big", label: true }`},
+		{"routed honest", "function show<T extends Node>(n: T): void", `{ kind: 80, pos: 2, size: 3, label: "x" }`},
+		{"routed lying", "function show<T extends Node>(n: T): void", `{ kind: 80, pos: 2, size: "big", label: true }`},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerTypeScriptAssertionSource(t, brandedPrelude+records+probe.show+body+"const w = "+probe.value+"; const v: Node = w; show(v);\nconsole.log(String(counts[\"a\"]));\n")
+			var pending *NotYet
+			if !errors.As(err, &pending) || pending.What != "a union or optional field read in a program with record storage" {
+				t.Fatalf("want NotYet at the n.size read, held by record storage, got %v", err)
 			}
 		})
 	}
