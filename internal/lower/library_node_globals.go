@@ -130,6 +130,10 @@ func (l *lowering) nodeGarbageCollectorRefusal(node *ast.Node) error {
 				return l.notYet(argument, nodeGarbageCollectorMember+" called with a spread argument (fix: pass its arguments one by one)")
 			}
 		}
+		// The call always throws, so its result is never had; a slot that would hold it isn't lowered.
+		if outer := nodeGlobalsOuter(call); outer.Parent == nil || outer.Parent.Kind != ast.KindExpressionStatement {
+			return l.notYet(call, nodeGarbageCollectorMember+" with its result used as a value, which the call's TypeError never gives (fix: call it as a statement)")
+		}
 	}
 	return nil
 }

@@ -33,8 +33,9 @@ func init() {
 // Every use of Error.captureStackTrace but a read and a call as a statement through the global Error
 // identifier stops with a named NotYet: an alias of Error, an optional call, its result used as a
 // value, a write, and its value in a slot that sees its parameters otherwise. So does every use of
-// global.gc but a read and a call through the global identifier (gc by its bare name, through
-// globalThis, an optional call, a write), and global anywhere but as global.gc's receiver. Each
+// global.gc but a read and a call as a statement through the global identifier (gc by its bare name,
+// through globalThis, an optional call, a write, the call's result used as a value), and global anywhere
+// but as global.gc's receiver. Each
 // program runs on Node, and its whole first diagnostic is pinned in its .stopped file.
 func TestNodeGlobalsCaptureGCRefusals(t *testing.T) {
 	t.Parallel()
@@ -46,7 +47,9 @@ func TestNodeGlobalsCaptureGCRefusals(t *testing.T) {
 	programs := 0
 	for _, entry := range entries {
 		name := entry.Name()
-		if !strings.HasSuffix(name, ".a") {
+		// A .ts program is one the checker lets through only past a non-null assertion, which .a refuses.
+		extension := filepath.Ext(name)
+		if extension != ".a" && extension != ".ts" {
 			continue
 		}
 		programs++
@@ -57,7 +60,7 @@ func TestNodeGlobalsCaptureGCRefusals(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			expected, err := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".stopped")
+			expected, err := os.ReadFile(strings.TrimSuffix(absolute, extension) + ".stopped")
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -80,7 +83,7 @@ func TestNodeGlobalsCaptureGCRefusals(t *testing.T) {
 			}
 		})
 	}
-	if programs != 11 {
-		t.Fatalf("%d programs in %s, want 11: a program added or removed needs this count changed with it", programs, directory)
+	if programs != 12 {
+		t.Fatalf("%d programs in %s, want 12: a program added or removed needs this count changed with it", programs, directory)
 	}
 }
