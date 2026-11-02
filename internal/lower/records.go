@@ -412,13 +412,59 @@ func (l *lowering) recordStorageView(node *ast.Node) error {
 		}
 	}
 	own := l.checker.GetTypeAtLocation(source)
-	if !l.sameRecordStorage(own, target, map[[2]*checker.Type]bool{}) {
+	if stored, literal := l.branchesStoredAs(source, target); literal && stored {
+		return nil
+	} else if literal || !l.sameRecordStorage(own, target, map[[2]*checker.Type]bool{}) {
 		return l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as "+l.checker.TypeToString(target)+" (fixed objects and records have different storage; copy explicitly)")
 	}
 	return nil
 }
 
 func init() { refusalRules.register(2000, "recordStorageView", (*lowering).recordStorageView) }
+
+// branchesStoredAs judges a source that can evaluate to an object literal one value at a time: each arm
+// of a conditional, and an arrow's expression body against the target's return. A literal is stored as
+// what objectLiteral builds it as (recordLiteralElement: its slot's record, else its own type), never
+// as its own type alone, so a literal built fixed meets the target as fixed. literal reports whether
+// any arm was an object literal; when none was, the source's own type is judged as before.
+func (l *lowering) branchesStoredAs(source *ast.Node, target *checker.Type) (stored, literal bool) {
+	node := ast.SkipParentheses(source)
+	switch node.Kind {
+	case ast.KindObjectLiteralExpression:
+		built := l.checker.GetTypeAtLocation(node)
+		if slot := l.slotType(node); slot != nil && l.recordLiteralElement(node) != nil && l.recordElement(l.checker.GetNonNullableType(slot)) != nil {
+			built = l.checker.GetNonNullableType(slot)
+		}
+		return l.sameRecordStorage(built, target, map[[2]*checker.Type]bool{}), true
+	case ast.KindConditionalExpression:
+		conditional := node.AsConditionalExpression()
+		whenTrue, trueLiteral := l.branchesStoredAs(conditional.WhenTrue, target)
+		whenFalse, falseLiteral := l.branchesStoredAs(conditional.WhenFalse, target)
+		return whenTrue && whenFalse, trueLiteral || falseLiteral
+	case ast.KindArrowFunction:
+		body := node.Body()
+		if body == nil || body.Kind == ast.KindBlock {
+			break
+		}
+		own, viewed := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node), checker.SignatureKindCall), l.checker.GetSignaturesOfType(l.checker.GetNonNullableType(target), checker.SignatureKindCall)
+		if len(own) != 1 || len(viewed) != 1 {
+			break
+		}
+		returned, bodyLiteral := l.branchesStoredAs(body, l.checker.GetReturnTypeOfSignature(viewed[0]))
+		if !bodyLiteral {
+			break
+		}
+		ownParameters, viewedParameters := own[0].Parameters(), viewed[0].Parameters()
+		for i := 0; i < len(ownParameters) && i < len(viewedParameters); i++ {
+			// A caller passes the viewed parameter's value into the arrow's own: that's the flow.
+			if !l.sameRecordStorage(l.checker.GetTypeOfSymbol(viewedParameters[i]), l.checker.GetTypeOfSymbol(ownParameters[i]), map[[2]*checker.Type]bool{}) {
+				return false, true
+			}
+		}
+		return returned, true
+	}
+	return l.sameRecordStorage(l.checker.GetTypeAtLocation(node), target, map[[2]*checker.Type]bool{}), false
+}
 
 // Structural views must preserve dictionary storage at every depth, including callbacks.
 func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
