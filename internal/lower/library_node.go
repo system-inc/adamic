@@ -83,25 +83,39 @@ func (l *lowering) nodeHostObject(proven *checker.Type) (registered func(member 
 const (
 	nodeHostViewDepth   = 8
 	nodeHostViewTooDeep = "past the depth the view check follows, at "
+	nodeHostViewOpaque  = "an opaque view of "
 )
+
+// parameter distinguishes the opaque-view policy of a callback's incoming values from the
+// existing result policy. Keep both in the seen key: visiting one must not suppress the other.
+type nodeHostViewPair struct {
+	own, view *checker.Type
+	parameter bool
+}
 
 // nodeHostViewReach is the first member of a host object that a type it's seen as reaches and no
 // registration names, or "" when every member reached is registered. It follows each property of
-// the view, each object member of a union view, the property's type and a method's result, with a
-// seen-set, and past nodeHostViewDepth it fails closed, naming the type it stopped at. A value
+// the view, each object member of a union view, the property's type and a method's result and
+// contravariant parameters, with a seen-set. Past nodeHostViewDepth it fails closed, naming the
+// type it stopped at. A value
 // that isn't a host object is walked together with its view to every host object inside it: an
 // instantiated library generic (an array, a tuple, a Map) through its type arguments paired with
 // the view's, and any other object through its properties, index signatures and methods' results,
 // and anything callable through its call and construct results. So a container holding one, or a
 // function giving one, is the host object seen through the container's view. A type parameter in
 // the view is seen as its constraint, which is all its body can name.
-func (l *lowering) nodeHostViewReach(own, view *checker.Type, depth int, seen map[[2]*checker.Type]bool) string {
+func (l *lowering) nodeHostViewReach(own, view *checker.Type, depth int, seen map[nodeHostViewPair]bool, parameter bool) string {
 	if own == nil || view == nil || own == view {
 		return ""
 	}
-	if own.Flags()&checker.TypeFlagsUnion != 0 {
+	if parameter && own.Flags()&checker.TypeFlagsInstantiableNonPrimitive != 0 {
+		if constraint := l.checker.GetBaseConstraintOfType(own); constraint != nil && constraint != own {
+			return l.nodeHostViewReach(constraint, view, depth, seen, parameter)
+		}
+	}
+	if own.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
 		for _, member := range own.Types() {
-			if reached := l.nodeHostViewReach(member, view, depth, seen); reached != "" {
+			if reached := l.nodeHostViewReach(member, view, depth, seen, parameter); reached != "" {
 				return reached
 			}
 		}
@@ -110,17 +124,26 @@ func (l *lowering) nodeHostViewReach(own, view *checker.Type, depth int, seen ma
 	if own.Flags()&checker.TypeFlagsObject == 0 {
 		return ""
 	}
-	view = l.checker.GetNonNullableType(view)
+	if parameter && view.Flags()&checker.TypeFlagsInstantiableNonPrimitive != 0 && l.nodeHoldsHost(own) {
+		return nodeHostViewOpaque + l.checker.TypeToString(own)
+	}
 	if view.Flags()&checker.TypeFlagsTypeParameter != 0 {
 		constraint := l.checker.GetBaseConstraintOfType(view)
-		if constraint == nil || constraint == view {
+		if constraint == nil || constraint == view || constraint.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0 {
+			if parameter && l.nodeHoldsHost(own) {
+				return nodeHostViewOpaque + l.checker.TypeToString(own)
+			}
 			return ""
 		}
 		view = l.checker.GetNonNullableType(constraint)
 	}
+	if parameter && view.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0 && l.nodeHoldsHost(own) {
+		return nodeHostViewOpaque + l.checker.TypeToString(own)
+	}
+	view = l.checker.GetNonNullableType(view)
 	registered, host := l.nodeHostObject(own)
 	// A primitive view can't hold an object at all, a host object or one holding it.
-	if own == view || seen[[2]*checker.Type{own, view}] || !host && !l.nodeHoldsHost(own) || view.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsUnion|checker.TypeFlagsIntersection) == 0 {
+	if own == view || seen[nodeHostViewPair{own, view, parameter}] || !host && !l.nodeHoldsHost(own) && !l.nodeHoldsHost(view) || view.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsUnion|checker.TypeFlagsIntersection) == 0 {
 		return ""
 	}
 	// A union's properties are only those its members share, so each object member the value fits
@@ -128,12 +151,12 @@ func (l *lowering) nodeHostViewReach(own, view *checker.Type, depth int, seen ma
 	// doesn't fit, a primitive or another host type among them, can't hold it. An intersection's
 	// properties are already every member's.
 	if view.Flags()&checker.TypeFlagsUnion != 0 {
-		seen[[2]*checker.Type{own, view}] = true
+		seen[nodeHostViewPair{own, view, parameter}] = true
 		for _, member := range view.Types() {
 			if member.Flags()&checker.TypeFlagsObject == 0 || !l.checker.IsTypeAssignableTo(own, member) {
 				continue
 			}
-			if reached := l.nodeHostViewReach(own, member, depth, seen); reached != "" {
+			if reached := l.nodeHostViewReach(own, member, depth, seen, parameter); reached != "" {
 				return reached
 			}
 		}
@@ -144,11 +167,11 @@ func (l *lowering) nodeHostViewReach(own, view *checker.Type, depth int, seen ma
 		// proved holds none (one that it has never gets this far).
 		return nodeHostViewTooDeep + l.checker.TypeToString(own)
 	}
-	seen[[2]*checker.Type{own, view}] = true
+	seen[nodeHostViewPair{own, view, parameter}] = true
 	// A function or a class seen as a callable view gives what its calls give: each call or construct
 	// signature's result is paired with the view's, as a callable property's are below.
 	for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
-		if reached := l.nodeHostSignaturesReach(l.checker.GetSignaturesOfType(own, kind), l.checker.GetSignaturesOfType(view, kind), depth, seen); reached != "" {
+		if reached := l.nodeHostSignaturesReach(l.checker.GetSignaturesOfType(own, kind), l.checker.GetSignaturesOfType(view, kind), depth, seen, parameter); reached != "" {
 			return reached
 		}
 	}
@@ -158,7 +181,7 @@ func (l *lowering) nodeHostViewReach(own, view *checker.Type, depth int, seen ma
 		held, seenAs := l.checker.GetTypeArguments(own), l.checker.GetTypeArguments(view)
 		if len(held) == len(seenAs) {
 			for index := range held {
-				if reached := l.nodeHostViewReach(held[index], seenAs[index], depth+1, seen); reached != "" {
+				if reached := l.nodeHostViewReach(held[index], seenAs[index], depth+1, seen, parameter); reached != "" {
 					return reached
 				}
 			}
@@ -177,17 +200,17 @@ func (l *lowering) nodeHostViewReach(own, view *checker.Type, depth int, seen ma
 			continue
 		}
 		held, seenAs := l.checker.GetTypeOfSymbol(member), l.checker.GetTypeOfSymbol(property)
-		if reached := l.nodeHostViewReach(held, seenAs, depth+1, seen); reached != "" {
+		if reached := l.nodeHostViewReach(held, seenAs, depth+1, seen, parameter); reached != "" {
 			return reached
 		}
-		if reached := l.nodeHostSignaturesReach(l.checker.GetSignaturesOfType(held, checker.SignatureKindCall), l.checker.GetSignaturesOfType(seenAs, checker.SignatureKindCall), depth, seen); reached != "" {
+		if reached := l.nodeHostSignaturesReach(l.checker.GetSignaturesOfType(held, checker.SignatureKindCall), l.checker.GetSignaturesOfType(seenAs, checker.SignatureKindCall), depth, seen, parameter); reached != "" {
 			return reached
 		}
 	}
 	for _, index := range l.checker.GetIndexInfosOfType(view) {
 		for _, held := range l.checker.GetIndexInfosOfType(own) {
 			if held.KeyType() == index.KeyType() {
-				if reached := l.nodeHostViewReach(held.ValueType(), index.ValueType(), depth+1, seen); reached != "" {
+				if reached := l.nodeHostViewReach(held.ValueType(), index.ValueType(), depth+1, seen, parameter); reached != "" {
 					return reached
 				}
 			}
@@ -198,7 +221,7 @@ func (l *lowering) nodeHostViewReach(own, view *checker.Type, depth int, seen ma
 
 // nodeHoldsHost says whether a value of a type may hold a host object anywhere inside it, along the
 // edges nodeHostViewReach walks: a union's members, a library container's type arguments, and any
-// other object's properties, index signatures and call and construct results. It's remembered for the
+// other object's properties, index signatures and call and construct results and parameters. It's remembered for the
 // lowering, so the walk passes over the many program types that hold none: a search from one type
 // that meets no host object proves every type it met holds none, and one that meets a host object
 // proves the types on the way to it hold one.
@@ -228,7 +251,11 @@ func (l *lowering) nodeHoldsHost(root *checker.Type) bool {
 		}
 		var next []*checker.Type
 		switch {
-		case proven.Flags()&checker.TypeFlagsUnion != 0:
+		case proven.Flags()&checker.TypeFlagsInstantiableNonPrimitive != 0:
+			if constraint := l.checker.GetBaseConstraintOfType(proven); constraint != proven {
+				next = append(next, constraint)
+			}
+		case proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0:
 			next = proven.Types()
 		case proven.Flags()&checker.TypeFlagsObject == 0:
 		case l.nodeLibraryContainer(proven):
@@ -243,6 +270,9 @@ func (l *lowering) nodeHoldsHost(root *checker.Type) bool {
 			for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
 				for _, signature := range l.checker.GetSignaturesOfType(proven, kind) {
 					next = append(next, l.checker.GetReturnTypeOfSignature(signature))
+					for _, parameter := range signature.Parameters() {
+						next = append(next, l.checker.GetTypeOfSymbol(parameter))
+					}
 				}
 			}
 		}
@@ -263,26 +293,56 @@ func (l *lowering) nodeHoldsHost(root *checker.Type) bool {
 	return false
 }
 
-// nodeHostSignaturesReach pairs each of a view's signatures with each of own's whose result fits the
-// view's, the overloads the checker could have related it to (realpathSync.native's string overload
-// to a view giving a string, not its Buffer one), and walks their results. Only a result is
-// followed. A parameter would be the contravariant road, a host method handing the program a host
-// object through a callback; no registered member does (TestNodeRegisteredCallbacksHandNoHostObject
-// holds it), so none is followed yet.
-func (l *lowering) nodeHostSignaturesReach(own, view []*checker.Signature, depth int, seen map[[2]*checker.Type]bool) string {
+// nodeHostSignaturesReach judges results covariantly and parameters contravariantly. A host
+// callback hands its declared parameter types to the program's listener, and another function
+// layer swaps that direction again. All overload pairs and every supplied position (including
+// rest elements and optional parameters) are judged, not just a signature selected by its result.
+func (l *lowering) nodeHostSignaturesReach(own, view []*checker.Signature, depth int, seen map[nodeHostViewPair]bool, parameter bool) string {
 	for _, called := range view {
-		result := l.checker.GetReturnTypeOfSignature(called)
 		for _, call := range own {
-			held := l.checker.GetReturnTypeOfSignature(call)
-			if !l.checker.IsTypeAssignableTo(held, result) {
-				continue
+			called, call := checker.Checker_getCanonicalSignature(l.checker, called), checker.Checker_getCanonicalSignature(l.checker, call)
+			result, held := l.checker.GetReturnTypeOfSignature(called), l.checker.GetReturnTypeOfSignature(call)
+			if l.checker.IsTypeAssignableTo(held, result) {
+				if reached := l.nodeHostViewReach(held, result, depth+1, seen, parameter); reached != "" {
+					return reached
+				}
 			}
-			if reached := l.nodeHostViewReach(held, result, depth+1, seen); reached != "" {
-				return reached
+			for position := range l.nodeHostParameterPositions(call, called) {
+				handed, declared := l.checker.GetTypeAtPosition(called, position), l.checker.GetTypeAtPosition(call, position)
+				if declared.Flags()&checker.TypeFlagsInstantiableNonPrimitive != 0 && l.nodeHoldsHost(handed) {
+					return nodeHostViewOpaque + l.checker.TypeToString(handed)
+				}
+				if reached := l.nodeHostViewReach(handed, declared, depth+1, seen, true); reached != "" {
+					return reached
+				}
 			}
 		}
 	}
 	return ""
+}
+
+// nodeHostParameterPositions expands fixed tuple rest parameters too. A declared rest slot can
+// stand for several positions; inspecting just len(Parameters) would miss a later host object.
+func (l *lowering) nodeHostParameterPositions(from, to *checker.Signature) int {
+	positions := l.nodeHostParameterCount(from)
+	if l.checker.HasEffectiveRestParameter(from) {
+		positions = max(positions, l.nodeHostParameterCount(to))
+	}
+	if !l.checker.HasEffectiveRestParameter(to) {
+		positions = min(positions, l.nodeHostParameterCount(to))
+	}
+	return positions
+}
+
+func (l *lowering) nodeHostParameterCount(signature *checker.Signature) int {
+	n := len(signature.Parameters())
+	if signature.HasRestParameter() && n != 0 {
+		rest := l.checker.GetTypeOfSymbol(signature.Parameters()[n-1])
+		if checker.IsTupleType(rest) {
+			return n - 1 + len(l.checker.GetTypeArguments(rest))
+		}
+	}
+	return n
 }
 
 // nodeLibraryContainer says whether a type is a tuple or an instantiated generic the library
@@ -309,7 +369,7 @@ func (l *lowering) nodeHostViewAt(own, view *checker.Type) string {
 	if reached, known := l.nodeHostViews[key]; known {
 		return reached
 	}
-	reached := l.nodeHostViewReach(own, view, 0, map[[2]*checker.Type]bool{})
+	reached := l.nodeHostViewReach(own, view, 0, map[nodeHostViewPair]bool{}, false)
 	if l.nodeHostViews == nil {
 		l.nodeHostViews = map[nodeHostViewKey]string{}
 	}
@@ -324,10 +384,74 @@ func (l *lowering) nodeHostViewRefusal(node *ast.Node, own, view *checker.Type, 
 	if _, host := l.nodeHostObject(l.checker.GetNonNullableType(own)); !host {
 		subject = "a value of type " + l.checker.TypeToString(own) + " holding a host object"
 	}
+	if strings.HasPrefix(reached, nodeHostViewOpaque) {
+		return l.notYet(node, subject+" seen as "+l.checker.TypeToString(view)+", which hides a host object behind any, unknown or an unbound type parameter")
+	}
 	if strings.HasPrefix(reached, nodeHostViewTooDeep) {
 		return l.notYet(node, subject+" seen as "+l.checker.TypeToString(view)+", which goes "+reached+", where it may hold a host object")
 	}
 	return l.notYet(node, subject+" seen as "+l.checker.TypeToString(view)+", which reaches "+reached+", a member no host registration names")
+}
+
+// nodeHostCallbackArgument judges a registered call's callback before lowering the argument.
+// GetTypeAtPosition expands rest slots; each library overload the call may use is checked.
+func (l *lowering) nodeHostCallbackArgument(node *ast.Node) error {
+	outer := node
+	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
+		outer = outer.Parent
+	}
+	parent := outer.Parent
+	if parent == nil || parent.Kind != ast.KindCallExpression && parent.Kind != ast.KindNewExpression || !implementedNodeMembers[l.nodeLibraryMember(parent)] {
+		return nil
+	}
+	for position, argument := range parent.Arguments() {
+		if argument != outer {
+			continue
+		}
+		own := l.checker.GetTypeAtLocation(node)
+		if len(l.checker.GetSignaturesOfType(own, checker.SignatureKindCall)) == 0 && len(l.checker.GetSignaturesOfType(own, checker.SignatureKindConstruct)) == 0 {
+			return nil
+		}
+		kind := checker.SignatureKindCall
+		if parent.Kind == ast.KindNewExpression {
+			kind = checker.SignatureKindConstruct
+		}
+		for _, signature := range l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(parent.Expression()), kind) {
+			if position >= len(signature.Parameters()) && !signature.HasRestParameter() {
+				continue
+			}
+			if !l.nodeHostCallbackOverload(parent, signature) {
+				continue
+			}
+			view := l.checker.GetTypeAtPosition(signature, position)
+			if reached := l.nodeHostViewAt(own, view); reached != "" {
+				return l.nodeHostViewRefusal(node, own, view, reached)
+			}
+		}
+	}
+	return nil
+}
+
+// nodeHostCallbackOverload excludes signatures whose arguments cannot fit. Every overload
+// of each applicable callback is still judged by the walk. Generic signatures
+// stay in: an unbound slot cannot prove that the host hands out no object.
+func (l *lowering) nodeHostCallbackOverload(call *ast.Node, signature *checker.Signature) bool {
+	arguments := call.Arguments()
+	if len(arguments) < signature.MinArgumentCount() || len(arguments) > l.nodeHostParameterCount(signature) && !l.checker.HasEffectiveRestParameter(signature) {
+		return false
+	}
+	if len(signature.TypeParameters()) != 0 {
+		return true
+	}
+	for index, argument := range arguments {
+		if argument.Kind == ast.KindSpreadElement {
+			continue
+		}
+		if !l.checker.IsTypeAssignableTo(l.checker.GetTypeAtLocation(argument), l.checker.GetTypeAtPosition(signature, index)) {
+			return false
+		}
+	}
+	return true
 }
 
 // nodeHostDeclaredArgument is the type an argument's parameter is declared as, before the call
@@ -367,6 +491,9 @@ func (l *lowering) nodeLibraryRefusal(node *ast.Node) error {
 	}
 	if !ast.IsExpressionNode(node) || ast.IsPartOfTypeNode(node) {
 		return nil
+	}
+	if err := l.nodeHostCallbackArgument(node); err != nil {
+		return err
 	}
 	if found, err := l.nodeStdoutUseRefusal(node); found {
 		return err
