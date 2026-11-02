@@ -1,0 +1,12 @@
+=== RUN   TestASettledPlacementWaitsForAFillOfItsKey
+=== PAUSE TestASettledPlacementWaitsForAFillOfItsKey
+=== RUN   TestASecondCopyOfAKeyIsComparedWithTheKeptOne
+=== RUN   TestASecondCopyOfAKeyIsComparedWithTheKeptOne/different
+=== RUN   TestASecondCopyOfAKeyIsComparedWithTheKeptOne/alike
+--- PASS: TestASecondCopyOfAKeyIsComparedWithTheKeptOne (0.02s)
+    --- PASS: TestASecondCopyOfAKeyIsComparedWithTheKeptOne/different (0.01s)
+    --- PASS: TestASecondCopyOfAKeyIsComparedWithTheKeptOne/alike (0.01s)
+=== CONT  TestASettledPlacementWaitsForAFillOfItsKey
+--- PASS: TestASettledPlacementWaitsForAFillOfItsKey (0.22s)
+PASS
+ok  	github.com/system-inc/adamic/internal/buildcache	0.249s

@@ -1,0 +1,9 @@
+=== RUN   TestAnAuditMismatchNamesTheFileAndSectionABuildDirectoryLandedIn
+    difference_test.go:23: build witness 902c0750c23a miss 0.03
+    difference_test.go:48: census:
+        audit witness 1e914e676be8fbf746946a7ee5f9fb18eb8dfde3f8a5a9b033316c1e14f4522e mismatch 5092ed25b7c9b17b9c1b404522af0ef1d285b0843404788170b59ce863aed7f7 ea3d5cb40165fa4d35d671a3dd125ad4837ed6c5df5766704dbc150f9356e4fd /tmp/TestAnAuditMismatchNamesTheFileAndSectionABuildDirectoryLandedIn1791266678/005/.audit-1e914e676be8-3096182438
+        audit-difference witness 1e914e676be8fbf746946a7ee5f9fb18eb8dfde3f8a5a9b033316c1e14f4522e witness.o (ELF section .rodata.str1.1, at its byte 82)
+        build witness 1e914e676be8 hit 0.03
+--- PASS: TestAnAuditMismatchNamesTheFileAndSectionABuildDirectoryLandedIn (0.22s)
+PASS
+ok  	github.com/system-inc/adamic/internal/buildcache	0.232s

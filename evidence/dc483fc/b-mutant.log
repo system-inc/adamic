@@ -1,0 +1,10 @@
+=== RUN   TestASecondCopyOfAKeyIsComparedWithTheKeptOne
+=== RUN   TestASecondCopyOfAKeyIsComparedWithTheKeptOne/different
+    settle_difference_test.go:49: logged "", want "settle-difference cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd product at byte 0\n"
+=== RUN   TestASecondCopyOfAKeyIsComparedWithTheKeptOne/alike
+--- FAIL: TestASecondCopyOfAKeyIsComparedWithTheKeptOne (0.03s)
+    --- FAIL: TestASecondCopyOfAKeyIsComparedWithTheKeptOne/different (0.01s)
+    --- PASS: TestASecondCopyOfAKeyIsComparedWithTheKeptOne/alike (0.01s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/buildcache	0.038s
+FAIL

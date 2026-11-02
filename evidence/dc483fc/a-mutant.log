@@ -1,0 +1,10 @@
+=== RUN   TestAnAuditMismatchNamesTheFileAndSectionABuildDirectoryLandedIn
+    difference_test.go:23: build witness 902c0750c23a miss 0.04
+    difference_test.go:48: census:
+        audit witness 1e914e676be8fbf746946a7ee5f9fb18eb8dfde3f8a5a9b033316c1e14f4522e clean 41f1f62e2e71f40468a9faeea707cfc378efeaa6f6b1dca96d1f91cbaf63129e
+        build witness 1e914e676be8 hit 0.03
+    difference_test.go:50: a product baking its build directory into a binary: census "audit witness 1e914e676be8fbf746946a7ee5f9fb18eb8dfde3f8a5a9b033316c1e14f4522e clean 41f1f62e2e71f40468a9faeea707cfc378efeaa6f6b1dca96d1f91cbaf63129e\nbuild witness 1e914e676be8 hit 0.03\n", want a mismatch audit line as Loom reads it
+--- FAIL: TestAnAuditMismatchNamesTheFileAndSectionABuildDirectoryLandedIn (0.21s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/buildcache	0.218s
+FAIL

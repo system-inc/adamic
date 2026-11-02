@@ -1,0 +1,12 @@
+=== RUN   TestAnAuditMismatchNamesTheFileAndSectionABuildDirectoryLandedIn
+    difference_test.go:23: build witness 902c0750c23a miss 5.33
+--- PASS: TestAnAuditMismatchNamesTheFileAndSectionABuildDirectoryLandedIn (5.52s)
+=== RUN   TestTheFirstDifferenceIsAFileAndWhereInIt
+=== PAUSE TestTheFirstDifferenceIsAFileAndWhereInIt
+=== RUN   TestAListedProductIsRebuiltAndComparedOnItsLocalHit
+    precise_test.go:3342: build port 7d625b7dcd46 miss 0.00
+--- PASS: TestAListedProductIsRebuiltAndComparedOnItsLocalHit (0.16s)
+=== CONT  TestTheFirstDifferenceIsAFileAndWhereInIt
+--- PASS: TestTheFirstDifferenceIsAFileAndWhereInIt (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/buildcache	5.703s
