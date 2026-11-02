@@ -1,0 +1,20 @@
+// The other built-in Error classes the runtime names, made, thrown and caught as a TypeError is: each
+// one's name and message are Node's, natively and on the JavaScript backend (#bbhwj30).
+function fail(kind: number, n: number): void {
+	if (kind === 0) {
+		throw new RangeError('range ' + String(n));
+	}
+	if (kind === 1) {
+		throw new ReferenceError('reference ' + String(n));
+	}
+	throw new SyntaxError('syntax ' + String(n));
+}
+for (const kind of [0, 1, 2]) {
+	try {
+		fail(kind, kind + 10);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(`${error.name}: ${error.message}`);
+		}
+	}
+}
