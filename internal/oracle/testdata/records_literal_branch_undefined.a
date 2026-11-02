@@ -1,0 +1,28 @@
+type OptionValue = string | number | boolean | undefined;
+interface Options {
+	module?: number;
+	target?: number;
+	strict?: boolean;
+	noImplicitAny?: boolean;
+	[option: string]: OptionValue;
+}
+type Value = string | number | boolean | null | Value[] | Recovery;
+interface Recovery { [key: string]: Value | undefined; }
+function fresh(wanted: boolean): number {
+	const result: Recovery | undefined = wanted ? {} : undefined;
+	if (result === undefined) {
+		return 0;
+	}
+	result['first'] = 1;
+	result['second'] = 'two';
+	return Object.keys(result).length;
+}
+function absent(wanted: boolean): Recovery | undefined {
+	const result: Recovery | undefined = wanted ? undefined : {};
+	return result;
+}
+const kept = absent(false);
+if (kept !== undefined) {
+	kept['k'] = [1, 'x'];
+}
+console.log(`${fresh(true)} ${fresh(false)} ${absent(true) === undefined ? 'undefined' : 'object'} ${kept === undefined ? 'none' : Object.keys(kept).join(',')}`);
