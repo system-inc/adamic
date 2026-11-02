@@ -4,10 +4,10 @@ package lower
 import (
 	"context"
 	"fmt"
-	"os"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
+	"os"
 )
 
 type latentCandidate struct {
@@ -113,8 +113,12 @@ func latentFull(ctx context.Context, program *load.Program, emit func(LatentFile
 }
 
 func latentFullSelected(ctx context.Context, program *load.Program, emit func(LatentFile), selection *latentReplaySelection) {
+	var facts *latentProgramFacts
+
 	for _, file := range program.Files() {
-		if selected := os.Getenv("LATENT_ONLY_FILE"); selected != "" && program.FileName(file) != selected { continue }
+		if !latentFileSelected(program.FileName(file)) {
+			continue
+		}
 		if selection != nil && file != selection.file {
 			continue
 		}
@@ -141,6 +145,8 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
 		base.noteAccessorNames(program.Files())
 		base.latentRegister(program.Files())
 		base.latentRegisterNested(program.Files())
+		base.latentUseProgramFacts(&facts)
+
 		for _, candidate := range latentCandidates(program, file) {
 			node := candidate.node
 			if selection != nil && node != selection.node {

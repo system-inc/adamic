@@ -19,8 +19,37 @@ original = (repository / 'internal/lower/lower.go').read_text()
 start = original.index('\tfiles := program.Files()')
 end = original.index('\n}\n\ntype lowering', start)
 original = original[:start] + '\treturn nil, fmt.Errorf("latent census: measurement only; no IR output")' + original[end:]
-original = original.replace('type lowering struct {', 'type lowering struct {\n latentDeclarations map[int]*ast.Node\n latentReady map[int]bool\n latentAncestors map[*ast.Node]bool')
+original = original.replace('type lowering struct {', 'type lowering struct {\n latentDeclarations map[int]*ast.Node\n latentReady map[int]bool\n latentAncestors map[*ast.Node]bool\n latentProgramRecordsPending bool')
 overlay('internal/lower/lower.go', original)
+# Reading a carried record fact must retain the original first-ask module-order
+# effects. A separate flag travels through snapshots, so rollback restores both
+# the read proofs and the need to establish them again. The record walk itself
+# runs only on the disposable program probe, never on a unit.
+records = (repository / 'internal/lower/entries_records.go').read_text()
+needle = 'func (l *lowering) entriesProgramHasRecords() bool {'
+assert records.count(needle) == 1
+records = records.replace(needle, needle + '''
+ if l.latentProgramRecordsPending {
+  l.latentProgramRecordsPending = false
+  _, _ = l.moduleOrder(l.program.Files()[0])
+ }
+''', 1)
+# The proven literal map is carried too. The original walk established module
+# read proofs only for a const initializer; preserve that first-ask timing, and
+# do not establish cycle proofs merely for querying an unrelated literal.
+needle = 'func (l *lowering) entriesRecordLiteral(literal *ast.Node) bool {'
+assert records.count(needle) == 1
+records = records.replace(needle, needle + '''
+ if l.latentProgramRecordsPending {
+  parent := literal.Parent
+  for parent != nil && (parent.Kind == ast.KindAsExpression || parent.Kind == ast.KindParenthesizedExpression) { parent = parent.Parent }
+  if parent != nil && parent.Kind == ast.KindVariableDeclaration && parent.Parent.Flags & ast.NodeFlagsConst != 0 {
+   l.latentProgramRecordsPending = false
+   _, _ = l.moduleOrder(l.program.Files()[0])
+  }
+ }
+''', 1)
+overlay('internal/lower/entries_records.go', records)
 # Generate typed snapshots of all lowering-owned state; unknown shapes fail loudly.
 state_output = scratch / 'internal_lower_latent_state.go'
 subprocess.run(['go', 'run', str(territory / 'statecopy'), str(repository),

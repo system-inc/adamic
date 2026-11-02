@@ -1,0 +1,16 @@
+{
+  "file": "binder.ts",
+  "first": {
+    "answer": "[*checker.Type@12211b38000,*checker.Type@12200c13c00,*checker.Type@12200c13c00,*checker.Type@12211b380c0,*checker.Type@12201170540,*checker.Type@12201170540,*checker.Type@12211b38480,*checker.Type@12201171680,*checker.Type@12201171680,*checker.Type@12211b38540,*checker.Type@1220253a800,*checker.Type@1220253a800,*checker.Type@12211b38600,*checker.Type@122014c4f00,*checker.Type@122014c4f00,*checker.Type@12211b386c0,*checker.Type@122015fe8c0,*checker.Type@122015fe8c0,*checker.Type@12211b38780,*checker.Type@122014c4f00,*checker.Type@122014c4f00,*checker.Type@12211b38cc0,*checker.Type@1220aaa8300,*checker.Type@1220aaa8300]",
+    "memo": "entriesRecordStorageTypes",
+    "phase": "lowering",
+    "unit": "/workspace/scratch/tree/src/compiler/binder.ts:620:5"
+  },
+  "second": {
+    "answer": "[*checker.Type@12218175740,*checker.Type@12200c13c00,*checker.Type@12200c13c00,*checker.Type@12218175800,*checker.Type@12201170540,*checker.Type@12201170540,*checker.Type@12211b38000,*checker.Type@12201171680,*checker.Type@12201171680,*checker.Type@12211b380c0,*checker.Type@1220253a800,*checker.Type@1220253a800,*checker.Type@12211b38480,*checker.Type@122014c4f00,*checker.Type@122014c4f00,*checker.Type@12211b38540,*checker.Type@122015fe8c0,*checker.Type@122015fe8c0,*checker.Type@12211b38600,*checker.Type@122014c4f00,*checker.Type@122014c4f00,*checker.Type@12211b386c0,*checker.Type@1220aaa8300,*checker.Type@1220aaa8300]",
+    "memo": "entriesRecordStorageTypes",
+    "phase": "lowering",
+    "unit": "/workspace/scratch/tree/src/compiler/binder.ts:635:5"
+  },
+  "decision": "not carried; actual checker-type identity lists differ within one process"
+}

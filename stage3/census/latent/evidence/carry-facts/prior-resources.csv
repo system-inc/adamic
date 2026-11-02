@@ -1,0 +1,17 @@
+mode,file,wall_seconds,peak_rss_kib,exit_code,over_12_gib
+baseline,binder.ts,105.6090302980001,1580644,0,False
+baseline,emitter.ts,281.3631379770004,2378200,0,False
+baseline,utilities.ts,288.37294847600015,2128008,0,False
+profile,binder.ts,105.66751991100045,1644444,0,False
+profile,emitter.ts,265.3222785549997,2366904,0,False
+profile,utilities.ts,269.29344919599953,2111548,0,False
+changed,binder.ts,103.13594851200014,1613224,0,False
+changed,emitter.ts,265.8148485869997,2313492,0,False
+changed,utilities.ts,268.3280741029994,2125052,0,False
+literal-proof,binder.ts,102.10550927799977,1691560,0,False
+literal-proof,emitter.ts,264.83354738099933,2360032,0,False
+literal-proof,utilities.ts,269.31487744100014,2141568,0,False
+pre-extension-aborted,utilities.ts,26.027991853999993,959660,-15,False
+carried,binder.ts,66.57729047500015,1648556,0,False
+carried,emitter.ts,150.23118939399956,2417132,0,False
+carried,utilities.ts,146.7229891880006,2125276,0,False

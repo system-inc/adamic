@@ -7,6 +7,8 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"os"
 	"reflect"
+ "maps"
+ "strings"
 )
 
 func (l *lowering) latentBodyDiagnostics(body *ast.Node) []string {
@@ -17,6 +19,37 @@ func (l *lowering) latentBodyDiagnostics(body *ast.Node) []string {
 		return l.program.LatentOwnDiagnosticsIn(body)
 	}
 	return l.program.LatentDiagnosticsIn(body)
+}
+
+// A newline separates exact names; the measured absolute paths contain none.
+func latentFileSelected(name string) bool {
+	selected := os.Getenv("LATENT_ONLY_FILE")
+	if selected == "" {
+		return true
+	}
+	for _, candidate := range strings.Split(selected, "\n") {
+		if candidate == name {
+			return true
+		}
+	}
+	return false
+}
+
+// Both modes call this only after their normal registration. A disposable
+// snapshot discovers the program facts without moving module-read effects into
+// the unit. Each installed map is owned, including first-error fresh lowerings
+// which do not take the full-mode per-unit snapshot.
+func (l *lowering) latentUseProgramFacts(facts **latentProgramFacts) {
+	if *facts == nil {
+		probe := l.latentSnapshot()
+		probe.entriesProgramHasRecords()
+		captured := latentCaptureProgramFacts(probe)
+		*facts = &captured
+	}
+	local := **facts
+	local.entriesRecords = maps.Clone(local.entriesRecords)
+	l.latentApplyProgramFacts(local)
+	l.latentProgramRecordsPending = true
 }
 
 func latentFullEnabled() bool { return os.Getenv("LATENT_FULL") == "1" || latentSpeculativeEnabled() }
