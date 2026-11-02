@@ -3702,6 +3702,45 @@ func TestAHandedBuildsAbsoluteReadUnderItsPathsRefusesIt(t *testing.T) {
 	}
 }
 
+// A LeanProductOf build's read of a file of the tree its Files don't name is keyed by its window (Tests' condition on
+// stage3/lane/adaptedtree): a lean caller's census holds what its Go code reaches, and no census sees what a process it
+// starts reads, as the adapted tree's python reads the adaptations beside apply.py. So a handed build whose child reads
+// an undeclared file settles with that file's content in its set, a runner finds the product, and an edit to the file
+// misses, naming it. Outside a trace every product, lean or not, is keyed by its declared inputs alone, for its own
+// machine, and never leaves it: the tree builder refuses an untraced build, and a runner never builds. Mutants that each
+// fail it: a lean build's reads taken without its window; the window's subprocesses dropped.
+// Not parallel: newRig.
+func TestAHandedBuildsUndeclaredReadIsKeyedByItsWindow(t *testing.T) {
+	r := newRig(t)
+	LeanProductOf(t, Handed{Inputs: port, Paths: []string{"/var/lib/adamic-handed-undeclared"}}, handedBuilding)
+	build := r.built(t)["port"]
+	child := r.pid + 1
+	r.window(build.Build, func() {
+		r.open(r.pid, "source/a.c")
+		r.add(r.pid, `clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|SIGCHLD) = %d`, child)
+		r.open(child, "notes.txt")
+		r.add(child, "+++ exited with 0 +++")
+	})
+	settlement := r.settle(t)
+	if len(settlement.Settled) != 1 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	if slices.Contains(port.Files, "notes.txt") {
+		t.Fatalf("port declares notes.txt, so its read proves nothing undeclared: %q", port.Files)
+	}
+	if entries := r.entries(t, build.NameKey); !slices.Contains(entries, "content notes.txt") {
+		t.Fatalf("the set of a handed build whose child read notes.txt lacks it: %q", entries)
+	}
+	product, err := reading(t, port)
+	if err != nil {
+		t.Fatalf("a runner didn't find the settled product: %v", err)
+	}
+	write(t, r.root, "notes.txt", "another note\n")
+	if found, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "content notes.txt") {
+		t.Fatalf("an edit to the undeclared file it read found %q, %v; want a miss naming content notes.txt (it was %s)", found, err, product)
+	}
+}
+
 // refusedHandedRead holds a handed build's reads by where they sit, as spelled and as resolved, whatever kind keys them
 // by their spelling (Tests' musts on c4e510e52d): a root handed through a link against the path the window recorded
 // resolved, and the other way round; a temporary directory reached through a link; a lookup under home, which the window

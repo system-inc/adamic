@@ -168,8 +168,11 @@ func functionPackage(symbol string) string {
 // and their C, a LeanProductOf build running the stage 0 compiler it's handed over the package's programs
 // (TestTheAgreementCBuildReachesOnlyItsDeclaredFiles); and tsprinter's library oracles and their shards, each a
 // LeanProductOf build of what it's handed (#zb9268t), whose package holds its census
-// (TestALibraryOraclesBuildReadsNoStateButItsInitializers).
-var leanCallers = []string{"internal/native/agreementproducts", "internal/native/runtimeproducts", "stage1/cohere/tsprinter/oracles"}
+// (TestALibraryOraclesBuildReadsNoStateButItsInitializers); and stage3/lane's adapted tree, a LeanProductOf build of the
+// TypeScript source and the two installs it's handed, settled by its own package's binary, never lane's, whose census
+// holds its reach to its one file and buildcache's slice (TestTheAdaptedTreeBuildReachesOnlyItsDeclaredFile), and
+// whose runtime reads, apply.py's and node's, are its window's (TestAHandedBuildsUndeclaredReadIsKeyedByItsWindow).
+var leanCallers = []string{"internal/native/agreementproducts", "internal/native/runtimeproducts", "stage1/cohere/tsprinter/oracles", "stage3/lane/adaptedtree"}
 
 func product(t testing.TB, inputs Inputs, build func(directory string) error, lean *leanBuild) string {
 	t.Helper()
