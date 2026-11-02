@@ -1,0 +1,1 @@
+internal/oracle/testdata/node_globals_capture_gc_refused/gc_value.ts:5:17: stage 0 can't lower node:globals.gc with its result used as a value, which the call's TypeError never gives (fix: call it as a statement) yet
