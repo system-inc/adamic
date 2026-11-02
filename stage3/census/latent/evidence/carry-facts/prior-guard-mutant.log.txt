@@ -1,0 +1,5 @@
+--- FAIL: TestLatentCarryFactsRequiresEveryLoweringFieldPolicy (0.10s)
+    guard_test.go:207: lowering.entriesRecords has no census memo/copy policy
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/census/latent/statecopy	0.102s
+FAIL

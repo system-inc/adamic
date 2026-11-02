@@ -1,0 +1,66 @@
+Selected stack from go tool pprof -traces -focus entriesProgramRecordsWalk
+
+      10ms   runtime.memmove
+             runtime.typedmemmove
+             internal/runtime/maps.typedmemmove
+             internal/runtime/maps.(*table).uncheckedPutSlot
+             internal/runtime/maps.(*table).split
+             internal/runtime/maps.(*table).rehash
+             runtime.mapassign_fast64ptr
+             github.com/system-inc/adamic/internal/lower.(*lowering).proveModuleReads.func1
+             github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes (inline)
+             github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList (inline)
+             github.com/microsoft/TypeScript/tsc/internal/ast.(*CallExpression).ForEachChild
+             github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+             github.com/system-inc/adamic/internal/lower.(*lowering).proveModuleReads.func1
+             github.com/microsoft/TypeScript/tsc/internal/ast.visit (inline)
+             github.com/microsoft/TypeScript/tsc/internal/ast.(*AsExpression).ForEachChild (inline)
+             github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+             github.com/system-inc/adamic/internal/lower.(*lowering).proveModuleReads.func1
+             github.com/microsoft/TypeScript/tsc/internal/ast.visit (inline)
+             github.com/microsoft/TypeScript/tsc/internal/ast.(*PropertyAssignment).ForEachChild
+             github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+             github.com/system-inc/adamic/internal/lower.(*lowering).proveModuleReads.func1
+             github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes (inline)
+             github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList (inline)
+             github.com/microsoft/TypeScript/tsc/internal/ast.(*ObjectLiteralExpression).ForEachChild (inline)
+             github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+             github.com/system-inc/adamic/internal/lower.(*lowering).proveModuleReads.func1
+             github.com/microsoft/TypeScript/tsc/internal/ast.visit (inline)
+             github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclaration).ForEachChild
+             github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+             github.com/system-inc/adamic/internal/lower.(*lowering).proveModuleReads.func1
+             github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes (inline)
+             github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList (inline)
+             github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclarationList).ForEachChild (inline)
+             github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+             github.com/system-inc/adamic/internal/lower.(*lowering).proveModuleReads.func1
+             github.com/microsoft/TypeScript/tsc/internal/ast.visit (inline)
+             github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableStatement).ForEachChild
+             github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+             github.com/system-inc/adamic/internal/lower.(*lowering).proveModuleReads.func1
+             github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes (inline)
+             github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList (inline)
+             github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild
+             github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+             github.com/system-inc/adamic/internal/lower.(*lowering).proveModuleReads.func1
+             github.com/system-inc/adamic/internal/lower.(*lowering).proveModuleReads
+             github.com/system-inc/adamic/internal/lower.(*lowering).moduleOrder
+             github.com/system-inc/adamic/internal/lower.(*lowering).entriesProgramRecordsWalk
+             github.com/system-inc/adamic/internal/lower.(*lowering).entriesProgramHasRecords
+             github.com/system-inc/adamic/internal/lower.(*lowering).property
+             github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue
+             github.com/system-inc/adamic/internal/lower.(*lowering).value
+             github.com/system-inc/adamic/internal/lower.(*lowering).latentExpressionRaw
+             github.com/system-inc/adamic/internal/lower.(*lowering).latentSpecExpression
+             github.com/system-inc/adamic/internal/lower.(*lowering).expression (inline)
+             github.com/system-inc/adamic/internal/lower.(*lowering).prefix
+             github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue
+             github.com/system-inc/adamic/internal/lower.(*lowering).value
+             github.com/system-inc/adamic/internal/lower.(*lowering).latentExpressionRaw
+             github.com/system-inc/adamic/internal/lower.(*lowering).latentSpecExpression
+             github.com/system-inc/adamic/internal/lower.(*lowering).expression (inline)
+             github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue
+             github.com/system-inc/adamic/internal/lower.(*lowering).value
+             github.com/system-inc/adamic/internal/lower.(*lowering).latentExpressionRaw
+             github.com/system-inc/adamic/internal/lower.(*lowering).latentSpecExpression

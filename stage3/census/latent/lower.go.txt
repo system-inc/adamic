@@ -255,6 +255,7 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 	// registering every file's locals, re-walked all of the program's modules once a statement: 35% of the latent step's
 	// CPU on tsc's 79 files (#pv935yw).
 	identities := map[*ast.Node]ir.SourceIdentity{}
+	var facts *latentProgramFacts
 	for _, file := range program.Files() {
 		latentFindings = nil
 		latentFindingOwner, latentFindingPhase = program.Where(file.AsNode()), "refusal_scan"
@@ -309,6 +310,7 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 				l.noteInheritance(program.Files())
 				l.noteAccessorNames(program.Files())
 				l.latentRegister(program.Files())
+				l.latentUseProgramFacts(&facts)
 				if node.Kind == ast.KindFunctionDeclaration && node.Name() != nil && node.Name().Text() == os.Getenv("LATENT_MUTANT_FUNCTION") && (os.Getenv("LATENT_MUTANT_WHERE") == "" || program.Where(node) == os.Getenv("LATENT_MUTANT_WHERE")) {
 					latentRecord(l.notYet(node, "latent planted extra NotYet"))
 				}

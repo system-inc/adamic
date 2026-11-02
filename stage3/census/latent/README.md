@@ -289,3 +289,25 @@ generics and cross-file callers in legacy, full and speculative modes. It kills
 missing-gap-list, deferred-as-attempted and deferred-bytes-as-examined mutants.
 `prove_identity.py REPOSITORY OUTPUT BASE` compares overlay-off C and JavaScript
 bytes against the given compiler base and proves both comparisons can fail.
+
+
+## File selection and program record facts
+
+In full mode, `LATENT_ONLY_FILE` accepts one exact absolute filename or several
+exact names separated by newline. This is membership in normal program file order;
+none of the measured paths contains a newline. The source-directory argument still
+loads the complete program and preserves checker diagnostics and declarations.
+First-error mode retains its unfiltered traversal. Speculative traversal is unchanged.
+
+First-error and full mode share record-fact discovery/installation after their
+normal registration. One census-local memo spans files; each lowering owns its map
+copy and replays module-read effects on its first eligible query. The carried-field
+and main-source replay guards remain in place. Checker-type storage slices are not
+carried.
+
+[Mode-complete evidence](evidence/carry-facts/report.md) proves first-error identity
+over all 79 files and full-mode identity across binder/emitter/utilities in one
+process each side. It also records a failed single-file composition check: deferred
+generic `instantiated` metadata is census-wide, so utilities-only and multi-file
+records differ even on unchanged main. Do not treat separate-process file records
+as interchangeable with multi-file records without accounting for that witness scope.
