@@ -149,7 +149,7 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 	if err := lowering.findCycles(modules); err != nil {
 		return nil, err
 	}
-	if err := lowering.checkBrandedOptionalWrites(); err != nil {
+	if err := lowering.checkViewOptionalWrites(); err != nil {
 		return nil, err
 	}
 	if err := lowering.checkViewCopies(); err != nil {
@@ -229,6 +229,9 @@ type lowering struct {
 	// (view_widened.go).
 	viewSources []viewSource
 	viewTypes   map[int]*checker.Type
+	// viewOptionalWrites are the writes to a field their receiver declares optional, judged once every
+	// view is in (view_optional_writes.go).
+	viewOptionalWrites []viewOptionalWrite
 	// narrowedReads are, for each local, the types the checker narrowed a read of it to, and
 	// narrowedFields the types it narrowed a field read to: where a predicate's view takes its
 	// value (view_widened.go).
