@@ -1,0 +1,20 @@
+type OptionValue = string | number | boolean | undefined;
+interface Options {
+	module?: number;
+	target?: number;
+	strict?: boolean;
+	noImplicitAny?: boolean;
+	[option: string]: OptionValue;
+}
+function defaults(json: boolean): Options {
+	const options: Options = json ? { module: 1, strict: true } : {};
+	options['custom'] = json ? 'json' : 'plain';
+	return options;
+}
+const context: { compilerOptions: () => Options } = { compilerOptions: () => ({}) };
+const first = context.compilerOptions();
+first.target = 5;
+first['extra'] = 'x';
+const second = context.compilerOptions();
+console.log(`${Object.keys(defaults(true)).join(',')} ${Object.keys(defaults(false)).join(',')}`);
+console.log(`${String(first.target)} ${String(first['extra'])} ${Object.keys(second).length}`);
