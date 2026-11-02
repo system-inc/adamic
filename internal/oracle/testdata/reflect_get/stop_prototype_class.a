@@ -1,0 +1,13 @@
+// An Object.prototype name stops on a class instance, on both backends, in the Object.prototype stop's
+// words: the JavaScript backend's accessor table is an object literal, which an Object.prototype name
+// indexes to Object's own member, so it must look at the table's own entries alone, or it stops
+// naming a setter without a getter. Node prints function.
+import { propertyOf } from './hostErrors.ts';
+
+class Thing {
+	label = 'thing';
+}
+const thing = new Thing();
+console.log(thing.label);
+const value = propertyOf(thing, 'toString');
+console.log(typeof value);

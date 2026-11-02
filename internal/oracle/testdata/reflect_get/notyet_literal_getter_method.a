@@ -1,0 +1,15 @@
+// An object literal with a getter can't hold a method yet ("a non-accessor method in an accessor
+// literal"), so a run-time key read never meets one beside a getter; the getter alone stops
+// (stop_literal_getter.a), and a literal without one answers its method (literal_method.a).
+import { propertyOf } from './hostErrors.ts';
+
+const literal = {
+	get value(): string {
+		return 'got';
+	},
+	describe(): string {
+		return 'described';
+	},
+};
+console.log(literal.describe());
+console.log(typeof propertyOf(literal, 'describe'));

@@ -477,6 +477,9 @@ func (e *emitter) cache() string {
 type objectMetadataNeeds struct {
 	dynamic    bool
 	fieldTypes bool
+
+	// keyed is whether the program reads by a run-time key (keyedClassDeclarations).
+	keyed bool
 }
 
 func (e *emitter) prepareObjectMetadata() {
@@ -492,6 +495,8 @@ func (e *emitter) prepareObjectMetadata() {
 			needs.fieldTypes = needs.fieldTypes || expression.CheckedFields
 		case ir.DynamicProperty:
 			needs.dynamic = true
+		case ir.DynamicKeyedProperty:
+			needs.dynamic, needs.keyed = true, true
 		case ir.Property:
 			needs.fieldTypes = needs.fieldTypes || expression.View != ""
 		}
@@ -504,6 +509,11 @@ func (e *emitter) prepareObjectMetadata() {
 func (e *emitter) dynamicProperties() bool {
 	e.prepareObjectMetadata()
 	return e.objectMetadata.dynamic
+}
+
+func (e *emitter) keyedReads() bool {
+	e.prepareObjectMetadata()
+	return e.objectMetadata.keyed
 }
 
 func (e *emitter) methodEntryType() string {

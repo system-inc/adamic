@@ -1,0 +1,18 @@
+// A class getter that writes an object field into a template converts it to a primitive, which calls
+// the object's own toString, a call hidden inside the read, so the whole program stays NotYet though
+// the read here is of a plain object.
+import { propertyOf } from './hostErrors.ts';
+
+class Inner {
+	toString(): string {
+		return 'inner';
+	}
+}
+class Outer {
+	inner = new Inner();
+	get shown(): string {
+		return `${this.inner}`;
+	}
+}
+console.log(new Outer().shown);
+console.log(typeof propertyOf({ present: 'here' }, 'present'));

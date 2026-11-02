@@ -1,0 +1,10 @@
+// An Object.prototype name a record doesn't hold as its own stops, on both backends. Node prints
+// function.
+import { propertyOf } from './hostErrors.ts';
+
+const entries: Record<string, string> = {};
+entries['own'] = 'value';
+const own = propertyOf(entries, 'own');
+if (typeof own === 'string') console.log(own);
+const value = propertyOf(entries, 'constructor');
+console.log(typeof value);
