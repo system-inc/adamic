@@ -1,0 +1,3 @@
+// A RangeError nothing catches panics with its name, as a TypeError does (#bbhwj30).
+console.log('before');
+throw new RangeError('x');
