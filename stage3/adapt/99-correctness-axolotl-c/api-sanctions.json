@@ -1,0 +1,16 @@
+[
+  {
+    "path": ["CompilerOptions", "project"],
+    "kind": "PropertySignature",
+    "before": "string",
+    "after": "string | undefined",
+    "why": "convertToTSConfig deliberately stores a present undefined to clear project; adaptation 20 permits truthful optional property declarations."
+  },
+  {
+    "path": ["ProjectReference", "originalPath"],
+    "kind": "PropertySignature",
+    "before": "string",
+    "after": "string | undefined",
+    "why": "convertToTSConfig spreads each reference and deliberately stores a present undefined in originalPath; adaptation 20 permits truthful optional property declarations."
+  }
+]
