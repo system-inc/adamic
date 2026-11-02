@@ -87,9 +87,13 @@ func TestFunctionTypeClaimIsCheckedAtTheCall(t *testing.T) {
 // What the check at the call can't reach keeps its refusal. A library's claim is called inside the
 // library, so a checked parameter forwarded to filter or find keeps predicateArguments' proof (Lower's
 // must). An overload whose implementation takes a plain callback calls it unchecked, so the overload's
-// argument keeps its proof too. A target with no runtime test is NotYet at the call, never a vacuous
-// check. .a needs proof and refuses the claim. Mutants: the library test dropped, which admits the
-// forwards; the overload's implementation rule dropped, which admits overload_union_impl.
+// argument keeps its proof too: overload_optional_impl writes the callback or undefined out, which
+// predicateParameter trusts as a plain callback, and overload_union_impl names it through an alias,
+// which plainCallbackType doesn't read, so only checkedFunctionTypeClaim's overload rule keeps its
+// argument's proof. A target with no runtime test is NotYet at the call, never a vacuous check. .a
+// needs proof and refuses the claim. Mutants: the library test dropped, which admits the forwards; the
+// overload's implementation rule dropped, which lets overload_union_impl's argument through to the
+// census proof's refusal of its result.
 func TestFunctionTypeClaimKeepsWhatTheCallCantCheck(t *testing.T) {
 	t.Parallel()
 	read := func(name string) string {
@@ -103,6 +107,7 @@ func TestFunctionTypeClaimKeepsWhatTheCallCantCheck(t *testing.T) {
 		{"forward_filter", `an unproven predicate argument for parameter predicate (argument "test")`},
 		{"forward_find", `an unproven predicate argument for parameter predicate (argument "test")`},
 		{"overload_union_impl", `an unproven predicate argument for parameter assert (argument "(node: Node): void => {}")`},
+		{"overload_optional_impl", `an unproven predicate argument for parameter assert (argument "(node: Node): void => {}")`},
 	} {
 		_, err := lowerTypeScriptAssertionSource(t, read(refusal.name))
 		var refused *Refused
