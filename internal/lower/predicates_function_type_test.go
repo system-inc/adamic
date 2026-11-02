@@ -225,10 +225,11 @@ console.log(found === undefined ? "none" : String(found.kind));`, `refused: an u
 // assertNodeSource is debug.ts's assertNode (tsc's debug.ts:294): a generic overload asserting its node
 // through a predicate parameter, a plain overload for a test that may be absent, and an implementation
 // taking the callback or undefined, `((node: Node) => boolean) | undefined`, not a plain function type.
+// The %s is what the overload's test takes: Node, as assertNotNode's does, or T, as assertNode's does.
 const assertNodeSource = `interface Node { readonly kind: number; }
 interface Identifier extends Node { readonly kind: 80; readonly escapedText: string; }
 function isIdentifier(node: Node): node is Identifier { return node.kind === 80; }
-function assertNode<T extends Node, U extends T>(node: T | undefined, test: (node: T) => node is U, message?: string): asserts node is U;
+function assertNode<T extends Node, U extends T>(node: T | undefined, test: (node: %s) => node is U, message?: string): asserts node is U;
 function assertNode(node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string): void;
 function assertNode(node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string): void {
   if (node === undefined || (test !== undefined && !test(node))) { console.log("failed: " + (message === undefined ? "node" : message)); }
@@ -251,7 +252,7 @@ function isIdentifier(node: Node): node is Identifier { return node.kind === 80;
 function visitArrayWorker<U extends Node>(nodes: readonly Node[], test: (node: Node) => node is U, start: number, count: number): readonly Node[];
 function visitArrayWorker(nodes: readonly Node[], test: %s, start: number, count: number): readonly Node[] {
   const visited: Node[] = [];
-  for (let index = start; index < start + count; index++) { if (%s) { visited.push(nodes[index]); } }
+  for (let index = start; index < start + count; index++) { const node = nodes[index]; if (node !== undefined && (%s)) { visited.push(node); } }
   return visited;
 }
 const identifier: Identifier = { kind: 80, escapedText: "named" };
@@ -264,17 +265,28 @@ const nodes: readonly Node[] = [{ kind: 11 }, identifier, { kind: 80 }, { kind: 
 // assertOptionalNode and assertEachNode, and visitorPublic.ts's visitArrayWorker): an absent argument is
 // never called, a present one is exactly the function, and every argument through the overload keeps
 // predicateArguments' proof. Called with a one-line kind test, and through the plain overload with none,
-// both agree with Node. Mutant: the implementation's type read as written, without looking through the
-// parentheses and undefined, which refuses both as "there is no body proving this parameter".
+// both agree with Node. tsc's assertNode, assertEachNode and assertOptionalNode take a test on T, not
+// Node, and with the claim trusted they meet the census overload proof next, which refuses a callback on
+// T served by one the implementation calls with any Node; that refusal is pinned here so its move is
+// seen. Mutant: the implementation's type read as written, without looking through the parentheses and
+// undefined, which refuses both agreeing shapes as "there is no body proving this parameter".
 func TestOverloadPredicateOverOptionalCallback(t *testing.T) {
 	t.Parallel()
 	t.Run("assertNode", func(t *testing.T) {
 		t.Parallel()
-		lowersAndAgreesWithNodeAs(t, assertNodeSource, ".ts")
+		lowersAndAgreesWithNodeAs(t, fmt.Sprintf(assertNodeSource, "Node"), ".ts")
+	})
+	t.Run("assertNode on T", func(t *testing.T) {
+		t.Parallel()
+		_, err := lowerSourceAs(t, fmt.Sprintf(assertNodeSource, "T"), ".ts")
+		var refused *Refused
+		if !errors.As(err, &refused) || !strings.Contains(err.Error(), "overload 1 of assertNode parameter test cannot be served by implementation parameter test") {
+			t.Fatalf("want the census overload proof's refusal, got %v", err)
+		}
 	})
 	t.Run("visitArrayWorker", func(t *testing.T) {
 		t.Parallel()
-		lowersAndAgreesWithNodeAs(t, fmt.Sprintf(visitArraySource, "((node: Node) => boolean) | undefined", "test === undefined || test(nodes[index])", `console.log(String(visitArrayWorker(nodes, isIdentifier, 0, 4).length));
+		lowersAndAgreesWithNodeAs(t, fmt.Sprintf(visitArraySource, "((node: Node) => boolean) | undefined", "test === undefined || test(node)", `console.log(String(visitArrayWorker(nodes, isIdentifier, 0, 4).length));
 console.log(String(visitArrayWorker(nodes, isIdentifier, 2, 2).length));`), ".ts")
 	})
 }
@@ -307,8 +319,8 @@ console.log(String(visitArrayWorker(nodes, test, 0, 4).length));`, `refused: an 
 		for _, mode := range []struct{ extension, want string }{{".ts", probe.typeScript}, {".a", probe.adamic}} {
 			t.Run(probe.name+mode.extension, func(t *testing.T) {
 				t.Parallel()
-				_, optionalErr := lowerSourceAs(t, fmt.Sprintf(visitArraySource, "((node: Node) => boolean) | undefined", "test === undefined || test(nodes[index])", probe.calls), mode.extension)
-				_, plainErr := lowerSourceAs(t, fmt.Sprintf(visitArraySource, "(node: Node) => boolean", "test(nodes[index])", probe.calls), mode.extension)
+				_, optionalErr := lowerSourceAs(t, fmt.Sprintf(visitArraySource, "((node: Node) => boolean) | undefined", "test === undefined || test(node)", probe.calls), mode.extension)
+				_, plainErr := lowerSourceAs(t, fmt.Sprintf(visitArraySource, "(node: Node) => boolean", "test(node)", probe.calls), mode.extension)
 				optional, plain := outcome(optionalErr), outcome(plainErr)
 				if optional != plain {
 					t.Fatalf("optional %q, plain twin %q; want them to match", optional, plain)
