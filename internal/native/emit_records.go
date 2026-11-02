@@ -74,7 +74,7 @@ func (e *emitter) recordWalk(record string, visit func(string, string)) {
 	e.line("adamic_release(%s);", iterator)
 }
 func (e *emitter) dictionaryLiteral(literal ir.RecordLiteral) string {
-	result := e.own(ir.Record, fmt.Sprintf("adamic_record_new(%t)", literal.Element.IsReference()))
+	result := e.own(ir.Record, fmt.Sprintf("adamic_record_new(%s)", recordValueKind(literal.Element)))
 	if literal.Spread != nil {
 		source := e.value(literal.Spread)
 		e.recordWalk(source, func(key, slot string) {
@@ -125,4 +125,18 @@ func (e *emitter) recordCoalesce(c ir.RecordCoalesce) string {
 		e.owned = append(e.owned, result)
 	}
 	return result
+}
+
+// recordValueKind is the adamic_field_kind a record of the element type is made with (record.c), which
+// its shape keeps, so a run-time key read boxes its values by it. Unlike a field's storage kind
+// (fieldStorageKind), boolean | undefined is a boolean here: the packed byte reads as one, 2 for
+// undefined, as number | undefined's packed double does as a number.
+func recordValueKind(element ir.Type) string {
+	if element.IsReference() {
+		return "adamic_field_reference"
+	}
+	if element == ir.Boolean || element == ir.MaybeBoolean {
+		return "adamic_field_boolean"
+	}
+	return "adamic_field_number"
 }

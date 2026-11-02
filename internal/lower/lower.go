@@ -131,6 +131,9 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 	if err := lowering.checkRecordGuardedReads(); err != nil {
 		return nil, err
 	}
+	if err := lowering.checkDynamicKeyedGetters(); err != nil {
+		return nil, err
+	}
 	if err := flow.NormalizeAsync(lowering.result); err != nil {
 		where := entry.AsNode()
 		var located *flow.AsyncError
@@ -199,6 +202,12 @@ type lowering struct {
 
 	// Source-only sites for graph adoption diagnostics; never stored in emitted IR.
 	graphViewSite, graphDynamicSite *ast.Node
+	// dynamicKeyedSite is the first run-time key read (reflectGet), where checkDynamicKeyedGetters
+	// says why a class getter keeps the program from reading by a run-time key.
+	dynamicKeyedSite *ast.Node
+	// getterDeclarations is each class getter's declaration, by its function (registerAccessor), which
+	// checkDynamicKeyedGetters reads.
+	getterDeclarations map[int]*ast.Node
 	// slots are what a value is judged against where the checker's contextual type isn't the whole
 	// answer (slotType, impliedTarget).
 	slots slotTargets
