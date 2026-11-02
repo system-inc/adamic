@@ -11,7 +11,8 @@ import statistics
 import subprocess
 import sys
 
-from shard_plan import LANE, names_digest
+from artifact import input_key
+from shard_plan import LANE, names_digest, runtime_hash, unit_inputs_hash
 
 BEFORE = [f'stage3-lane-file-{index:03d}' for index in (7, 18, 109, 10, 36, 49, 57, 63)]
 AFTER = [f'stage3-lane-file-{index:03d}' for index in range(20, 41)]
@@ -49,7 +50,10 @@ def main():
     cold_times = {row['name']: row['seconds'] for row in rows}
     assert len(rows) == len(definitions) == len({row['name'] for row in rows}), 'incomplete cold ledger'
     assert {row['name'] for row in rows} == set(definitions), 'cold unit union'
-    assert all(row['inputs_hash'] == definitions[row['name']]['inputs_hash'] for row in rows), 'cold inputs'
+    key, _ = input_key()
+    runtime = runtime_hash()
+    assert all(row['artifact'] == key and row['inputs_hash'] == unit_inputs_hash(
+        definitions[row['name']], plan, key, runtime) for row in rows), 'cold inputs'
     assert all(row['exit'] == 0 and row['status'] == 'pass' for row in rows), 'cold verdict'
     require_budget(rows, 12)
     print(json.dumps(dict(event='cold proof', distribution=stats(rows))), flush=True)
@@ -106,15 +110,7 @@ def main():
             (drop_results / original['name']).symlink_to(cold / original['name'], target_is_directory=True)
     rebound = json.loads((drop_results / 'plan.json').read_text())
     from merge_shards import merge
-    previous_parser = os.environ.get('TSC_ADAPT_TYPESCRIPT')
-    try:
-        os.environ['TSC_ADAPT_TYPESCRIPT'] = str(Path(os.environ['STAGE3_ARTIFACT']) / 'api')
-        rejected = merge(drop_results, whole, rebound)
-    finally:
-        if previous_parser is None:
-            os.environ.pop('TSC_ADAPT_TYPESCRIPT', None)
-        else:
-            os.environ['TSC_ADAPT_TYPESCRIPT'] = previous_parser
+    rejected = merge(drop_results, whole, rebound)
     (root / 'dropped-case-merge.json').write_text(json.dumps(rejected, indent=2) + '\n')
     assert rejected['status'] == 'fail'
     assert any('executed test union differs' in error for error in rejected['errors'])
