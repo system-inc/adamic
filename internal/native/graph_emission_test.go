@@ -24,10 +24,23 @@ import (
 // control runs source Node first, both backends, sanitizers and the leak check.
 func graphCompilerWitness(t *testing.T, source string, mutant func(string) string) *ir.Program {
 	t.Helper()
+	return graphCompilerModulesWitness(t, source, nil, mutant)
+}
+
+// graphCompilerModulesWitness is graphCompilerWitness of a main.a that imports modules, each written
+// beside it under its name, so './name' reaches it: load follows the imports, and the program lowers
+// as one.
+func graphCompilerModulesWitness(t *testing.T, source string, modules map[string]string, mutant func(string) string) *ir.Program {
+	t.Helper()
 	directory := t.TempDir()
 	path := filepath.Join(directory, "main.a")
 	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
 		t.Fatal(err)
+	}
+	for name, module := range modules {
+		if err := os.WriteFile(filepath.Join(directory, name), []byte(module), 0600); err != nil {
+			t.Fatal(err)
+		}
 	}
 	run := func(env []string, name string, args ...string) ([]byte, []byte, error) {
 		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
