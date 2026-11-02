@@ -1,0 +1,7 @@
+// An array of strings viewed as unknown stops as not yet, as every array does until join comes, which
+// needs V8's empty answer for an array that holds itself (#09dvwny). Node prints before, then a,b.
+function show(value: unknown): void {
+	console.log(String(value));
+}
+console.log('before');
+show(['a', 'b']);

@@ -292,6 +292,9 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	if strings.Contains(code, "adamicDynamicGet(") {
 		code = dynamicKeyedRuntime(program) + code
 	}
+	if strings.Contains(code, "adamicUnknownKind(") {
+		code = unknownKindRuntime(program) + code
+	}
 	if strings.Contains(code, "adamicNodeTmpdir()") {
 		code = "import { tmpdir as adamicNodeTmpdir } from 'node:os';\n" + code
 	}
@@ -1214,6 +1217,12 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "adamicTypeOf(" + e.value(expression.Value) + ")"
 	case ir.UnionToString:
 		return "String(" + e.value(expression.Value) + ")"
+	case ir.UnknownKind:
+		return "adamicUnknownKind(" + e.value(expression.Value) + ")"
+	case ir.OwnFunction:
+		return "((object) => Object.hasOwn(object, " + quote(expression.Name) + ") && object[" + quote(expression.Name) + "] instanceof AdamicClosure)(" + e.value(expression.Object) + ")"
+	case ir.ErrorToString:
+		return "Error.prototype.toString.call(" + e.value(expression.Value) + ")"
 	case ir.MaybeToString:
 		return "String(" + e.value(expression.Value) + ")"
 	case ir.Coalesce:

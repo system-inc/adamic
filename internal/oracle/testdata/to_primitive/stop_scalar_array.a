@@ -1,0 +1,7 @@
+// An array of numbers viewed as unknown stops as not yet: its elements don't say they're numbers
+// (#09dvwny). Node prints before, then 1,2,3.
+function show(value: unknown): void {
+	console.log(String(value));
+}
+console.log('before');
+show([1, 2, 3]);

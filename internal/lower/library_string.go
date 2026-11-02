@@ -91,6 +91,12 @@ func (l *lowering) stringConversion(node *ast.Node) (ir.Expression, error) {
 		if l.writable(l.checker.GetTypeAtLocation(node)) || l.dynamicScalarProperty(node) {
 			return ir.UnionToString{Value: value}, nil
 		}
+		// Only an unknown or an object: unknownView refuses a nullable reference where one flows in, so
+		// its null and undefined are told apart, which another union holding a reference's may not be
+		// (logical_and_reference_null.a).
+		if dynamicObjectType(l.checker.GetTypeAtLocation(node)) {
+			return l.toStringHint(value), nil
+		}
 	}
 	if _, missing := value.(ir.Undefined); missing {
 		return ir.StringConstant{Index: l.constant("undefined")}, nil

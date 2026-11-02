@@ -79,22 +79,25 @@ const char *adamic_error_field_name(const adamic_object *object, const char *nam
 	return object->shape == &absent_message_shape && strcmp(name, "message") == 0 ? "#message" : name;
 }
 
-_Noreturn void adamic_uncaught(void) {
-	// String(error), as Node's runner reports an error nothing caught (Error.prototype.toString): the
-	// name and the message joined by ": " when both are there, and whichever one is when the other is
-	// empty.
+// Error.prototype.toString, which String(error) is: the name and the message joined by ": " when both
+// are there, and whichever one is when the other is empty. An Error's name and message are always
+// strings here, so neither of Node's defaults for an undefined one (the name "Error", the message "")
+// arises.
+adamic_string *adamic_error_to_string(const adamic_object *error) {
 	static adamic_slot_cache name_cache, message_cache;
-	const adamic_string *name = adamic_object_field(adamic_thrown, "name", &name_cache)->reference;
-	const adamic_string *message = adamic_object_field(adamic_thrown, "message", &message_cache)->reference;
-	size_t separator = name->length > 0 && message->length > 0 ? 2 : 0;
-	size_t length = name->length + separator + message->length;
-	char *text = malloc(length + 1);
-	if (text == NULL) {
-		static const char out_of_memory[] = "out of memory";
-		adamic_panic(out_of_memory, sizeof out_of_memory - 1);
-	}
-	memcpy(text, name->bytes, name->length);
-	memcpy(text + name->length, ": ", separator);
-	memcpy(text + name->length + separator, message->bytes, message->length);
-	adamic_panic(text, length);
+	adamic_string *name = adamic_object_field(error, "name", &name_cache)->reference;
+	adamic_string *message = adamic_object_field(error, "message", &message_cache)->reference;
+	if (message->length == 0) return adamic_retain(name);
+	if (name->length == 0) return adamic_retain(message);
+	adamic_string *text = adamic_string_allocate(name->length + 2 + message->length);
+	memcpy((char *)text->bytes, name->bytes, name->length);
+	memcpy((char *)text->bytes + name->length, ": ", 2);
+	memcpy((char *)text->bytes + name->length + 2, message->bytes, message->length);
+	return text;
+}
+
+_Noreturn void adamic_uncaught(void) {
+	// String(error), as Node's runner reports an error nothing caught.
+	adamic_string *text = adamic_error_to_string(adamic_thrown);
+	adamic_panic(text->bytes, text->length);
 }

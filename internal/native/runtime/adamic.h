@@ -1293,6 +1293,12 @@ extern adamic_string adamic_typeof_boolean;
 extern adamic_string adamic_typeof_undefined;
 extern adamic_string adamic_typeof_object;
 extern adamic_string adamic_typeof_function;
+// adamic_union_kind is ir.UnknownKind's number for a union: the kind of value String's dispatch takes
+// apart (lower/to_primitive.go), from the value's own tags.
+double adamic_union_kind(const adamic_heap *value);
+// adamic_object_own_function is ir.OwnFunction: whether a plain object or a record has an own property
+// of the name holding a function.
+bool adamic_object_own_function(const adamic_heap *value, const char *name);
 
 // adamic_weak is the handle a Weak<Target> slot holds (weak.c): counted itself, it doesn't count its
 // target, and it says NULL once the target is freed. adamic_weak_of is the target's handle, retained
@@ -1351,6 +1357,9 @@ extern _Thread_local adamic_object *adamic_thrown;
 // NULL is an omitted or undefined message; its empty fallback is not an own field.
 adamic_object *adamic_error_new(adamic_string *message);
 const char *adamic_error_field_name(const adamic_object *object, const char *name);
+// adamic_error_to_string is Error.prototype.toString of an Error (adamic_error_is), a string the caller
+// owns: what String(error) is, and what adamic_uncaught prints.
+adamic_string *adamic_error_to_string(const adamic_object *error);
 _Noreturn void adamic_uncaught(void);
 
 // adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail

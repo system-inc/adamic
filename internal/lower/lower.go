@@ -119,6 +119,7 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 	if err := lowering.finishAccessors(); err != nil {
 		return nil, err
 	}
+	lowering.finishToPrimitive()
 	if err := lowering.exceptions(); err != nil {
 		return nil, err
 	}
@@ -379,4 +380,8 @@ type lowering struct {
 	writeSites       []writeSite
 	accessorCaptures []accessorCapture
 	accessorNames    map[string]bool
+
+	// toPrimitive is the program's to_string_hint helper plus one, or zero before a String of a union
+	// that may hold an object needs it (to_primitive.go).
+	toPrimitive int
 }

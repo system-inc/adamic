@@ -293,6 +293,12 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.typeOf(expression)
 	case ir.UnionToString:
 		return e.own(ir.String, fmt.Sprintf("adamic_union_to_string(%s)", e.value(expression.Value)))
+	case ir.UnknownKind:
+		return e.snapshot(ir.Number, fmt.Sprintf("adamic_union_kind((const adamic_heap *)(%s))", e.value(expression.Value)))
+	case ir.OwnFunction:
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_own_function((const adamic_heap *)(%s), %s)", e.value(expression.Object), cString(expression.Name)))
+	case ir.ErrorToString:
+		return e.own(ir.String, fmt.Sprintf("adamic_error_to_string((const adamic_object *)(%s))", e.value(expression.Value)))
 	case ir.Coalesce:
 		return e.coalesce(expression)
 	case ir.StringLength:

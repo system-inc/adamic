@@ -1,0 +1,18 @@
+// A record through String over an unknown (#09dvwny): one with no own toString is "[object Object]",
+// and one whose own toString holds a number skips it, as Node does, for Object.prototype.valueOf, which
+// gives the record itself, so it's a TypeError.
+interface Values { [key: string]: number }
+function show(value: unknown): void {
+	console.log(String(value));
+	console.log(`<${value}>`);
+}
+const numbers: Values = {};
+numbers['a'] = 1;
+show(numbers);
+const named: Values = {};
+named['toString'] = 3;
+try {
+	show(named);
+} catch (error) {
+	console.log(String(error));
+}

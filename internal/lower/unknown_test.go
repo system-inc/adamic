@@ -20,7 +20,6 @@ func TestUnknownReflectionRefusals(t *testing.T) {
 		{`function box(value: unknown): unknown { return value; } box({code:null});`, "nullable field"},
 		{`class Code { get code(): string { return 'x'; } } function read(value: unknown): unknown { return typeof value === 'object' && value !== null && 'code' in value ? value.code : undefined; } read(new Code());`, "dynamic getter"},
 		{`class Code { code(): string { return 'x'; } } function read(value: unknown): unknown { return typeof value === 'object' && value !== null && 'code' in value ? value.code : undefined; } read(new Code());`, "dynamic getter or method"},
-		{`function text(value: unknown): string { return String(value); }`, "ToPrimitive"},
 		{`function read(value: unknown): unknown { return typeof value === 'object' && value !== null && 'code' in value ? value.code : undefined; } const nested = {child:{code:null}}; read(nested);`, "nullable field"},
 		{`function box(value: unknown): unknown { return value; } box(() => 1);`, "function descriptors"},
 		{`function box(value: unknown): unknown { return value; } box(JSON);`, "JSON as a value"},
