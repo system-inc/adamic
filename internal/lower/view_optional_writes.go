@@ -17,8 +17,9 @@ type viewOptionalWrite struct {
 func (l *lowering) viewWriteReceiverTypeID(target, receiver *ast.Node, names ...string) int {
 	id := l.viewReceiverTypeID(l.checker.GetTypeAtLocation(receiver))
 	held := l.viewTypes[id]
-	// A class instance declares every field, so its shape has the slot (absentOptionalWrite).
-	if held == nil || isClassInstance(held) {
+	// A class instance isn't set aside: its own fields each get a slot (fieldInitializers writes every
+	// property declaration), but an optional member an interface merged into the class declares has none.
+	if held == nil {
 		return id
 	}
 	for _, name := range names {
