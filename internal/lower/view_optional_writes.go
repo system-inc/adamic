@@ -43,7 +43,7 @@ func (l *lowering) viewWriteReceiverTypeID(target, receiver *ast.Node, names ...
 func (l *lowering) checkViewOptionalWrites() error {
 	for _, write := range l.viewOptionalWrites {
 		if l.result.CheckedField(write.receiverTypeID, write.name) {
-			return l.notYet(write.node, "a write to optional field "+write.name+" through a checked view, whose slot a fixed shape can't add yet")
+			return l.notYet(write.node, "a write to optional field "+write.name+" through a checked view, whose slot a fixed shape can't add")
 		}
 	}
 	return nil

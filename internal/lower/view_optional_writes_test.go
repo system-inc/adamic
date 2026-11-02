@@ -20,7 +20,7 @@ interface Element extends Declaration { _elementBrand: undefined; name?: string;
 function isElement(n: Node): n is Element { return n.kind === 171; }
 `
 
-// The reason checkViewOptionalWrites gives.
+// The reason checkViewOptionalWrites gives for name, which notYet ends with " yet".
 const viewOptionalWriteReason = "a write to optional field name through a checked view, whose slot a fixed shape can't add yet"
 
 // A write through a checked view to a field the view declares optional is NotYet at the write, whatever
@@ -49,13 +49,25 @@ rename(fresh);`, viewOptionalWriteReason},
 		{"or", fresh + `function rename(n: Node): void { if (isElement(n)) { n.name ||= "w"; console.log(String(n.name)); } }
 rename(fresh);`, viewOptionalWriteReason},
 		{"increment", held + `function bump(n: Node): void { if (isElement(n)) { n.count!++; console.log(String(n.count)); } }
-bump(held);`, viewOptionalWriteReason},
+bump(held);`, "a write to optional field count through a checked view, whose slot a fixed shape can't add yet"},
+		// delete never reaches the view: every delete of a fixed object's field is Refused.
 		{"delete", held + `function drop(n: Node): void { if (isElement(n)) { delete n.name; console.log(String(n.name)); } }
-drop(held);`, ""},
+drop(held);`, "refuses delete; fixed objects cannot lose fields"},
 		{"guarded", held + `function rename(n: Node): void { if (isElement(n)) { if (n.name !== undefined) { n.name = "w"; } console.log(String(n.name)); } }
 rename(held);`, viewOptionalWriteReason},
+		// A cast's view checks name as the predicate's does, so its write is held by the same rule.
 		{"v3 cast", fresh + `function rename(n: Node): void { const e = n as Element; e.name = "w"; console.log(String(e.name)); }
-rename(fresh);`, ""},
+rename(fresh);`, viewOptionalWriteReason},
+		// A class instance has a slot for each field the class declares, but none for an optional member
+		// an interface merges into it. Tagged's required merged name makes name checked under its bare name
+		// (mergedFieldRead), so Box's write to its merged optional name is a checked write too. Nothing reads
+		// b.name after, since a checked read of an optional field stops first, under its own reason.
+		{"merged class member", `interface Tagged { name: string; }
+class Tagged { kind = 1; }
+function show(t: Tagged): void { console.log(String(t.name)); }
+interface Box { name?: string; }
+class Box { kind = 2; }
+const b = new Box(); b.name = "w"; console.log("written");`, viewOptionalWriteReason},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -76,7 +88,7 @@ rename(fresh);`, ""},
 			}
 			var pending *NotYet
 			var refused *Refused
-			if !errors.As(err, &pending) && !errors.As(err, &refused) || !strings.Contains(err.Error(), probe.want) {
+			if !errors.As(err, &pending) && !errors.As(err, &refused) || !strings.Contains(err.Error(), probe.want) || strings.Contains(err.Error(), "yet yet") {
 				t.Fatalf("want NotYet or Refused with %q, got %v", probe.want, err)
 			}
 			t.Logf("stops: %v", err)
