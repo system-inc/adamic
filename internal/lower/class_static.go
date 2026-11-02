@@ -10,7 +10,7 @@ import (
 )
 
 func (l *lowering) staticBase(declaration *ast.Node) *ast.Node {
-	for _, clause := range nodesOf(declaration.AsClassDeclaration().HeritageClauses) {
+	for _, clause := range nodesOf(declaration.ClassLikeData().HeritageClauses) {
 		if clause.AsHeritageClause().Token != ast.KindExtendsKeyword {
 			continue
 		}
@@ -238,7 +238,7 @@ func (l *lowering) staticDeclaration(declaration *ast.Node) ([]ir.Statement, err
 		// Extends reads the public binding, whose name and ready point belong to
 		// the source class, rather than the internal storage initialized earlier.
 		checked := true
-		for _, clause := range nodesOf(declaration.AsClassDeclaration().HeritageClauses) {
+		for _, clause := range nodesOf(declaration.ClassLikeData().HeritageClauses) {
 			if clause.AsHeritageClause().Token != ast.KindExtendsKeyword {
 				continue
 			}
@@ -486,7 +486,7 @@ func (l *lowering) staticClassDeclaration(declaration *ast.Node) error {
 	if ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAmbient) {
 		return l.notYet(declaration, "a declare class without a runtime definition")
 	}
-	for _, clause := range nodesOf(declaration.AsClassDeclaration().HeritageClauses) {
+	for _, clause := range nodesOf(declaration.ClassLikeData().HeritageClauses) {
 		if clause.AsHeritageClause().Token == ast.KindExtendsKeyword && l.staticBase(declaration) == nil {
 			return l.notYet(clause, "a computed class base; name the base class directly")
 		}
