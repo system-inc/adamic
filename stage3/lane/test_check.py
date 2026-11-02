@@ -172,15 +172,28 @@ class LandingLaneTests(unittest.TestCase):
                                   ('BuilderProgramHost', 'createHash')})
         methods = [site for site in sites if site['public'] and '?(' in site['before']]
         self.assertEqual(manifest['excluded_method_conversions'], len(methods))
+        self.assertEqual(len(methods), 10)
+        sanction_file = 'adapt/97-cli-axolotl-d/api-sanctions.json'
+        sanctions = json.loads((LANE.parent / sanction_file).read_text())
+        sanctioned_methods = {
+            tuple(row['path']): f'{sanction_file} row {index + 1} '
+            + json.dumps(row, ensure_ascii=False, separators=(',', ':'))
+            for index, row in enumerate(sanctions) if row.get('replace') == 'member'
+        }
         for site in methods:
-            key = 'member:' + json.dumps(['ts', site['interface'], site['name']], separators=(',', ':')) + '#0'
-            self.assertNotIn(key, changes)
+            path = (site['interface'], site['name'])
+            key = 'member:' + json.dumps(['ts', *path], separators=(',', ':')) + '#0'
+            self.assertIn(key, changes)
+            method_owners = [row for row in manifest['owners'] if tuple(row['path']) == path]
+            self.assertEqual(len(method_owners), 1, path)
+            self.assertNotEqual(method_owners[0]['adaptation'], '32', path)
+            self.assertEqual(method_owners[0]['adaptation'], sanctioned_methods[path], path)
         self.assertEqual(manifest['counts']['30'], 0)
         self.assertEqual(manifest['counts']['32'], 3)
         self.assertEqual(manifest['counts']['33'], 0)
         self.assertEqual(manifest['counts']['79'], 1)
         self.assertIn('member:["ts","System","exit"]#0', changes)
-        self.assertEqual(len(changes), 223)
+        self.assertEqual(len(changes), 243)
 
     def test_unknown_platform(self):
         self.execution['platform']['node'] = 'v24.19.1'
