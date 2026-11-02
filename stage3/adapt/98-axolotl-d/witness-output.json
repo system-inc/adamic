@@ -1,0 +1,22 @@
+{
+  "before": {
+    "version": "6.0.3",
+    "plain": {
+      "sourcesContent": "[\"present\"]"
+    },
+    "getter": {
+      "sourcesContent_property_reads": 3,
+      "sourcesContent": "[null]"
+    }
+  },
+  "after": {
+    "version": "6.0.3",
+    "plain": {
+      "sourcesContent": "[\"present\"]"
+    },
+    "getter": {
+      "sourcesContent_property_reads": 2,
+      "sourcesContent": "[\"present\"]"
+    }
+  }
+}
