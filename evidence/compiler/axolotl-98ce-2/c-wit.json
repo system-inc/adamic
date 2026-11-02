@@ -1,0 +1,171 @@
+{
+  "node": "v22.23.4",
+  "typescript": "6.0.3",
+  "mutant": false,
+  "statements": {
+    "before": "hitSystemWatcherLimit ||= e.code === \"ENOSPC\";",
+    "after": "hitSystemWatcherLimit ||= propertyOf(e, \"code\") === \"ENOSPC\";"
+  },
+  "cases": 14,
+  "failed": [],
+  "results": [
+    {
+      "name": "thrown null",
+      "hit": false,
+      "original": {
+        "threw": "TypeError",
+        "message": "Cannot read properties of null (reading 'code')"
+      },
+      "adapted": {
+        "threw": "TypeError",
+        "message": "Cannot read properties of null (reading 'code')"
+      },
+      "agree": true
+    },
+    {
+      "name": "thrown null",
+      "hit": true,
+      "original": {
+        "value": true
+      },
+      "adapted": {
+        "value": true
+      },
+      "agree": true
+    },
+    {
+      "name": "thrown undefined",
+      "hit": false,
+      "original": {
+        "threw": "TypeError",
+        "message": "Cannot read properties of undefined (reading 'code')"
+      },
+      "adapted": {
+        "threw": "TypeError",
+        "message": "Cannot read properties of undefined (reading 'code')"
+      },
+      "agree": true
+    },
+    {
+      "name": "thrown undefined",
+      "hit": true,
+      "original": {
+        "value": true
+      },
+      "adapted": {
+        "value": true
+      },
+      "agree": true
+    },
+    {
+      "name": "a thrown string",
+      "hit": false,
+      "original": {
+        "value": false
+      },
+      "adapted": {
+        "value": false
+      },
+      "agree": true
+    },
+    {
+      "name": "a thrown string",
+      "hit": true,
+      "original": {
+        "value": true
+      },
+      "adapted": {
+        "value": true
+      },
+      "agree": true
+    },
+    {
+      "name": "a thrown object with code ENOSPC",
+      "hit": false,
+      "original": {
+        "value": true
+      },
+      "adapted": {
+        "value": true
+      },
+      "agree": true
+    },
+    {
+      "name": "a thrown object with code ENOSPC",
+      "hit": true,
+      "original": {
+        "value": true
+      },
+      "adapted": {
+        "value": true
+      },
+      "agree": true
+    },
+    {
+      "name": "a thrown object with code EMFILE",
+      "hit": false,
+      "original": {
+        "value": false
+      },
+      "adapted": {
+        "value": false
+      },
+      "agree": true
+    },
+    {
+      "name": "a thrown object with code EMFILE",
+      "hit": true,
+      "original": {
+        "value": true
+      },
+      "adapted": {
+        "value": true
+      },
+      "agree": true
+    },
+    {
+      "name": "a thrown object without code",
+      "hit": false,
+      "original": {
+        "value": false
+      },
+      "adapted": {
+        "value": false
+      },
+      "agree": true
+    },
+    {
+      "name": "a thrown object without code",
+      "hit": true,
+      "original": {
+        "value": true
+      },
+      "adapted": {
+        "value": true
+      },
+      "agree": true
+    },
+    {
+      "name": "a getter-only code",
+      "hit": false,
+      "original": {
+        "value": true
+      },
+      "adapted": {
+        "value": true
+      },
+      "agree": true
+    },
+    {
+      "name": "a getter-only code",
+      "hit": true,
+      "original": {
+        "value": true
+      },
+      "adapted": {
+        "value": true
+      },
+      "agree": true
+    }
+  ]
+}

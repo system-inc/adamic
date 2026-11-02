@@ -1,0 +1,55 @@
+{
+  "files": 5,
+  "javascriptChanging": true,
+  "evidence": [
+    {
+      "row": 4,
+      "file": "src/compiler/types.ts",
+      "line": 7750,
+      "before": "{ stack?: string; message?: string; }",
+      "after": "unknown"
+    },
+    {
+      "row": 4,
+      "file": "src/server/types.ts",
+      "line": 24,
+      "before": "{ stack?: string; message?: string; }",
+      "after": "unknown"
+    },
+    {
+      "row": 4,
+      "file": "src/compiler/_namespaces/ts.ts",
+      "line": 10,
+      "before": "",
+      "after": "\r\nexport * from \"../hostErrors.js\";"
+    },
+    {
+      "row": 4,
+      "file": "src/server/project.ts",
+      "line": 106,
+      "before": "",
+      "after": "\n    propertyOf,"
+    },
+    {
+      "row": 4,
+      "file": "src/server/project.ts",
+      "line": 507,
+      "before": "result.error.stack || result.error.message || JSON.stringify(result.error)",
+      "after": "propertyOf(result.error, \"stack\") || propertyOf(result.error, \"message\") || JSON.stringify(result.error)"
+    },
+    {
+      "row": 4,
+      "file": "src/server/project.ts",
+      "line": 537,
+      "before": "result.error.stack || result.error.message || JSON.stringify(result.error)",
+      "after": "propertyOf(result.error, \"stack\") || propertyOf(result.error, \"message\") || JSON.stringify(result.error)"
+    },
+    {
+      "row": 5,
+      "file": "src/compiler/sys.ts",
+      "line": 1430,
+      "before": "createSHA256Hash?(data: string): string;",
+      "after": "createSHA256Hash?: { createSHA256Hash(data: string): string; }[\"createSHA256Hash\"] | undefined;"
+    }
+  ]
+}
