@@ -71,6 +71,12 @@ func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
 	if len(arguments) != 1 {
 		return nil, true, l.notYet(node, "Object.keys without exactly one argument")
 	}
+	// An Error's message and name are own properties Node doesn't enumerate, so its keys are none, where
+	// natively they're fields like any other's and the JavaScript backend's named error has its name
+	// enumerable: no keys path tells the truth about one yet.
+	if l.isLibraryType(l.checker.GetTypeAtLocation(arguments[0]), errorClasses...) {
+		return nil, true, l.notYet(node, "Object.keys of an Error, whose own properties Node doesn't enumerate")
+	}
 	if value, handled, err := l.recordObjectCall(node, "keys"); handled {
 		return value, true, err
 	}
@@ -117,7 +123,7 @@ func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
 		}
 	}
 	if !isClassInstance(proven) && !l.isStaticType(proven) && !l.hasAccessorStorage(proven) {
-		if l.isLibraryType(proven, "RegExp", "Error") || l.includesUndefined(proven) {
+		if l.isLibraryType(proven, "RegExp") || l.includesUndefined(proven) {
 			return l.objectCall(node, "keys")
 		}
 		for _, property := range l.checker.GetPropertiesOfType(proven) {
