@@ -23,7 +23,7 @@ func (l *lowering) knownLoweringGap(node *ast.Node) error {
 			}
 		}
 	case ast.KindClassDeclaration:
-		for _, clause := range nodesOf(node.AsClassDeclaration().HeritageClauses) {
+		for _, clause := range nodesOf(node.ClassLikeData().HeritageClauses) {
 			if clause.AsHeritageClause().Token != ast.KindExtendsKeyword {
 				continue
 			}

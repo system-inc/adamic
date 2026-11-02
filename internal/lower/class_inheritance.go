@@ -12,7 +12,7 @@ import (
 )
 
 func (l *lowering) baseInstance(declaration *ast.Node, classType *checker.Type) (*instance, error) {
-	for _, clause := range nodesOf(declaration.AsClassDeclaration().HeritageClauses) {
+	for _, clause := range nodesOf(declaration.ClassLikeData().HeritageClauses) {
 		if clause.AsHeritageClause().Token != ast.KindExtendsKeyword {
 			continue
 		}
