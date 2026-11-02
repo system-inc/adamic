@@ -1,0 +1,127 @@
+package main
+
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"io"
+	"os"
+	"path/filepath"
+	"regexp"
+	"strings"
+)
+
+// runtimeNotYetStop is a run-time NotYet (#zhgxzjg, Adamic, Nov 2): an honest stop where a key or a
+// receiver can't be known before the read. It's no type lie, so it never sits among the negative
+// witnesses. Both backends stop with exit 70 and the entry's one allowlisted message after printing
+// exactly what Node printed so far, and Node, running the source, goes on to the end.
+type runtimeNotYetStop struct {
+	Path        string `json:"path"`
+	RulingTask  string `json:"ruling_task"`
+	LiftingTask string `json:"lifting_task"`
+	Stderr      string `json:"stderr"`
+}
+type runtimeNotYetStopList struct {
+	Comment string                       `json:"_comment"`
+	Stops   map[string]runtimeNotYetStop `json:"stops"`
+}
+
+// runtimeNotYetForms is the closed allowlist of run-time NotYet messages, each followed by
+// " (reading 'key')", and the ruling that made each. The words are internal/ir's DynamicKeyedStops, the
+// seven a ruled fixture reaches. The table's two compiler-bug stops never qualify, and nor does a form
+// not here: a new one needs Adamic's ruling and its line here.
+var runtimeNotYetForms = map[string]string{
+	"a primitive receiver's properties aren't read yet":                     "#zhgxzjg",
+	"a method isn't read by a run-time key yet":                             "#zhgxzjg",
+	"a name beginning with # isn't read by a run-time key yet":              "#zhgxzjg",
+	"an Object.prototype name isn't read by a run-time key yet":             "#zhgxzjg",
+	"an Error property Node sets and the native Error lacks isn't read yet": "#zhgxzjg",
+	"an array's or a tuple's properties aren't read by a run-time key yet":  "#zhgxzjg",
+	"an object literal's getter isn't read by a run-time key yet":           "#zhgxzjg",
+}
+
+// runtimeNotYetMessage is a stop's whole stderr: one line, its form, and the key it was reading.
+var runtimeNotYetMessage = regexp.MustCompile(`^adamic: panic: (.+?) \(reading '([^\n]*)'\)\n$`)
+
+// taskReference is a task named as the lists name one, #id.
+var taskReference = regexp.MustCompile(`^#[0-9a-z]+$`)
+
+// runtimeNotYetForm is the allowlisted form the stop message says, or false. A compiler bug said out
+// loud never qualifies, even if its words were listed.
+func runtimeNotYetForm(stderr string) (string, bool) {
+	message := runtimeNotYetMessage.FindStringSubmatch(stderr)
+	if message == nil || strings.Contains(stderr, "compiler bug") {
+		return "", false
+	}
+	if _, allowed := runtimeNotYetForms[message[1]]; !allowed {
+		return "", false
+	}
+	return message[1], true
+}
+func readRuntimeNotYetStops(path string) (runtimeNotYetStopList, error) {
+	var list runtimeNotYetStopList
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return list, err
+	}
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	if err = decoder.Decode(&list); err != nil {
+		return list, err
+	}
+	var extra any
+	if err = decoder.Decode(&extra); err != io.EOF {
+		return list, fmt.Errorf("run-time NotYet list has trailing JSON")
+	}
+	if !strings.Contains(list.Comment, "Adding an entry is a ruling") || !strings.Contains(list.Comment, "@system_adamic") || list.Stops == nil {
+		return list, fmt.Errorf("run-time NotYet list needs its ruling header and stops object")
+	}
+	for hash, stop := range list.Stops {
+		if !validContentHash(hash) {
+			return list, fmt.Errorf("invalid run-time NotYet content hash %q", hash)
+		}
+		if stop.Path == "" || filepath.IsAbs(stop.Path) || filepath.ToSlash(filepath.Clean(stop.Path)) != stop.Path || stop.Path == ".." || strings.HasPrefix(stop.Path, "../") {
+			return list, fmt.Errorf("run-time NotYet needs its program's repository path: %s", hash)
+		}
+		if !taskReference.MatchString(stop.RulingTask) || !taskReference.MatchString(stop.LiftingTask) || stop.LiftingTask == stop.RulingTask {
+			return list, fmt.Errorf("run-time NotYet needs its ruling task and the task that lifts it: %s", hash)
+		}
+		form, allowed := runtimeNotYetForm(stop.Stderr)
+		if !allowed {
+			return list, fmt.Errorf("run-time NotYet stop message is not a ruled form: %s", hash)
+		}
+		if stop.RulingTask != runtimeNotYetForms[form] {
+			return list, fmt.Errorf("run-time NotYet ruling task %s is not its form's ruling %s: %s", stop.RulingTask, runtimeNotYetForms[form], hash)
+		}
+	}
+	return list, nil
+}
+
+// acceptsRuntimeNotYet says a run is the listed stop: Node runs the source to the end, exit 0, printing
+// more than the backends did, and each backend prints exactly Node's first bytes, then stops with exit 70
+// and the entry's whole message.
+func acceptsRuntimeNotYet(stop runtimeNotYetStop, node, javascript, native observation) bool {
+	if node.Error != "" || node.Exit != 0 {
+		return false
+	}
+	for _, backend := range []observation{javascript, native} {
+		if backend.Error != "" || backend.Exit != 70 || backend.Stderr != stop.Stderr {
+			return false
+		}
+	}
+	return javascript.Stdout == native.Stdout && strings.HasPrefix(node.Stdout, native.Stdout) && len(node.Stdout) > len(native.Stdout)
+}
+
+// runtimeNotYetRelated schedules a listed program, or an edit at a listed path, for a run, as
+// negativeRelated does. The exemption still comes only from contentHash.
+func runtimeNotYetRelated(path string, source []byte, list runtimeNotYetStopList) bool {
+	if _, listed := list.Stops[contentHash(source)]; listed {
+		return true
+	}
+	for _, stop := range list.Stops {
+		if path == stop.Path {
+			return true
+		}
+	}
+	return false
+}

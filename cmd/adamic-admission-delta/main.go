@@ -57,6 +57,8 @@ type entry struct {
 	Agree             *bool        `json:"agree"`
 	NegativeRelated   bool         `json:"negative_related"`
 	NegativeWitness   bool         `json:"negative_witness"`
+	NotYetRelated     bool         `json:"notyet_related"`
+	RuledRuntimeStop  bool         `json:"ruled_runtime_stop"`
 	RepairAgree       *bool        `json:"repair_agree,omitempty"`
 	Sampled           bool         `json:"sampled"`
 	VoidReason        string       `json:"void_reason,omitempty"`
@@ -65,6 +67,11 @@ type report struct {
 	NegativeWitnessCount  int                `json:"negative_witness_count"`
 	AcceptedWitnesses     int                `json:"accepted_witnesses"`
 	NodeAgreements        int                `json:"node_agreements"`
+	RuntimeNotYetCount    int                `json:"runtime_notyet_count"`
+	RuledRuntimeStops     int                `json:"ruled_runtime_stops"`
+	RuledRuntimeStopPaths []string           `json:"ruled_runtime_stop_paths"`
+	StaleRuntimeStops     []string           `json:"stale_runtime_stops"`
+	PendingRuntimeStops   []string           `json:"pending_runtime_stops"`
 	CorpusFilter          string             `json:"corpus_filter"`
 	Shard                 string             `json:"shard"`
 	CompleteCorpus        bool               `json:"complete_corpus"`
@@ -199,6 +206,7 @@ func run(args []string) error {
 	headLowerBinary := flags.String("head-lower-binary", "", "head compiler with admission-lower adapter")
 	headBinary := flags.String("head-binary", "", "built head compiler")
 	negativePath := flags.String("negative-witnesses", "cloud/admission-corpus/negative-witnesses.json", "ruled content-hash negative witnesses")
+	runtimeNotYetPath := flags.String("runtime-notyet-stops", "cloud/admission-corpus/runtime-notyet-stops.json", "ruled content-hash run-time NotYet stops")
 	manifestPath := flags.String("manifest", "", "pinned JSON corpus manifest")
 	generator := flags.String("manifest-generator", "", "generator path at head")
 	generatorRevision := flags.String("manifest-generator-revision", "", "generator source revision, defaults to head")
@@ -240,9 +248,20 @@ func run(args []string) error {
 		return err
 	}
 	fmt.Fprintf(os.Stderr, "negative witnesses: %d\n", len(negatives.Witnesses))
+	runtimeStops, err := readRuntimeNotYetStops(*runtimeNotYetPath)
+	if err != nil {
+		return err
+	}
+	// A run-time NotYet is a separate ruling from a type lie, never inside the witness list.
+	for hash := range runtimeStops.Stops {
+		if _, listed := negatives.Witnesses[hash]; listed {
+			return fmt.Errorf("program listed both as a negative witness and as a run-time NotYet: %s", hash)
+		}
+	}
 	startedAll := time.Now()
-	result := report{Programs: []entry{}, Verdict: "pass", Phases: map[string]float64{}, Workers: *workers, Classification: "lowering-only"}
+	result := report{Programs: []entry{}, RuledRuntimeStopPaths: []string{}, StaleRuntimeStops: []string{}, PendingRuntimeStops: []string{}, Verdict: "pass", Phases: map[string]float64{}, Workers: *workers, Classification: "lowering-only"}
 	result.NegativeWitnessCount = len(negatives.Witnesses)
+	result.RuntimeNotYetCount = len(runtimeStops.Stops)
 	result.Base, err = git(root, "rev-parse", *base+"^{commit}")
 	if err != nil {
 		return err
@@ -412,6 +431,8 @@ func run(args []string) error {
 	result.CompileTimeoutSeconds = compileLimit.Seconds()
 	result.RuntimeTimeoutSeconds = limit.Seconds()
 	seen := map[string]string{}
+	// held is every program's content hash, so a listed stop no program holds is seen after the run.
+	held := map[string]bool{}
 	for _, c := range m.Corpora {
 		for _, p := range c.Programs {
 			clean := filepath.ToSlash(filepath.Clean(p.Path))
@@ -443,7 +464,8 @@ func run(args []string) error {
 			if e != nil {
 				return e
 			}
-			result.Programs = append(result.Programs, entry{program: p, Corpus: c.Name, NegativeRelated: negativeRelated(p.Path, source, negatives)})
+			held[contentHash(source)] = true
+			result.Programs = append(result.Programs, entry{program: p, Corpus: c.Name, NegativeRelated: negativeRelated(p.Path, source, negatives), NotYetRelated: runtimeNotYetRelated(p.Path, source, runtimeStops)})
 		}
 	}
 
@@ -550,8 +572,20 @@ func run(args []string) error {
 				result.AcceptedWitnesses++
 			}
 		}
+		if stop, ruled := runtimeStops.Stops[contentHash(data)]; ruled {
+			// A listed program that now runs to the end and agrees with Node is stale: it fails, so its entry
+			// leaves the list. Otherwise it passes only as the very stop it was ruled.
+			if agree {
+				result.StaleRuntimeStops = append(result.StaleRuntimeStops, record.Path)
+				result.Verdict = "fail"
+			} else if acceptsRuntimeNotYet(stop, node, javascript, native) {
+				record.RuledRuntimeStop = true
+				result.RuledRuntimeStops++
+				result.RuledRuntimeStopPaths = append(result.RuledRuntimeStopPaths, record.Path)
+			}
+		}
 		record.Agree = &agree
-		if !agree && !record.NegativeWitness {
+		if !agree && !record.NegativeWitness && !record.RuledRuntimeStop {
 			if command := timedOut(node, jsCompile, javascript, nativeCompile, native); command != "" {
 				record.VoidReason = command + " timeout"
 				voids = append(voids, record.Path+": "+record.VoidReason)
@@ -560,6 +594,28 @@ func run(args []string) error {
 			}
 		}
 	}
+	// A listed stop no program held is judged only in a run that holds every corpus. Its path holding other
+	// bytes at head is an edit, stale as an agreeing stop is; a path absent at head is a program not landed
+	// yet, said as pending.
+	if result.CompleteCorpus {
+		for hash, stop := range runtimeStops.Stops {
+			if held[hash] {
+				continue
+			}
+			source, e := os.ReadFile(filepath.Join(headTree, stop.Path))
+			if errors.Is(e, os.ErrNotExist) {
+				result.PendingRuntimeStops = append(result.PendingRuntimeStops, stop.Path)
+			} else if e != nil {
+				return e
+			} else if contentHash(source) != hash {
+				result.StaleRuntimeStops = append(result.StaleRuntimeStops, stop.Path)
+				result.Verdict = "fail"
+			}
+		}
+		sort.Strings(result.StaleRuntimeStops)
+		sort.Strings(result.PendingRuntimeStops)
+	}
+	fmt.Fprintf(os.Stderr, "ruled run-time stops: %d\n", result.RuledRuntimeStops)
 	result.SamplingSize = len(selected)
 	result.BudgetUsedSeconds = time.Since(started).Seconds()
 	result.Phases["runtime"] = result.BudgetUsedSeconds
@@ -623,12 +679,13 @@ func sample(programs []entry, seed []byte, seconds float64, limit time.Duration)
 	witnesses := []int{}
 	others := []int{}
 	for i, p := range programs {
-		if p.Class != "newly-accepted" && !(p.NegativeRelated && p.Head.Exit == 0 && p.Head.Error == "") {
+		related := p.NegativeRelated || p.NotYetRelated
+		if p.Class != "newly-accepted" && !(related && p.Head.Exit == 0 && p.Head.Error == "") {
 			continue
 		}
 		if p.Corpus == "diff" {
 			diff = append(diff, i)
-		} else if p.Corpus == "witnesses" || p.NegativeRelated {
+		} else if p.Corpus == "witnesses" || related {
 			witnesses = append(witnesses, i)
 		} else {
 			others = append(others, i)
