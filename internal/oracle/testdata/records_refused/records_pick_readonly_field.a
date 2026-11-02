@@ -1,0 +1,17 @@
+// a-check: refused a Frozen seen as Pick<Options, "target"> (fixed objects and records have different storage; copy explicitly)
+type OptionValue = string | number | boolean | undefined;
+interface Options {
+	module?: number;
+	target?: number;
+	strict?: boolean;
+	noImplicitAny?: boolean;
+	[option: string]: OptionValue;
+}
+interface Frozen {
+	readonly target?: number;
+	[option: string]: OptionValue;
+}
+const frozen: Frozen = { target: 3 };
+const view: Pick<Options, 'target'> = frozen;
+view.target = 4;
+console.log(String(frozen.target));

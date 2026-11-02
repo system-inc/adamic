@@ -1,0 +1,14 @@
+// a-check: refused a Options seen as Readonly<Options> (fixed objects and records have different storage; copy explicitly)
+type OptionValue = string | number | boolean | undefined;
+interface Options {
+	module?: number;
+	target?: number;
+	strict?: boolean;
+	noImplicitAny?: boolean;
+	[option: string]: OptionValue;
+}
+const options: Options = { target: 3 };
+const frozen: Readonly<Options> = options;
+const thawed: Options = frozen;
+thawed.target = 4;
+console.log(String(options.target));

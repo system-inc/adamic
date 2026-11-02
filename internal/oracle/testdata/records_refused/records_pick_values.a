@@ -1,0 +1,13 @@
+// a-check: refused Object.values on a Pick of a record, which holds fields the Pick doesn't name
+type OptionValue = string | number | boolean | undefined;
+interface Options {
+	module?: number;
+	target?: number;
+	strict?: boolean;
+	noImplicitAny?: boolean;
+	[option: string]: OptionValue;
+}
+const options: Options = { target: 1 };
+options['custom'] = 'x';
+const view: Pick<Options, 'target'> = options;
+console.log(Object.values(view).join(','));

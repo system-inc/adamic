@@ -1,0 +1,39 @@
+type OptionValue = string | number | boolean | undefined;
+interface Options {
+	module?: number;
+	target?: number;
+	strict?: boolean;
+	noImplicitAny?: boolean;
+	[option: string]: OptionValue;
+}
+type StrictName = 'noImplicitAny';
+function strictValue(options: Options, flag: StrictName): boolean {
+	return options[flag] === undefined ? options.strict !== false : !!options[flag];
+}
+const table = {
+	module: { computeValue: (options: Pick<Options, 'module' | 'target'>): number => options.module ?? ((options.target ?? 0) >= 2 ? 5 : 1) },
+	noImplicitAny: { computeValue: (options: Pick<Options, 'noImplicitAny' | 'strict'>): boolean => strictValue(options, 'noImplicitAny') },
+};
+const moduleKind: (options: Pick<Options, 'module' | 'target'>) => number = table.module.computeValue;
+const implicitAny: (options: Options) => boolean = table.noImplicitAny.computeValue;
+const options: Options = { target: 3, strict: true };
+options['custom'] = 'kept';
+console.log(`${moduleKind(options)} ${implicitAny(options)} ${moduleKind({ module: 7 })} ${String(options['custom'])}`);
+function setTarget(view: Pick<Options, 'target'>, value: number): void {
+	view.target = value;
+}
+setTarget(options, 9);
+console.log(`${String(options.target)} ${moduleKind(options)}`);
+const literal: Pick<Options, 'module' | 'target'> = { module: 2 };
+literal.target = 4;
+const widened: Options = literal;
+widened['extra'] = true;
+console.log(`${String(widened.module)} ${String(widened.target)} ${String(widened['extra'])} ${String(implicitAny(widened))}`);
+const view: Pick<Options, 'target'> = options;
+const seen: string[] = [];
+for (const key in view) {
+	seen.push(key);
+}
+console.log(seen.join(','));
+console.log(Object.keys(view).join(','));
+console.log(String(Object.hasOwn(view, 'custom')));

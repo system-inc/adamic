@@ -20,6 +20,9 @@ func (l *lowering) recordElement(t *checker.Type) *checker.Type {
 	if element := l.finitePartialRecordElement(t); element != nil {
 		return element
 	}
+	if base := l.pickedRecordBase(t); base != nil {
+		return l.recordElement(base)
+	}
 	if l.enumerationRecordStorageType(t) {
 		return nil
 	}
@@ -343,6 +346,10 @@ func (l *lowering) recordObjectCallArguments(node *ast.Node, name string, args [
 		}
 		return nil, true, l.notYet(node, "Object."+name+" on a record")
 	}
+	// A Pick holds the whole record, so its values include fields it doesn't name, held otherwise.
+	if (name == "values" || name == "entries") && l.pickedRecordBase(l.checker.GetTypeAtLocation(args[0])) != nil {
+		return nil, true, l.notYet(node, "Object."+name+" on a Pick of a record, which holds fields the Pick doesn't name")
+	}
 	count := 1
 	if name == "hasOwn" {
 		count = 2
@@ -437,6 +444,13 @@ func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*che
 		return true
 	}
 	from, to = l.present(from), l.present(to)
+	// A Pick of a record is stored as the whole record, so it's compared as that record.
+	if base := l.pickedRecordBase(from); base != nil {
+		from = base
+	}
+	if base := l.pickedRecordBase(to); base != nil {
+		to = base
+	}
 	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] {
 		return true
 	}
