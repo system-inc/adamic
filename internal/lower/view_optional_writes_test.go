@@ -2,7 +2,11 @@ package lower
 
 import (
 	"errors"
+	"go/ast"
+	"go/parser"
+	"go/token"
 	"os"
+	"sort"
 	"strings"
 	"testing"
 )
@@ -84,4 +88,83 @@ rename(fresh);`, ""},
 const labelled: Node = { kind: 171, pos: 1, _declarationBrand: undefined, _elementBrand: undefined, label: "l" } as Node;
 relabel(labelled);`, ".ts")
 	})
+}
+
+// viewWriteProducers are the functions that make a SetProperty with a ViewReceiverTypeID, each through
+// viewWriteReceiverTypeID, which the walk has to see or it proved nothing about them.
+var viewWriteProducers = []string{"increment", "setProperty", "updateProperty", "logicalAssignment"}
+
+// Every SetProperty a view may check takes its ViewReceiverTypeID from viewWriteReceiverTypeID, so
+// checkViewOptionalWrites sees every write to an optional field (Lower's ruling, Nov 2). The test reads
+// this package's source: an ir.SetProperty literal that sets ViewReceiverTypeID sets it to a call of the
+// helper, so a sixth producer can't skip it. Mutant: updateProperty given l.viewReceiverTypeID directly,
+// and it's named here.
+func TestViewWriteReceiverHoldsEveryWrite(t *testing.T) {
+	t.Parallel()
+	entries, err := os.ReadDir(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	files := token.NewFileSet()
+	var skipped []string
+	producers := map[string]bool{}
+	for _, entry := range entries {
+		if entry.IsDir() || !strings.HasSuffix(entry.Name(), ".go") || strings.HasSuffix(entry.Name(), "_test.go") {
+			continue
+		}
+		file, err := parser.ParseFile(files, entry.Name(), nil, 0)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, declaration := range file.Decls {
+			function, isFunction := declaration.(*ast.FuncDecl)
+			if !isFunction || function.Body == nil {
+				continue
+			}
+			ast.Inspect(function.Body, func(node ast.Node) bool {
+				literal, isLiteral := node.(*ast.CompositeLit)
+				if !isLiteral || !setPropertyLiteral(literal) {
+					return true
+				}
+				for _, element := range literal.Elts {
+					field, isField := element.(*ast.KeyValueExpr)
+					if !isField {
+						continue
+					}
+					if key, isKey := field.Key.(*ast.Ident); !isKey || key.Name != "ViewReceiverTypeID" {
+						continue
+					}
+					producers[function.Name.Name] = true
+					helper := false
+					if call, isCall := field.Value.(*ast.CallExpr); isCall {
+						selector, isSelector := call.Fun.(*ast.SelectorExpr)
+						helper = isSelector && selector.Sel.Name == "viewWriteReceiverTypeID"
+					}
+					if !helper {
+						skipped = append(skipped, files.Position(field.Pos()).String()+" in "+function.Name.Name)
+					}
+				}
+				return true
+			})
+		}
+	}
+	sort.Strings(skipped)
+	if len(skipped) > 0 {
+		t.Errorf("a SetProperty takes its ViewReceiverTypeID from something other than viewWriteReceiverTypeID, so a write to an optional field through a checked view can lower unjudged; give it the helper's:\n%s", strings.Join(skipped, "\n"))
+	}
+	for _, name := range viewWriteProducers {
+		if !producers[name] {
+			t.Errorf("the walk never saw %s make a SetProperty with a ViewReceiverTypeID", name)
+		}
+	}
+}
+
+// setPropertyLiteral is whether literal is an ir.SetProperty{...}.
+func setPropertyLiteral(literal *ast.CompositeLit) bool {
+	selector, isSelector := literal.Type.(*ast.SelectorExpr)
+	if !isSelector || selector.Sel.Name != "SetProperty" {
+		return false
+	}
+	qualifier, isQualified := selector.X.(*ast.Ident)
+	return isQualified && qualifier.Name == "ir"
 }
