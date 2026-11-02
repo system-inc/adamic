@@ -1,9 +1,11 @@
 // union.c: a union whose members are held differently, as one counted reference (adamic.h).
 
 #include "adamic.h"
+#include "dynamic_keyed_names.h"
 
 #include <math.h>
 #include <pthread.h>
+#include <stdlib.h>
 #include <string.h>
 
 adamic_heap adamic_null = {0, adamic_kind_object, 0};
@@ -220,4 +222,176 @@ adamic_heap *adamic_dynamic_property(adamic_heap *value, const char *name) {
 		return NULL;
 	}
 	adamic_panic("dynamic property read on an unsupported runtime value", sizeof "dynamic property read on an unsupported runtime value" - 1);
+}
+
+// A run-time key is any string, a slice, a view or one with bytes of its own, so it's compared with a
+// name by its content, never by pointer or a cached hash.
+static bool key_is(const adamic_string *key, const char *name) {
+	size_t length = strlen(name);
+	return key->length == length && memcmp(key->bytes, name, length) == 0;
+}
+
+static bool key_named(const adamic_string *key, const char *const *names, size_t count) {
+	for (size_t index = 0; index < count; index++) {
+		if (key_is(key, names[index])) return true;
+	}
+	return false;
+}
+
+// keyed_stop says why a run-time key read stops, in the words the JavaScript backend prints too
+// (dynamic_keyed_names.h), and then which key it was reading.
+_Noreturn static void keyed_stop(enum adamic_dynamic_keyed_stop stop, const adamic_string *key) {
+	const char *reason = adamic_dynamic_keyed_stop_messages[stop];
+	static const char reading[] = " (reading '";
+	size_t length = strlen(reason) + sizeof reading - 1 + key->length + 2;
+	char *message = malloc(length);
+	if (message == NULL) {
+		static const char out_of_memory[] = "out of memory";
+		adamic_panic(out_of_memory, sizeof out_of_memory - 1);
+	}
+	char *at = message;
+	memcpy(at, reason, strlen(reason));
+	at += strlen(reason);
+	memcpy(at, reading, sizeof reading - 1);
+	at += sizeof reading - 1;
+	memcpy(at, key->bytes, key->length);
+	at += key->length;
+	memcpy(at, "')", 2);
+	adamic_panic(message, length);
+}
+
+// keyed_accessor is the accessor the key names on the object's class chain, as adamic_accessor_find
+// finds one by a name of the program's, or NULL.
+static const adamic_accessor *keyed_accessor(const adamic_object *object, const adamic_string *key) {
+	for (const adamic_class *class = object->class; class != NULL; class = class->base) {
+		for (size_t index = 0; index < class->accessor_count; index++) {
+			if (key_is(key, class->accessors[index].name)) return &class->accessors[index];
+		}
+	}
+	return NULL;
+}
+
+// keyed_getter calls a class getter with the object as this, as Reflect.get with the object as the
+// receiver does, and boxes what it gives by the getter's own representation (ir.Type's, written by
+// the emitter into the accessor), owned. Lowering admits a run-time key read only where every class
+// getter is one return of its own fields, literals and operators, which can't throw, of a
+// representation boxed here, and null only as a union (reflect_get.go).
+static adamic_heap *keyed_getter(adamic_object *object, const adamic_accessor *accessor) {
+	adamic_value value = accessor->get(object);
+	switch (accessor->type) {
+	case 1: return adamic_box_number(value.number);
+	case 2: return value.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
+	case 7: {
+		adamic_maybe_number number = adamic_maybe_number_unpack(value.number);
+		return number.present ? adamic_box_number(number.number) : NULL;
+	}
+	case 9: {
+		adamic_maybe_boolean boolean = adamic_maybe_boolean_unpack(value.maybe_boolean);
+		if (!boolean.present) return NULL;
+		return boolean.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
+	}
+	// A string, an object, an array, a Map, a closure, a union or a record is one counted reference,
+	// which a union holds as it is, undefined as NULL.
+	case 3: case 4: case 5: case 6: case 8: case 10: case 14:
+		return value.reference;
+	default: {
+		static const char message[] = "compiler bug: a getter read by a run-time key has no union representation";
+		adamic_panic(message, sizeof message - 1);
+	}
+	}
+}
+
+// keyed_record_value is a record's own value as a union, owned, boxed by the kind its shape names
+// (record.c): a number or a boolean may be packed with undefined, and reads as undefined then.
+static adamic_heap *keyed_record_value(const adamic_record *record, const adamic_value *own) {
+	switch (adamic_record_values(record)) {
+	case adamic_field_reference:
+		return adamic_retain(own->reference);
+	case adamic_field_number: {
+		adamic_maybe_number number = adamic_maybe_number_unpack(own->number);
+		return number.present ? adamic_box_number(number.number) : NULL;
+	}
+	case adamic_field_boolean: {
+		adamic_maybe_boolean boolean = adamic_maybe_boolean_unpack(own->maybe_boolean);
+		if (!boolean.present) return NULL;
+		return boolean.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
+	}
+	}
+	static const char message[] = "compiler bug: a record of unknown value kind";
+	adamic_panic(message, sizeof message - 1);
+}
+
+// keyed_class is the emitter's row for the object's class, found by the class itself, or NULL.
+static const adamic_keyed_class *keyed_class(const adamic_object *object, const adamic_keyed_class *classes, size_t count) {
+	for (size_t index = 0; index < count; index++) {
+		if (classes[index].class == object->class) return &classes[index];
+	}
+	return NULL;
+}
+
+// keyed_slot is where an object's own shape holds the name, never a slot cache's packed word (another
+// shape's, as another thread may have left it), or the shape's count.
+static size_t keyed_slot(const adamic_object *object, const adamic_string *key, const char *remapped) {
+	for (size_t index = 0; index < object->shape->count; index++) {
+		const char *name = object->shape->names[index];
+		if (remapped != NULL ? strcmp(name, remapped) == 0 : key_is(key, name)) return index;
+	}
+	return object->shape->count;
+}
+
+adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_string *key, const adamic_keyed_class *classes, size_t count) {
+	if (value == NULL || value == &adamic_null) keyed_stop(adamic_dynamic_keyed_stop_nullish, key);
+	switch (value->kind) {
+	case adamic_kind_number:
+	case adamic_kind_boolean:
+	case adamic_kind_string:
+		keyed_stop(adamic_dynamic_keyed_stop_primitive, key);
+	case adamic_kind_closure:
+		keyed_stop(adamic_dynamic_keyed_stop_function, key);
+	case adamic_kind_array:
+		keyed_stop(adamic_dynamic_keyed_stop_array, key);
+	case adamic_kind_map:
+		keyed_stop(adamic_dynamic_keyed_stop_collection, key);
+	case adamic_kind_typed_array:
+		keyed_stop(adamic_dynamic_keyed_stop_typed_array, key);
+	case adamic_kind_object:
+		break;
+	default:
+		keyed_stop(adamic_dynamic_keyed_stop_runtime_value, key);
+	}
+	adamic_object *object = (adamic_object *)value;
+	if (object->tuple) keyed_stop(adamic_dynamic_keyed_stop_tuple, key);
+	if (object->class != NULL && object->class->is_static) keyed_stop(adamic_dynamic_keyed_stop_static_class, key);
+	if (key->length > 0 && key->bytes[0] == '#') keyed_stop(adamic_dynamic_keyed_stop_private, key);
+	bool error = adamic_error_is(object);
+	if (error && key_named(key, adamic_dynamic_keyed_error_names, sizeof adamic_dynamic_keyed_error_names / sizeof adamic_dynamic_keyed_error_names[0])) {
+		keyed_stop(adamic_dynamic_keyed_stop_error_property, key);
+	}
+	if (object->class != NULL) {
+		const adamic_keyed_class *row = keyed_class(object, classes, count);
+		if (row == NULL) keyed_stop(adamic_dynamic_keyed_stop_unknown_class, key);
+		const adamic_accessor *accessor = keyed_accessor(object, key);
+		if (accessor != NULL) {
+			if (row->literal) keyed_stop(adamic_dynamic_keyed_stop_object_literal_getter, key);
+			if (accessor->get == NULL) keyed_stop(adamic_dynamic_keyed_stop_setter_only, key);
+			return keyed_getter(object, accessor);
+		}
+		// By content, as every name the key meets is.
+		if (key_named(key, row->method_names, row->method_count)) keyed_stop(adamic_dynamic_keyed_stop_method, key);
+	}
+	if (adamic_record_is(object)) {
+		const adamic_value *own = adamic_record_get_own(object, key);
+		if (own != NULL) return keyed_record_value(object, own);
+	} else {
+		// An Error made without a message keeps Error.prototype's empty one in private storage.
+		const char *remapped = error && key_is(key, "message") ? adamic_error_field_name(object, "message") : NULL;
+		size_t index = keyed_slot(object, key, remapped);
+		// An absent optional slot reads undefined, as does a present one holding undefined, but only
+		// after the stops above, so neither hides a getter, a method or a private name.
+		if (index < object->shape->count && adamic_object_present(object, index)) return dynamic_slot(object, index);
+	}
+	if (key_named(key, adamic_dynamic_keyed_prototype_names, sizeof adamic_dynamic_keyed_prototype_names / sizeof adamic_dynamic_keyed_prototype_names[0])) {
+		keyed_stop(adamic_dynamic_keyed_stop_object_prototype, key);
+	}
+	return NULL;
 }

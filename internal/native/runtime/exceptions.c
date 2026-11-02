@@ -10,12 +10,16 @@
 
 _Thread_local adamic_object *adamic_thrown;
 
+// Every Error's shape names these, the host errors' too, which is how a run-time key read knows an
+// Error (adamic.h).
+const adamic_methods adamic_error_methods = {0, NULL, NULL};
+
 static const char *const error_names[] = {"name", "message"};
 static const bool error_references[] = {true, true};
 static const adamic_field_kind error_kinds[] = {adamic_field_reference, adamic_field_reference};
-static const adamic_shape error_shape = {2, error_names, error_references, NULL, error_kinds};
+static const adamic_shape error_shape = {2, error_names, error_references, &adamic_error_methods, error_kinds};
 static const char *const absent_message_names[] = {"name", "#message"};
-static const adamic_shape absent_message_shape = {2, absent_message_names, error_references, NULL, error_kinds};
+static const adamic_shape absent_message_shape = {2, absent_message_names, error_references, &adamic_error_methods, error_kinds};
 static adamic_string empty_message = ADAMIC_STRING("");
 static adamic_string error_name = ADAMIC_STRING("Error");
 
@@ -64,6 +68,10 @@ adamic_primitive adamic_ordinary_to_primitive(adamic_heap *receiver, enum adamic
 	error->slots[0].reference = type_name;
 	adamic_thrown = error;
 	return empty;
+}
+
+bool adamic_error_is(const adamic_object *object) {
+	return object->shape->methods == &adamic_error_methods;
 }
 
 // Public lookup sees Error.prototype.message without creating an own property.

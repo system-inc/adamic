@@ -20,7 +20,7 @@
 static const char *const error_names[] = {"name", "message", "code"};
 static const bool error_refs[] = {true, true, true};
 static const adamic_field_kind error_shape_kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_reference};
-static const adamic_shape error_shape = {3, error_names, error_refs, NULL, error_shape_kinds};
+static const adamic_shape error_shape = {3, error_names, error_refs, &adamic_error_methods, error_shape_kinds};
 static adamic_string error_name = ADAMIC_STRING("Error");
 static adamic_string type_error_name = ADAMIC_STRING("TypeError");
 static void *allocate(size_t size) {

@@ -46,6 +46,7 @@ var gobTypes = []any{
 	Debugger{},
 	Declare{},
 	Defined{},
+	DynamicKeyedProperty{},
 	DynamicProperty{},
 	Effects{},
 	Evaluate{},

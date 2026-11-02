@@ -586,6 +586,9 @@ func callsBack(expression ir.Expression) bool {
 		return call.Replacement != nil
 	}
 	switch expression.(type) {
+	// A run-time key read calls whichever class getter its key names.
+	case ir.DynamicKeyedProperty:
+		return true
 	// Fail closed for encoding: lowering refuses getter-bearing operands;
 	// schema field reads must never introduce an untracked callback.
 	case ir.JSONEncode, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort, ir.MapForEach, ir.ParallelMap:

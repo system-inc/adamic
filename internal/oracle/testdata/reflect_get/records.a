@@ -1,0 +1,34 @@
+// A record's own values, read by a run-time key, each boxed by the kind its record was made with
+// (#zhgxzjg, Runtime's three record shapes): numbers, booleans, strings, and a number or a boolean
+// that may be undefined, an own key holding undefined among them.
+import { propertyOf } from './hostErrors.ts';
+
+function show(label: string, value: unknown): void {
+	if (typeof value === 'string') console.log(`${label}: "${value}"`);
+	else if (typeof value === 'number') console.log(`${label}: ${String(value)}`);
+	else if (typeof value === 'boolean') console.log(`${label}: ${value ? 'true' : 'false'}`);
+	else console.log(`${label}: ${typeof value}`);
+}
+
+const counts: Record<string, number> = {};
+counts['seen'] = 3;
+const flags: Record<string, boolean> = {};
+flags['on'] = true;
+flags['off'] = false;
+const names: Record<string, string> = {};
+names['first'] = 'ada';
+const maybeCounts: Record<string, number | undefined> = {};
+maybeCounts['here'] = 4;
+maybeCounts['gone'] = undefined;
+const maybeFlags: Record<string, boolean | undefined> = {};
+maybeFlags['yes'] = true;
+maybeFlags['unset'] = undefined;
+show('count', propertyOf(counts, 'seen'));
+show('missing', propertyOf(counts, 'missing'));
+show('on', propertyOf(flags, 'on'));
+show('off', propertyOf(flags, 'off'));
+show('name', propertyOf(names, 'first'));
+show('here', propertyOf(maybeCounts, 'here'));
+show('gone', propertyOf(maybeCounts, 'gone'));
+show('yes', propertyOf(maybeFlags, 'yes'));
+show('unset', propertyOf(maybeFlags, 'unset'));
