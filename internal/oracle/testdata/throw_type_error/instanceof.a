@@ -1,0 +1,7 @@
+// A caught value tested against TypeError: an Error a catch took isn't known to be one, so this isn't
+// lowered to true (#bbhwj30).
+try {
+	throw new TypeError('typed');
+} catch (error) {
+	console.log(`${error instanceof TypeError}`);
+}
