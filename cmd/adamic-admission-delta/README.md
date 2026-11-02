@@ -149,3 +149,35 @@ admitted edit at a ruled declaration's path, even if accepted by both compilers.
 These comparisons are mandatory under a budget. A path schedules coverage only;
 it never grants an exemption. This prevents an already-admitted repair from
 escaping Node agreement merely because it is no longer a new admission.
+
+## Run-time NotYet stops
+
+A run-time NotYet (#zhgxzjg, Adamic, Nov 2) is a third thing, neither an
+agreement nor a negative witness: an honest stop where a key or a receiver
+can't be known before the read. It is never a type lie, so it is never listed in
+`negative-witnesses.json`, and the tool refuses a program listed in both. Its
+own list is `cloud/admission-corpus/runtime-notyet-stops.json`, or an explicit
+`--runtime-notyet-stops` path. Only Adamic adds an entry: adding one is a ruling
+routed to @system_adamic, and the `_comment` header says so. The map key is
+SHA-256 of exact program bytes, so an edited program falls out of the list and
+demands Node agreement. Each entry names its `path`, its `ruling_task`, the
+`lifting_task` that will lift the stop, and its exact `stderr`. The tool refuses
+the list when an entry lacks either task or its message is not one line of
+`adamic: panic: <form> (reading '<key>')` with `<form>` on the tool's closed
+allowlist (`runtimeNotYetForms`), each form naming the ruling that made it. The
+allowlist holds the seven `internal/ir` DynamicKeyedStops forms a ruled fixture
+reaches; a `compiler bug:` stop never qualifies, listed or allowlisted.
+
+A listed program passes only when the tool sees all of it: both backends exit 70
+with exactly the entry's stderr, their stdout is the same bytes and is byte for
+byte the start of Node's, and Node runs the source to the end, exit 0, printing
+more than that. Anything else is a lie or a crash, and fails as any disagreement
+does. A listed program that now runs to the end on both backends and agrees with
+Node is stale: it fails the gate, named in `stale_runtime_stops`, so its entry
+leaves the list. Like a witness, a listed program, or an edit at a listed path,
+runs even when both compilers already admit it, and under any budget, so the
+list can't rot between changes; an entry whose program is absent from the run's
+corpora is read and checked as an entry but has nothing to run. Counted, never
+hidden: JSON records `ruled_runtime_stops`, `ruled_runtime_stop_paths`,
+`runtime_notyet_count` (the list's size) and each program's `ruled_runtime_stop`,
+with `agree` false, and every run prints `ruled run-time stops: N` to stderr.
