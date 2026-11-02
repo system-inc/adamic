@@ -1,0 +1,72 @@
+MUTANT multiple-task-guard
+test_case_partitions_reject_invalid_inventory (test_shards.ShardTests.test_case_partitions_reject_invalid_inventory) ... 
+  test_case_partitions_reject_invalid_inventory (test_shards.ShardTests.test_case_partitions_reject_invalid_inventory) (message='exactly one upstream task') ... FAIL
+
+======================================================================
+FAIL: test_case_partitions_reject_invalid_inventory (test_shards.ShardTests.test_case_partitions_reject_invalid_inventory) (message='exactly one upstream task')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_shards.py", line 139, in test_case_partitions_reject_invalid_inventory
+    with self.assertRaisesRegex(ValueError, message):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+FAILED (failures=1)
+CAUGHT multiple-task-guard
+MUTANT too-few-titles-guard
+test_case_partitions_reject_invalid_inventory (test_shards.ShardTests.test_case_partitions_reject_invalid_inventory) ... 
+  test_case_partitions_reject_invalid_inventory (test_shards.ShardTests.test_case_partitions_reject_invalid_inventory) (message='too few selectable titles') ... FAIL
+
+======================================================================
+FAIL: test_case_partitions_reject_invalid_inventory (test_shards.ShardTests.test_case_partitions_reject_invalid_inventory) (message='too few selectable titles')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_shards.py", line 139, in test_case_partitions_reject_invalid_inventory
+    with self.assertRaisesRegex(ValueError, message):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)
+CAUGHT too-few-titles-guard
+MUTANT unanchored-case-groups
+test_generated_plan_preserves_every_execution (test_shards.ShardTests.test_generated_plan_preserves_every_execution) ... FAIL
+
+======================================================================
+FAIL: test_generated_plan_preserves_every_execution (test_shards.ShardTests.test_generated_plan_preserves_every_execution)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_shards.py", line 82, in test_generated_plan_preserves_every_execution
+    self.assertIsNone(pattern.search(shard_plan.title(rows[0]['name']) + ' additional case'))
+AssertionError: <re.Match object; span=(0, 82), match='unittests:: services:: convertToAsyncFunction:: c> is not None
+
+----------------------------------------------------------------------
+Ran 1 test in 2.174s
+
+FAILED (failures=1)
+CAUGHT unanchored-case-groups
+Removed planned task: {'runner': 'fourslash', 'file': 'tests/cases/fourslash/unusedFunctionInNamespace2.ts', 'size': 296}
+MUTANT missing-planned-task
+test_generated_plan_preserves_every_execution (test_shards.ShardTests.test_generated_plan_preserves_every_execution) ... FAIL
+
+======================================================================
+FAIL: test_generated_plan_preserves_every_execution (test_shards.ShardTests.test_generated_plan_preserves_every_execution)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_shards.py", line 75, in test_generated_plan_preserves_every_execution
+    self.assertTrue({(row['task']['runner'], row['task']['file']) for row in rows} <= tasks)
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 2.317s
+
+FAILED (failures=1)
+CAUGHT missing-planned-task
+generated shard declarations differ from shards.json; run generate_shards.py
+CAUGHT stale-generated-declaration
+Five guard mutants caught; source and production plan unchanged

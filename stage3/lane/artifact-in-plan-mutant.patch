@@ -1,0 +1,11 @@
+--- a/stage3/lane/shard_plan.py
++++ b/stage3/lane/shard_plan.py
+@@ -142,7 +142,7 @@
+         unit['expect']['pass'] = unit['expect'].pop('pass_')
+         unit['names_digest'] = names_digest(records)
+         unit['baseline_diffs'] = ['api/typescript.d.ts'] if unit['name'] == 'stage3-lane-byte-comparisons' else []
+-    return dict(version=1, api_digest=api_digest, runtime=runtime,
++    return dict(version=1, artifact=__import__('artifact').input_key()[0], api_digest=api_digest, runtime=runtime,
+                 planning=planning, counts={'pass': 106366, 'fail': 1, 'skip': 0}, units=sorted(units.values(), key=lambda row: row['name'])), tests
+ 
+ 

@@ -36,7 +36,7 @@ def main():
 
     plan = shard_plan.load_plan()
     with patch.object(shard_plan, 'exact_grep', side_effect=lambda name: re.escape(shard_plan.title(name))):
-        unanchored, _ = shard_plan.build_plan(plan['artifact'], plan['api_digest'])
+        unanchored, _ = shard_plan.build_plan(plan['api_digest'])
     with patch.object(shard_plan, 'load_plan', return_value=unanchored):
         caught('unanchored-case-groups', 'test_generated_plan_preserves_every_execution')
 

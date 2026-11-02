@@ -9,12 +9,16 @@ from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
+import artifact
 import shard
 import shard_plan
 import merge_shards
 
+original_input_key = artifact.input_key
+
 
 class ShardTests(unittest.TestCase):
+    maxDiff = 2000
     def test_manifest_exact_schema_and_counts(self):
         plan = shard_plan.load_plan()
         manifest = json.loads((shard_plan.LANE / 'shards.json').read_text())
@@ -93,8 +97,8 @@ class ShardTests(unittest.TestCase):
         plan = shard_plan.load_plan()
         legacy_groups = {file: 3 for file in shard_plan.CASE_PARTITIONS}
         with patch.object(shard_plan, 'CASE_GROUPS', legacy_groups):
-            legacy, original = shard_plan.build_plan(plan['artifact'], plan['api_digest'])
-        current, assigned = shard_plan.build_plan(plan['artifact'], plan['api_digest'])
+            legacy, original = shard_plan.build_plan(plan['api_digest'])
+        current, assigned = shard_plan.build_plan(plan['api_digest'])
         prefix = 'stage3-lane-project-reference-cases-'
         unchanged = lambda units: [{key: value for key, value in unit.items() if key != 'inputs_hash'}
                                     for unit in units if not unit['name'].startswith(prefix)]
@@ -134,7 +138,49 @@ class ShardTests(unittest.TestCase):
                        io.StringIO(''.join(json.dumps(row) + '\n' for row in records))]
             with self.subTest(message=message), patch.object(shard_plan.gzip, 'open', side_effect=streams):
                 with self.assertRaisesRegex(ValueError, message):
-                    shard_plan.build_plan('tree', 'api')
+                    shard_plan.build_plan('api')
+
+    def test_tree_hash_reports_change_after_adaptation_edit(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            adaptation = root / 'stage3/adapt/99-hash-proof/README.md'
+            adaptation.parent.mkdir(parents=True)
+            adaptation.write_text('before')
+            unit, _ = self.valid_observation()
+            plan = dict(api_digest='api', runtime='runtime', units=[unit])
+            reports = []
+            with patch.object(artifact.subprocess, 'check_output', return_value='fixed tool'), patch.object(
+                    shard, 'input_key', side_effect=lambda: artifact.input_key(root)), patch.object(
+                    shard, 'runtime_hash', return_value='runtime'), patch.object(
+                    shard, 'adapted_inputs', side_effect=ValueError('stop before upstream')):
+                for index, content in enumerate(('before', 'after')):
+                    adaptation.write_text(content)
+                    results = root / str(index)
+                    shard.run_unit(unit['name'], results, plan=plan)
+                    report = json.loads((results / unit['name'] / 'report.json').read_text())
+                    key, _ = artifact.input_key(root)
+                    self.assertEqual(report['artifact'], key)
+                    self.assertEqual(report['inputs_hash'], shard_plan.unit_inputs_hash(unit, plan, key, 'runtime'))
+                    reports.append(report)
+            self.assertNotEqual(reports[0]['artifact'], reports[1]['artifact'])
+            self.assertNotEqual(reports[0]['inputs_hash'], reports[1]['inputs_hash'])
+
+    def test_plan_bytes_ignore_adaptation_edit(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            adaptation = root / 'stage3/adapt/99-hash-proof/README.md'
+            adaptation.parent.mkdir(parents=True)
+            snapshots = []
+            with patch.object(artifact.subprocess, 'check_output', return_value='fixed tool'), patch.object(
+                    artifact, 'input_key', wraps=lambda: original_input_key(root)):
+                for content in ('before', 'after'):
+                    adaptation.write_text(content)
+                    plan, _ = shard_plan.build_plan('api')
+                    manifest = json.dumps(shard_plan.gate_manifest(plan), indent=2) + '\n'
+                    snapshots.append((json.dumps(plan, indent=2) + '\n', manifest))
+            self.assertEqual(snapshots[0], snapshots[1])
+            self.assertNotIn('artifact', set(plan))
+            self.assertTrue(all('inputs_hash' not in unit for unit in plan['units']))
 
     def test_view_keeps_mutable_outputs_and_configuration_private(self):
         from view import make_view
@@ -162,7 +208,7 @@ class ShardTests(unittest.TestCase):
 
     def run_observed_unit(self, root, code, grep):
         unit, record = self.valid_observation()
-        unit.update(tasks=[record['task']], inputs_hash='inputs')
+        unit.update(tasks=[record['task']])
         if grep:
             unit['grep'] = '^one$'
         plan = dict(artifact='tree', units=[unit])
@@ -182,7 +228,7 @@ class ShardTests(unittest.TestCase):
             return code
 
         with ExitStack() as patches:
-            for probe in (patch.object(shard, 'check_unit_inputs'),
+            for probe in (patch.object(shard, 'check_unit_inputs', return_value=('tree', 'inputs')),
                           patch.object(shard, 'adapted_inputs', return_value=(root, root, None, None)),
                           patch.object(shard, 'make_view'),
                           patch.object(shard, 'baseline_diff', return_value=([], '')),
@@ -191,7 +237,7 @@ class ShardTests(unittest.TestCase):
                           patch.object(shard.time, 'monotonic', side_effect=lambda: clock[0]),
                           patch.object(shard, 'execute', side_effect=execute)):
                 patches.enter_context(probe)
-            result = shard.run_unit(unit['name'], root, 'inputs', plan=plan)
+            result = shard.run_unit(unit['name'], root, plan=plan)
         report = json.loads((root / unit['name'] / 'report.json').read_text())
         return result, report
 
@@ -221,13 +267,14 @@ class ShardTests(unittest.TestCase):
 
     def test_input_hash_guard_detects_changed_harness(self):
         unit, _ = self.valid_observation()
-        plan = dict(artifact='tree', api_digest='api')
-        with patch.object(shard, 'runtime_hash', return_value='original'):
-            unit['inputs_hash'] = shard_plan.digest(dict(artifact='tree', api='api', runtime='original', unit=unit))
-            shard.check_unit_inputs(unit, plan, unit['inputs_hash'])
+        plan = dict(api_digest='api', runtime='original')
+        with patch.object(shard, 'runtime_hash', return_value='original'), patch.object(
+                shard, 'input_key', return_value=('tree', {})):
+            self.assertEqual(shard.check_unit_inputs(unit, plan), ('tree', shard_plan.unit_inputs_hash(
+                unit, plan, 'tree', 'original')))
         with patch.object(shard, 'runtime_hash', return_value='changed'):
-            with self.assertRaisesRegex(ValueError, 'inputs hash'):
-                shard.check_unit_inputs(unit, plan, unit['inputs_hash'])
+            with self.assertRaisesRegex(ValueError, 'harness inputs changed'):
+                shard.check_unit_inputs(unit, plan)
 
     def test_merge_rejects_changed_union_despite_equal_counts(self):
         with tempfile.TemporaryDirectory() as scratch:
@@ -236,11 +283,11 @@ class ShardTests(unittest.TestCase):
             unit = root / 'one'; unit.mkdir(); (unit / 'oracle').mkdir()
             original = dict(task=dict(runner='compiler', file='one.ts'), name=['baseline'], status='pass')
             mutant = copy.deepcopy(original); mutant['name'] = ['replacement baseline']
-            plan_unit = dict(name='one', inputs_hash='inputs', expect={'pass': 1, 'fail': 0, 'skip': 0},
+            plan_unit = dict(name='one', expect={'pass': 1, 'fail': 0, 'skip': 0},
                              names_digest=shard_plan.names_digest([mutant]))
-            plan = dict(artifact='tree', units=[plan_unit], counts=plan_unit['expect'])
+            plan = dict(api_digest='api', runtime='runtime', units=[plan_unit], counts=plan_unit['expect'])
             (unit / 'observations.json').write_text(json.dumps([mutant]))
-            (unit / 'report.json').write_text(json.dumps(dict(name='one', inputs_hash='inputs', artifact='tree',
+            (unit / 'report.json').write_text(json.dumps(dict(name='one', inputs_hash=shard_plan.unit_inputs_hash(plan_unit, plan, 'tree', 'runtime'), artifact='tree',
                 status='pass', counts=plan_unit['expect'], seconds=1, failed_tests=[], baseline_diffs=[])))
             (unit / 'oracle/baseline.diff').write_text('')
             (whole / 'execution.json').write_text(json.dumps(dict(artifact='tree')))
@@ -248,10 +295,39 @@ class ShardTests(unittest.TestCase):
             (whole / 'oracle/baseline.diff').write_text('')
             (whole / 'whole-tasks.jsonl').write_text(json.dumps(dict(task=original['task'], passes=[original], errors=[])) + '\n')
             expected = root / 'expected.json'; expected.write_text(json.dumps(dict(failed_tests=[], baseline_diffs=[])))
-            with patch.object(merge_shards, 'LANE', root), patch.object(merge_shards, 'check_results', return_value=dict(status='pass')):
+            with patch.object(merge_shards, 'input_key', return_value=('tree', {})), patch.object(
+                    merge_shards, 'runtime_hash', return_value='runtime'), patch.object(
+                    merge_shards, 'LANE', root), patch.object(merge_shards, 'check_results', return_value=dict(status='pass')):
                 report = merge_shards.merge(root, whole, plan)
             self.assertEqual(report['errors'], ['executed test union differs from the unsharded lane'])
             self.assertEqual(report['status'], 'fail')
+
+    def test_merge_rejects_report_key_from_another_tree(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            whole = root / 'whole'
+            (whole / 'oracle').mkdir(parents=True)
+            output = root / 'one'
+            (output / 'oracle').mkdir(parents=True)
+            definition, record = self.valid_observation()
+            plan = dict(api_digest='api', runtime='runtime', units=[definition], counts=definition['expect'])
+            (output / 'observations.json').write_text(json.dumps([record]))
+            report = dict(name='one', artifact='other-tree', inputs_hash=shard_plan.unit_inputs_hash(
+                definition, plan, 'tree', 'runtime'), status='pass', counts=definition['expect'],
+                seconds=1, failed_tests=[], baseline_diffs=[])
+            (output / 'report.json').write_text(json.dumps(report))
+            (output / 'oracle/baseline.diff').write_text('')
+            (whole / 'execution.json').write_text(json.dumps(dict(artifact='tree')))
+            (whole / 'oracle/report.json').write_text(json.dumps(dict(counts=dict(passing=1, failing=0, pending=0))))
+            (whole / 'oracle/baseline.diff').write_text('')
+            (whole / 'whole-tasks.jsonl').write_text(json.dumps(dict(task=record['task'], passes=[record], errors=[])) + '\n')
+            (root / 'expected.json').write_text(json.dumps(dict(failed_tests=[], baseline_diffs=[])))
+            with patch.object(merge_shards, 'input_key', return_value=('tree', {})), patch.object(
+                    merge_shards, 'runtime_hash', return_value='runtime'), patch.object(
+                    merge_shards, 'LANE', root), patch.object(merge_shards, 'check_results', return_value=dict(status='pass')):
+                result = merge_shards.merge(root, whole, plan)
+            self.assertEqual(result['errors'], ['unit input identity mismatch: one'])
+            self.assertEqual(result['status'], 'fail')
 
     def test_merge_rejects_newline_tampering_with_all_other_checks_green(self):
         with tempfile.TemporaryDirectory() as scratch:
@@ -260,11 +336,11 @@ class ShardTests(unittest.TestCase):
             unit = root / 'one'; unit.mkdir(); (unit / 'oracle').mkdir()
             original = dict(task=dict(runner='compiler', file='one.ts'), name=['baseline'], status='pass')
             mutant = copy.deepcopy(original)
-            plan_unit = dict(name='one', inputs_hash='inputs', expect={'pass': 1, 'fail': 0, 'skip': 0},
+            plan_unit = dict(name='one', expect={'pass': 1, 'fail': 0, 'skip': 0},
                              names_digest=shard_plan.names_digest([mutant]))
-            plan = dict(artifact='tree', units=[plan_unit], counts=plan_unit['expect'])
+            plan = dict(api_digest='api', runtime='runtime', units=[plan_unit], counts=plan_unit['expect'])
             (unit / 'observations.json').write_text(json.dumps([mutant]))
-            (unit / 'report.json').write_text(json.dumps(dict(name='one', inputs_hash='inputs', artifact='tree',
+            (unit / 'report.json').write_text(json.dumps(dict(name='one', inputs_hash=shard_plan.unit_inputs_hash(plan_unit, plan, 'tree', 'runtime'), artifact='tree',
                 status='pass', counts=plan_unit['expect'], seconds=1, failed_tests=[], baseline_diffs=[])))
             (unit / 'oracle/baseline.diff').write_bytes(b'--- reference/api/typescript.d.ts\r\n')
             (whole / 'execution.json').write_text(json.dumps(dict(artifact='tree')))
@@ -272,7 +348,9 @@ class ShardTests(unittest.TestCase):
             (whole / 'oracle/baseline.diff').write_bytes(b'--- reference/api/typescript.d.ts\n')
             (whole / 'whole-tasks.jsonl').write_text(json.dumps(dict(task=original['task'], passes=[original], errors=[])) + '\n')
             expected = root / 'expected.json'; expected.write_text(json.dumps(dict(failed_tests=[], baseline_diffs=[])))
-            with patch.object(merge_shards, 'LANE', root), patch.object(merge_shards, 'check_results', return_value=dict(status='pass')):
+            with patch.object(merge_shards, 'input_key', return_value=('tree', {})), patch.object(
+                    merge_shards, 'runtime_hash', return_value='runtime'), patch.object(
+                    merge_shards, 'LANE', root), patch.object(merge_shards, 'check_results', return_value=dict(status='pass')):
                 report = merge_shards.merge(root, whole, plan)
             self.assertEqual(report['errors'], ['merged baseline bytes differ from the unsharded lane'])
             self.assertEqual(report['status'], 'fail')
@@ -289,7 +367,7 @@ class SharedArtifactTests(unittest.TestCase):
         self.ready = dict(key='tree', inputs=self.inputs,
             payload=shard.payload_digest(self.artifact / 'tree'),
             phases={phase: dict(exit=0) for phase in ('apply', 'install', 'build', 'harness')})
-        self.plan = dict(artifact='tree', runtime='runtime', api_digest=shard.payload_digest(self.artifact / 'api'))
+        self.plan = dict(runtime='runtime', api_digest=shard.payload_digest(self.artifact / 'api'))
         self.write_ready()
         for probe in (patch.dict(shard.os.environ, STAGE3_ARTIFACT=str(self.artifact)),
                       patch.object(shard, 'input_key', return_value=('tree', self.inputs)),
@@ -308,6 +386,11 @@ class SharedArtifactTests(unittest.TestCase):
     def test_failed_producer_phase_is_rejected(self):
         self.ready['phases']['build']['exit'] = 7; self.write_ready()
         with self.assertRaisesRegex(ValueError, 'producer phase failed'):
+            shard.shared_artifact(self.plan)
+
+    def test_ready_key_from_another_tree_is_rejected(self):
+        self.ready['key'] = 'other-tree'; self.write_ready()
+        with self.assertRaisesRegex(ValueError, 'inputs hash'):
             shard.shared_artifact(self.plan)
 
     def test_changed_ready_input_identity_is_rejected(self):
