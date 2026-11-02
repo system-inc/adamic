@@ -1,0 +1,467 @@
+{
+  "node": "v24.14.1",
+  "typescript": "6.0.3",
+  "mutant": false,
+  "cases": 14,
+  "failed": [],
+  "moved": [
+    "createGetSourceFile, a string: onError's message becomes text, and the consumer's Debug Failure. becomes \"Cannot read file 'a.ts': undefined.\"",
+    "createWriteFileMeasuringIO, a string: onError's message becomes text, and the consumer's Debug Failure. becomes \"Could not write file 'a.js': undefined.\"",
+    "createGetSourceFile, a number: onError's message becomes text, and the consumer's Debug Failure. becomes \"Cannot read file 'a.ts': undefined.\"",
+    "createWriteFileMeasuringIO, a number: onError's message becomes text, and the consumer's Debug Failure. becomes \"Could not write file 'a.js': undefined.\"",
+    "createGetSourceFile, { message: 42 }: onError's message becomes text; the consumer's diagnostic text is unchanged, \"Cannot read file 'a.ts': 42.\"",
+    "createWriteFileMeasuringIO, { message: 42 }: onError's message becomes text; the consumer's diagnostic text is unchanged, \"Could not write file 'a.js': 42.\"",
+    "createGetSourceFile, {}: onError's message becomes text, and the consumer's Debug Failure. becomes \"Cannot read file 'a.ts': undefined.\"",
+    "createWriteFileMeasuringIO, {}: onError's message becomes text, and the consumer's Debug Failure. becomes \"Could not write file 'a.js': undefined.\""
+  ],
+  "results": [
+    {
+      "site": "createGetSourceFile",
+      "value": "null",
+      "original": {
+        "received": [],
+        "threw": "TypeError",
+        "message": "Cannot read properties of null (reading 'message')",
+        "frames": [
+          "at eval"
+        ]
+      },
+      "adapted": {
+        "received": [],
+        "threw": "TypeError",
+        "message": "Cannot read properties of null (reading 'message')",
+        "frames": [
+          "at propertyOf",
+          "at eval"
+        ]
+      },
+      "formatted": {},
+      "asRuled": true,
+      "moves": "unchanged"
+    },
+    {
+      "site": "createWriteFileMeasuringIO",
+      "value": "null",
+      "original": {
+        "received": [],
+        "threw": "TypeError",
+        "message": "Cannot read properties of null (reading 'message')",
+        "frames": [
+          "at eval"
+        ]
+      },
+      "adapted": {
+        "received": [],
+        "threw": "TypeError",
+        "message": "Cannot read properties of null (reading 'message')",
+        "frames": [
+          "at propertyOf",
+          "at eval"
+        ]
+      },
+      "formatted": {},
+      "asRuled": true,
+      "moves": "unchanged"
+    },
+    {
+      "site": "createGetSourceFile",
+      "value": "undefined",
+      "original": {
+        "received": [],
+        "threw": "TypeError",
+        "message": "Cannot read properties of undefined (reading 'message')",
+        "frames": [
+          "at eval"
+        ]
+      },
+      "adapted": {
+        "received": [],
+        "threw": "TypeError",
+        "message": "Cannot read properties of undefined (reading 'message')",
+        "frames": [
+          "at propertyOf",
+          "at eval"
+        ]
+      },
+      "formatted": {},
+      "asRuled": true,
+      "moves": "unchanged"
+    },
+    {
+      "site": "createWriteFileMeasuringIO",
+      "value": "undefined",
+      "original": {
+        "received": [],
+        "threw": "TypeError",
+        "message": "Cannot read properties of undefined (reading 'message')",
+        "frames": [
+          "at eval"
+        ]
+      },
+      "adapted": {
+        "received": [],
+        "threw": "TypeError",
+        "message": "Cannot read properties of undefined (reading 'message')",
+        "frames": [
+          "at propertyOf",
+          "at eval"
+        ]
+      },
+      "formatted": {},
+      "asRuled": true,
+      "moves": "unchanged"
+    },
+    {
+      "site": "createGetSourceFile",
+      "value": "a string",
+      "original": {
+        "received": [
+          {
+            "type": "undefined"
+          }
+        ],
+        "returned": {
+          "fileName": "a.ts",
+          "text": ""
+        }
+      },
+      "adapted": {
+        "received": [
+          {
+            "type": "string",
+            "value": "undefined"
+          }
+        ],
+        "returned": {
+          "fileName": "a.ts",
+          "text": ""
+        }
+      },
+      "formatted": {
+        "original": {
+          "threw": "Error",
+          "message": "Debug Failure.",
+          "at": "typescript.js:21671",
+          "line": "return text.replace(/\\{(\\d+)\\}/g, (_match, index) => \"\" + Debug.checkDefined(args[+index]));"
+        },
+        "adapted": {
+          "text": "Cannot read file 'a.ts': undefined."
+        }
+      },
+      "asRuled": true,
+      "moves": "onError's message becomes text, and the consumer's Debug Failure. becomes \"Cannot read file 'a.ts': undefined.\""
+    },
+    {
+      "site": "createWriteFileMeasuringIO",
+      "value": "a string",
+      "original": {
+        "received": [
+          {
+            "type": "undefined"
+          }
+        ]
+      },
+      "adapted": {
+        "received": [
+          {
+            "type": "string",
+            "value": "undefined"
+          }
+        ]
+      },
+      "formatted": {
+        "original": {
+          "threw": "Error",
+          "message": "Debug Failure.",
+          "at": "typescript.js:21671",
+          "line": "return text.replace(/\\{(\\d+)\\}/g, (_match, index) => \"\" + Debug.checkDefined(args[+index]));"
+        },
+        "adapted": {
+          "text": "Could not write file 'a.js': undefined."
+        }
+      },
+      "asRuled": true,
+      "moves": "onError's message becomes text, and the consumer's Debug Failure. becomes \"Could not write file 'a.js': undefined.\""
+    },
+    {
+      "site": "createGetSourceFile",
+      "value": "a number",
+      "original": {
+        "received": [
+          {
+            "type": "undefined"
+          }
+        ],
+        "returned": {
+          "fileName": "a.ts",
+          "text": ""
+        }
+      },
+      "adapted": {
+        "received": [
+          {
+            "type": "string",
+            "value": "undefined"
+          }
+        ],
+        "returned": {
+          "fileName": "a.ts",
+          "text": ""
+        }
+      },
+      "formatted": {
+        "original": {
+          "threw": "Error",
+          "message": "Debug Failure.",
+          "at": "typescript.js:21671",
+          "line": "return text.replace(/\\{(\\d+)\\}/g, (_match, index) => \"\" + Debug.checkDefined(args[+index]));"
+        },
+        "adapted": {
+          "text": "Cannot read file 'a.ts': undefined."
+        }
+      },
+      "asRuled": true,
+      "moves": "onError's message becomes text, and the consumer's Debug Failure. becomes \"Cannot read file 'a.ts': undefined.\""
+    },
+    {
+      "site": "createWriteFileMeasuringIO",
+      "value": "a number",
+      "original": {
+        "received": [
+          {
+            "type": "undefined"
+          }
+        ]
+      },
+      "adapted": {
+        "received": [
+          {
+            "type": "string",
+            "value": "undefined"
+          }
+        ]
+      },
+      "formatted": {
+        "original": {
+          "threw": "Error",
+          "message": "Debug Failure.",
+          "at": "typescript.js:21671",
+          "line": "return text.replace(/\\{(\\d+)\\}/g, (_match, index) => \"\" + Debug.checkDefined(args[+index]));"
+        },
+        "adapted": {
+          "text": "Could not write file 'a.js': undefined."
+        }
+      },
+      "asRuled": true,
+      "moves": "onError's message becomes text, and the consumer's Debug Failure. becomes \"Could not write file 'a.js': undefined.\""
+    },
+    {
+      "site": "createGetSourceFile",
+      "value": "an Error",
+      "original": {
+        "received": [
+          {
+            "type": "string",
+            "value": "disk failed"
+          }
+        ],
+        "returned": {
+          "fileName": "a.ts",
+          "text": ""
+        }
+      },
+      "adapted": {
+        "received": [
+          {
+            "type": "string",
+            "value": "disk failed"
+          }
+        ],
+        "returned": {
+          "fileName": "a.ts",
+          "text": ""
+        }
+      },
+      "formatted": {
+        "original": {
+          "text": "Cannot read file 'a.ts': disk failed."
+        },
+        "adapted": {
+          "text": "Cannot read file 'a.ts': disk failed."
+        }
+      },
+      "asRuled": true,
+      "moves": "unchanged"
+    },
+    {
+      "site": "createWriteFileMeasuringIO",
+      "value": "an Error",
+      "original": {
+        "received": [
+          {
+            "type": "string",
+            "value": "disk failed"
+          }
+        ]
+      },
+      "adapted": {
+        "received": [
+          {
+            "type": "string",
+            "value": "disk failed"
+          }
+        ]
+      },
+      "formatted": {
+        "original": {
+          "text": "Could not write file 'a.js': disk failed."
+        },
+        "adapted": {
+          "text": "Could not write file 'a.js': disk failed."
+        }
+      },
+      "asRuled": true,
+      "moves": "unchanged"
+    },
+    {
+      "site": "createGetSourceFile",
+      "value": "{ message: 42 }",
+      "original": {
+        "received": [
+          {
+            "type": "number",
+            "value": 42
+          }
+        ],
+        "returned": {
+          "fileName": "a.ts",
+          "text": ""
+        }
+      },
+      "adapted": {
+        "received": [
+          {
+            "type": "string",
+            "value": "42"
+          }
+        ],
+        "returned": {
+          "fileName": "a.ts",
+          "text": ""
+        }
+      },
+      "formatted": {
+        "original": {
+          "text": "Cannot read file 'a.ts': 42."
+        },
+        "adapted": {
+          "text": "Cannot read file 'a.ts': 42."
+        }
+      },
+      "asRuled": true,
+      "moves": "onError's message becomes text; the consumer's diagnostic text is unchanged, \"Cannot read file 'a.ts': 42.\""
+    },
+    {
+      "site": "createWriteFileMeasuringIO",
+      "value": "{ message: 42 }",
+      "original": {
+        "received": [
+          {
+            "type": "number",
+            "value": 42
+          }
+        ]
+      },
+      "adapted": {
+        "received": [
+          {
+            "type": "string",
+            "value": "42"
+          }
+        ]
+      },
+      "formatted": {
+        "original": {
+          "text": "Could not write file 'a.js': 42."
+        },
+        "adapted": {
+          "text": "Could not write file 'a.js': 42."
+        }
+      },
+      "asRuled": true,
+      "moves": "onError's message becomes text; the consumer's diagnostic text is unchanged, \"Could not write file 'a.js': 42.\""
+    },
+    {
+      "site": "createGetSourceFile",
+      "value": "{}",
+      "original": {
+        "received": [
+          {
+            "type": "undefined"
+          }
+        ],
+        "returned": {
+          "fileName": "a.ts",
+          "text": ""
+        }
+      },
+      "adapted": {
+        "received": [
+          {
+            "type": "string",
+            "value": "undefined"
+          }
+        ],
+        "returned": {
+          "fileName": "a.ts",
+          "text": ""
+        }
+      },
+      "formatted": {
+        "original": {
+          "threw": "Error",
+          "message": "Debug Failure.",
+          "at": "typescript.js:21671",
+          "line": "return text.replace(/\\{(\\d+)\\}/g, (_match, index) => \"\" + Debug.checkDefined(args[+index]));"
+        },
+        "adapted": {
+          "text": "Cannot read file 'a.ts': undefined."
+        }
+      },
+      "asRuled": true,
+      "moves": "onError's message becomes text, and the consumer's Debug Failure. becomes \"Cannot read file 'a.ts': undefined.\""
+    },
+    {
+      "site": "createWriteFileMeasuringIO",
+      "value": "{}",
+      "original": {
+        "received": [
+          {
+            "type": "undefined"
+          }
+        ]
+      },
+      "adapted": {
+        "received": [
+          {
+            "type": "string",
+            "value": "undefined"
+          }
+        ]
+      },
+      "formatted": {
+        "original": {
+          "threw": "Error",
+          "message": "Debug Failure.",
+          "at": "typescript.js:21671",
+          "line": "return text.replace(/\\{(\\d+)\\}/g, (_match, index) => \"\" + Debug.checkDefined(args[+index]));"
+        },
+        "adapted": {
+          "text": "Could not write file 'a.js': undefined."
+        }
+      },
+      "asRuled": true,
+      "moves": "onError's message becomes text, and the consumer's Debug Failure. becomes \"Could not write file 'a.js': undefined.\""
+    }
+  ]
+}
