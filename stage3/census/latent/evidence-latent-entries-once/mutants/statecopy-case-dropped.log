@@ -1,0 +1,8 @@
+=== RUN   TestLatentStatecopySharesEntriesRecords
+=== PAUSE TestLatentStatecopySharesEntriesRecords
+=== CONT  TestLatentStatecopySharesEntriesRecords
+    guard_test.go:209: the lowering copier deep-copies entriesRecords, which every lowering of a latent file shares
+--- FAIL: TestLatentStatecopySharesEntriesRecords (0.09s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/census/latent/statecopy	0.097s
+FAIL

@@ -1,0 +1,8 @@
+=== RUN   TestEachFileStartsAFreshShare
+=== PAUSE TestEachFileStartsAFreshShare
+=== CONT  TestEachFileStartsAFreshShare
+    share_test.go:36: lower.go.txt's latentRun: a lowering is made before the file's share is set
+--- FAIL: TestEachFileStartsAFreshShare (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/census/latent/entriesshare	0.007s
+FAIL

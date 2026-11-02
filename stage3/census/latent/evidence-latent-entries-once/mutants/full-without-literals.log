@@ -1,0 +1,8 @@
+=== RUN   TestEachFileStartsAFreshShare
+=== PAUSE TestEachFileStartsAFreshShare
+=== CONT  TestEachFileStartsAFreshShare
+    share_test.go:36: units.go.txt's latentFullSelected: a lowering is made without entriesRecords: latentEntriesShare.literals
+--- FAIL: TestEachFileStartsAFreshShare (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/census/latent/entriesshare	0.007s
+FAIL

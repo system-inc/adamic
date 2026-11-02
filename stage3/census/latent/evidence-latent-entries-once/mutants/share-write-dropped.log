@@ -1,0 +1,13 @@
+=== RUN   TestOneWalkAFile
+=== PAUSE TestOneWalkAFile
+=== CONT  TestOneWalkAFile
+    share_test.go:121: build latent_entries_share_probe 53b3ea0e0b0c hit 0.18
+    share_test.go:134: compiled share probe: exit status 1
+        === RUN   TestShare
+            probe_test.go:24: file 0: the second lowering's answer isn't the file's first walk's
+        --- FAIL: TestShare (0.00s)
+        FAIL
+--- FAIL: TestOneWalkAFile (0.20s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/census/latent/entriesshare	0.204s
+FAIL

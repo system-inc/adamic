@@ -1,0 +1,31 @@
+File: latent-census-prof
+Build ID: 7b7377df2bc973f15c409f90f2a4e4619afdf4b3
+Type: cpu
+Time: 2026-11-02 01:51:20 UTC
+Duration: 82.44s, Total samples = 101.18s (122.73%)
+Showing nodes accounting for 101.18s, 100% of 101.18s total
+----------------------------------------------------------+-------------
+      flat  flat%   sum%        cum   cum%   calls calls% + context 	 	 
+----------------------------------------------------------+-------------
+                                            11.94s   100% |   github.com/system-inc/adamic/internal/lower.(*lowering).property (inline)
+         0     0%     0%     11.94s 11.80%                | github.com/system-inc/adamic/internal/lower.(*lowering).entriesProgramHasRecords
+                                            11.94s   100% |   github.com/system-inc/adamic/internal/lower.(*lowering).entriesProgramRecordsWalk
+----------------------------------------------------------+-------------
+                                            34.10s 97.74% |   github.com/system-inc/adamic/internal/lower.(*lowering).value
+         0     0%     0%     34.89s 34.48%                | github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue
+                                            22.80s 65.35% |   github.com/system-inc/adamic/internal/lower.(*lowering).callOrMethod
+                                            15.31s 43.88% |   github.com/system-inc/adamic/internal/lower.(*lowering).property
+                                            12.25s 35.11% |   github.com/system-inc/adamic/internal/lower.(*lowering).expression (inline)
+                                             3.73s 10.69% |   github.com/system-inc/adamic/internal/lower.(*lowering).conditional
+                                             1.21s  3.47% |   github.com/system-inc/adamic/internal/lower.(*lowering).cast
+                                             0.55s  1.58% |   github.com/system-inc/adamic/internal/lower.(*lowering).prefix
+                                             0.51s  1.46% |   github.com/system-inc/adamic/internal/lower.(*lowering).closure
+                                             0.47s  1.35% |   github.com/system-inc/adamic/internal/lower.(*lowering).coalesce
+                                             0.24s  0.69% |   github.com/system-inc/adamic/internal/lower.(*lowering).functionValue
+                                             0.11s  0.32% |   github.com/system-inc/adamic/internal/lower.(*lowering).arrayLiteral
+                                             0.03s 0.086% |   github.com/system-inc/adamic/internal/lower.(*lowering).builtin
+                                             0.02s 0.057% |   github.com/system-inc/adamic/internal/lower.(*lowering).nonNull
+                                             0.02s 0.057% |   github.com/system-inc/adamic/internal/lower.(*lowering).objectLiteral
+                                             0.01s 0.029% |   github.com/system-inc/adamic/internal/lower.(*lowering).combine
+                                             0.01s 0.029% |   github.com/system-inc/adamic/internal/lower.(*lowering).processValue
+----------------------------------------------------------+-------------
