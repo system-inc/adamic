@@ -1,12 +1,9 @@
 // An object literal's method is its own data property holding a function, on Node and on both
 // backends alike, so a run-time key read gives that function; only a class's methods, which no object
-// holds as its own, stop. Its getter stops (stop_literal_getter.a).
+// holds as its own, stop.
 import { propertyOf } from './hostErrors.ts';
 
 const literal = {
-	get value(): string {
-		return 'got';
-	},
 	describe(): string {
 		return 'described';
 	},

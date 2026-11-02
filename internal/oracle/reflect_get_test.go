@@ -32,7 +32,7 @@ func reflectGetFixture(t *testing.T, name string) string {
 
 // Mutants, each its own run with the file restored by cmp: dynamic_slot's retain dropped (union.c), so
 // read_twice.a's string is freed under its holder and ASan reads freed memory; keyed_getter skipped
-// on an accessor, so property_of.a's getter reads undefined; the Error message remap dropped, so
+// on an accessor, so getter.a's getter reads undefined; the Error message remap dropped, so
 // property_of.a's empty message reads undefined; record.c's number and boolean shapes swapped, so
 // records.a's booleans read as numbers.
 func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
@@ -40,7 +40,8 @@ func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 	for _, probe := range []struct{ file, stdout string }{
 		{"property_of.a", propertyOfAnswers},
 		{"read_twice.a", "namename\nname\n"},
-		{"records.a", "count: 3\nmissing: undefined\non: true\noff: false\nname: \"ada\"\nhere: 4\ngone: undefined\nyes: true\nunset: undefined\n"},
+		{"getter.a", "getter: \"ENOENT\"\nabsent: undefined\n"},
+		{"records.a", "count: 3\nmissing: undefined\non: true\noff: false\nname: \"ada\"\nhere: 4\ngone: undefined\n"},
 		{"literal_method.a", "described\nfunction\n"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
@@ -74,7 +75,6 @@ absent: undefined
 message: ""
 given message: "given"
 name: "TypeError"
-getter: "ENOENT"
 concatenated: "first"
 substring: "second"
 null: "Cannot read properties of null (reading 'code')"
@@ -170,7 +170,9 @@ func TestReflectGetPrivateMutantJavaScript(t *testing.T) {
 // into a template, whose toString would run. Each is NotYet at the read, judged there before any
 // getter's body is lowered. An
 // Error subclass is NotYet at its class, so no emitted shape is an Error the read could miss
-// (Runtime's must on #zhgxzjg): its stack, cause and errno reads never run on either backend.
+// (Runtime's must on #zhgxzjg): its stack, cause and errno reads never run on either backend, and
+// when subclasses lower it goes red and asks for the mark. An object literal with a getter holding a
+// method is NotYet at the method, so the read never meets that pair.
 func TestReflectGetOtherShapesNotYet(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ file, at, what string }{
@@ -181,7 +183,8 @@ func TestReflectGetOtherShapesNotYet(t *testing.T) {
 		{"notyet_getter_call.a", "hostErrors.ts:16:12", "a class getter that does more than return its fields and literals joined by operators"},
 		{"notyet_getter_on_getter.a", "hostErrors.ts:16:12", "a class getter that does more than return its fields and literals joined by operators"},
 		{"notyet_getter_to_primitive.a", "hostErrors.ts:16:12", "a class getter that converts an object field to a primitive"},
-		{"error_subclass.a", "error_subclass.a:5:17", "a base that isn't a declared class"},
+		{"notyet_literal_getter_method.a", "notyet_literal_getter_method.a:10:2", "a non-accessor method in an accessor literal"},
+		{"error_subclass.a", "error_subclass.a:5:17", "a computed class base; name the base class directly"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()

@@ -1,6 +1,7 @@
 // A record's own values, read by a run-time key, each boxed by the kind its record was made with
-// (#zhgxzjg, Runtime's three record shapes): numbers, booleans, strings, and a number or a boolean
-// that may be undefined, an own key holding undefined among them.
+// (#zhgxzjg, Runtime's three record shapes): numbers, booleans, strings, and a number that may be
+// undefined, an own key holding undefined among them. A record of boolean | undefined isn't admitted
+// yet ("record values with an unsupported slot representation"), so it isn't here.
 import { propertyOf } from './hostErrors.ts';
 
 function show(label: string, value: unknown): void {
@@ -20,9 +21,6 @@ names['first'] = 'ada';
 const maybeCounts: Record<string, number | undefined> = {};
 maybeCounts['here'] = 4;
 maybeCounts['gone'] = undefined;
-const maybeFlags: Record<string, boolean | undefined> = {};
-maybeFlags['yes'] = true;
-maybeFlags['unset'] = undefined;
 show('count', propertyOf(counts, 'seen'));
 show('missing', propertyOf(counts, 'missing'));
 show('on', propertyOf(flags, 'on'));
@@ -30,5 +28,3 @@ show('off', propertyOf(flags, 'off'));
 show('name', propertyOf(names, 'first'));
 show('here', propertyOf(maybeCounts, 'here'));
 show('gone', propertyOf(maybeCounts, 'gone'));
-show('yes', propertyOf(maybeFlags, 'yes'));
-show('unset', propertyOf(maybeFlags, 'unset'));
