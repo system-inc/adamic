@@ -1,0 +1,552 @@
+[
+  {
+    "kind": "NotYet",
+    "reason": "Array.isArray on a tuple or an erased object/any/unknown view",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/utilities.ts:8765:54"
+    ],
+    "B_examples": [
+      "src/compiler/utilities.ts:8765:54"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "a branded supertype inside a checked predicate's array target",
+    "A": 2,
+    "B": 2,
+    "A_examples": [
+      "src/compiler/transformers/destructuring.ts:171:14",
+      "src/compiler/visitorPublic.ts:548:9"
+    ],
+    "B_examples": [
+      "src/compiler/transformers/destructuring.ts:171:14",
+      "src/compiler/visitorPublic.ts:548:9"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "a checked predicate target DynamicNamedDeclaration that narrows GetAccessorDeclaration, which isn't its supertype",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/utilities.ts:6838:9"
+    ],
+    "B_examples": [
+      "src/compiler/utilities.ts:6838:9"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression",
+    "A": 1,
+    "B": 0,
+    "A_examples": [
+      "src/compiler/core.ts:1784:32"
+    ],
+    "B_examples": []
+  },
+  {
+    "kind": "NotYet",
+    "reason": "a checked predicate target NamedDeclaration that narrows ArrowFunction, which isn't its supertype",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/utilitiesPublic.ts:888:9"
+    ],
+    "B_examples": [
+      "src/compiler/utilitiesPublic.ts:888:9"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "a checked predicate target TypeNode that narrows undefined, which isn't its supertype",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/factory/utilities.ts:626:5"
+    ],
+    "B_examples": [
+      "src/compiler/factory/utilities.ts:626:5"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "a checked predicate target whose base has no required field to check (CompilerOptions & { types: string[]; })",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/utilities.ts:9028:1"
+    ],
+    "B_examples": [
+      "src/compiler/utilities.ts:9028:1"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "a checked predicate target whose check would read past the depth bound (BuilderProgramStateWithDefinedProgram)",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/builder.ts:268:1"
+    ],
+    "B_examples": [
+      "src/compiler/builder.ts:268:1"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "a checked predicate target whose check would read past the depth bound (CircularBuildOrder)",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/tsbuildPublic.ts:259:1"
+    ],
+    "B_examples": [
+      "src/compiler/tsbuildPublic.ts:259:1"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "a checked predicate target whose check would read past the depth bound (CommandLineOptionOfCustomType)",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/commandLineParser.ts:1728:1"
+    ],
+    "B_examples": [
+      "src/compiler/commandLineParser.ts:1728:1"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "a checked predicate target whose check would read past the depth bound (IncrementalBundleEmitBuildInfo)",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/builder.ts:1181:1"
+    ],
+    "B_examples": [
+      "src/compiler/builder.ts:1181:1"
+    ]
+  },
+  {
+    "kind": "Refused",
+    "reason": "a checked view with a callable contract",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/sys.ts:1659:13"
+    ],
+    "B_examples": [
+      "src/compiler/sys.ts:1659:13"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "a literal method through a view that erases its receiver",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/program.ts:528:37"
+    ],
+    "B_examples": [
+      "src/compiler/program.ts:528:37"
+    ]
+  },
+  {
+    "kind": "Refused",
+    "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+    "A": 14,
+    "B": 14,
+    "A_examples": [
+      "src/compiler/core.ts:2459:66",
+      "src/compiler/core.ts:2459:91",
+      "src/compiler/core.ts:2461:105",
+      "src/compiler/core.ts:2461:130",
+      "src/compiler/core.ts:2461:80"
+    ],
+    "B_examples": [
+      "src/compiler/core.ts:2459:66",
+      "src/compiler/core.ts:2459:91",
+      "src/compiler/core.ts:2461:105",
+      "src/compiler/core.ts:2461:130",
+      "src/compiler/core.ts:2461:80"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "an object with a nullable field viewed as unknown or object (null and undefined slot tags)",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/builder.ts:295:59"
+    ],
+    "B_examples": [
+      "src/compiler/builder.ts:295:59"
+    ]
+  },
+  {
+    "kind": "Refused",
+    "reason": "an unproven predicate argument for parameter callback (argument \"decl => isVariableDeclarationInitializedToRequire(decl)\")",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/utilities.ts:3908:53"
+    ],
+    "B_examples": [
+      "src/compiler/utilities.ts:3908:53"
+    ]
+  },
+  {
+    "kind": "Refused",
+    "reason": "an unproven predicate argument for parameter callback (argument \"n => isExportAssignment(n) || isStatement(n) || isVariableDeclaration(n) || isPropertyDeclaration(n) || isParameter(n)\")",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/transformers/declarations/diagnostics.ts:708:43"
+    ],
+    "B_examples": [
+      "src/compiler/transformers/declarations/diagnostics.ts:708:43"
+    ]
+  },
+  {
+    "kind": "Refused",
+    "reason": "an unproven predicate argument for parameter f (argument \"helper => !helper.scoped\")",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/factory/utilities.ts:761:47"
+    ],
+    "B_examples": [
+      "src/compiler/factory/utilities.ts:761:47"
+    ]
+  },
+  {
+    "kind": "Refused",
+    "reason": "an unproven predicate argument for parameter f (argument \"p => isParameterPropertyDeclaration(p, constructor)\")",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/transformers/ts.ts:1384:44"
+    ],
+    "B_examples": [
+      "src/compiler/transformers/ts.ts:1384:44"
+    ]
+  },
+  {
+    "kind": "Refused",
+    "reason": "an unproven predicate argument for parameter nodeTest (argument \"isModuleDeclaration\")",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/transformers/ts.ts:1975:47"
+    ],
+    "B_examples": [
+      "src/compiler/transformers/ts.ts:1975:47"
+    ]
+  },
+  {
+    "kind": "Refused",
+    "reason": "an unproven predicate argument for parameter predicate (argument \"modifier => !isExportModifier(modifier) && !isDefaultModifier(modifier)\")",
+    "A": 2,
+    "B": 2,
+    "A_examples": [
+      "src/compiler/factory/nodeConverters.ts:66:40",
+      "src/compiler/factory/nodeConverters.ts:84:36"
+    ],
+    "B_examples": [
+      "src/compiler/factory/nodeConverters.ts:66:40",
+      "src/compiler/factory/nodeConverters.ts:84:36"
+    ]
+  },
+  {
+    "kind": "Refused",
+    "reason": "an unproven predicate argument for parameter predicate (argument \"predicate\")",
+    "A": 2,
+    "B": 2,
+    "A_examples": [
+      "src/compiler/utilitiesPublic.ts:1280:52",
+      "src/compiler/utilitiesPublic.ts:1285:38"
+    ],
+    "B_examples": [
+      "src/compiler/utilitiesPublic.ts:1280:52",
+      "src/compiler/utilitiesPublic.ts:1285:38"
+    ]
+  },
+  {
+    "kind": "Refused",
+    "reason": "an unproven predicate argument for parameter test (argument \"createAssignmentCallback ? isIdentifier : isExpression\")",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/transformers/destructuring.ts:185:34"
+    ],
+    "B_examples": [
+      "src/compiler/transformers/destructuring.ts:185:34"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate membership over an open tag domain",
+    "A": 50,
+    "B": 50,
+    "A_examples": [
+      "src/compiler/factory/nodeConverters.ts:55:13",
+      "src/compiler/factory/nodeFactory.ts:7287:20",
+      "src/compiler/factory/utilities.ts:1024:21",
+      "src/compiler/factory/utilities.ts:1096:17",
+      "src/compiler/factory/utilities.ts:1573:9"
+    ],
+    "B_examples": [
+      "src/compiler/factory/nodeConverters.ts:55:13",
+      "src/compiler/factory/nodeFactory.ts:7287:20",
+      "src/compiler/factory/utilities.ts:1024:21",
+      "src/compiler/factory/utilities.ts:1096:17",
+      "src/compiler/factory/utilities.ts:1573:9"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target AssignmentExpression<AmpersandAmpersandEqualsToken | BarBarEqualsToken | EqualsToken | QuestionQuestionEqualsToken> & ...",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/utilities.ts:5522:1"
+    ],
+    "B_examples": [
+      "src/compiler/utilities.ts:5522:1"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target BinaryExpression & { operatorToken: Token<SyntaxKind.CommaToken>; }",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/factory/utilities.ts:607:1"
+    ],
+    "B_examples": [
+      "src/compiler/factory/utilities.ts:607:1"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target BindableStaticElementAccessExpression",
+    "A": 2,
+    "B": 2,
+    "A_examples": [
+      "src/compiler/utilities.ts:4148:1",
+      "src/compiler/utilities.ts:7563:1"
+    ],
+    "B_examples": [
+      "src/compiler/utilities.ts:4148:1",
+      "src/compiler/utilities.ts:7563:1"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target ClassNamedEvaluationHelperBlock",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/transformers/namedEvaluation.ts:139:1"
+    ],
+    "B_examples": [
+      "src/compiler/transformers/namedEvaluation.ts:139:1"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target ClassThisAssignmentBlock",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/transformers/classThis.ts:72:1"
+    ],
+    "B_examples": [
+      "src/compiler/transformers/classThis.ts:72:1"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target ElementAccessExpression & Declaration & { readonly argumentExpression: NumericLiteral | StringLiteralLike; } & ...",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/utilities.ts:4104:1"
+    ],
+    "B_examples": [
+      "src/compiler/utilities.ts:4104:1"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target ImportClause & { readonly isTypeOnly: true; readonly name: Identifier; }",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/utilitiesPublic.ts:1536:1"
+    ],
+    "B_examples": [
+      "src/compiler/utilitiesPublic.ts:1536:1"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target ImportEqualsDeclaration & { moduleReference: ExternalModuleReference; }",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/utilities.ts:3773:1"
+    ],
+    "B_examples": [
+      "src/compiler/utilities.ts:3773:1"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target JSDocTag",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/utilitiesPublic.ts:2534:1"
+    ],
+    "B_examples": [
+      "src/compiler/utilitiesPublic.ts:2534:1"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target LiteralImportTypeNode",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/utilities.ts:2724:1"
+    ],
+    "B_examples": [
+      "src/compiler/utilities.ts:2724:1"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target LiteralLikeElementAccessExpression",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/utilities.ts:4139:1"
+    ],
+    "B_examples": [
+      "src/compiler/utilities.ts:4139:1"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target NamedDeclaration & { name: DeclarationName; }",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/utilitiesPublic.ts:946:1"
+    ],
+    "B_examples": [
+      "src/compiler/utilitiesPublic.ts:946:1"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target NonIncrementalBuildInfo",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/builder.ts:1192:1"
+    ],
+    "B_examples": [
+      "src/compiler/builder.ts:1192:1"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target ParameterPropertyDeclaration",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/utilitiesPublic.ts:615:1"
+    ],
+    "B_examples": [
+      "src/compiler/utilitiesPublic.ts:615:1"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target PrefixUnaryExpression & { operand: NumericLiteral; }",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/utilities.ts:5367:1"
+    ],
+    "B_examples": [
+      "src/compiler/utilities.ts:5367:1"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target PrefixUnaryExpression & { operator: SyntaxKind.PlusToken; operand: NumericLiteral; }",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/debug.ts:365:5"
+    ],
+    "B_examples": [
+      "src/compiler/debug.ts:365:5"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked predicate overload target ReferencedFile",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/program.ts:1162:1"
+    ],
+    "B_examples": [
+      "src/compiler/program.ts:1162:1"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked view field modifiers of type NodeArray<Modifier> | NodeArray<ModifierLike> | undefined",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/utilities.ts:5340:11"
+    ],
+    "B_examples": [
+      "src/compiler/utilities.ts:5340:11"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "checked view union arm awaits views-v3: array element kind",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/factory/nodeChildren.ts:20:16"
+    ],
+    "B_examples": [
+      "src/compiler/factory/nodeChildren.ts:20:16"
+    ]
+  },
+  {
+    "kind": "NotYet",
+    "reason": "detached hasOwnProperty through an object view (a value with a different native representation may be hidden by the view)",
+    "A": 1,
+    "B": 1,
+    "A_examples": [
+      "src/compiler/core.ts:1267:32"
+    ],
+    "B_examples": [
+      "src/compiler/core.ts:1267:32"
+    ]
+  }
+]

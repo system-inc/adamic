@@ -1,0 +1,626 @@
+[
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/binder.ts",
+    "where": "/workspace/scratch/tree/src/compiler/binder.ts:2337:50",
+    "unit_where": "/workspace/scratch/tree/src/compiler/binder.ts:509:1",
+    "unit_name": "createBinder",
+    "line": "const body = isSourceFile(node) ? node : tryCast(node.body, isModuleBlock);"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/binder.ts",
+    "where": "/workspace/scratch/tree/src/compiler/binder.ts:3430:42",
+    "unit_where": "/workspace/scratch/tree/src/compiler/binder.ts:509:1",
+    "unit_name": "createBinder",
+    "line": "bindStaticPropertyAssignment(cast(node.left, isBindableStaticNameExpression));"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/binder.ts",
+    "where": "/workspace/scratch/tree/src/compiler/binder.ts:3906:19",
+    "unit_where": "/workspace/scratch/tree/src/compiler/binder.ts:3905:1",
+    "unit_name": "lookupSymbolForName",
+    "line": "const local = tryCast(container, canHaveLocals)?.locals?.get(name);"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/checker.ts",
+    "where": "/workspace/scratch/tree/src/compiler/checker.ts:3123:45",
+    "unit_where": "/workspace/scratch/tree/src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "line": "const propertyDeclaration = tryCast(current.parent, isPropertyDeclaration);"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/checker.ts",
+    "where": "/workspace/scratch/tree/src/compiler/checker.ts:3151:35",
+    "unit_where": "/workspace/scratch/tree/src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "line": "const decorator = tryCast(current.parent, isDecorator);"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/checker.ts",
+    "where": "/workspace/scratch/tree/src/compiler/checker.ts:4131:29",
+    "unit_where": "/workspace/scratch/tree/src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "line": "const localSymbol = tryCast(moduleSymbol.valueDeclaration, canHaveLocals)?.locals?.get(moduleExportNameTextEscaped(name));"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/checker.ts",
+    "where": "/workspace/scratch/tree/src/compiler/checker.ts:8053:149",
+    "unit_where": "/workspace/scratch/tree/src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "line": "kind === SyntaxKind.FunctionDeclaration ? factory.createFunctionDeclaration(modifiers, /*asteriskToken*/ undefined, options?.name ? cast(options.name, isIdentifier) : factory.createIdentifier(\"\"), typeParameters, parameters, returnTypeNode, /*body*/ undefined) :"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/checker.ts",
+    "where": "/workspace/scratch/tree/src/compiler/checker.ts:8054:147",
+    "unit_where": "/workspace/scratch/tree/src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "line": "kind === SyntaxKind.FunctionExpression ? factory.createFunctionExpression(modifiers, /*asteriskToken*/ undefined, options?.name ? cast(options.name, isIdentifier) : factory.createIdentifier(\"\"), typeParameters, parameters, returnTypeNode, factory.createBlock([])) :"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/checker.ts",
+    "where": "/workspace/scratch/tree/src/compiler/checker.ts:9479:78",
+    "unit_where": "/workspace/scratch/tree/src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "line": "factory.createNamedExports(flatMap(exports, e => cast(e.exportClause, isNamedExports).elements)),"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/checker.ts",
+    "where": "/workspace/scratch/tree/src/compiler/checker.ts:9497:88",
+    "unit_where": "/workspace/scratch/tree/src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "line": "factory.createNamedExports(flatMap(group, e => cast(e.exportClause, isNamedExports).elements)),"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/checker.ts",
+    "where": "/workspace/scratch/tree/src/compiler/checker.ts:12269:56",
+    "unit_where": "/workspace/scratch/tree/src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "line": "const exportedMemberName = tryCast(exportedMember.valueDeclaration, isNamedDeclaration)?.name || exportedMember.valueDeclaration;"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/checker.ts",
+    "where": "/workspace/scratch/tree/src/compiler/checker.ts:12714:30",
+    "unit_where": "/workspace/scratch/tree/src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "line": "const accessor = tryCast(getDeclarationOfKind<PropertyDeclaration>(symbol, SyntaxKind.PropertyDeclaration), isAutoAccessorPropertyDeclaration);"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/checker.ts",
+    "where": "/workspace/scratch/tree/src/compiler/checker.ts:12764:20",
+    "unit_where": "/workspace/scratch/tree/src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "line": "?? tryCast(getDeclarationOfKind<PropertyDeclaration>(symbol, SyntaxKind.PropertyDeclaration), isAutoAccessorPropertyDeclaration);"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/checker.ts",
+    "where": "/workspace/scratch/tree/src/compiler/checker.ts:15673:31",
+    "unit_where": "/workspace/scratch/tree/src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "line": "const links = tryCast(singleProp, isTransientSymbol)?.links;"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/checker.ts",
+    "where": "/workspace/scratch/tree/src/compiler/checker.ts:29004:135",
+    "unit_where": "/workspace/scratch/tree/src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "line": "function getFlowTypeOfReference(reference: Node, declaredType: Type, initialType = declaredType, flowContainer?: Node, flowNode = tryCast(reference, canHaveFlowNode)?.flowNode) {"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/checker.ts",
+    "where": "/workspace/scratch/tree/src/compiler/checker.ts:32291:33",
+    "unit_where": "/workspace/scratch/tree/src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "line": "const lhs = cast(binaryExpression.left, isAccessExpression);"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/checker.ts",
+    "where": "/workspace/scratch/tree/src/compiler/checker.ts:32355:28",
+    "unit_where": "/workspace/scratch/tree/src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "line": "const thisAccess = cast(binaryExpression.left, isAccessExpression);"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/checker.ts",
+    "where": "/workspace/scratch/tree/src/compiler/checker.ts:38388:41",
+    "unit_where": "/workspace/scratch/tree/src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "line": "const lastElement = tryCast(lastOrUndefined(elements), isBindingElement);"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/checker.ts",
+    "where": "/workspace/scratch/tree/src/compiler/checker.ts:38410:35",
+    "unit_where": "/workspace/scratch/tree/src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "line": "const restParameter = tryCast(restSymbol?.valueDeclaration, isParameter);"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/checker.ts",
+    "where": "/workspace/scratch/tree/src/compiler/checker.ts:44593:16",
+    "unit_where": "/workspace/scratch/tree/src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "line": "return tryCast(getRootDeclaration(node), isParameter);"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/checker.ts",
+    "where": "/workspace/scratch/tree/src/compiler/checker.ts:44749:40",
+    "unit_where": "/workspace/scratch/tree/src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "line": "return bindingNameText(cast(first(name.elements), isBindingElement).name);"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/checker.ts",
+    "where": "/workspace/scratch/tree/src/compiler/checker.ts:48706:129",
+    "unit_where": "/workspace/scratch/tree/src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "line": "return !!node.attributes && node.attributes.elements.some(attr => getTextOfIdentifierOrLiteral(attr.name) === \"type\" && tryCast(attr.value, isStringLiteralLike)?.text === \"json\");"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/checker.ts",
+    "where": "/workspace/scratch/tree/src/compiler/checker.ts:50486:26",
+    "unit_where": "/workspace/scratch/tree/src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "line": "const node = cast(expr.parent.parent, isObjectLiteralExpression);"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/checker.ts",
+    "where": "/workspace/scratch/tree/src/compiler/checker.ts:50492:22",
+    "unit_where": "/workspace/scratch/tree/src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "line": "const node = cast(expr.parent, isArrayLiteralExpression);"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/checker.ts",
+    "where": "/workspace/scratch/tree/src/compiler/checker.ts:50507:64",
+    "unit_where": "/workspace/scratch/tree/src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "line": "const typeOfObjectLiteral = getTypeOfAssignmentPattern(cast(location.parent.parent, isAssignmentPattern));"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/checker.ts",
+    "where": "/workspace/scratch/tree/src/compiler/checker.ts:51547:79",
+    "unit_where": "/workspace/scratch/tree/src/compiler/checker.ts:1486:1",
+    "unit_name": "createTypeChecker",
+    "line": "const specifier = declaration.kind === SyntaxKind.ModuleDeclaration ? tryCast(declaration.name, isStringLiteral) : getExternalModuleName(declaration);"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/commandLineParser.ts",
+    "where": "/workspace/scratch/tree/src/compiler/commandLineParser.ts:2207:12",
+    "unit_where": "/workspace/scratch/tree/src/compiler/commandLineParser.ts:2206:1",
+    "unit_name": "getDiagnosticText",
+    "line": "return cast(createCompilerDiagnostic(message, ...args).messageText, isString);"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/emitter.ts",
+    "where": "/workspace/scratch/tree/src/compiler/emitter.ts:1563:65",
+    "unit_where": "/workspace/scratch/tree/src/compiler/emitter.ts:1211:1",
+    "unit_name": "createPrinter",
+    "line": "if (hint === EmitHint.SourceFile) return emitSourceFile(cast(node, isSourceFile));"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/emitter.ts",
+    "where": "/workspace/scratch/tree/src/compiler/emitter.ts:1564:69",
+    "unit_where": "/workspace/scratch/tree/src/compiler/emitter.ts:1211:1",
+    "unit_name": "createPrinter",
+    "line": "if (hint === EmitHint.IdentifierName) return emitIdentifier(cast(node, isIdentifier));"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/emitter.ts",
+    "where": "/workspace/scratch/tree/src/compiler/emitter.ts:1565:69",
+    "unit_where": "/workspace/scratch/tree/src/compiler/emitter.ts:1211:1",
+    "unit_name": "createPrinter",
+    "line": "if (hint === EmitHint.JsxAttributeValue) return emitLiteral(cast(node, isStringLiteral), /*jsxAttributeEscape*/ true);"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/emitter.ts",
+    "where": "/workspace/scratch/tree/src/compiler/emitter.ts:1566:83",
+    "unit_where": "/workspace/scratch/tree/src/compiler/emitter.ts:1211:1",
+    "unit_name": "createPrinter",
+    "line": "if (hint === EmitHint.MappedTypeParameter) return emitMappedTypeParameter(cast(node, isTypeParameterDeclaration));"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/emitter.ts",
+    "where": "/workspace/scratch/tree/src/compiler/emitter.ts:1567:93",
+    "unit_where": "/workspace/scratch/tree/src/compiler/emitter.ts:1211:1",
+    "unit_name": "createPrinter",
+    "line": "if (hint === EmitHint.ImportTypeNodeAttributes) return emitImportTypeNodeAttributes(cast(node, isImportAttributes));"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/emitter.ts",
+    "where": "/workspace/scratch/tree/src/compiler/emitter.ts:2926:42",
+    "unit_where": "/workspace/scratch/tree/src/compiler/emitter.ts:1211:1",
+    "unit_name": "createPrinter",
+    "line": "next = parenthesizerRule(cast(lastSubstitution, isExpression));"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/emitter.ts",
+    "where": "/workspace/scratch/tree/src/compiler/emitter.ts:5681:40",
+    "unit_where": "/workspace/scratch/tree/src/compiler/emitter.ts:1211:1",
+    "unit_name": "createPrinter",
+    "line": "return isUniqueLocalName(name, tryCast(node, canHaveLocals)) ? name : makeUniqueName(name, isUniqueName, /*optimistic*/ false, /*scoped*/ false, /*privateName*/ false, /*prefix*/ \"\", /*suffix*/ \"\");"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/factory/nodeConverters.ts",
+    "where": "/workspace/scratch/tree/src/compiler/factory/nodeConverters.ts:115:16",
+    "unit_where": "/workspace/scratch/tree/src/compiler/factory/nodeConverters.ts:41:1",
+    "unit_name": "createNodeConverters",
+    "line": "return cast(element, isExpression);"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/factory/nodeConverters.ts",
+    "where": "/workspace/scratch/tree/src/compiler/factory/nodeConverters.ts:132:16",
+    "unit_where": "/workspace/scratch/tree/src/compiler/factory/nodeConverters.ts:41:1",
+    "unit_name": "createNodeConverters",
+    "line": "return cast(element, isObjectLiteralElementLike);"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/factory/nodeConverters.ts",
+    "where": "/workspace/scratch/tree/src/compiler/factory/nodeConverters.ts:157:16",
+    "unit_where": "/workspace/scratch/tree/src/compiler/factory/nodeConverters.ts:41:1",
+    "unit_name": "createNodeConverters",
+    "line": "return cast(node, isObjectLiteralExpression);"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/factory/nodeConverters.ts",
+    "where": "/workspace/scratch/tree/src/compiler/factory/nodeConverters.ts:170:16",
+    "unit_where": "/workspace/scratch/tree/src/compiler/factory/nodeConverters.ts:41:1",
+    "unit_name": "createNodeConverters",
+    "line": "return cast(node, isArrayLiteralExpression);"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/factory/nodeConverters.ts",
+    "where": "/workspace/scratch/tree/src/compiler/factory/nodeConverters.ts:178:16",
+    "unit_where": "/workspace/scratch/tree/src/compiler/factory/nodeConverters.ts:41:1",
+    "unit_name": "createNodeConverters",
+    "line": "return cast(node, isExpression);"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/factory/nodeFactory.ts",
+    "where": "/workspace/scratch/tree/src/compiler/factory/nodeFactory.ts:2921:87",
+    "unit_where": "/workspace/scratch/tree/src/compiler/factory/nodeFactory.ts:492:1",
+    "unit_name": "createNodeFactory",
+    "line": "return updatePropertyAccessChain(node, expression, node.questionDotToken, cast(name, isIdentifier));"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts",
+    "where": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts:684:48",
+    "unit_where": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts:675:1",
+    "unit_name": null,
+    "line": "parenthesizeExpressionOfNew: expression => cast(expression, isLeftHandSideExpression),"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts",
+    "where": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts:685:49",
+    "unit_where": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts:675:1",
+    "unit_name": null,
+    "line": "parenthesizeLeftSideOfAccess: expression => cast(expression, isLeftHandSideExpression),"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts",
+    "where": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts:686:51",
+    "unit_where": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts:675:1",
+    "unit_name": null,
+    "line": "parenthesizeOperandOfPostfixUnary: operand => cast(operand, isLeftHandSideExpression),"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts",
+    "where": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts:687:50",
+    "unit_where": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts:675:1",
+    "unit_name": null,
+    "line": "parenthesizeOperandOfPrefixUnary: operand => cast(operand, isUnaryExpression),"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts",
+    "where": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts:688:59",
+    "unit_where": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts:675:1",
+    "unit_name": null,
+    "line": "parenthesizeExpressionsOfCommaDelimitedList: nodes => cast(nodes, isNodeArray),"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts",
+    "where": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts:694:55",
+    "unit_where": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts:675:1",
+    "unit_name": null,
+    "line": "parenthesizeConstituentTypesOfUnionType: nodes => cast(nodes, isNodeArray),"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts",
+    "where": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts:696:62",
+    "unit_where": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts:675:1",
+    "unit_name": null,
+    "line": "parenthesizeConstituentTypesOfIntersectionType: nodes => cast(nodes, isNodeArray),"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts",
+    "where": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts:701:51",
+    "unit_where": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts:675:1",
+    "unit_name": null,
+    "line": "parenthesizeElementTypesOfTupleType: nodes => cast(nodes, isNodeArray),"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts",
+    "where": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts:704:50",
+    "unit_where": "/workspace/scratch/tree/src/compiler/factory/parenthesizerRules.ts:675:1",
+    "unit_name": null,
+    "line": "parenthesizeTypeArguments: nodes => nodes && cast(nodes, isNodeArray),"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/program.ts",
+    "where": "/workspace/scratch/tree/src/compiler/program.ts:4718:77",
+    "unit_where": "/workspace/scratch/tree/src/compiler/program.ts:1515:1",
+    "unit_name": "createProgram",
+    "line": "_compilerOptionsObjectLiteralSyntax = compilerOptionsProperty ? tryCast(compilerOptionsProperty.initializer, isObjectLiteralExpression) || false : false;"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/transformers/classFields.ts",
+    "where": "/workspace/scratch/tree/src/compiler/transformers/classFields.ts:455:24",
+    "unit_where": "/workspace/scratch/tree/src/compiler/transformers/classFields.ts:354:1",
+    "unit_name": "transformClassFields",
+    "line": "return tryCast(node, isModifier);"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/transformers/declarations.ts",
+    "where": "/workspace/scratch/tree/src/compiler/transformers/declarations.ts:1831:52",
+    "unit_where": "/workspace/scratch/tree/src/compiler/transformers/declarations.ts:259:1",
+    "unit_name": "transformDeclarations",
+    "line": "return visitArray(node.modifiers, n => tryCast(n, isModifier), isModifier);"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts",
+    "where": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:4377:22",
+    "unit_where": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:488:1",
+    "unit_name": "transformES2015",
+    "line": "const body = cast(cast(skipOuterExpressions(node.expression), isArrowFunction).body, isBlock);"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts",
+    "where": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:4377:27",
+    "unit_where": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:488:1",
+    "unit_name": "transformES2015",
+    "line": "const body = cast(cast(skipOuterExpressions(node.expression), isArrowFunction).body, isBlock);"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts",
+    "where": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:4391:30",
+    "unit_where": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:488:1",
+    "unit_name": "transformES2015",
+    "line": "const varStatement = cast(first(classStatements), isVariableStatement);"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts",
+    "where": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:4413:31",
+    "unit_where": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:488:1",
+    "unit_name": "transformES2015",
+    "line": "let aliasAssignment = tryCast(initializer, isAssignmentExpression);"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts",
+    "where": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:4415:31",
+    "unit_where": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:488:1",
+    "unit_name": "transformES2015",
+    "line": "aliasAssignment = tryCast(initializer.left, isAssignmentExpression);"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts",
+    "where": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:4419:22",
+    "unit_where": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:488:1",
+    "unit_name": "transformES2015",
+    "line": "const call = cast(aliasAssignment ? skipOuterExpressions(aliasAssignment.right) : initializer, isCallExpression);"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts",
+    "where": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:4420:22",
+    "unit_where": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:488:1",
+    "unit_name": "transformES2015",
+    "line": "const func = cast(skipOuterExpressions(call.expression), isFunctionExpression);"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts",
+    "where": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:4430:33",
+    "unit_where": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:488:1",
+    "unit_name": "transformES2015",
+    "line": "const extendsCall = tryCast(funcStatements[classBodyStart], isExpressionStatement);"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts",
+    "where": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:4445:25",
+    "unit_where": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:488:1",
+    "unit_name": "transformES2015",
+    "line": "cast(variable.name, isIdentifier),"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts",
+    "where": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:4471:33",
+    "unit_where": "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:488:1",
+    "unit_name": "transformES2015",
+    "line": "const returnStatement = tryCast(elementAt(funcStatements, classBodyEnd), isReturnStatement);"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/transformers/es2020.ts",
+    "where": "/workspace/scratch/tree/src/compiler/transformers/es2020.ts:92:21",
+    "unit_where": "/workspace/scratch/tree/src/compiler/transformers/es2020.ts:42:1",
+    "unit_name": "transformES2020",
+    "line": "chain = cast(skipPartiallyEmittedExpressions(chain.expression), isOptionalChain);"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/transformers/esDecorators.ts",
+    "where": "/workspace/scratch/tree/src/compiler/transformers/esDecorators.ts:1351:89",
+    "unit_where": "/workspace/scratch/tree/src/compiler/transformers/esDecorators.ts:295:1",
+    "unit_name": "transformESDecorators",
+    "line": "descriptor = createDescriptor(member, visitNodes(modifiers, node => tryCast(node, isAsyncModifier), isModifier));"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/transformers/namedEvaluation.ts",
+    "where": "/workspace/scratch/tree/src/compiler/transformers/namedEvaluation.ts:250:9",
+    "unit_where": "/workspace/scratch/tree/src/compiler/transformers/namedEvaluation.ts:236:1",
+    "unit_name": "finishTransformNamedEvaluation",
+    "line": "cast(injectClassNamedEvaluationHelperBlockIfMissing(context, innerExpression, assignedName), isClassExpression) :"
+  },
+  {
+    "callee": "cast",
+    "file": "/workspace/scratch/tree/src/compiler/transformers/utilities.ts",
+    "where": "/workspace/scratch/tree/src/compiler/transformers/utilities.ts:304:33",
+    "unit_where": "/workspace/scratch/tree/src/compiler/transformers/utilities.ts:179:1",
+    "unit_name": "collectExternalModuleInfo",
+    "line": "for (const specifier of cast(node.exportClause, isNamedExports).elements) {"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/utilities.ts",
+    "where": "/workspace/scratch/tree/src/compiler/utilities.ts:3109:16",
+    "unit_where": "/workspace/scratch/tree/src/compiler/utilities.ts:3106:1",
+    "unit_name": "getTsConfigObjectLiteralExpression",
+    "line": "return tryCast(expression, isObjectLiteralExpression);"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/utilities.ts",
+    "where": "/workspace/scratch/tree/src/compiler/utilities.ts:4357:20",
+    "unit_where": "/workspace/scratch/tree/src/compiler/utilities.ts:4349:1",
+    "unit_name": "tryGetModuleSpecifierFromDeclaration",
+    "line": "return tryCast(node.moduleSpecifier, isStringLiteralLike);"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/utilities.ts",
+    "where": "/workspace/scratch/tree/src/compiler/utilities.ts:4359:20",
+    "unit_where": "/workspace/scratch/tree/src/compiler/utilities.ts:4349:1",
+    "unit_name": "tryGetModuleSpecifierFromDeclaration",
+    "line": "return tryCast(tryCast(node.moduleReference, isExternalModuleReference)?.expression, isStringLiteralLike);"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/utilities.ts",
+    "where": "/workspace/scratch/tree/src/compiler/utilities.ts:4359:28",
+    "unit_where": "/workspace/scratch/tree/src/compiler/utilities.ts:4349:1",
+    "unit_name": "tryGetModuleSpecifierFromDeclaration",
+    "line": "return tryCast(tryCast(node.moduleReference, isExternalModuleReference)?.expression, isStringLiteralLike);"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/utilities.ts",
+    "where": "/workspace/scratch/tree/src/compiler/utilities.ts:4362:20",
+    "unit_where": "/workspace/scratch/tree/src/compiler/utilities.ts:4349:1",
+    "unit_name": "tryGetModuleSpecifierFromDeclaration",
+    "line": "return tryCast(node.parent.moduleSpecifier, isStringLiteralLike);"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/utilities.ts",
+    "where": "/workspace/scratch/tree/src/compiler/utilities.ts:4365:20",
+    "unit_where": "/workspace/scratch/tree/src/compiler/utilities.ts:4349:1",
+    "unit_name": "tryGetModuleSpecifierFromDeclaration",
+    "line": "return tryCast(node.parent.parent.moduleSpecifier, isStringLiteralLike);"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/utilities.ts",
+    "where": "/workspace/scratch/tree/src/compiler/utilities.ts:4367:20",
+    "unit_where": "/workspace/scratch/tree/src/compiler/utilities.ts:4349:1",
+    "unit_name": "tryGetModuleSpecifierFromDeclaration",
+    "line": "return tryCast(node.parent.parent.parent.moduleSpecifier, isStringLiteralLike);"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/utilities.ts",
+    "where": "/workspace/scratch/tree/src/compiler/utilities.ts:4395:20",
+    "unit_where": "/workspace/scratch/tree/src/compiler/utilities.ts:4381:1",
+    "unit_name": "tryGetImportFromModuleSpecifier",
+    "line": "return tryCast(node.parent.parent, isImportTypeNode) as ValidImportTypeNode | undefined;"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/utilities.ts",
+    "where": "/workspace/scratch/tree/src/compiler/utilities.ts:4430:41",
+    "unit_where": "/workspace/scratch/tree/src/compiler/utilities.ts:4427:1",
+    "unit_name": "getNamespaceDeclarationNode",
+    "line": "return node.importClause && tryCast(node.importClause.namedBindings, isNamespaceImport);"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/utilities.ts",
+    "where": "/workspace/scratch/tree/src/compiler/utilities.ts:4434:41",
+    "unit_where": "/workspace/scratch/tree/src/compiler/utilities.ts:4427:1",
+    "unit_name": "getNamespaceDeclarationNode",
+    "line": "return node.exportClause && tryCast(node.exportClause, isNamespaceExport);"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/utilities.ts",
+    "where": "/workspace/scratch/tree/src/compiler/utilities.ts:4477:18",
+    "unit_where": "/workspace/scratch/tree/src/compiler/utilities.ts:4475:1",
+    "unit_name": "isJSDocConstructSignature",
+    "line": "const name = tryCast(param && param.name, isIdentifier);"
+  },
+  {
+    "callee": "tryCast",
+    "file": "/workspace/scratch/tree/src/compiler/utilitiesPublic.ts",
+    "where": "/workspace/scratch/tree/src/compiler/utilitiesPublic.ts:867:20",
+    "unit_where": "/workspace/scratch/tree/src/compiler/utilitiesPublic.ts:865:1",
+    "unit_name": "identifierToKeywordKind",
+    "line": "return token ? tryCast(token, isKeyword) : undefined;"
+  }
+]

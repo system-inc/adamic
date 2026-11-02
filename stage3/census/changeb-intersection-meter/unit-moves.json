@@ -1,0 +1,22 @@
+[
+  {
+    "unit": "src/compiler/factory/parenthesizerRules.ts:675:1",
+    "name": "nullParenthesizerRules",
+    "A": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression",
+      "where": "src/compiler/core.ts:1784:32",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    },
+    "B": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "a template interpolating an object, an array, a map, a function or undefined",
+      "where": "src/compiler/core.ts:1786:59",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    }
+  }
+]

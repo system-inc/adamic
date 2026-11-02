@@ -1,0 +1,10 @@
+{
+  "definition": "import/export declarations and empty statements: no receiver read is lowered; includes registration, scheduling and GC noise",
+  "units": 168,
+  "median_absolute_seconds": 0.002643968999999996,
+  "p90_absolute_seconds": 0.020407116999999995,
+  "max_absolute_seconds": 0.09651078800000001,
+  "median_ratio": 0.9857976800758976,
+  "A_total_seconds": 9.127494324,
+  "B_total_seconds": 9.354933208
+}

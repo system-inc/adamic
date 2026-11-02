@@ -1,0 +1,19 @@
+{
+  "A": {
+    "ledger_sha256": "14594e7e612712ba6c35a3ae1b20aa544090918b4746938ceb9cb25faa83b12e",
+    "file_rows": 79,
+    "exit": 0
+  },
+  "B": {
+    "ledger_sha256": "7c22622502189b71eec0c562e70f31aa6be059155d9a3f5947d2cd433104f823",
+    "file_rows": 79,
+    "exit": 0
+  },
+  "timed_units_each": 4018,
+  "identical_unit_metadata": true,
+  "new_distinct_sites_all_kinds": 0,
+  "removed_distinct_sites_all_kinds": 1,
+  "A_lowering_units_absent_or_stopped_in_B": [],
+  "meter_validator": "report.py::lowering_summary passed on both complete ledgers",
+  "compressed_byte_integrity": "pass"
+}

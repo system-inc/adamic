@@ -1,0 +1,574 @@
+[
+  {
+    "unit": "src/compiler/binder.ts:3905:1",
+    "name": "lookupSymbolForName",
+    "calls": 1,
+    "A": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "an optional Map get through a structural receiver",
+      "where": "src/compiler/binder.ts:3906:19",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    },
+    "B": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "an optional Map get through a structural receiver",
+      "where": "src/compiler/binder.ts:3906:19",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    }
+  },
+  {
+    "unit": "src/compiler/binder.ts:509:1",
+    "name": "createBinder",
+    "calls": 2,
+    "A": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "a value of type BindableObjectDefinePropertyCall",
+      "where": "src/compiler/binder.ts:3201:45",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    },
+    "B": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "a value of type BindableObjectDefinePropertyCall",
+      "where": "src/compiler/binder.ts:3201:45",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    }
+  },
+  {
+    "unit": "src/compiler/checker.ts:1486:1",
+    "name": "createTypeChecker",
+    "calls": 23,
+    "A": {
+      "outcome": "skipped_checker_body",
+      "status": "skipped_checker_body",
+      "reason": null,
+      "where": null,
+      "kind": null,
+      "checker_diagnostics": [
+        "/workspace/scratch/tree/src/compiler/checker.ts:1683:9: error TS2322: Type '(signature: Signature, kind: SignatureDeclaration[\"kind\"], enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker, maximumLength?: number, verbosityLevel?: number, out?: WriterContextOut) => SignatureDeclaration | undefined' is not assignable to type '{ (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined): (SignatureDeclaration & ...) | undefined; (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined, internalFlags?: InternalNodeBuilderF...'.\n  Type 'SignatureDeclaration | undefined' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.\n    Type 'ArrowFunction' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.\n      Type 'ArrowFunction' is not assignable to type 'ArrowFunction & { typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n        Type 'ArrowFunction' is not assignable to type '{ typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n          Types of property 'typeArguments' are incompatible.\n            Type 'NodeArray<TypeNode> | undefined' is not assignable to type 'NodeArray<TypeNode>'.\n              Type 'undefined' is not assignable to type 'NodeArray<TypeNode>'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:5311:45: error TS2322: Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:12034:30: error TS18048: 'file' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:17890:21: error TS2412: Type 'NamedTupleMember | ParameterDeclaration | undefined' is not assignable to type 'NamedTupleMember | ParameterDeclaration' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'NamedTupleMember | ParameterDeclaration'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:17946:29: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.\n      Type 'undefined' is not assignable to type 'Type'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:19044:25: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.\n      Type 'undefined' is not assignable to type 'Type'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:20595:32: error TS2722: Cannot invoke an object which is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:22498:29: error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:22498:32: error TS2488: Type '[message: DiagnosticMessage, ...args: (string | number | boolean | readonly string[] | SourceFile | undefined)[]] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:38430:64: error TS2345: Argument of type 'ElementFlags | undefined' is not assignable to parameter of type 'ElementFlags'.\n  Type 'undefined' is not assignable to type 'ElementFlags'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:42849:65: error TS2345: Argument of type 'TypeParameter | undefined' is not assignable to parameter of type 'TypeParameter'.\n  Type 'undefined' is not assignable to type 'TypeParameter'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:43517:20: error TS2412: Type 'Type | undefined' is not assignable to type 'Type' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'Type'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:46114:128: error TS2345: Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.\n  Type 'undefined' is not assignable to type 'Type'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:46114:208: error TS2345: Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.\n  Type 'undefined' is not assignable to type 'Type'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:46128:128: error TS2345: Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.\n  Type 'undefined' is not assignable to type 'Type'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:50153:121: error TS2532: Object is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52426:13: error TS18048: 'parameter' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52427:39: error TS18048: 'parameter' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52429:35: error TS2345: Argument of type 'ParameterDeclaration | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52430:39: error TS18048: 'parameter' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52432:13: error TS18048: 'parameter' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52433:39: error TS18048: 'parameter' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52435:13: error TS18048: 'parameter' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52436:39: error TS18048: 'parameter' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52438:14: error TS18048: 'parameter' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52439:39: error TS18048: 'parameter' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52441:42: error TS18048: 'parameter' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52443:39: error TS18048: 'parameter' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52446:39: error TS18048: 'parameter' is possibly 'undefined'."
+      ]
+    },
+    "B": {
+      "outcome": "skipped_checker_body",
+      "status": "skipped_checker_body",
+      "reason": null,
+      "where": null,
+      "kind": null,
+      "checker_diagnostics": [
+        "/workspace/scratch/tree/src/compiler/checker.ts:1683:9: error TS2322: Type '(signature: Signature, kind: SignatureDeclaration[\"kind\"], enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker, maximumLength?: number, verbosityLevel?: number, out?: WriterContextOut) => SignatureDeclaration | undefined' is not assignable to type '{ (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined): (SignatureDeclaration & ...) | undefined; (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined, internalFlags?: InternalNodeBuilderF...'.\n  Type 'SignatureDeclaration | undefined' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.\n    Type 'ArrowFunction' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.\n      Type 'ArrowFunction' is not assignable to type 'ArrowFunction & { typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n        Type 'ArrowFunction' is not assignable to type '{ typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n          Types of property 'typeArguments' are incompatible.\n            Type 'NodeArray<TypeNode> | undefined' is not assignable to type 'NodeArray<TypeNode>'.\n              Type 'undefined' is not assignable to type 'NodeArray<TypeNode>'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:5311:45: error TS2322: Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:12034:30: error TS18048: 'file' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:17890:21: error TS2412: Type 'NamedTupleMember | ParameterDeclaration | undefined' is not assignable to type 'NamedTupleMember | ParameterDeclaration' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'NamedTupleMember | ParameterDeclaration'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:17946:29: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.\n      Type 'undefined' is not assignable to type 'Type'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:19044:25: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.\n      Type 'undefined' is not assignable to type 'Type'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:20595:32: error TS2722: Cannot invoke an object which is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:22498:29: error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:22498:32: error TS2488: Type '[message: DiagnosticMessage, ...args: (string | number | boolean | readonly string[] | SourceFile | undefined)[]] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:38430:64: error TS2345: Argument of type 'ElementFlags | undefined' is not assignable to parameter of type 'ElementFlags'.\n  Type 'undefined' is not assignable to type 'ElementFlags'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:42849:65: error TS2345: Argument of type 'TypeParameter | undefined' is not assignable to parameter of type 'TypeParameter'.\n  Type 'undefined' is not assignable to type 'TypeParameter'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:43517:20: error TS2412: Type 'Type | undefined' is not assignable to type 'Type' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'Type'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:46114:128: error TS2345: Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.\n  Type 'undefined' is not assignable to type 'Type'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:46114:208: error TS2345: Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.\n  Type 'undefined' is not assignable to type 'Type'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:46128:128: error TS2345: Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.\n  Type 'undefined' is not assignable to type 'Type'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:50153:121: error TS2532: Object is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52426:13: error TS18048: 'parameter' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52427:39: error TS18048: 'parameter' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52429:35: error TS2345: Argument of type 'ParameterDeclaration | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52430:39: error TS18048: 'parameter' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52432:13: error TS18048: 'parameter' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52433:39: error TS18048: 'parameter' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52435:13: error TS18048: 'parameter' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52436:39: error TS18048: 'parameter' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52438:14: error TS18048: 'parameter' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52439:39: error TS18048: 'parameter' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52441:42: error TS18048: 'parameter' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52443:39: error TS18048: 'parameter' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/checker.ts:52446:39: error TS18048: 'parameter' is possibly 'undefined'."
+      ]
+    }
+  },
+  {
+    "unit": "src/compiler/commandLineParser.ts:2206:1",
+    "name": "getDiagnosticText",
+    "calls": 1,
+    "A": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "a template interpolating a union with an object, an array, a map or a function in it",
+      "where": "src/compiler/core.ts:1786:59",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    },
+    "B": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "a template interpolating a union with an object, an array, a map or a function in it",
+      "where": "src/compiler/core.ts:1786:59",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    }
+  },
+  {
+    "unit": "src/compiler/emitter.ts:1211:1",
+    "name": "createPrinter",
+    "calls": 7,
+    "A": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "a function returning SortedReadonlyArray<EmitHelper> | undefined",
+      "where": "src/compiler/emitter.ts:2097:14",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    },
+    "B": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "a function returning SortedReadonlyArray<EmitHelper> | undefined",
+      "where": "src/compiler/emitter.ts:2097:14",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    }
+  },
+  {
+    "unit": "src/compiler/factory/nodeConverters.ts:41:1",
+    "name": "createNodeConverters",
+    "calls": 5,
+    "A": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "checked predicate membership over an open tag domain",
+      "where": "src/compiler/factory/nodeConverters.ts:55:13",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    },
+    "B": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "checked predicate membership over an open tag domain",
+      "where": "src/compiler/factory/nodeConverters.ts:55:13",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    }
+  },
+  {
+    "unit": "src/compiler/factory/nodeFactory.ts:492:1",
+    "name": "createNodeFactory",
+    "calls": 1,
+    "A": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "a rest parameter that isn't an array",
+      "where": "src/compiler/factory/nodeFactory.ts:2363:40",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    },
+    "B": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "a rest parameter that isn't an array",
+      "where": "src/compiler/factory/nodeFactory.ts:2363:40",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    }
+  },
+  {
+    "unit": "src/compiler/factory/parenthesizerRules.ts:675:1",
+    "name": "nullParenthesizerRules",
+    "calls": 9,
+    "A": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression",
+      "where": "src/compiler/core.ts:1784:32",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    },
+    "B": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "a template interpolating an object, an array, a map, a function or undefined",
+      "where": "src/compiler/core.ts:1786:59",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    }
+  },
+  {
+    "unit": "src/compiler/program.ts:1515:1",
+    "name": "createProgram",
+    "calls": 1,
+    "A": {
+      "outcome": "skipped_checker_body",
+      "status": "skipped_checker_body",
+      "reason": null,
+      "where": null,
+      "kind": null,
+      "checker_diagnostics": [
+        "/workspace/scratch/tree/src/compiler/program.ts:1876:11: error TS2375: Type '{ getRootFileNames: () => readonly string[]; getSourceFile: (fileName: string) => SourceFile | undefined; getSourceFileByPath: (path: Path) => SourceFile | undefined; getSourceFiles: () => SourceFile[]; ... 75 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'Program' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'directoryExists' are incompatible.\n    Type '((path: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean'.\n      Type 'undefined' is not assignable to type '(path: string) => boolean'.",
+        "/workspace/scratch/tree/src/compiler/program.ts:2599:9: error TS2375: Type '{ getCanonicalFileName: (fileName: string) => string; getCommonSourceDirectory: () => string; getCompilerOptions: () => CompilerOptions; getCurrentDirectory: () => string; ... 24 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'EmitHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createHash' are incompatible.\n    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.\n      Type 'undefined' is not assignable to type '(data: string) => string'.",
+        "/workspace/scratch/tree/src/compiler/program.ts:4157:64: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+        "/workspace/scratch/tree/src/compiler/program.ts:4160:69: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+        "/workspace/scratch/tree/src/compiler/program.ts:4160:95: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+      ]
+    },
+    "B": {
+      "outcome": "skipped_checker_body",
+      "status": "skipped_checker_body",
+      "reason": null,
+      "where": null,
+      "kind": null,
+      "checker_diagnostics": [
+        "/workspace/scratch/tree/src/compiler/program.ts:1876:11: error TS2375: Type '{ getRootFileNames: () => readonly string[]; getSourceFile: (fileName: string) => SourceFile | undefined; getSourceFileByPath: (path: Path) => SourceFile | undefined; getSourceFiles: () => SourceFile[]; ... 75 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'Program' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'directoryExists' are incompatible.\n    Type '((path: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean'.\n      Type 'undefined' is not assignable to type '(path: string) => boolean'.",
+        "/workspace/scratch/tree/src/compiler/program.ts:2599:9: error TS2375: Type '{ getCanonicalFileName: (fileName: string) => string; getCommonSourceDirectory: () => string; getCompilerOptions: () => CompilerOptions; getCurrentDirectory: () => string; ... 24 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'EmitHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createHash' are incompatible.\n    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.\n      Type 'undefined' is not assignable to type '(data: string) => string'.",
+        "/workspace/scratch/tree/src/compiler/program.ts:4157:64: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+        "/workspace/scratch/tree/src/compiler/program.ts:4160:69: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+        "/workspace/scratch/tree/src/compiler/program.ts:4160:95: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+      ]
+    }
+  },
+  {
+    "unit": "src/compiler/transformers/classFields.ts:354:1",
+    "name": "transformClassFields",
+    "calls": 1,
+    "A": {
+      "outcome": "skipped_checker_body",
+      "status": "skipped_checker_body",
+      "reason": null,
+      "where": null,
+      "kind": null,
+      "checker_diagnostics": [
+        "/workspace/scratch/tree/src/compiler/transformers/classFields.ts:1835:21: error TS2532: Object is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/transformers/classFields.ts:2251:45: error TS2538: Type 'undefined' cannot be used as an index type.",
+        "/workspace/scratch/tree/src/compiler/transformers/classFields.ts:2252:97: error TS18048: 'superStatementIndex' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/transformers/classFields.ts:2253:27: error TS18048: 'superStatementIndex' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/transformers/classFields.ts:2297:52: error TS2345: Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'.",
+        "/workspace/scratch/tree/src/compiler/transformers/classFields.ts:2376:56: error TS2345: Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'."
+      ]
+    },
+    "B": {
+      "outcome": "skipped_checker_body",
+      "status": "skipped_checker_body",
+      "reason": null,
+      "where": null,
+      "kind": null,
+      "checker_diagnostics": [
+        "/workspace/scratch/tree/src/compiler/transformers/classFields.ts:1835:21: error TS2532: Object is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/transformers/classFields.ts:2251:45: error TS2538: Type 'undefined' cannot be used as an index type.",
+        "/workspace/scratch/tree/src/compiler/transformers/classFields.ts:2252:97: error TS18048: 'superStatementIndex' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/transformers/classFields.ts:2253:27: error TS18048: 'superStatementIndex' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/transformers/classFields.ts:2297:52: error TS2345: Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'.",
+        "/workspace/scratch/tree/src/compiler/transformers/classFields.ts:2376:56: error TS2345: Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'."
+      ]
+    }
+  },
+  {
+    "unit": "src/compiler/transformers/declarations.ts:259:1",
+    "name": "transformDeclarations",
+    "calls": 1,
+    "A": {
+      "outcome": "skipped_checker_body",
+      "status": "skipped_checker_body",
+      "reason": null,
+      "where": null,
+      "kind": null,
+      "checker_diagnostics": [
+        "/workspace/scratch/tree/src/compiler/transformers/declarations.ts:1678:110: error TS2345: Argument of type 'ExpressionWithTypeArguments | undefined' is not assignable to parameter of type 'DeclarationDiagnosticProducing'.\n  Type 'undefined' is not assignable to type 'DeclarationDiagnosticProducing'."
+      ]
+    },
+    "B": {
+      "outcome": "skipped_checker_body",
+      "status": "skipped_checker_body",
+      "reason": null,
+      "where": null,
+      "kind": null,
+      "checker_diagnostics": [
+        "/workspace/scratch/tree/src/compiler/transformers/declarations.ts:1678:110: error TS2345: Argument of type 'ExpressionWithTypeArguments | undefined' is not assignable to parameter of type 'DeclarationDiagnosticProducing'.\n  Type 'undefined' is not assignable to type 'DeclarationDiagnosticProducing'."
+      ]
+    }
+  },
+  {
+    "unit": "src/compiler/transformers/es2015.ts:488:1",
+    "name": "transformES2015",
+    "calls": 10,
+    "A": {
+      "outcome": "skipped_checker_body",
+      "status": "skipped_checker_body",
+      "reason": null,
+      "where": null,
+      "kind": null,
+      "checker_diagnostics": [
+        "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:2803:38: error TS2532: Object is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:3046:64: error TS2532: Object is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:4437:29: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.\n  Type 'undefined' is not assignable to type 'Statement'.",
+        "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:4691:34: error TS2532: Object is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:4693:13: error TS2532: Object is possibly 'undefined'."
+      ]
+    },
+    "B": {
+      "outcome": "skipped_checker_body",
+      "status": "skipped_checker_body",
+      "reason": null,
+      "where": null,
+      "kind": null,
+      "checker_diagnostics": [
+        "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:2803:38: error TS2532: Object is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:3046:64: error TS2532: Object is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:4437:29: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.\n  Type 'undefined' is not assignable to type 'Statement'.",
+        "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:4691:34: error TS2532: Object is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/transformers/es2015.ts:4693:13: error TS2532: Object is possibly 'undefined'."
+      ]
+    }
+  },
+  {
+    "unit": "src/compiler/transformers/es2020.ts:42:1",
+    "name": "transformES2020",
+    "calls": 1,
+    "A": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+      "where": "src/compiler/visitorPublic.ts:587:119",
+      "kind": "Refused",
+      "checker_diagnostics": []
+    },
+    "B": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+      "where": "src/compiler/visitorPublic.ts:587:119",
+      "kind": "Refused",
+      "checker_diagnostics": []
+    }
+  },
+  {
+    "unit": "src/compiler/transformers/esDecorators.ts:295:1",
+    "name": "transformESDecorators",
+    "calls": 1,
+    "A": {
+      "outcome": "skipped_checker_body",
+      "status": "skipped_checker_body",
+      "reason": null,
+      "where": null,
+      "kind": null,
+      "checker_diagnostics": [
+        "/workspace/scratch/tree/src/compiler/transformers/esDecorators.ts:1164:45: error TS2538: Type 'undefined' cannot be used as an index type.",
+        "/workspace/scratch/tree/src/compiler/transformers/esDecorators.ts:1165:97: error TS18048: 'superStatementIndex' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/transformers/esDecorators.ts:1192:80: error TS18048: 'superStatementIndex' is possibly 'undefined'."
+      ]
+    },
+    "B": {
+      "outcome": "skipped_checker_body",
+      "status": "skipped_checker_body",
+      "reason": null,
+      "where": null,
+      "kind": null,
+      "checker_diagnostics": [
+        "/workspace/scratch/tree/src/compiler/transformers/esDecorators.ts:1164:45: error TS2538: Type 'undefined' cannot be used as an index type.",
+        "/workspace/scratch/tree/src/compiler/transformers/esDecorators.ts:1165:97: error TS18048: 'superStatementIndex' is possibly 'undefined'.",
+        "/workspace/scratch/tree/src/compiler/transformers/esDecorators.ts:1192:80: error TS18048: 'superStatementIndex' is possibly 'undefined'."
+      ]
+    }
+  },
+  {
+    "unit": "src/compiler/transformers/namedEvaluation.ts:236:1",
+    "name": "finishTransformNamedEvaluation",
+    "calls": 1,
+    "A": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "a value of type WrappedExpression<AnonymousFunctionDefinition>",
+      "where": "src/compiler/transformers/namedEvaluation.ts:238:5",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    },
+    "B": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "a value of type WrappedExpression<AnonymousFunctionDefinition>",
+      "where": "src/compiler/transformers/namedEvaluation.ts:238:5",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    }
+  },
+  {
+    "unit": "src/compiler/transformers/utilities.ts:179:1",
+    "name": "collectExternalModuleInfo",
+    "calls": 1,
+    "A": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "a template interpolating an object, an array, a map, a function or undefined",
+      "where": "src/compiler/core.ts:1786:59",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    },
+    "B": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "a template interpolating an object, an array, a map, a function or undefined",
+      "where": "src/compiler/core.ts:1786:59",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    }
+  },
+  {
+    "unit": "src/compiler/utilities.ts:3106:1",
+    "name": "getTsConfigObjectLiteralExpression",
+    "calls": 1,
+    "A": {
+      "outcome": "lowers",
+      "status": "attempted",
+      "reason": null,
+      "where": null,
+      "kind": null,
+      "checker_diagnostics": []
+    },
+    "B": {
+      "outcome": "lowers",
+      "status": "attempted",
+      "reason": null,
+      "where": null,
+      "kind": null,
+      "checker_diagnostics": []
+    }
+  },
+  {
+    "unit": "src/compiler/utilities.ts:4349:1",
+    "name": "tryGetModuleSpecifierFromDeclaration",
+    "calls": 6,
+    "A": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "a value of type JSDocImportTag | CanHaveModuleSpecifier",
+      "where": "src/compiler/utilities.ts:4349:54",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    },
+    "B": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "a value of type JSDocImportTag | CanHaveModuleSpecifier",
+      "where": "src/compiler/utilities.ts:4349:54",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    }
+  },
+  {
+    "unit": "src/compiler/utilities.ts:4381:1",
+    "name": "tryGetImportFromModuleSpecifier",
+    "calls": 1,
+    "A": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "a function returning AnyValidImportOrReExport | undefined",
+      "where": "src/compiler/utilities.ts:4381:17",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    },
+    "B": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "a function returning AnyValidImportOrReExport | undefined",
+      "where": "src/compiler/utilities.ts:4381:17",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    }
+  },
+  {
+    "unit": "src/compiler/utilities.ts:4427:1",
+    "name": "getNamespaceDeclarationNode",
+    "calls": 2,
+    "A": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "a value of type never",
+      "where": "src/compiler/debug.ts:273:33",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    },
+    "B": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "a value of type never",
+      "where": "src/compiler/debug.ts:273:33",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    }
+  },
+  {
+    "unit": "src/compiler/utilities.ts:4475:1",
+    "name": "isJSDocConstructSignature",
+    "calls": 1,
+    "A": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "where": "src/compiler/binder.ts:2258:13",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    },
+    "B": {
+      "outcome": "stopped",
+      "status": "attempted",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "where": "src/compiler/binder.ts:2258:13",
+      "kind": "NotYet",
+      "checker_diagnostics": []
+    }
+  },
+  {
+    "unit": "src/compiler/utilitiesPublic.ts:865:1",
+    "name": "identifierToKeywordKind",
+    "calls": 1,
+    "A": {
+      "outcome": "lowers",
+      "status": "attempted",
+      "reason": null,
+      "where": null,
+      "kind": null,
+      "checker_diagnostics": []
+    },
+    "B": {
+      "outcome": "lowers",
+      "status": "attempted",
+      "reason": null,
+      "where": null,
+      "kind": null,
+      "checker_diagnostics": []
+    }
+  }
+]

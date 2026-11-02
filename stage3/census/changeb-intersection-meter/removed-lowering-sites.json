@@ -1,0 +1,8 @@
+[
+  {
+    "kind": "NotYet",
+    "where": "/workspace/scratch/tree/src/compiler/core.ts:1784:32",
+    "reason": "a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression",
+    "text": "/workspace/scratch/tree/src/compiler/core.ts:1784:32: stage 0 can't lower a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression yet"
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "command": [
+    "timeout",
+    "--kill-after=60s",
+    "5400",
+    "/workspace/scratch/census-B",
+    "/workspace/scratch/tree/src/compiler",
+    "/workspace/scratch/evidence/stage3/census/changeb-intersection-meter/B.jsonl"
+  ],
+  "wall_seconds": 1015.994187409,
+  "peak_rss_kib": 5918008,
+  "user_seconds": 1181.227751,
+  "system_seconds": 15.851513,
+  "exit_status": 0
+}
