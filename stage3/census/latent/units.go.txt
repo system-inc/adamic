@@ -113,6 +113,7 @@ func latentFull(ctx context.Context, program *load.Program, emit func(LatentFile
 }
 
 func latentFullSelected(ctx context.Context, program *load.Program, emit func(LatentFile), selection *latentReplaySelection) {
+	defer func() { latentEntriesShare = nil }()
 	for _, file := range program.Files() {
 		if selected := os.Getenv("LATENT_ONLY_FILE"); selected != "" && program.FileName(file) != selected { continue }
 		if selection != nil && file != selection.file {
@@ -122,8 +123,11 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
 		latentFindingOwner, latentFindingPhase = program.Where(file.AsNode()), "refusal_scan"
 		record := LatentFile{Measurement: LatentMeasurementLabel, File: program.FileName(file), Declarations: latentDeclarations(program, file), Units: []LatentUnit{}}
 		checker, release := program.Checker(ctx, file)
+		// Every lowering of this file, its units' snapshots of base included, shares the file's record answers
+		// (lower.go.txt's latentEntriesShare, #wd9wpyk); statecopy passes entriesRecords through to each snapshot.
+		latentEntriesShare = latentEntriesFile()
 		fresh := func() *lowering {
-			return &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
+			return &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1, entriesRecords: latentEntriesShare.literals}
 		}
 		if selection == nil {
 			func() {

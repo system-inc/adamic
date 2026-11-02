@@ -239,7 +239,50 @@ func Latent(ctx context.Context, program *load.Program, emit func(LatentFile)) {
     }
 }
 
+// latentEntriesShare holds the record answers of the file being measured, so every lowering of that file computes them
+// once, not once a unit (#wd9wpyk): literals is entriesRecordLiteral's memo, which every lowering of the file is made
+// with as its entriesRecords, and known and records are entriesProgramHasRecords' answer. Each is the program's and the
+// file's checker's alone. entriesRecordLiteral says so of its own answer, which is why a lowering already keeps it per
+// literal whatever it lowers next; entriesProgramHasRecords' walk is moduleOrder of the program's first file and that
+// answer asked of each object literal. A real build asks each once, of its one lowering; the census made a lowering a
+// unit, and each unit asked both again, every literal's answer a walk of the whole program. latentRun and
+// latentFullSelected start a share per file, since the checker is the file's. A nil share (the speculative census)
+// computes as main does.
+type latentEntriesAnswer struct {
+	literals       map[*ast.Node]bool
+	known, records bool
+}
+
+var latentEntriesShare *latentEntriesAnswer
+
+func latentEntriesFile() *latentEntriesAnswer {
+	return &latentEntriesAnswer{literals: map[*ast.Node]bool{}}
+}
+
+// latentEntriesProgramWalks counts the walks a share didn't answer, for the census's own tests.
+var latentEntriesProgramWalks int
+
+// entriesProgramRecordsWalk is main's walk (make_overlay.py renames it latentEntriesProgramRecordsWalkRaw) behind the
+// file's share. A lowering the share answers still runs the walk's first act, moduleOrder of the program's first file,
+// since that sets the lowering's cyclicModules and provenModuleReads, which later reads in the unit see. The rest of
+// the walk leaves only entriesRecordLiteral's memo, which is the file's shared one, already holding what the first walk
+// put there. The share is written only once the walk returns, so a walk that panics leaves the next lowering to walk.
+func (l *lowering) entriesProgramRecordsWalk() bool {
+	share := latentEntriesShare
+	if share != nil && share.known {
+		_, _ = l.moduleOrder(l.program.Files()[0])
+		return share.records
+	}
+	latentEntriesProgramWalks++
+	records := l.latentEntriesProgramRecordsWalkRaw()
+	if share != nil {
+		share.known, share.records = true, records
+	}
+	return records
+}
+
 func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)) {
+	defer func() { latentEntriesShare = nil }()
 	if latentSpeculativeEnabled() {
 		latentSpeculative(ctx, program, emit)
 		return
@@ -260,8 +303,9 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 		latentFindingOwner, latentFindingPhase = program.Where(file.AsNode()), "refusal_scan"
 		record := LatentFile{Measurement: LatentMeasurementLabel, File: program.FileName(file), Declarations: latentDeclarations(program, file), Units: []LatentUnit{}}
 		checker, release := program.Checker(ctx, file)
+		latentEntriesShare = latentEntriesFile()
 		fresh := func() *lowering {
-			return &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1, sourceIdentities: identities}
+			return &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1, sourceIdentities: identities, entriesRecords: latentEntriesShare.literals}
 		}
 		func() {
 			defer func() {

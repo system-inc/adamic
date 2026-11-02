@@ -37,6 +37,7 @@ var overlayAnchors = []overlayAnchor{
 	{"locals.go", "func (l *lowering) declareLocal(name *ast.Node) (int, error) {", true, "129, 135"},
 	{"expression.go", "func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {", true, "130, 135"},
 	{"functions.go", "\tpending := l.signed[index]", true, "148-149"},
+	{"entries_records.go", "func (l *lowering) entriesProgramRecordsWalk() bool {", true, "158-160"},
 }
 
 // overlayAnchorGaps is every make_overlay.py text edit the internal/lower files read reach would miss, in the
@@ -102,6 +103,7 @@ func TestMakeOverlayTextEditsHoldOnMainLower(t *testing.T) {
 	// Reads: internal/lower/functions.go
 	// Reads: internal/lower/generic.go
 	// Reads: internal/lower/locals.go
+	// Reads: internal/lower/entries_records.go
 	if gaps := overlayAnchorGaps(readMainLower); len(gaps) > 0 {
 		t.Fatalf("make_overlay.py's text edits miss main's internal/lower:\n%s", strings.Join(gaps, "\n"))
 	}
@@ -116,6 +118,7 @@ func TestMakeOverlayTextEditsNameAReshape(t *testing.T) {
 	// Reads: internal/lower/functions.go
 	// Reads: internal/lower/generic.go
 	// Reads: internal/lower/locals.go
+	// Reads: internal/lower/entries_records.go
 	mutants := []struct {
 		name   string
 		file   string

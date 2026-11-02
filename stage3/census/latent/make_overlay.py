@@ -153,6 +153,11 @@ source = source.replace(needle, '\tif latentPieceSkipBody(declaration) { return 
 output.write_text(source)
 overlay('internal/lower/latent_progress.go', (territory / 'progress.go.txt').read_text())
 overlay('internal/lower/latent_speculative.go', (territory / 'speculative.go.txt').read_text())
+# A file's lowerings share entriesProgramHasRecords' walk through lower.go.txt's entriesProgramRecordsWalk (#wd9wpyk).
+records = (repository / 'internal/lower/entries_records.go').read_text()
+needle = 'func (l *lowering) entriesProgramRecordsWalk() bool {'
+assert records.count(needle) == 1, 'entries program walk'
+overlay('internal/lower/entries_records.go', records.replace(needle, 'func (l *lowering) latentEntriesProgramRecordsWalkRaw() bool {'))
 
 # Clean imports after every rewrite, including files subsequently extended above.
 subprocess.run(['go', 'run', str(territory / 'importclean'),

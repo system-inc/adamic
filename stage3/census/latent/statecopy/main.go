@@ -240,6 +240,11 @@ func generate(repository, lowerInput string) []byte {
 						// Shared on purpose: a cache of identities that are functions of the program alone, one map for
 						// every lowering of a latent run (lower.go.txt's latentRun), so a copy reads and fills the same one.
 						expr = "value." + id.Name
+					} else if name == "lowering" && id.Name == "entriesRecords" && printed(field.Type) == "map[*ast.Node]bool" {
+						// Shared on purpose: entriesRecordLiteral's memo, answers of the program and the file's checker
+						// alone, one map for every lowering of a file (lower.go.txt's latentEntriesShare, #wd9wpyk), so a
+						// unit's snapshot reads and fills the file's one.
+						expr = "value." + id.Name
 					} else {
 						expr = g.copyField(name, id, field)
 					}

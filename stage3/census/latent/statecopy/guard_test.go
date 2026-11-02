@@ -66,6 +66,9 @@ func TestLatentStatecopyCoversEveryLoweringStateField(t *testing.T) {
 					if name == "lowering" && id.Name == "sourceIdentities" && printed(field.Type) == "map[*ast.Node]ir.SourceIdentity" {
 						continue
 					}
+					if name == "lowering" && id.Name == "entriesRecords" && printed(field.Type) == "map[*ast.Node]bool" {
+						continue
+					}
 					func() {
 						defer func() {
 							if failure := recover(); failure != nil {
@@ -184,5 +187,25 @@ func TestLatentStatecopyNamesEveryPrivateIRField(t *testing.T) {
 		if !strings.Contains(generated, want) {
 			t.Errorf("the generated copier lacks %s", want)
 		}
+	}
+}
+
+// entriesRecords is passed through as sourceIdentities is: a unit's snapshot reads and fills the one memo every lowering
+// of its file shares (#wd9wpyk). Mutant: the generator's entriesRecords case dropped, so the copy gets
+// result.entriesRecords from a fresh map and a unit's answers never reach the file's.
+func TestLatentStatecopySharesEntriesRecords(t *testing.T) {
+	t.Parallel()
+	// Reads: internal/lower/*.go
+	// Reads: internal/ir/*.go
+	root, err := filepath.Abs("../../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	result := string(generate(root, filepath.Join(root, "internal/lower/lower.go")))
+	if !strings.Contains(result, "func latentCopy_lowering(") {
+		t.Fatal("no lowering copier was generated")
+	}
+	if strings.Contains(result, "result.entriesRecords=") || strings.Contains(result, "result.entriesRecords =") {
+		t.Fatal("the lowering copier deep-copies entriesRecords, which every lowering of a latent file shares")
 	}
 }
