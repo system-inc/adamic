@@ -23,7 +23,7 @@ func (l *lowering) recordDivergenceRefusal(node *ast.Node) error {
 			}
 		}
 	}
-	if !l.recordTarget(node) || l.recordReadDiscarded(node) || l.recordReadOwnGuarded(node) {
+	if !l.recordReadTarget(node) || l.recordReadDiscarded(node) || l.recordReadOwnGuarded(node) {
 		return nil
 	}
 	at := node
