@@ -63,6 +63,9 @@ class ApplyCheckoutTests(unittest.TestCase):
             shutil.copytree(APPLY.pinned_packages(ROOT / 'stage3/api'), source / 'stage3/api/node_modules',
                             symlinks=True)
             table = source / 'stage3/patch-set.md'
+            # copy2 keeps the runner's mode bits, and a Loom runner's source tree is read-only, so the seeded table
+            # gets its owner's write bit back before the test edits it.
+            table.chmod(table.stat().st_mode | 0o200)
             table.write_text(table.read_text() + '\n<!-- Deliberately stale test table. -->\n')
             git = ['git', '-C', str(source), '-c', 'user.name=Apply test', '-c', 'user.email=apply-test@example.invalid']
             environment = dict(os.environ, GIT_CONFIG_GLOBAL=os.devnull, GIT_CONFIG_NOSYSTEM='1')
