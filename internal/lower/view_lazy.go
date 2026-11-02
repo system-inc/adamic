@@ -175,6 +175,14 @@ func (l *lowering) checkLazyViewReads() error {
 func viewedAllocations(program *ir.Program, throughSpreads bool) (*allocationFlowGraph, map[int]bool, bool) {
 	assignAllocationSites(program)
 	graph := newAllocationFlowGraph(program)
+	viewed, unknown := graph.viewedFrom(program.ViewOrigins, throughSpreads)
+	return graph, viewed, unknown
+}
+
+// viewedFrom is viewedAllocations from the given origins only, on a graph whose program already
+// numbers its allocation sites: what one view reaches, where viewedAllocations is what every view
+// does (class_accessors.go judges a getter against one view's origin by it).
+func (graph *allocationFlowGraph) viewedFrom(origins []ir.Expression, throughSpreads bool) (map[int]bool, bool) {
 	viewed := map[int]bool{}
 	unknown := false
 	queue := []int{}
@@ -187,7 +195,7 @@ func viewedAllocations(program *ir.Program, throughSpreads bool) (*allocationFlo
 			}
 		}
 	}
-	for _, origin := range program.ViewOrigins {
+	for _, origin := range origins {
 		add(graph.ReachingAllocations(origin))
 	}
 	index := graph.projectionIndex()
@@ -219,7 +227,7 @@ func viewedAllocations(program *ir.Program, throughSpreads bool) (*allocationFlo
 			}
 		}
 	}
-	return graph, viewed, unknown
+	return viewed, unknown
 }
 
 // A checked field read is emitted either through the union adapter, whose contracts are unions,

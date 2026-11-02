@@ -107,6 +107,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, source, target *che
 		return nil, err
 	}
 	var refused error
+	var getters []*ast.Node
 	var visit ast.Visitor
 	visit = func(part *ast.Node) bool {
 		if refused != nil {
@@ -131,8 +132,10 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, source, target *che
 				}
 			}
 		}
+		// A getter named as a contract field is judged by what can reach this view, once lowering
+		// is done (refuseReachedContractGetters), never by its name alone (#c7w6j0y).
 		if part.Kind == ast.KindGetAccessor && part.Name() != nil && fields[part.Name().Text()] {
-			refused = l.notYet(part, "a getter in a checked field contract")
+			getters = append(getters, part)
 		}
 		if refused == nil {
 			part.ForEachChild(visit)
@@ -144,6 +147,9 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, source, target *che
 	}
 	if refused != nil {
 		return nil, refused
+	}
+	if len(getters) != 0 {
+		l.contractGetters = append(l.contractGetters, contractGetters{origin: value, getters: getters})
 	}
 	l.result.ViewOrigins = append(l.result.ViewOrigins, value)
 	l.graphViewSite = node
@@ -288,13 +294,15 @@ func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *check
 		return nil, err
 	}
 	var found error
+	var getters []*ast.Node
 	var visit ast.Visitor
 	visit = func(part *ast.Node) bool {
 		if found != nil {
 			return true
 		}
+		// As view's: judged by reach once lowering is done (refuseReachedContractGetters).
 		if part.Kind == ast.KindGetAccessor && part.Name() != nil && fields[part.Name().Text()] {
-			found = l.notYet(part, "a getter in a checked field contract")
+			getters = append(getters, part)
 		}
 		if part.Kind == ast.KindObjectBindingPattern {
 			for _, binding := range part.AsBindingPattern().Elements.Nodes {
@@ -339,6 +347,9 @@ func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *check
 	}
 	if err := l.refuseViewElementReads(fields); err != nil {
 		return nil, err
+	}
+	if len(getters) != 0 {
+		l.contractGetters = append(l.contractGetters, contractGetters{origin: value, getters: getters})
 	}
 	if l.result.CheckedFields == nil {
 		l.result.CheckedFields = map[string]bool{}
