@@ -1,0 +1,7 @@
+// Object.keys of an Error subclass's instance through a structural view, in a program with no catch: Node prints 0.
+// A tripwire: today the class stops at its base, before errorMayHide is asked (TestErrorSubclassStaysNotYet).
+class Bad extends Error {}
+function show(seen: { message: string }): void {
+	console.log(`${Object.keys(seen).length}`);
+}
+show(new Bad('x'));

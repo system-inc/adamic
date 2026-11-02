@@ -113,7 +113,7 @@ func (l *lowering) objectPrototypeCallArguments(node, receiver *ast.Node, name s
 	if name == "isPrototypeOf" {
 		return nil, true, &Refused{Where: l.program.Where(node), What: "isPrototypeOf", Fix: "Adamic has no observable prototype chain; use instanceof for class identity or an explicit discriminant"}
 	}
-	if name != "valueOf" && l.isLibraryType(l.checker.GetTypeAtLocation(receiver), "Error") {
+	if name != "valueOf" && l.isLibraryType(l.checker.GetTypeAtLocation(receiver), errorClasses...) {
 		return nil, true, l.notYet(node, name+" on Error (its prototype and non-enumerable own descriptors differ from plain objects)")
 	}
 	of, _ := l.representation(l.checker.GetTypeAtLocation(receiver))
@@ -291,8 +291,8 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 
 // errorMayHide reports whether receiver may hold an Error. Node keeps an Error's message as an own property
 // it doesn't enumerate, and its name on the prototype, where natively both are fields like any other's, so
-// no road that walks or tests own properties tells the truth about one yet. An Error made in the source
-// may hide when its type fits receiver's. One the runtime made, from a failing host call or a brand check,
+// no road that walks or tests own properties tells the truth about one yet. An Error made in the source,
+// by new Error or any other of errorClasses, may hide when its type fits receiver's. One the runtime made, from a failing host call or a brand check,
 // has no such node, so it may hide whenever the library's Error fits receiver's type and the program can
 // take one: a catch that binds what it caught, or a Promise's rejection handler. prototypeHazard decides
 // its own Error case here, so the two can't drift. This deliberately errs toward refusal.
@@ -310,7 +310,7 @@ func (l *lowering) errorMayHide(receiver *ast.Node) bool {
 		}
 		if node.Kind == ast.KindNewExpression || node.Kind == ast.KindCallExpression {
 			shape := l.checker.GetTypeAtLocation(node)
-			if l.isLibraryType(shape, "Error") && l.checker.IsTypeAssignableTo(shape, view) {
+			if l.isLibraryType(shape, errorClasses...) && l.checker.IsTypeAssignableTo(shape, view) {
 				made = true
 				return true
 			}

@@ -1,0 +1,4 @@
+// Object.keys of a TypeError: Node enumerates none of an Error's own properties, so this isn't lowered
+// until a keys path can say so (#bbhwj30).
+const made = new TypeError('k');
+console.log(`${Object.keys(made).length}`);

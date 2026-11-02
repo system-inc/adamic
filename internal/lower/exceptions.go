@@ -10,7 +10,29 @@ import (
 
 // Exceptions (docs/memory.md, "Exceptions, designed into counting"): throw new Error(message), a
 // caught error thrown again, and try with catch, finally or both. What's thrown is only ever an
-// Error, made by new Error or caught, since a catch binds unknown and 0.2 has no value of every kind.
+// Error, made by new Error (or a built-in subclass, new TypeError among them) or caught, since a catch
+// binds unknown and 0.2 has no value of every kind. Any other thrown value is NotYet, never refused
+// (docs/0.1.md's exceptions row, ruled October 19).
+
+// errorClasses are the built-in Error classes new makes, each an Error whose name slot holds the
+// class's name. Each one's message and name, caught and uncaught, agree with Node natively and on the
+// JavaScript backend (internal/oracle/throw_type_error_test.go), and every check that keeps an Error off
+// a plain object's paths (its name and message reads, its prototype methods, Object.keys) takes them all.
+var errorClasses = []string{"Error", "TypeError", "RangeError", "ReferenceError", "SyntaxError"}
+
+// errorClass names the built-in Error class a new expression makes, or "" for any other node.
+func (l *lowering) errorClass(node *ast.Node) string {
+	node = ast.SkipParentheses(node)
+	if node.Kind != ast.KindNewExpression {
+		return ""
+	}
+	for _, class := range errorClasses {
+		if l.isLibraryGlobal(node.AsNewExpression().Expression, class) {
+			return class
+		}
+	}
+	return ""
+}
 
 // tryRecord is a try statement lowered, for the checks made once every function is: where it is,
 // and its body.
@@ -22,7 +44,7 @@ type tryRecord struct {
 // throwStatement lowers throw.
 func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
 	thrown := ast.SkipParentheses(node.AsThrowStatement().Expression)
-	isNewError := thrown.Kind == ast.KindNewExpression && l.isLibraryGlobal(thrown.AsNewExpression().Expression, "Error")
+	isNewError := l.errorClass(thrown) != ""
 	isCaught := ast.IsIdentifier(thrown) && l.caught[l.symbol(thrown)]
 	// Error is structurally typed: { name, message, stack } can satisfy it without
 	// being an Error on Node. Follow only immutable bindings to a real allocation.
@@ -34,7 +56,7 @@ func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
 		}
 		value = ast.SkipParentheses(value)
 		if value.Kind == ast.KindNewExpression {
-			return l.isLibraryGlobal(value.AsNewExpression().Expression, "Error")
+			return l.errorClass(value) != ""
 		}
 		if !ast.IsIdentifier(value) {
 			return false
@@ -50,12 +72,14 @@ func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
 		}
 		return madeError(declaration.AsVariableDeclaration().Initializer)
 	}
-	isStoredError := !isNewError && !isCaught && l.isLibraryType(l.checker.GetTypeAtLocation(thrown), "Error") && madeError(thrown)
+	isStoredError := !isNewError && !isCaught && l.isLibraryType(l.checker.GetTypeAtLocation(thrown), errorClasses...) && madeError(thrown)
 	if !isNewError && !isCaught && !isStoredError {
-		if l.isLibraryType(l.checker.GetTypeAtLocation(thrown), "Error") {
+		if l.isLibraryType(l.checker.GetTypeAtLocation(thrown), errorClasses...) {
 			return nil, l.notYet(thrown, "throwing an Error that isn't made where it's thrown or caught by the catch around it")
 		}
-		return nil, &Refused{Where: l.program.Where(thrown), What: "throwing a " + l.checker.TypeToString(l.checker.GetTypeAtLocation(thrown)), Fix: "throw an Error: throw new Error(String(value)); what a catch takes is unknown, and an Error is what it can be sure of"}
+		// Any value may be thrown (docs/0.1.md, ruled October 19): until the runtime carries one that
+		// isn't an Error, it isn't built yet, never refused.
+		return nil, l.notYet(thrown, "throwing a "+l.checker.TypeToString(l.checker.GetTypeAtLocation(thrown)))
 	}
 	value, err := l.expression(thrown)
 	if err != nil {
@@ -64,13 +88,15 @@ func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
 	return []ir.Statement{ir.Throw{Value: value}}, nil
 }
 
-// newError lowers new Error(message), and new Error().
+// newError lowers new Error(message), and new Error(), or one of the other errorClasses, whose name
+// goes in the error's name slot.
 func (l *lowering) newError(node *ast.Node) (ir.Expression, error) {
 	created := node.AsNewExpression()
+	class := l.errorClass(node)
 	message := ir.Expression(ir.Undefined{Of: ir.String})
 	if created.Arguments != nil && len(created.Arguments.Nodes) > 0 {
 		if len(created.Arguments.Nodes) > 1 {
-			return nil, l.notYet(node, "new Error with options")
+			return nil, l.notYet(node, "new "+class+" with options")
 		}
 		var err error
 		if message, err = l.expression(created.Arguments.Nodes[0]); err != nil {
@@ -78,10 +104,13 @@ func (l *lowering) newError(node *ast.Node) (ir.Expression, error) {
 		}
 		message = fit(message, ir.String)
 		if message.Type() != ir.String {
-			return nil, l.notYet(node, "new Error with a message that isn't a string")
+			return nil, l.notYet(node, "new "+class+" with a message that isn't a string")
 		}
 	}
-	return ir.MakeError{Message: message}, nil
+	if class == "Error" {
+		return ir.MakeError{Message: message}, nil
+	}
+	return ir.MakeError{Message: message, Name: ir.StringConstant{Index: l.constant(class)}}, nil
 }
 
 // tryStatement lowers try, with catch, finally or both.
