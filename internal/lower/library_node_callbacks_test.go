@@ -2,8 +2,8 @@ package lower
 
 import (
 	"context"
+	"errors"
 	"maps"
-	"os"
 	"slices"
 	"strings"
 	"testing"
@@ -13,33 +13,144 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
-// nodeHostViewReach follows a method's result and not its parameters, because no registered member
-// hands the program a host object through a callback (#8k12t4s). That's a claim about the
-// registrations, so this holds it: every name RegisterNodeLibraryMembers filled is resolved to its
-// declaration in the Node library files, and for each call signature, each parameter that's callable
-// is read for a callback parameter that's a host object per nodeHostObject. One that is fails here
-// before a view of it reaches native. ADAMIC_HOST_CALLBACK_MUTANT=1 registers Writable.on, whose
-// "pipe" listener is handed the Readable piped in, and the test must go red.
-func TestNodeRegisteredCallbacksHandNoHostObject(t *testing.T) {
+// Every registered callback which hands out a host object must judge the listener's view.
+// In particular an opaque listener must not reach the dynamic-property path. The concrete
+// parameter and nested-function direction are pinned below; Writable.on is the planted control.
+func TestNodeRegisteredCallbacksJudgeHandedHostObjects(t *testing.T) {
 	t.Parallel()
-	registered := maps.Clone(implementedNodeMembers)
-	if os.Getenv("ADAMIC_HOST_CALLBACK_MUTANT") == "1" {
-		registered["node:stream.Writable.on"] = true
-	}
+	registered := implementedNodeMembers
 	l, resolved := nodeRegisteredDeclarations(t, registered)
+	var opaque *checker.Type
+	for _, statement := range l.program.Files()[0].Statements.Nodes {
+		if statement.Kind == ast.KindVariableStatement {
+			for _, declaration := range statement.AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes {
+				if declaration.Name().Text() == "nodeCallbackOpaque" {
+					opaque = l.checker.GetTypeAtLocation(declaration.Name())
+				}
+			}
+		}
+	}
+	if opaque == nil {
+		t.Fatal("opaque listener probe missing")
+	}
+	judged := 0
 	for _, name := range slices.Sorted(maps.Keys(resolved)) {
-		if handed := l.nodeCallbackHostObject(resolved[name]); handed != "" {
-			t.Errorf("%s hands the program %s through a callback: follow parameters contravariantly in nodeHostViewReach, or keep it out", name, handed)
+		for _, signature := range append(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(resolved[name]), checker.SignatureKindCall), l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(resolved[name]), checker.SignatureKindConstruct)...) {
+			for _, parameter := range signature.Parameters() {
+				callback := l.checker.GetNonNullableType(l.checker.GetTypeOfSymbol(parameter))
+				if l.nodeHeldHostObjectInParameters(callback) == "" {
+					continue
+				}
+				judged++
+				if reached := l.nodeHostViewAt(opaque, callback); reached == "" {
+					t.Errorf("%s hands out a host object without judging its listener parameters", name)
+				}
+			}
 		}
 	}
-	var unresolved []string
-	for name := range registered {
-		if _, ok := resolved[name]; !ok {
-			unresolved = append(unresolved, name)
+	t.Logf("%d registered names, %d resolved, %d host-object callback signatures judged", len(registered), len(resolved), judged)
+}
+
+func TestNodeHostCallbackParameterViews(t *testing.T) {
+	t.Parallel()
+	prefix := `import type {Stats} from 'node:fs';
+ function hand(listener: (curr:Stats)=>void): void {}`
+	for _, probe := range []struct{ name, parameter, want string }{
+		{"honest", "Stats", ""},
+		{"h11", "{ blocks:number }", "node:fs.StatsBase.blocks"},
+		{"any", "any", "any"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			_, err := lowerSource(t, prefix+`function listener(curr: `+probe.parameter+`):void{} hand(listener);`)
+			if probe.want == "" {
+				if err != nil {
+					t.Fatal(err)
+				}
+				return
+			}
+			var notYet *NotYet
+			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.want) {
+				t.Fatalf("want NotYet %q, got %v", probe.want, err)
+			}
+		})
+	}
+}
+
+// These types are checker probes, not extra library registrations. Each function layer swaps
+// direction: the host callback accepts a function supplied by the listener; its result hands
+// Stats back, while that function's parameter travels from the listener to the host.
+func TestNodeHostCallbackDirectionAndSignaturePositions(t *testing.T) {
+	t.Parallel()
+	probes := []struct {
+		name, own, view string
+		reject          bool
+	}{
+		{"parameter", "(x:{blocks:number})=>void", "(x:Stats)=>void", true},
+		{"opaque-result-unchanged", "Stats", "unknown", false},
+		{"opaque-nested-parameter", "(x:{nested:any})=>void", "(x:{nested:Stats})=>void", true},
+		{"construct", "new (x:{blocks:number})=>object", "new (x:Stats)=>object", true},
+		{"intersection", "((x:{blocks:number})=>void)&{tag:number}", "(x:Stats)=>void", true},
+		{"depth", "(x:{blocks:number}[][][][][][][][][][])=>void", "(x:Stats[][][][][][][][][][])=>void", true},
+		{"unknown", "(x:unknown)=>void", "(x:Stats)=>void", true},
+		{"any", "(x:any)=>void", "(x:Stats)=>void", true},
+		{"nested-result", "(f:()=>{blocks:number})=>void", "(f:()=>Stats)=>void", true},
+		{"nested-parameter", "(f:(x:Stats)=>void)=>void", "(f:(x:{blocks:number})=>void)=>void", true},
+		{"nested-honest", "(f:(x:Stats)=>Stats)=>void", "(f:(x:Stats)=>Stats)=>void", false},
+		{"optional", "(x?:{blocks:number})=>void", "(x?:Stats)=>void", true},
+		{"rest", "(...x:{blocks:number}[])=>void", "(...x:Stats[])=>void", true},
+		{"tuple-rest", "(...x:[number,{blocks:number}])=>void", "(...x:[number,Stats])=>void", true},
+		{"tuple-rest-honest", "(...x:[number,Stats])=>void", "(...x:[number,Stats])=>void", false},
+		{"tuple-rest-empty", "(...x:[])=>void", "(x:Stats)=>void", false},
+		{"ignored-parameter", "(x:number)=>void", "(x:number,stat:Stats)=>void", false},
+		{"overload", "{(x:Stats):void;(x:{blocks:number}):void}", "(x:Stats)=>void", true},
+		{"generic", "<T>(x:T)=>void", "(x:Stats)=>void", true},
+		{"indexed-parameter", "<K extends 'stat'>(x:{stat:Stats}[K])=>void", "(x:Stats)=>void", true},
+		{"indexed-handed", "(x:unknown)=>void", "<K extends 'stat'>(x:{stat:Stats}[K])=>void", true},
+		{"indexed-nested", "<K extends 'stat'>(x:{nested:{stat:Stats}[K]})=>void", "(x:{nested:Stats})=>void", true},
+		{"constrained-generic", "<T extends Stats>(x:T)=>void", "(x:Stats)=>void", true},
+		{"handed-constraint", "(x:unknown)=>void", "<T extends Stats>(x:T)=>void", true},
+		{"any-rest", "(...x:any[])=>void", "(x:Stats)=>void", true},
+	}
+	for _, probe := range probes {
+		t.Run(probe.name, func(t *testing.T) {
+			source := `import type {Stats} from 'node:fs'; declare const own: ` + probe.own + `; declare const view: ` + probe.view + `;`
+			program, err := load.Load([]string{writeAgreementSource(t, "main.ts", source)})
+			if err != nil {
+				t.Fatal(err)
+			}
+			checked, release := program.Checker(context.Background(), program.Files()[0])
+			defer release()
+			l := &lowering{program: program, checker: checked}
+			types := map[string]*checker.Type{}
+			var visit ast.Visitor
+			visit = func(n *ast.Node) bool {
+				if n.Kind == ast.KindVariableDeclaration {
+					types[n.Name().Text()] = checked.GetTypeAtLocation(n.Name())
+				}
+				n.ForEachChild(visit)
+				return false
+			}
+			program.Files()[0].AsNode().ForEachChild(visit)
+			if types["own"] == nil || types["view"] == nil {
+				t.Fatal("probe types missing")
+			}
+			reached := l.nodeHostViewAt(types["own"], types["view"])
+			if (reached != "") != probe.reject {
+				t.Fatalf("reject=%v, got %q", probe.reject, reached)
+			}
+		})
+	}
+}
+
+func (l *lowering) nodeHeldHostObjectInParameters(callback *checker.Type) string {
+	for _, called := range append(l.checker.GetSignaturesOfType(callback, checker.SignatureKindCall), l.checker.GetSignaturesOfType(callback, checker.SignatureKindConstruct)...) {
+		for _, handed := range called.Parameters() {
+			if host := l.nodeHeldHostObject(l.checker.GetTypeOfSymbol(handed), 0); host != nil {
+				return l.checker.TypeToString(host)
+			}
 		}
 	}
-	slices.Sort(unresolved)
-	t.Logf("%d registered names, %d resolved to a Node library declaration and read; these resolve to none: %s", len(registered), len(resolved), strings.Join(unresolved, ", "))
+	return ""
 }
 
 // The check above can find what it looks for: Writable.on's "pipe" listener is handed a Readable.
@@ -63,6 +174,7 @@ func nodeRegisteredDeclarations(t *testing.T, registered map[string]bool) (*lowe
 		`import { readFileSync } from "node:fs";`, `import { cwd } from "node:process";`, `import { performance } from "node:perf_hooks";`,
 		`import { createHash } from "node:crypto";`, `import { Buffer } from "node:buffer";`, `import { join } from "node:path";`,
 		`import { tmpdir } from "node:os";`, `import { Writable } from "node:stream";`, `import { Socket } from "node:net";`,
+		`declare const nodeCallbackOpaque: (...args: unknown[]) => void;`,
 		`console.log(cwd() + join(tmpdir(), "a") + String(performance.now() >= 0) + String(Buffer.from("a").length) + createHash("sha256").update("a").digest("hex") + String(readFileSync === undefined) + String(Writable === undefined) + String(Socket === undefined));`,
 	}, "\n")
 	program, err := load.Load([]string{writeAgreementSource(t, "main.ts", source)})
