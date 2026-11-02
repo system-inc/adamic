@@ -1,12 +1,16 @@
 package buildcache
 
 import (
+	"encoding/json"
 	"os"
 	"path/filepath"
+	"runtime/debug"
 	"slices"
 	"strings"
 	"sync"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // testReadsRig is a rig whose run journals this process afresh, as a traced test's process always does: the journal's
@@ -292,5 +296,119 @@ func TestARefusedBuildsReadsStayInTheTestReadSet(t *testing.T) {
 	}
 	if !strings.HasPrefix(settlement.TestReads, "no test read set: ") || !strings.Contains(settlement.TestReads, "scratch.txt") || testReadsReport(settlement) != nil {
 		t.Fatalf("a refused build's untracked read: test reads %q", settlement.TestReads)
+	}
+}
+
+// A product test that builds and finds no product journals nothing, and under Loom's --trace-binary its command is its
+// test binary: the run's set is recorded under the recipe of the binary's own package, read from the file the command
+// executed, and cmd/find finds it (#cb8bpe7, Node's ruling). A run under plain go test, whose command is go, records
+// none: go's build info names cmd/go, never the test's code. Mutant that fails it: the entry's package taken from
+// another package, which keys the set under a recipe no run of this binary asks for.
+// Not parallel: newRig, and it replaces recipeFor.
+func TestARunThatJournalsNothingIsKeyedByItsTestBinary(t *testing.T) {
+	binary, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
+	}
+	own, ok := debug.ReadBuildInfo()
+	if !ok || !strings.HasSuffix(own.Path, ".test") {
+		t.Fatalf("this test binary's build info names %+v, not a test binary's package", own)
+	}
+	goProgram, err := toolchain.Path("go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, command := range []struct {
+		name, program string
+		recorded      bool
+	}{{"the test binary", binary, true}, {"go", goProgram, false}} {
+		t.Run(command.name, func(t *testing.T) {
+			r := testReadsRig(t)
+			var asked []string
+			recipeFor = func(_ string, process journalEntry) recipe {
+				asked = append(asked, process.Package)
+				return recipe{entries: []readEntry{{Kind: "content", Path: "go.mod"}}}
+			}
+			r.add(r.pid, `execve(%q, [%q, "-test.run", "TestX"], 0x7ffd5e1c /* 3 vars */) = 0`, command.program, command.program)
+			r.open(r.pid, "notes.txt")
+			// Under go test, go runs the test binary as its child: the child's program is never the command's.
+			child := r.pid + 1
+			r.add(r.pid, `clone(child_stack=NULL, flags=SIGCHLD) = %d`, child)
+			r.add(child, `execve(%q, [%q], 0x7ffd5e1c /* 3 vars */) = 0`, binary, binary)
+			r.add(child, "+++ exited with 0 +++")
+			r.add(r.pid, "+++ exited with 0 +++")
+			settlement := r.settle(t)
+			if entries, _ := readJournal(r.trace); len(entries) != 0 {
+				t.Fatalf("the run journaled %+v, want nothing", entries)
+			}
+			t.Setenv("ADAMIC_BUILD_TRACE", "")
+			if !command.recorded {
+				if !strings.Contains(settlement.TestReads, "isn't a Go test binary") || testReadsReport(settlement) != nil || len(asked) != 0 {
+					t.Fatalf("a run whose command is go: test reads %q, recipes asked %q", settlement.TestReads, asked)
+				}
+				if finding := findTestReads(t); finding.Outcome != FindingMissing {
+					t.Fatalf("a run whose command is go left a test read set: %+v", finding)
+				}
+				return
+			}
+			if !strings.HasPrefix(settlement.TestReads, "test read set ") || !slices.Equal(asked, []string{own.Path}) {
+				t.Fatalf("test reads %q, recipes asked %q; want a set under %s's recipe", settlement.TestReads, asked, own.Path)
+			}
+			if finding := findTestReads(t); finding.Outcome != FindingFound || finding.Key != testReadsReport(settlement).Key {
+				t.Fatalf("an unchanged tree: %+v", finding)
+			}
+			write(t, r.root, "notes.txt", "another note\n")
+			if finding := findTestReads(t); finding.Outcome != FindingMissing || !strings.Contains(finding.Why, "notes.txt") {
+				t.Fatalf("a change to notes.txt, which the run read: %+v", finding)
+			}
+		})
+	}
+}
+
+// The recipe a test binary's file names is the one its journal names (#cb8bpe7, Node's condition): the entry read from
+// the file (commandEntry) and the one the binary journals for itself are byte for byte one line, so the two recipes are
+// one, and a set recorded from a run that journaled nothing keys under the name a journaled run of the same binary
+// asks for. Mutant that fails it: the file's settings dropped.
+// Not parallel: it sets ADAMIC_BUILD_TRACE and runs go list in the repository.
+func TestATestBinarysFileNamesTheRecipeItsJournalNames(t *testing.T) {
+	trace := t.TempDir()
+	t.Setenv("ADAMIC_BUILD_TRACE", trace)
+	journalProcess = sync.Once{}
+	t.Cleanup(func() { journalProcess = sync.Once{} })
+	journal(journalEntry{Event: "found"})
+	entries, err := readJournal(trace)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var journaled journalEntry
+	for _, entry := range entries {
+		if entry.Event == "process" && entry.Process == os.Getpid() {
+			journaled = entry
+		}
+	}
+	if !strings.HasSuffix(journaled.Package, ".test") || len(journaled.Settings) == 0 {
+		t.Fatalf("this test binary journaled %+v, want its package and settings", journaled)
+	}
+	state := &traceState{commandExecutable: journaled.Executable}
+	fromFile, why := state.commandEntry()
+	if why != "" {
+		t.Fatal(why)
+	}
+	fromFile.Process = journaled.Process
+	fileLine, _ := json.Marshal(fromFile)
+	journalLine, _ := json.Marshal(journaled)
+	if string(fileLine) != string(journalLine) {
+		t.Fatalf("the binary's file names\n%s\nits journal\n%s", fileLine, journalLine)
+	}
+	if recipeName(fromFile) != recipeName(journaled) {
+		t.Fatalf("recipe names differ: %q and %q", recipeName(fromFile), recipeName(journaled))
+	}
+	root := repositoryRootForTest(t)
+	fileRecipe, journalRecipe := recipeOf(root, fromFile), recipeOf(root, journaled)
+	if fileRecipe.reason != "" || journalRecipe.reason != "" {
+		t.Fatalf("a recipe was refused: %q, %q", fileRecipe.reason, journalRecipe.reason)
+	}
+	if fileRecipe.settings != journalRecipe.settings || !slices.Equal(sortedEntries(fileRecipe.entries), sortedEntries(journalRecipe.entries)) {
+		t.Fatalf("one binary's recipe two ways: settings %q and %q, %d and %d entries", fileRecipe.settings, journalRecipe.settings, len(fileRecipe.entries), len(journalRecipe.entries))
 	}
 }

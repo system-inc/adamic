@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"cmp"
 	"crypto/sha256"
+	"debug/buildinfo"
 	"encoding/hex"
 	"encoding/json"
 	"errors"
@@ -766,6 +767,10 @@ type traceState struct {
 	started              bool
 	// command is the command strace ran, the trace's first process; commandStatus its exit status, -1 until it exits.
 	command, commandStatus int
+	// commandExecutable is the program the command's process last executed, as the trace names it: under Loom's
+	// --trace-binary the test binary itself, whose build info names the recipe of a run that journaled nothing
+	// (commandEntry).
+	commandExecutable string
 	// runReads is everything the run read, the command's reads and every process's it started, taken as the command
 	// exits (snapshot), and runLast when each path was last read (#sfqdxvy). Nil until it exits.
 	runReads, runLast map[string]int
@@ -964,6 +969,9 @@ func (state *traceState) handle(call traceCall) {
 			return
 		}
 		kind = readKind(call.call, rest, failed)
+		if kind == readExec && process == state.command {
+			state.commandExecutable = name
+		}
 		if kind == readWrite || kind&readWrite != 0 {
 			if second := secondTarget(call.call, rest, state.directory[process]); second != "" {
 				state.record(call.pid, process, second, readWrite)
@@ -1861,11 +1869,13 @@ const productKeyKind = "product key"
 // outcome readSet, the name key and the marker's key, which Loom keeps to vouch with this set and no other. A product test that only finds products another
 // test built has no build, so no product's set holds the reads that decided the names it asked for; this set does: what
 // the command and every process it started read, keying aside and not what the run wrote before reading it (snapshot),
-// classed and keyed as a product's set is, with the recipe of the processes that journaled. A build's own reads aren't
+// classed and keyed as a product's set is, with the recipe of the processes that journaled, or of the Go test binary the
+// command ran when none did (commandEntry). A build's own reads aren't
 // the test's: each build that settled (keyed) stands in for its window by its product's key (#mmpt615). Recorded by recordUnion
 // beside a marker product under its key, so cmd/find finds it exactly when every value the run read is what it was. Only
 // a run that can stand for the test's next run is recorded: nothing lost, the command exited 0, and every process that
-// journaled ran one recipe; any other records nothing, and its test runs.
+// journaled ran one recipe, or none journaled and the command ran a test binary; any other records nothing, and its
+// test runs.
 func (state *traceState) recordTestReads(settlement *Settlement, nameKey string, processes map[int]journalEntry, recipes map[string]recipe, products map[string]string, productEnds map[string]int, keyed map[string]string) {
 	settlement.TestReads = state.testReads(settlement, nameKey, processes, recipes, products, productEnds, keyed)
 }
@@ -1894,7 +1904,16 @@ func (state *traceState) testReads(settlement *Settlement, nameKey string, proce
 		}
 	}
 	if name == "" {
-		return none("no process of the run keyed a product, so no recipe names the code it ran")
+		// A test that builds and finds no product journals nothing, and under Loom's --trace-binary its command is its
+		// test binary, so the binary names the code it ran (#cb8bpe7, Node's ruling): its file's build info, taken as the
+		// binary's own journal entry takes it, so the set keys under the recipe a journaled run of it asks for.
+		own, why := state.commandEntry()
+		if why != "" {
+			return none("no process of the run keyed a product, and " + why)
+		}
+		processes = map[int]journalEntry{state.command: own}
+		name = recipeName(own)
+		facts.executables[own.Executable] = true
 	}
 	if _, ok := recipes[name]; !ok {
 		for _, process := range processes {
@@ -1940,6 +1959,24 @@ func (state *traceState) testReads(settlement *Settlement, nameKey string, proce
 	}
 	settlement.Reports = append(settlement.Reports, Report{Name: TestReadSetName, NameKey: nameKey, Key: evaluated.key, Outcome: ReportReadSet, Reads: len(set.Entries)})
 	return fmt.Sprintf("test read set %s: %d reads", evaluated.key[:12], len(set.Entries))
+}
+
+// commandEntry is the journal entry of the program the run's command executed, read from its file as processEntry reads
+// a process's own, or why there is none: the trace names no program, its file holds no Go build info, or it isn't a Go
+// test binary (go itself under plain go test, whose build info names cmd/go, never the test's code). Read after the run,
+// so it's the file as it is now, the binary that ran unless the run replaced it.
+func (state *traceState) commandEntry() (journalEntry, string) {
+	if state.commandExecutable == "" {
+		return journalEntry{}, "the trace names no program its command executed"
+	}
+	info, err := buildinfo.ReadFile(state.commandExecutable)
+	if err != nil {
+		return journalEntry{}, fmt.Sprintf("its command's program %s holds no Go build info to name the code it ran: %v", state.commandExecutable, err)
+	}
+	if !strings.HasSuffix(info.Path, ".test") {
+		return journalEntry{}, fmt.Sprintf("its command's program %s isn't a Go test binary (its build info names %q), so it doesn't name the test's code", state.commandExecutable, info.Path)
+	}
+	return processEntry(state.commandExecutable, info), ""
 }
 
 // placeTestMarker is a test read set's marker product under key: a directory naming the set it stands for, so a lookup

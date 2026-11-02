@@ -124,18 +124,28 @@ func journal(entry journalEntry) {
 		return
 	}
 	journalProcess.Do(func() {
-		own := journalEntry{Event: "process", Process: os.Getpid()}
-		own.Executable, _ = os.Executable()
-		if info, ok := debug.ReadBuildInfo(); ok {
-			own.Package = info.Path
-			for _, setting := range info.Settings {
-				own.Settings = append(own.Settings, setting.Key+"="+setting.Value)
-			}
-		}
+		executable, _ := os.Executable()
+		info, _ := debug.ReadBuildInfo()
+		own := processEntry(executable, info)
+		own.Process = os.Getpid()
 		appendJournal(directory, own)
 	})
 	entry.Process = os.Getpid()
 	appendJournal(directory, entry)
+}
+
+// processEntry is a process's own journal entry, the recipe Settle keys its builds by: its executable and the package
+// and settings its binary was built from, none when info is nil. Settle takes a command that journaled nothing by the
+// same entry, read from its binary's file (commandEntry), so both name one recipe for one binary.
+func processEntry(executable string, info *debug.BuildInfo) journalEntry {
+	own := journalEntry{Event: "process", Executable: executable}
+	if info != nil {
+		own.Package = info.Path
+		for _, setting := range info.Settings {
+			own.Settings = append(own.Settings, setting.Key+"="+setting.Value)
+		}
+	}
+	return own
 }
 
 func appendJournal(directory string, entry journalEntry) {
