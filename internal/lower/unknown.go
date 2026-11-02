@@ -31,6 +31,14 @@ func (l *lowering) inProperty(node *ast.Node) (ir.Expression, error) {
 	if strings.ContainsRune(key.Text(), 0) {
 		return nil, l.notYet(key, "in with a NUL key (native shape names)")
 	}
+	// An Error made without a message keeps its inherited "" in a slot named #message
+	// (exceptions.c's absent_message_shape), and adamic_has_property finds it on that classless object,
+	// where Node answers false: "#message" in error is no own key there. Any other # key is an ordinary
+	// string key on a plain object ('#ordinary' in {'#ordinary': 1} is true on both), and a class's
+	// privates are judged by its public shape, so only this one name is held back.
+	if key.Text() == "#message" {
+		return nil, l.notYet(key, "in with the key #message (an Error's inherited-message slot name)")
+	}
 	// "key" in value narrows a union of object types to the members that declare the key, and any
 	// object carrying that key passes, so the narrowed member's fields would be read on trust. The
 	// sound use is presence on an unknown or single object type, where reads stay dynamic.
