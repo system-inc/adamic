@@ -149,6 +149,9 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 	if err := lowering.findCycles(modules); err != nil {
 		return nil, err
 	}
+	if err := lowering.checkBrandedOptionalWrites(); err != nil {
+		return nil, err
+	}
 	if err := lowering.checkViewCopies(); err != nil {
 		return nil, err
 	}
