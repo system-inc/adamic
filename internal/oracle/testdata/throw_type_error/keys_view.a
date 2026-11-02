@@ -1,0 +1,7 @@
+// Object.keys of a made TypeError through a structural view, in a program with no catch: Node prints 0,
+// and natively its message and name are fields. errorMayHide counts every errorClasses member as an Error
+// made in the source, so this stops at the call (#bbhwj30).
+function show(seen: { message: string }): void {
+	console.log(`${Object.keys(seen).length}`);
+}
+show(new TypeError('v'));

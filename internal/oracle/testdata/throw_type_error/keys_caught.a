@@ -1,0 +1,9 @@
+// Object.keys of a caught Error: Node prints 0, and on main the native build printed 2, its message and
+// name read as fields. Not lowered until a keys path tells the truth about an Error (#bbhwj30).
+try {
+	throw new Error('c');
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(`${Object.keys(error).length}`);
+	}
+}
