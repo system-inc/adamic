@@ -240,11 +240,16 @@ const i: Identifier = { kind: 80, pos: 2, escapedText: "e" }; show(i);`, "a chec
 		// A generic argument narrows to T & S, and its first read on the true side concretes to the instance's
 		// intersection. Here T is the object literal's own type, which S isn't assignable to, so the call is
 		// NotYet (one of Language's g1 to g3 on 7f4b7030). The other two, at Node inferred and given, and the
-		// generic object arguments, g4 and g5 on 4a1fe092, read S intersected only with supertypes of S, so
-		// they're checked now (TestBrandedSupertypeGenericIntersection). Mutant: the type-parameter guard
-		// dropped, and this is NotYet by the wrong rule.
+		// generic object argument, g4 on 4a1fe092, read S intersected only with supertypes of S, so they're
+		// checked now (TestBrandedSupertypeGenericIntersection). Mutant: the type-parameter guard dropped, and
+		// this is NotYet by the wrong rule.
 		{"generic argument through a supertype", `function show<T extends Declaration>(n: T): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
 const w = { kind: 80, pos: 2, escapedText: "e", name: 5, _declarationBrand: undefined }; show(w);`, "over a generic argument T"},
+		// g5 on 4a1fe092: its read concretes to Readonly<T> & TypeElement with T still unmapped (measured on
+		// Golem, Nov 1), so a member mentions a type parameter and the call stays NotYet (Adamic's ruling,
+		// Nov 1: B's unread rule).
+		{"generic readonly argument", `function show<T extends Node>(n: Readonly<T>): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
+const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const v: Node = w; show(v);`, "read on the true side as Readonly<T> & TypeElement"},
 		// An anonymous object holding a type parameter is held by the related-member rule, not the generic
 		// one, since mentionsTypeParameter doesn't walk members (Language's g7 on 59d9c44b, a should), and K,
 		// read from no reference or signature, is unread, so no mapper makes a new type of it. It's safe
@@ -404,8 +409,9 @@ console.log(String(firstPos(elements)));
 // for isTypeElement and isClassElement alike, and so does TOut = TypeElement over a PropertySignature |
 // Node (Compiler's union pin), whose result reads through TypeElement's view. A lie stops at its first bad
 // read: inside the helper's body when the body reads a field, as castName does, and through tryCast, whose
-// body reads nothing, at the caller's. Mutant: the read compared as written, unconcreted, and the reason
-// names the wrong type.
+// body reads nothing, at the caller's. Mutants: the read compared as written, unconcreted, and these are
+// NotYet; the intersection's reads not routed to S's view (brandedIntersectionReceiver), and castName's
+// value.name, read through Positioned & TypeElement, is NotYet as a widened read, honest or lying.
 func TestBrandedSupertypeTryCastIsJudgedPerInstance(t *testing.T) {
 	t.Parallel()
 	// castName is cast reading a field of its value after the narrowing. Its TIn holds undefined, so
@@ -451,13 +457,15 @@ const u = tryCast(p, isTypeElement); console.log(u === undefined ? "no" : String
 	}
 }
 
-// A generic argument narrows to T & S, which concretes to the instance's own intersection. At T = Node or
-// any other supertype of S it's S intersected only with supertypes of S, read through S's view, so an
-// honest value agrees with Node and a lie stops at the read (Language's g1 at Node, and its g4 and g5 at
-// theirs, Adamic's ruling, Nov 1). At T = PropertySignature, a subtype of S, at T = Identifier, which S
-// isn't assignable to, and at T = Named, whose name is required where S's is optional, the intersection
-// holds a member that isn't a supertype, so the call stays NotYet. Mutants: any member let through, and
-// g1 at PropertySignature lowers; comparability in place of assignability, and g1 at Named lowers.
+// A generic argument narrows to T & S, which concretes to the instance's own intersection. At T = Node, or
+// another supertype of S, it's S intersected only with supertypes of S, read through S's view, so an
+// honest value agrees with Node and a lie stops at the read (Language's g1 at Node, and its g4 at
+// Holder<number>, Adamic's ruling, Nov 1). At T = PropertySignature, a subtype of S, at T = Identifier,
+// which S isn't assignable to, and at T = Named, whose name is required where S's is optional, the
+// intersection holds a member that isn't a supertype, so the call stays NotYet. Mutants: any member let
+// through, and g1 at PropertySignature, Identifier and Named lower; comparability in place of
+// assignability, and g1 at Named lowers; the reads not routed to S's view, and the honest g1 is NotYet as
+// a widened read.
 func TestBrandedSupertypeGenericIntersection(t *testing.T) {
 	t.Parallel()
 	const g1 = `function show<T extends Node>(n: T): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
@@ -475,8 +483,6 @@ const x = { kind: 80, pos: 3 }; const y: Node = x; show(y);
 		{"g4 at Holder<number>", `interface Holder<K extends number> { readonly kind: K; readonly pos: number; }
 function show<K extends number>(n: Holder<K>): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
 const v: Holder<number> = w; show(v);`},
-		{"g5 at Readonly<Node>", `function show<T extends Node>(n: Readonly<T>): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
-const v: Node = w; show(v);`},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()

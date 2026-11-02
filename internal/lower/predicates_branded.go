@@ -392,9 +392,10 @@ func (l *lowering) brandedIntersection(read, target *checker.Type) bool {
 
 // brandedIntersectionReceiver is the branded supertype S a receiver of S intersected only with supertypes
 // of S is read through, or receiver as it is. A checked view's fields are keyed by its target's id
-// (CheckedFieldKey), and the intersection has an id of its own, so without this a read through it, such
-// as cast's value.name, would be no read of S's view: plain, or NotYet as a widened read
-// (view_widened.go). brandedIntersection is what makes it S's (Adamic's ruling, Nov 1).
+// (CheckedFieldKey), and the intersection has an id of its own, so without this a read through it is no
+// read of S's view: g1's n.name at T = Node, admitted with no routing, was a widened read, NotYet as one
+// that may hold a checked view's value (view_widened.go, probed on Golem, Nov 1). brandedIntersection is
+// what makes it S's (Adamic's ruling, Nov 1).
 func (l *lowering) brandedIntersectionReceiver(receiver *checker.Type) *checker.Type {
 	if receiver.Flags()&checker.TypeFlagsIntersection == 0 {
 		return receiver
