@@ -221,3 +221,102 @@ console.log(found === undefined ? "none" : String(found.kind));`, `refused: an u
 		}
 	}
 }
+
+// assertNodeSource is debug.ts's assertNode (tsc's debug.ts:294): a generic overload asserting its node
+// through a predicate parameter, a plain overload for a test that may be absent, and an implementation
+// taking the callback or undefined, `((node: Node) => boolean) | undefined`, not a plain function type.
+const assertNodeSource = `interface Node { readonly kind: number; }
+interface Identifier extends Node { readonly kind: 80; readonly escapedText: string; }
+function isIdentifier(node: Node): node is Identifier { return node.kind === 80; }
+function assertNode<T extends Node, U extends T>(node: T | undefined, test: (node: T) => node is U, message?: string): asserts node is U;
+function assertNode(node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string): void;
+function assertNode(node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string): void {
+  if (node === undefined || (test !== undefined && !test(node))) { console.log("failed: " + (message === undefined ? "node" : message)); }
+}
+const identifier: Identifier = { kind: 80, escapedText: "named" };
+const node: Node = identifier;
+assertNode(node, isIdentifier);
+console.log(node.escapedText);
+assertNode(node, undefined, "untested");
+console.log(String(node.kind));
+`
+
+// visitArraySource is visitorPublic.ts's visitArrayWorker: an overload whose test claims node is U, over
+// an implementation taking the same test or undefined, in parentheses. The first %s is the
+// implementation's test type and the second its guard, so its plain twin, core.ts filter's shape, differs
+// only there, and the calls start on the same line in both.
+const visitArraySource = `interface Node { readonly kind: number; }
+interface Identifier extends Node { readonly kind: 80; readonly escapedText: string; }
+function isIdentifier(node: Node): node is Identifier { return node.kind === 80; }
+function visitArrayWorker<U extends Node>(nodes: readonly Node[], test: (node: Node) => node is U, start: number, count: number): readonly Node[];
+function visitArrayWorker(nodes: readonly Node[], test: %s, start: number, count: number): readonly Node[] {
+  const visited: Node[] = [];
+  for (let index = start; index < start + count; index++) { if (%s) { visited.push(nodes[index]); } }
+  return visited;
+}
+const identifier: Identifier = { kind: 80, escapedText: "named" };
+const nodes: readonly Node[] = [{ kind: 11 }, identifier, { kind: 80 }, { kind: 9 }];
+%s
+`
+
+// An overload's predicate parameter over an implementation taking `((node: Node) => boolean) | undefined`
+// is trusted as one over a plain callback is (#1w5bve2, debug.ts's assertNode, assertNotNode,
+// assertOptionalNode and assertEachNode, and visitorPublic.ts's visitArrayWorker): an absent argument is
+// never called, a present one is exactly the function, and every argument through the overload keeps
+// predicateArguments' proof. Called with a one-line kind test, and through the plain overload with none,
+// both agree with Node. Mutant: the implementation's type read as written, without looking through the
+// parentheses and undefined, which refuses both as "there is no body proving this parameter".
+func TestOverloadPredicateOverOptionalCallback(t *testing.T) {
+	t.Parallel()
+	t.Run("assertNode", func(t *testing.T) {
+		t.Parallel()
+		lowersAndAgreesWithNodeAs(t, assertNodeSource, ".ts")
+	})
+	t.Run("visitArrayWorker", func(t *testing.T) {
+		t.Parallel()
+		lowersAndAgreesWithNodeAs(t, fmt.Sprintf(visitArraySource, "((node: Node) => boolean) | undefined", "test === undefined || test(nodes[index])", `console.log(String(visitArrayWorker(nodes, isIdentifier, 0, 4).length));
+console.log(String(visitArrayWorker(nodes, isIdentifier, 2, 2).length));`), ".ts")
+	})
+}
+
+// The optional callback changes nothing else: each argument through the overload is admitted or refused
+// exactly as for its plain twin, whose implementation takes `(node: Node) => boolean` as core.ts's filter
+// does, in .ts, where an arrow claiming more than its body proves is a checked closure, and in .a, where
+// it's refused. A let that's reassigned can hold any function of its type, so it's refused in both.
+// Mutant: the fix reverted, where every optional row is refused at the claim, "there is no body proving
+// this parameter", and stops matching its twin.
+func TestOverloadPredicateOverOptionalCallbackMatchesItsPlainTwin(t *testing.T) {
+	t.Parallel()
+	outcome := func(err error) string {
+		var refused *Refused
+		if errors.As(err, &refused) {
+			return "refused: " + refused.What
+		}
+		if err != nil {
+			return err.Error()
+		}
+		return "admitted"
+	}
+	for _, probe := range []struct{ name, calls, typeScript, adamic string }{
+		{"proven", `console.log(String(visitArrayWorker(nodes, isIdentifier, 0, 4).length));`, "admitted", "admitted"},
+		{"lying arrow", `console.log(String(visitArrayWorker(nodes, (node: Node): node is Identifier => true, 0, 4).length));`, "admitted", `refused: an unproven predicate argument for parameter test (argument "(node: Node): node is Identifier => true")`},
+		{"reassigned let", `let test = (node: Node): node is Identifier => node.kind === 80;
+test = (node: Node): node is Identifier => true;
+console.log(String(visitArrayWorker(nodes, test, 0, 4).length));`, `refused: an unproven predicate argument for parameter test (argument "test")`, `refused: an unproven predicate argument for parameter test (argument "test")`},
+	} {
+		for _, mode := range []struct{ extension, want string }{{".ts", probe.typeScript}, {".a", probe.adamic}} {
+			t.Run(probe.name+mode.extension, func(t *testing.T) {
+				t.Parallel()
+				_, optionalErr := lowerSourceAs(t, fmt.Sprintf(visitArraySource, "((node: Node) => boolean) | undefined", "test === undefined || test(nodes[index])", probe.calls), mode.extension)
+				_, plainErr := lowerSourceAs(t, fmt.Sprintf(visitArraySource, "(node: Node) => boolean", "test(nodes[index])", probe.calls), mode.extension)
+				optional, plain := outcome(optionalErr), outcome(plainErr)
+				if optional != plain {
+					t.Fatalf("optional %q, plain twin %q; want them to match", optional, plain)
+				}
+				if optional != mode.want {
+					t.Fatalf("got %q for both; want %q", optional, mode.want)
+				}
+			})
+		}
+	}
+}
