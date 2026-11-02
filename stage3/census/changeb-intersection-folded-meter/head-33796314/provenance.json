@@ -1,0 +1,41 @@
+{
+  "A": "3aec8230abb53ac93b92b24f5e3ae916f9cd36a8",
+  "B": "5e5f57d3b530264cb09eba5712a8a362375aede2",
+  "C": "33796314e5bd17ec159c0c4a92dd633552bf27ab",
+  "TypeScript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "original_evidence_commit": "42437f4581cbc22211b93596691b50be39a56720",
+  "binary_sha256": {
+    "a": "04c72fc31d9fc1a9e3e0b26e1a154465d5d2078892a99b1106e7ad3057339004",
+    "b": "1c184a82c8964821b06aeafb789f2df88f0601f19f145f7e2d9ecf9f78761843",
+    "c": "3c262e22d64d75d80d5d3d863a1335fab4ef4ca13341e4e36449e640ec6476c6"
+  },
+  "submodules": {
+    "cohere": "06af2e399c6c1fb93fd570b774027942747400b4",
+    "cohere/TypeScript": "d92d9bfee114c80be2c375d72edae966176e3a4f"
+  },
+  "toolchain": {
+    "go version": "go version go1.27.1 linux/amd64",
+    "node --version": "v24.19.0",
+    "python3 --version": "Python 3.12.14"
+  },
+  "same_tree_manifest": "../source-manifest.json",
+  "run_design": "A/B original simultaneous pair; C alone on same box and tree",
+  "stage3_A_equals_C": true,
+  "c_only_census_process_observed": true,
+  "observation_utc": "2026-11-02T13:24:49.254081+00:00",
+  "raw_stream_sha256": {
+    "c.jsonl": "d222ff253f037e6d1d1180d2c4ee59f845060600c71ed6c56b75ad1f9c48dead",
+    "c-times.jsonl": "24299fc5ab1ca1c865bd282f060cb1add5d84b4e0f3bfb736fec3de42f5107dd"
+  },
+  "ledger_byte_equal_to_A": false,
+  "ledger_byte_equal_to_B": true,
+  "final_checks": {
+    "all_parent_artifact_checksums_unchanged": true,
+    "all_79_source_hashes_unchanged": true,
+    "internal_source_diff_empty": true,
+    "binary_sha256_unchanged": true,
+    "gzip_crc_and_roundtrip": true,
+    "both_delta_raw_hashes_match": true,
+    "B_C_raw_bytes_directly_equal": true
+  }
+}

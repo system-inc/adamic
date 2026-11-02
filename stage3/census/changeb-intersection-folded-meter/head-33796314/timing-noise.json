@@ -1,0 +1,28 @@
+{
+  "A-C": {
+    "selection": "91 import declarations: no lowered receiver read, destructure or predicate; includes registration; C alone versus concurrent original run",
+    "median_absolute_seconds": 0.011718137000000003,
+    "p95_absolute_seconds": 0.042959781,
+    "max_absolute_seconds": 0.092356095,
+    "median_ratio": 0.9469478641324982,
+    "p05_ratio": 0.7032539368350572,
+    "p95_ratio": 1.2663668226918283,
+    "control_totals": {
+      "A": 7.854498294,
+      "C": 7.307330741
+    }
+  },
+  "B-C": {
+    "selection": "91 import declarations: no lowered receiver read, destructure or predicate; includes registration; C alone versus concurrent original run",
+    "median_absolute_seconds": 0.013138521,
+    "p95_absolute_seconds": 0.06291902100000002,
+    "max_absolute_seconds": 0.13731060900000003,
+    "median_ratio": 0.9594319593071936,
+    "p05_ratio": 0.5885766072959043,
+    "p95_ratio": 1.4172135347842292,
+    "control_totals": {
+      "B": 7.984738501,
+      "C": 7.307330741
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "command": [
+    "timeout",
+    "--kill-after=60s",
+    "5400",
+    "env",
+    "LATENT_FULL=0",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "LATENT_TIMES=/workspace/adamic/stage3/census/changeb-intersection-folded-meter/head-33796314/c-times.jsonl",
+    "LATENT_PROGRESS_FILE=/workspace/adamic/stage3/census/changeb-intersection-folded-meter/head-33796314/c-progress.json",
+    "/workspace/scratch/census-c",
+    "/workspace/scratch/tree/src/compiler",
+    "/workspace/adamic/stage3/census/changeb-intersection-folded-meter/head-33796314/c.jsonl"
+  ],
+  "started_utc": "2026-11-02T13:22:51.015089+00:00",
+  "ended_utc": "2026-11-02T13:50:03.380373+00:00",
+  "wall_seconds": 1632.365312291,
+  "peak_rss_kib": 6704252,
+  "user_seconds": 2006.486516,
+  "system_seconds": 20.945417,
+  "exit_code": 0,
+  "accounting": "Linux wait4 for timeout process and its reaped descendants; ru_maxrss in KiB"
+}

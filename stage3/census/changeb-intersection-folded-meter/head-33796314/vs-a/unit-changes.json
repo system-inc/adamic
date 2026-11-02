@@ -1,0 +1,45 @@
+[
+  {
+    "unit": "src/compiler/factory/parenthesizerRules.ts:675:1",
+    "name": "nullParenthesizerRules",
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/core.ts:1799:32",
+      "reason": "a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/factory/parenthesizerRules.ts:675:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1799:32",
+          "reason": "a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression",
+          "text": "src/compiler/core.ts:1799:32: stage 0 can't lower a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/core.ts:1801:59",
+      "reason": "a template interpolating an object, an array, a map, a function or undefined",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/factory/parenthesizerRules.ts:675:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1801:59",
+          "reason": "a template interpolating an object, an array, a map, a function or undefined",
+          "text": "src/compiler/core.ts:1801:59: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet"
+        }
+      ]
+    },
+    "record_guard": false
+  }
+]

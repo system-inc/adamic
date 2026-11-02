@@ -1,0 +1,419 @@
+diff --git a/internal/lower/collections.go b/internal/lower/collections.go
+index cf4c8e5cb..0410b3c22 100644
+--- a/internal/lower/collections.go
++++ b/internal/lower/collections.go
+@@ -391,7 +391,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
+ 		}
+ 		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of, Absent: absent}
+ 		value.View = sourceExpression(binding) + " (field " + field + ")"
+-		value.ViewReceiverTypeID = l.viewReadReceiverTypeID(destructured)
++		value.ViewReceiverTypeID = l.viewFieldReceiverTypeID(nil, destructured)
+ 		value.ViewTypeID = l.viewTypeID(fieldType)
+ 		value.ViewWhere = l.program.Where(binding)
+ 		value.ViewType = l.checker.TypeToString(fieldType)
+diff --git a/internal/lower/destructure_view.go b/internal/lower/destructure_view.go
+index 3ad7e040b..e5149c705 100644
+--- a/internal/lower/destructure_view.go
++++ b/internal/lower/destructure_view.go
+@@ -52,7 +52,7 @@ func (l *lowering) refuseIncompatibleDestructuredView(pattern, initializer *ast.
+ 			continue
+ 		}
+ 		field := name.Text()
+-		if !l.checkedViewReceiverField(receiver, field) {
++		if !l.checkedViewReceiverField(nil, receiver, field) {
+ 			continue
+ 		}
+ 		targetField, sourceField := l.checker.GetPropertyOfType(receiver, field), l.checker.GetPropertyOfType(actual, field)
+diff --git a/internal/lower/interface_cast.go b/internal/lower/interface_cast.go
+index b72bacaa0..3849099a8 100644
+--- a/internal/lower/interface_cast.go
++++ b/internal/lower/interface_cast.go
+@@ -115,7 +115,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, source, target *che
+ 		}
+ 		// An accessor slot still needs a conversion the checked read boundary can't emit. An
+ 		// optional slot or receiver is emission's to judge, at the read (unemittableCheckedViewRead).
+-		if part.Kind == ast.KindPropertyAccessExpression && l.checkedViewReceiverField(l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression), part.Name().Text()) {
++		if part.Kind == ast.KindPropertyAccessExpression && l.checkedViewReceiverField(part, l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression), part.Name().Text()) {
+ 			access := part.AsPropertyAccessExpression()
+ 			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
+ 				field := l.checker.GetSymbolAtLocation(part.Name())
+@@ -124,7 +124,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, source, target *che
+ 				}
+ 			}
+ 		}
+-		if part.Kind == ast.KindPropertyAccessExpression && l.checkedViewReceiverField(l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression), part.Name().Text()) && ast.IsAssignmentTarget(part) {
++		if part.Kind == ast.KindPropertyAccessExpression && l.checkedViewReceiverField(part, l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression), part.Name().Text()) && ast.IsAssignmentTarget(part) {
+ 			if symbol := l.checker.GetSymbolAtLocation(part.Name()); symbol != nil {
+ 				of, _ := l.representation(l.checker.GetTypeOfSymbol(symbol))
+ 				if of == ir.Object {
+@@ -319,7 +319,7 @@ func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *check
+ 				}
+ 			}
+ 		}
+-		if part.Kind == ast.KindPropertyAccessExpression && l.checkedViewReceiverField(l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression), part.Name().Text()) {
++		if part.Kind == ast.KindPropertyAccessExpression && l.checkedViewReceiverField(part, l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression), part.Name().Text()) {
+ 			access := part.AsPropertyAccessExpression()
+ 			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
+ 				field := l.checker.GetSymbolAtLocation(part.Name())
+@@ -368,13 +368,29 @@ func (l *lowering) viewReceiverTypeID(receiver *checker.Type) int {
+ 	return l.viewTypeID(l.viewReceiver(receiver))
+ }
+ 
++// viewFieldReceiverTypeID is the one place the id a field read is checked under is
++// decided, for the read lowering emits and for every guard that asks whether that
++// read is checked (record storage's, the alias refusals, a destructured view, a
++// view's lie, a whole copy), so a guard can't ask an id the read isn't checked
++// under (Lower, Nov 2). A read takes viewReadReceiverTypeID's routed id. An
++// assignment target takes the raw viewReceiverTypeID its write uses, the read half
++// of a compound or logical assignment included. A nil node is a read with no
++// access of its own: a destructured binding, a view's source, a copied value.
++// TestViewReceiverCallersAreClassified holds every caller to a role.
++func (l *lowering) viewFieldReceiverTypeID(node *ast.Node, receiver *checker.Type) int {
++	if node != nil && ast.IsAssignmentTarget(node) {
++		return l.viewReceiverTypeID(receiver)
++	}
++	return l.viewReadReceiverTypeID(receiver)
++}
++
+ // viewReadReceiverTypeID is a field read's receiver id, viewReceiverTypeID's but
+ // with a branded supertype intersected only with its supertypes read as that
+ // supertype (brandedIntersectionReceiver). Only a read is routed: a write keeps
+ // its receiver's own id, since a write routed to S's checked write checked the
+ // slot S's view keys, which a value admitted as S needn't have, and stopped where
+-// Node wrote (Language's y4, Optimizer's ruling, Nov 2). The read half of a
+-// compound or logical assignment is the write's, so it keeps the write's id too.
++// Node wrote (Language's y4, Optimizer's ruling, Nov 2). Only
++// viewFieldReceiverTypeID calls it.
+ func (l *lowering) viewReadReceiverTypeID(receiver *checker.Type) int {
+ 	return l.viewTypeID(l.brandedIntersectionReceiver(l.viewReceiver(receiver)))
+ }
+@@ -400,16 +416,18 @@ func (l *lowering) viewTypeID(named *checker.Type) int {
+ }
+ 
+ // A union receiver can carry a checked member's allocation. Preserve that
+-// boundary for its common field without marking unrelated receiver types.
+-func (l *lowering) checkedViewReceiverField(receiver *checker.Type, name string) bool {
+-	id := l.viewReceiverTypeID(receiver)
++// boundary for its common field without marking unrelated receiver types. Node
++// is the access asked about, or nil for a read with none, and decides the id as
++// its read is checked under (viewFieldReceiverTypeID).
++func (l *lowering) checkedViewReceiverField(node *ast.Node, receiver *checker.Type, name string) bool {
++	id := l.viewFieldReceiverTypeID(node, receiver)
+ 	if l.result.CheckedField(id, name) {
+ 		return true
+ 	}
+ 	receiver = l.checker.GetNonNullableType(l.concrete(receiver))
+ 	if receiver.Flags()&checker.TypeFlagsUnion != 0 {
+ 		for _, member := range receiver.Types() {
+-			if l.checkedViewReceiverField(member, name) {
++			if l.checkedViewReceiverField(node, member, name) {
+ 				l.result.CheckedFields[ir.CheckedFieldKey(id, name)] = true
+ 				return true
+ 			}
+diff --git a/internal/lower/object.go b/internal/lower/object.go
+index 964d4a4ab..3ad8e365f 100644
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -659,7 +659,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+ 			if l.recordMayReach(receiver) {
+ 				return nil, l.notYet(node, "a union or optional field read in a program with record storage")
+ 			}
+-			l.recordGuardedReads = append(l.recordGuardedReads, recordGuardedRead{node: node, receiverTypeID: l.viewReceiverTypeID(receiver), name: name})
++			// The id the read is checked under, routed as the read is, or a routed read would look
++			// unchecked here and fail open (Lower's must on 148e6df3).
++			l.recordGuardedReads = append(l.recordGuardedReads, recordGuardedRead{node: node, receiverTypeID: l.viewFieldReceiverTypeID(node, receiver), name: name})
+ 		}
+ 		if of.IsMaybe() && optional {
+ 			// box?.size is number | undefined because box may be; the field itself is what's stored.
+@@ -726,11 +728,7 @@ func (l *lowering) viewedField(node *ast.Node, property ir.Property) ir.Property
+ 	property.ViewWhere = l.program.Where(node)
+ 	if node.Kind == ast.KindPropertyAccessExpression {
+ 		receiver := l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression)
+-		property.ViewReceiverTypeID = l.viewReadReceiverTypeID(receiver)
+-		if ast.IsAssignmentTarget(node) {
+-			// The read half of a compound or logical assignment keeps its write's id.
+-			property.ViewReceiverTypeID = l.viewReceiverTypeID(receiver)
+-		}
++		property.ViewReceiverTypeID = l.viewFieldReceiverTypeID(node, receiver)
+ 	}
+ 	if symbol := l.checker.GetSymbolAtLocation(node.Name()); symbol != nil {
+ 		declared := l.checker.GetTypeOfSymbol(symbol)
+@@ -2082,10 +2080,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
+ 		if position >= 0 && position < len(elements) {
+ 			property.ViewTypeID = l.viewTypeID(elements[position])
+ 			property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
+-			property.ViewReceiverTypeID = l.viewReadReceiverTypeID(receiver)
+-			if ast.IsAssignmentTarget(node) {
+-				property.ViewReceiverTypeID = l.viewReceiverTypeID(receiver)
+-			}
++			property.ViewReceiverTypeID = l.viewFieldReceiverTypeID(node, receiver)
+ 			property.ViewType = l.checker.TypeToString(elements[position])
+ 			property.ViewAllowed = l.viewLiterals(elements[position])
+ 			property.View = sourceExpression(node)
+diff --git a/internal/lower/predicates_branded_test.go b/internal/lower/predicates_branded_test.go
+index 1f68326e0..18cd1e795 100644
+--- a/internal/lower/predicates_branded_test.go
++++ b/internal/lower/predicates_branded_test.go
+@@ -621,36 +621,79 @@ function show(n: Node): void { if (isTypeElementLie(n)) { console.log(nameOf(n))
+ // intersection's own id, since S's checked write checks a slot a value admitted as S needn't have: routed,
+ // Language's y4 stopped at x.name = "w" with "<write>.name is not initialized" on both backends where Node
+ // prints w (Optimizer's ruling, Nov 2). Mut's name is optional and Branded's value has none, or has "a".
+-// Unrouted, the write is a plain one, the read after it is checked through TypeElement's view, and both
+-// agree with Node, printing w (Pupa, Nov 2). Mutant: the four write sites routed again, and y4 stops at
+-// the write.
++// Unrouted, the write is a plain one and the read after it is checked through TypeElement's view. Each y4
++// is NotYet, or lowers and agrees with Node on the JavaScript backend and sanitized native both, since
++// lowersAndAgreesWithNodeAs runs only the JavaScript backend. Today y4 without a name lowers, the
++// JavaScript backend prints w, and native panics with "compiler bug: a field the checker proved is there
++// is missing": main's missing slot for an optional field an intersection-typed literal is made without,
++// which needs no predicate (`type Branded = Mut & { brand: undefined }`, Lower's, under the two-hour rule;
++// Language, Nov 2). That row skips while main's own witness still panics so, and fails on any other native
++// outcome than agreement, so it never passes on a native panic and goes green once Lower's fix lands. A
++// required field, MutCount's count over Counted, always has its slot, and agrees on both backends. None
++// is the widened NotYet, since checkViewWidenedReads weighs reads, never writes (Pupa, Nov 2). Mutant:
++// the four write sites routed again, and y4 stops at the write.
+ func TestBrandedSupertypeWriteIsNotRouted(t *testing.T) {
+ 	t.Parallel()
+ 	const y4 = `interface Mut extends Node { name?: string; }
+ function show<T extends Mut>(x: T): void { if (isTypeElement(x)) { x.name = "w"; console.log(String(x.name)); } }
+ type Branded = Mut & { _declarationBrand: undefined; _typeElementBrand: undefined };
+ `
+-	for _, probe := range []struct{ name, source string }{
+-		{"y4", `const v: Branded = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined };
+-const mv: Mut = v; show(mv);`},
+-		{"y4 holding a name", `const v: Branded = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a" };
+-const mv: Mut = v; show(mv);`},
++	const counted = `interface Counted extends Declaration { _countedBrand: undefined; count: number; }
++function isCountedLie(n: Node): n is Counted { return kindOf(n) !== 0; }
++interface MutCount extends Node { count: number; }
++function show<T extends MutCount>(x: T): void { if (isCountedLie(x)) { x.count = 7; console.log(String(x.count)); } }
++`
++	// main's missing-slot bug with no predicate: native panics where Node prints w while it's there.
++	const missingSlot = "adamic: panic: compiler bug: a field the checker proved is there is missing"
++	const witness = `interface Mut extends Node { name?: string; }
++type Branded = Mut & { brand: undefined };
++const v: Branded = { kind: 1, pos: 1, brand: undefined }; v.name = "w"; console.log(String(v.name));
++`
++	for _, probe := range []struct {
++		name, source, field, node string
++		notYet                    bool
++	}{
++		{"y4", y4 + `const v: Branded = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined };
++const mv: Mut = v; show(mv);`, "name", "w\n", true},
++		{"y4 holding a name", y4 + `const v: Branded = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a" };
++const mv: Mut = v; show(mv);`, "name", "w\n", true},
++		{"required field", counted + `const w = { kind: 5, pos: 1, count: 3 }; const m: MutCount = w; show(m);`, "count", "7\n", false},
+ 	} {
+ 		t.Run(probe.name, func(t *testing.T) {
+ 			t.Parallel()
+-			program := lowersAndAgreesWithNodeAs(t, brandedPrelude+y4+probe.source, ".ts")
++			source := brandedPrelude + probe.source
++			if probe.notYet {
++				_, err := lowerTypeScriptAssertionSource(t, source)
++				var pending *NotYet
++				if errors.As(err, &pending) {
++					return
++				}
++			}
++			program := lowersAndAgreesWithNodeAs(t, source, ".ts")
++			if code, out, errs := brandedNative(t, program); code != 0 || out != probe.node || errs != "" {
++				if probe.notYet && code == 70 && out == "" && strings.HasPrefix(errs, missingSlot) {
++					witnessed, err := lowerTypeScriptAssertionSource(t, brandedPrelude+witness)
++					if err != nil {
++						t.Fatalf("main's missing-slot witness doesn't lower: %v", err)
++					}
++					if code, _, errs := brandedNative(t, witnessed); code == 70 && strings.HasPrefix(errs, missingSlot) {
++						t.Skipf("sanitized native panics at the write with main's missing-slot bug, which its own witness still shows: %q", errs)
++					}
++				}
++				t.Fatalf("sanitized native exit %d, stdout %q, stderr %.300q where Node prints %q", code, out, errs, probe.node)
++			}
+ 			reads, writes := 0, 0
+ 			inspect := func(node any) bool {
+-				if read, ok := node.(ir.Property); ok && read.Name == "name" {
++				if read, ok := node.(ir.Property); ok && read.Name == probe.field {
+ 					reads++
+ 					if !program.CheckedField(read.ViewReceiverTypeID, read.Name) {
+-						t.Errorf("x.name's read isn't checked through TypeElement's view")
++						t.Errorf("x.%s's read isn't checked through the branded supertype's view", probe.field)
+ 					}
+ 				}
+-				if write, ok := node.(ir.SetProperty); ok && write.Name == "name" {
++				if write, ok := node.(ir.SetProperty); ok && write.Name == probe.field {
+ 					writes++
+ 					if program.CheckedField(write.ViewReceiverTypeID, write.Name) {
+-						t.Errorf("x.name = \"w\" is routed to TypeElement's checked write")
++						t.Errorf("the write of x.%s is routed to the branded supertype's checked write", probe.field)
+ 					}
+ 				}
+ 				return true
+@@ -660,7 +703,38 @@ const mv: Mut = v; show(mv);`},
+ 				walk(function.Body, inspect)
+ 			}
+ 			if reads != 1 || writes != 1 {
+-				t.Fatalf("want one read and one write of name, found %d and %d", reads, writes)
++				t.Fatalf("want one read and one write of %s, found %d and %d", probe.field, reads, writes)
++			}
++		})
++	}
++}
++
++// A union or optional field read in a program with record storage is NotYet when a view registered its
++// field (rule a, checkRecordGuardedReads), and the guard asks the id the read is checked under: a read
++// through Sized & Node is routed to Sized's view, so it's held as one through Sized is. Asking the raw id,
++// 148e6df3 lowered the routed read where the plain one stopped (Lower's must, probed on Pupa, Nov 2).
++// Mutant: the record guard back on the raw id, and the routed reads lower.
++func TestBrandedSupertypeRecordGuardIsRouted(t *testing.T) {
++	t.Parallel()
++	const records = `const counts: Record<string, number> = {};
++counts["a"] = 1;
++interface Sized extends Declaration { _sizedBrand: undefined; readonly size?: number; readonly label: string | number; }
++function isSizedLie(n: Node): n is Sized { return kindOf(n) !== 0; }
++`
++	const body = ` { if (isSizedLie(n)) { console.log(n.size === undefined ? "none" : String(n.size)); console.log(String(n.label)); } }
++`
++	for _, probe := range []struct{ name, show, value string }{
++		{"plain honest", "function show(n: Node): void", `{ kind: 80, pos: 2, size: 3, label: "x" }`},
++		{"plain lying", "function show(n: Node): void", `{ kind: 80, pos: 2, size: "big", label: true }`},
++		{"routed honest", "function show<T extends Node>(n: T): void", `{ kind: 80, pos: 2, size: 3, label: "x" }`},
++		{"routed lying", "function show<T extends Node>(n: T): void", `{ kind: 80, pos: 2, size: "big", label: true }`},
++	} {
++		t.Run(probe.name, func(t *testing.T) {
++			t.Parallel()
++			_, err := lowerTypeScriptAssertionSource(t, brandedPrelude+records+probe.show+body+"const w = "+probe.value+"; const v: Node = w; show(v);\nconsole.log(String(counts[\"a\"]));\n")
++			var pending *NotYet
++			if !errors.As(err, &pending) || pending.What != "a union or optional field read in a program with record storage" {
++				t.Fatalf("want NotYet at the n.size read, held by record storage, got %v", err)
+ 			}
+ 		})
+ 	}
+diff --git a/internal/lower/view_copies.go b/internal/lower/view_copies.go
+index 7262d5bed..2de9cdad3 100644
+--- a/internal/lower/view_copies.go
++++ b/internal/lower/view_copies.go
+@@ -83,7 +83,7 @@ func (l *lowering) checkViewCopies() error {
+ // checkedViewType is the view receiver type a copied value's type is, or holds as a union or
+ // intersection member, or nil.
+ func (l *lowering) checkedViewType(copied *checker.Type, receivers map[int]bool) *checker.Type {
+-	if receivers[l.viewReceiverTypeID(copied)] {
++	if receivers[l.viewFieldReceiverTypeID(nil, copied)] {
+ 		return copied
+ 	}
+ 	copied = l.checker.GetNonNullableType(l.concrete(copied))
+diff --git a/internal/lower/view_receiver_callers_test.go b/internal/lower/view_receiver_callers_test.go
+new file mode 100644
+index 000000000..001701754
+--- /dev/null
++++ b/internal/lower/view_receiver_callers_test.go
+@@ -0,0 +1,98 @@
++package lower
++
++import (
++	"go/ast"
++	"go/parser"
++	"go/token"
++	"os"
++	"sort"
++	"strconv"
++	"strings"
++	"testing"
++)
++
++// viewReceiverCallers is every call of the receiver id functions in this package, by file, enclosing
++// function and callee, with how many such calls it makes and why each is a read or a write. A read is
++// checked under the id viewFieldReceiverTypeID decides, so the read lowering emits and every guard asking
++// whether that read is checked ask the same id; a write keeps viewReceiverTypeID's raw id (Lower's rule on
++// 148e6df3, after the record guard asked the raw id of a routed read and failed open).
++var viewReceiverCallers = []struct {
++	caller string
++	calls  int
++	role   string
++}{
++	{"object.go property viewFieldReceiverTypeID", 1, "read guard: a union or optional field read beside record storage is NotYet when its read is checked (checkRecordGuardedReads)"},
++	{"object.go viewedField viewFieldReceiverTypeID", 1, "read: a property access's emitted field read, raw when it's an assignment target's read half"},
++	{"object.go elementAccess viewFieldReceiverTypeID", 1, "read: a tuple element's emitted read, raw when it's an assignment target's read half"},
++	{"collections.go destructureFrom viewFieldReceiverTypeID", 1, "read: a destructured binding's emitted field read"},
++	{"view_widened.go viewLie viewFieldReceiverTypeID", 1, "read guard: whether a view's source holds a field honestly, or only as a checked read"},
++	{"view_copies.go checkedViewType viewFieldReceiverTypeID", 1, "read guard: a whole copy reads every field, NotYet when its type is a checked view's receiver"},
++	{"interface_cast.go checkedViewReceiverField viewFieldReceiverTypeID", 1, "read guard: the id the asked access is checked under, read or write by its node"},
++	{"interface_cast.go viewFieldReceiverTypeID viewReceiverTypeID", 1, "write: an assignment target keeps its write's raw id"},
++	{"interface_cast.go viewFieldReceiverTypeID viewReadReceiverTypeID", 1, "read: the routed id, the only caller of viewReadReceiverTypeID"},
++	{"interface_cast.go view checkedViewReceiverField", 2, "read guard: an accessor alias refused at a checked read; write guard: a checked object field write refused, by the access's own node"},
++	{"interface_cast.go legacyView checkedViewReceiverField", 1, "read guard: a checked field alias's conversion gap (checkedFieldAliasGap), by the access's own node"},
++	{"interface_cast.go checkedViewReceiverField checkedViewReceiverField", 1, "read guard: a union receiver's member, under the same node"},
++	{"destructure_view.go refuseIncompatibleDestructuredView checkedViewReceiverField", 1, "read guard: a destructured field read through an object-union view"},
++	{"logical_assignment.go logicalAssignment viewReceiverTypeID", 1, "write: a logical assignment's keyed SetProperty"},
++	{"class.go setProperty viewReceiverTypeID", 1, "write: a property assignment's SetProperty"},
++	{"class.go updateProperty viewReceiverTypeID", 1, "write: a compound assignment's SetProperty"},
++	{"assignments.go increment viewReceiverTypeID", 1, "write: an increment's SetProperty"},
++}
++
++// Every call of viewReceiverTypeID, viewReadReceiverTypeID, viewFieldReceiverTypeID and
++// checkedViewReceiverField is named in viewReceiverCallers as a read or a write, so a new caller has
++// to say which id it asks, and a guard of a read can't ask the raw id the read isn't checked under.
++// The test reads this package's source.
++func TestViewReceiverCallersAreClassified(t *testing.T) {
++	t.Parallel()
++	entries, err := os.ReadDir(".")
++	if err != nil {
++		t.Fatal(err)
++	}
++	callees := map[string]bool{"viewReceiverTypeID": true, "viewReadReceiverTypeID": true, "viewFieldReceiverTypeID": true, "checkedViewReceiverField": true}
++	files := token.NewFileSet()
++	found := map[string]int{}
++	for _, entry := range entries {
++		if entry.IsDir() || !strings.HasSuffix(entry.Name(), ".go") || strings.HasSuffix(entry.Name(), "_test.go") {
++			continue
++		}
++		file, err := parser.ParseFile(files, entry.Name(), nil, 0)
++		if err != nil {
++			t.Fatal(err)
++		}
++		for _, declaration := range file.Decls {
++			function, isFunction := declaration.(*ast.FuncDecl)
++			if !isFunction || function.Body == nil {
++				continue
++			}
++			ast.Inspect(function.Body, func(node ast.Node) bool {
++				if call, isCall := node.(*ast.CallExpr); isCall {
++					if selector, isSelector := call.Fun.(*ast.SelectorExpr); isSelector && callees[selector.Sel.Name] {
++						found[entry.Name()+" "+function.Name.Name+" "+selector.Sel.Name]++
++					}
++				}
++				return true
++			})
++		}
++	}
++	classified := map[string]int{}
++	for _, caller := range viewReceiverCallers {
++		classified[caller.caller] = caller.calls
++	}
++	var unclassified []string
++	for key, calls := range found {
++		if classified[key] != calls {
++			unclassified = append(unclassified, key+": "+strconv.Itoa(calls)+" calls, classified "+strconv.Itoa(classified[key]))
++		}
++	}
++	for key := range classified {
++		if found[key] == 0 {
++			unclassified = append(unclassified, key+": classified, never called")
++		}
++	}
++	sort.Strings(unclassified)
++	if len(unclassified) > 0 {
++		t.Errorf("a receiver id call isn't classified as a read or a write; a read asks viewFieldReceiverTypeID, a write viewReceiverTypeID, and viewReceiverCallers says which and why:\n%s", strings.Join(unclassified, "\n"))
++	}
++}
+diff --git a/internal/lower/view_widened.go b/internal/lower/view_widened.go
+index 47263ac11..9b77ebc0d 100644
+--- a/internal/lower/view_widened.go
++++ b/internal/lower/view_widened.go
+@@ -320,7 +320,7 @@ func (l *lowering) viewLie(view viewSource) viewLie {
+ 	}
+ 	for _, property := range l.checker.GetPropertiesOfType(view.target) {
+ 		var held *ast.Symbol
+-		if source != nil && !l.result.CheckedField(l.viewReceiverTypeID(source), property.Name) {
++		if source != nil && !l.result.CheckedField(l.viewFieldReceiverTypeID(nil, source), property.Name) {
+ 			held = l.checker.GetPropertyOfType(source, property.Name)
+ 		}
+ 		if held == nil {

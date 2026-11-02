@@ -1,0 +1,1790 @@
+[
+  {
+    "file": "src/compiler/binder.ts",
+    "where": "src/compiler/binder.ts:509:1",
+    "start": 17393,
+    "end": 189285,
+    "name": "createBinder",
+    "calls": [
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/binder.ts:2337:50",
+        "start": 110017,
+        "text": "tryCast(node.body, isModuleBlock)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/binder.ts:3430:42",
+        "start": 170660,
+        "text": "cast(node.left, isBindableStaticNameExpression)"
+      }
+    ],
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/binder.ts:3201:45",
+      "reason": "a value of type BindableObjectDefinePropertyCall",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/binder.ts:509:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/binder.ts:3201:45",
+          "reason": "a value of type BindableObjectDefinePropertyCall",
+          "text": "src/compiler/binder.ts:3201:45: stage 0 can't lower a value of type BindableObjectDefinePropertyCall yet"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/binder.ts:3201:45",
+      "reason": "a value of type BindableObjectDefinePropertyCall",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/binder.ts:509:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/binder.ts:3201:45",
+          "reason": "a value of type BindableObjectDefinePropertyCall",
+          "text": "src/compiler/binder.ts:3201:45: stage 0 can't lower a value of type BindableObjectDefinePropertyCall yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/binder.ts:3201:45",
+      "reason": "a value of type BindableObjectDefinePropertyCall",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/binder.ts:509:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/binder.ts:3201:45",
+          "reason": "a value of type BindableObjectDefinePropertyCall",
+          "text": "src/compiler/binder.ts:3201:45: stage 0 can't lower a value of type BindableObjectDefinePropertyCall yet"
+        }
+      ]
+    }
+  },
+  {
+    "file": "src/compiler/binder.ts",
+    "where": "src/compiler/binder.ts:3905:1",
+    "start": 195011,
+    "end": 195524,
+    "name": "lookupSymbolForName",
+    "calls": [
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/binder.ts:3906:19",
+        "start": 195118,
+        "text": "tryCast(container, canHaveLocals)"
+      }
+    ],
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/binder.ts:3906:19",
+      "reason": "an optional Map get through a structural receiver",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/binder.ts:3905:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/binder.ts:3906:19",
+          "reason": "an optional Map get through a structural receiver",
+          "text": "src/compiler/binder.ts:3906:19: stage 0 can't lower an optional Map get through a structural receiver yet"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/binder.ts:3906:19",
+      "reason": "an optional Map get through a structural receiver",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/binder.ts:3905:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/binder.ts:3906:19",
+          "reason": "an optional Map get through a structural receiver",
+          "text": "src/compiler/binder.ts:3906:19: stage 0 can't lower an optional Map get through a structural receiver yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/binder.ts:3906:19",
+      "reason": "an optional Map get through a structural receiver",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/binder.ts:3905:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/binder.ts:3906:19",
+          "reason": "an optional Map get through a structural receiver",
+          "text": "src/compiler/binder.ts:3906:19: stage 0 can't lower an optional Map get through a structural receiver yet"
+        }
+      ]
+    }
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "where": "src/compiler/checker.ts:1486:1",
+    "start": 46380,
+    "end": 3145321,
+    "name": "createTypeChecker",
+    "calls": [
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/checker.ts:3123:45",
+        "start": 137515,
+        "text": "tryCast(current.parent, isPropertyDeclaration)"
+      },
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/checker.ts:3151:35",
+        "start": 139328,
+        "text": "tryCast(current.parent, isDecorator)"
+      },
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/checker.ts:4131:29",
+        "start": 198609,
+        "text": "tryCast(moduleSymbol.valueDeclaration, canHaveLocals)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/checker.ts:8053:149",
+        "start": 445806,
+        "text": "cast(options.name, isIdentifier)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/checker.ts:8054:147",
+        "start": 446084,
+        "text": "cast(options.name, isIdentifier)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/checker.ts:9479:78",
+        "start": 536268,
+        "text": "cast(e.exportClause, isNamedExports)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/checker.ts:9497:88",
+        "start": 537653,
+        "text": "cast(e.exportClause, isNamedExports)"
+      },
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/checker.ts:12269:56",
+        "start": 716719,
+        "text": "tryCast(exportedMember.valueDeclaration, isNamedDeclaration)"
+      },
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/checker.ts:12714:30",
+        "start": 742256,
+        "text": "tryCast(getDeclarationOfKind<PropertyDeclaration>(symbol, SyntaxKind.PropertyDeclaration), isAutoAccessorPropertyDeclaration)"
+      },
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/checker.ts:12764:20",
+        "start": 745411,
+        "text": "tryCast(getDeclarationOfKind<PropertyDeclaration>(symbol, SyntaxKind.PropertyDeclaration), isAutoAccessorPropertyDeclaration)"
+      },
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/checker.ts:15673:31",
+        "start": 914548,
+        "text": "tryCast(singleProp, isTransientSymbol)"
+      },
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/checker.ts:29004:135",
+        "start": 1726483,
+        "text": "tryCast(reference, canHaveFlowNode)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/checker.ts:32291:33",
+        "start": 1923093,
+        "text": "cast(binaryExpression.left, isAccessExpression)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/checker.ts:32355:28",
+        "start": 1926968,
+        "text": "cast(binaryExpression.left, isAccessExpression)"
+      },
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/checker.ts:38388:41",
+        "start": 2274130,
+        "text": "tryCast(lastOrUndefined(elements), isBindingElement)"
+      },
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/checker.ts:38410:35",
+        "start": 2275414,
+        "text": "tryCast(restSymbol?.valueDeclaration, isParameter)"
+      },
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/checker.ts:44594:16",
+        "start": 2617211,
+        "text": "tryCast(getRootDeclaration(node), isParameter)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/checker.ts:44750:40",
+        "start": 2627090,
+        "text": "cast(first(name.elements), isBindingElement)"
+      },
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/checker.ts:48707:129",
+        "start": 2846243,
+        "text": "tryCast(attr.value, isStringLiteralLike)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/checker.ts:50497:26",
+        "start": 2938491,
+        "text": "cast(expr.parent.parent, isObjectLiteralExpression)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/checker.ts:50503:22",
+        "start": 2938935,
+        "text": "cast(expr.parent, isArrayLiteralExpression)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/checker.ts:50518:64",
+        "start": 2939926,
+        "text": "cast(location.parent.parent, isAssignmentPattern)"
+      },
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/checker.ts:51558:79",
+        "start": 2997290,
+        "text": "tryCast(declaration.name, isStringLiteral)"
+      }
+    ],
+    "A": {
+      "outcome": "skipped_checker_body",
+      "checker_diagnostics": [
+        "/workspace/scratch/tree/src/compiler/checker.ts:1683:9: error TS2322: Type '(signature: Signature, kind: SignatureDeclaration[\"kind\"], enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker, maximumLength?: number, verbosityLevel?: number, out?: WriterContextOut) => SignatureDeclaration | undefined' is not assignable to type '{ (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined): (SignatureDeclaration & ...) | undefined; (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined, internalFlags?: InternalNodeBuilderF...'.\n  Type 'SignatureDeclaration | undefined' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.\n    Type 'ArrowFunction' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.\n      Type 'ArrowFunction' is not assignable to type 'ArrowFunction & { typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n        Type 'ArrowFunction' is not assignable to type '{ typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n          Types of property 'typeArguments' are incompatible.\n            Type 'NodeArray<TypeNode> | undefined' is not assignable to type 'NodeArray<TypeNode>'.\n              Type 'undefined' is not assignable to type 'NodeArray<TypeNode>'."
+      ],
+      "instantiated": false
+    },
+    "B": {
+      "outcome": "skipped_checker_body",
+      "checker_diagnostics": [
+        "/workspace/scratch/tree/src/compiler/checker.ts:1683:9: error TS2322: Type '(signature: Signature, kind: SignatureDeclaration[\"kind\"], enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker, maximumLength?: number, verbosityLevel?: number, out?: WriterContextOut) => SignatureDeclaration | undefined' is not assignable to type '{ (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined): (SignatureDeclaration & ...) | undefined; (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined, internalFlags?: InternalNodeBuilderF...'.\n  Type 'SignatureDeclaration | undefined' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.\n    Type 'ArrowFunction' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.\n      Type 'ArrowFunction' is not assignable to type 'ArrowFunction & { typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n        Type 'ArrowFunction' is not assignable to type '{ typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n          Types of property 'typeArguments' are incompatible.\n            Type 'NodeArray<TypeNode> | undefined' is not assignable to type 'NodeArray<TypeNode>'.\n              Type 'undefined' is not assignable to type 'NodeArray<TypeNode>'."
+      ],
+      "instantiated": false
+    },
+    "C": {
+      "outcome": "skipped_checker_body",
+      "checker_diagnostics": [
+        "/workspace/scratch/tree/src/compiler/checker.ts:1683:9: error TS2322: Type '(signature: Signature, kind: SignatureDeclaration[\"kind\"], enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker, maximumLength?: number, verbosityLevel?: number, out?: WriterContextOut) => SignatureDeclaration | undefined' is not assignable to type '{ (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined): (SignatureDeclaration & ...) | undefined; (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined, internalFlags?: InternalNodeBuilderF...'.\n  Type 'SignatureDeclaration | undefined' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.\n    Type 'ArrowFunction' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.\n      Type 'ArrowFunction' is not assignable to type 'ArrowFunction & { typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n        Type 'ArrowFunction' is not assignable to type '{ typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n          Types of property 'typeArguments' are incompatible.\n            Type 'NodeArray<TypeNode> | undefined' is not assignable to type 'NodeArray<TypeNode>'.\n              Type 'undefined' is not assignable to type 'NodeArray<TypeNode>'."
+      ],
+      "instantiated": false
+    }
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "where": "src/compiler/commandLineParser.ts:2206:1",
+    "start": 85735,
+    "end": 85955,
+    "name": "getDiagnosticText",
+    "calls": [
+      {
+        "callee": "cast",
+        "where": "src/compiler/commandLineParser.ts:2207:12",
+        "start": 85881,
+        "text": "cast(createCompilerDiagnostic(message, ...args).messageText, isString)"
+      }
+    ],
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/core.ts:1801:59",
+      "reason": "a template interpolating a union with an object, an array, a map or a function in it",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/commandLineParser.ts:2206:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1801:59",
+          "reason": "a template interpolating a union with an object, an array, a map or a function in it",
+          "text": "src/compiler/core.ts:1801:59: stage 0 can't lower a template interpolating a union with an object, an array, a map or a function in it yet"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/core.ts:1801:59",
+      "reason": "a template interpolating a union with an object, an array, a map or a function in it",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/commandLineParser.ts:2206:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1801:59",
+          "reason": "a template interpolating a union with an object, an array, a map or a function in it",
+          "text": "src/compiler/core.ts:1801:59: stage 0 can't lower a template interpolating a union with an object, an array, a map or a function in it yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/core.ts:1801:59",
+      "reason": "a template interpolating a union with an object, an array, a map or a function in it",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/commandLineParser.ts:2206:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1801:59",
+          "reason": "a template interpolating a union with an object, an array, a map or a function in it",
+          "text": "src/compiler/core.ts:1801:59: stage 0 can't lower a template interpolating a union with an object, an array, a map or a function in it yet"
+        }
+      ]
+    }
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "where": "src/compiler/emitter.ts:1211:1",
+    "start": 48845,
+    "end": 272360,
+    "name": "createPrinter",
+    "calls": [
+      {
+        "callee": "cast",
+        "where": "src/compiler/emitter.ts:1563:65",
+        "start": 64061,
+        "text": "cast(node, isSourceFile)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/emitter.ts:1564:69",
+        "start": 64157,
+        "text": "cast(node, isIdentifier)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/emitter.ts:1565:69",
+        "start": 64253,
+        "text": "cast(node, isStringLiteral)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/emitter.ts:1566:83",
+        "start": 64395,
+        "text": "cast(node, isTypeParameterDeclaration)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/emitter.ts:1567:93",
+        "start": 64529,
+        "text": "cast(node, isImportAttributes)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/emitter.ts:2926:42",
+        "start": 127746,
+        "text": "cast(lastSubstitution, isExpression)"
+      },
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/emitter.ts:5681:40",
+        "start": 243003,
+        "text": "tryCast(node, canHaveLocals)"
+      }
+    ],
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/emitter.ts:2097:14",
+      "reason": "a function returning SortedReadonlyArray<EmitHelper> | undefined",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/emitter.ts:1211:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/emitter.ts:2097:14",
+          "reason": "a function returning SortedReadonlyArray<EmitHelper> | undefined",
+          "text": "src/compiler/emitter.ts:2097:14: stage 0 can't lower a function returning SortedReadonlyArray<EmitHelper> | undefined yet"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/emitter.ts:2097:14",
+      "reason": "a function returning SortedReadonlyArray<EmitHelper> | undefined",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/emitter.ts:1211:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/emitter.ts:2097:14",
+          "reason": "a function returning SortedReadonlyArray<EmitHelper> | undefined",
+          "text": "src/compiler/emitter.ts:2097:14: stage 0 can't lower a function returning SortedReadonlyArray<EmitHelper> | undefined yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/emitter.ts:2097:14",
+      "reason": "a function returning SortedReadonlyArray<EmitHelper> | undefined",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/emitter.ts:1211:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/emitter.ts:2097:14",
+          "reason": "a function returning SortedReadonlyArray<EmitHelper> | undefined",
+          "text": "src/compiler/emitter.ts:2097:14: stage 0 can't lower a function returning SortedReadonlyArray<EmitHelper> | undefined yet"
+        }
+      ]
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeConverters.ts",
+    "where": "src/compiler/factory/nodeConverters.ts:41:1",
+    "start": 974,
+    "end": 6732,
+    "name": "createNodeConverters",
+    "calls": [
+      {
+        "callee": "cast",
+        "where": "src/compiler/factory/nodeConverters.ts:115:16",
+        "start": 3981,
+        "text": "cast(element, isExpression)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/factory/nodeConverters.ts:132:16",
+        "start": 4991,
+        "text": "cast(element, isObjectLiteralElementLike)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/factory/nodeConverters.ts:157:16",
+        "start": 5955,
+        "text": "cast(node, isObjectLiteralExpression)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/factory/nodeConverters.ts:170:16",
+        "start": 6427,
+        "text": "cast(node, isArrayLiteralExpression)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/factory/nodeConverters.ts:178:16",
+        "start": 6697,
+        "text": "cast(node, isExpression)"
+      }
+    ],
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/factory/nodeConverters.ts:55:13",
+      "reason": "checked predicate membership over an open tag domain",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/factory/nodeConverters.ts:41:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/factory/nodeConverters.ts:55:13",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "src/compiler/factory/nodeConverters.ts:55:13: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/factory/nodeConverters.ts:55:13",
+      "reason": "checked predicate membership over an open tag domain",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/factory/nodeConverters.ts:41:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/factory/nodeConverters.ts:55:13",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "src/compiler/factory/nodeConverters.ts:55:13: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/factory/nodeConverters.ts:55:13",
+      "reason": "checked predicate membership over an open tag domain",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/factory/nodeConverters.ts:41:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/factory/nodeConverters.ts:55:13",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "src/compiler/factory/nodeConverters.ts:55:13: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      ]
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "where": "src/compiler/factory/nodeFactory.ts:492:1",
+    "start": 12998,
+    "end": 322879,
+    "name": "createNodeFactory",
+    "calls": [
+      {
+        "callee": "cast",
+        "where": "src/compiler/factory/nodeFactory.ts:2921:87",
+        "start": 121653,
+        "text": "cast(name, isIdentifier)"
+      }
+    ],
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/factory/nodeFactory.ts:2363:40",
+      "reason": "a rest parameter that isn't an array",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/factory/nodeFactory.ts:492:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/factory/nodeFactory.ts:2363:40",
+          "reason": "a rest parameter that isn't an array",
+          "text": "src/compiler/factory/nodeFactory.ts:2363:40: stage 0 can't lower a rest parameter that isn't an array yet"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/factory/nodeFactory.ts:2363:40",
+      "reason": "a rest parameter that isn't an array",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/factory/nodeFactory.ts:492:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/factory/nodeFactory.ts:2363:40",
+          "reason": "a rest parameter that isn't an array",
+          "text": "src/compiler/factory/nodeFactory.ts:2363:40: stage 0 can't lower a rest parameter that isn't an array yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/factory/nodeFactory.ts:2363:40",
+      "reason": "a rest parameter that isn't an array",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/factory/nodeFactory.ts:492:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/factory/nodeFactory.ts:2363:40",
+          "reason": "a rest parameter that isn't an array",
+          "text": "src/compiler/factory/nodeFactory.ts:2363:40: stage 0 can't lower a rest parameter that isn't an array yet"
+        }
+      ]
+    }
+  },
+  {
+    "file": "src/compiler/factory/parenthesizerRules.ts",
+    "where": "src/compiler/factory/parenthesizerRules.ts:675:1",
+    "start": 31979,
+    "end": 34070,
+    "name": "nullParenthesizerRules",
+    "calls": [
+      {
+        "callee": "cast",
+        "where": "src/compiler/factory/parenthesizerRules.ts:684:48",
+        "start": 32638,
+        "text": "cast(expression, isLeftHandSideExpression)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/factory/parenthesizerRules.ts:685:49",
+        "start": 32731,
+        "text": "cast(expression, isLeftHandSideExpression)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/factory/parenthesizerRules.ts:686:51",
+        "start": 32826,
+        "text": "cast(operand, isLeftHandSideExpression)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/factory/parenthesizerRules.ts:687:50",
+        "start": 32917,
+        "text": "cast(operand, isUnaryExpression)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/factory/parenthesizerRules.ts:688:59",
+        "start": 33010,
+        "text": "cast(nodes, isNodeArray)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/factory/parenthesizerRules.ts:694:55",
+        "start": 33375,
+        "text": "cast(nodes, isNodeArray)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/factory/parenthesizerRules.ts:696:62",
+        "start": 33518,
+        "text": "cast(nodes, isNodeArray)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/factory/parenthesizerRules.ts:701:51",
+        "start": 33819,
+        "text": "cast(nodes, isNodeArray)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/factory/parenthesizerRules.ts:704:50",
+        "start": 33993,
+        "text": "cast(nodes, isNodeArray)"
+      }
+    ],
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/core.ts:1799:32",
+      "reason": "a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/factory/parenthesizerRules.ts:675:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1799:32",
+          "reason": "a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression",
+          "text": "src/compiler/core.ts:1799:32: stage 0 can't lower a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression yet"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/core.ts:1801:59",
+      "reason": "a template interpolating an object, an array, a map, a function or undefined",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/factory/parenthesizerRules.ts:675:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1801:59",
+          "reason": "a template interpolating an object, an array, a map, a function or undefined",
+          "text": "src/compiler/core.ts:1801:59: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/core.ts:1801:59",
+      "reason": "a template interpolating an object, an array, a map, a function or undefined",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/factory/parenthesizerRules.ts:675:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1801:59",
+          "reason": "a template interpolating an object, an array, a map, a function or undefined",
+          "text": "src/compiler/core.ts:1801:59: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet"
+        }
+      ]
+    }
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "where": "src/compiler/program.ts:1515:1",
+    "start": 68464,
+    "end": 253656,
+    "name": "createProgram",
+    "calls": [
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/program.ts:4718:77",
+        "start": 247412,
+        "text": "tryCast(compilerOptionsProperty.initializer, isObjectLiteralExpression)"
+      }
+    ],
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/program.ts:3267:14",
+      "reason": "a function returning SortedReadonlyArray<Diagnostic>",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/program.ts:1515:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/program.ts:3267:14",
+          "reason": "a function returning SortedReadonlyArray<Diagnostic>",
+          "text": "src/compiler/program.ts:3267:14: stage 0 can't lower a function returning SortedReadonlyArray<Diagnostic> yet"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/program.ts:3267:14",
+      "reason": "a function returning SortedReadonlyArray<Diagnostic>",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/program.ts:1515:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/program.ts:3267:14",
+          "reason": "a function returning SortedReadonlyArray<Diagnostic>",
+          "text": "src/compiler/program.ts:3267:14: stage 0 can't lower a function returning SortedReadonlyArray<Diagnostic> yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/program.ts:3267:14",
+      "reason": "a function returning SortedReadonlyArray<Diagnostic>",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/program.ts:1515:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/program.ts:3267:14",
+          "reason": "a function returning SortedReadonlyArray<Diagnostic>",
+          "text": "src/compiler/program.ts:3267:14: stage 0 can't lower a function returning SortedReadonlyArray<Diagnostic> yet"
+        }
+      ]
+    }
+  },
+  {
+    "file": "src/compiler/transformers/classFields.ts",
+    "where": "src/compiler/transformers/classFields.ts:354:1",
+    "start": 10002,
+    "end": 154786,
+    "name": "transformClassFields",
+    "calls": [
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/transformers/classFields.ts:455:24",
+        "start": 15258,
+        "text": "tryCast(node, isModifier)"
+      }
+    ],
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/transformers/classFields.ts:671:55",
+      "reason": "a value of type PrivateIdentifierInExpression",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/transformers/classFields.ts:354:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/classFields.ts:671:55",
+          "reason": "a value of type PrivateIdentifierInExpression",
+          "text": "src/compiler/transformers/classFields.ts:671:55: stage 0 can't lower a value of type PrivateIdentifierInExpression yet"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/transformers/classFields.ts:671:55",
+      "reason": "a value of type PrivateIdentifierInExpression",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/transformers/classFields.ts:354:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/classFields.ts:671:55",
+          "reason": "a value of type PrivateIdentifierInExpression",
+          "text": "src/compiler/transformers/classFields.ts:671:55: stage 0 can't lower a value of type PrivateIdentifierInExpression yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/transformers/classFields.ts:671:55",
+      "reason": "a value of type PrivateIdentifierInExpression",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/transformers/classFields.ts:354:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/classFields.ts:671:55",
+          "reason": "a value of type PrivateIdentifierInExpression",
+          "text": "src/compiler/transformers/classFields.ts:671:55: stage 0 can't lower a value of type PrivateIdentifierInExpression yet"
+        }
+      ]
+    }
+  },
+  {
+    "file": "src/compiler/transformers/declarations.ts",
+    "where": "src/compiler/transformers/declarations.ts:259:1",
+    "start": 6761,
+    "end": 95637,
+    "name": "transformDeclarations",
+    "calls": [
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/transformers/declarations.ts:1833:52",
+        "start": 94030,
+        "text": "tryCast(n, isModifier)"
+      }
+    ],
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/binder.ts:1109:17",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/transformers/declarations.ts:259:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/binder.ts:1109:17",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/binder.ts:1109:17",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/transformers/declarations.ts:259:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/binder.ts:1109:17",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/binder.ts:1109:17",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/transformers/declarations.ts:259:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/binder.ts:1109:17",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+        }
+      ]
+    }
+  },
+  {
+    "file": "src/compiler/transformers/es2015.ts",
+    "where": "src/compiler/transformers/es2015.ts:488:1",
+    "start": 16466,
+    "end": 231852,
+    "name": "transformES2015",
+    "calls": [
+      {
+        "callee": "cast",
+        "where": "src/compiler/transformers/es2015.ts:4377:22",
+        "start": 201426,
+        "text": "cast(cast(skipOuterExpressions(node.expression), isArrowFunction).body, isBlock)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/transformers/es2015.ts:4377:27",
+        "start": 201431,
+        "text": "cast(skipOuterExpressions(node.expression), isArrowFunction)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/transformers/es2015.ts:4391:30",
+        "start": 202452,
+        "text": "cast(first(classStatements), isVariableStatement)"
+      },
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/transformers/es2015.ts:4413:31",
+        "start": 203358,
+        "text": "tryCast(initializer, isAssignmentExpression)"
+      },
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/transformers/es2015.ts:4415:31",
+        "start": 203563,
+        "text": "tryCast(initializer.left, isAssignmentExpression)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/transformers/es2015.ts:4419:22",
+        "start": 203739,
+        "text": "cast(aliasAssignment ? skipOuterExpressions(aliasAssignment.right) : initializer, isCallExpression)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/transformers/es2015.ts:4420:22",
+        "start": 203862,
+        "text": "cast(skipOuterExpressions(call.expression), isFunctionExpression)"
+      },
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/transformers/es2015.ts:4430:33",
+        "start": 204317,
+        "text": "tryCast(funcStatements[classBodyStart], isExpressionStatement)"
+      },
+      {
+        "callee": "cast",
+        "where": "src/compiler/transformers/es2015.ts:4445:25",
+        "start": 204936,
+        "text": "cast(variable.name, isIdentifier)"
+      },
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/transformers/es2015.ts:4471:33",
+        "start": 206115,
+        "text": "tryCast(elementAt(funcStatements, classBodyEnd), isReturnStatement)"
+      }
+    ],
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/transformers/es2015.ts:825:14",
+      "reason": "a function returning CapturedThis",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/transformers/es2015.ts:488:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/es2015.ts:825:14",
+          "reason": "a function returning CapturedThis",
+          "text": "src/compiler/transformers/es2015.ts:825:14: stage 0 can't lower a function returning CapturedThis yet"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/transformers/es2015.ts:825:14",
+      "reason": "a function returning CapturedThis",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/transformers/es2015.ts:488:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/es2015.ts:825:14",
+          "reason": "a function returning CapturedThis",
+          "text": "src/compiler/transformers/es2015.ts:825:14: stage 0 can't lower a function returning CapturedThis yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/transformers/es2015.ts:825:14",
+      "reason": "a function returning CapturedThis",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/transformers/es2015.ts:488:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/es2015.ts:825:14",
+          "reason": "a function returning CapturedThis",
+          "text": "src/compiler/transformers/es2015.ts:825:14: stage 0 can't lower a function returning CapturedThis yet"
+        }
+      ]
+    }
+  },
+  {
+    "file": "src/compiler/transformers/es2020.ts",
+    "where": "src/compiler/transformers/es2020.ts:42:1",
+    "start": 892,
+    "end": 13126,
+    "name": "transformES2020",
+    "calls": [
+      {
+        "callee": "cast",
+        "where": "src/compiler/transformers/es2020.ts:92:21",
+        "start": 3118,
+        "text": "cast(skipPartiallyEmittedExpressions(chain.expression), isOptionalChain)"
+      }
+    ],
+    "A": {
+      "outcome": "stopped",
+      "kind": "Refused",
+      "where": "src/compiler/visitorPublic.ts:587:119",
+      "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/transformers/es2020.ts:42:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/visitorPublic.ts:587:119",
+          "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+          "text": "src/compiler/visitorPublic.ts:587:119: Adamic 0.1 refuses overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "Refused",
+      "where": "src/compiler/visitorPublic.ts:587:119",
+      "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/transformers/es2020.ts:42:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/visitorPublic.ts:587:119",
+          "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+          "text": "src/compiler/visitorPublic.ts:587:119: Adamic 0.1 refuses overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "Refused",
+      "where": "src/compiler/visitorPublic.ts:587:119",
+      "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/transformers/es2020.ts:42:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/visitorPublic.ts:587:119",
+          "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+          "text": "src/compiler/visitorPublic.ts:587:119: Adamic 0.1 refuses overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+        }
+      ]
+    }
+  },
+  {
+    "file": "src/compiler/transformers/esDecorators.ts",
+    "where": "src/compiler/transformers/esDecorators.ts:295:1",
+    "start": 9697,
+    "end": 127404,
+    "name": "transformESDecorators",
+    "calls": [
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/transformers/esDecorators.ts:1351:89",
+        "start": 69286,
+        "text": "tryCast(node, isAsyncModifier)"
+      }
+    ],
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/transformers/esDecorators.ts:670:14",
+      "reason": "a function returning ImmediatelyInvokedArrowFunction",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/transformers/esDecorators.ts:295:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/esDecorators.ts:670:14",
+          "reason": "a function returning ImmediatelyInvokedArrowFunction",
+          "text": "src/compiler/transformers/esDecorators.ts:670:14: stage 0 can't lower a function returning ImmediatelyInvokedArrowFunction yet"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/transformers/esDecorators.ts:670:14",
+      "reason": "a function returning ImmediatelyInvokedArrowFunction",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/transformers/esDecorators.ts:295:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/esDecorators.ts:670:14",
+          "reason": "a function returning ImmediatelyInvokedArrowFunction",
+          "text": "src/compiler/transformers/esDecorators.ts:670:14: stage 0 can't lower a function returning ImmediatelyInvokedArrowFunction yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/transformers/esDecorators.ts:670:14",
+      "reason": "a function returning ImmediatelyInvokedArrowFunction",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/transformers/esDecorators.ts:295:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/esDecorators.ts:670:14",
+          "reason": "a function returning ImmediatelyInvokedArrowFunction",
+          "text": "src/compiler/transformers/esDecorators.ts:670:14: stage 0 can't lower a function returning ImmediatelyInvokedArrowFunction yet"
+        }
+      ]
+    }
+  },
+  {
+    "file": "src/compiler/transformers/namedEvaluation.ts",
+    "where": "src/compiler/transformers/namedEvaluation.ts:236:1",
+    "start": 8605,
+    "end": 9456,
+    "name": "finishTransformNamedEvaluation",
+    "calls": [
+      {
+        "callee": "cast",
+        "where": "src/compiler/transformers/namedEvaluation.ts:250:9",
+        "start": 9162,
+        "text": "cast(injectClassNamedEvaluationHelperBlockIfMissing(context, innerExpression, assignedName), isClassExpression)"
+      }
+    ],
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/transformers/namedEvaluation.ts:238:5",
+      "reason": "a value of type WrappedExpression<AnonymousFunctionDefinition>",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/transformers/namedEvaluation.ts:236:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/namedEvaluation.ts:238:5",
+          "reason": "a value of type WrappedExpression<AnonymousFunctionDefinition>",
+          "text": "src/compiler/transformers/namedEvaluation.ts:238:5: stage 0 can't lower a value of type WrappedExpression<AnonymousFunctionDefinition> yet"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/transformers/namedEvaluation.ts:238:5",
+      "reason": "a value of type WrappedExpression<AnonymousFunctionDefinition>",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/transformers/namedEvaluation.ts:236:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/namedEvaluation.ts:238:5",
+          "reason": "a value of type WrappedExpression<AnonymousFunctionDefinition>",
+          "text": "src/compiler/transformers/namedEvaluation.ts:238:5: stage 0 can't lower a value of type WrappedExpression<AnonymousFunctionDefinition> yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/transformers/namedEvaluation.ts:238:5",
+      "reason": "a value of type WrappedExpression<AnonymousFunctionDefinition>",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/transformers/namedEvaluation.ts:236:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/transformers/namedEvaluation.ts:238:5",
+          "reason": "a value of type WrappedExpression<AnonymousFunctionDefinition>",
+          "text": "src/compiler/transformers/namedEvaluation.ts:238:5: stage 0 can't lower a value of type WrappedExpression<AnonymousFunctionDefinition> yet"
+        }
+      ]
+    }
+  },
+  {
+    "file": "src/compiler/transformers/utilities.ts",
+    "where": "src/compiler/transformers/utilities.ts:179:1",
+    "start": 6337,
+    "end": 15264,
+    "name": "collectExternalModuleInfo",
+    "calls": [
+      {
+        "callee": "cast",
+        "where": "src/compiler/transformers/utilities.ts:304:33",
+        "start": 12980,
+        "text": "cast(node.exportClause, isNamedExports)"
+      }
+    ],
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/core.ts:1801:59",
+      "reason": "a template interpolating an object, an array, a map, a function or undefined",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/transformers/utilities.ts:179:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1801:59",
+          "reason": "a template interpolating an object, an array, a map, a function or undefined",
+          "text": "src/compiler/core.ts:1801:59: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/core.ts:1801:59",
+      "reason": "a template interpolating an object, an array, a map, a function or undefined",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/transformers/utilities.ts:179:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1801:59",
+          "reason": "a template interpolating an object, an array, a map, a function or undefined",
+          "text": "src/compiler/core.ts:1801:59: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/core.ts:1801:59",
+      "reason": "a template interpolating an object, an array, a map, a function or undefined",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/transformers/utilities.ts:179:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1801:59",
+          "reason": "a template interpolating an object, an array, a map, a function or undefined",
+          "text": "src/compiler/core.ts:1801:59: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet"
+        }
+      ]
+    }
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "where": "src/compiler/utilities.ts:3106:1",
+    "start": 113855,
+    "end": 114237,
+    "name": "getTsConfigObjectLiteralExpression",
+    "calls": [
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/utilities.ts:3109:16",
+        "start": 114180,
+        "text": "tryCast(expression, isObjectLiteralExpression)"
+      }
+    ],
+    "A": {
+      "outcome": "lowers"
+    },
+    "B": {
+      "outcome": "lowers"
+    },
+    "C": {
+      "outcome": "lowers"
+    }
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "where": "src/compiler/utilities.ts:4349:1",
+    "start": 169380,
+    "end": 170842,
+    "name": "tryGetModuleSpecifierFromDeclaration",
+    "calls": [
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/utilities.ts:4357:20",
+        "start": 169966,
+        "text": "tryCast(node.moduleSpecifier, isStringLiteralLike)"
+      },
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/utilities.ts:4359:20",
+        "start": 170088,
+        "text": "tryCast(tryCast(node.moduleReference, isExternalModuleReference)?.expression, isStringLiteralLike)"
+      },
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/utilities.ts:4359:28",
+        "start": 170096,
+        "text": "tryCast(node.moduleReference, isExternalModuleReference)"
+      },
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/utilities.ts:4362:20",
+        "start": 170289,
+        "text": "tryCast(node.parent.moduleSpecifier, isStringLiteralLike)"
+      },
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/utilities.ts:4365:20",
+        "start": 170452,
+        "text": "tryCast(node.parent.parent.moduleSpecifier, isStringLiteralLike)"
+      },
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/utilities.ts:4367:20",
+        "start": 170580,
+        "text": "tryCast(node.parent.parent.parent.moduleSpecifier, isStringLiteralLike)"
+      }
+    ],
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/utilities.ts:4349:54",
+      "reason": "a value of type JSDocImportTag | CanHaveModuleSpecifier",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/utilities.ts:4349:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:4349:54",
+          "reason": "a value of type JSDocImportTag | CanHaveModuleSpecifier",
+          "text": "src/compiler/utilities.ts:4349:54: stage 0 can't lower a value of type JSDocImportTag | CanHaveModuleSpecifier yet"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/utilities.ts:4349:54",
+      "reason": "a value of type JSDocImportTag | CanHaveModuleSpecifier",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/utilities.ts:4349:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:4349:54",
+          "reason": "a value of type JSDocImportTag | CanHaveModuleSpecifier",
+          "text": "src/compiler/utilities.ts:4349:54: stage 0 can't lower a value of type JSDocImportTag | CanHaveModuleSpecifier yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/utilities.ts:4349:54",
+      "reason": "a value of type JSDocImportTag | CanHaveModuleSpecifier",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/utilities.ts:4349:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:4349:54",
+          "reason": "a value of type JSDocImportTag | CanHaveModuleSpecifier",
+          "text": "src/compiler/utilities.ts:4349:54: stage 0 can't lower a value of type JSDocImportTag | CanHaveModuleSpecifier yet"
+        }
+      ]
+    }
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "where": "src/compiler/utilities.ts:4381:1",
+    "start": 171052,
+    "end": 172048,
+    "name": "tryGetImportFromModuleSpecifier",
+    "calls": [
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/utilities.ts:4395:20",
+        "start": 171908,
+        "text": "tryCast(node.parent.parent, isImportTypeNode)"
+      }
+    ],
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/utilities.ts:4381:17",
+      "reason": "a function returning AnyValidImportOrReExport | undefined",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/utilities.ts:4381:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:4381:17",
+          "reason": "a function returning AnyValidImportOrReExport | undefined",
+          "text": "src/compiler/utilities.ts:4381:17: stage 0 can't lower a function returning AnyValidImportOrReExport | undefined yet"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/utilities.ts:4381:17",
+      "reason": "a function returning AnyValidImportOrReExport | undefined",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/utilities.ts:4381:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:4381:17",
+          "reason": "a function returning AnyValidImportOrReExport | undefined",
+          "text": "src/compiler/utilities.ts:4381:17: stage 0 can't lower a function returning AnyValidImportOrReExport | undefined yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/utilities.ts:4381:17",
+      "reason": "a function returning AnyValidImportOrReExport | undefined",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/utilities.ts:4381:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:4381:17",
+          "reason": "a function returning AnyValidImportOrReExport | undefined",
+          "text": "src/compiler/utilities.ts:4381:17: stage 0 can't lower a function returning AnyValidImportOrReExport | undefined yet"
+        }
+      ]
+    }
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "where": "src/compiler/utilities.ts:4427:1",
+    "start": 173311,
+    "end": 173975,
+    "name": "getNamespaceDeclarationNode",
+    "calls": [
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/utilities.ts:4430:41",
+        "start": 173634,
+        "text": "tryCast(node.importClause.namedBindings, isNamespaceImport)"
+      },
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/utilities.ts:4434:41",
+        "start": 173856,
+        "text": "tryCast(node.exportClause, isNamespaceExport)"
+      }
+    ],
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/debug.ts:273:33",
+      "reason": "a value of type never",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/utilities.ts:4427:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/debug.ts:273:33",
+          "reason": "a value of type never",
+          "text": "src/compiler/debug.ts:273:33: stage 0 can't lower a value of type never yet"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/debug.ts:273:33",
+      "reason": "a value of type never",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/utilities.ts:4427:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/debug.ts:273:33",
+          "reason": "a value of type never",
+          "text": "src/compiler/debug.ts:273:33: stage 0 can't lower a value of type never yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/debug.ts:273:33",
+      "reason": "a value of type never",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/utilities.ts:4427:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/debug.ts:273:33",
+          "reason": "a value of type never",
+          "text": "src/compiler/debug.ts:273:33: stage 0 can't lower a value of type never yet"
+        }
+      ]
+    }
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "where": "src/compiler/utilities.ts:4475:1",
+    "start": 175390,
+    "end": 175685,
+    "name": "isJSDocConstructSignature",
+    "calls": [
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/utilities.ts:4477:18",
+        "start": 175589,
+        "text": "tryCast(param && param.name, isIdentifier)"
+      }
+    ],
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/binder.ts:2258:13",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/utilities.ts:4475:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/binder.ts:2258:13",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/binder.ts:2258:13",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/utilities.ts:4475:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/binder.ts:2258:13",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/binder.ts:2258:13",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/utilities.ts:4475:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/binder.ts:2258:13",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+        }
+      ]
+    }
+  },
+  {
+    "file": "src/compiler/utilitiesPublic.ts",
+    "where": "src/compiler/utilitiesPublic.ts:865:1",
+    "start": 33357,
+    "end": 33746,
+    "name": "identifierToKeywordKind",
+    "calls": [
+      {
+        "callee": "tryCast",
+        "where": "src/compiler/utilitiesPublic.ts:867:20",
+        "start": 33705,
+        "text": "tryCast(token, isKeyword)"
+      }
+    ],
+    "A": {
+      "outcome": "lowers"
+    },
+    "B": {
+      "outcome": "lowers"
+    },
+    "C": {
+      "outcome": "lowers"
+    }
+  }
+]

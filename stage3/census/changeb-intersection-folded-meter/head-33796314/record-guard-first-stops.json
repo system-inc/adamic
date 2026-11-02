@@ -1,0 +1,429 @@
+[
+  {
+    "unit": "src/compiler/builder.ts:1616:1",
+    "name": "getTextHandlingSourceMapForSignature",
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/builder.ts:1617:12",
+      "reason": "a union or optional field read in a program with record storage",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/builder.ts:1616:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1617:12",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/builder.ts:1617:12: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/builder.ts:1617:12",
+      "reason": "a union or optional field read in a program with record storage",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/builder.ts:1616:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1617:12",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/builder.ts:1617:12: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/builder.ts:1617:12",
+      "reason": "a union or optional field read in a program with record storage",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/builder.ts:1616:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1617:12",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/builder.ts:1617:12: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        }
+      ]
+    }
+  },
+  {
+    "unit": "src/compiler/moduleNameResolver.ts:2228:1",
+    "name": "getEntrypointsFromPackageJsonInfo",
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/moduleNameResolver.ts:2256:54",
+      "reason": "a union or optional field read in a program with record storage",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:2228:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:2256:54",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/moduleNameResolver.ts:2256:54: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/moduleNameResolver.ts:2256:54",
+      "reason": "a union or optional field read in a program with record storage",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:2228:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:2256:54",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/moduleNameResolver.ts:2256:54: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/moduleNameResolver.ts:2256:54",
+      "reason": "a union or optional field read in a program with record storage",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:2228:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:2256:54",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/moduleNameResolver.ts:2256:54: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        }
+      ]
+    }
+  },
+  {
+    "unit": "src/compiler/moduleNameResolver.ts:2619:1",
+    "name": "loadModuleFromExports",
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/moduleNameResolver.ts:2620:10",
+      "reason": "a union or optional field read in a program with record storage",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:2619:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:2620:10",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/moduleNameResolver.ts:2620:10: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/moduleNameResolver.ts:2620:10",
+      "reason": "a union or optional field read in a program with record storage",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:2619:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:2620:10",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/moduleNameResolver.ts:2620:10: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/moduleNameResolver.ts:2620:10",
+      "reason": "a union or optional field read in a program with record storage",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:2619:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:2620:10",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/moduleNameResolver.ts:2620:10: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        }
+      ]
+    }
+  },
+  {
+    "unit": "src/compiler/moduleSpecifiers.ts:288:1",
+    "name": "getNodeModulesPackageName",
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/moduleSpecifiers.ts:298:182",
+      "reason": "a union or optional field read in a program with record storage",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleSpecifiers.ts:288:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleSpecifiers.ts:298:182",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/moduleSpecifiers.ts:298:182: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/moduleSpecifiers.ts:298:182",
+      "reason": "a union or optional field read in a program with record storage",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleSpecifiers.ts:288:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleSpecifiers.ts:298:182",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/moduleSpecifiers.ts:298:182: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/moduleSpecifiers.ts:298:182",
+      "reason": "a union or optional field read in a program with record storage",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleSpecifiers.ts:288:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleSpecifiers.ts:298:182",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/moduleSpecifiers.ts:298:182: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        }
+      ]
+    }
+  },
+  {
+    "unit": "src/compiler/moduleSpecifiers.ts:301:1",
+    "name": "getModuleSpecifierWorker",
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/moduleSpecifiers.ts:313:191",
+      "reason": "a union or optional field read in a program with record storage",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleSpecifiers.ts:301:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleSpecifiers.ts:313:191",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/moduleSpecifiers.ts:313:191: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/moduleSpecifiers.ts:313:191",
+      "reason": "a union or optional field read in a program with record storage",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleSpecifiers.ts:301:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleSpecifiers.ts:313:191",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/moduleSpecifiers.ts:313:191: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/moduleSpecifiers.ts:313:191",
+      "reason": "a union or optional field read in a program with record storage",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleSpecifiers.ts:301:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleSpecifiers.ts:313:191",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/moduleSpecifiers.ts:313:191: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        }
+      ]
+    }
+  },
+  {
+    "unit": "src/compiler/moduleSpecifiers.ts:433:1",
+    "name": "getLocalModuleSpecifierBetweenFileNames",
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/moduleSpecifiers.ts:442:24",
+      "reason": "a union or optional field read in a program with record storage",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleSpecifiers.ts:433:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleSpecifiers.ts:442:24",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/moduleSpecifiers.ts:442:24: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/moduleSpecifiers.ts:442:24",
+      "reason": "a union or optional field read in a program with record storage",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleSpecifiers.ts:433:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleSpecifiers.ts:442:24",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/moduleSpecifiers.ts:442:24: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/moduleSpecifiers.ts:442:24",
+      "reason": "a union or optional field read in a program with record storage",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleSpecifiers.ts:433:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleSpecifiers.ts:442:24",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/moduleSpecifiers.ts:442:24: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        }
+      ]
+    }
+  },
+  {
+    "unit": "src/compiler/program.ts:1339:1",
+    "name": "getImpliedNodeFormatForFile",
+    "A": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/program.ts:1341:41",
+      "reason": "a union or optional field read in a program with record storage",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/program.ts:1339:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/program.ts:1341:41",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/program.ts:1341:41: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/program.ts:1341:41",
+      "reason": "a union or optional field read in a program with record storage",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/program.ts:1339:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/program.ts:1341:41",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/program.ts:1341:41: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        }
+      ]
+    },
+    "C": {
+      "outcome": "stopped",
+      "kind": "NotYet",
+      "where": "src/compiler/program.ts:1341:41",
+      "reason": "a union or optional field read in a program with record storage",
+      "all_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/program.ts:1339:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/program.ts:1341:41",
+          "reason": "a union or optional field read in a program with record storage",
+          "text": "src/compiler/program.ts:1341:41: stage 0 can't lower a union or optional field read in a program with record storage yet"
+        }
+      ]
+    }
+  }
+]
