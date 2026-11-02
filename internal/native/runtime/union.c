@@ -137,6 +137,9 @@ bool adamic_has_property(const adamic_heap *value, const char *name) {
 			adamic_string key = {{0, adamic_kind_string, 0}, strlen(name), name, 0, NULL, NULL, 0};
 			return adamic_record_has(object, &key);
 		}
+		// Error.prototype supplies message, so on Node an Error made without one still has it, as "". Its
+		// absent-message shape keeps that "" in #message (exceptions.c), so look for it there.
+		name = adamic_error_field_name(object, name);
 		for (size_t index = 0; index < object->shape->count; index++) {
 			if (strcmp(name, object->shape->names[index]) != 0) continue;
 			if (!adamic_object_present(object, index)) continue;
@@ -203,6 +206,8 @@ adamic_heap *adamic_dynamic_property(adamic_heap *value, const char *name) {
 			const adamic_value *slot = adamic_record_get(object, &key);
 			return slot == NULL ? NULL : adamic_retain(slot->reference);
 		}
+		// The inherited message, as in adamic_has_property.
+		name = adamic_error_field_name(object, name);
 		for (size_t index = 0; index < object->shape->count; index++) {
 			if (strcmp(name, object->shape->names[index]) == 0) return dynamic_slot(object, index);
 		}
