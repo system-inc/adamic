@@ -1,0 +1,16 @@
+// a-check: refused a {} | undefined seen as Value | undefined (fixed objects and records have different storage; copy explicitly)
+type OptionValue = string | number | boolean | undefined;
+interface Options {
+	module?: number;
+	target?: number;
+	strict?: boolean;
+	noImplicitAny?: boolean;
+	[option: string]: OptionValue;
+}
+type Value = string | number | boolean | null | Value[] | Recovery;
+interface Recovery { [key: string]: Value | undefined; }
+function recover(wanted: boolean): Value | undefined {
+	return wanted ? {} : undefined;
+}
+const recovered = recover(true);
+console.log(`${typeof recovered} ${String(recover(false))}`);
