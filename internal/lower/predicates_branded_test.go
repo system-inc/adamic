@@ -622,35 +622,43 @@ function show(n: Node): void { if (isTypeElementLie(n)) { console.log(nameOf(n))
 // Language's y4 stopped at x.name = "w" with "<write>.name is not initialized" on both backends where Node
 // prints w (Optimizer's ruling, Nov 2). Mut's name is optional and Branded's value has none, or has "a".
 // Unrouted, the write is a plain one, the read after it is checked through TypeElement's view, and both
-// agree with Node, printing w (Pupa, Nov 2). Mutant: the four write sites routed again, and y4 stops at
-// the write.
+// agree with Node, printing w (Pupa, Nov 2). A required field, MutCount's count over Counted, is no
+// different: the write stays a plain one and the read after it is checked. Neither is the widened NotYet,
+// since checkViewWidenedReads weighs reads, never writes (Pupa, Nov 2). Mutant: the four write sites
+// routed again, and y4 stops at the write.
 func TestBrandedSupertypeWriteIsNotRouted(t *testing.T) {
 	t.Parallel()
 	const y4 = `interface Mut extends Node { name?: string; }
 function show<T extends Mut>(x: T): void { if (isTypeElement(x)) { x.name = "w"; console.log(String(x.name)); } }
 type Branded = Mut & { _declarationBrand: undefined; _typeElementBrand: undefined };
 `
-	for _, probe := range []struct{ name, source string }{
-		{"y4", `const v: Branded = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined };
-const mv: Mut = v; show(mv);`},
-		{"y4 holding a name", `const v: Branded = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a" };
-const mv: Mut = v; show(mv);`},
+	const counted = `interface Counted extends Declaration { _countedBrand: undefined; count: number; }
+function isCountedLie(n: Node): n is Counted { return kindOf(n) !== 0; }
+interface MutCount extends Node { count: number; }
+function show<T extends MutCount>(x: T): void { if (isCountedLie(x)) { x.count = 7; console.log(String(x.count)); } }
+`
+	for _, probe := range []struct{ name, source, field string }{
+		{"y4", y4 + `const v: Branded = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined };
+const mv: Mut = v; show(mv);`, "name"},
+		{"y4 holding a name", y4 + `const v: Branded = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a" };
+const mv: Mut = v; show(mv);`, "name"},
+		{"required field", counted + `const w = { kind: 5, pos: 1, count: 3 }; const m: MutCount = w; show(m);`, "count"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			program := lowersAndAgreesWithNodeAs(t, brandedPrelude+y4+probe.source, ".ts")
+			program := lowersAndAgreesWithNodeAs(t, brandedPrelude+probe.source, ".ts")
 			reads, writes := 0, 0
 			inspect := func(node any) bool {
-				if read, ok := node.(ir.Property); ok && read.Name == "name" {
+				if read, ok := node.(ir.Property); ok && read.Name == probe.field {
 					reads++
 					if !program.CheckedField(read.ViewReceiverTypeID, read.Name) {
-						t.Errorf("x.name's read isn't checked through TypeElement's view")
+						t.Errorf("x.%s's read isn't checked through the branded supertype's view", probe.field)
 					}
 				}
-				if write, ok := node.(ir.SetProperty); ok && write.Name == "name" {
+				if write, ok := node.(ir.SetProperty); ok && write.Name == probe.field {
 					writes++
 					if program.CheckedField(write.ViewReceiverTypeID, write.Name) {
-						t.Errorf("x.name = \"w\" is routed to TypeElement's checked write")
+						t.Errorf("the write of x.%s is routed to the branded supertype's checked write", probe.field)
 					}
 				}
 				return true
@@ -660,7 +668,7 @@ const mv: Mut = v; show(mv);`},
 				walk(function.Body, inspect)
 			}
 			if reads != 1 || writes != 1 {
-				t.Fatalf("want one read and one write of name, found %d and %d", reads, writes)
+				t.Fatalf("want one read and one write of %s, found %d and %d", probe.field, reads, writes)
 			}
 		})
 	}
