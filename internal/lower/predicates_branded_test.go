@@ -461,14 +461,16 @@ const u = tryCast(p, isTypeElement); console.log(u === undefined ? "no" : String
 // Declaration, or another supertype of S whose every field is S's, it's S intersected only with supertypes
 // of S, read through S's view, so an honest value agrees with Node and a lie stops at the read (Language's
 // g1 at Node, and its g4 at Holder<number>, Adamic's ruling, Nov 1). At T = PropertySignature, a subtype
-// of S, at T = Identifier, which S isn't assignable to, and at T = Named, whose name is required where
-// S's is optional, the intersection holds a member that isn't a supertype, so the call stays NotYet. So
-// it does at T = Lettered, whose optional a S lacks, and at T = Bag, whose index
-// signature is no property of S's (brandedSupertypeMember, ruled Nov 2). Mutants: any member let through,
-// and g1 at PropertySignature, Identifier and Named lower; comparability in place of assignability, and
-// g1 at Named lowers; the reads not routed to S's view, and the honest g1 is NotYet as a widened read; the
-// property-subset test dropped, and g1 at Lettered lowers; the signature test dropped, and g1 at Bag
-// lowers.
+// of S, at T = Identifier, which S isn't assignable to, at T = Named, whose name is required where S's is
+// optional, and at T = Bag, whose index signature an interface S has no implicit one for, the
+// intersection holds a member that isn't a supertype, so the call stays NotYet. So it does at T = Lettered,
+// whose optional a S lacks, at T = Present, whose name S has as an optional field of the same type, and,
+// for a claim of Shape, a type literal's alias S that does have an implicit index signature, at T = Bag,
+// whose index signature is no property (brandedSupertypeMember, ruled Nov 2). Mutants: any member let
+// through, and g1 at PropertySignature, Identifier and Named lower; comparability in place of
+// assignability, and g1 at Present lowers; the reads not routed to S's view, and the honest g1 is NotYet
+// as a widened read; the property-subset test dropped, and g1 at Lettered lowers; the signature test
+// dropped, and Shape at Bag lowers.
 func TestBrandedSupertypeGenericIntersection(t *testing.T) {
 	t.Parallel()
 	const g1 = `function show<T extends Node>(n: T): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
@@ -510,6 +512,13 @@ function show<T extends Lettered>(x: T): void { if (isTypeElementLie(x)) { conso
 		{"g1 at Bag", `interface Bag extends Node { [k: string]: unknown; }
 function show<T extends Bag>(n: T): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
 const b: Bag = { kind: 80, pos: 2 }; show(b);`, "read on the true side as Bag & TypeElement"},
+		{"g1 at Present", `interface Present extends Node { readonly name: string | undefined; }
+` + g1 + `const q: Present = { kind: 80, pos: 2, name: "q" }; show(q);`, "read on the true side as Present & TypeElement"},
+		{"Shape at Bag", `type Shape = { readonly kind: number; readonly pos: number; _declarationBrand: undefined; _shapeBrand: undefined; readonly name?: string };
+function isShapeLie(n: Node): n is Shape { return kindOf(n) !== 0; }
+interface Bag extends Node { [k: string]: unknown; }
+function show<T extends Bag>(n: T): void { if (isShapeLie(n)) { console.log(String(n.name)); } }
+const b: Bag = { kind: 80, pos: 2 }; show(b);`, "read on the true side as Bag & Shape"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
