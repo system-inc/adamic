@@ -497,7 +497,9 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 // that field out: the literal's object has no slot for it, and the write would find none ('a field the
 // checker proved is there is missing'), whatever the field's representation. A field held in a Union is
 // refused wherever it's written, as before. A class instance declares every field, so it has the slot.
-// Optional presence lifts this (#r3chqza).
+// The field is matched by its declarations (fieldDeclarations), never by the type that spelled it, so an
+// interface, an intersection, an alias of either, an upcast view and a generic's constraint all reach the
+// same field (#krv1hgh). Optional presence lifts this (#r3chqza).
 func (l *lowering) absentOptionalWrite(target *ast.Node) error {
 	member := l.checker.GetSymbolAtLocation(target)
 	if member == nil || member.Flags&ast.SymbolFlagsOptional == 0 || isClassInstance(l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression)) {
@@ -506,10 +508,28 @@ func (l *lowering) absentOptionalWrite(target *ast.Node) error {
 	if stored, _ := l.representation(l.checker.GetTypeOfSymbol(member)); stored == ir.Union {
 		return l.notYet(target, "writing a possibly absent optional own field")
 	}
-	if l.omittedOptionals[member] && !presentBeforeWrite(target) && !l.literalGivesField(target) {
+	omitted := false
+	for _, field := range fieldDeclarations(member) {
+		omitted = omitted || l.omittedOptionals[field]
+	}
+	if omitted && !presentBeforeWrite(target) && !l.literalGivesField(target) {
 		return l.notYet(target, "writing a possibly absent optional own field")
 	}
 	return nil
+}
+
+// fieldDeclarations is a property's symbol and the symbols of the declarations it was made from. An
+// interface's or a type literal's property is its own declaration's. An intersection's, or an
+// instantiated or mapped type's, is a symbol the checker makes for that type alone, so Mut & { brand }
+// and Mut name one field by two symbols, and only the declarations' tie them.
+func fieldDeclarations(property *ast.Symbol) []*ast.Symbol {
+	symbols := []*ast.Symbol{property}
+	for _, declaration := range property.Declarations {
+		if declared := declaration.Symbol(); declared != nil && declared != property {
+			symbols = append(symbols, declared)
+		}
+	}
+	return symbols
 }
 
 // presentBeforeWrite is a write to object.name inside the then branch of an if that tested
@@ -610,8 +630,9 @@ func (l *lowering) literalGivesField(target *ast.Node) bool {
 }
 
 // noteOmittedOptionals finds every object literal whose context types it and records the optional
-// properties of that type it leaves out. A spread counts as giving a property its source declares
-// required.
+// properties of that type it leaves out, by their declarations (fieldDeclarations). A spread counts as
+// giving a property its source declares required. A context that's an intersection of object types is
+// one object, whose optional properties the literal leaves out as an interface's (#krv1hgh).
 func (l *lowering) noteOmittedOptionals(modules []*ast.SourceFile) {
 	l.omittedOptionals = map[*ast.Symbol]bool{}
 	var visit ast.Visitor
@@ -647,7 +668,7 @@ func (l *lowering) noteOmittedOptionalsOf(literal *ast.Node) {
 		members = contextual.Types()
 	}
 	for _, member := range members {
-		if member.Flags()&checker.TypeFlagsObject == 0 {
+		if member.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 {
 			continue
 		}
 		for _, property := range l.checker.GetPropertiesOfType(member) {
@@ -661,7 +682,9 @@ func (l *lowering) noteOmittedOptionalsOf(literal *ast.Node) {
 				}
 			}
 			if !spread {
-				l.omittedOptionals[property] = true
+				for _, field := range fieldDeclarations(property) {
+					l.omittedOptionals[field] = true
+				}
 			}
 		}
 	}
