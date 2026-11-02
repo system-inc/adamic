@@ -48,6 +48,10 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 		return "(() => { throw Object.assign(new Error(\"Cannot find module '\" + " + args[0] + " + \"'\"), {code: 'MODULE_NOT_FOUND'}); })()"
 	case "date_new":
 		return "new Date(" + args[0] + ")"
+	case "date_now":
+		return "new Date()"
+	case "time_now":
+		return "Date.now()"
 	case "date_time":
 		return "(" + args[0] + ").getTime()"
 	case "is_file":

@@ -1,3 +1,3 @@
-// Spec: `Math.random` and `Date` would make the oracle nondeterministic
-// Expect: refused Math.random
+// Spec: `Math.random` is not built yet
+// Expect: notyet Math.random
 console.log(String(Math.random() >= 0));

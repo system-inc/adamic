@@ -436,6 +436,18 @@ adamic_object *adamic_fs_file_date_new(double milliseconds) {
     return date;
 }
 
+// Date.now(): the current time in whole epoch milliseconds, truncated as Node truncates it.
+double adamic_fs_file_time_now(void) {
+    struct timespec now;
+    clock_gettime(CLOCK_REALTIME, &now);
+    return (double)now.tv_sec * 1000.0 + (double)(now.tv_nsec / 1000000);
+}
+
+// new Date(): a Date of Date.now(), through the constructor every Date takes.
+adamic_object *adamic_fs_file_date_now(void) {
+    return adamic_fs_file_date_new(adamic_fs_file_time_now());
+}
+
 double adamic_fs_file_date_time(const adamic_object *date) {
     static adamic_slot_cache cache;
     return adamic_object_field(date, "_fsFileTime", &cache)->number;
