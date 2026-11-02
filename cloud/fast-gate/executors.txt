@@ -1488,6 +1488,12 @@ reads stage3/applyproducts .gitattributes
 # audited in stage3/lane/READS.md, and the root .gitattributes.
 reads stage3/lane stage3/*
 reads stage3/lane .gitattributes
+# The adapted tree's own package (#qwfw9pv): its product test, TestProduct_Stage3AdaptedTree, reads stage3/source.json,
+# apply.py, caches.py, the adaptations and the API and TypeScript package pins, and buildcache's git lookup reads the
+# root .gitattributes. stage3/* also takes the lane and oracle, which it doesn't read: a key that moves more than it
+# must, never less.
+reads stage3/lane/adaptedtree stage3/*
+reads stage3/lane/adaptedtree .gitattributes
 # TestFixtures, TestFixturePaths via transformedNodeRunner — stage3/fixtures/fixtures_test.go:121
 # TestFixtures — stage3/fixtures/fixtures_test.go:264
 # TestTransformedNodeRunnerGuardHook — stage3/fixtures/runner_guard_test.go:21
