@@ -94,7 +94,10 @@ func build(handed buildcache.Handed, directory string) error {
 	if err != nil {
 		return err
 	}
-	pack, err := buildcache.PinnedGit(source, handed.Inputs, pin, objects, "pack-objects", "--stdout")
+	// One thread, so the pack's bytes are a function of its objects: pack-objects' threaded delta search lays the same
+	// objects out differently from build to build, which an audit rebuild reads as Nondeterministic (Node's ruling on
+	// #qwfw9pv). Its objects are the pin's alone, since the source is the gate input's depth-one checkout.
+	pack, err := buildcache.PinnedGit(source, handed.Inputs, pin, objects, "-c", "pack.threads=1", "pack-objects", "--stdout")
 	if err != nil {
 		return err
 	}
