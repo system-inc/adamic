@@ -1,0 +1,27 @@
+{
+  "mode": "first-error",
+  "distinct_key": [
+    "kind",
+    "where",
+    "reason",
+    "text"
+  ],
+  "normalization": "remove each adapted tree root from embedded locations in where, reason and text",
+  "files": 79,
+  "before_sites": 3207,
+  "after_sites": 3206,
+  "changed_reasons": [
+    {
+      "reason": "a checked predicate target LeftHandSideExpression over a generic argument TIn & ({} | null), read on the true side as Expression & LeftHandSideExpression",
+      "before": 1,
+      "after": 0,
+      "delta": -1,
+      "examples": []
+    }
+  ],
+  "new_or_growing": [],
+  "raw_sha256": {
+    "before": "230e18cb9f65bdd538655506b52da0c0c572bf34b4b28b961cb98b20a23dd918",
+    "after": "d222ff253f037e6d1d1180d2c4ee59f845060600c71ed6c56b75ad1f9c48dead"
+  }
+}

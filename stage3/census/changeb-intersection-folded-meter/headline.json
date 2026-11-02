@@ -1,0 +1,51 @@
+{
+  "files": 79,
+  "summary": {
+    "a": {
+      "NotYet": 555,
+      "Refused": 2652,
+      "SkippedDependency": 2,
+      "error": 0,
+      "panic": 0
+    },
+    "b": {
+      "NotYet": 554,
+      "Refused": 2652,
+      "SkippedDependency": 2,
+      "error": 0,
+      "panic": 0
+    }
+  },
+  "changed_reasons": 1,
+  "unit_changes": 1,
+  "A_lowers_B_stops": 0,
+  "A_lowers_B_other": 0,
+  "removed_A_lowering_sites": 1,
+  "direct_calls": 78,
+  "caller_units": 22,
+  "timing_totals": {
+    "a": {
+      "wall_seconds": 981.694304657,
+      "cpu_seconds": 1048.9818640000017,
+      "units": 4032
+    },
+    "b": {
+      "wall_seconds": 971.80024612,
+      "cpu_seconds": 1031.2103750000015,
+      "units": 4032
+    }
+  },
+  "noise": {
+    "selection": "ImportDeclaration: no lowered receiver read, destructure or predicate; registration still included",
+    "units": 91,
+    "median_abs_seconds": 0.011643635,
+    "p90_abs_seconds": 0.03566161699999999,
+    "p95_abs_seconds": 0.06961631599999998,
+    "max_abs_seconds": 0.13441281500000002,
+    "median_B_over_A": 0.9761222736084665,
+    "p05_B_over_A": 0.6726509243351593,
+    "p95_B_over_A": 1.8246364387938003,
+    "A_total_seconds": 7.854498294,
+    "B_total_seconds": 7.984738501
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "nproc": "5",
+  "memory": "MemTotal:       18440100 kB\nMemFree:        11874128 kB\nMemAvailable:   16975220 kB\nBuffers:           90216 kB\nCached:          4797532 kB\nSwapCached:            0 kB\nActive:           717604 kB\nInactive:        4361364 kB\nActive(anon):       2780 kB\nInactive(anon):   229656 kB\nActive(file):     714824 kB\nInactive(file):  4131708 kB\nUnevictable:       29924 kB\nMlocked:               0 kB\nSwapTotal:             0 kB\nSwapFree:              0 kB\nDirty:           1414524 kB\nWriteback:             0 kB\nAnonPages:        222584 kB\nMapped:           106852 kB\nShmem:             10312 kB\nKReclaimable:     606572 kB\nSlab:             690008 kB\nSReclaimable:     606572 kB\nSUnreclaim:        83436 kB\nKernelStack:        2888 kB\nPageTables:         3800 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:     9220048 kB\nCommitted_AS:    1028980 kB\nVmallocTotal:   34359738367 kB\nVmallocUsed:        5356 kB\nVmallocChunk:          0 kB\nPercpu:             1296 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nBalloon:               0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:       40960 kB\nDirectMap2M:    10475520 kB\nDirectMap1G:    40894464 kB\n",
+  "cpu_max": "400000 100000\n",
+  "memory_max": "17179869184\n",
+  "uname": "Linux b46aa1a9b4e6 6.18.57 #1 SMP Tue Oct 20 21:56:04 UTC 2026 x86_64 GNU/Linux",
+  "A": "3aec8230abb53ac93b92b24f5e3ae916f9cd36a8",
+  "B": "5e5f57d3b530264cb09eba5712a8a362375aede2",
+  "main": "50503bc6abc22da12e9f9a0caad28b7f4bb1b20d",
+  "TypeScript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "binary_sha256": {
+    "a": "04c72fc31d9fc1a9e3e0b26e1a154465d5d2078892a99b1106e7ad3057339004",
+    "b": "1c184a82c8964821b06aeafb789f2df88f0601f19f145f7e2d9ecf9f78761843"
+  },
+  "submodules": {
+    "cohere": "06af2e399c6c1fb93fd570b774027942747400b4",
+    "cohere/TypeScript": "d92d9bfee114c80be2c375d72edae966176e3a4f"
+  },
+  "stage3_A_equals_main": true,
+  "toolchain": {
+    "go version": "go version go1.27.1 linux/amd64",
+    "node --version": "v24.19.0",
+    "python3 --version": "Python 3.12.14"
+  },
+  "raw_stream_sha256": {
+    "a.jsonl": "230e18cb9f65bdd538655506b52da0c0c572bf34b4b28b961cb98b20a23dd918",
+    "b.jsonl": "d222ff253f037e6d1d1180d2c4ee59f845060600c71ed6c56b75ad1f9c48dead",
+    "a-times.jsonl": "cff26622a565e1ea8ac494bc5179abd1c94fb1ec1dac2399d6e6b4cf37065184",
+    "b-times.jsonl": "46698107f72279f96d1017e72623dba95125fe812009f69296aaba51aace2f89"
+  },
+  "final_checks": {
+    "source_manifest_unchanged": true,
+    "gzip_crc_and_roundtrip": true,
+    "delta_raw_sha256_match": true,
+    "internal_source_diffs_empty": true
+  }
+}
