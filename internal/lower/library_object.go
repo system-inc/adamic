@@ -85,6 +85,10 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 			}
 		}
 		if name == "keys" || name == "values" || name == "entries" {
+			// As in objectKeys: Node enumerates none of an Error's own properties.
+			if !l.exactObject(shape, 0) && l.errorMayHide(written[0]) {
+				return nil, true, l.notYet(node, "Object."+name+" of a value that may hold an Error, whose own properties Node doesn't enumerate")
+			}
 			if err := l.enumerationDescriptors(node, false); err != nil {
 				return nil, true, err
 			}

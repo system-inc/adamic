@@ -71,6 +71,11 @@ func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
 	if len(arguments) != 1 {
 		return nil, true, l.notYet(node, "Object.keys without exactly one argument")
 	}
+	// Node enumerates none of an Error's own properties, and natively they're fields like any other's
+	// (errorMayHide). A literal, or a const bound to one, is never an Error.
+	if !l.exactObject(arguments[0], 0) && l.errorMayHide(arguments[0]) {
+		return nil, true, l.notYet(node, "Object.keys of a value that may hold an Error, whose own properties Node doesn't enumerate")
+	}
 	if value, handled, err := l.recordObjectCall(node, "keys"); handled {
 		return value, true, err
 	}

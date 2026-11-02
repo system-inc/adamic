@@ -1,0 +1,3 @@
+// hasOwnProperty and propertyIsEnumerable of a plain object through the same view, with no Error and no catch.
+const o: { message: string } = { message: 'x' };
+console.log(`${o.hasOwnProperty('message')} ${o.propertyIsEnumerable('message')}`);
