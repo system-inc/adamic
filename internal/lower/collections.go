@@ -123,8 +123,16 @@ func (l *lowering) collectionPart(node *ast.Node, receiver *ast.Node, part strin
 // another Map, or map.entries(). Each pair's key and value must be held as the Map holds its own, or
 // a number would land where number | undefined goes without becoming the pair, so they're checked.
 func (l *lowering) newMapFrom(node *ast.Node, source *ast.Node, key ir.Type, value ir.Type) (ir.Expression, error) {
+	if sourceType := l.checker.GetTypeAtLocation(ast.SkipParentheses(source)); sourceType.Flags()&checker.TypeFlagsUnion != 0 && l.checker.GetNonNullableType(sourceType) != sourceType && l.arrayOrUndefined(sourceType) {
+		return l.newMapFromOptional(source, sourceType, key, value)
+	}
 	pairKey, pairValue, isKnown := l.pairTypes(source)
 	if !isKnown {
+		// A generator's pairs are pairs, but a generator function is refused (docs/user-iterators.md),
+		// so walking one waits on generators, not on this constructor.
+		if l.isLibraryType(l.checker.GetTypeAtLocation(ast.SkipParentheses(source)), "Generator") {
+			return nil, l.notYet(source, "new Map from a generator's pairs")
+		}
 		return nil, l.notYet(source, "new Map from something that isn't [key, value] pairs")
 	}
 	if pairKey != key || pairValue != value {
@@ -140,30 +148,33 @@ func (l *lowering) newMapFrom(node *ast.Node, source *ast.Node, key ir.Type, val
 	return ir.MapNew{Key: key, Value: value, Pairs: pairs}, nil
 }
 
+// newMapFromOptional lowers new Map(pairs) where pairs is an array of [key, value] tuples or undefined
+// as new Map(pairs ?? []): Node makes an empty Map from undefined, as it does with no argument.
+func (l *lowering) newMapFromOptional(source *ast.Node, sourceType *checker.Type, key ir.Type, value ir.Type) (ir.Expression, error) {
+	pairKey, pairValue, isKnown := l.pairArrayTypes(l.checker.GetNonNullableType(sourceType))
+	if !isKnown {
+		return nil, l.notYet(source, "new Map from something that isn't [key, value] pairs")
+	}
+	if pairKey != key || pairValue != value {
+		return nil, l.notYet(source, "new Map from pairs held otherwise than the Map's keys and values")
+	}
+	pairs, err := l.expression(source)
+	if err != nil {
+		return nil, err
+	}
+	if pairs.Type() != ir.Array {
+		return nil, l.notYet(source, "new Map from something that isn't [key, value] pairs")
+	}
+	return ir.MapNew{Key: key, Value: value, Pairs: ir.Coalesce{Value: pairs, Fallback: ir.ArrayLiteral{Element: ir.Object}, Of: ir.Array}}, nil
+}
+
 // pairTypes is how a source of [key, value] pairs holds its keys and values: an array of tuples by its
 // tuple's types, a Map (and its entries()) by its own.
 func (l *lowering) pairTypes(source *ast.Node) (ir.Type, ir.Type, bool) {
 	source = ast.SkipParentheses(source)
 	sourceType := l.checker.GetTypeAtLocation(source)
 	if l.checker.IsArrayType(sourceType) || l.isLibraryType(sourceType, "MapIterator", "SetIterator", "Set", "ReadonlySet") {
-		element := l.checker.GetElementTypeOfArrayType(sourceType)
-		if element == nil {
-			arguments := l.typeArguments(sourceType)
-			if len(arguments) != 1 {
-				return 0, 0, false
-			}
-			element = arguments[0]
-		}
-		if !checker.IsTupleType(element) {
-			return 0, 0, false
-		}
-		arguments := l.checker.GetTypeArguments(element)
-		if len(arguments) != 2 {
-			return 0, 0, false
-		}
-		key, keyKnown := l.representation(arguments[0])
-		value, valueKnown := l.representation(arguments[1])
-		return key, value, keyKnown && valueKnown
+		return l.pairArrayTypes(sourceType)
 	}
 	if source.Kind == ast.KindCallExpression {
 		callee := ast.SkipParentheses(source.AsCallExpression().Expression)
@@ -181,6 +192,29 @@ func (l *lowering) pairTypes(source *ast.Node) (ir.Type, ir.Type, bool) {
 	}
 	key, value, err := l.mapTypes(source)
 	return key, value, err == nil
+}
+
+// pairArrayTypes is how an array (or a library iterator or Set) of [key, value] tuples holds its keys
+// and values, by its tuple's types.
+func (l *lowering) pairArrayTypes(sourceType *checker.Type) (ir.Type, ir.Type, bool) {
+	element := l.checker.GetElementTypeOfArrayType(sourceType)
+	if element == nil {
+		arguments := l.typeArguments(sourceType)
+		if len(arguments) != 1 {
+			return 0, 0, false
+		}
+		element = arguments[0]
+	}
+	if !checker.IsTupleType(element) {
+		return 0, 0, false
+	}
+	arguments := l.checker.GetTypeArguments(element)
+	if len(arguments) != 2 {
+		return 0, 0, false
+	}
+	key, keyKnown := l.representation(arguments[0])
+	value, valueKnown := l.representation(arguments[1])
+	return key, value, keyKnown && valueKnown
 }
 
 // clearOrVisit lowers clear() and forEach(callback) on a Map or a Set.
