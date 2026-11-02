@@ -167,7 +167,25 @@ func TestTimersAgainstNode(t *testing.T) {
 
 type timerRuntime struct{ directory string }
 
+// build links code against this mutant runtime the way native.Build links a product: through clangIn, with the build
+// directory and the runtime's directory mapped out of everything the compile records of a path. A bare clang here put
+// the product's random staging directory into __FILE__ and the debug info, so no two builds of one mutant matched, even
+// on one box (Loom's Builder, #landing90, Nov 2). TestTimerMutantProductIsReproducible pins it, and
+// TestTimerMutantProductPinCatchesBareClang shows the pin goes red with the old bare clang.
 func (runtime timerRuntime) build(code, output string, options native.Options) error {
+	library, err := native.RuntimeLibrary(runtime.directory, options)
+	if err != nil {
+		return err
+	}
+	if err := native.BuildWithRuntimeForTest(code, output, options, library); err != nil {
+		return fmt.Errorf("mutant must compile: %w", err)
+	}
+	return nil
+}
+
+// buildBare is the probe build this file used before #landing90: the source written beside the output and compiled
+// by a bare clang. It stays only as the pin's mutant.
+func (runtime timerRuntime) buildBare(code, output string, options native.Options) error {
 	library, err := native.RuntimeLibrary(runtime.directory, options)
 	if err != nil {
 		return err
@@ -185,6 +203,52 @@ func (runtime timerRuntime) build(code, output string, options native.Options) e
 	}
 	return nil
 }
+
+// timerMutantTwice builds one mutant's sanitized probe twice, each from its own copy of the mutated runtime into its
+// own directory, as two boxes or two staging directories would, and returns both binaries' bytes.
+func timerMutantTwice(t *testing.T, bare bool) ([]byte, []byte) {
+	t.Helper()
+	mutation := timerMutations[5]
+	if mutation.name != "unref-ignored" {
+		t.Fatalf("timerMutations[5] is %s, want unref-ignored", mutation.name)
+	}
+	options := native.Options{Sanitize: true, Count: true}
+	var built [2][]byte
+	for index := range built {
+		runtime := timerMutant(t, mutation.file, mutation.before, mutation.after)
+		output := filepath.Join(t.TempDir(), "probe")
+		build := runtime.build
+		if bare {
+			build = runtime.buildBare
+		}
+		if err := build(timerHarness(t), output, options); err != nil {
+			t.Fatal(err)
+		}
+		data, err := os.ReadFile(output)
+		if err != nil {
+			t.Fatal(err)
+		}
+		built[index] = data
+	}
+	return built[0], built[1]
+}
+
+func TestTimerMutantProductIsReproducible(t *testing.T) {
+	t.Parallel()
+	first, second := timerMutantTwice(t, false)
+	if !bytes.Equal(first, second) {
+		t.Fatalf("one mutant built in two directories differs (%d and %d bytes): a path reached the binary", len(first), len(second))
+	}
+}
+
+func TestTimerMutantProductPinCatchesBareClang(t *testing.T) {
+	t.Parallel()
+	first, second := timerMutantTwice(t, true)
+	if bytes.Equal(first, second) {
+		t.Fatal("the bare-clang build matched across directories, so the reproducibility pin proves nothing")
+	}
+}
+
 func timerMutant(t *testing.T, file, before, after string) timerRuntime {
 	t.Helper()
 	runtime := timerRuntime{t.TempDir()}
