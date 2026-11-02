@@ -1,0 +1,490 @@
+[
+  {
+    "file": "src/compiler/types.ts",
+    "owner": "ParsedCommandLine",
+    "kind": "InterfaceDeclaration",
+    "before": "raw?: any;",
+    "after": "raw?: unknown;",
+    "why": "Adamic r2628wp: public caller values are unknown; parsed conversion uses its real recovery union."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "convertToObject",
+    "kind": "FunctionDeclaration",
+    "before": "export function convertToObject(sourceFile: JsonSourceFile, errors: Diagnostic[]): any {\r\n    return convertToJson(sourceFile, sourceFile.statements[0]?.expression, errors, /*returnValue*/ true, /*jsonConversionNotifier*/ undefined);\r\n}",
+    "after": "export function convertToObject(sourceFile: JsonSourceFile, errors: Diagnostic[]): AdamicJsonRecoveryValue | undefined {\r\n    return convertToJson(sourceFile, sourceFile.statements[0]?.expression, errors, /*returnValue*/ true, /*jsonConversionNotifier*/ undefined);\r\n}",
+    "why": "Adamic r2628wp: public caller values are unknown; parsed conversion uses its real recovery union."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "parseJsonConfigFileContent",
+    "kind": "FunctionDeclaration",
+    "before": "json: any",
+    "after": "json: unknown",
+    "why": "Adamic r2628wp: public caller values are unknown; parsed conversion uses its real recovery union."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "convertCompilerOptionsFromJson",
+    "kind": "FunctionDeclaration",
+    "before": "jsonOptions: any",
+    "after": "jsonOptions: unknown",
+    "why": "Adamic r2628wp: public caller values are unknown; parsed conversion uses its real recovery union."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "convertTypeAcquisitionFromJson",
+    "kind": "FunctionDeclaration",
+    "before": "jsonOptions: any",
+    "after": "jsonOptions: unknown",
+    "why": "Adamic r2628wp: public caller values are unknown; parsed conversion uses its real recovery union."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "ParsedTsconfig",
+    "kind": "InterfaceDeclaration",
+    "before": "raw: any;",
+    "after": "raw: unknown;",
+    "why": "Adamic r2628wp: public caller values are unknown; parsed conversion uses its real recovery union."
+  },
+  {
+    "file": "src/server/protocol.ts",
+    "owner": "Request",
+    "kind": "InterfaceDeclaration",
+    "before": "arguments?: any;",
+    "after": "arguments?: unknown;",
+    "why": "Adamic r2628wp: public caller values are unknown; parsed conversion uses its real recovery union."
+  },
+  {
+    "file": "src/server/protocol.ts",
+    "owner": "Event",
+    "kind": "InterfaceDeclaration",
+    "before": "body?: any;",
+    "after": "body?: unknown;",
+    "why": "Adamic r2628wp: public caller values are unknown; parsed conversion uses its real recovery union."
+  },
+  {
+    "file": "src/server/protocol.ts",
+    "owner": "Response",
+    "kind": "InterfaceDeclaration",
+    "before": "body?: any;",
+    "after": "body?: unknown;",
+    "why": "Adamic r2628wp: public caller values are unknown; parsed conversion uses its real recovery union."
+  },
+  {
+    "file": "src/server/protocol.ts",
+    "owner": "ConfigurePluginRequestArguments",
+    "kind": "InterfaceDeclaration",
+    "before": "configuration: any;",
+    "after": "configuration: unknown;",
+    "why": "Adamic r2628wp: public caller values are unknown; parsed conversion uses its real recovery union."
+  },
+  {
+    "file": "src/server/protocol.ts",
+    "owner": "TelemetryEventBody",
+    "kind": "InterfaceDeclaration",
+    "before": "payload: any;",
+    "after": "payload: unknown;",
+    "why": "Adamic r2628wp: public caller values are unknown; parsed conversion uses its real recovery union."
+  },
+  {
+    "file": "src/server/project.ts",
+    "owner": "PluginCreateInfo",
+    "kind": "InterfaceDeclaration",
+    "before": "config: any;",
+    "after": "config: unknown;",
+    "why": "Adamic r2628wp: public caller values are unknown; parsed conversion uses its real recovery union."
+  },
+  {
+    "file": "src/server/project.ts",
+    "owner": "PluginModule",
+    "kind": "InterfaceDeclaration",
+    "before": "onConfigurationChanged?(config: any): void;",
+    "after": "onConfigurationChanged?(config: unknown): void;",
+    "why": "Adamic r2628wp: public caller values are unknown; parsed conversion uses its real recovery union."
+  },
+  {
+    "file": "src/services/types.ts",
+    "owner": "LanguageServiceHost",
+    "kind": "InterfaceDeclaration",
+    "before": "getLocalizedDiagnosticMessages?(): any;",
+    "after": "getLocalizedDiagnosticMessages?(): unknown;",
+    "why": "Adamic r2628wp: public caller values are unknown; parsed conversion uses its real recovery union."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "",
+    "kind": "SourceFile",
+    "before": "/** @internal */\r\nexport type AdamicJsonRecoveryValue = string | number | boolean | null | AdamicJsonRecoveryValue[] | AdamicJsonRecoveryObject;\r\n/** @internal */\r\nexport interface AdamicJsonRecoveryObject { [key: string]: AdamicJsonRecoveryValue | undefined; }\r\n\r\n",
+    "after": "export type AdamicJsonRecoveryValue = string | number | boolean | null | AdamicJsonRecoveryValue[] | AdamicJsonRecoveryObject;\r\nexport interface AdamicJsonRecoveryObject { [key: string]: AdamicJsonRecoveryValue | undefined; }\r\n\r\n/** @internal */\r\nexport function isAdamicJsonObject(value: unknown): value is { [key: string]: unknown; } {\r\n    return typeof value === \"object\" && value !== null || typeof value === \"function\";\r\n}\r\n\r\n/** @internal */\r\nexport function checkedAdamicJsonObject(value: unknown): { [key: string]: unknown; } {\r\n    if (!isAdamicJsonObject(value)) throw new TypeError(\"Expected a JSON/config object\");\r\n    return value;\r\n}\r\n\r\n",
+    "why": "Publish the existing recovery definitions and check object reads without asserting a value shape."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "parseJsonConfigFileContentWorker",
+    "kind": "FunctionDeclaration",
+    "before": "const { raw } = parsedConfig;",
+    "after": "const raw = checkedAdamicJsonObject(parsedConfig.raw);",
+    "why": "Check the raw object once before its field reads; retain the same object and mutations."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "isSolutionConfig",
+    "kind": "FunctionDeclaration",
+    "before": "hasProperty(config.raw, \"references\")",
+    "after": "hasProperty(checkedAdamicJsonObject(config.raw), \"references\")",
+    "why": "Check the object only when the existing short circuit reaches this read."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "parseConfig",
+    "kind": "FunctionDeclaration",
+    "before": "function parseConfig<TRaw>(\r\n    json: TRaw,\r\n    sourceFile: TsConfigSourceFile | undefined,\r\n    host: ParseConfigHost,\r\n    basePath: string,\r\n    configFileName: string | undefined,\r\n    resolutionStack: string[],\r\n    errors: Diagnostic[],\r\n    extendedConfigCache?: Map<string, ExtendedConfigCacheEntry>,\r\n): ParsedTsconfig {\r\n    basePath = normalizeSlashes(basePath);\r\n    const resolvedPath = getNormalizedAbsolutePath(configFileName || \"\", basePath);\r\n\r\n    if (resolutionStack.includes(resolvedPath)) {\r\n        errors.push(createCompilerDiagnostic(Diagnostics.Circularity_detected_while_resolving_configuration_Colon_0, [...resolutionStack, resolvedPath].join(\" -> \")));\r\n        return { raw: json || convertToObject(sourceFile!, errors) };\r\n    }\r\n\r\n    const ownConfig = json ?\r\n        parseOwnConfigOfJson(json, host, basePath, configFileName, errors) :\r\n        parseOwnConfigOfJsonSourceFile(sourceFile!, host, basePath, configFileName, errors);\r\n\r\n    if (ownConfig.options?.paths) {\r\n        // If we end up needing to resolve relative paths from 'paths' relative to\r\n        // the config file location, we'll need to know where that config file was.\r\n        // Since 'paths' can be inherited from an extended config in another directory,\r\n        // we wouldn't know which directory to use unless we store it here.\r\n        ownConfig.options.pathsBasePath = basePath;\r\n    }\r\n    if (ownConfig.extendedConfigPath) {\r\n        // copy the resolution stack so it is never reused between branches in potential diamond-problem scenarios.\r\n        resolutionStack = resolutionStack.concat([resolvedPath]);\r\n        const result: ExtendsResult = { options: {} };\r\n        if (isString(ownConfig.extendedConfigPath)) {\r\n            applyExtendedConfig(result, ownConfig.extendedConfigPath);\r\n        }\r\n        else {\r\n            ownConfig.extendedConfigPath.forEach(extendedConfigPath => applyExtendedConfig(result, extendedConfigPath));\r\n        }\r\n        if (result.include) ownConfig.raw.include = result.include;\r\n        if (result.exclude) ownConfig.raw.exclude = result.exclude;\r\n        if (result.files) ownConfig.raw.files = result.files;\r\n\r\n        if (ownConfig.raw.compileOnSave === undefined && result.compileOnSave) ownConfig.raw.compileOnSave = result.compileOnSave;\r\n        if (sourceFile && result.extendedSourceFiles) sourceFile.extendedSourceFiles = arrayFrom(result.extendedSourceFiles.keys());\r\n\r\n        ownConfig.options = assign(result.options, ownConfig.options);\r\n        ownConfig.watchOptions = ownConfig.watchOptions && result.watchOptions ?\r\n            assignWatchOptions(result, ownConfig.watchOptions) :\r\n            ownConfig.watchOptions || result.watchOptions;\r\n    }\r\n    return ownConfig;\r\n\r\n    function applyExtendedConfig(result: ExtendsResult, extendedConfigPath: string) {\r\n        const extendedConfig = getExtendedConfig(sourceFile, extendedConfigPath, host, resolutionStack, errors, extendedConfigCache, result);\r\n        if (extendedConfig && isSuccessfulParsedTsconfig(extendedConfig)) {\r\n            const extendsRaw = extendedConfig.raw;\r\n            let relativeDifference: string | undefined;\r\n            const setPropertyInResultIfNotUndefined = (propertyName: \"include\" | \"exclude\" | \"files\") => {\r\n                if (ownConfig.raw[propertyName]) return; // No need to calculate if already set in own config\r\n                if (extendsRaw[propertyName]) {\r\n                    result[propertyName] = map(extendsRaw[propertyName], (path: string) =>\r\n                        startsWithConfigDirTemplate(path) || isRootedDiskPath(path) ?\r\n                            path :\r\n                            combinePaths(\r\n                                relativeDifference ||= convertToRelativePath(getDirectoryPath(extendedConfigPath), basePath, createGetCanonicalFileName(host.useCaseSensitiveFileNames)),\r\n                                path,\r\n                            ));\r\n                }\r\n            };\r\n            setPropertyInResultIfNotUndefined(\"include\");\r\n            setPropertyInResultIfNotUndefined(\"exclude\");\r\n            setPropertyInResultIfNotUndefined(\"files\");\r\n            if (extendsRaw.compileOnSave !== undefined) {\r\n                result.compileOnSave = extendsRaw.compileOnSave;\r\n            }\r\n            assign(result.options, extendedConfig.options);\r\n            result.watchOptions = result.watchOptions && extendedConfig.watchOptions ?\r\n                assignWatchOptions(result, extendedConfig.watchOptions) :\r\n                result.watchOptions || extendedConfig.watchOptions;\r\n            // TODO extend type typeAcquisition\r\n        }\r\n    }\r\n\r\n    function assignWatchOptions(result: ExtendsResult, watchOptions: WatchOptions) {\r\n        if (result.watchOptionsCopied) return assign(result.watchOptions!, watchOptions);\r\n        result.watchOptionsCopied = true;\r\n        return assign({}, result.watchOptions, watchOptions);\r\n    }\r\n}",
+    "after": "function parseConfig<TRaw>(\r\n    json: TRaw,\r\n    sourceFile: TsConfigSourceFile | undefined,\r\n    host: ParseConfigHost,\r\n    basePath: string,\r\n    configFileName: string | undefined,\r\n    resolutionStack: string[],\r\n    errors: Diagnostic[],\r\n    extendedConfigCache?: Map<string, ExtendedConfigCacheEntry>,\r\n): ParsedTsconfig {\r\n    basePath = normalizeSlashes(basePath);\r\n    const resolvedPath = getNormalizedAbsolutePath(configFileName || \"\", basePath);\r\n\r\n    if (resolutionStack.includes(resolvedPath)) {\r\n        errors.push(createCompilerDiagnostic(Diagnostics.Circularity_detected_while_resolving_configuration_Colon_0, [...resolutionStack, resolvedPath].join(\" -> \")));\r\n        return { raw: json || convertToObject(sourceFile!, errors) };\r\n    }\r\n\r\n    const ownConfig = json ?\r\n        parseOwnConfigOfJson(json, host, basePath, configFileName, errors) :\r\n        parseOwnConfigOfJsonSourceFile(sourceFile!, host, basePath, configFileName, errors);\r\n\r\n    const ownRaw = checkedAdamicJsonObject(ownConfig.raw);\r\n\r\n    if (ownConfig.options?.paths) {\r\n        // If we end up needing to resolve relative paths from 'paths' relative to\r\n        // the config file location, we'll need to know where that config file was.\r\n        // Since 'paths' can be inherited from an extended config in another directory,\r\n        // we wouldn't know which directory to use unless we store it here.\r\n        ownConfig.options.pathsBasePath = basePath;\r\n    }\r\n    if (ownConfig.extendedConfigPath) {\r\n        // copy the resolution stack so it is never reused between branches in potential diamond-problem scenarios.\r\n        resolutionStack = resolutionStack.concat([resolvedPath]);\r\n        const result: ExtendsResult = { options: {} };\r\n        if (isString(ownConfig.extendedConfigPath)) {\r\n            applyExtendedConfig(result, ownConfig.extendedConfigPath);\r\n        }\r\n        else {\r\n            ownConfig.extendedConfigPath.forEach(extendedConfigPath => applyExtendedConfig(result, extendedConfigPath));\r\n        }\r\n        if (result.include) ownRaw.include = result.include;\r\n        if (result.exclude) ownRaw.exclude = result.exclude;\r\n        if (result.files) ownRaw.files = result.files;\r\n\r\n        if (ownRaw.compileOnSave === undefined && result.compileOnSave) ownRaw.compileOnSave = result.compileOnSave;\r\n        if (sourceFile && result.extendedSourceFiles) sourceFile.extendedSourceFiles = arrayFrom(result.extendedSourceFiles.keys());\r\n\r\n        ownConfig.options = assign(result.options, ownConfig.options);\r\n        ownConfig.watchOptions = ownConfig.watchOptions && result.watchOptions ?\r\n            assignWatchOptions(result, ownConfig.watchOptions) :\r\n            ownConfig.watchOptions || result.watchOptions;\r\n    }\r\n    return ownConfig;\r\n\r\n    function applyExtendedConfig(result: ExtendsResult, extendedConfigPath: string) {\r\n        const extendedConfig = getExtendedConfig(sourceFile, extendedConfigPath, host, resolutionStack, errors, extendedConfigCache, result);\r\n        if (extendedConfig && isSuccessfulParsedTsconfig(extendedConfig)) {\r\n            const extendsRaw = checkedAdamicJsonObject(extendedConfig.raw);\r\n            let relativeDifference: string | undefined;\r\n            const setPropertyInResultIfNotUndefined = (propertyName: \"include\" | \"exclude\" | \"files\") => {\r\n                if (ownRaw[propertyName]) return; // No need to calculate if already set in own config\r\n                const extendedSpecs = extendsRaw[propertyName];\r\n                if (extendedSpecs) {\r\n                    if (!isArray(extendedSpecs) || !extendedSpecs.every(isString)) throw new TypeError(\"Expected inherited string specs\");\r\n                    result[propertyName] = map(extendedSpecs, (path: string) =>\r\n                        startsWithConfigDirTemplate(path) || isRootedDiskPath(path) ?\r\n                            path :\r\n                            combinePaths(\r\n                                relativeDifference ||= convertToRelativePath(getDirectoryPath(extendedConfigPath), basePath, createGetCanonicalFileName(host.useCaseSensitiveFileNames)),\r\n                                path,\r\n                            ));\r\n                }\r\n            };\r\n            setPropertyInResultIfNotUndefined(\"include\");\r\n            setPropertyInResultIfNotUndefined(\"exclude\");\r\n            setPropertyInResultIfNotUndefined(\"files\");\r\n            if (extendsRaw.compileOnSave !== undefined) {\r\n                result.compileOnSave = extendsRaw.compileOnSave;\r\n            }\r\n            assign(result.options, extendedConfig.options);\r\n            result.watchOptions = result.watchOptions && extendedConfig.watchOptions ?\r\n                assignWatchOptions(result, extendedConfig.watchOptions) :\r\n                result.watchOptions || extendedConfig.watchOptions;\r\n            // TODO extend type typeAcquisition\r\n        }\r\n    }\r\n\r\n    function assignWatchOptions(result: ExtendsResult, watchOptions: WatchOptions) {\r\n        if (result.watchOptionsCopied) return assign(result.watchOptions!, watchOptions);\r\n        result.watchOptionsCopied = true;\r\n        return assign({}, result.watchOptions, watchOptions);\r\n    }\r\n}",
+    "why": "Check mutation bases and extended arrays before indexing/mapping."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "ExtendsResult",
+    "kind": "InterfaceDeclaration",
+    "before": "compileOnSave?: boolean;",
+    "after": "compileOnSave?: unknown;",
+    "why": "The raw inherited compileOnSave value is not necessarily boolean; preserve the original value and truthiness without a cast."
+  },
+  {
+    "file": "src/server/editorServices.ts",
+    "owner": "",
+    "kind": "SourceFile",
+    "before": "    isArray,",
+    "after": "    isAdamicJsonObject,\r\n    isArray,",
+    "why": "Import the checked object predicate."
+  },
+  {
+    "file": "src/server/session.ts",
+    "owner": "",
+    "kind": "SourceFile",
+    "before": "    isArray,",
+    "after": "    isAdamicJsonObject,\r\n    isArray,",
+    "why": "Import the checked object predicate."
+  },
+  {
+    "file": "src/services/services.ts",
+    "owner": "",
+    "kind": "SourceFile",
+    "before": "    isArray,",
+    "after": "    isAdamicJsonObject,\r\n    isArray,",
+    "why": "Import the checked object predicate."
+  },
+  {
+    "file": "src/server/editorServices.ts",
+    "owner": "loadConfiguredProject",
+    "kind": "MethodDeclaration",
+    "before": "        if (!project.projectOptions) {\r\n            project.projectOptions = {",
+    "after": "        if (!project.projectOptions) {\r\n            const raw = parsedCommandLine.raw;\r\n            if (!isAdamicJsonObject(raw)) throw new TypeError(\"Expected parsed config raw object\");\r\n            project.projectOptions = {",
+    "why": "Check the telemetry raw value at the four actual field reads."
+  },
+  {
+    "file": "src/server/editorServices.ts",
+    "owner": "loadConfiguredProject",
+    "kind": "MethodDeclaration",
+    "before": "parsedCommandLine.raw.extends !== undefined",
+    "after": "raw.extends !== undefined",
+    "why": "Use the checked raw binding."
+  },
+  {
+    "file": "src/server/editorServices.ts",
+    "owner": "loadConfiguredProject",
+    "kind": "MethodDeclaration",
+    "before": "parsedCommandLine.raw.files !== undefined",
+    "after": "raw.files !== undefined",
+    "why": "Use the checked raw binding."
+  },
+  {
+    "file": "src/server/editorServices.ts",
+    "owner": "loadConfiguredProject",
+    "kind": "MethodDeclaration",
+    "before": "parsedCommandLine.raw.include !== undefined",
+    "after": "raw.include !== undefined",
+    "why": "Use the checked raw binding."
+  },
+  {
+    "file": "src/server/editorServices.ts",
+    "owner": "loadConfiguredProject",
+    "kind": "MethodDeclaration",
+    "before": "parsedCommandLine.raw.exclude !== undefined",
+    "after": "raw.exclude !== undefined",
+    "why": "Use the checked raw binding."
+  },
+  {
+    "file": "src/services/services.ts",
+    "owner": "createLanguageService",
+    "kind": "FunctionDeclaration",
+    "before": "    maybeSetLocalizedDiagnosticMessages(host.getLocalizedDiagnosticMessages?.bind(host));",
+    "after": "    const getLocalizedMessages = host.getLocalizedDiagnosticMessages;\r\n    maybeSetLocalizedDiagnosticMessages(getLocalizedMessages && (() => {\r\n        const messages: unknown = getLocalizedMessages.call(host);\r\n        if (messages === undefined) return undefined;\r\n        if (!isAdamicLocalizedMessages(messages)) throw new TypeError(\"Expected localized message strings\");\r\n        return messages;\r\n    }));",
+    "why": "Check the unknown host return after call erasure, retaining bound this and lazy invocation."
+  },
+  {
+    "file": "src/services/services.ts",
+    "owner": "",
+    "kind": "SourceFile",
+    "before": "export function createLanguageService(",
+    "after": "function isAdamicLocalizedMessages(value: unknown): value is MapLike<string> {\r\n    if (!isAdamicJsonObject(value)) return false;\r\n    for (const key in value) {\r\n        if (typeof value[key] !== \"string\") return false;\r\n    }\r\n    return true;\r\n}\r\n\r\nexport function createLanguageService(",
+    "why": "Check every localized message before retaining the original dictionary by identity."
+  },
+  {
+    "file": "src/server/session.ts",
+    "owner": "",
+    "kind": "SourceFile",
+    "before": "function isCompletionEntryData(",
+    "after": "function isAdamicFileLocation(value: unknown): value is protocol.FileLocationRequestArgs {\r\n    return isAdamicJsonObject(value) && typeof value.file === \"string\" && typeof value.line === \"number\" && typeof value.offset === \"number\" &&\r\n        (value.projectFileName === undefined || typeof value.projectFileName === \"string\") &&\r\n        (value.position === undefined || typeof value.position === \"number\");\r\n}\r\n\r\nfunction checkedAdamicFileLocation(value: unknown): protocol.FileLocationRequestArgs {\r\n    if (isAdamicFileLocation(value)) return value;\r\n    if (isAdamicJsonObject(value) && typeof value.file === \"string\" && typeof value.position === \"number\" &&\r\n        (value.projectFileName === undefined || typeof value.projectFileName === \"string\")) {\r\n        return { file: value.file, line: 0, offset: 0, position: value.position,\r\n            ...(value.projectFileName === undefined ? {} : { projectFileName: value.projectFileName }) };\r\n    }\r\n    throw new TypeError(\"Expected implementation file location\");\r\n}\r\n\r\nfunction isCompletionEntryData(",
+    "why": "Validate implementation command arguments before passing them to a typed handler."
+  },
+  {
+    "file": "src/server/session.ts",
+    "owner": "",
+    "kind": "SourceFile",
+    "before": "            return this.requiredResponse(this.getImplementation(request.arguments, /*simplifiedResult*/ true));",
+    "after": "            return this.requiredResponse(this.getImplementation(checkedAdamicFileLocation(request.arguments), /*simplifiedResult*/ true));",
+    "why": "Validate this base Request dispatch before the typed argument read."
+  },
+  {
+    "file": "src/server/session.ts",
+    "owner": "",
+    "kind": "SourceFile",
+    "before": "            return this.requiredResponse(this.getImplementation(request.arguments, /*simplifiedResult*/ false));",
+    "after": "            return this.requiredResponse(this.getImplementation(checkedAdamicFileLocation(request.arguments), /*simplifiedResult*/ false));",
+    "why": "Validate this base Request dispatch before the typed argument read."
+  },
+  {
+    "file": "src/harness/harnessLanguageService.ts",
+    "owner": "",
+    "kind": "SourceFile",
+    "before": "parts.displayParts.push({ text: info.config.message, kind: \"punctuation\" });",
+    "after": "if (!ts.isAdamicJsonObject(info.config) || typeof info.config.message !== \"string\") throw new TypeError(\"Expected plugin message string\");\r\n                                parts.displayParts.push({ text: info.config.message, kind: \"punctuation\" });",
+    "why": "Check plugin config and its message at the consuming read."
+  },
+  {
+    "file": "src/harness/harnessLanguageService.ts",
+    "owner": "",
+    "kind": "SourceFile",
+    "before": "customMessage = info.config.message;",
+    "after": "if (!ts.isAdamicJsonObject(info.config) || typeof info.config.message !== \"string\") throw new TypeError(\"Expected plugin message string\");\r\n                                customMessage = info.config.message;",
+    "why": "Check plugin config and its message at the consuming read."
+  },
+  {
+    "file": "src/harness/client.ts",
+    "owner": "",
+    "kind": "SourceFile",
+    "before": "import {\r\n    ApplicableRefactorInfo,",
+    "after": "import {\r\n    CodeAction,\r\n    InstallPackageAction,\r\n    isAdamicJsonObject,\r\n    ReferencedSymbolDefinitionInfo,\r\n    ReferencedSymbolEntry,\r\n    SymbolDisplayPart,\r\n    ApplicableRefactorInfo,",
+    "why": "Use the existing named import so adaptation 99f still sees exactly one ts module import; reserve the DocumentSpan insertion point for HashedSet."
+  },
+  {
+    "file": "src/harness/client.ts",
+    "owner": "",
+    "kind": "SourceFile",
+    "before": "export interface SessionClientHost",
+    "after": "function adamicArrayOf<T>(value: unknown, check: (value: unknown) => value is T): value is T[] {\r\n    return Array.isArray(value) && value.every(check);\r\n}\r\n\r\nfunction adamicIsScriptElementKind(value: unknown): value is ScriptElementKind {\r\n    return typeof value === \"string\" && [\"\",\"warning\",\"keyword\",\"script\",\"module\",\"class\",\"local class\",\"interface\",\"type\",\"enum\",\"enum member\",\"var\",\"local var\",\"using\",\"await using\",\"function\",\"local function\",\"method\",\"getter\",\"setter\",\"property\",\"accessor\",\"constructor\",\"call\",\"index\",\"construct\",\"parameter\",\"type parameter\",\"primitive type\",\"label\",\"alias\",\"const\",\"let\",\"directory\",\"external module name\",\"JSX attribute\",\"string\",\"link\",\"link name\",\"link text\"].includes(value);\r\n}\r\n\r\nfunction adamicIsTextSpan(value: unknown): value is TextSpan {\r\n    return isAdamicJsonObject(value) &&\r\n        typeof value.start === \"number\" &&\r\n        typeof value.length === \"number\";\r\n}\r\n\r\nfunction adamicIsDocumentSpan(value: unknown): value is DocumentSpan {\r\n    return isAdamicJsonObject(value) &&\r\n        adamicIsTextSpan(value.textSpan) &&\r\n        typeof value.fileName === \"string\" &&\r\n        (value.originalTextSpan === undefined || adamicIsTextSpan(value.originalTextSpan)) &&\r\n        (value.originalFileName === undefined || typeof value.originalFileName === \"string\") &&\r\n        (value.contextSpan === undefined || adamicIsTextSpan(value.contextSpan)) &&\r\n        (value.originalContextSpan === undefined || adamicIsTextSpan(value.originalContextSpan));\r\n}\r\n\r\nfunction adamicIsSymbolDisplayPart(value: unknown): value is SymbolDisplayPart {\r\n    return isAdamicJsonObject(value) &&\r\n        typeof value.text === \"string\" &&\r\n        typeof value.kind === \"string\";\r\n}\r\n\r\nfunction adamicIsJSDocTagInfo(value: unknown): value is protocol.JSDocTagInfo {\r\n    return isAdamicJsonObject(value) &&\r\n        typeof value.name === \"string\" &&\r\n        (value.text === undefined || typeof value.text === \"string\" || adamicArrayOf(value.text, adamicIsSymbolDisplayPart));\r\n}\r\n\r\nfunction adamicIsTextChange(value: unknown): value is TextChange {\r\n    return isAdamicJsonObject(value) &&\r\n        adamicIsTextSpan(value.span) &&\r\n        typeof value.newText === \"string\";\r\n}\r\n\r\nfunction adamicIsFileTextChanges(value: unknown): value is FileTextChanges {\r\n    return isAdamicJsonObject(value) &&\r\n        typeof value.fileName === \"string\" &&\r\n        adamicArrayOf(value.textChanges, adamicIsTextChange) &&\r\n        (value.isNewFile === undefined || typeof value.isNewFile === \"boolean\");\r\n}\r\n\r\nfunction adamicIsInstallPackageAction(value: unknown): value is InstallPackageAction {\r\n    return isAdamicJsonObject(value) &&\r\n        value.type === \"install package\" &&\r\n        typeof value.file === \"string\" &&\r\n        typeof value.packageName === \"string\";\r\n}\r\n\r\nfunction adamicIsCodeAction(value: unknown): value is CodeAction {\r\n    return isAdamicJsonObject(value) &&\r\n        typeof value.description === \"string\" &&\r\n        adamicArrayOf(value.changes, adamicIsFileTextChanges) &&\r\n        (value.commands === undefined || adamicArrayOf(value.commands, adamicIsInstallPackageAction));\r\n}\r\n\r\nfunction adamicIsCompletionEntryDetails(value: unknown): value is HarnessCompletionEntryDetails {\r\n    return isAdamicJsonObject(value) &&\r\n        typeof value.name === \"string\" &&\r\n        adamicIsScriptElementKind(value.kind) &&\r\n        typeof value.kindModifiers === \"string\" &&\r\n        adamicArrayOf(value.displayParts, adamicIsSymbolDisplayPart) &&\r\n        (value.documentation === undefined || adamicArrayOf(value.documentation, adamicIsSymbolDisplayPart)) &&\r\n        (value.tags === undefined || adamicArrayOf(value.tags, adamicIsJSDocTagInfo)) &&\r\n        (value.codeActions === undefined || adamicArrayOf(value.codeActions, adamicIsCodeAction)) &&\r\n        (value.source === undefined || adamicArrayOf(value.source, adamicIsSymbolDisplayPart)) &&\r\n        (value.sourceDisplay === undefined || adamicArrayOf(value.sourceDisplay, adamicIsSymbolDisplayPart));\r\n}\r\n\r\nfunction adamicIsReferencedSymbolDefinitionInfo(value: unknown): value is ReferencedSymbolDefinitionInfo {\r\n    return isAdamicJsonObject(value) &&\r\n        adamicIsTextSpan(value.textSpan) &&\r\n        typeof value.fileName === \"string\" &&\r\n        (value.originalTextSpan === undefined || adamicIsTextSpan(value.originalTextSpan)) &&\r\n        (value.originalFileName === undefined || typeof value.originalFileName === \"string\") &&\r\n        (value.contextSpan === undefined || adamicIsTextSpan(value.contextSpan)) &&\r\n        (value.originalContextSpan === undefined || adamicIsTextSpan(value.originalContextSpan)) &&\r\n        adamicIsScriptElementKind(value.kind) &&\r\n        typeof value.name === \"string\" &&\r\n        adamicIsScriptElementKind(value.containerKind) &&\r\n        typeof value.containerName === \"string\" &&\r\n        (value.unverified === undefined || typeof value.unverified === \"boolean\") &&\r\n        (value.isLocal === undefined || typeof value.isLocal === \"boolean\") &&\r\n        (value.isAmbient === undefined || typeof value.isAmbient === \"boolean\") &&\r\n        (value.failedAliasResolution === undefined || typeof value.failedAliasResolution === \"boolean\") &&\r\n        adamicArrayOf(value.displayParts, adamicIsSymbolDisplayPart);\r\n}\r\n\r\nfunction adamicIsReferencedSymbolEntry(value: unknown): value is ReferencedSymbolEntry {\r\n    return isAdamicJsonObject(value) &&\r\n        adamicIsTextSpan(value.textSpan) &&\r\n        typeof value.fileName === \"string\" &&\r\n        (value.originalTextSpan === undefined || adamicIsTextSpan(value.originalTextSpan)) &&\r\n        (value.originalFileName === undefined || typeof value.originalFileName === \"string\") &&\r\n        (value.contextSpan === undefined || adamicIsTextSpan(value.contextSpan)) &&\r\n        (value.originalContextSpan === undefined || adamicIsTextSpan(value.originalContextSpan)) &&\r\n        typeof value.isWriteAccess === \"boolean\" &&\r\n        (value.isInString === undefined || value.isInString === true) &&\r\n        (value.isDefinition === undefined || typeof value.isDefinition === \"boolean\");\r\n}\r\n\r\nfunction adamicIsReferencedSymbol(value: unknown): value is ReferencedSymbol {\r\n    return isAdamicJsonObject(value) &&\r\n        adamicIsReferencedSymbolDefinitionInfo(value.definition) &&\r\n        adamicArrayOf(value.references, adamicIsReferencedSymbolEntry);\r\n}\r\n\r\nexport interface SessionClientHost",
+    "why": "Validate response arrays, required fields and optional fields before admitting compiler response types."
+  },
+  {
+    "file": "src/harness/client.ts",
+    "owner": "getCompletionEntryDetails",
+    "kind": "MethodDeclaration",
+    "before": "        Debug.assert(response.body.length === 1, \"Unexpected length of completion details response body.\");\r\n        return response.body[0];",
+    "after": "        const body = response.body;\r\n        if (!adamicArrayOf(body, adamicIsCompletionEntryDetails)) throw new TypeError(\"Expected completion details array\");\r\n        Debug.assert(body.length === 1, \"Unexpected length of completion details response body.\");\r\n        return body[0];",
+    "why": "Check the body array and each details value before length/index use."
+  },
+  {
+    "file": "src/harness/client.ts",
+    "owner": "findReferences",
+    "kind": "MethodDeclaration",
+    "before": "        return response.body;",
+    "after": "        if (response.body === undefined) return undefined;\r\n        if (!adamicArrayOf(response.body, adamicIsReferencedSymbol)) throw new TypeError(\"Expected referenced symbols array\");\r\n        return response.body;",
+    "why": "Check the actual referenced-symbol schema before returning the array unchanged."
+  },
+  {
+    "file": "src/testRunner/unittests/tsserver/session.ts",
+    "owner": "",
+    "kind": "SourceFile",
+    "before": "            this.addProtocolHandler(\"echo\", (req: ts.server.protocol.Request) => ({\r\n                response: req.arguments,\r\n                responseRequired: true,\r\n            }));",
+    "after": "            this.addProtocolHandler(\"echo\", (req: ts.server.protocol.Request) => {\r\n                if (req.arguments !== undefined && req.arguments === null) throw new TypeError(\"Expected echo response value\");\r\n                return { response: req.arguments, responseRequired: true };\r\n            });",
+    "why": "The echo response admits every non-null value or undefined; check the actual missing case."
+  },
+  {
+    "file": "src/harness/client.ts",
+    "owner": "findReferences",
+    "kind": "MethodDeclaration",
+    "before": "): ReferencedSymbol[] {",
+    "after": "): ReferencedSymbol[] | undefined {",
+    "why": "The server legitimately omits a reference body when no symbol is found; preserve that result."
+  },
+  {
+    "file": "src/harness/client.ts",
+    "owner": "",
+    "kind": "SourceFile",
+    "before": "export class SessionClient implements LanguageService {\r\n",
+    "after": "export type HarnessCompletionEntryDetails = Omit<CompletionEntryDetails, \"tags\"> & { tags?: readonly protocol.JSDocTagInfo[]; };\r\n\r\nexport interface HarnessLanguageService extends Omit<LanguageService, \"getCompletionEntryDetails\"> {\r\n    getCompletionEntryDetails(...args: Parameters<LanguageService[\"getCompletionEntryDetails\"]>): HarnessCompletionEntryDetails | undefined;\r\n}\r\n\r\nexport class SessionClient implements HarnessLanguageService {\r\n",
+    "why": "Carry the precise full completion reply through harness consumers, preserving emitted JavaScript and original values."
+  },
+  {
+    "file": "src/harness/client.ts",
+    "owner": "getCompletionEntryDetails",
+    "kind": "MethodDeclaration",
+    "before": "getCompletionEntryDetails(fileName: string, position: number, entryName: string, _options: FormatCodeOptions | FormatCodeSettings | undefined, source: string | undefined, _preferences: UserPreferences | undefined, data: unknown): CompletionEntryDetails {\r\n",
+    "after": "getCompletionEntryDetails(fileName: string, position: number, entryName: string, _options: FormatCodeOptions | FormatCodeSettings | undefined, source: string | undefined, _preferences: UserPreferences | undefined, data: unknown): HarnessCompletionEntryDetails {\r\n",
+    "why": "Carry the precise full completion reply through harness consumers, preserving emitted JavaScript and original values."
+  },
+  {
+    "file": "src/harness/harnessLanguageService.ts",
+    "owner": "LanguageServiceAdapter",
+    "kind": "InterfaceDeclaration",
+    "before": "    getLanguageService(): ts.LanguageService;\r\n",
+    "after": "    getLanguageService(): ts.server.HarnessLanguageService;\r\n",
+    "why": "Carry the precise full completion reply through harness consumers, preserving emitted JavaScript and original values."
+  },
+  {
+    "file": "src/harness/harnessLanguageService.ts",
+    "owner": "ServerLanguageServiceAdapter",
+    "kind": "ClassDeclaration",
+    "before": "    getLanguageService(): ts.LanguageService {\r\n",
+    "after": "    getLanguageService(): ts.server.HarnessLanguageService {\r\n",
+    "why": "Carry the precise full completion reply through harness consumers, preserving emitted JavaScript and original values."
+  },
+  {
+    "file": "src/harness/fourslashImpl.ts",
+    "owner": "TestState",
+    "kind": "ClassDeclaration",
+    "before": "    private languageService: ts.LanguageService;\r\n",
+    "after": "    private languageService: ts.server.HarnessLanguageService;\r\n",
+    "why": "Carry the precise full completion reply through harness consumers, preserving emitted JavaScript and original values."
+  },
+  {
+    "file": "src/harness/fourslashImpl.ts",
+    "owner": "TestState",
+    "kind": "ClassDeclaration",
+    "before": "        function memoWrap(ls: ts.LanguageService, target: TestState): ts.LanguageService {\r\n",
+    "after": "        function memoWrap(ls: ts.server.HarnessLanguageService, target: TestState): ts.server.HarnessLanguageService {\r\n",
+    "why": "Carry the precise full completion reply through harness consumers, preserving emitted JavaScript and original values."
+  },
+  {
+    "file": "src/harness/fourslashImpl.ts",
+    "owner": "TestState",
+    "kind": "ClassDeclaration",
+    "before": "            const proxy = {} as ts.LanguageService;\r\n",
+    "after": "            const proxy: ts.server.HarnessLanguageService = {} as ts.LanguageService;\r\n",
+    "why": "Carry the precise full completion reply through harness consumers, preserving emitted JavaScript and original values."
+  },
+  {
+    "file": "src/harness/fourslashImpl.ts",
+    "owner": "TestState",
+    "kind": "ClassDeclaration",
+    "before": "    private getCompletionEntryDetails(entryName: string, source: string | undefined, data: ts.CompletionEntryData | undefined, preferences?: ts.UserPreferences): ts.CompletionEntryDetails | undefined {\r\n",
+    "after": "    private getCompletionEntryDetails(entryName: string, source: string | undefined, data: ts.CompletionEntryData | undefined, preferences?: ts.UserPreferences): ts.server.HarnessCompletionEntryDetails | undefined {\r\n",
+    "why": "Carry the precise full completion reply through harness consumers, preserving emitted JavaScript and original values."
+  },
+  {
+    "file": "src/harness/fourslashImpl.ts",
+    "owner": "baselineCompletions",
+    "kind": "MethodDeclaration",
+    "before": "        const result = ts.arrayFrom(this.testData.markerPositions.entries(), ([name, marker]) => {\r\n",
+    "after": "        const result: {\r\n            marker: Marker & { name: string; };\r\n            item: {\r\n                optionalReplacementSpan?: ts.TextSpan;\r\n                entries?: (Pick<ts.CompletionEntry, \"name\" | \"kind\" | \"kindModifiers\"> & {\r\n                    displayParts?: ts.SymbolDisplayPart[];\r\n                    tags?: readonly { text?: Iterable<{ kind?: string; length?: number; }>; }[];\r\n                })[];\r\n            };\r\n        }[] = ts.arrayFrom(this.testData.markerPositions.entries(), ([name, marker]) => {\r\n",
+    "why": "Carry the precise full completion reply through harness consumers, preserving emitted JavaScript and original values."
+  },
+  {
+    "file": "src/harness/fourslashImpl.ts",
+    "owner": "TestState",
+    "kind": "ClassDeclaration",
+    "before": "        function getLinkedEditingBaselineWorker(activeFile: FourSlashFile, offset: number, languageService: ts.LanguageService) {\r\n",
+    "after": "        function getLinkedEditingBaselineWorker(activeFile: FourSlashFile, offset: number, languageService: ts.server.HarnessLanguageService) {\r\n",
+    "why": "Carry the precise full completion reply through harness consumers, preserving emitted JavaScript and original values."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "readConfigFile",
+    "kind": "FunctionDeclaration",
+    "before": "config?: any;",
+    "after": "config?: AdamicJsonRecoveryObject;",
+    "why": "Only parseConfigFileTextToJson has a judged pin; expose the actual readConfigFile recovery object."
+  },
+  {
+    "file": "src/jsTyping/jsTyping.ts",
+    "owner": "",
+    "kind": "SourceFile",
+    "before": "    CharacterCodes,",
+    "after": "    CharacterCodes,\r\n    checkedAdamicJsonObject,",
+    "why": "Check optional recovery objects before their jsTyping reads."
+  },
+  {
+    "file": "src/jsTyping/jsTyping.ts",
+    "owner": "",
+    "kind": "SourceFile",
+    "before": "    hasJSFileExtension,",
+    "after": "    hasJSFileExtension,\r\n    isAdamicJsonObject,",
+    "why": "Check dictionaries and dependency maps at their reads."
+  },
+  {
+    "file": "src/jsTyping/jsTyping.ts",
+    "owner": "",
+    "kind": "SourceFile",
+    "before": "interface PackageJson {\r\n    dependencies?: MapLike<string>;\r\n    devDependencies?: MapLike<string>;\r\n    name?: string;\r\n    optionalDependencies?: MapLike<string>;\r\n    peerDependencies?: MapLike<string>;\r\n    types?: string;\r\n    typings?: string;\r\n}",
+    "after": "interface PackageJson {\r\n    name?: unknown;\r\n    types?: unknown;\r\n    typings?: unknown;\r\n}",
+    "why": "Describe only the package fields this consumer reads and check each used string at the read."
+  },
+  {
+    "file": "src/jsTyping/jsTyping.ts",
+    "owner": "",
+    "kind": "SourceFile",
+    "before": "/** @internal */\r\nexport function loadSafeList(",
+    "after": "function isAdamicTypingStringMap(value: unknown): value is MapLike<string> | string {\r\n    return typeof value === \"string\" || isAdamicJsonObject(value) && Object.values(value).every(entry => typeof entry === \"string\");\r\n}\r\n\r\nfunction checkedAdamicTypingStringMap(value: unknown): MapLike<string> | string {\r\n    if (!isAdamicTypingStringMap(value)) throw new TypeError(\"Expected typing string map\");\r\n    return value;\r\n}\r\n\r\nfunction adamicTypingDependencyKeys(value: unknown): string[] {\r\n    if (isAdamicJsonObject(value)) return getOwnKeys(value);\r\n    return typeof value === \"string\" ? Object.keys(value) : [];\r\n}\r\n\r\n/** @internal */\r\nexport function loadSafeList(",
+    "why": "Check the exact map values consumed by Object.entries and retain the old for-in behavior for primitive dependency maps."
+  },
+  {
+    "file": "src/jsTyping/jsTyping.ts",
+    "owner": "loadSafeList",
+    "kind": "FunctionDeclaration",
+    "before": "Object.entries<string>(result.config)",
+    "after": "Object.entries<string>(checkedAdamicTypingStringMap(result.config))",
+    "why": "Check the safe-list string dictionary before constructing its map."
+  },
+  {
+    "file": "src/jsTyping/jsTyping.ts",
+    "owner": "loadTypesMap",
+    "kind": "FunctionDeclaration",
+    "before": "Object.entries<string>(result.config.simpleMap)",
+    "after": "Object.entries<string>(checkedAdamicTypingStringMap(result.config.simpleMap))",
+    "why": "Check a truthy simpleMap only when the original branch reads its entries."
+  },
+  {
+    "file": "src/jsTyping/jsTyping.ts",
+    "owner": "getTypingNames",
+    "kind": "FunctionDeclaration",
+    "before": "manifest = readConfigFile(manifestPath, path => host.readFile(path)).config;",
+    "after": "manifest = checkedAdamicJsonObject(readConfigFile(manifestPath, path => host.readFile(path)).config);",
+    "why": "Check the manifest object before its dependency property reads."
+  },
+  {
+    "file": "src/jsTyping/jsTyping.ts",
+    "owner": "getTypingNames",
+    "kind": "FunctionDeclaration",
+    "before": "manifest.peerDependencies], getOwnKeys);",
+    "after": "manifest.peerDependencies], adamicTypingDependencyKeys);",
+    "why": "Check dependency objects before getOwnKeys, preserving string indices and empty primitive/missing cases."
+  },
+  {
+    "file": "src/jsTyping/jsTyping.ts",
+    "owner": "getTypingNames",
+    "kind": "FunctionDeclaration",
+    "before": "const manifest: PackageJson = result.config;",
+    "after": "const manifest: PackageJson = checkedAdamicJsonObject(result.config);",
+    "why": "Check the package object and keep its fields unknown until their actual reads."
+  },
+  {
+    "file": "src/jsTyping/jsTyping.ts",
+    "owner": "getTypingNames",
+    "kind": "FunctionDeclaration",
+    "before": "            if (!manifest.name) {\r\n                continue;\r\n            }\r\n            const ownTypes = manifest.types || manifest.typings;\r\n            if (ownTypes) {",
+    "after": "            if (!manifest.name) {\r\n                continue;\r\n            }\r\n            if (typeof manifest.name !== \"string\") throw new TypeError(\"Expected package name string\");\r\n            const ownTypes = manifest.types || manifest.typings;\r\n            if (ownTypes) {\r\n                if (typeof ownTypes !== \"string\") throw new TypeError(\"Expected package types string\");",
+    "why": "Check only truthy package names and the selected truthy types/typings path, preserving existing falsey branches."
+  }
+]
