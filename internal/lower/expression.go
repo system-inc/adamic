@@ -1047,6 +1047,14 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 				return nil, err
 			}
 			if left.Type() == ir.Record && of != ir.Record && of != ir.Union && !of.IsMaybe() {
+				// A record is an object, so it's falsy only when it's missing, and a bare record pointer
+				// is never null (record | null is boxed as a union). So record && x is x where the record
+				// is present and undefined where it isn't, which a reference result holds as its null
+				// pointer (table && table[key], a string | undefined). || would keep the record itself,
+				// which the result can't hold.
+				if operator == ast.KindAmpersandAmpersandToken && of.IsReference() && of != ir.Weak {
+					return ir.Conditional{Condition: ir.Truthy{Value: left}, WhenTrue: fit(right, of), WhenNot: ir.Undefined{Of: of}, Of: of}, nil
+				}
 				return nil, l.notYet(node, "a logical record operand converted to "+typeName(of)+" without a proven result representation")
 			}
 			return ir.Logical{Left: left, Right: fit(right, of), Of: of, KeepTruthy: operator == ast.KindBarBarToken}, nil
