@@ -1,0 +1,10 @@
+// Object.keys of a const bound to a literal still lowers in a program that catches an Error: a literal is never one.
+const o = { message: 'x' };
+console.log(Object.keys(o).join(','));
+try {
+	throw new Error('m');
+} catch (e) {
+	if (e instanceof Error) {
+		console.log(e.message);
+	}
+}
