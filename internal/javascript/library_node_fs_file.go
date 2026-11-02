@@ -11,6 +11,13 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 		args[i] = e.value(arg)
 	}
 	switch call.Operation {
+	case "host_watch_file":
+		return "adamicNodeFSFile.watchFile(" + args[0] + ", {persistent:" + args[1] + ", interval:" + args[2] + "}, " + "adamicWatchFileListener(" + args[3] + "))"
+	case "host_unwatch_file":
+		if len(args) == 2 {
+			args[1] = "adamicWatchFileListener(" + args[1] + ")"
+		}
+		return "adamicNodeFSFile.unwatchFile(" + strings.Join(args, ", ") + ")"
 	case "host_stdout_columns":
 		return "adamicNodeProcess.stdout.columns"
 	case "host_stdout_is_tty":
@@ -76,3 +83,14 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 	}
 	panic("javascript: unknown fs file operation " + call.Operation)
 }
+
+// Node retains real functions; compiled function values use the closure ABI.
+// One adapter per closure preserves unwatchFile's listener identity.
+const nodeWatchFileRuntime = `const adamicWatchFileListeners = new WeakMap();
+const adamicWatchFileListener = callback => {
+ if (!adamicWatchFileListeners.has(callback)) {
+  adamicWatchFileListeners.set(callback, (curr, prev) => adamicCall(callback, [curr, prev]));
+ }
+ return adamicWatchFileListeners.get(callback);
+};
+`
