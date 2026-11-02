@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Fetch the keyed adapted tree; --build-product prepares it outside test units."""
+# planner probe: a comment the adapted tree's window reads (#qwfw9pv)
 import argparse
 import hashlib
 from concurrent.futures import ThreadPoolExecutor
