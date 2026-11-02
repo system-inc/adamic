@@ -174,6 +174,14 @@ func compilationInputs(t *testing.T) buildcache.Inputs {
 // profiledCompilationDirectory is where the profiled build's debug info says it was compiled, whatever the box.
 const profiledCompilationDirectory = "/adamic-lint-profile"
 
+// profiledClang is the profiled build's clang, compiler run through native.ClangIn in this package's directory: its flags
+// map the product's directory and name the compilation directory, and ClangIn's maps take out where clang is installed,
+// which the debug info names among its include directories (#8wgk65j). A bare toolchain.Command here left that path in
+// the bytes, so two boxes whose tools sit apart built two profiled binaries for one key (#dc483fc).
+func profiledClang(compiler string, flags ...string) *exec.Cmd {
+	return native.ClangIn("", compiler, flags...)
+}
+
 func compilationProducts(t *testing.T) string {
 	return compilationProductKinds(t, []string{"scanner", "counted", "profiled"})
 }
@@ -243,7 +251,7 @@ func compilationProductKinds(t *testing.T, kinds []string) string {
 				flags := append(native.SourceFlags(string(source), options), "-g", "-ffile-prefix-map="+dir+"="+profiledCompilationDirectory, "-ffile-compilation-dir="+profiledCompilationDirectory, "-o", filepath.Join(dir, kind))
 				flags = append(flags, units...)
 				flags = append(flags, "-lm")
-				command := toolchain.Command("clang", flags...)
+				command := profiledClang("clang", flags...)
 				if output, err := command.CombinedOutput(); err != nil {
 					return fmt.Errorf("profile clang: %w\n%s", err, output)
 				}

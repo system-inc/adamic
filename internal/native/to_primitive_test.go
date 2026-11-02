@@ -15,7 +15,6 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 var primitiveCases = []string{
@@ -122,7 +121,7 @@ func primitiveMutants(t *testing.T) string {
 	flags := Flags(Options{Sanitize: true, Count: true})
 	inputs := buildcache.Inputs{
 		Name:      "primitive-mutants",
-		Files:     []string{"internal/native/runtime", "internal/native/testdata/to-primitive/runtime.c", "internal/native/to_primitive_test.go", "internal/native/split_units_test.go", "internal/native/native.go", "internal/native/library.go"},
+		Files:     []string{"internal/native/runtime", "internal/native/testdata/to-primitive/runtime.c", "internal/native/to_primitive_test.go", "internal/native/split_units_test.go", "internal/native/runtime_mutants_test.go", "internal/native/native.go", "internal/native/library.go"},
 		Flags:     slices.Clone(flags),
 		Toolchain: []string{buildcache.Tool("clang", "--version")},
 	}
@@ -153,7 +152,7 @@ func primitiveMutants(t *testing.T) string {
 		// directory (cachedRuntime's way).
 		compile := func(within, source string) error {
 			arguments := append(append(slices.Clone(flags), prefixMaps(within, "/adamic-runtime")...), "-c", source, "-o", strings.TrimSuffix(source, ".c")+".o")
-			command := toolchain.CommandIn(within, "clang", arguments...)
+			command := runtimeMutantClang(within, arguments...)
 			if output, err := command.CombinedOutput(); err != nil {
 				return fmt.Errorf("compiling runtime %s: %w\n%s", source, err, output)
 			}
@@ -220,7 +219,7 @@ func primitiveMutants(t *testing.T) string {
 				}
 			}
 			arguments = append(arguments, "-lm")
-			command := toolchain.CommandIn(scratch, "clang", arguments...)
+			command := runtimeMutantClang(scratch, arguments...)
 			if output, err := command.CombinedOutput(); err != nil {
 				return fmt.Errorf("mutant %s must compile: %w\n%s", mutation.name, err, output)
 			}

@@ -18,17 +18,13 @@ var productClangRoots = []string{"internal", "cmd", "stage1", "stage2", "stage3"
 // bareProductClang is each function, in a file that builds a product, that runs clang by name itself rather than through
 // native's clangIn: how many such calls it holds, and why it may. clangIn maps the compiler's installation and any sysroot
 // out of what a compile records of a path (toolMaps, #8wgk65j); a bare clang maps only the directories its caller names,
-// so the same key builds different bytes on two boxes whose tools sit in different places. Every entry here but the timer
-// mutant's is one compiler/products-through-clangin moves onto clangIn, and takes off this list in the same commit.
+// so the same key builds different bytes on two boxes whose tools sit in different places. compiler/products-through-clangin
+// moved the four builders that ran one onto clangIn and took them off this list; what stays is the timer mutant's.
 var bareProductClang = map[string]struct {
 	calls  int
 	reason string
 }{
-	"internal/native/to_primitive_test.go:primitiveMutants":                       {2, "moves to clangIn in compiler/products-through-clangin"},
-	"internal/native/record_test.go:recordMutants":                                {2, "moves to clangIn in compiler/products-through-clangin"},
-	"stage1/cohere/lint/profile_compilation_main_test.go:compilationProductKinds": {1, "moves to clangIn in compiler/products-through-clangin"},
-	"stage1/cohere/estree/recovery_cache_test.go:recoveryStableNative":            {1, "moves to clangIn in compiler/products-through-clangin"},
-	"internal/native/timers_test.go:timerRuntime.buildBare":                       {1, "the reproducibility pin's mutant: it must stay bare so TestTimerMutantProductPinCatchesBareClang can show the pin fails"},
+	"internal/native/timers_test.go:timerRuntime.buildBare": {1, "the reproducibility pin's mutant: it must stay bare so TestTimerMutantProductPinCatchesBareClang can show the pin fails"},
 }
 
 // productCommandCalls are the calls that run a program by name, each with the index of its program argument.
