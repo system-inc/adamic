@@ -4,6 +4,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
+	"strconv"
 	"strings"
 )
 
@@ -27,7 +28,13 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 		family = "callable"
 	}
 	if family == "" {
+		if target.Flags()&checker.TypeFlagsIntersection != 0 {
+			l.intersectionViewDepth++
+		}
 		id, err := l.strictViewContract(node, target)
+		if target.Flags()&checker.TypeFlagsIntersection != 0 {
+			l.intersectionViewDepth--
+		}
 		if err == nil {
 			return id, nil
 		}
@@ -64,7 +71,7 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 	case flags&checker.TypeFlagsTypeParameter != 0:
 		return "generic"
 	case flags&checker.TypeFlagsIntersection != 0:
-		return "intersection"
+		return l.intersectionViewFamily(target)
 	case flags&checker.TypeFlagsNull != 0:
 		return ""
 	case flags&checker.TypeFlagsUndefined != 0:
@@ -80,6 +87,43 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 	}
 
 	return ""
+}
+
+// intersectionViewDepthBound is how many intersections deep a view's contract is built, each inside
+// a field of the one before. Past it the contract is a descriptor, and a demanded read is NotYet.
+const intersectionViewDepthBound = 8
+
+// intersectionPastDepthBound is the family of an intersection nested past intersectionViewDepthBound.
+var intersectionPastDepthBound = "intersection nested past the depth bound of " + strconv.Itoa(intersectionViewDepthBound)
+
+// An intersection of plain object types is described by its resolved properties, each with its
+// refined type: the checker gives true for boolean & true and Identifier for DeclarationName &
+// Identifier, so a read checks the narrower type and never the base's. Any other member keeps the
+// intersection unsupported: a type parameter has no layout to describe, a callable member would
+// lose its signature, and a member with a family of its own (a class instance's nominal check, an
+// index signature's dictionary, a collection, a tuple) would lose that.
+func (l *lowering) intersectionViewFamily(target *checker.Type) string {
+	if !l.plainObjectIntersection(target) {
+		return "intersection"
+	}
+	if l.intersectionViewDepth >= intersectionViewDepthBound {
+		return intersectionPastDepthBound
+	}
+	return ""
+}
+
+// plainObjectIntersection is whether every member of an intersection is a plain object type, and
+// it isn't the present half of a Weak<Target>, which is kept weakly.
+func (l *lowering) plainObjectIntersection(target *checker.Type) bool {
+	if target.Flags()&checker.TypeFlagsIntersection == 0 || l.weakTarget(target) != nil {
+		return false
+	}
+	for _, member := range target.Types() {
+		if member.Flags()&checker.TypeFlagsObject == 0 || l.checker.IsArrayType(member) || l.callableViewContract(member) || l.unsupportedViewFamily(member) != "" {
+			return false
+		}
+	}
+	return true
 }
 
 // Demand uses the same allocations, joined arguments/results and projected
@@ -149,6 +193,10 @@ func (l *lowering) checkLazyViewReads() error {
 		if demanded {
 			if strings.Contains(family, "views-v3: array element kind") {
 				refused = &NotYet{Where: where, What: "checked view union arm awaits views-v3: array element kind"}
+				return false
+			}
+			if family == intersectionPastDepthBound {
+				refused = &NotYet{Where: where, What: "a checked view read of field " + field + " through an " + family}
 				return false
 			}
 			refused = &Refused{Where: where, What: "checked view read of field " + field + " with unsupported " + family + " contract", Fix: "prove or implement the " + family + " contract before reading this field"}
