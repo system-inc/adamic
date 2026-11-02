@@ -573,6 +573,50 @@ const w = { kind: 80, pos: 2, _declarationBrand: undefined, _typeElementBrand: u
 `, "adamic: panic: field read failed: n.arity matches no member of number | undefined")
 }
 
+// Two branded members each a supertype of the other, TypeElement and Twin2 with the same fields, both
+// qualify, so brandedIntersectionReceiver routes a declared TypeElement & Twin2 to its first member and
+// Twin2 & TypeElement to its own first, a different id. The outcome is the same either way with both views
+// live, and that's what's pinned, never the id: x.name is a checked read, an honest value agrees with Node,
+// and a lie stops with the same message on sanitized native and the JavaScript backend (probed on Pupa,
+// Nov 2; Compiler's accept). Mutant: the routing removed, and each lie is NotYet as a widened read.
+func TestBrandedSupertypeMutualIntersectionOrder(t *testing.T) {
+	t.Parallel()
+	const twin = `interface Twin2 extends Declaration { _typeElementBrand: undefined; readonly name?: string; }
+function isTwin2Lie(n: Node): n is Twin2 { return kindOf(n) !== 0; }
+function reg(n: Node): number { if (isTwin2Lie(n)) { return n.pos; } return 0; }
+const r: Node = { kind: 3, pos: 3 }; reg(r);
+function show(n: Node): void { if (isTypeElementLie(n)) { console.log(nameOf(n)); } }
+`
+	// reg puts Twin2's view in the program and prints nothing, since a stop must come before any output.
+	for _, order := range []string{"TypeElement & Twin2", "Twin2 & TypeElement"} {
+		t.Run(order, func(t *testing.T) {
+			t.Parallel()
+			source := brandedPrelude + twin + "function nameOf(x: " + order + "): string { return String(x.name); }\n"
+			program := lowersAndAgreesWithNodeAs(t, source+`const w = { kind: 171, pos: 2, name: "a" }; const v: Node = w; show(v);
+`, ".ts")
+			reads := 0
+			inspect := func(node any) bool {
+				if read, ok := node.(ir.Property); ok && read.Name == "name" {
+					reads++
+					if !program.CheckedField(read.ViewReceiverTypeID, read.Name) {
+						t.Errorf("x.name through %s isn't a checked read", order)
+					}
+				}
+				return true
+			}
+			walk(program.Main, inspect)
+			for _, function := range program.Functions {
+				walk(function.Body, inspect)
+			}
+			if reads != 1 {
+				t.Fatalf("want the one read of name, x.name, found %d", reads)
+			}
+			brandedStops(t, source+`const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const v: Node = w; show(v);
+`, "adamic: panic: field read failed: x.name matches no member of string | undefined")
+		})
+	}
+}
+
 // A generic helper is judged per instance: pick at Identifier lowers, and pick at TypeElement over the
 // same PropertySignature | Identifier argument is NotYet at its own call, in a program that lowers the
 // Identifier instance first. Mutant: one judgment kept for every instance of a declaration, and the second
