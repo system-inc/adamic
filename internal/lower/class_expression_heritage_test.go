@@ -49,3 +49,19 @@ func TestClassExpressionHeritageIsNotYet(t *testing.T) {
 		}
 	}
 }
+
+// Correctness's census program with a class declaration in place of the expression, the control
+// (#57pc1at): the same namespace walk reads a ClassDeclaration's heritage through ClassLikeData, and it
+// lowers, as on main, where Node prints 1.
+func TestClassDeclarationHeritageBesideANamespaceLowers(t *testing.T) {
+	t.Parallel()
+	const source = "namespace N {\n    export const k = 1;\n}\nclass Base {\n    value(): number {\n        return N.k;\n    }\n}\nclass Derived extends Base {}\nconsole.log(String(new Derived().value()));\n"
+	for _, extension := range []string{".ts", ".a"} {
+		t.Run(extension, func(t *testing.T) {
+			t.Parallel()
+			if _, err := lowerSourceAs(t, source, extension); err != nil {
+				t.Fatalf("the class declaration control must lower: %v", err)
+			}
+		})
+	}
+}
