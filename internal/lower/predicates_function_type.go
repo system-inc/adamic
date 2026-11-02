@@ -49,6 +49,9 @@ func (l *lowering) checkedFunctionTypeClaim(annotation *ast.Node) bool {
 	// An overload's parameter is called in its implementation, through the implementation's own
 	// parameter type, and the overload's result leans on the answers (takeWhile's U[]). So it's checked
 	// only when that parameter carries a checked claim too, which checks every call the body makes.
+	// A callback written out, alone or beside undefined, never reaches here: predicateParameter trusts
+	// it above, and its argument keeps predicateArguments' proof. This rule speaks for what
+	// plainCallbackType doesn't read, an alias or a union of callables (overload_union_impl's alias).
 	// The census overload proof refuses overload_union_impl too today ("cannot be served by
 	// implementation result"), so its fixture goes red through that refusal without this rule: the two
 	// guard one claim independently, and this one stays if the census proof is relaxed (Compiler, Oct 30).

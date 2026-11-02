@@ -87,9 +87,13 @@ func TestFunctionTypeClaimIsCheckedAtTheCall(t *testing.T) {
 // What the check at the call can't reach keeps its refusal. A library's claim is called inside the
 // library, so a checked parameter forwarded to filter or find keeps predicateArguments' proof (Lower's
 // must). An overload whose implementation takes a plain callback calls it unchecked, so the overload's
-// argument keeps its proof too. A target with no runtime test is NotYet at the call, never a vacuous
-// check. .a needs proof and refuses the claim. Mutants: the library test dropped, which admits the
-// forwards; the overload's implementation rule dropped, which admits overload_union_impl.
+// argument keeps its proof too: overload_optional_impl writes the callback or undefined out, which
+// predicateParameter trusts as a plain callback, and overload_union_impl names it through an alias,
+// which plainCallbackType doesn't read, so only checkedFunctionTypeClaim's overload rule keeps its
+// argument's proof. A target with no runtime test is NotYet at the call, never a vacuous check. .a
+// needs proof and refuses the claim. Mutants: the library test dropped, which admits the forwards; the
+// overload's implementation rule dropped, which lets overload_union_impl's argument through to the
+// census proof's refusal of its result.
 func TestFunctionTypeClaimKeepsWhatTheCallCantCheck(t *testing.T) {
 	t.Parallel()
 	read := func(name string) string {
@@ -103,6 +107,7 @@ func TestFunctionTypeClaimKeepsWhatTheCallCantCheck(t *testing.T) {
 		{"forward_filter", `an unproven predicate argument for parameter predicate (argument "test")`},
 		{"forward_find", `an unproven predicate argument for parameter predicate (argument "test")`},
 		{"overload_union_impl", `an unproven predicate argument for parameter assert (argument "(node: Node): void => {}")`},
+		{"overload_optional_impl", `an unproven predicate argument for parameter assert (argument "(node: Node): void => {}")`},
 	} {
 		_, err := lowerTypeScriptAssertionSource(t, read(refusal.name))
 		var refused *Refused
@@ -216,6 +221,141 @@ console.log(found === undefined ? "none" : String(found.kind));`, `refused: an u
 				}
 				if optional != mode.want {
 					t.Fatalf("got %q for both; want %q", optional, mode.want)
+				}
+			})
+		}
+	}
+}
+
+// assertNodeSource is debug.ts's assertNode (tsc's debug.ts:294): a generic overload asserting its node
+// through a predicate parameter, a plain overload for a test that may be absent, and an implementation
+// taking the callback or undefined, `((node: Node) => boolean) | undefined`, not a plain function type.
+// The %s is what the overload's test takes: Node, as assertNotNode's does, or T, as assertNode's does.
+const assertNodeSource = `interface Node { readonly kind: number; }
+interface Identifier extends Node { readonly kind: 80; readonly escapedText: string; }
+function isIdentifier(node: Node): node is Identifier { return node.kind === 80; }
+function assertNode<T extends Node, U extends T>(node: T | undefined, test: (node: %s) => node is U, message?: string): asserts node is U;
+function assertNode(node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string): void;
+function assertNode(node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string): void {
+  if (node === undefined || (test !== undefined && !test(node))) { console.log("failed: " + (message === undefined ? "node" : message)); }
+}
+const identifier: Identifier = { kind: 80, escapedText: "named" };
+const node: Node = identifier;
+assertNode(node, isIdentifier);
+console.log(node.escapedText);
+assertNode(node, undefined, "untested");
+console.log(String(node.kind));
+`
+
+// visitArraySource is visitorPublic.ts's visitArrayWorker: an overload whose test claims node is U, over
+// an implementation taking the same test or undefined, in parentheses. The first %s is the
+// implementation's test type and the second its guard, so its plain twin, core.ts filter's shape, differs
+// only there, and the calls start on the same line in both.
+const visitArraySource = `interface Node { readonly kind: number; }
+interface Identifier extends Node { readonly kind: 80; readonly escapedText: string; }
+function isIdentifier(node: Node): node is Identifier { return node.kind === 80; }
+function visitArrayWorker<U extends Node>(nodes: readonly Node[], test: (node: Node) => node is U, start: number, count: number): readonly Node[];
+function visitArrayWorker(nodes: readonly Node[], test: %s, start: number, count: number): readonly Node[] {
+  const visited: Node[] = [];
+  for (let index = start; index < start + count; index++) { const node = nodes[index]; if (node !== undefined && (%s)) { visited.push(node); } }
+  return visited;
+}
+const identifier: Identifier = { kind: 80, escapedText: "named" };
+const nodes: readonly Node[] = [{ kind: 11 }, identifier, { kind: 80 }, { kind: 9 }];
+%s
+`
+
+// An overload's predicate parameter over an implementation taking `((node: Node) => boolean) | undefined`
+// is trusted as one over a plain callback is (#1w5bve2, debug.ts's assertNode, assertNotNode,
+// assertOptionalNode and assertEachNode, and visitorPublic.ts's visitArrayWorker): an absent argument is
+// never called, a present one is exactly the function, and every argument through the overload keeps
+// predicateArguments' proof. Called with a one-line kind test, and through the plain overload with none,
+// both agree with Node. tsc's assertNode, assertEachNode and assertOptionalNode take a test on T, not
+// Node, and with the claim trusted they meet the census overload proof next, which refuses a callback on
+// T served by one the implementation calls with any Node; that refusal is pinned here so its move is
+// seen. Mutant: the implementation's type read as written, without looking through the parentheses and
+// undefined, which refuses both agreeing shapes as "there is no body proving this parameter".
+func TestOverloadPredicateOverOptionalCallback(t *testing.T) {
+	t.Parallel()
+	t.Run("assertNode", func(t *testing.T) {
+		t.Parallel()
+		lowersAndAgreesWithNodeAs(t, fmt.Sprintf(assertNodeSource, "Node"), ".ts")
+	})
+	t.Run("assertNode on T", func(t *testing.T) {
+		t.Parallel()
+		_, err := lowerSourceAs(t, fmt.Sprintf(assertNodeSource, "T"), ".ts")
+		var refused *Refused
+		if !errors.As(err, &refused) || !strings.Contains(err.Error(), "overload 1 of assertNode parameter test cannot be served by implementation parameter test") {
+			t.Fatalf("want the census overload proof's refusal, got %v", err)
+		}
+	})
+	t.Run("visitArrayWorker", func(t *testing.T) {
+		t.Parallel()
+		lowersAndAgreesWithNodeAs(t, fmt.Sprintf(visitArraySource, "((node: Node) => boolean) | undefined", "test === undefined || test(node)", `console.log(String(visitArrayWorker(nodes, isIdentifier, 0, 4).length));
+console.log(String(visitArrayWorker(nodes, isIdentifier, 2, 2).length));`), ".ts")
+	})
+}
+
+// The optional callback changes nothing else: each argument through the overload is admitted or refused
+// exactly as for its plain twin, whose implementation takes `(node: Node) => boolean` as core.ts's filter
+// does, in .ts, where an arrow claiming more than its body proves is a checked closure, and in .a, where
+// it's refused. A let that's reassigned can hold any function of its type, so it's refused in both.
+// Mutant: the fix reverted, where the proven rows and the lying arrow in .ts are refused at the claim,
+// "there is no body proving this parameter", and stop matching their twins.
+func TestOverloadPredicateOverOptionalCallbackMatchesItsPlainTwin(t *testing.T) {
+	t.Parallel()
+	outcome := func(err error) string {
+		var refused *Refused
+		if errors.As(err, &refused) {
+			return "refused: " + refused.What
+		}
+		if err != nil {
+			return err.Error()
+		}
+		return "admitted"
+	}
+	for _, probe := range []struct{ name, calls, typeScript, adamic string }{
+		{"proven", `console.log(String(visitArrayWorker(nodes, isIdentifier, 0, 4).length));`, "admitted", "admitted"},
+		{"lying arrow", `console.log(String(visitArrayWorker(nodes, (node: Node): node is Identifier => true, 0, 4).length));`, "admitted", `refused: an unproven predicate argument for parameter test (argument "(node: Node): node is Identifier => true")`},
+		{"reassigned let", `let test = (node: Node): node is Identifier => node.kind === 80;
+test = (node: Node): node is Identifier => true;
+console.log(String(visitArrayWorker(nodes, test, 0, 4).length));`, `refused: an unproven predicate argument for parameter test (argument "test")`, `refused: an unproven predicate argument for parameter test (argument "test")`},
+	} {
+		for _, mode := range []struct{ extension, want string }{{".ts", probe.typeScript}, {".a", probe.adamic}} {
+			t.Run(probe.name+mode.extension, func(t *testing.T) {
+				t.Parallel()
+				_, optionalErr := lowerSourceAs(t, fmt.Sprintf(visitArraySource, "((node: Node) => boolean) | undefined", "test === undefined || test(node)", probe.calls), mode.extension)
+				_, plainErr := lowerSourceAs(t, fmt.Sprintf(visitArraySource, "(node: Node) => boolean", "test(node)", probe.calls), mode.extension)
+				optional, plain := outcome(optionalErr), outcome(plainErr)
+				if optional != plain {
+					t.Fatalf("optional %q, plain twin %q; want them to match", optional, plain)
+				}
+				if optional != mode.want {
+					t.Fatalf("got %q for both; want %q", optional, mode.want)
+				}
+			})
+		}
+	}
+}
+
+// Only undefined is looked through: an implementation taking the callback or null, with undefined or
+// without, isn't a plain callback, and the overload's claim stays refused as before (#1w5bve2, Lower's
+// should on block 1). An argument of null reaches the body, which must test for it, so a widening that
+// takes null out too goes red here instead of opening the parameter silently. Mutant: plainCallbackType
+// looking through null as through undefined, which admits every row.
+func TestOverloadPredicateOverNullableCallbackStaysRefused(t *testing.T) {
+	t.Parallel()
+	for _, implementation := range []struct{ name, test, guard string }{
+		{"null", "((node: Node) => boolean) | null", "test !== null && test(node)"},
+		{"null or undefined", "((node: Node) => boolean) | null | undefined", "test !== null && test !== undefined && test(node)"},
+	} {
+		for _, extension := range []string{".ts", ".a"} {
+			t.Run(implementation.name+extension, func(t *testing.T) {
+				t.Parallel()
+				_, err := lowerSourceAs(t, fmt.Sprintf(visitArraySource, implementation.test, implementation.guard, `console.log(String(visitArrayWorker(nodes, isIdentifier, 0, 4).length));`), extension)
+				var refused *Refused
+				if !errors.As(err, &refused) || refused.What != "a type predicate whose return is not proven (there is no body proving this parameter)" {
+					t.Fatalf("want the overload's claim refused, got %v", err)
 				}
 			})
 		}
