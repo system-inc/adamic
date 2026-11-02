@@ -28,6 +28,8 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		"1100 recordLiteralRead",
 		"1200 indexSignatureStorageGap",
 		"1300 deleteRefusal",
+		// recordDeclaredDeleteRefusal judges only a record entry's delete, which deleteRefusal let by.
+		"1350 recordDeclaredDeleteRefusal",
 		"1400 syntaxRefusal",
 		"1500 jsonSchemaCallRefusal",
 		"1600 typedArrayUnsupported",

@@ -11,9 +11,6 @@ const key = "extra" + "Option";
 options[key] = 9;
 console.log(`${options.required}:${options.target}:${options[key]}:${options["missing"]}`);
 console.log(Object.keys(options).join(","));
-function dropRequired(options: Options, key: string): void { delete options[key]; }
-dropRequired(options, "required");
-console.log(`${typeof options.required}:${options.required === undefined}`);
 console.log(`${"target" in options}:${"missing" in options}`);
 delete options.target;
 console.log(`${"target" in options}:${options.target ?? 0}`);
