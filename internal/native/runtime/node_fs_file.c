@@ -19,7 +19,7 @@
 static const char *const error_fields[] = {"name", "message", "code"};
 static const bool error_refs[] = {true, true, true};
 static const adamic_field_kind error_kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_reference};
-static const adamic_shape error_shape = {3, error_fields, error_refs, NULL, error_kinds};
+static const adamic_shape error_shape = {3, error_fields, error_refs, &adamic_error_methods, error_kinds};
 
 static adamic_string *text(const char *bytes) {
     return adamic_decode_utf8((const unsigned char *)bytes, strlen(bytes));
@@ -434,7 +434,7 @@ static void realpath_system_error(const adamic_string *path, char *name, int err
     static const char *const names[] = {"name", "message", "code", "syscall", "path", "errno"};
     static const bool references[] = {true, true, true, true, true, false};
     static const adamic_field_kind kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_reference, adamic_field_reference, adamic_field_reference, adamic_field_number};
-    static const adamic_shape shape = {6, names, references, NULL, kinds};
+    static const adamic_shape shape = {6, names, references, &adamic_error_methods, kinds};
     adamic_object *original = adamic_thrown;
     adamic_object *result = adamic_object_new(&shape);
     for (size_t i = 0; i < 3; i++) { result->slots[i].reference = adamic_retain(original->slots[i].reference); }
