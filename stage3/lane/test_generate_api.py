@@ -222,10 +222,11 @@ class ApiSanctionGeneratorTests(unittest.TestCase):
                 self.assertIn('invalid insert sanction', result.stderr)
 
     def test_api_sanction_function_return_applied_and_guard_accepts(self):
-        self.row = dict(path=['convertToObject'], kind='FunctionDeclaration', before='any',
-                        after='AdamicJsonRecoveryValue | undefined', why='Fixture function return')
+        self.row = dict(path=['getDefaultLibFileName'], kind='FunctionDeclaration', before='string',
+                        after='string | undefined', why='Fixture function return')
         proof = self.generated()
-        self.assertTrue('): AdamicJsonRecoveryValue | undefined;' in proof['expected'])
+        self.assertTrue('function getDefaultLibFileName(options: CompilerOptions): string | undefined;'
+                        in proof['expected'], 'sanctioned function return was not emitted')
         self.assertEqual(self.guard(proof, proof['expected']), [])
 
     def test_api_sanction_overloaded_function_is_rejected(self):

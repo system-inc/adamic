@@ -193,7 +193,7 @@ class LandingLaneTests(unittest.TestCase):
         self.assertEqual(manifest['counts']['33'], 0)
         self.assertEqual(manifest['counts']['79'], 1)
         self.assertIn('member:["ts","System","exit"]#0', changes)
-        self.assertEqual(len(changes), 243)
+        self.assertEqual(len(changes), 262)
 
     def test_unknown_platform(self):
         self.execution['platform']['node'] = 'v24.19.1'

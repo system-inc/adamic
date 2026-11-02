@@ -2,19 +2,49 @@
   "source_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
   "normalized_changes": [
     {
+      "declaration": "FunctionDeclaration:[\"ts\",\"convertCompilerOptionsFromJson\"]#0",
+      "before": "[\"FunctionDeclaration\",[\"Identifier\",\"convertCompilerOptionsFromJson\"],[\"Parameter\",[\"Identifier\",\"jsonOptions\"],[\"AnyKeyword\"]],[\"Parameter\",[\"Identifier\",\"basePath\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"configFileName\"],[\"QuestionToken\"],[\"StringKeyword\"]],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"options\"],[\"TypeReference\",[\"Identifier\",\"CompilerOptions\"]]],[\"PropertySignature\",[\"Identifier\",\"errors\"],[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"Diagnostic\"]]]]]]",
+      "after": "[\"FunctionDeclaration\",[\"Identifier\",\"convertCompilerOptionsFromJson\"],[\"Parameter\",[\"Identifier\",\"jsonOptions\"],[\"UnknownKeyword\"]],[\"Parameter\",[\"Identifier\",\"basePath\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"configFileName\"],[\"QuestionToken\"],[\"StringKeyword\"]],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"options\"],[\"TypeReference\",[\"Identifier\",\"CompilerOptions\"]]],[\"PropertySignature\",[\"Identifier\",\"errors\"],[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"Diagnostic\"]]]]]]"
+    },
+    {
+      "declaration": "FunctionDeclaration:[\"ts\",\"convertToObject\"]#0",
+      "before": "[\"FunctionDeclaration\",[\"Identifier\",\"convertToObject\"],[\"Parameter\",[\"Identifier\",\"sourceFile\"],[\"TypeReference\",[\"Identifier\",\"JsonSourceFile\"]]],[\"Parameter\",[\"Identifier\",\"errors\"],[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"Diagnostic\"]]]],[\"AnyKeyword\"]]",
+      "after": "[\"FunctionDeclaration\",[\"Identifier\",\"convertToObject\"],[\"Parameter\",[\"Identifier\",\"sourceFile\"],[\"TypeReference\",[\"Identifier\",\"JsonSourceFile\"]]],[\"Parameter\",[\"Identifier\",\"errors\"],[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"Diagnostic\"]]]],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"AdamicJsonRecoveryValue\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "FunctionDeclaration:[\"ts\",\"convertTypeAcquisitionFromJson\"]#0",
+      "before": "[\"FunctionDeclaration\",[\"Identifier\",\"convertTypeAcquisitionFromJson\"],[\"Parameter\",[\"Identifier\",\"jsonOptions\"],[\"AnyKeyword\"]],[\"Parameter\",[\"Identifier\",\"basePath\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"configFileName\"],[\"QuestionToken\"],[\"StringKeyword\"]],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"options\"],[\"TypeReference\",[\"Identifier\",\"TypeAcquisition\"]]],[\"PropertySignature\",[\"Identifier\",\"errors\"],[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"Diagnostic\"]]]]]]",
+      "after": "[\"FunctionDeclaration\",[\"Identifier\",\"convertTypeAcquisitionFromJson\"],[\"Parameter\",[\"Identifier\",\"jsonOptions\"],[\"UnknownKeyword\"]],[\"Parameter\",[\"Identifier\",\"basePath\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"configFileName\"],[\"QuestionToken\"],[\"StringKeyword\"]],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"options\"],[\"TypeReference\",[\"Identifier\",\"TypeAcquisition\"]]],[\"PropertySignature\",[\"Identifier\",\"errors\"],[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"Diagnostic\"]]]]]]"
+    },
+    {
       "declaration": "FunctionDeclaration:[\"ts\",\"parseConfigFileTextToJson\"]#0",
       "before": "[\"FunctionDeclaration\",[\"Identifier\",\"parseConfigFileTextToJson\"],[\"Parameter\",[\"Identifier\",\"fileName\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"jsonText\"],[\"StringKeyword\"]],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"config\"],[\"QuestionToken\"],[\"AnyKeyword\"]],[\"PropertySignature\",[\"Identifier\",\"error\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Diagnostic\"]]]]]",
       "after": "[\"FunctionDeclaration\",[\"Identifier\",\"parseConfigFileTextToJson\"],[\"Parameter\",[\"Identifier\",\"fileName\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"jsonText\"],[\"StringKeyword\"]],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"config\"],[\"QuestionToken\"],[\"AnyKeyword\"]],[\"PropertySignature\",[\"Identifier\",\"error\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Diagnostic\"]],[\"UndefinedKeyword\"]]]]]"
     },
     {
+      "declaration": "FunctionDeclaration:[\"ts\",\"parseJsonConfigFileContent\"]#0",
+      "before": "[\"FunctionDeclaration\",[\"Identifier\",\"parseJsonConfigFileContent\"],[\"Parameter\",[\"Identifier\",\"json\"],[\"AnyKeyword\"]],[\"Parameter\",[\"Identifier\",\"host\"],[\"TypeReference\",[\"Identifier\",\"ParseConfigHost\"]]],[\"Parameter\",[\"Identifier\",\"basePath\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"existingOptions\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"CompilerOptions\"]]],[\"Parameter\",[\"Identifier\",\"configFileName\"],[\"QuestionToken\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"resolutionStack\"],[\"QuestionToken\"],[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"Path\"]]]],[\"Parameter\",[\"Identifier\",\"extraFileExtensions\"],[\"QuestionToken\"],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"FileExtensionInfo\"]]]]],[\"Parameter\",[\"Identifier\",\"extendedConfigCache\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Map\"],[\"StringKeyword\"],[\"TypeReference\",[\"Identifier\",\"ExtendedConfigCacheEntry\"]]]],[\"Parameter\",[\"Identifier\",\"existingWatchOptions\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"WatchOptions\"]]],[\"TypeReference\",[\"Identifier\",\"ParsedCommandLine\"]]]",
+      "after": "[\"FunctionDeclaration\",[\"Identifier\",\"parseJsonConfigFileContent\"],[\"Parameter\",[\"Identifier\",\"json\"],[\"UnknownKeyword\"]],[\"Parameter\",[\"Identifier\",\"host\"],[\"TypeReference\",[\"Identifier\",\"ParseConfigHost\"]]],[\"Parameter\",[\"Identifier\",\"basePath\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"existingOptions\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"CompilerOptions\"]]],[\"Parameter\",[\"Identifier\",\"configFileName\"],[\"QuestionToken\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"resolutionStack\"],[\"QuestionToken\"],[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"Path\"]]]],[\"Parameter\",[\"Identifier\",\"extraFileExtensions\"],[\"QuestionToken\"],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"FileExtensionInfo\"]]]]],[\"Parameter\",[\"Identifier\",\"extendedConfigCache\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Map\"],[\"StringKeyword\"],[\"TypeReference\",[\"Identifier\",\"ExtendedConfigCacheEntry\"]]]],[\"Parameter\",[\"Identifier\",\"existingWatchOptions\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"WatchOptions\"]]],[\"TypeReference\",[\"Identifier\",\"ParsedCommandLine\"]]]"
+    },
+    {
       "declaration": "FunctionDeclaration:[\"ts\",\"readConfigFile\"]#0",
       "before": "[\"FunctionDeclaration\",[\"Identifier\",\"readConfigFile\"],[\"Parameter\",[\"Identifier\",\"fileName\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"readFile\"],[\"FunctionType\",[\"Parameter\",[\"Identifier\",\"path\"],[\"StringKeyword\"]],[\"UnionType\",[\"StringKeyword\"],[\"UndefinedKeyword\"]]]],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"config\"],[\"QuestionToken\"],[\"AnyKeyword\"]],[\"PropertySignature\",[\"Identifier\",\"error\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Diagnostic\"]]]]]",
-      "after": "[\"FunctionDeclaration\",[\"Identifier\",\"readConfigFile\"],[\"Parameter\",[\"Identifier\",\"fileName\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"readFile\"],[\"FunctionType\",[\"Parameter\",[\"Identifier\",\"path\"],[\"StringKeyword\"]],[\"UnionType\",[\"StringKeyword\"],[\"UndefinedKeyword\"]]]],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"config\"],[\"QuestionToken\"],[\"AnyKeyword\"]],[\"PropertySignature\",[\"Identifier\",\"error\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Diagnostic\"]],[\"UndefinedKeyword\"]]]]]"
+      "after": "[\"FunctionDeclaration\",[\"Identifier\",\"readConfigFile\"],[\"Parameter\",[\"Identifier\",\"fileName\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"readFile\"],[\"FunctionType\",[\"Parameter\",[\"Identifier\",\"path\"],[\"StringKeyword\"]],[\"UnionType\",[\"StringKeyword\"],[\"UndefinedKeyword\"]]]],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"config\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"AdamicJsonRecoveryObject\"]]],[\"PropertySignature\",[\"Identifier\",\"error\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Diagnostic\"]],[\"UndefinedKeyword\"]]]]]"
     },
     {
       "declaration": "FunctionDeclaration:[\"ts\",\"setTextRange\"]#0",
       "before": "[\"FunctionDeclaration\",[\"Identifier\",\"setTextRange\"],[\"TypeParameter\",[\"Identifier\",\"T\"],[\"TypeReference\",[\"Identifier\",\"TextRange\"]]],[\"Parameter\",[\"Identifier\",\"range\"],[\"TypeReference\",[\"Identifier\",\"T\"]]],[\"Parameter\",[\"Identifier\",\"location\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"TextRange\"]],[\"UndefinedKeyword\"]]],[\"TypeReference\",[\"Identifier\",\"T\"]]]",
       "after": "[\"FunctionDeclaration\",[\"Identifier\",\"setTextRange\"],[\"TypeParameter\",[\"Identifier\",\"T\"],[\"TypeReference\",[\"Identifier\",\"TextRange\"]]],[\"Parameter\",[\"Identifier\",\"range\"],[\"TypeReference\",[\"Identifier\",\"T\"]]],[\"Parameter\",[\"Identifier\",\"location\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Readonly\"],[\"TypeReference\",[\"Identifier\",\"TextRange\"]]],[\"UndefinedKeyword\"]]],[\"TypeReference\",[\"Identifier\",\"T\"]]]"
+    },
+    {
+      "declaration": "InterfaceDeclaration:[\"ts\",\"AdamicJsonRecoveryObject\"]#0",
+      "before": null,
+      "after": "[[],[\"Identifier\",\"AdamicJsonRecoveryObject\"],[],[]]"
+    },
+    {
+      "declaration": "TypeAliasDeclaration:[\"ts\",\"AdamicJsonRecoveryValue\"]#0",
+      "before": null,
+      "after": "[\"TypeAliasDeclaration\",[\"Identifier\",\"AdamicJsonRecoveryValue\"],[\"UnionType\",[\"StringKeyword\"],[\"NumberKeyword\"],[\"BooleanKeyword\"],[\"LiteralType\",[\"NullKeyword\"]],[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"AdamicJsonRecoveryValue\"]]],[\"TypeReference\",[\"Identifier\",\"AdamicJsonRecoveryObject\"]]]]"
     },
     {
       "declaration": "TypeAliasDeclaration:[\"ts\",\"ErrorCallback\"]#0",
@@ -25,6 +55,11 @@
       "declaration": "TypeAliasDeclaration:[\"ts\",\"Path\"]#0",
       "before": "[\"TypeAliasDeclaration\",[\"Identifier\",\"Path\"],[\"IntersectionType\",[\"StringKeyword\"],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"__pathBrand\"],[\"AnyKeyword\"]]]]]",
       "after": "[\"TypeAliasDeclaration\",[\"Identifier\",\"Path\"],[\"IntersectionType\",[\"StringKeyword\"],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"__pathBrand\"],[\"UndefinedKeyword\"]]]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"AdamicJsonRecoveryObject\",\"\"]#0",
+      "before": null,
+      "after": "[\"IndexSignature\",[\"Parameter\",[\"Identifier\",\"key\"],[\"StringKeyword\"]],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"AdamicJsonRecoveryValue\"]],[\"UndefinedKeyword\"]]]"
     },
     {
       "declaration": "member:[\"ts\",\"AmdDependency\",\"name\"]#0",
@@ -657,6 +692,11 @@
       "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeArguments\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]],[\"UndefinedKeyword\"]]]"
     },
     {
+      "declaration": "member:[\"ts\",\"LanguageServiceHost\",\"getLocalizedDiagnosticMessages\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"getLocalizedDiagnosticMessages\"],[\"QuestionToken\"],[\"AnyKeyword\"]]",
+      "after": "[\"MethodSignature\",[\"Identifier\",\"getLocalizedDiagnosticMessages\"],[\"QuestionToken\"],[\"UnknownKeyword\"]]"
+    },
+    {
       "declaration": "member:[\"ts\",\"LeftHandSideExpression\",\"_leftHandSideExpressionBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_leftHandSideExpressionBrand\"],[\"AnyKeyword\"]]",
       "after": "[\"PropertySignature\",[\"Identifier\",\"_leftHandSideExpressionBrand\"],[\"UndefinedKeyword\"]]"
@@ -822,6 +862,11 @@
       "after": "[\"PropertySignature\",[\"Identifier\",\"projectReferences\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"ProjectReference\"]]]],[\"UndefinedKeyword\"]]]"
     },
     {
+      "declaration": "member:[\"ts\",\"ParsedCommandLine\",\"raw\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"raw\"],[\"QuestionToken\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"raw\"],[\"QuestionToken\"],[\"UnknownKeyword\"]]"
+    },
+    {
       "declaration": "member:[\"ts\",\"ParsedCommandLine\",\"watchOptions\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"watchOptions\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"WatchOptions\"]]]",
       "after": "[\"PropertySignature\",[\"Identifier\",\"watchOptions\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"WatchOptions\"]],[\"UndefinedKeyword\"]]]"
@@ -830,6 +875,11 @@
       "declaration": "member:[\"ts\",\"ParsedTsconfig\",\"extendedConfigPath\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"extendedConfigPath\"],[\"QuestionToken\"],[\"UnionType\",[\"StringKeyword\"],[\"ArrayType\",[\"StringKeyword\"]]]]",
       "after": "[\"PropertySignature\",[\"Identifier\",\"extendedConfigPath\"],[\"QuestionToken\"],[\"UnionType\",[\"StringKeyword\"],[\"ArrayType\",[\"StringKeyword\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ParsedTsconfig\",\"raw\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"raw\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"raw\"],[\"UnknownKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"ParsedTsconfig\",\"watchOptions\"]#0",
@@ -940,6 +990,16 @@
       "declaration": "member:[\"ts\",\"PropertySignature\",\"type\"]#0",
       "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"type\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]]",
       "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"type\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"TypeNode\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ResolvedModuleFull\",\"packageId\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"packageId\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"PackageId\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"packageId\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"PackageId\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ResolvedTypeReferenceDirective\",\"packageId\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"packageId\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"PackageId\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"packageId\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"PackageId\"]],[\"UndefinedKeyword\"]]]"
     },
     {
       "declaration": "member:[\"ts\",\"ReturnStatement\",\"expression\"]#0",
@@ -1215,6 +1275,41 @@
       "declaration": "member:[\"ts\",\"YieldExpression\",\"expression\"]#0",
       "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"expression\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Expression\"]]]",
       "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"expression\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Expression\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"server\",\"PluginCreateInfo\",\"config\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"config\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"config\"],[\"UnknownKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"server\",\"PluginModule\",\"onConfigurationChanged\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"onConfigurationChanged\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"config\"],[\"AnyKeyword\"]],[\"VoidKeyword\"]]",
+      "after": "[\"MethodSignature\",[\"Identifier\",\"onConfigurationChanged\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"config\"],[\"UnknownKeyword\"]],[\"VoidKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"server\",\"protocol\",\"ConfigurePluginRequestArguments\",\"configuration\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"configuration\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"configuration\"],[\"UnknownKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"server\",\"protocol\",\"Event\",\"body\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"body\"],[\"QuestionToken\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"body\"],[\"QuestionToken\"],[\"UnknownKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"server\",\"protocol\",\"Request\",\"arguments\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"arguments\"],[\"QuestionToken\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"arguments\"],[\"QuestionToken\"],[\"UnknownKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"server\",\"protocol\",\"Response\",\"body\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"body\"],[\"QuestionToken\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"body\"],[\"QuestionToken\"],[\"UnknownKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"server\",\"protocol\",\"TelemetryEventBody\",\"payload\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"payload\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"payload\"],[\"UnknownKeyword\"]]"
     }
   ],
   "counts": {
@@ -3006,6 +3101,145 @@
       "line": 8489
     },
     {
+      "adaptation": "adapt/52-json-values/api-sanctions.json row 1 {\"path\":[\"server\",\"protocol\",\"Request\",\"arguments\"],\"kind\":\"PropertySignature\",\"before\":\"any\",\"after\":\"unknown\",\"why\":\"Adamic r2628wp: check caller values at use instead of publishing any.\"}",
+      "path": [
+        "server",
+        "protocol",
+        "Request",
+        "arguments"
+      ],
+      "line": 152
+    },
+    {
+      "adaptation": "adapt/52-json-values/api-sanctions.json row 2 {\"path\":[\"server\",\"protocol\",\"Event\",\"body\"],\"kind\":\"PropertySignature\",\"before\":\"any\",\"after\":\"unknown\",\"why\":\"Adamic r2628wp: check caller values at use instead of publishing any.\"}",
+      "path": [
+        "server",
+        "protocol",
+        "Event",
+        "body"
+      ],
+      "line": 172
+    },
+    {
+      "adaptation": "adapt/52-json-values/api-sanctions.json row 3 {\"path\":[\"server\",\"protocol\",\"Response\",\"body\"],\"kind\":\"PropertySignature\",\"before\":\"any\",\"after\":\"unknown\",\"why\":\"Adamic r2628wp: check caller values at use instead of publishing any.\"}",
+      "path": [
+        "server",
+        "protocol",
+        "Response",
+        "body"
+      ],
+      "line": 199
+    },
+    {
+      "adaptation": "adapt/52-json-values/api-sanctions.json row 4 {\"path\":[\"server\",\"protocol\",\"ConfigurePluginRequestArguments\",\"configuration\"],\"kind\":\"PropertySignature\",\"before\":\"any\",\"after\":\"unknown\",\"why\":\"Adamic r2628wp: check caller values at use instead of publishing any.\"}",
+      "path": [
+        "server",
+        "protocol",
+        "ConfigurePluginRequestArguments",
+        "configuration"
+      ],
+      "line": 1202
+    },
+    {
+      "adaptation": "adapt/52-json-values/api-sanctions.json row 5 {\"path\":[\"server\",\"protocol\",\"TelemetryEventBody\",\"payload\"],\"kind\":\"PropertySignature\",\"before\":\"any\",\"after\":\"unknown\",\"why\":\"Adamic r2628wp: check caller values at use instead of publishing any.\"}",
+      "path": [
+        "server",
+        "protocol",
+        "TelemetryEventBody",
+        "payload"
+      ],
+      "line": 2391
+    },
+    {
+      "adaptation": "adapt/52-json-values/api-sanctions.json row 6 {\"path\":[\"server\",\"PluginCreateInfo\",\"config\"],\"kind\":\"PropertySignature\",\"before\":\"any\",\"after\":\"unknown\",\"why\":\"Adamic r2628wp: check caller values at use instead of publishing any.\"}",
+      "path": [
+        "server",
+        "PluginCreateInfo",
+        "config"
+      ],
+      "line": 2845
+    },
+    {
+      "adaptation": "adapt/52-json-values/api-sanctions.json row 7 {\"path\":[\"server\",\"PluginModule\",\"onConfigurationChanged\",\"config\"],\"kind\":\"Parameter\",\"before\":\"any\",\"after\":\"unknown\",\"why\":\"Adamic r2628wp: check caller values at use instead of publishing any.\"}",
+      "path": [
+        "server",
+        "PluginModule",
+        "onConfigurationChanged",
+        "config"
+      ],
+      "line": 2850
+    },
+    {
+      "adaptation": "adapt/52-json-values/api-sanctions.json row 8 {\"path\":[\"ParsedCommandLine\",\"raw\"],\"kind\":\"PropertySignature\",\"before\":\"any\",\"after\":\"unknown\",\"why\":\"Adamic r2628wp: check caller values at use instead of publishing any.\"}",
+      "path": [
+        "ParsedCommandLine",
+        "raw"
+      ],
+      "line": 7243
+    },
+    {
+      "adaptation": "adapt/52-json-values/api-sanctions.json row 9 {\"path\":[\"ParsedTsconfig\",\"raw\"],\"kind\":\"PropertySignature\",\"before\":\"any\",\"after\":\"unknown\",\"why\":\"Adamic r2628wp: check caller values at use instead of publishing any.\"}",
+      "path": [
+        "ParsedTsconfig",
+        "raw"
+      ],
+      "line": 9308
+    },
+    {
+      "adaptation": "adapt/52-json-values/api-sanctions.json row 10 {\"path\":[\"parseJsonConfigFileContent\",\"json\"],\"kind\":\"Parameter\",\"before\":\"any\",\"after\":\"unknown\",\"why\":\"Adamic r2628wp: check caller values at use instead of publishing any.\"}",
+      "path": [
+        "parseJsonConfigFileContent",
+        "json"
+      ],
+      "line": 9267
+    },
+    {
+      "adaptation": "adapt/52-json-values/api-sanctions.json row 11 {\"path\":[\"convertCompilerOptionsFromJson\",\"jsonOptions\"],\"kind\":\"Parameter\",\"before\":\"any\",\"after\":\"unknown\",\"why\":\"Adamic r2628wp: check caller values at use instead of publishing any.\"}",
+      "path": [
+        "convertCompilerOptionsFromJson",
+        "jsonOptions"
+      ],
+      "line": 9276
+    },
+    {
+      "adaptation": "adapt/52-json-values/api-sanctions.json row 12 {\"path\":[\"convertTypeAcquisitionFromJson\",\"jsonOptions\"],\"kind\":\"Parameter\",\"before\":\"any\",\"after\":\"unknown\",\"why\":\"Adamic r2628wp: check caller values at use instead of publishing any.\"}",
+      "path": [
+        "convertTypeAcquisitionFromJson",
+        "jsonOptions"
+      ],
+      "line": 9280
+    },
+    {
+      "adaptation": "adapt/52-json-values/api-sanctions.json row 13 {\"path\":[\"LanguageServiceHost\",\"getLocalizedDiagnosticMessages\"],\"kind\":\"MethodSignature\",\"before\":\"any\",\"after\":\"unknown\",\"why\":\"Adamic r2628wp: check caller values at use instead of publishing any.\"}",
+      "path": [
+        "LanguageServiceHost",
+        "getLocalizedDiagnosticMessages"
+      ],
+      "line": 10084
+    },
+    {
+      "adaptation": "adapt/52-json-values/api-sanctions.json row 14 {\"path\":[\"convertToObject\"],\"kind\":\"FunctionDeclaration\",\"before\":\"any\",\"after\":\"AdamicJsonRecoveryValue | undefined\",\"why\":\"Adamic r2628wp: the JSON AST converter produces the recursive recovery value domain or undefined.\"}",
+      "path": [
+        "convertToObject"
+      ],
+      "line": 9259
+    },
+    {
+      "adaptation": "adapt/52-json-values/api-sanctions.json row 15 {\"path\":[\"readConfigFile\",\"config\"],\"kind\":\"PropertySignature\",\"before\":\"any\",\"after\":\"AdamicJsonRecoveryObject\",\"why\":\"APISample_parseConfig calls only parseConfigFileTextToJson; readConfigFile has no judged public-any pin.\"}",
+      "path": [
+        "readConfigFile",
+        "config"
+      ],
+      "line": 9239
+    },
+    {
+      "adaptation": "adapt/52-json-values/api-sanctions.json row 16 {\"insert\":\"after\",\"path\":[\"ParseConfigFileHost\"],\"kind\":\"InterfaceDeclaration\",\"text\":\"type AdamicJsonRecoveryValue = string | number | boolean | null | AdamicJsonRecoveryValue[] | AdamicJsonRecoveryObject;\\ninterface AdamicJsonRecoveryObject {\\n    [key: string]: AdamicJsonRecoveryValue | undefined;\\n}\",\"why\":\"Adamic r2628wp: publish adaptation 43 recovery definitions at the declaration bundler position.\"}",
+      "path": [
+        "ParseConfigFileHost"
+      ],
+      "line": 9304
+    },
+    {
       "adaptation": "adapt/95-checker-axolotl-e/api-sanctions.json row 1 {\"path\":[\"TypeChecker\",\"signatureToSignatureDeclaration\"],\"kind\":\"MethodSignature\",\"before\":\"| SignatureDeclaration & {\\n                typeArguments?: NodeArray<TypeNode>;\\n            }\\n            | undefined\",\"after\":\"| SignatureDeclaration & {\\n                typeArguments?: NodeArray<TypeNode> | undefined;\\n            }\\n            | undefined\",\"why\":\"tsc can return an ArrowFunction whose typeArguments property is present and undefined.\"}",
       "path": [
         "TypeChecker",
@@ -3166,6 +3400,22 @@
       "line": 9962
     },
     {
+      "adaptation": "adapt/98-axolotl-d/api-sanctions.json row 1 {\"path\":[\"ResolvedModuleFull\",\"packageId\"],\"kind\":\"PropertySignature\",\"before\":\"PackageId\",\"after\":\"PackageId | undefined\",\"why\":\"createResolvedModuleWithFailedLookupLocations always writes packageId: resolved.packageId, which withPackageId leaves undefined when package.json has no string name and version.\"}",
+      "path": [
+        "ResolvedModuleFull",
+        "packageId"
+      ],
+      "line": 7310
+    },
+    {
+      "adaptation": "adapt/98-axolotl-d/api-sanctions.json row 2 {\"path\":[\"ResolvedTypeReferenceDirective\",\"packageId\"],\"kind\":\"PropertySignature\",\"before\":\"PackageId\",\"after\":\"PackageId | undefined\",\"why\":\"resolveTypeReferenceDirective always writes packageId, destructured from a Resolved that withPackageId leaves undefined when package.json has no string name and version.\"}",
+      "path": [
+        "ResolvedTypeReferenceDirective",
+        "packageId"
+      ],
+      "line": 7352
+    },
+    {
       "adaptation": "75",
       "path": [
         "JsonSourceFile",
@@ -3260,12 +3510,20 @@
       "sha256": "37a765a6491e6232bdff3f17f9680d19daac0ba9370b00a94f4849034f831f55"
     },
     {
+      "file": "stage3/adapt/52-json-values/api-sanctions.json",
+      "sha256": "e474a597ac84b64d61122ad99aa3d3a1bcc59f1f53326e6e6a01beb2a5f41e3c"
+    },
+    {
       "file": "stage3/adapt/95-checker-axolotl-e/api-sanctions.json",
       "sha256": "5d7e48d39c9dcfb9522b9377e863ed08ec38c9d33fb225fd35081e7a3bb1083a"
     },
     {
       "file": "stage3/adapt/97-cli-axolotl-d/api-sanctions.json",
       "sha256": "b048e3f0a8fea6baddf3b199fce46fe775084d003f3d1cfd972ba1d284c893bb"
+    },
+    {
+      "file": "stage3/adapt/98-axolotl-d/api-sanctions.json",
+      "sha256": "8caf13434d6cea1ff16cbf047b11d5350746f78e767760939248295ac1b90baf"
     }
   ],
   "baseline_diffs": [
@@ -3274,6 +3532,66 @@
   "diff_lines": [
     "--- reference/api/typescript.d.ts\n",
     "+++ local/api/typescript.d.ts\n",
+    "@@ -149,7 +149,7 @@\n",
+    "                 /**\n",
+    "                  * Object containing arguments for the command\n",
+    "                  */\n",
+    "-                arguments?: any;\n",
+    "+                arguments?: unknown;\n",
+    "             }\n",
+    "             /**\n",
+    "              * Request to reload the project structure for all the opened files\n",
+    "@@ -169,7 +169,7 @@\n",
+    "                 /**\n",
+    "                  * Event-specific information\n",
+    "                  */\n",
+    "-                body?: any;\n",
+    "+                body?: unknown;\n",
+    "             }\n",
+    "             /**\n",
+    "              * Response by server to client request message.\n",
+    "@@ -196,7 +196,7 @@\n",
+    "                 /**\n",
+    "                  * Contains message body if success === true.\n",
+    "                  */\n",
+    "-                body?: any;\n",
+    "+                body?: unknown;\n",
+    "                 /**\n",
+    "                  * Contains extra information that plugin can include to be passed on\n",
+    "                  */\n",
+    "@@ -1199,7 +1199,7 @@\n",
+    "             }\n",
+    "             export interface ConfigurePluginRequestArguments {\n",
+    "                 pluginName: string;\n",
+    "-                configuration: any;\n",
+    "+                configuration: unknown;\n",
+    "             }\n",
+    "             export interface ConfigurePluginRequest extends Request {\n",
+    "                 command: CommandTypes.ConfigurePlugin;\n",
+    "@@ -2388,7 +2388,7 @@\n",
+    "             }\n",
+    "             export interface TelemetryEventBody {\n",
+    "                 telemetryEventName: string;\n",
+    "-                payload: any;\n",
+    "+                payload: unknown;\n",
+    "             }\n",
+    "             export type TypesInstallerInitializationFailedEventName = \"typesInstallerInitializationFailed\";\n",
+    "             export interface TypesInstallerInitializationFailedEvent extends Event {\n",
+    "@@ -2842,12 +2842,12 @@\n",
+    "             languageServiceHost: LanguageServiceHost;\n",
+    "             serverHost: ServerHost;\n",
+    "             session?: Session<unknown>;\n",
+    "-            config: any;\n",
+    "+            config: unknown;\n",
+    "         }\n",
+    "         interface PluginModule {\n",
+    "             create(createInfo: PluginCreateInfo): LanguageService;\n",
+    "             getExternalFiles?(proj: Project, updateLevel: ProgramUpdateLevel): string[];\n",
+    "-            onConfigurationChanged?(config: any): void;\n",
+    "+            onConfigurationChanged?(config: unknown): void;\n",
+    "         }\n",
+    "         interface PluginModuleWithName {\n",
+    "             name: string;\n",
     "@@ -3662,13 +3662,13 @@\n",
     "         [index: string]: T;\n",
     "     }\n",
@@ -4354,17 +4672,19 @@
     "         synchronousWatchDirectory?: boolean;\n",
     "         excludeDirectories?: string[];\n",
     "         excludeFiles?: string[];\n",
-    "@@ -7238,8 +7239,8 @@\n",
+    "@@ -7238,9 +7239,9 @@\n",
     "         options: CompilerOptions;\n",
     "         typeAcquisition?: TypeAcquisition;\n",
     "         fileNames: string[];\n",
     "-        projectReferences?: readonly ProjectReference[];\n",
     "-        watchOptions?: WatchOptions;\n",
+    "-        raw?: any;\n",
     "+        projectReferences?: readonly ProjectReference[] | undefined;\n",
     "+        watchOptions?: WatchOptions | undefined;\n",
-    "         raw?: any;\n",
+    "+        raw?: unknown;\n",
     "         errors: Diagnostic[];\n",
     "         wildcardDirectories?: MapLike<WatchDirectoryFlags>;\n",
+    "         compileOnSave?: boolean;\n",
     "@@ -7252,23 +7253,23 @@\n",
     "     interface CreateProgramOptions {\n",
     "         rootNames: readonly string[];\n",
@@ -4397,6 +4717,24 @@
     "         useCaseSensitiveFileNames?: boolean | (() => boolean) | undefined;\n",
     "     }\n",
     "     /**\n",
+    "@@ -7307,7 +7308,7 @@\n",
+    "          * This is optional for backwards-compatibility, but will be added if not provided.\n",
+    "          */\n",
+    "         extension: string;\n",
+    "-        packageId?: PackageId;\n",
+    "+        packageId?: PackageId | undefined;\n",
+    "     }\n",
+    "     /**\n",
+    "      * Unique identifier with a package name and version.\n",
+    "@@ -7349,7 +7350,7 @@\n",
+    "     interface ResolvedTypeReferenceDirective {\n",
+    "         primary: boolean;\n",
+    "         resolvedFileName: string | undefined;\n",
+    "-        packageId?: PackageId;\n",
+    "+        packageId?: PackageId | undefined;\n",
+    "         /** True if `resolvedFileName` comes from `node_modules`. */\n",
+    "         isExternalLibraryImport?: boolean;\n",
+    "     }\n",
     "@@ -7361,33 +7362,33 @@\n",
     "         getSourceFileByPath?(fileName: string, path: Path, languageVersionOrOptions: ScriptTarget | CreateSourceFileOptions, onError?: (message: string) => void, shouldCreateNewSourceFile?: boolean): SourceFile | undefined;\n",
     "         getCancellationToken?(): CancellationToken;\n",
@@ -4499,11 +4837,13 @@
     "     }\n",
     "     function parseCommandLine(commandLine: readonly string[], readFile?: (path: string) => string | undefined): ParsedCommandLine;\n",
     "     function parseBuildCommand(commandLine: readonly string[]): ParsedBuildCommand;\n",
-    "@@ -9237,7 +9238,7 @@\n",
+    "@@ -9236,8 +9237,8 @@\n",
+    "      * @param fileName The path to the config file\n",
     "      */\n",
     "     function readConfigFile(fileName: string, readFile: (path: string) => string | undefined): {\n",
-    "         config?: any;\n",
+    "-        config?: any;\n",
     "-        error?: Diagnostic;\n",
+    "+        config?: AdamicJsonRecoveryObject;\n",
     "+        error?: Diagnostic | undefined;\n",
     "     };\n",
     "     /**\n",
@@ -4517,9 +4857,49 @@
     "     };\n",
     "     /**\n",
     "      * Read tsconfig.json file\n",
-    "@@ -9307,12 +9308,12 @@\n",
+    "@@ -9256,7 +9257,7 @@\n",
+    "     /**\n",
+    "      * Convert the json syntax tree into the json value\n",
+    "      */\n",
+    "-    function convertToObject(sourceFile: JsonSourceFile, errors: Diagnostic[]): any;\n",
+    "+    function convertToObject(sourceFile: JsonSourceFile, errors: Diagnostic[]): AdamicJsonRecoveryValue | undefined;\n",
+    "     /**\n",
+    "      * Parse the contents of a config file (tsconfig.json).\n",
+    "      * @param json The contents of the config file to parse\n",
+    "@@ -9264,7 +9265,7 @@\n",
+    "      * @param basePath A root directory to resolve relative path entries in the config\n",
+    "      *    file to. e.g. outDir\n",
+    "      */\n",
+    "-    function parseJsonConfigFileContent(json: any, host: ParseConfigHost, basePath: string, existingOptions?: CompilerOptions, configFileName?: string, resolutionStack?: Path[], extraFileExtensions?: readonly FileExtensionInfo[], extendedConfigCache?: Map<string, ExtendedConfigCacheEntry>, existingWatchOptions?: WatchOptions): ParsedCommandLine;\n",
+    "+    function parseJsonConfigFileContent(json: unknown, host: ParseConfigHost, basePath: string, existingOptions?: CompilerOptions, configFileName?: string, resolutionStack?: Path[], extraFileExtensions?: readonly FileExtensionInfo[], extendedConfigCache?: Map<string, ExtendedConfigCacheEntry>, existingWatchOptions?: WatchOptions): ParsedCommandLine;\n",
+    "     /**\n",
+    "      * Parse the contents of a config file (tsconfig.json).\n",
+    "      * @param jsonNode The contents of the config file to parse\n",
+    "@@ -9273,11 +9274,11 @@\n",
+    "      *    file to. e.g. outDir\n",
+    "      */\n",
+    "     function parseJsonSourceFileConfigFileContent(sourceFile: TsConfigSourceFile, host: ParseConfigHost, basePath: string, existingOptions?: CompilerOptions, configFileName?: string, resolutionStack?: Path[], extraFileExtensions?: readonly FileExtensionInfo[], extendedConfigCache?: Map<string, ExtendedConfigCacheEntry>, existingWatchOptions?: WatchOptions): ParsedCommandLine;\n",
+    "-    function convertCompilerOptionsFromJson(jsonOptions: any, basePath: string, configFileName?: string): {\n",
+    "+    function convertCompilerOptionsFromJson(jsonOptions: unknown, basePath: string, configFileName?: string): {\n",
+    "         options: CompilerOptions;\n",
+    "         errors: Diagnostic[];\n",
+    "     };\n",
+    "-    function convertTypeAcquisitionFromJson(jsonOptions: any, basePath: string, configFileName?: string): {\n",
+    "+    function convertTypeAcquisitionFromJson(jsonOptions: unknown, basePath: string, configFileName?: string): {\n",
+    "         options: TypeAcquisition;\n",
+    "         errors: Diagnostic[];\n",
+    "     };\n",
+    "@@ -9304,15 +9305,19 @@\n",
+    "     interface ParseConfigFileHost extends ParseConfigHost, ConfigFileDiagnosticsReporter {\n",
+    "         getCurrentDirectory(): string;\n",
+    "     }\n",
+    "+    type AdamicJsonRecoveryValue = string | number | boolean | null | AdamicJsonRecoveryValue[] | AdamicJsonRecoveryObject;\n",
+    "+    interface AdamicJsonRecoveryObject {\n",
+    "+        [key: string]: AdamicJsonRecoveryValue | undefined;\n",
+    "+    }\n",
     "     interface ParsedTsconfig {\n",
-    "         raw: any;\n",
+    "-        raw: any;\n",
+    "+        raw: unknown;\n",
     "         options?: CompilerOptions;\n",
     "-        watchOptions?: WatchOptions;\n",
     "+        watchOptions?: WatchOptions | undefined;\n",
@@ -4532,7 +4912,7 @@
     "     }\n",
     "     interface ExtendedConfigCacheEntry {\n",
     "         extendedResult: TsConfigSourceFile;\n",
-    "@@ -9671,7 +9672,7 @@\n",
+    "@@ -9671,7 +9676,7 @@\n",
     "         /**\n",
     "          * If provided this would be used this hash instead of actual file shape text for detecting changes\n",
     "          */\n",
@@ -4541,7 +4921,7 @@
     "         /**\n",
     "          * When emit or emitNextAffectedFile are called without writeFile,\n",
     "          * this callback if present would be used to write files\n",
-    "@@ -9795,7 +9796,7 @@\n",
+    "@@ -9795,7 +9800,7 @@\n",
     "         rootNames: readonly string[];\n",
     "         options: CompilerOptions;\n",
     "         configFileParsingDiagnostics?: readonly Diagnostic[];\n",
@@ -4550,7 +4930,7 @@
     "         host?: CompilerHost;\n",
     "         createProgram?: CreateProgram<T>;\n",
     "     }\n",
-    "@@ -9814,7 +9815,7 @@\n",
+    "@@ -9814,7 +9819,7 @@\n",
     "         setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;\n",
     "         /** If provided, will be used to reset existing delayed compilation */\n",
     "         clearTimeout?(timeoutId: any): void;\n",
@@ -4559,7 +4939,7 @@
     "     }\n",
     "     interface ProgramHost<T extends BuilderProgram> {\n",
     "         /**\n",
-    "@@ -9826,7 +9827,7 @@\n",
+    "@@ -9826,7 +9831,7 @@\n",
     "         getCurrentDirectory(): string;\n",
     "         getDefaultLibFileName(options: CompilerOptions): string;\n",
     "         getDefaultLibLocation?(): string;\n",
@@ -4568,7 +4948,7 @@
     "         /**\n",
     "          * Use to check file presence for source files and\n",
     "          * if resolveModuleNames is not provided (complier is in charge of module resolution) then module files as well\n",
-    "@@ -9838,17 +9839,17 @@\n",
+    "@@ -9838,17 +9843,17 @@\n",
     "          */\n",
     "         readFile(path: string, encoding?: string): string | undefined;\n",
     "         /** If provided, used for module resolution as well as to handle directory structure */\n",
@@ -4589,7 +4969,7 @@
     "         /**\n",
     "          * @deprecated supply resolveModuleNameLiterals instead for resolution that can handle newer resolution modes like nodenext\n",
     "          *\n",
-    "@@ -9887,9 +9888,9 @@\n",
+    "@@ -9887,9 +9892,9 @@\n",
     "         rootFiles: string[];\n",
     "         /** Compiler options */\n",
     "         options: CompilerOptions;\n",
@@ -4601,7 +4981,7 @@
     "     }\n",
     "     /**\n",
     "      * Host to create watch with config file\n",
-    "@@ -9898,9 +9899,9 @@\n",
+    "@@ -9898,9 +9903,9 @@\n",
     "         /** Name of the config file to compile */\n",
     "         configFileName: string;\n",
     "         /** Options to extend */\n",
@@ -4614,7 +4994,7 @@
     "         /**\n",
     "          * Used to generate source file names from the config file and its include, exclude, files rules\n",
     "          * and also to cache the directory stucture\n",
-    "@@ -9954,12 +9955,12 @@\n",
+    "@@ -9954,12 +9959,12 @@\n",
     "         line: number;\n",
     "     }\n",
     "     interface SolutionBuilderHostBase<T extends BuilderProgram> extends ProgramHost<T> {\n",
@@ -4629,7 +5009,7 @@
     "         getCustomTransformers?: (project: string) => CustomTransformers | undefined;\n",
     "         getModifiedTime(fileName: string): Date | undefined;\n",
     "         setModifiedTime(fileName: string, date: Date): void;\n",
-    "@@ -9970,7 +9971,7 @@\n",
+    "@@ -9970,7 +9975,7 @@\n",
     "         afterProgramEmitAndDiagnostics?(program: T): void;\n",
     "     }\n",
     "     interface SolutionBuilderHost<T extends BuilderProgram> extends SolutionBuilderHostBase<T> {\n",
@@ -4637,6 +5017,15 @@
     "+        reportErrorSummary?: ReportEmitErrorSummary | undefined;\n",
     "     }\n",
     "     interface SolutionBuilderWithWatchHost<T extends BuilderProgram> extends SolutionBuilderHostBase<T>, WatchHost {\n",
-    "     }\n"
+    "     }\n",
+    "@@ -10081,7 +10086,7 @@\n",
+    "         getScriptVersion(fileName: string): string;\n",
+    "         getScriptSnapshot(fileName: string): IScriptSnapshot | undefined;\n",
+    "         getProjectReferences?(): readonly ProjectReference[] | undefined;\n",
+    "-        getLocalizedDiagnosticMessages?(): any;\n",
+    "+        getLocalizedDiagnosticMessages?(): unknown;\n",
+    "         getCancellationToken?(): HostCancellationToken;\n",
+    "         getCurrentDirectory(): string;\n",
+    "         getDefaultLibFileName(options: CompilerOptions): string;\n"
   ]
 }
