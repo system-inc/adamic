@@ -48,7 +48,7 @@ class Counter {
 class Unseen {
 	readonly flag = true;
 }
-const accessor = { get size(): number { return 2; } };
+const accessor = { get area(): number { return 2; } };
 function show(value: unknown): void {
 	console.log(String(value));
 }
@@ -58,7 +58,7 @@ show(new Box<number>(1));
 show(new Box<string>('a'));
 console.log(String(new Counter().increment()));
 console.log(String(new Unseen().flag));
-console.log(String(accessor.size));
+console.log(String(accessor.area));
 `)
 	if err != nil {
 		t.Fatal(err)
