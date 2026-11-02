@@ -1,0 +1,34 @@
+{
+  "status": "pass",
+  "main_tip": "80c2d3282e44b527555d59690bb413cc883d2bf2",
+  "units": 398,
+  "tests": 106367,
+  "counts": {
+    "pass": 106366,
+    "fail": 1,
+    "skip": 0
+  },
+  "failed_tests": [
+    "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+  ],
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "artifact": "8033458540fdfd72493cb54caf1a189700f59beb228432724510edae9869b614",
+  "runtime": "bbb57d4c533618ab6fe632d8e2b65ebfb62ed119ad18b84b358e824e9f4d6266",
+  "tools": {
+    "node": "v24.19.0",
+    "npm": "11.9.0",
+    "git": "git version 2.52.0",
+    "python3": "Python 3.12.14"
+  },
+  "names_digest": "1004b377ba6d3c36e8f10d7d67e28ab06944f62ca5b2cd22cde1250b342c9498",
+  "executed_union_matches_inventory": true,
+  "maximum_unit_seconds": 16.551605709999876,
+  "maximum_command_seconds": 16.74010999799998,
+  "wall_seconds": 1908.575733956,
+  "concurrency": 2,
+  "cpu_max": "400000 100000",
+  "adapted_tree": "/home/agent/.cache/adamic-build/local/6c6eaa6c0e25a591688cda732e00f5a74b0ee7353d202cb45a74865a4a31819a/tree",
+  "every_report_identity_recomputed": true
+}

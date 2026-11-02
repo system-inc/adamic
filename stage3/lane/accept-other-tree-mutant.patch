@@ -1,0 +1,11 @@
+--- a/stage3/lane/merge_shards.py
++++ b/stage3/lane/merge_shards.py
+@@ -18,7 +18,7 @@
+     for unit in plan['units']:
+         report = json.loads((results / unit['name'] / 'report.json').read_text())
+         reports.append(report)
+-        if report['name'] != unit['name'] or report['inputs_hash'] != unit_inputs_hash(unit, plan, key, runtime) or report['artifact'] != key:
++        if report['name'] != unit['name'] or report['inputs_hash'] != unit_inputs_hash(unit, plan, key, runtime):
+             errors.append('unit input identity mismatch: ' + unit['name'])
+         if report['status'] != 'pass' or report['counts'] != unit['expect'] or report['seconds'] >= 30:
+             errors.append('unit verdict rejected: ' + unit['name'])

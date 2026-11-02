@@ -13,7 +13,7 @@ import sys
 import time
 from artifact import input_key, payload_digest
 from check import api_check, test_counts
-from shard_plan import LANE, digest, load_plan, names_digest, runtime_hash, title
+from shard_plan import LANE, load_plan, names_digest, runtime_hash, title, unit_inputs_hash
 from view import make_view
 sys.path.append(str(LANE.parent / 'oracle'))
 from failure_details import read_failures, markdown
@@ -22,13 +22,13 @@ from caches import cache_root
 
 
 def shared_artifact(plan):
+    key, inputs = input_key()
     supplied = os.environ.get('STAGE3_ARTIFACT')
-    artifact = Path(supplied) if supplied else cache_root() / 'adamic-stage3-artifacts' / plan['artifact']
+    artifact = Path(supplied) if supplied else cache_root() / 'adamic-stage3-artifacts' / key
     if not (artifact / 'ready.json').is_file():
         raise ValueError('shared artifact missing; run prepare_shards.py before the gate and set STAGE3_ARTIFACT')
     ready = json.loads((artifact / 'ready.json').read_text())
-    key, inputs = input_key()
-    if ready['key'] != plan['artifact'] or key != ready['key'] or ready['inputs'] != inputs:
+    if key != ready['key'] or ready['inputs'] != inputs:
         raise ValueError('shared artifact inputs hash does not match this checkout and toolchain')
     if any(ready['phases'][phase]['exit'] != 0 for phase in ('apply', 'install', 'build', 'harness')):
         raise ValueError('shared artifact producer phase failed')
@@ -131,23 +131,30 @@ def timed_out(name, code, started, limit):
         raise ValueError(f'{name} timed out after {time.monotonic() - started:.1f} seconds, past its {limit:g} second limit')
 
 
-def check_unit_inputs(unit, plan, wanted_hash):
-    definition = {key: value for key, value in unit.items() if key != 'inputs_hash'}
-    actual_hash = digest(dict(artifact=plan['artifact'], api=plan['api_digest'], runtime=runtime_hash(), unit=definition))
-    if actual_hash != wanted_hash or wanted_hash != unit['inputs_hash']:
-        raise ValueError('unit inputs hash differs from the manifest')
+def check_unit_inputs(unit, plan):
+    runtime = runtime_hash()
+    if runtime != plan['runtime']:
+        raise ValueError('shard harness inputs changed; regenerate the manifest')
+    if os.environ.get('STAGE3_ADAPTED_TREE'):
+        # The gate owns this product's identity and keys the unit by its reads.
+        # Unit sandboxes have node and Python, but need not have npm.
+        key = 'stage3-adapted-tree'
+    else:
+        key, _ = input_key()
+    return key, unit_inputs_hash(unit, plan, key, runtime)
 
 
-def run_unit(name, results, wanted_hash, plan=None, mutant_case=None, mutant_content=None, mutant_runner=None):
+def run_unit(name, results, plan=None, mutant_case=None, mutant_content=None, mutant_runner=None):
     started = time.monotonic()
     limit = shard_seconds()
     plan = plan or load_plan()
     unit = next(row for row in plan['units'] if row['name'] == name)
     output = results / name
     output.mkdir(parents=True, exist_ok=False)
-    report = dict(name=name, inputs_hash=wanted_hash, artifact=plan['artifact'], counts={}, errors=[], status='fail')
+    report = dict(name=name, counts={}, errors=[], status='fail')
     try:
-        check_unit_inputs(unit, plan, wanted_hash)
+        key, inputs_hash = check_unit_inputs(unit, plan)
+        report.update(artifact=key, inputs_hash=inputs_hash)
         source, api, phases, modules = adapted_inputs(plan)
         tree = output / 'adapted-tree'
         if mutant_case is not None:
@@ -248,7 +255,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('name')
     parser.add_argument('results')
-    parser.add_argument('--inputs-hash', required=True)
     parser.add_argument('--mutant-case', type=Path, help='real private case input for failure proofs only')
     parser.add_argument('--mutant-content', type=Path)
     parser.add_argument('--mutant-runner', type=Path, help='private built test input for case-level failure proofs only')
@@ -256,4 +262,4 @@ if __name__ == '__main__':
     results = Path(os.path.expandvars(args.results)).resolve()
     if '$' in str(results):
         parser.error('STAGE3_RESULTS is unset')
-    raise SystemExit(run_unit(args.name, results, args.inputs_hash, mutant_case=args.mutant_case, mutant_content=args.mutant_content, mutant_runner=args.mutant_runner))
+    raise SystemExit(run_unit(args.name, results, mutant_case=args.mutant_case, mutant_content=args.mutant_content, mutant_runner=args.mutant_runner))

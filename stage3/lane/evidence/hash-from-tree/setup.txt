@@ -1,0 +1,22 @@
+submodule cache: off
+v24.19.0
+go version go1.27.1 linux/amd64
+setup: node ready (0.022s)
+setup: go ready (0.024s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.178s)
+setup: tsc ready (TypeScript 6.0.3) (0.185s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.006s
+setup: markdown dependencies ready (0.222s)
+From https://github.com/system-inc/TypeScript
+ * branch                  d92d9bfee114c80be2c375d72edae966176e3a4f -> FETCH_HEAD
+Submodule path 'cohere/TypeScript': checked out 'd92d9bfee114c80be2c375d72edae966176e3a4f'
+setup: submodules ready (167.719s)
+setup: shared cache off (opt in with ADAMIC_GOCACHE=1) (167.721s)
+setup: go build ready (344.602s)
+setup: test binaries deferred (use --warm-tests) (344.720s)
+setup: build cache warm (344.721s)
+setup: build-flags commit=80c2d3282e44b527555d59690bb413cc883d2bf2 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gocacheprog=off load-before=0.14 0.09 0.03 1/157 1364 load-after=11.70 6.03 2.45 3/198 10207
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (344.763s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.0k273Q
