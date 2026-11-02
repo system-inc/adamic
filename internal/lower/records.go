@@ -45,6 +45,10 @@ func (l *lowering) recordLiteralElement(node *ast.Node) *checker.Type {
 		if e := l.recordElement(l.checker.GetNonNullableType(t)); e != nil {
 			return e
 		}
+		// A literal going into a union of records is built as the record its parameter reads.
+		if e := l.recordUnionElement(l.checker.GetNonNullableType(t), ""); e != nil {
+			return e
+		}
 	}
 	return l.recordElement(l.checker.GetTypeAtLocation(node))
 }
@@ -70,6 +74,55 @@ func (l *lowering) recordTarget(node *ast.Node) bool {
 	}
 	if n.Kind == ast.KindPropertyAccessExpression {
 		return l.recordElement(l.checker.GetTypeAtLocation(n.AsPropertyAccessExpression().Expression)) != nil
+	}
+	return false
+}
+
+// recordUnionElement is the element of a union whose defined members are each record storage of one
+// slot representation, with the named key held one way on every member. Such a value is the bare record
+// pointer, so a read off it is a record read. Only reads and literals take it, never a write or a delete.
+func (l *lowering) recordUnionElement(t *checker.Type, name string) *checker.Type {
+	if t == nil || t.Flags()&checker.TypeFlagsUnion == 0 {
+		return nil
+	}
+	var first *checker.Type
+	var shared, named ir.Type
+	for index, member := range l.definedMembers(t) {
+		element := l.recordElement(member)
+		if element == nil {
+			return nil
+		}
+		of, known := l.recordStorageType(element)
+		if !known {
+			return nil
+		}
+		// A member without the key reads it through its index signature, which is another contract.
+		contract := ir.Type(0)
+		if name != "" {
+			if property := l.checker.GetPropertyOfType(member, name); property != nil {
+				contract, known = l.representation(l.checker.GetTypeOfSymbol(property))
+				if !known {
+					return nil
+				}
+			}
+		}
+		if index == 0 {
+			first, shared, named = element, of, contract
+		} else if of != shared || contract != named {
+			return nil
+		}
+	}
+	return first
+}
+
+// recordReadTarget is recordTarget, widened for a read to a union of like record storage.
+func (l *lowering) recordReadTarget(node *ast.Node) bool {
+	if l.recordTarget(node) {
+		return true
+	}
+	n := ast.SkipParentheses(node)
+	if n.Kind == ast.KindPropertyAccessExpression {
+		return l.recordUnionElement(l.checker.GetTypeAtLocation(n.AsPropertyAccessExpression().Expression), n.Name().Text()) != nil
 	}
 	return false
 }
@@ -142,6 +195,11 @@ func (l *lowering) recordAccess(node *ast.Node, read bool) (ir.Expression, ir.Ex
 		name = a.Name().Text()
 	}
 	of, err := l.recordSlot(receiver)
+	if element := l.recordUnionElement(l.checker.GetTypeAtLocation(receiver), name); err != nil && element != nil && read {
+		// Only recordReadTarget's reads reach here with a union; writes and deletes ask recordTarget.
+		of, _ = l.recordStorageType(element)
+		err = nil
+	}
 	if err != nil {
 		return nil, nil, 0, err
 	}
@@ -161,7 +219,7 @@ func (l *lowering) recordAccess(node *ast.Node, read bool) (ir.Expression, ir.Ex
 	return r, key, of, err
 }
 func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error) {
-	if l.recordTarget(node) {
+	if l.recordTarget(node) || l.recordReadTarget(node) && !l.recordReadDiscarded(node) && !l.recordReadOwnGuarded(node) {
 		discarded := l.recordReadDiscarded(node)
 		guarded := l.recordReadOwnGuarded(node)
 		r, k, of, err := l.recordAccess(node, !discarded && !guarded)
@@ -558,7 +616,7 @@ func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*che
 
 // Catch literal reads before method/builtin dispatch can bypass ordinary value lowering.
 func (l *lowering) recordLiteralRead(node *ast.Node) error {
-	if !l.recordTarget(node) || l.recordReadDiscarded(node) || l.recordReadOwnGuarded(node) {
+	if !l.recordReadTarget(node) || l.recordReadDiscarded(node) || l.recordReadOwnGuarded(node) {
 		return nil
 	}
 	at := node
