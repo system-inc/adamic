@@ -295,8 +295,8 @@ console.log(String(visitArrayWorker(nodes, isIdentifier, 2, 2).length));`), ".ts
 // exactly as for its plain twin, whose implementation takes `(node: Node) => boolean` as core.ts's filter
 // does, in .ts, where an arrow claiming more than its body proves is a checked closure, and in .a, where
 // it's refused. A let that's reassigned can hold any function of its type, so it's refused in both.
-// Mutant: the fix reverted, where every optional row is refused at the claim, "there is no body proving
-// this parameter", and stops matching its twin.
+// Mutant: the fix reverted, where the proven rows and the lying arrow in .ts are refused at the claim,
+// "there is no body proving this parameter", and stop matching their twins.
 func TestOverloadPredicateOverOptionalCallbackMatchesItsPlainTwin(t *testing.T) {
 	t.Parallel()
 	outcome := func(err error) string {
