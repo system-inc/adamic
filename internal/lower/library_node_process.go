@@ -205,6 +205,9 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 	if value, known, err := l.nodeStackTraceLimit(node); known {
 		return value, known, err
 	}
+	if value, known, err := l.nodeGlobalsValue(node); known {
+		return value, known, err
+	}
 	if node.Kind == ast.KindPrefixUnaryExpression {
 		outer := node.AsPrefixUnaryExpression()
 		inner := ast.SkipParentheses(outer.Operand)
@@ -345,6 +348,9 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 }
 
 func (l *lowering) nodeProcessMethodObservation(node *ast.Node) bool {
+	if l.nodeCaptureStackTraceRead(node) {
+		return true
+	}
 	path := l.processPath(node)
 	if path == "process.nextTick" && node.Parent != nil && node.Parent.Kind == ast.KindPrefixUnaryExpression {
 		inner := node.Parent.AsPrefixUnaryExpression()

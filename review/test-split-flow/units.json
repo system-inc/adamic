@@ -6026,6 +6026,14 @@
   {
     "package": "flow",
     "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_node_globals_capture_gc_a_0e1ea1858d46",
+    "program": "internal/oracle/testdata/node_globals_capture_gc.a",
+    "path": "../oracle/testdata/node_globals_capture_gc.a",
+    "sha256": "296504563ec69a37a2b5d04415e85fc8ee0207be8220a318c8b1940272adb604"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
     "test": "TestFlowProgram____oracle_testdata_node_options_const_capture_a_b447d7f8507e",
     "program": "internal/oracle/testdata/node_options_const_capture.a",
     "path": "../oracle/testdata/node_options_const_capture.a",
@@ -9342,6 +9350,14 @@
     "program": "internal/oracle/testdata/casts.ts",
     "path": "../oracle/testdata/casts.ts",
     "sha256": "39c1527a441be73d7e44bac23c1776b573bee24b2c36e933263fb3b64261712d"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_node_globals_gc_call_ts_675a37379050",
+    "program": "internal/oracle/testdata/node_globals_gc_call.ts",
+    "path": "../oracle/testdata/node_globals_gc_call.ts",
+    "sha256": "1a15041bb57fbce2bd2b93e79445e4b82e198f04f463a3f9f26640cba879f748"
   },
   {
     "package": "flow",
@@ -15882,6 +15898,14 @@
   {
     "package": "flow",
     "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_node_globals_capture_gc_a_0e1ea1858d46",
+    "program": "internal/oracle/testdata/node_globals_capture_gc.a",
+    "path": "../oracle/testdata/node_globals_capture_gc.a",
+    "sha256": "296504563ec69a37a2b5d04415e85fc8ee0207be8220a318c8b1940272adb604"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
     "test": "TestFlowProgram____oracle_testdata_node_options_const_capture_a_b447d7f8507e",
     "program": "internal/oracle/testdata/node_options_const_capture.a",
     "path": "../oracle/testdata/node_options_const_capture.a",
@@ -19198,6 +19222,14 @@
     "program": "internal/oracle/testdata/casts.ts",
     "path": "../oracle/testdata/casts.ts",
     "sha256": "39c1527a441be73d7e44bac23c1776b573bee24b2c36e933263fb3b64261712d"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_node_globals_gc_call_ts_675a37379050",
+    "program": "internal/oracle/testdata/node_globals_gc_call.ts",
+    "path": "../oracle/testdata/node_globals_gc_call.ts",
+    "sha256": "1a15041bb57fbce2bd2b93e79445e4b82e198f04f463a3f9f26640cba879f748"
   },
   {
     "package": "flow",
@@ -25738,6 +25770,14 @@
   {
     "package": "flow",
     "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_node_globals_capture_gc_a_0e1ea1858d46",
+    "program": "internal/oracle/testdata/node_globals_capture_gc.a",
+    "path": "../oracle/testdata/node_globals_capture_gc.a",
+    "sha256": "296504563ec69a37a2b5d04415e85fc8ee0207be8220a318c8b1940272adb604"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
     "test": "TestFlowProgram____oracle_testdata_node_options_const_capture_a_b447d7f8507e",
     "program": "internal/oracle/testdata/node_options_const_capture.a",
     "path": "../oracle/testdata/node_options_const_capture.a",
@@ -29054,6 +29094,14 @@
     "program": "internal/oracle/testdata/casts.ts",
     "path": "../oracle/testdata/casts.ts",
     "sha256": "39c1527a441be73d7e44bac23c1776b573bee24b2c36e933263fb3b64261712d"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_node_globals_gc_call_ts_675a37379050",
+    "program": "internal/oracle/testdata/node_globals_gc_call.ts",
+    "path": "../oracle/testdata/node_globals_gc_call.ts",
+    "sha256": "1a15041bb57fbce2bd2b93e79445e4b82e198f04f463a3f9f26640cba879f748"
   },
   {
     "package": "flow",
@@ -35594,6 +35642,14 @@
   {
     "package": "flow",
     "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_node_globals_capture_gc_a_0e1ea1858d46",
+    "program": "internal/oracle/testdata/node_globals_capture_gc.a",
+    "path": "../oracle/testdata/node_globals_capture_gc.a",
+    "sha256": "296504563ec69a37a2b5d04415e85fc8ee0207be8220a318c8b1940272adb604"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
     "test": "TestFlowProgram____oracle_testdata_node_options_const_capture_a_b447d7f8507e",
     "program": "internal/oracle/testdata/node_options_const_capture.a",
     "path": "../oracle/testdata/node_options_const_capture.a",
@@ -38910,6 +38966,14 @@
     "program": "internal/oracle/testdata/casts.ts",
     "path": "../oracle/testdata/casts.ts",
     "sha256": "39c1527a441be73d7e44bac23c1776b573bee24b2c36e933263fb3b64261712d"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_node_globals_gc_call_ts_675a37379050",
+    "program": "internal/oracle/testdata/node_globals_gc_call.ts",
+    "path": "../oracle/testdata/node_globals_gc_call.ts",
+    "sha256": "1a15041bb57fbce2bd2b93e79445e4b82e198f04f463a3f9f26640cba879f748"
   },
   {
     "package": "flow",
@@ -45802,6 +45866,14 @@
   {
     "package": "fresh",
     "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_node_globals_capture_gc_a_0e1ea1858d46",
+    "program": "internal/oracle/testdata/node_globals_capture_gc.a",
+    "path": "../oracle/testdata/node_globals_capture_gc.a",
+    "sha256": "296504563ec69a37a2b5d04415e85fc8ee0207be8220a318c8b1940272adb604"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
     "test": "TestFreshWrites____oracle_testdata_node_options_const_capture_a_b447d7f8507e",
     "program": "internal/oracle/testdata/node_options_const_capture.a",
     "path": "../oracle/testdata/node_options_const_capture.a",
@@ -49150,6 +49222,14 @@
     "program": "internal/oracle/testdata/casts.ts",
     "path": "../oracle/testdata/casts.ts",
     "sha256": "39c1527a441be73d7e44bac23c1776b573bee24b2c36e933263fb3b64261712d"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_node_globals_gc_call_ts_675a37379050",
+    "program": "internal/oracle/testdata/node_globals_gc_call.ts",
+    "path": "../oracle/testdata/node_globals_gc_call.ts",
+    "sha256": "1a15041bb57fbce2bd2b93e79445e4b82e198f04f463a3f9f26640cba879f748"
   },
   {
     "package": "fresh",

@@ -1,0 +1,6 @@
+// A receiver other than the global Error identifier, here a const alias of it.
+import 'node:process';
+const E = Error;
+const e = new Error('boom');
+E.captureStackTrace(e);
+console.log(e.message);

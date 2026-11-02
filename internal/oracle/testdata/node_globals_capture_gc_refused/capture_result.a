@@ -1,0 +1,4 @@
+// Error.captureStackTrace's undefined result used as a value.
+import 'node:process';
+const e = new Error('boom');
+console.log(String(Error.captureStackTrace(e)));
