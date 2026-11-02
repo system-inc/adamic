@@ -326,8 +326,10 @@ func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Typ
 	// flow type at its first read on the true side, concreted under the body's mapper. The call stands only
 	// when that's S itself, so every read goes through S's view, which checks each field it reads (Adamic's
 	// ruling on 810ce7d9: the checker is asked, never modelled; Compiler's and Lower's reading, Nov 1, that
-	// the concreted read is that question). An instance that's a union or an array narrows its members or
-	// elements by rules this read doesn't see, and no read found says nothing, so both are NotYet.
+	// the concreted read is that question). A read of S intersected only with S's supertypes, as tsc's
+	// tryCast and cast read their value, stands too (brandedIntersection). An instance that's a union or an
+	// array narrows its members or elements by rules this read doesn't see, and no read found says nothing,
+	// so both are NotYet.
 	if declared := l.checker.GetTypeAtLocation(argument); l.concrete(declared) != declared || l.mentionsTypeParameter(declared, map[*checker.Type]bool{}) {
 		instance := l.concrete(claim)
 		narrowed := l.brandedNarrowedRead(node, argument)
@@ -335,7 +337,7 @@ func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Typ
 			return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(instance)+" over a generic argument "+l.checker.TypeToString(declared)+", with no read of it on the true side")
 		}
 		read := l.concrete(narrowed)
-		if read.Id() == instance.Id() && instance.Flags()&checker.TypeFlagsUnion == 0 && !l.checker.IsArrayType(instance) {
+		if (read.Id() == instance.Id() || l.brandedIntersection(read, instance)) && instance.Flags()&checker.TypeFlagsUnion == 0 && !l.checker.IsArrayType(instance) {
 			return nil
 		}
 		return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(instance)+" over a generic argument "+l.checker.TypeToString(declared)+", read on the true side as "+l.checker.TypeToString(read))
@@ -360,6 +362,49 @@ func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Typ
 		}
 	}
 	return nil
+}
+
+// brandedIntersection is whether read, a read's concreted type, is target intersected only with
+// supertypes of target, as tsc's tryCast and cast read their value as TIn & TOut, which concretes to
+// Node & TypeElement (Adamic's ruling, Nov 1). Each field of such an intersection is target's own field
+// type met with a wider one, which is target's, so a read through it is a read through target's checked
+// view, which checks the value is target where it reads. A member is a supertype when target is assignable
+// to it by the checker's strict assignability, never comparability, which takes an optional field for a
+// required one: target's view would check that field as maybe absent while the read types it as present.
+// A member typed any or unknown adds nothing. A member that's still a type parameter, one the body is
+// lowered without mapping, or anything else, is no supertype, so the read stays NotYet.
+func (l *lowering) brandedIntersection(read, target *checker.Type) bool {
+	if read.Flags()&checker.TypeFlagsIntersection == 0 {
+		return false
+	}
+	found := false
+	for _, member := range read.Types() {
+		switch {
+		case member.Id() == target.Id():
+			found = true
+		case member.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0:
+		case l.mentionsTypeParameter(member, map[*checker.Type]bool{}) || !l.checker.IsTypeAssignableTo(target, member):
+			return false
+		}
+	}
+	return found
+}
+
+// brandedIntersectionReceiver is the branded supertype S a receiver of S intersected only with supertypes
+// of S is read through, or receiver as it is. A checked view's fields are keyed by its target's id
+// (CheckedFieldKey), and the intersection has an id of its own, so without this a read through it, such
+// as cast's value.name, would be no read of S's view: plain, or NotYet as a widened read
+// (view_widened.go). brandedIntersection is what makes it S's (Adamic's ruling, Nov 1).
+func (l *lowering) brandedIntersectionReceiver(receiver *checker.Type) *checker.Type {
+	if receiver.Flags()&checker.TypeFlagsIntersection == 0 {
+		return receiver
+	}
+	for _, member := range receiver.Types() {
+		if member.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(member) && l.fieldLiteral(member, "kind") == nil && l.brandedSupertype(member) && l.brandedIntersection(receiver, member) {
+			return member
+		}
+	}
+	return receiver
 }
 
 // mentionsTypeParameter is whether t is instantiable, or names an instantiable type through a union's or

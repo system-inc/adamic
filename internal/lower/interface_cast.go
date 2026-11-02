@@ -364,6 +364,8 @@ func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *check
 // Nullable receivers read the present object's contract. A generic receiver
 // uses its instantiated type, or its constraint when the binder remains rigid.
 // Neither operation relates unrelated objects merely because their names match.
+// A branded supertype intersected only with its supertypes is read as that
+// supertype (brandedIntersectionReceiver).
 func (l *lowering) viewReceiverTypeID(receiver *checker.Type) int {
 	receiver = l.concrete(receiver)
 	if receiver.Flags()&checker.TypeFlagsTypeParameter != 0 {
@@ -371,7 +373,7 @@ func (l *lowering) viewReceiverTypeID(receiver *checker.Type) int {
 			receiver = l.concrete(constraint)
 		}
 	}
-	return l.viewTypeID(l.checker.GetNonNullableType(receiver))
+	return l.viewTypeID(l.brandedIntersectionReceiver(l.checker.GetNonNullableType(receiver)))
 }
 
 // viewTypeID is the id a read's view names a type by, kept with its type in viewTypes.
