@@ -14,8 +14,8 @@ import (
 // It classifies from Adamic's own class metadata, never from JavaScript reflection, since this
 // backend's objects carry what native's don't: a class's private fields are string keys named "#..."
 // (adamicClass), a method is on its class's prototype, an object literal's getter is an own accessor,
-// and a Node error has own stack, errno, syscall and path. So a class's accessors are found through
-// adamicFindAccessor and called through adamicGetAccessor, its methods are judged by the names its
+// and a Node error has own stack, errno, syscall and path. So a class's accessors are found among its
+// table's own entries and called through adamicGetAccessor, its methods are judged by the names its
 // table holds, an own value is read only by Object.hasOwn, and a record, a plain object here, is read
 // as recordRuntime reads one, by its own keys.
 func dynamicKeyedRuntime(program *ir.Program) string {
@@ -47,6 +47,11 @@ func dynamicKeyedRuntime(program *ir.Program) string {
 			tables = append(tables, "["+strings.Join(quoted, ", ")+"]")
 		}
 		builder.WriteString("const adamicDynamicMethodNames = [" + strings.Join(tables, ", ") + "];\n")
+		// A class's accessors are an object literal, so indexing it by an Object.prototype name finds
+		// Object's own member (constructor, toString), which adamicFindAccessor takes for an accessor
+		// without a getter. Only the table's own entries are accessors here, as native's class->accessors
+		// holds only the class's own.
+		builder.WriteString("const adamicDynamicAccessor = (value, key) => { for (let id = adamicClassIdentities.get(value); id; id = adamicClasses[id - 1].base) { const accessors = adamicClasses[id - 1].accessors; if (Object.hasOwn(accessors, key)) return accessors[key]; } };\n")
 	}
 	builder.WriteString("const adamicDynamicGet = (value, key) => {\n")
 	builder.WriteString("\tif (value === undefined || value === null) return adamicDynamicStop('Nullish', key);\n")
@@ -68,7 +73,7 @@ func dynamicKeyedRuntime(program *ir.Program) string {
 	builder.WriteString("\tif (error && adamicDynamicKeyedErrorNames.has(key)) return adamicDynamicStop('ErrorProperty', key);\n")
 	if classes {
 		builder.WriteString("\tif (id !== undefined) {\n")
-		builder.WriteString("\t\tconst accessor = adamicFindAccessor(value, key);\n")
+		builder.WriteString("\t\tconst accessor = adamicDynamicAccessor(value, key);\n")
 		builder.WriteString("\t\tif (accessor !== undefined) {\n")
 		builder.WriteString("\t\t\tif (adamicClasses[id - 1].literal) return adamicDynamicStop('ObjectLiteralGetter', key);\n")
 		builder.WriteString("\t\t\tif (accessor.get === undefined) return adamicDynamicStop('SetterOnly', key);\n")

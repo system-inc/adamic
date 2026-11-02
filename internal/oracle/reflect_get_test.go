@@ -89,6 +89,7 @@ var reflectGetStops = []struct{ file, stdout, stop, key, node string }{
 	{"stop_method.a", "thing\n", "Method", "describe", "thing\nfunction\n"},
 	{"stop_prototype_object.a", "before\n", "ObjectPrototype", "toString", "before\nfunction\n"},
 	{"stop_prototype_record.a", "value\n", "ObjectPrototype", "constructor", "value\nfunction\n"},
+	{"stop_prototype_class.a", "thing\n", "ObjectPrototype", "toString", "thing\nfunction\n"},
 	{"stop_error_stack.a", "before\n", "ErrorProperty", "stack", "before\nstring\n"},
 	{"stop_array.a", "before\n", "Array", "length", "before\nnumber\n"},
 	{"stop_literal_getter.a", "got\n", "ObjectLiteralGetter", "value", "got\nstring\n"},
@@ -108,7 +109,9 @@ func reflectGetStop(t *testing.T, stdout, stop, key string) run {
 }
 
 // Each stop, on both backends, in the same words byte for byte. The private stop's mutant is
-// TestReflectGetPrivateMutantJavaScript's.
+// TestReflectGetPrivateMutantJavaScript's. stop_prototype_class.a's is the JavaScript helper finding a
+// class's accessors through adamicFindAccessor, which takes Object's toString for an accessor without
+// a getter, so that backend stops in the setter-only stop's words.
 func TestReflectGetStopsAlikeOnBothBackends(t *testing.T) {
 	t.Parallel()
 	for _, probe := range reflectGetStops {
