@@ -339,3 +339,5 @@ func runPythonCommand(t *testing.T, directory string, environment []string, argu
 		t.Fatalf("%s in %s: %v\n%s", command, directory, err, output)
 	}
 }
+
+// planner probe: a comment in a lane test file (#qwfw9pv)
