@@ -506,6 +506,48 @@ const v: Holder<number> = w; show(v);`},
 	}
 }
 
+// brandedIntersectionReceiver routes a read to the one branded member every other member is a supertype
+// of, so with two branded members it's the narrower or neither (Compiler, on 021e43f3). TypeElement &
+// ClassElement holds two that neither is a supertype of the other, so the receiver stays the intersection
+// and x.name, with both views live, is no checked read: a plain one, since x holds only an allocation no
+// view admitted, and the program agrees with Node. MethodLike extends TypeElement, both branded, so g1's
+// read through TypeElement & MethodLike goes through MethodLike's view, which checks arity, and a lie stops
+// there. Mutant: the receiver takes the first branded member found, and TypeElement & ClassElement's read
+// is checked, and MethodLike's arity is read through TypeElement, NotYet as a widened read.
+func TestBrandedSupertypeIntersectionReceiver(t *testing.T) {
+	t.Parallel()
+	program := lowersAndAgreesWithNodeAs(t, brandedPrelude+`interface ClassElement extends Declaration { _classElementBrand: undefined; readonly name?: string; }
+function isClassElementLie(n: Node): n is ClassElement { return kindOf(n) !== 0; }
+function show(n: Node): void { if (isTypeElementLie(n)) { console.log(String(n.pos)); } if (isClassElementLie(n)) { console.log(String(n.pos)); } }
+function nameOf(x: TypeElement & ClassElement): string { return String(x.name); }
+const n: Node = { kind: 2, pos: 3 }; show(n);
+const b: TypeElement & ClassElement = { kind: 1, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, _classElementBrand: undefined, name: "b" };
+console.log(nameOf(b));
+`, ".ts")
+	reads := 0
+	inspect := func(node any) bool {
+		if read, ok := node.(ir.Property); ok && read.Name == "name" {
+			reads++
+			if program.CheckedField(read.ViewReceiverTypeID, read.Name) {
+				t.Errorf("x.name through TypeElement & ClassElement is a checked read of receiver %d", read.ViewReceiverTypeID)
+			}
+		}
+		return true
+	}
+	walk(program.Main, inspect)
+	for _, function := range program.Functions {
+		walk(function.Body, inspect)
+	}
+	if reads != 1 {
+		t.Fatalf("want the one read of name, x.name, found %d", reads)
+	}
+	brandedStops(t, brandedPrelude+`interface MethodLike extends TypeElement { _methodLikeBrand: undefined; readonly arity?: number; }
+function isMethodLikeLie(n: Node): n is MethodLike { return kindOf(n) !== 0; }
+function show<T extends TypeElement>(n: T): void { if (isMethodLikeLie(n)) { console.log(String(n.arity)); } }
+const w = { kind: 80, pos: 2, _declarationBrand: undefined, _typeElementBrand: undefined, arity: "x" }; const e: TypeElement = w; show(e);
+`, "adamic: panic: field read failed: n.arity matches no member of number | undefined")
+}
+
 // A generic helper is judged per instance: pick at Identifier lowers, and pick at TypeElement over the
 // same PropertySignature | Identifier argument is NotYet at its own call, in a program that lowers the
 // Identifier instance first. Mutant: one judgment kept for every instance of a declaration, and the second
