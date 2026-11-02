@@ -133,6 +133,24 @@ func (l *lowering) optionalValue(node *ast.Node, target *checker.Type) *optional
 			}
 		}
 		return nil
+	case ast.KindArrowFunction:
+		// An arrow's expression body is the value it returns, judged as the return's value, so a fresh
+		// literal there is a fresh literal. Its parameters are judged as any function's are.
+		body := node.Body()
+		sources, targets := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node), checker.SignatureKindCall), l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)
+		if body == nil || body.Kind == ast.KindBlock || len(sources) != 1 || len(targets) != 1 || len(sources[0].TypeParameters()) != 0 || len(targets[0].TypeParameters()) != 0 {
+			break
+		}
+		if found := l.optionalValue(body, l.checker.GetReturnTypeOfSignature(targets[0])); found != nil {
+			return found
+		}
+		takes, gives := sources[0].Parameters(), targets[0].Parameters()
+		for index := 0; index < len(takes) && index < len(gives); index++ {
+			if found := l.optionalWidened(l.checker.GetTypeOfSymbol(gives[index]), l.checker.GetTypeOfSymbol(takes[index]), nil, map[[2]*checker.Type]bool{}); found != nil {
+				return found
+			}
+		}
+		return nil
 	}
 	return l.optionalWidened(l.checker.GetTypeAtLocation(node), target, nil, map[[2]*checker.Type]bool{})
 }
