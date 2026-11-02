@@ -1,0 +1,25 @@
+// A class getter, read by a run-time key, is called with the object as this and answers as Node's
+// Reflect.get does (#zhgxzjg, Compiler's pick). propertyOf is written here as hostErrors.ts carries
+// it, without 47's two helpers: errorCode's error.code beside a getter named code is a dynamic-read
+// hazard, NotYet.
+export function propertyOf(value: unknown, key: string): unknown {
+	if (value === null || value === undefined) {
+		throw new TypeError(`Cannot read properties of ${value === null ? 'null' : 'undefined'} (reading '${key}')`);
+	}
+	return Reflect.get(Object(value), key, value);
+}
+
+class Reading {
+	#code: string;
+	constructor(code: string) {
+		this.#code = code;
+	}
+	get code(): string {
+		return 'E' + this.#code;
+	}
+}
+
+const code = propertyOf(new Reading('NOENT'), 'code');
+if (typeof code === 'string') console.log(`getter: "${code}"`);
+const absent = propertyOf(new Reading('NOENT'), 'absent');
+console.log(`absent: ${typeof absent}`);

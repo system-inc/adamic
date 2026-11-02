@@ -1,0 +1,12 @@
+// An object literal's getter stops on both backends; only a class's getter is called. Node prints
+// string.
+import { propertyOf } from './hostErrors.ts';
+
+const literal = {
+	get value(): string {
+		return 'got';
+	},
+};
+console.log(literal.value);
+const value = propertyOf(literal, 'value');
+console.log(typeof value);

@@ -1,0 +1,6 @@
+// Reflect.get whose receiver isn't the value it reads isn't the shape a run-time key read lowers.
+function read(value: unknown, other: unknown, key: string): unknown {
+	if (value === null || value === undefined) return undefined;
+	return Reflect.get(Object(value), key, other);
+}
+console.log(typeof read({ present: 'here' }, {}, 'present'));
