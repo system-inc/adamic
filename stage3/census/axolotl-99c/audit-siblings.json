@@ -1,0 +1,44 @@
+[
+  {
+    "owner": "TSConfig",
+    "member": "exclude",
+    "declaration": "exclude?: readonly string[];",
+    "references": [
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2625,
+        "column": 5,
+        "kind": "declaration",
+        "text": "exclude?: readonly string[];"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2681,
+        "column": 13,
+        "kind": "literal",
+        "text": "exclude: configParseResult.options.configFile.configFileSpecs.validatedExcludeSpecs,"
+      }
+    ]
+  },
+  {
+    "owner": "TSConfig",
+    "member": "include",
+    "declaration": "include?: readonly string[];",
+    "references": [
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2627,
+        "column": 5,
+        "kind": "declaration",
+        "text": "include?: readonly string[];"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2680,
+        "column": 13,
+        "kind": "literal",
+        "text": "include: filterSameAsDefaultInclude(configParseResult.options.configFile.configFileSpecs.validatedIncludeSpecs),"
+      }
+    ]
+  }
+]

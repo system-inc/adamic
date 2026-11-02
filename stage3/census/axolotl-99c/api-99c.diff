@@ -1,0 +1,20 @@
+--- /workspace/scratch/before/built/local/typescript.d.ts	2026-11-02 01:33:48.003504780 +0000
++++ /workspace/scratch/after/built/local/typescript.d.ts	2026-11-02 01:35:49.001190151 +0000
+@@ -6985,7 +6985,7 @@
+         /** A normalized path on disk */
+         path: string;
+         /** The path as the user originally wrote it */
+-        originalPath?: string;
++        originalPath?: string | undefined;
+         /** @deprecated */
+         prepend?: boolean | undefined;
+         /** True if it is intended that this reference form a circularity */
+@@ -7093,7 +7093,7 @@
+         preserveSymlinks?: boolean;
+         /** @deprecated */
+         preserveValueImports?: boolean;
+-        project?: string;
++        project?: string | undefined;
+         reactNamespace?: string;
+         jsxFactory?: string;
+         jsxFragmentFactory?: string;

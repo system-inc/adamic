@@ -1,0 +1,55 @@
+{
+  "implementation_sha": "820d57df8395a56359c8eec0c3e109b8d7d27226",
+  "base_main_sha": "80c2d3282e44b527555d59690bb413cc883d2bf2",
+  "implementation_branch": "typescript/axolotl-99c",
+  "evidence_branch": "typescript/axolotl-99c-evidence",
+  "typescript_pin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "typescript_tool_version": "6.0.3",
+  "declarations_widened": 12,
+  "edited_source_files": [
+    "src/compiler/commandLineParser.ts",
+    "src/compiler/types.ts"
+  ],
+  "public_declarations_widened": 2,
+  "internal_declarations_widened": 10,
+  "already_widened_member_unchanged": "CompilerOptions.configFilePath",
+  "whole_program_roots": 79,
+  "before_diagnostics": 53,
+  "after_diagnostics": 51,
+  "removed_diagnostics": 2,
+  "added_or_changed_diagnostics": 0,
+  "mutants_killed": 13,
+  "api_replaced_lines": 2,
+  "api_diff_added_lines": 2,
+  "api_diff_removed_lines": 2,
+  "javascript": [
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "bytes": 161985,
+      "sha256": "dc05a488396d003e9ec4d5ff78ef11af0e7e5f99d6264d5860872975b6ec7c5d"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "bytes": 139659,
+      "sha256": "4839bedc439cad06969bad2a3d805a7c0b480f06df73fcff62d2cd0957009fc3"
+    }
+  ],
+  "bundled_javascript_files": 10,
+  "bundled_javascript_bytes": 28602533,
+  "oracle_counts": {
+    "passing": 106367,
+    "failing": 0,
+    "pending": 0
+  },
+  "oracle_status": "pass",
+  "oracle_baseline_differences": [],
+  "setup_exit": 0,
+  "setup_seconds": 918.367,
+  "idempotence": true,
+  "refusals": {
+    "partial": true,
+    "lastFileDrift": true,
+    "lastFileDuplicate": true
+  },
+  "adapter_sha256": "6d14f88573424332503c034c80c4361b77eac28415210bc5fb698529b385898e"
+}

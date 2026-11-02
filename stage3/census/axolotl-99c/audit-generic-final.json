@@ -1,0 +1,964 @@
+[
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 9370,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "compilerOptions[flag]"
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 9370,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "compilerOptions[flag]"
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 9402,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "options[option.name]"
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 2677,
+    "members": [
+      "ProjectReference.originalPath"
+    ],
+    "text": "...r"
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 2901,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "options[allSetOptions[0]]"
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 2933,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "options[setting]"
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 2977,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "result[name]"
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 2979,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "options[name]"
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 3613,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "currentOption[option.name]"
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 3785,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "(defaultOptions || (defaultOptions = {}))[opt.name]"
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 4269,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "out[key]"
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 4269,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "opts[key]"
+  },
+  {
+    "file": "src/compiler/moduleNameResolver.ts",
+    "line": 1886,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "...state.compilerOptions"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 8637,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "...compilerOptions"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 1525,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "options[option.name]"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 5099,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "option[d.skippedOn]"
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 1447,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "(result ||= {})[name]"
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 1449,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "options[name]"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 334,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "result[option.name]"
+  },
+  {
+    "file": "src/services/transpile.ts",
+    "line": 124,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "options[key]"
+  },
+  {
+    "file": "src/services/transpile.ts",
+    "line": 125,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "options[key]"
+  },
+  {
+    "file": "src/services/transpile.ts",
+    "line": 125,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "defaultOptions[key]"
+  },
+  {
+    "file": "src/services/transpile.ts",
+    "line": 135,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "options[option.name]"
+  },
+  {
+    "file": "src/services/transpile.ts",
+    "line": 252,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "options[opt.name]"
+  },
+  {
+    "file": "src/services/transpile.ts",
+    "line": 256,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "options[opt.name]"
+  },
+  {
+    "file": "src/server/project.ts",
+    "line": 2368,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "...this.getCompilerOptions()"
+  },
+  {
+    "file": "src/server/project.ts",
+    "line": 2755,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "...hostProject.getCompilerOptions()"
+  },
+  {
+    "file": "src/server/project.ts",
+    "line": 2756,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "...this.compilerOptionsOverrides"
+  },
+  {
+    "file": "src/server/editorServices.ts",
+    "line": 463,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "protocolOptions[id]"
+  },
+  {
+    "file": "src/server/editorServices.ts",
+    "line": 465,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "protocolOptions[id]"
+  },
+  {
+    "file": "src/server/editorServices.ts",
+    "line": 479,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "protocolOptions[option.name]"
+  },
+  {
+    "file": "src/server/editorServices.ts",
+    "line": 492,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "protocolOptions[option.name]"
+  },
+  {
+    "file": "src/harness/harnessIO.ts",
+    "line": 292,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "options[option.name]"
+  },
+  {
+    "file": "src/harness/compilerImpl.ts",
+    "line": 267,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "...compilerOptions"
+  },
+  {
+    "file": "src/harness/fourslashImpl.ts",
+    "line": 105,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "...ts.getDefaultCompilerOptions()"
+  },
+  {
+    "file": "src/testRunner/projectsRunner.ts",
+    "line": 478,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "testCase[name]"
+  },
+  {
+    "file": "src/testRunner/projectsRunner.ts",
+    "line": 486,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "compilerOptions[option.name]"
+  },
+  {
+    "file": "src/testRunner/unittests/customTransforms.ts",
+    "line": 23,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "...options"
+  },
+  {
+    "file": "src/testRunner/unittests/helpers/tsc.ts",
+    "line": 431,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "...readableBuildInfo.options"
+  },
+  {
+    "file": "src/testRunner/unittests/tsbuild/commandLine.ts",
+    "line": 63,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "...options"
+  },
+  {
+    "file": "src/testRunner/unittests/tsbuild/commandLine.ts",
+    "line": 84,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "...options"
+  },
+  {
+    "file": "src/testRunner/unittests/tsbuild/commandLine.ts",
+    "line": 182,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "...options"
+  },
+  {
+    "file": "src/testRunner/unittests/tsbuild/commandLine.ts",
+    "line": 228,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "...options"
+  },
+  {
+    "file": "src/testRunner/unittests/tsbuild/commandLine.ts",
+    "line": 271,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "...options"
+  },
+  {
+    "file": "src/testRunner/unittests/helpers/declarationEmit.ts",
+    "line": 12,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "...options"
+  },
+  {
+    "file": "src/testRunner/unittests/helpers/declarationEmit.ts",
+    "line": 45,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "...options"
+  },
+  {
+    "file": "src/testRunner/unittests/helpers/noEmit.ts",
+    "line": 400,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "...compilerOptions"
+  },
+  {
+    "file": "src/testRunner/unittests/helpers/noEmit.ts",
+    "line": 431,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "...compilerOptions"
+  },
+  {
+    "file": "src/testRunner/unittests/helpers/noEmit.ts",
+    "line": 461,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "...compilerOptions"
+  },
+  {
+    "file": "src/testRunner/unittests/tsc/incremental.ts",
+    "line": 446,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "...options"
+  },
+  {
+    "file": "src/testRunner/unittests/tsc/incremental.ts",
+    "line": 469,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "...options"
+  },
+  {
+    "file": "src/testRunner/unittests/tscWatch/sourceOfProjectReferenceRedirect.ts",
+    "line": 116,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "...extraOptions"
+  },
+  {
+    "file": "src/testRunner/unittests/tsserver/projectReferences.ts",
+    "line": 448,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "...extraOptions"
+  },
+  {
+    "file": "src/testRunner/unittests/tsserver/projectReferences.ts",
+    "line": 1347,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "...(extendOptionsProject2 || {})"
+  },
+  {
+    "file": "src/testRunner/unittests/tsserver/projectReferences.ts",
+    "line": 1550,
+    "members": [
+      "CompilerOptions.build",
+      "CompilerOptions.configFilePath",
+      "CompilerOptions.configFile",
+      "CompilerOptions.help",
+      "CompilerOptions.init",
+      "CompilerOptions.listEmittedFiles",
+      "CompilerOptions.listFiles",
+      "CompilerOptions.project",
+      "CompilerOptions.version",
+      "CompilerOptions.showConfig"
+    ],
+    "text": "...optionsToExtend || {}"
+  },
+  {
+    "file": "src/services/getEditsForFileRename.ts",
+    "line": 105,
+    "members": [
+      "CompilerOptions.configFile"
+    ],
+    "text": "configFile",
+    "kind": "destructure"
+  },
+  {
+    "file": "src/services/codefixes/fixEnableJsxFlag.ts",
+    "line": 19,
+    "members": [
+      "CompilerOptions.configFile"
+    ],
+    "text": "configFile",
+    "kind": "destructure"
+  },
+  {
+    "file": "src/services/codefixes/fixEnableJsxFlag.ts",
+    "line": 32,
+    "members": [
+      "CompilerOptions.configFile"
+    ],
+    "text": "configFile",
+    "kind": "destructure"
+  },
+  {
+    "file": "src/services/codefixes/fixModuleAndTargetOptions.ts",
+    "line": 28,
+    "members": [
+      "CompilerOptions.configFile"
+    ],
+    "text": "configFile",
+    "kind": "destructure"
+  }
+]

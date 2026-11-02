@@ -1,0 +1,70 @@
+src/server/utilities.ts:81:export function getBaseConfigFileName(configFilePath: NormalizedPath): "tsconfig.json" | "jsconfig.json" | undefined {
+src/services/services.ts:1469:export function updateLanguageServiceSourceFile(sourceFile: SourceFile, scriptSnapshot: IScriptSnapshot, version: string, textChangeRange: TextChangeRange | undefined, aggressiveChecks?: boolean): SourceFile {
+src/server/editorServices.ts:1045:export function getDetailWatchInfo(watchType: WatchType, project: Project | NormalizedPath | undefined) {
+src/server/editorServices.ts:1079:function updateConfiguredProject(project: ConfiguredProject, triggerFile: NormalizedPath | undefined) {
+src/server/editorServices.ts:3176:    private updateRootAndOptionsOfNonInferredProject<T>(project: ExternalProject | ConfiguredProject, newUncheckedFiles: T[], propertyReader: FilePropertyReader<T>, newOptions: CompilerOptions, newTypeAcquisition: TypeAcquisition, compileOnSave: boolean | undefined, watchOptions: WatchOptions | undefined) {
+src/server/editorServices.ts:3295:    sendConfigFileDiagEvent(project: ConfiguredProject, triggerFile: NormalizedPath | undefined, force: boolean): boolean {
+src/server/editorServices.ts:3776:    getDocumentPositionMapper(project: Project, generatedFileName: string, sourceFileName?: string): DocumentPositionMapper | undefined {
+src/server/editorServices.ts:4015:    getWatchOptions(project: Project): WatchOptions | undefined {
+src/server/editorServices.ts:4229:    getOriginalLocationEnsuringConfiguredProject(project: Project, location: DocumentPosition): DocumentPosition | undefined {
+src/server/editorServices.ts:4570:            project: ConfiguredProject | undefined,
+src/server/editorServices.ts:5621:    getNearestAncestorDirectoryWithPackageJson(fileName: string, project: Project): string | undefined {
+src/server/session.ts:495:    action: (project: Project, value: T) => readonly U[] | U | undefined,
+src/server/session.ts:690:function forEachProjectInProjects(projects: Projects, path: string | undefined, cb: (project: Project, path: string | undefined) => void): void {
+src/server/session.ts:723:    getResultsForPosition: (project: Project, location: DocumentPosition) => readonly TResult[] | undefined,
+src/server/session.ts:809:    function searchPosition(project: Project, location: DocumentPosition): readonly TResult[] | undefined {
+src/server/session.ts:872:function isLocationProjectReferenceRedirect(project: Project, location: Pick<DocumentPosition, "fileName"> | undefined) {
+src/server/session.ts:896:function getMappedLocationForProject(location: DocumentPosition, project: Project): DocumentPosition | undefined {
+src/server/session.ts:900:function getMappedDocumentSpanForProject(documentSpan: DocumentSpan, project: Project): DocumentSpan | undefined {
+src/server/session.ts:904:function getMappedContextSpanForProject(documentSpan: DocumentSpan, project: Project): TextSpan | undefined {
+src/server/session.ts:1319:        tracing?.push(tracing.Phase.Session, "semanticCheck", { file, configFilePath: (project as ConfiguredProject).canonicalConfigFilePath }); // undefined is fine if the cast fails
+src/server/session.ts:1329:        tracing?.push(tracing.Phase.Session, "syntacticCheck", { file, configFilePath: (project as ConfiguredProject).canonicalConfigFilePath }); // undefined is fine if the cast fails
+src/server/session.ts:1336:        tracing?.push(tracing.Phase.Session, "suggestionCheck", { file, configFilePath: (project as ConfiguredProject).canonicalConfigFilePath }); // undefined is fine if the cast fails
+src/server/session.ts:1343:        tracing?.push(tracing.Phase.Session, "regionSemanticCheck", { file, configFilePath: (project as ConfiguredProject).canonicalConfigFilePath }); // undefined is fine if the cast fails
+src/server/session.ts:1522:    private getConfigFileAndProject(args: protocol.FileRequestArgs): { configFile: NormalizedPath | undefined; project: Project | undefined; } {
+src/server/session.ts:1527:            configFile: project && project.hasConfigFile(file) ? file : undefined,
+src/harness/fourslashImpl.ts:2631:        const help = this.languageService.getSignatureHelpItems(this.activeFile.fileName, this.currentCaretPosition, /*options*/ undefined);
+src/harness/compilerImpl.ts:19:export function readProject(host: fakes.ParseConfigHost, project: string | undefined, existingOptions?: ts.CompilerOptions): Project | undefined {
+src/harness/compilerImpl.ts:267:    const preProgram = !skipErrorComparison ? ts.createProgram({ rootNames: rootFiles || [], options: { ...compilerOptions, configFile: compilerOptions.configFile, traceResolution: false }, host, typeScriptVersion }) : undefined;
+src/compiler/binder.ts:3550:        let init = !node ? undefined :
+src/compiler/commandLineParser.ts:2665:            showConfig: undefined,
+src/compiler/commandLineParser.ts:2666:            configFile: undefined,
+src/compiler/commandLineParser.ts:2667:            configFilePath: undefined,
+src/compiler/commandLineParser.ts:2668:            help: undefined,
+src/compiler/commandLineParser.ts:2669:            init: undefined,
+src/compiler/commandLineParser.ts:2670:            listFiles: undefined,
+src/compiler/commandLineParser.ts:2671:            listEmittedFiles: undefined,
+src/compiler/commandLineParser.ts:2672:            project: undefined,
+src/compiler/commandLineParser.ts:2673:            build: undefined,
+src/compiler/commandLineParser.ts:2674:            version: undefined,
+src/compiler/commandLineParser.ts:2677:        references: map(configParseResult.projectReferences, r => ({ ...r, path: r.originalPath ? r.originalPath : "", originalPath: undefined })),
+src/compiler/commandLineParser.ts:3032:export function setConfigFileInOptions(options: CompilerOptions, configFile: TsConfigSourceFile | undefined): void {
+src/compiler/watchPublic.ts:104:    getBuildInfo?(fileName: string, configFilePath: string | undefined): BuildInfo | undefined;
+src/compiler/builder.ts:1263:                { version: value.version, impliedFormat: value.impliedFormat, signature: undefined, affectsGlobalScope: undefined } :
+src/compiler/builder.ts:1317:                { version: value.version, signature: undefined, affectsGlobalScope: value.affectsGlobalScope, impliedFormat: value.impliedFormat } :
+src/compiler/builder.ts:2231:        { version: fileInfo, signature: fileInfo, affectsGlobalScope: undefined, impliedFormat: undefined } :
+src/compiler/builder.ts:2234:        { version: fileInfo.version, signature: fileInfo.signature === false ? undefined : fileInfo.version, affectsGlobalScope: fileInfo.affectsGlobalScope, impliedFormat: fileInfo.impliedFormat };
+src/compiler/builder.ts:2271:            fileInfos.set(path, isString(fileInfo) ? { version: fileInfo, signature: undefined, affectsGlobalScope: undefined, impliedFormat: undefined } : fileInfo);
+src/services/codefixes/fixModuleAndTargetOptions.ts:29:        if (configFile === undefined) {
+src/services/codefixes/fixEnableJsxFlag.ts:20:        if (configFile === undefined) {
+src/services/codefixes/fixEnableJsxFlag.ts:33:            if (configFile === undefined) {
+src/compiler/types.ts:8206:    /** @internal */ getBuildInfo?(fileName: string, configFilePath: string | undefined): BuildInfo | undefined;
+src/compiler/moduleNameResolver.ts:288:            originalPath: resolved.originalPath === true ? undefined : resolved.originalPath,
+src/compiler/moduleNameResolver.ts:522:        originalPath: pathsAreEqual ? undefined : fileName,
+src/compiler/moduleNameResolver.ts:625:        let resolvedFileName = fileName, originalPath: string | undefined;
+src/testRunner/unittests/moduleResolution.ts:169:                originalPath: undefined,
+src/testRunner/unittests/moduleResolution.ts:184:                originalPath: undefined,
+src/testRunner/unittests/moduleResolution.ts:201:                originalPath: undefined,
+src/testRunner/unittests/moduleResolution.ts:217:                originalPath: undefined,
+src/testRunner/unittests/moduleResolution.ts:232:                originalPath: undefined,
+src/compiler/checker.ts:12159:    function getJSContainerObjectType(decl: Node, symbol: Symbol, init: Expression | undefined): Type | undefined {
+src/compiler/tsbuildPublic.ts:223:    getCustomTransformers?: (project: string) => CustomTransformers | undefined;
+src/compiler/tsbuildPublic.ts:573:function getCachedParsedConfigFile<T extends BuilderProgram>(state: SolutionBuilderState<T>, configFilePath: ResolvedConfigFilePath): ParsedCommandLine | undefined {
+src/compiler/tsbuildPublic.ts:578:function parseConfigFile<T extends BuilderProgram>(state: SolutionBuilderState<T>, configFileName: ResolvedConfigFileName, configFilePath: ResolvedConfigFilePath): ParsedCommandLine | undefined {
+src/compiler/tsbuildPublic.ts:722:function getBuildOrderFor<T extends BuilderProgram>(state: SolutionBuilderState<T>, project: string | undefined, onlyReferences: boolean | undefined): AnyBuildOrder | undefined {
+src/compiler/tsbuildPublic.ts:1457:function checkConfigFileUpToDateStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, configFile: string, oldestOutputFileTime: Date, oldestOutputFileName: string): Status.OutOfDateWithSelf | undefined {
+src/compiler/tsbuildPublic.ts:1634:            let version: string | undefined;
+src/compiler/tsbuildPublic.ts:1798:function getUpToDateStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, project: ParsedCommandLine | undefined, resolvedPath: ResolvedConfigFilePath): UpToDateStatus {
+src/compiler/tsbuildPublic.ts:1799:    if (project === undefined) {
+src/compiler/tsbuildPublic.ts:1958:function buildWorker<T extends BuilderProgram>(state: SolutionBuilderState<T>, project: string | undefined, cancellationToken: CancellationToken | undefined, writeFile: WriteFileCallback | undefined, getCustomTransformers: ((project: string) => CustomTransformers) | undefined, onlyReferences: boolean | undefined): ExitStatus {
+src/compiler/tsbuildPublic.ts:1995:function cleanWorker<T extends BuilderProgram>(state: SolutionBuilderState<T>, project: string | undefined, onlyReferences: boolean | undefined) {

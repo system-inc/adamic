@@ -1,0 +1,40 @@
+[
+  {
+    "label": "before",
+    "compilerOptionsOwnUndefinedKeys": [
+      "showConfig",
+      "configFile",
+      "configFilePath",
+      "help",
+      "init",
+      "listFiles",
+      "listEmittedFiles",
+      "project",
+      "build",
+      "version"
+    ],
+    "referenceOriginalPathOwnUndefined": true,
+    "includeAndExcludeOwnUndefined": true,
+    "json": "{\"compilerOptions\":{},\"references\":[{\"path\":\"./project\"}]}",
+    "withSpecsJson": "{\"compilerOptions\":{}}"
+  },
+  {
+    "label": "after-final",
+    "compilerOptionsOwnUndefinedKeys": [
+      "showConfig",
+      "configFile",
+      "configFilePath",
+      "help",
+      "init",
+      "listFiles",
+      "listEmittedFiles",
+      "project",
+      "build",
+      "version"
+    ],
+    "referenceOriginalPathOwnUndefined": true,
+    "includeAndExcludeOwnUndefined": true,
+    "json": "{\"compilerOptions\":{},\"references\":[{\"path\":\"./project\"}]}",
+    "withSpecsJson": "{\"compilerOptions\":{}}"
+  }
+]

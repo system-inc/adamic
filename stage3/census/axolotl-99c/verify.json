@@ -1,0 +1,57 @@
+{
+  "changedFiles": [
+    "src/compiler/types.ts"
+  ],
+  "javascriptBytes": 139659,
+  "javascriptSha256": "4839bedc439cad06969bad2a3d805a7c0b480f06df73fcff62d2cd0957009fc3",
+  "idempotence": true,
+  "refusals": {
+    "partial": true,
+    "drift": true,
+    "duplicate": true
+  },
+  "pristineAndIdempotence": true,
+  "apiReplacedLines": 2,
+  "bundledJavascript": [
+    {
+      "file": "_tsc.js",
+      "bytes": 6239845
+    },
+    {
+      "file": "_tsserver.js",
+      "bytes": 27889
+    },
+    {
+      "file": "_typingsInstaller.js",
+      "bytes": 10364
+    },
+    {
+      "file": "run.js",
+      "bytes": 13175080
+    },
+    {
+      "file": "tsc.js",
+      "bytes": 267
+    },
+    {
+      "file": "tsserver.js",
+      "bytes": 272
+    },
+    {
+      "file": "tsserverlibrary.js",
+      "bytes": 1013
+    },
+    {
+      "file": "typescript.js",
+      "bytes": 9145209
+    },
+    {
+      "file": "typingsInstaller.js",
+      "bytes": 280
+    },
+    {
+      "file": "watchGuard.js",
+      "bytes": 2314
+    }
+  ]
+}

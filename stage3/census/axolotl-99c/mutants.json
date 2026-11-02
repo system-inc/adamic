@@ -1,0 +1,120 @@
+[
+  {
+    "owner": "CompilerOptions",
+    "member": "showConfig",
+    "diagnostics": 52,
+    "restored": "TREE/src/compiler/commandLineParser.ts:2668:9: error TS2375: Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'showConfig' are incompatible.\n    Type 'undefined' is not assignable to type 'boolean'.",
+    "allAdded": [
+      "TREE/src/compiler/commandLineParser.ts:2668:9: error TS2375: Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'showConfig' are incompatible.\n    Type 'undefined' is not assignable to type 'boolean'."
+    ]
+  },
+  {
+    "owner": "CompilerOptions",
+    "member": "help",
+    "diagnostics": 52,
+    "restored": "TREE/src/compiler/commandLineParser.ts:2668:9: error TS2375: Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'help' are incompatible.\n    Type 'undefined' is not assignable to type 'boolean'.",
+    "allAdded": [
+      "TREE/src/compiler/commandLineParser.ts:2668:9: error TS2375: Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'help' are incompatible.\n    Type 'undefined' is not assignable to type 'boolean'."
+    ]
+  },
+  {
+    "owner": "CompilerOptions",
+    "member": "init",
+    "diagnostics": 52,
+    "restored": "TREE/src/compiler/commandLineParser.ts:2668:9: error TS2375: Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'init' are incompatible.\n    Type 'undefined' is not assignable to type 'boolean'.",
+    "allAdded": [
+      "TREE/src/compiler/commandLineParser.ts:2668:9: error TS2375: Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'init' are incompatible.\n    Type 'undefined' is not assignable to type 'boolean'."
+    ]
+  },
+  {
+    "owner": "CompilerOptions",
+    "member": "listFiles",
+    "diagnostics": 52,
+    "restored": "TREE/src/compiler/commandLineParser.ts:2668:9: error TS2375: Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'listFiles' are incompatible.\n    Type 'undefined' is not assignable to type 'boolean'.",
+    "allAdded": [
+      "TREE/src/compiler/commandLineParser.ts:2668:9: error TS2375: Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'listFiles' are incompatible.\n    Type 'undefined' is not assignable to type 'boolean'."
+    ]
+  },
+  {
+    "owner": "CompilerOptions",
+    "member": "listEmittedFiles",
+    "diagnostics": 52,
+    "restored": "TREE/src/compiler/commandLineParser.ts:2668:9: error TS2375: Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'listEmittedFiles' are incompatible.\n    Type 'undefined' is not assignable to type 'boolean'.",
+    "allAdded": [
+      "TREE/src/compiler/commandLineParser.ts:2668:9: error TS2375: Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'listEmittedFiles' are incompatible.\n    Type 'undefined' is not assignable to type 'boolean'."
+    ]
+  },
+  {
+    "owner": "CompilerOptions",
+    "member": "build",
+    "diagnostics": 52,
+    "restored": "TREE/src/compiler/commandLineParser.ts:2668:9: error TS2375: Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'build' are incompatible.\n    Type 'undefined' is not assignable to type 'boolean'.",
+    "allAdded": [
+      "TREE/src/compiler/commandLineParser.ts:2668:9: error TS2375: Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'build' are incompatible.\n    Type 'undefined' is not assignable to type 'boolean'."
+    ]
+  },
+  {
+    "owner": "CompilerOptions",
+    "member": "version",
+    "diagnostics": 52,
+    "restored": "TREE/src/compiler/commandLineParser.ts:2668:9: error TS2375: Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'version' are incompatible.\n    Type 'undefined' is not assignable to type 'boolean'.",
+    "allAdded": [
+      "TREE/src/compiler/commandLineParser.ts:2668:9: error TS2375: Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'version' are incompatible.\n    Type 'undefined' is not assignable to type 'boolean'."
+    ]
+  },
+  {
+    "owner": "CompilerOptions",
+    "member": "configFile",
+    "diagnostics": 52,
+    "restored": "TREE/src/compiler/commandLineParser.ts:2668:9: error TS2375: Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'configFile' are incompatible.\n    Type 'undefined' is not assignable to type 'TsConfigSourceFile'.",
+    "allAdded": [
+      "TREE/src/compiler/commandLineParser.ts:2668:9: error TS2375: Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'configFile' are incompatible.\n    Type 'undefined' is not assignable to type 'TsConfigSourceFile'."
+    ]
+  },
+  {
+    "owner": "CompilerOptions",
+    "member": "project",
+    "diagnostics": 52,
+    "restored": "TREE/src/compiler/commandLineParser.ts:2668:9: error TS2375: Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'project' are incompatible.\n    Type 'undefined' is not assignable to type 'string'.",
+    "allAdded": [
+      "TREE/src/compiler/commandLineParser.ts:2668:9: error TS2375: Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'project' are incompatible.\n    Type 'undefined' is not assignable to type 'string'."
+    ]
+  },
+  {
+    "owner": "ProjectReference",
+    "member": "originalPath",
+    "diagnostics": 52,
+    "restored": "TREE/src/compiler/commandLineParser.ts:2682:9: error TS2322: Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }[] | undefined' is not assignable to type 'readonly ProjectReference[] | undefined'.\n  Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }[]' is not assignable to type 'readonly ProjectReference[]'.\n    Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }' is not assignable to type 'ProjectReference' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n      Types of property 'originalPath' are incompatible.\n        Type 'undefined' is not assignable to type 'string'.",
+    "allAdded": [
+      "TREE/src/compiler/commandLineParser.ts:2682:9: error TS2322: Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }[] | undefined' is not assignable to type 'readonly ProjectReference[] | undefined'.\n  Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }[]' is not assignable to type 'readonly ProjectReference[]'.\n    Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }' is not assignable to type 'ProjectReference' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n      Types of property 'originalPath' are incompatible.\n        Type 'undefined' is not assignable to type 'string'."
+    ]
+  },
+  {
+    "owner": "CompilerOptions",
+    "member": "configFilePath",
+    "diagnostics": 53,
+    "restored": "TREE/src/compiler/commandLineParser.ts:2668:9: error TS2375: Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'configFilePath' are incompatible.\n    Type 'undefined' is not assignable to type 'string'.",
+    "allAdded": [
+      "TREE/src/compiler/commandLineParser.ts:2668:9: error TS2375: Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'configFilePath' are incompatible.\n    Type 'undefined' is not assignable to type 'string'.",
+      "TREE/src/compiler/commandLineParser.ts:3092:5: error TS2412: Type 'string | undefined' is not assignable to type 'string' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'string'."
+    ]
+  },
+  {
+    "owner": "TSConfig",
+    "member": "include",
+    "diagnostics": 52,
+    "restored": "TREE/src/compiler/commandLineParser.ts:2667:11: error TS2375: Type '{ compilerOptions: { showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }; watchOptions: object | undefined; references: { prepend?: boolean | undefined...' is not assignable to type 'TSConfig & { watchOptions?: object | undefined; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Type '{ compilerOptions: { showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }; watchOptions: object | undefined; references: { prepend?: boolean | undefined...' is not assignable to type 'TSConfig' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'include' are incompatible.\n      Type 'readonly string[] | undefined' is not assignable to type 'readonly string[]'.\n        Type 'undefined' is not assignable to type 'readonly string[]'.",
+    "allAdded": [
+      "TREE/src/compiler/commandLineParser.ts:2667:11: error TS2375: Type '{ compilerOptions: { showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }; watchOptions: object | undefined; references: { prepend?: boolean | undefined...' is not assignable to type 'TSConfig & { watchOptions?: object | undefined; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Type '{ compilerOptions: { showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }; watchOptions: object | undefined; references: { prepend?: boolean | undefined...' is not assignable to type 'TSConfig' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'include' are incompatible.\n      Type 'readonly string[] | undefined' is not assignable to type 'readonly string[]'.\n        Type 'undefined' is not assignable to type 'readonly string[]'."
+    ]
+  },
+  {
+    "owner": "TSConfig",
+    "member": "exclude",
+    "diagnostics": 52,
+    "restored": "TREE/src/compiler/commandLineParser.ts:2667:11: error TS2375: Type '{ compilerOptions: { showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }; watchOptions: object | undefined; references: { prepend?: boolean | undefined...' is not assignable to type 'TSConfig & { watchOptions?: object | undefined; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Type '{ compilerOptions: { showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }; watchOptions: object | undefined; references: { prepend?: boolean | undefined...' is not assignable to type 'TSConfig' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'exclude' are incompatible.\n      Type 'readonly string[] | undefined' is not assignable to type 'readonly string[]'.\n        Type 'undefined' is not assignable to type 'readonly string[]'.",
+    "allAdded": [
+      "TREE/src/compiler/commandLineParser.ts:2667:11: error TS2375: Type '{ compilerOptions: { showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }; watchOptions: object | undefined; references: { prepend?: boolean | undefined...' is not assignable to type 'TSConfig & { watchOptions?: object | undefined; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Type '{ compilerOptions: { showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }; watchOptions: object | undefined; references: { prepend?: boolean | undefined...' is not assignable to type 'TSConfig' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'exclude' are incompatible.\n      Type 'readonly string[] | undefined' is not assignable to type 'readonly string[]'.\n        Type 'undefined' is not assignable to type 'readonly string[]'."
+    ]
+  }
+]

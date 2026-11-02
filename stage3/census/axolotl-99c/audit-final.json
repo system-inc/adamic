@@ -1,0 +1,1171 @@
+[
+  {
+    "owner": "ProjectReference",
+    "member": "originalPath",
+    "declaration": "originalPath?: string;",
+    "references": [
+      {
+        "file": "src/compiler/types.ts",
+        "line": 7371,
+        "column": 5,
+        "kind": "declaration",
+        "text": "originalPath?: string;"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2677,
+        "column": 84,
+        "kind": "read",
+        "text": "references: map(configParseResult.projectReferences, r => ({ ...r, path: r.originalPath ? r.originalPath : \"\", originalPath: undefined })),"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2677,
+        "column": 101,
+        "kind": "read",
+        "text": "references: map(configParseResult.projectReferences, r => ({ ...r, path: r.originalPath ? r.originalPath : \"\", originalPath: undefined })),"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3209,
+        "column": 25,
+        "kind": "literal",
+        "text": "originalPath: ref.path,"
+      }
+    ]
+  },
+  {
+    "owner": "CompilerOptions",
+    "member": "build",
+    "declaration": "build?: boolean;",
+    "references": [
+      {
+        "file": "src/compiler/types.ts",
+        "line": 7421,
+        "column": 5,
+        "kind": "declaration",
+        "text": "build?: boolean;"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2673,
+        "column": 13,
+        "kind": "literal",
+        "text": "build: undefined,"
+      }
+    ]
+  },
+  {
+    "owner": "CompilerOptions",
+    "member": "configFilePath",
+    "declaration": "configFilePath?: string;",
+    "references": [
+      {
+        "file": "src/compiler/types.ts",
+        "line": 7425,
+        "column": 22,
+        "kind": "declaration",
+        "text": "/** @internal */ configFilePath?: string;"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 711,
+        "column": 23,
+        "kind": "read",
+        "text": "return oldOptions.configFilePath !== newOptions.configFilePath ||"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 711,
+        "column": 53,
+        "kind": "read",
+        "text": "return oldOptions.configFilePath !== newOptions.configFilePath ||"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 6682,
+        "column": 36,
+        "kind": "read",
+        "text": "if (options.rootDir || options.configFilePath) {"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2667,
+        "column": 13,
+        "kind": "literal",
+        "text": "configFilePath: undefined,"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2984,
+        "column": 16,
+        "kind": "read",
+        "text": "if (result.configFilePath) {"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2985,
+        "column": 16,
+        "kind": "write",
+        "text": "result.configFilePath = toAbsolutePath(result.configFilePath);"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2985,
+        "column": 55,
+        "kind": "read",
+        "text": "result.configFilePath = toAbsolutePath(result.configFilePath);"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3087,
+        "column": 13,
+        "kind": "write",
+        "text": "options.configFilePath = configFileName && normalizeSlashes(configFileName);"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3756,
+        "column": 17,
+        "kind": "write",
+        "text": "options.configFilePath = normalizeSlashes(configFileName);"
+      },
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 485,
+        "column": 17,
+        "kind": "read",
+        "text": "if (options.configFilePath) {"
+      },
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 486,
+        "column": 53,
+        "kind": "read",
+        "text": "currentDirectory = getDirectoryPath(options.configFilePath);"
+      },
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 2897,
+        "column": 76,
+        "kind": "read",
+        "text": "if (state.compilerOptions.rootDir || state.compilerOptions.configFilePath) {"
+      },
+      {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "line": 638,
+        "column": 50,
+        "kind": "read",
+        "text": "const projectDirectory = compilerOptions.configFilePath ?"
+      },
+      {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "line": 639,
+        "column": 53,
+        "kind": "read",
+        "text": "toPath(getDirectoryPath(compilerOptions.configFilePath), host.getCurrentDirectory(), info.getCanonicalFileName) :"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 482,
+        "column": 32,
+        "kind": "read",
+        "text": "const configFile = options.configFilePath;"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 584,
+        "column": 109,
+        "kind": "read",
+        "text": "return !isJsonFile || comparePaths(inputFileName, outputFileName, Debug.checkDefined(configFile.options.configFilePath), ignoreCase) !== Comparison.EqualTo ?"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 649,
+        "column": 22,
+        "kind": "read",
+        "text": "else if (options.configFilePath) {"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 651,
+        "column": 75,
+        "kind": "read",
+        "text": "commonSourceDirectory = getDirectoryPath(normalizeSlashes(options.configFilePath));"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 689,
+        "column": 70,
+        "kind": "read",
+        "text": "getDirectoryPath(normalizeSlashes(Debug.checkDefined(options.configFilePath))),"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 727,
+        "column": 100,
+        "kind": "read",
+        "text": "return Debug.checkDefined(jsFilePath || declarationFilePath, `project ${configFile.options.configFilePath} expected to have at least one output`);"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 742,
+        "column": 53,
+        "kind": "read",
+        "text": "return Debug.fail(`project ${configFile.options.configFilePath} expected to have at least one output`);"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1142,
+        "column": 41,
+        "kind": "read",
+        "text": "const containingDirectory = options.configFilePath ? getDirectoryPath(options.configFilePath) : currentDirectory;"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1142,
+        "column": 83,
+        "kind": "read",
+        "text": "const containingDirectory = options.configFilePath ? getDirectoryPath(options.configFilePath) : currentDirectory;"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1574,
+        "column": 85,
+        "kind": "read",
+        "text": "tracing?.push(tracing.Phase.Program, \"createProgram\", { configFilePath: options.configFilePath, rootDir: options.rootDir }, /*separateBeginAndEnd*/ true);"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1791,
+        "column": 49,
+        "kind": "read",
+        "text": "const containingDirectory = options.configFilePath ? getDirectoryPath(options.configFilePath) : currentDirectory;"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1791,
+        "column": 91,
+        "kind": "read",
+        "text": "const containingDirectory = options.configFilePath ? getDirectoryPath(options.configFilePath) : currentDirectory;"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4117,
+        "column": 88,
+        "kind": "read",
+        "text": "if (!options.tsBuildInfoFile && options.incremental && !outputFile && !options.configFilePath) {"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4134,
+        "column": 33,
+        "kind": "read",
+        "text": "options.configFilePath || \"\","
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4266,
+        "column": 21,
+        "kind": "read",
+        "text": "options.configFilePath &&"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4284,
+        "column": 49,
+        "kind": "read",
+        "text": "getBaseFileName(options.configFilePath),"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4285,
+        "column": 57,
+        "kind": "read",
+        "text": "getRelativePathFromFile(options.configFilePath, dir59, getCanonicalFileName),"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4410,
+        "column": 34,
+        "kind": "read",
+        "text": "if (!options.configFilePath) {"
+      },
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 112,
+        "column": 70,
+        "kind": "read",
+        "text": "buildInfo = host.getBuildInfo(buildInfoPath, compilerOptions.configFilePath);"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1765,
+        "column": 79,
+        "kind": "read",
+        "text": "const configStatus = checkConfigFileUpToDateStatus(state, project.options.configFilePath!, oldestOutputFileTime, oldestOutputFileName);"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1831,
+        "column": 91,
+        "kind": "read",
+        "text": "if (!!state.options.verbose) reportStatus(state, verboseMessage, proj.options.configFilePath!);"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1850,
+        "column": 66,
+        "kind": "read",
+        "text": "reportStatus(state, verboseMessage, proj.options.configFilePath!);"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1881,
+        "column": 126,
+        "kind": "read",
+        "text": "return reportStatus(state, Diagnostics.A_non_dry_build_would_update_timestamps_for_output_of_project_0, proj.options.configFilePath!);"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 1021,
+        "column": 51,
+        "kind": "read",
+        "text": "configFileName: configParseResult.options.configFilePath!,"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 1152,
+        "column": 105,
+        "kind": "read",
+        "text": "startTracing(isBuildMode ? \"build\" : \"project\", compilerOptions.generateTrace!, compilerOptions.configFilePath);"
+      },
+      {
+        "file": "src/services/documentRegistry.ts",
+        "line": 287,
+        "column": 127,
+        "kind": "read",
+        "text": "tracing.instant(tracing.Phase.Session, \"createdDocumentRegistryBucket\", { configFilePath: compilationSettings.configFilePath, key: keyWithMode });"
+      },
+      {
+        "file": "src/server/project.ts",
+        "line": 1119,
+        "column": 33,
+        "kind": "read",
+        "text": "return path === options.configFilePath ? options.configFile : this.getSourceFile(path);"
+      },
+      {
+        "file": "src/testRunner/unittests/reuseProgramStructure.ts",
+        "line": 211,
+        "column": 101,
+        "kind": "literal",
+        "text": "const program1 = newProgram(getFiles(), [\"a.ts\"], { target, module: ts.ModuleKind.CommonJS, configFilePath: \"/home/src/workspaces/project/a/b/tsconfig.json\" });"
+      },
+      {
+        "file": "src/testRunner/unittests/reuseProgramStructure.ts",
+        "line": 214,
+        "column": 102,
+        "kind": "literal",
+        "text": "const program2 = updateProgram(program1, [\"a.ts\"], { target, module: ts.ModuleKind.CommonJS, configFilePath: \"/home/src/workspaces/project/a/c/tsconfig.json\" }, ts.noop);"
+      },
+      {
+        "file": "src/testRunner/compilerRunner.ts",
+        "line": 245,
+        "column": 48,
+        "kind": "read",
+        "text": "if (tsConfigOptions && tsConfigOptions.configFilePath !== undefined) {"
+      },
+      {
+        "file": "src/testRunner/compilerRunner.ts",
+        "line": 246,
+        "column": 68,
+        "kind": "read",
+        "text": "tsConfigOptions.configFile!.fileName = tsConfigOptions.configFilePath;"
+      }
+    ]
+  },
+  {
+    "owner": "CompilerOptions",
+    "member": "configFile",
+    "declaration": "readonly configFile?: TsConfigSourceFile;",
+    "references": [
+      {
+        "file": "src/compiler/types.ts",
+        "line": 7431,
+        "column": 14,
+        "kind": "declaration",
+        "text": "readonly configFile?: TsConfigSourceFile;"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2650,
+        "column": 40,
+        "kind": "read",
+        "text": "!configParseResult.options.configFile?.configFileSpecs?.validatedIncludeSpecs ? returnTrue : matchesSpecs("
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2652,
+        "column": 43,
+        "kind": "read",
+        "text": "configParseResult.options.configFile.configFileSpecs.validatedIncludeSpecs,"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2653,
+        "column": 43,
+        "kind": "read",
+        "text": "configParseResult.options.configFile.configFileSpecs.validatedExcludeSpecs,"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2666,
+        "column": 13,
+        "kind": "literal",
+        "text": "configFile: undefined,"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2679,
+        "column": 39,
+        "kind": "read",
+        "text": "...(configParseResult.options.configFile?.configFileSpecs ? {"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2680,
+        "column": 75,
+        "kind": "read",
+        "text": "include: filterSameAsDefaultInclude(configParseResult.options.configFile.configFileSpecs.validatedIncludeSpecs),"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2681,
+        "column": 48,
+        "kind": "read",
+        "text": "exclude: configParseResult.options.configFile.configFileSpecs.validatedExcludeSpecs,"
+      },
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 2887,
+        "column": 43,
+        "kind": "read",
+        "text": "&& (state.compilerOptions.configFile ? containsPath(scope.packageDirectory, toAbsolutePath(state.compilerOptions.configFile.fileName), !useCaseSensitiveFileNames(state)) : true)"
+      },
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 2887,
+        "column": 130,
+        "kind": "read",
+        "text": "&& (state.compilerOptions.configFile ? containsPath(scope.packageDirectory, toAbsolutePath(state.compilerOptions.configFile.fileName), !useCaseSensitiveFileNames(state)) : true)"
+      },
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 2974,
+        "column": 58,
+        "kind": "read",
+        "text": "const currentDir = state.compilerOptions.configFile ? state.host.getCurrentDirectory?.() || \"\" : commonSourceDirGuess;"
+      },
+      {
+        "file": "src/compiler/watchUtilities.ts",
+        "line": 414,
+        "column": 49,
+        "kind": "read",
+        "text": "const extendedConfigs = arrayToMap(options?.configFile?.extendedSourceFiles || emptyArray, toPath);"
+      },
+      {
+        "file": "src/compiler/watchUtilities.ts",
+        "line": 606,
+        "column": 49,
+        "kind": "read",
+        "text": "if (isExcludedFile(fileOrDirectory, options.configFile!.configFileSpecs!, getNormalizedAbsolutePath(getDirectoryPath(configFileName), currentDirectory), useCaseSensitiveFileNames, currentDirectory)) {"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1267,
+        "column": 24,
+        "kind": "read",
+        "text": "if (currentOptions.configFile && newOptions.configFile) return currentOptions.configFile.text === newOptions.configFile.text;"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1267,
+        "column": 49,
+        "kind": "read",
+        "text": "if (currentOptions.configFile && newOptions.configFile) return currentOptions.configFile.text === newOptions.configFile.text;"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1267,
+        "column": 83,
+        "kind": "read",
+        "text": "if (currentOptions.configFile && newOptions.configFile) return currentOptions.configFile.text === newOptions.configFile.text;"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1267,
+        "column": 114,
+        "kind": "read",
+        "text": "if (currentOptions.configFile && newOptions.configFile) return currentOptions.configFile.text === newOptions.configFile.text;"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1297,
+        "column": 52,
+        "kind": "read",
+        "text": "if (oldResolvedRef.commandLine.options.configFile !== newParsedCommandLine.options.configFile) return false;"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1297,
+        "column": 96,
+        "kind": "read",
+        "text": "if (oldResolvedRef.commandLine.options.configFile !== newParsedCommandLine.options.configFile) return false;"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1324,
+        "column": 42,
+        "kind": "read",
+        "text": "return configFileParseResult.options.configFile ?"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1325,
+        "column": 43,
+        "kind": "read",
+        "text": "[...configFileParseResult.options.configFile.parseDiagnostics, ...configFileParseResult.errors] :"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 2578,
+        "column": 46,
+        "kind": "read",
+        "text": "const isConfigIdentical = oldOptions.configFile && oldOptions.configFile === options.configFile"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 2578,
+        "column": 71,
+        "kind": "read",
+        "text": "const isConfigIdentical = oldOptions.configFile && oldOptions.configFile === options.configFile"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 2578,
+        "column": 94,
+        "kind": "read",
+        "text": "const isConfigIdentical = oldOptions.configFile && oldOptions.configFile === options.configFile"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 2579,
+        "column": 28,
+        "kind": "read",
+        "text": "|| !oldOptions.configFile && !options.configFile && !optionsHaveChanges(oldOptions, options, optionDeclarations);"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 2579,
+        "column": 51,
+        "kind": "read",
+        "text": "|| !oldOptions.configFile && !options.configFile && !optionsHaveChanges(oldOptions, options, optionDeclarations);"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 3275,
+        "column": 22,
+        "kind": "read",
+        "text": "if (!options.configFile) return emptyArray;"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 3276,
+        "column": 101,
+        "kind": "read",
+        "text": "let diagnostics = programDiagnostics.getCombinedDiagnostics(program).getDiagnostics(options.configFile.fileName);"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4021,
+        "column": 65,
+        "kind": "read",
+        "text": "sourceFile = Debug.checkDefined(commandLine.options.configFile);"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4043,
+        "column": 21,
+        "kind": "read",
+        "text": "if (options.configFile !== sourceFile) {"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4624,
+        "column": 108,
+        "kind": "read",
+        "text": "programDiagnostics.addConfigDiagnostic(createDiagnosticForNodeInSourceFile(options.configFile!, initializer.elements[valueIndex], message, ...args));"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4671,
+        "column": 81,
+        "kind": "read",
+        "text": "const referencesSyntax = forEachTsConfigPropArray(sourceFile || options.configFile, \"references\", property => isArrayLiteralExpression(property.initializer) ? property.initializer : undefined);"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4673,
+        "column": 110,
+        "kind": "read",
+        "text": "programDiagnostics.addConfigDiagnostic(createDiagnosticForNodeInSourceFile(sourceFile || options.configFile!, referencesSyntax.elements[index], message, ...args));"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4700,
+        "column": 104,
+        "kind": "read",
+        "text": "programDiagnostics.addConfigDiagnostic(createDiagnosticForNodeFromMessageChain(options.configFile!, compilerOptionsProperty.name, message));"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4703,
+        "column": 100,
+        "kind": "read",
+        "text": "programDiagnostics.addConfigDiagnostic(createDiagnosticForNodeInSourceFile(options.configFile!, compilerOptionsProperty.name, message, ...args));"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4726,
+        "column": 60,
+        "kind": "read",
+        "text": "getTsConfigObjectLiteralExpression(options.configFile),"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4742,
+        "column": 104,
+        "kind": "read",
+        "text": "programDiagnostics.addConfigDiagnostic(createDiagnosticForNodeFromMessageChain(options.configFile!, onKey ? prop.name : prop.initializer, message));"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4745,
+        "column": 100,
+        "kind": "read",
+        "text": "programDiagnostics.addConfigDiagnostic(createDiagnosticForNodeInSourceFile(options.configFile!, onKey ? prop.name : prop.initializer, message, ...args));"
+      },
+      {
+        "file": "src/compiler/programDiagnostics.ts",
+        "line": 359,
+        "column": 22,
+        "kind": "read",
+        "text": "if (!options.configFile) return undefined;"
+      },
+      {
+        "file": "src/compiler/programDiagnostics.ts",
+        "line": 364,
+        "column": 30,
+        "kind": "read",
+        "text": "if (!options.configFile.configFileSpecs) return undefined;"
+      },
+      {
+        "file": "src/compiler/programDiagnostics.ts",
+        "line": 368,
+        "column": 79,
+        "kind": "read",
+        "text": "configFileNode = getTsConfigPropArrayElementValue(options.configFile, \"files\", matchedByFiles);"
+      },
+      {
+        "file": "src/compiler/programDiagnostics.ts",
+        "line": 375,
+        "column": 75,
+        "kind": "read",
+        "text": "configFileNode = getTsConfigPropArrayElementValue(options.configFile, \"include\", matchedByInclude);"
+      },
+      {
+        "file": "src/compiler/programDiagnostics.ts",
+        "line": 388,
+        "column": 73,
+        "kind": "read",
+        "text": "{ sourceFile: parent?.sourceFile || options.configFile!, index } :"
+      },
+      {
+        "file": "src/compiler/programDiagnostics.ts",
+        "line": 422,
+        "column": 21,
+        "kind": "read",
+        "text": "options.configFile,"
+      },
+      {
+        "file": "src/compiler/watch.ts",
+        "line": 417,
+        "column": 53,
+        "kind": "read",
+        "text": "const configFile = program.getCompilerOptions().configFile;"
+      },
+      {
+        "file": "src/compiler/watch.ts",
+        "line": 428,
+        "column": 53,
+        "kind": "read",
+        "text": "const configFile = program.getCompilerOptions().configFile;"
+      },
+      {
+        "file": "src/compiler/watch.ts",
+        "line": 497,
+        "column": 26,
+        "kind": "read",
+        "text": "if (!options.configFile?.configFileSpecs) return chainDiagnosticMessages(/*details*/ undefined, Diagnostics.Root_file_specified_for_compilation);"
+      },
+      {
+        "file": "src/compiler/watch.ts",
+        "line": 507,
+        "column": 40,
+        "kind": "read",
+        "text": "toFileName(options.configFile, fileNameConvertor),"
+      },
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 927,
+        "column": 69,
+        "kind": "read",
+        "text": "rootFileNames = getFileNamesFromConfigSpecs(compilerOptions.configFile!.configFileSpecs!, getNormalizedAbsolutePath(getDirectoryPath(configFileName), currentDirectory), compilerOptions, parseConfigFileHost, extraFileExtensions);"
+      },
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 932,
+        "column": 33,
+        "kind": "read",
+        "text": "compilerOptions.configFile!.configFileSpecs!,"
+      },
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 993,
+        "column": 54,
+        "kind": "read",
+        "text": "config.parsedCommandLine.options.configFile!.configFileSpecs!,"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1239,
+        "column": 75,
+        "kind": "read",
+        "text": "config.fileNames = getFileNamesFromConfigSpecs(config.options.configFile!.configFileSpecs!, getDirectoryPath(project), config.options, state.parseConfigFileHost);"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1243,
+        "column": 32,
+        "kind": "read",
+        "text": "config.options.configFile!.configFileSpecs!,"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1769,
+        "column": 58,
+        "kind": "read",
+        "text": "const extendedConfigStatus = forEach(project.options.configFile!.extendedSourceFiles || emptyArray, configFile => checkConfigFileUpToDateStatus(state, configFile, oldestOutputFileTime, oldestOutputFileName));"
+      },
+      {
+        "file": "src/services/utilities.ts",
+        "line": 2246,
+        "column": 55,
+        "kind": "read",
+        "text": "setConfigFileInOptions(result, options && options.configFile);"
+      },
+      {
+        "file": "src/services/refactors/moveToFile.ts",
+        "line": 282,
+        "column": 46,
+        "kind": "read",
+        "text": "const cfg = program.getCompilerOptions().configFile;"
+      },
+      {
+        "file": "src/services/codefixes/importFixes.ts",
+        "line": 1222,
+        "column": 25,
+        "kind": "read",
+        "text": "if (compilerOptions.configFile) {"
+      },
+      {
+        "file": "src/server/project.ts",
+        "line": 1119,
+        "column": 58,
+        "kind": "read",
+        "text": "return path === options.configFilePath ? options.configFile : this.getSourceFile(path);"
+      },
+      {
+        "file": "src/server/project.ts",
+        "line": 1251,
+        "column": 66,
+        "kind": "read",
+        "text": "const configFile = this.program.getCompilerOptions().configFile;"
+      },
+      {
+        "file": "src/server/project.ts",
+        "line": 1274,
+        "column": 66,
+        "kind": "read",
+        "text": "const configFile = this.program.getCompilerOptions().configFile;"
+      },
+      {
+        "file": "src/server/project.ts",
+        "line": 3155,
+        "column": 39,
+        "kind": "read",
+        "text": "this.getCompilerOptions().configFile!.configFileSpecs!,"
+      },
+      {
+        "file": "src/server/editorServices.ts",
+        "line": 2929,
+        "column": 60,
+        "kind": "read",
+        "text": "project.setProjectErrors(parsedCommandLine.options.configFile!.parseDiagnostics);"
+      },
+      {
+        "file": "src/server/editorServices.ts",
+        "line": 3207,
+        "column": 67,
+        "kind": "read",
+        "text": "const configFileSpecs = config.parsedCommandLine!.options.configFile!.configFileSpecs!;"
+      },
+      {
+        "file": "src/server/editorServices.ts",
+        "line": 3458,
+        "column": 68,
+        "kind": "read",
+        "text": "return configProject && configProject.getCompilerOptions().configFile;"
+      },
+      {
+        "file": "src/server/editorServices.ts",
+        "line": 4507,
+        "column": 101,
+        "kind": "read",
+        "text": "const { validatedFilesSpec, validatedIncludeSpecs, validatedExcludeSpecs } = config.options.configFile!.configFileSpecs!;"
+      },
+      {
+        "file": "src/harness/harnessIO.ts",
+        "line": 366,
+        "column": 34,
+        "kind": "read",
+        "text": ".map(file => options.configFile ? ts.getNormalizedAbsolutePath(file.unitName, currentDirectory) : file.unitName)"
+      },
+      {
+        "file": "src/harness/compilerImpl.ts",
+        "line": 267,
+        "column": 125,
+        "kind": "literal",
+        "text": "const preProgram = !skipErrorComparison ? ts.createProgram({ rootNames: rootFiles || [], options: { ...compilerOptions, configFile: compilerOptions.configFile, traceResolution: false }, host, typeScriptVersion }) : undefined;"
+      },
+      {
+        "file": "src/harness/compilerImpl.ts",
+        "line": 267,
+        "column": 153,
+        "kind": "read",
+        "text": "const preProgram = !skipErrorComparison ? ts.createProgram({ rootNames: rootFiles || [], options: { ...compilerOptions, configFile: compilerOptions.configFile, traceResolution: false }, host, typeScriptVersion }) : undefined;"
+      },
+      {
+        "file": "src/testRunner/compilerRunner.ts",
+        "line": 246,
+        "column": 29,
+        "kind": "read",
+        "text": "tsConfigOptions.configFile!.fileName = tsConfigOptions.configFilePath;"
+      }
+    ]
+  },
+  {
+    "owner": "CompilerOptions",
+    "member": "help",
+    "declaration": "help?: boolean;",
+    "references": [
+      {
+        "file": "src/compiler/types.ts",
+        "line": 7452,
+        "column": 22,
+        "kind": "declaration",
+        "text": "/** @internal */ help?: boolean;"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2668,
+        "column": 13,
+        "kind": "literal",
+        "text": "help: undefined,"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 592,
+        "column": 29,
+        "kind": "read",
+        "text": "if (commandLine.options.help || commandLine.options.all) {"
+      }
+    ]
+  },
+  {
+    "owner": "CompilerOptions",
+    "member": "init",
+    "declaration": "init?: boolean;",
+    "references": [
+      {
+        "file": "src/compiler/types.ts",
+        "line": 7457,
+        "column": 22,
+        "kind": "declaration",
+        "text": "/** @internal */ init?: boolean;"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2669,
+        "column": 13,
+        "kind": "literal",
+        "text": "init: undefined,"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 582,
+        "column": 29,
+        "kind": "read",
+        "text": "if (commandLine.options.init) {"
+      }
+    ]
+  },
+  {
+    "owner": "CompilerOptions",
+    "member": "listEmittedFiles",
+    "declaration": "listEmittedFiles?: boolean;",
+    "references": [
+      {
+        "file": "src/compiler/types.ts",
+        "line": 7467,
+        "column": 22,
+        "kind": "declaration",
+        "text": "/** @internal */ listEmittedFiles?: boolean;"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2671,
+        "column": 13,
+        "kind": "literal",
+        "text": "listEmittedFiles: undefined,"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 767,
+        "column": 66,
+        "kind": "read",
+        "text": "var emittedFilesList: string[] | undefined = compilerOptions.listEmittedFiles ? [] : undefined;"
+      }
+    ]
+  },
+  {
+    "owner": "CompilerOptions",
+    "member": "listFiles",
+    "declaration": "listFiles?: boolean;",
+    "references": [
+      {
+        "file": "src/compiler/types.ts",
+        "line": 7468,
+        "column": 22,
+        "kind": "declaration",
+        "text": "/** @internal */ listFiles?: boolean;"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2670,
+        "column": 13,
+        "kind": "literal",
+        "text": "listFiles: undefined,"
+      },
+      {
+        "file": "src/compiler/watch.ts",
+        "line": 343,
+        "column": 22,
+        "kind": "read",
+        "text": "else if (options.listFiles || options.listFilesOnly) {"
+      }
+    ]
+  },
+  {
+    "owner": "CompilerOptions",
+    "member": "project",
+    "declaration": "project?: string;",
+    "references": [
+      {
+        "file": "src/compiler/types.ts",
+        "line": 7520,
+        "column": 5,
+        "kind": "declaration",
+        "text": "project?: string;"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2672,
+        "column": 13,
+        "kind": "literal",
+        "text": "project: undefined,"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 602,
+        "column": 29,
+        "kind": "read",
+        "text": "if (commandLine.options.project) {"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 608,
+        "column": 67,
+        "kind": "read",
+        "text": "const fileOrDirectory = normalizePath(commandLine.options.project);"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 612,
+        "column": 160,
+        "kind": "read",
+        "text": "reportDiagnostic(createCompilerDiagnostic(Diagnostics.Cannot_find_a_tsconfig_json_file_at_the_specified_directory_Colon_0, commandLine.options.project));"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 619,
+        "column": 134,
+        "kind": "read",
+        "text": "reportDiagnostic(createCompilerDiagnostic(Diagnostics.The_specified_path_does_not_exist_Colon_0, commandLine.options.project));"
+      },
+      {
+        "file": "src/services/stringCompletions.ts",
+        "line": 759,
+        "column": 38,
+        "kind": "read",
+        "text": "const basePath = compilerOptions.project || host.getCurrentDirectory();"
+      },
+      {
+        "file": "src/harness/compilerImpl.ts",
+        "line": 245,
+        "column": 25,
+        "kind": "read",
+        "text": "if (compilerOptions.project || !rootFiles || rootFiles.length === 0) {"
+      },
+      {
+        "file": "src/harness/compilerImpl.ts",
+        "line": 246,
+        "column": 75,
+        "kind": "read",
+        "text": "const project = readProject(host.parseConfigHost, compilerOptions.project, compilerOptions);"
+      },
+      {
+        "file": "src/harness/compilerImpl.ts",
+        "line": 256,
+        "column": 32,
+        "kind": "read",
+        "text": "delete compilerOptions.project;"
+      },
+      {
+        "file": "src/testRunner/projectsRunner.ts",
+        "line": 148,
+        "column": 34,
+        "kind": "read",
+        "text": "if (this.compilerOptions.project) {"
+      },
+      {
+        "file": "src/testRunner/projectsRunner.ts",
+        "line": 150,
+        "column": 84,
+        "kind": "read",
+        "text": "configFileName = ts.normalizePath(ts.combinePaths(this.compilerOptions.project, \"tsconfig.json\"));"
+      },
+      {
+        "file": "src/testRunner/unittests/config/showConfig.ts",
+        "line": 28,
+        "column": 41,
+        "kind": "read",
+        "text": "if (commandLine.options.project) {"
+      },
+      {
+        "file": "src/testRunner/unittests/config/showConfig.ts",
+        "line": 29,
+        "column": 92,
+        "kind": "read",
+        "text": "const result = ts.getParsedCommandLineOfConfigFile(commandLine.options.project, commandLine.options, configParseHost);"
+      },
+      {
+        "file": "src/testRunner/unittests/tsserver/telemetry.ts",
+        "line": 88,
+        "column": 13,
+        "kind": "literal",
+        "text": "project: \"\","
+      }
+    ]
+  },
+  {
+    "owner": "CompilerOptions",
+    "member": "version",
+    "declaration": "version?: boolean;",
+    "references": [
+      {
+        "file": "src/compiler/types.ts",
+        "line": 7563,
+        "column": 22,
+        "kind": "declaration",
+        "text": "/** @internal */ version?: boolean;"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2674,
+        "column": 13,
+        "kind": "literal",
+        "text": "version: undefined,"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 587,
+        "column": 29,
+        "kind": "read",
+        "text": "if (commandLine.options.version) {"
+      }
+    ]
+  },
+  {
+    "owner": "CompilerOptions",
+    "member": "showConfig",
+    "declaration": "showConfig?: boolean;",
+    "references": [
+      {
+        "file": "src/compiler/types.ts",
+        "line": 7566,
+        "column": 22,
+        "kind": "declaration",
+        "text": "/** @internal */ showConfig?: boolean;"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2665,
+        "column": 13,
+        "kind": "literal",
+        "text": "showConfig: undefined,"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 636,
+        "column": 37,
+        "kind": "read",
+        "text": "if (commandLine.options.showConfig) {"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 655,
+        "column": 32,
+        "kind": "read",
+        "text": "if (commandLineOptions.showConfig) {"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 704,
+        "column": 32,
+        "kind": "read",
+        "text": "if (commandLineOptions.showConfig) {"
+      }
+    ]
+  }
+]
