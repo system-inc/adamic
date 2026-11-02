@@ -29,6 +29,8 @@ bool adamic_fs_file_is_file(const adamic_object *);
 bool adamic_fs_file_is_directory(const adamic_object *);
 bool adamic_fs_file_is_symbolic_link(const adamic_object *);
 adamic_object *adamic_fs_file_date_new(double);
+adamic_object *adamic_fs_file_date_now(void);
+double adamic_fs_file_time_now(void);
 double adamic_fs_file_date_time(const adamic_object *);
 // Raw bytes seam for the Buffer unit. The caller frees bytes, closes only fds it
 // opened, and raises the saved errno after any cleanup. No fake Buffer type.
