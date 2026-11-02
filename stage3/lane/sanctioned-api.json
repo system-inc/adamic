@@ -217,6 +217,11 @@
       "after": "[\"PropertySignature\",[\"Identifier\",\"module\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ModuleKind\"]],[\"UndefinedKeyword\"]]]"
     },
     {
+      "declaration": "member:[\"ts\",\"CompilerOptions\",\"project\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"project\"],[\"QuestionToken\"],[\"StringKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"project\"],[\"QuestionToken\"],[\"UnionType\",[\"StringKeyword\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
       "declaration": "member:[\"ts\",\"CompilerOptions\",\"target\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"target\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"ScriptTarget\"]]]",
       "after": "[\"PropertySignature\",[\"Identifier\",\"target\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ScriptTarget\"]],[\"UndefinedKeyword\"]]]"
@@ -930,6 +935,11 @@
       "declaration": "member:[\"ts\",\"ProjectReference\",\"circular\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"circular\"],[\"QuestionToken\"],[\"BooleanKeyword\"]]",
       "after": "[\"PropertySignature\",[\"Identifier\",\"circular\"],[\"QuestionToken\"],[\"UnionType\",[\"BooleanKeyword\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ProjectReference\",\"originalPath\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"originalPath\"],[\"QuestionToken\"],[\"StringKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"originalPath\"],[\"QuestionToken\"],[\"UnionType\",[\"StringKeyword\"],[\"UndefinedKeyword\"]]]"
     },
     {
       "declaration": "member:[\"ts\",\"ProjectReference\",\"prepend\"]#0",
@@ -3416,6 +3426,22 @@
       "line": 7352
     },
     {
+      "adaptation": "adapt/99-correctness-axolotl-c/api-sanctions.json row 1 {\"path\":[\"CompilerOptions\",\"project\"],\"kind\":\"PropertySignature\",\"before\":\"string\",\"after\":\"string | undefined\",\"why\":\"convertToTSConfig deliberately stores a present undefined to clear project; adaptation 20 permits truthful optional property declarations.\"}",
+      "path": [
+        "CompilerOptions",
+        "project"
+      ],
+      "line": 7095
+    },
+    {
+      "adaptation": "adapt/99-correctness-axolotl-c/api-sanctions.json row 2 {\"path\":[\"ProjectReference\",\"originalPath\"],\"kind\":\"PropertySignature\",\"before\":\"string\",\"after\":\"string | undefined\",\"why\":\"convertToTSConfig spreads each reference and deliberately stores a present undefined in originalPath; adaptation 20 permits truthful optional property declarations.\"}",
+      "path": [
+        "ProjectReference",
+        "originalPath"
+      ],
+      "line": 6987
+    },
+    {
       "adaptation": "75",
       "path": [
         "JsonSourceFile",
@@ -3524,6 +3550,10 @@
     {
       "file": "stage3/adapt/98-axolotl-d/api-sanctions.json",
       "sha256": "8caf13434d6cea1ff16cbf047b11d5350746f78e767760939248295ac1b90baf"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-c/api-sanctions.json",
+      "sha256": "00373a533e7b6436402c35f67d6b7148a7ade064b453cc5cb40950b743156432"
     }
   ],
   "baseline_diffs": [
@@ -4631,9 +4661,12 @@
     "     }\n",
     "     interface DiagnosticRelatedInformation {\n",
     "         category: DiagnosticCategory;\n",
-    "@@ -6986,9 +6987,9 @@\n",
+    "@@ -6984,11 +6985,11 @@\n",
+    "         /** A normalized path on disk */\n",
+    "         path: string;\n",
     "         /** The path as the user originally wrote it */\n",
-    "         originalPath?: string;\n",
+    "-        originalPath?: string;\n",
+    "+        originalPath?: string | undefined;\n",
     "         /** @deprecated */\n",
     "-        prepend?: boolean;\n",
     "+        prepend?: boolean | undefined;\n",
@@ -4652,6 +4685,15 @@
     "         moduleResolution?: ModuleResolutionKind;\n",
     "         moduleSuffixes?: string[];\n",
     "         moduleDetection?: ModuleDetectionKind;\n",
+    "@@ -7092,7 +7093,7 @@\n",
+    "         preserveSymlinks?: boolean;\n",
+    "         /** @deprecated */\n",
+    "         preserveValueImports?: boolean;\n",
+    "-        project?: string;\n",
+    "+        project?: string | undefined;\n",
+    "         reactNamespace?: string;\n",
+    "         jsxFactory?: string;\n",
+    "         jsxFragmentFactory?: string;\n",
     "@@ -7121,8 +7122,8 @@\n",
     "         suppressExcessPropertyErrors?: boolean;\n",
     "         /** @deprecated */\n",
