@@ -88,7 +88,8 @@ func TestToPrimitiveAnswersAgreeWithNode(t *testing.T) {
 var toPrimitiveStops = []struct{ file, what, node string }{
 	{"stop_scalar_array.a", "an array or a tuple", "before\n1,2,3\n"},
 	{"stop_reference_array.a", "an array or a tuple", "before\na,b\n"},
-	{"stop_static_class.a", "a class object", "before\nclass Counter {\n\tstatic count = 1;\n}\n"},
+	// Node runs the source as its runner emits it, which indents by four spaces.
+	{"stop_static_class.a", "a class object", "before\nclass Counter {\n    static count = 1;\n}\n"},
 	{"stop_record_function.a", "an object whose own toString is a function this program can't name", "before\nfrom record\n"},
 }
 

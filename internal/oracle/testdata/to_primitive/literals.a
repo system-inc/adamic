@@ -6,7 +6,9 @@ function show(value: unknown): void {
 	console.log(`<${value}>`);
 }
 show({ toString: () => 'x' });
-show({ label: 'method', toString(): string { return this.label; } });
+// Bound first, so this is the literal's own type rather than unknown's.
+const labelled = { label: 'method', toString(): string { return this.label; } };
+show(labelled);
 show({ toString: 3, valueOf: () => 42 });
 show({ size: 1 });
 show({ valueOf: () => 8 });
