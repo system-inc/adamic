@@ -1,0 +1,1 @@
+internal/oracle/testdata/record_declared_keys_refused/d01_delete_required.a:3:62: Adamic 0.1 refuses a delete from a record through a key that is not one literal, which can remove a required declared property (delete options[key] on Options by key: required is declared number, not optional); delete an optional property by its name, or give the record no required keys
