@@ -161,6 +161,9 @@ static int timer_wait_ms(void);
 #include "timers_impl.h"
 
 void adamic_async_teardown(void) {
+#ifdef ADAMIC_NODE_HOST
+    adamic_fs_file_watch_shutdown();
+#endif
     timer_shutdown();
     host_shutdown();
     while (subscriptions != NULL) abandon(subscriptions->promise, false);

@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"fmt"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
@@ -9,6 +10,9 @@ import (
 // This host slice recognizes library declarations, including import aliases.
 // It borrows only strings and does not expose a mutable process object.
 func (l *lowering) nodeHost(node *ast.Node) (ir.Expression, bool, error) {
+	if value, found, err := l.nodeWatchFile(node); found {
+		return value, true, err
+	}
 	if value, found, err := l.nodeRealpathCall(node); found {
 		return value, true, err
 	}
@@ -551,4 +555,143 @@ func (l *lowering) nodeStdoutUseRefusal(node *ast.Node) (bool, error) {
 		return true, l.nodeStdoutWriteRefusal(outer.Parent)
 	}
 	return true, l.notYet(access, "node:process.Process.stdout.write used as a value: its boolean is backpressure in Node and blocking success natively")
+}
+
+// nodeWatchFile binds only the stat-polling forms used by sys.ts. The returned
+// StatWatcher is not exposed: cancellation uses the original listener identity.
+func (l *lowering) nodeWatchFile(node *ast.Node) (ir.Expression, bool, error) {
+	name := l.nodeLibraryMember(node)
+	if name != "node:fs.watchFile" && name != "node:fs.unwatchFile" {
+		return nil, false, nil
+	}
+	call := node.AsCallExpression()
+	refuse := func(why string) (ir.Expression, bool, error) { return nil, true, l.notYet(node, name+" "+why) }
+	outer := node
+	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
+		outer = outer.Parent
+	}
+	discarded := outer.Parent != nil && outer.Parent.Kind == ast.KindExpressionStatement
+	if name == "node:fs.unwatchFile" && l.function != nil && l.function.Returns == 0 && outer.Parent != nil {
+		discarded = discarded || outer.Parent.Kind == ast.KindReturnStatement || outer.Parent.Kind == ast.KindArrowFunction && outer.Parent.Body() == outer
+	}
+	if !discarded {
+		return refuse("used as a value; discard the result and use unwatchFile")
+	}
+	if node.Flags&ast.NodeFlagsOptionalChain != 0 {
+		return refuse("through an optional call; use a direct call")
+	}
+	written := call.Arguments.Nodes
+	for _, argument := range written {
+		if argument.Kind == ast.KindSpreadElement {
+			return refuse("with spread arguments; write the arguments explicitly")
+		}
+	}
+	if name == "node:fs.watchFile" && len(written) != 3 || name == "node:fs.unwatchFile" && len(written) != 1 && len(written) != 2 {
+		return refuse("outside the stat-polling signature")
+	}
+	path, err := l.expression(written[0])
+	if err != nil {
+		return nil, true, err
+	}
+	if path.Type() != ir.String {
+		return refuse("with a non-string path; use a string")
+	}
+	arguments := []ir.Expression{path}
+	if name == "node:fs.watchFile" {
+		options := ast.SkipParentheses(written[1])
+		if options.Kind != ast.KindObjectLiteralExpression {
+			return refuse("with non-literal options; use {persistent, interval}")
+		}
+		fields := options.AsObjectLiteralExpression().Properties.Nodes
+		if len(fields) != 2 {
+			return refuse("outside {persistent, interval} options")
+		}
+		for index, key := range []string{"persistent", "interval"} {
+			field := fields[index]
+			if field.Kind != ast.KindPropertyAssignment || field.Name() == nil || field.Name().Text() != key {
+				return refuse("outside {persistent, interval} options in that order")
+			}
+			value, err := l.expression(field.AsPropertyAssignment().Initializer)
+			if err != nil {
+				return nil, true, err
+			}
+			expected := ir.Boolean
+			if index == 1 {
+				expected = ir.Number
+			}
+			if value.Type() != expected {
+				return refuse("with a non-" + fmt.Sprint(expected) + " " + key)
+			}
+			arguments = append(arguments, value)
+		}
+	}
+	if len(written) > 1 {
+		listener := written[len(written)-1]
+		if !l.nodeWatchListener(listener, map[*ast.Symbol]bool{}) {
+			return refuse("with a listener outside a known (curr: Stats, prev: Stats) => void function")
+		}
+		signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(listener), checker.SignatureKindCall)
+		if len(signatures) != 1 || len(signatures[0].Parameters()) != 2 || l.checker.GetReturnTypeOfSignature(signatures[0]).Flags()&checker.TypeFlagsVoid == 0 {
+			return refuse("with a listener outside (curr: Stats, prev: Stats) => void")
+		}
+		for _, parameter := range signatures[0].Parameters() {
+			if nodeLibraryName(l.checker.GetTypeOfSymbol(parameter).Symbol()) != "node:fs.Stats" {
+				return refuse("with a listener outside (curr: Stats, prev: Stats) => void")
+			}
+		}
+		callback, err := l.expression(listener)
+		if err != nil {
+			return nil, true, err
+		}
+		if callback.Type() != ir.Closure {
+			return refuse("with a non-closure listener")
+		}
+		arguments = append(arguments, callback)
+	}
+	operation := "host_watch_file"
+	if name == "node:fs.unwatchFile" {
+		operation = "host_unwatch_file"
+	}
+	return ir.NodeFSFile{Operation: operation, Arguments: arguments, Of: ir.Number}, true, nil
+}
+func init() { RegisterNodeLibraryMembers("node:fs.watchFile", "node:fs.unwatchFile") }
+
+// Resolve const aliases to the actual function, rather than trusting a void
+// callback view which can hide an owned return value or extra optional slots.
+func (l *lowering) nodeWatchListener(node *ast.Node, seen map[*ast.Symbol]bool) bool {
+	node = ast.SkipParentheses(node)
+	if ast.IsIdentifier(node) {
+		symbol := l.symbol(node)
+		if symbol == nil || seen[symbol] || len(symbol.Declarations) != 1 {
+			return false
+		}
+		seen[symbol] = true
+		declaration := symbol.Declarations[0]
+		if declaration.Kind == ast.KindVariableDeclaration && declaration.Parent != nil && declaration.Parent.Flags&ast.NodeFlagsConst != 0 {
+			value := declaration.AsVariableDeclaration().Initializer
+			return value != nil && l.nodeWatchListener(value, seen)
+		}
+		node = declaration
+	}
+	if node.Kind != ast.KindFunctionDeclaration || len(node.TypeParameters()) != 0 {
+		return false
+	}
+	if len(node.Parameters()) != 2 || node.Body() == nil {
+		return false
+	}
+	signature := l.checker.GetSignatureFromDeclaration(node)
+	if signature == nil || l.checker.GetReturnTypeOfSignature(signature).Flags()&checker.TypeFlagsVoid == 0 {
+		return false
+	}
+	for _, parameter := range node.Parameters() {
+		if parameter.AsParameterDeclaration().DotDotDotToken != nil {
+			return false
+		}
+	}
+	for _, parameter := range signature.Parameters() {
+		if nodeLibraryName(l.checker.GetTypeOfSymbol(parameter).Symbol()) != "node:fs.Stats" {
+			return false
+		}
+	}
+	return true
 }

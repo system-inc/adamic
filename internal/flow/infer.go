@@ -582,6 +582,9 @@ func writes(expression ir.Expression) bool {
 
 // callsBack reports whether an IR node calls a function value it's handed.
 func callsBack(expression ir.Expression) bool {
+	if call, ok := expression.(ir.NodeFSFile); ok && call.Operation == "host_watch_file" {
+		return true
+	}
 	if call, ok := expression.(ir.RegExpCall); ok {
 		return call.Replacement != nil
 	}

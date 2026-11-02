@@ -15,6 +15,8 @@ func (r *TargetRefused) Error() string {
 }
 
 var wasiHostRefusals = map[string]TargetRefused{
+	"adamic_fs_file_watch":       {"fs.watchFile", "wasi preview1 has no stat-polling watcher provider"},
+	"adamic_fs_file_unwatch":     {"fs.unwatchFile", "wasi preview1 has no stat-polling watcher provider"},
 	"adamic_host_stdout_columns": {"process.stdout.columns", "wasi preview1 reports no terminal size"},
 	"adamic_node_argv":           {"process.argv", "WASI has no executable paths"},
 	"adamic_fs_file_mkdtemp":     {"fs.mkdtempSync", "WASI has no temporary directory creation"},

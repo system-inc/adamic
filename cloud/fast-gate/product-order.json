@@ -2639,6 +2639,66 @@
       "internal/oracle TestProduct_NativeRuntimesSanitized2",
       "internal/oracle TestProduct_NativeRuntimesRelease0",
       "internal/oracle TestProduct_NativeRuntimesCounted0"
+    ],
+    "internal/native TestProduct_WatchFileCustomHooks": [],
+    "internal/native TestProduct_WatchFileCustomHooksMutant": [],
+    "internal/native TestProduct_WatchFileProviderSanitized": [],
+    "internal/native TestProduct_WatchFileBatchCheckpointMutant": [],
+    "internal/native TestProduct_WatchFileSharedIntervalMutant": [],
+    "internal/oracle TestProduct_WatchFileInitialMissing": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized0",
+      "internal/oracle TestProduct_NativeRuntimesSanitized1",
+      "internal/oracle TestProduct_NativeRuntimesSanitized2"
+    ],
+    "internal/oracle TestProduct_WatchFileAppearance": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized0",
+      "internal/oracle TestProduct_NativeRuntimesSanitized1",
+      "internal/oracle TestProduct_NativeRuntimesSanitized2"
+    ],
+    "internal/oracle TestProduct_WatchFileSameSizeMtime": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized0",
+      "internal/oracle TestProduct_NativeRuntimesSanitized1",
+      "internal/oracle TestProduct_NativeRuntimesSanitized2"
+    ],
+    "internal/oracle TestProduct_WatchFileCancelOne": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized0",
+      "internal/oracle TestProduct_NativeRuntimesSanitized1",
+      "internal/oracle TestProduct_NativeRuntimesSanitized2"
+    ],
+    "internal/oracle TestProduct_WatchFileCancelAll": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized0",
+      "internal/oracle TestProduct_NativeRuntimesSanitized1",
+      "internal/oracle TestProduct_NativeRuntimesSanitized2"
+    ],
+    "internal/oracle TestProduct_WatchFileDuplicateListener": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized0",
+      "internal/oracle TestProduct_NativeRuntimesSanitized1",
+      "internal/oracle TestProduct_NativeRuntimesSanitized2"
+    ],
+    "internal/oracle TestProduct_WatchFileListenerBatch": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized0",
+      "internal/oracle TestProduct_NativeRuntimesSanitized1",
+      "internal/oracle TestProduct_NativeRuntimesSanitized2"
+    ],
+    "internal/oracle TestProduct_WatchFileUnref": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized0",
+      "internal/oracle TestProduct_NativeRuntimesSanitized1",
+      "internal/oracle TestProduct_NativeRuntimesSanitized2"
+    ],
+    "internal/oracle TestProduct_WatchFileThrowingListener": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized0",
+      "internal/oracle TestProduct_NativeRuntimesSanitized1",
+      "internal/oracle TestProduct_NativeRuntimesSanitized2"
+    ],
+    "internal/oracle TestProduct_WatchFileMutantSizeOnly": [],
+    "internal/oracle TestProduct_WatchFileMutantInitialMissing": [],
+    "internal/oracle TestProduct_WatchFileMutantUnref": [],
+    "internal/oracle TestProduct_WatchFileMutantListenerIdentity": [],
+    "internal/oracle TestProduct_WatchFileMutantThrowingListener": [],
+    "internal/oracle TestProduct_WatchFileTscCloseShape": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized0",
+      "internal/oracle TestProduct_NativeRuntimesSanitized1",
+      "internal/oracle TestProduct_NativeRuntimesSanitized2"
     ]
   }
 }

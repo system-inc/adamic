@@ -1,0 +1,33 @@
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'adamic-watch-probe-'));
+const file = path.join(directory, 'missing');
+const mode = process.argv[2];
+if (mode === 'throw') {
+ fs.watchFile(file, {persistent:true, interval:10}, () => {
+  fs.rmSync(directory, {recursive:true, force:true});
+  throw new Error('watch listener failed');
+ });
+} else if (mode === 'interval') {
+ let notifications = 0;
+ function counted() { notifications++; fs.appendFileSync(file, 'x'); }
+ fs.watchFile(file, {persistent:true, interval:100}, counted);
+ fs.watchFile(file, {persistent:true, interval:1}, counted);
+ fs.unwatchFile(file, counted);
+ setTimeout(() => {
+  fs.unwatchFile(file);
+  fs.rmSync(directory, {recursive:true, force:true});
+  console.log(`interval ${notifications <= 7}`);
+ }, 500);
+} else {
+ function first() {
+  console.log('first');
+  Promise.resolve().then(() => console.log('job'));
+  fs.unwatchFile(file);
+  fs.rmSync(directory, {recursive:true, force:true});
+ }
+ function second() { console.log('second'); }
+ fs.watchFile(file, {persistent:true, interval:10}, first);
+ fs.watchFile(file, {persistent:true, interval:10}, second);
+}
