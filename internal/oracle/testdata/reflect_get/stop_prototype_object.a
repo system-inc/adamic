@@ -1,0 +1,6 @@
+// An Object.prototype name stops on a plain object, on both backends. Node prints function.
+import { propertyOf } from './hostErrors.ts';
+
+console.log('before');
+const value = propertyOf({ present: 'here' }, 'toString');
+console.log(typeof value);
