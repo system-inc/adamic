@@ -164,7 +164,8 @@ demands Node agreement. Each entry names its `path`, its `ruling_task`, the
 `lifting_task` that will lift the stop, and its exact `stderr`. The tool refuses
 the list when an entry lacks either task or its message is not one line of
 `adamic: panic: <form> (reading '<key>')` with `<form>` on the tool's closed
-allowlist (`runtimeNotYetForms`), each form naming the ruling that made it. The
+allowlist (`runtimeNotYetForms`), each form naming the ruling that made it, and
+it refuses an entry whose `ruling_task` is not its form's ruling. The
 allowlist holds the seven `internal/ir` DynamicKeyedStops forms a ruled fixture
 reaches; a `compiler bug:` stop never qualifies, listed or allowlisted.
 
@@ -176,8 +177,17 @@ does. A listed program that now runs to the end on both backends and agrees with
 Node is stale: it fails the gate, named in `stale_runtime_stops`, so its entry
 leaves the list. Like a witness, a listed program, or an edit at a listed path,
 runs even when both compilers already admit it, and under any budget, so the
-list can't rot between changes; an entry whose program is absent from the run's
-corpora is read and checked as an entry but has nothing to run. Counted, never
+list can't rot between changes.
+
+An entry whose bytes no program in the run holds is judged only in a run that
+holds every corpus (no `--corpus-filter`, no `--shard`), since a partial run
+can't know what the rest held. If its `path` holds other bytes at head, the
+listed program was edited in place: the entry is stale, named in
+`stale_runtime_stops`, and fails the gate as an agreeing one does, even when the
+edit agrees with Node. If nothing is at its `path`, the listed program never
+arrived or has since been deleted: the run passes and names it in
+`pending_runtime_stops`, so the list can land before its programs. That case
+fails toward showing, listed in the JSON, never toward hiding. Counted, never
 hidden: JSON records `ruled_runtime_stops`, `ruled_runtime_stop_paths`,
 `runtime_notyet_count` (the list's size) and each program's `ruled_runtime_stop`,
 with `agree` false, and every run prints `ruled run-time stops: N` to stderr.

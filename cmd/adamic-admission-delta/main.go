@@ -71,6 +71,7 @@ type report struct {
 	RuledRuntimeStops     int                `json:"ruled_runtime_stops"`
 	RuledRuntimeStopPaths []string           `json:"ruled_runtime_stop_paths"`
 	StaleRuntimeStops     []string           `json:"stale_runtime_stops"`
+	PendingRuntimeStops   []string           `json:"pending_runtime_stops"`
 	CorpusFilter          string             `json:"corpus_filter"`
 	Shard                 string             `json:"shard"`
 	CompleteCorpus        bool               `json:"complete_corpus"`
@@ -258,7 +259,7 @@ func run(args []string) error {
 		}
 	}
 	startedAll := time.Now()
-	result := report{Programs: []entry{}, RuledRuntimeStopPaths: []string{}, StaleRuntimeStops: []string{}, Verdict: "pass", Phases: map[string]float64{}, Workers: *workers, Classification: "lowering-only"}
+	result := report{Programs: []entry{}, RuledRuntimeStopPaths: []string{}, StaleRuntimeStops: []string{}, PendingRuntimeStops: []string{}, Verdict: "pass", Phases: map[string]float64{}, Workers: *workers, Classification: "lowering-only"}
 	result.NegativeWitnessCount = len(negatives.Witnesses)
 	result.RuntimeNotYetCount = len(runtimeStops.Stops)
 	result.Base, err = git(root, "rev-parse", *base+"^{commit}")
@@ -430,6 +431,8 @@ func run(args []string) error {
 	result.CompileTimeoutSeconds = compileLimit.Seconds()
 	result.RuntimeTimeoutSeconds = limit.Seconds()
 	seen := map[string]string{}
+	// held is every program's content hash, so a listed stop no program holds is seen after the run.
+	held := map[string]bool{}
 	for _, c := range m.Corpora {
 		for _, p := range c.Programs {
 			clean := filepath.ToSlash(filepath.Clean(p.Path))
@@ -461,6 +464,7 @@ func run(args []string) error {
 			if e != nil {
 				return e
 			}
+			held[contentHash(source)] = true
 			result.Programs = append(result.Programs, entry{program: p, Corpus: c.Name, NegativeRelated: negativeRelated(p.Path, source, negatives), NotYetRelated: runtimeNotYetRelated(p.Path, source, runtimeStops)})
 		}
 	}
@@ -589,6 +593,27 @@ func run(args []string) error {
 				result.Verdict = "fail"
 			}
 		}
+	}
+	// A listed stop no program held is judged only in a run that holds every corpus. Its path holding other
+	// bytes at head is an edit, stale as an agreeing stop is; a path absent at head is a program not landed
+	// yet, said as pending.
+	if result.CompleteCorpus {
+		for hash, stop := range runtimeStops.Stops {
+			if held[hash] {
+				continue
+			}
+			source, e := os.ReadFile(filepath.Join(headTree, stop.Path))
+			if errors.Is(e, os.ErrNotExist) {
+				result.PendingRuntimeStops = append(result.PendingRuntimeStops, stop.Path)
+			} else if e != nil {
+				return e
+			} else if contentHash(source) != hash {
+				result.StaleRuntimeStops = append(result.StaleRuntimeStops, stop.Path)
+				result.Verdict = "fail"
+			}
+		}
+		sort.Strings(result.StaleRuntimeStops)
+		sort.Strings(result.PendingRuntimeStops)
 	}
 	fmt.Fprintf(os.Stderr, "ruled run-time stops: %d\n", result.RuledRuntimeStops)
 	result.SamplingSize = len(selected)
