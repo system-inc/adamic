@@ -1,0 +1,4 @@
+// global.gc called through an optional chain.
+import 'node:process';
+global.gc?.();
+console.log('done');

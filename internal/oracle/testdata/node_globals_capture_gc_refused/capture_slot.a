@@ -1,0 +1,5 @@
+// Error.captureStackTrace written into a slot that sees its target as an array.
+import 'node:process';
+const take: (targets: Error[]) => void = Error.captureStackTrace;
+take([new Error('boom')]);
+console.log('taken');
