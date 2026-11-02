@@ -139,11 +139,16 @@ bool adamic_has_property(const adamic_heap *value, const char *name) {
 		}
 		// Error.prototype supplies message, so on Node an Error made without one still has it, as "". Its
 		// absent-message shape keeps that "" in #message (exceptions.c), so look for it there.
+		const char *key = name;
 		name = adamic_error_field_name(object, name);
+		// Only the plain key "message", mapped above, reaches that slot. On Node a string key never names
+		// a private and an Error has no own or inherited "#message", so a # key on that shape is false.
+		// The shape is the one whose "message" is mapped; a plain object's '#message' key isn't touched.
+		if (key[0] == '#' && adamic_error_field_name(object, "message")[0] == '#') return false;
 		for (size_t index = 0; index < object->shape->count; index++) {
 			if (strcmp(name, object->shape->names[index]) != 0) continue;
 			if (!adamic_object_present(object, index)) continue;
-			if (object->class == NULL || name[0] != '#') return true;
+			if (object->class == NULL || key[0] != '#') return true;
 			const adamic_shape *public = object->class->public_shape;
 			if (named(name, public->names, public->count)) return true;
 		}

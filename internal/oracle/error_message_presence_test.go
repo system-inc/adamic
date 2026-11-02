@@ -14,6 +14,12 @@ import (
 // corpora lower every program at the top of testdata. Mutants: adamic_has_property without
 // adamic_error_field_name turns no_message red natively; adamic_dynamic_property without it turns
 // no_message_unguarded red, since its in test passes and String(e.message) is a dynamic read.
+//
+// hash_message asks '#message' and 'message' of an Error made without a message and one made with 'x',
+// then '#ordinary' of a plain object: false, false, true, true, true on Node. The #message slot made the
+// first true natively, so adamic_has_property answers false for a # key on the absent-message shape, and
+// only the plain key "message", mapped by adamic_error_field_name, reaches that slot. Mutant: that guard
+// removed from union.c, and hash_message's first line prints true natively and goes red.
 func TestErrorMessagePresenceAgreesWithNode(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ file, stdout string }{
@@ -23,6 +29,8 @@ func TestErrorMessagePresenceAgreesWithNode(t *testing.T) {
 		{"message.ts", "\"x\"\n"},
 		{"no_message_unguarded.a", "\"\"\n"},
 		{"no_message_unguarded.ts", "\"\"\n"},
+		{"hash_message.a", "false\nfalse\ntrue\ntrue\ntrue\n"},
+		{"hash_message.ts", "false\nfalse\ntrue\ntrue\ntrue\n"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()
