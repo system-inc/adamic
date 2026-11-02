@@ -12,12 +12,14 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/stage3/lane/adaptedtree"
 )
 
 // The upstream TypeScript suite is partitioned into manifest units (shards.json): file shards balanced from the
 // measured census, exact groups for expensive suites, 16 symlink-watcher cases, and the publicApi byte comparison. Each is a
 // TestShard_ test of its own (shards_generated_test.go), so Planner cuts them like any other tests and a red names its
-// shard. Every one runs shard.py against the adapted tree product, built ahead (adaptedTree), never a tree it builds.
+// shard. Every one runs shard.py against the adapted tree product, built ahead (adaptedtree.Product), never a tree it
+// builds.
 
 // shardTeardown is what a shard's limit leaves of its test's deadline: shard.py's teardown after it kills upstream,
 // writing its report and removing its view.
@@ -84,7 +86,7 @@ func manifestUnit(path, name string) (unit, error) {
 // titles and upstream exit, and this checks it passed with the counts the manifest expects.
 func runManifestShard(t *testing.T, name string) {
 	t.Helper()
-	tree := filepath.Join(adaptedTree(t), "tree")
+	tree := filepath.Join(adaptedtree.Product(t), "tree")
 	root := repositoryRoot(t)
 	selected, err := manifestUnit(filepath.Join(root, "stage3/lane/shards.json"), name)
 	if err != nil {
