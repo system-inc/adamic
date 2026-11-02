@@ -28,7 +28,10 @@ import (
 // first direction) turns r03, r07, r26 and v01 red; admitting a dictionary read through a declared
 // property (its second) turns r05, r15 and r16 red; admitting the write (declaredKeyWrite's refusal
 // dropped) turns r01, r02 and v06 red; leaving the type arguments unjudged (declaredKeyBindings
-// dropped) turns n05 red.
+// dropped) turns n05 red. A delete through a key that isn't one literal, of a required declared property
+// it can remove, is refused too (#p9jj9jg): by a string key, the road records_named_operations.a ran
+// (d01), and by a "target" | "required" one (d02). Mutant: recordDeclaredDeleteRefusal returning nil
+// turns d01 and d02 red.
 func TestRecordDeclaredKeysAreRefusedInA(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/record_declared_keys_refused"
@@ -79,8 +82,8 @@ func TestRecordDeclaredKeysAreRefusedInA(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 37 {
-		t.Fatalf("found %d refused programs, want 37", programs)
+	if programs != 39 {
+		t.Fatalf("found %d refused programs, want 39", programs)
 	}
 }
 
@@ -99,7 +102,10 @@ func TestRecordDeclaredKeysAreRefusedInA(t *testing.T) {
 // write and the optional widening stop where they did, and the type-argument roads too, whose .a
 // twins are refused. Each program that lowers agrees with Node on
 // release and sanitized native and on the JavaScript backend. Mutant: the key folding dropped
-// (writtenNames judging a folded key as any name) refuses the scanner's shape here.
+// (writtenNames judging a folded key as any name) refuses the scanner's shape here. In .ts, d01's delete
+// of a required declared property through a string key is not yet (#p9jj9jg), and c01's deletes, by a
+// "target" | "extra" key and by the optional target's name, lower in both, since neither can remove a
+// required one. Mutant: recordDeclaredDeleteRefusal returning nil turns d01 red.
 func TestRecordDeclaredKeyStopsArePinned(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/record_declared_keys_stops"
@@ -149,7 +155,7 @@ func TestRecordDeclaredKeyStopsArePinned(t *testing.T) {
 			}
 		})
 	}
-	if programs != 57 {
-		t.Fatalf("found %d programs, want 57", programs)
+	if programs != 60 {
+		t.Fatalf("found %d programs, want 60", programs)
 	}
 }
