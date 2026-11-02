@@ -1,0 +1,8 @@
+=== RUN   TestProfiledBuildIsTheSameBytesFromTwoToolsRoots
+=== PAUSE TestProfiledBuildIsTheSameBytesFromTwoToolsRoots
+=== CONT  TestProfiledBuildIsTheSameBytesFromTwoToolsRoots
+    profile_tools_root_test.go:107: the profiled build from clang at /usr/lib/llvm-18/bin/clang and at /tmp/adamic-gate/TestProfiledBuildIsTheSameBytesFromTwoToolsRoots2935194431/001/tools-reached-at-a-second-place/bin/clang differs: where the tools sit reaches its bytes
+--- FAIL: TestProfiledBuildIsTheSameBytesFromTwoToolsRoots (0.46s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	0.507s
+FAIL

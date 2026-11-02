@@ -1,0 +1,13 @@
+=== RUN   TestProduct_RecordMutants
+=== PAUSE TestProduct_RecordMutants
+=== RUN   TestProduct_PrimitiveMutants
+=== PAUSE TestProduct_PrimitiveMutants
+=== CONT  TestProduct_RecordMutants
+=== CONT  TestProduct_PrimitiveMutants
+    to_primitive_test.go:235: build primitive-mutants 1e024aa3c2b1 miss 13.82
+--- PASS: TestProduct_PrimitiveMutants (13.84s)
+=== NAME  TestProduct_RecordMutants
+    record_test.go:439: build record-mutants 18c062754f09 miss 16.30
+--- PASS: TestProduct_RecordMutants (16.32s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	16.340s

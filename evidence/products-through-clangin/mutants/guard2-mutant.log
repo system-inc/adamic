@@ -1,0 +1,9 @@
+=== RUN   TestProductClangRunsThroughClangIn
+=== PAUSE TestProductClangRunsThroughClangIn
+=== CONT  TestProductClangRunsThroughClangIn
+    product_clang_test.go:114: internal/native/to_primitive_test.go:primitiveMutants runs clang by name 3 times, bareProductClang lists 2: internal/native/to_primitive_test.go:156:15, internal/native/to_primitive_test.go:157:8, internal/native/to_primitive_test.go:224:15
+    product_clang_test.go:109: stage1/cohere/estree/recovery_cache_test.go:286:33 runs clang by name in a file that builds a product: run it through native's clangIn (or a seam on it, outside package native), so the tools root is mapped out of the bytes, or list stage1/cohere/estree/recovery_cache_test.go:recoveryBareMutant in bareProductClang with why it may
+--- FAIL: TestProductClangRunsThroughClangIn (0.84s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/compilercensus	0.850s
+FAIL

@@ -1,0 +1,27 @@
+=== RUN   TestRecoveryNativeRecipe
+=== PAUSE TestRecoveryNativeRecipe
+=== RUN   TestRecoveryClangMapsTheToolsRoot
+=== PAUSE TestRecoveryClangMapsTheToolsRoot
+=== CONT  TestRecoveryNativeRecipe
+=== CONT  TestRecoveryClangMapsTheToolsRoot
+--- PASS: TestRecoveryClangMapsTheToolsRoot (0.01s)
+=== NAME  TestRecoveryNativeRecipe
+    recovery_shards_test.go:46: BUILD estree-native-recipe-proof-a cold wall=23.544582s
+    recovery_cache_test.go:256: build estree-native-recipe-proof-a a1a35ae1c10e miss 23.76
+    recovery_shards_test.go:46: BUILD estree-native-recipe-proof-b cold wall=20.466657s
+    recovery_cache_test.go:256: build estree-native-recipe-proof-b b3dfb72d9cef miss 20.48
+    recovery_cache_test.go:269: union: 4 cases, 4 unique IDs, 4 shards
+=== RUN   TestRecoveryNativeRecipe/shard-000
+=== RUN   TestRecoveryNativeRecipe/shard-001
+=== RUN   TestRecoveryNativeRecipe/shard-002
+=== RUN   TestRecoveryNativeRecipe/shard-003
+=== NAME  TestRecoveryNativeRecipe
+    recovery_shards_test.go:38: setup wall=44.440983s builds=44.238187s without-builds=0.202796s
+    recovery_shards_test.go:33: TEST totalCPU=43.361956s
+--- PASS: TestRecoveryNativeRecipe (44.44s)
+    --- PASS: TestRecoveryNativeRecipe/shard-000 (0.02s)
+    --- PASS: TestRecoveryNativeRecipe/shard-001 (0.09s)
+    --- PASS: TestRecoveryNativeRecipe/shard-002 (0.01s)
+    --- PASS: TestRecoveryNativeRecipe/shard-003 (0.04s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/estree	44.460s

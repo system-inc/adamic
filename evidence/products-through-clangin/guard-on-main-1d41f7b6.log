@@ -1,0 +1,25 @@
+=== RUN   TestEveryCCompilerRunsThroughNative
+=== PAUSE TestEveryCCompilerRunsThroughNative
+=== RUN   TestDependenciesFollowTheMarkers
+=== PAUSE TestDependenciesFollowTheMarkers
+=== RUN   TestDependenciesCoverTheDeclaredMap
+=== PAUSE TestDependenciesCoverTheDeclaredMap
+=== RUN   TestEveryNativeBuildIsBoundedByTheProcessJobserver
+=== PAUSE TestEveryNativeBuildIsBoundedByTheProcessJobserver
+=== RUN   TestProductClangRunsThroughClangIn
+=== PAUSE TestProductClangRunsThroughClangIn
+=== CONT  TestEveryCCompilerRunsThroughNative
+=== CONT  TestDependenciesCoverTheDeclaredMap
+=== CONT  TestDependenciesFollowTheMarkers
+=== CONT  TestProductClangRunsThroughClangIn
+--- PASS: TestDependenciesFollowTheMarkers (0.20s)
+=== CONT  TestEveryNativeBuildIsBoundedByTheProcessJobserver
+--- PASS: TestEveryCCompilerRunsThroughNative (1.33s)
+--- PASS: TestEveryNativeBuildIsBoundedByTheProcessJobserver (1.14s)
+--- PASS: TestProductClangRunsThroughClangIn (1.44s)
+=== NAME  TestDependenciesCoverTheDeclaredMap
+    dependencies_test.go:121: 33 declared, each derived among the census's 98
+--- PASS: TestDependenciesCoverTheDeclaredMap (3.38s)
+PASS
+ok  	github.com/system-inc/adamic/internal/compilercensus	3.391s
+?   	github.com/system-inc/adamic/internal/compilercensus/cmd/dependencies	[no test files]

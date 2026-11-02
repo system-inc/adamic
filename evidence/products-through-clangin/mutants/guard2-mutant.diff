@@ -1,0 +1,37 @@
+diff --git a/internal/compilercensus/product_clang_test.go b/internal/compilercensus/product_clang_test.go
+index d118892c8..4bb50e556 100644
+--- a/internal/compilercensus/product_clang_test.go
++++ b/internal/compilercensus/product_clang_test.go
+@@ -28,9 +28,7 @@ var bareProductClang = map[string]struct {
+ 	"internal/native/record_test.go:recordMutants":                                {2, "moves to clangIn in compiler/products-through-clangin"},
+ 	"stage1/cohere/lint/profile_compilation_main_test.go:compilationProductKinds": {1, "moves to clangIn in compiler/products-through-clangin"},
+ 	"stage1/cohere/estree/recovery_cache_test.go:recoveryStableNative":            {1, "moves to clangIn in compiler/products-through-clangin"},
+-	// b0d68b5d (platforms/timer-mutant-reproducible) moves the timer mutants' probe onto clangIn and keeps this build
+-	// as its reproducibility pin's mutant, renamed buildBare; this entry follows it when it lands.
+-	"internal/native/timers_test.go:timerRuntime.build": {1, "the timer mutants' probe link; b0d68b5d moves it to clangIn and keeps it as the reproducibility pin's mutant"},
++	"internal/native/timers_test.go:timerRuntime.buildBare":                       {1, "the reproducibility pin's mutant: it must stay bare so TestTimerMutantProductPinCatchesBareClang can show the pin fails"},
+ }
+ 
+ // productCommandCalls are the calls that run a program by name, each with the index of its program argument.
+diff --git a/internal/native/to_primitive_test.go b/internal/native/to_primitive_test.go
+index c0d016bcb..a241334af 100644
+--- a/internal/native/to_primitive_test.go
++++ b/internal/native/to_primitive_test.go
+@@ -154,6 +154,7 @@ func primitiveMutants(t *testing.T) string {
+ 		compile := func(within, source string) error {
+ 			arguments := append(append(slices.Clone(flags), prefixMaps(within, "/adamic-runtime")...), "-c", source, "-o", strings.TrimSuffix(source, ".c")+".o")
+ 			command := toolchain.CommandIn(within, "clang", arguments...)
++			_ = exec.Command("clang++")
+ 			if output, err := command.CombinedOutput(); err != nil {
+ 				return fmt.Errorf("compiling runtime %s: %w\n%s", source, err, output)
+ 			}
+diff --git a/stage1/cohere/estree/recovery_cache_test.go b/stage1/cohere/estree/recovery_cache_test.go
+index 4457f7ba4..13121c574 100644
+--- a/stage1/cohere/estree/recovery_cache_test.go
++++ b/stage1/cohere/estree/recovery_cache_test.go
+@@ -282,3 +282,5 @@ func TestRecoveryNativeRecipe(t *testing.T) {
+ 		}
+ 	})
+ }
++
++func recoveryBareMutant() { _ = toolchain.CommandIn(".", "clang", "-v") }

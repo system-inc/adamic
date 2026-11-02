@@ -1,0 +1,17 @@
+=== RUN   TestProduct_ProfileCompilationProfiled
+=== PAUSE TestProduct_ProfileCompilationProfiled
+=== RUN   TestProfiledBuildIsTheSameBytesFromTwoToolsRoots
+=== PAUSE TestProfiledBuildIsTheSameBytesFromTwoToolsRoots
+=== CONT  TestProduct_ProfileCompilationProfiled
+=== CONT  TestProfiledBuildIsTheSameBytesFromTwoToolsRoots
+--- PASS: TestProfiledBuildIsTheSameBytesFromTwoToolsRoots (0.53s)
+=== NAME  TestProduct_ProfileCompilationProfiled
+    profile_compilation_main_test.go:289: build lint-profile-lowered 6431a851a634 miss 14.53
+    profile_compilation_main_test.go:316: build lint-profile-emit-c 689916133d45 miss 43.34
+    profile_compilation_main_test.go:289: build lint-profile-lowered 6431a851a634 hit 0.02
+    profile_compilation_main_test.go:316: build lint-profile-emit-javascript 520f1fbca996 miss 0.18
+    profile_compilation_main_test.go:216: build lint-profile-profiled 3151b4294cb7 miss 105.25
+    lint_setup_clock_products_test.go:87: product wall=2m44.002683169s
+--- PASS: TestProduct_ProfileCompilationProfiled (164.02s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	164.086s

@@ -1,0 +1,63 @@
+diff --git a/stage1/cohere/estree/recovery_cache_test.go b/stage1/cohere/estree/recovery_cache_test.go
+index 4457f7ba4..aec1356e8 100644
+--- a/stage1/cohere/estree/recovery_cache_test.go
++++ b/stage1/cohere/estree/recovery_cache_test.go
+@@ -191,13 +191,20 @@ func recoveryStableNative(repo, directory, source string) error {
+ 	args = append(args, "-ffile-prefix-map="+work+"=/adamic-estree", "-fdebug-prefix-map="+work+"=/adamic-estree", "-I", "runtime", "port.c")
+ 	args = append(args, units...)
+ 	args = append(args, "-o", filepath.Join(directory, "port"), "-lm")
+-	cmd := toolchain.CommandIn(work, "clang", args...)
++	cmd := recoveryClang(work, args...)
+ 	if output, err := cmd.CombinedOutput(); err != nil {
+ 		return fmt.Errorf("sanitized native build: %w: %s", err, output)
+ 	}
+ 	return nil
+ }
+ 
++// recoveryClang is the sanitized port build's clang, run in its work directory through native.ClangIn: the build's own
++// flags map the work directory, and ClangIn's maps take out where clang is installed. A bare toolchain.CommandIn here
++// mapped the work directory alone, so two boxes whose tools sit apart could build two ports for one key (#dc483fc).
++func recoveryClang(work string, args ...string) *exec.Cmd {
++	return toolchain.CommandIn(work, "clang", args...)
++}
++
+ // Oracle answers are build products too. Use stable relative input names so an
+ // audit's path fields and diagnostics do not depend on t.TempDir or the checkout.
+ func recoveryAnswer(t *testing.T, oracle, list, mode string) []byte {
+@@ -229,7 +236,7 @@ func recoveryNativeRecipe(t *testing.T, setup *recoverySetup) (string, string) {
+ 	source := recoveryNativeRecipeSource
+ 	inputs := buildcache.Inputs{
+ 		Name:      "estree-native-recipe-proof-a",
+-		Files:     []string{"internal/native/runtime", "internal/native/native.go", "internal/native/library.go", "stage1/cohere/estree/recovery_cache_test.go"},
++		Files:     []string{"internal/native/runtime", "internal/native/native.go", "internal/native/library.go", "internal/native/clang_in.go", "stage1/cohere/estree/recovery_cache_test.go"},
+ 		Flags:     append(native.Flags(native.Options{Sanitize: true}), source),
+ 		Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version"), buildcache.Tool("getconf", "GNU_LIBC_VERSION")},
+ 	}
+diff --git a/stage1/cohere/lint/profile_compilation_main_test.go b/stage1/cohere/lint/profile_compilation_main_test.go
+index 0a0106549..a36a5a97c 100644
+--- a/stage1/cohere/lint/profile_compilation_main_test.go
++++ b/stage1/cohere/lint/profile_compilation_main_test.go
+@@ -174,6 +174,14 @@ func compilationInputs(t *testing.T) buildcache.Inputs {
+ // profiledCompilationDirectory is where the profiled build's debug info says it was compiled, whatever the box.
+ const profiledCompilationDirectory = "/adamic-lint-profile"
+ 
++// profiledClang is the profiled build's clang, compiler run through native.ClangIn in this package's directory: its flags
++// map the product's directory and name the compilation directory, and ClangIn's maps take out where clang is installed,
++// which the debug info names among its include directories (#8wgk65j). A bare toolchain.Command here left that path in
++// the bytes, so two boxes whose tools sit apart built two profiled binaries for one key (#dc483fc).
++func profiledClang(compiler string, flags ...string) *exec.Cmd {
++	return toolchain.Command(compiler, flags...)
++}
++
+ func compilationProducts(t *testing.T) string {
+ 	return compilationProductKinds(t, []string{"scanner", "counted", "profiled"})
+ }
+@@ -243,7 +251,7 @@ func compilationProductKinds(t *testing.T, kinds []string) string {
+ 				flags := append(native.SourceFlags(string(source), options), "-g", "-ffile-prefix-map="+dir+"="+profiledCompilationDirectory, "-ffile-compilation-dir="+profiledCompilationDirectory, "-o", filepath.Join(dir, kind))
+ 				flags = append(flags, units...)
+ 				flags = append(flags, "-lm")
+-				command := toolchain.Command("clang", flags...)
++				command := profiledClang("clang", flags...)
+ 				if output, err := command.CombinedOutput(); err != nil {
+ 					return fmt.Errorf("profile clang: %w\n%s", err, output)
+ 				}

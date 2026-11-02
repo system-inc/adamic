@@ -1,0 +1,8 @@
+=== RUN   TestProductClangRunsThroughClangIn
+=== PAUSE TestProductClangRunsThroughClangIn
+=== CONT  TestProductClangRunsThroughClangIn
+    product_clang_test.go:105: internal/native/record_test.go:427:15 runs clang by name in a file that builds a product: run it through native's clangIn (or a seam on it, outside package native), so the tools root is mapped out of the bytes, or list internal/native/record_test.go:recordMutants in bareProductClang with why it may
+--- FAIL: TestProductClangRunsThroughClangIn (1.19s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/compilercensus	1.202s
+FAIL

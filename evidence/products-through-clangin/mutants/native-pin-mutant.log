@@ -1,0 +1,8 @@
+=== RUN   TestRuntimeMutantClangMapsTheToolsRoot
+=== PAUSE TestRuntimeMutantClangMapsTheToolsRoot
+=== CONT  TestRuntimeMutantClangMapsTheToolsRoot
+    runtime_mutants_test.go:48: a runtime mutant's clang maps no tools root: ["/usr/bin/clang" "-std=c11" "-Wall" "-Wextra" "-Werror" "-Wcast-function-type-strict" "-pedantic" "-Wno-unused-variable" "-Wno-unused-but-set-variable" "-Wno-unused-function" "-Wno-unused-parameter" "-Wno-self-assign" "-ffp-contract=off" "-fno-optimize-sibling-calls" "-pthread" "-DADAMIC_COUNT" "-O1" "-g" "-fsanitize=address,undefined" "-fno-sanitize-recover=all" "-fsanitize-undefined-strip-path-components=-1" "-ffile-prefix-map=/tmp/adamic-gate/TestRuntimeMutantClangMapsTheToolsRoot728944379/001=/adamic-runtime" "-c" "exceptions.c" "-o" "exceptions.o"] lacks -ffile-prefix-map=/usr/lib/llvm-18=/adamic-compiler
+--- FAIL: TestRuntimeMutantClangMapsTheToolsRoot (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.017s
+FAIL

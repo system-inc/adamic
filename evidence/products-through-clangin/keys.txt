@@ -1,0 +1,18 @@
+Product keys, guard-2 (abeb669f) -> products-through-clangin (f5d5ce39), from the "build <name> <key>" lines in base-*.log and h1-*.log.
+Both runs on one box, ADAMIC_GATE_UNCACHED=1, TMPDIR=/tmp/adamic-gate, clang 18.1.3 at /usr/lib/llvm-18.
+
+primitive-mutants                1e024aa3c2b1 -> 5d287d9636a8
+record-mutants                   18c062754f09 -> 8cc53b5925b7
+estree-native-recipe-proof-a     fce45a20a68a -> a1a35ae1c10e
+estree-native-recipe-proof-b     7d01b968760e -> b3dfb72d9cef
+lint-profile-lowered             7fcfad5376b9 -> 6431a851a634
+lint-profile-emit-c              7597765ee670 -> 689916133d45
+lint-profile-emit-javascript     0936292905ec -> 520f1fbca996
+lint-profile-profiled            0a9b71ef45be -> 3151b4294cb7
+
+Not measured but moved by the same inputs: lint-profile-scanner and lint-profile-counted (same inputs as profiled),
+estree's recovery shard ports (recovery_shards_test.go's inputs), and any product keyed on the whole internal/native
+directory (internal/oracle's program-* products), for internal/native/clang_in.go and runtime_mutants_test.go.
+
+Setup note: this box had no compiler-rt (no ASan runtime), so no sanitized product could link until
+apt-get install libclang-rt-18-dev.

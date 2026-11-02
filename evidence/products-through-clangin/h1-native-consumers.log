@@ -1,0 +1,168 @@
+=== RUN   TestRecordMutantsUnit00
+=== PAUSE TestRecordMutantsUnit00
+=== RUN   TestRecordMutantsUnit01
+=== PAUSE TestRecordMutantsUnit01
+=== RUN   TestRecordMutantsUnit02
+=== PAUSE TestRecordMutantsUnit02
+=== RUN   TestRecordMutantsUnit03
+=== PAUSE TestRecordMutantsUnit03
+=== RUN   TestRecordMutantsUnit04
+=== PAUSE TestRecordMutantsUnit04
+=== RUN   TestRecordMutantsUnit05
+=== PAUSE TestRecordMutantsUnit05
+=== RUN   TestRuntimeMutantClangMapsTheToolsRoot
+=== PAUSE TestRuntimeMutantClangMapsTheToolsRoot
+=== RUN   TestOrdinaryToPrimitiveMutants
+=== PAUSE TestOrdinaryToPrimitiveMutants
+=== CONT  TestRecordMutantsUnit00
+=== RUN   TestRecordMutantsUnit00/indices-in-insertion-order
+=== CONT  TestRecordMutantsUnit04
+=== CONT  TestRecordMutantsUnit02
+=== RUN   TestRecordMutantsUnit02/deleted-key-iterated
+=== RUN   TestRecordMutantsUnit04/stored-key-freed
+=== CONT  TestOrdinaryToPrimitiveMutants
+=== RUN   TestOrdinaryToPrimitiveMutants/wrong-order
+=== NAME  TestRecordMutantsUnit00/indices-in-insertion-order
+    record_test.go:465: build record-mutants 8cc53b5925b7 hit 0.31
+=== NAME  TestRecordMutantsUnit04/stored-key-freed
+    record_test.go:465: build record-mutants 8cc53b5925b7 hit 0.32
+=== NAME  TestRecordMutantsUnit02/deleted-key-iterated
+    record_test.go:465: build record-mutants 8cc53b5925b7 hit 0.35
+=== NAME  TestRecordMutantsUnit00/indices-in-insertion-order
+    record_test.go:471: adamic: counts: allocations 199 frees 199 retains 129 releases 224 peak 25 regions 0
+=== NAME  TestOrdinaryToPrimitiveMutants/wrong-order
+    to_primitive_test.go:240: build primitive-mutants 5d287d9636a8 hit 0.36
+=== RUN   TestOrdinaryToPrimitiveMutants/wrong-order/version-template
+=== NAME  TestRecordMutantsUnit02/deleted-key-iterated
+    record_test.go:471: adamic: counts: allocations 21 frees 21 retains 10 releases 22 peak 12 regions 0
+=== NAME  TestRecordMutantsUnit00/indices-in-insertion-order
+    record_test.go:478: caught by Node
+=== RUN   TestRecordMutantsUnit00/attributes-not-reset
+=== NAME  TestRecordMutantsUnit02/deleted-key-iterated
+    record_test.go:478: caught by Node
+--- PASS: TestRecordMutantsUnit02 (0.46s)
+    --- PASS: TestRecordMutantsUnit02/deleted-key-iterated (0.46s)
+=== CONT  TestRuntimeMutantClangMapsTheToolsRoot
+--- PASS: TestRuntimeMutantClangMapsTheToolsRoot (0.00s)
+=== CONT  TestRecordMutantsUnit05
+=== RUN   TestRecordMutantsUnit05/own-slot-null-read
+=== NAME  TestRecordMutantsUnit00/attributes-not-reset
+    record_test.go:465: build record-mutants 8cc53b5925b7 hit 0.00
+=== NAME  TestRecordMutantsUnit05/own-slot-null-read
+    record_test.go:465: build record-mutants 8cc53b5925b7 hit 0.00
+=== NAME  TestOrdinaryToPrimitiveMutants/wrong-order/version-template
+    to_primitive_test.go:250: wrong-order mutant caught by Node output and lookup/call trace
+=== RUN   TestOrdinaryToPrimitiveMutants/wrong-order/version-add
+    to_primitive_test.go:250: wrong-order mutant caught by Node output and lookup/call trace
+=== RUN   TestOrdinaryToPrimitiveMutants/wrong-order/declaration-array
+=== NAME  TestRecordMutantsUnit00/attributes-not-reset
+    record_test.go:478: caught by runtime error: load of value
+--- PASS: TestRecordMutantsUnit00 (0.62s)
+    --- PASS: TestRecordMutantsUnit00/indices-in-insertion-order (0.47s)
+    --- PASS: TestRecordMutantsUnit00/attributes-not-reset (0.16s)
+=== CONT  TestRecordMutantsUnit01
+=== RUN   TestRecordMutantsUnit01/uint32-max-as-index
+=== NAME  TestOrdinaryToPrimitiveMutants/wrong-order/declaration-array
+    to_primitive_test.go:250: wrong-order mutant caught by Node output and lookup/call trace
+=== RUN   TestOrdinaryToPrimitiveMutants/wrong-order/valueOf-first
+=== NAME  TestRecordMutantsUnit01/uint32-max-as-index
+    record_test.go:465: build record-mutants 8cc53b5925b7 hit 0.00
+    record_test.go:471: adamic: counts: allocations 199 frees 199 retains 129 releases 224 peak 25 regions 0
+=== NAME  TestRecordMutantsUnit05/own-slot-null-read
+    record_test.go:478: caught by runtime error: member access within null pointer
+--- PASS: TestRecordMutantsUnit05 (0.18s)
+    --- PASS: TestRecordMutantsUnit05/own-slot-null-read (0.18s)
+=== CONT  TestRecordMutantsUnit03
+=== RUN   TestRecordMutantsUnit03/overwrite-key-leaked
+=== NAME  TestRecordMutantsUnit04/stored-key-freed
+    record_test.go:478: caught by AddressSanitizer: heap-use-after-free
+--- PASS: TestRecordMutantsUnit04 (0.65s)
+    --- PASS: TestRecordMutantsUnit04/stored-key-freed (0.65s)
+=== NAME  TestRecordMutantsUnit03/overwrite-key-leaked
+    record_test.go:465: build record-mutants 8cc53b5925b7 hit 0.00
+=== NAME  TestRecordMutantsUnit01/uint32-max-as-index
+    record_test.go:478: caught by Node
+=== RUN   TestRecordMutantsUnit01/hidden-keys-listed
+    record_test.go:465: build record-mutants 8cc53b5925b7 hit 0.00
+=== NAME  TestOrdinaryToPrimitiveMutants/wrong-order/valueOf-first
+    to_primitive_test.go:250: wrong-order mutant caught by Node output and lookup/call trace
+=== RUN   TestOrdinaryToPrimitiveMutants/wrong-order/string-fallback
+=== NAME  TestRecordMutantsUnit01/hidden-keys-listed
+    record_test.go:471: adamic: counts: allocations 294 frees 294 retains 103 releases 265 peak 46 regions 0
+=== NAME  TestOrdinaryToPrimitiveMutants/wrong-order/string-fallback
+    to_primitive_test.go:250: wrong-order mutant caught by Node output and lookup/call trace
+=== RUN   TestOrdinaryToPrimitiveMutants/wrong-order/objects-throw
+=== NAME  TestRecordMutantsUnit01/hidden-keys-listed
+    record_test.go:478: caught by Node
+--- PASS: TestRecordMutantsUnit01 (0.15s)
+    --- PASS: TestRecordMutantsUnit01/uint32-max-as-index (0.08s)
+    --- PASS: TestRecordMutantsUnit01/hidden-keys-listed (0.08s)
+=== NAME  TestOrdinaryToPrimitiveMutants/wrong-order/objects-throw
+    to_primitive_test.go:250: wrong-order mutant caught by Node output and lookup/call trace
+=== RUN   TestOrdinaryToPrimitiveMutants/wrong-order/noncallable-skipped
+    to_primitive_test.go:250: wrong-order mutant caught by Node output and lookup/call trace
+=== RUN   TestOrdinaryToPrimitiveMutants/wrong-order/absent-throw
+    to_primitive_test.go:250: wrong-order mutant caught by Node output and lookup/call trace
+=== RUN   TestOrdinaryToPrimitiveMutants/wrong-order/call-throws
+    to_primitive_test.go:250: wrong-order mutant caught by Node output and lookup/call trace
+=== RUN   TestOrdinaryToPrimitiveMutants/wrong-order/get-throws
+    to_primitive_test.go:250: wrong-order mutant caught by Node output and lookup/call trace
+=== RUN   TestOrdinaryToPrimitiveMutants/wrong-order/lookup-after-mutation
+    to_primitive_test.go:250: wrong-order mutant caught by Node output and lookup/call trace
+=== RUN   TestOrdinaryToPrimitiveMutants/wrong-order/undefined-result
+=== NAME  TestRecordMutantsUnit03/overwrite-key-leaked
+    record_test.go:478: caught by LeakSanitizer
+--- PASS: TestRecordMutantsUnit03 (0.43s)
+    --- PASS: TestRecordMutantsUnit03/overwrite-key-leaked (0.43s)
+=== NAME  TestOrdinaryToPrimitiveMutants/wrong-order/undefined-result
+    to_primitive_test.go:250: wrong-order mutant caught by Node output and lookup/call trace
+=== RUN   TestOrdinaryToPrimitiveMutants/wrong-order/null-result
+    to_primitive_test.go:250: wrong-order mutant caught by Node output and lookup/call trace
+=== RUN   TestOrdinaryToPrimitiveMutants/wrong-order/boolean-result
+    to_primitive_test.go:250: wrong-order mutant caught by Node output and lookup/call trace
+=== RUN   TestOrdinaryToPrimitiveMutants/wrong-order/negative-zero-result
+    to_primitive_test.go:250: wrong-order mutant caught by Node output and lookup/call trace
+=== RUN   TestOrdinaryToPrimitiveMutants/wrong-order/string-result
+    to_primitive_test.go:250: wrong-order mutant caught by Node output and lookup/call trace
+=== RUN   TestOrdinaryToPrimitiveMutants/wrong-order/number-hint
+    to_primitive_test.go:250: wrong-order mutant caught by Node output and lookup/call trace
+=== RUN   TestOrdinaryToPrimitiveMutants/wrong-order/function-results-throw
+    to_primitive_test.go:250: wrong-order mutant caught by Node output and lookup/call trace
+=== RUN   TestOrdinaryToPrimitiveMutants/wrong-order/getter-mutates-next
+    to_primitive_test.go:250: wrong-order mutant caught by Node output and lookup/call trace
+=== RUN   TestOrdinaryToPrimitiveMutants/wrong-order/second-get-throws
+    to_primitive_test.go:250: wrong-order mutant caught by Node output and lookup/call trace
+=== RUN   TestOrdinaryToPrimitiveMutants/missing-TypeError
+    to_primitive_test.go:255: build primitive-mutants 5d287d9636a8 hit 0.00
+    to_primitive_test.go:264: missing-TypeError mutant caught by objects-throw
+    to_primitive_test.go:264: missing-TypeError mutant caught by absent-throw
+    to_primitive_test.go:264: missing-TypeError mutant caught by function-results-throw
+=== RUN   TestOrdinaryToPrimitiveMutants/leaked-object-result
+    to_primitive_test.go:268: build primitive-mutants 5d287d9636a8 hit 0.00
+    to_primitive_test.go:273: rejected-result release mutant caught by LeakSanitizer
+--- PASS: TestOrdinaryToPrimitiveMutants (1.81s)
+    --- PASS: TestOrdinaryToPrimitiveMutants/wrong-order (1.59s)
+        --- PASS: TestOrdinaryToPrimitiveMutants/wrong-order/version-template (0.09s)
+        --- PASS: TestOrdinaryToPrimitiveMutants/wrong-order/version-add (0.08s)
+        --- PASS: TestOrdinaryToPrimitiveMutants/wrong-order/declaration-array (0.06s)
+        --- PASS: TestOrdinaryToPrimitiveMutants/wrong-order/valueOf-first (0.08s)
+        --- PASS: TestOrdinaryToPrimitiveMutants/wrong-order/string-fallback (0.05s)
+        --- PASS: TestOrdinaryToPrimitiveMutants/wrong-order/objects-throw (0.05s)
+        --- PASS: TestOrdinaryToPrimitiveMutants/wrong-order/noncallable-skipped (0.05s)
+        --- PASS: TestOrdinaryToPrimitiveMutants/wrong-order/absent-throw (0.05s)
+        --- PASS: TestOrdinaryToPrimitiveMutants/wrong-order/call-throws (0.05s)
+        --- PASS: TestOrdinaryToPrimitiveMutants/wrong-order/get-throws (0.06s)
+        --- PASS: TestOrdinaryToPrimitiveMutants/wrong-order/lookup-after-mutation (0.05s)
+        --- PASS: TestOrdinaryToPrimitiveMutants/wrong-order/undefined-result (0.06s)
+        --- PASS: TestOrdinaryToPrimitiveMutants/wrong-order/null-result (0.06s)
+        --- PASS: TestOrdinaryToPrimitiveMutants/wrong-order/boolean-result (0.06s)
+        --- PASS: TestOrdinaryToPrimitiveMutants/wrong-order/negative-zero-result (0.05s)
+        --- PASS: TestOrdinaryToPrimitiveMutants/wrong-order/string-result (0.05s)
+        --- PASS: TestOrdinaryToPrimitiveMutants/wrong-order/number-hint (0.07s)
+        --- PASS: TestOrdinaryToPrimitiveMutants/wrong-order/function-results-throw (0.06s)
+        --- PASS: TestOrdinaryToPrimitiveMutants/wrong-order/getter-mutates-next (0.07s)
+        --- PASS: TestOrdinaryToPrimitiveMutants/wrong-order/second-get-throws (0.06s)
+    --- PASS: TestOrdinaryToPrimitiveMutants/missing-TypeError (0.17s)
+    --- PASS: TestOrdinaryToPrimitiveMutants/leaked-object-result (0.06s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	1.830s
