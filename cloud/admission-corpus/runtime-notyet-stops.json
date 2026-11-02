@@ -1,0 +1,53 @@
+{
+  "_comment": "Adding an entry is a ruling routed to @system_adamic, and only Adamic adds one. A run-time NotYet (#zhgxzjg, Adamic, Nov 2) is an honest stop where a key or a receiver can't be known before the read; it is never a type lie, so it is never listed in negative-witnesses.json, and a program can't sit in both. Schema: stops maps SHA-256 of exact source bytes to path (where the program lives, documentary and for scheduling), ruling_task, lifting_task (the task that lifts the stop; an entry without either is refused), and stderr (exact bytes: adamic: panic: <form> (reading '<key>'), with the form one of the tool's allowlisted forms, each naming its ruling, never a compiler bug). A listed program passes only when both backends exit 70 with exactly that stderr, their stdout is byte for byte Node's first bytes, and Node runs the source to the end, exit 0, printing more. One that now runs to the end and agrees with Node fails the gate as stale, so its entry leaves. No name lookup; an edit falls out of the list and demands Node agreement.",
+  "stops": {
+    "e85a6953f813a7dae6b94d8364cb8d2c34c6dcbc3aa7c82efe81079e9cfaf080": {
+      "path": "internal/oracle/testdata/reflect_get/stop_array.a",
+      "ruling_task": "#zhgxzjg",
+      "lifting_task": "#ys4naww",
+      "stderr": "adamic: panic: an array's or a tuple's properties aren't read by a run-time key yet (reading 'length')\n"
+    },
+    "47fd37fa64c58682983a994cff4dccab02b90932f9410baa9422c0b045a37676": {
+      "path": "internal/oracle/testdata/reflect_get/stop_error_stack.a",
+      "ruling_task": "#zhgxzjg",
+      "lifting_task": "#xf4n18n",
+      "stderr": "adamic: panic: an Error property Node sets and the native Error lacks isn't read yet (reading 'stack')\n"
+    },
+    "52d247f51dbecd80396018b218cf9901674de0f8527b6fa57931cbbedde7b4c6": {
+      "path": "internal/oracle/testdata/reflect_get/stop_literal_getter.a",
+      "ruling_task": "#zhgxzjg",
+      "lifting_task": "#80kf7th",
+      "stderr": "adamic: panic: an object literal's getter isn't read by a run-time key yet (reading 'value')\n"
+    },
+    "d936d4e28a60b2a9b68c2ea4d0c74dd286e7b661b074b96ed3ab2d865fa99011": {
+      "path": "internal/oracle/testdata/reflect_get/stop_method.a",
+      "ruling_task": "#zhgxzjg",
+      "lifting_task": "#abn11yw",
+      "stderr": "adamic: panic: a method isn't read by a run-time key yet (reading 'describe')\n"
+    },
+    "43e4665c25e4f7a7628575284b498293dfcb4cde51583cc3ab11e9a657593b7e": {
+      "path": "internal/oracle/testdata/reflect_get/stop_primitive.a",
+      "ruling_task": "#zhgxzjg",
+      "lifting_task": "#2ear8zk",
+      "stderr": "adamic: panic: a primitive receiver's properties aren't read yet (reading 'length')\n"
+    },
+    "9a3a00037ca3cc8ba10e69863a34b7ab8da3e3095b2257e2fcac3d37f312fca6": {
+      "path": "internal/oracle/testdata/reflect_get/stop_private.a",
+      "ruling_task": "#zhgxzjg",
+      "lifting_task": "#jgtzxh6",
+      "stderr": "adamic: panic: a name beginning with # isn't read by a run-time key yet (reading '#x')\n"
+    },
+    "30a252310fadeb064f63adc4f7a14735a705294b503bfc3736e4c0df73758730": {
+      "path": "internal/oracle/testdata/reflect_get/stop_prototype_object.a",
+      "ruling_task": "#zhgxzjg",
+      "lifting_task": "#0sps03r",
+      "stderr": "adamic: panic: an Object.prototype name isn't read by a run-time key yet (reading 'toString')\n"
+    },
+    "793c4a36944a35d496efc7298bec4047aec1b2b7955203d1e8b92de6a79b494f": {
+      "path": "internal/oracle/testdata/reflect_get/stop_prototype_record.a",
+      "ruling_task": "#zhgxzjg",
+      "lifting_task": "#0sps03r",
+      "stderr": "adamic: panic: an Object.prototype name isn't read by a run-time key yet (reading 'constructor')\n"
+    }
+  }
+}
