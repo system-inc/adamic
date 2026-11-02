@@ -1074,7 +1074,11 @@ func (e *emitter) value(expression ir.Expression) string {
 				elements = append(elements, e.value(element))
 			}
 		}
-		array := "adamicTuple([" + strings.Join(elements, ", ") + "])"
+		// An array, never a tuple: every tuple-typed literal lowers as an ObjectLiteral marked Tuple
+		// (lower's tupleLiteral), which the case above marks. Marking an array as one would let a checked
+		// view that wants an object admit it (adamicViewObject, the untagged matcher), where native's
+		// view check finds an array and stops (#nazvcep).
+		array := "[" + strings.Join(elements, ", ") + "]"
 		if len(expression.Metadata) != 0 {
 			types := []string{}
 			for _, field := range expression.Metadata {
