@@ -341,7 +341,8 @@ var auditLists sync.Map
 // auditHit rebuilds a product found in the cache, directory under key, into a new directory under the process's
 // temporary directory, never beside the product, so a build that bakes in a path its key doesn't name differs too
 // (Tests' change 2), and appends the audit line Loom reads (builder.AuditTree's auditLine) to $ADAMIC_BUILD_LOG: clean
-// with the digest, or mismatch with the stored digest, the rebuilt one and where the rebuilt copy is kept. A rebuild
+// with the digest, or mismatch with the stored digest, the rebuilt one and where the rebuilt copy is kept, followed on a
+// mismatch by an audit-difference line naming the first differing file and its section (firstDifference). A rebuild
 // that fails is the lookup's error, since nothing was compared.
 func auditHit(key, name, directory string, build func(directory string) error) error {
 	rebuilt, err := os.MkdirTemp("", ".audit-"+key[:12]+"-")
@@ -369,6 +370,14 @@ func auditHit(key, name, directory string, build func(directory string) error) e
 		return nil
 	}
 	note("audit %s %s mismatch %s %s %s", name, key, stored, fresh, rebuilt)
+	// Where the two copies first differ, on a line of its own after the mismatch line, whose fields Loom reads and which
+	// stays as it was: a path baked into a binary is found where it lands, in a file and a section, without unpacking
+	// the two copies by hand. A difference that can't be read is said so; the mismatch stands either way.
+	where, err := firstDifference(directory, rebuilt)
+	if err != nil {
+		where = "unread: " + err.Error()
+	}
+	note("audit-difference %s %s %s", name, key, where)
 	return nil
 }
 
