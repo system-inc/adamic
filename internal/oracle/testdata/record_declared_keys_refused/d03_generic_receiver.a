@@ -1,0 +1,6 @@
+// a-check: refused delete
+interface Options { target?: number; required: number; [option: string]: number | undefined; }
+function drop<T extends Options>(options: T, key: string): void { delete options[key]; }
+const options: Options = { required: 4 };
+drop(options, "required");
+console.log(typeof options.required);
