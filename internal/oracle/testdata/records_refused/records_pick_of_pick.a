@@ -1,0 +1,12 @@
+// a-check: refused a Options seen as Pick<Pick<Options, "module" | "target">, "target"> (fixed objects and records have different storage; copy explicitly)
+type OptionValue = string | number | boolean | undefined;
+interface Options {
+	module?: number;
+	target?: number;
+	strict?: boolean;
+	noImplicitAny?: boolean;
+	[option: string]: OptionValue;
+}
+const options: Options = { module: 1, target: 2 };
+const inner: Pick<Pick<Options, 'module' | 'target'>, 'target'> = options;
+console.log(String(inner.target));
