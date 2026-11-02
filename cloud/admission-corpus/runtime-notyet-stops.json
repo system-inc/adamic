@@ -37,6 +37,12 @@
       "lifting_task": "#jgtzxh6",
       "stderr": "adamic: panic: a name beginning with # isn't read by a run-time key yet (reading '#x')\n"
     },
+    "29f530d0ac164635cc667aa083f7d0e8e307af6a0302e0841805b039f5c3310f": {
+      "path": "internal/oracle/testdata/reflect_get/stop_prototype_class.a",
+      "ruling_task": "#zhgxzjg",
+      "lifting_task": "#0sps03r",
+      "stderr": "adamic: panic: an Object.prototype name isn't read by a run-time key yet (reading 'toString')\n"
+    },
     "30a252310fadeb064f63adc4f7a14735a705294b503bfc3736e4c0df73758730": {
       "path": "internal/oracle/testdata/reflect_get/stop_prototype_object.a",
       "ruling_task": "#zhgxzjg",
