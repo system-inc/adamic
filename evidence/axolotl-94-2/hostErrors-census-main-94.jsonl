@@ -1,0 +1,1 @@
+{"roots":["/tmp/tsc-94a/src/compiler/hostErrors.ts"],"kind":"Refused","where":"/tmp/tsc-94a/src/compiler/hostErrors.ts:14:15","reason":"throwing a TypeError","fix":"throw an Error: throw new Error(String(value)); what a catch takes is unknown, and an Error is what it can be sure of","seconds":0.036728783}
