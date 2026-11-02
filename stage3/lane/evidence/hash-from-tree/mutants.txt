@@ -1,0 +1,76 @@
+test_tree_hash_reports_change_after_adaptation_edit (test_shards.ShardTests.test_tree_hash_reports_change_after_adaptation_edit) ... {"name": "one", "status": "fail", "counts": {}, "seconds": 0.000471689999812952, "errors": ["stop before upstream"]}
+FAIL
+
+======================================================================
+FAIL: test_tree_hash_reports_change_after_adaptation_edit (test_shards.ShardTests.test_tree_hash_reports_change_after_adaptation_edit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_shards.py", line 163, in test_tree_hash_reports_change_after_adaptation_edit
+    self.assertEqual(report['inputs_hash'], shard_plan.unit_inputs_hash(unit, plan, key, 'runtime'))
+AssertionError: 'cc6ef6522fd63209b4d826a8c7139554b07e40b429a52b0a7d80a7b2160951b4' != '601473715fb028714516546e3c4e114af3c2ac3e5f83b0cd1a5a40c5b256fec2'
+- cc6ef6522fd63209b4d826a8c7139554b07e40b429a52b0a7d80a7b2160951b4
++ 601473715fb028714516546e3c4e114af3c2ac3e5f83b0cd1a5a40c5b256fec2
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)
+test_merge_rejects_report_key_from_another_tree (test_shards.ShardTests.test_merge_rejects_report_key_from_another_tree) ... FAIL
+
+======================================================================
+FAIL: test_merge_rejects_report_key_from_another_tree (test_shards.ShardTests.test_merge_rejects_report_key_from_another_tree)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_shards.py", line 329, in test_merge_rejects_report_key_from_another_tree
+    self.assertEqual(result['errors'], ['unit input identity mismatch: one'])
+AssertionError: Lists differ: [] != ['unit input identity mismatch: one']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'unit input identity mismatch: one'
+
+- []
++ ['unit input identity mismatch: one']
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+test_plan_bytes_ignore_adaptation_edit (test_shards.ShardTests.test_plan_bytes_ignore_adaptation_edit) ... FAIL
+
+======================================================================
+FAIL: test_plan_bytes_ignore_adaptation_edit (test_shards.ShardTests.test_plan_bytes_ignore_adaptation_edit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_shards.py", line 181, in test_plan_bytes_ignore_adaptation_edit
+    self.assertEqual(snapshots[0], snapshots[1])
+AssertionError: Tuples differ: ('{\n[28 chars]": "12ab08316543d07c66922aeefd773c3829b12bc47f[3695287 chars]}\n') != ('{\n[28 chars]": "131ea9c1f03c1c15ff5975abae906225ee39d07c40[3695287 chars]}\n')
+
+First differing element 0:
+'{\n [27 chars]": "12ab08316543d07c66922aeefd773c3829b12bc47f[3580157 chars]n}\n'
+'{\n [27 chars]": "131ea9c1f03c1c15ff5975abae906225ee39d07c40[3580157 chars]n}\n'
+
+Diff is 4442548 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 1 test in 4.458s
+
+FAILED (failures=1)
+[
+  {
+    "mutant": "stale-runner-hash-mutant.patch",
+    "test": "test_shards.ShardTests.test_tree_hash_reports_change_after_adaptation_edit",
+    "caught": true
+  },
+  {
+    "mutant": "accept-other-tree-mutant.patch",
+    "test": "test_shards.ShardTests.test_merge_rejects_report_key_from_another_tree",
+    "caught": true
+  },
+  {
+    "mutant": "artifact-in-plan-mutant.patch",
+    "test": "test_shards.ShardTests.test_plan_bytes_ignore_adaptation_edit",
+    "caught": true
+  }
+]
