@@ -621,7 +621,9 @@ function show(n: Node): void { if (isTypeElementLie(n)) { console.log(nameOf(n))
 // intersection's own id, since S's checked write checks a slot a value admitted as S needn't have: routed,
 // Language's y4 stopped at x.name = "w" with "<write>.name is not initialized" on both backends where Node
 // prints w (Optimizer's ruling, Nov 2). Mut's name is optional and Branded's value has none, or has "a".
-// Mutant: the four write sites routed again, and y4 stops at the write.
+// Unrouted, the write is a plain one, the read after it is checked through TypeElement's view, and both
+// agree with Node, printing w (Pupa, Nov 2). Mutant: the four write sites routed again, and y4 stops at
+// the write.
 func TestBrandedSupertypeWriteIsNotRouted(t *testing.T) {
 	t.Parallel()
 	const y4 = `interface Mut extends Node { name?: string; }
@@ -636,19 +638,30 @@ const mv: Mut = v; show(mv);`},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			source := brandedPrelude + y4 + probe.source
-			_, err := lowerTypeScriptAssertionSource(t, source)
-			var pending *NotYet
-			var refused *Refused
-			if errors.As(err, &pending) || errors.As(err, &refused) {
-				t.Logf("Y4 %s: stops before it lowers: %v", probe.name, err)
-				return
+			program := lowersAndAgreesWithNodeAs(t, brandedPrelude+y4+probe.source, ".ts")
+			reads, writes := 0, 0
+			inspect := func(node any) bool {
+				if read, ok := node.(ir.Property); ok && read.Name == "name" {
+					reads++
+					if !program.CheckedField(read.ViewReceiverTypeID, read.Name) {
+						t.Errorf("x.name's read isn't checked through TypeElement's view")
+					}
+				}
+				if write, ok := node.(ir.SetProperty); ok && write.Name == "name" {
+					writes++
+					if program.CheckedField(write.ViewReceiverTypeID, write.Name) {
+						t.Errorf("x.name = \"w\" is routed to TypeElement's checked write")
+					}
+				}
+				return true
 			}
-			if err != nil {
-				t.Fatal(err)
+			walk(program.Main, inspect)
+			for _, function := range program.Functions {
+				walk(function.Body, inspect)
 			}
-			t.Logf("Y4 %s: lowers", probe.name)
-			lowersAndAgreesWithNodeAs(t, source, ".ts")
+			if reads != 1 || writes != 1 {
+				t.Fatalf("want one read and one write of name, found %d and %d", reads, writes)
+			}
 		})
 	}
 }
