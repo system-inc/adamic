@@ -617,6 +617,42 @@ function show(n: Node): void { if (isTypeElementLie(n)) { console.log(nameOf(n))
 	}
 }
 
+// Only a read is routed to S's view. A write through S intersected with its supertypes keeps the
+// intersection's own id, since S's checked write checks a slot a value admitted as S needn't have: routed,
+// Language's y4 stopped at x.name = "w" with "<write>.name is not initialized" on both backends where Node
+// prints w (Optimizer's ruling, Nov 2). Mut's name is optional and Branded's value has none, or has "a".
+// Mutant: the four write sites routed again, and y4 stops at the write.
+func TestBrandedSupertypeWriteIsNotRouted(t *testing.T) {
+	t.Parallel()
+	const y4 = `interface Mut extends Node { name?: string; }
+function show<T extends Mut>(x: T): void { if (isTypeElement(x)) { x.name = "w"; console.log(String(x.name)); } }
+type Branded = Mut & { _declarationBrand: undefined; _typeElementBrand: undefined };
+`
+	for _, probe := range []struct{ name, source string }{
+		{"y4", `const v: Branded = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined };
+const mv: Mut = v; show(mv);`},
+		{"y4 holding a name", `const v: Branded = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a" };
+const mv: Mut = v; show(mv);`},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			source := brandedPrelude + y4 + probe.source
+			_, err := lowerTypeScriptAssertionSource(t, source)
+			var pending *NotYet
+			var refused *Refused
+			if errors.As(err, &pending) || errors.As(err, &refused) {
+				t.Logf("Y4 %s: stops before it lowers: %v", probe.name, err)
+				return
+			}
+			if err != nil {
+				t.Fatal(err)
+			}
+			t.Logf("Y4 %s: lowers", probe.name)
+			lowersAndAgreesWithNodeAs(t, source, ".ts")
+		})
+	}
+}
+
 // A generic helper is judged per instance: pick at Identifier lowers, and pick at TypeElement over the
 // same PropertySignature | Identifier argument is NotYet at its own call, in a program that lowers the
 // Identifier instance first. Mutant: one judgment kept for every instance of a declaration, and the second

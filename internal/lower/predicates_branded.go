@@ -417,7 +417,8 @@ func (l *lowering) brandedSupertypeMember(member, target *checker.Type) bool {
 // (CheckedFieldKey), and the intersection has an id of its own, so without this a read through it is no
 // read of S's view: g1's n.name at T = Node, admitted with no routing, was a widened read, NotYet as one
 // that may hold a checked view's value (view_widened.go, probed on Golem, Nov 1). brandedIntersection is
-// what makes it S's (Adamic's ruling, Nov 1).
+// what makes it S's (Adamic's ruling, Nov 1). Only reads take it (viewReadReceiverTypeID); a write keeps
+// the intersection's own id.
 func (l *lowering) brandedIntersectionReceiver(receiver *checker.Type) *checker.Type {
 	if receiver.Flags()&checker.TypeFlagsIntersection == 0 {
 		return receiver

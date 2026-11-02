@@ -721,7 +721,12 @@ func (l *lowering) viewedField(node *ast.Node, property ir.Property) ir.Property
 	property.View = sourceExpression(node)
 	property.ViewWhere = l.program.Where(node)
 	if node.Kind == ast.KindPropertyAccessExpression {
-		property.ViewReceiverTypeID = l.viewReceiverTypeID(l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression))
+		receiver := l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression)
+		property.ViewReceiverTypeID = l.viewReadReceiverTypeID(receiver)
+		if ast.IsAssignmentTarget(node) {
+			// The read half of a compound or logical assignment keeps its write's id.
+			property.ViewReceiverTypeID = l.viewReceiverTypeID(receiver)
+		}
 	}
 	if symbol := l.checker.GetSymbolAtLocation(node.Name()); symbol != nil {
 		declared := l.checker.GetTypeOfSymbol(symbol)
@@ -2073,7 +2078,10 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		if position >= 0 && position < len(elements) {
 			property.ViewTypeID = l.viewTypeID(elements[position])
 			property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
-			property.ViewReceiverTypeID = l.viewReceiverTypeID(receiver)
+			property.ViewReceiverTypeID = l.viewReadReceiverTypeID(receiver)
+			if ast.IsAssignmentTarget(node) {
+				property.ViewReceiverTypeID = l.viewReceiverTypeID(receiver)
+			}
 			property.ViewType = l.checker.TypeToString(elements[position])
 			property.ViewAllowed = l.viewLiterals(elements[position])
 			property.View = sourceExpression(node)

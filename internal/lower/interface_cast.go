@@ -364,16 +364,30 @@ func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *check
 // Nullable receivers read the present object's contract. A generic receiver
 // uses its instantiated type, or its constraint when the binder remains rigid.
 // Neither operation relates unrelated objects merely because their names match.
-// A branded supertype intersected only with its supertypes is read as that
-// supertype (brandedIntersectionReceiver).
 func (l *lowering) viewReceiverTypeID(receiver *checker.Type) int {
+	return l.viewTypeID(l.viewReceiver(receiver))
+}
+
+// viewReadReceiverTypeID is a field read's receiver id, viewReceiverTypeID's but
+// with a branded supertype intersected only with its supertypes read as that
+// supertype (brandedIntersectionReceiver). Only a read is routed: a write keeps
+// its receiver's own id, since a write routed to S's checked write checked the
+// slot S's view keys, which a value admitted as S needn't have, and stopped where
+// Node wrote (Language's y4, Optimizer's ruling, Nov 2). The read half of a
+// compound or logical assignment is the write's, so it keeps the write's id too.
+func (l *lowering) viewReadReceiverTypeID(receiver *checker.Type) int {
+	return l.viewTypeID(l.brandedIntersectionReceiver(l.viewReceiver(receiver)))
+}
+
+// viewReceiver is the type a receiver's view is keyed by, before its id.
+func (l *lowering) viewReceiver(receiver *checker.Type) *checker.Type {
 	receiver = l.concrete(receiver)
 	if receiver.Flags()&checker.TypeFlagsTypeParameter != 0 {
 		if constraint := l.checker.GetBaseConstraintOfType(receiver); constraint != nil {
 			receiver = l.concrete(constraint)
 		}
 	}
-	return l.viewTypeID(l.brandedIntersectionReceiver(l.checker.GetNonNullableType(receiver)))
+	return l.checker.GetNonNullableType(receiver)
 }
 
 // viewTypeID is the id a read's view names a type by, kept with its type in viewTypes.
