@@ -24,8 +24,10 @@ var DynamicKeyedStops = []DynamicKeyedStop{
 	// missing name would read a method as undefined.
 	{"Primitive", "a primitive receiver's properties aren't read yet"},
 	{"Function", "a function's properties aren't read by a run-time key yet"},
-	{"Tuple", "a tuple's properties aren't read by a run-time key yet"},
-	{"Array", "an array's properties aren't read by a run-time key yet"},
+	// One stop for an array and a tuple: the JavaScript backend marks every array literal as it marks
+	// a tuple (adamicTuple), so it can't tell them apart. A tuple can't reach the read today (lowering
+	// refuses one viewed as unknown), so the native tuple branch is a guard, sharing these words.
+	{"Array", "an array's or a tuple's properties aren't read by a run-time key yet"},
 	{"Collection", "a Map's or a Set's properties aren't read by a run-time key yet"},
 	{"TypedArray", "a typed array's properties aren't read by a run-time key yet"},
 	{"StaticClass", "a class's static properties aren't read by a run-time key yet"},

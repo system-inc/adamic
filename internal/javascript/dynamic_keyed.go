@@ -52,7 +52,8 @@ func dynamicKeyedRuntime(program *ir.Program) string {
 	builder.WriteString("\tif (value === undefined || value === null) return adamicDynamicStop('Nullish', key);\n")
 	builder.WriteString("\tif (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') return adamicDynamicStop('Primitive', key);\n")
 	builder.WriteString("\tif (value instanceof AdamicClosure) return adamicDynamicStop('Function', key);\n")
-	builder.WriteString("\tif (adamicTupleObjects.has(value)) return adamicDynamicStop('Tuple', key);\n")
+	// A tuple is an array on this backend, and every array literal is marked as a tuple is
+	// (adamicTuple), so the two share native's one stop.
 	builder.WriteString("\tif (Array.isArray(value)) return adamicDynamicStop('Array', key);\n")
 	builder.WriteString("\tif (value instanceof Map || value instanceof Set) return adamicDynamicStop('Collection', key);\n")
 	builder.WriteString("\tif (ArrayBuffer.isView(value)) return adamicDynamicStop('TypedArray', key);\n")

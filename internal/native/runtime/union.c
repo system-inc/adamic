@@ -360,7 +360,7 @@ adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_stri
 		keyed_stop(adamic_dynamic_keyed_stop_runtime_value, key);
 	}
 	adamic_object *object = (adamic_object *)value;
-	if (object->tuple) keyed_stop(adamic_dynamic_keyed_stop_tuple, key);
+	if (object->tuple) keyed_stop(adamic_dynamic_keyed_stop_array, key);
 	if (object->class != NULL && object->class->is_static) keyed_stop(adamic_dynamic_keyed_stop_static_class, key);
 	if (key->length > 0 && key->bytes[0] == '#') keyed_stop(adamic_dynamic_keyed_stop_private, key);
 	bool error = adamic_error_is(object);
