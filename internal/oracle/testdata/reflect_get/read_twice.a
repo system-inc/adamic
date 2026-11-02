@@ -1,0 +1,15 @@
+// The same key read twice off one object, each result dropped, and then twice more and kept: each read
+// gives its own count (#zhgxzjg, Runtime's first condition), so the object's string outlives them all
+// and nothing leaks. The string is built at run time, since a literal is immortal.
+import { propertyOf } from './hostErrors.ts';
+
+function joined(left: string, right: string): string {
+	return left + right;
+}
+const holder = { name: joined('na', 'me') };
+propertyOf(holder, 'name');
+propertyOf(holder, 'name');
+const first = propertyOf(holder, 'name');
+const second = propertyOf(holder, 'name');
+if (typeof first === 'string' && typeof second === 'string') console.log(first + second);
+console.log(holder.name);

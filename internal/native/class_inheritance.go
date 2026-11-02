@@ -58,6 +58,59 @@ func (e *emitter) classDeclarations(builder *strings.Builder) {
 		}
 
 	}
+	e.keyedClassDeclarations(builder)
+}
+
+// keyedClassRow is one class's row in the table a run-time key read takes (adamic_keyed_class): its
+// emitted name, whether an object literal made it, and its method table's names.
+type keyedClassRow struct {
+	name    string
+	literal bool
+	methods []string
+}
+
+// keyedClassRows are the program's classes as a run-time key read judges them, one row for each
+// emitted class, taken from the IR class the JavaScript backend's helper reads (literal, and
+// ir.Program's DynamicKeyedMethodNames), or none in a program without the read.
+func (e *emitter) keyedClassRows() []keyedClassRow {
+	if !e.keyedReads() {
+		return nil
+	}
+	rows := []keyedClassRow{}
+	seen := map[string]bool{}
+	for index, class := range e.program.Classes {
+		name := e.className(index + 1)
+		if seen[name] {
+			// One stable symbol, one definition (classDeclarations), so one row.
+			continue
+		}
+		seen[name] = true
+		rows = append(rows, keyedClassRow{name, class.Literal, e.program.DynamicKeyedMethodNames(index + 1)})
+	}
+	return rows
+}
+
+// keyedClassDeclarations writes the table adamic_dynamic_property_keyed takes, only into a program with
+// a run-time key read, so every other program's C is what it was.
+func (e *emitter) keyedClassDeclarations(builder *strings.Builder) {
+	rows := e.keyedClassRows()
+	if len(rows) == 0 {
+		return
+	}
+	entries := []string{}
+	for _, row := range rows {
+		names := "NULL"
+		if len(row.methods) > 0 {
+			names = row.name + "_keyed_method_names"
+			quoted := []string{}
+			for _, method := range row.methods {
+				quoted = append(quoted, cString(method))
+			}
+			fmt.Fprintf(builder, "static const char *const %s[] = {%s};\n", names, strings.Join(quoted, ", "))
+		}
+		entries = append(entries, fmt.Sprintf("\t{&%s, %t, %s, %d},\n", row.name, row.literal, names, len(row.methods)))
+	}
+	fmt.Fprintf(builder, "static const adamic_keyed_class adamic_keyed_classes[] = {\n%s};\n", strings.Join(entries, ""))
 }
 
 func (e *emitter) callCode(call ir.Call, arguments []string) string {

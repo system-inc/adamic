@@ -1,0 +1,43 @@
+// propertyOf exactly as stage3's hostErrors.ts carries it, with Performance's message and 47's two
+// helpers beside it, reading each thing a run-time key read answers (#zhgxzjg): a host error's code,
+// an absent name, an Error's empty message, and own fields by a key a concatenation and a substring
+// build at run time. A class getter is getter.a's: a getter named code beside errorCode's error.code
+// makes that read a dynamic-read hazard, NotYet.
+import { readFileSync } from 'node:fs';
+import { errorCode, errorMessage, propertyOf } from './hostErrors.ts';
+
+function show(label: string, value: unknown): void {
+	if (typeof value === 'string') console.log(`${label}: "${value}"`);
+	else if (typeof value === 'number') console.log(`${label}: ${String(value)}`);
+	else console.log(`${label}: ${typeof value}`);
+}
+function joined(left: string, right: string): string {
+	return left + right;
+}
+function inside(text: string): string {
+	return text.substring(1, text.length - 1);
+}
+
+try {
+	readFileSync('/nonexistent-adamic-reflect-get/file', 'utf8');
+} catch (error) {
+	show('code', propertyOf(error, 'code'));
+	show('errorCode', errorCode(error));
+}
+show('absent', propertyOf({ present: 'here' }, 'absent'));
+show('message', propertyOf(new Error(), 'message'));
+show('given message', propertyOf(new Error('given'), 'message'));
+show('name', propertyOf(new TypeError('typed'), 'name'));
+const record = { alpha: 'first', beta: 'second' };
+show('concatenated', propertyOf(record, joined('al', 'pha')));
+show('substring', propertyOf(record, inside('[beta]')));
+try {
+	propertyOf(null, 'code');
+} catch (error) {
+	show('null', errorMessage(error));
+}
+try {
+	propertyOf(undefined, 'code');
+} catch (error) {
+	show('undefined', errorMessage(error));
+}

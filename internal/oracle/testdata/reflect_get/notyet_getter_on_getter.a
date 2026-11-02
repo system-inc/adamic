@@ -1,0 +1,14 @@
+// A class getter that reads another getter keeps the program from reading by a run-time key.
+import { propertyOf } from './hostErrors.ts';
+
+class Layered {
+	base = 'base';
+	get inner(): string {
+		return this.base + '!';
+	}
+	get outer(): string {
+		return this.inner + '?';
+	}
+}
+console.log(new Layered().outer);
+console.log(typeof propertyOf(new Layered(), 'base'));
