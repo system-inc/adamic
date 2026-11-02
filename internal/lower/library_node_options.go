@@ -43,7 +43,7 @@ func (l *lowering) nodeHostConsumesOptionsPosition(node *ast.Node, index int) bo
 	}
 	optionIndex := 1
 	switch l.nodeLibraryMember(node) {
-	case "node:fs.statSync", "node:fs.mkdirSync", "node:fs.readFileSync", "node:fs.rmSync", "node:fs.mkdtempSync":
+	case "node:fs.watchFile", "node:fs.statSync", "node:fs.mkdirSync", "node:fs.readFileSync", "node:fs.rmSync", "node:fs.mkdtempSync":
 	case "node:fs.writeFileSync":
 		optionIndex = 2
 	default:

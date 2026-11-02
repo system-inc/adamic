@@ -1,0 +1,14 @@
+import * as fs from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+const directory = fs.mkdtempSync(join(tmpdir(), 'adamic-watch-'));
+const file = join(directory, 'watched');
+let stage = 0;
+function changed(curr: fs.Stats, prev: fs.Stats): void {
+ console.log(`${curr.size} ${prev.size}`);
+ if (stage === 0) { stage = 1; fs.writeFileSync(file, 'data'); }
+ else if (stage === 1) { stage = 2; fs.unlinkSync(file); }
+ else if (stage === 2) { stage = 3; fs.writeFileSync(file, 'new data'); }
+ else { fs.unwatchFile(file); fs.rmSync(directory, {recursive:true, force:true}); }
+}
+fs.watchFile(file, {persistent:true, interval:10}, changed);
