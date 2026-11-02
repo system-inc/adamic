@@ -1,0 +1,13 @@
+// for...in of a caught Error through a structural view, a road that already stops.
+try {
+	throw new Error('m');
+} catch (e) {
+	if (e instanceof Error) {
+		const o: { message: string } = e;
+		let count = 0;
+		for (const key in o) {
+			count += key.length;
+		}
+		console.log(`${count}`);
+	}
+}

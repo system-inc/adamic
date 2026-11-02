@@ -214,6 +214,9 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 	if err != nil {
 		return "the program's runtime shapes are not known"
 	}
+	if name != "valueOf" && l.errorMayHide(receiver) {
+		return "an Error may be hidden by the view"
+	}
 	reason := ""
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
@@ -231,10 +234,6 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 				}
 				if representation, known := l.representation(shape); known && representation != ir.Object && !l.exactPlainObject(receiver) {
 					reason = "a value with a different native representation may be hidden by the view"
-					return true
-				}
-				if name != "valueOf" && l.isLibraryType(shape, "Error") {
-					reason = "an Error may be hidden by the view"
 					return true
 				}
 				member := l.checker.GetPropertyOfType(shape, name)
@@ -288,6 +287,91 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 		module.AsNode().ForEachChild(visit)
 	}
 	return reason
+}
+
+// errorMayHide reports whether receiver may hold an Error. Node keeps an Error's message as an own property
+// it doesn't enumerate, and its name on the prototype, where natively both are fields like any other's, so
+// no road that walks or tests own properties tells the truth about one yet. An Error made in the source
+// may hide when its type fits receiver's. One the runtime made, from a failing host call or a brand check,
+// has no such node, so it may hide whenever the library's Error fits receiver's type and the program can
+// take one: a catch that binds what it caught, or a Promise's rejection handler. prototypeHazard decides
+// its own Error case here, so the two can't drift. This deliberately errs toward refusal.
+func (l *lowering) errorMayHide(receiver *ast.Node) bool {
+	view := l.concrete(l.checker.GetTypeAtLocation(receiver))
+	modules, err := l.moduleOrder(l.program.Files()[0])
+	if err != nil {
+		return true
+	}
+	made, takes := false, false
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if made {
+			return true
+		}
+		if node.Kind == ast.KindNewExpression || node.Kind == ast.KindCallExpression {
+			shape := l.checker.GetTypeAtLocation(node)
+			if l.isLibraryType(shape, "Error") && l.checker.IsTypeAssignableTo(shape, view) {
+				made = true
+				return true
+			}
+		}
+		takes = takes || takesRejection(node)
+		node.ForEachChild(visit)
+		return false
+	}
+	for _, module := range modules {
+		module.AsNode().ForEachChild(visit)
+	}
+	if made {
+		return true
+	}
+	if !takes {
+		return false
+	}
+	errorType := l.libraryErrorType()
+	return errorType == nil || l.checker.IsTypeAssignableTo(errorType, view)
+}
+
+// takesRejection reports whether node hands the program a thrown value it didn't make: a catch that binds
+// it, or a call that can pass a Promise's rejection reason to a handler, read by name alone so a receiver
+// typed loosely still counts.
+func takesRejection(node *ast.Node) bool {
+	if node.Kind == ast.KindCatchClause {
+		return node.AsCatchClause().VariableDeclaration != nil
+	}
+	if node.Kind != ast.KindCallExpression {
+		return false
+	}
+	call := node.AsCallExpression()
+	callee := ast.SkipParentheses(call.Expression)
+	if callee.Kind != ast.KindPropertyAccessExpression {
+		return false
+	}
+	switch callee.Name().Text() {
+	case "catch", "allSettled":
+		return true
+	case "then":
+		return call.Arguments != nil && len(call.Arguments.Nodes) > 1
+	}
+	return false
+}
+
+// libraryErrorType is the library's Error interface, the type a caught Error the runtime made has, or nil
+// if the library doesn't declare one.
+func (l *lowering) libraryErrorType() *checker.Type {
+	for _, file := range l.program.CompilerProgram().GetSourceFiles() {
+		if !load.IsLibrary(file) {
+			continue
+		}
+		for _, statement := range file.Statements.Nodes {
+			if statement.Kind == ast.KindInterfaceDeclaration && statement.Name().Text() == "Error" {
+				if symbol := l.checker.GetSymbolOfDeclaration(statement); symbol != nil {
+					return l.checker.GetDeclaredTypeOfSymbol(symbol)
+				}
+			}
+		}
+	}
+	return nil
 }
 
 // An unannotated const made directly from a plain literal has no boxed primitive hidden by a

@@ -1,0 +1,10 @@
+// propertyIsEnumerable through a view of an Error the runtime made: Node prints false.
+import { readFileSync } from 'node:fs';
+try {
+	readFileSync('/no/such', 'utf8');
+} catch (e) {
+	if (e instanceof Error) {
+		const o: { message: string } = e;
+		console.log(`${o.propertyIsEnumerable('message')}`);
+	}
+}
