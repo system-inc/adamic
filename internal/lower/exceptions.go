@@ -5,6 +5,7 @@ import (
 	"reflect"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
@@ -79,13 +80,60 @@ func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
 		}
 		// Any value may be thrown (docs/0.1.md, ruled October 19): until the runtime carries one that
 		// isn't an Error, it isn't built yet, never refused.
-		return nil, l.notYet(thrown, "throwing a "+l.checker.TypeToString(l.checker.GetTypeAtLocation(thrown)))
+		return nil, l.notYet(thrown, "throwing "+l.thrownCategory(l.checker.GetTypeAtLocation(thrown)))
 	}
 	value, err := l.expression(thrown)
 	if err != nil {
 		return nil, err
 	}
 	return []ir.Statement{ir.Throw{Value: value}}, nil
+}
+
+// thrownCategory names a thrown value that isn't an Error by what JavaScript's typeof would call it, never
+// by its type's text: a literal type prints the literal ("a 3") and a structural one its whole shape, and
+// the program's own text is already at the location. A union across categories is "a value".
+func (l *lowering) thrownCategory(thrown *checker.Type) string {
+	var category func(*checker.Type) string
+	category = func(member *checker.Type) string {
+		flags := member.Flags()
+		switch {
+		case flags&checker.TypeFlagsStringLike != 0:
+			return "a string"
+		case flags&checker.TypeFlagsNumberLike != 0:
+			return "a number"
+		case flags&checker.TypeFlagsBooleanLike != 0:
+			return "a boolean"
+		case flags&checker.TypeFlagsBigIntLike != 0:
+			return "a bigint"
+		case flags&checker.TypeFlagsESSymbolLike != 0:
+			return "a symbol"
+		case flags&checker.TypeFlagsNull != 0:
+			return "null"
+		case flags&(checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0:
+			return "undefined"
+		case flags&checker.TypeFlagsUnion != 0:
+			named := ""
+			for _, each := range member.Types() {
+				if one := category(each); named == "" {
+					named = one
+				} else if one != named {
+					return "a value"
+				}
+			}
+			return named
+		case flags&(checker.TypeFlagsObject|checker.TypeFlagsNonPrimitive) != 0:
+			if len(l.checker.GetSignaturesOfType(member, checker.SignatureKindCall)) > 0 {
+				return "a function"
+			}
+			return "an object"
+		}
+		return "a value"
+	}
+	named := category(thrown)
+	if named == "null" || named == "undefined" {
+		return named + ", which isn't an Error,"
+	}
+	return named + " that isn't an Error"
 }
 
 // newError lowers new Error(message), and new Error(), or one of the other errorClasses, whose name
