@@ -301,7 +301,7 @@ func (l *lowering) plainMethods() plainMethodSet {
 		case ir.ObjectLiteral:
 			for _, field := range node.Fields {
 				written(field.Name, field.Value)
-				if node.Record {
+				if node.Record && field.Value != nil {
 					holds(field.Value.Type())
 				}
 			}

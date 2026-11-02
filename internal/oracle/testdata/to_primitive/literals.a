@@ -13,5 +13,5 @@ show({ valueOf: () => 8 });
 try {
 	show({ toString: 'not a function' });
 } catch (error) {
-	console.log(String(error));
+	show(error);
 }

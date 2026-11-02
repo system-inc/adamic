@@ -34,21 +34,21 @@ var toPrimitiveAnswers = []struct{ file, stdout string }{
 		"3\n<3>\n" +
 		"undefined\n<undefined>\n" +
 		"toString ran\nstring\ntoString ran\n<string>\n" +
-		cannotConvert + "\n" +
-		"caught " + cannotConvert + "\n"},
+		cannotConvert + "\n<" + cannotConvert + ">\n" +
+		cannotConvert + "\n<" + cannotConvert + ">\n"},
 	{"literals.a", "x\n<x>\n" +
 		"method\n<method>\n" +
 		"42\n<42>\n" +
 		"[object Object]\n<[object Object]>\n" +
 		"[object Object]\n<[object Object]>\n" +
-		cannotConvert + "\n"},
+		cannotConvert + "\n<" + cannotConvert + ">\n"},
 	{"errors.a", "Error: plain\n<Error: plain>\n" +
 		"TypeError: typed\n<TypeError: typed>\n" +
 		"Error\n<Error>\n" +
 		"Error\n<Error>\n" +
 		"Custom: renamed\n<Custom: renamed>\n" +
 		"renamed\n<renamed>\n"},
-	{"records.a", "[object Object]\n<[object Object]>\n" + cannotConvert + "\n"},
+	{"records.a", "[object Object]\n<[object Object]>\n" + cannotConvert + "\n<" + cannotConvert + ">\n"},
 }
 
 // Mutants, each its own run with the change reverted by git apply -R: the object arm skipped (the

@@ -66,13 +66,14 @@ show(new Valued());
 show(new Swapped());
 show(new Missing());
 show(new Ordered());
+// What a catch takes is held as an Error, so it's printed through show's unknown.
 try {
 	show(new Neither());
 } catch (error) {
-	console.log(String(error));
+	show(error);
 }
 try {
 	console.log(templated(new Neither()));
 } catch (error) {
-	console.log(`caught ${error}`);
+	show(error);
 }

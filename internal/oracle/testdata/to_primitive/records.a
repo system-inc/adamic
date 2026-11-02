@@ -14,5 +14,5 @@ named['toString'] = 3;
 try {
 	show(named);
 } catch (error) {
-	console.log(String(error));
+	show(error);
 }
