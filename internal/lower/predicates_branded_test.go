@@ -544,7 +544,7 @@ console.log(nameOf(b));
 	brandedStops(t, brandedPrelude+`interface MethodLike extends TypeElement { _methodLikeBrand: undefined; readonly arity?: number; }
 function isMethodLikeLie(n: Node): n is MethodLike { return kindOf(n) !== 0; }
 function show<T extends TypeElement>(n: T): void { if (isMethodLikeLie(n)) { console.log(String(n.arity)); } }
-const w = { kind: 80, pos: 2, _declarationBrand: undefined, _typeElementBrand: undefined, arity: "x" }; const e: TypeElement = w; show(e);
+const w = { kind: 80, pos: 2, _declarationBrand: undefined, _typeElementBrand: undefined, name: "m", arity: "x" }; const e: TypeElement = w; show(e);
 `, "adamic: panic: field read failed: n.arity matches no member of number | undefined")
 }
 
