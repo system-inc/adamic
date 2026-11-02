@@ -268,7 +268,7 @@ func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
 			return visit(branch)
 		}
 		if ast.IsClassLike(node) {
-			for _, clause := range nodesOf(node.AsClassDeclaration().HeritageClauses) {
+			for _, clause := range nodesOf(node.ClassLikeData().HeritageClauses) {
 				if clause.AsHeritageClause().Token == ast.KindExtendsKeyword {
 					for _, element := range clause.AsHeritageClause().Types.Nodes {
 						if err := visit(element.AsExpressionWithTypeArguments().Expression); err != nil {
@@ -279,7 +279,7 @@ func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
 			}
 			// Instance fields and constructor bodies execute at new, not at the
 			// declaration. Unknown construction keeps the checks in those bodies.
-			for _, member := range node.AsClassDeclaration().Members.Nodes {
+			for _, member := range node.ClassLikeData().Members.Nodes {
 				if ast.HasStaticModifier(member) || member.Kind == ast.KindClassStaticBlockDeclaration {
 					if err := visit(member); err != nil {
 						return err
