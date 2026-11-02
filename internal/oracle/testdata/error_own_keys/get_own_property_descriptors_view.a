@@ -1,0 +1,10 @@
+// Object.getOwnPropertyDescriptors of a caught Error through a structural view, a road that already stops.
+try {
+	throw new Error('m');
+} catch (e) {
+	if (e instanceof Error) {
+		const o: { message: string } = e;
+		const descriptors = Object.getOwnPropertyDescriptors(o);
+		console.log(typeof descriptors);
+	}
+}
