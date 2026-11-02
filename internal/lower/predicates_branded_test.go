@@ -237,22 +237,19 @@ const s: Signature = { kind: 174, pos: 3, arity: "1", _declarationBrand: undefin
 		{"asserts over a union", `function assertTypeElement(n: Node): asserts n is TypeElement { if (kindOf(n) === 0) { throw new Error("no"); } }
 function show(x: PropertySignature | Identifier): void { assertTypeElement(x); console.log(x.typeText); }
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" }; show(i);`, "a checked predicate target TypeElement that narrows Identifier, which isn't its supertype"},
-		// A generic argument narrows to T & S, and its first read on the true side concretes to Node & S, an
-		// intersection no view covers, so the call is NotYet (Language's g1 to g3 on 7f4b7030). Mutant: the
-		// type-parameter guard dropped, and g1 lowers.
-		{"generic argument", `function show<T extends Node>(n: T): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
-const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const v: Node = w; show(v);`, "over a generic argument T"},
+		// A generic argument narrows to T & S, and its first read on the true side concretes to the instance's
+		// intersection. Here T is the object literal's own type, which S isn't assignable to, so the call is
+		// NotYet (one of Language's g1 to g3 on 7f4b7030). The other two, at Node inferred and given, and the
+		// generic object argument, g4 on 4a1fe092, read S intersected only with supertypes of S, so they're
+		// checked now (TestBrandedSupertypeGenericIntersection). Mutant: the type-parameter guard dropped, and
+		// this is NotYet by the wrong rule.
 		{"generic argument through a supertype", `function show<T extends Declaration>(n: T): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
 const w = { kind: 80, pos: 2, escapedText: "e", name: 5, _declarationBrand: undefined }; show(w);`, "over a generic argument T"},
-		{"generic argument given its type", `function show<T extends Node>(n: T): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
-const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show<Node>(w);`, "over a generic argument T"},
-		// A generic object type mentions its type parameter in an argument (Language's g4 and g5 on
-		// 4a1fe092). Mutant: the guard judged by the type's own flags, and g4 lowers.
-		{"generic object argument", `interface Holder<K extends number> { readonly kind: K; readonly pos: number; }
-function show<K extends number>(n: Holder<K>): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
-const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const v: Holder<number> = w; show(v);`, "over a generic argument Holder<K>"},
+		// g5 on 4a1fe092: its read concretes to Readonly<T> & TypeElement with T still unmapped (measured on
+		// Golem, Nov 1), so a member mentions a type parameter and the call stays NotYet (Adamic's ruling,
+		// Nov 1: B's unread rule).
 		{"generic readonly argument", `function show<T extends Node>(n: Readonly<T>): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
-const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const v: Node = w; show(v);`, "over a generic argument Readonly<T>"},
+const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const v: Node = w; show(v);`, "read on the true side as Readonly<T> & TypeElement"},
 		// An anonymous object holding a type parameter is held by the related-member rule, not the generic
 		// one, since mentionsTypeParameter doesn't walk members (Language's g7 on 59d9c44b, a should), and K,
 		// read from no reference or signature, is unread, so no mapper makes a new type of it. It's safe
@@ -407,32 +404,100 @@ console.log(String(firstPos(elements)));
 // tsc's tryCast and cast take a predicate as a function type and call it on a value of the type its claim
 // extends: `test(value)` claims TOut of a TIn, with TOut extends TIn. Each instance is judged where it's
 // lowered (core.ts:1779, Adamic's ruling on 810ce7d9). Both read the value, after `value !== undefined`,
-// as TIn & TOut, which concretes to Node & TypeElement, an intersection no view covers, so both are NotYet
-// at their own call, for isTypeElement and isClassElement alike, and so is TOut = TypeElement over a
-// PropertySignature | Node (Compiler's union pin). Reading S intersected with its supertypes through S's
-// view is its own change after this one (Adamic's ruling, Nov 1), which lowers these. Mutant: the read
-// compared as written, unconcreted, and the reason names the wrong type.
+// as TIn & TOut, which concretes to Node & TypeElement: S intersected only with a supertype of S, read
+// through S's checked view (brandedIntersection, Adamic's ruling, Nov 1). So both lower and agree with Node
+// for isTypeElement and isClassElement alike, and so does TOut = TypeElement over a PropertySignature |
+// Node (Compiler's union pin), whose result reads through TypeElement's view. A lie stops at its first bad
+// read: inside the helper's body when the body reads a field, as castName does, and through tryCast, whose
+// body reads nothing, at the caller's. Mutants: the read compared as written, unconcreted, and these are
+// NotYet; the intersection's reads not routed to S's view (brandedIntersectionReceiver), and castName's
+// value.name, read through Positioned & TypeElement, is NotYet as a widened read, honest or lying.
 func TestBrandedSupertypeTryCastIsJudgedPerInstance(t *testing.T) {
 	t.Parallel()
+	// castName is cast reading a field of its value after the narrowing. Its TIn holds undefined, so
+	// `value !== undefined` reads it as TIn & {}, which the claim narrows to TIn & {} & TOut, as cast's.
 	const helpers = `interface ClassElement extends Declaration { _classElementBrand: undefined; readonly name?: string; }
+interface Positioned { readonly pos: number; readonly name?: string; }
 function isClassElement(n: Node): n is ClassElement { const k = kindOf(n); return k === 172 || k === 174; }
 function tryCast<TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut | undefined { return value !== undefined && test(value) ? value : undefined; }
 function cast<TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut { if (value !== undefined && test(value)) { return value; } throw new Error("Invalid cast"); }
+function castName<TOut extends TIn, TIn extends Positioned | undefined = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut { if (value !== undefined && test(value)) { console.log(String(value.name)); return value; } throw new Error("Invalid cast"); }
 `
-	for _, probe := range []struct{ name, source, want string }{
+	for _, probe := range []struct{ name, source string }{
 		{"tryCast", `function show(n: Node): void { const e = tryCast(n, isTypeElement); console.log(e === undefined ? "no" : String(e.pos)); }
-show({ kind: 171, pos: 1 });`, "read on the true side as Node & TypeElement"},
+show({ kind: 171, pos: 1 }); show({ kind: 80, pos: 2 });`},
 		{"tryCast class element", `function show(n: Node): void { const c = tryCast(n, isClassElement); console.log(c === undefined ? "no" : String(c.pos)); }
-show({ kind: 172, pos: 2 });`, "read on the true side as Node & ClassElement"},
+show({ kind: 172, pos: 2 }); show({ kind: 80, pos: 3 });`},
 		{"cast", `const a = { kind: 171, pos: 1, name: "a", typeText: "t" };
-console.log(String(cast(a as Node, isTypeElement).pos));`, "read on the true side as Node & TypeElement"},
+const e = cast(a as Node, isTypeElement); console.log(String(e.pos) + " " + String(e.name));`},
+		{"cast class element", `const a = { kind: 172, pos: 4, name: "c" };
+const c = cast(a as Node, isClassElement); console.log(String(c.pos) + " " + String(c.name));`},
+		{"castName", `const a = { kind: 171, pos: 1, name: "a", typeText: "t" };
+console.log(String(castName(a as Node, isTypeElement).pos));`},
 		{"union", `const a = { kind: 171, pos: 1, name: "a", typeText: "t" };
 const p: PropertySignature | Node = a;
-const u = tryCast(p, isTypeElement); console.log(u === undefined ? "no" : String(u.name));`, "read on the true side as"},
+const u = tryCast(p, isTypeElement); console.log(u === undefined ? "no" : String(u.name));`},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			_, err := lowerTypeScriptAssertionSource(t, brandedPrelude+helpers+probe.source)
+			lowersAndAgreesWithNodeAs(t, brandedPrelude+helpers+probe.source, ".ts")
+		})
+	}
+	const lie = `const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const n: Node = w;
+`
+	for _, probe := range []struct{ name, source, stderr string }{
+		{"castName lie", `console.log(String(castName(n, isTypeElementLie).pos));`, "adamic: panic: field read failed: value.name matches no member of string | undefined"},
+		{"tryCast lie", `const e = tryCast(n, isTypeElementLie); console.log(e === undefined ? "no" : String(e.name));`, "adamic: panic: field read failed: e.name matches no member of string | undefined"},
+		{"union lie", `const p: PropertySignature | Node = n; const u = tryCast(p, isTypeElementLie); console.log(u === undefined ? "no" : String(u.name));`, "adamic: panic: field read failed: u.name matches no member of string | undefined"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			brandedStops(t, brandedPrelude+helpers+lie+probe.source, probe.stderr)
+		})
+	}
+}
+
+// A generic argument narrows to T & S, which concretes to the instance's own intersection. At T = Node, or
+// another supertype of S, it's S intersected only with supertypes of S, read through S's view, so an
+// honest value agrees with Node and a lie stops at the read (Language's g1 at Node, and its g4 at
+// Holder<number>, Adamic's ruling, Nov 1). At T = PropertySignature, a subtype of S, at T = Identifier,
+// which S isn't assignable to, and at T = Named, whose name is required where S's is optional, the
+// intersection holds a member that isn't a supertype, so the call stays NotYet. Mutants: any member let
+// through, and g1 at PropertySignature, Identifier and Named lower; comparability in place of
+// assignability, and g1 at Named lowers; the reads not routed to S's view, and the honest g1 is NotYet as
+// a widened read.
+func TestBrandedSupertypeGenericIntersection(t *testing.T) {
+	t.Parallel()
+	const g1 = `function show<T extends Node>(n: T): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
+`
+	const honest = `function show<T extends Node>(n: T): void { if (isTypeElement(n)) { console.log(String(n.name)); } else { console.log("no"); } }
+`
+	lowersAndAgreesWithNodeAs(t, brandedPrelude+honest+`const w = { kind: 171, pos: 2, name: "a" }; const v: Node = w; show(v);
+const x = { kind: 80, pos: 3 }; const y: Node = x; show(y);
+`, ".ts")
+	const lie = `const w = { kind: 80, pos: 2, escapedText: "e", name: 5 };
+`
+	for _, probe := range []struct{ name, source string }{
+		{"g1 at Node", g1 + `const v: Node = w; show(v);`},
+		{"g1 given Node", g1 + `show<Node>(w);`},
+		{"g4 at Holder<number>", `interface Holder<K extends number> { readonly kind: K; readonly pos: number; }
+function show<K extends number>(n: Holder<K>): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
+const v: Holder<number> = w; show(v);`},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			brandedStops(t, brandedPrelude+lie+probe.source, "adamic: panic: field read failed: n.name matches no member of string | undefined")
+		})
+	}
+	for _, probe := range []struct{ name, source, want string }{
+		{"g1 at PropertySignature", g1 + `const p: PropertySignature = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a", typeText: "t" }; show(p);`, "read on the true side as PropertySignature & TypeElement"},
+		{"g1 at Identifier", g1 + `const i: Identifier = { kind: 80, pos: 2, escapedText: "e" }; show(i);`, "read on the true side as Identifier & TypeElement"},
+		{"g1 at Named", `interface Named extends Node { readonly name: string; }
+` + g1 + `const m: Named = { kind: 80, pos: 2, name: "m" }; show(m);`, "read on the true side as Named & TypeElement"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerTypeScriptAssertionSource(t, brandedPrelude+probe.source)
 			var pending *NotYet
 			if !errors.As(err, &pending) || !strings.Contains(err.Error(), probe.want) {
 				t.Fatalf("want NotYet with %q, got %v", probe.want, err)
