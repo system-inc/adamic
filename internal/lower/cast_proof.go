@@ -214,8 +214,12 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	}
 	if source.Flags()&checker.TypeFlagsUnion == 0 {
 
-		origins := len(l.result.ViewOrigins)
-		defer func() { l.result.ViewOrigins = l.result.ViewOrigins[:origins] }()
+		// A proof's view is no view: neither its origin nor its contract's getters outlive it.
+		origins, getters := len(l.result.ViewOrigins), len(l.contractGetters)
+		defer func() {
+			l.result.ViewOrigins = l.result.ViewOrigins[:origins]
+			l.contractGetters = l.contractGetters[:getters]
+		}()
 		if checked, err := l.interfaceCast(node, ir.Read{Of: ir.Object}, source, target); checked != nil || err != nil {
 			proof := castProof{interfaceView: checked != nil}
 			// The tag the view tests, which .a's refusal names in the narrowing it offers.
