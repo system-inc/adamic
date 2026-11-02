@@ -10,8 +10,10 @@ import (
 	"github.com/system-inc/adamic/internal/leancensus"
 )
 
-// buildcacheSlice are the packages of the tree buildcache links, which a lean build's recipe keys whole with buildcache
-// (buildcache's leanRecipeOf): the build may reach them as it likes, and nothing else of the tree.
+// buildcacheSlice are the packages of the tree buildcache links, which the build may reach as it likes, and nothing
+// else of the tree. A reviewed lean caller's build is keyed by the recipe of the binary that settles it (settle.go's
+// recipeFor, since only buildcache's own builds take leanRecipeOf), and buildcache's part of that recipe is counted by
+// its make files: a buildcache file outside them, as pinned.go is, moves no key (#yzwm4rj).
 var buildcacheSlice = []string{
 	leancensus.ModulePath + "/internal/buildcache", leancensus.ModulePath + "/internal/buildcache/goplan",
 	leancensus.ModulePath + "/internal/buildcache/location", leancensus.ModulePath + "/internal/childguard",
