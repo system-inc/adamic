@@ -7306,6 +7306,14 @@
   {
     "package": "flow",
     "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_records_union_member_entry_a_919626d5ad2e",
+    "program": "internal/oracle/testdata/records_union_member_entry.a",
+    "path": "../oracle/testdata/records_union_member_entry.a",
+    "sha256": "e7a811767f9a7079d009b9bd87dbbd4df5305a2103d4319b80e302860c97791b"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
     "test": "TestFlowProgram____oracle_testdata_records_union_null_a_77f714cd737c",
     "program": "internal/oracle/testdata/records_union_null.a",
     "path": "../oracle/testdata/records_union_null.a",
@@ -17150,6 +17158,14 @@
     "program": "internal/oracle/testdata/records_type_only_value.a",
     "path": "../oracle/testdata/records_type_only_value.a",
     "sha256": "702192870e6135b5e856ad08f6033f66c3763608d687cfb7d0421791b4c2404c"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_records_union_member_entry_a_919626d5ad2e",
+    "program": "internal/oracle/testdata/records_union_member_entry.a",
+    "path": "../oracle/testdata/records_union_member_entry.a",
+    "sha256": "e7a811767f9a7079d009b9bd87dbbd4df5305a2103d4319b80e302860c97791b"
   },
   {
     "package": "flow",
@@ -27002,6 +27018,14 @@
   {
     "package": "flow",
     "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_records_union_member_entry_a_919626d5ad2e",
+    "program": "internal/oracle/testdata/records_union_member_entry.a",
+    "path": "../oracle/testdata/records_union_member_entry.a",
+    "sha256": "e7a811767f9a7079d009b9bd87dbbd4df5305a2103d4319b80e302860c97791b"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
     "test": "TestFlowProgram____oracle_testdata_records_union_null_a_77f714cd737c",
     "program": "internal/oracle/testdata/records_union_null.a",
     "path": "../oracle/testdata/records_union_null.a",
@@ -36846,6 +36870,14 @@
     "program": "internal/oracle/testdata/records_type_only_value.a",
     "path": "../oracle/testdata/records_type_only_value.a",
     "sha256": "702192870e6135b5e856ad08f6033f66c3763608d687cfb7d0421791b4c2404c"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_records_union_member_entry_a_919626d5ad2e",
+    "program": "internal/oracle/testdata/records_union_member_entry.a",
+    "path": "../oracle/testdata/records_union_member_entry.a",
+    "sha256": "e7a811767f9a7079d009b9bd87dbbd4df5305a2103d4319b80e302860c97791b"
   },
   {
     "package": "flow",
@@ -47062,6 +47094,14 @@
     "program": "internal/oracle/testdata/records_type_only_value.a",
     "path": "../oracle/testdata/records_type_only_value.a",
     "sha256": "702192870e6135b5e856ad08f6033f66c3763608d687cfb7d0421791b4c2404c"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_records_union_member_entry_a_919626d5ad2e",
+    "program": "internal/oracle/testdata/records_union_member_entry.a",
+    "path": "../oracle/testdata/records_union_member_entry.a",
+    "sha256": "e7a811767f9a7079d009b9bd87dbbd4df5305a2103d4319b80e302860c97791b"
   },
   {
     "package": "fresh",

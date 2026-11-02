@@ -436,7 +436,16 @@ func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*che
 	}
 	if to.Flags()&checker.TypeFlagsUnion != 0 {
 		visited[[2]*checker.Type{from, to}] = true
-		for _, member := range l.definedMembers(to) {
+		members := l.definedMembers(to)
+		// A value enters a union that names its own type as that member, whatever other members it's
+		// assignable to: CompilerOptions in CompilerOptions | PrinterOptions stays a record, and a read on
+		// the union dispatches on the value it holds.
+		for _, member := range members {
+			if member == from {
+				return true
+			}
+		}
+		for _, member := range members {
 			if l.checker.IsTypeAssignableTo(from, member) && !l.sameRecordStorage(from, member, visited) {
 				return false
 			}

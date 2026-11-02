@@ -1,0 +1,20 @@
+type OptionValue = string | number | boolean | undefined;
+interface Options {
+	newLine?: number;
+	removeComments?: boolean;
+	target?: number;
+	[option: string]: OptionValue;
+}
+interface Printer {
+	newLine?: number;
+	removeComments?: boolean;
+	omitTrailingSemicolon?: boolean;
+}
+function newLine(options: Options | Printer): string {
+	return options.newLine === 1 ? 'crlf' : options.newLine === undefined ? 'unset' : 'lf';
+}
+const options: Options = { target: 2, newLine: 1 };
+const printer: Printer = { newLine: 0, omitTrailingSemicolon: true };
+console.log(`${newLine(options)} ${newLine(printer)} ${newLine({ removeComments: true })}`);
+delete options.newLine;
+console.log(newLine(options));
