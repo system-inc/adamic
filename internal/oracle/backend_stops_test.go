@@ -70,8 +70,10 @@ func assertUnlistedBackendSourceAgreement(t *testing.T, nativeBackend bool) {
 func terminalStackProgram(t *testing.T) *ir.Program {
 	t.Helper()
 	// The weak-after-free stop is pinned at its weak_miscompiles path by weak_differential_test.go.
-	if len(ruledBackendDivergences) != 1 {
-		t.Fatal("only the named-stack fixture is ruled to diverge")
+	// The rest are installed-layout's and no-javascript-plugins' two fixtures each, which pin the
+	// source on Node too.
+	if len(ruledBackendDivergences) != 5 || ruledBackendDivergences[0].fixture != "internal/oracle/testdata/d96d304_try_stack.a" {
+		t.Fatal("only the named-stack fixture is ruled to diverge between backends, and it's the first row")
 	}
 	path := filepath.Join(repository, "internal/oracle/testdata/d96d304_try_stack.a")
 	source := onSliceNode(t, path)

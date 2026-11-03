@@ -825,13 +825,15 @@ func runNativeAgreesShard(t *testing.T, shard int) {
 				}
 				return
 			}
-			if difference := disagreement(oracle, native); difference != "" {
+			// A ruled fixture that pins Node's side holds each side to its own pinned outcome
+			// (backend_divergences_test.go); any other is held to the source byte for byte.
+			if difference := sourceDisagreement(fixture.path, oracle, native, false); difference != "" {
 				t.Errorf("%s\nnode:   exit %d, stdout %q, stderr %q\nnative: exit %d, stdout %q, stderr %q",
 					difference, oracle.exitCode, oracle.stdout, oracle.stderr, native.exitCode, native.stdout, native.stderr)
 			}
 			// The JavaScript backend runs the same IR the native one compiled, with nothing of C, so
 			// where it differs from the source the fault is in lowering.
-			if difference := disagreement(oracle, backend); difference != "" {
+			if difference := sourceDisagreement(fixture.path, oracle, backend, true); difference != "" {
 				t.Errorf("JavaScript backend: %s\nnode:    exit %d, stdout %q, stderr %q\nbackend: exit %d, stdout %q, stderr %q",
 					difference, oracle.exitCode, oracle.stdout, oracle.stderr, backend.exitCode, backend.stdout, backend.stderr)
 			}

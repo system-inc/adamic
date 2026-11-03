@@ -35,6 +35,10 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 		return "adamicNodeProcess.platform"
 	case "host_chdir":
 		return "adamicNodeProcess.chdir(" + args[0] + ")"
+	case "host_require_missing":
+		// Node's error for a module that isn't installed, with the first line of its message: native's
+		// answer, which the JavaScript backend gives too, since the generated module could find one that is.
+		return "(() => { throw Object.assign(new Error(\"Cannot find module '\" + " + args[0] + " + \"'\"), {code: 'MODULE_NOT_FOUND'}); })()"
 	case "date_new":
 		return "new Date(" + args[0] + ")"
 	case "date_time":
