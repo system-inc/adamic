@@ -1,0 +1,6 @@
+// A Node-coded error nothing catches: utimesSync of a time that isn't finite throws Node's
+// ERR_INVALID_ARG_TYPE TypeError before it looks at the path, printed `TypeError [ERR_INVALID_ARG_TYPE]: ...`
+// (#z28avqd).
+import { utimesSync } from 'node:fs';
+console.log('before');
+utimesSync('/adamic-coded-host-error-missing', Infinity, 0);

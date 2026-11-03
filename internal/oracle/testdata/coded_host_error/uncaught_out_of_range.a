@@ -1,0 +1,5 @@
+// A Node-coded error nothing catches: process.exitCode of a fraction throws Node's ERR_OUT_OF_RANGE
+// RangeError, printed `RangeError [ERR_OUT_OF_RANGE]: ...` (#z28avqd).
+import 'node:process';
+console.log('before');
+process.exitCode = 1.5;

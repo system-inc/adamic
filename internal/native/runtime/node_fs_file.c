@@ -22,14 +22,20 @@
 static const char *const error_fields[] = {"name", "message", "code"};
 static const bool error_refs[] = {true, true, true};
 static const adamic_field_kind error_kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_reference};
+// One layout, two shapes, picked at each raise by how Node builds the error. error_shape is an errno
+// error's, and the two coded errors Node prints plain as well: ERR_STRING_TOO_LONG, `Error: Cannot
+// create a string longer than ...`, and a descriptor's ERR_OUT_OF_RANGE (file_descriptor).
+// coded_error_shape is an error Node builds with makeNodeErrorWithCode or as a SystemError, whose
+// toString brackets the code (exceptions.c).
 static const adamic_shape error_shape = {3, error_fields, error_refs, &adamic_error_methods, error_kinds};
+static const adamic_shape coded_error_shape = {3, error_fields, error_refs, &adamic_coded_error_methods, error_kinds};
 
 static adamic_string *text(const char *bytes) {
     return adamic_decode_utf8((const unsigned char *)bytes, strlen(bytes));
 }
 
-static void raise_error(const char *name, const char *code, const char *message) {
-    adamic_object *error = adamic_object_new(&error_shape);
+static void raise_error(const adamic_shape *shape, const char *name, const char *code, const char *message) {
+    adamic_object *error = adamic_object_new(shape);
     error->slots[0].reference = text(name);
     error->slots[1].reference = text(message);
     error->slots[2].reference = text(code);
@@ -69,7 +75,7 @@ static void system_error(int error, const char *operation, const char *path) {
     if (message == NULL) { adamic_panic("out of memory", 13); }
     if (path == NULL) { snprintf(message, length, "%s: %s, %s", code, reason, operation); }
     else { snprintf(message, length, "%s: %s, %s '%s'", code, reason, operation, path); }
-    raise_error("Error", code, message);
+    raise_error(&error_shape, "Error", code, message);
     free(message);
 }
 
@@ -124,7 +130,7 @@ static void invalid_value(const char *prefix, const adamic_string *value) {
     memcpy(message, prefix, strlen(prefix));
     memcpy(message + strlen(prefix), preview->bytes, preview->length);
     message[length - 1] = 0;
-    raise_error("TypeError", "ERR_INVALID_ARG_VALUE", message);
+    raise_error(&coded_error_shape, "TypeError", "ERR_INVALID_ARG_VALUE", message);
     free(message); adamic_release(preview);
 }
 
@@ -134,7 +140,7 @@ static char *path_bytes(const adamic_string *path, bool throwing) {
     return NULL;
 }
 
-static bool integer(double value, double maximum, const char *argument) {
+static bool integer(const adamic_shape *shape, double value, double maximum, const char *argument) {
     if (isfinite(value) && value == trunc(value) && value >= 0 && value <= maximum) { return true; }
     adamic_string *shown = adamic_string_from_number(value);
     char message[300];
@@ -144,22 +150,25 @@ static bool integer(double value, double maximum, const char *argument) {
         snprintf(message, sizeof message, "The value of \"%s\" is out of range. It must be >= 0 && <= %.0f. Received %.*s", argument, maximum, (int)shown->length, shown->bytes);
     }
     adamic_release(shown);
-    raise_error("RangeError", "ERR_OUT_OF_RANGE", message);
+    raise_error(shape, "RangeError", "ERR_OUT_OF_RANGE", message);
     return false;
 }
 
-static void read_range(const char *argument, const char *range, double value) {
+static void read_range(const adamic_shape *shape, const char *argument, const char *range, double value) {
     adamic_string *shown = adamic_string_from_number(value);
     char message[300];
     snprintf(message, sizeof message, "The value of \"%s\" is out of range. It must be %s. Received %.*s", argument, range, (int)shown->length, shown->bytes);
     adamic_release(shown);
-    raise_error("RangeError", "ERR_OUT_OF_RANGE", message);
+    raise_error(shape, "RangeError", "ERR_OUT_OF_RANGE", message);
 }
+// A descriptor's RangeError is plain on Node, `RangeError: The value of "fd" ...` (closeSync, readSync,
+// writeSync and writeFileSync of a buffer, measured on Node 24.14.1), where its other range errors
+// bracket the code.
 static bool file_descriptor(double value) {
     if (isfinite(value) && (value < 0 || value > INT_MAX)) {
-        read_range("fd", ">= 0 && <= 2147483647", value); return false;
+        read_range(&error_shape, "fd", ">= 0 && <= 2147483647", value); return false;
     }
-    return integer(value, INT_MAX, "fd");
+    return integer(&error_shape, value, INT_MAX, "fd");
 }
 
 static int flags(const adamic_string *flag) {
@@ -190,7 +199,7 @@ static int open_file(const adamic_string *path, const adamic_string *flag, doubl
     if (name == NULL) { return -1; }
     int of = flags(flag);
     if (of < 0) { free(name); return -1; }
-    if (!integer(mode, 4294967295., "mode")) { free(name); return -1; }
+    if (!integer(&coded_error_shape, mode, 4294967295., "mode")) { free(name); return -1; }
 #ifdef ADAMIC_TARGET_WASI
     if (mode != 0666) {
         free(name);
@@ -244,7 +253,7 @@ static adamic_string *read_file(int descriptor, bool owned) {
         free(buffer);
         char message[120];
         snprintf(message, sizeof message, "Cannot create a string longer than 0x%zx characters", (size_t)ADAMIC_STRING_MAX_UNITS);
-        raise_error("Error", "ERR_STRING_TOO_LONG", message);
+        raise_error(&error_shape, "Error", "ERR_STRING_TOO_LONG", message);
         return NULL;
     }
     adamic_string *result = adamic_decode_utf8(buffer, length);
@@ -301,18 +310,18 @@ double adamic_fs_file_close(double descriptor) {
 
 double adamic_fs_file_read_sync(double descriptor, adamic_array *buffer, double offset, double length, double position) {
     adamic_output_flush();
-    if (!integer(offset, 9007199254740991., "offset")) { return 0; }
+    if (!integer(&coded_error_shape, offset, 9007199254740991., "offset")) { return 0; }
     length = adamic_bitwise_or(length, 0);
-    if (!isfinite(position) || position != trunc(position)) { read_range("position", "an integer", position); return 0; }
-    if (position < -1 || position > 9007199254740991.) { read_range("position", ">= -1 && <= 9007199254740991", position); return 0; }
+    if (!isfinite(position) || position != trunc(position)) { read_range(&coded_error_shape, "position", "an integer", position); return 0; }
+    if (position < -1 || position > 9007199254740991.) { read_range(&coded_error_shape, "position", ">= -1 && <= 9007199254740991", position); return 0; }
     if (length == 0) { return 0; }
     if (buffer->length == 0) {
-        raise_error("TypeError", "ERR_INVALID_ARG_VALUE", "The argument 'buffer' is empty and cannot be written. Received <Buffer >"); return 0;
+        raise_error(&coded_error_shape, "TypeError", "ERR_INVALID_ARG_VALUE", "The argument 'buffer' is empty and cannot be written. Received <Buffer >"); return 0;
     }
-    if (length < 0) { read_range("length", ">= 0", length); return 0; }
+    if (length < 0) { read_range(&coded_error_shape, "length", ">= 0", length); return 0; }
     if (offset + length > (double)buffer->length) {
         char range[80]; snprintf(range, sizeof range, "<= %.0f", (double)buffer->length - offset);
-        read_range("length", range, length); return 0;
+        read_range(&coded_error_shape, "length", range, length); return 0;
     }
     if (!file_descriptor(descriptor)) { return 0; }
     unsigned char *bytes = malloc((size_t)length);
@@ -572,7 +581,7 @@ adamic_string *adamic_fs_file_mkdir(const adamic_string *path, bool recursive, d
     adamic_output_flush();
     char *name = path_bytes(path, true);
     if (name == NULL) { return NULL; }
-    if (!integer(mode, 4294967295., "options.mode")) { free(name); return NULL; }
+    if (!integer(&coded_error_shape, mode, 4294967295., "options.mode")) { free(name); return NULL; }
 #ifdef ADAMIC_TARGET_WASI
     if (mode != 0777) {
         free(name);
@@ -639,7 +648,7 @@ static void remove_error(int error, const char *operation, const char *name) {
         char *message = malloc(length);
         if (message == NULL) { adamic_panic("out of memory", 13); }
         snprintf(message, length, "%s, %s: %s '%s'", code, reason, name, name);
-        raise_error("Error", code, message); free(message);
+        raise_error(&error_shape, "Error", code, message); free(message);
     } else { system_error(error, operation, name); }
 }
 
@@ -659,7 +668,7 @@ static void remove_path(const char *name, bool recursive, bool force) {
         char *message = malloc(length);
         if (message == NULL) { adamic_panic("out of memory", 13); }
         snprintf(message, length, "Path is a directory: rm returned EISDIR (is a directory) %s", name);
-        raise_error("SystemError", "ERR_FS_EISDIR", message); free(message); return;
+        raise_error(&coded_error_shape, "SystemError", "ERR_FS_EISDIR", message); free(message); return;
     }
     if (rmdir(name) == 0) { return; }
     int error = errno;
@@ -717,7 +726,7 @@ static double fs_utimes(const adamic_string *path, double atime, double mtime, b
             char message[250];
             snprintf(message, sizeof message, "The \"time\" argument must be an instance of Date or an Time in seconds. Received type number (%.*s)", (int)shown->length, shown->bytes);
             adamic_release(shown); free(name);
-            raise_error("TypeError", "ERR_INVALID_ARG_TYPE", message);
+            raise_error(&coded_error_shape, "TypeError", "ERR_INVALID_ARG_TYPE", message);
             return 0;
         }
 #ifdef ADAMIC_TARGET_WASI
