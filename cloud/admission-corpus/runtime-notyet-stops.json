@@ -13,6 +13,12 @@
       "lifting_task": "#xf4n18n",
       "stderr": "adamic: panic: an Error property Node sets and the native Error lacks isn't read yet (reading 'stack')\n"
     },
+    "0f3f677bdbc14c1b867e666a44f365584f39988b4d3bc427b6f380a25949c9c5": {
+      "path": "internal/oracle/testdata/reflect_get/stop_host_object.a",
+      "ruling_task": "#zhgxzjg",
+      "lifting_task": "#0sps03r",
+      "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'constructor')\n"
+    },
     "52d247f51dbecd80396018b218cf9901674de0f8527b6fa57931cbbedde7b4c6": {
       "path": "internal/oracle/testdata/reflect_get/stop_literal_getter.a",
       "ruling_task": "#zhgxzjg",

@@ -1,0 +1,10 @@
+// An Object.prototype name stops on a runtime-made object, on both backends: a Stats' constructor is
+// Stats on Node, and natively a host object's prototype isn't known, so Object's closures would stand
+// in for another's. Node prints function.
+import * as fs from 'node:fs';
+import { propertyOf } from './hostErrors.ts';
+
+const stats = fs.statSync('.');
+console.log(stats.isDirectory() ? 'directory' : 'other');
+const value = propertyOf(stats, 'constructor');
+console.log(typeof value);
