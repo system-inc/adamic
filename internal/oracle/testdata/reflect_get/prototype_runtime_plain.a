@@ -1,0 +1,35 @@
+// An Object.prototype name answers on each plain object the runtime makes from a static shape, on
+// both backends, as on a literal: decodeJson's, readTextFile's, writeTextFile's, readDirectory's and
+// fileStatus's results, each kind, an iterator's result from a Map, a Set and matchAll, and
+// process.memoryUsage(). Node's prototype for each is Object's, so it prints function true for every
+// row. The runtime registers each shape where it makes the object, as the emitter does a literal's.
+// Its paths are relative to internal/oracle, where its test runs it; from elsewhere a read is an
+// error result instead, which answers the same.
+import { decodeJson, fileStatus, readDirectory, readTextFile, writeTextFile } from 'adamic';
+import process from 'node:process';
+import { propertyOf } from './hostErrors.ts';
+
+function show(label: string, value: unknown): void {
+	const made = propertyOf(value, 'constructor');
+	console.log(`${label}: ${typeof made} ${String(made === propertyOf({}, 'constructor'))}`);
+}
+
+show('decoded object', decodeJson<{ readonly x: number }>('{"x":1}'));
+show('decoded number', decodeJson<number>('1'));
+show('decoded boolean', decodeJson<boolean>('true'));
+show('decode error', decodeJson<number>('bad'));
+show('read', readTextFile('testdata/reflect_get/hostErrors.ts'));
+show('read error', readTextFile('testdata/reflect_get/missing-file'));
+show('written', writeTextFile('/dev/null', ''));
+show('write error', writeTextFile('testdata/reflect_get/missing-directory/file', ''));
+show('listing', readDirectory('.'));
+show('listing error', readDirectory('testdata/reflect_get/missing-directory'));
+show('status', fileStatus('.'));
+show('status error', fileStatus('testdata/reflect_get/missing-file'));
+show('map entry', new Map<string, number>([['a', 1]]).entries().next());
+const numbers = new Map<string, number>([['a', 1]]).values();
+show('map number', numbers.next());
+const flags = new Set<boolean>([true]).values();
+show('set boolean', flags.next());
+show('match', 'ab'.matchAll(/a/g).next());
+show('memory', process.memoryUsage());

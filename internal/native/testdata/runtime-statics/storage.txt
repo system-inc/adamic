@@ -60,6 +60,11 @@
 `directory.c:not_directory:1`
 `directory.c:ok_kind:1`
 `directory.c:other_type:1`
+# Shape metadata a result registers so a run-time key read sees a plain object: union.c's
+# adamic_register_shape_types writes next and registered once, under its lock, and nothing after.
+`directory.c:error_metadata:1`
+`directory.c:listing_metadata:1`
+`directory.c:status_metadata:1`
 `exceptions.c:adamic_thrown:1`
 `exceptions.c:code_cache:1`
 # empty_message is an immortal ADAMIC_STRING literal (references=0). Retain/release and share
@@ -114,6 +119,11 @@
 `input.c:ok_kind:1`
 `input.c:read_prefix:1`
 `input.c:write_prefix:1`
+# Shape metadata a result registers so a run-time key read sees a plain object: union.c's
+# adamic_register_shape_types writes next and registered once, under its lock, and nothing after.
+`input.c:error_metadata:1`
+`input.c:ok_metadata:1`
+`input.c:written_metadata:1`
 `json_stringify.c:blanks:1`
 `json_stringify.c:empty:1`
 `library_language.c:identities:1`
@@ -121,6 +131,9 @@
 `map.c:value_cache:1`
 `map_set.c:collection_next:1`
 `map_set.c:string_next:1` Function prototype through adamic_code_function, like collection_next; no mutable state.
+# Shape metadata a result registers so a run-time key read sees a plain object: union.c's
+# adamic_register_shape_types writes next and registered once, under its lock, and nothing after.
+`map_set.c:result_metadata:1`
 `maybe.c:adamic_string_undefined:1`
 `node_fs_file.c:cache:1`
 `node_fs_file.c:cache:2`
@@ -144,6 +157,9 @@
 # Atomic test/embedding mode; matcher calls hold their own regular state.
 `regexp.c:regex_regular_mode:1`
 `regexp.c:regex_step_limit:1`
+# Shape metadata a result registers so a run-time key read sees a plain object: union.c's
+# adamic_register_shape_types writes next and registered once, under its lock, and nothing after.
+`regexp.c:next_metadata:1`
 `runtime-file:adamic.c`
 `runtime-file:adamic.h`
 `runtime-file:array.c`
@@ -342,6 +358,12 @@
 `json_decode.c:ok_kind:1`
 `json_decode.c:error_kind:1`
 `json_decode.c:root:1`
+# Shape metadata a result registers so a run-time key read sees a plain object: union.c's
+# adamic_register_shape_types writes next and registered once, under its lock, and nothing after.
+`json_decode.c:boolean_metadata:1`
+`json_decode.c:error_metadata:1`
+`json_decode.c:number_metadata:1`
+`json_decode.c:ok_metadata:1`
 # json_encode.c has no mutable static storage. Each field's last-shape cache lives in the
 # program's emitted descriptor, written only on the program's own thread, as above. When
 # encodeJson is allowed in parallel work, those cache writes must become atomic (a
@@ -380,6 +402,9 @@
 `node_process.c:mark_type:1`
 `node_process.c:marks:1`
 `node_process.c:measure_type:1`
+# Shape metadata a result registers so a run-time key read sees a plain object: union.c's
+# adamic_register_shape_types writes next and registered once, under its lock, and nothing after.
+`node_process.c:metadata:1`
 `node_process.c:method:1`
 `node_process.c:name_error:1`
 `node_process.c:performance_clear_marks_closure:1`

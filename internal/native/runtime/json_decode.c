@@ -394,6 +394,13 @@ static const adamic_shape ok_shape = {2, ok_names, references, NULL, reference_k
 static const adamic_shape number_shape = {2, ok_names, number_references, NULL, number_kinds};
 static const adamic_shape boolean_shape = {2, ok_names, number_references, NULL, boolean_kinds};
 static const adamic_shape error_shape = {2, error_names, references, NULL, reference_kinds};
+// decodeJson's result is a plain object on Node (json_decode.mjs), so each of its shapes is
+// registered as the decoder's own are, and Object.prototype's names answer on it by a run-time key.
+static const int result_types[2];
+static adamic_shape_types ok_metadata = {&ok_shape, result_types, NULL, false};
+static adamic_shape_types number_metadata = {&number_shape, result_types, NULL, false};
+static adamic_shape_types boolean_metadata = {&boolean_shape, result_types, NULL, false};
+static adamic_shape_types error_metadata = {&error_shape, result_types, NULL, false};
 adamic_object *adamic_json_decode(const adamic_string *text,const adamic_decode_schema *schema) {
  json_reader reader={text,0,(size_t)adamic_string_length(text),NULL};
  json_node *tree=read_value(&reader,0);
@@ -408,11 +415,14 @@ adamic_object *adamic_json_decode(const adamic_string *text,const adamic_decode_
  dispose(tree);
  if (error!=NULL) {
   adamic_object *result=adamic_object_new(&error_shape);
+  adamic_register_shape_types(&error_metadata);
   adamic_object_field_types(result)[0]=3; adamic_object_field_types(result)[1]=3;
   result->slots[0].reference=&error_kind; result->slots[1].reference=error; return result;
  }
  int of=schema->nodes[schema->root].representation;
- adamic_object *result=adamic_object_new(reference(of)?&ok_shape:of==2?&boolean_shape:&number_shape);
+ adamic_shape_types *metadata=reference(of)?&ok_metadata:of==2?&boolean_metadata:&number_metadata;
+ adamic_object *result=adamic_object_new(metadata->shape);
+ adamic_register_shape_types(metadata);
  adamic_object_field_types(result)[0]=3; adamic_object_field_types(result)[1]=(unsigned char)of;
  result->slots[0].reference=&ok_kind; result->slots[1]=value; return result;
 }
