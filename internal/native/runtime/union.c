@@ -399,6 +399,16 @@ static adamic_value prototype_method_called(adamic_closure *self, adamic_value *
 	adamic_panic(message, length);
 }
 
+// program_shape reports whether the program made objects of this shape. In a program with a run-time
+// key read the emitter registers each literal's shape as it makes one (emit_objects.go), and nothing
+// in the runtime registers a shape, so a host object's shape is never on the list.
+static bool program_shape(const adamic_shape *shape) {
+	for (const adamic_shape_types *entry = __atomic_load_n(&shape_types, __ATOMIC_ACQUIRE); entry != NULL; entry = entry->next) {
+		if (entry->shape == shape) return true;
+	}
+	return false;
+}
+
 // prototype_value is what an object inherits from Object.prototype under the key, as an immortal
 // closure, or NULL.
 static adamic_heap *prototype_value(const adamic_string *key) {
@@ -463,5 +473,14 @@ adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_stri
 		// after the stops above, so neither hides a getter, a method or a private name.
 		if (index < object->shape->count && adamic_object_present(object, index)) return dynamic_slot(object, index);
 	}
-	return prototype_value(key);
+	adamic_heap *inherited = prototype_value(key);
+	// Object.prototype is the prototype of a record, a class instance and an object the program made,
+	// one with no fields included: no runtime shape has none, and a match's groups object, which has a
+	// null prototype on Node, is only made with a group. A runtime-made object may have another,
+	// Date.prototype or Performance.prototype, whose own members Object's closures would stand in for,
+	// so it stops.
+	if (inherited != NULL && object->class == NULL && !adamic_record_is(object) && object->shape->count != 0 && !program_shape(object->shape)) {
+		keyed_stop(adamic_dynamic_keyed_stop_runtime_value, key);
+	}
+	return inherited;
 }
