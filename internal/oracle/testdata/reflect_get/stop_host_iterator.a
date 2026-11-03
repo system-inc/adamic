@@ -1,0 +1,9 @@
+// An Object.prototype name stops on a collection's iterator, on both backends, while the result its
+// next() gives answers (prototype_runtime_plain.a): on Node the iterator's prototype is Map
+// Iterator's, not Object's, and its constructor is Iterator. Node prints function.
+import { propertyOf } from './hostErrors.ts';
+
+const entries = new Map<string, number>([['a', 1]]).entries();
+console.log('iterator');
+const value = propertyOf(entries, 'constructor');
+console.log(typeof value);
