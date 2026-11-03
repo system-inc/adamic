@@ -24,6 +24,8 @@ var commonJSReasonPrograms = []struct{ name, where, what string }{
 	{"crypto", "main.ts:2:1", `node:module.require("crypto"): CommonJS loading with no ES-module answer yet (fix: import it with an import declaration)`},
 	{"spread", "main.ts:6:1", "node:module.require of a computed module path called with a spread or a second argument: CommonJS loading with no ES-module answer yet (fix: pass the module path as its one argument)"},
 	{"fs", "main.ts:2:1", "node:module.require"},
+	{"fs-asserted", "main.ts:4:1", "node:module.require"},
+	{"crypto-asserted", "main.ts:3:1", `node:module.require("crypto"): CommonJS loading with no ES-module answer yet (fix: import it with an import declaration)`},
 	{"inspector", "main.ts:2:1", "node:module.require"},
 }
 
@@ -34,6 +36,7 @@ var commonJSReasonPrograms = []struct{ name, where, what string }{
 var commonJSThrowPrograms = []struct{ name, holds string }{
 	{"source-map-support", `Operation:"host_require_missing"`},
 	{"source-map-support-install", `Operation:"host_require_missing"`},
+	{"source-map-support-asserted", `Operation:"host_require_missing"`},
 	{"computed", `Name:"require_javascript"`},
 }
 

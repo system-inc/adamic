@@ -54,7 +54,7 @@ func (l *lowering) nodeCommonJSUseRefusal(node *ast.Node) (bool, error) {
 	if nodeCommonJSRequireThrows(call) {
 		return true, nil
 	}
-	argument := ast.SkipParentheses(call.AsCallExpression().Arguments.Nodes[0])
+	argument := nodeCommonJSRequireArgument(call)
 	if argument.Kind != ast.KindStringLiteral && argument.Kind != ast.KindNoSubstitutionTemplateLiteral {
 		return true, l.notYet(node, nodeRequireMember+" of a computed module path called with a spread or a second argument"+nodeCommonJSLoading+" (fix: pass the module path as its one argument)")
 	}
@@ -62,6 +62,13 @@ func (l *lowering) nodeCommonJSUseRefusal(node *ast.Node) (bool, error) {
 		return true, l.notYet(node, nodeRequireMember+`("`+argument.Text()+`")`+nodeCommonJSLoading+" (fix: import it with an import declaration)")
 	}
 	return false, nil
+}
+
+// nodeCommonJSRequireArgument is a require call's first argument as it's judged: past the
+// parentheses, assertions and non-nulls that leave its value as it is, so a literal wrapped in one
+// (`require("source-map-support" as string)`) is the literal it wraps, never a computed path.
+func nodeCommonJSRequireArgument(call *ast.Node) *ast.Node {
+	return ast.SkipOuterExpressions(call.AsCallExpression().Arguments.Nodes[0], ast.OEKAll)
 }
 
 // nodeCommonJSRequireThrows says whether a require call lowers as the throw Adamic ruled for it: a
@@ -72,7 +79,7 @@ func nodeCommonJSRequireThrows(call *ast.Node) bool {
 	if len(arguments) != 1 {
 		return false
 	}
-	argument := ast.SkipParentheses(arguments[0])
+	argument := nodeCommonJSRequireArgument(call)
 	switch argument.Kind {
 	case ast.KindSpreadElement:
 		return false
@@ -123,12 +130,13 @@ func (l *lowering) nodeCommonJSRequireValue(node *ast.Node) (ir.Expression, bool
 		}
 		effects.Result = placeholderZero(of)
 	}
-	argument := ast.SkipParentheses(call.AsCallExpression().Arguments.Nodes[0])
-	if argument.Kind == ast.KindStringLiteral || argument.Kind == ast.KindNoSubstitutionTemplateLiteral {
+	if argument := nodeCommonJSRequireArgument(call); argument.Kind == ast.KindStringLiteral || argument.Kind == ast.KindNoSubstitutionTemplateLiteral {
 		missing := ir.NodeFSFile{Operation: "host_require_missing", Arguments: []ir.Expression{ir.StringConstant{Index: l.constant(argument.Text())}}, Of: ir.Number}
 		effects.Body = append(effects.Body, ir.Evaluate{Value: missing})
 		return effects, true, nil
 	}
+	// The path is evaluated as written, wrappers and all: a non-null assertion may carry a check.
+	argument := call.AsCallExpression().Arguments.Nodes[0]
 	path, err := l.expression(argument)
 	if err != nil {
 		return nil, true, err
