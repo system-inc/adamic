@@ -1,0 +1,1 @@
+node_source_map_test.go:50: top frame = "at sourceMapThrow (file:///workspace/scratch/mutant/internal/oracle/testdata/node_source_map/enum_tab_throw.ts:9:11)", want "at sourceMapThrow (/workspace/scratch/mutant/internal/oracle/testdata/node_source_map/enum_tab_throw.ts:5:8)"

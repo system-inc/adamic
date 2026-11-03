@@ -31,7 +31,7 @@ registerHooks({
 				const sources = JSON.parse(execFileSync(binary || 'go', arguments_, { cwd: root, encoding: 'utf8' }));
 				source = sources[fileURLToPath(url)];
 			}
-			return { format: 'module', source: stripTypeScriptTypes(source, { mode: 'transform' }), shortCircuit: true };
+			return { format: 'module', source: stripTypeScriptTypes(source, { mode: 'transform', sourceMap: true, sourceUrl: url }), shortCircuit: true };
 		}
 		return nextLoad(url, context);
 	},
@@ -42,5 +42,7 @@ registerHooks({
 const program = process.argv[2];
 process.argv.splice(1, 1);
 
+// Enable map consumption before loading either runtime or program.
+process.setSourceMapsEnabled(true);
 await import(runtimeUrl);
 await import(pathToFileURL(program).href);
