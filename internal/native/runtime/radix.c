@@ -141,8 +141,10 @@ adamic_string *adamic_number_to_radix(double value, double radix) {
 	// ToIntegerOrInfinity: NaN is 0, and a fraction truncates.
 	radix = isnan(radix) ? 0 : trunc(radix);
 	if (radix < 2 || radix > 36) {
-		static const char message[] = "RangeError: toString() radix argument must be between 2 and 36";
-		adamic_panic(message, sizeof message - 1);
+		// Node's RangeError on the pending word, and an empty string the caller lets go (number.c).
+		static const char message[] = "toString() radix argument must be between 2 and 36";
+		adamic_throw_kind("RangeError", sizeof "RangeError" - 1, message, sizeof message - 1);
+		return adamic_retain(&adamic_string_empty);
 	}
 	if (radix == 10) {
 		return adamic_string_from_number(value);

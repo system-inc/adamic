@@ -49,8 +49,17 @@ int main(void) {
 			number(adamic_power(left, right));
 		} else {
 			adamic_string *fixed = adamic_number_to_fixed(left, right);
-			fwrite(fixed->bytes, 1, fixed->length, stdout);
-			fputc('\n', stdout);
+			if (adamic_thrown != NULL) {
+				// Digits out of range: Node's RangeError, its name and message apart, and an empty result.
+				const adamic_string *name = adamic_thrown->slots[0].reference;
+				const adamic_string *message = adamic_thrown->slots[1].reference;
+				printf("%.*s|%.*s|%zu\n", (int)name->length, name->bytes, (int)message->length, message->bytes, fixed->length);
+				adamic_release(adamic_thrown);
+				adamic_thrown = NULL;
+			} else {
+				fwrite(fixed->bytes, 1, fixed->length, stdout);
+				fputc('\n', stdout);
+			}
 			adamic_release(fixed);
 		}
 	}
@@ -71,7 +80,12 @@ for (const line of require('node:fs').readFileSync(0, 'utf8').trim().split('\n')
 		case 'max': out.push(number(Math.max(left, right))); break;
 		case 'min': out.push(number(Math.min(left, right))); break;
 		case 'pow': out.push(number(left ** right)); break;
-		default: out.push(left.toFixed(right));
+		default:
+			try {
+				out.push(left.toFixed(right));
+			} catch (error) {
+				out.push(error.name + '|' + error.message + '|0');
+			}
 	}
 }
 process.stdout.write(out.join('\n') + '\n');
@@ -101,6 +115,14 @@ func TestMathAndToFixedMatchJavaScript(t *testing.T) {
 				fmt.Fprintf(&input, "fixed %s %s\n", bits(value), bits(digits))
 				lines++
 			}
+		}
+	}
+	// Digits are checked before the value is looked at, so NaN and the infinities throw too; a fraction
+	// truncates first, so -0.5 and 100.5 don't.
+	for _, value := range special {
+		for _, digits := range []float64{-1, 101, math.Inf(1), math.Inf(-1), -0.5, 100.5} {
+			fmt.Fprintf(&input, "fixed %s %s\n", bits(value), bits(digits))
+			lines++
 		}
 	}
 	exponents := []float64{-10, -3, -2, -1, -0.5, 0, 0.5, 1, 2, 3, 10, 1.0 / 3, 2.5, -2.5, 0.1}
