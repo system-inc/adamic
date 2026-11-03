@@ -36,7 +36,8 @@ func reflectGetFixture(t *testing.T, name string) string {
 // property_of.a's empty message reads undefined; record.c's number and boolean shapes swapped, so
 // records.a's booleans read as numbers; one closure dropped from union.c's prototype_methods, so
 // prototype_names.a reads that name as undefined; a closure made for each read in place of the
-// immortal one, so prototype_names.a's identities print false.
+// immortal one, so prototype_names.a's identities print false; json_decode.c's registration of the
+// shapes it builds dropped, so prototype_decoded.a stops natively at its first constructor.
 func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ file, stdout string }{
@@ -48,6 +49,7 @@ func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 		{"prototype_object.a", "before\nfunction\n"},
 		{"prototype_record.a", "value\nfunction\n"},
 		{"prototype_names.a", prototypeNamesAnswers},
+		{"prototype_decoded.a", "1 function function true\n3 function\nfunction\nfunction true\n"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()

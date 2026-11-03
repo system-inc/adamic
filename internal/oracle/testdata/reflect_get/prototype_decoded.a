@@ -1,0 +1,27 @@
+// An Object.prototype name answers on a decoded JSON object, on both backends, as it does on a
+// literal: Node's own function, or natively the immortal closure, since the decoder registers each
+// shape it builds. A decoded object, one nested in another and an array's element each answer, and a
+// literal is the control. Node prints 1 function function true, 3 function, function, then function
+// true.
+import { decodeJson } from 'adamic';
+import { propertyOf } from './hostErrors.ts';
+
+interface Point { readonly x: number; }
+const point = decodeJson<Point>('{"x":1}');
+if (point.kind === 'Ok') {
+	const objectConstructor = propertyOf(point.value, 'constructor');
+	console.log(`${point.value.x} ${typeof objectConstructor} ${typeof propertyOf(point.value, 'toString')} ${String(objectConstructor === propertyOf({}, 'constructor'))}`);
+} else console.log(point.message);
+
+interface Outer { readonly inner: { readonly y: number }; }
+const outer = decodeJson<Outer>('{"inner":{"y":3}}');
+if (outer.kind === 'Ok') console.log(`${outer.value.inner.y} ${typeof propertyOf(outer.value.inner, 'hasOwnProperty')}`);
+else console.log(outer.message);
+
+const points = decodeJson<readonly Point[]>('[{"x":5}]');
+if (points.kind === 'Ok') {
+	for (const element of points.value) console.log(typeof propertyOf(element, 'valueOf'));
+} else console.log(points.message);
+
+const literal = { x: 1 };
+console.log(`${typeof propertyOf(literal, 'toString')} ${String(propertyOf(literal, 'constructor') === propertyOf({}, 'constructor'))}`);
