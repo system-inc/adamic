@@ -110,3 +110,10 @@ interface JSON {
 interface ArrayConstructor {
 	isArray(arg: unknown): arg is readonly unknown[];
 }
+
+// An argumentless new Map() takes its arguments from the slot it fills. The bundled any defaults
+// would hand the program a Map<any, any> that relates to every map, so this overload infers K and V
+// from the context, and an uncontextual new Map() is Map<unknown, unknown>.
+interface MapConstructor {
+	new <K = unknown, V = unknown>(): Map<K, V>;
+}
