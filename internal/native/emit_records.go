@@ -45,7 +45,12 @@ func (e *emitter) recordCall(call ir.RecordCall) string {
 	case "keys":
 		return e.own(ir.Array, fmt.Sprintf("adamic_record_keys(%s)", args[0]))
 	case "values", "entries":
-		result := e.own(ir.Array, fmt.Sprintf("adamic_array_new(0, %t)", call.Method == "entries" || call.Element.IsReference()))
+		element := call.Element
+		if call.Method == "entries" {
+			// Entries are [key, value] tuples, references whatever the values are.
+			element = ir.Union
+		}
+		result := e.own(ir.Array, fmt.Sprintf("adamic_array_make(0, %s)", arrayElement(element)))
 		e.recordWalk(args[0], func(key, slot string) {
 			value := slot
 			if call.Element.IsReference() {

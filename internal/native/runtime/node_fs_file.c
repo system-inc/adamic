@@ -268,7 +268,7 @@ static adamic_array *read_buffer(int descriptor, bool owned) {
     int error = adamic_fs_file_read_bytes(descriptor, &bytes, &length);
     if (owned) { close(descriptor); }
     if (error != 0) { system_error(error, "read", NULL); return NULL; }
-    adamic_array *result = adamic_array_new(length, false);
+    adamic_array *result = adamic_array_make(length, adamic_ir_Number);
     for (size_t i = 0; i < length; i++) {
         adamic_value byte = {0};
         byte.number = bytes[i];

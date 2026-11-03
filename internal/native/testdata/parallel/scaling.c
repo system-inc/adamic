@@ -42,7 +42,7 @@ int main(int argc, char **argv) {
 	}
 	adamic_release(object);
 	free(names); free(references); free(kinds);
-	adamic_array *items = adamic_array_new(1024, true);
+	adamic_array *items = adamic_array_make(1024, adamic_ir_Union);
 	// Repeated aliases exercise racing builders. Empty, small, ASCII and indexed BMP
 	// strings all publish a length; only indexed strings need checkpoints and a view.
 	size_t lengths[] = {0, 2, 160, 512};
@@ -58,7 +58,7 @@ int main(int argc, char **argv) {
 		adamic_release(text);
 	}
 	adamic_closure *work = adamic_closure_new(read_text, 0);
-	adamic_array *results = adamic_parallel_map(items, work, false);
+	adamic_array *results = adamic_parallel_map(items, work, adamic_ir_Number);
 	for (size_t i = 0; i < results->length; i++) {
 		size_t k = i / 256;
 		double expected = (double)(k == 3 ? lengths[k] : lengths[k] / 2);

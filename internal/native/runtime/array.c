@@ -9,11 +9,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-adamic_array *adamic_array_new(size_t capacity, bool references) {
+adamic_array *adamic_array_make(size_t capacity, enum adamic_ir_type element) {
 	adamic_array *array = adamic_allocate(sizeof *array, adamic_kind_array);
 	array->length = 0;
 	array->capacity = capacity;
-	array->references = references;
+	array->references = adamic_ir_type_reference(element);
+	array->element = array->references ? adamic_ir_Union : element;
 	array->elements = NULL;
 	array->properties = NULL;
 	array->metadata = NULL;
@@ -25,6 +26,18 @@ adamic_array *adamic_array_new(size_t capacity, bool references) {
 		}
 	}
 	return array;
+}
+
+enum adamic_ir_type adamic_array_scalar_element(const adamic_array *array) {
+	if (array->references) {
+		static const char message[] = "compiler bug: a scalar element kind was asked of a reference array";
+		adamic_panic(message, sizeof message - 1);
+	}
+	if (array->element == 0) {
+		static const char message[] = "compiler bug: a scalar element kind was asked of an array of unknown element kind";
+		adamic_panic(message, sizeof message - 1);
+	}
+	return (enum adamic_ir_type)array->element;
 }
 
 void adamic_array_push(adamic_array *array, adamic_value value) {
@@ -108,7 +121,7 @@ adamic_string *adamic_array_join(const adamic_array *array, const adamic_string 
 	return joined;
 }
 
-adamic_array *adamic_array_slice(const adamic_array *array, double start, double end, bool has_end) {
+adamic_array *adamic_array_slice(const adamic_array *array, double start, double end, bool has_end, enum adamic_ir_type element) {
 	// ECMAScript's relative indexes: ToIntegerOrInfinity, negative from the end, clamped.
 	double length = (double)array->length;
 	start = isnan(start) ? 0 : trunc(start);
@@ -120,7 +133,7 @@ adamic_array *adamic_array_slice(const adamic_array *array, double start, double
 		end = length;
 	}
 	size_t from = (size_t)start, to = end > start ? (size_t)end : from;
-	adamic_array *sliced = adamic_array_new(to - from, array->references);
+	adamic_array *sliced = adamic_array_make(to - from, element);
 	for (size_t index = from; index < to; index++) {
 		adamic_value value = array->elements[index];
 		if (array->references) {
@@ -266,15 +279,15 @@ adamic_array *adamic_array_reverse(adamic_array *array) {
 	return array;
 }
 
-adamic_array *adamic_array_filled(double length, adamic_value value, bool references) {
+adamic_array *adamic_array_filled(double length, adamic_value value, enum adamic_ir_type element) {
 	// new Array(length): an integer from 0 to 2^32 - 1, or JavaScript throws.
 	if (!(length >= 0) || length > 4294967295.0 || length != trunc(length)) {
 		static const char message[] = "RangeError: Invalid array length";
 		adamic_panic(message, sizeof message - 1);
 	}
-	adamic_array *array = adamic_array_new((size_t)length, references);
+	adamic_array *array = adamic_array_make((size_t)length, element);
 	for (size_t index = 0; index < (size_t)length; index++) {
-		if (references) {
+		if (array->references) {
 			adamic_retain(value.reference);
 		}
 		adamic_array_push(array, value);
@@ -306,8 +319,9 @@ adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double 
 }
 
 // splice_into is splice, the removed elements moving to removed, or let go when removed is NULL:
-// a splice whose result nothing uses (adamic_array_remove) allocates no array to hold them.
-static void splice_into(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items, adamic_array **removed) {
+// a splice whose result nothing uses (adamic_array_remove) allocates no array to hold them. element is
+// the kind removed is made with.
+static void splice_into(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items, adamic_array **removed, enum adamic_ir_type element) {
 	// ECMAScript's relative start, clamped to the array; a count left out is everything after it, and
 	// a count given is clamped to what's there.
 	double length = (double)array->length;
@@ -321,7 +335,7 @@ static void splice_into(adamic_array *array, double start, double count, bool ha
 	size_t from = (size_t)start, removed_count = (size_t)removing;
 	// The removed elements move to the result, their references with them, or are let go.
 	if (removed != NULL) {
-		*removed = adamic_array_new(removed_count, array->references);
+		*removed = adamic_array_make(removed_count, element);
 		for (size_t index = 0; index < removed_count; index++) {
 			adamic_value value = array->elements[from + index];
 			if (array->references) { adamic_graph_escape(array, value.reference); }
@@ -367,14 +381,14 @@ static void splice_into(adamic_array *array, double start, double count, bool ha
 	}
 }
 
-adamic_array *adamic_array_splice(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items) {
+adamic_array *adamic_array_splice(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items, enum adamic_ir_type element) {
 	adamic_array *removed;
-	splice_into(array, start, count, has_count, item_count, items, &removed);
+	splice_into(array, start, count, has_count, item_count, items, &removed, element);
 	return removed;
 }
 
 void adamic_array_remove(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items) {
-	splice_into(array, start, count, has_count, item_count, items, NULL);
+	splice_into(array, start, count, has_count, item_count, items, NULL, 0);
 }
 
 void adamic_array_append(adamic_array *array, const adamic_array *source) {
@@ -389,12 +403,12 @@ void adamic_array_append(adamic_array *array, const adamic_array *source) {
 	}
 }
 
-adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[]) {
+adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[], enum adamic_ir_type element) {
 	size_t length = 0;
 	for (size_t which = 0; which < count; which++) {
 		length += arrays[which]->length;
 	}
-	adamic_array *joined = adamic_array_new(length, arrays[0]->references);
+	adamic_array *joined = adamic_array_make(length, element);
 	for (size_t which = 0; which < count; which++) {
 		for (size_t index = 0; index < arrays[which]->length; index++) {
 			adamic_value value = arrays[which]->elements[index];

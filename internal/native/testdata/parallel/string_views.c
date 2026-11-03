@@ -36,11 +36,11 @@ int main(void) {
  adamic_string *parent=adamic_string_allocate(128);
  for(size_t i=0;i<128;i++) ((char *)parent->bytes)[i]=(char)i;
  parent->units=129;
- adamic_array *items=adamic_array_new(128,true);
+ adamic_array *items=adamic_array_make(128,adamic_ir_Union);
  for(size_t i=0;i<128;i++) adamic_array_push(items,(adamic_value){.reference=adamic_retain(parent)});
  adamic_release(parent);
  adamic_closure *work=adamic_closure_new(read_characters,0);
- adamic_array *results=adamic_parallel_map(items,work,false);
+ adamic_array *results=adamic_parallel_map(items,work,adamic_ir_Number);
  for(size_t i=0;i<results->length;i++) printf("%.0f\n",results->elements[i].number);
  adamic_release(results);adamic_release(work);adamic_release(items);
  return 0;
