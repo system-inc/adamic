@@ -27,9 +27,14 @@ const nodeCommonJSLoading = ": CommonJS loading with no ES-module answer yet"
 // that's the answer native gives (installed-layout in internal/oracle's ruled divergences).
 const nodeSourceMapSupport = "source-map-support"
 
-// nodeJavaScriptPlugins starts the message a computed require throws with, before the path it was
-// given. Stock Node would load the plugin; native can't run JavaScript (no-javascript-plugins).
-const nodeJavaScriptPlugins = "native tsc can't load JavaScript modules: "
+// nodeJavaScriptModuleOpening and nodeJavaScriptModuleClosing are the message a computed require
+// throws with, around the path it was given, in Diagnostics' words (#redxes2): which load failed, the
+// limit, and the one fix. Stock Node would load the module; native can't run JavaScript
+// (no-javascript-plugins).
+const (
+	nodeJavaScriptModuleOpening = "Cannot load JavaScript module '"
+	nodeJavaScriptModuleClosing = "': a native Adamic program can't run JavaScript; run it on Node to load modules at run time"
+)
 
 // nodeCommonJSUseRefusal names __filename and __dirname, and the requires the meter tracks: of
 // crypto, and of a computed module path called with a spread. It refuses the nodes the generic
@@ -147,7 +152,7 @@ func (l *lowering) nodeCommonJSRequireValue(node *ast.Node) (ir.Expression, bool
 	index := len(l.result.Functions)
 	parameter := len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "modulePath", Type: ir.String, Function: index})
-	failure := ir.MakeError{Message: ir.Concat{Parts: []ir.Expression{ir.StringConstant{Index: l.constant(nodeJavaScriptPlugins)}, ir.Read{Local: parameter, Of: ir.String}}}}
+	failure := ir.MakeError{Message: ir.Concat{Parts: []ir.Expression{ir.StringConstant{Index: l.constant(nodeJavaScriptModuleOpening)}, ir.Read{Local: parameter, Of: ir.String}, ir.StringConstant{Index: l.constant(nodeJavaScriptModuleClosing)}}}}
 	l.result.Functions = append(l.result.Functions, ir.Function{Name: "require_javascript", Parameters: []int{parameter}, Body: []ir.Statement{ir.Throw{Value: failure}}})
 	effects.Body = append(effects.Body, ir.Evaluate{Value: ir.Call{Function: index, Arguments: []ir.Expression{path}}})
 	return effects, true, nil
