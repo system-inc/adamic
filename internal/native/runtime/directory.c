@@ -31,6 +31,13 @@ static const adamic_field_kind ok_status_kinds[] = {adamic_field_reference, adam
 static const adamic_shape status_shape = {4, ok_status_names, status_references, NULL, ok_status_kinds};
 static const adamic_field_kind error_kinds[] = {adamic_field_reference, adamic_field_reference};
 static const adamic_shape error_shape = {2, error_names, two_references, NULL, error_kinds};
+// readDirectory's and fileStatus's results are plain objects on Node (oracle/adamic.mjs), so each
+// shape is registered as a literal's is (union.c) and Object.prototype's names answer on it by a
+// run-time key. The scalar tags are zero, no evidence, as union.c's dynamic_slot reads them.
+static const int result_types[4];
+static adamic_shape_types listing_metadata = {&listing_shape, result_types, NULL, false};
+static adamic_shape_types status_metadata = {&status_shape, result_types, NULL, false};
+static adamic_shape_types error_metadata = {&error_shape, result_types, NULL, false};
 static adamic_string ok_kind = ADAMIC_STRING("Ok");
 static adamic_string error_kind = ADAMIC_STRING("Error");
 static adamic_string file_type = ADAMIC_STRING("file");
@@ -61,6 +68,7 @@ static adamic_object *failure(const char *prefix, size_t prefix_length, const ad
 		break;
 	}
 	adamic_object *result = adamic_object_new(&error_shape);
+	adamic_register_shape_types(&error_metadata);
 	result->slots[0].reference = &error_kind;
 	result->slots[1].reference = adamic_string_concat(3, (adamic_string *const[]){&before, (adamic_string *)path, reason});
 	return result;
@@ -136,6 +144,7 @@ adamic_object *adamic_read_directory(const adamic_string *path) {
 	}
 	free(names);
 	adamic_object *result = adamic_object_new(&listing_shape);
+	adamic_register_shape_types(&listing_metadata);
 	result->slots[0].reference = &ok_kind;
 	result->slots[1].reference = listed;
 	return result;
@@ -171,6 +180,7 @@ adamic_object *adamic_file_status(const adamic_string *path) {
 		return failure(prefix, sizeof prefix - 1, path, error, false);
 	}
 	adamic_object *result = adamic_object_new(&status_shape);
+	adamic_register_shape_types(&status_metadata);
 	result->slots[0].reference = &ok_kind;
 	result->slots[1].reference = S_ISREG(status.st_mode) ? &file_type : S_ISDIR(status.st_mode) ? &directory_type : &other_type;
 	result->slots[2].number = (double)status.st_size;
