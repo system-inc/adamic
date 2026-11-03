@@ -43,20 +43,43 @@ var runtimeNotYetForms = map[string]string{
 // runtimeNotYetMessage is a stop's whole stderr: one line, its form, and the key it was reading.
 var runtimeNotYetMessage = regexp.MustCompile(`^adamic: panic: (.+?) \(reading '([^\n]*)'\)\n$`)
 
+// runtimeNotYetConversions is the second closed allowlist, of the keyless stops String and a template
+// make of an unknown (lower/to_primitive.go, #09dvwny, Adamic, Nov 3): each what, said whole as
+// "adamic: panic: converting <what> to a string is not yet lowered\n", and the ruling that made it. Only
+// these exact words qualify, never a pattern over the shape: a fourth what needs Adamic's ruling and its
+// line here.
+var runtimeNotYetConversions = map[string]string{
+	"an object whose own toString is a function this program can't name": "#09dvwny",
+	"an array of only numbers, booleans, null or undefined":              "#09dvwny",
+	"a class object": "#09dvwny",
+}
+
+// The keyless shape's two ends, around its what.
+const (
+	runtimeNotYetConversionPrefix = "adamic: panic: converting "
+	runtimeNotYetConversionSuffix = " to a string is not yet lowered\n"
+)
+
 // taskReference is a task named as the lists name one, #id.
 var taskReference = regexp.MustCompile(`^#[0-9a-z]+$`)
 
-// runtimeNotYetForm is the allowlisted form the stop message says, or false. A compiler bug said out
-// loud never qualifies, even if its words were listed.
-func runtimeNotYetForm(stderr string) (string, bool) {
-	message := runtimeNotYetMessage.FindStringSubmatch(stderr)
-	if message == nil || strings.Contains(stderr, "compiler bug") {
-		return "", false
+// runtimeNotYetForm is the allowlisted form the stop message says, with the ruling that made it, or
+// false: a keyed form of runtimeNotYetForms, or a keyless conversion of runtimeNotYetConversions, the
+// message whole. A compiler bug said out loud never qualifies, even if its words were listed.
+func runtimeNotYetForm(stderr string) (string, string, bool) {
+	if strings.Contains(stderr, "compiler bug") {
+		return "", "", false
 	}
-	if _, allowed := runtimeNotYetForms[message[1]]; !allowed {
-		return "", false
+	if message := runtimeNotYetMessage.FindStringSubmatch(stderr); message != nil {
+		ruling, allowed := runtimeNotYetForms[message[1]]
+		return message[1], ruling, allowed
 	}
-	return message[1], true
+	for what, ruling := range runtimeNotYetConversions {
+		if stderr == runtimeNotYetConversionPrefix+what+runtimeNotYetConversionSuffix {
+			return what, ruling, true
+		}
+	}
+	return "", "", false
 }
 func readRuntimeNotYetStops(path string) (runtimeNotYetStopList, error) {
 	var list runtimeNotYetStopList
@@ -86,12 +109,12 @@ func readRuntimeNotYetStops(path string) (runtimeNotYetStopList, error) {
 		if !taskReference.MatchString(stop.RulingTask) || !taskReference.MatchString(stop.LiftingTask) || stop.LiftingTask == stop.RulingTask {
 			return list, fmt.Errorf("run-time NotYet needs its ruling task and the task that lifts it: %s", hash)
 		}
-		form, allowed := runtimeNotYetForm(stop.Stderr)
+		_, ruling, allowed := runtimeNotYetForm(stop.Stderr)
 		if !allowed {
 			return list, fmt.Errorf("run-time NotYet stop message is not a ruled form: %s", hash)
 		}
-		if stop.RulingTask != runtimeNotYetForms[form] {
-			return list, fmt.Errorf("run-time NotYet ruling task %s is not its form's ruling %s: %s", stop.RulingTask, runtimeNotYetForms[form], hash)
+		if stop.RulingTask != ruling {
+			return list, fmt.Errorf("run-time NotYet ruling task %s is not its form's ruling %s: %s", stop.RulingTask, ruling, hash)
 		}
 	}
 	return list, nil
