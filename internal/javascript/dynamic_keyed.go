@@ -69,6 +69,7 @@ func dynamicKeyedRuntime(program *ir.Program) string {
 	}
 	builder.WriteString("\tif (typeof value !== 'object' || value instanceof Promise) return adamicDynamicStop('RuntimeValue', key);\n")
 	builder.WriteString("\tif (key.startsWith('#')) return adamicDynamicStop('Private', key);\n")
+	builder.WriteString("\tif (key === '__proto__') return adamicDynamicStop('Proto', key);\n")
 	builder.WriteString("\tconst error = value instanceof Error;\n")
 	builder.WriteString("\tif (error && adamicDynamicKeyedErrorNames.has(key)) return adamicDynamicStop('ErrorProperty', key);\n")
 	if classes {
@@ -80,13 +81,16 @@ func dynamicKeyedRuntime(program *ir.Program) string {
 		builder.WriteString("\t\t\treturn adamicGetAccessor(value, key);\n")
 		builder.WriteString("\t\t}\n")
 		builder.WriteString("\t\tif (adamicDynamicMethodNames[id - 1].includes(key)) return adamicDynamicStop('Method', key);\n")
+		// An object literal is a plain object here, whose constructor is Object, as native's is.
+		builder.WriteString("\t\tif (!adamicClasses[id - 1].literal && key === 'constructor') return adamicDynamicStop('ClassConstructor', key);\n")
 		builder.WriteString("\t}\n")
 	}
 	// A native Error holds its name and message as its own; Node's inherits its name, and the empty
 	// message of one made without any.
 	builder.WriteString("\tif (error && (key === 'name' || key === 'message')) return value[key];\n")
 	builder.WriteString("\tif (Object.hasOwn(value, key)) return value[key];\n")
-	builder.WriteString("\tif (adamicDynamicKeyedPrototypeNames.has(key)) return adamicDynamicStop('ObjectPrototype', key);\n")
+	// Node's own Object.prototype member, where native hands out its immortal closure for the name.
+	builder.WriteString("\tif (adamicDynamicKeyedPrototypeNames.has(key)) return value[key];\n")
 	builder.WriteString("\treturn undefined;\n")
 	builder.WriteString("};\n")
 	return builder.String()

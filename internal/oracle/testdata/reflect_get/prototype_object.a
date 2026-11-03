@@ -1,0 +1,7 @@
+// An Object.prototype name answers on a plain object, on both backends, as Node's own function or,
+// natively, the immortal closure standing for it. Node prints function.
+import { propertyOf } from './hostErrors.ts';
+
+console.log('before');
+const value = propertyOf({ present: 'here' }, 'toString');
+console.log(typeof value);

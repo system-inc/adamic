@@ -618,8 +618,9 @@ typedef struct adamic_keyed_class {
 
 // adamic_dynamic_property_keyed is Reflect.get(Object(object), key, object) for an object lowering
 // proved neither null nor undefined: an own data slot, a record's own key or a class getter, owned,
-// and a loud stop wherever the representation can't answer as Node does. The key is compared by its
-// content, whatever string it is. classes are the program's rows, count of them.
+// Object.prototype's immortal closure for one of its names, and a loud stop wherever the
+// representation can't answer as Node does. The key is compared by its content, whatever string it
+// is. classes are the program's rows, count of them.
 adamic_heap *adamic_dynamic_property_keyed(adamic_heap *object, const adamic_string *key, const adamic_keyed_class *classes, size_t count);
 
 // adamic_object_field finds a field by name. The checker proved the field is there. Where this place in

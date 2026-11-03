@@ -170,7 +170,7 @@ allowlist (`runtimeNotYetForms`), or, keyless, exactly
 one of the three on the second allowlist (`runtimeNotYetConversions`, #09dvwny:
 String and a template of an unknown), matched whole, never as a pattern. Each
 form names the ruling that made it, and the tool refuses an entry whose
-`ruling_task` is not its form's ruling. The first allowlist holds the seven
+`ruling_task` is not its form's ruling. The first allowlist holds the eight
 `internal/ir` DynamicKeyedStops forms a ruled fixture reaches; a `compiler bug:`
 stop never qualifies, listed or allowlisted.
 

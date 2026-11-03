@@ -36,26 +36,38 @@ var DynamicKeyedStops = []DynamicKeyedStop{
 	// backend, and the JavaScript backend can't tell a record from a plain object, so every such key
 	// stops, a record's included.
 	{"Private", "a name beginning with # isn't read by a run-time key yet"},
+	// Object.prototype's accessor answers with the receiver's prototype, which no object of Adamic's
+	// carries as a value, and a record may hold the name as its own where Node's setter took it.
+	{"Proto", "__proto__ isn't read by a run-time key yet"},
 	{"ErrorProperty", "an Error property Node sets and the native Error lacks isn't read yet"},
 	{"ObjectLiteralGetter", "an object literal's getter isn't read by a run-time key yet"},
 	{"SetterOnly", "a setter without a getter isn't read by a run-time key yet"},
 	{"Method", "a method isn't read by a run-time key yet"},
-	{"ObjectPrototype", "an Object.prototype name isn't read by a run-time key yet"},
+	// A class instance's constructor is its class, a value the read can't find natively: an instance
+	// carries its class's metadata, never the class object the program holds.
+	{"ClassConstructor", "a class instance's constructor isn't read by a run-time key yet"},
 }
 
-// DynamicKeyedPrototypeNames are Object.getOwnPropertyNames(Object.prototype) on Node: a name no
-// object of Adamic's holds as its own and every JavaScript object inherits, a function or an accessor
-// a run-time key read would hand out as a value.
-var DynamicKeyedPrototypeNames = []string{
-	"constructor", "__proto__", "toString", "toLocaleString", "valueOf", "hasOwnProperty", "isPrototypeOf",
-	"propertyIsEnumerable", "__defineGetter__", "__defineSetter__", "__lookupGetter__", "__lookupSetter__",
+// DynamicKeyedPrototypeMethods are Object.prototype's ten methods, the functions every object of
+// Adamic's inherits under these names. A run-time key read hands one out as Node does: on the
+// JavaScript backend Node's own, natively one immortal closure for each name (union.c), the same from
+// every receiver and every read, whose call stops loudly, since no call can reach one yet.
+var DynamicKeyedPrototypeMethods = []string{
+	"toString", "toLocaleString", "valueOf", "hasOwnProperty", "isPrototypeOf", "propertyIsEnumerable",
+	"__defineGetter__", "__defineSetter__", "__lookupGetter__", "__lookupSetter__",
 }
+
+// DynamicKeyedPrototypeNames are Object.getOwnPropertyNames(Object.prototype) on Node: Object as
+// constructor, the __proto__ accessor, and the ten methods.
+var DynamicKeyedPrototypeNames = append([]string{"constructor", "__proto__"}, DynamicKeyedPrototypeMethods...)
 
 // DynamicKeyedErrorNames are the properties Node gives its own errors and the native Error doesn't
 // have, so on an Error they stop on both backends even where one side has the name: every Error's
 // stack, an Error's cause, and a system error's errno, syscall, path and dest. Natively most host
 // errors carry name, message and code only, while Node's carry all of a system error's own properties.
-var DynamicKeyedErrorNames = []string{"stack", "cause", "errno", "syscall", "path", "dest"}
+// An Error's toString and constructor are Error.prototype's, never Object.prototype's, so the closures
+// a plain object's read hands out would be the wrong functions there.
+var DynamicKeyedErrorNames = []string{"stack", "cause", "errno", "syscall", "path", "dest", "toString", "constructor"}
 
 // DynamicKeyedMethodNames are the names a class's method table holds, the inherited ones included, as
 // both backends judge a run-time key against them: Methods by MethodName, less a getter's or a

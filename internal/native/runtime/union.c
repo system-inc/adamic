@@ -410,6 +410,65 @@ static size_t keyed_slot(const adamic_object *object, const adamic_string *key, 
 	return object->shape->count;
 }
 
+// Object.prototype's methods, and Object as their constructor, as a run-time key read hands them out:
+// one immortal closure for each, the same from every receiver and every read, as Node's are one
+// function each, with Node's length. No call reaches one yet: lowering refuses every call through an
+// unknown narrowed to a function ("calling through the unchecked Function type", function_rulings.go),
+// so each one's code is a guard that stops loudly.
+static adamic_value prototype_method_called(adamic_closure *self, adamic_value *arguments);
+static adamic_value object_called(adamic_closure *self, adamic_value *arguments) {
+	(void)self;
+	(void)arguments;
+	static const char message[] = "Object isn't called yet";
+	adamic_panic(message, sizeof message - 1);
+}
+static adamic_closure object_constructor = {.heap = {0, adamic_kind_closure, 0}, .code = object_called, .count = 0, .source_length = 1};
+static adamic_closure prototype_to_string = {.heap = {0, adamic_kind_closure, 0}, .code = prototype_method_called, .count = 0, .source_length = 0};
+static adamic_closure prototype_to_locale_string = {.heap = {0, adamic_kind_closure, 0}, .code = prototype_method_called, .count = 0, .source_length = 0};
+static adamic_closure prototype_value_of = {.heap = {0, adamic_kind_closure, 0}, .code = prototype_method_called, .count = 0, .source_length = 0};
+static adamic_closure prototype_has_own_property = {.heap = {0, adamic_kind_closure, 0}, .code = prototype_method_called, .count = 0, .source_length = 1};
+static adamic_closure prototype_is_prototype_of = {.heap = {0, adamic_kind_closure, 0}, .code = prototype_method_called, .count = 0, .source_length = 1};
+static adamic_closure prototype_property_is_enumerable = {.heap = {0, adamic_kind_closure, 0}, .code = prototype_method_called, .count = 0, .source_length = 1};
+static adamic_closure prototype_define_getter = {.heap = {0, adamic_kind_closure, 0}, .code = prototype_method_called, .count = 0, .source_length = 2};
+static adamic_closure prototype_define_setter = {.heap = {0, adamic_kind_closure, 0}, .code = prototype_method_called, .count = 0, .source_length = 2};
+static adamic_closure prototype_lookup_getter = {.heap = {0, adamic_kind_closure, 0}, .code = prototype_method_called, .count = 0, .source_length = 1};
+static adamic_closure prototype_lookup_setter = {.heap = {0, adamic_kind_closure, 0}, .code = prototype_method_called, .count = 0, .source_length = 1};
+// In adamic_dynamic_keyed_prototype_method_names' order.
+static adamic_closure *const prototype_methods[] = {
+	&prototype_to_string, &prototype_to_locale_string, &prototype_value_of, &prototype_has_own_property, &prototype_is_prototype_of,
+	&prototype_property_is_enumerable, &prototype_define_getter, &prototype_define_setter, &prototype_lookup_getter, &prototype_lookup_setter,
+};
+_Static_assert(sizeof prototype_methods / sizeof prototype_methods[0] == sizeof adamic_dynamic_keyed_prototype_method_names / sizeof adamic_dynamic_keyed_prototype_method_names[0], "one closure for each of Object.prototype's methods");
+
+static adamic_value prototype_method_called(adamic_closure *self, adamic_value *arguments) {
+	(void)arguments;
+	const char *name = "an unknown method";
+	for (size_t index = 0; index < sizeof prototype_methods / sizeof prototype_methods[0]; index++) {
+		if (prototype_methods[index] == self) name = adamic_dynamic_keyed_prototype_method_names[index];
+	}
+	static const char prefix[] = "Object.prototype.", suffix[] = " isn't called yet";
+	size_t length = sizeof prefix - 1 + strlen(name) + sizeof suffix - 1;
+	char *message = malloc(length);
+	if (message == NULL) {
+		static const char out_of_memory[] = "out of memory";
+		adamic_panic(out_of_memory, sizeof out_of_memory - 1);
+	}
+	memcpy(message, prefix, sizeof prefix - 1);
+	memcpy(message + sizeof prefix - 1, name, strlen(name));
+	memcpy(message + sizeof prefix - 1 + strlen(name), suffix, sizeof suffix - 1);
+	adamic_panic(message, length);
+}
+
+// prototype_value is what an object inherits from Object.prototype under the key, as an immortal
+// closure, or NULL.
+static adamic_heap *prototype_value(const adamic_string *key) {
+	if (key_is(key, "constructor")) return &object_constructor.heap;
+	for (size_t index = 0; index < sizeof prototype_methods / sizeof prototype_methods[0]; index++) {
+		if (key_is(key, adamic_dynamic_keyed_prototype_method_names[index])) return &prototype_methods[index]->heap;
+	}
+	return NULL;
+}
+
 adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_string *key, const adamic_keyed_class *classes, size_t count) {
 	if (value == NULL || value == &adamic_null) keyed_stop(adamic_dynamic_keyed_stop_nullish, key);
 	switch (value->kind) {
@@ -434,6 +493,7 @@ adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_stri
 	if (object->tuple) keyed_stop(adamic_dynamic_keyed_stop_array, key);
 	if (object->class != NULL && object->class->is_static) keyed_stop(adamic_dynamic_keyed_stop_static_class, key);
 	if (key->length > 0 && key->bytes[0] == '#') keyed_stop(adamic_dynamic_keyed_stop_private, key);
+	if (key_is(key, "__proto__")) keyed_stop(adamic_dynamic_keyed_stop_proto, key);
 	bool error = adamic_error_is(object);
 	if (error && key_named(key, adamic_dynamic_keyed_error_names, sizeof adamic_dynamic_keyed_error_names / sizeof adamic_dynamic_keyed_error_names[0])) {
 		keyed_stop(adamic_dynamic_keyed_stop_error_property, key);
@@ -449,6 +509,8 @@ adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_stri
 		}
 		// By content, as every name the key meets is.
 		if (key_named(key, row->method_names, row->method_count)) keyed_stop(adamic_dynamic_keyed_stop_method, key);
+		// An object literal's constructor is Object, as a plain object's is.
+		if (!row->literal && key_is(key, "constructor")) keyed_stop(adamic_dynamic_keyed_stop_class_constructor, key);
 	}
 	if (adamic_record_is(object)) {
 		const adamic_value *own = adamic_record_get_own(object, key);
@@ -461,8 +523,5 @@ adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_stri
 		// after the stops above, so neither hides a getter, a method or a private name.
 		if (index < object->shape->count && adamic_object_present(object, index)) return dynamic_slot(object, index);
 	}
-	if (key_named(key, adamic_dynamic_keyed_prototype_names, sizeof adamic_dynamic_keyed_prototype_names / sizeof adamic_dynamic_keyed_prototype_names[0])) {
-		keyed_stop(adamic_dynamic_keyed_stop_object_prototype, key);
-	}
-	return NULL;
+	return prototype_value(key);
 }
