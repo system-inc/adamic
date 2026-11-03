@@ -25,6 +25,11 @@
 `adamic.h:adamic_typeof_object:1`
 `adamic.h:adamic_typeof_string:1`
 `adamic.h:adamic_typeof_undefined:1`
+# String's join stack (#09dvwny), as heap.c's freeing stack is kept: thread-local, so each thread's
+# joins see only their own, holding identities it never counts, freed when its outermost join ends.
+`array.c:joining:1`
+`array.c:joining_capacity:1`
+`array.c:joining_count:1`
 # Loop-thread-only borrowed frame cleanup registry, like subscriptions and jobs.
 `async.c:cleanups:1`
 `async.c:jobs:1`
