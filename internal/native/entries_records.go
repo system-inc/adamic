@@ -6,7 +6,7 @@ import (
 )
 
 func (e *emitter) recordLiteral(literal ir.ObjectLiteral) string {
-	object := e.own(ir.Object, "adamic_record_new(true)")
+	object := e.own(ir.Object, "adamic_record_new(adamic_field_reference)")
 	e.programObject(object, literal.ProgramRegion)
 	for _, field := range literal.Fields {
 		value := e.value(field.Value)

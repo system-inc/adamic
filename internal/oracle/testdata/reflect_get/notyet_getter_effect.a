@@ -1,0 +1,13 @@
+// One class getter that assigns keeps the whole program from reading by a run-time key, though the
+// read here is of a plain object and never reaches it: the read calls a getter from inside the runtime,
+// where the passes that follow calls don't see it, so every class getter is judged.
+import { propertyOf } from './hostErrors.ts';
+
+let reads = 0;
+class Counted {
+	get count(): number {
+		return (reads += 1);
+	}
+}
+console.log(String(new Counted().count));
+console.log(typeof propertyOf({ present: 'here' }, 'present'));

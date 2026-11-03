@@ -1,0 +1,6 @@
+// Reflect.get(Object(value), key, value) of a value the checker hasn't proved neither null nor
+// undefined: Object(null) is a new empty object, which no backend's read sees.
+function read(value: unknown, key: string): unknown {
+	return Reflect.get(Object(value), key, value);
+}
+console.log(typeof read({ present: 'here' }, 'present'));

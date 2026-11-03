@@ -45,6 +45,10 @@ func (l *lowering) registerAccessor(class int, node *ast.Node, function int) {
 	}
 	if node.Kind == ast.KindGetAccessor {
 		metadata.Accessors[index].Getter = function
+		if l.getterDeclarations == nil {
+			l.getterDeclarations = map[int]*ast.Node{}
+		}
+		l.getterDeclarations[function] = node
 	} else {
 		metadata.Accessors[index].Setter = function
 	}

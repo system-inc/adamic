@@ -469,7 +469,7 @@ func (f *cycleFinder) graphAdoptionBoundary() error {
 				reason = "a dynamic-shape object in a graph program"
 				site = f.l.graphDynamicSite
 			}
-		case ir.DynamicProperty:
+		case ir.DynamicProperty, ir.DynamicKeyedProperty:
 			reason = "a dynamic-shape object in a graph program"
 			site = f.l.graphDynamicSite
 		case ir.ObjectCall:

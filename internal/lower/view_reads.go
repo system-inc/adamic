@@ -52,6 +52,11 @@ func viewReadOf(program *ir.Program, expression ir.Expression) viewRead {
 		return viewReadNotYet
 	case ir.CheckedCast, ir.DynamicProperty:
 		return viewReadChecks
+	case ir.DynamicKeyedProperty:
+		// As DynamicProperty: what it reads, it reads by the allocation's own runtime shape and
+		// gives as a tagged union, never by a type's claim; a getter it calls is a class's, and a
+		// view's entry is a plain object with none.
+		return viewReadChecks
 	case ir.ArrayConcat, ir.ArrayFill, ir.ArrayFrom, ir.ArrayIndex, ir.ArrayIsArray, ir.ArrayJoin, ir.ArrayLiteral,
 		ir.ArrayMap, ir.ArrayPop, ir.ArrayPush, ir.ArrayReduce, ir.ArrayReverse, ir.ArraySearch, ir.ArraySlice,
 		ir.ArraySort, ir.ArraySplice, ir.ArrayVisit, ir.Await, ir.Binary, ir.BooleanToString, ir.Box, ir.Call,

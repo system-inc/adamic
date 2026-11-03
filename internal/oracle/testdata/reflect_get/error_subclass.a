@@ -1,0 +1,9 @@
+// An Error subclass a program declares doesn't lower yet, so no shape the emitter writes is an Error,
+// and a run-time key read can't meet one: its stack, cause and errno would stop as an Error's do.
+import { propertyOf } from './hostErrors.ts';
+
+class HostError extends Error {}
+const error = new HostError('host');
+console.log(typeof propertyOf(error, 'stack'));
+console.log(typeof propertyOf(error, 'cause'));
+console.log(typeof propertyOf(error, 'errno'));

@@ -289,6 +289,9 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	if strings.Contains(code, "adamicHostEnvironment(") {
 		code = nodeEnvironmentRuntime() + code
 	}
+	if strings.Contains(code, "adamicDynamicGet(") {
+		code = dynamicKeyedRuntime(program) + code
+	}
 	if strings.Contains(code, "adamicNodeTmpdir()") {
 		code = "import { tmpdir as adamicNodeTmpdir } from 'node:os';\n" + code
 	}
@@ -880,6 +883,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "(" + quote(expression.Name) + " in " + e.value(expression.Object) + ")"
 	case ir.DynamicProperty:
 		return "(" + e.value(expression.Object) + ")[" + quote(expression.Name) + "]"
+	case ir.DynamicKeyedProperty:
+		return "adamicDynamicGet(" + e.value(expression.Object) + ", " + e.value(expression.Key) + ")"
 	case ir.Null:
 		return "null"
 	case ir.IsNull:

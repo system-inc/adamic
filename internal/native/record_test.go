@@ -225,6 +225,18 @@ func TestRecordProtoAssignmentStops(t *testing.T) {
 	}
 }
 
+// The three record shapes (record.c) differ by address alone, and a run-time key read boxes a record's
+// value by the kind its shape names, so a record made with each kind must read that kind back. A linker
+// that folded identical constants (--icf=all, -fmerge-all-constants) would make them one shape, and this
+// goes red (Runtime's should on #zhgxzjg).
+func TestRecordShapesKeepTheirValueKinds(t *testing.T) {
+	t.Parallel()
+	stdout, stderr, err := recordRun(recordBinary(t), "value-kinds")
+	if err != nil || stdout != "number boolean reference\n" {
+		t.Fatalf("want each record shape's own kind: %v\nstdout %q\nstderr %s", err, stdout, stderr)
+	}
+}
+
 // A record reaching a fixed-object read is a lowering bug, and must stop loudly rather than read
 // undefined or its own table: through an optional field, through a field named like its slot, and
 // through a uniform field slot's unchecked load, checked because this harness builds sanitized and counted.
