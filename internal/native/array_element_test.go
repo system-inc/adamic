@@ -298,12 +298,13 @@ console.log(` + "`${grown(3)}`" + `);
 `
 
 const reuseSpreadSource = `function grown(count: number): string {
-	let list: string[] = [];
+	const list: string[] = [];
 	for (let index = 0; index < count; index++) {
-		list = [...list, ` + "`item${index}`" + `];
+		list.push(` + "`item${index}`" + `);
 	}
-	list.reverse();
-	return list[0] ?? '';
+	const longer = [...list, ` + "`last${count}`" + `];
+	longer.reverse();
+	return longer[0] ?? '';
 }
 console.log(grown(3));
 `
