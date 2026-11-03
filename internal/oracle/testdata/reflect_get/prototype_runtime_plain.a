@@ -1,12 +1,12 @@
 // An Object.prototype name answers on each plain object the runtime makes from a static shape, on
 // both backends, as on a literal: decodeJson's, readTextFile's, writeTextFile's, readDirectory's and
-// fileStatus's results, each kind, an iterator's result from a Map, a Set and matchAll, and
-// process.memoryUsage(). Node's prototype for each is Object's, so it prints function true for every
-// row. The runtime registers each shape where it makes the object, as the emitter does a literal's.
+// fileStatus's results, each kind, and an iterator's result from a Map, a Set and matchAll. Node's
+// prototype for each is Object's, so it prints function true for every row. The runtime registers each
+// shape where it makes the object, as the emitter does a literal's. process.memoryUsage() is a host
+// object instead (stop_host_memory_heap.a), by Adamic's ruling on #ey7aysy.
 // Its paths are relative to internal/oracle, where its test runs it; from elsewhere a read is an
 // error result instead, which answers the same.
 import { decodeJson, fileStatus, readDirectory, readTextFile, writeTextFile } from 'adamic';
-import process from 'node:process';
 import { propertyOf } from './hostErrors.ts';
 
 function show(label: string, value: unknown): void {
@@ -32,4 +32,3 @@ show('map number', numbers.next());
 const flags = new Set<boolean>([true]).values();
 show('set boolean', flags.next());
 show('match', 'ab'.matchAll(/a/g).next());
-show('memory', process.memoryUsage());

@@ -1,0 +1,10 @@
+// A host object stops for every key, not only Object.prototype's names (#ey7aysy): a Stats' isFile is
+// Stats.prototype's method on Node, which native's shape doesn't hold, so it read undefined on both
+// backends before. Node prints function.
+import * as fs from 'node:fs';
+import { propertyOf } from './hostErrors.ts';
+
+const stats = fs.statSync('.');
+console.log(stats.isDirectory() ? 'directory' : 'other');
+const value = propertyOf(stats, 'isFile');
+console.log(typeof value);

@@ -1,0 +1,9 @@
+// A host object stops for every key (#ey7aysy): a matchAll iterator's next is its prototype's method
+// on Node, which native's shape doesn't hold, so it read undefined on both backends before. Node
+// prints function.
+import { propertyOf } from './hostErrors.ts';
+
+const matches = 'ab'.matchAll(/a/g);
+console.log('iterator');
+const value = propertyOf(matches, 'next');
+console.log(typeof value);

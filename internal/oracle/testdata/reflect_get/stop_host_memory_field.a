@@ -1,0 +1,10 @@
+// process.memoryUsage() is a host object that stops for every key, by Adamic's ruling on #ey7aysy:
+// Node's has rss, which native's shape doesn't hold, so it read undefined natively before. Node prints
+// number.
+import process from 'node:process';
+import { propertyOf } from './hostErrors.ts';
+
+const usage = process.memoryUsage();
+console.log('memory');
+const value = propertyOf(usage, 'rss');
+console.log(typeof value);
