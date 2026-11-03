@@ -1,0 +1,12 @@
+// Error.prototype.toString.call of a caught Node-coded error is Error.prototype.toString itself, the
+// name and message alone, `TypeError: ...`, not the class's own bracketed toString. Adamic refuses the
+// method read as a value today; were it to lower through adamic_error_to_string it would print the
+// brackets (#z28avqd).
+import { readFileSync } from 'node:fs';
+try {
+	console.log(readFileSync('a\0b', 'utf8'));
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(Error.prototype.toString.call(error));
+	}
+}

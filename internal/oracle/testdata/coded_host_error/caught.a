@@ -1,0 +1,69 @@
+// Caught Node-coded host errors through String and a template over an unknown, which is ToPrimitive and
+// so the error's own toString: `name [code]: message` for one Node builds with makeNodeErrorWithCode or
+// as a SystemError, and `name: message` for a descriptor's RangeError and an errno error, which Node
+// makes without that toString (#z28avqd).
+import { closeSync, readdirSync, readFileSync, rmSync, utimesSync } from 'node:fs';
+import 'node:process';
+function errorCode(error: unknown): string | undefined {
+	return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
+function show(error: unknown): void {
+	console.log(String(error));
+	console.log(`<${error}>`);
+}
+try {
+	console.log(readFileSync('a\0b', 'utf8'));
+} catch (error) {
+	if (error instanceof Error) {
+		show(error);
+		console.log(`${error.name} ${errorCode(error)}`);
+	}
+}
+try {
+	console.log(readdirSync('a\0b').join(','));
+} catch (error) {
+	if (error instanceof Error) {
+		show(error);
+		console.log(`${error.name} ${errorCode(error)}`);
+	}
+}
+try {
+	process.exitCode = 1.5;
+} catch (error) {
+	if (error instanceof Error) {
+		show(error);
+		console.log(`${error.name} ${errorCode(error)}`);
+	}
+}
+try {
+	rmSync('.');
+} catch (error) {
+	if (error instanceof Error) {
+		show(error);
+		console.log(`${error.name} ${errorCode(error)}`);
+	}
+}
+try {
+	utimesSync('/adamic-coded-host-error-missing', Infinity, 0);
+} catch (error) {
+	if (error instanceof Error) {
+		show(error);
+		console.log(`${error.name} ${errorCode(error)}`);
+	}
+}
+try {
+	closeSync(-1);
+} catch (error) {
+	if (error instanceof Error) {
+		show(error);
+		console.log(`${error.name} ${errorCode(error)}`);
+	}
+}
+try {
+	console.log(readFileSync('/adamic-coded-host-error-missing/file', 'utf8'));
+} catch (error) {
+	if (error instanceof Error) {
+		show(error);
+		console.log(`${error.name} ${errorCode(error)}`);
+	}
+}
