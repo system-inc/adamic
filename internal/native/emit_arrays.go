@@ -284,7 +284,7 @@ func (e *emitter) spliceArguments(splice ir.ArraySplice) string {
 	if len(items) > 0 {
 		packed = "(adamic_value[]){" + strings.Join(items, ", ") + "}"
 	}
-	return fmt.Sprintf("%s, %s, %s, %t, %d, %s, %s", array, start, count, splice.Count != nil, len(items), packed, arrayElement(splice.Element))
+	return fmt.Sprintf("%s, %s, %s, %t, %d, %s", array, start, count, splice.Count != nil, len(items), packed)
 }
 
 // constantNumbers is how many constant numbers an array literal holds before they're emitted as

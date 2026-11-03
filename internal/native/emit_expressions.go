@@ -451,7 +451,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("adamic_array_fill(%s, %s, %s, %s, %t, %t);", array, borrowed(expression.Element, value), start, end, expression.Start != nil, expression.End != nil)
 		return array
 	case ir.ArraySplice:
-		return e.programArray(e.graphArray(fmt.Sprintf("adamic_array_splice(%s)", e.spliceArguments(expression)), expression.GraphTypes, expression.ProgramRegion), expression.ProgramRegion)
+		return e.programArray(e.graphArray(fmt.Sprintf("adamic_array_splice(%s, %s)", e.spliceArguments(expression), arrayElement(expression.Element)), expression.GraphTypes, expression.ProgramRegion), expression.ProgramRegion)
 	case ir.ArrayFrom:
 		return e.arrayFrom(expression)
 	case ir.ArrayReverse:
