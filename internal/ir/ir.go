@@ -787,12 +787,13 @@ type (
 	ArrayReverse struct{ Array Expression }
 
 	// ArrayConcat is array.concat(Others...): a new array of every one's elements, in order. Each of
-	// Others is an array of the same elements.
+	// Others is an array of the same elements. Element is the new array's element type.
 	ArrayConcat struct {
 		GraphTypes    []int
 		ProgramRegion bool
 		Array         Expression
 		Others        []Expression
+		Element       Type
 	}
 
 	// ArrayReduce is array.reduce(Callback, Initial): the callback called per element with what it
@@ -876,12 +877,14 @@ type (
 		KeyType, ValueType Type
 	}
 
-	// ArraySlice is array.slice(start, end), either argument perhaps left out.
+	// ArraySlice is array.slice(start, end), either argument perhaps left out. Element is the new
+	// array's element type.
 	ArraySlice struct {
 		GraphTypes    []int
 		ProgramRegion bool
 		Array         Expression
 		Arguments     []Expression
+		Element       Type
 	}
 
 	// ArraySort is array.sort(comparator): one of the module's functions (Comparator), or a function

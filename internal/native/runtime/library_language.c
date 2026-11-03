@@ -29,7 +29,7 @@ adamic_array *adamic_plain_object_keys(const adamic_object *object) {
 	if (adamic_record_is(object)) return adamic_record_keys(object);
 	if (object->write_order != NULL) return adamic_object_keys(object);
 	const adamic_shape *shape = object->shape;
-	adamic_array *keys = adamic_array_new(shape->count, true);
+	adamic_array *keys = adamic_array_make(shape->count, adamic_ir_Union);
 	// Insertion-sort just the integer keys, then append ordinary strings in shape order. Runtime
 	// shapes retain insertion order even through a narrower static type and a spread.
 	for (size_t position = 0; position < shape->count; position++) {

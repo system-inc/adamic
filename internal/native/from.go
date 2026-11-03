@@ -14,7 +14,7 @@ func (e *emitter) arrayFrom(from ir.ArrayFrom) string {
 	callback := e.value(from.Callback)
 	count, index := e.temporary(), e.temporary()
 	e.line("size_t %s = adamic_array_from_length(%s);", count, length)
-	made := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%s, %t)", count, from.Element.IsReference()))
+	made := e.own(ir.Array, fmt.Sprintf("adamic_array_make(%s, %s)", count, arrayElement(from.Element)))
 	e.adoptGraph(made, "sizeof *"+made, e.graphTypes(from.GraphTypes) && !from.ProgramRegion)
 	e.programArray(made, from.ProgramRegion)
 	e.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)

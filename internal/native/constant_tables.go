@@ -59,7 +59,7 @@ func (e *emitter) numberTableCopy() string {
 	if !found {
 		e.declarations = append(e.declarations, fmt.Sprintf(`static adamic_array *%s(size_t count, const double *values) __attribute__((noinline));
 static adamic_array *%s(size_t count, const double *values) {
- adamic_array *array = adamic_array_new(count, false);
+ adamic_array *array = adamic_array_make(count, adamic_ir_Number);
  for (size_t index = 0; index < count; index++) {
   adamic_array_push(array, (adamic_value){.number = values[index]});
  }
@@ -109,7 +109,7 @@ func (e *emitter) constantRecords(literal ir.ArrayLiteral) (string, bool) {
 	if len(runs) == 0 {
 		return "", false
 	}
-	array := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%d, true)", len(literal.Elements)))
+	array := e.own(ir.Array, fmt.Sprintf("adamic_array_make(%d, %s)", len(literal.Elements), arrayElement(literal.Element)))
 	next := 0
 	for index := 0; index < len(literal.Elements); {
 		if next < len(runs) && index == runs[next].begin {

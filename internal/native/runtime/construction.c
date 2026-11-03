@@ -46,7 +46,7 @@ adamic_object *adamic_object_construct(const adamic_shape *shape) {
  return object;
 }
 
-adamic_array *adamic_node_array_new(size_t capacity, bool references, const adamic_shape *extras) {
+adamic_array *adamic_node_array_make(size_t capacity, enum adamic_ir_type element, const adamic_shape *extras) {
  size_t metadata_size = construction_size(extras);
  if (metadata_size > SIZE_MAX - sizeof(adamic_array) || capacity > SIZE_MAX / sizeof(adamic_value)) {
   adamic_panic("out of memory", sizeof "out of memory" - 1);
@@ -54,7 +54,8 @@ adamic_array *adamic_node_array_new(size_t capacity, bool references, const adam
  adamic_array *array = adamic_allocate(sizeof *array + metadata_size, adamic_kind_array);
  array->length = 0;
  array->capacity = capacity;
- array->references = references;
+ array->references = adamic_ir_type_reference(element);
+ array->element = array->references ? adamic_ir_Union : element;
  array->properties = NULL;
  array->elements = capacity == 0 ? NULL : malloc(capacity * sizeof(adamic_value));
  if (capacity != 0 && array->elements == NULL) adamic_panic("out of memory", sizeof "out of memory" - 1);
@@ -66,7 +67,7 @@ adamic_array *adamic_node_array_new(size_t capacity, bool references, const adam
 }
 
 adamic_array *adamic_node_array_keys(const adamic_array *array) {
- adamic_array *keys = adamic_array_new(array->length, true);
+ adamic_array *keys = adamic_array_make(array->length, adamic_ir_Union);
  for (size_t index = 0; index < array->length; index++) {
   adamic_array_push(keys, (adamic_value){.reference = adamic_string_from_number((double)index)});
  }

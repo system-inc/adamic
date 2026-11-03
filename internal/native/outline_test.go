@@ -12,7 +12,7 @@ import (
 
 func TestInitializerFlatBoundaries(t *testing.T) {
 	t.Parallel()
-	flat := `adamic_array *adamic_temporary_1 = adamic_array_new(1, false); adamic_array_push(adamic_temporary_1, (adamic_value){.number = 1});`
+	flat := `adamic_array *adamic_temporary_1 = adamic_array_make(1, adamic_ir_Number); adamic_array_push(adamic_temporary_1, (adamic_value){.number = 1});`
 	if got := len(initializerStatements(flat)); got != 2 {
 		t.Fatalf("compound literal boundaries: %d", got)
 	}
@@ -85,7 +85,7 @@ func TestInitializerUnitOwnership(t *testing.T) {
 func TestInitializerCrossModuleRoot(t *testing.T) {
 	t.Parallel()
 	e := &emitter{indent: 1}
-	parts := []initializerPart{{module: "first.a", statements: []string{"adamic_array *adamic_local_root = adamic_array_new(1, false);"}}, {module: "second.a", statements: []string{`adamic_array_push(adamic_local_root, (adamic_value){.number=7}); printf("%zu\n", adamic_local_root->length);`}}}
+	parts := []initializerPart{{module: "first.a", statements: []string{"adamic_array *adamic_local_root = adamic_array_make(1, adamic_ir_Number);"}}, {module: "second.a", statements: []string{`adamic_array_push(adamic_local_root, (adamic_value){.number=7}); printf("%zu\n", adamic_local_root->length);`}}}
 	definitions := e.outlineInitializers(parts, "adamic_release(adamic_local_root);\n")
 	source := "#include \"adamic.h\"\n#include <stdio.h>\n" + definitions + "int main(void){\n" + e.out.String() + "return 0;\n}\n"
 	binary := filepath.Join(t.TempDir(), "root")
