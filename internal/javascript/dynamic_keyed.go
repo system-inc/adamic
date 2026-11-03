@@ -90,7 +90,16 @@ func dynamicKeyedRuntime(program *ir.Program) string {
 	builder.WriteString("\tif (error && (key === 'name' || key === 'message')) return value[key];\n")
 	builder.WriteString("\tif (Object.hasOwn(value, key)) return value[key];\n")
 	// Node's own Object.prototype member, where native hands out its immortal closure for the name.
-	builder.WriteString("\tif (adamicDynamicKeyedPrototypeNames.has(key)) return value[key];\n")
+	// Native can't know a runtime-made object's prototype and stops on one, so here an object whose
+	// prototype isn't Object's, a Stats or an Error, stops too, a class instance aside.
+	instance := ""
+	if classes {
+		instance = " && id === undefined"
+	}
+	builder.WriteString("\tif (adamicDynamicKeyedPrototypeNames.has(key)) {\n")
+	builder.WriteString("\t\tif (Object.getPrototypeOf(value) !== Object.prototype" + instance + ") return adamicDynamicStop('RuntimeValue', key);\n")
+	builder.WriteString("\t\treturn value[key];\n")
+	builder.WriteString("\t}\n")
 	builder.WriteString("\treturn undefined;\n")
 	builder.WriteString("};\n")
 	return builder.String()
