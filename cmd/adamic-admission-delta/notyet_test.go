@@ -108,6 +108,48 @@ func TestRuntimeNotYetRulingMetadata(t *testing.T) {
 	}
 }
 
+// The keyless stops String and a template make of an unknown (#09dvwny) are the second shape: each of the
+// three ruled whats, said whole, reads under its ruling, and nothing else of that shape does, a fourth
+// what, a pattern's near miss or another ruling. Mutants: runtimeNotYetForm matching the shape's two ends
+// around any what accepts "a fourth what"; without the keyless shape, every ruled what is refused.
+func TestRuntimeNotYetConversionForms(t *testing.T) {
+	t.Parallel()
+	source, stop, list := runtimeNotYetFixture(t)
+	path := filepath.Join(t.TempDir(), "stops.json")
+	read := func(stderr, ruling string) error {
+		converted := stop
+		converted.Stderr, converted.RulingTask, converted.LiftingTask = stderr, ruling, "#0cmbkgt"
+		writeRuntimeNotYetList(t, path, runtimeNotYetStopList{Comment: list.Comment, Stops: map[string]runtimeNotYetStop{contentHash(source): converted}})
+		_, err := readRuntimeNotYetStops(path)
+		return err
+	}
+	for _, what := range []string{
+		"an object whose own toString is a function this program can't name",
+		"an array of only numbers, booleans, null or undefined",
+		"a class object",
+	} {
+		if err := read("adamic: panic: converting "+what+" to a string is not yet lowered\n", "#09dvwny"); err != nil {
+			t.Errorf("ruled conversion %q refused: %v", what, err)
+		}
+	}
+	for name, stderr := range map[string]string{
+		"a fourth what":       "adamic: panic: converting a function to a string is not yet lowered\n",
+		"a what's near miss":  "adamic: panic: converting an array of only numbers to a string is not yet lowered\n",
+		"no newline":          "adamic: panic: converting a class object to a string is not yet lowered",
+		"two lines":           "adamic: panic: converting a class object to a string is not yet lowered\nadamic: panic: converting a class object to a string is not yet lowered\n",
+		"another ending":      "adamic: panic: converting a class object to a string is not yet supported\n",
+		"no panic prefix":     "converting a class object to a string is not yet lowered\n",
+		"a key read after it": "adamic: panic: converting a class object to a string is not yet lowered (reading 'x')\n",
+	} {
+		if err := read(stderr, "#09dvwny"); err == nil {
+			t.Errorf("%s accepted: %q", name, stderr)
+		}
+	}
+	if err := read("adamic: panic: converting a class object to a string is not yet lowered\n", "#zhgxzjg"); err == nil {
+		t.Error("a conversion under another ruling accepted")
+	}
+}
+
 // internal/ir's two compiler-bug stops are never a NotYet, listed or allowlisted. Not parallel: it widens
 // the allowlist for its run, before the parallel tests resume.
 func TestRuntimeNotYetCompilerBugNeverQualifies(t *testing.T) {

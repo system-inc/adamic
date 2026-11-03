@@ -165,10 +165,14 @@ demands Node agreement. Each entry names its `path`, its `ruling_task`, the
 `lifting_task` that will lift the stop, and its exact `stderr`. The tool refuses
 the list when an entry lacks either task or its message is not one line of
 `adamic: panic: <form> (reading '<key>')` with `<form>` on the tool's closed
-allowlist (`runtimeNotYetForms`), each form naming the ruling that made it, and
-it refuses an entry whose `ruling_task` is not its form's ruling. The
-allowlist holds the seven `internal/ir` DynamicKeyedStops forms a ruled fixture
-reaches; a `compiler bug:` stop never qualifies, listed or allowlisted.
+allowlist (`runtimeNotYetForms`), or, keyless, exactly
+`adamic: panic: converting <what> to a string is not yet lowered` with `<what>`
+one of the three on the second allowlist (`runtimeNotYetConversions`, #09dvwny:
+String and a template of an unknown), matched whole, never as a pattern. Each
+form names the ruling that made it, and the tool refuses an entry whose
+`ruling_task` is not its form's ruling. The first allowlist holds the seven
+`internal/ir` DynamicKeyedStops forms a ruled fixture reaches; a `compiler bug:`
+stop never qualifies, listed or allowlisted.
 
 A listed program passes only when the tool sees all of it: both backends exit 70
 with exactly the entry's stderr, their stdout is the same bytes and is byte for
