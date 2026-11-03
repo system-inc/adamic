@@ -157,6 +157,7 @@ var signatureReaders = map[string]string{
 	"checkedPredicateInferredReference": "the callee's type predicate, to read the reference it narrows",
 	"checkedPredicateResult":            "the callee's declaration, to check a predicate's claim at the call",
 	"classGenericCall":                  "the callee's instantiation, to lower a generic class's method",
+	"declaredKeyBindings":               "the callee's instantiation, to judge each type argument it binds against its constraint by the declared-key rule; an argument's slot is judged as a view (recordViewSite)",
 	"detachedOwnOpaqueArgument":         "a parameter's declaration, to find the own-property helper by name",
 	"instantiateFunction":               "the callee's instantiation, to lower a generic function",
 	"libraryCallResult":                 "the callee's declaration, whether the library declares it",
