@@ -12,7 +12,7 @@ const (
 )
 
 // nodeCommonJSModuleValues is the one reason for __filename and __dirname, so the meter counts them together.
-const nodeCommonJSModuleValues = "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the path in, such as one built from process.cwd())"
+const nodeCommonJSModuleValues = "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
 
 // nodeCommonJSLoading is what each named require's reason says after naming it.
 const nodeCommonJSLoading = ": CommonJS loading with no ES-module answer yet"
