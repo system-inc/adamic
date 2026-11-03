@@ -3,7 +3,9 @@
 // number and boolean, decodeJson's number result, fileStatus's size and symbolicLink, matchAll's
 // done, a Map's number and a Set's boolean from next(), and memoryUsage's heapUsed. The size and
 // heapUsed print their type only, since their values vary. The path is relative to internal/oracle,
-// where its test runs it.
+// where its test runs it. Last, an optional number field, present and absent, and a number |
+// undefined field written with a plain number and then with undefined: a slot that may hold a packed
+// maybe-number, whose byte must name the slot's storage, not the value written into it.
 import { decodeJson, fileStatus } from 'adamic';
 import process from 'node:process';
 import { propertyOf } from './hostErrors.ts';
@@ -32,3 +34,12 @@ show('map value', propertyOf(numbers.next(), 'value'));
 const flags = new Set<boolean>([true]).values();
 show('set value', propertyOf(flags.next(), 'value'));
 console.log(`heapUsed ${typeof propertyOf(process.memoryUsage(), 'heapUsed')}`);
+const present: { readonly count?: number } = { count: 3 };
+show('present', propertyOf(present, 'count'));
+const absent: { readonly count?: number } = {};
+show('absent', propertyOf(absent, 'count'));
+const box: { count: number | undefined } = { count: undefined };
+box.count = 4;
+show('written', propertyOf(box, 'count'));
+box.count = undefined;
+show('cleared', propertyOf(box, 'count'));
