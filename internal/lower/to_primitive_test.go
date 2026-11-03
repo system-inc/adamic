@@ -119,27 +119,28 @@ show(new Below());
 		t.Fatal(err)
 	}
 	want := "converting an object whose class has a toString or valueOf field to a string is not yet lowered"
+	// The class arms sit inside the instance kind's branch, so they're found at any depth.
 	arms := map[string]string{}
-	for _, statement := range toPrimitiveHelper(t, program).Body {
-		branch, ok := statement.(ir.If)
+	walk(toPrimitiveHelper(t, program).Body, func(node any) bool {
+		branch, ok := node.(ir.If)
 		if !ok {
-			continue
+			return true
 		}
 		test, ok := branch.Condition.(ir.InstanceOf)
 		if !ok || !test.Exact {
-			continue
+			return true
 		}
 		name := program.Classes[test.Class-1].Name
 		arms[name] = ""
-		if len(branch.Then) != 1 {
-			continue
-		}
-		if panicked, ok := branch.Then[0].(ir.Panic); ok {
-			if text, ok := panicked.Message.(ir.StringConstant); ok {
-				arms[name] = program.Strings[text.Index]
+		if len(branch.Then) == 1 {
+			if panicked, ok := branch.Then[0].(ir.Panic); ok {
+				if text, ok := panicked.Message.(ir.StringConstant); ok {
+					arms[name] = program.Strings[text.Index]
+				}
 			}
 		}
-	}
+		return true
+	})
 	for _, name := range []string{"Base", "Derived", "Valued", "Below"} {
 		got, found := arms[name]
 		if !found {
