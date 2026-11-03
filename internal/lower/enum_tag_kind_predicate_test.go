@@ -41,7 +41,10 @@ func TestKindPredicateCallIsItsComparison(t *testing.T) {
 		{"!== true", isA + "function show(n: N): string { if (isA(n) !== true) { return `b ${n.b}`; } return `a ${n.a}`; }\n" + values + "console.log(show(a));\nconsole.log(show(b));\n", "a 1\nb x\n"},
 		{"const arrow", "const isA = (n: N): n is A => n.kind === K.A;\nfunction show(n: N): string { return isA(n) ? `a ${n.a}` : `b ${n.b}`; }\n" + values + "console.log(show(a));\nconsole.log(show(b));\n", "a 1\nb x\n"},
 		{"this parameter", "function isA(this: void, n: N): n is A { return n.kind === K.A; }\nfunction show(n: N): string { return isA(n) ? `a ${n.a}` : `b ${n.b}`; }\n" + values + "console.log(show(a));\nconsole.log(show(b));\n", "a 1\nb x\n"},
-		{"generic, reduced", "function isA<T extends N>(n: T): n is T & A { return n.kind === K.A; }\nfunction show(n: N): string { return isA(n) ? `a ${n.a}` : `b ${n.b}`; }\n" + values + "console.log(show(a));\nconsole.log(show(b));\n", "a 1\nb x\n"},
+		// Compiler's filter pair: the predicate called in a walked branch and handed to filter as a value,
+		// where it stays R-T80's checked closure (this head drops no check anywhere).
+		{"walked call beside filter", isA + "function show(n: N): string { return isA(n) ? `a ${n.a}` : `b ${n.b}`; }\n" + values + "console.log(show(a));\nconsole.log([a, b].filter(isA).map((n) => `${n.a}`).join(','));\n", "a 1\n1\n"},
+		{"generic, reduced","function isA<T extends N>(n: T): n is T & A { return n.kind === K.A; }\nfunction show(n: N): string { return isA(n) ? `a ${n.a}` : `b ${n.b}`; }\n" + values + "console.log(show(a));\nconsole.log(show(b));\n", "a 1\nb x\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
