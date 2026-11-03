@@ -1,0 +1,14 @@
+// A class used before its declaration runs throws Node's ReferenceError, which a try in main catches
+// (#bxmdk73). Node prints the error, then late.
+function make(): string {
+	return new Late().label;
+}
+try {
+	console.log(make());
+} catch (error) {
+	if (error instanceof Error) console.log(`${error.name}|${error.message}|${String(error)}`);
+}
+class Late {
+	label = 'late';
+}
+console.log(make());

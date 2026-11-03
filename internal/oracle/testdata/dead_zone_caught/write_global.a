@@ -1,0 +1,20 @@
+// A write of a global in its temporal dead zone throws once its value has run, as Node's store does:
+// mark runs, then the write throws, and later keeps nothing (#bxmdk73). Node prints the error, m, then
+// 3 once later is declared.
+let trace = '';
+function mark(): number {
+	trace += 'm';
+	return 3;
+}
+function setLater(): void {
+	later = mark();
+}
+try {
+	setLater();
+} catch (error) {
+	if (error instanceof Error) console.log(`${error.name}|${error.message}|${String(error)}`);
+}
+console.log(trace);
+let later = 1;
+setLater();
+console.log(String(later));

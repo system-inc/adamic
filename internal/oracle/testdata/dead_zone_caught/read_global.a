@@ -1,0 +1,17 @@
+// A global read in its temporal dead zone throws Node's ReferenceError, which a try in main catches,
+// through a function that can't throw on its own: twice only calls readLater, so the throw leaves both
+// (#bxmdk73). Node prints before, ReferenceError|Cannot access 'later' before initialization|..., 43.
+function readLater(): number {
+	return later * 2;
+}
+function twice(): number {
+	return readLater() + 1;
+}
+console.log('before');
+try {
+	console.log(String(twice()));
+} catch (error) {
+	if (error instanceof Error) console.log(`${error.name}|${error.message}|${String(error)}`);
+}
+const later = 21;
+console.log(String(twice()));

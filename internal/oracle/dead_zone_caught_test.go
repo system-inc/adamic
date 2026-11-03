@@ -1,0 +1,41 @@
+package oracle
+
+import (
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+// A read or write in its temporal dead zone throws Node's ReferenceError natively, named
+// ReferenceError with "Cannot access 'name' before initialization" as its message alone, so a try
+// catches it and e.name, e.message and String(e) read as Node's (#bxmdk73, Adamic's ruling on
+// #d2p19w9). The throw is counted wherever the analyses ask what can throw (ir.Program's
+// DeadZoneMayThrow, read by lower's throwsOut and flow's CanThrow), so a caller tests for it through
+// a function that can't throw on its own (read_global.a's twice), and an async function's rejection
+// lands in its awaiter's try. Each agrees with Node natively, sanitized and on JavaScript. Mutants:
+// adamic_panic back in the emitter's deadZone, and every program goes red natively; the class
+// prefix put back in the message, and each e.message reads doubled; DeadZoneMayThrow false for a
+// read, and read_global.a's twice no longer tests the word.
+func TestDeadZoneThrowsAreCaughtAsNodes(t *testing.T) {
+	t.Parallel()
+	directory := "internal/oracle/testdata/dead_zone_caught"
+	entries, err := os.ReadDir(filepath.Join(repository, directory))
+	if err != nil {
+		t.Fatal(err)
+	}
+	programs := 0
+	for _, entry := range entries {
+		if !strings.HasSuffix(entry.Name(), ".a") {
+			continue
+		}
+		programs++
+		t.Run(entry.Name(), func(t *testing.T) {
+			t.Parallel()
+			loomViewsDAgrees(t, directory+"/"+entry.Name())
+		})
+	}
+	if programs != 6 {
+		t.Fatalf("%d programs in %s, want 6: a program added or removed needs this count changed with it", programs, directory)
+	}
+}
