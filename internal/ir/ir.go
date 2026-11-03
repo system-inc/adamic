@@ -33,11 +33,16 @@ type Program struct {
 	PredicateChecks PredicateCheckCounts
 
 	// CheckedFields are the fields checked at every object read and write: a view member under its CheckedFieldKey, a
-	// record's field under its bare name. CheckedField reads it.
+	// record's field or a merged class's under its bare name. CheckedField reads it.
 	CheckedFields SortedMap[string, bool]
 	NonNullChecks NonNullCheckCounts
 	Generated     []*GeneratedType
 	AsyncEntry    int // one-based ordinary function for module suspension, zero when synchronous
+
+	// PlainReceivers are the receiver types, by the id CheckedFieldKey takes, lowering proved never hold a record or an
+	// instance of a class merged with an interface, which a bare-name CheckedFields entry stands for, so CheckedField
+	// doesn't check a read or write through them by a bare name (lower's plainReceiver, #9jnjwrw).
+	PlainReceivers SortedMap[int, bool]
 
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
@@ -529,6 +534,10 @@ type (
 		// class's method, called with the object as this. A method can't be read any other way
 		// (docs/0.1.md), so only a callee is one.
 		Method bool
+		// NotRecord says the read runs where a storage test found neither a record nor a class instance
+		// (lower's weakFieldRead, in its fixed branch): its receiver is proven plain by its value, as
+		// PlainReceivers proves one by its type, so a bare-name entry doesn't check it (Program.CheckedRead).
+		NotRecord bool
 	}
 
 	// ArrayLiteral makes an array. Where Spread is set, the element at that position is an array of the
