@@ -292,7 +292,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	if strings.Contains(code, "adamicUnknownKind(") {
 		code = unknownKindRuntime(program) + code
 	}
-	if strings.Contains(code, "adamicJoinEnter(") {
+	if strings.Contains(code, "adamicArrayOfScalars(") || strings.Contains(code, "adamicJoinEnter(") {
 		code = joinRuntime + code
 	}
 	if strings.Contains(code, "adamicNodeTmpdir()") {
