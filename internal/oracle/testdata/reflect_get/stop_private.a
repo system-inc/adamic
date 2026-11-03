@@ -1,0 +1,18 @@
+// A key naming a class's private field, built at run time, stops on both backends: the JavaScript
+// backend keeps the private as a string key "#x", which a plain read would hand out. Node prints
+// undefined, since a private name is no property.
+import { propertyOf } from './hostErrors.ts';
+
+function joined(left: string, right: string): string {
+	return left + right;
+}
+class Secret {
+	#x = 'hidden';
+	reveal(): string {
+		return this.#x;
+	}
+}
+const secret = new Secret();
+console.log(secret.reveal());
+const value = propertyOf(secret, joined('#', 'x'));
+console.log(typeof value);

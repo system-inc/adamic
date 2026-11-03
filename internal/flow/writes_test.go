@@ -33,6 +33,8 @@ var callBackExamples = []ir.Expression{
 	ir.ArrayMap{}, ir.ArrayVisit{}, ir.ArrayReduce{}, ir.ArrayFrom{}, ir.ArraySort{}, ir.MapForEach{}, ir.ParallelMap{},
 	ir.RegExpCall{Replacement: &ir.RegExpReplacement{}},
 	ir.JSONEncode{}, // Fail closed: lowering refuses getter-bearing operands before JSON encoding.
+	// A run-time key read calls whichever class getter its key names.
+	ir.DynamicKeyedProperty{},
 }
 
 // valueCases write into what they're handed, or call, through a case of value's own, which makes
