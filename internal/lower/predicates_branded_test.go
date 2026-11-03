@@ -622,9 +622,10 @@ function show(n: Node): void { if (isTypeElementLie(n)) { console.log(nameOf(n))
 // Language's y4 stopped at x.name = "w" with "<write>.name is not initialized" on both backends where Node
 // prints w (Optimizer's ruling, Nov 2). Mut's name is optional and Branded's value has none, or has "a".
 // Unrouted, the write is a plain one, and with #krv1hgh on main a plain write to an optional field some
-// literal left out is NotYet at the write, so both y4 rows are NotYet there, "writing a possibly absent
-// optional own field", natively and on the JavaScript backend alike (Language, merged on main 24616705,
-// Nov 2). Before #krv1hgh the plain write reached main's missing slot and native panicked. A
+// literal left out is NotYet at the write, so y4 is NotYet there, "writing a possibly absent optional own
+// field" (Language, merged on main 24616705, Nov 2). Before #krv1hgh the plain write reached main's
+// missing slot and native panicked. y4 holding a name has its slot, so #krv1hgh admits its write, and it
+// lowers and agrees on both backends, its write unrouted and its read checked. A
 // required field, MutCount's count over Counted, always has its slot: its write stays a plain one and
 // agrees on both backends, and it isn't the widened NotYet, since checkViewWidenedReads weighs reads,
 // never writes (Pupa, Nov 2). Mutant: the four write sites routed again, and the required field's write is
@@ -647,7 +648,7 @@ function show<T extends MutCount>(x: T): void { if (isCountedLie(x)) { x.count =
 		{"y4", y4 + `const v: Branded = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined };
 const mv: Mut = v; show(mv);`, "name", "w\n", true},
 		{"y4 holding a name", y4 + `const v: Branded = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a" };
-const mv: Mut = v; show(mv);`, "name", "w\n", true},
+const mv: Mut = v; show(mv);`, "name", "w\n", false},
 		{"required field", counted + `const w = { kind: 5, pos: 1, count: 3 }; const m: MutCount = w; show(m);`, "count", "7\n", false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
