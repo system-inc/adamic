@@ -1,0 +1,32 @@
+{
+  "task": "#redxes2 head 1",
+  "base": "a0ba9dd52b23326880b16a7898d446597cfb5a88",
+  "controlMain": "a0ba9dd52b23326880b16a7898d446597cfb5a88",
+  "controlReused": false,
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "adaptation": "99-wasm-crypto-import",
+  "applyExit": {
+    "control": 0,
+    "after": 0
+  },
+  "applySnapshots": {
+    "before": "373a5bdc3987439b1c0ab834aee030860c15999c",
+    "after": "d347e707905395197c31a019f7f5eb290977f952"
+  },
+  "applyNumstat": "4\t11\tsrc/compiler/sys.ts\n",
+  "sourceFiles": 746,
+  "sourceScope": [
+    "src/compiler/sys.ts"
+  ],
+  "oracleWorkers": 8,
+  "sharedHarnessUnchanged": true,
+  "protectedPaths": [
+    "stage3/patch-set.md",
+    "stage3/lane",
+    "stage3/oracle",
+    "stage3/fixtures",
+    "stage3/meter"
+  ],
+  "applyPySha256": "8f5b9fac51c349fc0e6d75574b1e5ff4ab1f32cf2c90e512c98938812de770d2",
+  "laneCheckSha256": "5c523a2069bd994e374e13d74094c9b869a066c1b6503685449e45e1a06d34b8"
+}

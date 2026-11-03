@@ -1,0 +1,21 @@
+--- a/src/compiler/sys.ts
++++ b/src/compiler/sys.ts
+@@ -52,0 +53 @@
++import * as _crypto from "node:crypto";
+@@ -1474,8 +1474,0 @@
+-        // crypto can be absent on reduced node installations
+-        let _crypto: typeof import("crypto") | undefined;
+-        try {
+-            _crypto = require("crypto");
+-        }
+-        catch {
+-            _crypto = undefined;
+-        }
+@@ -1573,2 +1566,2 @@
+-            createHash: _crypto ? createSHA256Hash : generateDjb2Hash,
+-            createSHA256Hash: _crypto ? createSHA256Hash : undefined,
++            createHash: createSHA256Hash,
++            createSHA256Hash,
+@@ -1950 +1943 @@
+-            const hash = _crypto!.createHash("sha256");
++            const hash = _crypto.createHash("sha256");

@@ -1,0 +1,13 @@
+{
+  "status": "pass",
+  "apiBytes": 593502,
+  "apiSha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+  "beforeSysSha256": "f9ff61b6a486c60e6738b334fe2e483ced5e53bfb2e462fadc4bdc9749d25336",
+  "afterSysSha256": "a52755b55d8998df5fd5045fc0418c33bc7496502a131116a00d9bb4bc04b273",
+  "rerunDoesNotWrite": true,
+  "movedTargetRejectedBeforeWrite": true,
+  "scopeMutantsCaught": true,
+  "ternaryMutantCaught": true,
+  "earlierReaderFailsOnlyOnNewShape": true,
+  "shorthandTypechecks": true
+}

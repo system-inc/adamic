@@ -1,0 +1,253 @@
+[
+  {
+    "name": "api-install",
+    "command": [
+      "npm",
+      "ci",
+      "--prefix",
+      "stage3/api",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/workspace/scratch/adapt-94",
+    "exit": 0,
+    "seconds": 1.001,
+    "limit": 600,
+    "minFreeBytes": 23518363648
+  },
+  {
+    "name": "control-apply",
+    "command": [
+      "bash",
+      "stage3/apply.sh",
+      "/workspace/scratch/wasm-crypto-proof/control"
+    ],
+    "cwd": "/workspace/scratch/adapt-94",
+    "exit": 0,
+    "seconds": 274.107,
+    "limit": 1800,
+    "minFreeBytes": 22653923328
+  },
+  {
+    "name": "after-apply",
+    "command": [
+      "bash",
+      "stage3/apply.sh",
+      "/workspace/scratch/wasm-crypto-proof/after"
+    ],
+    "cwd": "/workspace/scratch/adapt-94",
+    "exit": 0,
+    "seconds": 279.144,
+    "limit": 1800,
+    "minFreeBytes": 21783064576
+  },
+  {
+    "name": "checks",
+    "command": [
+      "node",
+      "/workspace/scratch/adapt-94/stage3/adapt/99-wasm-crypto-import/proofs/check.cjs",
+      "/workspace/scratch/wasm-crypto-proof/control",
+      "/workspace/scratch/wasm-crypto-proof/after",
+      "/workspace/scratch/adapt-94/stage3/adapt/99-wasm-crypto-import/proofs/checks.json"
+    ],
+    "cwd": "/workspace/scratch/adapt-94",
+    "exit": 0,
+    "seconds": 1.001,
+    "limit": 300,
+    "minFreeBytes": 21777625088
+  },
+  {
+    "name": "bindings",
+    "command": [
+      "node",
+      "/workspace/scratch/adapt-94/stage3/adapt/99-wasm-crypto-import/proofs/bindings.cjs",
+      "/workspace/scratch/wasm-crypto-proof/control",
+      "/workspace/scratch/wasm-crypto-proof/after",
+      "/workspace/scratch/adapt-94/stage3/adapt/99-wasm-crypto-import/proofs/bindings.json"
+    ],
+    "cwd": "/workspace/scratch/adapt-94",
+    "exit": 0,
+    "seconds": 7.002,
+    "limit": 300,
+    "minFreeBytes": 21777428480
+  },
+  {
+    "name": "idempotence-no-write",
+    "command": [
+      "node",
+      "/workspace/scratch/adapt-94/stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+      "/workspace/scratch/wasm-crypto-proof/after"
+    ],
+    "cwd": "/workspace/scratch/adapt-94",
+    "exit": 0,
+    "seconds": 4.001,
+    "limit": 180,
+    "minFreeBytes": 21777424384
+  },
+  {
+    "name": "moved-target-mutant",
+    "command": [
+      "node",
+      "/workspace/scratch/adapt-94/stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+      "/workspace/scratch/wasm-crypto-proof/after"
+    ],
+    "cwd": "/workspace/scratch/adapt-94",
+    "exit": 1,
+    "seconds": 2.002,
+    "limit": 180,
+    "minFreeBytes": 21777420288
+  },
+  {
+    "name": "scope-only-mutant",
+    "command": [
+      "node",
+      "/workspace/scratch/adapt-94/stage3/adapt/99-wasm-crypto-import/proofs/scope-mutant.cjs",
+      "/workspace/scratch/wasm-crypto-proof/control",
+      "/workspace/scratch/wasm-crypto-proof/after"
+    ],
+    "cwd": "/workspace/scratch/adapt-94",
+    "exit": 1,
+    "seconds": 1.001,
+    "limit": 300,
+    "minFreeBytes": 21777416192
+  },
+  {
+    "name": "runtime-scope-mutant",
+    "command": [
+      "node",
+      "/workspace/scratch/adapt-94/stage3/adapt/99-wasm-crypto-import/proofs/check.cjs",
+      "/workspace/scratch/wasm-crypto-proof/control",
+      "/workspace/scratch/wasm-crypto-proof/after"
+    ],
+    "cwd": "/workspace/scratch/adapt-94",
+    "exit": 1,
+    "seconds": 1.001,
+    "limit": 300,
+    "minFreeBytes": 21777387520
+  },
+  {
+    "name": "ternary-mutant",
+    "command": [
+      "node",
+      "/workspace/scratch/adapt-94/stage3/adapt/99-wasm-crypto-import/proofs/ternary-mutant.cjs",
+      "/workspace/scratch/wasm-crypto-proof/after"
+    ],
+    "cwd": "/workspace/scratch/adapt-94",
+    "exit": 1,
+    "seconds": 2.001,
+    "limit": 300,
+    "minFreeBytes": 21777350656
+  },
+  {
+    "name": "earlier-reader",
+    "command": [
+      "node",
+      "/workspace/scratch/adapt-94/stage3/adapt/98-axolotl-e/adapt.cjs",
+      "/workspace/scratch/wasm-crypto-proof/after"
+    ],
+    "cwd": "/workspace/scratch/adapt-94",
+    "exit": 1,
+    "seconds": 1.001,
+    "limit": 300,
+    "minFreeBytes": 21777350656
+  },
+  {
+    "name": "restored-checks",
+    "command": [
+      "node",
+      "/workspace/scratch/adapt-94/stage3/adapt/99-wasm-crypto-import/proofs/check.cjs",
+      "/workspace/scratch/wasm-crypto-proof/control",
+      "/workspace/scratch/wasm-crypto-proof/after",
+      "/workspace/scratch/adapt-94/stage3/adapt/99-wasm-crypto-import/proofs/checks.json"
+    ],
+    "cwd": "/workspace/scratch/adapt-94",
+    "exit": 0,
+    "seconds": 1.001,
+    "limit": 300,
+    "minFreeBytes": 21777346560
+  },
+  {
+    "name": "control-install",
+    "command": [
+      "npm",
+      "ci",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/workspace/scratch/wasm-crypto-proof/control",
+    "exit": 0,
+    "seconds": 6.002,
+    "limit": 600,
+    "minFreeBytes": 21620674560
+  },
+  {
+    "name": "control-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/workspace/scratch/wasm-crypto-proof/control",
+    "exit": 0,
+    "seconds": 26.039,
+    "limit": 1200,
+    "minFreeBytes": 21469003776
+  },
+  {
+    "name": "after-install",
+    "command": [
+      "npm",
+      "ci",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/workspace/scratch/wasm-crypto-proof/after",
+    "exit": 0,
+    "seconds": 3.001,
+    "limit": 600,
+    "minFreeBytes": 21336932352
+  },
+  {
+    "name": "after-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/workspace/scratch/wasm-crypto-proof/after",
+    "exit": 0,
+    "seconds": 24.015,
+    "limit": 1200,
+    "minFreeBytes": 21209489408
+  },
+  {
+    "name": "built-witness",
+    "command": [
+      "node",
+      "/workspace/scratch/adapt-94/stage3/adapt/99-wasm-crypto-import/proofs/built-witness.cjs",
+      "/workspace/scratch/wasm-crypto-proof/control",
+      "/workspace/scratch/wasm-crypto-proof/after",
+      "/workspace/scratch/wasm-crypto-proof/project",
+      "/workspace/scratch/adapt-94/stage3/adapt/99-wasm-crypto-import/proofs/built-witness.json"
+    ],
+    "cwd": "/workspace/scratch/adapt-94",
+    "exit": 0,
+    "seconds": 2.527,
+    "limit": 300
+  },
+  {
+    "name": "built-witness-final",
+    "command": [
+      "node",
+      "/workspace/scratch/adapt-94/stage3/adapt/99-wasm-crypto-import/proofs/built-witness.cjs",
+      "/workspace/scratch/wasm-crypto-proof/control",
+      "/workspace/scratch/wasm-crypto-proof/after",
+      "/workspace/scratch/wasm-crypto-proof/project-final",
+      "/workspace/scratch/adapt-94/stage3/adapt/99-wasm-crypto-import/proofs/built-witness.json"
+    ],
+    "cwd": "/workspace/scratch/adapt-94",
+    "exit": 0,
+    "seconds": 2.532,
+    "limit": 300
+  }
+]
