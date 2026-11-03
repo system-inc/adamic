@@ -1,0 +1,18 @@
+// a-check: refused a Options | Printer seen as Printer (fixed objects and records have different storage; copy explicitly)
+interface Options {
+	removeComments?: boolean;
+	[option: string]: boolean | undefined;
+}
+interface Printer {
+	removeComments?: boolean;
+	omitTrailingSemicolon?: boolean;
+}
+function omit(printer: Printer): boolean {
+	return printer.omitTrailingSemicolon === true;
+}
+function pass(options: Options | Printer): boolean {
+	return omit(options);
+}
+const options: Options = { removeComments: true };
+options['omitTrailingSemicolon'] = false;
+console.log(String(pass(options)));
