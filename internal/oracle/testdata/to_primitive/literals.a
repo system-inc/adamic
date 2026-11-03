@@ -1,0 +1,19 @@
+// An object literal's own toString and valueOf (#09dvwny): a function is called, with the literal as
+// this where it's a method, a field that holds no function is skipped, and with no own toString at all
+// it's Object.prototype.toString's "[object Object]".
+function show(value: unknown): void {
+	console.log(String(value));
+	console.log(`<${value}>`);
+}
+show({ toString: () => 'x' });
+// Bound first, so this is the literal's own type rather than unknown's.
+const labelled = { label: 'method', toString(): string { return this.label; } };
+show(labelled);
+show({ toString: 3, valueOf: () => 42 });
+show({ size: 1 });
+show({ valueOf: () => 8 });
+try {
+	show({ toString: 'not a function' });
+} catch (error) {
+	show(error);
+}

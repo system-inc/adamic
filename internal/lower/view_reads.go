@@ -53,20 +53,20 @@ func viewReadOf(program *ir.Program, expression ir.Expression) viewRead {
 	case ir.CheckedCast, ir.DynamicProperty:
 		return viewReadChecks
 	case ir.ArrayConcat, ir.ArrayFill, ir.ArrayFrom, ir.ArrayIndex, ir.ArrayIsArray, ir.ArrayJoin, ir.ArrayLiteral,
-		ir.ArrayMap, ir.ArrayPop, ir.ArrayPush, ir.ArrayReduce, ir.ArrayReverse, ir.ArraySearch, ir.ArraySlice,
+		ir.ArrayMap, ir.ArrayOfScalars, ir.ArrayPop, ir.ArrayPush, ir.ArrayReduce, ir.ArrayReverse, ir.ArraySearch, ir.ArraySlice,
 		ir.ArraySort, ir.ArraySplice, ir.ArrayVisit, ir.Await, ir.Binary, ir.BooleanToString, ir.Box, ir.Call,
 		ir.CallClosure, ir.CharCodeAt, ir.Coalesce, ir.CodePoints, ir.CollectionIterator, ir.Comma, ir.Concat,
-		ir.Conditional, ir.Defined, ir.Effects, ir.FileStatus, ir.HasAccessor, ir.HasOwn, ir.HasProperty,
-		ir.InstanceOf, ir.IsNull, ir.IsUndefined, ir.JSONDecode, ir.JSONStringify, ir.Length, ir.Logical,
+		ir.Conditional, ir.Defined, ir.Effects, ir.ErrorToString, ir.FileStatus, ir.HasAccessor, ir.HasOwn, ir.HasProperty,
+		ir.InstanceOf, ir.IsNull, ir.IsUndefined, ir.JSONDecode, ir.JSONStringify, ir.JoinEnter, ir.Length, ir.Logical,
 		ir.LogicalAssignment, ir.MakeError, ir.MapClear, ir.MapDelete, ir.MapEntries, ir.MapForEach, ir.MapGet,
 		ir.MapHas, ir.MapKeys, ir.MapNew, ir.MapSet, ir.MapSize, ir.MapValues, ir.MathCall, ir.MaybeOf,
 		ir.MaybeToString, ir.Narrow, ir.NodeBufferCall, ir.NodeFSFile, ir.NodeHostCall, ir.NumberCall,
-		ir.NumberFormat, ir.NumberToString, ir.ObjectKeys, ir.ParallelMap, ir.PhantomMember, ir.PlaceholderUse, ir.ProcessCall,
+		ir.NumberFormat, ir.NumberToString, ir.ObjectKeys, ir.OwnFunction, ir.ParallelMap, ir.PhantomMember, ir.PlaceholderUse, ir.ProcessCall,
 		ir.PromiseValue, ir.ReadDirectory, ir.ReadTextFile, ir.RecordCall, ir.RecordCoalesce, ir.RecordLiteral,
 		ir.RegExpCall, ir.RegExpGroup, ir.RegExpNew, ir.RegExpProperty, ir.SetAdd, ir.SetNew, ir.SetValues,
 		ir.StringCall, ir.StringFromCodes, ir.StringIndex, ir.StringIterator, ir.StringLength, ir.ToFixed, ir.Trim,
 		ir.Truthy, ir.TypeOf, ir.TypedArrayFill, ir.TypedArrayNew, ir.TypedArraySet, ir.TypedArraySort,
-		ir.TypedArraySubarray, ir.Unary, ir.UnionToString, ir.Unwrap, ir.Utf8At, ir.Utf8Length, ir.Void, ir.WeakOf,
+		ir.TypedArraySubarray, ir.Unary, ir.UnionToString, ir.UnknownKind, ir.Unwrap, ir.Utf8At, ir.Utf8Length, ir.Void, ir.WeakOf,
 		ir.WeakTarget, ir.WriteTextFile:
 		return viewReadsNoField
 	}

@@ -108,6 +108,55 @@ adamic_string *adamic_array_join(const adamic_array *array, const adamic_string 
 	return joined;
 }
 
+bool adamic_array_of_scalars(const adamic_heap *value) {
+	if (value->kind != adamic_kind_array) {
+		// A tuple, which adamic_union_kind calls an array, as Node does. unknownView refuses one where it
+		// flows into an unknown, so none gets here today; its slots aren't an array's to read.
+		static const char message[] = "converting a tuple to a string is not yet lowered";
+		adamic_panic(message, sizeof message - 1);
+	}
+	const adamic_array *array = (const adamic_array *)value;
+	if (array->length == 0) return false;
+	// Unboxed elements are numbers or booleans, or a maybe pair's undefined, whichever they are.
+	if (!array->references) return true;
+	for (size_t index = 0; index < array->length; index++) {
+		const adamic_heap *element = array->elements[index].reference;
+		if (element != NULL && element != &adamic_null && element->kind != adamic_kind_number && element->kind != adamic_kind_boolean) return false;
+	}
+	return true;
+}
+
+// The arrays whose joins are under way on this thread, innermost last, as V8 keeps them. Each is only
+// compared, never retained. The storage goes once the outermost join ends, so nothing is left at exit.
+static _Thread_local const adamic_heap **joining;
+static _Thread_local size_t joining_count, joining_capacity;
+
+bool adamic_join_enter(const adamic_heap *array) {
+	for (size_t index = 0; index < joining_count; index++) {
+		if (joining[index] == array) return false;
+	}
+	if (joining_count == joining_capacity) {
+		size_t capacity = joining_capacity == 0 ? 8 : joining_capacity * 2;
+		const adamic_heap **grown = realloc(joining, capacity * sizeof *grown);
+		if (grown == NULL) {
+			static const char message[] = "out of memory";
+			adamic_panic(message, sizeof message - 1);
+		}
+		joining = grown;
+		joining_capacity = capacity;
+	}
+	joining[joining_count++] = array;
+	return true;
+}
+
+void adamic_join_leave(void) {
+	if (--joining_count == 0) {
+		free(joining);
+		joining = NULL;
+		joining_capacity = 0;
+	}
+}
+
 adamic_array *adamic_array_slice(const adamic_array *array, double start, double end, bool has_end) {
 	// ECMAScript's relative indexes: ToIntegerOrInfinity, negative from the end, clamped.
 	double length = (double)array->length;

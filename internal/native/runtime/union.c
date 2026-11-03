@@ -86,6 +86,61 @@ adamic_string *adamic_union_typeof(const adamic_heap *value, bool null) {
 	}
 }
 
+// The numbers are internal/ir's UnknownKind numbers, which the JavaScript backend's adamicUnknownKind
+// answers too, in this order: an Error before a class, since an Error's shape has no class. A number
+// rather than a name, so the runtime keeps no storage for it.
+double adamic_union_kind(const adamic_heap *value) {
+	enum { undefined, null, number, boolean, string, error, instance, static_class, object, array, function, collection, typed_array, other };
+	if (value == NULL) return undefined;
+	if (value == &adamic_null) return null;
+	switch (value->kind) {
+	case adamic_kind_number:
+		return number;
+	case adamic_kind_boolean:
+		return boolean;
+	case adamic_kind_string:
+		return string;
+	case adamic_kind_closure:
+		return function;
+	case adamic_kind_array:
+		return array;
+	case adamic_kind_map:
+		return collection;
+	case adamic_kind_typed_array:
+		return typed_array;
+	case adamic_kind_object: {
+		const adamic_object *held = (const adamic_object *)value;
+		// A tuple is an array on Node, and on the JavaScript backend.
+		if (held->tuple) return array;
+		if (adamic_error_is(held)) return error;
+		if (held->class != NULL) return held->class->is_static ? static_class : instance;
+		return object;
+	}
+	default:
+		return other;
+	}
+}
+
+// Only a reference slot can hold a function, so a scalar one, a record of numbers or booleans among
+// them, never answers yes, and its bits are never read as a pointer.
+bool adamic_object_own_function(const adamic_heap *value, const char *name) {
+	const adamic_object *object = (const adamic_object *)value;
+	if (adamic_record_is(object)) {
+		if (!((const adamic_map *)object->slots[0].reference)->reference_values) return false;
+		adamic_string key = {{0, adamic_kind_string, 0}, strlen(name), name, 0, NULL, NULL, 0};
+		const adamic_value *own = adamic_record_get_own(object, &key);
+		const adamic_heap *held = own == NULL ? NULL : own->reference;
+		return held != NULL && held->kind == adamic_kind_closure;
+	}
+	for (size_t index = 0; index < object->shape->count; index++) {
+		if (strcmp(name, object->shape->names[index]) != 0) continue;
+		if (!adamic_object_present(object, index) || !object->shape->references[index]) return false;
+		const adamic_heap *held = object->slots[index].reference;
+		return held != NULL && held->kind == adamic_kind_closure;
+	}
+	return false;
+}
+
 // Program shape metadata is static, registered when an object of the shape is made. Objects are made
 // in parallel tasks too, so an entry is pushed once under the lock and published with release order;
 // readers load the list head with acquire, and an entry's fields never change once it's on the list.

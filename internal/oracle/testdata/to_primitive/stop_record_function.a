@@ -1,0 +1,11 @@
+// A record that holds functions, with one under toString, which Node calls: natively and on the
+// JavaScript backend it stops as not yet, since the call through a record's own key isn't lowered
+// (#09dvwny). Node prints before, then from record.
+interface Handlers { [key: string]: () => string }
+const handlers: Handlers = {};
+handlers['toString'] = () => 'from record';
+function show(value: unknown): void {
+	console.log(String(value));
+}
+console.log('before');
+show(handlers);
