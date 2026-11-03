@@ -237,10 +237,18 @@ static adamic_heap *dynamic_slot(const adamic_object *object, size_t index) {
 	if (!adamic_object_present(object, index) || !adamic_object_initialized(object)[index]) return NULL;
 	const adamic_value slot = object->slots[index];
 	if (object->shape->references[index]) return adamic_retain(slot.reference);
-	if (object->write_order!=NULL) {
-		unsigned char actual=adamic_object_field_types(object)[index];
-		if (actual==1) return adamic_box_number(slot.number);
-		if (actual==2) return slot.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
+	// The slot's own representation byte is ir.Type's, as its last write left it, whatever made the
+	// object: every allocator zeroes the bytes, the emitter writes one with each construction and write
+	// in a program that reads by a run-time key (fieldTypesNeeded), and the runtime writes those of
+	// what it hands a program (json_decode.c, map_set.c, directory.c, regexp.c, node_process.c). Zero
+	// is no evidence, so the shape's registered tags decide then.
+	switch (adamic_object_field_types(object)[index]) {
+	case 1: return adamic_box_number(slot.number);
+	case 2: return slot.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
+	case 7: {
+		adamic_maybe_number number = adamic_maybe_number_unpack(slot.number);
+		return number.present ? adamic_box_number(number.number) : NULL;
+	}
 	}
 	for (const adamic_shape_types *entry = __atomic_load_n(&shape_types, __ATOMIC_ACQUIRE); entry != NULL; entry = entry->next) {
 		if (entry->shape != object->shape) continue;

@@ -1,0 +1,34 @@
+// A scalar field read by a run-time key answers as Node's does, natively from the representation
+// byte its object carries: a decoded object's number and boolean beside its string, a literal's
+// number and boolean, decodeJson's number result, fileStatus's size and symbolicLink, matchAll's
+// done, a Map's number and a Set's boolean from next(), and memoryUsage's heapUsed. The size and
+// heapUsed print their type only, since their values vary. The path is relative to internal/oracle,
+// where its test runs it.
+import { decodeJson, fileStatus } from 'adamic';
+import process from 'node:process';
+import { propertyOf } from './hostErrors.ts';
+
+function show(label: string, value: unknown): void {
+	if (typeof value === 'number') console.log(`${label} number ${String(value)}`);
+	else if (typeof value === 'boolean') console.log(`${label} boolean ${value ? 'true' : 'false'}`);
+	else if (typeof value === 'string') console.log(`${label} string ${value}`);
+	else console.log(`${label} ${typeof value}`);
+}
+
+const decoded = decodeJson<{ readonly n: number; readonly b: boolean; readonly s: string }>('{"n":1,"b":true,"s":"text"}');
+if (decoded.kind === 'Ok') {
+	for (const name of ['n', 'b', 's']) show(name, propertyOf(decoded.value, name));
+} else console.log(decoded.message);
+const literal = { count: 2, on: false };
+show('count', propertyOf(literal, 'count'));
+show('on', propertyOf(literal, 'on'));
+show('decoded result', propertyOf(decodeJson<number>('5'), 'value'));
+const status = fileStatus('testdata');
+console.log(`size ${typeof propertyOf(status, 'size')}`);
+show('symbolicLink', propertyOf(status, 'symbolicLink'));
+show('done', propertyOf('ab'.matchAll(/a/g).next(), 'done'));
+const numbers = new Map<string, number>([['a', 1]]).values();
+show('map value', propertyOf(numbers.next(), 'value'));
+const flags = new Set<boolean>([true]).values();
+show('set value', propertyOf(flags.next(), 'value'));
+console.log(`heapUsed ${typeof propertyOf(process.memoryUsage(), 'heapUsed')}`);

@@ -270,7 +270,8 @@ static adamic_object *make_object(size_t count) {
 // object for one the program made, whose prototype is Object's on Node, and Object.prototype's
 // names answer. Its scalar tags are zero, no evidence, as union.c's dynamic_slot reads them: the
 // entry is shared by every schema whose fields store alike, a number field's and a null field's
-// among them, so no one schema's representations may stand for the rest.
+// among them, so no one schema's representations may stand for the rest. Each object's own
+// representation bytes, written as validate fills its slots, answer a scalar read instead.
 typedef struct decode_shape_entry {
  struct decode_shape_entry *next;
  adamic_shape shape;

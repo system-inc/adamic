@@ -33,7 +33,8 @@ static const adamic_field_kind error_kinds[] = {adamic_field_reference, adamic_f
 static const adamic_shape error_shape = {2, error_names, two_references, NULL, error_kinds};
 // readDirectory's and fileStatus's results are plain objects on Node (oracle/adamic.mjs), so each
 // shape is registered as a literal's is (union.c) and Object.prototype's names answer on it by a
-// run-time key. The scalar tags are zero, no evidence, as union.c's dynamic_slot reads them.
+// run-time key. The scalar tags are zero, no evidence: a status's own representation bytes for size
+// and symbolicLink, written where it's made, answer a scalar read.
 static const int result_types[4];
 static adamic_shape_types listing_metadata = {&listing_shape, result_types, NULL, false};
 static adamic_shape_types status_metadata = {&status_shape, result_types, NULL, false};
@@ -184,7 +185,9 @@ adamic_object *adamic_file_status(const adamic_string *path) {
 	result->slots[0].reference = &ok_kind;
 	result->slots[1].reference = S_ISREG(status.st_mode) ? &file_type : S_ISDIR(status.st_mode) ? &directory_type : &other_type;
 	result->slots[2].number = (double)status.st_size;
+	adamic_object_field_types(result)[2] = adamic_ir_Number;
 	result->slots[3].boolean = symbolic;
+	adamic_object_field_types(result)[3] = adamic_ir_Boolean;
 	return result;
 }
 
