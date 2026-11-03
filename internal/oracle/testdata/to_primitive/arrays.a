@@ -61,3 +61,8 @@ try {
 }
 failing = false;
 show(throwing);
+// Natively a counted cycle outlives the program (there's no collector), which no join is about, so each
+// is let go of before the end and the leak check reads the join alone.
+itself.pop();
+after.pop();
+outer.pop();
