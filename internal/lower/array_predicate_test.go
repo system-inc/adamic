@@ -97,3 +97,24 @@ func TestArrayPredicateCoexistsWithUnknownReflection(t *testing.T) {
 		lowersAndAgreesWithNode(t, source)
 	}
 }
+
+// Since C1 the checker narrows Array.isArray and a readonly unknown[] wrapper itself, so lowering
+// reads the checker's narrowed type, with no recovery from the declared type of its own. These are
+// the reads that recovery used to answer: a negated test read as a scalar, a for-of over the array
+// member, a wrapper's element read with ??, an unknown, and a true branch with no array member at
+// all, where the checker says Box & readonly unknown[] and the recovery said never. Mutant: the
+// narrowed local read through its declared type in place of the checker's (locals.go:277), which
+// stops the for-of over the array member.
+func TestArrayPredicateReadsTheCheckersNarrowing(t *testing.T) {
+	t.Parallel()
+	for _, source := range []string{
+		"function scalar(value: string | number | number[]): string { if (!Array.isArray(value)) { return `scalar ${value}`; } return `array ${value.length}`; }\nconsole.log(scalar('x')); console.log(scalar(2)); console.log(scalar([1, 2]));",
+		"function total(value: string | number[]): number { let sum = 0; if (Array.isArray(value)) { for (const item of value) { sum += item; } } return sum; }\nconsole.log(String(total([1, 2, 3]))); console.log(String(total('x')));",
+		"function isList(value: unknown): value is readonly unknown[] { return Array.isArray(value); }\nfunction first(value: string | number[]): string { if (isList(value)) { return `list ${value[0] ?? -1}`; } return `other ${value}`; }\nconsole.log(first([7])); console.log(first([])); console.log(first('q'));",
+		"function size(value: unknown): string { if (Array.isArray(value)) { return `size ${value.length}`; } return 'none'; }\nconsole.log(size([1])); console.log(size(3));",
+		"class Box { n = 1; }\nfunction never(value: Box): string { if (Array.isArray(value)) { return `array ${value.n}`; } return `box ${value.n}`; }\nconsole.log(never(new Box()));",
+		"function text(value: string): string { if (Array.isArray(value)) { return `array ${value.length}`; } return `string ${value}`; }\nconsole.log(text('x'));",
+	} {
+		lowersAndAgreesWithNode(t, source)
+	}
+}

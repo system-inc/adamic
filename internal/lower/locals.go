@@ -274,7 +274,7 @@ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 			parent = parent.Parent
 		}
 		observing := comparedWithUndefined(node) || (parent != nil && parent.Kind == ast.KindTypeOfExpression) || unionEqualityObservation(node) || l.checker.GetTypeAtLocation(node).Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0
-		if narrowed, isKnown := l.representation(l.arrayPredicateObservedType(node)); isKnown && narrowed != ir.Union && !observing {
+		if narrowed, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown && narrowed != ir.Union && !observing {
 			// Calls and captured writes can invalidate the checker's narrowing. Check the
 			// held member before casting it, with ordinary IR shared by both backends.
 			name := "object"
@@ -300,7 +300,7 @@ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 				if declared.Flags()&checker.TypeFlagsUnion != 0 {
 					members = declared.Types()
 				}
-				observed := l.concrete(l.arrayPredicateObservedType(node))
+				observed := l.concrete(l.checker.GetTypeAtLocation(node))
 				kept := []*checker.Type{observed}
 				if observed.Flags()&checker.TypeFlagsUnion != 0 {
 					kept = observed.Types()
@@ -342,7 +342,7 @@ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 				// typeof says object for null too.
 				matches = ir.Binary{Operator: ir.And, Left: matches, Right: ir.Unary{Operator: ir.Not, Operand: ir.IsNull{Value: held}}}
 			}
-			if l.includesUndefined(l.arrayPredicateObservedType(node)) {
+			if l.includesUndefined(l.checker.GetTypeAtLocation(node)) {
 				matches = ir.Binary{Operator: ir.Or, Left: matches, Right: ir.IsUndefined{Value: held}}
 			}
 			message := "union member where the checker narrowed it away: a call since the narrowing put it back"
