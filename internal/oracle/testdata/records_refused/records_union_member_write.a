@@ -1,13 +1,13 @@
 // a-check: refused assigning a field of a union of differently held members
 type OptionValue = string | number | boolean | undefined;
 interface Options {
-	newLine?: number;
+	newLine: number;
 	removeComments?: boolean;
 	target?: number;
 	[option: string]: OptionValue;
 }
 interface Printer {
-	newLine?: number;
+	newLine: number;
 	removeComments?: boolean;
 	omitTrailingSemicolon?: boolean;
 }
@@ -17,8 +17,8 @@ function setNewLine(options: Options | Printer, value: number): void {
 function newLine(options: Options | Printer): string {
 	return String(options.newLine);
 }
-const options: Options = { target: 2 };
-const printer: Printer = { omitTrailingSemicolon: true };
+const options: Options = { newLine: 2, target: 2 };
+const printer: Printer = { newLine: 2, omitTrailingSemicolon: true };
 setNewLine(options, 1);
 setNewLine(printer, 0);
 console.log(`${newLine(options)} ${String(options.newLine)} ${newLine(printer)} ${String(printer.newLine)} ${String(printer.omitTrailingSemicolon)} ${String(options['target'])}`);
