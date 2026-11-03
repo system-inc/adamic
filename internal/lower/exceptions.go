@@ -268,6 +268,10 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			found = found || node.Throws
 		case ir.NodeFSFile:
 			found = found || node.MayThrow()
+		case ir.ToFixed:
+			found = found || node.MayThrow()
+		case ir.NumberFormat:
+			found = found || node.MayThrow()
 		case ir.ObjectLiteral:
 			found = found || l.result.ObjectSpreadMayThrow(node)
 		case ir.PhantomMember:
@@ -353,32 +357,24 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 			}
 		case ir.StringCall:
 			switch {
-			case node.Method == "repeat" && !constantWithin(node.Arguments[0], 0, math.MaxFloat64):
+			case node.Method == "repeat" && !ir.ConstantWithin(node.Arguments[0], 0, math.MaxFloat64):
 				failing = "repeat"
 			case node.Method == "normalize" && len(node.Arguments) > 0 && !isNormalizationForm(node.Arguments[0], l.result.Strings):
 				failing = "normalize"
 			}
-		case ir.ToFixed:
-			if !constantWithin(node.Digits, 0, 100) {
-				failing = "toFixed"
-			}
-		case ir.NumberFormat:
-			if bounds := formatArguments[node.Method]; node.Argument != nil && !constantWithin(node.Argument, bounds[0], bounds[1]) {
-				failing = node.Method
-			}
 		case ir.TypedArrayNew:
-			if !node.FromArray && !constantWithin(node.Source, 0, 9007199254740991) {
+			if !node.FromArray && !ir.ConstantWithin(node.Source, 0, 9007199254740991) {
 				failing = "typed array length conversion"
 			}
 		case ir.TypedArraySet:
 			failing = "typed array set range validation"
 		case ir.ArrayFill:
-			if node.Array == nil && !constantWithin(node.Length, 0, 4294967295) {
+			if node.Array == nil && !ir.ConstantWithin(node.Length, 0, 4294967295) {
 				failing = "new Array(length)"
 			}
 		case ir.ArrayFrom:
 			callsClosures = true
-			if !constantWithin(node.Length, math.Inf(-1), 4294967295) {
+			if !ir.ConstantWithin(node.Length, math.Inf(-1), 4294967295) {
 				failing = "Array.from({ length })"
 			}
 		}
@@ -396,16 +392,6 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 		}
 	}
 	return failing
-}
-
-// formatArguments are the arguments each number format takes without throwing.
-var formatArguments = map[string][2]float64{"toExponential": {0, 100}, "toPrecision": {1, 100}, "toString": {2, 36}}
-
-// constantWithin reports whether a value is a constant integer from low to high, which a call taking
-// it can't fail on.
-func constantWithin(value ir.Expression, low float64, high float64) bool {
-	constant, isConstant := value.(ir.NumberConstant)
-	return isConstant && constant.Value >= low && constant.Value <= high && (high == math.MaxFloat64 || constant.Value == math.Trunc(constant.Value)) && !math.IsInf(constant.Value, 0)
 }
 
 func isNormalizationForm(value ir.Expression, strings []string) bool {

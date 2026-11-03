@@ -795,7 +795,12 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.ToFixed:
 		value := e.value(expression.Value)
 		digits := e.value(expression.Digits)
-		return e.own(ir.String, fmt.Sprintf("adamic_number_to_fixed(%s, %s)", value, digits))
+		result := e.own(ir.String, fmt.Sprintf("adamic_number_to_fixed(%s, %s)", value, digits))
+		// Digits out of range leave a RangeError pending, and an empty result, let go with the rest.
+		if expression.MayThrow() {
+			e.checkThrown()
+		}
+		return result
 	case ir.NumberFormat:
 		return e.numberFormat(expression)
 	}
