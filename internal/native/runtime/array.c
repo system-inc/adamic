@@ -162,6 +162,9 @@ bool adamic_join_enter(const adamic_heap *array) {
 }
 
 void adamic_join_leave(void) {
+	// Lowering leaves only a join it entered, since an enter answering false skips the join and its
+	// leave. A leave past that would wrap the count, and the next enter would read far past the stack.
+	if (joining_count == 0) adamic_invariant("join stack left more times than entered");
 	if (--joining_count == 0) {
 		free(joining);
 		joining = NULL;
