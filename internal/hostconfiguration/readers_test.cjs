@@ -20,7 +20,10 @@ for (const [reader, filename] of [
 ]) for (const mode of ['unset','selected','unknown']) {
  const scratch = fs.mkdtempSync(path.join(os.tmpdir(),'host-configuration-reader-'));
  const selected = path.join(scratch,'selected-node');
- fs.symlinkSync(process.execPath,selected);
+ fs.writeFileSync(selected,`#!/bin/sh
+if [ "$1" = -p ]; then echo 'v24.19.0 false'; exit 0; fi
+exec '${process.execPath}' "$@"
+`,{mode:0o700});
  const row = structuredClone(original.find(row=>row.file===filename));
  row.configuration = {...configuration, ...(mode==='unknown'?{name:'unknown-build'}:{})};
  const text = fs.readFileSync(path.join(root,reader),'utf8');
@@ -34,6 +37,7 @@ for (const [reader, filename] of [
  function requireIn(name) {
   if (name==='fs'||name==='node:fs')return fakeFS;
   if (name==='node:child_process')return {spawnSync(binary,args,options){
+   if(args[0]==='-p')return childProcess.spawnSync(binary,args,options);
    commands.push([binary,args]);assert.equal(binary,selected);
    const result=childProcess.spawnSync(binary,args,options);assert.ifError(result.error);
    assert.equal(result.status,0,String(result.stderr));
@@ -42,7 +46,7 @@ for (const [reader, filename] of [
   }};
   if (name.endsWith('hostconfiguration/configuration.cjs')) {
    const m={exports:{}};
-   vm.runInContext('(function(require,module){'+fs.readFileSync(selector,'utf8')+'\n})',ctx)(()=>registry,m);
+   vm.runInContext('(function(require,module){'+fs.readFileSync(selector,'utf8')+'\n})',ctx)(name=>name==='./configurations.json'?registry:requireIn(name),m);
    return m.exports;
   }
   if (name.endsWith('/typescript'))return ts;

@@ -71,12 +71,16 @@ func hostStatusFile(t *testing.T, index int, wasiOnly bool, statusPath string) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	nodeBinary := hostconfiguration.Require(t, index+1, row.Configuration)
-	truth := hostNodeWith(t, inputRun{directory: repository}, nodeBinary, path)
-	recorded := run{stdout: []byte(row.Node.Stdout), stderr: []byte(row.Node.Stderr), exitCode: row.Node.Exit}
-	if difference := disagreement(recorded, truth); difference != "" {
-		t.Fatalf("recorded Node %s: %s", row.File, difference)
-	}
+	truth := run{stdout: []byte(row.Node.Stdout), stderr: []byte(row.Node.Stderr), exitCode: row.Node.Exit}
+	nodeChecked := false
+	t.Run("node", func(t *testing.T) {
+		nodeBinary := hostconfiguration.Require(t, index+1, row.Configuration)
+		actualNode := hostNodeWith(t, inputRun{directory: repository}, nodeBinary, path)
+		if difference := disagreement(truth, actualNode); difference != "" {
+			t.Fatalf("recorded Node %s: %s", row.File, difference)
+		}
+		nodeChecked = true
+	})
 	program, err := load.Load([]string{path})
 	observed := hostStage{Outcome: "Compiles"}
 	var code, script string
@@ -110,22 +114,26 @@ func hostStatusFile(t *testing.T, index int, wasiOnly bool, statusPath string) {
 	} else {
 		directory := t.TempDir()
 		if !wasiOnly {
-			binary := filepath.Join(directory, "program")
-			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-				t.Fatal(err)
-			}
-			actual := executeInput(t, inputRun{directory: repository}, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
-			if difference := disagreement(truth, actual); difference != "" {
-				t.Fatalf("%s native: %s", row.File, difference)
-			}
-			js := filepath.Join(directory, "program.mjs")
-			if err := os.WriteFile(js, []byte(script), 0600); err != nil {
-				t.Fatal(err)
-			}
-			actual = onNodeWith(t, inputRun{directory: repository}, js)
-			if difference := disagreement(truth, actual); difference != "" {
-				t.Fatalf("%s JavaScript: %s", row.File, difference)
-			}
+			t.Run("native", func(t *testing.T) {
+				binary := filepath.Join(directory, "program")
+				if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+					t.Fatal(err)
+				}
+				actual := executeInput(t, inputRun{directory: repository}, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+				if difference := disagreement(truth, actual); difference != "" {
+					t.Fatalf("%s native: %s", row.File, difference)
+				}
+			})
+			t.Run("javascript", func(t *testing.T) {
+				js := filepath.Join(directory, "program.mjs")
+				if err := os.WriteFile(js, []byte(script), 0600); err != nil {
+					t.Fatal(err)
+				}
+				actual := onNodeWith(t, inputRun{directory: repository}, js)
+				if difference := disagreement(truth, actual); difference != "" {
+					t.Fatalf("%s JavaScript: %s", row.File, difference)
+				}
+			})
 		}
 		if wasiOnly {
 			wasm := filepath.Join(directory, "program.wasm")
@@ -149,11 +157,15 @@ func hostStatusFile(t *testing.T, index int, wasiOnly bool, statusPath string) {
 			}
 		}
 	}
-	t.Logf("%s: current Node agrees; stage=%s diagnostic=%q", row.File, observed.Outcome, observed.What)
+	if nodeChecked {
+		t.Logf("%s: current Node agrees; stage=%s diagnostic=%q", row.File, observed.Outcome, observed.What)
+	} else {
+		t.Logf("%s: reference Node not verified; stage=%s diagnostic=%q", row.File, observed.Outcome, observed.What)
+	}
 	if observed == row.Stage {
 		return
 	}
-	if !*updateHostStatus || wasiOnly {
+	if !*updateHostStatus || wasiOnly || !nodeChecked {
 		t.Fatalf("host status changed: got %+v; recorded %+v", observed, row.Stage)
 	}
 	// Replace only this stage0 field. Keep original fixture provenance and Node bytes.

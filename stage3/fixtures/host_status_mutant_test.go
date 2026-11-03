@@ -2,7 +2,6 @@ package fixtures
 
 import (
 	"encoding/json"
-	"github.com/system-inc/adamic/internal/hostconfiguration"
 	"os"
 	"path/filepath"
 	"strings"
@@ -36,7 +35,6 @@ func TestHostStatusMutants(t *testing.T) {
 		for _, mutation := range []string{"real", "wrong stage", "missing fixture"} {
 			t.Run(rows[index].File+"/"+mutation, func(t *testing.T) {
 				t.Parallel()
-				hostconfiguration.Require(t, index+1, rows[index].Configuration)
 				root := t.TempDir()
 				directory := filepath.Join(root, "host")
 				if err := os.Mkdir(directory, 0700); err != nil {

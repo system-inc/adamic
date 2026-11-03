@@ -19,8 +19,9 @@ for(const [index,row] of JSON.parse(fs.readFileSync(bucket+'/status.json')).entr
  if(process.env.ADAMIC_HOST_STOCK_ROW && process.env.ADAMIC_HOST_STOCK_ROW!==row.file)continue;
  if(mutant&&row.file!=='23_newLine.a')continue;
  const nodeBinary=nodeFor(row,index+1);
- if(!nodeBinary){all.push({file:row.file,skipped:true,configuration:row.configuration});continue;}
- if(row.configuration && process.env.ADAMIC_HOST_STOCK_ROW!==row.file){
+ // This is a checker, not the fixture's Node oracle: stage0 still runs here
+ // when the reference build is absent.
+ if(nodeBinary && row.configuration && process.env.ADAMIC_HOST_STOCK_ROW!==row.file){
   const result=spawnSync(nodeBinary,[__filename,repo,logs,...(mutant?['--mutant']:[])],{env:{...process.env,ADAMIC_HOST_STOCK_ROW:row.file},encoding:'utf8'});
   if(result.error)throw result.error;
   if(result.status!==0)throw Error(result.stdout+result.stderr);
@@ -37,25 +38,22 @@ for(const [index,row] of JSON.parse(fs.readFileSync(bucket+'/status.json')).entr
  function format(d){const pos=d.file?d.file.getLineAndCharacterOfPosition(d.start):null;const name=d.file?d.file.fileName.replace(alias,real).replace(bucket+'/', 'stage3/fixtures/host/').replace(repo+'/',''):null;return(name?`${name}:${pos.line+1}:${pos.character+1}: `:'')+`error TS${d.code}: `+ts.flattenDiagnosticMessageText(d.messageText,'\n');}
  const diagnostics=ds.map(d=>({code:d.code,file:d.file?.fileName.replace(alias,real).replace(bucket+'/', 'stage3/fixtures/host/').replace(repo+'/',''),start:d.start,text:format(d)}));
  fs.writeFileSync(logs+'/'+row.file+(mutant?'.mutant':'')+'.tsc.log',diagnostics.map(d=>d.text).sort().join('\n')+(ds.length?'\n':''));
- all.push({file:row.file,exit:ds.length?1:0,diagnostics});
+ all.push({file:row.file,exit:ds.length?1:0,diagnostics,...(!nodeBinary?{nodeReferenceSkipped:true}: {})});
 }
 fs.writeFileSync(logs+'/'+(mutant?'stock-mutant':'stock')+'.json',JSON.stringify({version:ts.version,options,results:all},null,2)+'\n');
 console.log(all.map(x=>x.skipped?`${x.file}: skipped configuration ${x.configuration.name}`:`${x.file}: stock diagnostics=${x.diagnostics.length}`).join('\n'));
 
 if(mutant){
- if(all.length===1&&all[0].skipped){ /* nodeFor already reported the named skip. */ }else{
  if(all.length!==1||!all[0].diagnostics.some(d=>d.code===2322))throw Error('SURVIVING stock checker mutant');
  console.log('caught stock checker mutant: TS2322 for _os.EOL assigned to number');
- }
 }else{
  const status=JSON.parse(fs.readFileSync(bucket+'/status.json'));
  for(const result of all){
-  if(result.skipped)continue;
   const row=status.find(r=>r.file===result.file);
   const expected=row.stage0.outcome==='Checker'?row.stage0.what:'';
   const actual=result.diagnostics.map(d=>d.text).join('\n');
   if(actual!==expected)throw Error('Stock comparison differs: '+result.file+'\n'+actual);
  }
- const skipped=all.filter(result=>result.skipped).length;
- console.log(skipped?`pass: stock checker agrees with executed rows; ${skipped} configured rows skipped`:'pass: stock checker agrees with every classified row');
+ const skipped=all.filter(result=>result.nodeReferenceSkipped).length;
+ console.log(skipped?`pass: stock checker agrees with every classified row; ${skipped} reference builds unavailable`:'pass: stock checker agrees with every classified row');
 }

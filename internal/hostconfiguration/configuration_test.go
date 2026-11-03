@@ -80,10 +80,7 @@ func TestHostConfigurationReaderUsesDeclaredNode(t *testing.T) {
 	}
 	// A stock-Node launcher labels the test input, not an inspector implementation.
 	// Removing the field selects stock Node and the real byte comparison must fail.
-	launcher := filepath.Join(t.TempDir(), "configured-node")
-	if err := os.WriteFile(launcher, []byte(fmt.Sprintf("#!/bin/sh\nADAMIC_HOST_CONFIGURATION_PROOF=configured exec '%s' \"$@\"\n", strings.ReplaceAll(node, "'", "'\\''"))), 0700); err != nil {
-		t.Fatal(err)
-	}
+	launcher := nodeStub(t, node, "configured")
 	configured := map[string]any{"configuration": rows[0]["configuration"], "node": map[string]string{"stdout": "configured\n"}}
 	out, err := invoke("labelled Node selected", configured, launcher)
 	if err != nil {
@@ -98,7 +95,7 @@ func TestHostConfigurationReaderUsesDeclaredNode(t *testing.T) {
 	if err != nil || !strings.Contains(out, "row 1 needs node-without-inspector; set "+switchName) || !strings.Contains(out, "--- SKIP:") {
 		t.Fatalf("want named skip: %v\n%s", err, out)
 	}
-	out, err = invoke("stock Node selected", rows[0], node)
+	out, err = invoke("verified stub selected", rows[0], nodeStub(t, node, ""))
 	if err != nil || !strings.Contains(out, "--- PASS:") {
 		t.Fatalf("selected Node: %v\n%s", err, out)
 	}
@@ -147,5 +144,127 @@ func TestHostConfigurationScriptReaders(t *testing.T) {
 			}
 			t.Logf("%s", out)
 		})
+	}
+}
+
+// Test-only launcher: it supplies the probe line, then runs stock Node for the
+// mechanism fixture. Production resolution never accepts stock Node itself.
+func nodeStub(t *testing.T, node, label string) string {
+	t.Helper()
+	path := filepath.Join(t.TempDir(), "node-stub")
+	text := fmt.Sprintf("#!/bin/sh\nif [ \"$1\" = -p ]; then echo 'v24.19.0 false'; exit 0; fi\nADAMIC_HOST_CONFIGURATION_PROOF='%s' exec '%s' \"$@\"\n", label, strings.ReplaceAll(node, "'", "'\\''"))
+	if err := os.WriteFile(path, []byte(text), 0700); err != nil {
+		t.Fatal(err)
+	}
+	return path
+}
+
+func TestHostConfigurationRejectsStockNode(t *testing.T) {
+	t.Parallel()
+	node, err := exec.LookPath("node")
+	if err != nil {
+		t.Fatal(err)
+	}
+	cfg := &Configuration{Name: "node-without-inspector", Node: "v24.19.0", Configure: "--without-inspector", Ruling: "#cn4yapb"}
+	_, _, err = Resolve(1, cfg, func(string) string { return node })
+	if err == nil || !strings.Contains(err.Error(), node) || !strings.Contains(err.Error(), "v24.19.0 true") || !strings.Contains(err.Error(), "v24.19.0 false") {
+		t.Fatalf("stock Node must fail its capability probe: %v", err)
+	}
+	t.Log(err)
+}
+
+func TestHostConfigurationProbeIsCached(t *testing.T) {
+	t.Parallel()
+	cfg := &Configuration{Name: "node-without-inspector", Node: "v24.19.0", Configure: "--without-inspector", Ruling: "#cn4yapb"}
+	for _, line := range []string{"v24.19.0 false", "wrong"} {
+		dir := t.TempDir()
+		binary := filepath.Join(dir, "node")
+		calls := filepath.Join(dir, "calls")
+		text := fmt.Sprintf("#!/bin/sh\necho probe >> '%s'\necho '%s'\n", calls, line)
+		if err := os.WriteFile(binary, []byte(text), 0700); err != nil {
+			t.Fatal(err)
+		}
+		for i := 0; i < 2; i++ {
+			_, _, err := Resolve(i+1, cfg, func(string) string { return binary })
+			if (err == nil) != (line == "v24.19.0 false") {
+				t.Fatal(err)
+			}
+		}
+		data, err := os.ReadFile(calls)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if string(data) != "probe\n" {
+			t.Fatalf("probe wasn't cached: %q", data)
+		}
+	}
+}
+
+func TestHostConfigurationScriptProbes(t *testing.T) {
+	t.Parallel()
+	data, err := os.ReadFile("testdata/status.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	node, err := exec.LookPath("node")
+	if err != nil {
+		t.Fatal(err)
+	}
+	scripts := []struct {
+		binary string
+		args   []string
+	}{
+		{"python3", []string{"-B", "-c", `import json,sys,os
+from configuration import node_for
+row=json.load(sys.stdin)[0]
+for i in range(2):
+ try: node_for(row,i+1)
+ except ValueError as error:
+  print(error)
+  if os.environ['PROBE_TEST_MODE']=='stock': sys.exit(1)
+`}},
+		{"node", []string{"-e", `const {nodeFor}=require('./configuration.cjs');const fs=require('fs');const row=JSON.parse(fs.readFileSync(0))[0];for(let i=0;i<2;i++){try{nodeFor(row,i+1);}catch(error){console.log(String(error));if(process.env.PROBE_TEST_MODE==='stock')process.exit(1);}}`}},
+	}
+	for _, script := range scripts {
+		for _, mode := range []string{"stock", "success", "failure"} {
+			t.Run(script.binary+"/"+mode, func(t *testing.T) {
+				selected := node
+				calls := filepath.Join(t.TempDir(), "calls")
+				if mode != "stock" {
+					selected = filepath.Join(t.TempDir(), "node")
+					line := "v24.19.0 false"
+					if mode == "failure" {
+						line = "wrong"
+					}
+					text := fmt.Sprintf("#!/bin/sh\necho probe >> '%s'\necho '%s'\n", calls, line)
+					if err := os.WriteFile(selected, []byte(text), 0700); err != nil {
+						t.Fatal(err)
+					}
+				}
+				cmd := exec.Command(script.binary, script.args...)
+				cmd.Stdin = bytes.NewReader(data)
+				cmd.Env = append(os.Environ(), switchName+"="+selected, "PROBE_TEST_MODE="+mode)
+				out, err := cmd.CombinedOutput()
+				if mode == "stock" {
+					if err == nil || !strings.Contains(string(out), "v24.19.0 true") || !strings.Contains(string(out), "v24.19.0 false") {
+						t.Fatalf("stock Node wasn't rejected: %v %s", err, out)
+					}
+					return
+				}
+				if err != nil {
+					t.Fatalf("probe test: %v %s", err, out)
+				}
+				contents, err := os.ReadFile(calls)
+				if err != nil {
+					t.Fatal(err)
+				}
+				if string(contents) != "probe\n" {
+					t.Fatalf("probe not cached: %q", contents)
+				}
+				if mode == "failure" && !strings.Contains(string(out), "wrong") {
+					t.Fatalf("mismatch wasn't reported: %s", out)
+				}
+			})
+		}
 	}
 }

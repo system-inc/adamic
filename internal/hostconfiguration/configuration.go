@@ -2,11 +2,16 @@
 package hostconfiguration
 
 import (
+	"context"
 	"embed"
 	"encoding/json"
 	"fmt"
 	"os"
+	"os/exec"
+	"strings"
+	"sync"
 	"testing"
+	"time"
 )
 
 //go:embed configurations.json
@@ -29,7 +34,7 @@ func Resolve(row int, configuration *Configuration, getenv func(string) string) 
 	if err != nil {
 		return "", "", err
 	}
-	var known map[string]struct{ Node, Configure, Ruling, Environment string }
+	var known map[string]struct{ Node, Configure, Ruling, Environment, Probe, Expect string }
 	if err := json.Unmarshal(data, &known); err != nil {
 		return "", "", err
 	}
@@ -43,8 +48,34 @@ func Resolve(row int, configuration *Configuration, getenv func(string) string) 
 	binary = getenv(spec.Environment)
 	if binary == "" {
 		skip = fmt.Sprintf("row %d needs %s; set %s", row, configuration.Name, spec.Environment)
+	} else if err := probe(binary, spec.Probe, spec.Expect); err != nil {
+		return "", "", fmt.Errorf("row %d: %w", row, err)
 	}
 	return binary, skip, nil
+}
+
+// Both successful and failed probes are memoized, once per binary/recipe in a process.
+var probes sync.Map
+
+type probeResult struct {
+	once sync.Once
+	err  error
+}
+
+func probe(binary, expression, expected string) error {
+	key := struct{ binary, expression, expected string }{binary, expression, expected}
+	entry, _ := probes.LoadOrStore(key, &probeResult{})
+	result := entry.(*probeResult)
+	result.once.Do(func() {
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		defer cancel()
+		output, err := exec.CommandContext(ctx, binary, "-p", expression).CombinedOutput()
+		actual := strings.TrimSuffix(string(output), "\n")
+		if err != nil || actual != expected {
+			result.err = fmt.Errorf("configuration probe %q printed %q; expected %q (execution: %v)", binary, actual, expected, err)
+		}
+	})
+	return result.err
 }
 
 // Require is the only Go skip site for configured host fixtures. Judge keys its

@@ -41,21 +41,39 @@ class ReaderTests(unittest.TestCase):
             before.pop("configuration")
         before_data = json.dumps([before])
         read_text, read_bytes, glob = Path.read_text, Path.read_bytes, Path.glob
+        write_text, write_bytes = Path.write_text, Path.write_bytes
+        source_overlay = {}
         commands = []
         real_run = subprocess.run
         output = io.StringIO()
         with tempfile.TemporaryDirectory() as temp:
             out = Path(temp)
             def text(path, *args, **kwargs):
-                return data if path == STATUS else read_text(path, *args, **kwargs)
+                return data if path == STATUS else source_overlay[path].decode() if path in source_overlay else read_text(path, *args, **kwargs)
             def raw(path, *args, **kwargs):
-                return data.encode() if path == STATUS else read_bytes(path, *args, **kwargs)
+                return data.encode() if path == STATUS else source_overlay[path] if path in source_overlay else read_bytes(path, *args, **kwargs)
+            def put_text(path, value, *args, **kwargs):
+                if path == ROOT/'stage3/fixtures/host/25_readDirectory.a':
+                    source_overlay[path]=value.encode();return len(value)
+                return write_text(path,value,*args,**kwargs)
+            def put_bytes(path, value, *args, **kwargs):
+                if path == ROOT/'stage3/fixtures/host/25_readDirectory.a':
+                    source_overlay[path]=value;return len(value)
+                return write_bytes(path,value,*args,**kwargs)
             def paths(path, pattern, *args, **kwargs):
                 if path == ROOT / 'stage3/fixtures' and pattern == '*/status.json':
                     return iter([STATUS])
                 return glob(path, pattern, *args, **kwargs)
             def execute(command, *args, **kwargs):
+                if len(command)>1 and command[1]=='-p':
+                    return real_run(command,*args,**kwargs)
                 commands.append(command)
+                if mode=='unset' and not metadata:
+                    if reader.endswith('check.py'):
+                        self.assertTrue(command[0]=='go' or command[0]=='/unused',command)
+                    else:
+                        self.assertIn('source-audit.cjs',str(command))
+                    raise AtNode()
                 if not metadata or reader == 'stage3/records-maplike-rebuild/audit-status.py':
                     self.assertEqual(command[0], selected)
                     result = real_run(command, *args, **kwargs)
@@ -73,8 +91,9 @@ class ReaderTests(unittest.TestCase):
                 'stage3/records-maplike-rebuild/audit-status.py': [reader],
             }[reader]
             selected = str(out / 'selected-node')
-            Path(selected).symlink_to(shutil.which('node'))
-            with patch.dict(os.environ, {SWITCH: selected if mode == 'selected' else ''}), patch.object(sys, 'argv', argv), patch.object(Path, 'read_text', text), patch.object(Path, 'read_bytes', raw), patch.object(Path, 'glob', paths), patch('subprocess.run', execute), patch('subprocess.check_output', return_value=before_data.encode()), contextlib.redirect_stdout(output):
+            Path(selected).write_text("#!/bin/sh\nif [ \"$1\" = -p ]; then echo 'v24.19.0 false'; exit 0; fi\nexec '" + shutil.which('node') + "' \"$@\"\n")
+            Path(selected).chmod(0o700)
+            with patch.dict(os.environ, {SWITCH: selected if mode == 'selected' else ''}), patch.object(sys, 'argv', argv), patch.object(Path, 'read_text', text), patch.object(Path, 'read_bytes', raw), patch.object(Path, 'glob', paths), patch.object(Path,'write_text',put_text), patch.object(Path,'write_bytes',put_bytes), patch('subprocess.run', execute), patch('subprocess.check_output', return_value=before_data.encode()), contextlib.redirect_stdout(output):
                 error = None
                 try:
                     runpy.run_path(str(ROOT/reader), run_name='__main__')
@@ -93,7 +112,8 @@ class ReaderTests(unittest.TestCase):
                 if mode == 'unset':
                     self.assertIn(f'SKIP: row 1 needs node-without-inspector; set {SWITCH}', output.getvalue())
                     if not metadata:
-                        self.assertEqual(commands, [], 'unset recipe compared against stock Node')
+                        self.assertTrue(commands, 'unset reference build skipped non-Node checks')
+                        self.assertFalse(any(command[0]==selected for command in commands))
                 else:
                     self.assertNotIn('SKIP:', output.getvalue())
                     if not metadata:
@@ -133,7 +153,7 @@ class ReaderTests(unittest.TestCase):
             with self.subTest(missing=missing), tempfile.TemporaryDirectory() as temp:
                 observed = {'one.a': {'stdout': 'one'}, 'two.a': {'skipped': True} if missing else {'stdout': 'two'}}
                 scope = dict(observed=observed, rows=[{}, {}], mutants=[], out=Path(temp), json=json,
-                             p=types.SimpleNamespace(returncode=0),
+                             p=types.SimpleNamespace(returncode=0), fixture_node=None if missing else 'node',
                              subprocess=types.SimpleNamespace(check_output=lambda args: b'v24.19.0\n'))
                 output = io.StringIO()
                 with contextlib.redirect_stdout(output):

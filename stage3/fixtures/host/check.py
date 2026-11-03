@@ -103,14 +103,17 @@ with tempfile.TemporaryDirectory(prefix='adamic-host-check-') as scratch:
         binary_node = node_for(row, index + 1)
         if binary_node is None:
             skipped_rows.add(row['file'])
-            continue
         file = bucket / row['file']
-        observed = node(file.relative_to(repo), row['file'] + '.node', binary_node)
-        # A fixture must not silently record a crash as its intended Node behavior.
-        assert observed['stderr'] == '', (row['file'], observed)
-        assert observed['exit'] == ({'18_exit_0.a': 0, '19_exit_1.a': 1, '20_exit_2.a': 2}.get(row['file'], 0))
-        if not args.record:
-            compare(observed, row['node'], row['file'] + ' Node')
+        observed = row.get('node')
+        if binary_node is not None:
+            observed = node(file.relative_to(repo), row['file'] + '.node', binary_node)
+            assert observed['stderr'] == '', (row['file'], observed)
+            assert observed['exit'] == ({'18_exit_0.a': 0, '19_exit_1.a': 1, '20_exit_2.a': 2}.get(row['file'], 0))
+            if not args.record:
+                compare(observed, row['node'], row['file'] + ' Node')
+        assert observed is not None, 'no recorded bytes for ' + row['file']
+        # Native and generated JS use pinned bytes, even with no reference build.
+        baseline = observed if args.record else row['node']
         binary = Path(scratch) / str(Path(row['file']).with_suffix(''))
         built = run(['go', 'run', '-overlay=' + str(overlay), './cmd/adamic', 'build', str(file), '-o', str(binary)], row['file'] + '.stage0', args.compiler_repo)
         diagnostic = built['stdout'] + built['stderr']
@@ -121,16 +124,21 @@ with tempfile.TemporaryDirectory(prefix='adamic-host-check-') as scratch:
         outcome = 'Compiles' if built['exit'] == 0 else 'NotYet' if "stage 0 can't lower" in diagnostic else 'Refused' if 'Adamic 0.1 refuses' in diagnostic else 'Checker'
         if outcome == 'Compiles':
             native = run([str(binary)], row['file'] + '.native')
-            if native != observed:
+            if native != baseline:
                 raise AssertionError('SILENT MISCOMPILE: ' + row['file'] + ': native differs from Node')
+            built_js = run(['go', 'run', '-overlay=' + str(overlay), './cmd/adamic', 'js', str(file)], row['file'] + '.javascript-build', args.compiler_repo)
+            assert built_js['exit'] == 0, built_js
+            script = Path(scratch) / (row['file'] + '.mjs')
+            script.write_text(built_js['stdout'])
+            compare(node(script, row['file'] + '.javascript', 'node'), baseline, row['file'] + ' JavaScript')
         stage0 = dict(outcome=outcome, what='' if outcome == 'Compiles' else diagnostic)
         if args.record:
             row['node'], row['stage0'] = observed, stage0
-        elif args.update_stage0:
+        elif args.update_stage0 and binary_node is not None:
             row['stage0'] = stage0
         else:
             compare_stage0(stage0, row['stage0'], row['file'] + ' stage0')
-        print(row['file'] + ': Node exit=' + str(observed['exit']) + ', stage0=' + outcome)
+        print(row['file'] + (': Node exit=' if binary_node is not None else ': recorded Node exit=') + str(observed['exit']) + ', stage0=' + outcome)
     if args.record and skipped_rows:
         print('SKIP: recording not published; configured rows were unavailable: ' + ', '.join(sorted(skipped_rows)))
     elif args.record:
@@ -185,8 +193,6 @@ with tempfile.TemporaryDirectory(prefix='adamic-host-check-') as scratch:
         # Every compiler record must retain message, source line and code after
         # normalization. Change one field at a time; use the real comparison.
         for index, row in enumerate(status):
-            if node_for(row, index + 1) is None:
-                continue
             wrapped = copy.deepcopy(row['stage0'])
             wrapped['what'] = ('adamic: ' + wrapped['what'].replace('stage3/fixtures/', str(bucket.parent) + '/')
                                + '\nexit status 1\n')

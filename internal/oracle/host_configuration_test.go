@@ -27,6 +27,10 @@ func TestHostConfigurationOracleReaders(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	stub := filepath.Join(t.TempDir(), "node-stub")
+	if err := os.WriteFile(stub, []byte("#!/bin/sh\nif [ \"$1\" = -p ]; then echo 'v24.19.0 false'; exit 0; fi\nexec '"+node+"' \"$@\"\n"), 0700); err != nil {
+		t.Fatal(err)
+	}
 	original, err := os.ReadFile(filepath.Join(repository, "stage3/fixtures/host/status.json"))
 	if err != nil {
 		t.Fatal(err)
@@ -40,19 +44,30 @@ func TestHostConfigurationOracleReaders(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, reader := range []string{"status", "newline"} {
-		for _, mode := range []string{"unset", "selected", "unknown"} {
+		for _, mode := range []string{"unset", "selected", "unknown", "wrong-recorded"} {
 			t.Run(reader+"/"+mode, func(t *testing.T) {
 				var rows []map[string]json.RawMessage
 				if err := json.Unmarshal(original, &rows); err != nil {
 					t.Fatal(err)
 				}
 				index := 0
+				if reader == "status" {
+					rows[0], rows[22] = rows[22], rows[0]
+				}
 				if reader == "newline" {
 					index = 22
 				}
 				rows[index]["configuration"] = model[0]["configuration"]
 				if mode == "unknown" {
 					rows[index]["configuration"] = json.RawMessage(`{"name":"unknown-build"}`)
+				}
+				if mode == "wrong-recorded" {
+					var expected map[string]any
+					if err := json.Unmarshal(rows[index]["node"], &expected); err != nil {
+						t.Fatal(err)
+					}
+					expected["stdout"] = "wrong recorded bytes\n"
+					rows[index]["node"], _ = json.Marshal(expected)
 				}
 				encoded, err := json.Marshal(rows)
 				if err != nil {
@@ -64,12 +79,19 @@ func TestHostConfigurationOracleReaders(t *testing.T) {
 				}
 				selected := ""
 				if mode == "selected" {
-					selected = node
+					selected = stub
 				}
 				cmd := exec.Command(binary, "-test.run=^TestHostConfigurationOracleReaders$", "-test.count=1", "-test.v", "-test.timeout=30s")
 				cmd.Env = append(os.Environ(), "ADAMIC_HOST_CONFIGURATION_ORACLE_INPUT="+input, "ADAMIC_HOST_CONFIGURATION_ORACLE_READER="+reader, "ADAMIC_HOST_NODE_WITHOUT_INSPECTOR="+selected)
 				out, err := cmd.CombinedOutput()
 				t.Logf("%s", out)
+				if mode == "unset" || mode == "selected" {
+					for _, backend := range []string{"native", "javascript"} {
+						if !strings.Contains(string(out), "--- PASS: TestHostConfigurationOracleReaders/"+backend) {
+							t.Fatalf("%s comparison didn't run: %s", backend, out)
+						}
+					}
+				}
 				switch mode {
 				case "unset":
 					if err != nil || !strings.Contains(string(out), "needs node-without-inspector; set ADAMIC_HOST_NODE_WITHOUT_INSPECTOR") || !strings.Contains(string(out), "--- SKIP:") {
@@ -78,6 +100,10 @@ func TestHostConfigurationOracleReaders(t *testing.T) {
 				case "selected":
 					if err != nil || strings.Contains(string(out), "--- SKIP:") {
 						t.Fatalf("want selected-Node pass: %v\n%s", err, out)
+					}
+				case "wrong-recorded":
+					if err == nil || !strings.Contains(string(out), "--- FAIL: TestHostConfigurationOracleReaders/native") {
+						t.Fatalf("recorded bytes mismatch not caught natively: %v\n%s", err, out)
 					}
 				case "unknown":
 					if err == nil || !strings.Contains(string(out), "unknown host configuration") {

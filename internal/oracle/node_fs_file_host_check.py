@@ -71,13 +71,15 @@ with tempfile.TemporaryDirectory(prefix='fs-file-host-') as scratch:
         if prefix not in owned:
             continue
         binary_node = node_for(row, index + 1)
-        if binary_node is None:
-            report.append({'file': row['file'], 'skipped': True, 'configuration': row['configuration']})
-            continue
         path = bucket / row['file']
-        truth = node(path, row['file'] + '.node', binary_node)
-        assert truth == row['node'], row['file'] + ': recorded Node observation differs'
-        result = {'file': row['file'], 'nodeMatches': True}
+        truth = row['node']
+        result = {'file': row['file'], 'nodeMatches': False}
+        if binary_node is not None:
+            assert node(path, row['file'] + '.node', binary_node) == truth, row['file'] + ': recorded Node observation differs'
+            result['nodeMatches'] = True
+        else:
+            result['nodeReferenceSkipped'] = True
+            result['configuration'] = row['configuration']
         binary = scratch / path.stem
         native = run([str(args.compiler), 'build', str(path), '-o', str(binary)], row['file'] + '.native-build')
         javascript = run([str(args.compiler), 'js', str(path)], row['file'] + '.javascript-build')
@@ -93,7 +95,7 @@ with tempfile.TemporaryDirectory(prefix='fs-file-host-') as scratch:
                     observed = node(module, row['file'] + '.javascript', 'node')
                 assert observed == truth, 'SILENT MISCOMPILE: ' + row['file'] + ' ' + backend
                 result[backend]['agrees'] = True
-        if args.mutants:
+        if args.mutants and binary_node is not None:
             before, after = mutations[prefix]
             source = path.read_text()
             assert before in source, row['file'] + ': mutant changed nothing'
@@ -102,7 +104,7 @@ with tempfile.TemporaryDirectory(prefix='fs-file-host-') as scratch:
             assert node(mutant, row['file'] + '.mutant', binary_node) != truth, 'SURVIVING MUTANT: ' + row['file']
             result['nodeMutantCaught'] = True
         report.append(result)
-        print(row['file'] + ': Node agrees; native=' + result['native']['stage'] + '; javascript=' + result['javascript']['stage'])
+        print(row['file'] + (': Node agrees; native=' if binary_node is not None else ': recorded Node bytes; native=') + result['native']['stage'] + '; javascript=' + result['javascript']['stage'])
 args.report.parent.mkdir(parents=True, exist_ok=True)
 args.report.write_text(json.dumps(report, indent=2) + '\n')
-raise SystemExit(0 if all(row[backend]['stage'] == 'Compiles' for row in report if not row.get('skipped') for backend in ['native', 'javascript']) else 1)
+raise SystemExit(0 if all(row[backend]['stage'] == 'Compiles' for row in report for backend in ['native', 'javascript']) else 1)

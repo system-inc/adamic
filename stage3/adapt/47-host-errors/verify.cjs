@@ -55,12 +55,7 @@ try {
     const status = JSON.parse(fs.readFileSync(path.join(fixtureDirectory, "status.json"), "utf8"));
     for (const [index, row] of status.entries()) {
         const nodeBinary = nodeFor(row, index + 1);
-        if (!nodeBinary) {
-            const skipped = {file: row.file, skipped: true, configuration: row.configuration};
-            fixtureResults.push(skipped);
-            if (row.file.startsWith("13_")) helperSkipped = skipped;
-            continue;
-        }
+
         const fixture = path.join(fixtureDirectory, row.file);
         let text = fs.readFileSync(fixture, "utf8");
         const source = parse(row.file, text);
@@ -74,6 +69,12 @@ try {
         }
         const target = path.join(scratch, row.file + ".mjs");
         fs.writeFileSync(target, emit(text));
+        if (!nodeBinary) {
+            const skipped = {file: row.file, skipped: true, configuration: row.configuration};
+            fixtureResults.push(skipped);
+            if (row.file.startsWith("13_")) helperSkipped = skipped;
+            continue;
+        }
         function observe() {
             const result = spawnSync(nodeBinary, [target], { encoding: "utf8" });
             if (result.error) throw result.error;

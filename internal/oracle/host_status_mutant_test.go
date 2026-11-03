@@ -3,7 +3,6 @@ package oracle
 import (
 	"context"
 	"encoding/json"
-	"github.com/system-inc/adamic/internal/hostconfiguration"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -48,7 +47,6 @@ func TestOracleHostStatusMutants(t *testing.T) {
 	if err := json.Unmarshal(rows[hostStatusMutantRow], &recorded); err != nil {
 		t.Fatal(err)
 	}
-	hostconfiguration.Require(t, hostStatusMutantRow+1, recorded.Configuration)
 	if recorded.Stage.Outcome != "Refused" {
 		t.Fatalf("wrong-stage witness changed: %+v", recorded.Stage)
 	}
@@ -106,7 +104,7 @@ func TestOracleHostStatusMutants(t *testing.T) {
 				t.Fatalf("status probe exceeded 20s: %v\n%s", ctx.Err(), output)
 			}
 			if want == "" {
-				if runErr != nil || !strings.Contains(string(output), "current Node agrees; stage=Refused") {
+				if runErr != nil || !strings.Contains(string(output), "stage=Refused") {
 					t.Fatalf("real file must pass the same check: %v\n%s", runErr, output)
 				}
 				t.Log("real status file passes after all planted failures")
@@ -116,7 +114,7 @@ func TestOracleHostStatusMutants(t *testing.T) {
 			if !ok || exit.ExitCode() != 1 || !strings.Contains(string(output), want) {
 				t.Fatalf("want checker failure %q and exit 1: %v\n%s", want, runErr, output)
 			}
-			if mutation == "wrong-stage" && !strings.Contains(string(output), "current Node agrees; stage=Refused") {
+			if mutation == "wrong-stage" && !strings.Contains(string(output), "stage=Refused") {
 				t.Fatalf("wrong stage failed before observing its real outcome:\n%s", output)
 			}
 			t.Logf("%s caught by the real status checker: %s", mutation, want)

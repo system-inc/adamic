@@ -36,23 +36,30 @@ func nodeProcessHostNewLine(t *testing.T, statusPath string) {
 	for index, row := range rows {
 		if row.File == "23_newLine.a" {
 			found = true
-			nodeBinary := hostconfiguration.Require(t, index+1, row.Configuration)
-			truth = hostNodeWith(t, inputRun{}, nodeBinary, path)
+			truth = run{stdout: []byte(row.Node.Stdout), stderr: []byte(row.Node.Stderr), exitCode: row.Node.Exit}
+			t.Run("node", func(t *testing.T) {
+				nodeBinary := hostconfiguration.Require(t, index+1, row.Configuration)
+				actualNode := hostNodeWith(t, inputRun{}, nodeBinary, path)
+				if difference := disagreement(truth, actualNode); difference != "" {
+					t.Fatal("recorded Node: " + difference)
+				}
+			})
 			_, binary, script = sanitized(t, "stage3/fixtures/host/23_newLine.a")
-			expected := run{stdout: []byte(row.Node.Stdout), stderr: []byte(row.Node.Stderr), exitCode: row.Node.Exit}
-			if difference := disagreement(expected, truth); difference != "" {
-				t.Fatal("recorded Node: " + difference)
-			}
 		}
 	}
 	if !found {
 		t.Fatal("missing recorded fixture")
 	}
-	for _, got := range []run{execute(t, binary), onNodeWith(t, inputRun{}, script)} {
-		if difference := disagreement(truth, got); difference != "" {
-			t.Fatal(difference)
+	t.Run("native", func(t *testing.T) {
+		if difference := disagreement(truth, execute(t, binary)); difference != "" {
+			t.Fatal("native versus recorded Node: " + difference)
 		}
-	}
+	})
+	t.Run("javascript", func(t *testing.T) {
+		if difference := disagreement(truth, onNodeWith(t, inputRun{}, script)); difference != "" {
+			t.Fatal("JavaScript versus recorded Node: " + difference)
+		}
+	})
 	program, err := lowered(t, path)
 	if err != nil {
 		t.Fatal(err)

@@ -27,9 +27,6 @@ for index,row in enumerate(rows):
 fixture=bucket/'25_readDirectory.a'
 fixture_index=next(index for index,row in enumerate(rows) if row['file']==fixture.name)
 fixture_node=node_for(rows[fixture_index],fixture_index+1)
-if fixture_node is None:
- (out/'proof.json').write_text(json.dumps({'status':'skipped','file':fixture.name,'configuration':rows[fixture_index]['configuration'],'observations':observed,'mutantsSkipped':True},indent=2)+'\n')
- sys.exit(0)
 original=fixture.read_bytes()
 mutants=[]
 audit=['node',str(bucket/'source-audit.cjs'),tree]
@@ -42,13 +39,14 @@ try:
   assert p.returncode!=0 and b'missing or changed copied declaration' in p.stderr,label+' survived audit'
   mutants.append({'mutant':label,'caughtBy':'full source audit','exit':p.returncode})
   fixture.write_bytes(original)
- text=original.decode(); old='if (extensions && !fileExtensionIsOneOf(name, extensions)) continue;'; assert text.count(old)==1
- # Keep relative module imports resolving from the actual fixture directory.
- fixture.write_text(text.replace(old,'if (false) continue;'))
- p=subprocess.run([fixture_node,'--disable-warning=ExperimentalWarning','oracle/node.mjs',str(fixture)],cwd=root,capture_output=True)
- (out/'extension-filter.stdout').write_bytes(p.stdout); (out/'extension-filter.stderr').write_bytes(p.stderr)
- assert p.returncode==0 and not p.stderr and p.stdout.decode()!=before[fixture.name]['stdout'],'extension semantic mutant survived'
- mutants.append({'mutant':'remove extension filter','caughtBy':'exact Node stdout comparison','exit':p.returncode})
+ if fixture_node is not None:
+  text=original.decode(); old='if (extensions && !fileExtensionIsOneOf(name, extensions)) continue;'; assert text.count(old)==1
+  # Keep relative module imports resolving from the actual fixture directory.
+  fixture.write_text(text.replace(old,'if (false) continue;'))
+  p=subprocess.run([fixture_node,'--disable-warning=ExperimentalWarning','oracle/node.mjs',str(fixture)],cwd=root,capture_output=True)
+  (out/'extension-filter.stdout').write_bytes(p.stdout); (out/'extension-filter.stderr').write_bytes(p.stderr)
+  assert p.returncode==0 and not p.stderr and p.stdout.decode()!=before[fixture.name]['stdout'],'extension semantic mutant survived'
+  mutants.append({'mutant':'remove extension filter','caughtBy':'exact Node stdout comparison','exit':p.returncode})
 finally:
  fixture.write_bytes(original)
 p=subprocess.run(audit,cwd=root,capture_output=True)
@@ -56,6 +54,6 @@ p=subprocess.run(audit,cwd=root,capture_output=True)
 proof={'node':subprocess.check_output(['node','--version']).decode().strip(),'fixtures':len(rows),'unchangedBeforeAndGoldens':True,'mutants':mutants,'restoredAuditExit':p.returncode}
 skipped=[name for name,result in observed.items() if result.get('skipped')]
 if skipped:
- proof.update(skipped=skipped,compared=len(rows)-len(skipped),unchangedBeforeAndGoldens=False)
+ proof.update(skipped=skipped,compared=len(rows)-len(skipped),unchangedBeforeAndGoldens=False,extensionMutantSkipped=fixture_node is None)
 (out/'proof.json').write_text(json.dumps(proof,indent=2)+'\n')
 print('PASS: observed Node rows unchanged; skipped configured rows: '+', '.join(skipped) if skipped else 'PASS: all 25 Node observations unchanged; 2 stale-cast audit mutants and extension-filter semantic mutant caught; restored full audit passes')
