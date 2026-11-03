@@ -1,0 +1,13 @@
+{
+  "exit_code": 0,
+  "exit_status_source": "strace exit_group of original timeout PID 10741; outer sampler interrupted by environment reconnect",
+  "elapsed_seconds": 4143.535208702087,
+  "sampled_peak_bytes": 15923269632,
+  "sample_interval_seconds": 1,
+  "sampling_interruption": "2026-11-03T21:02:47Z until resumed observer start",
+  "after": {
+    "memory.max": "17179869184",
+    "memory.peak": "15942144000",
+    "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0"
+  }
+}
