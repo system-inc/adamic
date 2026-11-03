@@ -257,7 +257,12 @@ func (w *enumTagWalk) exactKindCall(node *ast.Node) (kindCall, bool) {
 	if len(parameters) > 0 && ast.IsIdentifier(parameters[0].Name()) && parameters[0].Name().Text() == "this" {
 		parameters = parameters[1:]
 	}
-	if len(parameters) == 0 || !ast.IsIdentifier(parameters[0].Name()) || parameters[0].AsParameterDeclaration().DotDotDotToken != nil || len(call.Arguments.Nodes) == 0 {
+	// A default, an optional mark or a rest would let the body test something other than the
+	// argument: isA(undefined) tests the default's kind (Language's attack on 5d222aba).
+	if len(parameters) == 0 || !ast.IsIdentifier(parameters[0].Name()) || len(call.Arguments.Nodes) == 0 {
+		return kindCall{}, false
+	}
+	if declaration := parameters[0].AsParameterDeclaration(); declaration.DotDotDotToken != nil || declaration.QuestionToken != nil || declaration.Initializer != nil {
 		return kindCall{}, false
 	}
 	argument := call.Arguments.Nodes[0]

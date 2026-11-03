@@ -140,6 +140,10 @@ func TestKindPredicateWalkRefusals(t *testing.T) {
 		{"method", kindPredicateTypes, "const kinds = { isA(n: N): n is A { return n.kind === K.A; } };\nfunction show(n: N): string { return kinds.isA(n) ? `a ${n.a}` : 'b'; }\nconsole.log(show({ kind: K.A, flag: F.X, a: 1 }));\n", kindPredicateRefusal},
 		{"value alias", kindPredicateTypes, "function isAlpha(n: N): n is A { return n.kind === K.A; }\nconst isA = isAlpha;\n" + show, kindPredicateRefusal},
 		{"let arrow", kindPredicateTypes, "let isA = (n: N): n is A => n.kind === K.A;\n" + show, kindPredicateRefusal},
+		// A default or an optional mark: isA(undefined) would test the default's kind, not the argument's
+		// (Language's attack on 5d222aba).
+		{"parameter with a default", kindPredicateTypes, "const fallback: N = { kind: K.A, flag: F.X, a: 0 };\nfunction isA(n: N = fallback): n is A { return n.kind === K.A; }\nfunction show(n: N | undefined): string { return isA(n) ? `a ${n.a}` : 'b'; }\nconsole.log(show({ kind: K.A, flag: F.X, a: 1 }));\n", kindPredicateRefusal},
+		{"optional parameter", kindPredicateTypes, "function isA(n?: N): n is A { return n !== undefined && n.kind === K.A; }\nfunction show(n: N): string { return isA(n) ? `a ${n.a}` : 'b'; }\nconsole.log(show({ kind: K.A, flag: F.X, a: 1 }));\n", kindPredicateRefusal},
 		{"two statements", kindPredicateTypes, "function isA(n: N): n is A { const k = n.kind; return k === K.A; }\n" + show, kindPredicateRefusal},
 		{"asserts", kindPredicateTypes, "function assertA(n: N): asserts n is A { if (n.kind !== K.A) { throw new Error('not A'); } }\nfunction show(n: N): string { assertA(n); return `a ${n.a}`; }\nconsole.log(show({ kind: K.A, flag: F.X, a: 1 }));\n", kindPredicateRefusal},
 		{"switch (true)", kindPredicateTypes, "function isA(n: N): n is A { return n.kind === K.A; }\nfunction show(n: N): string { switch (true) { case isA(n): return `a ${n.a}`; } return 'b'; }\nconsole.log(show({ kind: K.A, flag: F.X, a: 1 }));\n", kindPredicateRefusal},
