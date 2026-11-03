@@ -378,10 +378,15 @@ func (l *lowering) viewReceiverTypeID(receiver *checker.Type) int {
 // access of its own: a destructured binding, a view's source, a copied value.
 // TestViewReceiverCallersAreClassified holds every caller to a role.
 func (l *lowering) viewFieldReceiverTypeID(node *ast.Node, receiver *checker.Type) int {
+	var id int
 	if node != nil && ast.IsAssignmentTarget(node) {
-		return l.viewReceiverTypeID(receiver)
+		id = l.viewReceiverTypeID(receiver)
+	} else {
+		id = l.viewReadReceiverTypeID(receiver)
 	}
-	return l.viewReadReceiverTypeID(receiver)
+	// Whether a record's or a merged class's field name checks it (#9jnjwrw).
+	l.plainReceiver(id)
+	return id
 }
 
 // viewReadReceiverTypeID is a field read's receiver id, viewReceiverTypeID's but

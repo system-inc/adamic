@@ -10,9 +10,21 @@ func CheckedFieldKey(receiverTypeID int, name string) string {
 }
 
 // CheckedField says whether a read or write of name through a receiver of type receiverTypeID is checked: a view member
-// under its receiver's key, or a record's field under its bare name.
+// under its receiver's key, or a record's or merged class's field under its bare name, through any receiver lowering
+// hasn't proven plain (PlainReceivers). An unproven receiver stays checked.
 func (p *Program) CheckedField(receiverTypeID int, name string) bool {
-	return p.CheckedFields[CheckedFieldKey(receiverTypeID, name)] || p.CheckedFields[name]
+	return p.CheckedFields[CheckedFieldKey(receiverTypeID, name)] || p.CheckedFields[name] && !p.PlainReceivers[receiverTypeID]
+}
+
+// CheckedRead is CheckedField for a field read, which can prove its receiver plain by its value as well
+// as its type. A read made where a storage test found neither a record nor a class instance
+// (Property.NotRecord, a weak read's fixed branch) is checked only as a view member under its receiver's
+// key, as a read through a PlainReceivers type is.
+func (p *Program) CheckedRead(read Property) bool {
+	if read.NotRecord {
+		return p.CheckedFields[CheckedFieldKey(read.ViewReceiverTypeID, read.Name)]
+	}
+	return p.CheckedField(read.ViewReceiverTypeID, read.Name)
 }
 
 // ViewContractID is one-based; zero means no available semantic certificate.
