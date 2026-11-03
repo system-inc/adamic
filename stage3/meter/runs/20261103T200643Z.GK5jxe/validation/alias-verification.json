@@ -1,0 +1,25 @@
+{
+  "trees_identical": true,
+  "streams": {
+    "census.jsonl.gz": {
+      "identical": true,
+      "uncompressed_sha256": "abe6133ba3829a052797a857c98d60c9585f22452300c3cf261a00600b17936c"
+    },
+    "latent.jsonl.gz": {
+      "identical": true,
+      "uncompressed_sha256": "e5cbb394b222de99daaa252e3542f68c4d3d1063d3166ed3bdd0746c72763428"
+    },
+    "latent-times.jsonl.gz": {
+      "identical": true,
+      "uncompressed_sha256": "54ba989144182638edbe95970a7ab3987d6669fab2f7fca068bf16ad05b0aeb1"
+    },
+    "tsc/census.jsonl.gz": {
+      "identical": true,
+      "uncompressed_sha256": "cdbb3ea49dcaa1c96e6ab81c8aadaab10d8e80505352a13ed688d7e1974e2bd1"
+    },
+    "tsc/latent.jsonl.gz": {
+      "identical": true,
+      "uncompressed_sha256": "41da33aba36f82581575cf1faa914a5802bb43fe7064777be248a687b82a167a"
+    }
+  }
+}

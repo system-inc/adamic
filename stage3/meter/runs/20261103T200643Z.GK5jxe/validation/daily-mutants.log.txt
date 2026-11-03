@@ -1,0 +1,31 @@
+ignore-pin: caught
+unequal-pins: caught
+checkout-compiler: caught
+omit-origin-retry: caught
+second-measurement: caught
+omit-previous: caught
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/meter/check-daily-mutants.py", line 64, in <module>
+    caught('any-hook', ['python3', '-m', 'unittest', 'discover', '-s', 'stage3/meter', '-p', 'generator_test.py'],
+  File "/workspace/adamic/stage3/meter/check-daily-mutants.py", line 20, in caught
+    raise AssertionError(name + ': mutant survived or failed for the wrong reason\n' + text)
+AssertionError: any-hook: mutant survived or failed for the wrong reason
+F
+======================================================================
+FAIL: test_nil_populated_unknown_and_permissive_mutant (generator_test.HookTests.test_nil_populated_unknown_and_permissive_mutant)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/meter/generator_test.py", line 49, in test_nil_populated_unknown_and_permissive_mutant
+    self.assertEqual(code, 0, log)
+AssertionError: 1 != 0 : # probe
+copy.go:4:2: no required module provides package github.com/system-inc/adamic/internal/ir; to add it:
+	go get github.com/system-inc/adamic/internal/ir
+FAIL	probe [setup failed]
+FAIL
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.299s
+
+FAILED (failures=1)
+

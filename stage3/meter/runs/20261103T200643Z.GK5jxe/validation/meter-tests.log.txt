@@ -1,0 +1,18 @@
+.........s.........sFss.......................
+======================================================================
+FAIL: test_nil_populated_unknown_and_permissive_mutant (generator_test.HookTests.test_nil_populated_unknown_and_permissive_mutant)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/meter/generator_test.py", line 49, in test_nil_populated_unknown_and_permissive_mutant
+    self.assertEqual(code, 0, log)
+AssertionError: 1 != 0 : # probe
+copy.go:4:2: no required module provides package github.com/system-inc/adamic/internal/ir; to add it:
+	go get github.com/system-inc/adamic/internal/ir
+FAIL	probe [setup failed]
+FAIL
+
+
+----------------------------------------------------------------------
+Ran 46 tests in 11.948s
+
+FAILED (failures=1, skipped=4)

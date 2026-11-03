@@ -1,0 +1,16 @@
+F
+======================================================================
+FAIL: test_per_ref_builds_and_runs_each_pinned_compiler (compiler_test.CompilerSelectionTests.test_per_ref_builds_and_runs_each_pinned_compiler)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/meter/compiler_test.py", line 193, in test_per_ref_builds_and_runs_each_pinned_compiler
+    run, result = self.measure('per-ref')
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage3/meter/compiler_test.py", line 164, in measure
+    self.assertEqual(len(invocations.read_text().splitlines()), 4, 'main must be measured exactly once')
+AssertionError: 8 != 4 : main must be measured exactly once
+
+----------------------------------------------------------------------
+Ran 1 test in 2.103s
+
+FAILED (failures=1)
