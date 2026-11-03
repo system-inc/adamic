@@ -24,7 +24,7 @@ var bareProductClang = map[string]struct {
 	calls  int
 	reason string
 }{
-	"internal/native/timers_test.go:timerRuntime.buildBare": {1, "the reproducibility pin's mutant: it must stay bare so TestTimerMutantProductPinCatchesBareClang can show the pin fails"},
+	"internal/native/timers_test.go:timerBuildBare": {1, "the reproducibility pin's mutant: it must stay bare so TestTimerMutantProductPinCatchesBareClang can show the pin fails"},
 }
 
 // productCommandCalls are the calls that run a program by name, each with the index of its program argument.
