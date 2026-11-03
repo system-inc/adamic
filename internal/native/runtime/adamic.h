@@ -1406,10 +1406,15 @@ adamic_primitive adamic_ordinary_to_primitive(adamic_heap *receiver, enum adamic
 
 // adamic_thrown is the error being thrown, or NULL (exceptions.c): set by a throw, tested after
 // every call that can throw, and taken by the catch that lands it. adamic_error_new is new
-// Error(message), and adamic_uncaught the panic of an error nothing caught.
+// Error(message), adamic_error_new_kind the same with a built-in class's name (a RangeError's,
+// a TypeError's), and adamic_uncaught the panic of an error nothing caught.
 extern _Thread_local adamic_object *adamic_thrown;
 // NULL is an omitted or undefined message; its empty fallback is not an own field.
 adamic_object *adamic_error_new(adamic_string *message);
+// The message is retained, not taken: the caller still releases its own reference.
+adamic_object *adamic_error_new_kind(const char *name, size_t name_length, adamic_string *message);
+// adamic_throw_kind sets adamic_thrown to new <name>(message), the message given as bytes.
+void adamic_throw_kind(const char *name, size_t name_length, const char *message, size_t message_length);
 const char *adamic_error_field_name(const adamic_object *object, const char *name);
 _Noreturn void adamic_uncaught(void);
 
@@ -1472,7 +1477,8 @@ int adamic_number_shortest_digits(double value, char digits[18], int *point);
 
 // adamic_number_to_exponential is value.toExponential(digits), and the shortest digits when there
 // are none; adamic_number_to_precision is value.toPrecision(digits), and String(value) when there
-// are none. Both are V8's (dtoa.c), and return a string the caller owns.
+// are none. Both are V8's (dtoa.c), and return a string the caller owns: the empty string when
+// digits out of range set adamic_thrown to Node's RangeError.
 adamic_string *adamic_number_to_exponential(double value, double digits, bool has_digits);
 adamic_string *adamic_number_to_precision(double value, double digits, bool has_digits);
 
@@ -1506,10 +1512,11 @@ adamic_string *adamic_string_from_char_codes(size_t count, const double values[]
 adamic_string *adamic_string_from_code_points(size_t count, const double values[]);
 
 // adamic_number_to_radix is value.toString(radix), V8's (radix.c), and returns a string the caller
-// owns.
+// owns: the empty string when a radix out of range sets adamic_thrown to Node's RangeError.
 adamic_string *adamic_number_to_radix(double value, double radix);
 
-// adamic_number_to_fixed is value.toFixed(digits), and returns a string the caller owns.
+// adamic_number_to_fixed is value.toFixed(digits), and returns a string the caller owns: the empty
+// string when digits out of range set adamic_thrown to Node's RangeError.
 adamic_string *adamic_number_to_fixed(double value, double digits);
 
 // Input, opened in 0.2 (input.c). adamic_arguments_save keeps main's argc and argv;

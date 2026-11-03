@@ -1,0 +1,50 @@
+// An async function's try around toPrecision, and around toFixed: the RangeError takes the flow
+// graph's exception edge to the catch. Without a try, it rejects the promise, and the caller's await
+// throws it.
+async function describe(value: number, precision: number): Promise<string> {
+	await Promise.resolve();
+	try {
+		const text = value.toPrecision(precision);
+		return `ok ${text}`;
+	} catch (error) {
+		if (error instanceof Error) {
+			return `${error.name}|${error.message}`;
+		}
+		return 'not an error';
+	}
+}
+
+async function fixed(value: number, digits: number): Promise<void> {
+	const label = `toFixed(${digits})`;
+	try {
+		console.log(`${label}: ${value.toFixed(digits)}`);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(`${label} threw ${error.name}|${error.message}`);
+		}
+	}
+	await Promise.resolve();
+}
+
+async function bare(value: number, precision: number): Promise<string> {
+	await Promise.resolve();
+	return value.toPrecision(precision);
+}
+
+async function run(): Promise<string> {
+	const first = await describe(Math.PI, 3);
+	const second = await describe(Math.PI, 0);
+	await fixed(2.5, 1);
+	await fixed(2.5, 101);
+	let text = `${first} ${second}`;
+	try {
+		const third = await bare(2, 200);
+		text = `${text} ${third}`;
+	} catch (error) {
+		if (error instanceof Error) {
+			text = `${text} rejected ${error.name}|${error.message}`;
+		}
+	}
+	return text;
+}
+console.log(await run());
