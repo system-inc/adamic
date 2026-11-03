@@ -1118,10 +1118,16 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 		case ir.MaybeNumber, ir.MaybeBoolean:
 			value = ir.MaybeToString{Value: value}
 		case ir.Union:
-			if !l.writable(l.arrayPredicateObservedType(span.AsTemplateSpan().Expression)) {
+			observed := l.arrayPredicateObservedType(span.AsTemplateSpan().Expression)
+			switch {
+			case l.writable(observed):
+				value = ir.UnionToString{Value: value}
+			case dynamicObjectType(observed):
+				// As String's: only an unknown or an object (stringConversion).
+				value = l.toStringHint(value)
+			default:
 				return nil, l.notYet(span, "a template interpolating a union with an object, an array, a map or a function in it")
 			}
-			value = ir.UnionToString{Value: value}
 		case ir.String:
 			value = l.spelled(span.AsTemplateSpan().Expression, value)
 		default:

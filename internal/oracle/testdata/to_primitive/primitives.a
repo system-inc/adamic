@@ -1,0 +1,12 @@
+// The five primitives an unknown holds, through String and through a template, each as Node writes
+// it (#09dvwny).
+function show(value: unknown): void {
+	console.log(String(value));
+	console.log(`<${value}>`);
+}
+show(undefined);
+show(null);
+show(42);
+show(-0.5);
+show(true);
+show('text');

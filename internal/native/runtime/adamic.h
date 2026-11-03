@@ -1103,6 +1103,14 @@ enum adamic_join {
 	adamic_join_maybe_numbers,
 };
 struct adamic_string *adamic_array_join(const adamic_array *array, const struct adamic_string *separator, enum adamic_join kind);
+// adamic_array_of_scalars is ir.ArrayOfScalars of an array a union holds: it has elements, each a
+// number, a boolean, null or undefined, with a number or a boolean among them or only undefined, which
+// an array of unboxed elements always is.
+bool adamic_array_of_scalars(const adamic_heap *value);
+// adamic_join_enter and adamic_join_leave are ir.JoinEnter and ir.JoinLeave, V8's join stack: enter
+// pushes the array and says true, or says false, pushing nothing, when its join is already under way.
+bool adamic_join_enter(const adamic_heap *array);
+void adamic_join_leave(void);
 
 struct adamic_string *adamic_array_join_nested(const adamic_array *array, const struct adamic_string *separator, enum adamic_join kind, size_t depth);
 
@@ -1313,6 +1321,12 @@ extern adamic_string adamic_typeof_boolean;
 extern adamic_string adamic_typeof_undefined;
 extern adamic_string adamic_typeof_object;
 extern adamic_string adamic_typeof_function;
+// adamic_union_kind is ir.UnknownKind's number for a union: the kind of value String's dispatch takes
+// apart (lower/to_primitive.go), from the value's own tags.
+double adamic_union_kind(const adamic_heap *value);
+// adamic_object_own_function is ir.OwnFunction: whether a plain object or a record has an own property
+// of the name holding a function.
+bool adamic_object_own_function(const adamic_heap *value, const char *name);
 
 // adamic_weak is the handle a Weak<Target> slot holds (weak.c): counted itself, it doesn't count its
 // target, and it says NULL once the target is freed. adamic_weak_of is the target's handle, retained

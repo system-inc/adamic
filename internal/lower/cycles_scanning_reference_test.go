@@ -1716,6 +1716,7 @@ func scanLowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.
 	if err := lowering.finishAccessors(); err != nil {
 		return nil, err
 	}
+	lowering.finishToPrimitive()
 	if err := lowering.exceptions(); err != nil {
 		return nil, err
 	}
