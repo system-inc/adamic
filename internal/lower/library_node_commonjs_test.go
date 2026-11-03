@@ -17,8 +17,8 @@ import (
 // lowers to and where, in the program's own file: one per CommonJS reason the meter names
 // (#redxes2), and requires that keep node:module.require.
 var commonJSReasonPrograms = []struct{ name, where, what string }{
-	{"filename", "main.ts:4:35", "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the path in, such as one built from process.cwd())"},
-	{"dirname", "main.ts:4:36", "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the path in, such as one built from process.cwd())"},
+	{"filename", "main.ts:4:35", "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"},
+	{"dirname", "main.ts:4:36", "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"},
 	{"crypto", "main.ts:2:1", `node:module.require("crypto"): CommonJS loading with no ES-module answer yet (fix: import it with an import declaration)`},
 	{"source-map-support", "main.ts:4:1", `node:module.require("source-map-support"): CommonJS loading with no ES-module answer yet (fix: import it with an import declaration)`},
 	{"computed", "main.ts:5:1", "node:module.require of a computed module path: CommonJS loading with no ES-module answer yet (fix: import each module it can load with an import declaration)"},
