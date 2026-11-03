@@ -190,6 +190,12 @@ static const adamic_field_kind ok_kinds[] = {adamic_field_reference, adamic_fiel
 static const adamic_shape ok_shape = {2, ok_names, both_references, NULL, ok_kinds};
 static const adamic_field_kind error_kinds[] = {adamic_field_reference, adamic_field_reference};
 static const adamic_shape error_shape = {2, error_names, both_references, NULL, error_kinds};
+// readTextFile's and writeTextFile's results are plain objects on Node (oracle/adamic.mjs), so each
+// shape is registered as a literal's is (union.c) and Object.prototype's names answer on it by a
+// run-time key. They hold references only, so their zeroed scalar tags are never read.
+static const int result_types[2];
+static adamic_shape_types ok_metadata = {&ok_shape, result_types, NULL, false};
+static adamic_shape_types error_metadata = {&error_shape, result_types, NULL, false};
 static adamic_string ok_kind = ADAMIC_STRING("Ok");
 static adamic_string error_kind = ADAMIC_STRING("Error");
 
@@ -220,6 +226,7 @@ static adamic_object *failure(const adamic_string *path, int error, bool writing
 		break;
 	}
 	adamic_object *result = adamic_object_new(&error_shape);
+	adamic_register_shape_types(&error_metadata);
 	result->slots[0].reference = &error_kind;
 	result->slots[1].reference = adamic_string_concat(3, (adamic_string *const[]){writing ? &write_prefix : &read_prefix, (adamic_string *)path, reason});
 	return result;
@@ -348,6 +355,7 @@ adamic_object *adamic_read_text_file(const adamic_string *path) {
 	adamic_string *text = decode(bytes, length);
 	free(bytes);
 	adamic_object *result = adamic_object_new(&ok_shape);
+	adamic_register_shape_types(&ok_metadata);
 	result->slots[0].reference = &ok_kind;
 	result->slots[1].reference = text;
 	return result;
@@ -357,6 +365,7 @@ adamic_object *adamic_read_text_file(const adamic_string *path) {
 static const char *const written_names[] = {"kind"};
 static const adamic_field_kind written_kinds[] = {adamic_field_reference};
 static const adamic_shape written_shape = {1, written_names, both_references, NULL, written_kinds};
+static adamic_shape_types written_metadata = {&written_shape, result_types, NULL, false};
 
 // write_all writes every byte, through partial writes and interrupted calls, and returns 0 or the
 // errno that stopped it.
@@ -424,6 +433,7 @@ adamic_object *adamic_write_text_file(const adamic_string *path, const adamic_st
 		return failure(path, error, true);
 	}
 	adamic_object *result = adamic_object_new(&written_shape);
+	adamic_register_shape_types(&written_metadata);
 	result->slots[0].reference = &ok_kind;
 	return result;
 }
