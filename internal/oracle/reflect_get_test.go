@@ -144,6 +144,10 @@ done boolean false
 map value number 1
 set value boolean true
 heapUsed number
+present number 3
+absent undefined
+written number 4
+cleared undefined
 `
 
 // reflectGetStops are the stop fixtures: what each prints before it stops, which stop and key, and
