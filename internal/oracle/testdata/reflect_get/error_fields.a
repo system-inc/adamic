@@ -1,7 +1,8 @@
 // An Error's own fields keep answering a run-time key read, though its prototype isn't Object's: the
 // carve-out from #ey7aysy's host stop, on both backends, since stage3's adapters read caught errors
 // through this propertyOf. A caught fs error's code and message, and a thrown Error's message and
-// name.
+// name. A key that isn't an Error's own field reads undefined on each, as on Node, so the carve-out
+// can't hand out a field the runtime adds later (Language's condition on #ey7aysy).
 import { readFileSync } from 'node:fs';
 import { propertyOf } from './hostErrors.ts';
 
@@ -15,10 +16,12 @@ try {
 } catch (error) {
 	show('code', propertyOf(error, 'code'));
 	show('message', propertyOf(error, 'message'));
+	show('caught foo', propertyOf(error, 'foo'));
 }
 try {
 	throw new Error('thrown');
 } catch (error) {
 	show('thrown', propertyOf(error, 'message'));
 	show('name', propertyOf(error, 'name'));
+	show('thrown foo', propertyOf(error, 'foo'));
 }
