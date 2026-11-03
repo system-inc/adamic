@@ -72,6 +72,17 @@ func dynamicKeyedRuntime(program *ir.Program) string {
 	builder.WriteString("\tif (key === '__proto__') return adamicDynamicStop('Proto', key);\n")
 	builder.WriteString("\tconst error = value instanceof Error;\n")
 	builder.WriteString("\tif (error && adamicDynamicKeyedErrorNames.has(key)) return adamicDynamicStop('ErrorProperty', key);\n")
+	// host is the one predicate for a value whose prototype isn't Object's, a program class's instance
+	// aside (#ey7aysy, Adamic's ruling on #0sps03r), native's host_object (union.c) on this backend's
+	// objects: a Stats, a Dirent, an AdamicIterator, a match's groups object, process.memoryUsage()'s
+	// (library_node_process.go) and an Error. It stops for every key before an own property is read,
+	// an Error aside, whose own fields answer as Node's do, and whose prototype's names stop below.
+	instance := ""
+	if classes {
+		instance = " && id === undefined"
+	}
+	builder.WriteString("\tconst host = Object.getPrototypeOf(value) !== Object.prototype" + instance + ";\n")
+	builder.WriteString("\tif (host && !error) return adamicDynamicStop('RuntimeValue', key);\n")
 	if classes {
 		builder.WriteString("\tif (id !== undefined) {\n")
 		builder.WriteString("\t\tconst accessor = adamicDynamicAccessor(value, key);\n")
@@ -90,14 +101,9 @@ func dynamicKeyedRuntime(program *ir.Program) string {
 	builder.WriteString("\tif (error && (key === 'name' || key === 'message')) return value[key];\n")
 	builder.WriteString("\tif (Object.hasOwn(value, key)) return value[key];\n")
 	// Node's own Object.prototype member, where native hands out its immortal closure for the name.
-	// Native can't know a runtime-made object's prototype and stops on one, so here an object whose
-	// prototype isn't Object's, a Stats or an Error, stops too, a class instance aside.
-	instance := ""
-	if classes {
-		instance = " && id === undefined"
-	}
+	// Only an Error reaches here as a host, and Error.prototype's members aren't Object's, so it stops.
 	builder.WriteString("\tif (adamicDynamicKeyedPrototypeNames.has(key)) {\n")
-	builder.WriteString("\t\tif (Object.getPrototypeOf(value) !== Object.prototype" + instance + ") return adamicDynamicStop('RuntimeValue', key);\n")
+	builder.WriteString("\t\tif (host) return adamicDynamicStop('RuntimeValue', key);\n")
 	builder.WriteString("\t\treturn value[key];\n")
 	builder.WriteString("\t}\n")
 	builder.WriteString("\treturn undefined;\n")
