@@ -1,0 +1,20 @@
+# Mutant evidence for the four CommonJS reason owner entries in stage3/meter/owners.json (#redxes2)
+# Test: report_test.LatentReportTests.test_exact_prefix_and_variance_owners
+# The reasons are internal/lower/library_node_commonjs.go's: __filename and __dirname, and the requires of
+# crypto, of source-map-support and of a computed module path. The bare node:module.require (the inspector
+# require's, #cn4yapb) is held to OWNER BLANK, so no new prefix takes it.
+
+## With the entries (expected pass)
+Ran 1 test in 0.006s
+OK
+
+## Mutant: the four entries removed (expected red, owner blank)
+AssertionError: 'OWNER BLANK' != '#redxes2 (WebAssembly)'
+Ran 1 test in 0.004s
+FAILED (failures=1)
+
+## Restored (expected pass; owners.json byte-identical to the commit)
+Ran 1 test in 0.005s
+OK
+report_test: Ran 25 tests in 5.496s
+OK (skipped=2)

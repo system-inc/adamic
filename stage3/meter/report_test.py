@@ -272,6 +272,12 @@ class LatentReportTests(unittest.TestCase):
             'a checked predicate without a reifiable target': '#1ge1bv8 (Diagnostics)',
             "a checked predicate result read by a CallExpression inside a condition, which its direction walk doesn't read": '#1761dah (Lower)',
             "a tag-proven predicate whose target has an optional field (name on Declaration) that the view can't check": '#1w5bve2 (Optimizer)',
+            "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)": '#redxes2 (WebAssembly)',
+            'node:module.require("crypto"): CommonJS loading with no ES-module answer yet (fix: import it with an import declaration)': '#redxes2 (WebAssembly)',
+            'node:module.require("source-map-support"): CommonJS loading with no ES-module answer yet (fix: import it with an import declaration)': '#redxes2 (WebAssembly)',
+            'node:module.require of a computed module path: CommonJS loading with no ES-module answer yet (fix: import each module it can load with an import declaration)': '#redxes2 (WebAssembly)',
+            # The bare reason, the inspector require's (#cn4yapb), stays unowned: no CommonJS prefix matches it.
+            'node:module.require': 'OWNER BLANK',
         }.items():
             self.assertEqual(reason_owner(reason, owners), owner)
         self.assertEqual(reason_owner('unmatched', owners), 'OWNER BLANK')
