@@ -1,13 +1,13 @@
 // A scalar field read by a run-time key answers as Node's does, natively from the representation
 // byte its object carries: a decoded object's number and boolean beside its string, a literal's
 // number and boolean, decodeJson's number result, fileStatus's size and symbolicLink, matchAll's
-// done, a Map's number and a Set's boolean from next(), and memoryUsage's heapUsed. The size and
-// heapUsed print their type only, since their values vary. The path is relative to internal/oracle,
-// where its test runs it. Last, an optional number field, present and absent, and a number |
-// undefined field written with a plain number and then with undefined: a slot that may hold a packed
-// maybe-number, whose byte must name the slot's storage, not the value written into it.
+// done, and a Map's number and a Set's boolean from next(). The size prints its type only, since its
+// value varies. The path is relative to internal/oracle, where its test runs it. memoryUsage's
+// heapUsed is a host object's field, which stops (stop_host_memory_heap.a). Last, an optional number
+// field, present and absent, and a number | undefined field written with a plain number and then
+// with undefined: a slot that may hold a packed maybe-number, whose byte must name the slot's
+// storage, not the value written into it.
 import { decodeJson, fileStatus } from 'adamic';
-import process from 'node:process';
 import { propertyOf } from './hostErrors.ts';
 
 function show(label: string, value: unknown): void {
@@ -33,7 +33,6 @@ const numbers = new Map<string, number>([['a', 1]]).values();
 show('map value', propertyOf(numbers.next(), 'value'));
 const flags = new Set<boolean>([true]).values();
 show('set value', propertyOf(flags.next(), 'value'));
-console.log(`heapUsed ${typeof propertyOf(process.memoryUsage(), 'heapUsed')}`);
 const present: { readonly count?: number } = { count: 3 };
 show('present', propertyOf(present, 'count'));
 const absent: { readonly count?: number } = {};

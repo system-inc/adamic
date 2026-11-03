@@ -56,6 +56,7 @@ func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 		{"prototype_decoded.a", "1 function function true\n3 function\nfunction\nfunction true\n"},
 		{"prototype_runtime_plain.a", prototypeRuntimePlainAnswers},
 		{"decoded_scalar_reads.a", decodedScalarReadsAnswers},
+		{"error_fields.a", "code: \"ENOENT\"\nmessage: \"ENOENT: no such file or directory, open '/nonexistent-adamic-reflect-get/file'\"\nthrown: \"thrown\"\nname: \"Error\"\n"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()
@@ -128,7 +129,6 @@ map entry: function true
 map number: function true
 set boolean: function true
 match: function true
-memory: function true
 `
 
 // decodedScalarReadsAnswers is what decoded_scalar_reads.a prints on Node.
@@ -143,7 +143,6 @@ symbolicLink boolean false
 done boolean false
 map value number 1
 set value boolean true
-heapUsed number
 present number 3
 absent undefined
 written number 4
@@ -160,6 +159,14 @@ var reflectGetStops = []struct{ file, stdout, stop, key, node string }{
 	{"stop_proto.a", "before\n", "Proto", "__proto__", "before\nobject\n"},
 	{"stop_host_iterator.a", "iterator\n", "RuntimeValue", "constructor", "iterator\nfunction\n"},
 	{"stop_host_object.a", "directory\n", "RuntimeValue", "constructor", "directory\nfunction\n"},
+	{"stop_host_stats_method.a", "directory\n", "RuntimeValue", "isFile", "directory\nfunction\n"},
+	{"stop_host_stats_field.a", "directory\n", "RuntimeValue", "dev", "directory\nnumber\n"},
+	{"stop_host_stats_size.a", "directory\n", "RuntimeValue", "size", "directory\nnumber\n"},
+	{"stop_host_matchall_input.a", "iterator\n", "RuntimeValue", "input", "iterator\nundefined\n"},
+	{"stop_host_matchall_next.a", "iterator\n", "RuntimeValue", "next", "iterator\nfunction\n"},
+	{"stop_host_iterator_next.a", "iterator\n", "RuntimeValue", "next", "iterator\nfunction\n"},
+	{"stop_host_memory_field.a", "memory\n", "RuntimeValue", "rss", "memory\nnumber\n"},
+	{"stop_host_memory_heap.a", "memory number\n", "RuntimeValue", "heapUsed", "memory number\nnumber\n"},
 	{"stop_error_stack.a", "before\n", "ErrorProperty", "stack", "before\nstring\n"},
 	{"stop_array.a", "before\n", "Array", "length", "before\nnumber\n"},
 	{"stop_literal_getter.a", "got\n", "ObjectLiteralGetter", "value", "got\nstring\n"},
@@ -186,6 +193,10 @@ func reflectGetStop(t *testing.T, stdout, stop, key string) run {
 // and the helper's prototype test dropped, so the JavaScript backend reads Node's Stats.
 // stop_host_iterator.a's is the JavaScript backend's AdamicIterator made a plain object again
 // (library_map_set.go), so that backend hands out Object as a Map iterator's constructor.
+// The stop_host_ rows after stop_host_object.a are #ey7aysy's: a host object stops for every key.
+// Their mutants are union.c's guard put back on Object.prototype's names only, so
+// stop_host_stats_method.a's isFile reads undefined natively, and
+// TestReflectGetHostMutantJavaScript's.
 func TestReflectGetStopsAlikeOnBothBackends(t *testing.T) {
 	t.Parallel()
 	for _, probe := range reflectGetStops {
@@ -211,6 +222,32 @@ func TestReflectGetStopsAlikeOnBothBackends(t *testing.T) {
 				t.Errorf("the backends differ: %s", difference)
 			}
 		})
+	}
+}
+
+// The JavaScript backend's host test runs before an own property is read, as native's host_object
+// does (#ey7aysy). Mutant: that early test dropped, so a host value is judged only after hasOwn, as
+// before, and stop_host_stats_method.a's isFile reads undefined there instead of stopping.
+func TestReflectGetHostMutantJavaScript(t *testing.T) {
+	t.Parallel()
+	path := reflectGetFixture(t, "stop_host_stats_method.a")
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	code := javascript.JavaScript(program)
+	const check = "\tif (host && !error) return adamicDynamicStop('RuntimeValue', key);\n"
+	if strings.Count(code, check) != 1 {
+		t.Fatal("the host check is not in the helper once")
+	}
+	mutated := filepath.Join(t.TempDir(), "program.mjs")
+	if err := os.WriteFile(mutated, []byte(strings.Replace(code, check, "", 1)), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	got := onNode(t, mutated)
+	want := reflectGetStop(t, "directory\n", "RuntimeValue", "isFile")
+	if disagreement(want, got) == "" {
+		t.Fatalf("the host check's mutant survived: exit %d, stdout %q, stderr %q", got.exitCode, got.stdout, got.stderr)
 	}
 }
 

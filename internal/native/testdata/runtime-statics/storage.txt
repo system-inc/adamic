@@ -401,9 +401,6 @@
 `node_process.c:mark_type:1`
 `node_process.c:marks:1`
 `node_process.c:measure_type:1`
-# Shape metadata a result registers so a run-time key read sees a plain object: union.c's
-# adamic_register_shape_types writes next and registered once, under its lock, and nothing after.
-`node_process.c:metadata:1`
 `node_process.c:method:1`
 `node_process.c:name_error:1`
 `node_process.c:performance_clear_marks_closure:1`
