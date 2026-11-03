@@ -112,6 +112,15 @@ func (w *enumTagWalk) visit(flow *ast.FlowNode) bool {
 			}
 			flow = flow.Antecedent
 		case flow.Flags&ast.FlowFlagsCondition != 0:
+			if field := w.directField(flow.Node); field == "" {
+				if call, exact := w.exactKindCall(flow.Node); exact {
+					if !w.kindPredicateStep(flow, call) {
+						return false
+					}
+					flow = flow.Antecedent
+					continue
+				}
+			}
 			if !w.step(flow, w.directField(flow.Node)) {
 				return false
 			}
@@ -166,6 +175,212 @@ func (w *enumTagWalk) step(flow *ast.FlowNode, field string) bool {
 		return true
 	}
 	return false
+}
+
+// kindCall is a direct call to an exact kind predicate whose argument is the reference: the
+// comparison `reference.field === member` its body makes, and whether a `!` turns it around.
+type kindCall struct {
+	field   string
+	member  *checker.Type
+	negated bool
+}
+
+// exactKindCall recognizes a condition that calls an exact kind predicate on the reference, under
+// parentheses and `!` (#00rd54t, Adamic's ruling, Nov 3, extending rulings.md:213). The predicate is
+// exact by its body alone: a function declaration, or a const arrow, that the checker's symbol for
+// the callee resolves to (so a shadowing local never qualifies), with one declaration (so not
+// overloaded), whose declared return is `p is T` on its first parameter p after any `this`, and
+// whose body is only `return p.f === E.M`, either order, E.M an enum member. An asserts predicate,
+// an inferred one and a const with an annotation don't count. The callee is a bare name, so never a
+// method, a namespace member or a value read off an object, and an import or re-export under another
+// name resolves to the one declaration. The reference must be the argument at p, as the checker
+// matches it. Whether the call proves anything is judged at the call (kindPredicateStep).
+func (w *enumTagWalk) exactKindCall(node *ast.Node) (kindCall, bool) {
+	negated := false
+	unwrap := func() {
+		node = ast.SkipParentheses(node)
+		for node.Kind == ast.KindPrefixUnaryExpression && node.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken {
+			negated = !negated
+			node = ast.SkipParentheses(node.AsPrefixUnaryExpression().Operand)
+		}
+	}
+	unwrap()
+	// `isX(n) === true`, `!== false` and their turns: the call compared with a boolean literal is the
+	// call, kept or turned around. `==` and `!=` never reach here (rulings.md:172 refuses them).
+	if node.Kind == ast.KindBinaryExpression {
+		binary := node.AsBinaryExpression()
+		operator := binary.OperatorToken.Kind
+		if operator != ast.KindEqualsEqualsEqualsToken && operator != ast.KindExclamationEqualsEqualsToken {
+			return kindCall{}, false
+		}
+		left, right := ast.SkipParentheses(binary.Left), ast.SkipParentheses(binary.Right)
+		if left.Kind == ast.KindTrueKeyword || left.Kind == ast.KindFalseKeyword {
+			left, right = right, left
+		}
+		if right.Kind != ast.KindTrueKeyword && right.Kind != ast.KindFalseKeyword {
+			return kindCall{}, false
+		}
+		if (operator == ast.KindExclamationEqualsEqualsToken) != (right.Kind == ast.KindFalseKeyword) {
+			negated = !negated
+		}
+		node = left
+		unwrap()
+	}
+	if node.Kind != ast.KindCallExpression {
+		return kindCall{}, false
+	}
+	call := node.AsCallExpression()
+	callee := ast.SkipParentheses(call.Expression)
+	// A bare name only: `ts.isBlock(n)` through a namespace import is a property access and doesn't count.
+	if callee.Kind != ast.KindIdentifier || call.QuestionDotToken != nil || node.Flags&ast.NodeFlagsOptionalChain != 0 {
+		return kindCall{}, false
+	}
+	symbol := w.l.symbol(callee)
+	if symbol == nil || len(symbol.Declarations) != 1 {
+		return kindCall{}, false
+	}
+	function := symbol.Declarations[0]
+	if function.Kind == ast.KindVariableDeclaration {
+		variable := function.AsVariableDeclaration()
+		if function.Parent == nil || function.Parent.Flags&ast.NodeFlagsConst == 0 || variable.Type != nil || variable.Initializer == nil {
+			return kindCall{}, false
+		}
+		function = ast.SkipParentheses(variable.Initializer)
+		if function.Kind != ast.KindArrowFunction {
+			return kindCall{}, false
+		}
+	} else if function.Kind != ast.KindFunctionDeclaration {
+		return kindCall{}, false
+	}
+	// The first parameter after a `this` declaration, and the argument at the same place.
+	parameters := function.Parameters()
+	if len(parameters) > 0 && ast.IsIdentifier(parameters[0].Name()) && parameters[0].Name().Text() == "this" {
+		parameters = parameters[1:]
+	}
+	if len(parameters) == 0 || !ast.IsIdentifier(parameters[0].Name()) || parameters[0].AsParameterDeclaration().DotDotDotToken != nil || len(call.Arguments.Nodes) == 0 {
+		return kindCall{}, false
+	}
+	argument := call.Arguments.Nodes[0]
+	if argument.Kind == ast.KindSpreadElement || !predicateMatchingReference(w.l.checker, w.reference, argument) {
+		return kindCall{}, false
+	}
+	parameter := parameters[0].Name()
+	annotation := function.Type()
+	if annotation == nil || annotation.Kind != ast.KindTypePredicate {
+		return kindCall{}, false
+	}
+	predicate := annotation.AsTypePredicateNode()
+	if predicate.AssertsModifier != nil || predicate.Type == nil || predicate.ParameterName.Kind != ast.KindIdentifier || predicate.ParameterName.Text() != parameter.Text() {
+		return kindCall{}, false
+	}
+	body := function.Body()
+	if body == nil {
+		return kindCall{}, false
+	}
+	compared := body
+	if body.Kind == ast.KindBlock {
+		statements := body.AsBlock().Statements.Nodes
+		if len(statements) != 1 || statements[0].Kind != ast.KindReturnStatement || statements[0].AsReturnStatement().Expression == nil {
+			return kindCall{}, false
+		}
+		compared = statements[0].AsReturnStatement().Expression
+	}
+	compared = ast.SkipParentheses(compared)
+	if compared.Kind != ast.KindBinaryExpression {
+		return kindCall{}, false
+	}
+	binary := compared.AsBinaryExpression()
+	if binary.OperatorToken.Kind != ast.KindEqualsEqualsEqualsToken {
+		return kindCall{}, false
+	}
+	parameterSymbol := w.l.checker.GetSymbolAtLocation(parameters[0].Name())
+	read := func(side *ast.Node) string {
+		side = ast.SkipParentheses(side)
+		if side.Kind != ast.KindPropertyAccessExpression || side.Flags&ast.NodeFlagsOptionalChain != 0 {
+			return ""
+		}
+		access := side.AsPropertyAccessExpression()
+		object := ast.SkipParentheses(access.Expression)
+		if access.QuestionDotToken != nil || object.Kind != ast.KindIdentifier || parameterSymbol == nil || w.l.checker.GetSymbolAtLocation(object) != parameterSymbol {
+			return ""
+		}
+		return access.Name().Text()
+	}
+	member := func(side *ast.Node) *checker.Type {
+		side = ast.SkipParentheses(side)
+		constant := w.l.symbol(side)
+		if constant == nil || constant.Flags&ast.SymbolFlagsEnumMember == 0 {
+			return nil
+		}
+		return w.l.checker.GetTypeAtLocation(side)
+	}
+	field, constant := read(binary.Left), member(binary.Right)
+	if field == "" || constant == nil {
+		field, constant = read(binary.Right), member(binary.Left)
+	}
+	if field == "" || constant == nil {
+		return kindCall{}, false
+	}
+	return kindCall{field: field, member: constant, negated: negated}, true
+}
+
+// kindPredicateStep judges an exact kind predicate's call as the comparison its body makes. It
+// passes only when that comparison would: the field is read directly off every object member
+// flowing in (no accessor), and it can't lie there (enumTagHazardOf, as step asks of a comparison).
+// The checker narrows a predicate's call by the predicate's declared type, not by its body, so the
+// step also passes only when that narrowing is identical to the comparison's on the side this path
+// takes: a predicate whose type disagrees with its own body proves nothing here. R-T80's check at the
+// call is kept; only the refusal of the read moves.
+func (w *enumTagWalk) kindPredicateStep(flow *ast.FlowNode, call kindCall) bool {
+	before := predicateFlowType(w.l.checker, w.reference, w.declared, w.declared, nil, flow.Antecedent)
+	members := []*checker.Type{before}
+	if before.Flags()&checker.TypeFlagsUnion != 0 {
+		members = before.Types()
+	}
+	for _, member := range members {
+		if member.Flags()&checker.TypeFlagsPrimitive != 0 {
+			continue
+		}
+		property := w.l.checker.GetPropertyOfType(member, call.field)
+		if property == nil || property.Flags&(ast.SymbolFlagsGetAccessor|ast.SymbolFlagsSetAccessor|ast.SymbolFlagsMethod) != 0 {
+			return false
+		}
+	}
+	if w.l.enumTagHazardOf(before, call.field) != enumTagNoHazard {
+		return false
+	}
+	taken := flow.Flags&ast.FlowFlagsTrueCondition != 0
+	if call.negated {
+		taken = !taken
+	}
+	kept := []*checker.Type{}
+	for _, member := range members {
+		if member.Flags()&checker.TypeFlagsPrimitive != 0 {
+			// A comparison of a field reads no primitive, so the true side has none, and the false
+			// side keeps it as the checker does.
+			if !taken {
+				kept = append(kept, member)
+			}
+			continue
+		}
+		tag := w.l.checker.GetTypeOfSymbol(w.l.checker.GetPropertyOfType(member, call.field))
+		if taken {
+			if checker.Checker_isTypeAssignableTo(w.l.checker, call.member, tag) {
+				kept = append(kept, member)
+			}
+		} else if !checker.Checker_isTypeIdenticalTo(w.l.checker, tag, call.member) {
+			kept = append(kept, member)
+		}
+	}
+	if len(kept) == 0 {
+		return false
+	}
+	after := predicateFlowType(w.l.checker, w.reference, w.declared, w.declared, nil, flow)
+	if !checker.Checker_isTypeIdenticalTo(w.l.checker, after, w.l.checker.GetUnionType(kept)) {
+		return false
+	}
+	w.proved++
+	return true
 }
 
 // directField is the field a recognized comparison reads off the reference: `r.f === x`, `!==`,

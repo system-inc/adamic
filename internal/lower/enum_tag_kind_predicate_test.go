@@ -1,0 +1,148 @@
+package lower
+
+import (
+	"context"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+
+	"github.com/system-inc/adamic/internal/load"
+)
+
+// The walk of enum_tag_flow.go takes a direct call to an exact kind predicate as the comparison its
+// body makes (#00rd54t, Adamic's ruling, Nov 3, extending rulings.md:213), judged like that comparison
+// and only where the checker's narrowing at the call is the comparison's own. Each refinement here
+// needs the walk: F is a one-member enum, so A's flag is an open enum tag B lacks, and the union N
+// has a hazard; kind tells A and B apart, so a comparison of kind is proven.
+const kindPredicateTypes = `enum K { A = 1, B = 2 }
+enum F { X = 1 }
+interface A { readonly kind: K.A; readonly flag: F; readonly a: number }
+interface B { readonly kind: K.B; readonly b: string }
+type N = A | B;
+`
+
+const kindPredicateRefusal = "an object refinement using an open numeric enum as a literal tag"
+
+// Each exact predicate's call lowers and agrees with Node, on the JavaScript backend and sanitized
+// natively, on the side each read sits: true, false by `!`, by an early return, by `?:`, and by a
+// comparison with a boolean literal. Mutant: kindPredicateStep refusing every call, so each goes back
+// to the open-enum refusal (TestKindPredicateWalkRefusals' controls hold the refusal's own words).
+func TestKindPredicateCallIsItsComparison(t *testing.T) {
+	t.Parallel()
+	const isA = "function isA(n: N): n is A { return n.kind === K.A; }\n"
+	const values = "const a: N = { kind: K.A, flag: F.X, a: 1 };\nconst b: N = { kind: K.B, b: 'x' };\n"
+	for _, probe := range []struct{ name, source, stdout string }{
+		{"true and false", isA + "function show(n: N): string { if (isA(n)) { return `a ${n.a + 1}`; } return `b ${n.b}`; }\n" + values + "console.log(show(a));\nconsole.log(show(b));\n", "a 2\nb x\n"},
+		{"negated", isA + "function show(n: N): string { if (!isA(n)) { return `b ${n.b}`; } return `a ${n.a}`; }\n" + values + "console.log(show(a));\nconsole.log(show(b));\n", "a 1\nb x\n"},
+		{"conditional", isA + "function show(n: N): string { return isA(n) ? `a ${n.a}` : `b ${n.b}`; }\n" + values + "console.log(show(a));\nconsole.log(show(b));\n", "a 1\nb x\n"},
+		{"early return", isA + "function show(n: N): string { if (isA(n)) return 'a'; return `b ${n.b}`; }\n" + values + "console.log(show(a));\nconsole.log(show(b));\n", "a\nb x\n"},
+		{"=== false", isA + "function show(n: N): string { if (isA(n) === false) { return `b ${n.b}`; } return `a ${n.a}`; }\n" + values + "console.log(show(a));\nconsole.log(show(b));\n", "a 1\nb x\n"},
+		{"!== true", isA + "function show(n: N): string { if (isA(n) !== true) { return `b ${n.b}`; } return `a ${n.a}`; }\n" + values + "console.log(show(a));\nconsole.log(show(b));\n", "a 1\nb x\n"},
+		{"const arrow", "const isA = (n: N): n is A => n.kind === K.A;\nfunction show(n: N): string { return isA(n) ? `a ${n.a}` : `b ${n.b}`; }\n" + values + "console.log(show(a));\nconsole.log(show(b));\n", "a 1\nb x\n"},
+		{"this parameter", "function isA(this: void, n: N): n is A { return n.kind === K.A; }\nfunction show(n: N): string { return isA(n) ? `a ${n.a}` : `b ${n.b}`; }\n" + values + "console.log(show(a));\nconsole.log(show(b));\n", "a 1\nb x\n"},
+		{"generic, reduced", "function isA<T extends N>(n: T): n is T & A { return n.kind === K.A; }\nfunction show(n: N): string { return isA(n) ? `a ${n.a}` : `b ${n.b}`; }\n" + values + "console.log(show(a));\nconsole.log(show(b));\n", "a 1\nb x\n"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			source := kindPredicateTypes + probe.source
+			for _, extension := range []string{".ts", ".a"} {
+				if _, err := lowerSourceAs(t, source, extension); err != nil {
+					t.Fatalf("%s: want it lowered, got %v", extension, err)
+				}
+			}
+			program := lowersAndAgreesWithNodeAs(t, source, ".ts")
+			if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != probe.stdout {
+				t.Fatalf("native: exit %d, stdout %q, stderr %q; want 0 and %q", code, stdout, stderr, probe.stdout)
+			}
+		})
+	}
+}
+
+// What the walk still refuses, each with the reason it gives: a call that isn't an exact predicate's,
+// a predicate whose declared type disagrees with its body, and a comparison whose own hazard check
+// fails, which a predicate's call meets just as the comparison does. Mutants, each named in the
+// commit: condition 2's identity check dropped (the lying T and the twin layouts lower), and the
+// hazard check skipped on the predicate path only (the shared value and the wide kind lower).
+func TestKindPredicateWalkRefusals(t *testing.T) {
+	t.Parallel()
+	const show = "function show(n: N): string { return isA(n) ? `a ${n.a}` : 'b'; }\nconsole.log(show({ kind: K.A, flag: F.X, a: 1 }));\n"
+	for _, probe := range []struct{ name, types, source, refusal string }{
+		// Controls: today's comparisons, as the walk judged them before this change.
+		{"comparison control", kindPredicateTypes, "function show(n: N): string { return n.kind === K.A ? `a ${n.a}` : 'b'; }\nconsole.log(show({ kind: K.A, flag: F.X, a: 1 }));\n", ""},
+		{"wide kind comparison", "enum K { A = 1, B = 2 }\nenum F { X = 1 }\ninterface A { readonly kind: K.A; readonly flag: F; readonly a: number }\ninterface B { readonly kind: K; readonly b: string }\ntype N = A | B;\n", "function show(n: N): string { return n.kind === K.A ? `a ${n.a}` : 'b'; }\nconsole.log(show({ kind: K.A, flag: F.X, a: 1 }));\n", kindPredicateRefusal},
+		// The comparison's own hazard, met by the predicate's call.
+		{"wide kind call", "enum K { A = 1, B = 2 }\nenum F { X = 1 }\ninterface A { readonly kind: K.A; readonly flag: F; readonly a: number }\ninterface B { readonly kind: K; readonly b: string }\ntype N = A | B;\n", "function isA(n: N): n is A { return n.kind === K.A; }\n" + show, kindPredicateRefusal},
+		{"shared value call", "enum K { A = 1, Z = 5 }\nenum L { B = 1, W = 6 }\nenum F { X = 1 }\ninterface A { readonly kind: K.A; readonly flag: F; readonly a: number }\ninterface B { readonly kind: L.B; readonly b: string }\ntype N = A | B;\n", "function isA(n: N): n is A { return n.kind === K.A; }\n" + show, "share a value"},
+		{"shared value comparison", "enum K { A = 1, Z = 5 }\nenum L { B = 1, W = 6 }\nenum F { X = 1 }\ninterface A { readonly kind: K.A; readonly flag: F; readonly a: number }\ninterface B { readonly kind: L.B; readonly b: string }\ntype N = A | B;\n", "function show(n: N): string { return n.kind === K.A ? `a ${n.a}` : 'b'; }\nconsole.log(show({ kind: K.A, flag: F.X, a: 1 }));\n", "share a value"},
+		// Condition 2: the checker narrows by the declared type, so one that disagrees proves nothing.
+		{"lying declared type", kindPredicateTypes, "function isA(n: N): n is A { return n.kind === K.B; }\n" + show, kindPredicateRefusal},
+		{"twin layouts", "enum K { A = 1, B = 2 }\nenum F { X = 1 }\ninterface A { readonly kind: K.A; readonly flag: F; readonly a: number }\ninterface B { readonly kind: K.A; readonly b: string }\ntype N = A | B;\n", "function isA(n: N): n is A { return n.kind === K.A; }\n" + show, kindPredicateRefusal},
+		// A const whose annotation is wider than its arrow narrows by its annotation, N here, so its call
+		// isn't exact and narrows nothing: a step that changes nothing, and the comparison after it proves A.
+		{"annotated const wider than its arrow", kindPredicateTypes, "const isA: (n: N) => n is N = (n: N): n is A => n.kind === K.A;\nfunction show(n: N): string { return isA(n) && n.kind === K.A ? `a ${n.a}` : 'b'; }\nconsole.log(show({ kind: K.A, flag: F.X, a: 1 }));\n", ""},
+		// Not exact, so the call is any other step.
+		{"inferred predicate", kindPredicateTypes, "function isA(n: N) { return n.kind === K.A; }\n" + show, kindPredicateRefusal},
+		{"overloaded", kindPredicateTypes, "function isA(n: A): n is A;\nfunction isA(n: N): n is A;\nfunction isA(n: N): n is A { return n.kind === K.A; }\n" + show, kindPredicateRefusal},
+		{"method", kindPredicateTypes, "const kinds = { isA(n: N): n is A { return n.kind === K.A; } };\nfunction show(n: N): string { return kinds.isA(n) ? `a ${n.a}` : 'b'; }\nconsole.log(show({ kind: K.A, flag: F.X, a: 1 }));\n", kindPredicateRefusal},
+		{"value alias", kindPredicateTypes, "function isAlpha(n: N): n is A { return n.kind === K.A; }\nconst isA = isAlpha;\n" + show, kindPredicateRefusal},
+		{"let arrow", kindPredicateTypes, "let isA = (n: N): n is A => n.kind === K.A;\n" + show, kindPredicateRefusal},
+		{"two statements", kindPredicateTypes, "function isA(n: N): n is A { const k = n.kind; return k === K.A; }\n" + show, kindPredicateRefusal},
+		{"asserts", kindPredicateTypes, "function assertA(n: N): asserts n is A { if (n.kind !== K.A) { throw new Error('not A'); } }\nfunction show(n: N): string { assertA(n); return `a ${n.a}`; }\nconsole.log(show({ kind: K.A, flag: F.X, a: 1 }));\n", kindPredicateRefusal},
+		{"switch (true)", kindPredicateTypes, "function isA(n: N): n is A { return n.kind === K.A; }\nfunction show(n: N): string { switch (true) { case isA(n): return `a ${n.a}`; } return 'b'; }\nconsole.log(show({ kind: K.A, flag: F.X, a: 1 }));\n", kindPredicateRefusal},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, probe.types+probe.source, ".ts")
+			if probe.refusal == "" {
+				if err != nil {
+					t.Fatalf("want it lowered, got %v", err)
+				}
+				return
+			}
+			if err == nil || !strings.Contains(err.Error(), probe.refusal) {
+				t.Fatalf("want %q, got %v", probe.refusal, err)
+			}
+		})
+	}
+}
+
+// An import under another name and a re-export under another name both resolve to the one
+// declaration, so they count; a call through a namespace import is a property access and doesn't.
+func TestKindPredicateThroughModules(t *testing.T) {
+	t.Parallel()
+	library := kindPredicateTypes + "export function isA(n: N): n is A { return n.kind === K.A; }\nexport { K, F };\nexport type { A, B, N };\n"
+	for _, probe := range []struct{ name, main, refusal string }{
+		{"import as", "import { isA as isAlpha, K, F, type N } from './library';\nfunction show(n: N): string { return isAlpha(n) ? `a ${n.a}` : 'b'; }\nconsole.log(show({ kind: K.A, flag: F.X, a: 1 }));\n", ""},
+		{"re-export as", "import { isBeta, K, F, type N } from './relay';\nfunction show(n: N): string { return isBeta(n) ? `a ${n.a}` : 'b'; }\nconsole.log(show({ kind: K.A, flag: F.X, a: 1 }));\n", ""},
+		{"namespace import", "import * as library from './library';\nfunction show(n: library.N): string { return library.isA(n) ? `a ${n.a}` : 'b'; }\nconsole.log(show({ kind: library.K.A, flag: library.F.X, a: 1 }));\n", kindPredicateRefusal},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			directory := t.TempDir()
+			for name, source := range map[string]string{
+				"library.ts": library,
+				"relay.ts":   "export { isA as isBeta, K, F } from './library';\nexport type { N } from './library';\n",
+				"main.ts":    probe.main,
+			} {
+				if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
+					t.Fatal(err)
+				}
+			}
+			program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
+			if err != nil {
+				t.Fatalf("Load: %v", err)
+			}
+			_, err = Lower(context.Background(), program)
+			if probe.refusal == "" {
+				if err != nil {
+					t.Fatalf("want it lowered, got %v", err)
+				}
+				return
+			}
+			if err == nil || !strings.Contains(err.Error(), probe.refusal) {
+				t.Fatalf("want %q, got %v", probe.refusal, err)
+			}
+		})
+	}
+}
