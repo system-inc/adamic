@@ -206,9 +206,12 @@ func localInputs(cache, nameKey string) (Inputs, bool) {
 // relocatable refuses a product whose text names a path of the machine that built it: the repository, the build
 // cache (so any product in it, and this one's scratch directory), a product built uncached, the home directory, the
 // temporary directory, or a location an ADAMIC_ variable names (ADAMIC_TYPESCRIPT_SOURCE). A file holding a zero byte
-// is a binary, whose paths are debug information no test reads (native prefix maps are their own work), and so is a
-// macOS .dSYM bundle, unless it is data a test reads back (dataFormats); every other file is text a reader parses, and
-// must say <repository> and <build cache>/<name key>.
+// is a binary, and so is a macOS .dSYM bundle, unless it is data a test reads back (dataFormats): this check doesn't read
+// their paths. That a binary's path is debug information no test reads is not a reason to trust it, since a path baked
+// into a binary makes the product differ by where it was built: the audit is what finds one (ADAMIC_BUILD_AUDIT_KEYS
+// rebuilds an audited product in a fresh directory, and its audit-difference line names the file and the section the
+// path landed in, auditHit). Every other file is text a reader parses, and must say <repository> and <build cache>/<name
+// key>.
 //
 // One path is not the builder's: a whole path token that occurs, as the same whole token, in a tracked file among the
 // product's own declared inputs (its Files, read on this tree) is that input's text, which the product carries (#arw7837:
