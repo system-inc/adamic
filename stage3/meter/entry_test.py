@@ -174,6 +174,36 @@ class EntryCensusTests(unittest.TestCase):
 
 
 @unittest.skipUnless(os.environ.get('ENTRY_CENSUS_BINARY') and os.environ.get('CENSUS_BINARY'),
+                     'set ENTRY_CENSUS_BINARY and CENSUS_BINARY for the entry route probe')
+class EntryRouteTests(unittest.TestCase):
+    def test_every_module_in_the_reach_has_a_route_from_the_entry(self):
+        # Lowering names a module by its import route from Files()[0]. With two independent
+        # dependencies and declarations in all three files, a reach that doesn't start at the entry
+        # leaves at least one file unrouted, and naming its declarations panics (a0ba9dd5's 2,279).
+        with tempfile.TemporaryDirectory() as scratch:
+            tree = Path(scratch) / 'tree'
+            entry = tree / 'src/tsc/tsc.ts'
+            entry.parent.mkdir(parents=True)
+            (tree / 'src/first.a').write_text('export function first(): number { return 1; }\n')
+            (tree / 'src/second.a').write_text('export function second(): number { return 2; }\n')
+            entry.write_text('import { first } from "../first.a";\nimport { second } from "../second.a";\n'
+                             'export function both(): number { return first() + second(); }\nboth();\n')
+            run = Path(scratch) / 'run'
+            run.mkdir()
+            with (run / 'census.log').open('w') as log:
+                subprocess.run([os.environ['CENSUS_BINARY'], str(entry), str(run / 'census.jsonl')],
+                               check=True, stdout=log, stderr=log)
+            with (run / 'latent.log').open('w') as log:
+                subprocess.run([os.environ['ENTRY_CENSUS_BINARY'], str(entry), str(run / 'latent.jsonl')],
+                               check=True, env=dict(os.environ, LATENT_ASSERT_NO_OUTPUT='1'), stdout=log, stderr=log)
+            summary = entry_summary(tree, run)
+            self.assertTrue(summary['checker_whole_program'])
+            self.assertEqual(summary['lowering_census']['source_files'], 3)
+            self.assertEqual(summary['lowering_census']['totals']['panic'], 0,
+                             summary['lowering_census'].get('panic_sites'))
+
+
+@unittest.skipUnless(os.environ.get('ENTRY_CENSUS_BINARY') and os.environ.get('CENSUS_BINARY'),
                      'set ENTRY_CENSUS_BINARY and CENSUS_BINARY for full nested entry measurement')
 class FullEntryCensusTests(unittest.TestCase):
     def test_rejected_entry_measures_clean_nested_body_and_catches_first_error_mutant(self):
