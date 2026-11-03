@@ -1,0 +1,15 @@
+// a-check: refused can't lower .pretty on a value yet
+type OptionValue = string | number | boolean | undefined;
+interface Options {
+	pretty?: boolean;
+	[option: string]: OptionValue;
+}
+interface Build {
+	pretty?: string;
+	[option: string]: OptionValue;
+}
+function pretty(options: Options | Build): string {
+	return `${options.pretty}`;
+}
+const options: Options = { pretty: true };
+console.log(pretty(options));

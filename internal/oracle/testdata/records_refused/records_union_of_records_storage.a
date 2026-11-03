@@ -1,0 +1,8 @@
+// a-check: refused can't lower .size on a value yet
+type Counts = { [key: string]: number };
+type Names = { [key: string]: string };
+function size(table: Counts | Names): string {
+	return `${table.size}`;
+}
+const counts: Counts = { size: 1 };
+console.log(size(counts));
