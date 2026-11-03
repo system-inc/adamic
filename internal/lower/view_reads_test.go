@@ -138,6 +138,7 @@ var viewNoField = []viewReadExample{
 	{ir.RecordCall{}, "a record's own entries; a fixed object seen as a record is NotYet before it lowers (pinned by view_widened_held_record.ts)"},
 	{ir.RecordCoalesce{}, "a record's own entries"},
 	{ir.RecordLiteral{}, "a record's own entries; a fixed object spread into one is NotYet before it lowers (pinned by view_widened_held_record_spread.ts)"},
+	{ir.RecordStorage{}, "tests an object's storage"},
 	{ir.RegExpCall{}, "a pattern on a string"},
 	{ir.RegExpGroup{}, "a match's named group, which no view claims"},
 	{ir.RegExpNew{}, "a new pattern"},
