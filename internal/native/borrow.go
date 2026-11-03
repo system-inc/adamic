@@ -154,7 +154,7 @@ func (e *emitter) lentArgument(call ir.Call, index int) (string, bool) {
 		}
 	}
 	if read.Checked {
-		e.checkReady(read.Local)
+		e.checkReady(read, read.Local)
 	}
 	return e.snapshot(read.Of, e.localName(read.Local)), true
 }
