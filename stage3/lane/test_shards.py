@@ -37,6 +37,14 @@ class ShardTests(unittest.TestCase):
         self.assertEqual([unit['name'] for unit in manifest['units'] if unit['expect']['fail']],
                          ['stage3-lane-byte-comparisons'])
 
+    def test_plan_runtime_is_this_trees_runtime_hash(self):
+        # shard.py refuses every unit when the plan's runtime field isn't the tree's runtime_hash(), and RUNTIME holds
+        # sanctioned-api.json, so a head that regenerates the sanction must move this field too. 99c's first cut
+        # (chg_ynyzx2ka) didn't, and all 48 lane units went red in Loom; this catches it before submit.
+        self.assertEqual(shard_plan.load_plan()['runtime'], shard_plan.runtime_hash(),
+                         'shard-plan.json runtime differs from shard_plan.runtime_hash(); a RUNTIME file changed, '
+                         'so regenerate the plan')
+
     def test_watcher_grep_selects_exactly_one_case(self):
         plan = shard_plan.load_plan()
         with gzip.open(shard_plan.LANE / 'evidence/case-shards/tests-and-units.jsonl.gz', 'rt') as stream:

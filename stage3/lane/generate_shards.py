@@ -43,5 +43,9 @@ if __name__ == '__main__':
     if args.check:
         if args.output.read_bytes() != wanted:
             raise SystemExit('generated shard declarations differ from shards.json; run generate_shards.py')
+        from shard_plan import load_plan, runtime_hash
+        if load_plan()['runtime'] != runtime_hash():
+            raise SystemExit('shard-plan.json runtime differs from shard_plan.runtime_hash(); a file in RUNTIME changed, '
+                             'such as sanctioned-api.json, so the plan must move with it')
     else:
         args.output.write_bytes(wanted)
