@@ -37,7 +37,9 @@ func reflectGetFixture(t *testing.T, name string) string {
 // records.a's booleans read as numbers; one closure dropped from union.c's prototype_methods, so
 // prototype_names.a reads that name as undefined; a closure made for each read in place of the
 // immortal one, so prototype_names.a's identities print false; json_decode.c's registration of the
-// shapes it builds dropped, so prototype_decoded.a stops natively at its first constructor.
+// shapes it builds dropped, so prototype_decoded.a stops natively at its first constructor; map_set.c's
+// registration of an iterator result's shape dropped, so prototype_runtime_plain.a stops natively at
+// its map entry.
 func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ file, stdout string }{
@@ -50,6 +52,7 @@ func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 		{"prototype_record.a", "value\nfunction\n"},
 		{"prototype_names.a", prototypeNamesAnswers},
 		{"prototype_decoded.a", "1 function function true\n3 function\nfunction\nfunction true\n"},
+		{"prototype_runtime_plain.a", prototypeRuntimePlainAnswers},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()
@@ -103,6 +106,26 @@ constructor: function function
 true
 true
 true
+`
+
+// prototypeRuntimePlainAnswers is what prototype_runtime_plain.a prints on Node.
+const prototypeRuntimePlainAnswers = `decoded object: function true
+decoded number: function true
+decoded boolean: function true
+decode error: function true
+read: function true
+read error: function true
+written: function true
+write error: function true
+listing: function true
+listing error: function true
+status: function true
+status error: function true
+map entry: function true
+map number: function true
+set boolean: function true
+match: function true
+memory: function true
 `
 
 // reflectGetStops are the stop fixtures: what each prints before it stops, which stop and key, and

@@ -198,7 +198,13 @@ adamic_object *adamic_node_memory_usage(void) {
     static const bool references[] = {false};
     static const adamic_field_kind kinds[] = {adamic_field_number};
     static const adamic_shape shape = {1, memory_names, references, NULL, kinds};
+    // process.memoryUsage() is a plain object on Node, so its shape is registered as a literal's is
+    // (union.c) and Object.prototype's names answer on it by a run-time key. The scalar tag is zero,
+    // no evidence, as union.c's dynamic_slot reads it.
+    static const int types[1];
+    static adamic_shape_types metadata = {&shape, types, NULL, false};
     adamic_object *result = adamic_object_new(&shape);
+    adamic_register_shape_types(&metadata);
     result->slots[0].number = observations.heapUsed;
     return result;
 }
