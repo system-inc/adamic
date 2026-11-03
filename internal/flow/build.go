@@ -514,6 +514,12 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 			if call, ok := value.Interface().(ir.NodeFSFile); ok && call.MayThrow() {
 				throws = true
 			}
+			if call, ok := value.Interface().(ir.ToFixed); ok && call.MayThrow() {
+				throws = true
+			}
+			if call, ok := value.Interface().(ir.NumberFormat); ok && call.MayThrow() {
+				throws = true
+			}
 			if program.RecordWriteMayThrow(value.Interface()) {
 				throws = true
 			}

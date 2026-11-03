@@ -100,12 +100,14 @@ func TestToStringWithARadixMatchesNode(t *testing.T) {
 	t.Logf("%d answers (%d values, every radix from 2 to 36), %d mismatches", lines, len(values), mismatches)
 }
 
-// A radix out of range is a RangeError in Node and a panic in Adamic, checked before the value, so
-// NaN and the infinities throw too.
-func TestToStringWithARadixOutOfRangePanics(t *testing.T) {
+// A radix out of range is a RangeError in Node and in Adamic, checked before the value, so NaN and the
+// infinities throw too: the call leaves the Error on the pending word, its name and message apart, and
+// returns an empty string. Nothing catches it here, so it ends as an uncaught error does, exit 70.
+func TestToStringWithARadixOutOfRangeThrows(t *testing.T) {
 	t.Parallel()
 	const harness = `#include "adamic.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 
 int main(int count, char **arguments) {
@@ -113,6 +115,13 @@ int main(int count, char **arguments) {
 	static adamic_string before = ADAMIC_STRING("before");
 	adamic_write_line(adamic_stdout, &before);
 	adamic_string *text = adamic_number_to_radix(strtod(arguments[1], NULL), strtod(arguments[2], NULL));
+	if (adamic_thrown != NULL) {
+		const adamic_string *name = adamic_thrown->slots[0].reference;
+		const adamic_string *message = adamic_thrown->slots[1].reference;
+		fprintf(stderr, "thrown %.*s|%.*s|%zu\n", (int)name->length, name->bytes, (int)message->length, message->bytes, text->length);
+		adamic_release(text);
+		adamic_uncaught();
+	}
 	adamic_write_line(adamic_stdout, text);
 	adamic_release(text);
 	return 0;
@@ -122,9 +131,10 @@ int main(int count, char **arguments) {
 	if err := Build(harness, binary, Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
+	const message = "toString() radix argument must be between 2 and 36"
 	for _, probe := range []struct {
 		value, radix string
-		panics       bool
+		throws       bool
 	}{
 		{"255", "1", true}, {"255", "37", true}, {"255", "0", true}, {"255", "-2", true}, {"255", "nan", true},
 		{"255", "inf", true}, {"255", "1.9", true}, {"nan", "1", true}, {"inf", "40", true}, {"0", "37", true},
@@ -141,11 +151,13 @@ int main(int count, char **arguments) {
 		script := fmt.Sprintf("console.log('before'); console.log((%s).toString(%s));", value, radix)
 		native := outcome(t, binary, probe.value, probe.radix)
 		node := outcome(t, "node", "--eval", script)
-		if native.stdout != node.stdout || (native.exitCode == 70) != probe.panics || (node.exitCode != 0) != probe.panics {
+		if native.stdout != node.stdout || (native.exitCode == 70) != probe.throws || (node.exitCode != 0) != probe.throws {
 			t.Errorf("(%s).toString(%s): native exit %d %q, Node exit %d %q", value, radix, native.exitCode, native.stdout, node.exitCode, node.stdout)
 		}
-		if probe.panics && (!strings.HasPrefix(native.stderr, "adamic: panic: RangeError: toString() radix argument must be between 2 and 36") || !strings.Contains(node.stderr, "RangeError: toString() radix argument must be between 2 and 36")) {
-			t.Errorf("(%s).toString(%s): native stderr %q, Node stderr %q", value, radix, native.stderr, node.stderr)
+		// The name and the message are the Error's two fields, never one text in the message.
+		thrown := "thrown RangeError|" + message + "|0\n"
+		if probe.throws && (!strings.Contains(native.stderr, thrown) || !strings.Contains(native.stderr, "adamic: panic: RangeError: "+message) || !strings.Contains(node.stderr, "RangeError: "+message)) {
+			t.Errorf("(%s).toString(%s): native stderr %q, want %q; Node stderr %q", value, radix, native.stderr, thrown, node.stderr)
 		}
 	}
 }
