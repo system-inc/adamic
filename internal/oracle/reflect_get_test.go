@@ -136,6 +136,7 @@ var reflectGetStops = []struct{ file, stdout, stop, key, node string }{
 	{"stop_method.a", "thing\n", "Method", "describe", "thing\nfunction\n"},
 	{"stop_prototype_class.a", "thing\n", "ClassConstructor", "constructor", "thing\nfunction\n"},
 	{"stop_proto.a", "before\n", "Proto", "__proto__", "before\nobject\n"},
+	{"stop_host_iterator.a", "iterator\n", "RuntimeValue", "constructor", "iterator\nfunction\n"},
 	{"stop_host_object.a", "directory\n", "RuntimeValue", "constructor", "directory\nfunction\n"},
 	{"stop_error_stack.a", "before\n", "ErrorProperty", "stack", "before\nstring\n"},
 	{"stop_array.a", "before\n", "Array", "length", "before\nnumber\n"},
@@ -161,6 +162,8 @@ func reflectGetStop(t *testing.T, stdout, stop, key string) run {
 // without a getter, so that backend stops in the setter-only stop's words. stop_host_object.a's are
 // union.c's program_shape test dropped, so a Stats' constructor reads as Object's closure natively,
 // and the helper's prototype test dropped, so the JavaScript backend reads Node's Stats.
+// stop_host_iterator.a's is the JavaScript backend's AdamicIterator made a plain object again
+// (library_map_set.go), so that backend hands out Object as a Map iterator's constructor.
 func TestReflectGetStopsAlikeOnBothBackends(t *testing.T) {
 	t.Parallel()
 	for _, probe := range reflectGetStops {
