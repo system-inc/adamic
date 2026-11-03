@@ -1,0 +1,142 @@
+{
+  "status": "pass",
+  "preparation": {
+    "status": "pass",
+    "apiBytes": 593502,
+    "apiSha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+    "beforeSysSha256": "f9ff61b6a486c60e6738b334fe2e483ced5e53bfb2e462fadc4bdc9749d25336",
+    "afterSysSha256": "a52755b55d8998df5fd5045fc0418c33bc7496502a131116a00d9bb4bc04b273",
+    "rerunDoesNotWrite": true,
+    "movedTargetRejectedBeforeWrite": true,
+    "scopeMutantsCaught": true,
+    "ternaryMutantCaught": true,
+    "earlierReaderFailsOnlyOnNewShape": true,
+    "shorthandTypechecks": true
+  },
+  "scope": {
+    "files": 746,
+    "changed": [
+      "src/compiler/sys.ts"
+    ],
+    "undoRestoresExactBytes": true
+  },
+  "bindings": {
+    "before": {
+      "binding": "local let",
+      "references": 5,
+      "roles": [
+        "assignment",
+        "assignment",
+        "checked qualified receiver",
+        "condition",
+        "condition"
+      ],
+      "allUsesResolveToBinding": true,
+      "otherDeclarations": 0,
+      "qualifiedUses": 0,
+      "bareNamespaceUses": 0
+    },
+    "after": {
+      "binding": "namespace import",
+      "references": 1,
+      "roles": [
+        "qualified receiver"
+      ],
+      "allUsesResolveToBinding": true,
+      "otherDeclarations": 0,
+      "qualifiedUses": 1,
+      "bareNamespaceUses": 0
+    },
+    "mutants": [
+      {
+        "name": "module collision",
+        "message": "collision or bare namespace use: _crypto",
+        "caught": true
+      },
+      {
+        "name": "enclosing parameter shadow",
+        "message": "collision or bare namespace use: _crypto",
+        "caught": true
+      },
+      {
+        "name": "bare namespace value",
+        "message": "collision or bare namespace use: _crypto",
+        "caught": true
+      }
+    ]
+  },
+  "table": {
+    "control": [
+      "| **Total** | 95 | 6024 | 5731 |"
+    ],
+    "after": [
+      "| 99-wasm-crypto-import | 1 | 4 | 11 |",
+      "| **Total** | 95 | 6028 | 5742 |"
+    ]
+  },
+  "oracles": [
+    {
+      "label": "control",
+      "counts": {
+        "passing": 106366,
+        "failing": 1,
+        "pending": 0
+      },
+      "seconds": 345.003,
+      "exit": 1,
+      "lane": "pass"
+    },
+    {
+      "label": "after",
+      "counts": {
+        "passing": 106366,
+        "failing": 1,
+        "pending": 0
+      },
+      "seconds": 347.139,
+      "exit": 1,
+      "lane": "pass"
+    }
+  ],
+  "baselineDiff": {
+    "byteIdentical": true,
+    "bytes": 69407,
+    "sha256": "dade0a0d86d5f2ba9de4b812f1aa22e16a5c4d1121f488b1a31f7e30ad14f40f"
+  },
+  "api": {
+    "byteIdentical": true,
+    "bytes": 593502,
+    "sha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b"
+  },
+  "witnessOutput": [
+    {
+      "file": "main.js",
+      "bytes": 198,
+      "sha256": "dec3def62e0b28599368782a5ca138d37f62cbc3477c1756220d0abe9c4a00e3",
+      "byteIdentical": true
+    },
+    {
+      "file": "main.d.ts",
+      "bytes": 90,
+      "sha256": "b1c3e2bab4489c581ac3ee6e4a33b23a32843e81ab0f6d64b604954572f93758",
+      "byteIdentical": true
+    }
+  ],
+  "tsbuildinfo": {
+    "byteIdentical": true,
+    "bytes": 10456,
+    "sha256": "5d36280fdfea10ea7d195d0049f98aa922398195aa38d67e8f7066a21b425f2b"
+  },
+  "moduleLoadWitness": true,
+  "memoryEventsUnchanged": true,
+  "mutants": [
+    "module collision",
+    "enclosing parameter shadow",
+    "bare namespace value",
+    "moved target",
+    "extra erased type",
+    "extra runtime edit",
+    "leave crypto ternary",
+    "extra baseline line"
+  ]
+}
