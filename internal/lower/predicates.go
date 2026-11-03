@@ -509,13 +509,44 @@ func (l *lowering) predicateParameter(node *ast.Node) *ast.Node {
 	}
 	// A bodyless overload's callback predicate is not the implementation's
 	// contract when the implementation takes an ordinary boolean callback.
-	if signature.Parent != parameter && parameter.Type() != nil && parameter.Type().Kind == ast.KindFunctionType && parameter.Type().Type() != nil && parameter.Type().Type().Kind != ast.KindTypePredicate {
+	if signature.Parent != parameter && plainCallbackType(parameter.Type()) {
 		return parameter
 	}
 	if !l.predicateCallbackCallers(function, symbol) {
 		return nil
 	}
 	return parameter
+}
+
+// plainCallbackType is whether written, an implementation parameter's type, is a function type
+// claiming no predicate, in parentheses or not, alone or beside undefined: debug.ts's assertNode takes
+// `((node: Node) => boolean) | undefined` where core.ts's filter takes `(x: T) => boolean` (#1w5bve2).
+// An absent argument is never called, and a present one is exactly the function, so the body narrows
+// nothing through it either way and the overload's argument keeps predicateArguments' proof. It reads
+// the written type, not the checker's, so a union of callables or an alias stays out as before.
+func plainCallbackType(written *ast.Node) bool {
+	if written == nil {
+		return false
+	}
+	written = ast.SkipTypeParentheses(written)
+	if written.Kind == ast.KindUnionType {
+		var defined *ast.Node
+		for _, member := range written.AsUnionTypeNode().Types.Nodes {
+			member = ast.SkipTypeParentheses(member)
+			if member.Kind == ast.KindUndefinedKeyword {
+				continue
+			}
+			if defined != nil {
+				return false
+			}
+			defined = member
+		}
+		if defined == nil {
+			return false
+		}
+		written = defined
+	}
+	return written.Kind == ast.KindFunctionType && written.Type() != nil && written.Type().Kind != ast.KindTypePredicate
 }
 
 // Every producer is checked by predicateArguments before annotations are admitted.
@@ -634,7 +665,10 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 			return failure()
 		}
 		wanted := contract.AsTypePredicateNode()
-		calls := l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(parameter), checker.SignatureKindCall)
+		// An optional parameter's type is the function or undefined, which has no call signature of its
+		// own. An absent argument is never called, and a present one is exactly the function, so the
+		// claim to prove is the function's (getParseTreeNode's nodeTest, #1w5bve2).
+		calls := l.checker.GetSignaturesOfType(l.withoutUndefined(l.checker.GetTypeOfSymbol(parameter)), checker.SignatureKindCall)
 		var target *checker.Type
 		if len(calls) == 1 {
 			if predicate := predicateOfSignature(l.checker, calls[0]); predicate != nil {
