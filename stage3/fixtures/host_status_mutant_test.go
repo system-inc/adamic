@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 )
 
 // Exercise the directory oracle itself against isolated status inputs, retaining
@@ -61,8 +62,9 @@ func TestHostStatusMutants(t *testing.T) {
 				if err = os.WriteFile(filepath.Join(directory, "status.json"), encoded, 0600); err != nil {
 					t.Fatal(err)
 				}
-				result := execute(t, filepath.Join(repository, "stage3/fixtures"), nil, executable,
-					"-test.run=^TestFixturesHost$", "-test.count=1", "-test.timeout=25s", "-fixtures="+root)
+				arguments := []string{"-test.run=^TestFixturesHost$", "-test.count=1", "-fixtures=" + root}
+				arguments = append(arguments, hostStatusMutantTimeout(t)...)
+				result := execute(t, filepath.Join(repository, "stage3/fixtures"), nil, executable, arguments...)
 				if mutation == "real" {
 					if result.Exit != 0 {
 						t.Fatalf("real status failed: %s%s", result.Stdout, result.Stderr)
@@ -80,4 +82,17 @@ func TestHostStatusMutants(t *testing.T) {
 			})
 		}
 	}
+}
+
+// The child's clock must not be tighter than the unit's own under load.
+// Leave a small margin for the parent to report the child's result.
+func hostStatusMutantTimeout(t *testing.T) []string {
+	if deadline, ok := t.Deadline(); ok {
+		remaining := time.Until(deadline) - 5*time.Second
+		if remaining < time.Second {
+			remaining = time.Second
+		}
+		return []string{"-test.timeout=" + remaining.String()}
+	}
+	return nil
 }
