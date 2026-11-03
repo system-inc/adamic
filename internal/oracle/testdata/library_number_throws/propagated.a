@@ -1,0 +1,52 @@
+// A format's RangeError leaves the function it's thrown in, and its caller's catch takes it, through
+// a call, through a function value and through a finally that runs on the way out.
+function shown(value: number, digits: number): string {
+	const prefix = `value ${value}`;
+	return `${prefix} is ${value.toFixed(digits)}`;
+}
+
+function safe(value: number, digits: number): string {
+	try {
+		return shown(value, digits);
+	} catch (error) {
+		if (error instanceof Error) {
+			return `caught ${error.name}, ${error.message}`;
+		}
+		return 'not an error';
+	}
+}
+console.log(safe(1.25, 1));
+console.log(safe(1.25, 200));
+
+// No catch here: the finally runs, and the error goes on to the caller's.
+function guarded(value: number, radix: number): string {
+	try {
+		return value.toString(radix);
+	} finally {
+		console.log(`finally after radix ${radix}`);
+	}
+}
+for (const radix of [16, 99]) {
+	try {
+		console.log(guarded(255, radix));
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(error.name);
+			console.log(error.message);
+		}
+	} finally {
+		console.log(`outer finally for ${radix}`);
+	}
+}
+
+// Through a function value the runtime's loop calls: the array map was building is let go.
+for (const scale of [1, 200]) {
+	try {
+		const texts = [1, 2, 3].map((digits) => (2.5).toPrecision(digits * scale));
+		console.log(texts.join(' '));
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(`${error.name}: ${error.message}`);
+		}
+	}
+}
