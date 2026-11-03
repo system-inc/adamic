@@ -11,8 +11,11 @@ const (
 	installedLayoutMessage = "Cannot find module 'source-map-support'"
 )
 
-// noJavaScriptPlugins starts the message native's computed require throws with, before the path.
-const noJavaScriptPlugins = "native tsc can't load JavaScript modules: "
+// noJavaScriptPlugins is the message native's computed require throws for a path, in Diagnostics'
+// words (#redxes2).
+func noJavaScriptPlugins(path string) string {
+	return "Cannot load JavaScript module '" + path + "': a native Adamic program can't run JavaScript; run it on Node to load modules at run time"
+}
 
 // requireInESModule is what Node gives the source of a fixture that calls require: it runs every
 // program as an ES module (oracle/node.mjs), where require isn't defined. A catch sees the first
@@ -63,8 +66,8 @@ var ruledBackendDivergences = []struct {
 		ruling:     "@system_adamic, task #redxes2, Nov 3",
 		reason:     noJavaScriptPluginsReason,
 		node:       &run{stdout: []byte("ReferenceError none require is not defined\npaths built: 0\n")},
-		native:     run{stdout: []byte("Error none " + noJavaScriptPlugins + "./plugin-1.js\npaths built: 1\n")},
-		javascript: run{stdout: []byte("Error none " + noJavaScriptPlugins + "./plugin-1.js\npaths built: 1\n")},
+		native:     run{stdout: []byte("Error none " + noJavaScriptPlugins("./plugin-1.js") + "\npaths built: 1\n")},
+		javascript: run{stdout: []byte("Error none " + noJavaScriptPlugins("./plugin-1.js") + "\npaths built: 1\n")},
 	},
 	{
 		fixture:    "internal/oracle/testdata/node_commonjs_require_computed_uncaught.a",
@@ -72,8 +75,8 @@ var ruledBackendDivergences = []struct {
 		ruling:     "@system_adamic, task #redxes2, Nov 3",
 		reason:     noJavaScriptPluginsReason,
 		node:       &run{stdout: []byte("before\ncaught: require is not defined\n"), stderr: []byte("adamic: panic: " + requireInESModule + " in ES module scope, you can use import instead\n"), exitCode: 70},
-		native:     run{stdout: []byte("before\nresolving first\ncaught: " + noJavaScriptPlugins + "./first.js\nresolving plugin\n"), stderr: []byte("adamic: panic: Error: " + noJavaScriptPlugins + "./plugin.js\n"), exitCode: 70},
-		javascript: run{stdout: []byte("before\nresolving first\ncaught: " + noJavaScriptPlugins + "./first.js\nresolving plugin\n"), stderr: []byte("adamic: panic: Error: " + noJavaScriptPlugins + "./plugin.js\n"), exitCode: 70},
+		native:     run{stdout: []byte("before\nresolving first\ncaught: " + noJavaScriptPlugins("./first.js") + "\nresolving plugin\n"), stderr: []byte("adamic: panic: Error: " + noJavaScriptPlugins("./plugin.js") + "\n"), exitCode: 70},
+		javascript: run{stdout: []byte("before\nresolving first\ncaught: " + noJavaScriptPlugins("./first.js") + "\nresolving plugin\n"), stderr: []byte("adamic: panic: Error: " + noJavaScriptPlugins("./plugin.js") + "\n"), exitCode: 70},
 	},
 }
 

@@ -33,8 +33,9 @@ answer fails it.
 ### no-javascript-plugins
 
 A `require` of a path computed as the program runs is tsc's plugin load. It evaluates the path, then throws an
-`Error`, with no code, whose message is `native tsc can't load JavaScript modules: ` and the path. Stock Node
-would load the plugin; a native binary can't run JavaScript. tsc's catch returns the error as the load's
+`Error`, with no code, whose message is `Cannot load JavaScript module '<path>': a native Adamic program can't
+run JavaScript; run it on Node to load modules at run time`, in Diagnostics' words. Stock Node would load the
+plugin; a native binary can't run JavaScript. tsc's catch returns the error as the load's
 result.
 
 The row reaches any computed path, whatever it holds when the program runs: a path naming a builtin such as
