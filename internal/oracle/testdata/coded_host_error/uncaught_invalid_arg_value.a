@@ -1,0 +1,6 @@
+// A Node-coded error nothing catches: readFileSync of a path holding a NUL throws Node's
+// ERR_INVALID_ARG_VALUE TypeError, whose toString puts the code in brackets, so the panic line is
+// `TypeError [ERR_INVALID_ARG_VALUE]: ...` (#z28avqd).
+import { readFileSync } from 'node:fs';
+console.log('before');
+console.log(readFileSync('a\0b', 'utf8'));

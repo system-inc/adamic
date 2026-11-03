@@ -20,7 +20,11 @@
 static const char *const error_names[] = {"name", "message", "code"};
 static const bool error_refs[] = {true, true, true};
 static const adamic_field_kind error_shape_kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_reference};
+// One layout, two shapes: error_shape is adamic_node_fs_raise's errno error, coded_error_shape the
+// ERR_INVALID_ARG_VALUE TypeError valid throws, which Node builds with makeNodeErrorWithCode, whose
+// toString brackets the code (exceptions.c).
 static const adamic_shape error_shape = {3, error_names, error_refs, &adamic_error_methods, error_shape_kinds};
+static const adamic_shape coded_error_shape = {3, error_names, error_refs, &adamic_coded_error_methods, error_shape_kinds};
 static adamic_string error_name = ADAMIC_STRING("Error");
 static adamic_string type_error_name = ADAMIC_STRING("TypeError");
 static void *allocate(size_t size) {
@@ -204,7 +208,7 @@ static bool valid(const adamic_string *path, bool target) {
 		shown = adamic_string_concat(2, (adamic_string *const[]){cut, &dots});
 		adamic_release(cut);
 	}
-	adamic_object *thrown = adamic_object_new(&error_shape);
+	adamic_object *thrown = adamic_object_new(&coded_error_shape);
 	thrown->slots[0].reference = &type_error_name;
 	thrown->slots[1].reference =
 		adamic_string_concat(2, (adamic_string *const[]){target ? &target_before : &before, shown});

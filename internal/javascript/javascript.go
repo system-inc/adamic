@@ -1237,7 +1237,10 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.OwnFunction:
 		return "((object) => Object.hasOwn(object, " + quote(expression.Name) + ") && object[" + quote(expression.Name) + "] instanceof AdamicClosure)(" + e.value(expression.Object) + ")"
 	case ir.ErrorToString:
-		return "Error.prototype.toString.call(" + e.value(expression.Value) + ")"
+		// The toString of the error's class, as native's adamic_error_to_string: a Node-coded error's
+		// class has its own, name [code]: message, and every other error's is Error.prototype.toString.
+		// An own toString on the error isn't asked, as natively.
+		return "((error) => Object.getPrototypeOf(error).toString.call(error))(" + e.value(expression.Value) + ")"
 	case ir.ArrayOfScalars:
 		return "adamicArrayOfScalars(" + e.value(expression.Array) + ")"
 	case ir.JoinEnter:

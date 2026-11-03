@@ -1,0 +1,10 @@
+// toString() of a caught Node-coded error, which Node prints `TypeError [ERR_INVALID_ARG_VALUE]: ...`.
+// It doesn't lower yet, so its pin waits on it (TestCaughtCodedHostErrorToStringNotYet, #z28avqd).
+import { readFileSync } from 'node:fs';
+try {
+	console.log(readFileSync('a\0b', 'utf8'));
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(error.toString());
+	}
+}
