@@ -16,7 +16,7 @@ func (e *emitter) parallelMap(expression ir.ParallelMap) string {
 	// Keep the ordinary program's explicit ABI declaration. Async programs use
 	// adamic.h's declaration so split units need no external prototype ownership.
 	if expression.Moved || !e.program.HasPromises() {
-		declaration := fmt.Sprintf("adamic_array *%s(adamic_array *items, adamic_closure *work, bool references);\n", name)
+		declaration := fmt.Sprintf("adamic_array *%s(adamic_array *items, adamic_closure *work, enum adamic_ir_type element);\n", name)
 		if !slices.Contains(e.declarations, declaration) {
 			e.declarations = append(e.declarations, declaration)
 		}
@@ -45,7 +45,7 @@ func (e *emitter) parallelMap(expression ir.ParallelMap) string {
 		value := e.value(global)
 		e.line("%s->cells[%d] = adamic_cell_new((adamic_value){.reference = %s}, true);", work, index+1, retained(value))
 	}
-	result := e.own(ir.Array, fmt.Sprintf("%s(%s, %s, %t)", name, items, work, expression.Result.IsReference()))
+	result := e.own(ir.Array, fmt.Sprintf("%s(%s, %s, %s)", name, items, work, arrayElement(expression.Result)))
 	e.closureThrown()
 	return result
 }

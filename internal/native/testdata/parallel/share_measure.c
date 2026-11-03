@@ -21,7 +21,7 @@ static adamic_value work(adamic_closure *self, adamic_value *arguments) {
 }
 int main(int argc, char **argv) {
  adamic_start(argc, argv);
- adamic_array *items = adamic_array_new(4096, true);
+ adamic_array *items = adamic_array_make(4096, adamic_ir_Union);
  for (size_t i = 0; i < 4096; i++) {
   adamic_string *text = adamic_string_allocate(8192);
   for (size_t j = 0; j < text->length; j += 2) { memcpy((char *)text->bytes + j, "é", 2); }
@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
  double start = now();
  adamic_share(items); adamic_share(callback);
  double shared = now();
- adamic_array *results = adamic_parallel_map(items, callback, false);
+ adamic_array *results = adamic_parallel_map(items, callback, adamic_ir_Number);
  double end = now();
  double sum = 0;
  for (size_t i = 0; i < results->length; i++) { sum += results->elements[i].number; }

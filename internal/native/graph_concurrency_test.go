@@ -118,7 +118,7 @@ func TestGraphAdoptionSparseArray(t *testing.T) {
 	t.Parallel()
 	source := graphObjectPrelude + `int main(void) {
  adamic_cell *child = adamic_graph_adopt(adamic_cell_new((adamic_value){.number = 1}, false), sizeof(adamic_cell));
- adamic_array *array = adamic_array_new(8, true);
+ adamic_array *array = adamic_array_make(8, adamic_ir_Union);
  for (size_t i = 0; i < 7; i++) adamic_array_push(array, (adamic_value){.reference = NULL});
  adamic_array_push(array, (adamic_value){.reference = adamic_retain(child)});
  array = adamic_graph_adopt_owned(array, sizeof *array);
@@ -135,7 +135,7 @@ func TestGraphAdoptionSparseArray(t *testing.T) {
 func TestGraphRegionSparseArrayRelease(t *testing.T) {
 	t.Parallel()
 	source := graphObjectPrelude + `int main(void) {
- adamic_array *array = adamic_array_new(8, true);
+ adamic_array *array = adamic_array_make(8, adamic_ir_Union);
  for (size_t i = 0; i < 7; i++) adamic_array_push(array, (adamic_value){.reference = NULL});
  static adamic_string a = ADAMIC_STRING("built "), b = ADAMIC_STRING("now");
  adamic_array_push(array, (adamic_value){.reference = adamic_string_concat(2, (adamic_string *const[]){&a, &b})});
@@ -236,10 +236,10 @@ int main(void) {
  adamic_closure *callback = adamic_closure_new(work, 2);
  callback->cells[0] = adamic_cell_new((adamic_value){.reference = a}, true);
  callback->cells[1] = adamic_cell_new((adamic_value){.reference = b}, true);
- adamic_array *items = adamic_array_new(2, false);
+ adamic_array *items = adamic_array_make(2, adamic_ir_Number);
  adamic_array_push(items, (adamic_value){.number = 0});
  adamic_array_push(items, (adamic_value){.number = 1});
- adamic_array *results = adamic_parallel_map(items, callback, false);
+ adamic_array *results = adamic_parallel_map(items, callback, adamic_ir_Number);
  adamic_release(results); adamic_release(items); adamic_release(callback);
  adamic_parallel_shutdown();
  pthread_barrier_destroy(&barrier);

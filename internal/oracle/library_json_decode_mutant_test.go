@@ -54,7 +54,7 @@ func jsonDecodeValidationCases() []jsonDecodeValidationCase {
 		{"literal_string", `console.log(decodeJson<'Morning'|'Evening'>('"Noon"').kind);`, `return value->kind==json_string && adamic_string_equal(value->string,type->literal);`, `return value->kind==json_string;`},
 		{"literal_number", `console.log(decodeJson<1|2>('3').kind);`, `value->number==type->number`, `(value->number==type->number || true)`},
 		{"literal_boolean", `console.log(decodeJson<true>('false').kind);`, `value->boolean==type->boolean`, `(value->boolean==type->boolean || true)`},
-		{"array_kind", `console.log(decodeJson<readonly number[]>('{}').kind);`, mismatch, `if (!match && strcmp(kind,"array")==0) { out->reference=adamic_array_new(0,false); return true; } ` + mismatch},
+		{"array_kind", `console.log(decodeJson<readonly number[]>('{}').kind);`, mismatch, `if (!match && strcmp(kind,"array")==0) { out->reference=adamic_array_make(0,adamic_ir_Number); return true; } ` + mismatch},
 		{"object_kind", `console.log(decodeJson<{readonly x:number}>('[]').kind);`, mismatch, `if (!match && strcmp(kind,"object")==0) { out->reference=make_object(0); return true; } ` + mismatch},
 		{"tuple_kind", `console.log(decodeJson<readonly [number]>('{}').kind);`, mismatch, `if (!match && strcmp(kind,"tuple")==0) { out->reference=make_object(0); return true; } ` + mismatch},
 		{"tuple_length", `console.log(decodeJson<readonly [number]>('[]').kind);`, `if (tuple && value->count!=type->field_count) { mismatch(error,path,type->expected,value->kind); return false; }`, `if (tuple && value->count!=type->field_count) { out->reference=make_object(0); return true; }`},

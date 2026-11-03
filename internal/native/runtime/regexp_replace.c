@@ -44,7 +44,7 @@ adamic_string *adamic_regex_replace_callback(adamic_string *input, adamic_object
 	}
 	if (global)
 		regex->slots[1].number = 0;
-	adamic_array *matches = adamic_array_new(0, true);
+	adamic_array *matches = adamic_array_make(0, adamic_ir_Union);
 	for (;;) {
 		adamic_array *match = adamic_regex_exec(regex, input);
 		if (match == NULL)
@@ -61,7 +61,7 @@ adamic_string *adamic_regex_replace_callback(adamic_string *input, adamic_object
 			regex->slots[1].number = at + (pair ? 2 : 1);
 		}
 	}
-	adamic_array *pieces = adamic_array_new(0, true);
+	adamic_array *pieces = adamic_array_make(0, adamic_ir_Union);
 	size_t previous = 0;
 	size_t packed_count = rest_kind == 0 ? parameter_count : rest_slot + 1;
 	adamic_value *packed = calloc(packed_count == 0 ? 1 : packed_count, sizeof *packed);
@@ -74,7 +74,7 @@ adamic_string *adamic_regex_replace_callback(adamic_string *input, adamic_object
 		size_t offset = (size_t)match->properties->slots[0].number;
 		adamic_object *groups = match->properties->slots[2].reference;
 		size_t argument_count = match->length + 2 + (groups != NULL);
-		adamic_array *rest = rest_kind == 0 ? NULL : adamic_array_new(0, rest_kind != 2);
+		adamic_array *rest = rest_kind == 0 ? NULL : adamic_array_make(0, rest_kind == 2 ? adamic_ir_Number : adamic_ir_Union);
 		for (size_t j = 0; j < argument_count || j < parameter_count; j++) {
 			adamic_value value = {.reference = NULL};
 			unsigned actual = 0;

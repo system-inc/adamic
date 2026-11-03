@@ -120,10 +120,10 @@ static adamic_value work(adamic_closure *self,adamic_value *arguments) {
 }
 static void *probe(void *unused) {
  (void)unused;
- adamic_array *items=adamic_array_new(16,false);
+ adamic_array *items=adamic_array_make(16,adamic_ir_Number);
  for(size_t i=0;i<16;i++) adamic_array_push(items,(adamic_value){.number=(double)i});
  adamic_closure *callback=adamic_closure_new(work,0);
- adamic_array *results=adamic_parallel_map(items,callback,true);
+ adamic_array *results=adamic_parallel_map(items,callback,adamic_ir_Union);
  adamic_release(results);adamic_release(callback);adamic_release(items);
  adamic_parallel_shutdown();
  adamic_heap_thread_end();
