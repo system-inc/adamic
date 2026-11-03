@@ -44,7 +44,8 @@ modules a program imports, so a `.ts` is a program only where the manifest says
 so). A changed `.ts` it doesn't list, or every one in a `--corpus` run, goes to
 `diff_ts_unmatched` instead, by path, so a new program in an unglobbed directory
 is seen rather than silently skipped. Deleted programs are excluded. JSON always lists `diff` paths and
-blobs and `diff_count`, including an empty list and zero for equal revisions.
+blobs and `diff_count`, including an empty list and zero for equal revisions,
+and stderr says it as `changed programs: N`: programs added or changed, not programs that differ from Node.
 The diff corpus is first; duplicate paths are classified once, while every
 manifest blob is still verified. The name `diff` is reserved for this coverage.
 

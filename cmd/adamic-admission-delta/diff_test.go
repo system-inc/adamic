@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"strings"
 	"testing"
 	"time"
 )
@@ -71,6 +72,9 @@ func TestDiffCoverage(t *testing.T) {
 	}
 	if o.Exit != 0 || r.Admitted != 0 || r.DiffCount != 2 || len(r.Diff) != 2 || len(r.Programs) != 2 || r.Corpora[0].Name != "diff" {
 		t.Fatalf("missing or duplicated diff coverage: %+v %s", r, o.Stderr)
+	}
+	if !strings.Contains("\n"+o.Stderr, "\nchanged programs: 2\n") {
+		t.Fatalf("stderr does not count the changed programs: %s", o.Stderr)
 	}
 	// An ad hoc --corpus run has no manifest to list a .ts, so the changed one is reported, never run.
 	if !reflect.DeepEqual(r.DiffTSUnmatched, []string{"outside/ignored.ts"}) {
