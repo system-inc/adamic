@@ -440,6 +440,17 @@ func (e *emitter) closureThrown(holds ...string) {
 	}
 }
 
+// throwNamed throws a new Error whose name is class and whose message is message, as Node throws one
+// of its own (a ReferenceError, a TypeError): String(error) reads "class: message", and a catch takes it.
+func (e *emitter) throwNamed(class, message string) {
+	e.line("static adamic_string error_message = ADAMIC_STRING(%s);", cString(message))
+	e.line("static adamic_string error_name = ADAMIC_STRING(%s);", cString(class))
+	e.line("adamic_thrown = adamic_error_new(&error_message);")
+	e.line("adamic_release(adamic_thrown->slots[0].reference);")
+	e.line("adamic_thrown->slots[0].reference = adamic_retain(&error_name);")
+	e.checkThrown()
+}
+
 // throwStatement emits throw: the error is the pending word's, and the jump is made.
 func (e *emitter) throwStatement(statement ir.Throw) {
 	value := e.value(statement.Value)

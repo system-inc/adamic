@@ -89,7 +89,7 @@ func (e *emitter) logicalAssignment(expression ir.LogicalAssignment) string {
 	switch write := expression.Write.(type) {
 	case ir.Assign:
 		if write.Checked {
-			e.checkReady(write.Local)
+			e.checkReady(write, write.Local)
 		}
 		e.store(write.Local, value, false)
 	case ir.SetProperty:

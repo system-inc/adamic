@@ -156,14 +156,11 @@ func (e *emitter) statement(statement ir.Statement) {
 		}
 		value := e.value(statement.Value)
 		if e.program.Locals[statement.Local].Uninitialized && e.program.Locals[statement.Local].Global && !e.program.Locals[statement.Local].Hoisted {
-			e.line("if (!%s_declared) {", e.readyName(statement.Local))
-			message := "ReferenceError: Cannot access '" + e.program.Locals[statement.Local].Name + "' before initialization"
-			e.line("\tadamic_panic(%s, %d);", cString(message), len(message))
-			e.line("}")
+			// After the value, as JavaScript does: the right side runs, then the write throws.
+			e.deadZone(statement, statement.Local, e.readyName(statement.Local)+"_declared")
 		}
 		if statement.Checked {
-			// After the value, as JavaScript does: the right side runs, then the write throws.
-			e.checkReady(statement.Local)
+			e.checkReady(statement, statement.Local)
 		}
 		// The store is the statement's last write: nothing after it can assign the variable again
 		// while the statement still reads the value, so what the statement owns, the variable takes.
