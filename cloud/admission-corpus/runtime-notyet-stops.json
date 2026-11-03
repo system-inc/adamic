@@ -73,6 +73,12 @@
       "lifting_task": "#vwsqqt3",
       "stderr": "adamic: panic: converting a class object to a string is not yet lowered\n"
     },
+    "87ee5791f1bc60d3e5fbf419dc35ff3b0060d05e4d694d1e9bdbbc3de8256e51": {
+      "path": "internal/oracle/testdata/to_primitive/stop_undefined_array.a",
+      "ruling_task": "#09dvwny",
+      "lifting_task": "#0cmbkgt",
+      "stderr": "adamic: panic: converting an array of only numbers, booleans, null or undefined to a string is not yet lowered\n"
+    },
     "fdf3e71b7278bca26b6acae346a9a37d901dfbf8b30609f8762698c13de83f80": {
       "path": "internal/oracle/testdata/to_primitive/stop_union_numbers.a",
       "ruling_task": "#09dvwny",
