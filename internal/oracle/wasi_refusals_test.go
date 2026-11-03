@@ -15,6 +15,16 @@ var wasiFileRefusedFixtures = map[string]string{
 }
 
 var wasiRefusedFixtures = map[string]string{
+	"internal/oracle/testdata/host_watch_file/missing.a":        "wasm32-wasi refuses fs.unwatchFile: wasi preview1 has no stat-polling watcher provider; use a native Node host target",
+	"internal/oracle/testdata/host_watch_file/appearance.a":     "wasm32-wasi refuses fs.unwatchFile: wasi preview1 has no stat-polling watcher provider; use a native Node host target",
+	"internal/oracle/testdata/host_watch_file/mtime.a":          "wasm32-wasi refuses fs.unwatchFile: wasi preview1 has no stat-polling watcher provider; use a native Node host target",
+	"internal/oracle/testdata/host_watch_file/cancel_one.a":     "wasm32-wasi refuses fs.unwatchFile: wasi preview1 has no stat-polling watcher provider; use a native Node host target",
+	"internal/oracle/testdata/host_watch_file/cancel_all.a":     "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
+	"internal/oracle/testdata/host_watch_file/duplicate.a":      "wasm32-wasi refuses fs.unwatchFile: wasi preview1 has no stat-polling watcher provider; use a native Node host target",
+	"internal/oracle/testdata/host_watch_file/batch.a":          "wasm32-wasi refuses fs.unwatchFile: wasi preview1 has no stat-polling watcher provider; use a native Node host target",
+	"internal/oracle/testdata/host_watch_file/unref.a":          "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
+	"internal/oracle/testdata/host_watch_file/listener_throw.a": "wasm32-wasi refuses fs.unwatchFile: wasi preview1 has no stat-polling watcher provider; use a native Node host target",
+	"internal/oracle/testdata/host_watch_file/tsc_close.a":      "wasm32-wasi refuses fs.watchFile: wasi preview1 has no stat-polling watcher provider; use a native Node host target",
 	programHost14Path: "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
 	"internal/oracle/testdata/closure_convention_host24.a": "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
 	"internal/oracle/testdata/node_fs_rm_options.a":        "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",

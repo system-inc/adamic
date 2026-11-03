@@ -1,7 +1,8 @@
 package ir
 
-// NodeFSFile is a synchronous host operation. Arguments are evaluated in order,
-// borrowed during the call, and never retained by the host. Results are owned.
+// NodeFSFile is a host operation. Arguments are evaluated in order and borrowed
+// during the call; watchFile additionally retains its listener until cancellation
+// or loop shutdown. Results are owned.
 // Environment assignment and delete mutate live process state, returning the assigned string
 // and true respectively. Every operation except raw output, environment operations and platform
 // reads, exists and the Stats/Date observations may throw.

@@ -291,6 +291,9 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 		// A custom runtime need not expose Node exit helpers for programs without exit.
 		code = "const adamicProcessExiting = () => false;\n" + code
 	}
+	if strings.Contains(code, "adamicWatchFileListener(") {
+		code = nodeWatchFileRuntime + code
+	}
 	if strings.Contains(code, "adamicHostEnvironment(") {
 		code = nodeEnvironmentRuntime() + code
 	}
