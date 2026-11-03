@@ -301,10 +301,13 @@ func (l *lowering) entriesRecordStorageTypes() []*checker.Type {
 // recordMayReach says whether a record could be the receiver of a field read whose receiver has
 // this type. Unknown fails closed: an unconstrained type parameter, any and unknown may be a record.
 func (l *lowering) recordMayReach(receiver *checker.Type) bool {
-	return l.recordMayReachDepth(receiver, 0)
+	return l.typesMayReach(receiver, l.entriesRecordStorageTypes(), true, 0)
 }
 
-func (l *lowering) recordMayReachDepth(receiver *checker.Type, depth int) bool {
+// typesMayReach says whether a value made as one of sources could be the receiver of a field read
+// whose receiver has this type, records saying the sources are records' (an enumeration's own storage
+// type is one too). Unknown fails closed, as recordMayReach says.
+func (l *lowering) typesMayReach(receiver *checker.Type, sources []*checker.Type, records bool, depth int) bool {
 	if receiver == nil || depth > 8 {
 		return true
 	}
@@ -313,7 +316,7 @@ func (l *lowering) recordMayReachDepth(receiver *checker.Type, depth int) bool {
 	}
 	if receiver.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range receiver.Types() {
-			if member.Flags()&checker.TypeFlagsNullable == 0 && l.recordMayReachDepth(member, depth+1) {
+			if member.Flags()&checker.TypeFlagsNullable == 0 && l.typesMayReach(member, sources, records, depth+1) {
 				return true
 			}
 		}
@@ -321,28 +324,81 @@ func (l *lowering) recordMayReachDepth(receiver *checker.Type, depth int) bool {
 	}
 	if receiver.Flags()&checker.TypeFlagsIntersection != 0 {
 		for _, member := range receiver.Types() {
-			if l.recordMayReachDepth(member, depth+1) {
+			if l.typesMayReach(member, sources, records, depth+1) {
 				return true
 			}
 		}
 	}
 	if receiver.Flags()&checker.TypeFlagsInstantiable != 0 {
 		if concrete := l.concrete(receiver); concrete != nil && concrete != receiver {
-			return l.recordMayReachDepth(concrete, depth+1)
+			return l.typesMayReach(concrete, sources, records, depth+1)
 		}
-		return l.recordMayReachDepth(l.checker.GetBaseConstraintOfType(receiver), depth+1)
+		return l.typesMayReach(l.checker.GetBaseConstraintOfType(receiver), sources, records, depth+1)
 	}
-	if l.enumerationRecordStorageType(receiver) {
+	if records && l.enumerationRecordStorageType(receiver) {
 		return true
 	}
 	// Both ways: a record seen as a wider type, and a record narrowed to a narrower one (a predicate,
 	// a discriminant), arrive alike.
-	for _, record := range l.entriesRecordStorageTypes() {
-		if record == receiver || l.checker.IsTypeAssignableTo(record, receiver) || l.checker.IsTypeAssignableTo(receiver, record) {
+	for _, source := range sources {
+		if source == receiver || l.checker.IsTypeAssignableTo(source, receiver) || l.checker.IsTypeAssignableTo(receiver, source) {
 			return true
 		}
 	}
 	return false
+}
+
+// A bare-name CheckedFields entry stands for a record's field (readiness's markRecord) or a field a
+// class merged with an interface promises without initializing (mergedFieldRead), and keeps every read
+// and write of that name checked. plainReceiver records, for the receiver type a read or a write is
+// checked under, that no value of it can be either (#9jnjwrw): no record and no merged class is
+// assignable to it or it to them, by the same fail-closed walk as recordMayReach. The proof is the
+// type's alone, never a claim that a value is a class instance: TypeScript is structural, so an object
+// literal can stand where a class is declared, and a class type is plain only when no record and no
+// merged class can be one. ir.Program.CheckedField then leaves such a receiver's reads unchecked by a
+// bare name; a view member's own key still checks it.
+func (l *lowering) plainReceiver(id int) {
+	if l.plainAsked[id] {
+		return
+	}
+	if l.plainAsked == nil {
+		l.plainAsked = map[int]bool{}
+	}
+	l.plainAsked[id] = true
+	if _, err := l.moduleOrder(l.program.Files()[0]); err != nil {
+		return // Unknown fails closed: the record and merged class types are the modules'.
+	}
+	receiver := l.viewTypes[id]
+	if receiver == nil || l.recordMayReach(receiver) || l.typesMayReach(receiver, l.mergedClassInstanceTypes(), false, 0) {
+		return
+	}
+	if l.result.PlainReceivers == nil {
+		l.result.PlainReceivers = ir.SortedMap[int, bool]{}
+	}
+	l.result.PlainReceivers[id] = true
+}
+
+// mergedClassInstanceTypes are the instance types of the program's classes merged with an interface.
+func (l *lowering) mergedClassInstanceTypes() []*checker.Type {
+	if l.mergedClassTypesKnown {
+		return l.mergedClassTypes
+	}
+	l.mergedClassTypesKnown = true
+	modules, err := l.moduleOrder(l.program.Files()[0])
+	if err != nil {
+		return nil // plainReceiver proves nothing without the modules.
+	}
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindClassDeclaration && l.mergedClass(node) == node {
+			l.mergedClassTypes = append(l.mergedClassTypes, l.checker.GetTypeAtLocation(node.Name()))
+		}
+		return node.ForEachChild(visit)
+	}
+	for _, module := range modules {
+		module.AsNode().ForEachChild(visit)
+	}
+	return l.mergedClassTypes
 }
 
 // checkRecordGuardedReads runs once lowering has registered every checked view: a read admitted
@@ -355,4 +411,91 @@ func (l *lowering) checkRecordGuardedReads() error {
 		}
 	}
 	return nil
+}
+
+// weakFieldRead is a union or optional field read, in a .ts file, whose receiver a record may be. tsc
+// lets a record be assigned to a weak type (every field optional) whatever its value type, so a
+// record's table can arrive where a fixed object's slot is read, and a slot read of it would be wrong.
+// The receiver's storage decides as the read runs, in a helper that takes the receiver once
+// (weak_field_read). A fixed object reads its slot as any field read does (fixedFieldRead). A record
+// reads its key, an absent one undefined as Node reads it, and the value is held to the field's type
+// by the check every record read takes (recordReadDeclared), so a string under a field of 1 | 2 stops
+// there, named, and is never read as a number. Any other heap (a class instance, an Error, an array, a
+// Map, a function) stops loudly by name and never reaches the slot read. A nullish receiver under ?.
+// reads undefined, as the slot read does. Where the check can't hold the field's type (an object or
+// an array member) or makes none (a field held as a Union), the read stays NotYet. The storage test and the value check are each a checked
+// site in the report --explain-checks prints.
+func (l *lowering) weakFieldRead(node *ast.Node, object ir.Expression, name string, of ir.Type, optional bool) (ir.Expression, error) {
+	b := l.libraryArrayBuilder([]ir.Expression{object})
+	// The helper's index is reserved now, so a helper the record's check makes takes the next one, as
+	// expression.go's prefix_update reserves its own.
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: "weak_field_read", Returns: of})
+	receiver := b.read(b.parameters[0])
+	slot, err := l.fixedFieldRead(node, receiver, name, of, optional)
+	if err != nil {
+		return nil, err
+	}
+	// The fixed read runs only where the storage test found no record, so a record that writes a field
+	// of this name mustn't make it a checked view read (readiness keeps view data for a record's field
+	// names, CheckedField's bare name), which a fixed object's optional field can't be emitted as.
+	switch read := slot.(type) {
+	case ir.Property:
+		read.NotRecord = true
+		slot = read
+	case ir.Unwrap:
+		property, isProperty := read.Value.(ir.Property)
+		if !isProperty {
+			return nil, l.notYet(node, "a union or optional field read in a program with record storage")
+		}
+		property.NotRecord = true
+		read.Value = property
+		slot = read
+	default:
+		return nil, l.notYet(node, "a union or optional field read in a program with record storage")
+	}
+	stored := ir.RecordCall{Method: "get", Arguments: []ir.Expression{receiver, ir.StringConstant{Index: l.constant(name)}}, Element: ir.Union, Returns: ir.Union}
+	record, err := l.recordReadDeclared(node, stored, l.checker.GetTypeAtLocation(node))
+	if err != nil {
+		return nil, err
+	}
+	// recordReadDeclared gives the read back unchecked where it builds no check: a field held as a Union,
+	// whose tag it trusts. Through a weak type a record's values may be of any type, so a number would be
+	// read as object | string; that read waits for a value check of its own, as tsc's two
+	// packageJsonContent.exports reads (exports?: object) do.
+	if _, unchecked := record.(ir.RecordCall); unchecked || record.Type() != slot.Type() {
+		return nil, l.notYet(node, "a union or optional field read in a program with record storage")
+	}
+	// What the receiver turned out to be, named, for the stop.
+	kind := b.local("kind", ir.Number)
+	found := ir.Expression(ir.StringConstant{Index: l.constant("another value")})
+	for _, other := range []struct {
+		kind int
+		name string
+	}{
+		{ir.UnknownUndefined, "undefined"}, {ir.UnknownNull, "null"}, {ir.UnknownNumber, "a number"}, {ir.UnknownBoolean, "a boolean"},
+		{ir.UnknownString, "a string"}, {ir.UnknownError, "an Error"}, {ir.UnknownInstance, "a class instance"}, {ir.UnknownStaticClass, "a class"},
+		{ir.UnknownArray, "an array"}, {ir.UnknownFunction, "a function"}, {ir.UnknownCollection, "a Map or a Set"}, {ir.UnknownTypedArray, "a typed array"},
+	} {
+		found = ir.Conditional{Condition: ir.Binary{Operator: ir.Equal, Left: b.read(kind), Right: ir.NumberConstant{Value: float64(other.kind)}}, WhenTrue: ir.StringConstant{Index: l.constant(other.name)}, WhenNot: found, Of: ir.String}
+	}
+	seen := l.checker.TypeToString(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression)))
+	message := ir.Concat{Parts: []ir.Expression{
+		ir.StringConstant{Index: l.constant("field read failed: " + recordReadExpression(node) + " reads " + seen + " storage; expected a fixed object or a record, found ")},
+		found,
+	}}
+	storage := []ir.Statement{
+		ir.Declare{Local: kind, Value: ir.UnknownKind{Value: fit(receiver, ir.Union)}},
+		ir.If{Condition: ir.Binary{Operator: ir.NotEqual, Left: b.read(kind), Right: ir.NumberConstant{Value: ir.UnknownObject}}, Then: []ir.Statement{ir.Panic{Message: message}}},
+		ir.If{Condition: ir.RecordStorage{Value: receiver}, Then: []ir.Statement{ir.Return{Value: record}}},
+	}
+	if optional {
+		// ?. asks nothing of an absent receiver: the slot read gives undefined for it.
+		storage = []ir.Statement{ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: receiver}}, Then: storage}}
+	}
+	b.body = append(b.body, storage...)
+	b.body = append(b.body, ir.Return{Value: slot})
+	l.result.Functions[b.function] = ir.Function{Name: "weak_field_read", Parameters: b.parameters, Returns: slot.Type(), Body: b.body}
+	l.result.PlaceholderChecks = append(l.result.PlaceholderChecks, ir.PlaceholderCheck{Origin: "record storage", Use: "weak field read storage", Path: sourceExpression(node), Where: l.program.Where(node), Status: "checked"})
+	l.result.PlaceholderChecks = append(l.result.PlaceholderChecks, ir.PlaceholderCheck{Origin: "record storage", Use: "weak field read record value", Path: sourceExpression(node), Where: l.program.Where(node), Status: "checked"})
+	return ir.Call{Function: b.function, Arguments: b.arguments, Returns: slot.Type()}, nil
 }
