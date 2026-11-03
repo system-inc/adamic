@@ -40,14 +40,15 @@ func TestRulesRefuseMistakes(t *testing.T) {
 		{"not an object", `[]`, "cannot unmarshal array"},
 		{"first not a change id", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "first": ["chg_short"]}`, `not "chg_short"`},
 		{"first twice", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "first": ["chg_2tps70xcxmasvvbzer45mfhtd4", "chg_2tps70xcxmasvvbzer45mfhtd4"]}`, "each once"},
-		{"sizing field missing", `{"blocks": {"on": true, "budget": 2, "sizing": {"min": 3, "max": 16, "target": 0.8}}, "restack": {"on": false}}`, "sizing needs min, max, target and window"},
-		{"sizing unknown field", `{"blocks": {"on": true, "budget": 2, "sizing": {"min": 3, "max": 16, "target": 0.8, "window": 20, "floor": 1}}, "restack": {"on": false}}`, `unknown field "floor"`},
-		{"sizing min zero", `{"blocks": {"on": true, "budget": 2, "sizing": {"min": 0, "max": 16, "target": 0.8, "window": 20}}, "restack": {"on": false}}`, "1 <= min <= max"},
-		{"sizing max below min", `{"blocks": {"on": true, "budget": 2, "sizing": {"min": 5, "max": 4, "target": 0.8, "window": 20}}, "restack": {"on": false}}`, "1 <= min <= max"},
-		{"sizing target one", `{"blocks": {"on": true, "budget": 2, "sizing": {"min": 3, "max": 16, "target": 1, "window": 20}}, "restack": {"on": false}}`, "target above 0 and below 1"},
-		{"sizing target zero", `{"blocks": {"on": true, "budget": 2, "sizing": {"min": 3, "max": 16, "target": 0, "window": 20}}, "restack": {"on": false}}`, "target above 0 and below 1"},
-		{"sizing window past the queue's", `{"blocks": {"on": true, "budget": 2, "sizing": {"min": 3, "max": 16, "target": 0.8, "window": 201}}, "restack": {"on": false}}`, "window from 1 to 200"},
-		{"sizing window fraction", `{"blocks": {"on": true, "budget": 2, "sizing": {"min": 3, "max": 16, "target": 0.8, "window": 2.5}}, "restack": {"on": false}}`, "cannot unmarshal number 2.5"},
+		{"sizing field missing", `{"blocks": {"on": true, "budget": 2, "sizing": {"minimum": 3, "maximum": 16, "target": 0.8}}, "restack": {"on": false}}`, "sizing needs minimum, maximum, target and window"},
+		{"sizing unknown field", `{"blocks": {"on": true, "budget": 2, "sizing": {"minimum": 3, "maximum": 16, "target": 0.8, "window": 20, "floor": 1}}, "restack": {"on": false}}`, `unknown field "floor"`},
+		{"sizing min zero", `{"blocks": {"on": true, "budget": 2, "sizing": {"minimum": 0, "maximum": 16, "target": 0.8, "window": 20}}, "restack": {"on": false}}`, "1 <= minimum <= maximum"},
+		{"sizing max below min", `{"blocks": {"on": true, "budget": 2, "sizing": {"minimum": 5, "maximum": 4, "target": 0.8, "window": 20}}, "restack": {"on": false}}`, "1 <= minimum <= maximum"},
+		{"sizing target one", `{"blocks": {"on": true, "budget": 2, "sizing": {"minimum": 3, "maximum": 16, "target": 1, "window": 20}}, "restack": {"on": false}}`, "target above 0 and below 1"},
+		{"sizing target zero", `{"blocks": {"on": true, "budget": 2, "sizing": {"minimum": 3, "maximum": 16, "target": 0, "window": 20}}, "restack": {"on": false}}`, "target above 0 and below 1"},
+		{"sizing window past the queue's", `{"blocks": {"on": true, "budget": 2, "sizing": {"minimum": 3, "maximum": 16, "target": 0.8, "window": 201}}, "restack": {"on": false}}`, "window from 1 to 200"},
+		{"sizing window fraction", `{"blocks": {"on": true, "budget": 2, "sizing": {"minimum": 3, "maximum": 16, "target": 0.8, "window": 2.5}}, "restack": {"on": false}}`, "cannot unmarshal number 2.5"},
+		{"sizing in the old spelling", `{"blocks": {"on": true, "budget": 2, "sizing": {"min": 3, "max": 16, "target": 0.8, "window": 20}}, "restack": {"on": false}}`, `unknown field "min"`},
 		{"first not a list", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "first": "chg_2tps70xcxmasvvbzer45mfhtd4"}`, "cannot unmarshal string"},
 		{"depth one", `{"blocks": {"on": true, "budget": 2, "depth": 1}, "restack": {"on": false}}`, "from 2 to 32"},
 		{"depth past the queue's", `{"blocks": {"on": true, "budget": 2, "depth": 33}, "restack": {"on": false}}`, "from 2 to 32"},
@@ -232,5 +233,17 @@ func TestRulesTakeAWitness(t *testing.T) {
 	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
 	if err != nil || rules.Witness != nil {
 		t.Fatalf("%+v, %v", rules.Witness, err)
+	}
+}
+
+// A sizing rule reads by its unabbreviated names, the spelling the lander posts and the queue takes (#qt36cwf).
+func TestRulesReadSizingByItsNames(t *testing.T) {
+	t.Parallel()
+	rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 2, "sizing": {"minimum": 3, "maximum": 16, "target": 0.8, "window": 20}}, "restack": {"on": false}}`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if sizing := rules.Blocks.Sizing; sizing == nil || *sizing.Minimum != 3 || *sizing.Maximum != 16 {
+		t.Fatalf("sizing read as %+v, want minimum 3 and maximum 16", sizing)
 	}
 }
