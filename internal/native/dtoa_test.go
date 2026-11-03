@@ -216,9 +216,11 @@ func runDtoaValues(t *testing.T, name string) {
 	t.Logf("%d answers (%d values, every argument), %d mismatches", lines, len(values), total)
 }
 
-// Out of range, Node throws a RangeError, and Adamic panics: exit 70 with stdout flushed
-// (docs/0.1.md, library calls that throw). Each case is its own process, since a panic ends it.
-func TestToExponentialAndToPrecisionOutOfRangePanic(t *testing.T) {
+// Out of range, Node throws a RangeError, and so does Adamic: the call leaves the Error on the pending
+// word, its name and message apart, and returns an empty string the caller lets go. Nothing catches
+// it here, so it ends as an uncaught error does, exit 70 with stdout flushed. Each case is its own
+// process, since that ends it.
+func TestToExponentialAndToPrecisionOutOfRangeThrow(t *testing.T) {
 	t.Parallel()
 	const harness = `#include "adamic.h"
 
@@ -230,10 +232,17 @@ func TestToExponentialAndToPrecisionOutOfRangePanic(t *testing.T) {
 int main(int count, char **arguments) {
 	(void)count;
 	double digits = strtod(arguments[2], NULL);
-	// Written as a program writes, so the panic is what flushes it.
+	// Written as a program writes, so the uncaught error is what flushes it.
 	static adamic_string before = ADAMIC_STRING("before");
 	adamic_write_line(adamic_stdout, &before);
 	adamic_string *text = strcmp(arguments[1], "exponential") == 0 ? adamic_number_to_exponential(1.5, digits, true) : adamic_number_to_precision(1.5, digits, true);
+	if (adamic_thrown != NULL) {
+		const adamic_string *name = adamic_thrown->slots[0].reference;
+		const adamic_string *message = adamic_thrown->slots[1].reference;
+		fprintf(stderr, "thrown %.*s|%.*s|%zu\n", (int)name->length, name->bytes, (int)message->length, message->bytes, text->length);
+		adamic_release(text);
+		adamic_uncaught();
+	}
 	adamic_write_line(adamic_stdout, text);
 	adamic_release(text);
 	return 0;
@@ -246,7 +255,7 @@ int main(int count, char **arguments) {
 	for _, probe := range []struct {
 		operation string
 		digits    string
-		panics    bool
+		throws    bool
 	}{
 		{"exponential", "-1", true}, {"exponential", "101", true}, {"exponential", "inf", true}, {"exponential", "-inf", true},
 		{"exponential", "-0.9", false}, {"exponential", "100.5", false},
@@ -254,6 +263,7 @@ int main(int count, char **arguments) {
 		{"precision", "1", false}, {"precision", "100", false},
 	} {
 		method := map[string]string{"exponential": "toExponential", "precision": "toPrecision"}[probe.operation]
+		message := map[string]string{"exponential": "toExponential() argument must be between 0 and 100", "precision": "toPrecision() argument must be between 1 and 100"}[probe.operation]
 		digits := map[string]string{"inf": "Infinity", "-inf": "-Infinity"}[probe.digits]
 		if digits == "" {
 			digits = probe.digits
@@ -261,11 +271,13 @@ int main(int count, char **arguments) {
 		script := fmt.Sprintf("console.log('before'); console.log((1.5).%s(%s));", method, digits)
 		native := outcome(t, binary, probe.operation, probe.digits)
 		node := outcome(t, "node", "--eval", script)
-		if native.stdout != node.stdout || (native.exitCode == 70) != probe.panics || (node.exitCode != 0) != probe.panics {
+		if native.stdout != node.stdout || (native.exitCode == 70) != probe.throws || (node.exitCode != 0) != probe.throws {
 			t.Errorf("(1.5).%s(%s): native exit %d %q, Node exit %d %q", method, digits, native.exitCode, native.stdout, node.exitCode, node.stdout)
 		}
-		if probe.panics && (!strings.HasPrefix(native.stderr, "adamic: panic: RangeError: ") || !strings.Contains(node.stderr, "RangeError")) {
-			t.Errorf("(1.5).%s(%s): native stderr %q, Node stderr %q", method, digits, native.stderr, node.stderr)
+		// The name and the message are the Error's two fields, never one text in the message.
+		thrown := "thrown RangeError|" + message + "|0\n"
+		if probe.throws && (!strings.Contains(native.stderr, thrown) || !strings.Contains(native.stderr, "adamic: panic: RangeError: "+message) || !strings.Contains(node.stderr, "RangeError: "+message)) {
+			t.Errorf("(1.5).%s(%s): native stderr %q, want %q; Node stderr %q", method, digits, native.stderr, thrown, node.stderr)
 		}
 	}
 }

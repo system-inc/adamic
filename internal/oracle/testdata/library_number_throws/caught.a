@@ -1,0 +1,58 @@
+// Each number format given an argument out of its range throws Node's RangeError, and a catch takes
+// it: its name and its message are two fields, printed apart. The statement's temporaries, a label
+// built at run time among them, are let go on the way to the catch, so the leak check holds it.
+for (const digits of [2, 101, -1]) {
+	const label = `toFixed(${digits})`;
+	try {
+		console.log(`${label}: ${(1.5).toFixed(digits)}`);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(error.name);
+			console.log(error.message);
+		}
+	}
+}
+for (const digits of [3, 101, -1]) {
+	const label = `toExponential(${digits})`;
+	try {
+		console.log(`${label}: ${(123.456).toExponential(digits)}`);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(error.name);
+			console.log(error.message);
+		}
+	}
+}
+for (const precision of [4, 0, 101]) {
+	const label = `toPrecision(${precision})`;
+	try {
+		console.log(`${label}: ${Math.PI.toPrecision(precision)}`);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(error.name);
+			console.log(error.message);
+		}
+	}
+}
+// The radix is checked before the value, so NaN throws too, where toExponential gives "NaN" first.
+for (const value of [255, NaN]) {
+	for (const radix of [16, 1, 37]) {
+		const label = `(${value}).toString(${radix})`;
+		try {
+			console.log(`${label}: ${value.toString(radix)}`);
+		} catch (error) {
+			if (error instanceof Error) {
+				console.log(error.name);
+				console.log(error.message);
+			}
+		}
+	}
+}
+for (const digits of [1000, -1]) {
+	try {
+		console.log(NaN.toExponential(digits));
+	} catch (error) {
+		console.log(error instanceof Error ? error.message : 'not an error');
+	}
+}
+console.log('done');
