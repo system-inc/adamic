@@ -1,0 +1,21 @@
+// An Error through String and a template over an unknown is Error.prototype.toString (#09dvwny): the
+// name and the message joined by ": ", the name alone where the message is empty, and the message
+// alone where the name is.
+function show(value: unknown): void {
+	console.log(String(value));
+	console.log(`<${value}>`);
+}
+show(new Error('plain'));
+show(new TypeError('typed'));
+show(new Error(''));
+show(new Error());
+try {
+	throw new Error('renamed');
+} catch (error) {
+	if (error instanceof Error) {
+		error.name = 'Custom';
+		show(error);
+		error.name = '';
+		show(error);
+	}
+}

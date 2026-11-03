@@ -1,0 +1,13 @@
+// An array of a union type that holds only numbers stops as not yet too (#09dvwny). Natively its
+// elements are boxed and could join, but the JavaScript backend can't tell it from an array of numbers,
+// so both stop alike: the scalar rule's over-stop, a cost rather than a hole. Node prints before, then
+// 1,2.
+type Item = string | number;
+const numbers: Item[] = [];
+numbers.push(1);
+numbers.push(2);
+function show(value: unknown): void {
+	console.log(String(value));
+}
+console.log('before');
+show(numbers);

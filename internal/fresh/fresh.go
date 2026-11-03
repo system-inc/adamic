@@ -1266,6 +1266,23 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.UnionToString:
 		a.value(expression.Value)
 		return value{}
+	case ir.UnknownKind:
+		a.value(expression.Value)
+		return value{}
+	case ir.OwnFunction:
+		a.value(expression.Object)
+		return value{}
+	case ir.ErrorToString:
+		a.value(expression.Value)
+		return value{}
+	case ir.ArrayOfScalars:
+		a.value(expression.Array)
+		return value{}
+	case ir.JoinEnter:
+		a.value(expression.Array)
+		return value{}
+	case ir.JoinLeave:
+		return value{}
 	case ir.StringLength:
 		a.value(expression.Value)
 		return value{}
