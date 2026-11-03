@@ -6,6 +6,7 @@ const os = require("node:os");
 const vm = require("node:vm");
 const assert = require("node:assert/strict");
 const { spawnSync } = require("node:child_process");
+const { nodeFor } = require("../../../internal/hostconfiguration/configuration.cjs");
 const ts = require(process.env.CENSUS_TYPESCRIPT || "typescript");
 const { adapt, nodes } = require("./adapt.cjs");
 const [before, after, output] = process.argv.slice(2);
@@ -49,9 +50,17 @@ for (const e of [new Error("builtin load failed"), new Error(""), { message: "lo
 const scratch = fs.mkdtempSync(path.join(os.tmpdir(), "host-errors-verify-"));
 const fixtureResults = [];
 let helperMutant;
+let helperSkipped;
 try {
     const status = JSON.parse(fs.readFileSync(path.join(fixtureDirectory, "status.json"), "utf8"));
-    for (const row of status) {
+    for (const [index, row] of status.entries()) {
+        const nodeBinary = nodeFor(row, index + 1);
+        if (!nodeBinary) {
+            const skipped = {file: row.file, skipped: true, configuration: row.configuration};
+            fixtureResults.push(skipped);
+            if (row.file.startsWith("13_")) helperSkipped = skipped;
+            continue;
+        }
         const fixture = path.join(fixtureDirectory, row.file);
         let text = fs.readFileSync(fixture, "utf8");
         const source = parse(row.file, text);
@@ -66,7 +75,7 @@ try {
         const target = path.join(scratch, row.file + ".mjs");
         fs.writeFileSync(target, emit(text));
         function observe() {
-            const result = spawnSync(process.execPath, [target], { encoding: "utf8" });
+            const result = spawnSync(nodeBinary, [target], { encoding: "utf8" });
             if (result.error) throw result.error;
             return { stdout: result.stdout, stderr: result.stderr, exit: result.status };
         }
@@ -139,6 +148,6 @@ const beforeBytes = new Map(["sys.ts", "tracing.ts", "hostErrors.ts"].map(name =
 const idempotence = adapt(path.resolve(after), ts);
 assert.equal(idempotence.files, 0);
 for (const [name, bytes] of beforeBytes) assert(bytes.equals(fs.readFileSync(path.join(after, "src/compiler", name))));
-const report = { status: "pass", fixtures: fixtureResults, helperMutant: { caught: true, fixture: "13_createDirectory.a", ...helperMutant }, byteJavaScriptIdentical: true, tracingCases: 6, declineProofs, idempotence };
+const report = { status: "pass", fixtures: fixtureResults, helperMutant: helperMutant ? { caught: true, fixture: "13_createDirectory.a", ...helperMutant } : { ...helperSkipped, caught: false }, byteJavaScriptIdentical: true, tracingCases: 6, declineProofs, idempotence };
 fs.writeFileSync(output, JSON.stringify(report, null, 2) + "\n");
-console.log(JSON.stringify({ status: "pass", fixtures: fixtureResults.length, helperMutantCaught: true, idempotence }));
+console.log(JSON.stringify({ status: "pass", fixtures: fixtureResults.length, helperMutantCaught: Boolean(helperMutant), idempotence }));

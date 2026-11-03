@@ -7,32 +7,38 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/hostconfiguration"
 	"github.com/system-inc/adamic/internal/native"
 )
 
 func TestNodeProcessHostNewLine(t *testing.T) {
 	t.Parallel()
-	path, binary, script := sanitized(t, "stage3/fixtures/host/23_newLine.a")
-	truth := onNodeWith(t, inputRun{}, path)
-	data, err := os.ReadFile(filepath.Join(repository, "stage3/fixtures/host/status.json"))
+	nodeProcessHostNewLine(t, filepath.Join(repository, "stage3/fixtures/host/status.json"))
+}
+
+func nodeProcessHostNewLine(t *testing.T, statusPath string) {
+	t.Helper()
+	path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/host/23_newLine.a"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	var rows []struct {
-		File string `json:"file"`
-		Node struct {
-			Stdout string `json:"stdout"`
-			Stderr string `json:"stderr"`
-			Exit   int    `json:"exit"`
-		} `json:"node"`
+	var binary, script string
+	data, err := os.ReadFile(statusPath)
+	if err != nil {
+		t.Fatal(err)
 	}
+	var rows []hostMeasurement
 	if err := json.Unmarshal(data, &rows); err != nil {
 		t.Fatal(err)
 	}
 	found := false
-	for _, row := range rows {
+	var truth run
+	for index, row := range rows {
 		if row.File == "23_newLine.a" {
 			found = true
+			nodeBinary := hostconfiguration.Require(t, index+1, row.Configuration)
+			truth = hostNodeWith(t, inputRun{}, nodeBinary, path)
+			_, binary, script = sanitized(t, "stage3/fixtures/host/23_newLine.a")
 			expected := run{stdout: []byte(row.Node.Stdout), stderr: []byte(row.Node.Stderr), exitCode: row.Node.Exit}
 			if difference := disagreement(expected, truth); difference != "" {
 				t.Fatal("recorded Node: " + difference)

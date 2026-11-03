@@ -1,0 +1,24 @@
+[
+  {
+    "file": "configuration.a",
+    "configuration": {
+      "name": "node-without-inspector",
+      "node": "v24.19.0",
+      "configure": "--without-inspector",
+      "ruling": "#cn4yapb"
+    },
+    "node": {
+      "stdout": "stock\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "tsc": [
+      "#cn4yapb: test-only host-configuration mechanism"
+    ],
+    "reason": "Named reference Node build, before any real host row uses it",
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  }
+]

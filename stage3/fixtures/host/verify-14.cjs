@@ -1,15 +1,23 @@
 'use strict';
 const fs = require('node:fs'), path = require('node:path'), assert = require('node:assert/strict');
 const {spawnSync} = require('node:child_process');
+const {nodeFor} = require('../../../internal/hostconfiguration/configuration.cjs');
 const results = process.argv[2];
 assert(results, 'usage: node verify-14.cjs <new-results>');
 fs.mkdirSync(results, {recursive: false});
 const repo = path.resolve(__dirname, '../../..');
 const filename = '14_getCurrentDirectory.a';
 const file = path.join(__dirname, filename);
-const golden = JSON.parse(fs.readFileSync(path.join(__dirname, 'status.json'), 'utf8')).find(r => r.file === filename).node;
+const rows = JSON.parse(fs.readFileSync(path.join(__dirname, 'status.json'), 'utf8'));
+const index = rows.findIndex(r => r.file === filename);
+const nodeBinary = nodeFor(rows[index], index + 1);
+if (!nodeBinary) {
+    fs.writeFileSync(path.join(results, 'proof.json'), JSON.stringify({file: filename, skipped: true, configuration: rows[index].configuration}, null, 2) + '\n');
+    return;
+}
+const golden = rows[index].node;
 function run(target, name) {
-    const p = spawnSync(process.execPath, ['--disable-warning=ExperimentalWarning', path.join(repo, 'oracle/node.mjs'), target], {cwd: repo});
+    const p = spawnSync(nodeBinary, ['--disable-warning=ExperimentalWarning', path.join(repo, 'oracle/node.mjs'), target], {cwd: repo});
     assert.ifError(p.error);
     fs.writeFileSync(path.join(results, name + '.stdout'), p.stdout);
     fs.writeFileSync(path.join(results, name + '.stderr'), p.stderr);

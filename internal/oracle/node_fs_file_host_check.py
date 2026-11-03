@@ -11,6 +11,11 @@ import tempfile
 
 repo = Path(__file__).resolve().parents[2]
 bucket = repo / 'stage3/fixtures/host'
+import sys
+sys.path.insert(0, str(repo / 'internal/hostconfiguration'))
+sys.dont_write_bytecode = True
+from configuration import node_for
+
 parser = argparse.ArgumentParser()
 parser.add_argument('--compiler', type=Path, required=True)
 parser.add_argument('--logs', type=Path, required=True)
@@ -41,8 +46,8 @@ def run(command, label):
     return {'stdout': result.stdout.decode(), 'stderr': result.stderr.decode(), 'exit': result.returncode}
 
 
-def node(path, label):
-    return run(['node', '--disable-warning=ExperimentalWarning', 'oracle/node.mjs', str(path)], label)
+def node(path, label, binary):
+    return run([binary, '--disable-warning=ExperimentalWarning', 'oracle/node.mjs', str(path)], label)
 
 
 def stage(observation):
@@ -61,12 +66,16 @@ def stage(observation):
 report = []
 with tempfile.TemporaryDirectory(prefix='fs-file-host-') as scratch:
     scratch = Path(scratch)
-    for row in json.loads((bucket / 'status.json').read_text()):
+    for index, row in enumerate(json.loads((bucket / 'status.json').read_text())):
         prefix = row['file'][:2]
         if prefix not in owned:
             continue
+        binary_node = node_for(row, index + 1)
+        if binary_node is None:
+            report.append({'file': row['file'], 'skipped': True, 'configuration': row['configuration']})
+            continue
         path = bucket / row['file']
-        truth = node(path, row['file'] + '.node')
+        truth = node(path, row['file'] + '.node', binary_node)
         assert truth == row['node'], row['file'] + ': recorded Node observation differs'
         result = {'file': row['file'], 'nodeMatches': True}
         binary = scratch / path.stem
@@ -81,7 +90,7 @@ with tempfile.TemporaryDirectory(prefix='fs-file-host-') as scratch:
                 else:
                     module = scratch / (path.stem + '.mjs')
                     module.write_text(built['stdout'])
-                    observed = node(module, row['file'] + '.javascript')
+                    observed = node(module, row['file'] + '.javascript', 'node')
                 assert observed == truth, 'SILENT MISCOMPILE: ' + row['file'] + ' ' + backend
                 result[backend]['agrees'] = True
         if args.mutants:
@@ -90,10 +99,10 @@ with tempfile.TemporaryDirectory(prefix='fs-file-host-') as scratch:
             assert before in source, row['file'] + ': mutant changed nothing'
             mutant = scratch / row['file']
             mutant.write_text(source.replace(before, after, 1))
-            assert node(mutant, row['file'] + '.mutant') != truth, 'SURVIVING MUTANT: ' + row['file']
+            assert node(mutant, row['file'] + '.mutant', binary_node) != truth, 'SURVIVING MUTANT: ' + row['file']
             result['nodeMutantCaught'] = True
         report.append(result)
         print(row['file'] + ': Node agrees; native=' + result['native']['stage'] + '; javascript=' + result['javascript']['stage'])
 args.report.parent.mkdir(parents=True, exist_ok=True)
 args.report.write_text(json.dumps(report, indent=2) + '\n')
-raise SystemExit(0 if all(row[backend]['stage'] == 'Compiles' for row in report for backend in ['native', 'javascript']) else 1)
+raise SystemExit(0 if all(row[backend]['stage'] == 'Compiles' for row in report if not row.get('skipped') for backend in ['native', 'javascript']) else 1)

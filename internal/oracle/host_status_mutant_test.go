@@ -3,6 +3,7 @@ package oracle
 import (
 	"context"
 	"encoding/json"
+	"github.com/system-inc/adamic/internal/hostconfiguration"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -47,6 +48,7 @@ func TestOracleHostStatusMutants(t *testing.T) {
 	if err := json.Unmarshal(rows[hostStatusMutantRow], &recorded); err != nil {
 		t.Fatal(err)
 	}
+	hostconfiguration.Require(t, hostStatusMutantRow+1, recorded.Configuration)
 	if recorded.Stage.Outcome != "Refused" {
 		t.Fatalf("wrong-stage witness changed: %+v", recorded.Stage)
 	}

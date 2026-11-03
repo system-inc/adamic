@@ -12,6 +12,7 @@ import (
 	"sync"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/hostconfiguration"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -26,8 +27,9 @@ type hostStage struct {
 	What    string `json:"what"`
 }
 type hostMeasurement struct {
-	File string `json:"file"`
-	Node struct {
+	Configuration *hostconfiguration.Configuration `json:"configuration,omitempty"`
+	File          string                           `json:"file"`
+	Node          struct {
 		Stdout string `json:"stdout"`
 		Stderr string `json:"stderr"`
 		Exit   int    `json:"exit"`
@@ -69,7 +71,8 @@ func hostStatusFile(t *testing.T, index int, wasiOnly bool, statusPath string) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	truth := onNodeWith(t, inputRun{directory: repository}, path)
+	nodeBinary := hostconfiguration.Require(t, index+1, row.Configuration)
+	truth := hostNodeWith(t, inputRun{directory: repository}, nodeBinary, path)
 	recorded := run{stdout: []byte(row.Node.Stdout), stderr: []byte(row.Node.Stderr), exitCode: row.Node.Exit}
 	if difference := disagreement(recorded, truth); difference != "" {
 		t.Fatalf("recorded Node %s: %s", row.File, difference)
@@ -287,3 +290,14 @@ func TestHostStatusWASI_022(t *testing.T) { t.Parallel(); hostStatus(t, 22, true
 func TestHostStatusWASI_023(t *testing.T) { t.Parallel(); hostStatus(t, 23, true) }
 
 func TestHostStatusWASI_024(t *testing.T) { t.Parallel(); hostStatus(t, 24, true) }
+
+// Only the reference Node side uses the row's named build; Adamic's generated
+// JavaScript still runs on its ordinary backend runtime.
+func hostNodeWith(t *testing.T, how inputRun, binary, path string) run {
+	t.Helper()
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return executeInput(t, how, nil, binary, "--disable-warning=ExperimentalWarning", runner, path)
+}

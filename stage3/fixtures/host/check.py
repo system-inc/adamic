@@ -10,6 +10,11 @@ import tempfile
 
 bucket = Path(__file__).resolve().parent
 repo = bucket.parents[2]
+import sys
+sys.path.insert(0, str(repo / 'internal/hostconfiguration'))
+sys.dont_write_bytecode = True
+from configuration import node_for
+
 parser = argparse.ArgumentParser()
 recording = parser.add_mutually_exclusive_group()
 recording.add_argument('--record', type=Path, help='metadata array with file, tsc and reason')
@@ -44,8 +49,8 @@ def run(command, label, cwd=repo):
     return dict(stdout=result.stdout.decode(), stderr=result.stderr.decode(), exit=result.returncode)
 
 
-def node(file, label):
-    return run(['node', '--disable-warning=ExperimentalWarning', 'oracle/node.mjs', str(file)], label)
+def node(file, label, binary):
+    return run([binary, '--disable-warning=ExperimentalWarning', 'oracle/node.mjs', str(file)], label)
 
 
 def compare(observation, expected, label):
@@ -91,10 +96,16 @@ def update_stage0_records():
     path.write_text(result)
 
 
+skipped_rows = set()
+
 with tempfile.TemporaryDirectory(prefix='adamic-host-check-') as scratch:
-    for row in ([] if args.mutants_only else status):
+    for index, row in enumerate([] if args.mutants_only else status):
+        binary_node = node_for(row, index + 1)
+        if binary_node is None:
+            skipped_rows.add(row['file'])
+            continue
         file = bucket / row['file']
-        observed = node(file.relative_to(repo), row['file'] + '.node')
+        observed = node(file.relative_to(repo), row['file'] + '.node', binary_node)
         # A fixture must not silently record a crash as its intended Node behavior.
         assert observed['stderr'] == '', (row['file'], observed)
         assert observed['exit'] == ({'18_exit_0.a': 0, '19_exit_1.a': 1, '20_exit_2.a': 2}.get(row['file'], 0))
@@ -120,7 +131,9 @@ with tempfile.TemporaryDirectory(prefix='adamic-host-check-') as scratch:
         else:
             compare_stage0(stage0, row['stage0'], row['file'] + ' stage0')
         print(row['file'] + ': Node exit=' + str(observed['exit']) + ', stage0=' + outcome)
-    if args.record:
+    if args.record and skipped_rows:
+        print('SKIP: recording not published; configured rows were unavailable: ' + ', '.join(sorted(skipped_rows)))
+    elif args.record:
         (bucket / 'status.json').write_text(json.dumps(status, ensure_ascii=False, indent=2) + '\n')
     elif args.update_stage0:
         update_stage0_records()
@@ -153,13 +166,16 @@ with tempfile.TemporaryDirectory(prefix='adamic-host-check-') as scratch:
             ('if (extensions && !fileExtensionIsOneOf(name, extensions)) continue;', 'if (false) continue;'),
         ]
         assert len(mutations) == len(status)
-        for row, (before, after) in zip(status, mutations):
+        for index, (row, (before, after)) in enumerate(zip(status, mutations)):
+            binary_node = node_for(row, index + 1)
+            if binary_node is None:
+                continue
             source = (bucket / row['file']).read_text()
             assert before in source, (row['file'], before)
             changed = source.replace(before, after, 1)
             mutant = Path(scratch) / row['file']
             mutant.write_text(changed)
-            observed = node(mutant, row['file'] + '.mutant')
+            observed = node(mutant, row['file'] + '.mutant', binary_node)
             try:
                 compare(observed, row['node'], row['file'] + ' mutant')
             except AssertionError:
@@ -168,7 +184,9 @@ with tempfile.TemporaryDirectory(prefix='adamic-host-check-') as scratch:
                 raise AssertionError('SURVIVING MUTANT: ' + row['file'])
         # Every compiler record must retain message, source line and code after
         # normalization. Change one field at a time; use the real comparison.
-        for row in status:
+        for index, row in enumerate(status):
+            if node_for(row, index + 1) is None:
+                continue
             wrapped = copy.deepcopy(row['stage0'])
             wrapped['what'] = ('adamic: ' + wrapped['what'].replace('stage3/fixtures/', str(bucket.parent) + '/')
                                + '\nexit status 1\n')
