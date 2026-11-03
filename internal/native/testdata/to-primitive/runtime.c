@@ -38,7 +38,7 @@ static adamic_primitive value_of(adamic_heap *self, void *owner) {
     switch (mode) {
     case 17: return primitive(adamic_primitive_object, (adamic_value){.reference = adamic_closure_new(unused_closure, 0)});
     case 3: case 4: return primitive(adamic_primitive_number, (adamic_value){.number = 7});
-    case 5: return primitive(adamic_primitive_object, (adamic_value){.reference = adamic_array_new(0, false)});
+    case 5: return primitive(adamic_primitive_object, (adamic_value){.reference = adamic_array_make(0, adamic_ir_Number)});
     case 8: case 16: fail("call failed"); return nothing();
     case 10: changed = true; return primitive(adamic_primitive_object, (adamic_value){.reference = adamic_object_new(&shape)});
     case 11: return nothing();
@@ -88,7 +88,7 @@ static void run(void) {
     static const adamic_shape version_shape = {3, names, references, NULL, version_kinds};
     adamic_heap *receiver;
     if (mode == 2) {
-        adamic_array *array = adamic_array_new(2, true);
+        adamic_array *array = adamic_array_make(2, adamic_ir_Union);
         adamic_array_push(array, (adamic_value){.reference = text("Identifier")});
         adamic_array_push(array, (adamic_value){.reference = text("FunctionDeclaration")});
         receiver = &array->heap;
