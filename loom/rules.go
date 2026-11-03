@@ -98,12 +98,12 @@ const (
 )
 
 // SizingRule is a block-size policy: the largest block whose chance of coming back all green, at the red rate of the last
-// Window decided branches, is at least Target, clamped to Min and Max.
+// Window decided branches, is at least Target, clamped to Minimum and Maximum.
 type SizingRule struct {
-	Min    *int     `json:"min"`
-	Max    *int     `json:"max"`
-	Target *float64 `json:"target"`
-	Window *int     `json:"window"`
+	Minimum *int     `json:"minimum"`
+	Maximum *int     `json:"maximum"`
+	Target  *float64 `json:"target"`
+	Window  *int     `json:"window"`
 }
 
 // MaximumSizingWindow is the queue's: the most decided branches a window reads (Loom's lander/rules.go).
@@ -138,11 +138,11 @@ func ParseRules(data []byte) (Rules, error) {
 		return Rules{}, fmt.Errorf("rules.json: blocks' budget is %d, and a block holds at least one change", *rules.Blocks.Budget)
 	}
 	if sizing := rules.Blocks.Sizing; sizing != nil {
-		if sizing.Min == nil || sizing.Max == nil || sizing.Target == nil || sizing.Window == nil {
-			return Rules{}, errors.New("rules.json: blocks' sizing needs min, max, target and window")
+		if sizing.Minimum == nil || sizing.Maximum == nil || sizing.Target == nil || sizing.Window == nil {
+			return Rules{}, errors.New("rules.json: blocks' sizing needs minimum, maximum, target and window")
 		}
-		if *sizing.Min < 1 || *sizing.Max < *sizing.Min || !(*sizing.Target > 0 && *sizing.Target < 1) || *sizing.Window < 1 || *sizing.Window > MaximumSizingWindow {
-			return Rules{}, fmt.Errorf("rules.json: blocks' sizing needs 1 <= min <= max, target above 0 and below 1, and window from 1 to %d", MaximumSizingWindow)
+		if *sizing.Minimum < 1 || *sizing.Maximum < *sizing.Minimum || !(*sizing.Target > 0 && *sizing.Target < 1) || *sizing.Window < 1 || *sizing.Window > MaximumSizingWindow {
+			return Rules{}, fmt.Errorf("rules.json: blocks' sizing needs 1 <= minimum <= maximum, target above 0 and below 1, and window from 1 to %d", MaximumSizingWindow)
 		}
 	}
 	// Present or absent, never null, as the lander reads it: a null decodes as absent, so it's read from the raw object.
