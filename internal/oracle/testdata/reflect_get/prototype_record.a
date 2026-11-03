@@ -1,5 +1,5 @@
-// An Object.prototype name a record doesn't hold as its own stops, on both backends. Node prints
-// function.
+// An Object.prototype name a record doesn't hold as its own answers, on both backends: a record's
+// constructor is Object, as a plain object's is. Node prints function.
 import { propertyOf } from './hostErrors.ts';
 
 const entries: Record<string, string> = {};

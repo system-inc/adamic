@@ -1,0 +1,15 @@
+// Object.prototype's ten methods and its constructor, read by a run-time key off a plain object and a
+// record, are functions, each the same one from every receiver and every read. Node prints function
+// twice for each name, then true three times.
+import { propertyOf } from './hostErrors.ts';
+
+const names = ['toString', 'toLocaleString', 'valueOf', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', '__defineGetter__', '__defineSetter__', '__lookupGetter__', '__lookupSetter__', 'constructor'];
+const plain = { present: 'here' };
+const record: Record<string, string> = {};
+record['own'] = 'value';
+for (const name of names) {
+	console.log(`${name}: ${typeof propertyOf(plain, name)} ${typeof propertyOf(record, name)}`);
+}
+console.log(String(propertyOf({}, 'toString') === propertyOf(record, 'toString')));
+console.log(String(propertyOf(plain, 'valueOf') === propertyOf(plain, 'valueOf')));
+console.log(String(propertyOf(plain, 'constructor') === propertyOf(record, 'constructor')));

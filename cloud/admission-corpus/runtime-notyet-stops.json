@@ -37,24 +37,6 @@
       "lifting_task": "#jgtzxh6",
       "stderr": "adamic: panic: a name beginning with # isn't read by a run-time key yet (reading '#x')\n"
     },
-    "29f530d0ac164635cc667aa083f7d0e8e307af6a0302e0841805b039f5c3310f": {
-      "path": "internal/oracle/testdata/reflect_get/stop_prototype_class.a",
-      "ruling_task": "#zhgxzjg",
-      "lifting_task": "#0sps03r",
-      "stderr": "adamic: panic: an Object.prototype name isn't read by a run-time key yet (reading 'toString')\n"
-    },
-    "30a252310fadeb064f63adc4f7a14735a705294b503bfc3736e4c0df73758730": {
-      "path": "internal/oracle/testdata/reflect_get/stop_prototype_object.a",
-      "ruling_task": "#zhgxzjg",
-      "lifting_task": "#0sps03r",
-      "stderr": "adamic: panic: an Object.prototype name isn't read by a run-time key yet (reading 'toString')\n"
-    },
-    "793c4a36944a35d496efc7298bec4047aec1b2b7955203d1e8b92de6a79b494f": {
-      "path": "internal/oracle/testdata/reflect_get/stop_prototype_record.a",
-      "ruling_task": "#zhgxzjg",
-      "lifting_task": "#0sps03r",
-      "stderr": "adamic: panic: an Object.prototype name isn't read by a run-time key yet (reading 'constructor')\n"
-    },
     "0ea13db1aebc123d0e4e0c4e1c9494e52ff8dc571a0bf9fdfdb7b4a685c25d58": {
       "path": "internal/oracle/testdata/to_primitive/stop_boolean_array.a",
       "ruling_task": "#09dvwny",
@@ -90,6 +72,18 @@
       "ruling_task": "#09dvwny",
       "lifting_task": "#0cmbkgt",
       "stderr": "adamic: panic: converting an array of only numbers, booleans, null or undefined to a string is not yet lowered\n"
+    },
+    "2b83f1258c6b091b582c7779cec81fd2b28d3e3493fe1cefc73322cd82d446bb": {
+      "path": "internal/oracle/testdata/reflect_get/stop_proto.a",
+      "ruling_task": "#zhgxzjg",
+      "lifting_task": "#0sps03r",
+      "stderr": "adamic: panic: __proto__ isn't read by a run-time key yet (reading '__proto__')\n"
+    },
+    "9c3d828b571883e7ae08c3a2feb58d92e6cc952f6159605736b93603f3d332d1": {
+      "path": "internal/oracle/testdata/reflect_get/stop_prototype_class.a",
+      "ruling_task": "#zhgxzjg",
+      "lifting_task": "#0sps03r",
+      "stderr": "adamic: panic: a class instance's constructor isn't read by a run-time key yet (reading 'constructor')\n"
     }
   }
 }

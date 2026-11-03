@@ -17,11 +17,12 @@ enum adamic_dynamic_keyed_stop {
 	adamic_dynamic_keyed_stop_static_class,
 	adamic_dynamic_keyed_stop_runtime_value,
 	adamic_dynamic_keyed_stop_private,
+	adamic_dynamic_keyed_stop_proto,
 	adamic_dynamic_keyed_stop_error_property,
 	adamic_dynamic_keyed_stop_object_literal_getter,
 	adamic_dynamic_keyed_stop_setter_only,
 	adamic_dynamic_keyed_stop_method,
-	adamic_dynamic_keyed_stop_object_prototype,
+	adamic_dynamic_keyed_stop_class_constructor,
 };
 
 static const char *const adamic_dynamic_keyed_stop_messages[] = {
@@ -35,16 +36,15 @@ static const char *const adamic_dynamic_keyed_stop_messages[] = {
 	"a class's static properties aren't read by a run-time key yet",
 	"this runtime value's properties aren't read by a run-time key yet",
 	"a name beginning with # isn't read by a run-time key yet",
+	"__proto__ isn't read by a run-time key yet",
 	"an Error property Node sets and the native Error lacks isn't read yet",
 	"an object literal's getter isn't read by a run-time key yet",
 	"a setter without a getter isn't read by a run-time key yet",
 	"a method isn't read by a run-time key yet",
-	"an Object.prototype name isn't read by a run-time key yet",
+	"a class instance's constructor isn't read by a run-time key yet",
 };
 
-static const char *const adamic_dynamic_keyed_prototype_names[] = {
-	"constructor",
-	"__proto__",
+static const char *const adamic_dynamic_keyed_prototype_method_names[] = {
 	"toString",
 	"toLocaleString",
 	"valueOf",
@@ -64,6 +64,8 @@ static const char *const adamic_dynamic_keyed_error_names[] = {
 	"syscall",
 	"path",
 	"dest",
+	"toString",
+	"constructor",
 };
 
 #endif

@@ -34,7 +34,9 @@ func reflectGetFixture(t *testing.T, name string) string {
 // read_twice.a's string is freed under its holder and ASan reads freed memory; keyed_getter skipped
 // on an accessor, so getter.a's getter reads undefined; the Error message remap dropped, so
 // property_of.a's empty message reads undefined; record.c's number and boolean shapes swapped, so
-// records.a's booleans read as numbers.
+// records.a's booleans read as numbers; one closure dropped from union.c's prototype_methods, so
+// prototype_names.a reads that name as undefined; a closure made for each read in place of the
+// immortal one, so prototype_names.a's identities print false.
 func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ file, stdout string }{
@@ -43,6 +45,9 @@ func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 		{"getter.a", "getter: \"ENOENT\"\nabsent: undefined\n"},
 		{"records.a", "count: 3\nmissing: undefined\non: true\noff: false\nname: \"ada\"\nhere: 4\ngone: undefined\n"},
 		{"literal_method.a", "described\nfunction\n"},
+		{"prototype_object.a", "before\nfunction\n"},
+		{"prototype_record.a", "value\nfunction\n"},
+		{"prototype_names.a", prototypeNamesAnswers},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()
@@ -81,15 +86,31 @@ null: "Cannot read properties of null (reading 'code')"
 undefined: "Cannot read properties of undefined (reading 'code')"
 `
 
+// prototypeNamesAnswers is what prototype_names.a prints on Node.
+const prototypeNamesAnswers = `toString: function function
+toLocaleString: function function
+valueOf: function function
+hasOwnProperty: function function
+isPrototypeOf: function function
+propertyIsEnumerable: function function
+__defineGetter__: function function
+__defineSetter__: function function
+__lookupGetter__: function function
+__lookupSetter__: function function
+constructor: function function
+true
+true
+true
+`
+
 // reflectGetStops are the stop fixtures: what each prints before it stops, which stop and key, and
 // what Node prints running the source.
 var reflectGetStops = []struct{ file, stdout, stop, key, node string }{
 	{"stop_primitive.a", "before\n", "Primitive", "length", "before\nnumber\n"},
 	{"stop_private.a", "hidden\n", "Private", "#x", "hidden\nundefined\n"},
 	{"stop_method.a", "thing\n", "Method", "describe", "thing\nfunction\n"},
-	{"stop_prototype_object.a", "before\n", "ObjectPrototype", "toString", "before\nfunction\n"},
-	{"stop_prototype_record.a", "value\n", "ObjectPrototype", "constructor", "value\nfunction\n"},
-	{"stop_prototype_class.a", "thing\n", "ObjectPrototype", "toString", "thing\nfunction\n"},
+	{"stop_prototype_class.a", "thing\n", "ClassConstructor", "constructor", "thing\nfunction\n"},
+	{"stop_proto.a", "before\n", "Proto", "__proto__", "before\nobject\n"},
 	{"stop_error_stack.a", "before\n", "ErrorProperty", "stack", "before\nstring\n"},
 	{"stop_array.a", "before\n", "Array", "length", "before\nnumber\n"},
 	{"stop_literal_getter.a", "got\n", "ObjectLiteralGetter", "value", "got\nstring\n"},
@@ -110,8 +131,8 @@ func reflectGetStop(t *testing.T, stdout, stop, key string) run {
 
 // Each stop, on both backends, in the same words byte for byte. The private stop's mutant is
 // TestReflectGetPrivateMutantJavaScript's. stop_prototype_class.a's is the JavaScript helper finding a
-// class's accessors through adamicFindAccessor, which takes Object's toString for an accessor without
-// a getter, so that backend stops in the setter-only stop's words.
+// class's accessors through adamicFindAccessor, which takes Object's constructor for an accessor
+// without a getter, so that backend stops in the setter-only stop's words.
 func TestReflectGetStopsAlikeOnBothBackends(t *testing.T) {
 	t.Parallel()
 	for _, probe := range reflectGetStops {
