@@ -1260,6 +1260,9 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.ArrayIsArray:
 		a.value(expression.Value)
 		return value{}
+	case ir.RecordStorage:
+		a.value(expression.Value)
+		return value{}
 	case ir.TypeOf:
 		a.value(expression.Value)
 		return value{}

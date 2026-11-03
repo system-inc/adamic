@@ -31,6 +31,14 @@ func (l *lowering) recordReadType(node *ast.Node, read ir.Expression, here *chec
 	if recordTagObservation(node) {
 		return read, nil // These operations observe the runtime tag rather than unbox it.
 	}
+	return l.recordReadDeclared(node, read, here)
+}
+
+// recordReadDeclared is recordReadType's check of a value read out of a slot boxed as a union, held
+// to here, the type the read is declared or narrowed to, whatever observes it. A weak field read of
+// a record (weakFieldRead) is held by it too: its result is the field's representation, which a
+// typeof or an === undefined then compares, so there's no tag left to observe.
+func (l *lowering) recordReadDeclared(node *ast.Node, read ir.Expression, here *checker.Type) (ir.Expression, error) {
 	to, known := l.representation(here)
 	if !known || read.Type() != ir.Union || to == ir.Union {
 		return read, nil
@@ -72,6 +80,44 @@ func (l *lowering) recordReadType(node *ast.Node, read ir.Expression, here *chec
 		ir.StringConstant{Index: l.constant(", which a computed-key or index-signature write may have stored")},
 	}}
 	b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: message}}})
+	// typeof alone lets a 3 under 1 | 2, or Kind.C under Kind.A | Kind.B. Where the declared type is
+	// its literals alone (viewLiterals, the list a checked view holds a field to), a present value must
+	// be one of them; beside a member of its own representation (1 | number) the typeof is enough, and
+	// viewLiterals gives none. Lower's ruling on #1w8gvx9. A whole numeric enum is no closed list:
+	// numeric enums are open (docs/rulings.md, resolved October 19), so any number is one of its values,
+	// and only a strict subset of its members (ModuleKind.ESNext | ModuleKind.CommonJS) is held.
+	if allowed := l.viewLiterals(l.checker.GetNonNullableType(here)); len(allowed) != 0 && !l.openNumericEnumType(here) {
+		present := b.local("present", to.Present())
+		var member ir.Expression
+		for _, literal := range allowed {
+			equal := ir.Binary{Operator: ir.Equal, Left: b.read(present), Right: literal}
+			if member == nil {
+				member = equal
+			} else {
+				member = ir.Binary{Operator: ir.Or, Left: member, Right: equal}
+			}
+		}
+		shown := b.read(present)
+		switch to.Present() {
+		case ir.Number:
+			shown = ir.NumberToString{Value: shown}
+		case ir.Boolean:
+			shown = ir.BooleanToString{Value: shown}
+		}
+		missed := ir.Concat{Parts: []ir.Expression{
+			ir.StringConstant{Index: l.constant("field read failed: " + expression + " is not a " + declared + "; expected " + declared + ", found " + name + " ")},
+			shown,
+			ir.StringConstant{Index: l.constant(", which a computed-key or index-signature write may have stored")},
+		}}
+		membership := []ir.Statement{
+			ir.Declare{Local: present, Value: ir.Narrow{Value: value, To: to.Present()}},
+			ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: member}, Then: []ir.Statement{ir.Panic{Message: missed}}},
+		}
+		if l.includesUndefined(here) {
+			membership = []ir.Statement{ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: value}}, Then: membership}}
+		}
+		b.body = append(b.body, membership...)
+	}
 	return b.finish("record_declared_member", ir.Narrow{Value: value, To: to}), nil
 }
 

@@ -1,0 +1,13 @@
+// optional_plain.ts's read, in a .a file, stays NotYet with the reason it had before weak reads lowered
+// in .ts. .a is to refuse a record seen as a weak type at the relation, so a read that reaches here in
+// .a would be a hole in that rule. It reads a fixed object only: the read stops on its receiver's type,
+// before any record could be handed to it.
+interface Table { [key: string]: number | string; total: number }
+const table: Table = { total: 2 };
+table["overrideImportMode"] = 1;
+interface Options { readonly total?: number; readonly overrideImportMode?: 1 | 99 }
+function mode(options: Options): string {
+	return String(options.overrideImportMode);
+}
+for (const key of Object.keys(table)) console.log(key);
+console.log(mode({ total: 1, overrideImportMode: 99 }));

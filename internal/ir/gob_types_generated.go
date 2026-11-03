@@ -116,6 +116,7 @@ var gobTypes = []any{
 	RecordCall{},
 	RecordCoalesce{},
 	RecordLiteral{},
+	RecordStorage{},
 	RegExpCall{},
 	RegExpGroup{},
 	RegExpNew{},
