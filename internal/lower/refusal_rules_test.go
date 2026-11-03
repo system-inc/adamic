@@ -36,6 +36,7 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		"1900 castRefusal",
 		"1950 keptCheckDowncastRefusal",
 		"2000 recordStorageView",
+		"2050 classDeadZoneGap",
 		"2100 namespaceRefusal",
 		"2200 ambientRefusal",
 		"2300 operatorRefusal",
