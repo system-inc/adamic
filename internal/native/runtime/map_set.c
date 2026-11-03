@@ -60,8 +60,8 @@ static const adamic_field_kind result_kinds[][2] = {{adamic_field_boolean, adami
 static const adamic_shape result_shapes[] = {{2, result_names, result_scalar, NULL, result_kinds[0]}, {2, result_names, result_scalar, NULL, result_kinds[1]}, {2, result_names, result_reference, NULL, result_kinds[2]}};
 // An iterator's result is a plain object on Node, as the iterator itself isn't, so each result shape
 // is registered as a literal's is (union.c) and Object.prototype's names answer on it by a run-time
-// key. The scalar tags are zero, no evidence, as union.c's dynamic_slot reads them: a result's own
-// representation bytes vary with what it holds.
+// key. The scalar tags are zero, no evidence: a result's own representation bytes, written below,
+// vary with what it holds, and union.c's dynamic_slot reads those first.
 static const int result_types[2];
 static adamic_shape_types result_metadata[] = {{&result_shapes[0], result_types, NULL, false}, {&result_shapes[1], result_types, NULL, false}, {&result_shapes[2], result_types, NULL, false}};
 static const char *const pair_names[] = {"0", "1"};
