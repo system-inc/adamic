@@ -1,0 +1,79 @@
+// A class's toString and valueOf, through String and a template over an unknown (#09dvwny): with the
+// string hint toString runs first, a toString giving an object goes on to valueOf, one giving undefined
+// is taken, and with neither giving a primitive it's a TypeError. A class that declares no toString
+// gives "[object Object]", a valueOf alone notwithstanding.
+class Plain {
+	readonly size = 1;
+}
+class Named {
+	toString(): string {
+		return 'named';
+	}
+}
+class Child extends Named {
+	readonly extra = 2;
+}
+class Valued {
+	valueOf(): number {
+		return 7;
+	}
+}
+class Swapped {
+	toString(): Plain {
+		return new Plain();
+	}
+	valueOf(): number {
+		return 3;
+	}
+}
+class Missing {
+	toString(): string | undefined {
+		return undefined;
+	}
+	valueOf(): number {
+		return 9;
+	}
+}
+class Ordered {
+	toString(): string {
+		console.log('toString ran');
+		return 'string';
+	}
+	valueOf(): number {
+		console.log('valueOf ran');
+		return 5;
+	}
+}
+class Neither {
+	toString(): Plain {
+		return new Plain();
+	}
+	valueOf(): Plain {
+		return new Plain();
+	}
+}
+function show(value: unknown): void {
+	console.log(String(value));
+	console.log(`<${value}>`);
+}
+function templated(value: unknown): string {
+	return `<${value}>`;
+}
+show(new Plain());
+show(new Named());
+show(new Child());
+show(new Valued());
+show(new Swapped());
+show(new Missing());
+show(new Ordered());
+// What a catch takes is held as an Error, so it's printed through show's unknown.
+try {
+	show(new Neither());
+} catch (error) {
+	show(error);
+}
+try {
+	console.log(templated(new Neither()));
+} catch (error) {
+	show(error);
+}

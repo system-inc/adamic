@@ -1,0 +1,13 @@
+// An array of a union type holding only undefined stops as not yet (#09dvwny). Natively it's boxed
+// and could join, but an unboxed number | undefined array holding only undefined is the same to the
+// JavaScript backend, and natively that one doesn't say what its elements are, so both stop alike: the
+// scalar rule's over-stop, a cost rather than a hole. Node prints before, then a comma.
+type Item = string | undefined;
+const holes: Item[] = [];
+holes.push(undefined);
+holes.push(undefined);
+function show(value: unknown): void {
+	console.log(String(value));
+}
+console.log('before');
+show(holes);

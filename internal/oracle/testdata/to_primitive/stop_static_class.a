@@ -1,0 +1,9 @@
+// A class object viewed as unknown stops as not yet: Node prints the class's source (#09dvwny).
+class Counter {
+	static count = 1;
+}
+function show(value: unknown): void {
+	console.log(String(value));
+}
+console.log('before');
+show(Counter);

@@ -1,0 +1,8 @@
+// An array of numbers viewed as unknown stops as not yet: natively its elements are unboxed and don't
+// say they're numbers, so String's join stops on an array of only numbers, booleans, null or
+// undefined on both backends (#09dvwny). Node prints before, then 1,2,3.
+function show(value: unknown): void {
+	console.log(String(value));
+}
+console.log('before');
+show([1, 2, 3]);
