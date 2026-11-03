@@ -388,6 +388,12 @@ type lowering struct {
 	entriesRecordTypes      []*checker.Type
 	entriesRecordTypesKnown bool
 	recordGuardedReads      []recordGuardedRead
+	// mergedClassTypes, once mergedClassTypesKnown, are the instance types of the program's classes
+	// merged with an interface, and plainAsked each receiver id plainReceiver has judged
+	// (entries_records.go, #9jnjwrw).
+	mergedClassTypes      []*checker.Type
+	mergedClassTypesKnown bool
+	plainAsked            map[int]bool
 
 	// typeMapper is what the type parameters of the instantiation being lowered, and of those it's
 	// inside, stand for; instantiated is every class type an instantiation was made for (instantiate.go).
