@@ -5,7 +5,8 @@ package ir
 // or loop shutdown. Results are owned.
 // Environment assignment and delete mutate live process state, returning the assigned string
 // and true respectively. Every operation except raw output, environment operations and platform
-// reads, exists and the Stats/Date observations may throw.
+// reads, exists and the Stats/Date observations may throw. host_require_missing, a require of a module
+// that isn't installed, always throws: Node's MODULE_NOT_FOUND for its specifier.
 type NodeFSFile struct {
 	Operation string
 	Arguments []Expression

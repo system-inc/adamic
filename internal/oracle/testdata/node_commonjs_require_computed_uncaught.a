@@ -1,0 +1,13 @@
+// A require of a computed path no catch sees ends the program as an uncaught throw does, after
+// evaluating the path, with the Error naming it (no-javascript-plugins,
+// backend_divergences_test.go), where the source on Node, an ES module, has no require.
+import 'node:process';
+
+function pluginPath(): string {
+	console.log('resolving');
+	return './plugin.js';
+}
+
+console.log('before');
+require(pluginPath());
+console.log('unreached');
