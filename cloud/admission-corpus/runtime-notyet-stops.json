@@ -54,6 +54,42 @@
       "ruling_task": "#zhgxzjg",
       "lifting_task": "#0sps03r",
       "stderr": "adamic: panic: an Object.prototype name isn't read by a run-time key yet (reading 'constructor')\n"
+    },
+    "0ea13db1aebc123d0e4e0c4e1c9494e52ff8dc571a0bf9fdfdb7b4a685c25d58": {
+      "path": "internal/oracle/testdata/to_primitive/stop_boolean_array.a",
+      "ruling_task": "#09dvwny",
+      "lifting_task": "#0cmbkgt",
+      "stderr": "adamic: panic: converting an array of only numbers, booleans, null or undefined to a string is not yet lowered\n"
+    },
+    "d973403c9f1c49e9ac92e203f0dacf03f0bfdb47ca7253ea84033d87ad28d0e7": {
+      "path": "internal/oracle/testdata/to_primitive/stop_record_function.a",
+      "ruling_task": "#09dvwny",
+      "lifting_task": "#5k0tfr2",
+      "stderr": "adamic: panic: converting an object whose own toString is a function this program can't name to a string is not yet lowered\n"
+    },
+    "d81d33f7b1e353b862e4e67fa5789abc0a3c581de529c752eab5e4943df46883": {
+      "path": "internal/oracle/testdata/to_primitive/stop_scalar_array.a",
+      "ruling_task": "#09dvwny",
+      "lifting_task": "#0cmbkgt",
+      "stderr": "adamic: panic: converting an array of only numbers, booleans, null or undefined to a string is not yet lowered\n"
+    },
+    "42b291fb686148ceeddaa70593d3b49f3b31f13e3d9293dabf7b673912a9ed49": {
+      "path": "internal/oracle/testdata/to_primitive/stop_static_class.a",
+      "ruling_task": "#09dvwny",
+      "lifting_task": "#vwsqqt3",
+      "stderr": "adamic: panic: converting a class object to a string is not yet lowered\n"
+    },
+    "87ee5791f1bc60d3e5fbf419dc35ff3b0060d05e4d694d1e9bdbbc3de8256e51": {
+      "path": "internal/oracle/testdata/to_primitive/stop_undefined_array.a",
+      "ruling_task": "#09dvwny",
+      "lifting_task": "#0cmbkgt",
+      "stderr": "adamic: panic: converting an array of only numbers, booleans, null or undefined to a string is not yet lowered\n"
+    },
+    "fdf3e71b7278bca26b6acae346a9a37d901dfbf8b30609f8762698c13de83f80": {
+      "path": "internal/oracle/testdata/to_primitive/stop_union_numbers.a",
+      "ruling_task": "#09dvwny",
+      "lifting_task": "#0cmbkgt",
+      "stderr": "adamic: panic: converting an array of only numbers, booleans, null or undefined to a string is not yet lowered\n"
     }
   }
 }
