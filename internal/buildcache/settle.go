@@ -1792,11 +1792,12 @@ func leanSet(cache, nameKey, key string) bool {
 }
 
 // placeSettled puts a settled build's product under its key and returns where it is: a product already there (the same
-// bytes, from a build of the same reads) stays and the build's copy goes; an uncached build's directory on another
-// file system stays where it was built. It looks and places under the key's lock, as filled does, so a lookup fetching
-// the same key never loses its rename to this one, nor this one to it (#bcae1e2). cache is where the run writes: a
-// product already under the key in the build cache it reads through an output directory of its own is placed too, and
-// stays where it is; the lock, a rename and the rewritten <key>.inputs are the output directory's alone.
+// bytes, from a build of the same reads, which settledDifference checks and logs when it isn't) stays and the build's
+// copy goes; an uncached build's directory on another file system stays where it was built. It looks and places under
+// the key's lock, as filled does, so a lookup fetching the same key never loses its rename to this one, nor this one to
+// it (#bcae1e2). cache is where the run writes: a product already under the key in the build cache it reads through an
+// output directory of its own is placed too, and stays where it is; the lock, a rename and the rewritten <key>.inputs
+// are the output directory's alone.
 func placeSettled(cache, key string, entry journalEntry) string {
 	product := filepath.Join(cache, key)
 	pending := under(entry.Directory, filepath.Join(cache, "pending"))
@@ -1808,6 +1809,7 @@ func placeSettled(cache, key string, entry journalEntry) string {
 	placed, already := existingPlace(product)
 	switch {
 	case already:
+		settledDifference(key, placed, entry.Directory)
 		if pending {
 			os.RemoveAll(entry.Directory)
 		}
@@ -1822,6 +1824,18 @@ func placeSettled(cache, key string, entry journalEntry) string {
 	}
 	writeWhole(product+".inputs", []byte("name key "+entry.NameKey+"\n"+entry.Inputs))
 	return placed
+}
+
+// settledDifference compares a second copy of key, arriving while kept already holds the key, with the kept copy, and
+// logs one settle-difference line to $ADAMIC_BUILD_LOG naming the key and where they first differ (firstDifference) when
+// they differ. Two builds of the same reads that settle under one key should be the same bytes; when they aren't, the
+// build bakes in something its reads don't name, as a build directory in a binary, and the second copy is the one
+// witness of it, about to be dropped unread. It only reads and logs: which copy is kept, and every outcome, stays as it
+// was. A comparison that can't be read logs nothing, since nothing was found to differ.
+func settledDifference(key, kept, arriving string) {
+	if where, err := firstDifference(kept, arriving); err == nil && where != "" {
+		note("settle-difference %s %s", key, where)
+	}
 }
 
 // writeWhole writes content to path through a temporary file beside it, whose name starts with a dot as every scratch
