@@ -1,0 +1,17 @@
+agree  importServicePluginSync, error null: original {"threw":"TypeError","message":"Cannot read properties of null (reading 'stack')"}, adapted {"threw":"TypeError","message":"Cannot read properties of null (reading 'stack')"}
+agree  importServicePluginSync, error undefined: original {"threw":"TypeError","message":"Cannot read properties of undefined (reading 'stack')"}, adapted {"threw":"TypeError","message":"Cannot read properties of undefined (reading 'stack')"}
+agree  importServicePluginSync, a string: original {"value":"\"plugin failed\""}, adapted {"value":"\"plugin failed\""}
+agree  importServicePluginSync, an Error with stack: original {"value":"Error: plugin failed\n    at plugin (plugin.js:1:1)"}, adapted {"value":"Error: plugin failed\n    at plugin (plugin.js:1:1)"}
+agree  importServicePluginSync, an object with only message: original {"value":"only a message"}, adapted {"value":"only a message"}
+agree  importServicePluginSync, an object with neither: original {"value":"{\"name\":\"neither\"}"}, adapted {"value":"{\"name\":\"neither\"}"}
+agree  importServicePluginSync, an empty stack falls to message: original {"value":"the message"}, adapted {"value":"the message"}
+agree  importServicePluginSync, a number: original {"value":"42"}, adapted {"value":"42"}
+agree  importServicePluginAsync, error null: original {"threw":"TypeError","message":"Cannot read properties of null (reading 'stack')"}, adapted {"threw":"TypeError","message":"Cannot read properties of null (reading 'stack')"}
+agree  importServicePluginAsync, error undefined: original {"threw":"TypeError","message":"Cannot read properties of undefined (reading 'stack')"}, adapted {"threw":"TypeError","message":"Cannot read properties of undefined (reading 'stack')"}
+agree  importServicePluginAsync, a string: original {"value":"\"plugin failed\""}, adapted {"value":"\"plugin failed\""}
+agree  importServicePluginAsync, an Error with stack: original {"value":"Error: plugin failed\n    at plugin (plugin.js:1:1)"}, adapted {"value":"Error: plugin failed\n    at plugin (plugin.js:1:1)"}
+agree  importServicePluginAsync, an object with only message: original {"value":"only a message"}, adapted {"value":"only a message"}
+agree  importServicePluginAsync, an object with neither: original {"value":"{\"name\":\"neither\"}"}, adapted {"value":"{\"name\":\"neither\"}"}
+agree  importServicePluginAsync, an empty stack falls to message: original {"value":"the message"}, adapted {"value":"the message"}
+agree  importServicePluginAsync, a number: original {"value":"42"}, adapted {"value":"42"}
+16 of 16 agree

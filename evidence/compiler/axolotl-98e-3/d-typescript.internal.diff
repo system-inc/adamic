@@ -1,0 +1,52 @@
+--- adapted-c/built/local/typescript.internal.d.ts	2026-11-03 09:05:51.978386637 +0000
++++ adapted-e/built/local/typescript.internal.d.ts	2026-11-03 09:05:51.198386672 +0000
+@@ -3082,10 +3082,7 @@
+             error: undefined;
+         } | {
+             module: undefined;
+-            error: {
+-                stack?: string;
+-                message?: string;
+-            };
++            error: unknown;
+         };
+         /** @deprecated Use {@link ModuleImportResult} instead. */
+         type RequireResult = ModuleImportResult;
+@@ -13981,10 +13978,7 @@
+     } | {
+         module: undefined;
+         modulePath?: undefined;
+-        error: {
+-            stack?: string;
+-            message?: string;
+-        };
++        error: unknown;
+     };
+     interface CreateProgramOptions {
+         rootNames: readonly string[];
+@@ -16659,7 +16653,11 @@
+          */
+         createHash?(data: string): string;
+         /** This must be cryptographically secure. Only implement this method using `crypto.createHash("sha256")`. */
+-        createSHA256Hash?(data: string): string;
++        createSHA256Hash?:
++            | {
++                createSHA256Hash(data: string): string;
++            }["createSHA256Hash"]
++            | undefined;
+         getMemoryUsage?(): number;
+         exit(exitCode?: number): number | undefined;
+         /** @internal */ enableCPUProfiler?(path: string, continuation: () => void): boolean;
+@@ -16684,6 +16682,12 @@
+         close(): void;
+     }
+     let sys: System;
++    /** @internal */
++    function errorCode(error: unknown): string | undefined;
++    /** @internal */
++    function errorMessage(error: unknown): string | undefined;
++    /** @internal */
++    function propertyOf(value: unknown, key: string): unknown;
+     /**
+      * Determines whether a charCode corresponds to `/` or `\`.
+      *
