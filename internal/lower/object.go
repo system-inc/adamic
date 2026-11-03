@@ -659,7 +659,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			if l.recordMayReach(receiver) {
 				return nil, l.notYet(node, "a union or optional field read in a program with record storage")
 			}
-			l.recordGuardedReads = append(l.recordGuardedReads, recordGuardedRead{node: node, receiverTypeID: l.viewReceiverTypeID(receiver), name: name})
+			// The id the read is checked under, routed as the read is, or a routed read would look
+			// unchecked here and fail open (Lower's must on 148e6df3).
+			l.recordGuardedReads = append(l.recordGuardedReads, recordGuardedRead{node: node, receiverTypeID: l.viewFieldReceiverTypeID(node, receiver), name: name})
 		}
 		if of.IsMaybe() && optional {
 			// box?.size is number | undefined because box may be; the field itself is what's stored.
@@ -725,7 +727,8 @@ func (l *lowering) viewedField(node *ast.Node, property ir.Property) ir.Property
 	property.View = sourceExpression(node)
 	property.ViewWhere = l.program.Where(node)
 	if node.Kind == ast.KindPropertyAccessExpression {
-		property.ViewReceiverTypeID = l.viewReceiverTypeID(l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression))
+		receiver := l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression)
+		property.ViewReceiverTypeID = l.viewFieldReceiverTypeID(node, receiver)
 	}
 	if symbol := l.checker.GetSymbolAtLocation(node.Name()); symbol != nil {
 		declared := l.checker.GetTypeOfSymbol(symbol)
@@ -2077,7 +2080,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		if position >= 0 && position < len(elements) {
 			property.ViewTypeID = l.viewTypeID(elements[position])
 			property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
-			property.ViewReceiverTypeID = l.viewReceiverTypeID(receiver)
+			property.ViewReceiverTypeID = l.viewFieldReceiverTypeID(node, receiver)
 			property.ViewType = l.checker.TypeToString(elements[position])
 			property.ViewAllowed = l.viewLiterals(elements[position])
 			property.View = sourceExpression(node)

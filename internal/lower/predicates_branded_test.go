@@ -237,22 +237,19 @@ const s: Signature = { kind: 174, pos: 3, arity: "1", _declarationBrand: undefin
 		{"asserts over a union", `function assertTypeElement(n: Node): asserts n is TypeElement { if (kindOf(n) === 0) { throw new Error("no"); } }
 function show(x: PropertySignature | Identifier): void { assertTypeElement(x); console.log(x.typeText); }
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" }; show(i);`, "a checked predicate target TypeElement that narrows Identifier, which isn't its supertype"},
-		// A generic argument narrows to T & S, and its first read on the true side concretes to Node & S, an
-		// intersection no view covers, so the call is NotYet (Language's g1 to g3 on 7f4b7030). Mutant: the
-		// type-parameter guard dropped, and g1 lowers.
-		{"generic argument", `function show<T extends Node>(n: T): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
-const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const v: Node = w; show(v);`, "over a generic argument T"},
+		// A generic argument narrows to T & S, and its first read on the true side concretes to the instance's
+		// intersection. Here T is the object literal's own type, which S isn't assignable to, so the call is
+		// NotYet (one of Language's g1 to g3 on 7f4b7030). The other two, at Node inferred and given, and the
+		// generic object argument, g4 on 4a1fe092, read S intersected only with supertypes of S, so they're
+		// checked now (TestBrandedSupertypeGenericIntersection). Mutant: the type-parameter guard dropped, and
+		// this is NotYet by the wrong rule.
 		{"generic argument through a supertype", `function show<T extends Declaration>(n: T): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
 const w = { kind: 80, pos: 2, escapedText: "e", name: 5, _declarationBrand: undefined }; show(w);`, "over a generic argument T"},
-		{"generic argument given its type", `function show<T extends Node>(n: T): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
-const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show<Node>(w);`, "over a generic argument T"},
-		// A generic object type mentions its type parameter in an argument (Language's g4 and g5 on
-		// 4a1fe092). Mutant: the guard judged by the type's own flags, and g4 lowers.
-		{"generic object argument", `interface Holder<K extends number> { readonly kind: K; readonly pos: number; }
-function show<K extends number>(n: Holder<K>): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
-const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const v: Holder<number> = w; show(v);`, "over a generic argument Holder<K>"},
+		// g5 on 4a1fe092: its read concretes to Readonly<T> & TypeElement with T still unmapped (measured on
+		// Golem, Nov 1), so a member mentions a type parameter and the call stays NotYet (Adamic's ruling,
+		// Nov 1: B's unread rule).
 		{"generic readonly argument", `function show<T extends Node>(n: Readonly<T>): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
-const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const v: Node = w; show(v);`, "over a generic argument Readonly<T>"},
+const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const v: Node = w; show(v);`, "read on the true side as Readonly<T> & TypeElement"},
 		// An anonymous object holding a type parameter is held by the related-member rule, not the generic
 		// one, since mentionsTypeParameter doesn't walk members (Language's g7 on 59d9c44b, a should), and K,
 		// read from no reference or signature, is unread, so no mapper makes a new type of it. It's safe
@@ -407,35 +404,320 @@ console.log(String(firstPos(elements)));
 // tsc's tryCast and cast take a predicate as a function type and call it on a value of the type its claim
 // extends: `test(value)` claims TOut of a TIn, with TOut extends TIn. Each instance is judged where it's
 // lowered (core.ts:1779, Adamic's ruling on 810ce7d9). Both read the value, after `value !== undefined`,
-// as TIn & TOut, which concretes to Node & TypeElement, an intersection no view covers, so both are NotYet
-// at their own call, for isTypeElement and isClassElement alike, and so is TOut = TypeElement over a
-// PropertySignature | Node (Compiler's union pin). Reading S intersected with its supertypes through S's
-// view is its own change after this one (Adamic's ruling, Nov 1), which lowers these. Mutant: the read
-// compared as written, unconcreted, and the reason names the wrong type.
+// as TIn & TOut, which concretes to Node & TypeElement: S intersected only with a supertype of S, read
+// through S's checked view (brandedIntersection, Adamic's ruling, Nov 1). So both lower and agree with Node
+// for isTypeElement and isClassElement alike, and so does TOut = TypeElement over a PropertySignature |
+// Node (Compiler's union pin), whose result reads through TypeElement's view. A lie stops at its first bad
+// read: inside the helper's body when the body reads a field, as castName does, and through tryCast, whose
+// body reads nothing, at the caller's. Mutants: the read compared as written, unconcreted, and these are
+// NotYet; the intersection's reads not routed to S's view (brandedIntersectionReceiver), and castName's
+// value.name, read through Positioned & TypeElement, is NotYet as a widened read, honest or lying.
 func TestBrandedSupertypeTryCastIsJudgedPerInstance(t *testing.T) {
 	t.Parallel()
+	// castName is cast reading a field of its value after the narrowing. Its TIn holds undefined, so
+	// `value !== undefined` reads it as TIn & {}, which the claim narrows to TIn & {} & TOut, as cast's.
 	const helpers = `interface ClassElement extends Declaration { _classElementBrand: undefined; readonly name?: string; }
+interface Positioned { readonly pos: number; readonly name?: string; }
 function isClassElement(n: Node): n is ClassElement { const k = kindOf(n); return k === 172 || k === 174; }
 function tryCast<TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut | undefined { return value !== undefined && test(value) ? value : undefined; }
 function cast<TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut { if (value !== undefined && test(value)) { return value; } throw new Error("Invalid cast"); }
+function castName<TOut extends TIn, TIn extends Positioned | undefined = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut { if (value !== undefined && test(value)) { console.log(String(value.name)); return value; } throw new Error("Invalid cast"); }
 `
-	for _, probe := range []struct{ name, source, want string }{
+	for _, probe := range []struct{ name, source string }{
 		{"tryCast", `function show(n: Node): void { const e = tryCast(n, isTypeElement); console.log(e === undefined ? "no" : String(e.pos)); }
-show({ kind: 171, pos: 1 });`, "read on the true side as Node & TypeElement"},
+show({ kind: 171, pos: 1 }); show({ kind: 80, pos: 2 });`},
 		{"tryCast class element", `function show(n: Node): void { const c = tryCast(n, isClassElement); console.log(c === undefined ? "no" : String(c.pos)); }
-show({ kind: 172, pos: 2 });`, "read on the true side as Node & ClassElement"},
+show({ kind: 172, pos: 2 }); show({ kind: 80, pos: 3 });`},
 		{"cast", `const a = { kind: 171, pos: 1, name: "a", typeText: "t" };
-console.log(String(cast(a as Node, isTypeElement).pos));`, "read on the true side as Node & TypeElement"},
+const e = cast(a as Node, isTypeElement); console.log(String(e.pos) + " " + String(e.name));`},
+		{"cast class element", `const a = { kind: 172, pos: 4, name: "c" };
+const c = cast(a as Node, isClassElement); console.log(String(c.pos) + " " + String(c.name));`},
+		{"castName", `const a = { kind: 171, pos: 1, name: "a", typeText: "t" };
+console.log(String(castName(a as Node, isTypeElement).pos));`},
 		{"union", `const a = { kind: 171, pos: 1, name: "a", typeText: "t" };
 const p: PropertySignature | Node = a;
-const u = tryCast(p, isTypeElement); console.log(u === undefined ? "no" : String(u.name));`, "read on the true side as"},
+const u = tryCast(p, isTypeElement); console.log(u === undefined ? "no" : String(u.name));`},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			_, err := lowerTypeScriptAssertionSource(t, brandedPrelude+helpers+probe.source)
+			lowersAndAgreesWithNodeAs(t, brandedPrelude+helpers+probe.source, ".ts")
+		})
+	}
+	const lie = `const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const n: Node = w;
+`
+	for _, probe := range []struct{ name, source, stderr string }{
+		{"castName lie", `console.log(String(castName(n, isTypeElementLie).pos));`, "adamic: panic: field read failed: value.name matches no member of string | undefined"},
+		{"tryCast lie", `const e = tryCast(n, isTypeElementLie); console.log(e === undefined ? "no" : String(e.name));`, "adamic: panic: field read failed: e.name matches no member of string | undefined"},
+		{"union lie", `const p: PropertySignature | Node = n; const u = tryCast(p, isTypeElementLie); console.log(u === undefined ? "no" : String(u.name));`, "adamic: panic: field read failed: u.name matches no member of string | undefined"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			brandedStops(t, brandedPrelude+helpers+lie+probe.source, probe.stderr)
+		})
+	}
+}
+
+// A generic argument narrows to T & S, which concretes to the instance's own intersection. At T = Node,
+// Declaration, or another supertype of S whose every field is S's, it's S intersected only with supertypes
+// of S, read through S's view, so an honest value agrees with Node and a lie stops at the read (Language's
+// g1 at Node, and its g4 at Holder<number>, Adamic's ruling, Nov 1). At T = PropertySignature, a subtype
+// of S, at T = Identifier, which S isn't assignable to, at T = Named, whose name is required where S's is
+// optional, and at T = Bag, whose index signature an interface S has no implicit one for, the
+// intersection holds a member that isn't a supertype, so the call stays NotYet. So it does at T = Lettered,
+// whose optional a S lacks, at T = Present, whose name S has as an optional field of the same type, and,
+// for a claim of Shape, a type literal's alias S that does have an implicit index signature, at T = Bag,
+// whose index signature is no property (brandedSupertypeMember, ruled Nov 2). Mutants: any member let
+// through, and g1 at PropertySignature, Identifier and Named lower; comparability in place of
+// assignability, and g1 at Present lowers; the reads not routed to S's view, and the honest g1 is NotYet
+// as a widened read; the property-subset test dropped, and g1 at Lettered lowers; the signature test
+// dropped, and Shape at Bag lowers.
+func TestBrandedSupertypeGenericIntersection(t *testing.T) {
+	t.Parallel()
+	const g1 = `function show<T extends Node>(n: T): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
+`
+	const honest = `function show<T extends Node>(n: T): void { if (isTypeElement(n)) { console.log(String(n.name)); } else { console.log("no"); } }
+`
+	lowersAndAgreesWithNodeAs(t, brandedPrelude+honest+`const w = { kind: 171, pos: 2, name: "a" }; const v: Node = w; show(v);
+const x = { kind: 80, pos: 3 }; const y: Node = x; show(y);
+`, ".ts")
+	const lie = `const w = { kind: 80, pos: 2, escapedText: "e", name: 5 };
+`
+	for _, probe := range []struct{ name, source string }{
+		{"g1 at Node", g1 + `const v: Node = w; show(v);`},
+		{"g1 given Node", g1 + `show<Node>(w);`},
+		{"g4 at Holder<number>", `interface Holder<K extends number> { readonly kind: K; readonly pos: number; }
+function show<K extends number>(n: Holder<K>): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
+const v: Holder<number> = w; show(v);`},
+		{"g1 at Declaration", `function show<T extends Declaration>(n: T): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
+const d = { kind: 80, pos: 2, _declarationBrand: undefined, name: 5 }; const v: Declaration = d; show(v);`},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			brandedStops(t, brandedPrelude+lie+probe.source, "adamic: panic: field read failed: n.name matches no member of string | undefined")
+		})
+	}
+	// Lettered's a is optional, so TypeElement, which lacks it, is assignable to Lettered. On 021e43f3 the
+	// honest g1 at Lettered lowered and read x.a raw through TypeElement's id, unchecked (Pupa, Nov 2). A
+	// lying a can't be given a Lettered today: method bivariance, JSON.parse, a cast through unknown and
+	// any are each refused before this rule is reached, so the honest program is the pin.
+	const lettered = `interface Lettered extends Node { readonly a?: string; }
+function show<T extends Lettered>(x: T): void { if (isTypeElementLie(x)) { console.log(String(x.a)); } }
+`
+	for _, probe := range []struct{ name, source, want string }{
+		{"g1 at PropertySignature", g1 + `const p: PropertySignature = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a", typeText: "t" }; show(p);`, "read on the true side as PropertySignature & TypeElement"},
+		{"g1 at Identifier", g1 + `const i: Identifier = { kind: 80, pos: 2, escapedText: "e" }; show(i);`, "read on the true side as Identifier & TypeElement"},
+		{"g1 at Named", `interface Named extends Node { readonly name: string; }
+` + g1 + `const m: Named = { kind: 80, pos: 2, name: "m" }; show(m);`, "read on the true side as Named & TypeElement"},
+		{"g1 at Lettered", lettered + `const w = { kind: 80, pos: 2, a: "x" }; const v: Lettered = w; show(v);`, "read on the true side as Lettered & TypeElement"},
+		{"g1 at Bag", `interface Bag extends Node { [k: string]: unknown; }
+function show<T extends Bag>(n: T): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
+const b: Bag = { kind: 80, pos: 2 }; show(b);`, "read on the true side as Bag & TypeElement"},
+		{"g1 at Present", `interface Present extends Node { readonly name: string | undefined; }
+` + g1 + `const q: Present = { kind: 80, pos: 2, name: "q" }; show(q);`, "read on the true side as Present & TypeElement"},
+		{"Shape at Bag", `type Shape = { readonly kind: number; readonly pos: number; _declarationBrand: undefined; _shapeBrand: undefined; readonly name?: string };
+function isShapeLie(n: Node): n is Shape { return kindOf(n) !== 0; }
+interface Bag extends Node { [k: string]: unknown; }
+function show<T extends Bag>(n: T): void { if (isShapeLie(n)) { console.log(String(n.name)); } }
+const b: Bag = { kind: 80, pos: 2 }; show(b);`, "read on the true side as Bag & Shape"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerTypeScriptAssertionSource(t, brandedPrelude+probe.source)
 			var pending *NotYet
 			if !errors.As(err, &pending) || !strings.Contains(err.Error(), probe.want) {
 				t.Fatalf("want NotYet with %q, got %v", probe.want, err)
+			}
+		})
+	}
+}
+
+// brandedIntersectionReceiver routes a read to the one branded member every other member is a supertype
+// of, so with two branded members it's the narrower or neither (Compiler, on 021e43f3). TypeElement &
+// ClassElement holds two that neither is a supertype of the other, so the receiver stays the intersection
+// and x.name, with both views live, is no checked read: a plain one, since x holds only an allocation no
+// view admitted, and the program agrees with Node. MethodLike extends TypeElement, both branded, so g1's
+// read through TypeElement & MethodLike goes through MethodLike's view, which checks arity, and a lie stops
+// there. Mutant: the receiver takes the first branded member found, and TypeElement & ClassElement's read
+// is checked, and MethodLike's arity is read through TypeElement, NotYet as a widened read.
+func TestBrandedSupertypeIntersectionReceiver(t *testing.T) {
+	t.Parallel()
+	program := lowersAndAgreesWithNodeAs(t, brandedPrelude+`interface ClassElement extends Declaration { _classElementBrand: undefined; readonly name?: string; }
+function isClassElementLie(n: Node): n is ClassElement { return kindOf(n) !== 0; }
+function show(n: Node): void { if (isTypeElementLie(n)) { console.log(String(n.pos)); } if (isClassElementLie(n)) { console.log(String(n.pos)); } }
+function nameOf(x: TypeElement & ClassElement): string { return String(x.name); }
+const n: Node = { kind: 2, pos: 3 }; show(n);
+const b: TypeElement & ClassElement = { kind: 1, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, _classElementBrand: undefined, name: "b" };
+console.log(nameOf(b));
+`, ".ts")
+	reads := 0
+	inspect := func(node any) bool {
+		if read, ok := node.(ir.Property); ok && read.Name == "name" {
+			reads++
+			if program.CheckedField(read.ViewReceiverTypeID, read.Name) {
+				t.Errorf("x.name through TypeElement & ClassElement is a checked read of receiver %d", read.ViewReceiverTypeID)
+			}
+		}
+		return true
+	}
+	walk(program.Main, inspect)
+	for _, function := range program.Functions {
+		walk(function.Body, inspect)
+	}
+	if reads != 1 {
+		t.Fatalf("want the one read of name, x.name, found %d", reads)
+	}
+	brandedStops(t, brandedPrelude+`interface MethodLike extends TypeElement { _methodLikeBrand: undefined; readonly arity?: number; }
+function isMethodLikeLie(n: Node): n is MethodLike { return kindOf(n) !== 0; }
+function show<T extends TypeElement>(n: T): void { if (isMethodLikeLie(n)) { console.log(String(n.arity)); } }
+const w = { kind: 80, pos: 2, _declarationBrand: undefined, _typeElementBrand: undefined, name: "m", arity: "x" }; const e: TypeElement = w; show(e);
+`, "adamic: panic: field read failed: n.arity matches no member of number | undefined")
+}
+
+// Two branded members each a supertype of the other, TypeElement and Twin2 with the same fields, both
+// qualify, so brandedIntersectionReceiver routes a declared TypeElement & Twin2 to its first member and
+// Twin2 & TypeElement to its own first, a different id. The outcome is the same either way with both views
+// live, and that's what's pinned, never the id: x.name is a checked read, an honest value agrees with Node,
+// and a lie stops with the same message on sanitized native and the JavaScript backend (probed on Pupa,
+// Nov 2; Compiler's accept). Mutant: the routing removed, and each lie is NotYet as a widened read.
+func TestBrandedSupertypeMutualIntersectionOrder(t *testing.T) {
+	t.Parallel()
+	const twin = `interface Twin2 extends Declaration { _typeElementBrand: undefined; readonly name?: string; }
+function isTwin2Lie(n: Node): n is Twin2 { return kindOf(n) !== 0; }
+function reg(n: Node): number { if (isTwin2Lie(n)) { return n.pos; } return 0; }
+const r: Node = { kind: 3, pos: 3 }; reg(r);
+function show(n: Node): void { if (isTypeElementLie(n)) { console.log(nameOf(n)); } }
+`
+	// reg puts Twin2's view in the program and prints nothing, since a stop must come before any output.
+	for _, order := range []string{"TypeElement & Twin2", "Twin2 & TypeElement"} {
+		t.Run(order, func(t *testing.T) {
+			t.Parallel()
+			source := brandedPrelude + twin + "function nameOf(x: " + order + "): string { return String(x.name); }\n"
+			program := lowersAndAgreesWithNodeAs(t, source+`const w = { kind: 171, pos: 2, name: "a" }; const v: Node = w; show(v);
+`, ".ts")
+			reads := 0
+			inspect := func(node any) bool {
+				if read, ok := node.(ir.Property); ok && read.Name == "name" {
+					reads++
+					if !program.CheckedField(read.ViewReceiverTypeID, read.Name) {
+						t.Errorf("x.name through %s isn't a checked read", order)
+					}
+				}
+				return true
+			}
+			walk(program.Main, inspect)
+			for _, function := range program.Functions {
+				walk(function.Body, inspect)
+			}
+			if reads != 1 {
+				t.Fatalf("want the one read of name, x.name, found %d", reads)
+			}
+			brandedStops(t, source+`const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const v: Node = w; show(v);
+`, "adamic: panic: field read failed: x.name matches no member of string | undefined")
+		})
+	}
+}
+
+// Only a read is routed to S's view. A write through S intersected with its supertypes keeps the
+// intersection's own id, since S's checked write checks a slot a value admitted as S needn't have: routed,
+// Language's y4 stopped at x.name = "w" with "<write>.name is not initialized" on both backends where Node
+// prints w (Optimizer's ruling, Nov 2). Mut's name is optional and Branded's value has none, or has "a".
+// Unrouted, the write is a plain one, and with #krv1hgh on main a plain write to an optional field some
+// literal left out is NotYet at the write, so both y4 rows are NotYet there, "writing a possibly absent
+// optional own field", natively and on the JavaScript backend alike (Language, merged on main 24616705,
+// Nov 2). Before #krv1hgh the plain write reached main's missing slot and native panicked. A
+// required field, MutCount's count over Counted, always has its slot: its write stays a plain one and
+// agrees on both backends, and it isn't the widened NotYet, since checkViewWidenedReads weighs reads,
+// never writes (Pupa, Nov 2). Mutant: the four write sites routed again, and the required field's write is
+// routed to the checked write.
+func TestBrandedSupertypeWriteIsNotRouted(t *testing.T) {
+	t.Parallel()
+	const y4 = `interface Mut extends Node { name?: string; }
+function show<T extends Mut>(x: T): void { if (isTypeElement(x)) { x.name = "w"; console.log(String(x.name)); } }
+type Branded = Mut & { _declarationBrand: undefined; _typeElementBrand: undefined };
+`
+	const counted = `interface Counted extends Declaration { _countedBrand: undefined; count: number; }
+function isCountedLie(n: Node): n is Counted { return kindOf(n) !== 0; }
+interface MutCount extends Node { count: number; }
+function show<T extends MutCount>(x: T): void { if (isCountedLie(x)) { x.count = 7; console.log(String(x.count)); } }
+`
+	for _, probe := range []struct {
+		name, source, field, node string
+		notYet                    bool
+	}{
+		{"y4", y4 + `const v: Branded = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined };
+const mv: Mut = v; show(mv);`, "name", "w\n", true},
+		{"y4 holding a name", y4 + `const v: Branded = { kind: 171, pos: 1, _declarationBrand: undefined, _typeElementBrand: undefined, name: "a" };
+const mv: Mut = v; show(mv);`, "name", "w\n", true},
+		{"required field", counted + `const w = { kind: 5, pos: 1, count: 3 }; const m: MutCount = w; show(m);`, "count", "7\n", false},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			source := brandedPrelude + probe.source
+			if probe.notYet {
+				_, err := lowerTypeScriptAssertionSource(t, source)
+				var pending *NotYet
+				if !errors.As(err, &pending) || !strings.Contains(err.Error(), "writing a possibly absent optional own field") {
+					t.Fatalf("want NotYet at the write, writing a possibly absent optional own field, got %v", err)
+				}
+				return
+			}
+			program := lowersAndAgreesWithNodeAs(t, source, ".ts")
+			if code, out, errs := brandedNative(t, program); code != 0 || out != probe.node || errs != "" {
+				t.Fatalf("sanitized native exit %d, stdout %q, stderr %.300q where Node prints %q", code, out, errs, probe.node)
+			}
+			reads, writes := 0, 0
+			inspect := func(node any) bool {
+				if read, ok := node.(ir.Property); ok && read.Name == probe.field {
+					reads++
+					if !program.CheckedField(read.ViewReceiverTypeID, read.Name) {
+						t.Errorf("x.%s's read isn't checked through the branded supertype's view", probe.field)
+					}
+				}
+				if write, ok := node.(ir.SetProperty); ok && write.Name == probe.field {
+					writes++
+					if program.CheckedField(write.ViewReceiverTypeID, write.Name) {
+						t.Errorf("the write of x.%s is routed to the branded supertype's checked write", probe.field)
+					}
+				}
+				return true
+			}
+			walk(program.Main, inspect)
+			for _, function := range program.Functions {
+				walk(function.Body, inspect)
+			}
+			if reads != 1 || writes != 1 {
+				t.Fatalf("want one read and one write of %s, found %d and %d", probe.field, reads, writes)
+			}
+		})
+	}
+}
+
+// A union or optional field read in a program with record storage is NotYet when a view registered its
+// field (rule a, checkRecordGuardedReads), and the guard asks the id the read is checked under: a read
+// through Sized & Node is routed to Sized's view, so it's held as one through Sized is. Asking the raw id,
+// 148e6df3 lowered the routed read where the plain one stopped (Lower's must, probed on Pupa, Nov 2).
+// Mutant: the record guard back on the raw id, and the routed reads lower.
+func TestBrandedSupertypeRecordGuardIsRouted(t *testing.T) {
+	t.Parallel()
+	const records = `const counts: Record<string, number> = {};
+counts["a"] = 1;
+interface Sized extends Declaration { _sizedBrand: undefined; readonly size?: number; readonly label: string | number; }
+function isSizedLie(n: Node): n is Sized { return kindOf(n) !== 0; }
+`
+	const body = ` { if (isSizedLie(n)) { console.log(n.size === undefined ? "none" : String(n.size)); console.log(String(n.label)); } }
+`
+	for _, probe := range []struct{ name, show, value string }{
+		{"plain honest", "function show(n: Node): void", `{ kind: 80, pos: 2, size: 3, label: "x" }`},
+		{"plain lying", "function show(n: Node): void", `{ kind: 80, pos: 2, size: "big", label: true }`},
+		{"routed honest", "function show<T extends Node>(n: T): void", `{ kind: 80, pos: 2, size: 3, label: "x" }`},
+		{"routed lying", "function show<T extends Node>(n: T): void", `{ kind: 80, pos: 2, size: "big", label: true }`},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerTypeScriptAssertionSource(t, brandedPrelude+records+probe.show+body+"const w = "+probe.value+"; const v: Node = w; show(v);\nconsole.log(String(counts[\"a\"]));\n")
+			var pending *NotYet
+			if !errors.As(err, &pending) || pending.What != "a union or optional field read in a program with record storage" {
+				t.Fatalf("want NotYet at the n.size read, held by record storage, got %v", err)
 			}
 		})
 	}

@@ -83,7 +83,7 @@ func (l *lowering) checkViewCopies() error {
 // checkedViewType is the view receiver type a copied value's type is, or holds as a union or
 // intersection member, or nil.
 func (l *lowering) checkedViewType(copied *checker.Type, receivers map[int]bool) *checker.Type {
-	if receivers[l.viewReceiverTypeID(copied)] {
+	if receivers[l.viewFieldReceiverTypeID(nil, copied)] {
 		return copied
 	}
 	copied = l.checker.GetNonNullableType(l.concrete(copied))

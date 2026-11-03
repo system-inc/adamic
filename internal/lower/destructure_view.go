@@ -52,7 +52,7 @@ func (l *lowering) refuseIncompatibleDestructuredView(pattern, initializer *ast.
 			continue
 		}
 		field := name.Text()
-		if !l.checkedViewReceiverField(receiver, field) {
+		if !l.checkedViewReceiverField(nil, receiver, field) {
 			continue
 		}
 		targetField, sourceField := l.checker.GetPropertyOfType(receiver, field), l.checker.GetPropertyOfType(actual, field)
