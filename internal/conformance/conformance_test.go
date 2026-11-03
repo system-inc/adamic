@@ -8,26 +8,37 @@
 //	// Expect: refused <a phrase the refusal must say>
 //	// Expect: notyet <a phrase the not yet must say>
 //	// Expect: lowers
+//	// Expect: panics <a phrase the panic must say>
 //
 // A refused case must be refused (lower.Refused, a promise about the language), never only not yet lowered
 // (lower.NotYet, a promise about stage 0), and the refusal must say the phrase. A not yet case is the other promise:
 // something the language means to admit, so a refusal there is as wrong as a lowering. A case that lowers is the sound
 // sibling of a refusal: the fix the refusal names, held to compile, so a refusal that grew to swallow its own fix
 // goes red too. A case whose spec phrase docs/0.1.md no longer says goes red, so the spec and the suite move together.
+//
+// A panics case pins a Check: an inserted run-time check, where Node runs on or stops otherwise. It must lower, and
+// its program, run on the JavaScript backend, must exit 70 with "adamic: panic: <phrase>" on stderr, after printing
+// only what the source printed on Node up to there. The JavaScript backend alone is run: native is held to it by the
+// oracle's agreement families, and a native build per case would make this package's unit heavy.
 package conformance
 
 import (
 	"bufio"
+	"bytes"
 	"context"
 	"errors"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 
+	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // outcome is what lowering a case must end in.
@@ -37,6 +48,7 @@ const (
 	lowers outcome = iota
 	refused
 	notYet
+	panics
 )
 
 // expectation is what a case's header promises.
@@ -71,6 +83,8 @@ func readExpectation(path string) (expectation, error) {
 			found.outcome, found.says, expected = refused, strings.TrimPrefix(comment, "Expect: refused "), true
 		case strings.HasPrefix(comment, "Expect: notyet "):
 			found.outcome, found.says, expected = notYet, strings.TrimPrefix(comment, "Expect: notyet "), true
+		case strings.HasPrefix(comment, "Expect: panics "):
+			found.outcome, found.says, expected = panics, strings.TrimPrefix(comment, "Expect: panics "), true
 		}
 	}
 	if err := scanner.Err(); err != nil {
@@ -98,6 +112,11 @@ func judge(promise expectation, spec string, lowered error) string {
 		if !errors.As(lowered, &later) {
 			return fmt.Sprintf("the spec promises a not yet saying %q, and stage 0 gave %v", promise.says, lowered)
 		}
+	case panics:
+		if lowered != nil {
+			return fmt.Sprintf("the spec promises a panic saying %q at run time, and stage 0 didn't lower it: %v", promise.says, lowered)
+		}
+		return ""
 	default:
 		if lowered != nil {
 			return fmt.Sprintf("the spec promises this lowers, and stage 0 says: %v", lowered)
@@ -108,6 +127,59 @@ func judge(promise expectation, spec string, lowered error) string {
 		return fmt.Sprintf("stage 0 kept the promise's kind, but without saying %q: %v", promise.says, lowered)
 	}
 	return ""
+}
+
+// run is what a program printed and how it ended.
+type run struct {
+	stdout, stderr string
+	exit           int
+}
+
+// judgeRun says how a panics case's run broke its promise, given its JavaScript backend run and the source's run on
+// Node, or "" when it kept it: exit 70, the panic saying the phrase, and nothing printed that Node didn't print first.
+func judgeRun(promise expectation, backend, source run) string {
+	if backend.exit != 70 {
+		return fmt.Sprintf("the spec promises a panic saying %q, and the JavaScript backend exited %d (stderr %q)", promise.says, backend.exit, backend.stderr)
+	}
+	if !strings.Contains(backend.stderr, "adamic: panic: "+promise.says) {
+		return fmt.Sprintf("the JavaScript backend panicked without saying %q: %q", promise.says, backend.stderr)
+	}
+	if !strings.HasPrefix(source.stdout, backend.stdout) {
+		return fmt.Sprintf("the JavaScript backend printed %q before its panic, which isn't what Node printed first: %q", backend.stdout, source.stdout)
+	}
+	return ""
+}
+
+// runOnNode runs path through oracle/node.mjs, as the oracle runs a source or a JavaScript backend's output.
+func runOnNode(t *testing.T, path string) run {
+	t.Helper()
+	runner, err := filepath.Abs(filepath.Join("..", "..", "oracle", "node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	node, err := toolchain.Path("node")
+	if err != nil {
+		t.Fatal(err)
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, node, "--disable-warning=ExperimentalWarning", runner, path)
+	command.Env = toolchain.Env()
+	var stdout, stderr bytes.Buffer
+	command.Stdout, command.Stderr = &stdout, &stderr
+	err = command.Run()
+	if ctx.Err() != nil {
+		t.Fatalf("Node %s: %v", path, ctx.Err())
+	}
+	exit := 0
+	if err != nil {
+		var failure *exec.ExitError
+		if !errors.As(err, &failure) {
+			t.Fatalf("Node %s: %v", path, err)
+		}
+		exit = failure.ExitCode()
+	}
+	return run{stdout.String(), stderr.String(), exit}
 }
 
 func TestEveryCaseKeepsTheSpecsPromise(t *testing.T) {
@@ -142,8 +214,18 @@ func TestEveryCaseKeepsTheSpecsPromise(t *testing.T) {
 			if err != nil {
 				t.Fatalf("Load: %v (a case must be TypeScript tsc accepts; refusing it is Adamic's job)", err)
 			}
-			_, lowered := lower.Lower(context.Background(), program)
-			if broken := judge(promise, string(spec), lowered); broken != "" {
+			lowered, err := lower.Lower(context.Background(), program)
+			if broken := judge(promise, string(spec), err); broken != "" {
+				t.Fatal(broken)
+			}
+			if promise.outcome != panics {
+				return
+			}
+			generated := filepath.Join(t.TempDir(), "generated.mjs")
+			if err := os.WriteFile(generated, []byte(javascript.JavaScript(lowered)), 0o644); err != nil {
+				t.Fatal(err)
+			}
+			if broken := judgeRun(promise, runOnNode(t, generated), runOnNode(t, absolute)); broken != "" {
 				t.Error(broken)
 			}
 		})
@@ -177,11 +259,44 @@ func TestTheJudgeTellsAKeptPromiseFromABrokenOne(t *testing.T) {
 		{"refused where not yet was promised", expectation{spec: "Decorators", outcome: notYet, says: "a decorator"}, refusal, false},
 		{"lowered where not yet was promised", expectation{spec: "Decorators", outcome: notYet, says: "a decorator"}, nil, false},
 		{"a not yet saying something else", expectation{spec: "Decorators", outcome: notYet, says: "a getter"}, later, false},
+		{"a panic case lowered", expectation{spec: "Decorators", outcome: panics, says: "index"}, nil, true},
+		{"a panic case refused", expectation{spec: "Decorators", outcome: panics, says: "index"}, refusal, false},
+		{"a panic case not yet lowered", expectation{spec: "Decorators", outcome: panics, says: "index"}, later, false},
 	} {
 		t.Run(row.name, func(t *testing.T) {
 			t.Parallel()
 			if broken := judge(row.promise, spec, row.lowered); (broken == "") != row.kept {
 				t.Errorf("kept %v, judge said %q", row.kept, broken)
+			}
+		})
+	}
+}
+
+// The run judge on a panics case's runs, kept and broken. Each row is a mutant of judgeRun: a clean exit taken for a
+// panic, another stop's exit taken for a panic, a panic saying another phrase, and a backend that printed something
+// Node didn't print first.
+func TestTheRunJudgeTellsAPanicFromAnythingElse(t *testing.T) {
+	t.Parallel()
+	promise := expectation{spec: "Array writes", outcome: panics, says: "index -1 is outside an array of length 3"}
+	panicked := run{"before\n", "adamic: panic: index -1 is outside an array of length 3\n", 70}
+	node := run{"before\nafter\n", "", 0}
+	for _, row := range []struct {
+		name            string
+		backend, source run
+		kept            bool
+	}{
+		{"a panic saying its phrase after Node's first lines", panicked, node, true},
+		{"a panic where Node stops too", panicked, run{"before\n", "RangeError\n", 1}, true},
+		{"a clean exit", run{"before\nafter\n", "", 0}, node, false},
+		{"an uncaught throw's exit", run{"before\n", panicked.stderr, 1}, node, false},
+		{"a panic saying something else", run{"before\n", "adamic: panic: index 9 is outside an array of length 3\n", 70}, node, false},
+		{"the phrase without adamic's panic", run{"before\n", "index -1 is outside an array of length 3\n", 70}, node, false},
+		{"printed what Node didn't", run{"other\n", panicked.stderr, 70}, node, false},
+	} {
+		t.Run(row.name, func(t *testing.T) {
+			t.Parallel()
+			if broken := judgeRun(promise, row.backend, row.source); (broken == "") != row.kept {
+				t.Errorf("kept %v, judgeRun said %q", row.kept, broken)
 			}
 		})
 	}
