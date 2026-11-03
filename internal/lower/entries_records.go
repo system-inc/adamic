@@ -356,3 +356,90 @@ func (l *lowering) checkRecordGuardedReads() error {
 	}
 	return nil
 }
+
+// weakFieldRead is a union or optional field read, in a .ts file, whose receiver a record may be. tsc
+// lets a record be assigned to a weak type (every field optional) whatever its value type, so a
+// record's table can arrive where a fixed object's slot is read, and a slot read of it would be wrong.
+// The receiver's storage decides as the read runs, in a helper that takes the receiver once
+// (weak_field_read). A fixed object reads its slot as any field read does (fixedFieldRead). A record
+// reads its key, an absent one undefined as Node reads it, and the value is held to the field's type
+// by the check every record read takes (recordReadDeclared), so a string under a field of 1 | 2 stops
+// there, named, and is never read as a number. Any other heap (a class instance, an Error, an array, a
+// Map, a function) stops loudly by name and never reaches the slot read. A nullish receiver under ?.
+// reads undefined, as the slot read does. Where the check can't hold the field's type (an object or
+// an array member) or makes none (a field held as a Union), the read stays NotYet. The storage test and the value check are each a checked
+// site in the report --explain-checks prints.
+func (l *lowering) weakFieldRead(node *ast.Node, object ir.Expression, name string, of ir.Type, optional bool) (ir.Expression, error) {
+	b := l.libraryArrayBuilder([]ir.Expression{object})
+	// The helper's index is reserved now, so a helper the record's check makes takes the next one, as
+	// expression.go's prefix_update reserves its own.
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: "weak_field_read", Returns: of})
+	receiver := b.read(b.parameters[0])
+	slot, err := l.fixedFieldRead(node, receiver, name, of, optional)
+	if err != nil {
+		return nil, err
+	}
+	// The fixed read runs only where the storage test found no record, so a record that writes a field
+	// of this name mustn't make it a checked view read (readiness keeps view data for a record's field
+	// names, CheckedField's bare name), which a fixed object's optional field can't be emitted as.
+	switch read := slot.(type) {
+	case ir.Property:
+		read.NotRecord = true
+		slot = read
+	case ir.Unwrap:
+		property, isProperty := read.Value.(ir.Property)
+		if !isProperty {
+			return nil, l.notYet(node, "a union or optional field read in a program with record storage")
+		}
+		property.NotRecord = true
+		read.Value = property
+		slot = read
+	default:
+		return nil, l.notYet(node, "a union or optional field read in a program with record storage")
+	}
+	stored := ir.RecordCall{Method: "get", Arguments: []ir.Expression{receiver, ir.StringConstant{Index: l.constant(name)}}, Element: ir.Union, Returns: ir.Union}
+	record, err := l.recordReadDeclared(node, stored, l.checker.GetTypeAtLocation(node))
+	if err != nil {
+		return nil, err
+	}
+	// recordReadDeclared gives the read back unchecked where it builds no check: a field held as a Union,
+	// whose tag it trusts. Through a weak type a record's values may be of any type, so a number would be
+	// read as object | string; that read waits for a value check of its own, as tsc's two
+	// packageJsonContent.exports reads (exports?: object) do.
+	if _, unchecked := record.(ir.RecordCall); unchecked || record.Type() != slot.Type() {
+		return nil, l.notYet(node, "a union or optional field read in a program with record storage")
+	}
+	// What the receiver turned out to be, named, for the stop.
+	kind := b.local("kind", ir.Number)
+	found := ir.Expression(ir.StringConstant{Index: l.constant("another value")})
+	for _, other := range []struct {
+		kind int
+		name string
+	}{
+		{ir.UnknownUndefined, "undefined"}, {ir.UnknownNull, "null"}, {ir.UnknownNumber, "a number"}, {ir.UnknownBoolean, "a boolean"},
+		{ir.UnknownString, "a string"}, {ir.UnknownError, "an Error"}, {ir.UnknownInstance, "a class instance"}, {ir.UnknownStaticClass, "a class"},
+		{ir.UnknownArray, "an array"}, {ir.UnknownFunction, "a function"}, {ir.UnknownCollection, "a Map or a Set"}, {ir.UnknownTypedArray, "a typed array"},
+	} {
+		found = ir.Conditional{Condition: ir.Binary{Operator: ir.Equal, Left: b.read(kind), Right: ir.NumberConstant{Value: float64(other.kind)}}, WhenTrue: ir.StringConstant{Index: l.constant(other.name)}, WhenNot: found, Of: ir.String}
+	}
+	seen := l.checker.TypeToString(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression)))
+	message := ir.Concat{Parts: []ir.Expression{
+		ir.StringConstant{Index: l.constant("field read failed: " + recordReadExpression(node) + " reads " + seen + " storage; expected a fixed object or a record, found ")},
+		found,
+	}}
+	storage := []ir.Statement{
+		ir.Declare{Local: kind, Value: ir.UnknownKind{Value: fit(receiver, ir.Union)}},
+		ir.If{Condition: ir.Binary{Operator: ir.NotEqual, Left: b.read(kind), Right: ir.NumberConstant{Value: ir.UnknownObject}}, Then: []ir.Statement{ir.Panic{Message: message}}},
+		ir.If{Condition: ir.RecordStorage{Value: receiver}, Then: []ir.Statement{ir.Return{Value: record}}},
+	}
+	if optional {
+		// ?. asks nothing of an absent receiver: the slot read gives undefined for it.
+		storage = []ir.Statement{ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: receiver}}, Then: storage}}
+	}
+	b.body = append(b.body, storage...)
+	b.body = append(b.body, ir.Return{Value: slot})
+	l.result.Functions[b.function] = ir.Function{Name: "weak_field_read", Parameters: b.parameters, Returns: slot.Type(), Body: b.body}
+	l.result.PlaceholderChecks = append(l.result.PlaceholderChecks, ir.PlaceholderCheck{Origin: "record storage", Use: "weak field read storage", Path: sourceExpression(node), Where: l.program.Where(node), Status: "checked"})
+	l.result.PlaceholderChecks = append(l.result.PlaceholderChecks, ir.PlaceholderCheck{Origin: "record storage", Use: "weak field read record value", Path: sourceExpression(node), Where: l.program.Where(node), Status: "checked"})
+	return ir.Call{Function: b.function, Arguments: b.arguments, Returns: slot.Type()}, nil
+}

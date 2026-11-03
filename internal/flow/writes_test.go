@@ -126,6 +126,7 @@ var writesNothing = []struct {
 	{ir.ReadDirectory{}, "reads a path from the host"},
 	{ir.ReadTextFile{}, "reads a path from the host"},
 	{ir.RecordLiteral{}, "a new record"},
+	{ir.RecordStorage{}, "tests an object's storage"},
 	{ir.RegExpGroup{}, "reads a match's named group"},
 	{ir.RegExpNew{}, "a new pattern"},
 	{ir.RegExpProperty{}, "reads a match's field"},

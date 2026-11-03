@@ -529,6 +529,10 @@ type (
 		// class's method, called with the object as this. A method can't be read any other way
 		// (docs/0.1.md), so only a callee is one.
 		Method bool
+		// NotRecord says the read runs where a storage test found no record (lower's weakFieldRead, in
+		// its fixed branch), so a record's field of the same name doesn't make it a checked read
+		// (Program.CheckedRead).
+		NotRecord bool
 	}
 
 	// ArrayLiteral makes an array. Where Spread is set, the element at that position is an array of the

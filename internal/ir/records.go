@@ -37,6 +37,16 @@ type RecordCoalesce struct {
 
 func (r RecordCoalesce) Type() Type { return r.Element }
 
+// RecordStorage is whether Value, an object (an UnknownObject, so neither a class's nor an Error),
+// must be read by its keys rather than its slots: natively, whether it's record storage, a
+// dictionary behind one slot. A weak field read asks it (lower's weakFieldRead), since tsc lets a
+// record be seen as a type whose every field is optional. Native stops on a record of numbers or
+// booleans, whose unboxed values no read by key takes. On the JavaScript backend a record and a
+// fixed object are both plain objects, read by key alike, so it's always true there.
+type RecordStorage struct{ Value Expression }
+
+func (RecordStorage) Type() Type { return Boolean }
+
 // RecordWriteMayThrow says a node can throw because it writes or deletes a record entry that may be
 // a hidden key (HiddenRecordKeys): a record write, ??= or delete whose key is known only as it runs,
 // or is a literal some define hides, and an object write under such a name, which native's

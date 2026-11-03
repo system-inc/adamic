@@ -15,6 +15,16 @@ func (p *Program) CheckedField(receiverTypeID int, name string) bool {
 	return p.CheckedFields[CheckedFieldKey(receiverTypeID, name)] || p.CheckedFields[name]
 }
 
+// CheckedRead is CheckedField for a field read. A read made where a storage test found no record
+// (Property.NotRecord) is checked only as a view member under its receiver's key: no record reaches
+// it, so a record's field of the same name doesn't make it a checked read.
+func (p *Program) CheckedRead(read Property) bool {
+	if read.NotRecord {
+		return p.CheckedFields[CheckedFieldKey(read.ViewReceiverTypeID, read.Name)]
+	}
+	return p.CheckedField(read.ViewReceiverTypeID, read.Name)
+}
+
 // ViewContractID is one-based; zero means no available semantic certificate.
 type ViewContractID int
 
