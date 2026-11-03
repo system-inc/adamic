@@ -189,5 +189,9 @@
   "checked predicate overload target": "#c7w6j0y (Optimizer)",
   "a checked predicate without a reifiable target": "#1ge1bv8 (Diagnostics)",
   "a checked predicate result": "#1761dah (Lower)",
-  "a tag-proven predicate whose target has an optional field": "#1w5bve2 (Optimizer)"
+  "a tag-proven predicate whose target has an optional field": "#1w5bve2 (Optimizer)",
+  "node:module.__filename and __dirname": "#redxes2 (WebAssembly)",
+  "node:module.require(\"crypto\")": "#redxes2 (WebAssembly)",
+  "node:module.require(\"source-map-support\")": "#redxes2 (WebAssembly)",
+  "node:module.require of a computed module path": "#redxes2 (WebAssembly)"
 }

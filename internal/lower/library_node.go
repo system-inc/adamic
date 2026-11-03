@@ -389,6 +389,9 @@ func (l *lowering) nodeLibraryRefusal(node *ast.Node) error {
 	if err := l.nodeProcessSignature(node); err != nil {
 		return err
 	}
+	if found, err := l.nodeCommonJSUseRefusal(node); found {
+		return err
+	}
 	name := l.nodeLibraryMember(node)
 	if name != "" && !implementedNodeMembers[name] {
 		return l.notYet(node, name)
