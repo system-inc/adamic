@@ -1,0 +1,48 @@
+[
+  {
+    "row": 1,
+    "file": "src/compiler/sys.ts",
+    "line": 1708,
+    "column": 56,
+    "code": "TS2345",
+    "function": "disableCPUProfiler",
+    "expression": "JSON.stringify(cleanupPaths(profile))",
+    "occurrence": 1,
+    "total": 1,
+    "action": "assert",
+    "after": "JSON.stringify(cleanupPaths(profile))!",
+    "class": "required-result",
+    "javascript": "erased",
+    "invariant": "profile is the Profiler.stop result the inspector session hands its callback, a plain object parsed from the protocol's JSON message with no toJSON hook; cleanupPaths rewrites callFrame urls in place and returns the same object. JSON.stringify of such an object returns a string or throws, never undefined. The assertion is on the original call result, at its original evaluation point."
+  },
+  {
+    "row": 2,
+    "file": "src/compiler/sys.ts",
+    "line": 1598,
+    "column": 69,
+    "code": "TS2307",
+    "function": "tryEnableSourceMapsForHost",
+    "expression": "(require(\"source-map-support\") as typeof import(\"source-map-support\")).install()",
+    "occurrence": 1,
+    "total": 1,
+    "action": "drop type-only assertion",
+    "after": "require(\"source-map-support\").install()",
+    "javascript": "erased",
+    "source_of_any": "@types/node 25.3.3's global var require: NodeJS.Require, (id: string): any, from internal/load/node_types; not adaptation 65's file-local declarations"
+  },
+  {
+    "row": 3,
+    "file": "src/compiler/sys.ts",
+    "line": 1281,
+    "column": 43,
+    "code": "TS18046",
+    "function": "watchPresentFileSystemEntry",
+    "expression": "e.code",
+    "occurrence": 1,
+    "total": 1,
+    "action": "propertyOf",
+    "after": "propertyOf(e, \"code\")",
+    "javascript": "changed: the read goes through 94's propertyOf, the same value or the same TypeError type and message, one extra stack frame",
+    "import": "import { errorCode, propertyOf } from \"./hostErrors.js\";"
+  }
+]
