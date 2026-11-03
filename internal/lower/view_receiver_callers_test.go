@@ -14,8 +14,9 @@ import (
 // viewReceiverCallers is every call of the receiver id functions in this package, by file, enclosing
 // function and callee, with how many such calls it makes and why each is a read or a write. A read is
 // checked under the id viewFieldReceiverTypeID decides, so the read lowering emits and every guard asking
-// whether that read is checked ask the same id; a write keeps viewReceiverTypeID's raw id (Lower's rule on
-// 148e6df3, after the record guard asked the raw id of a routed read and failed open).
+// whether that read is checked ask the same id; a write takes viewWriteReceiverTypeID, which keeps
+// viewReceiverTypeID's raw id (Lower's rule on 148e6df3, after the record guard asked the raw id of a routed
+// read and failed open; #x0nd1mh's write helper, Nov 2).
 var viewReceiverCallers = []struct {
 	caller string
 	calls  int
@@ -34,14 +35,15 @@ var viewReceiverCallers = []struct {
 	{"interface_cast.go legacyView checkedViewReceiverField", 1, "read guard: a checked field alias's conversion gap (checkedFieldAliasGap), by the access's own node"},
 	{"interface_cast.go checkedViewReceiverField checkedViewReceiverField", 1, "read guard: a union receiver's member, under the same node"},
 	{"destructure_view.go refuseIncompatibleDestructuredView checkedViewReceiverField", 1, "read guard: a destructured field read through an object-union view"},
-	{"logical_assignment.go logicalAssignment viewReceiverTypeID", 1, "write: a logical assignment's keyed SetProperty"},
-	{"class.go setProperty viewReceiverTypeID", 1, "write: a property assignment's SetProperty"},
-	{"class.go updateProperty viewReceiverTypeID", 1, "write: a compound assignment's SetProperty"},
-	{"assignments.go increment viewReceiverTypeID", 1, "write: an increment's SetProperty"},
+	{"view_optional_writes.go viewWriteReceiverTypeID viewReceiverTypeID", 1, "write: every SetProperty's raw id, its optional fields kept for checkViewOptionalWrites"},
+	{"logical_assignment.go logicalAssignment viewWriteReceiverTypeID", 1, "write: a logical assignment's keyed SetProperty"},
+	{"class.go setProperty viewWriteReceiverTypeID", 1, "write: a property assignment's SetProperty"},
+	{"class.go updateProperty viewWriteReceiverTypeID", 1, "write: a compound assignment's SetProperty"},
+	{"assignments.go increment viewWriteReceiverTypeID", 1, "write: an increment's SetProperty"},
 }
 
-// Every call of viewReceiverTypeID, viewReadReceiverTypeID, viewFieldReceiverTypeID and
-// checkedViewReceiverField is named in viewReceiverCallers as a read or a write, so a new caller has
+// Every call of viewReceiverTypeID, viewReadReceiverTypeID, viewFieldReceiverTypeID,
+// viewWriteReceiverTypeID and checkedViewReceiverField is named in viewReceiverCallers as a read or a write, so a new caller has
 // to say which id it asks, and a guard of a read can't ask the raw id the read isn't checked under.
 // The test reads this package's source.
 func TestViewReceiverCallersAreClassified(t *testing.T) {
@@ -50,7 +52,7 @@ func TestViewReceiverCallersAreClassified(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	callees := map[string]bool{"viewReceiverTypeID": true, "viewReadReceiverTypeID": true, "viewFieldReceiverTypeID": true, "checkedViewReceiverField": true}
+	callees := map[string]bool{"viewReceiverTypeID": true, "viewReadReceiverTypeID": true, "viewFieldReceiverTypeID": true, "viewWriteReceiverTypeID": true, "checkedViewReceiverField": true}
 	files := token.NewFileSet()
 	found := map[string]int{}
 	for _, entry := range entries {
@@ -93,6 +95,6 @@ func TestViewReceiverCallersAreClassified(t *testing.T) {
 	}
 	sort.Strings(unclassified)
 	if len(unclassified) > 0 {
-		t.Errorf("a receiver id call isn't classified as a read or a write; a read asks viewFieldReceiverTypeID, a write viewReceiverTypeID, and viewReceiverCallers says which and why:\n%s", strings.Join(unclassified, "\n"))
+		t.Errorf("a receiver id call isn't classified as a read or a write; a read asks viewFieldReceiverTypeID, a write viewWriteReceiverTypeID, and viewReceiverCallers says which and why:\n%s", strings.Join(unclassified, "\n"))
 	}
 }
