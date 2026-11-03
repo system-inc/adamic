@@ -202,33 +202,51 @@ func TestEveryCaseKeepsTheSpecsPromise(t *testing.T) {
 	for _, path := range paths {
 		t.Run(filepath.ToSlash(strings.TrimPrefix(path, "testdata"+string(filepath.Separator))), func(t *testing.T) {
 			t.Parallel()
-			promise, err := readExpectation(path)
-			if err != nil {
-				t.Fatal(err)
-			}
-			absolute, err := filepath.Abs(path)
-			if err != nil {
-				t.Fatal(err)
-			}
-			program, err := load.Load([]string{absolute})
-			if err != nil {
-				t.Fatalf("Load: %v (a case must be TypeScript tsc accepts; refusing it is Adamic's job)", err)
-			}
-			lowered, err := lower.Lower(context.Background(), program)
-			if broken := judge(promise, string(spec), err); broken != "" {
-				t.Fatal(broken)
-			}
-			if promise.outcome != panics {
-				return
-			}
-			generated := filepath.Join(t.TempDir(), "generated.mjs")
-			if err := os.WriteFile(generated, []byte(javascript.JavaScript(lowered)), 0o644); err != nil {
-				t.Fatal(err)
-			}
-			if broken := judgeRun(promise, runOnNode(t, generated), runOnNode(t, absolute)); broken != "" {
+			if broken := keeps(t, path, string(spec)); broken != "" {
 				t.Error(broken)
 			}
 		})
+	}
+}
+
+// keeps says how the case at path broke the spec's promise, or "" when it kept it: lowered and judged, and for a panics
+// case, run and judged again.
+func keeps(t *testing.T, path, spec string) string {
+	t.Helper()
+	promise, err := readExpectation(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	absolute, err := filepath.Abs(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := load.Load([]string{absolute})
+	if err != nil {
+		t.Fatalf("Load: %v (a case must be TypeScript tsc accepts; refusing it is Adamic's job)", err)
+	}
+	lowered, err := lower.Lower(context.Background(), program)
+	if broken := judge(promise, spec, err); broken != "" || promise.outcome != panics {
+		return broken
+	}
+	generated := filepath.Join(t.TempDir(), "generated.mjs")
+	if err := os.WriteFile(generated, []byte(javascript.JavaScript(lowered)), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	return judgeRun(promise, runOnNode(t, generated), runOnNode(t, absolute))
+}
+
+// A panics case whose program lowers and runs to the end on Node and on the JavaScript backend is broken, so a judge
+// that lowers a panics case and never runs it can't pass for one that does.
+func TestAPanicsCaseThatRunsCleanIsBroken(t *testing.T) {
+	t.Parallel()
+	path := filepath.Join(t.TempDir(), "clean.a")
+	source := "// Spec: Array writes\n// Expect: panics index\nconst values: number[] = [1, 2, 3];\nvalues[1] = 9;\nconsole.log(values.join(','));\n"
+	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if broken := keeps(t, path, "Array writes"); broken == "" {
+		t.Error("a panics case that runs clean was judged kept")
 	}
 }
 
