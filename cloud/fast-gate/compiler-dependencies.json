@@ -33,7 +33,7 @@
     "internal/toolchain": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "stage1/cohere/parse": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "stage1/cohere/executable": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
-    "stage3/lane": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"]
+    "stage3/lane": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic", "stage3/lane/adaptedtree"]
   },
   "launchers": {
     "stage3/lane/adaptedtree": {"runs": ["python3", "node", "git"], "why": "builds the adapted TypeScript tree: stage3/apply.py adapts the pinned checkout, node runs hereby's tasks in it, and git packs it; none of it runs the compiler"}
