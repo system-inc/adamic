@@ -30,6 +30,7 @@ var writeExamples = []ir.Expression{
 
 // callBackExamples are what callsBack reports, each as a value it reports.
 var callBackExamples = []ir.Expression{
+	ir.NodeFSFile{Operation: "host_watch_file"},
 	ir.ArrayMap{}, ir.ArrayVisit{}, ir.ArrayReduce{}, ir.ArrayFrom{}, ir.ArraySort{}, ir.MapForEach{}, ir.ParallelMap{},
 	ir.RegExpCall{Replacement: &ir.RegExpReplacement{}},
 	ir.JSONEncode{}, // Fail closed: lowering refuses getter-bearing operands before JSON encoding.
@@ -374,5 +375,15 @@ func TestProcessEnvironmentWrites(t *testing.T) {
 				t.Fatalf("writes(%s)=%t, want %t", one.operation, got, one.want)
 			}
 		})
+	}
+}
+
+func TestWatchFileCallbackEffectFailsClosed(t *testing.T) {
+	t.Parallel()
+	if !callsBack(ir.NodeFSFile{Operation: "host_watch_file"}) {
+		t.Fatal("a retained listener must invalidate escaped facts")
+	}
+	if callsBack(ir.NodeFSFile{Operation: "host_unwatch_file"}) {
+		t.Fatal("cancellation calls no user code")
 	}
 }

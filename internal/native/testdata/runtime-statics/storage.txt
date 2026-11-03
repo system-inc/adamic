@@ -404,3 +404,8 @@
 `runtime-file:timers_impl.h`
 `timers_impl.h:timers:1`
 `timers_impl.h:timer_next_identity:1`
+
+# Loop-owned stat pollers retain listeners until cancellation or async teardown.
+`runtime-file:node_watch_file_impl.h`
+`node_watch_file_impl.h:watch_pollers:1`
+`node_watch_file_impl.h:watch_next_identity:1`
