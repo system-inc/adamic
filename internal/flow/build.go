@@ -478,7 +478,8 @@ func (b *builder) try(at *ir.Statement, statement ir.Try) {
 }
 
 // CanThrow reports whether an instruction can throw: it calls a function a throw can leave, directly,
-// through a function value when one in the program can throw, or as a sort's comparator. A throw
+// through a function value when one in the program can throw, or as a sort's comparator, or it reads
+// or writes a binding in its temporal dead zone (ir.Program's DeadZoneMayThrow). A throw
 // statement isn't one of these: it always throws, and its block goes straight to its handler.
 func CanThrow(program *ir.Program, instruction *Instruction) bool {
 	var node any = instruction.Expression
@@ -492,6 +493,12 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 	}
 	if _, isThrow := (*instruction.At).(ir.Throw); isThrow {
 		return false
+	}
+	// An assignment's own dead-zone test runs after its value, as JavaScript's store throws once the
+	// right side has run (#bxmdk73), and the instruction's Expression is only that value. The throw
+	// edge sees the state before the instruction's define, as every throw edge does.
+	if assign, isAssign := (*instruction.At).(ir.Assign); isAssign && program.DeadZoneMayThrow(assign) {
+		return true
 	}
 	throws := false
 	var walk func(value reflect.Value)
@@ -515,6 +522,11 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				throws = true
 			}
 			if program.RecordWriteMayThrow(value.Interface()) {
+				throws = true
+			}
+			// A read in its temporal dead zone, or a logical assignment's write, throws JavaScript's
+			// ReferenceError (#bxmdk73).
+			if program.DeadZoneMayThrow(value.Interface()) {
 				throws = true
 			}
 			switch value.Type() {
