@@ -1,0 +1,10 @@
+// process.memoryUsage() is a host object that stops for every key, by Adamic's ruling on #ey7aysy,
+// heapUsed included, which native's shape holds and lowering still reads statically. Node prints
+// number.
+import process from 'node:process';
+import { propertyOf } from './hostErrors.ts';
+
+const usage = process.memoryUsage();
+console.log(`memory ${typeof usage.heapUsed}`);
+const value = propertyOf(usage, 'heapUsed');
+console.log(typeof value);
