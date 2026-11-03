@@ -1228,6 +1228,11 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.value(expression.Value)
 	case ir.ArrayIsArray:
 		return "Array.isArray(" + e.value(expression.Value) + ")"
+	case ir.RecordStorage:
+		// A record and a fixed object are both plain objects here, and reading a key reads either, so
+		// a weak field read takes the record's read, value check and all, as native takes it for a
+		// record. A fixed object's field holds its declared type already, so the check passes there.
+		return "(" + e.value(expression.Value) + ", true)"
 	case ir.TypeOf:
 		return "adamicTypeOf(" + e.value(expression.Value) + ")"
 	case ir.UnionToString:

@@ -657,40 +657,53 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		if (of == ir.Union || of.IsMaybe()) && l.entriesProgramHasRecords() {
 			receiver := l.checker.GetTypeAtLocation(access.Expression)
 			if l.recordMayReach(receiver) {
-				return nil, l.notYet(node, "a union or optional field read in a program with record storage")
+				// A .ts read tests its receiver's storage as it runs (weakFieldRead). A .a read stays
+				// stopped: .a is to refuse a record seen as a weak type at the relation, so a read that
+				// reaches here in .a is a hole in that rule. A name Object.prototype holds is no record's
+				// own key to read, so it stays stopped too.
+				if !strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".ts") || recordPrototypeName(name) {
+					return nil, l.notYet(node, "a union or optional field read in a program with record storage")
+				}
+				return l.weakFieldRead(node, object, name, of, optional)
 			}
 			// The id the read is checked under, routed as the read is, or a routed read would look
 			// unchecked here and fail open (Lower's must on 148e6df3).
 			l.recordGuardedReads = append(l.recordGuardedReads, recordGuardedRead{node: node, receiverTypeID: l.viewFieldReceiverTypeID(node, receiver), name: name})
 		}
-		if of.IsMaybe() && optional {
-			// box?.size is number | undefined because box may be; the field itself is what's stored.
-			if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
-				if stored, isKnown := l.representation(l.checker.GetTypeOfSymbol(field)); isKnown && stored == of.Present() {
-					return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: stored, Optional: true, Class: l.classOf(node)}), nil
-				}
-			}
-		}
-		if symbol := l.checker.GetSymbolAtLocation(node.Name()); symbol != nil {
-			id := l.result.ViewContractTypes[int(l.checker.GetTypeOfSymbol(symbol).Id())]
-			if id > 0 && strings.Contains(l.result.ViewContracts[id-1].Unsupported, "views-v3: array element kind") {
-				return nil, l.notYet(node, "checked view union arm awaits "+l.result.ViewContracts[id-1].Unsupported)
-			}
-		}
-		if censusFieldSlotless(of) && !l.unionReadCertificate(node, of) {
-			return nil, l.notYet(node, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
-		}
-		if of.IsMaybe() {
-			// number | undefined, whether the field holds it or ?. makes it: the packed word, or
-			// undefined when the object is.
-			return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)}), nil
-		}
-		if optional && !of.IsReference() {
-			return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
-		}
-		return l.defined(node, l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)})), nil
+		return l.fixedFieldRead(node, object, name, of, optional)
 	}
 	return nil, l.notYet(node, "."+name+" on a "+typeName(object.Type()))
+}
+
+// fixedFieldRead is a union, maybe or plain field read of object, a fixed object, from its slot. A
+// weak field read (weakFieldRead) reads a fixed object's field through it too.
+func (l *lowering) fixedFieldRead(node *ast.Node, object ir.Expression, name string, of ir.Type, optional bool) (ir.Expression, error) {
+	if of.IsMaybe() && optional {
+		// box?.size is number | undefined because box may be; the field itself is what's stored.
+		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
+			if stored, isKnown := l.representation(l.checker.GetTypeOfSymbol(field)); isKnown && stored == of.Present() {
+				return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: stored, Optional: true, Class: l.classOf(node)}), nil
+			}
+		}
+	}
+	if symbol := l.checker.GetSymbolAtLocation(node.Name()); symbol != nil {
+		id := l.result.ViewContractTypes[int(l.checker.GetTypeOfSymbol(symbol).Id())]
+		if id > 0 && strings.Contains(l.result.ViewContracts[id-1].Unsupported, "views-v3: array element kind") {
+			return nil, l.notYet(node, "checked view union arm awaits "+l.result.ViewContracts[id-1].Unsupported)
+		}
+	}
+	if censusFieldSlotless(of) && !l.unionReadCertificate(node, of) {
+		return nil, l.notYet(node, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
+	}
+	if of.IsMaybe() {
+		// number | undefined, whether the field holds it or ?. makes it: the packed word, or
+		// undefined when the object is.
+		return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)}), nil
+	}
+	if optional && !of.IsReference() {
+		return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
+	}
+	return l.defined(node, l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)})), nil
 }
 
 // readObjectField keeps an optional own field distinct from optional chaining of its receiver.
