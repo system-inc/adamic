@@ -62,6 +62,56 @@ func TestKindPredicateCallIsItsComparison(t *testing.T) {
 	}
 }
 
+// kindPredicateStep models the comparison's narrowing by hand (a member stays on the true side when
+// E.M is assignable to its tag, and on the false side unless its tag is E.M itself), so these hold the
+// model to the checker's own narrowing of the written comparison where they could drift (Compiler's
+// should on 5d222aba): a member whose tag is a union of literals, and a const enum's member. Each
+// program narrows by the predicate and by the written comparison, and both must lower and agree with
+// Node; a predicate whose declared type is narrower than what its body proves is refused, fail
+// closed, while the written comparison lowers.
+func TestKindPredicateMatchesTheWrittenComparison(t *testing.T) {
+	t.Parallel()
+	const unionTag = `enum K { A = 1, B = 2, C = 3 }
+enum F { X = 1 }
+interface A { readonly kind: K.A; readonly flag: F; readonly a: number }
+interface B { readonly kind: K.B; readonly b: string }
+interface C { readonly kind: K.B | K.C; readonly c: string }
+type N = A | B | C;
+`
+	const constEnum = `const enum K { A = 1, B = 2 }
+enum F { X = 1 }
+interface A { readonly kind: K.A; readonly flag: F; readonly a: number }
+interface B { readonly kind: K.B; readonly b: string }
+type N = A | B;
+`
+	both := func(predicate, otherwise string) string {
+		return "function viaCall(n: N): string { if (isA(n)) { return `a ${n.a}`; } return " + otherwise + "; }\n" +
+			"function viaComparison(n: N): string { if (n.kind === K.A) { return `a ${n.a}`; } return " + otherwise + "; }\n" + predicate
+	}
+	for _, probe := range []struct{ name, source, stdout, refusal string }{
+		{"union-of-literals tag", unionTag + "function isA(n: N): n is A { return n.kind === K.A; }\n" + both("", "n.kind === K.B ? 'b or c' : `c ${n.c}`") +
+			"const values: N[] = [{ kind: K.A, flag: F.X, a: 1 }, { kind: K.B, b: 'x' }, { kind: K.C, c: 'y' }];\nfor (const n of values) { console.log(viaCall(n) + ' ' + viaComparison(n)); }\n", "a 1 a 1\nb or c b or c\nc y c y\n", ""},
+		{"const enum tag", constEnum + "function isA(n: N): n is A { return n.kind === K.A; }\n" + both("", "`b ${n.b}`") +
+			"const values: N[] = [{ kind: K.A, flag: F.X, a: 1 }, { kind: K.B, b: 'x' }];\nfor (const n of values) { console.log(viaCall(n) + ' ' + viaComparison(n)); }\n", "a 1 a 1\nb x b x\n", ""},
+		// isBC's body keeps B and C, its declared type only C: the call is refused, the comparison lowers.
+		{"declared type narrower than the body", unionTag + "function isBC(n: N): n is C { return n.kind === K.B; }\nfunction show(n: N): string { return isBC(n) ? `c ${n.c}` : 'other'; }\nconsole.log(show({ kind: K.C, c: 'y' }));\n", "", kindPredicateRefusal},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			if probe.refusal != "" {
+				if _, err := lowerSourceAs(t, probe.source, ".ts"); err == nil || !strings.Contains(err.Error(), probe.refusal) {
+					t.Fatalf("want %q, got %v", probe.refusal, err)
+				}
+				return
+			}
+			program := lowersAndAgreesWithNodeAs(t, probe.source, ".ts")
+			if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != probe.stdout {
+				t.Fatalf("native: exit %d, stdout %q, stderr %q; want 0 and %q", code, stdout, stderr, probe.stdout)
+			}
+		})
+	}
+}
+
 // What the walk still refuses, each with the reason it gives: a call that isn't an exact predicate's,
 // a predicate whose declared type disagrees with its body, and a comparison whose own hazard check
 // fails, which a predicate's call meets just as the comparison does. Mutants, each named in the
