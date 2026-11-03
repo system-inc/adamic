@@ -1,0 +1,77 @@
+// An array through String and a template over an unknown is Array.prototype.join's "," (#09dvwny):
+// each element written as String writes it, through its own toString, but null and undefined as
+// nothing. An array whose join is under way joins as "", as V8's join stack makes it, however deep
+// the cycle, through a toString that joins it again too, and a throw from an element's toString lets
+// the array go, so it joins again after. An empty array is "", an array of numbers among them. An
+// array of unknown has no element storage yet, so the arrays that hold anything are of Item.
+type Item = string | number | boolean | null | undefined | object;
+let failing = true;
+class Named {
+	toString(): string {
+		return 'named';
+	}
+}
+class Back {
+	toString(): string {
+		return '[' + String(viewed) + ']';
+	}
+}
+class Fails {
+	toString(): string {
+		if (failing) {
+			throw new Error('mid-join');
+		}
+		return 'recovered';
+	}
+}
+function show(value: unknown): void {
+	console.log(String(value));
+	console.log(`<${value}>`);
+}
+const mixed: Item[] = ['a', 1, null, undefined, true, new Named(), ['b', 'c'], new Error('e')];
+show(mixed);
+show(['p', 'q']);
+show([1, 'a']);
+// null is always boxed, so an array of only null and undefined joins rather than stops.
+const absent: Item[] = [];
+absent.push(null);
+absent.push(undefined);
+show(absent);
+const nulls: (number | null)[] = [];
+nulls.push(null);
+show(nulls);
+const empty: Item[] = [];
+show(empty);
+const none: number[] = [];
+show(none);
+const itself: Item[] = [];
+itself.push(itself);
+show(itself);
+const after: Item[] = [];
+after.push('x');
+after.push(after);
+show(after);
+const outer: Item[] = [];
+outer.push('o');
+const inner: Item[] = ['i', outer];
+outer.push(inner);
+show(outer);
+show(inner);
+const holder: Item[] = [];
+holder.push('h');
+const viewed: unknown = holder;
+holder.push(new Back());
+show(holder);
+const throwing: Item[] = ['t', new Fails()];
+try {
+	show(throwing);
+} catch (error) {
+	show(error);
+}
+failing = false;
+show(throwing);
+// Natively a counted cycle outlives the program (there's no collector), which no join is about, so each
+// is let go of before the end and the leak check reads the join alone.
+itself.pop();
+after.pop();
+outer.pop();

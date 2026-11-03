@@ -1,0 +1,38 @@
+// Language's probes on #09dvwny (tp_probes.ts), beside Node: a toString with a side effect, read through
+// String and then a template (c1, then c2); a cycle of two arrays; null and undefined in an array; and a
+// toString reading this. The probes' unknown[] has no element storage yet (TestToPrimitiveProbesOfUnknownArrays),
+// so the arrays here are of Item.
+type Item = string | null | undefined | object;
+function show(value: unknown): string {
+	return String(value) + '|' + `${value}`;
+}
+let calls = 0;
+class Count {
+	toString(): string {
+		calls++;
+		return 'c' + String(calls);
+	}
+}
+console.log(show(new Count()) + ' ' + String(calls));
+const a: Item[] = [];
+a.push('a');
+const b: Item[] = [];
+b.push('b');
+b.push(a);
+a.push(b);
+console.log(show(a) + ' ' + show(b));
+const arr: Item[] = [];
+arr.push('a');
+arr.push(null);
+arr.push(undefined);
+arr.push('b');
+console.log(show(arr));
+class Named {
+	name = 'n';
+	toString(): string {
+		return this.name + '!';
+	}
+}
+console.log(show(new Named()));
+// Natively a counted cycle outlives the program, so it's let go of before the end.
+a.pop();
