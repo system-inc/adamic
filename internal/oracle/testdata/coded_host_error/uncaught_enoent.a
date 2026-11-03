@@ -1,0 +1,5 @@
+// An errno error nothing catches stays `Error: ENOENT: ...`: Node's UVException has no toString of its
+// own, so its code is in the message and never in brackets (#z28avqd).
+import { readFileSync } from 'node:fs';
+console.log('before');
+console.log(readFileSync('/adamic-coded-host-error-missing/file', 'utf8'));

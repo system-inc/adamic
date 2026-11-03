@@ -66,7 +66,8 @@ type OwnFunction struct {
 func (OwnFunction) Type() Type { return Boolean }
 
 // ErrorToString is Error.prototype.toString of Value, an Error UnknownKind called UnknownError: its
-// name and message joined by ": ", or whichever one isn't empty. The string is new, owned.
+// name and message joined by ": ", or whichever one isn't empty. A Node-coded host error's is its
+// class's own toString, name [code]: message (adamic_error_to_string). The string is new, owned.
 type ErrorToString struct{ Value Expression }
 
 func (ErrorToString) Type() Type { return String }

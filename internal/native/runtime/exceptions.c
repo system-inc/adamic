@@ -10,9 +10,12 @@
 
 _Thread_local adamic_object *adamic_thrown;
 
-// Every Error's shape names these, the host errors' too, which is how a run-time key read knows an
+// Every Error's shape names these, an errno host error's too, which is how a run-time key read knows an
 // Error (adamic.h).
 const adamic_methods adamic_error_methods = {0, NULL, NULL};
+// A Node-coded host error's shape names these instead, one Node builds with makeNodeErrorWithCode or
+// as a SystemError, whose class's toString brackets the code (error_text).
+const adamic_methods adamic_coded_error_methods = {0, NULL, NULL};
 
 static const char *const error_names[] = {"name", "message"};
 static const bool error_references[] = {true, true};
@@ -71,7 +74,7 @@ adamic_primitive adamic_ordinary_to_primitive(adamic_heap *receiver, enum adamic
 }
 
 bool adamic_error_is(const adamic_object *object) {
-	return object->shape->methods == &adamic_error_methods;
+	return object->shape->methods == &adamic_error_methods || object->shape->methods == &adamic_coded_error_methods;
 }
 
 // Public lookup sees Error.prototype.message without creating an own property.
@@ -81,13 +84,26 @@ const char *adamic_error_field_name(const adamic_object *object, const char *nam
 
 // error_text is String(error) for an Error, as Node's Error.prototype.toString makes it of the name and
 // the message: the two joined by ": " when both are there, and whichever one is when the other is empty.
-// It returns the text's length, writing the text into bytes too unless bytes is NULL. It counts nothing,
-// neither an allocation nor a retain, so adamic_uncaught prints it without moving the counts a counted
-// run reports where it stops.
+// A coded error's is its class's own toString, `${this.name} [${code}]: ${this.message}`, a template, so
+// the brackets and ": " are there even when the name or the message is empty (Node 24.14.1 measured
+// `TypeError [ERR_INVALID_ARG_VALUE]: ` for an emptied message). It returns the text's length, writing
+// the text into bytes too unless bytes is NULL. It counts nothing, neither an allocation nor a retain, so
+// adamic_uncaught prints it without moving the counts a counted run reports where it stops.
 static size_t error_text(const adamic_object *error, char *bytes) {
-	static adamic_slot_cache name_cache, message_cache;
+	static adamic_slot_cache name_cache, message_cache, code_cache;
 	const adamic_string *name = adamic_object_field(error, "name", &name_cache)->reference;
 	const adamic_string *message = adamic_object_field(error, "message", &message_cache)->reference;
+	if (error->shape->methods == &adamic_coded_error_methods) {
+		const adamic_string *code = adamic_object_field(error, "code", &code_cache)->reference;
+		if (bytes != NULL) {
+			memcpy(bytes, name->bytes, name->length);
+			memcpy(bytes + name->length, " [", 2);
+			memcpy(bytes + name->length + 2, code->bytes, code->length);
+			memcpy(bytes + name->length + 2 + code->length, "]: ", 3);
+			memcpy(bytes + name->length + 2 + code->length + 3, message->bytes, message->length);
+		}
+		return name->length + 2 + code->length + 3 + message->length;
+	}
 	size_t separator = name->length > 0 && message->length > 0 ? 2 : 0;
 	if (bytes != NULL) {
 		memcpy(bytes, name->bytes, name->length);
