@@ -202,8 +202,8 @@ func TestParallelOracleCatchesResultOrder(t *testing.T) {
 	}
 	source = strings.ReplaceAll(source, "adamic_parallel_map(", "oracle_reordered_map(")
 	source = `#include "adamic.h"
-adamic_array *oracle_reordered_map(adamic_array *items, adamic_closure *work, bool references) {
- adamic_array *results = adamic_parallel_map(items, work, references);
+adamic_array *oracle_reordered_map(adamic_array *items, adamic_closure *work, enum adamic_ir_type element) {
+ adamic_array *results = adamic_parallel_map(items, work, element);
  if (results != NULL) { adamic_array_reverse(results); }
  return results;
 }

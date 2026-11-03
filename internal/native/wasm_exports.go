@@ -116,7 +116,11 @@ func WASIExports(program *ir.Program, exports []ABIExport) (string, error) {
 			declarations.WriteString(" return adamic_abi_string_read(b);\n")
 		case "number[]", "string[]":
 			refs := t.Kind == "string[]"
-			fmt.Fprintf(&declarations, " uint32_t count = adamic_abi_u32_read(b);\n adamic_array *v = adamic_array_new(count, %t);\n", refs)
+			element := ir.Number
+			if refs {
+				element = ir.String
+			}
+			fmt.Fprintf(&declarations, " uint32_t count = adamic_abi_u32_read(b);\n adamic_array *v = adamic_array_make(count, %s);\n", arrayElement(element))
 			if !refs {
 				declarations.WriteString(" adamic_abi_align(b);\n")
 			}
@@ -222,7 +226,7 @@ func WASIExports(program *ir.Program, exports []ABIExport) (string, error) {
 				if t.Kind == "string" {
 					fmt.Fprintf(&body, " adamic_string *%s = adamic_abi_wtf8(%s,%s_length);\n", value, name, name)
 				} else if t.Kind == "number[]" {
-					fmt.Fprintf(&body, " adamic_array *%s = adamic_array_new(%s_length,false);\n for (uint32_t i=0; i<%s_length; i++) { double v; memcpy(&v,%s+8*i,8); adamic_array_push(%s,(adamic_value){.number=v}); }\n", value, name, name, name, value)
+					fmt.Fprintf(&body, " adamic_array *%s = adamic_array_make(%s_length,adamic_ir_Number);\n for (uint32_t i=0; i<%s_length; i++) { double v; memcpy(&v,%s+8*i,8); adamic_array_push(%s,(adamic_value){.number=v}); }\n", value, name, name, name, value)
 				} else {
 					coder := codec(t)
 					fmt.Fprintf(&body, " adamic_abi_buffer %s_buffer = {%s,%s_length,0,false};\n %s %s = %s_read(&%s_buffer);\n if (%s_buffer.offset != %s_length) adamic_panic_c(\"ABI trailing input bytes\");\n", name, name, name, cType(t.representation()), value, coder, name, name, name)

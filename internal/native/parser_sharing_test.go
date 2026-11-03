@@ -16,7 +16,7 @@ static const bool references[] = {true};
 static const adamic_field_kind kinds[] = {adamic_field_reference};
 static const adamic_shape shape = {1, names, references, NULL, kinds};
 int main(void) {
- adamic_array *array = adamic_node_array_new(0, false, &shape);
+ adamic_array *array = adamic_node_array_make(0, adamic_ir_Number, &shape);
  adamic_string *text = adamic_string_from_number(12345);
  array->metadata->slots[0].reference = text;
  adamic_object_initialized(array->metadata)[0] = 1;

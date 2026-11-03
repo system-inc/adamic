@@ -158,7 +158,7 @@ func (n *asyncNormalizer) expression(value ir.Expression, out *[]ir.Statement, s
 	case ir.ArrayLiteral:
 		for index, spread := range value.Spread {
 			if spread {
-				value.Elements[index] = ir.ArraySlice{Array: value.Elements[index]}
+				value.Elements[index] = ir.ArraySlice{Array: value.Elements[index], Element: value.Element}
 			}
 		}
 		changed := n.operands(reflect.ValueOf(value), out).Interface().(ir.Expression)
