@@ -167,7 +167,7 @@ the list when an entry lacks either task or its message is not one line of
 `adamic: panic: <form> (reading '<key>')` with `<form>` on the tool's closed
 allowlist (`runtimeNotYetForms`), each form naming the ruling that made it, and
 it refuses an entry whose `ruling_task` is not its form's ruling. The
-allowlist holds the seven `internal/ir` DynamicKeyedStops forms a ruled fixture
+allowlist holds the eight `internal/ir` DynamicKeyedStops forms a ruled fixture
 reaches; a `compiler bug:` stop never qualifies, listed or allowlisted.
 
 A listed program passes only when the tool sees all of it: both backends exit 70

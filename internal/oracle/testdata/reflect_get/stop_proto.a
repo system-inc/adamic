@@ -1,0 +1,7 @@
+// __proto__ stops on a plain object, on both backends: Object.prototype's accessor answers with the
+// receiver's prototype, which no object of Adamic's carries as a value. Node prints object.
+import { propertyOf } from './hostErrors.ts';
+
+console.log('before');
+const value = propertyOf({ present: 'here' }, '__proto__');
+console.log(typeof value);
