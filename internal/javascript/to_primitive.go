@@ -42,7 +42,7 @@ func unknownKindRuntime(program *ir.Program) string {
 // adamic_join_enter and adamic_join_leave answer them: the scalar test by each element's own kind, so
 // both backends stop on the same arrays, and a join stack of the program's own, since its join is the
 // helper's loop and not Array.prototype.join, whose stack is V8's.
-const joinRuntime = "const adamicArrayOfScalars = (array) => array.length > 0 && array.every((element) => element === undefined || element === null || typeof element === 'number' || typeof element === 'boolean');\n" +
+const joinRuntime = "const adamicArrayOfScalars = (array) => array.length > 0 && array.every((element) => element === undefined || element === null || typeof element === 'number' || typeof element === 'boolean') && (array.some((element) => typeof element === 'number' || typeof element === 'boolean') || array.every((element) => element === undefined));\n" +
 	"const adamicJoining = [];\n" +
 	"const adamicJoinEnter = (array) => { if (adamicJoining.includes(array)) return false; adamicJoining.push(array); return true; };\n" +
 	"const adamicJoinLeave = () => { adamicJoining.pop(); };\n"

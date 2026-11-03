@@ -169,11 +169,13 @@ func (l *lowering) classToString(helper, class int, object ir.Expression) []ir.S
 // way, one that holds itself however deep, joins as "", as V8's join stack makes it (Compiler's must on
 // #09dvwny); the stack lets go of the array however its join ends, so a join a throw left joins again.
 // The length is read once, as join reads it, and an element a toString took away since is undefined.
-// An array of only numbers, booleans, null or undefined stops, named: natively an array of numbers or
-// booleans holds them unboxed, saying nothing of which they are, so the test both backends make alike
-// is by the elements (ir.ArrayOfScalars), until Memory's element kind comes. Its cost is an over-stop,
-// not a hole: an array of a union type holding only numbers stops too, though natively it's boxed and
-// could join, since the JavaScript backend can't tell it from a number[]. Both backends stop on it.
+// An array of only numbers, booleans, null or undefined, with a number or a boolean among them or only
+// undefined, stops, named: natively an array of numbers or booleans, or of number | undefined, holds
+// them unboxed, saying nothing of which they are, so the test both backends make alike is by the
+// elements (ir.ArrayOfScalars), until Memory's element kind comes. Its cost is an over-stop, not a
+// hole: an array of a union type holding only numbers, or only undefined, stops too, though natively
+// it's boxed and could join, since the JavaScript backend can't tell it from a number[] or a number |
+// undefined one. Both backends stop on it. [null, undefined] joins, since a null is always boxed.
 func (l *lowering) arrayToString(helper int, value ir.Expression) []ir.Statement {
 	array := ir.Narrow{Value: value, To: ir.Array}
 	joined := l.toPrimitiveLocal(helper, "joined", ir.String)

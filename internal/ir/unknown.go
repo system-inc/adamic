@@ -59,10 +59,12 @@ type ErrorToString struct{ Value Expression }
 
 func (ErrorToString) Type() Type { return String }
 
-// ArrayOfScalars is whether Array, an array UnknownKind called UnknownArray, has elements and every one
-// is a number, a boolean, null or undefined. String's join stops on one as not yet: natively an array
-// of numbers or booleans holds them unboxed, its elements saying nothing of their kind, so the one test
-// both backends make alike is by the elements, and such an array always passes it when it has any.
+// ArrayOfScalars is whether Array, an array UnknownKind called UnknownArray, has elements, every one a
+// number, a boolean, null or undefined, and either a number or a boolean among them or only undefined.
+// String's join stops on one as not yet: natively an array of numbers or booleans, or of number |
+// undefined, holds them unboxed, its elements saying nothing of their kind, so the one test both
+// backends make alike is by the elements, and such an array always passes it when it has any. A null
+// is always boxed, so [null, undefined] fails it and joins.
 type ArrayOfScalars struct{ Array Expression }
 
 func (ArrayOfScalars) Type() Type { return Boolean }

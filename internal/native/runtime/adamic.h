@@ -1103,8 +1103,9 @@ enum adamic_join {
 	adamic_join_maybe_numbers,
 };
 struct adamic_string *adamic_array_join(const adamic_array *array, const struct adamic_string *separator, enum adamic_join kind);
-// adamic_array_of_scalars is ir.ArrayOfScalars of an array a union holds: it has elements, and each is
-// a number, a boolean, null or undefined, which an array of unboxed elements always is.
+// adamic_array_of_scalars is ir.ArrayOfScalars of an array a union holds: it has elements, each a
+// number, a boolean, null or undefined, with a number or a boolean among them or only undefined, which
+// an array of unboxed elements always is.
 bool adamic_array_of_scalars(const adamic_heap *value);
 // adamic_join_enter and adamic_join_leave are ir.JoinEnter and ir.JoinLeave, V8's join stack: enter
 // pushes the array and says true, or says false, pushing nothing, when its join is already under way.

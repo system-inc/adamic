@@ -117,13 +117,25 @@ bool adamic_array_of_scalars(const adamic_heap *value) {
 	}
 	const adamic_array *array = (const adamic_array *)value;
 	if (array->length == 0) return false;
-	// Unboxed elements are numbers or booleans, or a maybe pair's undefined, whichever they are.
+	// Unboxed elements are numbers or booleans, or a maybe pair's undefined, and don't say which, so
+	// such an array is always one: holding only undefined, it is one by the last clause below.
 	if (!array->references) return true;
+	bool scalar = false, held_null = false;
 	for (size_t index = 0; index < array->length; index++) {
 		const adamic_heap *element = array->elements[index].reference;
-		if (element != NULL && element != &adamic_null && element->kind != adamic_kind_number && element->kind != adamic_kind_boolean) return false;
+		if (element == NULL) continue;
+		if (element == &adamic_null) {
+			held_null = true;
+		} else if (element->kind == adamic_kind_number || element->kind == adamic_kind_boolean) {
+			scalar = true;
+		} else {
+			return false;
+		}
 	}
-	return true;
+	// A number or a boolean among them, or only undefined, which is what an unboxed number | undefined
+	// array holding nothing else looks like on the JavaScript backend. A null is always boxed, so
+	// [null, undefined] joins.
+	return scalar || !held_null;
 }
 
 // The arrays whose joins are under way on this thread, innermost last, as V8 keeps them. Each is only

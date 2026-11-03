@@ -205,6 +205,23 @@ func TestToPrimitiveArrayJoinLetsGoInFinally(t *testing.T) {
 	}
 }
 
+// Language's probes over unknown[] (tp_probes.ts on #09dvwny), as written: an array of unknown has no
+// element storage yet, so each refuses at compile time, alike on both backends, where Node prints
+// a,b,|a,b, b,a,|b,a,| and a,,,b|a,,,b|. internal/oracle's probes.a holds the same arrays of Item beside
+// Node. The day unknown[] lowers, this goes red, and the probes join probes.a as written.
+func TestToPrimitiveProbesOfUnknownArrays(t *testing.T) {
+	t.Parallel()
+	for _, source := range []string{
+		"function show(v: unknown): string { return String(v) + \"|\" + `${v}`; }\nconst a: unknown[] = [\"a\"];\nconst b: unknown[] = [\"b\", a];\na.push(b);\nconsole.log(show(a) + \" \" + show(b));\n",
+		"function show(v: unknown): string { return String(v) + \"|\" + `${v}`; }\nconst arr: unknown[] = [\"a\", null, undefined, \"b\"];\nconsole.log(show(arr));\n",
+	} {
+		_, err := lowerSource(t, source)
+		if err == nil || !strings.Contains(err.Error(), "an array of unknown with erased element storage") {
+			t.Errorf("want an array of unknown refused for its element storage, got %v: %q", err, source)
+		}
+	}
+}
+
 // String(symbol) is "Symbol(d)" and a template of one throws, so the two forms part at a symbol, and a
 // bigint would be "1" in both. Neither has a representation, so neither reaches an unknown, which is
 // why to_string_hint serves String and a template alike. The day one does, this goes red, and the

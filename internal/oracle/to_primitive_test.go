@@ -48,10 +48,16 @@ var toPrimitiveAnswers = []struct{ file, stdout string }{
 		"Error\n<Error>\n" +
 		"Custom: renamed\n<Custom: renamed>\n" +
 		"renamed\n<renamed>\n"},
+	{"probes.a", "c1|c2 2\n" +
+		"a,b,|a,b, b,a,|b,a,\n" +
+		"a,,,b|a,,,b\n" +
+		"n!|n!\n"},
 	{"records.a", "[object Object]\n<[object Object]>\n" + cannotConvert + "\n<" + cannotConvert + ">\n"},
 	{"arrays.a", "a,1,,,true,named,b,c,Error: e\n<a,1,,,true,named,b,c,Error: e>\n" +
 		"p,q\n<p,q>\n" +
 		"1,a\n<1,a>\n" +
+		",\n<,>\n" +
+		"\n<>\n" +
 		"\n<>\n" +
 		"\n<>\n" +
 		"\n<>\n" +
@@ -108,6 +114,8 @@ var toPrimitiveStops = []struct{ file, what, node string }{
 	{"stop_scalar_array.a", "an array of only numbers, booleans, null or undefined", "before\n1,2,3\n"},
 	{"stop_boolean_array.a", "an array of only numbers, booleans, null or undefined", "before\ntrue,false\n"},
 	{"stop_union_numbers.a", "an array of only numbers, booleans, null or undefined", "before\n1,2\n"},
+	// Only undefined, which an unboxed number | undefined array holding nothing else is too.
+	{"stop_undefined_array.a", "an array of only numbers, booleans, null or undefined", "before\n,\n"},
 	// Node runs the source as its runner emits it, which indents by four spaces.
 	{"stop_static_class.a", "a class object", "before\nclass Counter {\n    static count = 1;\n}\n"},
 	{"stop_record_function.a", "an object whose own toString is a function this program can't name", "before\nfrom record\n"},

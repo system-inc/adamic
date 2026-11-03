@@ -32,6 +32,14 @@ const mixed: Item[] = ['a', 1, null, undefined, true, new Named(), ['b', 'c'], n
 show(mixed);
 show(['p', 'q']);
 show([1, 'a']);
+// null is always boxed, so an array of only null and undefined joins rather than stops.
+const absent: Item[] = [];
+absent.push(null);
+absent.push(undefined);
+show(absent);
+const nulls: (number | null)[] = [];
+nulls.push(null);
+show(nulls);
 const empty: Item[] = [];
 show(empty);
 const none: number[] = [];
