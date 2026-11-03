@@ -1,0 +1,23 @@
+type Path = string & { __brand: void };
+interface Entry { name: string }
+const declared: Map<string, string> = new Map();
+declared.set('a', 'b');
+console.log(declared.get('a') ?? 'none');
+const paths: Map<Path, number> = new Map();
+paths.set('p' as Path, 3);
+console.log(String(paths.size));
+let optional: Map<string, number[]> | undefined;
+function add(): void { (optional ??= new Map()).set('k', [1, 2]); }
+add();
+console.log(String(optional?.get('k')?.length ?? -1));
+class Holder { cache: Map<string, number> = new Map(); }
+const holder = new Holder();
+holder.cache.set('x', 1);
+console.log(String(holder.cache.get('x') ?? -1));
+function make(): Map<string, boolean> { return new Map(); }
+const made = make();
+made.set('y', true);
+console.log(String(made.get('y')));
+const entries: Map<number, Entry> = new Map();
+entries.set(1, { name: 'n' });
+console.log(entries.get(1)?.name ?? 'none');
