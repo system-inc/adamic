@@ -136,7 +136,7 @@ bool adamic_object_own_function(const adamic_heap *value, const char *name) {
 	}
 	for (size_t index = 0; index < object->shape->count; index++) {
 		if (strcmp(name, object->shape->names[index]) != 0) continue;
-		if (!adamic_object_present(object, index) || !object->shape->references[index]) return false;
+		if (!adamic_object_present(object, index) || !adamic_object_initialized(object)[index] || !object->shape->references[index]) return false;
 		const adamic_heap *held = object->slots[index].reference;
 		return held != NULL && held->kind == adamic_kind_closure;
 	}

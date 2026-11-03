@@ -87,6 +87,71 @@ console.log(String(accessor.area));
 	}
 }
 
+// A toString or valueOf field a base class declares is an own field of every subclass's object, which
+// Node reads before any method (Lower's should on #09dvwny), so a subclass's arm stops as its base's
+// does, never calling an inherited method or answering "[object Object]". It holds because a subclass's
+// Fields begin with its base's (class.go's instantiate). Every arm here stops, Valued's and Below's too,
+// where Node answers "[object Object]" and "method": a field of either name stops the class, an
+// over-stop that fails closed. Mutant: classToString reading only the class's
+// own fields, from OwnStart, so Derived's arm answers "[object Object]" and Below's calls its method.
+func TestToPrimitiveInheritedFieldStops(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSource(t, `class Base {
+	toString = (): string => 'field';
+}
+class Derived extends Base {}
+class Valued {
+	valueOf = (): number => 2;
+}
+class Below extends Valued {
+	toString(): string {
+		return 'method';
+	}
+}
+function show(value: unknown): void {
+	console.log(String(value));
+}
+show(new Base());
+show(new Derived());
+show(new Below());
+`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := "converting an object whose class has a toString or valueOf field to a string is not yet lowered"
+	arms := map[string]string{}
+	for _, statement := range toPrimitiveHelper(t, program).Body {
+		branch, ok := statement.(ir.If)
+		if !ok {
+			continue
+		}
+		test, ok := branch.Condition.(ir.InstanceOf)
+		if !ok || !test.Exact {
+			continue
+		}
+		name := program.Classes[test.Class-1].Name
+		arms[name] = ""
+		if len(branch.Then) != 1 {
+			continue
+		}
+		if panicked, ok := branch.Then[0].(ir.Panic); ok {
+			if text, ok := panicked.Message.(ir.StringConstant); ok {
+				arms[name] = program.Strings[text.Index]
+			}
+		}
+	}
+	for _, name := range []string{"Base", "Derived", "Valued", "Below"} {
+		got, found := arms[name]
+		if !found {
+			t.Errorf("no arm for %s", name)
+			continue
+		}
+		if got != want {
+			t.Errorf("%s's arm stops with %q, want %q", name, got, want)
+		}
+	}
+}
+
 // The arms no program reaches yet: unknownView refuses a function, a Map, a Set and a tuple where one
 // flows into an unknown, so each is held by the helper's shape, a loud stop naming the kind as not yet,
 // rather than by a program beside Node. The static class arm is reachable, and is held beside Node too
