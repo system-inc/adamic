@@ -1,0 +1,9 @@
+// A require of source-map-support no catch sees ends the program as an uncaught throw does: with the
+// error's name and the first line of Node's message where tsc 6.0.3 is installed
+// (installed-layout, backend_divergences_test.go), where the source on Node, an ES module, has no
+// require.
+import 'node:process';
+
+console.log('before');
+require('source-map-support').install();
+console.log('unreached');
