@@ -1,0 +1,6 @@
+// A Node SystemError nothing catches: rmSync of a directory without recursive throws ERR_FS_EISDIR,
+// whose SystemError toString brackets the code, `SystemError [ERR_FS_EISDIR]: ...`. The directory is
+// the working one, which a non-recursive rm never removes (#z28avqd).
+import { rmSync } from 'node:fs';
+console.log('before');
+rmSync('.');

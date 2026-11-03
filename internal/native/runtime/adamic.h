@@ -534,14 +534,18 @@ struct adamic_methods {
 };
 
 // adamic_error_methods is the empty methods table every Error's shape names, the runtime's own and
-// a host error's alike, and adamic_error_is the one test that reads it (exceptions.c): an object is an
-// Error exactly when its shape's methods are these. An Error has no methods of its own, and no Error
-// subclass a program declares lowers yet, so no shape the emitter writes is an Error.
+// an errno host error's alike, and adamic_coded_error_methods the one a Node-coded host error's shape
+// names in its place, one Node builds with makeNodeErrorWithCode or as a SystemError. adamic_error_is
+// is the one test that reads them (exceptions.c): an object is an Error exactly when its shape's
+// methods are either. An Error has no methods of its own, and no Error subclass a program declares
+// lowers yet, so no shape the emitter writes is an Error.
 extern const adamic_methods adamic_error_methods;
+extern const adamic_methods adamic_coded_error_methods;
 bool adamic_error_is(const adamic_object *object);
 // adamic_error_to_string is String(error) for an Error, Error.prototype.toString over its name and
 // message fields: the two joined by ": " when both are there, whichever one is when the other is
-// empty, and "" when both are. It returns a string the caller owns.
+// empty, and "" when both are. A coded error's is its class's own toString, name, " [", its code
+// field, "]: " and message, whatever is empty. It returns a string the caller owns.
 adamic_string *adamic_error_to_string(const adamic_object *error);
 
 // adamic_object_callee finds what object.name(...) calls, where the object is seen through an
