@@ -1,0 +1,16 @@
+// a-check: refused can't lower an indexed mutation without a closed const literal origin yet
+type OptionValue = string | number | boolean | undefined;
+interface Options {
+	pretty?: boolean;
+	[option: string]: OptionValue;
+}
+interface Build {
+	pretty?: boolean;
+	[option: string]: OptionValue;
+}
+function makePretty(options: Options | Build): void {
+	options.pretty = true;
+}
+const options: Options = { pretty: false };
+makePretty(options);
+console.log(`${options.pretty}`);

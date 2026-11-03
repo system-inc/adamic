@@ -1,0 +1,23 @@
+type OptionValue = string | number | boolean | undefined;
+interface Options {
+	pretty?: boolean;
+	target?: number;
+	[option: string]: OptionValue;
+}
+interface Build {
+	pretty?: boolean;
+	verbose?: boolean;
+	[option: string]: OptionValue;
+}
+function shouldBePretty(options: Options | Build): boolean {
+	if (typeof options.pretty === 'undefined') {
+		return true;
+	}
+	return options.pretty;
+}
+const options: Options = { target: 2, pretty: false };
+const build: Build = { verbose: true };
+console.log(`${shouldBePretty(options)} ${shouldBePretty(build)} ${shouldBePretty({ pretty: false, verbose: false })}`);
+const typed: Options | Build = { pretty: true, verbose: false };
+const cast = { pretty: false, verbose: true } as Build;
+console.log(`${shouldBePretty(typed)} ${shouldBePretty(cast)}`);
