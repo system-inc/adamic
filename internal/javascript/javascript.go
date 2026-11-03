@@ -68,6 +68,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 		builder.WriteString("import { createHash as adamicNodeCreateHash } from 'node:crypto';\n")
 	}
 	builder.WriteString(iteratorClassRuntime)
+	builder.WriteString(hostMemoryUsageRuntime)
 	builder.WriteString(collectionIteratorRuntime)
 	builder.WriteString(stringIteratorRuntime)
 	builder.WriteString(jsonStringifyRuntime)

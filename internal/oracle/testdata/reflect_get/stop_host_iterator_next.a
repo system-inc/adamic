@@ -1,0 +1,9 @@
+// A host object stops for every key (#ey7aysy): a Map iterator's next is its prototype's method on
+// Node, and both backends' iterators hold it as their own, so it answered before. Node prints
+// function.
+import { propertyOf } from './hostErrors.ts';
+
+const entries = new Map<string, number>([['a', 1]]).entries();
+console.log('iterator');
+const value = propertyOf(entries, 'next');
+console.log(typeof value);

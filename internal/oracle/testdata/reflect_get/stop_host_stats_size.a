@@ -1,0 +1,10 @@
+// A host object stops for every key (#ey7aysy): a Stats' size is a field native's shape holds, which
+// panicked natively before ("dynamic read of a host scalar without type metadata"), and now stops
+// before its slot is read. Node prints number.
+import * as fs from 'node:fs';
+import { propertyOf } from './hostErrors.ts';
+
+const stats = fs.statSync('.');
+console.log(stats.isDirectory() ? 'directory' : 'other');
+const value = propertyOf(stats, 'size');
+console.log(typeof value);
