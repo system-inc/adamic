@@ -1,0 +1,10 @@
+--- FAIL: TestAnAuditMismatchNamesTheFileAndSectionABuildDirectoryLandedIn (0.08s)
+    difference_test.go:22: build witness 327b2037fb53 miss 0.00
+    difference_test.go:47: census:
+        audit witness e17423c7a4ea9fd3da7c866ddde460aff1cb5072a1d6016725b1fe324449236d mismatch 14341258b0de3f48bee6b9c0bf42601245f19cf3dd3c404cb1669cb9d9cfeb4f 25d3020407f4e1f4cf0c86b34fb26e74d5ef902cffb87d73efbcf66546fe8407 /tmp/adamic-gate/TestAnAuditMismatchNamesTheFileAndSectionABuildDirectoryLandedIn3829006457/005/.audit-e17423c7a4ea-2657092602
+        audit-difference witness e17423c7a4ea9fd3da7c866ddde460aff1cb5072a1d6016725b1fe324449236d witness.o (only in the stored copy)
+        build witness e17423c7a4ea hit 0.00
+    difference_test.go:52: census "audit witness e17423c7a4ea9fd3da7c866ddde460aff1cb5072a1d6016725b1fe324449236d mismatch 14341258b0de3f48bee6b9c0bf42601245f19cf3dd3c404cb1669cb9d9cfeb4f 25d3020407f4e1f4cf0c86b34fb26e74d5ef902cffb87d73efbcf66546fe8407 /tmp/adamic-gate/TestAnAuditMismatchNamesTheFileAndSectionABuildDirectoryLandedIn3829006457/005/.audit-e17423c7a4ea-2657092602\naudit-difference witness e17423c7a4ea9fd3da7c866ddde460aff1cb5072a1d6016725b1fe324449236d witness.o (only in the stored copy)\nbuild witness e17423c7a4ea hit 0.00\n", want an audit-difference line naming witness.o and the section holding the path
+FAIL
+FAIL	github.com/system-inc/adamic/internal/buildcache	0.087s
+FAIL
