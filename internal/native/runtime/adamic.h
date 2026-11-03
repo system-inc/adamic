@@ -723,7 +723,8 @@ typedef struct adamic_array {
 	size_t capacity;
 	bool references;
 	// element names how the array's slots are held, never a static type: an enum adamic_ir_type. A
-	// scalar array's (references false) is Number, Boolean or MaybeNumber. Every reference array's is
+	// scalar array's (references false) is Number, Boolean or MaybeNumber: lowering refuses an array of
+	// MaybeBoolean (elementType, a slotless element), and no array holds the null or undefined representations. Every reference array's is
 	// Union, meaning each element names its own kind by its heap header, so a reader may not trust it
 	// as a class. 0 is a kind not known, and a reader that needs the kind stops on 0. Where it and
 	// the IR type at a read disagree, the byte is the truth. It fills what was padding.
