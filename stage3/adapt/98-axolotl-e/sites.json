@@ -1,0 +1,21 @@
+[
+  {
+    "row": 4,
+    "meter": "sys.ts 1617:13 TS2322",
+    "edits": [
+      { "file": "src/compiler/types.ts", "owner": "ModuleImportResult (@internal), failure member", "before": "error: { stack?: string; message?: string; }", "after": "error: unknown", "javascript": "erased" },
+      { "file": "src/server/types.ts", "owner": "ModuleImportResult (public), failure member", "before": "error: { stack?: string; message?: string; }", "after": "error: unknown", "javascript": "erased", "api": "declared, api-sanctions.json" },
+      { "file": "src/compiler/_namespaces/ts.ts", "after": "export * from \"../hostErrors.js\";", "placed": "after export * from \"../sys.js\";", "javascript": "changed: one re-export line" },
+      { "file": "src/server/project.ts", "owner": "the named import from ./_namespaces/ts.js", "after": "propertyOf, after ProjectReference,", "javascript": "changed: the import line" },
+      { "file": "src/server/project.ts", "owner": "importServicePluginSync's err", "before": "result.error.stack || result.error.message || JSON.stringify(result.error)", "after": "propertyOf(result.error, \"stack\") || propertyOf(result.error, \"message\") || JSON.stringify(result.error)", "javascript": "changed" },
+      { "file": "src/server/project.ts", "owner": "importServicePluginAsync's err", "before": "result.error.stack || result.error.message || JSON.stringify(result.error)", "after": "propertyOf(result.error, \"stack\") || propertyOf(result.error, \"message\") || JSON.stringify(result.error)", "javascript": "changed" }
+    ]
+  },
+  {
+    "row": 5,
+    "meter": "sys.ts 1524:15 TS2375, unmasked by row 4",
+    "edits": [
+      { "file": "src/compiler/sys.ts", "owner": "System.createSHA256Hash (public)", "before": "createSHA256Hash?(data: string): string;", "after": "createSHA256Hash?: { createSHA256Hash(data: string): string; }[\"createSHA256Hash\"] | undefined;", "javascript": "erased", "api": "declared, api-sanctions.json", "store": "nodeSystem's createSHA256Hash: _crypto ? createSHA256Hash : undefined (sys.ts:1574)" }
+    ]
+  }
+]
