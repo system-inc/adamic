@@ -1,0 +1,51 @@
+'use strict';
+const fs = require('node:fs'), path = require('node:path'), assert = require('node:assert/strict'), crypto = require('node:crypto');
+const ts = require('typescript');
+function hash(bytes) { return crypto.createHash('sha256').update(bytes).digest('hex'); }
+function inventory(tree) { return fs.readdirSync(path.join(tree, 'src'), {recursive:true, withFileTypes:true}).filter(e => e.isFile()).map(e => path.relative(tree, path.join(e.parentPath, e.name))).sort(); }
+function replaceOne(text, before, after) { assert.equal(text.split(before).length, 2, `reviewed site missing or duplicated: ${before}`); return text.replace(before, after); }
+function undo(text, erased = false, removeComments = false) {
+    const newline = text.includes('\r\n') ? '\r\n' : '\n';
+    text = replaceOne(text, newline + 'import * as _crypto from "node:crypto";', '');
+    text = replaceOne(text, 'createHash: createSHA256Hash,', 'createHash: _crypto ? createSHA256Hash : generateDjb2Hash,');
+    assert.equal([...text.matchAll(/^([ \t]*)createSHA256Hash,(\r?)$/gm)].length, 1, 'reviewed shorthand missing or duplicated');
+    text = text.replace(/^([ \t]*)createSHA256Hash,(\r?)$/m, '$1createSHA256Hash: _crypto ? createSHA256Hash : undefined,$2');
+    assert(text.includes('createSHA256Hash: _crypto ? createSHA256Hash : undefined,'), 'reviewed shorthand missing');
+    if (!erased) text = replaceOne(text, '_crypto.createHash("sha256")', '_crypto!.createHash("sha256")');
+    const anchors = [...text.matchAll(/^([ \t]*)const nativePattern = [^\r\n]*;/gm)];
+    assert.equal(anchors.length, 1, 'crypto block insertion anchor moved');
+    const anchor = anchors[0], at = text.indexOf('\n', anchor.index + anchor[0].length) + 1;
+    assert(at > 0);
+    const lines = [
+        ...(!removeComments ? ['// crypto can be absent on reduced node installations'] : []),
+        erased ? 'let _crypto;' : 'let _crypto: typeof import("crypto") | undefined;',
+        'try {', '    _crypto = require("crypto");', '}', 'catch {', '    _crypto = undefined;', '}',
+    ];
+    return text.slice(0, at) + lines.map(line => anchor[1] + line + newline).join('') + text.slice(at);
+}
+function TestCryptoSourceScope(before, after) {
+    const names = inventory(before); assert.deepEqual(inventory(after), names, 'source inventory changed');
+    assert.equal(names.length, 746, 'source inventory size moved');
+    const entries = names.map(file => ({file, before:hash(fs.readFileSync(path.join(before,file))), after:hash(fs.readFileSync(path.join(after,file)))}));
+    const changed = entries.filter(x => x.before !== x.after).map(x => x.file);
+    assert.deepEqual(changed, ['src/compiler/sys.ts'], 'source changed outside sys.ts');
+    const a = fs.readFileSync(path.join(before,'src/compiler/sys.ts'),'utf8'), b = fs.readFileSync(path.join(after,'src/compiler/sys.ts'),'utf8');
+    assert.equal(undo(b), a, 'TestCryptoSourceScope: edit outside the crypto import, removed optional load and three hash expressions');
+    return {files:names.length, changed, undoRestoresExactBytes:true, inventory:entries};
+}
+function TestCryptoTranspileScope(before, after) {
+    const read = tree => fs.readFileSync(path.join(tree,'src/compiler/sys.ts'),'utf8');
+    return [false,true].map(removeComments => {
+        const emit = text => ts.transpileModule(text,{compilerOptions:{target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext,removeComments}}).outputText;
+        const a = emit(read(before)), b = emit(read(after)); assert.notEqual(a,b);
+        assert.equal(undo(b,true,removeComments),a,'JavaScript changed outside the crypto import, removed optional load and two hash stores');
+        return {removeComments,beforeSha256:hash(a),afterSha256:hash(b),onlyReviewedChanges:true};
+    });
+}
+module.exports = {hash, inventory, undo, TestCryptoSourceScope, TestCryptoTranspileScope};
+if(require.main === module) {
+    const before = path.resolve(process.argv[2]), after = path.resolve(process.argv[3]);
+    const result = {scope:TestCryptoSourceScope(before,after),transpile:TestCryptoTranspileScope(before,after)};
+    if(process.argv[4]) fs.writeFileSync(process.argv[4],JSON.stringify(result,null,2)+'\n');
+    console.log(JSON.stringify({...result,scope:{...result.scope,inventory:`${result.scope.inventory.length} entries recorded in checks.json`}},null,2));
+}
