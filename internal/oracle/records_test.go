@@ -61,7 +61,7 @@ func TestRecordOperationMutants(t *testing.T) {
 		{"values", "operations", "adamic_record_iterator_next(", "record_mutant_next(", `static bool record_mutant_next(adamic_record_iterator *it,adamic_string **k,adamic_value *v) {bool more=adamic_record_iterator_next(it,k,v);if(more)v->number+=1;return more;}`},
 		{"entries", "operations", "adamic_record_iterator_next(", "record_mutant_next(", `static bool record_mutant_next(adamic_record_iterator *it,adamic_string **k,adamic_value *v) {bool more=adamic_record_iterator_next(it,k,v);if(more)*k=&adamic_string_empty;return more;}`},
 		{"spread", "operations", "adamic_record_define(", "record_mutant_define(", `static void record_mutant_define(adamic_record *r,adamic_string *k,adamic_value v) {v.number+=1;adamic_record_define(r,k,v);}`},
-		{"for_in", "for_in", "adamic_record_keys(", "record_mutant_keys(", `static adamic_array *record_mutant_keys(const adamic_record *r) {(void)r;return adamic_array_new(0,true);}`},
+		{"for_in", "for_in", "adamic_record_keys(", "record_mutant_keys(", `static adamic_array *record_mutant_keys(const adamic_record *r) {(void)r;return adamic_array_make(0,adamic_ir_Union);}`},
 		{"stringify", "operations", "adamic_json_record", "adamic_json_map", ""},
 	} {
 		t.Run(mutant.name, func(t *testing.T) {

@@ -224,7 +224,7 @@ adamic_string *adamic_host_executing_file_path(void) { return adamic_host_exec_p
 adamic_array *adamic_host_argv(void) {
 	adamic_string *path = adamic_host_exec_path();
 	if (path == NULL) { return NULL; }
-	adamic_array *array = adamic_array_new(saved_count > 0 ? (size_t)saved_count + 1 : 2, true);
+	adamic_array *array = adamic_array_make(saved_count > 0 ? (size_t)saved_count + 1 : 2, adamic_ir_Union);
 	adamic_array_push(array, (adamic_value){.reference = path});
 	adamic_array_push(array, (adamic_value){.reference = adamic_retain(path)});
 	for (int index = 1; index < saved_count; index++) {
@@ -232,7 +232,7 @@ adamic_array *adamic_host_argv(void) {
 	}
 	return array;
 }
-adamic_array *adamic_host_exec_argv(void) { return adamic_array_new(0, true); }
+adamic_array *adamic_host_exec_argv(void) { return adamic_array_make(0, adamic_ir_Union); }
 adamic_string *adamic_host_eol(void) { static adamic_string eol = ADAMIC_STRING("\n"); return &eol; }
 
 void adamic_host_backing_add(size_t bytes) { atomic_fetch_add_explicit(&backing_bytes, bytes, memory_order_relaxed); }

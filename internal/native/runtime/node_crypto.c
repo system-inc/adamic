@@ -65,7 +65,7 @@ static const adamic_shape shape = {2, names, references, NULL, kinds};
 adamic_object *adamic_node_hash_new(void)
 {
 	adamic_object *hash = adamic_object_new(&shape);
-	hash->slots[0].reference = adamic_array_new(0, false);
+	hash->slots[0].reference = adamic_array_make(0, adamic_ir_Number);
 	return hash;
 }
 static void check_finalized(const adamic_object *hash)

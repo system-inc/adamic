@@ -729,7 +729,11 @@ func (e *emitter) mapped(expression ir.ArrayMap) (string, bool) {
 	unique := e.temporary()
 	e.line("bool %s = %s;", unique, e.graphUnique(source))
 	callback := e.value(expression.Callback)
-	mapped := e.own(ir.Array, fmt.Sprintf("(%s ? adamic_retain(%s) : adamic_array_new(%s->length, %t))", unique, source, source, expression.Result.IsReference()))
+	mapped := e.own(ir.Array, fmt.Sprintf("(%s ? adamic_retain(%s) : adamic_array_make(%s->length, %s))", unique, source, source, arrayElement(expression.Result)))
+	// The source array is the result now, perhaps of another element type (sameSlots), and says so.
+	e.line("if (%s) {", unique)
+	e.line("\t%s->element = %s;", mapped, arrayElement(expression.Result))
+	e.line("}")
 	count, index, result := e.temporary(), e.temporary(), e.temporary()
 	e.line("size_t %s = %s->length;", count, source)
 	e.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)
@@ -769,8 +773,11 @@ func (e *emitter) spreadArray(literal ir.ArrayLiteral) (string, bool) {
 	source := e.variable(literal.Elements[0], read)
 	unique := e.temporary()
 	e.line("bool %s = %s;", unique, e.graphUnique(source))
-	array := e.own(ir.Array, fmt.Sprintf("(%s ? adamic_retain(%s) : adamic_array_new(0, %t))", unique, source, literal.Element.IsReference()))
-	e.line("if (!%s) {", unique)
+	array := e.own(ir.Array, fmt.Sprintf("(%s ? adamic_retain(%s) : adamic_array_make(0, %s))", unique, source, arrayElement(literal.Element)))
+	// The spread array is the literal now, perhaps of another element type, and says so.
+	e.line("if (%s) {", unique)
+	e.line("\t%s->element = %s;", array, arrayElement(literal.Element))
+	e.line("} else {")
 	e.line("\tadamic_array_append(%s, %s);", array, source)
 	e.line("}")
 	for index, element := range literal.Elements[1:] {

@@ -391,7 +391,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		source := e.temporary()
 		e.line("adamic_array *%s = %s;", source, e.value(expression.Array))
 		callback := e.value(expression.Callback)
-		mapped := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%s->length, %t)", source, expression.Result.IsReference()))
+		mapped := e.own(ir.Array, fmt.Sprintf("adamic_array_make(%s->length, %s)", source, arrayElement(expression.Result)))
 		e.adoptGraph(mapped, "sizeof *"+mapped, e.graphTypes(expression.GraphTypes) && !expression.ProgramRegion)
 		e.adoptProgram(mapped, "sizeof *"+mapped, expression.ProgramRegion)
 		count, index := e.temporary(), e.temporary()
@@ -426,7 +426,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		if expression.Array == nil {
 			length := e.value(expression.Length)
 			value := e.value(expression.Value)
-			return e.programArray(e.graphArray(fmt.Sprintf("adamic_array_filled(%s, %s, %t)", length, borrowed(expression.Element, value), expression.Element.IsReference()), expression.GraphTypes, expression.ProgramRegion), expression.ProgramRegion)
+			return e.programArray(e.graphArray(fmt.Sprintf("adamic_array_filled(%s, %s, %s)", length, borrowed(expression.Element, value), arrayElement(expression.Element)), expression.GraphTypes, expression.ProgramRegion), expression.ProgramRegion)
 		}
 		array := e.value(expression.Array)
 		value := e.value(expression.Value)
@@ -452,7 +452,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		for _, other := range expression.Others {
 			arrays = append(arrays, e.value(other))
 		}
-		return e.programArray(e.graphArray(fmt.Sprintf("adamic_array_concat(%d, (adamic_array *const[]){%s})", len(arrays), strings.Join(arrays, ", ")), expression.GraphTypes, expression.ProgramRegion), expression.ProgramRegion)
+		return e.programArray(e.graphArray(fmt.Sprintf("adamic_array_concat(%d, (adamic_array *const[]){%s}, %s)", len(arrays), strings.Join(arrays, ", "), arrayElement(expression.Element)), expression.GraphTypes, expression.ProgramRegion), expression.ProgramRegion)
 	case ir.CheckedCast:
 		object := e.temporary()
 		e.line("adamic_object *%s = %s;", object, e.value(expression.Value))
@@ -517,7 +517,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		for index, argument := range expression.Arguments {
 			arguments[index] = e.value(argument)
 		}
-		return e.programArray(e.graphArray(fmt.Sprintf("adamic_array_slice(%s, %s, %s, %t)", array, arguments[0], arguments[1], len(expression.Arguments) == 2), expression.GraphTypes, expression.ProgramRegion), expression.ProgramRegion)
+		return e.programArray(e.graphArray(fmt.Sprintf("adamic_array_slice(%s, %s, %s, %t, %s)", array, arguments[0], arguments[1], len(expression.Arguments) == 2, arrayElement(expression.Element)), expression.GraphTypes, expression.ProgramRegion), expression.ProgramRegion)
 	case ir.ArraySort:
 		array := e.value(expression.Array)
 		sort := "adamic_array_sort"
@@ -570,9 +570,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		return created
 	case ir.MapKeys:
-		return e.programArray(e.graphArray(fmt.Sprintf("adamic_map_keys(%s)", e.value(expression.Map)), expression.GraphTypes, expression.ProgramRegion), expression.ProgramRegion)
+		return e.programArray(e.graphArray(fmt.Sprintf("adamic_map_keys(%s, %s)", e.value(expression.Map), arrayElement(expression.Key)), expression.GraphTypes, expression.ProgramRegion), expression.ProgramRegion)
 	case ir.MapValues:
-		return e.programArray(e.graphArray(fmt.Sprintf("adamic_map_values(%s)", e.value(expression.Map)), expression.GraphTypes, expression.ProgramRegion), expression.ProgramRegion)
+		return e.programArray(e.graphArray(fmt.Sprintf("adamic_map_values(%s, %s)", e.value(expression.Map), arrayElement(expression.Value)), expression.GraphTypes, expression.ProgramRegion), expression.ProgramRegion)
 	case ir.MapClear:
 		e.line("adamic_map_clear(%s);", e.value(expression.Map))
 		return "0"
@@ -596,7 +596,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("adamic_map_set(%s, %s, (adamic_value){.number = 0});", set, e.heldIn(set, expression.Element, value))
 		return set
 	case ir.SetValues:
-		return e.programArray(e.graphArray(fmt.Sprintf("adamic_set_values(%s)", e.value(expression.Set)), expression.GraphTypes, expression.ProgramRegion), expression.ProgramRegion)
+		return e.programArray(e.graphArray(fmt.Sprintf("adamic_set_values(%s, %s)", e.value(expression.Set), arrayElement(expression.Element)), expression.GraphTypes, expression.ProgramRegion), expression.ProgramRegion)
 	case ir.MapGet:
 		slot := e.mapGetSlot(expression)
 		if expression.Type().IsMaybe() {
@@ -674,7 +674,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		if expression.Spread != nil {
 			// A spread is iterated where it stands, before the elements after it are evaluated, so the
 			// array is made first (which nothing can see) and each element appended as it comes.
-			array := e.own(ir.Array, fmt.Sprintf("adamic_array_new(0, %t)", expression.Element.IsReference()))
+			array := e.own(ir.Array, fmt.Sprintf("adamic_array_make(0, %s)", arrayElement(expression.Element)))
 			e.adoptGraph(array, "sizeof *"+array, e.graphTypes(expression.GraphTypes) && !expression.ProgramRegion)
 			e.adoptProgram(array, "sizeof *"+array, expression.ProgramRegion)
 			for index, element := range expression.Elements {
@@ -697,7 +697,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		for _, element := range expression.Elements {
 			elements = append(elements, e.value(element))
 		}
-		array := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%d, %t)", len(elements), expression.Element.IsReference()))
+		array := e.own(ir.Array, fmt.Sprintf("adamic_array_make(%d, %s)", len(elements), arrayElement(expression.Element)))
 		e.adoptGraph(array, "sizeof *"+array, e.graphTypes(expression.GraphTypes) && !expression.ProgramRegion)
 		e.adoptProgram(array, "sizeof *"+array, expression.ProgramRegion)
 		for _, element := range elements {

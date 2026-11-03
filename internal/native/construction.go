@@ -35,7 +35,7 @@ func (e *emitter) nodeArrayLiteral(literal ir.ArrayLiteral) string {
 			panic("native: NodeArray metadata must be absent at allocation")
 		}
 	}
-	array := e.own(ir.Array, fmt.Sprintf("adamic_node_array_new(%d, %t, &%s)", len(literal.Elements), literal.Element.IsReference(), e.shape(literal.Metadata)))
+	array := e.own(ir.Array, fmt.Sprintf("adamic_node_array_make(%d, %s, &%s)", len(literal.Elements), arrayElement(literal.Element), e.shape(literal.Metadata)))
 	for index, field := range literal.Metadata {
 		e.line("adamic_object_field_types(%s->metadata)[%d] = %d;", array, index, field.Value.Type())
 	}

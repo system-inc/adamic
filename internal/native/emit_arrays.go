@@ -21,7 +21,7 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 	result := "0"
 	switch visit.Method {
 	case "filter":
-		result = e.graphArray(fmt.Sprintf("adamic_array_new(0, %t)", references), visit.GraphTypes, visit.ProgramRegion)
+		result = e.graphArray(fmt.Sprintf("adamic_array_make(0, %s)", arrayElement(visit.Element)), visit.GraphTypes, visit.ProgramRegion)
 		e.programArray(result, visit.ProgramRegion)
 	case "some", "every":
 		result = e.snapshot(ir.Boolean, strconv.FormatBool(visit.Method == "every"))
@@ -235,6 +235,22 @@ func joinKind(element ir.Type) string {
 	return "adamic_join_strings"
 }
 
+// arrayElement is the element kind an array of these elements is made with (adamic.h's adamic_array),
+// as the C name of its enum adamic_ir_type: a scalar names itself, and every reference is Union, since
+// each element names its own kind by its heap header. An array whose kind isn't known is made with 0,
+// written where it's made; here a missing element type is a compiler bug.
+func arrayElement(element ir.Type) string {
+	if element.IsReference() {
+		element = ir.Union
+	}
+	for name, tag := range ir.TypeTags() {
+		if tag == element {
+			return "adamic_ir_" + name
+		}
+	}
+	panic(fmt.Sprintf("native: an array made with no element type (%d)", element))
+}
+
 // comparator declares, once per sort, an adapter from the runtime's comparison to the program's
 // comparator: JavaScript reads its result's sign, and NaN as 0.
 func (e *emitter) comparator(sort ir.ArraySort) string {
@@ -268,7 +284,7 @@ func (e *emitter) spliceArguments(splice ir.ArraySplice) string {
 	if len(items) > 0 {
 		packed = "(adamic_value[]){" + strings.Join(items, ", ") + "}"
 	}
-	return fmt.Sprintf("%s, %s, %s, %t, %d, %s", array, start, count, splice.Count != nil, len(items), packed)
+	return fmt.Sprintf("%s, %s, %s, %t, %d, %s, %s", array, start, count, splice.Count != nil, len(items), packed, arrayElement(splice.Element))
 }
 
 // constantNumbers is how many constant numbers an array literal holds before they're emitted as
@@ -316,10 +332,10 @@ func (e *emitter) constantArray(literal ir.ArrayLiteral) (string, bool) {
 		counts[index] = strconv.Itoa(length)
 	}
 	rows := e.lengthTable(counts)
-	array := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%d, true)", len(lengths)))
+	array := e.own(ir.Array, fmt.Sprintf("adamic_array_make(%d, %s)", len(lengths), arrayElement(literal.Element)))
 	row, at, column, inner := e.temporary(), e.temporary(), e.temporary(), e.temporary()
 	e.line("for (size_t %s = 0, %s = 0; %s < %d; %s++) {", row, at, row, len(lengths), row)
-	e.line("\tadamic_array *%s = adamic_array_new(%s[%s], false);", inner, rows, row)
+	e.line("\tadamic_array *%s = adamic_array_make(%s[%s], %s);", inner, rows, row, arrayElement(ir.Number))
 	e.line("\tfor (size_t %s = 0; %s < %s[%s]; %s++, %s++) {", column, column, rows, row, column, at)
 	e.line("\t\tadamic_array_push(%s, (adamic_value){.number = %s[%s]});", inner, table, at)
 	e.line("\t}")

@@ -1407,7 +1407,7 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 		if len(arguments) > 2 {
 			return nil, true, l.notYet(node, "slice with more than two arguments")
 		}
-		return ir.ArraySlice{Array: array, Arguments: arguments}, true, nil
+		return ir.ArraySlice{Array: array, Arguments: arguments, Element: element}, true, nil
 	}
 	if name == "push" {
 		if len(arguments) != 1 {
@@ -1477,7 +1477,7 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 				return nil, true, l.notYet(node, "concat of arrays of different elements")
 			}
 		}
-		return ir.ArrayConcat{Array: array, Others: arguments}, true, nil
+		return ir.ArrayConcat{Array: array, Others: arguments, Element: element}, true, nil
 	}
 	if element != ir.Number && element != ir.Boolean && element != ir.String && element != ir.MaybeNumber {
 		// JavaScript writes an object as "[object Object]", a function as its source, and an array as

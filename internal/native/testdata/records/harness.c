@@ -28,7 +28,7 @@ static void json(adamic_value value, const adamic_json_schema *schema) {
 static void snapshot(adamic_record *record) {
 	adamic_array *keys = adamic_record_keys(record);
 	json((adamic_value){.reference = keys}, &strings_schema);
-	adamic_array *values = adamic_array_new(keys->length, false);
+	adamic_array *values = adamic_array_make(keys->length, adamic_ir_Number);
 	for (size_t index = 0; index < keys->length; index++) {
 		adamic_value *value = adamic_record_get_own(record, keys->elements[index].reference);
 		adamic_array_push(values, *value);
@@ -284,7 +284,7 @@ static void two_indices(void) {
 // array index: its live entries in insertion order.
 static void own_names(adamic_record *record) {
 	const adamic_map *map = record->slots[0].reference;
-	adamic_array *names = adamic_array_new(map->count, true);
+	adamic_array *names = adamic_array_make(map->count, adamic_ir_Union);
 	for (size_t index = 0; index < map->used; index++) {
 		if (!map->entries[index].deleted) adamic_array_push(names, (adamic_value){.reference = adamic_retain(map->entries[index].key.reference)});
 	}

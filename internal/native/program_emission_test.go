@@ -62,7 +62,7 @@ func programCompilerWitness(t *testing.T, source string, mutant func(string) str
 	}
 	code := native.C(program)
 	if source == programMapperSource {
-		allocation := regexp.MustCompile(`adamic_array \*\s*(\w+) = \((\w+) \? adamic_retain\((\w+)\) : adamic_array_new\([^\n]+;`)
+		allocation := regexp.MustCompile(`adamic_array \*\s*(\w+) = \((\w+) \? adamic_retain\((\w+)\) : adamic_array_make\([^\n]+;`)
 		matches := allocation.FindAllStringSubmatchIndex(code, -1)
 		if len(matches) != 1 {
 			t.Fatalf("mapper allocation count %d, want 1", len(matches))

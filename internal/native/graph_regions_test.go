@@ -323,7 +323,7 @@ func TestGraphContainerBoundary(t *testing.T) {
 	t.Parallel()
 	const main = `int main(void) {
  adamic_object *root = node(), *child = node();
- adamic_array *array = adamic_array_new(1, true);
+ adamic_array *array = adamic_array_make(1, adamic_ir_Union);
  array = adamic_graph_adopt(array, sizeof *array);
  adamic_map *cache = adamic_map_new(true, true);
  cache = adamic_graph_adopt(cache, sizeof *cache);
