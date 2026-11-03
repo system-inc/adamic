@@ -138,7 +138,7 @@ adamic_object *adamic_read_directory(const adamic_string *path) {
 	if (count > 1) {
 		qsort(names, count, sizeof *names, compare_names);
 	}
-	adamic_array *listed = adamic_array_new(count, true);
+	adamic_array *listed = adamic_array_make(count, adamic_ir_Union);
 	for (size_t index = 0; index < count; index++) {
 		adamic_array_push(listed, (adamic_value){.reference = adamic_decode_utf8((const unsigned char *)names[index], strlen(names[index]))});
 		free(names[index]);

@@ -174,7 +174,7 @@ void adamic_arguments_save(int count, char **values) {
 
 adamic_array *adamic_program_arguments(void) {
 	size_t count = argument_count > 1 ? (size_t)argument_count - 1 : 0;
-	adamic_array *arguments = adamic_array_new(count, true);
+	adamic_array *arguments = adamic_array_make(count, adamic_ir_Union);
 	for (size_t index = 0; index < count; index++) {
 		const char *argument = argument_values[index + 1];
 		adamic_array_push(arguments, (adamic_value){.reference = decode((const unsigned char *)argument, strlen(argument))});

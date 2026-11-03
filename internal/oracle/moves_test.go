@@ -127,9 +127,9 @@ func moveCountedBinary(t *testing.T, mutant bool) string {
 		source := fmt.Sprintf(`#include "adamic.h"
 #include <stdio.h>
 #include <stdlib.h>
-adamic_array *%s(adamic_array *, adamic_closure *, bool);
-adamic_array *moves_count_map(adamic_array *items, adamic_closure *work, bool references) {
- adamic_array *results = %s(items, work, references);
+adamic_array *%s(adamic_array *, adamic_closure *, enum adamic_ir_type);
+adamic_array *moves_count_map(adamic_array *items, adamic_closure *work, enum adamic_ir_type element) {
+ adamic_array *results = %s(items, work, element);
  if (results == NULL) { abort(); }
  size_t shared = adamic_is_shared(&items->heap) + adamic_is_shared(&results->heap);
  for (size_t index = 0; index < items->length; index++) {

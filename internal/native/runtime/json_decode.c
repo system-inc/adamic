@@ -217,31 +217,7 @@ static bool literal(const json_node *value,const adamic_decode_node *type) {
  return value->kind==json_string && adamic_string_equal(value->string,type->literal);
 }
 static bool reference(int representation) {
- // Keep every tag explicit: -Wswitch must reject new representations until classified.
- switch ((enum adamic_ir_type)representation) {
- case adamic_ir_Number:
- case adamic_ir_Boolean:
- case adamic_ir_MaybeNumber:
- case adamic_ir_MaybeBoolean:
- case adamic_ir_NullRepresentation:
- case adamic_ir_UndefinedRepresentation:
-  return false;
- case adamic_ir_String:
- case adamic_ir_Object:
- case adamic_ir_Array:
- case adamic_ir_Map:
- case adamic_ir_Closure:
- case adamic_ir_Union:
- case adamic_ir_Weak:
- case adamic_ir_Record:
- case adamic_ir_Uint8Array:
- case adamic_ir_Int32Array:
- case adamic_ir_Float64Array:
- case adamic_ir_Promise:
- case adamic_ir_Uint16Array:
-  return true;
- }
- return false;
+ return adamic_ir_type_reference((enum adamic_ir_type)representation);
 }
 static adamic_field_kind storage_kind(int representation) {
  return reference(representation)?adamic_field_reference:representation==adamic_ir_Boolean?adamic_field_boolean:adamic_field_number;
@@ -349,7 +325,7 @@ static bool validate(const adamic_decode_schema *schema,size_t index,const json_
  if (value->kind==json_string) { out->reference=adamic_retain(value->string); return true; }
  if (strcmp(kind,"array")==0) {
   int of=schema->nodes[type->children[0]].representation;
-  adamic_array *a=adamic_array_new(value->count,reference(of));
+  adamic_array *a=adamic_array_make(value->count,(enum adamic_ir_type)of);
   for (size_t i=0;i<value->count;i++) {
    char name[32]; (void)snprintf(name,sizeof name,"%zu",i);
    adamic_string *where=path_field(path,name,true); adamic_value child={0};

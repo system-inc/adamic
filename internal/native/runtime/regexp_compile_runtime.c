@@ -5,7 +5,7 @@
 /* Each arena block is owned by a zero-length raw array, whose normal destructor
  * frees its buffer. A reference array owns all blocks; no cache or GC is used. */
 static void regex_runtime_take(void *owner,void *block) {
-    adamic_array *raw=adamic_array_new(0,false);raw->elements=block;
+    adamic_array *raw=adamic_array_make(0,0);raw->elements=block;
     adamic_array_push(owner,(adamic_value){.reference=raw});
 }
 static adamic_string *regex_runtime_source(adamic_string *pattern,unsigned flags) {
@@ -67,7 +67,7 @@ adamic_object *adamic_regex_compile_new(adamic_string *pattern,adamic_string *fl
     char ordered[8];size_t count=0;const char *letters="dgimsuvy";const unsigned bits[]={32,8,1,2,128,4,64,16};
     for(size_t i=0;i<8;i++)if((program->flags&bits[i])&&(letters[i]!='u'||!(program->flags&REGEX_FLAG_V)))ordered[count++]=letters[i];
     adamic_string *flag_string=adamic_string_allocate(count);memcpy((char *)flag_string->bytes,ordered,count);
-    adamic_array *storage=adamic_array_new(0,true);adamic_regex_parse_take_memory(&result,regex_runtime_take,storage);
+    adamic_array *storage=adamic_array_make(0,adamic_ir_Union);adamic_regex_parse_take_memory(&result,regex_runtime_take,storage);
     adamic_object *regex=adamic_regex_new_owned(program,source,flag_string,storage);
     adamic_release(storage);adamic_release(source);adamic_release(flag_string);return regex;
 }

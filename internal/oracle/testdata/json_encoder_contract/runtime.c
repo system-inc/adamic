@@ -56,13 +56,13 @@ static void print_json(adamic_json_result value,const adamic_json_runtime *provi
  if (text==NULL) puts("undefined"); else { fwrite(text->bytes,1,text->length,stdout); puts(""); adamic_release(text); }
 }
 int main(int argc,char **argv) {
- adamic_array *nested=adamic_array_new(1,false);
+ adamic_array *nested=adamic_array_make(1,adamic_ir_Number);
  adamic_array_push(nested,(adamic_value){.number=2});
  adamic_object *child=adamic_object_new(&x_shape);
  child->slots[0].boolean=true;
  static adamic_string built=ADAMIC_STRING("built");
  adamic_string *word=adamic_string_repeat(&built,2);
- adamic_array *mixed=adamic_array_new(8,false);
+ adamic_array *mixed=adamic_array_make(8,0);
  elements[0]=(adamic_json_result){{.number=7},&number};
  elements[1]=(adamic_json_result){{.reference=word},&string};
  elements[2]=(adamic_json_result){{.boolean=false},&boolean};

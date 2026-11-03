@@ -92,11 +92,11 @@ func (e *emitter) closureComparator(sort ir.ArraySort) string {
 // elements until the statement ends, including across mutations in later arguments.
 // The heterogeneous packed array itself borrows those snapshots and scalar temporaries.
 func (e *emitter) packCallArguments(arguments []ir.Expression, spread []bool) string {
-	packed := e.own(ir.Array, "adamic_array_new(0, false)")
+	packed := e.own(ir.Array, "adamic_array_make(0, 0)")
 	for index, argument := range arguments {
 		if len(spread) > index && spread[index] {
 			source := e.value(argument)
-			snapshot := e.own(ir.Array, fmt.Sprintf("adamic_array_slice(%s, 0, 0, false)", source))
+			snapshot := e.own(ir.Array, fmt.Sprintf("adamic_array_slice(%s, 0, 0, false, %s->element)", source, source))
 			position := e.temporary()
 			e.line("for (size_t %s = 0; %s < %s->length; %s++) {", position, position, snapshot, position)
 			e.line("\tadamic_array_push(%s, %s->elements[%s]);", packed, snapshot, position)
@@ -118,7 +118,7 @@ func packedParameter(of ir.Type, packed, count string, index int) string {
 }
 
 func (e *emitter) restArray(packed, count string, start int, element ir.Type) string {
-	result := e.own(ir.Array, fmt.Sprintf("adamic_array_new(0, %t)", element.IsReference()))
+	result := e.own(ir.Array, fmt.Sprintf("adamic_array_make(0, %s)", arrayElement(element)))
 	e.copyRest(result, packed, count, start, element)
 	return result
 }

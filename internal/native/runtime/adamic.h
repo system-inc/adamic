@@ -37,6 +37,36 @@ enum adamic_ir_type {
 	adamic_ir_Uint16Array = 19,
 };
 
+// adamic_ir_type_reference is ir.Type.IsReference: whether a value of the type lives on the heap and
+// is counted. 0, a type not known, is no reference.
+static inline bool adamic_ir_type_reference(enum adamic_ir_type type) {
+	// Keep every tag explicit: -Wswitch must reject new representations until classified.
+	switch (type) {
+	case adamic_ir_Number:
+	case adamic_ir_Boolean:
+	case adamic_ir_MaybeNumber:
+	case adamic_ir_MaybeBoolean:
+	case adamic_ir_NullRepresentation:
+	case adamic_ir_UndefinedRepresentation:
+		return false;
+	case adamic_ir_String:
+	case adamic_ir_Object:
+	case adamic_ir_Array:
+	case adamic_ir_Map:
+	case adamic_ir_Closure:
+	case adamic_ir_Union:
+	case adamic_ir_Weak:
+	case adamic_ir_Record:
+	case adamic_ir_Uint8Array:
+	case adamic_ir_Int32Array:
+	case adamic_ir_Float64Array:
+	case adamic_ir_Promise:
+	case adamic_ir_Uint16Array:
+		return true;
+	}
+	return false;
+}
+
 enum adamic_stream {
 	adamic_stdout = 1,
 	adamic_stderr = 2,
@@ -677,7 +707,7 @@ bool adamic_object_is_frozen(const adamic_heap *value);
 adamic_object *adamic_object_freeze(adamic_object *object);
 bool adamic_object_has_own(const adamic_object *object, const adamic_string *key);
 struct adamic_array *adamic_object_keys(const adamic_object *object);
-struct adamic_array *adamic_object_values(const adamic_object *object, bool references, bool entries);
+struct adamic_array *adamic_object_values(const adamic_object *object, enum adamic_ir_type element, bool entries);
 void adamic_object_assign(adamic_object *target, const adamic_object *source);
 void adamic_object_check_write(const adamic_object *object, const char *name);
 // Keep frozen-object failures out of the ordinary write's call path.
@@ -693,13 +723,32 @@ typedef struct adamic_array {
 	size_t length;
 	size_t capacity;
 	bool references;
+	// element names how the array's slots are held, never a static type: an enum adamic_ir_type. A
+	// scalar array's (references false) is Number, Boolean or MaybeNumber. Every reference array's is
+	// Union, meaning each element names its own kind by its heap header, so a reader may not trust it
+	// as a class. 0 is a kind not known, and a reader that needs the kind stops on 0. Where it and
+	// the IR type at a read disagree, the byte is the truth. It fills what was padding.
+	uint8_t element;
 	adamic_value *elements;
 	// Extra fields of RegExp result arrays, owned and released with the array.
 	adamic_object *properties;
 	// An interior fixed layout, owned by this allocation, never a wrapper.
 	adamic_object *metadata; // Never retained, never escapes as a value; retaining then releasing its zero-count header frees interior array storage.
 } adamic_array;
-adamic_array *adamic_node_array_new(size_t capacity, bool references, const adamic_shape *extras);
+#if defined(ADAMIC_TARGET_WASI)
+_Static_assert(sizeof(adamic_array) == 36 && offsetof(adamic_array, element) == 21, "an array's element byte sits in wasm32 padding");
+#elif UINTPTR_MAX == UINT64_MAX
+_Static_assert(sizeof(adamic_array) == 64 && offsetof(adamic_array, element) == 33, "an array's element byte sits in padding");
+#endif
+// adamic_array_make is a new array the caller owns, with room for capacity elements. Its references
+// follow from element, which a reference type makes Union (see element above). Every runtime
+// function that makes an array and takes an element is given the kind its result holds, by the
+// emitter, which knows it, and hands it here.
+adamic_array *adamic_array_make(size_t capacity, enum adamic_ir_type element);
+// adamic_array_scalar_element is a scalar array's element kind. An array of references, or of a
+// kind not known, panics: whoever asks needs slots it can read as a scalar.
+enum adamic_ir_type adamic_array_scalar_element(const adamic_array *array);
+adamic_array *adamic_node_array_make(size_t capacity, enum adamic_ir_type element, const adamic_shape *extras);
 adamic_array *adamic_node_array_keys(const adamic_array *array);
 
 
@@ -850,7 +899,6 @@ typedef struct adamic_typed_array_iterator {
 adamic_typed_array_iterator *adamic_typed_array_iterate(adamic_typed_array *array);
 bool adamic_typed_array_iterator_next(adamic_typed_array_iterator *iterator, double *value);
 
-adamic_array *adamic_array_new(size_t capacity, bool references);
 size_t adamic_public_index(const adamic_shape *shape, size_t position);
 adamic_array *adamic_class_object_keys(const adamic_object *object);
 const adamic_accessor *adamic_accessor_find(const adamic_object *object, const char *name);
@@ -858,7 +906,7 @@ adamic_value adamic_accessor_get(adamic_object *object, const char *name);
 void adamic_accessor_set(adamic_object *object, const char *name, adamic_value value, int type);
 
 // Structured fork-join. Arguments are borrowed until the join; the result is owned.
-adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, bool references);
+adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, enum adamic_ir_type element);
 
 // adamic_array_push appends; a reference pushed belongs to the array.
 void adamic_array_push(adamic_array *array, adamic_value value);
@@ -945,12 +993,12 @@ void adamic_map_clear(adamic_map *map);
 
 // adamic_map_keys and adamic_map_values are [...map.keys()] and [...map.values()]: new arrays the
 // caller owns, in insertion order.
-adamic_array *adamic_map_keys(const adamic_map *map);
+adamic_array *adamic_map_keys(const adamic_map *map, enum adamic_ir_type element);
 
 // adamic_map_add_pairs sets each [key, value] tuple of an array in a map, in order: new Map(pairs).
 // The map takes its own references.
 void adamic_map_add_pairs(adamic_map *map, const adamic_array *pairs);
-adamic_array *adamic_map_values(const adamic_map *map);
+adamic_array *adamic_map_values(const adamic_map *map, enum adamic_ir_type element);
 
 // adamic_map_get is the value's slot, or NULL when the key isn't there.
 adamic_value *adamic_map_get(const adamic_map *map, adamic_value key);
@@ -1024,7 +1072,7 @@ bool adamic_record_iterator_next(adamic_record_iterator *iterator, adamic_string
 // order, new Set(array), each reference retained; adamic_set_values is [...set], a new array the caller
 // owns.
 void adamic_set_add_all(adamic_map *set, const adamic_array *values);
-adamic_array *adamic_set_values(const adamic_map *set);
+adamic_array *adamic_set_values(const adamic_map *set, enum adamic_ir_type element);
 
 // adamic_map_free_children lets go of what a map holds, for the heap's freeing.
 void adamic_map_free_children(adamic_map *map, void (*let_go)(void *));
@@ -1089,12 +1137,12 @@ adamic_array *adamic_array_reverse(adamic_array *array);
 // adamic_array_filled is new Array(length).fill(value), a new array the caller owns;
 // adamic_array_fill is array.fill(value, start, end), in place, and is the array. Both hold the value
 // once per element; the caller keeps its own.
-adamic_array *adamic_array_filled(double length, adamic_value value, bool references);
+adamic_array *adamic_array_filled(double length, adamic_value value, enum adamic_ir_type element);
 adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double start, double end, bool has_start, bool has_end);
 
 // adamic_array_splice is array.splice(start, count, ...items): what's removed, in a new array the
 // caller owns. The items' references are the array's from then on.
-adamic_array *adamic_array_splice(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items);
+adamic_array *adamic_array_splice(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items, enum adamic_ir_type element);
 // adamic_array_remove is a splice whose result nothing uses: what it removes is let go of, and no
 // array is made to hold it.
 void adamic_array_remove(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items);
@@ -1102,12 +1150,12 @@ void adamic_array_remove(adamic_array *array, double start, double count, bool h
 // adamic_array_append is a spread, [...source], into an array being made: each element pushed, a
 // reference retained.
 void adamic_array_append(adamic_array *array, const adamic_array *source);
-adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[]);
+adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[], enum adamic_ir_type element);
 
 // adamic_array_slice is array.slice(start, end); adamic_array_sort sorts in place, stably, by a
 // comparator that gives -1, 0 or 1 and is passed context. adamic_compare_closure is that comparator for
 // a function value, the context.
-adamic_array *adamic_array_slice(const adamic_array *array, double start, double end, bool has_end);
+adamic_array *adamic_array_slice(const adamic_array *array, double start, double end, bool has_end, enum adamic_ir_type element);
 void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context);
 int adamic_compare_closure(adamic_value left, adamic_value right, void *context);
 // adamic_timsort sorts count values in place by V8's algorithm (sort.c). It says false, the values

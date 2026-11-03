@@ -646,7 +646,7 @@ static const adamic_field_kind pair_kinds[] = {adamic_field_number, adamic_field
 static const adamic_shape pair_shape = {2, pair_names, pair_references, NULL, pair_kinds};
 static adamic_array *regex_result(const adamic_regex_program *p, adamic_string *input,
 								  const ptrdiff_t *spans REGEX_STORAGE_PARAMETER) {
-	adamic_array *result = adamic_array_new(p->captures + 1, true);
+	adamic_array *result = adamic_array_make(p->captures + 1, adamic_ir_Union);
 	for (size_t k = 0; k <= p->captures; k++) {
 		adamic_string *value =
 			spans[2 * k] < 0
@@ -659,7 +659,7 @@ static adamic_array *regex_result(const adamic_regex_program *p, adamic_string *
 	result->properties->slots[1].reference = adamic_retain(input);
 	result->properties->slots[2].reference = regex_groups(p, result REGEX_GROUP_STORAGE);
 	if (p->flags & 32) {
-		adamic_array *indices = adamic_array_new(p->captures + 1, true);
+		adamic_array *indices = adamic_array_make(p->captures + 1, adamic_ir_Union);
 		for (size_t k = 0; k <= p->captures; k++) {
 			adamic_object *pair = NULL;
 			if (spans[2 * k] >= 0) {
@@ -792,7 +792,7 @@ adamic_array *adamic_regex_match(adamic_string *input, adamic_object *regex) {
 	if (!(p->flags & 8))
 		return adamic_regex_exec(regex, input);
 	regex->slots[1].number = 0;
-	adamic_array *result = adamic_array_new(0, true);
+	adamic_array *result = adamic_array_make(0, adamic_ir_Union);
 	size_t length;
 	uint16_t *units = regex_input(input, &length);
 	uint64_t steps = 0;
@@ -888,7 +888,7 @@ double adamic_regex_search(adamic_string *input, adamic_object *regex) {
 	return result;
 }
 adamic_array *adamic_regex_split(adamic_string *input, adamic_object *regex, double limit_value) {
-	adamic_array *result = adamic_array_new(0, true);
+	adamic_array *result = adamic_array_make(0, adamic_ir_Union);
 	uint32_t limit = (uint32_t)adamic_shift_right_unsigned(limit_value, 0);
 	if (limit == 0)
 		return result;
@@ -1055,7 +1055,7 @@ adamic_string *adamic_regex_replace(adamic_string *input, adamic_object *regex,
 	uint16_t *units = regex_input(input, &length),
 			 *text = regex_input(replacement, &replacement_length);
 	uint64_t steps = 0;
-	adamic_array *pieces = adamic_array_new(0, true);
+	adamic_array *pieces = adamic_array_make(0, adamic_ir_Union);
 	size_t previous = 0;
 	for (;;) {
 		ptrdiff_t *spans = regex_execute(regex, units, length, false, &steps);
