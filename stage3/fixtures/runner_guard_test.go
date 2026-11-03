@@ -19,7 +19,9 @@ func TestTransformedNodeRunnerGuardHook(t *testing.T) {
 		t.Fatal(err)
 	}
 	text := string(data)
-	if strings.Count(text, "stripTypeScriptTypes(source, { mode: 'transform' })") != 1 || strings.Contains(text, "import.meta.url") || !strings.Contains(text, "oracle/node.mjs") {
+	transformed := strings.Count(text, "stripTypeScriptTypes(source, { mode: 'transform' })") +
+		strings.Count(text, "stripTypeScriptTypes(source, { mode: 'transform', sourceMap: true, sourceUrl: url })")
+	if transformed != 1 || strings.Contains(text, "import.meta.url") || !strings.Contains(text, "oracle/node.mjs") {
 		t.Fatalf("runner transformation or runtime URL rewrite missing: %s", text)
 	}
 }
@@ -28,6 +30,7 @@ func TestTransformedNodeRunnerGuard(t *testing.T) {
 	t.Parallel()
 	const erasable = "stripTypeScriptTypes(source)"
 	const transformed = "stripTypeScriptTypes(source, { mode: 'transform' })"
+	const mapped = "stripTypeScriptTypes(source, { mode: 'transform', sourceMap: true, sourceUrl: url })"
 	const runtimeURL = "new URL('./adamic.mjs', import.meta.url)"
 	for _, probe := range []struct {
 		name, source string
@@ -35,6 +38,9 @@ func TestTransformedNodeRunnerGuard(t *testing.T) {
 	}{
 		{"erasable", erasable + ";" + runtimeURL, true},
 		{"transformed", transformed + ";" + runtimeURL, true},
+		{"transformed with a source map", mapped + ";" + runtimeURL, true},
+		{"source map without transform mode", "stripTypeScriptTypes(source, { sourceMap: true, sourceUrl: url });" + runtimeURL, false},
+		{"mapped and plain transform", mapped + ";" + transformed + ";" + runtimeURL, false},
 		{"missing call", runtimeURL, false},
 		{"unknown call", "stripTypeScriptTypes(source, { mode: 'unknown' });" + runtimeURL, false},
 		{"duplicate erasable", erasable + ";" + erasable + ";" + runtimeURL, false},

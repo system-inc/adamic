@@ -162,7 +162,11 @@ func validFixturePath(name string) bool {
 func nodeRunnerMode(t *testing.T, text string) int {
 	t.Helper()
 	erasable := strings.Count(text, "stripTypeScriptTypes(source)")
-	transformedCalls := strings.Count(text, "stripTypeScriptTypes(source, { mode: 'transform' })")
+	// The oracle's transform call also asks for a source map, so Node's stack positions name the program's own lines
+	// (#f4qxx5d). A map changes no code: on all 1,637 programs under stage3/fixtures, internal/oracle/testdata and oracle,
+	// the stripped output parses to the same syntax with and without it, differing only in comments and the map line.
+	transformedCalls := strings.Count(text, "stripTypeScriptTypes(source, { mode: 'transform' })") +
+		strings.Count(text, "stripTypeScriptTypes(source, { mode: 'transform', sourceMap: true, sourceUrl: url })")
 	if erasable+transformedCalls != 1 {
 		t.Fatal("source Node runner changed: review the transform-mode hook")
 	}
