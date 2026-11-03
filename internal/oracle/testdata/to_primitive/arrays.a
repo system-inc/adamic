@@ -2,7 +2,9 @@
 // each element written as String writes it, through its own toString, but null and undefined as
 // nothing. An array whose join is under way joins as "", as V8's join stack makes it, however deep
 // the cycle, through a toString that joins it again too, and a throw from an element's toString lets
-// the array go, so it joins again after. An empty array is "", an array of numbers among them.
+// the array go, so it joins again after. An empty array is "", an array of numbers among them. An
+// array of unknown has no element storage yet, so the arrays that hold anything are of Item.
+type Item = string | number | boolean | null | undefined | object;
 let failing = true;
 class Named {
 	toString(): string {
@@ -26,28 +28,29 @@ function show(value: unknown): void {
 	console.log(String(value));
 	console.log(`<${value}>`);
 }
-const mixed: unknown[] = ['a', 1, null, undefined, true, new Named(), ['b', 'c'], new Error('e')];
+const mixed: Item[] = ['a', 1, null, undefined, true, new Named(), ['b', 'c'], new Error('e')];
 show(mixed);
-const empty: unknown[] = [];
+show(['p', 'q']);
+const empty: Item[] = [];
 show(empty);
 const none: number[] = [];
 show(none);
-const itself: unknown[] = [];
+const itself: Item[] = [];
 itself.push(itself);
 show(itself);
-const after: unknown[] = ['x'];
+const after: Item[] = ['x'];
 after.push(after);
 show(after);
-const outer: unknown[] = ['o'];
-const inner: unknown[] = ['i', outer];
+const outer: Item[] = ['o'];
+const inner: Item[] = ['i', outer];
 outer.push(inner);
 show(outer);
 show(inner);
-const holder: unknown[] = ['h'];
+const holder: Item[] = ['h'];
 const viewed: unknown = holder;
 holder.push(new Back());
 show(holder);
-const throwing: unknown[] = ['t', new Fails()];
+const throwing: Item[] = ['t', new Fails()];
 try {
 	show(throwing);
 } catch (error) {

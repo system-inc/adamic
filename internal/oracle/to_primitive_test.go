@@ -50,6 +50,7 @@ var toPrimitiveAnswers = []struct{ file, stdout string }{
 		"renamed\n<renamed>\n"},
 	{"records.a", "[object Object]\n<[object Object]>\n" + cannotConvert + "\n<" + cannotConvert + ">\n"},
 	{"arrays.a", "a,1,,,true,named,b,c,Error: e\n<a,1,,,true,named,b,c,Error: e>\n" +
+		"p,q\n<p,q>\n" +
 		"\n<>\n" +
 		"\n<>\n" +
 		"\n<>\n" +
