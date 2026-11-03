@@ -37,7 +37,14 @@ A `require` of a path computed as the program runs is tsc's plugin load. It eval
 would load the plugin; a native binary can't run JavaScript. tsc's catch returns the error as the load's
 result.
 
-Held by: `node_commonjs_require_computed.a` and its uncaught variant.
+The row reaches any computed path, whatever it holds when the program runs: a path naming a builtin such as
+`"fs"`, built from a variable or a template, throws the same Error, where stock CommonJS Node would load the
+builtin. A literal is judged past parentheses, assertions and non-nulls, so `require("source-map-support" as
+string)` is installed-layout's literal and `require("fs" as string)` keeps its NotYet; only a value the
+program computes takes this row.
+
+Held by: `node_commonjs_require_computed.a` and its uncaught variant, which also makes two computed requires
+in one program.
 
 ## The source on Node
 
