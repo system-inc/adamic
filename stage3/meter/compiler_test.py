@@ -21,6 +21,12 @@ import (
 )
 func main() {
     root, output := os.Args[1], os.Args[2]
+    if path := os.Getenv("METER_INVOCATIONS"); path != "" {
+        stream, err := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+        if err != nil { panic(err) }
+        fmt.Fprintln(stream, root)
+        stream.Close()
+    }
     if path := os.Getenv("LATENT_TIMES"); path != "" {
         if err := os.WriteFile(path, []byte(""), 0600); err != nil { panic(err) }
     }
@@ -152,9 +158,19 @@ class CompilerSelectionTests(unittest.TestCase):
     def measure(self, mode=None):
         if mode:
             self.env['STAGE3_METER_COMPILER'] = mode
+        invocations = self.root / 'invocations.txt'
+        self.env['METER_INVOCATIONS'] = str(invocations)
         self.command('bash', 'stage3/meter/twice-daily.sh')
+        self.assertEqual(len(invocations.read_text().splitlines()), 4, 'main must be measured exactly once')
         run, = (self.repository / 'stage3/meter/runs').iterdir()
         report = json.loads((run / 'report.json').read_text())
+        self.assertEqual(json.loads((run / 'compiler-mode.json').read_text())['measurement_sources'],
+                         {'main': 'main', 'area': 'main'})
+        self.assertEqual(report['trees']['main']['adapted_tree'], report['trees']['area']['adapted_tree'])
+        for relative in ('census.jsonl.gz', 'latent.jsonl.gz', 'latent-times.jsonl.gz',
+                         'tsc/census.jsonl.gz', 'tsc/latent.jsonl.gz'):
+            self.assertEqual(gzip.decompress((run / 'main' / relative).read_bytes()),
+                             gzip.decompress((run / 'area' / relative).read_bytes()))
         for label in ('main', 'area'):
             tree = report['trees'][label]
             self.assertEqual(tree['tree_commit'], self.main)

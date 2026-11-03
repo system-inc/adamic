@@ -49,7 +49,7 @@ python3 - "$run/compiler-mode.json" "$compiler_mode" "$checkout_commit" "$main_c
 import json, sys
 path, mode, checkout, main, area, latent_mode = sys.argv[1:]
 with open(path, 'w') as output:
-    json.dump({'mode': mode, 'latent_mode': latent_mode, 'commits': {'main': main if mode == 'per-ref' else checkout,
+    json.dump({'mode': mode, 'latent_mode': latent_mode, 'measurement_sources': {'main': 'main', 'area': 'main'}, 'commits': {'main': main if mode == 'per-ref' else checkout,
                                       'area': area if mode == 'per-ref' else checkout}}, output, indent=2)
     output.write('\n')
 PYTHON
@@ -67,8 +67,7 @@ build_census() {
 if [[ $compiler_mode == single ]]; then
     build_census "$repository" "$scratch" "$run"
 fi
-measurement_pids=()
-for label in main area; do
+for label in main; do
     commit=$main_commit
     [[ $label == main ]] || commit=$area_commit
     mkdir -p "$scratch/$label-source" "$run/$label"
@@ -105,22 +104,17 @@ for label in main area; do
     entry=$scratch/$label-adapted/src/tsc/tsc.ts
     [[ -f $entry ]] || { echo "missing tsc entry: $entry" >&2; exit 1; }
     mkdir -p "$run/$label/tsc"
-    # Independent copies share CPU time; preparation stays ordered for apply caches.
-    (
+    # Only main is measured; area is a compatibility label for these same records.
     "$binaries/census" "$entry" "$run/$label/tsc/census.jsonl" > "$run/$label/tsc/census.log" 2>&1
     LATENT_FULL=$latent_full LATENT_ASSERT_NO_OUTPUT=1 "$binaries/entry-census" "$entry" "$run/$label/tsc/latent.jsonl" > "$run/$label/tsc/latent.log" 2>&1
     "$binaries/census" "$scratch/$label-adapted/src/compiler" "$run/$label/census.jsonl" > "$run/$label/census.log" 2>&1
     LATENT_TIMES="$run/$label/latent-times.jsonl" LATENT_FULL=$latent_full LATENT_ASSERT_NO_OUTPUT=1 "$binaries/latent-census" "$scratch/$label-adapted/src/compiler" "$run/$label/latent.jsonl" > "$run/$label/latent.log" 2>&1
-    ) &
-    measurement_pids+=("$!")
 done
-measurement_status=0
-for pid in "${measurement_pids[@]}"; do
-    wait "$pid" || measurement_status=$?
-done
-[[ $measurement_status == 0 ]] || exit "$measurement_status"
+# Copy all raw streams and preparation logs before reporting and gzip. Paths in
+# the copied streams still name main-adapted, so both labels use that tree.
+cp -a "$run/main" "$run/area"
 python3 "$repository/stage3/meter/box.py" "$run/box.json" end
-python3 stage3/meter/report.py "$scratch/main-adapted" "$scratch/area-adapted" "$run" "$stamp" "$main_commit" "$area_commit"
+python3 stage3/meter/report.py "$scratch/main-adapted" "$scratch/main-adapted" "$run" "$stamp" "$main_commit" "$area_commit"
 gzip "$run/main/latent-times.jsonl" "$run/area/latent-times.jsonl" "$run/main/tsc/census.jsonl" "$run/area/tsc/census.jsonl" "$run/main/tsc/latent.jsonl" "$run/area/tsc/latent.jsonl" "$run/main/census.jsonl" "$run/area/census.jsonl" "$run/main/latent.jsonl" "$run/area/latent.jsonl"
 python3 - "$run" "$SECONDS" <<'PYTHON'
 import json, pathlib, sys
@@ -128,6 +122,7 @@ run = pathlib.Path(sys.argv[1])
 seconds = int(sys.argv[2])
 (run / 'timing.json').write_text(json.dumps({'elapsed_seconds': seconds}) + '\n')
 with (run / 'README.md').open('a') as output:
+    output.write("\nArea reuses main's measurement, not a second measurement. main/ was copied to area/ before reporting and gzip; both labels use main-adapted. See compiler-mode.json measurement_sources.\n")
     output.write(f'\nElapsed: {seconds // 60}m {seconds % 60}s.\n')
 PYTHON
 cat "$run/report.md"

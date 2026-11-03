@@ -8,8 +8,12 @@ source /workspace/adamic-tools/env.sh && STAGE3_METER_COMPILER=per-ref STAGE3_ME
 
 Every invocation fetches only `origin/main`, then resolves one immutable commit.
 `STAGE3_METER_MAIN_REF` can select an explicit commit; its default is the fetched
-`origin/main`. The retired area tree is measured as a second independent copy of
-that same main commit, retaining the historical `area` reporter label.
+`origin/main`. Only main is measured. The historical `area` reporter label reuses that
+measurement: the complete `main/` directory (raw census, latent and timing
+streams, entry streams, and preparation/measurement logs) is copied to `area/`
+before reporting and gzip. Both reporter arguments name `main-adapted`, preserving
+the absolute paths in the copied records. `compiler-mode.json.measurement_sources`
+and the run README explicitly record this reuse.
 `STAGE3_METER_AREA_REF`, if supplied, must resolve to the same SHA.
 Unresolvable or unequal pins fail before creating an output directory.
 Cold runs clone the pinned upstream TypeScript tag when
@@ -18,11 +22,11 @@ Cold runs clone the pinned upstream TypeScript tag when
 runs unattended and its logs remain beside the measurement.
 
 The default compiler mode remains `single`, using the launcher checkout's
-compiler. The daily command selects `per-ref` so both compilers come from the
-measured SHA. Each snapshot uses its own apply script and adaptations.
+compiler. The daily command selects `per-ref` so the compiler comes from the
+measured SHA. The main snapshot uses its own apply script and adaptations.
 
 Set `STAGE3_METER_COMPILER=per-ref` to build both the ordinary census and latent
-census separately from each pinned ref's own compiler. Detached scratch worktrees
+census once from main's pinned compiler. Detached scratch worktrees
 initialize each ref's recorded submodules, and the worker supplies the guarded latent
 overlay instrumentation applied to each ref's compiler sources. Build, checkout and submodule logs live under `main/` and `area/`.
 Scratch worktrees are retained for inspection, including on failure.
@@ -109,7 +113,7 @@ Wall time uses Go's monotonic clock; CPU is the process's user plus system time
 from `getrusage(RUSAGE_SELF)`. The driver is sequential, so a unit includes its
 synchronous dependency work. Registration within an attempt is included; shared
 file setup and writing the time record are excluded. Both first-error and full
-mode record times. The paired trees still run concurrently and share the box.
+mode record times. Only main runs; area copies its times as well as its findings.
 
 Each tree's `latent_time` JSON block contains wall/CPU totals, `files` summed and
 sorted by descending wall time, and `slowest_units` (at most ten). Source locations
@@ -155,6 +159,15 @@ repository/toolchain paths:
 ```
 
 This unit does not install cron or send messages to @system_adamic.
+
+The single-measurement regression counts four census invocations, checks copied
+streams byte for byte after decompression, and checks the shared adapted tree and
+measurement provenance. Restore a real second measurement and require that check
+to go red with:
+
+```sh
+python3 stage3/meter/check-measure-once-mutant.py /tmp/measure-once-mutant-test.log > /tmp/measure-once-mutant.log 2>&1
+```
 
 Validate report accounting with:
 
