@@ -242,9 +242,15 @@ static adamic_object *make_object(size_t count) {
 }
 // Field-read caches keep shape identity across object lifetimes. Canonical shapes therefore live
 // until program exit; a shape embedded in a freed object could be mistaken for a later layout.
+// Each is registered as a literal's shape is (union.c), so a run-time key read takes a decoded
+// object for one the program made, whose prototype is Object's on Node, and Object.prototype's
+// names answer. Its scalar tags are zero, no evidence, as union.c's dynamic_slot reads them: the
+// entry is shared by every schema whose fields store alike, a number field's and a null field's
+// among them, so no one schema's representations may stand for the rest.
 typedef struct decode_shape_entry {
  struct decode_shape_entry *next;
  adamic_shape shape;
+ adamic_shape_types types;
 } decode_shape_entry;
 static decode_shape_entry *decode_shapes;
 static adamic_shape *canonical_shape(const adamic_shape *shape) {
@@ -257,18 +263,23 @@ static adamic_shape *canonical_shape(const adamic_shape *shape) {
   }
   if (same) { return &entry->shape; }
  }
- decode_shape_entry *entry=memory(sizeof *entry+shape->count*(sizeof(char *)+sizeof(bool)+sizeof(adamic_field_kind)));
+ // The tags sit after the names, where an int is aligned, and memory() zeroes them.
+ decode_shape_entry *entry=memory(sizeof *entry+shape->count*(sizeof(char *)+sizeof(int)+sizeof(bool)+sizeof(adamic_field_kind)));
  entry->next=decode_shapes;entry->shape=*shape;
  entry->shape.names=(const char *const *)(entry+1);
- entry->shape.references=(const bool *)(entry->shape.names+shape->count);
+ const int *types=(const int *)(entry->shape.names+shape->count);
+ entry->shape.references=(const bool *)(types+shape->count);
  entry->shape.kinds=(const adamic_field_kind *)(entry->shape.references+shape->count);
  if (shape->count!=0) {
   memcpy((void *)entry->shape.names,shape->names,shape->count*sizeof(char *));
   memcpy((void *)entry->shape.references,shape->references,shape->count*sizeof(bool));
   memcpy((void *)entry->shape.kinds,shape->kinds,shape->count*sizeof(adamic_field_kind));
  }
+ entry->types=(adamic_shape_types){&entry->shape,types,NULL,false};
+ adamic_register_shape_types(&entry->types);
  decode_shapes=entry;return &entry->shape;
 }
+// A freed entry stays on union.c's registered list, which nothing reads once the program has exited.
 __attribute__((destructor)) static void free_decode_shapes(void) {
  while (decode_shapes!=NULL) { decode_shape_entry *entry=decode_shapes;decode_shapes=entry->next;free(entry); }
 }
