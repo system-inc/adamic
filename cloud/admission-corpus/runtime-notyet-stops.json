@@ -15,8 +15,8 @@
     },
     "0f3f677bdbc14c1b867e666a44f365584f39988b4d3bc427b6f380a25949c9c5": {
       "path": "internal/oracle/testdata/reflect_get/stop_host_object.a",
-      "ruling_task": "#zhgxzjg",
-      "lifting_task": "#0sps03r",
+      "ruling_task": "#0sps03r",
+      "lifting_task": "#zhrjf2t",
       "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'constructor')\n"
     },
     "52d247f51dbecd80396018b218cf9901674de0f8527b6fa57931cbbedde7b4c6": {
@@ -45,14 +45,14 @@
     },
     "2b83f1258c6b091b582c7779cec81fd2b28d3e3493fe1cefc73322cd82d446bb": {
       "path": "internal/oracle/testdata/reflect_get/stop_proto.a",
-      "ruling_task": "#zhgxzjg",
-      "lifting_task": "#0sps03r",
+      "ruling_task": "#0sps03r",
+      "lifting_task": "#fzv1zwa",
       "stderr": "adamic: panic: __proto__ isn't read by a run-time key yet (reading '__proto__')\n"
     },
     "9c3d828b571883e7ae08c3a2feb58d92e6cc952f6159605736b93603f3d332d1": {
       "path": "internal/oracle/testdata/reflect_get/stop_prototype_class.a",
-      "ruling_task": "#zhgxzjg",
-      "lifting_task": "#0sps03r",
+      "ruling_task": "#0sps03r",
+      "lifting_task": "#tr1zpbv",
       "stderr": "adamic: panic: a class instance's constructor isn't read by a run-time key yet (reading 'constructor')\n"
     }
   }
