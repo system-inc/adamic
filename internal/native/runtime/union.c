@@ -185,8 +185,8 @@ static adamic_heap *dynamic_slot(const adamic_object *object, size_t index) {
 	// The slot's own representation byte is ir.Type's, as its last write left it, whatever made the
 	// object: every allocator zeroes the bytes, the emitter writes one with each construction and write
 	// in a program that reads by a run-time key (fieldTypesNeeded), and the runtime writes those of
-	// what it hands a program (json_decode.c, map_set.c, directory.c, regexp.c, node_process.c). Zero
-	// is no evidence, so the shape's registered tags decide then.
+	// the plain objects it hands a program (json_decode.c, map_set.c, directory.c, regexp.c). Zero is
+	// no evidence, so the shape's registered tags decide then.
 	switch (adamic_object_field_types(object)[index]) {
 	case 1: return adamic_box_number(slot.number);
 	case 2: return slot.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
@@ -419,14 +419,24 @@ static adamic_value prototype_method_called(adamic_closure *self, adamic_value *
 // key read the emitter registers each literal's shape as it makes one (emit_objects.go), and the
 // runtime registers each shape whose object is a plain one on Node, Object's prototype and no other:
 // each the JSON decoder builds (json_decode.c), and the results of decodeJson, readTextFile,
-// writeTextFile, readDirectory and fileStatus, a collection's or matchAll's next(), and
-// process.memoryUsage() (json_decode.c, input.c, directory.c, map_set.c, regexp.c, node_process.c).
-// A host object's shape is never on the list.
+// writeTextFile, readDirectory and fileStatus, and a collection's or matchAll's next() (json_decode.c,
+// input.c, directory.c, map_set.c, regexp.c). A host object's shape is never on the list.
 static bool program_shape(const adamic_shape *shape) {
 	for (const adamic_shape_types *entry = __atomic_load_n(&shape_types, __ATOMIC_ACQUIRE); entry != NULL; entry = entry->next) {
 		if (entry->shape == shape) return true;
 	}
 	return false;
+}
+
+// host_object is the one predicate for a value whose prototype on Node isn't Object's, a program
+// class's instance aside (#ey7aysy, Adamic's ruling on #0sps03r): an object with no class, not a
+// record, whose shape has fields and isn't registered. A record, a class instance, a shape the
+// program or the runtime registered and a zero-field shape are plain. The runtime's own objects whose
+// prototype on Node is another's, a Stats, a Dirent, an iterator, a match's groups object (whose is
+// null) or process.memoryUsage()'s, aren't registered, and so are host objects here. The JavaScript
+// backend's adamicDynamicGet names the same values by their prototype (dynamic_keyed.go).
+static bool host_object(const adamic_object *object) {
+	return object->class == NULL && !adamic_record_is(object) && object->shape->count != 0 && !program_shape(object->shape);
 }
 
 // prototype_value is what an object inherits from Object.prototype under the key, as an immortal
@@ -468,6 +478,11 @@ adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_stri
 	if (error && key_named(key, adamic_dynamic_keyed_error_names, sizeof adamic_dynamic_keyed_error_names / sizeof adamic_dynamic_keyed_error_names[0])) {
 		keyed_stop(adamic_dynamic_keyed_stop_error_property, key);
 	}
+	// A host object stops for every key, before its own slots are read: a slot may be internal (a
+	// matchAll iterator's input and regex), its name may be Node's prototype member (a Stats' isFile),
+	// or Node may hold a field native's shape doesn't (memoryUsage's rss). An Error is carved out: its
+	// own fields answer as Node's do, and its prototype's names stop below.
+	if (!error && host_object(object)) keyed_stop(adamic_dynamic_keyed_stop_runtime_value, key);
 	if (object->class != NULL) {
 		const adamic_keyed_class *row = keyed_class(object, classes, count);
 		if (row == NULL) keyed_stop(adamic_dynamic_keyed_stop_unknown_class, key);
@@ -494,13 +509,8 @@ adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_stri
 		if (index < object->shape->count && adamic_object_present(object, index)) return dynamic_slot(object, index);
 	}
 	adamic_heap *inherited = prototype_value(key);
-	// Object.prototype is the prototype of a record, a class instance and an object the program made,
-	// a plain object the runtime made and one with no fields included: no runtime shape has none, and
-	// a match's groups object, which has a null prototype on Node, is only made with a group. A
-	// runtime-made object may have another, Date.prototype or Performance.prototype, whose own members
-	// Object's closures would stand in for, so it stops.
-	if (inherited != NULL && object->class == NULL && !adamic_record_is(object) && object->shape->count != 0 && !program_shape(object->shape)) {
-		keyed_stop(adamic_dynamic_keyed_stop_runtime_value, key);
-	}
+	// Only an Error reaches here as a host object. Its prototype is Error.prototype, whose own members
+	// Object's closures would stand in for, so an Object.prototype name stops on it.
+	if (inherited != NULL && host_object(object)) keyed_stop(adamic_dynamic_keyed_stop_runtime_value, key);
 	return inherited;
 }
