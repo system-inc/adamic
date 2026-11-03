@@ -331,7 +331,7 @@ adamic_array *adamic_node_fs_readdir(const adamic_string *path,
 	if (count > 1) {
 		qsort(entries, count, sizeof *entries, compare);
 	}
-	adamic_array *result = adamic_array_new(count, true);
+	adamic_array *result = adamic_array_make(count, adamic_ir_Union);
 	for (size_t i = 0; i < count; i++) {
 		if (error == 0 && typed && entries[i].type == 4) {
 			size_t base = strlen(name), length = strlen(entries[i].name);

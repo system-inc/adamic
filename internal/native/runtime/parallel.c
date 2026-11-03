@@ -286,12 +286,12 @@ static void start(void) {
 size_t adamic_parallel_threads(void) { pthread_once(&started, start); return thread_count; }
 size_t adamic_parallel_workers(void) { pthread_once(&started, start); return created; }
 
-static adamic_array *parallel_map(adamic_array *items, adamic_closure *work, bool references, bool moved) {
+static adamic_array *parallel_map(adamic_array *items, adamic_closure *work, enum adamic_ir_type element, bool moved) {
 	pthread_once(&started, start);
 	if (!moved) { adamic_share(items); }
 	adamic_share(work);
 	ADAMIC_TSAN_PAUSE(adamic_tsan_publication);
-	adamic_array *results = adamic_array_new(items->length, references);
+	adamic_array *results = adamic_array_make(items->length, element);
 	results->length = items->length;
 	if (items->length != 0) { memset(results->elements, 0, items->length * sizeof *results->elements); }
 	if (thread_count == 1) {
@@ -334,10 +334,10 @@ static adamic_array *parallel_map(adamic_array *items, adamic_closure *work, boo
 
 // Lowering alone selects this path after proving disjoint exclusive item graphs.
 // The caller cannot access them until join; callback and result counts stay plain.
-adamic_array *adamic_parallel_map_move(adamic_array *items, adamic_closure *work, bool references) {
-	return parallel_map(items, work, references, true);
+adamic_array *adamic_parallel_map_move(adamic_array *items, adamic_closure *work, enum adamic_ir_type element) {
+	return parallel_map(items, work, element, true);
 }
 
-adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, bool references) {
-	return parallel_map(items, work, references, false);
+adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, enum adamic_ir_type element) {
+	return parallel_map(items, work, element, false);
 }

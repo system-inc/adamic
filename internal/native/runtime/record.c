@@ -311,7 +311,7 @@ static int compare_indices(const void *left, const void *right) {
 
 adamic_array *adamic_record_keys(const adamic_record *record) {
 	const adamic_map *map = table(record);
-	adamic_array *keys = adamic_array_new(map->count, true);
+	adamic_array *keys = adamic_array_make(map->count, adamic_ir_Union);
 	size_t count = 0;
 	for (size_t index = 0; index < map->used; index++) {
 		uint32_t number;

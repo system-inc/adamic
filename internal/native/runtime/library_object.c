@@ -105,7 +105,7 @@ adamic_array *adamic_object_keys(const adamic_object *object) {
  if (adamic_record_is(object)) return adamic_record_keys(object);
  if (object->class != NULL) return adamic_class_object_keys(object);
  size_t *indices = adamic_object_ordered(object);
- adamic_array *keys = adamic_array_new(object->shape->count, true);
+ adamic_array *keys = adamic_array_make(object->shape->count, adamic_ir_Union);
  for (size_t at = 0; at < object->shape->count; at++) {
   const char *name = object->shape->names[indices[at]];
   if (name[0] == '#' || !adamic_object_present(object, indices[at])) continue;
@@ -115,9 +115,11 @@ adamic_array *adamic_object_keys(const adamic_object *object) {
  return keys;
 }
 
-adamic_array *adamic_object_values(const adamic_object *object, bool references, bool entries) {
+adamic_array *adamic_object_values(const adamic_object *object, enum adamic_ir_type element, bool entries) {
  size_t *indices = adamic_object_ordered(object);
- adamic_array *values = adamic_array_new(object->shape->count, entries || references);
+ bool references = adamic_ir_type_reference(element);
+ // Entries are [key, value] tuples, references whatever the values are.
+ adamic_array *values = adamic_array_make(object->shape->count, entries ? adamic_ir_Union : element);
  static const char *const names[] = {"0", "1"};
  static const bool number_references[] = {true, false};
  static const bool string_references[] = {true, true};
@@ -186,7 +188,7 @@ void adamic_object_assign(adamic_object *target, const adamic_object *source) {
 adamic_array *adamic_object_values_checked(adamic_object *object, int expected, const char *expected_name, bool entries, const adamic_value *allowed, size_t allowed_count) {
  adamic_array *keys = adamic_object_keys(object);
  bool references = expected == 3;
- adamic_array *result = adamic_array_new(keys->length, entries || references);
+ adamic_array *result = adamic_array_make(keys->length, entries ? adamic_ir_Union : (enum adamic_ir_type)expected);
  static const char *const checked_names[] = {"0", "1"};
  static const bool scalar_references[] = {true, false};
  static const bool string_references[] = {true, true};

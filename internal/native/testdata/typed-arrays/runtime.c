@@ -29,7 +29,7 @@ static adamic_typed_array *sequence(enum adamic_typed_array_kind kind) {
 	return array;
 }
 static void suite(enum adamic_typed_array_kind kind) {
-	adamic_array *input = adamic_array_new(sizeof edges / sizeof *edges, false);
+	adamic_array *input = adamic_array_make(sizeof edges / sizeof *edges, adamic_ir_Number);
 	for (size_t index = 0; index < sizeof edges / sizeof *edges; index++) {
 		adamic_array_push(input, (adamic_value){.number = edges[index]});
 	}

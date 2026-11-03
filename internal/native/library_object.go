@@ -40,7 +40,7 @@ func (e *emitter) objectCall(call ir.ObjectCall) string {
 			}
 			return e.own(ir.Array, fmt.Sprintf("adamic_object_values_checked(%s, %d, %s, %t, %s, %d)", arguments[0], call.Element, cString(call.ElementName), call.Method == "entries", allowed, len(call.Allowed)))
 		}
-		return e.own(ir.Array, fmt.Sprintf("adamic_object_values(%s, %t, %t)", arguments[0], call.Element.IsReference(), call.Method == "entries"))
+		return e.own(ir.Array, fmt.Sprintf("adamic_object_values(%s, %s, %t)", arguments[0], arrayElement(call.Element), call.Method == "entries"))
 	case "assign":
 		for _, source := range arguments[1:] {
 			e.line("adamic_object_assign(%s, %s);", arguments[0], source)

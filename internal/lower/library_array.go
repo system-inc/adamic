@@ -65,12 +65,12 @@ func (l *lowering) libraryArrayMethodArguments(node, receiver *ast.Node, name st
 			return nil, true, l.notYet(node, "toReversed with arguments")
 		}
 		// Stage 0 arrays are dense. Copying first preserves identity and reference ownership.
-		return ir.ArrayReverse{Array: ir.ArraySlice{Array: array}}, true, nil
+		return ir.ArrayReverse{Array: ir.ArraySlice{Array: array, Element: element}}, true, nil
 	case "toSorted":
 		if l.includesUndefined(l.checker.GetElementTypeOfArrayType(l.checker.GetTypeAtLocation(receiver))) {
 			return nil, true, l.notYet(node, "toSorted on optional elements")
 		}
-		copy := ir.ArraySlice{Array: array}
+		copy := ir.ArraySlice{Array: array, Element: element}
 		if len(written) == 0 {
 			if element != ir.Number && element != ir.Boolean && element != ir.String {
 				return nil, true, l.notYet(node, "toSorted without a comparator on these elements")
@@ -198,7 +198,7 @@ func (l *lowering) libraryArraySpliced(node *ast.Node, array ir.Expression, elem
 		arguments = append(arguments, value)
 	}
 	b := l.libraryArrayBuilder(arguments)
-	copy := b.declare("copy", ir.ArraySlice{Array: b.read(b.parameters[0])})
+	copy := b.declare("copy", ir.ArraySlice{Array: b.read(b.parameters[0]), Element: element})
 	if len(arguments) > 1 {
 		splice := ir.ArraySplice{Array: b.read(copy), Start: b.read(b.parameters[1]), Element: element, Site: l.writeSite(node)}
 		if len(arguments) > 2 {
@@ -309,7 +309,7 @@ func (l *lowering) libraryArrayCopyWithin(node *ast.Node, array ir.Expression, e
 	start := b.declare("start", relative(startValue))
 	end := b.declare("end", relative(endValue))
 	// Snapshot the source range so overlapping writes have memmove semantics, with references held.
-	copy := b.declare("range", ir.ArraySlice{Array: source, Arguments: []ir.Expression{b.read(start), b.read(end)}})
+	copy := b.declare("range", ir.ArraySlice{Array: source, Arguments: []ir.Expression{b.read(start), b.read(end)}, Element: element})
 	count := b.declare("count", ir.MathCall{Function: "min", Arguments: []ir.Expression{ir.Length{Array: b.read(copy)}, ir.Binary{Operator: ir.Subtract, Left: b.read(length), Right: b.read(target)}}})
 	index := b.declare("index", zero)
 	value := ir.Expression(ir.ArrayIndex{Array: b.read(copy), Index: b.read(index), Element: element})
@@ -350,7 +350,7 @@ func (l *lowering) libraryArrayWith(node *ast.Node, array ir.Expression, element
 		ir.SetProperty{Object: b.read(errorLocal), Name: "name", Value: ir.StringConstant{Index: l.constant("RangeError")}, Site: l.libraryArraySyntheticWriteSite(node)},
 		ir.Throw{Value: b.read(errorLocal)},
 	}})
-	copy := b.declare("copy", ir.ArraySlice{Array: source})
+	copy := b.declare("copy", ir.ArraySlice{Array: source, Element: element})
 	b.body = append(b.body, ir.SetIndex{Array: b.read(copy), Index: b.read(actual), Value: b.read(b.parameters[2]), Element: element, Site: l.writeSite(node)})
 	return b.finish("array_with", b.read(copy)), true, nil
 }
