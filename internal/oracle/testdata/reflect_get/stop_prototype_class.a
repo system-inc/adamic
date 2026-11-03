@@ -1,7 +1,8 @@
-// An Object.prototype name stops on a class instance, on both backends, in the Object.prototype stop's
-// words: the JavaScript backend's accessor table is an object literal, which an Object.prototype name
-// indexes to Object's own member, so it must look at the table's own entries alone, or it stops
-// naming a setter without a getter. Node prints function.
+// A class instance's constructor stops, on both backends, in the class constructor stop's words: an
+// instance carries its class's metadata, never the class the program holds. The JavaScript backend's
+// accessor table is an object literal, which constructor indexes to Object's own member, so it must
+// look at the table's own entries alone, or it stops naming a setter without a getter. Node prints
+// function.
 import { propertyOf } from './hostErrors.ts';
 
 class Thing {
@@ -9,5 +10,5 @@ class Thing {
 }
 const thing = new Thing();
 console.log(thing.label);
-const value = propertyOf(thing, 'toString');
+const value = propertyOf(thing, 'constructor');
 console.log(typeof value);

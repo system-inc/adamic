@@ -36,7 +36,7 @@ func dynamicKeyedNamesHeader() []byte {
 	for _, list := range []struct {
 		name  string
 		names []string
-	}{{"prototype", ir.DynamicKeyedPrototypeNames}, {"error", ir.DynamicKeyedErrorNames}} {
+	}{{"prototype_method", ir.DynamicKeyedPrototypeMethods}, {"error", ir.DynamicKeyedErrorNames}} {
 		fmt.Fprintf(&text, "static const char *const adamic_dynamic_keyed_%s_names[] = {\n", list.name)
 		for _, name := range list.names {
 			fmt.Fprintf(&text, "\t%s,\n", cString(name))
