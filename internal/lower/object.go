@@ -326,7 +326,7 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 
 // elementType is the representation of an array's elements, from the checker's type for the node.
 func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
-	arrayType := l.checker.GetNonNullableType(l.concrete(l.arrayPredicateType(node)))
+	arrayType := l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeAtLocation(node)))
 	if l.nodeBufferType(arrayType, "Buffer") {
 		return ir.Number, nil
 	}
