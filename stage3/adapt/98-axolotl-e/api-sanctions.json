@@ -1,0 +1,26 @@
+[
+  {
+    "path": [
+      "System",
+      "createSHA256Hash"
+    ],
+    "line": 8487,
+    "kind": "MethodSignature",
+    "replace": "member",
+    "before": "createSHA256Hash?(data: string): string;",
+    "after": "createSHA256Hash?: { createSHA256Hash(data: string): string; }[\"createSHA256Hash\"] | undefined;",
+    "why": "nodeSystem stores createSHA256Hash: _crypto ? createSHA256Hash : undefined (sys.ts:1574), undefined when node's crypto module did not load. Admitted by name under Adamic's ruling, extending 97d's nineteen by exactly this member."
+  },
+  {
+    "path": [
+      "server",
+      "ModuleImportResult",
+      "error"
+    ],
+    "line": 2707,
+    "kind": "PropertySignature",
+    "before": "{\n                stack?: string;\n                message?: string;\n            }",
+    "after": "unknown",
+    "why": "importServicePluginAsync's catch stores the caught value as the error (result = { module: undefined, error: e }), and the compiler's internal ModuleImportResult, widened alike, must stay assignable to this one for the test hosts. Its two readers read it through propertyOf. ownerPath() matches two nodes here, the success member's error: undefined at line 2704 and this one, so the line is part of the row."
+  }
+]

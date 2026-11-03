@@ -238,9 +238,10 @@ class ApiSanctionGeneratorTests(unittest.TestCase):
         self.assertIn('ambiguous or missing proof owner', result.stderr)
 
     def line_row(self):
-        before = '{\n                stack?: string;\n                message?: string;\n            }'
-        self.row = dict(path=['server', 'ModuleImportResult', 'error'], kind='PropertySignature',
-                        line=2707, before=before, after=before + ' | undefined',
+        # Two members share this path; 98-e sanctions server.ModuleImportResult.error, so the fixture
+        # uses a pair no adaptation claims.
+        self.row = dict(path=['TypeOnlyExportDeclaration', 'isTypeOnly'], kind='PropertySignature',
+                        line=5651, before='true', after='true | 1',
                         why='Fixture disambiguated failure member')
 
     def test_api_sanction_line_applied_and_guard_accepts(self):
@@ -255,14 +256,14 @@ class ApiSanctionGeneratorTests(unittest.TestCase):
         result = self.generate()
         self.assertNotEqual(result.returncode, 0)
         self.assertIn('ambiguous or missing proof owner', result.stderr)
-        self.assertIn('server,ModuleImportResult,error', result.stderr)
+        self.assertIn('TypeOnlyExportDeclaration,isTypeOnly', result.stderr)
 
     def test_api_sanction_wrong_line_names_path_and_line(self):
         self.line_row()
-        self.row['line'] = 2706
+        self.row['line'] = 5650
         result = self.generate()
         self.assertNotEqual(result.returncode, 0)
-        self.assertIn('server,ModuleImportResult,error line 2706', result.stderr)
+        self.assertIn('TypeOnlyExportDeclaration,isTypeOnly line 5650', result.stderr)
         self.assertIn('ambiguous or missing proof owner', result.stderr)
         # A unique path must also refuse a drifted line, as the hard-coded proofs do.
         self.row = dict(path=['TypeReferenceNode', 'typeName'], kind='PropertySignature',
@@ -274,11 +275,11 @@ class ApiSanctionGeneratorTests(unittest.TestCase):
 
     def test_api_sanction_non_integer_line_is_rejected(self):
         self.line_row()
-        self.row['line'] = 2707.5
+        self.row['line'] = 5651.5
         result = self.generate()
         self.assertNotEqual(result.returncode, 0)
         self.assertIn('expected a positive integer', result.stderr)
-        self.assertIn('server,ModuleImportResult,error line 2707.5', result.stderr)
+        self.assertIn('TypeOnlyExportDeclaration,isTypeOnly line 5651.5', result.stderr)
 
 
 if __name__ == '__main__':
