@@ -1,4 +1,77 @@
-# checker.ts lowering scout: partial measurement
+# checker.ts lowering scout: 75-minute rerun
+
+First stop: **src/compiler/checker.ts:1708:51, Refused**.
+Exact reason: `an unproven predicate argument for parameter nodeTest (argument "isExportSpecifier")`.
+Full-mode inventory: pending; the first-error entry pass is complete.
+Meter comparison: pending the companion first-error compiler-directory pass.
+Branch: `scout/checker-lowering`; compiler and adapted inputs remain pinned to `a0ba9dd52b23326880b16a7898d446597cfb5a88`.
+
+<!-- current-rerun-start -->
+## Measured first-error result
+
+The tsc-entry first-error census completed successfully, exit 0, under the shared
+75-minute background deadline. All **81** resolved implementation-file records
+passed the meter reporter's coverage and measurement-label checks. The entry
+header has zero checker diagnostics. The first checker.ts observation in its
+record's emitted order is a **refusal_scan** finding, in the unit beginning at
+checker.ts:1486:1:
+
+```text
+src/compiler/checker.ts:1708:51
+Refused
+an unproven predicate argument for parameter nodeTest (argument "isExportSpecifier")
+            const node = getParseTreeNode(nodeIn, isExportSpecifier);
+```
+
+The exact diagnostic text, with only the scratch directory prefix omitted:
+
+```text
+src/compiler/checker.ts:1708:51: Adamic 0.1 refuses an unproven predicate argument for parameter nodeTest (argument "isExportSpecifier"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)
+```
+
+The meter's owner rule assigns this prefix to **#1w5bve2 (Optimizer)**.
+This is checker.ts's first census observation, not the entry program's first
+production stop (which remains the separately observed core.ts generator).
+
+Deduplicating `(kind, where, reason, text)` exactly as the meter does, the entry
+scope has **207 NotYet**, **4,240 Refused**, **2,279 recovered panic sites**,
+0 errors and 0 SkippedDependency sites. checker.ts has **20 NotYet + 1,538
+Refused = 1,558 blocker sites**, across **208 distinct reasons**, in this
+**first-error** pass. These are not full-mode counts. Recovered panics remain
+outside the blocker ranking; no successful IR or backend output is claimed.
+
+`scout/checker-lowering.jsonl.gz` now preserves the actual checker.ts findings
+from the completed first-error entry stream, deduplicated by the meter key, with
+`census` scope and source lines added. Original finding fields are retained.
+The companion directory census and full entry census are still running.
+
+## Background run and progress checks
+
+The shared hard limit started **2026-11-03T21:02:27Z** and expires at
+**2026-11-03T22:17:27Z**. `nohup timeout --signal=KILL 4500s bash
+/tmp/checker-rerun.sh` bounds all census children. The supervisor records its
+exit in `/tmp/checker-rerun/runner.status`. Separate logs, JSONL streams and
+`LATENT_TIMES` ledgers live in `/tmp/checker-rerun/` under `first-entry`,
+`first-directory` and `full-entry` prefixes. Both latent modes retain
+`LATENT_ASSERT_NO_OUTPUT=1`; production sources remain untouched.
+
+An independent monitor records log tails, per-file record counts and timed-unit
+counts every 300 seconds in `/tmp/checker-rerun/progress.log`. The main census
+buffers file records until all callers have run (`Latent`, in
+stage3/census/latent/lower.go.txt:213-238), to resolve deferred-generic witness
+metadata. Consequently an empty main log does not mean no work happened.
+Timing rows showed continuing progress through types.ts, scanner.ts,
+utilities.ts, factory files, parser.ts, checker.ts, transformers, program.ts,
+resolutionCache.ts and executeCommandLine.ts before the entry pass completed.
+
+The earlier 600-second attempt below is retained as history and is superseded
+by these observations. No new compiler tests or mutants have been introduced;
+this remains a measurement-only unit.
+<!-- current-rerun-end -->
+
+# Previous 600-second attempt (superseded)
+
+The following section records the earlier attempt, before the authorized 75-minute rerun. Its unmeasured statuses do not describe the completed first-error rerun.
 
 checker.ts first stop: **unmeasured**; no checker.ts finding was emitted.
 Full mode: distinct reasons and total sites **unmeasured**, not zero.
