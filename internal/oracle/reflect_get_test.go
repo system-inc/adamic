@@ -56,7 +56,7 @@ func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 		{"prototype_decoded.a", "1 function function true\n3 function\nfunction\nfunction true\n"},
 		{"prototype_runtime_plain.a", prototypeRuntimePlainAnswers},
 		{"decoded_scalar_reads.a", decodedScalarReadsAnswers},
-		{"error_fields.a", "code: \"ENOENT\"\nmessage: \"ENOENT: no such file or directory, open '/nonexistent-adamic-reflect-get/file'\"\nthrown: \"thrown\"\nname: \"Error\"\n"},
+		{"error_fields.a", "code: \"ENOENT\"\nmessage: \"ENOENT: no such file or directory, open '/nonexistent-adamic-reflect-get/file'\"\ncaught foo: undefined\nthrown: \"thrown\"\nname: \"Error\"\nthrown foo: undefined\n"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()
