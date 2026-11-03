@@ -19,13 +19,18 @@ def prepare(source, output):
     original = Path(replacements[hook]).read_text()
     if 'func (p *Program) LatentEntryReach(' in original:
         raise ValueError('entry overlay: duplicate Program.LatentEntryReach')
-    # GetSourceFiles is the checker's resolved graph, not every file in a directory.
+    # GetSourceFiles is the checker's resolved graph, not every file in a directory. Its order puts
+    # dependencies before the entry, and lowering reads Files()[0] as the entry: module identities
+    # are routes from it (internal/lower/source_identity.go). So the entry stays first, and the rest
+    # follow in the checker's order. With the entry anywhere else, every module the first file
+    # doesn't import panics "source module has no import-declaration route" (2,279 sites on a0ba9dd5).
     text = original + '''
 // Measurement only: ordinary Load and Lower remain disabled by this overlay.
 func (p *Program) LatentEntryReach() {
-    p.files = nil
+    entry := p.files[0]
+    p.files = []*ast.SourceFile{entry}
     for _, source := range p.compiler.GetSourceFiles() {
-        if !source.IsDeclarationFile && !IsLibrary(source) {
+        if source != entry && !source.IsDeclarationFile && !IsLibrary(source) {
             p.files = append(p.files, source)
         }
     }

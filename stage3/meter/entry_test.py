@@ -114,6 +114,25 @@ class EntryReportTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'internal/load/latent_hook.go, found 0'):
             prepare(source, self.run / 'overlay')
 
+    def test_overlay_keeps_the_entry_first(self):
+        # Lowering reads Files()[0] as the entry, and routes every module identity from it. The
+        # checker's resolved order puts dependencies first, so the reach must keep the entry at 0.
+        source = self.run / 'source'
+        source.mkdir(parents=True)
+        hook = source / 'latent_hook.go'
+        hook.write_text('package load\n')
+        driver = source / 'main.go'
+        driver.write_text('package main\n')
+        (source / 'overlay.json').write_text(json.dumps({'Replace': {
+            '/repository/internal/load/latent_hook.go': str(hook),
+            '/repository/stage3/census/latent/tool/main.go': str(driver)}}))
+        prepare(source, self.run / 'overlay')
+        text = (self.run / 'overlay' / 'entry_load_hook.go').read_text()
+        reach = text[text.index('func (p *Program) LatentEntryReach()'):]
+        self.assertIn('p.files = []*ast.SourceFile{entry}', reach)
+        self.assertIn('source != entry', reach)
+        self.assertLess(reach.index('entry := p.files[0]'), reach.index('p.files = []*ast.SourceFile{entry}'))
+
 
 @unittest.skipUnless(os.environ.get('ENTRY_CENSUS_BINARY') and os.environ.get('CENSUS_BINARY'),
                      'set ENTRY_CENSUS_BINARY and CENSUS_BINARY for the real entry reach probe')
@@ -144,6 +163,9 @@ class EntryCensusTests(unittest.TestCase):
             clean, planted = observations
             self.assertTrue(clean['checker_whole_program'])
             self.assertEqual(clean['lowering_census']['source_files'], 2)
+            # The entry imports its dependency, so the checker resolves the dependency first. With the
+            # entry not kept first, lowering finds no route to it and panics (a0ba9dd5's 2,279).
+            self.assertEqual(clean['lowering_census']['totals']['panic'], 0)
             self.assertGreater(clean['lowering_census']['totals']['Refused'], 0)
             self.assertFalse(planted['checker_whole_program'])
             self.assertEqual(planted['whole_program_diagnostics'], 1)
@@ -185,6 +207,7 @@ class FullEntryCensusTests(unittest.TestCase):
             self.assertEqual(full['lowering_census']['source_files'], 2)
             self.assertEqual(full['lowering_census']['measurement'], 'measured on a checker-rejected entry-root program')
             self.assertEqual(full['lowering_census']['totals']['Refused'], 3)
+            self.assertEqual(full['lowering_census']['totals']['panic'], 0)
             with self.assertRaises(AssertionError):
                 self.assertEqual(mutant['lowering_census']['totals']['Refused'], 3)
 
