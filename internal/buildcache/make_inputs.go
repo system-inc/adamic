@@ -10,3 +10,5 @@ type Inputs struct {
 	Flags     []string
 	Toolchain []string
 }
+
+// A comment for Planner's dry pair on #qwfw9pv: a make file edit moves the lean recipe.
