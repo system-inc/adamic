@@ -67,7 +67,7 @@ func viewReadOf(program *ir.Program, expression ir.Expression) viewRead {
 		ir.MapHas, ir.MapKeys, ir.MapNew, ir.MapSet, ir.MapSize, ir.MapValues, ir.MathCall, ir.MaybeOf,
 		ir.MaybeToString, ir.Narrow, ir.NodeBufferCall, ir.NodeFSFile, ir.NodeHostCall, ir.NumberCall,
 		ir.NumberFormat, ir.NumberToString, ir.ObjectKeys, ir.OwnFunction, ir.ParallelMap, ir.PhantomMember, ir.PlaceholderUse, ir.ProcessCall,
-		ir.PromiseValue, ir.ReadDirectory, ir.ReadTextFile, ir.RecordCall, ir.RecordCoalesce, ir.RecordLiteral,
+		ir.PromiseValue, ir.ReadDirectory, ir.ReadTextFile, ir.RecordCall, ir.RecordCoalesce, ir.RecordLiteral, ir.RecordStorage,
 		ir.RegExpCall, ir.RegExpGroup, ir.RegExpNew, ir.RegExpProperty, ir.SetAdd, ir.SetNew, ir.SetValues,
 		ir.StringCall, ir.StringFromCodes, ir.StringIndex, ir.StringIterator, ir.StringLength, ir.ToFixed, ir.Trim,
 		ir.Truthy, ir.TypeOf, ir.TypedArrayFill, ir.TypedArrayNew, ir.TypedArraySet, ir.TypedArraySort,
