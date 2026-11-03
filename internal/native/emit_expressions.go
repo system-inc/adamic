@@ -289,6 +289,14 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.ArrayIsArray:
 		value := e.snapshot(ir.Union, e.value(expression.Value))
 		return fmt.Sprintf("(%s != NULL && %s->kind == adamic_kind_array)", value, value)
+	case ir.RecordStorage:
+		// A record of numbers or booleans keeps its values unboxed, which a read by key into a union
+		// would take for pointers. Only an entries record, whose values are references, is seen
+		// through a fixed type (lower's recordStorageView), so another here is a road lowering missed.
+		object := e.snapshot(ir.Object, e.value(expression.Value))
+		const scalars = "compiler bug: a record of numbers or booleans reached a weak field read"
+		e.line("if (adamic_record_is(%s) && adamic_record_values(%s) != adamic_field_reference) adamic_panic(%s, %d);", object, object, cString(scalars), len(scalars))
+		return fmt.Sprintf("adamic_record_is(%s)", object)
 	case ir.TypeOf:
 		return e.typeOf(expression)
 	case ir.UnionToString:

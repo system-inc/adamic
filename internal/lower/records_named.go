@@ -31,6 +31,14 @@ func (l *lowering) recordReadType(node *ast.Node, read ir.Expression, here *chec
 	if recordTagObservation(node) {
 		return read, nil // These operations observe the runtime tag rather than unbox it.
 	}
+	return l.recordReadDeclared(node, read, here)
+}
+
+// recordReadDeclared is recordReadType's check of a value read out of a slot boxed as a union, held
+// to here, the type the read is declared or narrowed to, whatever observes it. A weak field read of
+// a record (weakFieldRead) is held by it too: its result is the field's representation, which a
+// typeof or an === undefined then compares, so there's no tag left to observe.
+func (l *lowering) recordReadDeclared(node *ast.Node, read ir.Expression, here *checker.Type) (ir.Expression, error) {
 	to, known := l.representation(here)
 	if !known || read.Type() != ir.Union || to == ir.Union {
 		return read, nil
