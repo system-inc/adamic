@@ -71,9 +71,9 @@ var ruledBackendDivergences = []struct {
 		name:       "no-javascript-plugins",
 		ruling:     "@system_adamic, task #redxes2, Nov 3",
 		reason:     noJavaScriptPluginsReason,
-		node:       &run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: " + requireInESModule + " in ES module scope, you can use import instead\n"), exitCode: 70},
-		native:     run{stdout: []byte("before\nresolving\n"), stderr: []byte("adamic: panic: Error: " + noJavaScriptPlugins + "./plugin.js\n"), exitCode: 70},
-		javascript: run{stdout: []byte("before\nresolving\n"), stderr: []byte("adamic: panic: Error: " + noJavaScriptPlugins + "./plugin.js\n"), exitCode: 70},
+		node:       &run{stdout: []byte("before\ncaught: require is not defined\n"), stderr: []byte("adamic: panic: " + requireInESModule + " in ES module scope, you can use import instead\n"), exitCode: 70},
+		native:     run{stdout: []byte("before\nresolving first\ncaught: " + noJavaScriptPlugins + "./first.js\nresolving plugin\n"), stderr: []byte("adamic: panic: Error: " + noJavaScriptPlugins + "./plugin.js\n"), exitCode: 70},
+		javascript: run{stdout: []byte("before\nresolving first\ncaught: " + noJavaScriptPlugins + "./first.js\nresolving plugin\n"), stderr: []byte("adamic: panic: Error: " + noJavaScriptPlugins + "./plugin.js\n"), exitCode: 70},
 	},
 }
 
