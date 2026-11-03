@@ -616,6 +616,9 @@ func run(args []string) error {
 		sort.Strings(result.PendingRuntimeStops)
 	}
 	fmt.Fprintf(os.Stderr, "ruled run-time stops: %d\n", result.RuledRuntimeStops)
+	// diff_count is how many programs base..head added or changed, never how many differ from Node, so
+	// the line says so (#zhgxzjg, a 24 read as differences).
+	fmt.Fprintf(os.Stderr, "changed programs: %d\n", result.DiffCount)
 	result.SamplingSize = len(selected)
 	result.BudgetUsedSeconds = time.Since(started).Seconds()
 	result.Phases["runtime"] = result.BudgetUsedSeconds
