@@ -273,6 +273,18 @@
 `union.c:adamic_typeof_object:1`
 `union.c:adamic_typeof_string:1`
 `union.c:adamic_typeof_undefined:1`
+# Object.prototype's immortal closures, a run-time key read's answers, are never written.
+`union.c:object_constructor:1`
+`union.c:prototype_define_getter:1`
+`union.c:prototype_define_setter:1`
+`union.c:prototype_has_own_property:1`
+`union.c:prototype_is_prototype_of:1`
+`union.c:prototype_lookup_getter:1`
+`union.c:prototype_lookup_setter:1`
+`union.c:prototype_property_is_enumerable:1`
+`union.c:prototype_to_locale_string:1`
+`union.c:prototype_to_string:1`
+`union.c:prototype_value_of:1`
 `union.c:shape_types:1`
 `union.c:shape_types_lock:1`
 `weak.c:table:1`
