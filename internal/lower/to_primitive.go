@@ -171,7 +171,9 @@ func (l *lowering) classToString(helper, class int, object ir.Expression) []ir.S
 // The length is read once, as join reads it, and an element a toString took away since is undefined.
 // An array of only numbers, booleans, null or undefined stops, named: natively an array of numbers or
 // booleans holds them unboxed, saying nothing of which they are, so the test both backends make alike
-// is by the elements (ir.ArrayOfScalars), until Memory's element kind comes.
+// is by the elements (ir.ArrayOfScalars), until Memory's element kind comes. Its cost is an over-stop,
+// not a hole: an array of a union type holding only numbers stops too, though natively it's boxed and
+// could join, since the JavaScript backend can't tell it from a number[]. Both backends stop on it.
 func (l *lowering) arrayToString(helper int, value ir.Expression) []ir.Statement {
 	array := ir.Narrow{Value: value, To: ir.Array}
 	joined := l.toPrimitiveLocal(helper, "joined", ir.String)

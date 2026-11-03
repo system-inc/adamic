@@ -1,0 +1,7 @@
+// An array of booleans viewed as unknown stops as not yet, as one of numbers does: natively its
+// elements are unboxed and don't say they're booleans (#09dvwny). Node prints before, then true,false.
+function show(value: unknown): void {
+	console.log(String(value));
+}
+console.log('before');
+show([true, false]);

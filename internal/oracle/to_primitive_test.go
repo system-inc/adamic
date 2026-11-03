@@ -51,6 +51,7 @@ var toPrimitiveAnswers = []struct{ file, stdout string }{
 	{"records.a", "[object Object]\n<[object Object]>\n" + cannotConvert + "\n<" + cannotConvert + ">\n"},
 	{"arrays.a", "a,1,,,true,named,b,c,Error: e\n<a,1,,,true,named,b,c,Error: e>\n" +
 		"p,q\n<p,q>\n" +
+		"1,a\n<1,a>\n" +
 		"\n<>\n" +
 		"\n<>\n" +
 		"\n<>\n" +
@@ -69,7 +70,8 @@ var toPrimitiveAnswers = []struct{ file, stdout string }{
 // the Error arm put after the plain object arm, so errors.a's Errors print "[object Object]"; the join
 // stack dropped (no JoinEnter and no JoinLeave), so arrays.a's array that holds itself joins itself
 // until the stack runs out, each run bounded by its minute; and JoinLeave moved out of the finally to
-// after the loop, so a throw leaves the array on the stack and arrays.a's join after it is "".
+// after the loop, so a throw leaves the array on the stack and arrays.a's join after it is ""; and the
+// scalar test dropped, which TestToPrimitiveStopsAlikeOnBothBackends holds: the stop fixtures join.
 func TestToPrimitiveAnswersAgreeWithNode(t *testing.T) {
 	t.Parallel()
 	for _, probe := range toPrimitiveAnswers {
@@ -100,7 +102,12 @@ func TestToPrimitiveAnswersAgreeWithNode(t *testing.T) {
 // toPrimitiveStops are the stop fixtures: which value's kind each stops at, after printing before,
 // and what Node prints running the source.
 var toPrimitiveStops = []struct{ file, what, node string }{
+	// One stop for an array of numbers, one of booleans and one of a union type holding only numbers,
+	// since natively only the first two are unboxed and the JavaScript backend can't tell any of them
+	// apart: the third is the rule's over-stop, a cost (lower/to_primitive.go's arrayToString).
 	{"stop_scalar_array.a", "an array of only numbers, booleans, null or undefined", "before\n1,2,3\n"},
+	{"stop_boolean_array.a", "an array of only numbers, booleans, null or undefined", "before\ntrue,false\n"},
+	{"stop_union_numbers.a", "an array of only numbers, booleans, null or undefined", "before\n1,2\n"},
 	// Node runs the source as its runner emits it, which indents by four spaces.
 	{"stop_static_class.a", "a class object", "before\nclass Counter {\n    static count = 1;\n}\n"},
 	{"stop_record_function.a", "an object whose own toString is a function this program can't name", "before\nfrom record\n"},
