@@ -5,21 +5,20 @@ import (
 	"debug/elf"
 	"encoding/binary"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"regexp"
 	"testing"
 )
 
 // An audited product whose build bakes its own build directory into a binary, as a C file compiled where it stands with
-// no prefix map does, rebuilds otherwise in the audit's fresh directory, and the audit names the file and the section
+// no prefix map does (here a hand-built object, see bakingItsDirectory), rebuilds otherwise in the audit's fresh directory, and the audit names the file and the section
 // the path landed in, after the mismatch line Loom reads, which stays as it was (#dc483fc). relocatable doesn't read a
 // binary's paths, so this is where such a path shows. Mutant: auditHit rebuilding into the stored product's own
 // directory, where the rebuild matches: no mismatch, and this test fails.
 // Not parallel: newRig.
 func TestAnAuditMismatchNamesTheFileAndSectionABuildDirectoryLandedIn(t *testing.T) {
 	r := newRig(t)
-	witness := Inputs{Name: "witness", Files: []string{"source"}, Toolchain: []string{"clang"}}
+	witness := Inputs{Name: "witness", Files: []string{"source"}}
 	Product(t, witness, bakingItsDirectory(t))
 	build := r.built(t)["witness"]
 	r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
@@ -49,31 +48,18 @@ func TestAnAuditMismatchNamesTheFileAndSectionABuildDirectoryLandedIn(t *testing
 	if !regexp.MustCompile(`(?m)^audit witness [0-9a-f]{64} mismatch [0-9a-f]{64} [0-9a-f]{64} \S+$`).MatchString(lines) {
 		t.Fatalf("a product baking its build directory into a binary: census %q, want a mismatch audit line as Loom reads it", lines)
 	}
-	if !regexp.MustCompile(`(?m)^audit-difference witness [0-9a-f]{64} witness\.o \(ELF section \.(rodata|debug_str)\S*, at its byte \d+\)$`).MatchString(lines) {
+	if !regexp.MustCompile(`(?m)^audit-difference witness [0-9a-f]{64} witness\.o \(ELF section \.rodata\S*, at its byte \d+\)$`).MatchString(lines) {
 		t.Errorf("census %q, want an audit-difference line naming witness.o and the section holding the path", lines)
 	}
 }
 
-// bakingItsDirectory builds witness.o in the product's directory from a C file compiled where it stands, with no prefix
-// map, so the object's string section holds the build directory. Without clang it writes, by hand, an ELF object
-// whose .rodata holds the directory, as the compiled one's does.
+// bakingItsDirectory writes witness.o in the product's directory: a hand-built ELF object whose .rodata holds the build
+// directory, as a C file compiled where it stands with no prefix map would leave it. No compiler is used. A compiled
+// object's path would need clang, which the census forbids outside internal/native, and native.Build maps the build
+// directory out, so the audit would see no mismatch. The hand-built object is the same on every box.
 func bakingItsDirectory(t *testing.T) func(directory string) error {
 	return func(directory string) error {
-		object := filepath.Join(directory, "witness.o")
-		if clang, err := exec.LookPath("clang"); err == nil {
-			source := filepath.Join(directory, "witness.c")
-			if err := os.WriteFile(source, []byte("const char *witness = __FILE__;\n"), 0o644); err != nil {
-				return err
-			}
-			command := exec.Command(clang, "-c", "-o", object, source)
-			command.Dir = directory
-			if output, err := command.CombinedOutput(); err != nil {
-				t.Errorf("clang: %v\n%s", err, output)
-				return err
-			}
-			return os.Remove(source)
-		}
-		return os.WriteFile(object, elfHolding(directory), 0o644)
+		return os.WriteFile(filepath.Join(directory, "witness.o"), elfHolding(directory), 0o644)
 	}
 }
 
