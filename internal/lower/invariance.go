@@ -20,6 +20,10 @@ import (
 // the other direction when it accepted the site, so together the slot is invariant. A readonly slot
 // only reads, and stays covariant.
 //
+// In .a, an index signature is a slot too, under every name a declared property doesn't take: a
+// declared property seen through a wider one can be written what it can't hold, and a dictionary
+// seen through a declared property can be read as what it doesn't hold (records_declared_keys.go).
+//
 // Two shapes reach a mutable array where tsc's relation can't be walked part by part, and each is
 // judged as cohere's rule judges it (cohere 838c6516):
 //   - A type parameter target (const pack: Pack = narrow, Narrow extends Pack extends Animal[]): what
@@ -40,6 +44,16 @@ type widening struct {
 
 	// parameter is a function's parameter of type source seen as taking target, which it can't.
 	parameter bool
+
+	// declaredKey names a declared property an index signature reaches in .a (records_declared_keys.go):
+	// the target's index signature can write target under it where source is declared, or, when
+	// dictionary is set, the source's index signature holds source where the target reads it as target.
+	declaredKey string
+	dictionary  bool
+
+	// viewed is the value seen, when it's one branch of a conditional whose own type tsc reduced to
+	// the wider side (flag ? options : dict is a Dict), so a refusal can name it.
+	viewed *checker.Type
 }
 
 // widened finds the first mutable slot at which a value of type from, seen as type to, could be
@@ -72,7 +86,16 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 	}
 	if members := l.definedMembers(to); len(members) > 1 {
 		// Seen as a union, a value is seen as each member it can be, and narrowing picks any of them
-		// to write through.
+		// to write through. For a declared key, a value entering a union that names its own type stays
+		// that member (#6c4swvt G2, records.go), and seeing the union as another member later is a view
+		// of its own, judged there.
+		if l.declaredKeys {
+			for _, member := range members {
+				if member == from {
+					return nil
+				}
+			}
+		}
 		for _, member := range members {
 			if !l.checker.IsTypeAssignableTo(from, member) {
 				continue
@@ -107,6 +130,11 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		// A class instance target is walked as any object is: its fields are slots as a literal's
 		// are, so Box<Dog> seen as Box<Animal>, or a plain object seen as a class, is judged by them.
 		return nil
+	}
+	if l.declaredKeys {
+		if found := l.declaredKeyWidened(from, to, nil, false); found != nil {
+			return found
+		}
 	}
 	if source, target := l.recordElement(from), l.recordElement(to); source != nil && target != nil {
 		if !l.checker.IsTypeAssignableTo(target, source) {
@@ -478,7 +506,14 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 			}
 		}
 		own, contextual = l.checker.GetTypeAtLocation(node.AsSpreadAssignment().Expression), literal
-		found = l.widenedProperties(own, literal, skip, true, map[[2]*checker.Type]bool{})
+		if l.declaredKeys {
+			// A copy writes each of the spread's entries under its key, so a dictionary's can land
+			// under the literal's declared properties; its own declared properties are only copied.
+			found = l.declaredKeyWidened(own, literal, skip, true)
+		}
+		if found == nil {
+			found = l.widenedProperties(own, literal, skip, true, map[[2]*checker.Type]bool{})
+		}
 	default:
 		if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) {
 			return nil
@@ -589,6 +624,9 @@ func (l *lowering) memberLiteralSlotWidened(node *ast.Node, own, literal *checke
 }
 
 func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {
+	if found.declaredKey != "" {
+		return l.declaredKeyRefusal(node, own, contextual, found)
+	}
 	if found.enum {
 		if enumObjectSymbol(found.target) != nil {
 			return &Refused{Where: l.program.Where(node), What: "a structural object seen as " + l.checker.TypeToString(found.target) + "; the complete enum shape is unproven", Fix: "use the enum's runtime object or a typeof alias, or give the ordinary object an explicit interface"}
@@ -652,6 +690,9 @@ func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual 
 		conditional := node.AsConditionalExpression()
 		for _, branch := range []*ast.Node{conditional.WhenTrue, conditional.WhenFalse} {
 			if found := l.freshOrWidened(branch, l.checker.GetTypeAtLocation(branch), contextual); found != nil {
+				if found.viewed == nil {
+					found.viewed = l.checker.GetTypeAtLocation(branch)
+				}
 				return found
 			}
 		}

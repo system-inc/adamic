@@ -1,0 +1,7 @@
+// a-check: refused a dictionary read through a declared property narrower than its values (Dict seen as Options: outFile is declared string | undefined, and the index signature holds string | number | undefined)
+interface Options { outFile?: string; [name: string]: string | number | undefined; }
+type Dict = { [name: string]: string | number | undefined };
+function flag(): boolean { return false; }
+const dict: Dict = { outFile: 3 };
+const options: Options = flag() ? { outFile: "a" } : dict;
+console.log(typeof options.outFile);
