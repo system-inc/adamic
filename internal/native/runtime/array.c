@@ -134,6 +134,11 @@ adamic_array *adamic_array_slice(const adamic_array *array, double start, double
 	}
 	size_t from = (size_t)start, to = end > start ? (size_t)end : from;
 	adamic_array *sliced = adamic_array_make(to - from, element);
+	// The result is made from the emitter's element and filled with the source's slots as they're held, so
+	// the two must hold them the same way: a double retained as a pointer is the failure this stops.
+	if (sliced->references != array->references) {
+		adamic_invariant("array copy across representations");
+	}
 	for (size_t index = from; index < to; index++) {
 		adamic_value value = array->elements[index];
 		if (array->references) {
@@ -336,6 +341,9 @@ static void splice_into(adamic_array *array, double start, double count, bool ha
 	// The removed elements move to the result, their references with them, or are let go.
 	if (removed != NULL) {
 		*removed = adamic_array_make(removed_count, element);
+		if ((*removed)->references != array->references) {
+			adamic_invariant("array copy across representations");
+		}
 		for (size_t index = 0; index < removed_count; index++) {
 			adamic_value value = array->elements[from + index];
 			if (array->references) { adamic_graph_escape(array, value.reference); }
@@ -410,6 +418,11 @@ adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[], en
 	}
 	adamic_array *joined = adamic_array_make(length, element);
 	for (size_t which = 0; which < count; which++) {
+		// Lowering admits a concat only of arrays of one element type (concat of arrays of different
+		// elements is not yet), so every source holds its slots as the result does; checked per source.
+		if (arrays[which]->references != joined->references) {
+			adamic_invariant("array copy across representations");
+		}
 		for (size_t index = 0; index < arrays[which]->length; index++) {
 			adamic_value value = arrays[which]->elements[index];
 			if (joined->references) {
