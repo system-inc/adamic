@@ -186,12 +186,12 @@ func (l *lowering) arrayToString(helper int, value ir.Expression) []ir.Statement
 		return ir.Assign{Local: joined, Value: ir.Concat{Parts: []ir.Expression{readJoined, part}}}
 	}
 	// null and undefined, the two kinds numbered first, join as nothing.
-	written := ir.Binary{Operator: ir.Greater, Left: ir.UnknownKind{Value: readElement}, Right: ir.NumberConstant{Value: ir.UnknownNull}}
+	present := ir.Binary{Operator: ir.Greater, Left: ir.UnknownKind{Value: readElement}, Right: ir.NumberConstant{Value: ir.UnknownNull}}
 	each := []ir.Statement{
 		ir.If{Condition: ir.Binary{Operator: ir.Greater, Left: readIndex, Right: ir.NumberConstant{Value: 0}}, Then: []ir.Statement{add(text(","))}},
 		ir.If{Condition: ir.Binary{Operator: ir.Less, Left: readIndex, Right: ir.Length{Array: array}}, Then: []ir.Statement{
 			ir.Declare{Local: element, Value: ir.ArrayIndex{Array: array, Index: readIndex, Element: ir.Union}},
-			ir.If{Condition: written, Then: []ir.Statement{add(ir.Call{Function: helper, Arguments: []ir.Expression{readElement}, Returns: ir.String})}},
+			ir.If{Condition: present, Then: []ir.Statement{add(ir.Call{Function: helper, Arguments: []ir.Expression{readElement}, Returns: ir.String})}},
 		}},
 	}
 	loop := ir.Loop{
