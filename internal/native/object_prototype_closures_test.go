@@ -11,8 +11,10 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// objectPrototypeHarness reads the key its argument names off a plain object by a run-time key, twice,
-// requires the same immortal closure both times, and calls that closure's code directly.
+// objectPrototypeHarness reads the key its argument names off an object by a run-time key. Given
+// "program", the object's shape is registered as the emitter registers a literal's, so the read must
+// give the same immortal closure twice, whose code it then calls directly. Given "host", the shape
+// isn't, as no runtime-made object's is, and the read must stop.
 const objectPrototypeHarness = `#include "adamic.h"
 #include <assert.h>
 #include <string.h>
@@ -20,9 +22,12 @@ static const char *const names[] = {"present"};
 static const bool references[] = {true};
 static const adamic_field_kind kinds[] = {adamic_field_reference};
 static const adamic_shape shape = {1, names, references, NULL, kinds};
+static const int types[] = {3};
+static adamic_shape_types metadata = {&shape, types, NULL, false};
 int main(int count, char **arguments) {
- assert(count == 2);
+ assert(count == 3);
  adamic_stack_thread_start();
+ if (strcmp(arguments[2], "program") == 0) adamic_register_shape_types(&metadata);
  static adamic_string here = ADAMIC_STRING("here");
  adamic_object *object = adamic_object_new(&shape);
  object->slots[0].reference = &here;
@@ -40,21 +45,23 @@ int main(int count, char **arguments) {
 // guards: no program can call one, since lowering refuses every call through an unknown narrowed to
 // a function ("calling through the unchecked Function type", function_rulings.go). If that refusal
 // ever loosens, the call must stop loudly, naming what wasn't called, never run as something else.
-// Mutant: the code function returning undefined, so the harness exits 0.
+// Mutant: the code function returning undefined, so the harness exits 0. A runtime-made object, a
+// Stats or a Date, may have another prototype than Object's, so on one the read stops instead.
 func TestObjectPrototypeClosuresStopWhenCalled(t *testing.T) {
 	t.Parallel()
 	binary := filepath.Join(t.TempDir(), "object-prototype")
 	if err := native.Build(objectPrototypeHarness, binary, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
-	for _, probe := range []struct{ key, message string }{
-		{"toString", "Object.prototype.toString isn't called yet"},
-		{"__lookupSetter__", "Object.prototype.__lookupSetter__ isn't called yet"},
-		{"constructor", "Object isn't called yet"},
+	for _, probe := range []struct{ key, object, message string }{
+		{"toString", "program", "Object.prototype.toString isn't called yet"},
+		{"__lookupSetter__", "program", "Object.prototype.__lookupSetter__ isn't called yet"},
+		{"constructor", "program", "Object isn't called yet"},
+		{"toString", "host", "this runtime value's properties aren't read by a run-time key yet (reading 'toString')"},
 	} {
-		t.Run(probe.key, func(t *testing.T) {
+		t.Run(probe.object+"/"+probe.key, func(t *testing.T) {
 			t.Parallel()
-			command := exec.Command(binary, probe.key)
+			command := exec.Command(binary, probe.key, probe.object)
 			command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
 			var stdout, stderr bytes.Buffer
 			command.Stdout, command.Stderr = &stdout, &stderr
