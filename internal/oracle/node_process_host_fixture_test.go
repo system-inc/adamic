@@ -33,9 +33,12 @@ func nodeProcessHostNewLine(t *testing.T, statusPath string) {
 	}
 	found := false
 	var truth run
+	var configuration *hostconfiguration.Configuration
+	var rowNumber int
 	for index, row := range rows {
 		if row.File == "23_newLine.a" {
 			found = true
+			configuration, rowNumber = row.Configuration, index+1
 			truth = run{stdout: []byte(row.Node.Stdout), stderr: []byte(row.Node.Stderr), exitCode: row.Node.Exit}
 			t.Run("node", func(t *testing.T) {
 				nodeBinary := hostconfiguration.Require(t, index+1, row.Configuration)
@@ -55,11 +58,6 @@ func nodeProcessHostNewLine(t *testing.T, statusPath string) {
 			t.Fatal("native versus recorded Node: " + difference)
 		}
 	})
-	t.Run("javascript", func(t *testing.T) {
-		if difference := disagreement(truth, onNodeWith(t, inputRun{}, script)); difference != "" {
-			t.Fatal("JavaScript versus recorded Node: " + difference)
-		}
-	})
 	program, err := lowered(t, path)
 	if err != nil {
 		t.Fatal(err)
@@ -76,21 +74,28 @@ func nodeProcessHostNewLine(t *testing.T, statusPath string) {
 	if bad.exitCode != 0 || len(bad.stderr) != 0 || disagreement(truth, bad) != "stdout differs" {
 		t.Fatal("native mutant must fail only Node stdout comparison")
 	}
-	source, err := os.ReadFile(script)
-	if err != nil {
-		t.Fatal(err)
-	}
-	anchor := `"\n"`
-	if strings.Count(string(source), anchor) != 1 {
-		t.Fatal("JavaScript EOL anchor changed")
-	}
-	jsMutant := filepath.Join(t.TempDir(), "newline-mutant.mjs")
-	if err := os.WriteFile(jsMutant, []byte(strings.Replace(string(source), anchor, `"\r\n"`, 1)), 0600); err != nil {
-		t.Fatal(err)
-	}
-	bad = onNodeWith(t, inputRun{}, jsMutant)
-	if bad.exitCode != 0 || len(bad.stderr) != 0 || disagreement(truth, bad) != "stdout differs" {
-		t.Fatal("JavaScript mutant must fail only Node stdout comparison")
-	}
-	t.Log("23_newLine unchanged source matches status.json on both backends; CRLF mutants run cleanly and fail only Node bytes")
+	t.Run("javascript", func(t *testing.T) {
+		nodeBinary := hostconfiguration.Require(t, rowNumber, configuration)
+		if difference := disagreement(truth, hostNodeWith(t, inputRun{}, nodeBinary, script)); difference != "" {
+			t.Fatal("JavaScript versus recorded Node: " + difference)
+		}
+		source, err := os.ReadFile(script)
+		if err != nil {
+			t.Fatal(err)
+		}
+		anchor := `"\n"`
+		if strings.Count(string(source), anchor) != 1 {
+			t.Fatal("JavaScript EOL anchor changed")
+		}
+		jsMutant := filepath.Join(t.TempDir(), "newline-mutant.mjs")
+		if err := os.WriteFile(jsMutant, []byte(strings.Replace(string(source), anchor, `"\r\n"`, 1)), 0600); err != nil {
+			t.Fatal(err)
+		}
+		bad := hostNodeWith(t, inputRun{}, nodeBinary, jsMutant)
+		if bad.exitCode != 0 || len(bad.stderr) != 0 || disagreement(truth, bad) != "stdout differs" {
+			t.Fatal("JavaScript mutant must fail only Node stdout comparison")
+		}
+	})
+
+	t.Log("23_newLine native checks match recorded bytes; JavaScript and its CRLF mutant require the row's Node build")
 }

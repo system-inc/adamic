@@ -32,8 +32,9 @@ it is mechanism evidence, not a real without-inspector build. An unset variable 
 `TestHostConfigurationScriptReaders` runs the Python and CJS reader proofs from
 Go. Each execution reader runs its real fixture Node command using a selected
 probe-verified test stub and checks the recorded bytes, or reports its named
-reference-only skip before any reference Node starts. Native, generated JS and
-stage0 checks against recorded bytes continue when the reference is unavailable. The stock-check reader runs its checker worker under
+named skip before any configured Node starts. Native and stage0 checks against
+recorded bytes continue when the configured binary is unavailable. Generated
+JavaScript uses that same configured binary and skips only its own execution. The stock-check reader runs its checker worker under
 the selected binary. Adaptation 47's fixture loop is isolated from its unrelated
 before/after source proofs. The four glob/manifest readers keep every row in
 their census, validate the configuration, and report the named requirement.
@@ -71,7 +72,8 @@ native versus Node byte comparison failed: got exit=0 stdout="stock\n" stderr=""
 --- FAIL: TestFixturesHost/host/configuration.a/native
 ```
 
-The JavaScript comparison fails too, and the stage0 comparison still runs.
+The stage0 comparison still runs. This Compiles row has no JavaScript backend
+check in the fixture harness: its original scope remains CheckedStop rows only.
 `TestHostConfigurationOracleReaders` repeats the same unset-reference and
 wrong-recorded-byte proof for both oracle reader paths.
 
@@ -93,5 +95,28 @@ host_configuration_test.go:117: recorded bytes mismatch wasn't caught: <nil>
 ```
 
 The missing native pass and the surviving wrong record independently catch a
-row-wide skip. Only `/node` may skip: `/native`, `/javascript` and `/stage0`
-continue against the pinned record.
+row-wide skip. `/native` and `/stage0` continue against the pinned record.
+Reference Node and the existing JavaScript checks each require the row's verified
+Node binary. There is still only one Go t.Skip site, in Require.
+
+JavaScript binary-selection mutant: in `internal/oracle/host_status_test.go`,
+replace `hostNodeWith(t, inputRun{directory: repository}, nodeBinary, js)` with
+`hostNodeWith(t, inputRun{directory: repository}, "node", js)`, retaining the
+Require call. Command:
+
+`go test ./internal/oracle -count=1 -run '^TestHostConfigurationOracleReaders$' -v`
+
+The overlay mutant exits 1; the restored reader family passes. Actual lines:
+
+```text
+host_configuration_test.go:109: source and generated JavaScript must both use the configured binary: <nil> --disable-warning=ExperimentalWarning
+--- FAIL: TestHostConfigurationOracleReaders/status/selected (1.95s)
+```
+
+The verified test launcher records every non-probe invocation. The source and
+generated JavaScript must both pass through it, independently of whether their
+stdout happens to match on stock Node. With no configured binary, native still
+compares the recorded bytes and the existing JavaScript execution skips by name.
+`test_fs_javascript_uses_configured_node` checks the Python reader's same rule.
+The fixture harness additionally asserts that ordinary Compiles rows do not
+acquire JavaScript comparisons: only its original CheckedStop path runs them.

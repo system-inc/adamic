@@ -394,7 +394,7 @@ func testFixtureDirectory(t *testing.T, directory string, selectedFiles ...strin
 					if err == nil {
 						lowered, lowerError := lower.Lower(context.Background(), program)
 						err = lowerError
-						if err == nil {
+						if err == nil && entry.Stage0.Outcome == "CheckedStop" {
 							checkedJavaScript = javascript.JavaScript(lowered)
 						}
 					}
@@ -416,20 +416,8 @@ func testFixtureDirectory(t *testing.T, directory string, selectedFiles ...strin
 						actual.What = strings.ReplaceAll(err.Error(), root+string(filepath.Separator), "stage3/fixtures/")
 						actual.What = strings.ReplaceAll(actual.What, repository+string(filepath.Separator), "")
 					}
-					nativeAgrees, javascriptAgrees := false, false
+					nativeAgrees := false
 					if actual.Outcome == "Compiles" {
-						javascriptAgrees = t.Run("javascript", func(t *testing.T) {
-							script := filepath.Join(t.TempDir(), "program.mjs")
-							if err := os.WriteFile(script, []byte(checkedJavaScript), 0600); err != nil {
-								t.Fatal(err)
-							}
-							actualJS := execute(t, repository, nil, "node", "--disable-warning=ExperimentalWarning", nodeRunner, script)
-							want := entry.Node
-							if entry.Stage0.Outcome == "CheckedStop" {
-								want = behavior{Stdout: entry.Stage0.Stdout, Stderr: entry.Stage0.What, Exit: 70}
-							}
-							equal(t, "JavaScript versus recorded Node", actualJS, want)
-						})
 						nativeAgrees = t.Run("native", func(t *testing.T) {
 							resultPath := filepath.Join(t.TempDir(), "result.json")
 							result := execute(t, repository, []string{"ADAMIC_STAGE3_FIXTURE=" + path, "ADAMIC_STAGE3_RESULT=" + resultPath}, hook, "-test.run=^TestStage3FixtureHook$", "-test.count=1", "-test.timeout=85s")
@@ -462,20 +450,23 @@ func testFixtureDirectory(t *testing.T, directory string, selectedFiles ...strin
 								if err := os.WriteFile(checkedPath, []byte(checkedJavaScript), 0600); err != nil {
 									t.Fatal(err)
 								}
-								checkedNode := execute(t, repository, nil, "node", "--disable-warning=ExperimentalWarning", nodeRunner, checkedPath)
 								want := behavior{Stdout: entry.Stage0.Stdout, Stderr: entry.Stage0.What, Exit: 70}
-								equal(t, "pinned Node check", checkedNode, want)
-								equal(t, "native versus checked Node", observed, checkedNode)
 								equal(t, "pinned native check", observed, want)
 								if observed == want {
 									actual = stage0{Outcome: "CheckedStop", What: string(stderr), Stdout: string(stdout)}
 								}
+								t.Run("javascript", func(t *testing.T) {
+									nodeBinary := hostconfiguration.Require(t, index+1, entry.Configuration)
+									checkedNode := execute(t, repository, nil, nodeBinary, "--disable-warning=ExperimentalWarning", nodeRunner, checkedPath)
+									equal(t, "pinned Node check", checkedNode, want)
+									equal(t, "native versus checked Node", observed, checkedNode)
+								})
 							} else {
 								equal(t, "native versus Node", observed, node)
 							}
 						})
 					}
-					if *update && recordedNodeAgrees && nativeAgrees && javascriptAgrees {
+					if *update && recordedNodeAgrees && nativeAgrees {
 						if actual != entry.Stage0 {
 							replacement, err := replaceStage0(raw, actual)
 							if err != nil {

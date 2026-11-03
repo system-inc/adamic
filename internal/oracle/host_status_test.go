@@ -129,7 +129,8 @@ func hostStatusFile(t *testing.T, index int, wasiOnly bool, statusPath string) {
 				if err := os.WriteFile(js, []byte(script), 0600); err != nil {
 					t.Fatal(err)
 				}
-				actual := onNodeWith(t, inputRun{directory: repository}, js)
+				nodeBinary := hostconfiguration.Require(t, index+1, row.Configuration)
+				actual := hostNodeWith(t, inputRun{directory: repository}, nodeBinary, js)
 				if difference := disagreement(truth, actual); difference != "" {
 					t.Fatalf("%s JavaScript: %s", row.File, difference)
 				}
@@ -148,12 +149,15 @@ func hostStatusFile(t *testing.T, index int, wasiOnly bool, statusPath string) {
 				if runnerErr != nil {
 					t.Fatal(runnerErr)
 				}
-				actual := executeInput(t, inputRun{directory: repository}, nil, "node", "--disable-warning=ExperimentalWarning", runner, wasm)
-				if reason := wasiRefusalReason(actual); reason != "" {
-					t.Logf("%s WASI refusal: %s", row.File, reason)
-				} else if difference := disagreement(truth, actual); difference != "" {
-					t.Fatalf("%s WASI: %s", row.File, difference)
-				}
+				t.Run("wasi", func(t *testing.T) {
+					nodeBinary := hostconfiguration.Require(t, index+1, row.Configuration)
+					actual := executeInput(t, inputRun{directory: repository}, nil, nodeBinary, "--disable-warning=ExperimentalWarning", runner, wasm)
+					if reason := wasiRefusalReason(actual); reason != "" {
+						t.Logf("%s WASI refusal: %s", row.File, reason)
+					} else if difference := disagreement(truth, actual); difference != "" {
+						t.Fatalf("%s WASI: %s", row.File, difference)
+					}
+				})
 			}
 		}
 	}
@@ -303,8 +307,7 @@ func TestHostStatusWASI_023(t *testing.T) { t.Parallel(); hostStatus(t, 23, true
 
 func TestHostStatusWASI_024(t *testing.T) { t.Parallel(); hostStatus(t, 24, true) }
 
-// Only the reference Node side uses the row's named build; Adamic's generated
-// JavaScript still runs on its ordinary backend runtime.
+// Both the source oracle and generated JavaScript use the row's named Node build.
 func hostNodeWith(t *testing.T, how inputRun, binary, path string) run {
 	t.Helper()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))

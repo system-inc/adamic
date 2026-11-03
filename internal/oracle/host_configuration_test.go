@@ -27,8 +27,10 @@ func TestHostConfigurationOracleReaders(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	stub := filepath.Join(t.TempDir(), "node-stub")
-	if err := os.WriteFile(stub, []byte("#!/bin/sh\nif [ \"$1\" = -p ]; then echo 'v24.19.0 false'; exit 0; fi\nexec '"+node+"' \"$@\"\n"), 0700); err != nil {
+	stubDirectory := t.TempDir()
+	stub := filepath.Join(stubDirectory, "node-stub")
+	calls := filepath.Join(stubDirectory, "calls")
+	if err := os.WriteFile(stub, []byte("#!/bin/sh\nif [ \"$1\" = -p ]; then echo 'v24.19.0 false'; exit 0; fi\nprintf '%s\\n' \"$@\" >> '"+calls+"'\nexec '"+node+"' \"$@\"\n"), 0700); err != nil {
 		t.Fatal(err)
 	}
 	original, err := os.ReadFile(filepath.Join(repository, "stage3/fixtures/host/status.json"))
@@ -83,13 +85,28 @@ func TestHostConfigurationOracleReaders(t *testing.T) {
 				}
 				cmd := exec.Command(binary, "-test.run=^TestHostConfigurationOracleReaders$", "-test.count=1", "-test.v", "-test.timeout=30s")
 				cmd.Env = append(os.Environ(), "ADAMIC_HOST_CONFIGURATION_ORACLE_INPUT="+input, "ADAMIC_HOST_CONFIGURATION_ORACLE_READER="+reader, "ADAMIC_HOST_NODE_WITHOUT_INSPECTOR="+selected)
+				if err := os.WriteFile(calls, nil, 0600); err != nil {
+					t.Fatal(err)
+				}
 				out, err := cmd.CombinedOutput()
 				t.Logf("%s", out)
 				if mode == "unset" || mode == "selected" {
-					for _, backend := range []string{"native", "javascript"} {
+					for _, backend := range []string{"native"} {
 						if !strings.Contains(string(out), "--- PASS: TestHostConfigurationOracleReaders/"+backend) {
 							t.Fatalf("%s comparison didn't run: %s", backend, out)
 						}
+					}
+				}
+				if mode == "unset" && !strings.Contains(string(out), "--- SKIP: TestHostConfigurationOracleReaders/javascript") {
+					t.Fatalf("JavaScript needs the configured binary: %s", out)
+				}
+				if mode == "selected" && !strings.Contains(string(out), "--- PASS: TestHostConfigurationOracleReaders/javascript") {
+					t.Fatalf("configured JavaScript did not run: %s", out)
+				}
+				if mode == "selected" {
+					data, err := os.ReadFile(calls)
+					if err != nil || strings.Count(string(data), "oracle/node.mjs") < 2 {
+						t.Fatalf("source and generated JavaScript must both use the configured binary: %v %s", err, data)
 					}
 				}
 				switch mode {

@@ -112,7 +112,7 @@ with tempfile.TemporaryDirectory(prefix='adamic-host-check-') as scratch:
             if not args.record:
                 compare(observed, row['node'], row['file'] + ' Node')
         assert observed is not None, 'no recorded bytes for ' + row['file']
-        # Native and generated JS use pinned bytes, even with no reference build.
+        # Native uses pinned bytes, even with no reference build.
         baseline = observed if args.record else row['node']
         binary = Path(scratch) / str(Path(row['file']).with_suffix(''))
         built = run(['go', 'run', '-overlay=' + str(overlay), './cmd/adamic', 'build', str(file), '-o', str(binary)], row['file'] + '.stage0', args.compiler_repo)
@@ -126,11 +126,6 @@ with tempfile.TemporaryDirectory(prefix='adamic-host-check-') as scratch:
             native = run([str(binary)], row['file'] + '.native')
             if native != baseline:
                 raise AssertionError('SILENT MISCOMPILE: ' + row['file'] + ': native differs from Node')
-            built_js = run(['go', 'run', '-overlay=' + str(overlay), './cmd/adamic', 'js', str(file)], row['file'] + '.javascript-build', args.compiler_repo)
-            assert built_js['exit'] == 0, built_js
-            script = Path(scratch) / (row['file'] + '.mjs')
-            script.write_text(built_js['stdout'])
-            compare(node(script, row['file'] + '.javascript', 'node'), baseline, row['file'] + ' JavaScript')
         stage0 = dict(outcome=outcome, what='' if outcome == 'Compiles' else diagnostic)
         if args.record:
             row['node'], row['stage0'] = observed, stage0

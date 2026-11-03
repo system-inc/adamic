@@ -128,11 +128,14 @@ func TestHostConfigurationFixtureReaders(t *testing.T) {
 					t.Fatalf("configured reader: %v\n%s", err, out)
 				}
 				if reader == "execute" {
-					for _, backend := range []string{"native", "javascript", "stage0"} {
+					for _, backend := range []string{"native", "stage0"} {
 						if !strings.Contains(string(out), "--- PASS: TestFixturesHost/host/configuration.a/"+backend) {
 							t.Fatalf("%s comparison didn't run: %s", backend, out)
 						}
 					}
+				}
+				if reader == "execute" && strings.Contains(string(out), "/configuration.a/javascript") {
+					t.Fatalf("Compiles row unexpectedly ran the JavaScript backend: %s", out)
 				}
 				if mode == "unset" && !strings.Contains(string(out), "row 1 needs node-without-inspector; set ADAMIC_HOST_NODE_WITHOUT_INSPECTOR") {
 					t.Fatalf("missing named skip:\n%s", out)

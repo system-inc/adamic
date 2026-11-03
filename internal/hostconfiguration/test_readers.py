@@ -144,6 +144,31 @@ class ReaderTests(unittest.TestCase):
                 self.run_reader('stage3/records-maplike-rebuild/audit-status.py',
                                 '01_readFile_utf8.a', mode, metadata=True, added_configuration=True)
 
+    def test_fs_javascript_uses_configured_node(self):
+        source = ast.parse((ROOT/'internal/oracle/node_fs_file_host_check.py').read_text())
+        statement = next(node for node in source.body if isinstance(node, ast.With))
+        row = copy.deepcopy(ORIGINAL[0])
+        row['configuration'] = CONFIG
+        for binary in (None, '/verified-node'):
+            with self.subTest(binary=binary), tempfile.TemporaryDirectory() as temp:
+                bucket = Path(temp)
+                (bucket/'status.json').write_text(json.dumps([row]))
+                commands = []
+                def run(command, label):
+                    return row['node'] if label.endswith('.native') else dict(stdout='compiled JavaScript', stderr='', exit=0)
+                def node(path, label, selected):
+                    commands.append((label, selected))
+                    self.assertEqual(selected, binary, 'generated JavaScript ignored configured Node')
+                    return row['node']
+                scope = dict(tempfile=tempfile, Path=Path, json=json, bucket=bucket, report=[],
+                             owned={'01'}, node_for=lambda *args: binary, node=node, run=run,
+                             stage=lambda result: 'Compiles',
+                             args=types.SimpleNamespace(compiler='/compiler', mutants=False))
+                with contextlib.redirect_stdout(io.StringIO()):
+                    exec(compile(ast.Module(body=[statement], type_ignores=[]), 'node_fs_file_host_check.py', 'exec'), scope)
+                self.assertEqual(len(commands), 0 if binary is None else 2)
+                self.assertTrue(scope['report'][0]['native']['agrees'])
+
     def test_python_reporting_does_not_claim_skipped_rows(self):
         source = ast.parse((ROOT/'stage3/fixtures/host/error-host-proof.py').read_text())
         start = next(index for index, node in enumerate(source.body)

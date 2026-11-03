@@ -87,12 +87,15 @@ with tempfile.TemporaryDirectory(prefix='fs-file-host-') as scratch:
             outcome = stage(built)
             result[backend] = {'stage': outcome, 'diagnostic': '' if outcome == 'Compiles' else built['stdout'] + built['stderr']}
             if outcome == 'Compiles':
+                if backend == 'javascript' and binary_node is None:
+                    result[backend]['nodeExecutionSkipped'] = True
+                    continue
                 if backend == 'native':
                     observed = run([str(binary)], row['file'] + '.native')
                 else:
                     module = scratch / (path.stem + '.mjs')
                     module.write_text(built['stdout'])
-                    observed = node(module, row['file'] + '.javascript', 'node')
+                    observed = node(module, row['file'] + '.javascript', binary_node)
                 assert observed == truth, 'SILENT MISCOMPILE: ' + row['file'] + ' ' + backend
                 result[backend]['agrees'] = True
         if args.mutants and binary_node is not None:
