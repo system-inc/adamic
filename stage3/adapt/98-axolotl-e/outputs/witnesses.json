@@ -1,0 +1,203 @@
+{
+  "node": "v24.22.2",
+  "typescript": "6.0.3",
+  "mutant": false,
+  "readers": {
+    "before": [
+      "result.error.stack || result.error.message || JSON.stringify(result.error)",
+      "result.error.stack || result.error.message || JSON.stringify(result.error)"
+    ],
+    "after": [
+      "propertyOf(result.error, \"stack\") || propertyOf(result.error, \"message\") || JSON.stringify(result.error)",
+      "propertyOf(result.error, \"stack\") || propertyOf(result.error, \"message\") || JSON.stringify(result.error)"
+    ]
+  },
+  "cases": 16,
+  "failed": [],
+  "results": [
+    {
+      "reader": "importServicePluginSync",
+      "name": "error null",
+      "original": {
+        "threw": "TypeError",
+        "message": "Cannot read properties of null (reading 'stack')"
+      },
+      "adapted": {
+        "threw": "TypeError",
+        "message": "Cannot read properties of null (reading 'stack')"
+      },
+      "agree": true
+    },
+    {
+      "reader": "importServicePluginSync",
+      "name": "error undefined",
+      "original": {
+        "threw": "TypeError",
+        "message": "Cannot read properties of undefined (reading 'stack')"
+      },
+      "adapted": {
+        "threw": "TypeError",
+        "message": "Cannot read properties of undefined (reading 'stack')"
+      },
+      "agree": true
+    },
+    {
+      "reader": "importServicePluginSync",
+      "name": "a string",
+      "original": {
+        "value": "\"plugin failed\""
+      },
+      "adapted": {
+        "value": "\"plugin failed\""
+      },
+      "agree": true
+    },
+    {
+      "reader": "importServicePluginSync",
+      "name": "an Error with stack",
+      "original": {
+        "value": "Error: plugin failed\n    at plugin (plugin.js:1:1)"
+      },
+      "adapted": {
+        "value": "Error: plugin failed\n    at plugin (plugin.js:1:1)"
+      },
+      "agree": true
+    },
+    {
+      "reader": "importServicePluginSync",
+      "name": "an object with only message",
+      "original": {
+        "value": "only a message"
+      },
+      "adapted": {
+        "value": "only a message"
+      },
+      "agree": true
+    },
+    {
+      "reader": "importServicePluginSync",
+      "name": "an object with neither",
+      "original": {
+        "value": "{\"name\":\"neither\"}"
+      },
+      "adapted": {
+        "value": "{\"name\":\"neither\"}"
+      },
+      "agree": true
+    },
+    {
+      "reader": "importServicePluginSync",
+      "name": "an empty stack falls to message",
+      "original": {
+        "value": "the message"
+      },
+      "adapted": {
+        "value": "the message"
+      },
+      "agree": true
+    },
+    {
+      "reader": "importServicePluginSync",
+      "name": "a number",
+      "original": {
+        "value": "42"
+      },
+      "adapted": {
+        "value": "42"
+      },
+      "agree": true
+    },
+    {
+      "reader": "importServicePluginAsync",
+      "name": "error null",
+      "original": {
+        "threw": "TypeError",
+        "message": "Cannot read properties of null (reading 'stack')"
+      },
+      "adapted": {
+        "threw": "TypeError",
+        "message": "Cannot read properties of null (reading 'stack')"
+      },
+      "agree": true
+    },
+    {
+      "reader": "importServicePluginAsync",
+      "name": "error undefined",
+      "original": {
+        "threw": "TypeError",
+        "message": "Cannot read properties of undefined (reading 'stack')"
+      },
+      "adapted": {
+        "threw": "TypeError",
+        "message": "Cannot read properties of undefined (reading 'stack')"
+      },
+      "agree": true
+    },
+    {
+      "reader": "importServicePluginAsync",
+      "name": "a string",
+      "original": {
+        "value": "\"plugin failed\""
+      },
+      "adapted": {
+        "value": "\"plugin failed\""
+      },
+      "agree": true
+    },
+    {
+      "reader": "importServicePluginAsync",
+      "name": "an Error with stack",
+      "original": {
+        "value": "Error: plugin failed\n    at plugin (plugin.js:1:1)"
+      },
+      "adapted": {
+        "value": "Error: plugin failed\n    at plugin (plugin.js:1:1)"
+      },
+      "agree": true
+    },
+    {
+      "reader": "importServicePluginAsync",
+      "name": "an object with only message",
+      "original": {
+        "value": "only a message"
+      },
+      "adapted": {
+        "value": "only a message"
+      },
+      "agree": true
+    },
+    {
+      "reader": "importServicePluginAsync",
+      "name": "an object with neither",
+      "original": {
+        "value": "{\"name\":\"neither\"}"
+      },
+      "adapted": {
+        "value": "{\"name\":\"neither\"}"
+      },
+      "agree": true
+    },
+    {
+      "reader": "importServicePluginAsync",
+      "name": "an empty stack falls to message",
+      "original": {
+        "value": "the message"
+      },
+      "adapted": {
+        "value": "the message"
+      },
+      "agree": true
+    },
+    {
+      "reader": "importServicePluginAsync",
+      "name": "a number",
+      "original": {
+        "value": "42"
+      },
+      "adapted": {
+        "value": "42"
+      },
+      "agree": true
+    }
+  ]
+}
