@@ -39,7 +39,9 @@ func reflectGetFixture(t *testing.T, name string) string {
 // immortal one, so prototype_names.a's identities print false; json_decode.c's registration of the
 // shapes it builds dropped, so prototype_decoded.a stops natively at its first constructor; map_set.c's
 // registration of an iterator result's shape dropped, so prototype_runtime_plain.a stops natively at
-// its map entry.
+// its map entry; dynamic_slot's representation bytes read only for an object with a write order, as
+// before #rany24c, so decoded_scalar_reads.a's decoded number panics natively; directory.c's byte
+// for a status's size dropped, so that row panics.
 func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ file, stdout string }{
@@ -53,6 +55,7 @@ func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 		{"prototype_names.a", prototypeNamesAnswers},
 		{"prototype_decoded.a", "1 function function true\n3 function\nfunction\nfunction true\n"},
 		{"prototype_runtime_plain.a", prototypeRuntimePlainAnswers},
+		{"decoded_scalar_reads.a", decodedScalarReadsAnswers},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()
@@ -126,6 +129,21 @@ map number: function true
 set boolean: function true
 match: function true
 memory: function true
+`
+
+// decodedScalarReadsAnswers is what decoded_scalar_reads.a prints on Node.
+const decodedScalarReadsAnswers = `n number 1
+b boolean true
+s string text
+count number 2
+on boolean false
+decoded result number 5
+size number
+symbolicLink boolean false
+done boolean false
+map value number 1
+set value boolean true
+heapUsed number
 `
 
 // reflectGetStops are the stop fixtures: what each prints before it stops, which stop and key, and

@@ -861,7 +861,8 @@ static const adamic_field_kind next_kinds[] = {adamic_field_boolean, adamic_fiel
 static const adamic_shape next_shape = {2, next_names, next_references, NULL, next_kinds};
 // matchAll's iterator result is a plain object on Node, as the iterator isn't, so its shape is
 // registered as a literal's is (union.c) and Object.prototype's names answer on it by a run-time key.
-// The scalar tags are zero, no evidence, as union.c's dynamic_slot reads them.
+// The scalar tags are zero, no evidence: the result's own representation byte for done, written
+// where it's made, answers a scalar read.
 static const int next_types[2];
 static adamic_shape_types next_metadata = {&next_shape, next_types, NULL, false};
 adamic_object *adamic_regex_next(adamic_object *iterator) {
@@ -869,6 +870,7 @@ adamic_object *adamic_regex_next(adamic_object *iterator) {
 	adamic_object *result = adamic_object_new(&next_shape);
 	adamic_register_shape_types(&next_metadata);
 	result->slots[0].boolean = value == NULL;
+	adamic_object_field_types(result)[0] = adamic_ir_Boolean;
 	result->slots[1].reference = value;
 	return result;
 }
