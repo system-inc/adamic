@@ -20,6 +20,17 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.DynamicProperty:
 		value := e.value(expression.Object)
 		return e.own(ir.Union, fmt.Sprintf("adamic_dynamic_property(%s, %s)", value, cString(expression.Name)))
+	case ir.DynamicKeyedProperty:
+		// The object, then the key, as Reflect.get's arguments are evaluated; both are borrowed for
+		// the call, and the union it gives is owned (a getter's result, a retained slot or record value,
+		// or a new box).
+		value := e.value(expression.Object)
+		key := e.value(expression.Key)
+		classes := "NULL, 0"
+		if rows := e.keyedClassRows(); len(rows) > 0 {
+			classes = fmt.Sprintf("adamic_keyed_classes, %d", len(rows))
+		}
+		return e.own(ir.Union, fmt.Sprintf("adamic_dynamic_property_keyed(%s, %s, %s)", value, key, classes))
 	case ir.ProcessCall:
 		return e.processCall(expression)
 	case ir.NodeHostCall:

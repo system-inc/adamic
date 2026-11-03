@@ -38,15 +38,15 @@ static void merge_print(adamic_record *record, const adamic_json_schema *schema)
 int main(int argc, char **argv) {
  adamic_start(argc, argv);
  if (argc > 1) {
-  adamic_record *cycle = adamic_record_new(true);
+  adamic_record *cycle = adamic_record_new(adamic_field_reference);
   adamic_record_define(cycle, merge_text("self"), (adamic_value){.reference = adamic_retain(cycle)});
   merge_print(cycle, &merge_cycle);
   return 0;
  }
- merge_value = adamic_record_new(false);
+ merge_value = adamic_record_new(adamic_field_number);
  adamic_record_define(merge_value, merge_text("x"), (adamic_value){.number = 7});
  adamic_object *receiver = adamic_object_new(&merge_shape);
- adamic_record *record = adamic_record_new(true);
+ adamic_record *record = adamic_record_new(adamic_field_reference);
  const char *names[] = {"omit", "nested", "again"};
  for (size_t index = 0; index < 3; index++) adamic_record_define(record, merge_text(names[index]), (adamic_value){.reference = adamic_retain(receiver)});
  merge_print(record, &merge_hooks);

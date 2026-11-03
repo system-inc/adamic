@@ -1,0 +1,11 @@
+// A class getter that calls anything keeps the program from reading by a run-time key.
+import { propertyOf } from './hostErrors.ts';
+
+class Named {
+	name = 'named';
+	get shout(): string {
+		return this.name.toUpperCase();
+	}
+}
+console.log(new Named().shout);
+console.log(typeof propertyOf(new Named(), 'name'));
