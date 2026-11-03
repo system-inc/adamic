@@ -35,6 +35,13 @@ func (l *lowering) logicalAssignment(node *ast.Node) (ir.Expression, error) {
 		if !known || l.caught[l.symbol(target)] || l.alwaysUndefined[l.symbol(target)] {
 			return nil, l.notYet(target, "a logical assignment to this binding")
 		}
+		// A logical assignment to a module binding that's checked here, one a function reaches before or
+		// after its declaration runs, leaves the binding undefined on both backends where Node assigns it
+		// (#aw65psm: later ??= 4 from a function, after let later: number | undefined = undefined, prints
+		// undefined where Node prints 4). Its cause isn't found yet, so the shape stops until it is.
+		if l.result.Locals[local].Global && l.checked(local) {
+			return nil, l.notYet(target, "a logical assignment to a module binding checked for its temporal dead zone")
+		}
 		of := l.result.Locals[local].Type
 		l.result.Locals[local].ExpressionAssigned = true
 		assignment.Read = ir.Read{Local: local, Of: of, Checked: l.checked(local)}
