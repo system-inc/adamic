@@ -7,6 +7,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 static size_t append(char *buffer, size_t length, const char *text) {
 	while (*text != '\0') {
@@ -127,8 +128,14 @@ adamic_string *adamic_number_to_fixed(double value, double digits) {
 	// ToIntegerOrInfinity first: NaN is 0, and a fraction truncates, so toFixed(-0.5) is toFixed(0).
 	digits = isnan(digits) ? 0 : trunc(digits);
 	if (!(digits >= 0 && digits <= 100)) {
-		static const char message[] = "RangeError: toFixed() digits argument must be between 0 and 100";
-		adamic_panic(message, sizeof message - 1);
+		// Node's RangeError, owned by the pending word for the caller to test; the empty string returned
+		// is the caller's to let go, as any result is.
+		static const char message[] = "toFixed() digits argument must be between 0 and 100";
+		adamic_string *text = adamic_string_allocate(sizeof message - 1);
+		memcpy((char *)text->bytes, message, sizeof message - 1);
+		adamic_thrown = adamic_error_new_kind("RangeError", sizeof "RangeError" - 1, text);
+		adamic_release(text);
+		return adamic_retain(&adamic_string_empty);
 	}
 	int places = (int)digits;
 	if (isnan(value)) {
