@@ -77,8 +77,29 @@ func (e *emitter) store(local int, value string, owned bool) {
 	e.line("adamic_release(%s);", old)
 }
 
-// checkReady panics as JavaScript throws when a global is touched before its declaration has run.
-func (e *emitter) checkReady(local int) { e.checkReadyRead(local, "") }
+// checkReady throws JavaScript's ReferenceError when node, a read or a write of local, touches the
+// binding in its temporal dead zone: its readiness flag is clear.
+func (e *emitter) checkReady(node any, local int) { e.deadZone(node, local, e.localReady(local)) }
+
+// deadZone emits the test of ready and, when it fails, the ReferenceError Node throws, "Cannot access
+// 'name' before initialization", named ReferenceError with that message alone, so String(error) reads
+// as Node's and a catch takes it (#bxmdk73). A node only throws here when ir.Program's DeadZoneMayThrow
+// counts it, since that is what lower's throwsOut and flow's CanThrow read: a throw they don't count is
+// one no caller tests and no try lands, so emitting one is a compiler bug, said out loud.
+func (e *emitter) deadZone(node any, local int, ready string) {
+	if !e.program.DeadZoneMayThrow(node) {
+		panic(fmt.Sprintf("native: a temporal-dead-zone test of %s on a node ir.Program's DeadZoneMayThrow doesn't count", e.program.Locals[local].Name))
+	}
+	if len(e.handlers) == 0 && e.function != nil && !e.function.Async && !e.function.MayThrow {
+		// The throw would leave a function its callers believe can't throw, so none would test it.
+		panic(fmt.Sprintf("native: a temporal-dead-zone throw of %s leaves %s, which lowering didn't mark as one that can throw", e.program.Locals[local].Name, e.function.Name))
+	}
+	e.line("if (!%s) {", ready)
+	e.indent++
+	e.throwNamed("ReferenceError", fmt.Sprintf("Cannot access '%s' before initialization", e.program.Locals[local].Name))
+	e.indent--
+	e.line("}")
+}
 
 func (e *emitter) localReady(local int) string {
 	if binding := e.program.Locals[local].Ready; binding != 0 {
@@ -90,11 +111,10 @@ func (e *emitter) localReady(local int) string {
 	return e.readyName(local)
 }
 
+// checkReadyRead panics when a read the readiness pass couldn't clear reaches a variable before its
+// assignment: Adamic's own stop, never JavaScript's throw, so it's no DeadZoneMayThrow node.
 func (e *emitter) checkReadyRead(local int, expression string) {
-	message := fmt.Sprintf("ReferenceError: Cannot access '%s' before initialization", e.program.Locals[local].Name)
-	if expression != "" {
-		message = fmt.Sprintf("read before assignment: variable '%s' in %s", e.program.Locals[local].Name, expression)
-	}
+	message := fmt.Sprintf("read before assignment: variable '%s' in %s", e.program.Locals[local].Name, expression)
 	e.line("if (!%s) {", e.localReady(local))
 	e.line("\tstatic const char message[] = %s;", cArray(message))
 	e.line("\tadamic_panic(message, sizeof message - 1);")
@@ -106,12 +126,11 @@ func (e *emitter) checkReadyRead(local int, expression string) {
 // checked against the temporal dead zone first.
 func (e *emitter) read(read ir.Read) string {
 	if read.Unset && e.program.Locals[read.Local].Global && !e.program.Locals[read.Local].Hoisted {
-		message := fmt.Sprintf("ReferenceError: Cannot access '%s' before initialization", e.program.Locals[read.Local].Name)
-		e.line("if (!%s_declared) adamic_panic(%s, %d);", e.readyName(read.Local), cString(message), len(message))
+		e.deadZone(read, read.Local, e.readyName(read.Local)+"_declared")
 	}
 	name := e.localName(read.Local)
 	if read.Checked {
-		e.checkReady(read.Local)
+		e.checkReady(read, read.Local)
 	}
 	// The shared readiness pass clears checks it proves unnecessary.
 	if read.Readiness != "" {
@@ -125,7 +144,7 @@ func (e *emitter) read(read ir.Read) string {
 	lent := e.lendable && lendable(read.Of)
 	if slot := e.cellSlot(read.Local); slot != "" {
 		if read.Checked {
-			e.checkReady(read.Local)
+			e.checkReady(read, read.Local)
 		}
 		// A captured variable may change under a call later in the statement (a closure that
 		// writes it), so, like a global, it's copied the moment JavaScript reads it.

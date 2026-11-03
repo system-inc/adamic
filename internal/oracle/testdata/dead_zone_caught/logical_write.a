@@ -1,0 +1,13 @@
+// A logical assignment to a global in its temporal dead zone throws Node's ReferenceError, caught in
+// main (#bxmdk73). Node prints the error, then 1, since later holds a number by then.
+function fill(): void {
+	later ??= 4;
+}
+try {
+	fill();
+} catch (error) {
+	if (error instanceof Error) console.log(`${error.name}|${error.message}`);
+}
+let later: number | undefined = 1;
+fill();
+console.log(String(later));

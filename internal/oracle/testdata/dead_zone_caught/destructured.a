@@ -1,0 +1,16 @@
+// A destructured local read by a nested function before its declaration runs throws Node's
+// ReferenceError, caught inside the function that declares it (#bxmdk73). Node prints the error and 5.
+function outer(): string {
+	function read(): number {
+		return value;
+	}
+	let result = 'none';
+	try {
+		result = String(read());
+	} catch (error) {
+		if (error instanceof Error) result = `${error.name}|${error.message}`;
+	}
+	const [value]: readonly [number] = [5];
+	return `${result} ${String(read())}`;
+}
+console.log(outer());
