@@ -249,9 +249,9 @@ func (l *lowering) exceptions() error {
 	return nil
 }
 
-// throwsOut reports whether a throw can leave statements: a throw, or a call to a function that can
-// throw (through a function value too, a sort's comparator among them), that isn't inside a try's
-// body with a catch.
+// throwsOut reports whether a throw can leave statements: a throw, a call to a function that can
+// throw (through a function value too, a sort's comparator among them), or a read or write in its
+// temporal dead zone (ir.Program's DeadZoneMayThrow), that isn't inside a try's body with a catch.
 func (l *lowering) throwsOut(statements []ir.Statement) bool {
 	found := false
 	walk(statements, func(node any) bool {
@@ -282,6 +282,9 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			found = found || l.result.RecordWriteMayThrow(node)
 		case ir.Defined:
 			found = found || node.Throws()
+		case ir.Read, ir.Assign:
+			// A read or write in its temporal dead zone throws JavaScript's ReferenceError (#bxmdk73).
+			found = found || l.result.DeadZoneMayThrow(node)
 		case ir.Call:
 			if l.result.CallMayThrow(node) {
 				found = true
