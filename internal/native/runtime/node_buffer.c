@@ -108,7 +108,7 @@ static unsigned byte_value(double value)
 }
 adamic_array *adamic_node_buffer_copy(const adamic_array *source)
 {
-	adamic_array *buffer = adamic_array_new(source->length, false);
+	adamic_array *buffer = adamic_array_make(source->length, adamic_ir_Number);
 	for (size_t at = 0; at < source->length; at++) {
 		push_byte(buffer, byte_value(source->elements[at].number));
 	}
@@ -159,7 +159,7 @@ adamic_array *adamic_node_buffer_from(const adamic_string *text, int encoding)
 {
 	size_t units = adamic_string_units(text);
 	adamic_array *buffer =
-		adamic_array_new(encoding == 1 ? units * 2 : text->length, false);
+		adamic_array_make(encoding == 1 ? units * 2 : text->length, adamic_ir_Number);
 	if (encoding == 0) {
 		for (size_t at = 0; at < text->length; at++) {
 			push_byte(buffer, (unsigned)adamic_utf8_at(text, (double)at));

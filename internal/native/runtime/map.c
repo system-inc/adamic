@@ -277,7 +277,7 @@ bool adamic_map_iterator_next(adamic_map_iterator *iterator, adamic_value *key, 
 }
 
 adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair) {
-	adamic_array *entries = adamic_array_new(map->count, true);
+	adamic_array *entries = adamic_array_make(map->count, adamic_ir_Union);
 	for (size_t index = 0; index < map->used; index++) {
 		const adamic_map_entry *entry = &map->entries[index];
 		if (entry->deleted) {
@@ -325,10 +325,10 @@ void adamic_map_clear(adamic_map *map) {
 }
 
 // listed is an array of every live entry's key, or every value, in insertion order, each reference
-// retained for the array.
-static adamic_array *listed(const adamic_map *map, bool keys) {
+// retained for the array, which is made with element.
+static adamic_array *listed(const adamic_map *map, bool keys, enum adamic_ir_type element) {
 	bool references = keys ? map->reference_keys : map->reference_values;
-	adamic_array *array = adamic_array_new(map->count, references);
+	adamic_array *array = adamic_array_make(map->count, element);
 	for (size_t index = 0; index < map->used; index++) {
 		const adamic_map_entry *entry = &map->entries[index];
 		if (entry->deleted) {
@@ -343,12 +343,12 @@ static adamic_array *listed(const adamic_map *map, bool keys) {
 	return array;
 }
 
-adamic_array *adamic_map_keys(const adamic_map *map) {
-	return listed(map, true);
+adamic_array *adamic_map_keys(const adamic_map *map, enum adamic_ir_type element) {
+	return listed(map, true, element);
 }
 
-adamic_array *adamic_map_values(const adamic_map *map) {
-	return listed(map, false);
+adamic_array *adamic_map_values(const adamic_map *map, enum adamic_ir_type element) {
+	return listed(map, false, element);
 }
 
 void adamic_map_add_pairs(adamic_map *map, const adamic_array *pairs) {

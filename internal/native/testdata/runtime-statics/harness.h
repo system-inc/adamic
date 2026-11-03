@@ -35,10 +35,10 @@ static adamic_value work(adamic_closure *self, adamic_value *arguments) {
 int main(int argc, char **argv) {
  adamic_start(argc, argv);
  prepare();
- adamic_array *items = adamic_array_new(256, false);
+ adamic_array *items = adamic_array_make(256, adamic_ir_Number);
  for (size_t index = 0; index < 256; index++) { adamic_array_push(items, (adamic_value){.number = (double)index}); }
  adamic_closure *callback = adamic_closure_new(work, 0);
- adamic_array *results = adamic_parallel_map(items, callback, false);
+ adamic_array *results = adamic_parallel_map(items, callback, adamic_ir_Number);
  if (results == NULL || results->length != items->length) { abort(); }
  for (size_t index = 0; index < results->length; index++) {
   if (results->elements[index].number <= 0) { abort(); }

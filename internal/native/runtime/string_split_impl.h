@@ -1,7 +1,7 @@
 // Private string split implementation, included only by string.c.
 
 adamic_array *adamic_string_code_points(const adamic_string *string) {
-	adamic_array *array = adamic_array_new(0, true);
+	adamic_array *array = adamic_array_make(0, adamic_ir_Union);
 	for (size_t offset = 0; offset < string->length;) {
 		size_t size = sequence((unsigned char)string->bytes[offset]);
 		adamic_array_push(array, (adamic_value){.reference = adamic_string_slice_bytes(string, offset, size)});
@@ -11,7 +11,7 @@ adamic_array *adamic_string_code_points(const adamic_string *string) {
 }
 
 adamic_array *adamic_string_split(const adamic_string *string, const adamic_string *separator) {
-	adamic_array *parts = adamic_array_new(0, true);
+	adamic_array *parts = adamic_array_make(0, adamic_ir_Union);
 	if (separator->length == 0) {
 		// An empty separator splits into UTF-16 code units, an emoji into its two halves.
 		units walk = units_start(string);

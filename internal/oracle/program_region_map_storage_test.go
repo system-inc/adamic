@@ -32,7 +32,7 @@ func programRegionMapperStorage(t *testing.T, enabled bool) {
 		t.Fatalf("JavaScript backend: %s", diff)
 	}
 	code := native.C(program)
-	allocation := regexp.MustCompile(`adamic_array \*\s*(\w+) = \((\w+) \? adamic_retain\((\w+)\) : adamic_array_new\([^\n]+;`)
+	allocation := regexp.MustCompile(`adamic_array \*\s*(\w+) = \((\w+) \? adamic_retain\((\w+)\) : adamic_array_make\([^\n]+;`)
 	matches := allocation.FindAllStringSubmatchIndex(code, -1)
 	if len(matches) != 1 {
 		t.Fatalf("expected exactly one reusable mapper allocation, got %d", len(matches))
