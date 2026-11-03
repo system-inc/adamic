@@ -41,6 +41,9 @@ func nodeProcessHostNewLine(t *testing.T, statusPath string) {
 			configuration, rowNumber = row.Configuration, index+1
 			truth = run{stdout: []byte(row.Node.Stdout), stderr: []byte(row.Node.Stderr), exitCode: row.Node.Exit}
 			t.Run("node", func(t *testing.T) {
+				if why := hostconfiguration.Skip(index+1, row.Configuration); why != "" {
+					t.Skip(why)
+				}
 				nodeBinary := hostconfiguration.Require(t, index+1, row.Configuration)
 				actualNode := hostNodeWith(t, inputRun{}, nodeBinary, path)
 				if difference := disagreement(truth, actualNode); difference != "" {
@@ -75,6 +78,9 @@ func nodeProcessHostNewLine(t *testing.T, statusPath string) {
 		t.Fatal("native mutant must fail only Node stdout comparison")
 	}
 	t.Run("javascript", func(t *testing.T) {
+		if why := hostconfiguration.Skip(rowNumber, configuration); why != "" {
+			t.Skip(why)
+		}
 		nodeBinary := hostconfiguration.Require(t, rowNumber, configuration)
 		if difference := disagreement(truth, hostNodeWith(t, inputRun{}, nodeBinary, script)); difference != "" {
 			t.Fatal("JavaScript versus recorded Node: " + difference)

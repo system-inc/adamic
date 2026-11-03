@@ -74,6 +74,9 @@ func hostStatusFile(t *testing.T, index int, wasiOnly bool, statusPath string) {
 	truth := run{stdout: []byte(row.Node.Stdout), stderr: []byte(row.Node.Stderr), exitCode: row.Node.Exit}
 	nodeChecked := false
 	t.Run("node", func(t *testing.T) {
+		if why := hostconfiguration.Skip(index+1, row.Configuration); why != "" {
+			t.Skip(why)
+		}
 		nodeBinary := hostconfiguration.Require(t, index+1, row.Configuration)
 		actualNode := hostNodeWith(t, inputRun{directory: repository}, nodeBinary, path)
 		if difference := disagreement(truth, actualNode); difference != "" {
@@ -129,6 +132,9 @@ func hostStatusFile(t *testing.T, index int, wasiOnly bool, statusPath string) {
 				if err := os.WriteFile(js, []byte(script), 0600); err != nil {
 					t.Fatal(err)
 				}
+				if why := hostconfiguration.Skip(index+1, row.Configuration); why != "" {
+					t.Skip(why)
+				}
 				nodeBinary := hostconfiguration.Require(t, index+1, row.Configuration)
 				actual := hostNodeWith(t, inputRun{directory: repository}, nodeBinary, js)
 				if difference := disagreement(truth, actual); difference != "" {
@@ -150,6 +156,9 @@ func hostStatusFile(t *testing.T, index int, wasiOnly bool, statusPath string) {
 					t.Fatal(runnerErr)
 				}
 				t.Run("wasi", func(t *testing.T) {
+					if why := hostconfiguration.Skip(index+1, row.Configuration); why != "" {
+						t.Skip(why)
+					}
 					nodeBinary := hostconfiguration.Require(t, index+1, row.Configuration)
 					actual := executeInput(t, inputRun{directory: repository}, nil, nodeBinary, "--disable-warning=ExperimentalWarning", runner, wasm)
 					if reason := wasiRefusalReason(actual); reason != "" {

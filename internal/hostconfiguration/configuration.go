@@ -78,8 +78,19 @@ func probe(binary, expression, expected string) error {
 	return result.err
 }
 
-// Require is the only Go skip site for configured host fixtures. Judge keys its
-// classification on this condition and Skip line, shared by every Go reader.
+// Skip returns a reason only for a valid configuration whose binary is missing.
+// Errors return no skip: callers must continue to Require, which fails loudly.
+// Each caller owns its t.Skip in a test file so the census can classify its test.
+func Skip(row int, configuration *Configuration) string {
+	_, why, err := Resolve(row, configuration, os.Getenv)
+	if err != nil {
+		return ""
+	}
+	return why
+}
+
+// Require resolves and verifies a binary without skipping. Callers first use
+// Skip to classify an unavailable build at their own test's skip site.
 func Require(t testing.TB, row int, configuration *Configuration) string {
 	t.Helper()
 	binary, skip, err := Resolve(row, configuration, os.Getenv)
@@ -87,7 +98,7 @@ func Require(t testing.TB, row int, configuration *Configuration) string {
 		t.Fatal(err)
 	}
 	if skip != "" {
-		t.Skip(skip)
+		t.Fatal(skip)
 	}
 	return binary
 }

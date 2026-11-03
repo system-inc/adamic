@@ -31,6 +31,9 @@ func TestHostConfigurationReaderUsesDeclaredNode(t *testing.T) {
 		if err := json.Unmarshal(data, &row); err != nil {
 			t.Fatal(err)
 		}
+		if why := Skip(1, row.Configuration); why != "" {
+			t.Skip(why)
+		}
 		node := Require(t, 1, row.Configuration)
 		fixture, err := filepath.Abs("testdata/configuration.a")
 		if err != nil {
@@ -103,6 +106,24 @@ func TestHostConfigurationReaderUsesDeclaredNode(t *testing.T) {
 	out, err = invoke("unknown", bad, node)
 	if err == nil || !strings.Contains(out, "unknown host configuration") {
 		t.Fatalf("unknown recipe silently accepted: %v\n%s", err, out)
+	}
+
+	// Skip must never turn metadata errors or a wrong binary into a passing skip.
+	wrongMetadata := map[string]any{"configuration": map[string]any{"name": "node-without-inspector", "node": "wrong"}, "node": map[string]string{"stdout": "stock\n"}}
+	for _, failure := range []struct {
+		name   string
+		row    map[string]any
+		binary string
+		want   string
+	}{
+		{"unknown without binary", bad, "", "unknown host configuration"},
+		{"metadata without binary", wrongMetadata, "", "invalid metadata"},
+		{"stock binary", rows[0], node, "v24.19.0 true"},
+	} {
+		out, err := invoke(failure.name, failure.row, failure.binary)
+		if err == nil || !strings.Contains(out, failure.want) || strings.Contains(out, "--- SKIP:") {
+			t.Fatalf("%s must fail, never skip: %v\n%s", failure.name, err, out)
+		}
 	}
 
 }

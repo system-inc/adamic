@@ -383,6 +383,9 @@ func testFixtureDirectory(t *testing.T, directory string, selectedFiles ...strin
 					node := entry.Node // Backend checks never depend on an available reference binary.
 					nodeChecked := false
 					recordedNodeAgrees := t.Run("node", func(t *testing.T) {
+						if why := hostconfiguration.Skip(index+1, entry.Configuration); why != "" {
+							t.Skip(why)
+						}
 						nodeBinary := hostconfiguration.Require(t, index+1, entry.Configuration)
 						actualNode := execute(t, repository, nil, nodeBinary, "--disable-warning=ExperimentalWarning", nodeRunner, path)
 						equal(t, "recorded Node", actualNode, entry.Node)
@@ -456,6 +459,9 @@ func testFixtureDirectory(t *testing.T, directory string, selectedFiles ...strin
 									actual = stage0{Outcome: "CheckedStop", What: string(stderr), Stdout: string(stdout)}
 								}
 								t.Run("javascript", func(t *testing.T) {
+									if why := hostconfiguration.Skip(index+1, entry.Configuration); why != "" {
+										t.Skip(why)
+									}
 									nodeBinary := hostconfiguration.Require(t, index+1, entry.Configuration)
 									checkedNode := execute(t, repository, nil, nodeBinary, "--disable-warning=ExperimentalWarning", nodeRunner, checkedPath)
 									equal(t, "pinned Node check", checkedNode, want)
@@ -556,6 +562,7 @@ func TestFixtureShardManifest(t *testing.T) {
 				t.Fatal(err)
 			}
 			if skip != "" {
+				// A manifest must keep every row: log the requirement; never Skip it.
 				t.Log(skip)
 			}
 			name := filepath.Base(filepath.Dir(status)) + "/" + entry.File

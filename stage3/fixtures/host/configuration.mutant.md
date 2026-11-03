@@ -15,7 +15,7 @@ Result with the mutant: exit 1. Restored, the same command passes. The run used
 a Go overlay to leave the working tree unchanged. Its real failing lines were:
 
 ```text
-configuration_test.go:45: configured Node mismatch: <nil>: got "stock\n" want "configured\n"
+configuration_test.go:48: configured Node mismatch: <nil>: got "stock\n" want "configured\n"
 configuration_test.go:90: configured control: exit status 1
 --- FAIL: TestHostConfigurationReaderUsesDeclaredNode (0.08s)
 FAIL
@@ -53,8 +53,8 @@ Node for the configured build. Command:
 With the Go overlay mutant, exit 1; restored, exit 0. Actual failing lines:
 
 ```text
-configuration_test.go:171: stock Node must fail its capability probe: <nil>
---- FAIL: TestHostConfigurationRejectsStockNode (0.12s)
+configuration_test.go:192: stock Node must fail its capability probe: <nil>
+--- FAIL: TestHostConfigurationRejectsStockNode (0.03s)
 FAIL
 ```
 
@@ -77,10 +77,9 @@ check in the fixture harness: its original scope remains CheckedStop rows only.
 `TestHostConfigurationOracleReaders` repeats the same unset-reference and
 wrong-recorded-byte proof for both oracle reader paths.
 
-Reference-scope mutant: insert
-`hostconfiguration.Require(t, index+1, entry.Configuration)` into the row body in
-`stage3/fixtures/fixtures_test.go`, before `node := entry.Node`, outside the
-`node` subtest. Command:
+Reference-scope mutant: move the `hostconfiguration.Skip` guard from the `node`
+subtest into the row body before `node := entry.Node` in
+`stage3/fixtures/fixtures_test.go`. Require itself no longer skips. Command:
 
 `go test ./stage3/fixtures -count=1 -run '^TestHostConfigurationFixtureReaders$' -v`
 
@@ -88,16 +87,16 @@ The Go overlay mutant exits 1. The restored test passes. Actual failing lines:
 
 ```text
 host_configuration_test.go:133: native comparison didn't run: === RUN   TestFixturesHost
---- FAIL: TestHostConfigurationFixtureReaders/execute/unset (1.49s)
+--- FAIL: TestHostConfigurationFixtureReaders/execute/unset (1.32s)
 host_configuration_test.go:117: recorded bytes mismatch wasn't caught: <nil>
---- FAIL: TestHostConfigurationFixtureReaders/execute/wrong-recorded (1.55s)
---- FAIL: TestHostConfigurationFixtureReaders (9.33s)
+--- FAIL: TestHostConfigurationFixtureReaders/execute/wrong-recorded (1.24s)
+--- FAIL: TestHostConfigurationFixtureReaders (9.46s)
 ```
 
 The missing native pass and the surviving wrong record independently catch a
 row-wide skip. `/native` and `/stage0` continue against the pinned record.
 Reference Node and the existing JavaScript checks each require the row's verified
-Node binary. There is still only one Go t.Skip site, in Require.
+Node binary. Each Go call site owns its skip in its test file; Require never skips.
 
 JavaScript binary-selection mutant: in `internal/oracle/host_status_test.go`,
 replace `hostNodeWith(t, inputRun{directory: repository}, nodeBinary, js)` with
@@ -110,7 +109,7 @@ The overlay mutant exits 1; the restored reader family passes. Actual lines:
 
 ```text
 host_configuration_test.go:109: source and generated JavaScript must both use the configured binary: <nil> --disable-warning=ExperimentalWarning
---- FAIL: TestHostConfigurationOracleReaders/status/selected (1.95s)
+--- FAIL: TestHostConfigurationOracleReaders/status/selected (2.07s)
 ```
 
 The verified test launcher records every non-probe invocation. The source and
@@ -120,3 +119,28 @@ compares the recorded bytes and the existing JavaScript execution skips by name.
 `test_fs_javascript_uses_configured_node` checks the Python reader's same rule.
 The fixture harness additionally asserts that ordinary Compiles rows do not
 acquire JavaScript comparisons: only its original CheckedStop path runs them.
+
+
+Call-site classification pin: each Go caller tests `hostconfiguration.Skip`
+in its own `_test.go` file, then calls Require for a verified binary. A missing
+binary is the only skip. An unknown name, invalid metadata, or stock binary
+returns no skip reason, and Require fails loudly. The manifest logs the missing
+configuration and keeps its row.
+
+Error-to-skip mutant: in `hostconfiguration.Skip`, return `err.Error()` instead
+of `""` when Resolve fails. Command:
+
+`go test ./internal/hostconfiguration -count=1 -run '^TestHostConfigurationReaderUsesDeclaredNode$' -v`
+
+The overlay exits 1. The restored helper suite passes. Actual failing lines:
+
+```text
+configuration_test.go:108: unknown recipe silently accepted: <nil>
+--- FAIL: TestHostConfigurationReaderUsesDeclaredNode (0.26s)
+```
+
+The helper also checks invalid metadata with no configured binary and stock Node
+with valid metadata: both must fail, never skip. The current-head rerun catches
+all five source mutants: ignored configuration, accepted stock probe, error as a
+skip, row-wide skip, and stock Node for generated JavaScript. The wrong-recorded
+bytes and deleted-field controls remain caught by the unmutated reader tests.
