@@ -14,8 +14,33 @@ MODES = ['resolve', 'reject', 'early', 'double', 'abandon', 'cancel', 'cancel-ab
          'invalid', 'hooks', 'app', 'direct', 'stress', 'checkpoint', 'stale']
 REFUSED = b'adamic: host completion refused: request retired or already completed\n'
 
+# A mutant's diagnostic is a list of shapes, each a list of byte strings that must all appear in its
+# stderr. A racing mutant can trip a different report depending on the schedule: the queue-lock mutant
+# is usually caught as the named data race, and sometimes as a heap-use-after-free in host_find, which
+# its unlocked queue also causes (Loom's Hot, Nov 2, #7kfk2rn). Only those known shapes count. Any
+# other report means the check passed for the wrong reason, so it doesn't.
+RACE = [[b'ThreadSanitizer: data race']]
+QUEUE_LOCK = [[b'ThreadSanitizer: data race'], [b'ThreadSanitizer: heap-use-after-free', b'host_find']]
+
+
+def caught(stderr, shapes):
+    return any(all(part in stderr for part in shape) for shape in shapes)
+
+
+def check_caught():
+    # The rule above, checked on fixed reports before any mutant runs, so loosening it fails here.
+    race = b'WARNING: ThreadSanitizer: data race (pid=1)\n  Write of size 8 at 0x1 by thread T1:\n'
+    freed = b'WARNING: ThreadSanitizer: heap-use-after-free (pid=1)\n    #0 host_find host_promises.c:76\n'
+    elsewhere = b'WARNING: ThreadSanitizer: heap-use-after-free (pid=1)\n    #0 adamic_release heap.c:40\n'
+    unrelated = b'WARNING: ThreadSanitizer: signal-unsafe call inside of a signal (pid=1)\n'
+    assert caught(race, QUEUE_LOCK) and caught(freed, QUEUE_LOCK), 'a known queue-lock shape was refused'
+    assert not caught(elsewhere, QUEUE_LOCK), 'a use after free outside host_find was taken'
+    assert not caught(unrelated, QUEUE_LOCK), 'an unrelated report was taken'
+    assert caught(race, RACE) and not caught(freed, RACE), 'the direct mutant takes only its race'
+
 
 def main():
+    check_caught()
     directory = Path(tempfile.mkdtemp(prefix='host-promises-'))
     print('artifacts:', directory, flush=True)
 
@@ -89,15 +114,15 @@ def main():
             assert node == result, (mode, node, result)
             print(label, mode, 'Node trace matches', flush=True)
 
-        mutants = [('direct', 'ADAMIC_HOST_DIRECT_SETTLE_MUTANT', 'direct', b'ThreadSanitizer: data race'),
-                   ('queue-lock', 'ADAMIC_HOST_QUEUE_LOCK_MUTANT', 'stress', b'ThreadSanitizer: data race')] \
+        mutants = [('direct', 'ADAMIC_HOST_DIRECT_SETTLE_MUTANT', 'direct', RACE),
+                   ('queue-lock', 'ADAMIC_HOST_QUEUE_LOCK_MUTANT', 'stress', QUEUE_LOCK)] \
                   if label == 'tsan' else [
-                      ('checkpoint', 'ADAMIC_HOST_CHECKPOINT_MUTANT', 'checkpoint', b'Assertion'),
+                      ('checkpoint', 'ADAMIC_HOST_CHECKPOINT_MUTANT', 'checkpoint', [[b'Assertion']]),
                       ('wake', 'ADAMIC_HOST_WAKE_MUTANT', 'resolve', None),
-                      ('host-registry', 'ADAMIC_HOST_EXIT_REGISTRY_MUTANT', 'exit', b'LeakSanitizer: detected memory leaks'),
-                      ('settle-cycle', 'ADAMIC_ASYNC_SETTLE_CYCLE_MUTANT', 'resolve', b'LeakSanitizer: detected memory leaks'),
-                      ('cancel-cycle', 'ADAMIC_ASYNC_CANCEL_CYCLE_MUTANT', 'cancel-abandon', b'LeakSanitizer: detected memory leaks'),
-                      ('exit-cycle', 'ADAMIC_ASYNC_EXIT_CYCLE_MUTANT', 'exit', b'LeakSanitizer: detected memory leaks')]
+                      ('host-registry', 'ADAMIC_HOST_EXIT_REGISTRY_MUTANT', 'exit', [[b'LeakSanitizer: detected memory leaks']]),
+                      ('settle-cycle', 'ADAMIC_ASYNC_SETTLE_CYCLE_MUTANT', 'resolve', [[b'LeakSanitizer: detected memory leaks']]),
+                      ('cancel-cycle', 'ADAMIC_ASYNC_CANCEL_CYCLE_MUTANT', 'cancel-abandon', [[b'LeakSanitizer: detected memory leaks']]),
+                      ('exit-cycle', 'ADAMIC_ASYNC_EXIT_CYCLE_MUTANT', 'exit', [[b'LeakSanitizer: detected memory leaks']])]
         for name, macro, mode, diagnostic in mutants:
             binary = build(name, macro)
             for attempt in range(3 if label == 'tsan' else 1):
@@ -106,8 +131,9 @@ def main():
                     assert result[0] == 'timeout', (name, result)
                     print('mutant', name, 'caught by bounded timeout (3s)', flush=True)
                 else:
-                    assert result[0] not in [0, 'timeout'] and diagnostic in result[2], (name, result)
-                    print('mutant', name, 'attempt', attempt + 1, 'caught by', diagnostic.decode(), flush=True)
+                    assert result[0] not in [0, 'timeout'] and caught(result[2], diagnostic), (name, result)
+                    shape = next(shape for shape in diagnostic if all(part in result[2] for part in shape))
+                    print('mutant', name, 'attempt', attempt + 1, 'caught by', b' + '.join(shape).decode(), flush=True)
         if label == 'asan':
             for name, mode, old, new in [
                 ('payload-copy', 'resolve', 'memcpy(entry->bytes, bytes, length);', "memset(entry->bytes, 'x', length);"),
