@@ -114,7 +114,7 @@ void *adamic_graph_adopt(void *value, size_t bytes) {
 	if (refused != NULL) { fail(refused, strlen(refused)); }
 	// A Weak names the address the move frees.
 	if (adamic_weak_held(heap)) { FAIL("compiler bug: a value can't be adopted into a graph region while a Weak names it"); }
-	if (heap->kind == adamic_kind_object && bytes != adamic_object_size(((adamic_object *)heap)->shape->count)) {
+	if (heap->kind == adamic_kind_object && bytes != adamic_object_allocation_size((adamic_object *)heap)) {
 		FAIL("compiler bug: graph adoption truncates object storage");
 	}
 	heap = adamic_heap_graph_storage(value, bytes);

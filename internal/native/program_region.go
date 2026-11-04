@@ -13,5 +13,5 @@ func (e *emitter) programArray(value string, member bool) string {
 	return e.adoptProgram(value, "sizeof *"+value, member)
 }
 func (e *emitter) programObject(value string, member bool) string {
-	return e.adoptProgram(value, fmt.Sprintf("adamic_object_size(%s->shape->count)", value), member)
+	return e.adoptProgram(value, fmt.Sprintf("adamic_object_allocation_size(%s)", value), member)
 }

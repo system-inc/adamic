@@ -513,6 +513,8 @@ bool adamic_object_present(const adamic_object *object, size_t index);
 void adamic_object_publish(adamic_object *object, size_t index);
 size_t *adamic_object_ordered(const adamic_object *object);
 adamic_object *adamic_object_construct(const adamic_shape *shape);
+// An object's allocation size as adamic_object_new or adamic_object_construct made it, the second longer by its write order.
+size_t adamic_object_allocation_size(const adamic_object *object);
 
 bool adamic_instanceof(const void *value, const adamic_class *wanted);
 size_t adamic_virtual(const adamic_object *object, size_t slot);
