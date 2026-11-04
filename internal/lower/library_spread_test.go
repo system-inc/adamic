@@ -46,9 +46,11 @@ func TestLibrarySpreadMapView(t *testing.T) {
 	_, err := lowerSource(t, `interface Sized { readonly size: number; }
 function copy(value: Sized): void { const result = { ...value }; }
 copy(new Map<string, number>());`)
-	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(refused.What, "library class Map") {
-		t.Fatalf("want Map refusal, got %v", err)
+	// A Map going where Sized, a plain object type, is held stops at the argument (shape_fit.go), before
+	// the spread could see it.
+	var notYet *NotYet
+	if !errors.As(err, &notYet) || !strings.HasSuffix(err.Error(), "main.a:3:6: stage 0 can't lower a Map or Set going where a plain object type is held yet") {
+		t.Fatalf("want the Map's NotYet at the argument, got %v", err)
 	}
 }
 
@@ -57,9 +59,11 @@ func TestLibrarySpreadSetView(t *testing.T) {
 	_, err := lowerSource(t, `interface Sized { readonly size: number; }
 function copy(value: Sized): void { const result = { ...value }; }
 copy(new Set<number>());`)
-	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(refused.What, "library class Set") {
-		t.Fatalf("want Set refusal, got %v", err)
+	// A Set going where Sized, a plain object type, is held stops at the argument (shape_fit.go), before
+	// the spread could see it.
+	var notYet *NotYet
+	if !errors.As(err, &notYet) || !strings.HasSuffix(err.Error(), "main.a:3:6: stage 0 can't lower a Map or Set going where a plain object type is held yet") {
+		t.Fatalf("want the Set's NotYet at the argument, got %v", err)
 	}
 }
 

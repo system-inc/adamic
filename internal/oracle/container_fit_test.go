@@ -30,7 +30,7 @@ import (
 // (the cost of failing closed, said so). The controls lower and agree with Node on sanitized, release and
 // JavaScript: a real Map seen as a ReadonlyMap, a real Set seen as a ReadonlySet, an array seen as a
 // ReadonlyArray, and a real Map five fields down.
-// Mutant: containerWhereOtherGoes answering false lowers the probes that stop at it, each red; the two
+// Mutant: containerWhereOtherGoes answering "" lowers the probes that stop at it, each red; the two
 // pinned at their own stops stay green.
 func TestContainerInterfaceValueIsNotYetWhereAMapIsHeld(t *testing.T) {
 	t.Parallel()
