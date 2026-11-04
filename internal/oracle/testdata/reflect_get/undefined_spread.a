@@ -1,0 +1,47 @@
+// A spread of a possibly-undefined object, given undefined, makes {} with the literal's own fields,
+// and a field its source type names but the literal doesn't give reads undefined by a run-time key
+// as statically (#2ncah99). Natively that object is made fresh, so each such field's representation
+// byte is written with it: a number's and a string's, beside a field the literal gives itself (one
+// the source has, since adding a field the source lacks is not yet lowered). Given a defined source,
+// the copy's number reads as the source's, and a spread of a defined object keeps its number and
+// boolean. propertyOf here is Reflect.get alone, as #2ncah99's program has it: hostErrors.ts's tests
+// `in` first, which is NotYet on a possibly absent spread.
+
+function propertyOf(value: unknown, key: string): unknown {
+	if (value === null || value === undefined) throw new TypeError('no value');
+	return Reflect.get(Object(value), key, value);
+}
+
+function show(label: string, value: unknown): void {
+	if (typeof value === 'number') console.log(`${label} number ${String(value)}`);
+	else if (typeof value === 'boolean') console.log(`${label} boolean ${value ? 'true' : 'false'}`);
+	else if (typeof value === 'string') console.log(`${label} string ${value}`);
+	else console.log(`${label} ${typeof value}`);
+}
+
+interface Point {
+	readonly x: number;
+	readonly y: number;
+	readonly name: string;
+}
+function copyOf(point: Point | undefined): { readonly x?: number; readonly y?: number; readonly name?: string } {
+	return { ...point };
+}
+function taggedOf(point: Point | undefined): { readonly x?: number; readonly y?: number; readonly name: string } {
+	return { ...point, name: 'given' };
+}
+
+const made = copyOf(undefined);
+show('keyed x', propertyOf(made, 'x'));
+show('keyed name', propertyOf(made, 'name'));
+show('static x', made.x);
+const tagged = taggedOf(undefined);
+show('tagged x', propertyOf(tagged, 'x'));
+show('tagged name', propertyOf(tagged, 'name'));
+const copied = copyOf({ x: 3, y: 4, name: 'p' });
+show('copied x', propertyOf(copied, 'x'));
+show('copied name', propertyOf(copied, 'name'));
+const flags = { count: 2, on: true };
+const spread = { ...flags };
+show('spread count', propertyOf(spread, 'count'));
+show('spread on', propertyOf(spread, 'on'));

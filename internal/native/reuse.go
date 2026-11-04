@@ -603,13 +603,19 @@ func (e *emitter) spreadCopy(literal ir.ObjectLiteral, source string) string {
 }
 
 // emptySpread gives the fields of the object spreadCopy made for an undefined source the value
-// undefined has in each: a new object's slots are zero, which is undefined only for a reference.
+// undefined has in each: a new object's slots are zero, which is undefined only for a reference. In
+// a program that reads by a run-time key, each also gets the representation byte a literal's field
+// gets (objectLiteral), since dynamic_slot reads that byte first and a zero one names no storage
+// (#2ncah99).
 func (e *emitter) emptySpread(literal ir.ObjectLiteral, source string, object string) {
 	if !literal.SpreadMaybeUndefined {
 		return
 	}
 	lines := []string{}
 	for index, field := range literal.Empty {
+		if e.fieldTypesNeeded() {
+			lines = append(lines, fmt.Sprintf("\tadamic_object_field_types(%s)[%d] = %d;", object, index, fieldInitialRepresentation(field)))
+		}
 		if !field.Value.Type().IsReference() {
 			lines = append(lines, fmt.Sprintf("\t%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), slotted(field.Value.Type(), e.value(field.Value))))
 		}
