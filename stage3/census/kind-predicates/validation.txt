@@ -1,0 +1,7 @@
+PASS: both complete 79-file streams; identical checker headers and 4,554 unit records.
+PASS: 4,056 timings per run; sums and every artifact digest match.
+PASS: 1,251 -> 1,006 open-tag sites; 239 finding-free, 6 other reasons, 1,006 unchanged.
+PASS: 245 changed source tokens; 245 removed findings and 1 added reason at an already blocked token.
+PASS: five remaining reasons predate the head; zero new failing locations, first-stop changes, or panics.
+PASS: all shared adapted source hashes and changed-token byte/UTF-16 identities match.
+PASS: exits, RSS records, unchanged OOM counters, and report punctuation checked.
