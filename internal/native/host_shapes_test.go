@@ -17,6 +17,7 @@ import (
 	"sync"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 )
@@ -372,7 +373,7 @@ func nameReaders(source string) (map[string]bool, error) {
 		if current.text == "names" && member && !(next(1) == "=" && next(2) != "=") {
 			readers[scope] = true
 		}
-		if (current.text == "host_stop" || current.text == "adamic_host_stop" || current.text == "host_object") && next(1) == "(" {
+		if (current.text == "host_stop" || current.text == "adamic_host_stop" || current.text == "adamic_host_stop_keys" || current.text == "host_object") && next(1) == "(" {
 			guarded[scope] = true
 		}
 	}
@@ -1064,6 +1065,13 @@ func TestHostShapesClosure(t *testing.T) {
 	}
 	for _, problem := range readerProblems(readerSources(t)) {
 		t.Error(problem)
+	}
+	union, err := os.ReadFile(filepath.Join("runtime", "union.c"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(string(union), strconv.Quote(ir.DynamicKeysStop)) {
+		t.Errorf("union.c's adamic_host_stop_keys doesn't say %q, ir.DynamicKeysStop's words the JavaScript backend stops with", ir.DynamicKeysStop)
 	}
 }
 

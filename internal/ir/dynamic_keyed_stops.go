@@ -12,6 +12,11 @@ type DynamicKeyedStop struct {
 	Message string
 }
 
+// DynamicKeysStop is the whole message, with no key, with which both backends stop Object.keys of a
+// host value (Adamic's ruling on #ey7aysy at 08:28Z): an enumeration reads no one key, so it doesn't
+// say "(reading 'x')". union.c writes the same words (host_shapes_test.go holds them alike).
+const DynamicKeysStop = "this runtime value's own keys aren't enumerated yet"
+
 // DynamicKeyedStops are in the order both backends test them, a value's kind first and then, for an
 // object, its key.
 var DynamicKeyedStops = []DynamicKeyedStop{
