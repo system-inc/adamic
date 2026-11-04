@@ -135,6 +135,9 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 	if err := lowering.checkDynamicKeyedGetters(); err != nil {
 		return nil, err
 	}
+	if err := checkGeneratorRoads(lowering.result); err != nil {
+		return nil, err
+	}
 	if err := flow.NormalizeAsync(lowering.result); err != nil {
 		where := entry.AsNode()
 		var located *flow.AsyncError
@@ -174,6 +177,11 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 	if discovery || plan != nil {
 		if lowering.result.HasAsync() {
 			return nil, &Refused{Where: program.Where(entry.AsNode()), What: "Program region with async work", Fix: "keep Program members in the one-shot synchronous CLI"}
+		}
+		if lowering.result.HasGenerators() {
+			// A generator's frame can't be a region member (adamic_region_unmovable), and which
+			// types it reaches isn't proven yet (Memory, q9).
+			return nil, &NotYet{Where: program.Where(entry.AsNode()), What: "a Program region in a program with generator functions (#qk8rztp)"}
 		}
 	}
 	if plan != nil {

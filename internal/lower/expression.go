@@ -767,6 +767,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		return l.expression(satisfies.Expression)
 	case ast.KindFunctionExpression:
 		return l.functionExpression(node)
+	case ast.KindYieldExpression:
+		// A yield's result is what next(x) sends in, which isn't built (#qk8rztp S5).
+		return nil, l.generatorNotYet(node, "using a yield's result as a value")
 	case ast.KindCallExpression:
 		if value, handled, err := l.promiseValue(node); handled {
 			return value, err
@@ -1335,6 +1338,11 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 		}
 		return nil, l.notYet(node, "a call to "+describe(callee))
 	}
+	if l.result.Functions[function].Generator {
+		// The two consumers that keep a generator to themselves lower its call before this; a
+		// generator anywhere else is a value no slot can hold yet (#qk8rztp S2).
+		return nil, l.generatorNotYet(node, "whose generator is used other than by a for-of over its call or a call as a statement")
+	}
 	value, err := l.callFunction(call, function)
 	if err == nil {
 		value = l.namespaceReadyCall(callee, value)
@@ -1441,6 +1449,9 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 				return nil, l.notYet(node, "an overloaded function as a value")
 			}
 		}
+	}
+	if l.result.Functions[target].Generator {
+		return nil, l.generatorNotYet(node, "used as a value")
 	}
 	if held, isMade := l.forwarders[target]; isMade {
 		return ir.Read{Local: held, Of: ir.Closure}, nil

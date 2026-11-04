@@ -1,0 +1,22 @@
+// The consumer breaks while the body is part way through a Map: the frame still holds the Map's
+// iterator, and dropping the generator lets go of it, so the Map takes writes and prints as Node's.
+function* entries(table: Map<string, number>): Generator<string, void, undefined> {
+    for(const [key, value] of table) {
+        yield `${key}=${String(value)}`;
+    }
+}
+const table = new Map<string, number>();
+table.set(`a${String(1)}`, 1);
+table.set(`b${String(2)}`, 2);
+table.set(`c${String(3)}`, 3);
+for(const line of entries(table)) {
+    console.log(line);
+    if(line.startsWith('b')) {
+        break;
+    }
+}
+table.delete('a1');
+table.set(`d${String(4)}`, 4);
+for(const [key, value] of table) {
+    console.log(`${key} ${String(value)}`);
+}

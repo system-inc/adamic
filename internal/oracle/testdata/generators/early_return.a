@@ -1,0 +1,17 @@
+// A return part way through the body finishes the frame before some of its cells were ever written.
+function* upTo(label: string, limit: number): Generator<string, void, undefined> {
+    const head = `${label}:`;
+    for(let index = 0; index < 10; index++) {
+        if(index === limit) {
+            return;
+        }
+        const item = head + String(index);
+        yield item;
+    }
+    const never = `${head}never`;
+    yield never;
+}
+for(const item of upTo('n', 2)) {
+    console.log(item);
+}
+console.log('after');

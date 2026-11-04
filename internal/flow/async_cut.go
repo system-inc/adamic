@@ -28,11 +28,14 @@ func (g suspensionGraph) Successors(id BlockId, visit func(BlockId)) {
 }
 func (g suspensionGraph) Suspension(id BlockId) (BlockId, BlockId, bool) {
 	block, _ := g.function.Block(id)
-	terminal, ok := block.Terminal.(*Suspend)
-	if !ok {
-		return 0, 0, false
+	switch terminal := block.Terminal.(type) {
+	case *Suspend:
+		return terminal.Fulfilled, terminal.Rejected, true
+	case *Yield:
+		// A generator resumes only by its next step, so its one way back is both roots.
+		return terminal.Next, terminal.Next, true
 	}
-	return terminal.Fulfilled, terminal.Rejected, true
+	return 0, 0, false
 }
 
 type AsyncRegions struct {
@@ -44,7 +47,7 @@ type AsyncRegions struct {
 func CutAsync(function *Function) AsyncRegions { return CutSuspensionGraph(suspensionGraph{function}) }
 
 // CutSuspensionGraph promotes joins reached from different roots until each block belongs
-// to exactly one region. Only Suspend yields; crossing a synchronous region edge is a jump.
+// to exactly one region. Only Suspend and Yield leave; crossing a synchronous region edge is a jump.
 func CutSuspensionGraph(graph SuspensionGraph) AsyncRegions {
 	order := graph.BlockOrder()
 	roots := map[BlockId]bool{graph.EntryBlock(): true}

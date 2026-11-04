@@ -110,6 +110,10 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("const adamicSetIndex = (array, index, value) => {\n\tif (!(Number.isInteger(index) && index >= 0 && index < array.length)) panic(`index ${index} is outside an array of length ${array.length}`);\n\tarray[index] = value;\n};\n")
 	builder.WriteString("const adamicCast = (object, field, allowed, message) => allowed.includes(object[field]) ? object : panic(message);\n")
 	builder.WriteString("const adamicUnready = (name) => { throw new ReferenceError(`Cannot access '${name}' before initialization`); };\n\n")
+	if program.HasGenerators() {
+		// A step and its done test are two nodes (ir/generator.go): the step keeps what next() said.
+		builder.WriteString("const adamicGeneratorSteps = new WeakMap();\nconst adamicGeneratorNext = (generator) => { const step = generator.next(); adamicGeneratorSteps.set(generator, step.done === true); return step.value; };\nconst adamicGeneratorDone = (generator) => adamicGeneratorSteps.get(generator);\n\n")
+	}
 	if len(program.Classes) > 0 {
 		builder.WriteString(classCountRuntime("const adamicClassIdentities = new WeakMap();\nconst adamicClass = (value, id) => { const metadata = adamicClasses[id - 1]; if (metadata.literal) { const result = {}; for (const name of metadata.publicKeys) { const descriptor = Object.hasOwn(metadata.accessors, name) ? metadata.accessors[name] : undefined; if (descriptor) Object.defineProperty(result, name, {enumerable: true, get: descriptor.get === undefined ? undefined : () => adamicGetAccessor(result, name), set: descriptor.set === undefined ? undefined : (next) => adamicSetAccessor(result, name, next)}); else result[name] = value[name]; } for (const name of metadata.privateFields) Object.defineProperty(result, name, {value: value[name], enumerable: false}); value = result; } else for (const name of metadata.privateFields) Object.defineProperty(value, name, {enumerable: false}); if (metadata.static) { const storage = value; value = function () {}; adamicStaticMethods.set(value, Object.getPrototypeOf(storage)); if (metadata.parent) Object.setPrototypeOf(value, storage[metadata.parent]); for (const name of metadata.privateFields) Object.defineProperty(value, name, {value: storage[name], writable: true, configurable: true}); } adamicClassIdentities.set(value, id); return value; };\nconst adamicInstanceOf = (value, wanted) => { for (let id = adamicClassIdentities.get(value); id; id = adamicClasses[id - 1].base) { if (id === wanted || (adamicClasses[wanted - 1].definition && adamicClasses[id - 1].definition === adamicClasses[wanted - 1].definition)) return true; } return false; };\nconst adamicVirtual = (value, slot, ...args) => adamicDirect(adamicClasses[adamicClassIdentities.get(value) - 1].methods[slot], [value, ...args]);\n", counted))
 		// A class's accessors are an object literal, so only its own entries are accessors: indexed bare, an
@@ -185,11 +189,14 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 		if function.ArgumentsCount != 0 && !function.Closure {
 			parameters = append([]string{emitter.name(function.ArgumentsCount - 1)}, parameters...)
 		}
-		prefix := ""
+		prefix, star := "", ""
 		if function.Async {
 			prefix = "async "
 		}
-		fmt.Fprintf(&builder, "\n"+prefix+"function %s(%s) {\n", functionName(program, index), strings.Join(parameters, ", "))
+		if function.Generator {
+			star = "*"
+		}
+		fmt.Fprintf(&builder, "\n"+prefix+"function%s %s(%s) {\n", star, functionName(program, index), strings.Join(parameters, ", "))
 		if external, ok := options.ExternalFunctions[index]; ok {
 			if function.Closure {
 				panic("javascript: external function cannot be a closure")
@@ -854,6 +861,12 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.nodeFSFile(expression)
 	case ir.Await:
 		return "(await " + e.value(expression.Value) + ")"
+	case ir.Yield:
+		return "(yield " + e.value(expression.Value) + ")"
+	case ir.GeneratorNext:
+		return "adamicGeneratorNext(" + e.value(expression.Generator) + ")"
+	case ir.GeneratorDone:
+		return "adamicGeneratorDone(" + e.value(expression.Generator) + ")"
 	case ir.PromiseValue:
 		name := "resolve"
 		if expression.Reject {

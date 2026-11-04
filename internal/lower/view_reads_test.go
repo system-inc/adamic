@@ -85,6 +85,8 @@ var viewNoField = []viewReadExample{
 	{ir.Effects{}, "runs statements; a field read in them is a Property, classed on its own"},
 	{ir.ErrorToString{}, "an Error's own name and message, which the runtime made and no view claims; to_string_hint takes it only where adamic_error_is says the value is one"},
 	{ir.FileStatus{}, "reads a path from the host"},
+	{ir.GeneratorDone{}, "reads whether the generator's body finished"},
+	{ir.GeneratorNext{}, "the value its body yields, moved; the body's reads are classed where they are"},
 	{ir.HasAccessor{}, "tests for an accessor"},
 	{ir.HasOwn{}, "tests for an own field without reading its value"},
 	{ir.HasProperty{}, "tests for a field without reading its value"},
@@ -170,6 +172,7 @@ var viewNoField = []viewReadExample{
 	{ir.WeakOf{}, "the target's weak handle"},
 	{ir.WeakTarget{}, "reads a weak reference"},
 	{ir.WriteTextFile{}, "writes a string to the host"},
+	{ir.Yield{}, "moves the value out to the consumer"},
 }
 
 func TestEveryOperandIsClassedForViews(t *testing.T) {

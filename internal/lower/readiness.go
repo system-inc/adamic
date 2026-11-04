@@ -417,10 +417,16 @@ func readinessCalls(instruction *flow.Instruction) bool {
 			node = statement
 		}
 	}
+	// A yield hands control to the consumer, which runs before the body goes on, as a call would.
+	if evaluate, ok := (*instruction.At).(ir.Evaluate); ok {
+		if _, yields := evaluate.Value.(ir.Yield); yields {
+			return true
+		}
+	}
 	calls := false
 	walk(node, func(node any) bool {
 		switch node.(type) {
-		case ir.Call, ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArraySort, ir.ArrayFrom, ir.MapForEach:
+		case ir.Call, ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArraySort, ir.ArrayFrom, ir.MapForEach, ir.GeneratorNext:
 			calls = true
 		}
 		return true

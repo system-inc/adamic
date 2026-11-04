@@ -26,6 +26,7 @@ var writeExamples = []ir.Expression{
 	ir.NodeBufferCall{Function: "buffer_set"}, ir.NodeFSFile{Operation: "read_sync"}, ir.ObjectCall{Method: "assign"},
 	ir.RegExpCall{Method: "test"},
 	ir.NodeFSFile{Operation: "host_env_set"}, ir.NodeFSFile{Operation: "host_env_delete"},
+	ir.GeneratorNext{},
 }
 
 // callBackExamples are what callsBack reports, each as a value it reports.
@@ -36,6 +37,8 @@ var callBackExamples = []ir.Expression{
 	ir.JSONEncode{}, // Fail closed: lowering refuses getter-bearing operands before JSON encoding.
 	// A run-time key read calls whichever class getter its key names.
 	ir.DynamicKeyedProperty{},
+	// A generator's step runs its body.
+	ir.GeneratorNext{},
 }
 
 // valueCases write into what they're handed, or call, through a case of value's own, which makes
@@ -82,6 +85,7 @@ var writesNothing = []struct {
 	{ir.DynamicProperty{}, "reads a field"},
 	{ir.ErrorToString{}, "a new string of an Error's name and message"},
 	{ir.FileStatus{}, "reads a path from the host"},
+	{ir.GeneratorDone{}, "reads whether the generator's last step finished it"},
 	{ir.HasAccessor{}, "tests for an accessor"},
 	{ir.HasOwn{}, "tests for an own field"},
 	{ir.HasProperty{}, "tests for a field without reading it"},
@@ -155,6 +159,7 @@ var writesNothing = []struct {
 	{ir.WeakOf{}, "the target's weak handle, which changes nothing the program reads of the target"},
 	{ir.WeakTarget{}, "reads a weak reference"},
 	{ir.WriteTextFile{}, "writes a file from a string"},
+	{ir.Yield{}, "a suspension, which Build makes a Yield terminal, where run mutates every escaped value"},
 }
 
 // regExpMethods is every Method lowering gives a RegExpCall (internal/lower/regexp.go,

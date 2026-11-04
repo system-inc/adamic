@@ -1,0 +1,14 @@
+// A throw after one yield, consumed by a top-level for-of: Node prints 1, then the error, and never
+// "after". The step's throw is tested before its done (Diagnostics' must 1 on #qk8rztp).
+function* each(values: number[]): Generator<number, void, undefined> {
+    for(const value of values) {
+        if(value === 2) {
+            throw new Error(`bad ${String(value)}`);
+        }
+        yield value;
+    }
+}
+for(const value of each([1, 2, 3])) {
+    console.log(String(value));
+}
+console.log('after');

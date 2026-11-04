@@ -1,0 +1,10 @@
+// A generator made and dropped at once runs none of its body; its frame lets go of the argument it
+// kept.
+function* never(text: string): Generator<string, void, undefined> {
+    console.log(`never runs ${text}`);
+    yield text;
+}
+const made = `dropped${String(1)}`;
+never(`${made}!`);
+never(made);
+console.log(made);

@@ -1,0 +1,25 @@
+// A throw out of the body leaves through the step, which the consuming function passes on to its
+// caller's try; the generator is finished, and the same function goes on to consume a fresh one.
+function* checked(values: number[]): Generator<string, void, undefined> {
+    for(const value of values) {
+        if(value < 0) {
+            throw new Error(`negative ${String(value)}`);
+        }
+        yield `ok ${String(value)}`;
+    }
+}
+function consume(values: number[]): void {
+    for(const line of checked(values)) {
+        console.log(line);
+    }
+    console.log('consumed');
+}
+try {
+    consume([1, 2, -3, 4]);
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(`caught ${error.message}`);
+    }
+}
+consume([5]);

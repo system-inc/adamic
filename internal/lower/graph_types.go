@@ -109,7 +109,7 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 		if declared.Captured && !declared.Global && proven != nil && !f.weak(proven) && f.reaches(proven, cycleNode{cell: local + 1}) && !f.l.closedFrameInput(local) {
 			// An async frame owns its captured cells and is never a graph member, so a cycle through
 			// one stays refused, as it was before graph regions.
-			if declared.Function >= 0 && f.l.result.Functions[declared.Function].Async {
+			if declared.Function >= 0 && f.l.result.Functions[declared.Function].Suspends() {
 				return &Refused{
 					Where: f.l.program.Where(f.l.localNodes[local]),
 					What:  "async frame capture cycle: '" + declared.Name + "', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",

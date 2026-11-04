@@ -1,0 +1,18 @@
+// The Error is made before the yield and thrown after it, so it lives in a frame cell across the
+// yield, which the kill set must leave alone (Diagnostics' must 2 on #qk8rztp).
+function* steps(label: string): Generator<number, void, undefined> {
+    const made = new Error(`made before the yield: ${label}`);
+    yield 1;
+    throw made;
+}
+try {
+    for(const step of steps(`s${String(1)}`)) {
+        console.log(String(step));
+    }
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(`caught ${error.message}`);
+    }
+}
+console.log('after');
