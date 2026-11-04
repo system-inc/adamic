@@ -24,6 +24,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/childguard"
+	"github.com/system-inc/adamic/internal/hostconfiguration"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -44,12 +45,13 @@ type stage0 struct {
 	Stdout  string `json:"stdout,omitempty"`
 }
 type fixture struct {
-	File     string   `json:"file"`
-	Platform string   `json:"platform,omitempty"`
-	TSC      []string `json:"tsc"`
-	Reason   string   `json:"reason"`
-	Node     behavior `json:"node"`
-	Stage0   stage0   `json:"stage0"`
+	Configuration *hostconfiguration.Configuration `json:"configuration,omitempty"`
+	File          string                           `json:"file"`
+	Platform      string                           `json:"platform,omitempty"`
+	TSC           []string                         `json:"tsc"`
+	Reason        string                           `json:"reason"`
+	Node          behavior                         `json:"node"`
+	Stage0        stage0                           `json:"stage0"`
 }
 
 // toolchainPath is the PATH setting toolchain.Env gives every tool.
@@ -382,8 +384,17 @@ func testFixtureDirectory(t *testing.T, directory string, selectedFiles ...strin
 					if bucket == "enums" || bucket == "namespaces" {
 						nodeRunner = transformedRunner
 					}
-					node := execute(t, repository, nil, "node", "--disable-warning=ExperimentalWarning", nodeRunner, path)
-					recordedNodeAgrees := t.Run("node", func(t *testing.T) { equal(t, "recorded Node", node, entry.Node) })
+					node := entry.Node // Backend checks never depend on an available reference binary.
+					nodeChecked := false
+					recordedNodeAgrees := t.Run("node", func(t *testing.T) {
+						if why := hostconfiguration.Skip(index+1, entry.Configuration); why != "" {
+							t.Skipf("fixture row %d: the node step needs node-without-inspector; set ADAMIC_HOST_NODE_WITHOUT_INSPECTOR", index+1)
+						}
+						nodeBinary := hostconfiguration.Require(t, index+1, entry.Configuration)
+						actualNode := execute(t, repository, nil, nodeBinary, "--disable-warning=ExperimentalWarning", nodeRunner, path)
+						equal(t, "recorded Node", actualNode, entry.Node)
+						nodeChecked = true
+					}) && nodeChecked
 					program, err := load.Load([]string{path})
 					actual := stage0{Outcome: "Compiles"}
 					var checkedJavaScript string
@@ -446,14 +457,20 @@ func testFixtureDirectory(t *testing.T, directory string, selectedFiles ...strin
 								if err := os.WriteFile(checkedPath, []byte(checkedJavaScript), 0600); err != nil {
 									t.Fatal(err)
 								}
-								checkedNode := execute(t, repository, nil, "node", "--disable-warning=ExperimentalWarning", nodeRunner, checkedPath)
 								want := behavior{Stdout: entry.Stage0.Stdout, Stderr: entry.Stage0.What, Exit: 70}
-								equal(t, "pinned Node check", checkedNode, want)
-								equal(t, "native versus checked Node", observed, checkedNode)
 								equal(t, "pinned native check", observed, want)
 								if observed == want {
 									actual = stage0{Outcome: "CheckedStop", What: string(stderr), Stdout: string(stdout)}
 								}
+								t.Run("javascript", func(t *testing.T) {
+									if why := hostconfiguration.Skip(index+1, entry.Configuration); why != "" {
+										t.Skipf("fixture row %d: the CheckedStop javascript check needs node-without-inspector; set ADAMIC_HOST_NODE_WITHOUT_INSPECTOR", index+1)
+									}
+									nodeBinary := hostconfiguration.Require(t, index+1, entry.Configuration)
+									checkedNode := execute(t, repository, nil, nodeBinary, "--disable-warning=ExperimentalWarning", nodeRunner, checkedPath)
+									equal(t, "pinned Node check", checkedNode, want)
+									equal(t, "native versus checked Node", observed, checkedNode)
+								})
 							} else {
 								equal(t, "native versus Node", observed, node)
 							}
@@ -543,7 +560,15 @@ func TestFixtureShardManifest(t *testing.T) {
 		if err := json.Unmarshal(data, &entries); err != nil {
 			t.Fatal(err)
 		}
-		for _, entry := range entries {
+		for index, entry := range entries {
+			_, skip, err := hostconfiguration.Resolve(index+1, entry.Configuration, os.Getenv)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if skip != "" {
+				// A manifest must keep every row: log the requirement; never Skip it.
+				t.Log(skip)
+			}
 			name := filepath.Base(filepath.Dir(status)) + "/" + entry.File
 			if seen[name] || !validFixturePath(entry.File) {
 				t.Fatalf("invalid or duplicate fixture %q", name)

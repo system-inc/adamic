@@ -13,6 +13,10 @@ import re
 import shutil
 import subprocess
 import time
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'internal/hostconfiguration'))
+sys.dont_write_bytecode = True
+from configuration import node_for
 
 
 def assignment(name, count):
@@ -24,7 +28,8 @@ def audit(binary, output, count):
     output.mkdir(parents=True, exist_ok=False)
     cases = {}
     for status in sorted(root.glob('*/status.json')):
-        for entry in json.loads(status.read_text()):
+        for index, entry in enumerate(json.loads(status.read_text())):
+            node_for(entry, index + 1)  # Validate/log; keep the row in the disjoint-union census.
             name = status.parent.name + '/' + entry['file']
             if name in cases:
                 raise AssertionError('duplicate fixture ' + name)

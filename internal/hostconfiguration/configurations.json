@@ -1,0 +1,10 @@
+{
+  "node-without-inspector": {
+    "node": "v24.19.0",
+    "configure": "--without-inspector",
+    "ruling": "#cn4yapb",
+    "environment": "ADAMIC_HOST_NODE_WITHOUT_INSPECTOR",
+    "probe": "process.version + ' ' + process.features.inspector",
+    "expect": "v24.19.0 false"
+  }
+}
