@@ -1,0 +1,54 @@
+// An async function's try around replaceAll, and around matchAll: the TypeError takes the flow
+// graph's exception edge to the catch. Without a try, it rejects the promise, and the caller's await
+// throws it.
+async function cleaned(text: string, pattern: RegExp): Promise<string> {
+	await Promise.resolve();
+	try {
+		const result = text.replaceAll(pattern, '');
+		return `ok ${result}`;
+	} catch (error) {
+		if (error instanceof Error) {
+			return `${error.name}|${error.message}`;
+		}
+		return 'not an error';
+	}
+}
+
+async function listed(text: string, pattern: RegExp): Promise<void> {
+	const label = `matchAll on ${text}`;
+	try {
+		const found: string[] = [];
+		for (const match of text.matchAll(pattern)) {
+			found.push(match[0]);
+		}
+		console.log(`${label}: ${found.join('|')}`);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(`${label} threw ${error.name}|${error.message}`);
+		}
+	}
+	await Promise.resolve();
+}
+
+async function bare(text: string, pattern: RegExp): Promise<string> {
+	await Promise.resolve();
+	return text.replaceAll(pattern, '+');
+}
+
+async function run(): Promise<string> {
+	const first = await cleaned('a.b.c', /\./g);
+	const second = await cleaned('a.b.c', /\./);
+	await listed('x1y22', /\d+/g);
+	await listed('x1y22', /\d+/);
+	let text = `${first} ${second}`;
+	try {
+		const third = await bare('aa', /a/);
+		text = `${text} ${third}`;
+	} catch (error) {
+		if (error instanceof Error) {
+			text = `${text} rejected ${error.name}|${error.message}`;
+		}
+	}
+	return text;
+}
+console.log(await run());

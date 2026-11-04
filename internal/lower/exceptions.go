@@ -217,6 +217,9 @@ func (l *lowering) caughtInstanceOfError(node *ast.Node) (ir.Expression, bool) {
 // natively but a throw on Node.
 func (l *lowering) exceptions() error {
 	functions := l.result.Functions
+	// A write to a frozen object throws, and which objects a freeze reaches isn't known, so a program
+	// that freezes any has every object write counted as one that can (ir.Program's FrozenWriteMayThrow).
+	l.result.ObjectsMayFreeze = l.objectCanFreeze()
 	// A class's methods are reached through function values too: a call through an interface the
 	// class implements calls one where it would call the object's own function value (ir.Property's
 	// Method), so a method that can throw makes every such call one that can.
@@ -284,12 +287,16 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			found = found || node.MayThrow()
 		case ir.ObjectLiteral:
 			found = found || l.result.ObjectSpreadMayThrow(node)
+		case ir.ObjectCall:
+			found = found || l.result.FrozenWriteMayThrow(node)
 		case ir.PhantomMember:
 			found = found || !node.Optional
 		case ir.Throw:
 			found = true
-		case ir.RecordCall, ir.RecordCoalesce, ir.SetProperty:
+		case ir.RecordCall, ir.RecordCoalesce:
 			found = found || l.result.RecordWriteMayThrow(node)
+		case ir.SetProperty:
+			found = found || l.result.RecordWriteMayThrow(node) || l.result.FrozenWriteMayThrow(node)
 		case ir.Defined:
 			found = found || node.Throws()
 		case ir.Read, ir.Assign:
@@ -302,7 +309,7 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 		case ir.GeneratorNext:
 			found = found || l.result.GeneratorNextMayThrow(node)
 		case ir.RegExpCall:
-			if node.Replacement != nil && l.result.ClosuresMayThrow {
+			if (node.Replacement != nil && l.result.ClosuresMayThrow) || l.result.GlobalFlagMayThrow(node) {
 				found = true
 			}
 		case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
@@ -351,24 +358,13 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 				visited[node.Comparator] = true
 				failing = l.libraryFailure(l.result.Functions[node.Comparator].Body, visited)
 			}
-		case ir.SetProperty:
-			if l.objectCanFreeze() {
-				failing = "a write to a potentially frozen object"
-			}
 		case ir.NodeBufferCall:
 			if node.Function == "hash_update" || node.Function == "hash_digest" {
 				failing = "Hash finalization, whose catchable .code contract is not supported yet"
 			}
-		case ir.ObjectCall:
-			if node.Method == "assign" && l.objectCanFreeze() {
-				failing = "Object.assign into a potentially frozen object"
-			}
 		case ir.RegExpCall:
 			if node.Replacement != nil {
 				callsClosures = true
-			}
-			if node.Method == "replaceAll" || node.Method == "matchAll" {
-				failing = "RegExp global-flag validation"
 			}
 		case ir.StringCall:
 			if node.Method == "repeat" && !ir.ConstantWithin(node.Arguments[0], 0, math.MaxFloat64) {
