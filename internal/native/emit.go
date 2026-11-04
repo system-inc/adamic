@@ -36,6 +36,7 @@ func cProgram(program *ir.Program, handler, lines int, options ...Options) strin
 	emitter := &emitter{program: program}
 	if len(options) > 0 {
 		emitter.debug = options[0].Debug
+		emitter.ladderEveryStatement = options[0].LadderEveryStatement
 	}
 	if program.HasPromises() {
 		// Suspension ownership is conservative until the shared analyses prove it.
@@ -260,7 +261,7 @@ func cProgram(program *ir.Program, handler, lines int, options ...Options) strin
 	}
 	emitter.classDeclarations(&builder)
 	builder.WriteString(strings.Replace(bodies.String(), "\tadamic_start(argc, argv);\n", "\tadamic_start(argc, argv);\n"+emitter.shapeChecks(), 1))
-	return resolveSourceLines(builder.String(), "main.c")
+	return unmarked(resolveSourceLines(builder.String(), "main.c"))
 }
 
 // mainLines is about the most lines of C main's top-level code is given in one function. clang -O2
@@ -507,6 +508,8 @@ type emitter struct {
 	ladder *ladder
 	// ladders counts the ladders opened, each one's serial.
 	ladders int
+	// ladderEveryStatement is Options.LadderEveryStatement.
+	ladderEveryStatement bool
 
 	// function is the function being emitted, and functionDepth the scope depth its body starts at.
 	asyncSlots    map[int]int
