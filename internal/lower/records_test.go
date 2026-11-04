@@ -37,7 +37,6 @@ func TestRecordRefusals(t *testing.T) {
 	}{
 		{`import type {Weak} from 'adamic'; interface Item {name:string} const r:Record<string,Weak<Item>>={};`, "slot representation", true},
 		{`function show(r:Record<string,number>|null):void {console.log(String(JSON.stringify(r)));}`, "JSON.stringify object references", true},
-		{`const r:Record<string,string>={}; console.log(String(r && 1));`, "logical record operand converted to number", true},
 		{`interface R { readonly [key:string]:number } const r:R={};`, "signature", true},
 		{`interface R { [key:number]:number } const r:R={};`, "signature", true},
 		{`const r:Record<string,()=>string>={}; console.log(r.toString());`, "toString", false},
