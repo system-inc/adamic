@@ -1,0 +1,41 @@
+{
+  "adaptation": "92-tty-host-results",
+  "results": [
+    {
+      "state": "before",
+      "foreign": [
+        {
+          "file": "src/compiler/sys.ts",
+          "function": "sysLog"
+        }
+      ],
+      "accepted": true,
+      "expectedBytes": true,
+      "noOpPreservesBytesAndMtime": true
+    },
+    {
+      "state": "before",
+      "file": "src/compiler/sys.ts",
+      "changedOwnerRefused": true,
+      "noWrite": true
+    },
+    {
+      "state": "after",
+      "foreign": [
+        {
+          "file": "src/compiler/sys.ts",
+          "function": "sysLog"
+        }
+      ],
+      "accepted": true,
+      "expectedBytes": true,
+      "noOpPreservesBytesAndMtime": true
+    },
+    {
+      "state": "after",
+      "file": "src/compiler/sys.ts",
+      "changedOwnerRefused": true,
+      "noWrite": true
+    }
+  ]
+}

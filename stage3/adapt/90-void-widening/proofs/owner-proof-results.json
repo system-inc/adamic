@@ -1,0 +1,95 @@
+{
+  "status": "pass",
+  "diagnostics": {
+    "before": 140,
+    "after": 140,
+    "mutant": 141
+  },
+  "sourceScan": {
+    "before": 116,
+    "after": 5,
+    "plantedMutant": 117,
+    "binderReversion": 6,
+    "fullLatentClaim": false
+  },
+  "erasureFiles": 7,
+  "commentModes": [
+    false,
+    true
+  ],
+  "runtimeMutantsCaught": 7,
+  "artifacts": [
+    {
+      "file": "_tsc.js",
+      "bytes": 6240271,
+      "sha256": "62d51c7578a278811cd72b0fbb099603bf90ed960fb221ce837aa35961df861f",
+      "byteIdentical": true
+    },
+    {
+      "file": "_tsserver.js",
+      "bytes": 27889,
+      "sha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "byteIdentical": true
+    },
+    {
+      "file": "_typingsInstaller.js",
+      "bytes": 10364,
+      "sha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "byteIdentical": true
+    },
+    {
+      "file": "run.js",
+      "bytes": 13183992,
+      "sha256": "6236dc1411a0ce3075542eac5827d7fe0667478bbae6f3dac4acc7f6584e7a49",
+      "byteIdentical": true
+    },
+    {
+      "file": "tsc.js",
+      "bytes": 267,
+      "sha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "byteIdentical": true
+    },
+    {
+      "file": "tsserver.js",
+      "bytes": 272,
+      "sha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "byteIdentical": true
+    },
+    {
+      "file": "tsserverlibrary.d.ts",
+      "bytes": 866,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+      "byteIdentical": true
+    },
+    {
+      "file": "tsserverlibrary.js",
+      "bytes": 1013,
+      "sha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "byteIdentical": true
+    },
+    {
+      "file": "typescript.d.ts",
+      "bytes": 591332,
+      "sha256": "b8faba99305b76f8f6ea0273807b08dc8ef6b9cada46d563e436f1d943e9a754",
+      "byteIdentical": true
+    },
+    {
+      "file": "typescript.js",
+      "bytes": 9148137,
+      "sha256": "386e6835df2af30b7c96c8674c0dd631d42cc97896339730c3c86e39bbbbbdfa",
+      "byteIdentical": true
+    },
+    {
+      "file": "typingsInstaller.js",
+      "bytes": 280,
+      "sha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "byteIdentical": true
+    },
+    {
+      "file": "watchGuard.js",
+      "bytes": 2314,
+      "sha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "byteIdentical": true
+    }
+  ]
+}

@@ -69,9 +69,18 @@ function adapt(tree) {
     const program = compiler(tree, ts);
     const file = program.getSourceFile(path.join(tree, manifest[0].file));
     assert(file && !file.parseDiagnostics.length, 'cannot parse sys.ts');
-    const digest = hash(file.text);
-    assert([manifest[0].beforeSha256, manifest[0].afterSha256].includes(digest), 'target source moved: sys.ts');
-    const done = digest === manifest[0].afterSha256;
+    const owners = nodes(ts, file, n => ts.isFunctionDeclaration(n) && n.name?.text === 'getNodeSystem');
+    assert.equal(owners.length, 1, 'getNodeSystem moved');
+    const owner = owners[0], digest = hash(owner.getText(file));
+    assert([manifest[0].ownerBeforeSha256, manifest[0].ownerAfterSha256].includes(digest), 'target owner moved: getNodeSystem');
+    const done = digest === manifest[0].ownerAfterSha256;
+    const importAnchor = source => {
+        const anchors = source.statements.filter(n => ts.isImportDeclaration(n) && n.moduleSpecifier.text === './hostErrors.js');
+        assert.equal(anchors.length, 1, 'hostErrors import anchor moved');
+        return anchors[0];
+    };
+    const importText = source => [importAnchor(source), ...source.statements.filter(n => ts.isImportDeclaration(n) && n.moduleSpecifier.text.startsWith('node:'))].map(n => n.getText(source)).join('\n');
+    assert.equal(hash(importText(file)), done ? manifest[0].importsAfterSha256 : manifest[0].importsBeforeSha256, 'import block moved');
     const checked = validateBindings(program, file, done);
     const imports = file.statements.filter(ts.isImportDeclaration);
     const edits = [];
@@ -86,13 +95,27 @@ function adapt(tree) {
             edits.push({start, end, text: ''});
         }
         assert(imports.length, 'existing imports moved');
-        const at = imports[imports.length - 1].end;
+        const at = importAnchor(file).end;
         const newline = file.text.includes('\r\n') ? '\r\n' : '\n';
         edits.push({start: at, end: at, text: targets.map(t => `${newline}import * as ${t.local} from "node:${t.module}";`).join('')});
     }
+    const insertion = importAnchor(file).end;
+    const newline = file.text.includes('\r\n') ? '\r\n' : '\n';
+    let insertions = 0;
+    for (const edit of edits) {
+        const inOwner = edit.start >= owner.getStart(file) && edit.start < owner.end && edit.end >= edit.start && edit.end <= owner.end;
+        const atImports = edit.start === insertion && edit.end === insertion && edit.text === targets.map(t => `${newline}import * as ${t.local} from "node:${t.module}";`).join('');
+        assert(inOwner || atImports, 'edit outside getNodeSystem and import insertion');
+        if (atImports) insertions++;
+    }
+    assert.equal(insertions, done ? 0 : 1, 'builtin import insertion count');
     let text = file.text;
     for (const edit of edits.sort((a,b) => b.start-a.start)) text = text.slice(0,edit.start)+edit.text+text.slice(edit.end);
-    assert.equal(hash(text), manifest[0].afterSha256, 'unreviewed builtin import change');
+    const changed = ts.createSourceFile(file.fileName, text, ts.ScriptTarget.Latest, true);
+    const changedOwners = nodes(ts, changed, n => ts.isFunctionDeclaration(n) && n.name?.text === 'getNodeSystem');
+    assert.equal(changedOwners.length, 1);
+    assert.equal(hash(changedOwners[0].getText(changed)), manifest[0].ownerAfterSha256, 'unreviewed builtin owner change');
+    assert.equal(hash(importText(changed)), manifest[0].importsAfterSha256, 'unreviewed import change');
     assert.equal(ts.createSourceFile(file.fileName,text,ts.ScriptTarget.Latest,true).parseDiagnostics.length,0);
     const planned = plannedProgram(program, file, text);
     validateBindings(planned, planned.getSourceFile(file.fileName), true);

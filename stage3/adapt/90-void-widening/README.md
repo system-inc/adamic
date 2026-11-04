@@ -8,8 +8,8 @@ See [the census report](../../census/void-widening/README.md) for the limits and
 [the per-site table](../../census/void-widening/void-widening-2026-10-20.json).
 
 Run `node adapt.cjs <tree>`. Stock TypeScript 6.0.3 resolves every target signature.
-Exact file hashes, declaration positions, lines and return types reject moved
-targets. All guards and full-file transpile comparisons run before any write.
+Owner function hashes, owner-relative declaration positions, lines and return
+types reject changed targets. All guards and full-file transpile comparisons run before any write.
 A second run writes zero files. targets.json records every original declaration
 and exact replacement. Explicit void becomes undefined; inferred void gains an
 undefined return annotation. Existing local parser callback assertions are
@@ -80,3 +80,38 @@ The implementation was exercised at its scratch path before being copied into
 this directory. The copied implementation is byte-identical. Compressed logs and
 structured proof results are retained under proofs/. No complete Adamic Go gate
 or native tsc execution is claimed for these external-source type annotations.
+
+The pins are owner-scoped so an adaptation can edit an unrelated function in the
+same file without invalidating this contract. `proofs/owner-contract.cjs` tests
+foreign edits and changed owners in every formerly pinned file, before and after
+application, including zero-write reruns with unchanged bytes and timestamps.
+Run it with `NODE_PATH=stage3/api/node_modules node proofs/owner-contract.cjs
+BEFORE AFTER SCRATCH`, using this adaptation's official apply snapshots.
+
+The earlier bounded evidence under [proofs/owner-scoped](proofs/owner-scoped/)
+was recorded on main `e4c3a1632aa33563574178f359dec4e44c78374f`; its oracle
+evidence is retained unchanged. The current change is based on
+`9295787a403578ffd8762fb0e29cee61035285f6` from
+`typescript/adapt32-directory-exists`. Adaptation 91 is inherited unchanged
+from that branch. Fresh rebase validation is recorded under
+[proofs/owner-scoped/rebased](proofs/owner-scoped/rebased/), using that branch's
+own adapted product as the control, including its utilities.ts declaration edit.
+
+`proofs/owner-proof.py MAIN_PRODUCT NEW_SCRATCH VOID_SCANNER` replays the
+checker, source scan, mutants and two fresh builds from the official before
+snapshot. Build VOID_SCANNER with 91's existing overlay commands.
+[owner-proof-results.json](proofs/owner-proof-results.json) records 140/140/141
+diagnostics, 116/5 source-scan findings, both scan mutants, seven erasure
+mutants and 12 byte-identical built artifacts. This remains a void-only source
+scan, with no claim about a complete full latent census.
+
+The inventory on this base has nine whole-file adaptation/file pairs: seven in
+90, one in 92 and one in 93. This commit changes only those three directories;
+91's owner-scoped implementation belongs to the base branch. No whole-file
+adapter hash assertions remain after this change.
+
+The rebased run passes the contract fixtures before and after application,
+including foreign edits that shift lines, changed-owner refusals and zero-write
+reruns. All 81,504 product files (746 under src) match the pending branch's own
+adapted tree, excluding Git metadata. Shard generation and the serial lane Go
+checks pass. The oracle shards are not repeated because the product bytes match.

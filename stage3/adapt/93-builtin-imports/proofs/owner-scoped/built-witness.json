@@ -1,0 +1,134 @@
+{
+  "test": "TestBuiltBuiltinImports",
+  "before": {
+    "node": "v24.19.0",
+    "version": "6.0.3",
+    "loads": [
+      {
+        "name": "fs",
+        "parent": "/workspace/scratch/owner-fixtures/93-builtin-imports/before/built/local/typescript.js",
+        "stack": [
+          "    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)",
+          "    at Module.require (node:internal/modules/cjs/loader:1617:12)",
+          "    at require (node:internal/modules/helpers:153:16)",
+          "    at getNodeSystem (/workspace/scratch/owner-fixtures/93-builtin-imports/before/built/local/typescript.js:8285:17)",
+          "    at /workspace/scratch/owner-fixtures/93-builtin-imports/before/built/local/typescript.js:8685:12",
+          "    at /workspace/scratch/owner-fixtures/93-builtin-imports/before/built/local/typescript.js:8691:3"
+        ]
+      },
+      {
+        "name": "path",
+        "parent": "/workspace/scratch/owner-fixtures/93-builtin-imports/before/built/local/typescript.js",
+        "stack": [
+          "    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)",
+          "    at Module.require (node:internal/modules/cjs/loader:1617:12)",
+          "    at require (node:internal/modules/helpers:153:16)",
+          "    at getNodeSystem (/workspace/scratch/owner-fixtures/93-builtin-imports/before/built/local/typescript.js:8286:19)",
+          "    at /workspace/scratch/owner-fixtures/93-builtin-imports/before/built/local/typescript.js:8685:12",
+          "    at /workspace/scratch/owner-fixtures/93-builtin-imports/before/built/local/typescript.js:8691:3"
+        ]
+      },
+      {
+        "name": "os",
+        "parent": "/workspace/scratch/owner-fixtures/93-builtin-imports/before/built/local/typescript.js",
+        "stack": [
+          "    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)",
+          "    at Module.require (node:internal/modules/cjs/loader:1617:12)",
+          "    at require (node:internal/modules/helpers:153:16)",
+          "    at getNodeSystem (/workspace/scratch/owner-fixtures/93-builtin-imports/before/built/local/typescript.js:8287:17)",
+          "    at /workspace/scratch/owner-fixtures/93-builtin-imports/before/built/local/typescript.js:8685:12",
+          "    at /workspace/scratch/owner-fixtures/93-builtin-imports/before/built/local/typescript.js:8691:3"
+        ]
+      }
+    ]
+  },
+  "after": {
+    "node": "v24.19.0",
+    "version": "6.0.3",
+    "loads": [
+      {
+        "name": "fs",
+        "parent": "/workspace/scratch/owner-fixtures/93-builtin-imports/after/built/local/typescript.js",
+        "stack": [
+          "    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)",
+          "    at Module.require (node:internal/modules/cjs/loader:1617:12)",
+          "    at require (node:internal/modules/helpers:153:16)",
+          "    at /workspace/scratch/owner-fixtures/93-builtin-imports/after/built/local/typescript.js:7329:19",
+          "    at Object.<anonymous> (/workspace/scratch/owner-fixtures/93-builtin-imports/after/built/local/typescript.js:201125:3)",
+          "    at Module._compile (node:internal/modules/cjs/loader:1872:14)"
+        ]
+      },
+      {
+        "name": "path",
+        "parent": "/workspace/scratch/owner-fixtures/93-builtin-imports/after/built/local/typescript.js",
+        "stack": [
+          "    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)",
+          "    at Module.require (node:internal/modules/cjs/loader:1617:12)",
+          "    at require (node:internal/modules/helpers:153:16)",
+          "    at /workspace/scratch/owner-fixtures/93-builtin-imports/after/built/local/typescript.js:7330:21",
+          "    at Object.<anonymous> (/workspace/scratch/owner-fixtures/93-builtin-imports/after/built/local/typescript.js:201125:3)",
+          "    at Module._compile (node:internal/modules/cjs/loader:1872:14)"
+        ]
+      },
+      {
+        "name": "os",
+        "parent": "/workspace/scratch/owner-fixtures/93-builtin-imports/after/built/local/typescript.js",
+        "stack": [
+          "    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)",
+          "    at Module.require (node:internal/modules/cjs/loader:1617:12)",
+          "    at require (node:internal/modules/helpers:153:16)",
+          "    at /workspace/scratch/owner-fixtures/93-builtin-imports/after/built/local/typescript.js:7331:19",
+          "    at Object.<anonymous> (/workspace/scratch/owner-fixtures/93-builtin-imports/after/built/local/typescript.js:201125:3)",
+          "    at Module._compile (node:internal/modules/cjs/loader:1872:14)"
+        ]
+      }
+    ]
+  },
+  "cli": [
+    {
+      "label": "control",
+      "command": [
+        "/workspace/scratch/owner-fixtures/93-builtin-imports/control/built/local/tsc.js",
+        "--project",
+        "/workspace/scratch/owner-93-project/tsconfig.json",
+        "--outDir",
+        "/workspace/scratch/owner-93-project/control",
+        "--pretty",
+        "false"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "after",
+      "command": [
+        "/workspace/scratch/owner-fixtures/93-builtin-imports/after/built/local/tsc.js",
+        "--project",
+        "/workspace/scratch/owner-93-project/tsconfig.json",
+        "--outDir",
+        "/workspace/scratch/owner-93-project/after",
+        "--pretty",
+        "false"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "output": [
+    {
+      "file": "main.js",
+      "bytes": 198,
+      "sha256": "dec3def62e0b28599368782a5ca138d37f62cbc3477c1756220d0abe9c4a00e3",
+      "byteIdentical": true
+    },
+    {
+      "file": "main.d.ts",
+      "bytes": 90,
+      "sha256": "b1c3e2bab4489c581ac3ee6e4a33b23a32843e81ab0f6d64b604954572f93758",
+      "byteIdentical": true
+    }
+  ],
+  "loadedDuringModuleEvaluation": true
+}

@@ -1,0 +1,82 @@
+{
+  "baseline": [
+    {
+      "strict": false,
+      "published": 0,
+      "corrected": 2,
+      "added": [
+        {
+          "file": "src/compiler/sys.ts",
+          "line": 1531,
+          "column": 13,
+          "code": 2322,
+          "message": "Type '() => number | undefined' is not assignable to type '() => number'.\n  Type 'number | undefined' is not assignable to type 'number'.\n    Type 'undefined' is not assignable to type 'number'."
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "line": 1534,
+          "column": 13,
+          "code": 2322,
+          "message": "Type '() => boolean | undefined' is not assignable to type '() => boolean'.\n  Type 'boolean | undefined' is not assignable to type 'boolean'.\n    Type 'undefined' is not assignable to type 'boolean'."
+        }
+      ]
+    },
+    {
+      "strict": true,
+      "published": 140,
+      "corrected": 142,
+      "added": [
+        {
+          "file": "src/compiler/sys.ts",
+          "line": 1531,
+          "column": 13,
+          "code": 2322,
+          "message": "Type '() => number | undefined' is not assignable to type '() => number'.\n  Type 'number | undefined' is not assignable to type 'number'.\n    Type 'undefined' is not assignable to type 'number'."
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "line": 1534,
+          "column": 13,
+          "code": 2322,
+          "message": "Type '() => boolean | undefined' is not assignable to type '() => boolean'.\n  Type 'boolean | undefined' is not assignable to type 'boolean'.\n    Type 'undefined' is not assignable to type 'boolean'."
+        }
+      ]
+    }
+  ],
+  "adapted": [
+    {
+      "strict": false,
+      "published": 0,
+      "corrected": 0,
+      "types": {
+        "getWidthOfTerminal": "number | undefined",
+        "writeOutputIsTTY": "boolean | undefined"
+      }
+    },
+    {
+      "strict": true,
+      "published": 140,
+      "corrected": 140,
+      "types": {
+        "getWidthOfTerminal": "number | undefined",
+        "writeOutputIsTTY": "boolean | undefined"
+      }
+    }
+  ],
+  "scope": {
+    "files": 746,
+    "changed": [
+      "src/compiler/sys.ts"
+    ],
+    "systemInterfaceUnchanged": true,
+    "javascriptChanging": true
+  },
+  "consumers": {
+    "cases": 63,
+    "widthReaders": [
+      534,
+      265
+    ],
+    "prettyCaller": 166
+  }
+}

@@ -1,7 +1,11 @@
 [
   {
     "file": "src/compiler/sys.ts",
-    "beforeSha256": "5c45814e8fb6155701df1ef9be2755096ccac593ac6d53b13a4d26d90c7284d8",
-    "afterSha256": "be2c80c35536b9d0a05a66df61b5f229155325353caf0718da64f459754ea121"
+    "owner": "getNodeSystem",
+    "ownerBeforeSha256": "7972e490bba24e7c05fa84c6129730a8bfe54d7b8e54bbb3e1830b7810c43205",
+    "ownerAfterSha256": "da17b1a63d7fb8dd98aac5c1431129553cd0f5791b299b5e56e92ca554bb4471",
+    "importsBeforeSha256": "c7be03b0af04cfe53c1e1d1542744b4cae2707ecabc294701ec64c804a6e4178",
+    "importsAfterSha256": "459cad8f65d434eb3e27c5bb196450c7e1a6c0f9a1e8df3a725a69e705ffbf49",
+    "importsScope": "hostErrors insertion anchor plus node: import statements, getText joined by LF"
   }
 ]

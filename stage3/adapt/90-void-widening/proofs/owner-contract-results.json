@@ -1,0 +1,161 @@
+{
+  "adaptation": "90-void-widening",
+  "results": [
+    {
+      "state": "before",
+      "foreign": [
+        {
+          "file": "src/compiler/binder.ts",
+          "function": "bindEachChild"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "function": "getTypeId"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "function": "emitThisType"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "function": "countNode"
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "function": "getProjectReferences"
+        },
+        {
+          "file": "src/compiler/symbolWalker.ts",
+          "function": "visitIndexType"
+        },
+        {
+          "file": "src/compiler/transformers/es2017.ts",
+          "function": "inTopLevelContext"
+        }
+      ],
+      "accepted": true,
+      "expectedBytes": true,
+      "noOpPreservesBytesAndMtime": true
+    },
+    {
+      "state": "before",
+      "file": "src/compiler/binder.ts",
+      "changedOwnerRefused": true,
+      "noWrite": true
+    },
+    {
+      "state": "before",
+      "file": "src/compiler/checker.ts",
+      "changedOwnerRefused": true,
+      "noWrite": true
+    },
+    {
+      "state": "before",
+      "file": "src/compiler/emitter.ts",
+      "changedOwnerRefused": true,
+      "noWrite": true
+    },
+    {
+      "state": "before",
+      "file": "src/compiler/parser.ts",
+      "changedOwnerRefused": true,
+      "noWrite": true
+    },
+    {
+      "state": "before",
+      "file": "src/compiler/program.ts",
+      "changedOwnerRefused": true,
+      "noWrite": true
+    },
+    {
+      "state": "before",
+      "file": "src/compiler/symbolWalker.ts",
+      "changedOwnerRefused": true,
+      "noWrite": true
+    },
+    {
+      "state": "before",
+      "file": "src/compiler/transformers/es2017.ts",
+      "changedOwnerRefused": true,
+      "noWrite": true
+    },
+    {
+      "state": "after",
+      "foreign": [
+        {
+          "file": "src/compiler/binder.ts",
+          "function": "bindEachChild"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "function": "getTypeId"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "function": "emitThisType"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "function": "countNode"
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "function": "getProjectReferences"
+        },
+        {
+          "file": "src/compiler/symbolWalker.ts",
+          "function": "visitIndexType"
+        },
+        {
+          "file": "src/compiler/transformers/es2017.ts",
+          "function": "inTopLevelContext"
+        }
+      ],
+      "accepted": true,
+      "expectedBytes": true,
+      "noOpPreservesBytesAndMtime": true
+    },
+    {
+      "state": "after",
+      "file": "src/compiler/binder.ts",
+      "changedOwnerRefused": true,
+      "noWrite": true
+    },
+    {
+      "state": "after",
+      "file": "src/compiler/checker.ts",
+      "changedOwnerRefused": true,
+      "noWrite": true
+    },
+    {
+      "state": "after",
+      "file": "src/compiler/emitter.ts",
+      "changedOwnerRefused": true,
+      "noWrite": true
+    },
+    {
+      "state": "after",
+      "file": "src/compiler/parser.ts",
+      "changedOwnerRefused": true,
+      "noWrite": true
+    },
+    {
+      "state": "after",
+      "file": "src/compiler/program.ts",
+      "changedOwnerRefused": true,
+      "noWrite": true
+    },
+    {
+      "state": "after",
+      "file": "src/compiler/symbolWalker.ts",
+      "changedOwnerRefused": true,
+      "noWrite": true
+    },
+    {
+      "state": "after",
+      "file": "src/compiler/transformers/es2017.ts",
+      "changedOwnerRefused": true,
+      "noWrite": true
+    }
+  ]
+}

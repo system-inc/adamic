@@ -26,14 +26,19 @@ needle=b'import { errorCode } from "./hostErrors.js";';assert after.count(needle
 imports=b''.join(nl+f'import * as {name} from "node:{module}";'.encode() for module,name in [('fs','_fs'),('path','_path'),('os','_os')])
 after=after.replace(needle,needle+imports)
 h=lambda b:hashlib.sha256(b).hexdigest()
-(P/'targets.json').write_text(json.dumps([dict(file='src/compiler/sys.ts',beforeSha256=h(before),afterSha256=h(after))],indent=2)+'\n')
-run('after-clone',['git','clone','--shared',D/'upstream',D/'after'])
-run('after-apply',['python3',R/'stage3/apply.py','--adapt-checkout',D/'after'],limit=1800)
-assert (D/'after/src/compiler/sys.ts').read_bytes()==after
-shutil.copyfile(D/'after/patch-set.md',R/'stage3/patch-set.md')
-shutil.copyfile(D/'after/patch-set.md',P/'patch-set.md')
-shutil.copyfile(D/'control/patch-set.md',P/'patch-set-control.md')
-shutil.copyfile(D/'logs/control-apply.log',P/'logs/control-apply.log')
+# Scoped pins are reviewed inputs, never regenerate a whole-file guard here.
+assert json.loads((P/'targets.json').read_text())[0]['owner']=='getNodeSystem'
+# A guard-only follow-up can use exact prefix snapshots from the official full apply.
+if os.environ.get('BUILTIN_PREFIX_SNAPSHOTS')!='1':
+ run('after-clone',['git','clone','--shared',D/'upstream',D/'after'])
+ run('after-apply',['python3',R/'stage3/apply.py','--adapt-checkout',D/'after'],limit=1800)
+ assert (D/'after/src/compiler/sys.ts').read_bytes()==after
+ # Keep the shared generated report unchanged.
+ shutil.copyfile(D/'after/patch-set.md',P/'patch-set.md')
+ shutil.copyfile(D/'control/patch-set.md',P/'patch-set-control.md')
+ shutil.copyfile(D/'logs/control-apply.log',P/'logs/control-apply.log')
+else:
+ assert (D/'after/src/compiler/sys.ts').read_bytes()==after
 run('checks',['node',P/'check.cjs',D/'control',D/'after',P/'checks.json'],limit=300)
 run('bindings',['node',P/'bindings.cjs',D/'control',D/'after',P/'bindings.json'],limit=300)
 run('idempotence',['node',P.parent/'adapt.cjs',D/'after'],limit=180)
@@ -44,9 +49,10 @@ assert saved==after
 run('idempotence-no-write',['node',P.parent/'adapt.cjs',D/'after'],limit=180)
 assert file.stat().st_mtime_ns==stamp
 try:
- file.write_bytes(saved+b'\n');stamp=file.stat().st_mtime_ns
+ mutant=saved.replace(b'function getNodeSystem(): System {',b'function getNodeSystem(): System {/* changed owner */');assert mutant!=saved
+ file.write_bytes(mutant);stamp=file.stat().st_mtime_ns
  run('moved-target-mutant',['node',P.parent/'adapt.cjs',D/'after'],expected=1,limit=180)
- assert file.read_bytes()==saved+b'\n' and file.stat().st_mtime_ns==stamp
+ assert file.read_bytes()==mutant and file.stat().st_mtime_ns==stamp
 finally:file.write_bytes(saved)
 # A real extra runtime edit: outside the sanctioned imports and removed declarations.
 try:

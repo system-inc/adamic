@@ -1,0 +1,128 @@
+[
+  {
+    "name": "control-install",
+    "command": [
+      "npm",
+      "ci",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/workspace/scratch/owner-fixtures/92-tty-host-results/control",
+    "exit": 0,
+    "seconds": 4.631,
+    "limit": 600
+  },
+  {
+    "name": "after-install",
+    "command": [
+      "npm",
+      "ci",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/workspace/scratch/owner-fixtures/92-tty-host-results/after",
+    "exit": 0,
+    "seconds": 3.918,
+    "limit": 600
+  },
+  {
+    "name": "checks",
+    "command": [
+      "node",
+      "/workspace/adamic-owner-scoped/stage3/adapt/92-tty-host-results/proofs/check.cjs",
+      "/workspace/scratch/owner-fixtures/92-tty-host-results/control",
+      "/workspace/scratch/owner-fixtures/92-tty-host-results/after",
+      "/workspace/adamic-owner-scoped/stage3/adapt/92-tty-host-results/proofs/checks.json"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 0,
+    "seconds": 99.383,
+    "limit": 300
+  },
+  {
+    "name": "undone-checker",
+    "command": [
+      "node",
+      "/workspace/adamic-owner-scoped/stage3/adapt/92-tty-host-results/proofs/check.cjs",
+      "--require-repaired",
+      "/workspace/scratch/owner-fixtures/92-tty-host-results/control"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 1,
+    "seconds": 30.796,
+    "limit": 180
+  },
+  {
+    "name": "restored-checker",
+    "command": [
+      "node",
+      "/workspace/adamic-owner-scoped/stage3/adapt/92-tty-host-results/proofs/check.cjs",
+      "--require-repaired",
+      "/workspace/scratch/owner-fixtures/92-tty-host-results/after"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 0,
+    "seconds": 53.999,
+    "limit": 180
+  },
+  {
+    "name": "idempotence",
+    "command": [
+      "node",
+      "/workspace/adamic-owner-scoped/stage3/adapt/92-tty-host-results/adapt.cjs",
+      "/workspace/scratch/owner-fixtures/92-tty-host-results/after"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 0,
+    "seconds": 2.65,
+    "limit": 180
+  },
+  {
+    "name": "moved-target-mutant",
+    "command": [
+      "node",
+      "/workspace/adamic-owner-scoped/stage3/adapt/92-tty-host-results/adapt.cjs",
+      "/workspace/scratch/owner-fixtures/92-tty-host-results/after"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 1,
+    "seconds": 2.555,
+    "limit": 180
+  },
+  {
+    "name": "wrong-fallback-mutant",
+    "command": [
+      "node",
+      "-e",
+      "require('/workspace/adamic-owner-scoped/stage3/adapt/92-tty-host-results/proofs/check.cjs').TestTTYConsumerEquivalence('/workspace/scratch/owner-fixtures/92-tty-host-results/control','/workspace/scratch/owner-fixtures/92-tty-host-results/after')"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 1,
+    "seconds": 0.475,
+    "limit": 60
+  },
+  {
+    "name": "control-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/workspace/scratch/owner-fixtures/92-tty-host-results/control",
+    "exit": 0,
+    "seconds": 5.094,
+    "limit": 1200
+  },
+  {
+    "name": "after-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/workspace/scratch/owner-fixtures/92-tty-host-results/after",
+    "exit": 0,
+    "seconds": 8.119,
+    "limit": 1200
+  }
+]

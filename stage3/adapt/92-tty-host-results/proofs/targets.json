@@ -1,7 +1,19 @@
 [
   {
     "file": "src/compiler/sys.ts",
-    "beforeSha256": "c97c103378b8f11b55ac4bdcfeca89a88fb2de1b860a28d229c783cd50360dd6",
-    "afterSha256": "5c45814e8fb6155701df1ef9be2755096ccac593ac6d53b13a4d26d90c7284d8"
+    "owners": [
+      {
+        "name": "getWidthOfTerminal",
+        "scope": "getNodeSystem",
+        "beforeSha256": "6340f96401eae07bf3cd21a0ccdf8cb1dde0a3b9800bc2984a7639308bc7e2b4",
+        "afterSha256": "3053bf92ea7c9b89e6e20c381e125fe86e6cb8ceea06d76285516e5c9c0d7ced"
+      },
+      {
+        "name": "writeOutputIsTTY",
+        "scope": "getNodeSystem",
+        "beforeSha256": "83510066845b01d5059fff377643a31f91f22a92967cdb54786db329d6c11523",
+        "afterSha256": "2f533d7ad041776de8261edb954e64ec0500e960e29ff1d231e2bf2f09b82dc3"
+      }
+    ]
   }
 ]
