@@ -28,7 +28,7 @@ static const adamic_shape record_reference_shape = {1, record_names, record_refe
 static const char *const iteration_names[] = {"0", "1", "key"};
 static const bool iteration_references[] = {true, true, false};
 static const adamic_field_kind iteration_kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_number};
-static const adamic_shape iteration_shape = {3, iteration_names, iteration_references, NULL, iteration_kinds};
+static const adamic_shape iteration_shape = {3, iteration_names, iteration_references, &adamic_host_methods, iteration_kinds};
 
 static adamic_map *table(const adamic_record *record) {
 	return record->slots[0].reference;

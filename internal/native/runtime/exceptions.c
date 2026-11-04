@@ -13,6 +13,9 @@ _Thread_local adamic_object *adamic_thrown;
 // Every Error's shape names these, the host errors' too, which is how a run-time key read knows an
 // Error (adamic.h).
 const adamic_methods adamic_error_methods = {0, NULL, NULL};
+// A host object's shape names these (adamic.h): empty, so a method lookup or an in test that walks
+// a shape's methods finds nothing in them.
+const adamic_methods adamic_host_methods = {0, NULL, NULL};
 
 static const char *const error_names[] = {"name", "message"};
 static const bool error_references[] = {true, true};

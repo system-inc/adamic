@@ -12,9 +12,9 @@ import (
 )
 
 // objectPrototypeHarness reads the key its argument names off an object by a run-time key. Given
-// "program", the object's shape is registered as the emitter registers a literal's, so the read must
-// give the same immortal closure twice, whose code it then calls directly. Given "host", the shape
-// isn't, as no runtime-made object's is, and the read must stop.
+// "program", the object's shape is a literal's, with no methods, so the read must give the same
+// immortal closure twice, whose code it then calls directly. Given "host", the shape's methods are
+// adamic_host_methods, as a Stats' are, and the read must stop.
 const objectPrototypeHarness = `#include "adamic.h"
 #include <assert.h>
 #include <string.h>
@@ -22,14 +22,12 @@ static const char *const names[] = {"present"};
 static const bool references[] = {true};
 static const adamic_field_kind kinds[] = {adamic_field_reference};
 static const adamic_shape shape = {1, names, references, NULL, kinds};
-static const int types[] = {3};
-static adamic_shape_types metadata = {&shape, types, NULL, false};
+static const adamic_shape host_shape = {1, names, references, &adamic_host_methods, kinds};
 int main(int count, char **arguments) {
  assert(count == 3);
  adamic_stack_thread_start();
- if (strcmp(arguments[2], "program") == 0) adamic_register_shape_types(&metadata);
  static adamic_string here = ADAMIC_STRING("here");
- adamic_object *object = adamic_object_new(&shape);
+ adamic_object *object = adamic_object_new(strcmp(arguments[2], "program") == 0 ? &shape : &host_shape);
  object->slots[0].reference = &here;
  adamic_string *key = adamic_decode_utf8((const unsigned char *)arguments[1], strlen(arguments[1]));
  adamic_heap *first = adamic_dynamic_property_keyed(&object->heap, key, NULL, 0);
@@ -45,8 +43,9 @@ int main(int count, char **arguments) {
 // guards: no program can call one, since lowering refuses every call through an unknown narrowed to
 // a function ("calling through the unchecked Function type", function_rulings.go). If that refusal
 // ever loosens, the call must stop loudly, naming what wasn't called, never run as something else.
-// Mutant: the code function returning undefined, so the harness exits 0. A runtime-made object, a
-// Stats or a Date, may have another prototype than Object's, so on one the read stops instead.
+// Mutant: the code function returning undefined, so the harness exits 0. An object whose shape the
+// runtime marks host, a Stats or a Date, has another prototype than Object's, so on one the read
+// stops instead.
 func TestObjectPrototypeClosuresStopWhenCalled(t *testing.T) {
 	t.Parallel()
 	binary := filepath.Join(t.TempDir(), "object-prototype")
