@@ -1,0 +1,9 @@
+// A host object stops for every key (#ey7aysy): stdout's handle is a Pipe on Node, whose setBlocking
+// is Pipe.prototype's method, where native's shape holds it as its own. Node prints function.
+import process from 'node:process';
+import { propertyOf } from './hostErrors.ts';
+
+const handle = (process.stdout as { readonly _handle?: { setBlocking(blocking: boolean): void } | undefined })._handle;
+console.log(`handle ${handle !== undefined}`);
+const value = propertyOf(handle, 'setBlocking');
+console.log(typeof value);

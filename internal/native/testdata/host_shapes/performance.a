@@ -1,0 +1,14 @@
+// performance is node_process.c's adamic_node_performance shape, marked host. Lowering doesn't yet
+// view an object with a nullable field as unknown, so no program reads it by a run-time key.
+// host_shapes_test.go requires this program refused in exactly those words; when they lift, the shape
+// needs a stop fixture.
+import { performance } from 'node:perf_hooks';
+
+function propertyOf(value: unknown, key: string): unknown {
+	if (value === null || value === undefined) {
+		throw new TypeError(`Cannot read properties of ${value === null ? 'null' : 'undefined'} (reading '${key}')`);
+	}
+	return Reflect.get(Object(value), key, value);
+}
+
+console.log(typeof propertyOf(performance, 'now'));
