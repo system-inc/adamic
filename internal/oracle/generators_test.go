@@ -8,7 +8,8 @@ import (
 )
 
 // Generators' first slice (#qk8rztp S1c): a top-level function* consumed by a for-of over its call,
-// or dropped by a call as a statement. Each fixture in testdata/generators agrees with Node natively,
+// a spread or Array.from of it, or dropped by a call as a statement, whatever iterator type it is
+// declared to return. Each fixture in testdata/generators agrees with Node natively,
 // sanitized and on the JavaScript backend, and one that finishes leaks nothing: every way out of the
 // consuming loop (exhaustion, break, return, a throw from the body or the loop, a labeled jump to an
 // outer loop) and of the body (completion, an early return, a throw) lets go of the generator once
@@ -34,8 +35,8 @@ func TestGeneratorsAgreeWithNode(t *testing.T) {
 			generatorAgrees(t, directory+"/"+entry.Name())
 		})
 	}
-	if programs != 11 {
-		t.Fatalf("%d programs in %s, want 11: a program added or removed needs this count changed with it", programs, directory)
+	if programs != 17 {
+		t.Fatalf("%d programs in %s, want 17: a program added or removed needs this count changed with it", programs, directory)
 	}
 }
 

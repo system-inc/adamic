@@ -1,0 +1,22 @@
+// A generator declared to return a SetIterator or a MapIterator is stepped as the generator it is by
+// every consumer, never read as a collection's iterator (Compiler's risk 2 on #qk8rztp).
+function* evens(limit: number): SetIterator<string> {
+    for(let index = 0; index < limit; index += 2) {
+        yield `even ${String(index)}`;
+    }
+}
+function* pairs(names: string[]): MapIterator<[string, number]> {
+    for(const name of names) {
+        yield [`${name}!`, name.length];
+    }
+}
+for(const value of evens(5)) {
+    console.log(value);
+}
+console.log([...evens(3)].join(','));
+console.log(Array.from(evens(7)).join(','));
+for(const pair of pairs(['ab', 'cde'])) {
+    console.log(`${pair[0]} ${String(pair[1])}`);
+}
+console.log([...pairs(['x'])].map((pair) => pair[0]).join(','));
+console.log(String(Array.from(pairs(['y', 'zz'])).length));
