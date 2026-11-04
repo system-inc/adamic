@@ -1,0 +1,1 @@
+internal/oracle/testdata/constraint_relation_sites/a4_explicit_type_argument.a:5:18: Adamic 0.1 refuses optional property overrideImportMode in Options absent from structural source { readonly other: string; }, which can hide fields; declare overrideImportMode on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
