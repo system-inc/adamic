@@ -172,10 +172,19 @@ func TestGeneratorVoidReturnIsNeverReadBySpreadOrArrayFrom(t *testing.T) {
 		voids + "console.log(String([...g()].length));",
 		voids + "console.log(String(Array.from(g()).length));",
 		plain + "const stored = numbers(3); console.log([...stored].join(','));",
+		// Language's attack: a mapper is a second argument, outside the exemption.
+		plain + "console.log(Array.from(numbers(3), (value) => value).join(','));",
 	} {
 		_, err := lowerSource(t, source)
 		if !errors.As(err, &refused) || !strings.Contains(refused.Error(), "adamic/no-void") {
 			t.Errorf("%s: got %v, want a void rule's refusal", source, err)
 		}
+	}
+	// Language's other attack: a generic generator spread at a void instantiation. It is no lowered
+	// generator, so the exemption never applies to it, and today rule 2500 stops it before the void
+	// rules do. The slice that lowers generics must keep it unadmitted, by judging T at the call.
+	generic := "function f(): void {}\nfunction* each<T>(value: T) { yield value; }\nconsole.log(String([...each(f())].length));"
+	if _, err := lowerSource(t, generic); err == nil {
+		t.Errorf("a generic generator spread at a void instantiation lowered; want it refused or not yet")
 	}
 }
