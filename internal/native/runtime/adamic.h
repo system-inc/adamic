@@ -391,13 +391,6 @@ extern char adamic_literal_mark;
 //
 // methods are, for the objects a class makes, the class's methods by name, and NULL for any other
 // object: a call through an interface the class implements finds one there (adamic_object_callee).
-//
-// host marks a runtime shape whose object's prototype on Node isn't Object's, a Stats, an iterator,
-// a match's groups object or an Error, so a run-time key read stops on it (union.c's host_object,
-// #ey7aysy). Every initializer spells it, as -Wextra requires of each field: the emitter's are false,
-// so an object the program makes, by any path, is plain, as it is on Node, and a shape built at run
-// time is false unless its builder sets it. A runtime shape written false reads as plain, so
-// host_shapes_test.go holds every runtime shape's flag to a table that classifies it against Node.
 typedef struct adamic_methods adamic_methods;
 // One byte per slot: optional scalars and unowned implementation words use number.
 enum adamic_field_kind { adamic_field_number, adamic_field_boolean, adamic_field_reference };
@@ -408,7 +401,6 @@ typedef struct adamic_shape {
 	const bool *references;
 	const adamic_methods *methods;
 	const adamic_field_kind *kinds;
-	bool host;
 } adamic_shape;
 
 static inline void adamic_shape_check(const adamic_shape *shape) {
@@ -547,6 +539,13 @@ struct adamic_methods {
 // subclass a program declares lowers yet, so no shape the emitter writes is an Error.
 extern const adamic_methods adamic_error_methods;
 bool adamic_error_is(const adamic_object *object);
+// adamic_host_methods, another empty table, marks a runtime shape whose object's prototype on Node
+// isn't Object's, a Stats, an iterator, a match's groups object or memoryUsage's, so a run-time key
+// read stops on it (union.c's host_object, #ey7aysy). The emitter
+// never writes it, so every object a program makes is plain, as on Node; an Error keeps its own
+// sentinel. A runtime shape left unmarked reads as plain, so host_shapes_test.go holds every runtime
+// shape to a table that classifies it against Node.
+extern const adamic_methods adamic_host_methods;
 // adamic_error_to_string is String(error) for an Error, Error.prototype.toString over its name and
 // message fields: the two joined by ": " when both are there, whichever one is when the other is
 // empty, and "" when both are. It returns a string the caller owns.

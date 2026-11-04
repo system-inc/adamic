@@ -159,7 +159,7 @@ func WASIExports(program *ir.Program, exports []ABIExport) (string, error) {
 				declarations.WriteString("adamic_field_number")
 			}
 			declarations.WriteString("};\n")
-			fmt.Fprintf(&declarations, " static const adamic_shape shape = {%d,names,refs,NULL,kinds,false};\n adamic_object *v = adamic_object_new(&shape);\n", len(t.Fields))
+			fmt.Fprintf(&declarations, " static const adamic_shape shape = {%d,names,refs,NULL,kinds};\n adamic_object *v = adamic_object_new(&shape);\n", len(t.Fields))
 			for i, f := range t.Fields {
 				fmt.Fprintf(&declarations, " v->slots[%d].%s = %s_read(b);\n", i, member(f.Type.representation()), children[i])
 			}

@@ -33,8 +33,8 @@ static const bool counted[] = {true};
 static const bool scalar[] = {false};
 static const adamic_field_kind counted_kinds[] = {adamic_field_reference};
 static const adamic_field_kind scalar_kinds[] = {adamic_field_number};
-static const adamic_shape counted_shape = {1, names, counted, NULL, counted_kinds, false};
-static const adamic_shape scalar_shape = {1, names, scalar, NULL, scalar_kinds, false};
+static const adamic_shape counted_shape = {1, names, counted, NULL, counted_kinds};
+static const adamic_shape scalar_shape = {1, names, scalar, NULL, scalar_kinds};
 
 static adamic_object *with_string(void) {
  static adamic_string a = ADAMIC_STRING("made ");

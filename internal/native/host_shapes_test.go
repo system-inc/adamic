@@ -21,10 +21,10 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-// adamic_shape's host flag (adamic.h) is spelled in every initializer, as -Wextra requires, but
-// nothing makes it the right one: a runtime shape written false, or built without setting it, reads
-// as a plain object by a run-time key, so Object.prototype's closures stand in for a Stats' members
-// and an iterator's internal slots go out as values. Nothing at run time catches that, so this test
+// A runtime shape is a host's when its methods are adamic_host_methods (adamic.h), and nothing makes
+// that so: a shape whose methods are NULL reads as a plain object by a run-time key, so
+// Object.prototype's closures stand in for a Stats' members and an iterator's internal slots go out
+// as values. Nothing at run time catches that, so this test
 // is the guard (#ey7aysy, Adamic's and Language's conditions): it finds every adamic_shape the runtime
 // defines or builds, and every one a Go generator writes into C, and holds each to one row of
 // hostShapeTable, which says what the shape's object is on Node and what pins that.
@@ -38,25 +38,27 @@ import (
 // does or a declaration it can't read, fails naming its file and line rather than being skipped.
 //
 // A row is one of three verdicts:
-//   - Host: the object's prototype on Node isn't Object's, so the shape must set host. Its pin is a
+//   - Host: the object's prototype on Node isn't Object's, so the shape's methods must be
+//     adamic_host_methods, or, for an Error, adamic_error_methods. Its pin is a
 //     reflect_get stop fixture that stops on it on both backends where Node answers; or, for an
 //     Error, the Error rule (its initializer's methods are adamic_error_methods, and
 //     stop_host_error_prototype.a pins an Object.prototype name stopping on one); or, for a shape
 //     no program holds, why not. That last one is prose, and so host only: if a program ever does
 //     hold one, it stops rather than answering wrong.
-//   - Plain: the object is a plain one on Node, so the shape must write host false. Its pin is a
+//   - Plain: the object is a plain one on Node, so the shape mustn't name the sentinel. Its pin is a
 //     reflect_get answer fixture and the text of the row in it that reads the object by a run-time
 //     key, agreeing with Node on both backends.
 //   - Unreachable: no program can read the object by a run-time key, because lowering refuses what
 //     would make it. Its pin is a program in testdata/host_shapes that lowering must refuse in exactly
-//     the refusal's words, so lifting the refusal fails this test. It sets host, failing closed.
+//     the refusal's words, so lifting the refusal fails this test. It names the host sentinel,
+//     failing closed.
 //
 // A row whose shape no longer exists fails too, so the table can't rot. The JavaScript backend's
 // wrappers for a native host object are held here as well (hostShapeWrappers). Mutants:
-// TestHostShapesClosureMutants, run every time; and, by hand, stat_shape's host written false
+// TestHostShapesClosureMutants, run every time; and, by hand, stat_shape's sentinel dropped
 // (node_fs_file.c), so the C disagrees with its row here and stop_host_stats_method.a answers
-// natively (dropped outright, it no longer compiles), a row removed, so this test names its shape,
-// and tsgo_query.a changed to lower, or to meet another refusal first, so this test says so.
+// natively, a row removed, so this test names its shape, and tsgo_query.a changed to lower, or to
+// meet another refusal first, so this test says so.
 
 type hostShapeVerdict string
 
@@ -86,6 +88,9 @@ type hostShapeRow struct {
 	// refusal is a testdata/host_shapes program and refused the refusal's exact words, for an
 	// unreachable shape.
 	refusal, refused string
+	// replacedBy is the row of the builder that replaces this shape before any object takes it, for
+	// an unreachable shape that needn't name the host sentinel itself.
+	replacedBy string
 }
 
 func (row hostShapeRow) key() string {
@@ -169,9 +174,10 @@ var hostShapeTable = []hostShapeRow{
 	{file: hostShapeRuntime + "regexp.c", name: "next_shape", verdict: hostShapePlain, answer: plainFixture, row: "show('match', "},
 	// The run-time compiler's groups shape is built twice: regex_compile_names' first, which
 	// adamic_regex_compile_new replaces with one holding the compiler's storage before any match
-	// is made. No program reaches either, or a run-time regular expression, while a pattern must be a
-	// constant.
-	{file: hostShapeRuntime + "regexp_compile_bytecode.c", scope: "regex_compile_names", verdict: hostShapeUnreachable, refusal: "regexp_runtime.a", refused: nonconstantRefusal},
+	// is made, so only the second names the sentinel (and regexp_compile_bytecode_test.go links the
+	// first without the rest of the runtime). No program reaches either, or a run-time regular
+	// expression, while a pattern must be a constant.
+	{file: hostShapeRuntime + "regexp_compile_bytecode.c", scope: "regex_compile_names", verdict: hostShapeUnreachable, refusal: "regexp_runtime.a", refused: nonconstantRefusal, replacedBy: hostShapeRuntime + "regexp_compile_runtime.c adamic_regex_compile_new [0]"},
 	{file: hostShapeRuntime + "regexp_compile_ownership.c", name: "regex_owned_shape", verdict: hostShapeUnreachable, refusal: "regexp_runtime.a", refused: nonconstantRefusal},
 	{file: hostShapeRuntime + "regexp_compile_runtime.c", scope: "adamic_regex_compile_new", verdict: hostShapeUnreachable, refusal: "regexp_runtime.a", refused: nonconstantRefusal},
 	{file: hostShapeRuntime + "tsgo.c", scope: "adamic_tsgo_query_in", name: "shape", verdict: hostShapeUnreachable, refusal: "tsgo_query.a", refused: "an unlinked typescript-go library call"},
@@ -328,9 +334,10 @@ func fileShapes(file, source string) ([]foundShape, []string) {
 		case current.text == "names" && (at(index-1) == "." || at(index-1) == ">" && at(index-2) == "-") && at(index+1) == "=" && at(index+2) != "=":
 			builder(index)
 			continue
-		case current.text == "host" && (at(index-1) == "." || at(index-1) == ">" && at(index-2) == "-") && at(index+1) == "=" && at(index+2) != "=":
-			if found := builder(index); found != nil && at(index+2) == "true" {
-				found.host = true
+		case current.text == "methods" && (at(index-1) == "." || at(index-1) == ">" && at(index-2) == "-") && at(index+1) == "=" && at(index+2) != "=" && (at(index+3) == "adamic_host_methods" || at(index+3) == "adamic_error_methods"):
+			if found := builder(index); found != nil {
+				found.host = found.host || at(index+3) == "adamic_host_methods"
+				found.errorShape = found.errorShape || at(index+3) == "adamic_error_methods"
 			}
 			continue
 		case current.text != "adamic_shape":
@@ -506,7 +513,7 @@ func initializerElements(tokens []cToken) [][]cToken {
 	return elements
 }
 
-// shapeInitializer reads a shape's host flag and whether its methods are an Error's, from the
+// shapeInitializer reads whether a shape's methods are the host sentinel or an Error's, from the
 // contents of its braces, positional or designated.
 func shapeInitializer(tokens []cToken) (host, errorShape bool, problem string) {
 	elements := initializerElements(tokens)
@@ -517,38 +524,25 @@ func shapeInitializer(tokens []cToken) (host, errorShape bool, problem string) {
 		}
 		return strings.Join(parts, " ")
 	}
-	var hostValue, methods string
+	methods := ""
 	for position, element := range elements {
 		if len(element) > 0 && element[0].text == "." {
 			if len(element) < 4 || element[2].text != "=" {
 				return false, false, "a designated initializer the scanner can't read"
 			}
-			switch element[1].text {
-			case "host":
-				hostValue = text(element[3:])
-			case "methods":
+			if element[1].text == "methods" {
 				methods = text(element[3:])
 			}
 			continue
 		}
-		switch position {
-		case 3:
+		if position == 3 {
 			methods = text(element)
-		case 5:
-			hostValue = text(element)
 		}
-		if position > 5 {
-			return false, false, "a shape initializer with more than six fields"
+		if position > 4 {
+			return false, false, "a shape initializer with more than five fields"
 		}
 	}
-	switch hostValue {
-	case "", "false":
-	case "true":
-		host = true
-	default:
-		return false, false, fmt.Sprintf("a host flag of %q, which isn't true or false", hostValue)
-	}
-	return host, methods == "& adamic_error_methods", ""
+	return methods == "& adamic_host_methods", methods == "& adamic_error_methods", ""
 }
 
 // generatorShape matches a shape initializer a Go generator writes into C, its fields captured.
@@ -618,21 +612,11 @@ func generatedShapes(root string) ([]foundShape, []string, error) {
 					}
 					for _, match := range matches {
 						fields := strings.Split(match[1], ",")
-						host := false
-						if len(fields) > 6 {
-							unclassified = append(unclassified, where+": a generated shape initializer with more than six fields")
+						if len(fields) != 5 {
+							unclassified = append(unclassified, where+": a generated shape initializer without five fields")
 							continue
 						}
-						if len(fields) == 6 {
-							switch strings.TrimSpace(fields[5]) {
-							case "true":
-								host = true
-							case "false":
-							default:
-								unclassified = append(unclassified, where+": a generated host flag that isn't true or false")
-								continue
-							}
-						}
+						host := strings.TrimSpace(fields[3]) == "&adamic_host_methods"
 						errorShape := len(fields) > 3 && strings.TrimSpace(fields[3]) == "&adamic_error_methods"
 						shapes = append(shapes, foundShape{file: relative, scope: scope, index: count, line: files.Position(literal.Pos()).Line, host: host, errorShape: errorShape})
 						count++
@@ -677,12 +661,17 @@ func hostShapeProblems(t *testing.T, table []hostShapeRow, shapes []foundShape, 
 		}
 		switch row.verdict {
 		case hostShapeHost, hostShapeUnreachable:
-			if !shape.host {
-				problems = append(problems, fmt.Sprintf("%s:%d: %s is %s in hostShapeTable, but its C doesn't set host", shape.file, shape.line, key, row.verdict))
+			// An Error is a host by its own sentinel, which the checks below hold, and a replaced
+			// shape by its replacement's.
+			if replacement, replaced := rows[row.replacedBy]; row.replacedBy != "" && (!replaced || replacement.verdict == hostShapePlain) {
+				problems = append(problems, fmt.Sprintf("%s:%d: %s is replaced by %s, which isn't a host row", shape.file, shape.line, key, row.replacedBy))
+			}
+			if !shape.host && !row.errorShape && row.replacedBy == "" {
+				problems = append(problems, fmt.Sprintf("%s:%d: %s is %s in hostShapeTable, but its methods aren't adamic_host_methods", shape.file, shape.line, key, row.verdict))
 			}
 		case hostShapePlain:
-			if shape.host {
-				problems = append(problems, fmt.Sprintf("%s:%d: %s is plain in hostShapeTable, but its C sets host", shape.file, shape.line, key))
+			if shape.host || shape.errorShape {
+				problems = append(problems, fmt.Sprintf("%s:%d: %s is plain in hostShapeTable, but its methods are a sentinel", shape.file, shape.line, key))
 			}
 		}
 		if shape.errorShape && !row.errorShape {
@@ -845,8 +834,8 @@ func TestHostShapesClosureMutants(t *testing.T) {
 			flipped[index].host = false
 		}
 	}
-	if !mentions(hostShapeProblems(t, hostShapeTable, flipped, unclassified), dropped+" is Host in hostShapeTable, but its C doesn't set host") {
-		t.Errorf("a host flag dropped went unnamed")
+	if !mentions(hostShapeProblems(t, hostShapeTable, flipped, unclassified), dropped+" is Host in hostShapeTable, but its methods aren't adamic_host_methods") {
+		t.Errorf("a host sentinel dropped went unnamed")
 	}
 	_, refused := fileShapes("mutant.c", "#include \"adamic.h\"\nvoid build(adamic_shape *into) { adamic_shape copy = *into; (void)copy; }\n")
 	if len(refused) != 1 || !strings.Contains(refused[0], "mutant.c:2:") {

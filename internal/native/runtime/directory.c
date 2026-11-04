@@ -26,11 +26,11 @@ static const char *const error_names[] = {"kind", "message"};
 static const bool two_references[] = {true, true};
 static const bool status_references[] = {true, true, false, false};
 static const adamic_field_kind ok_listing_kinds[] = {adamic_field_reference, adamic_field_reference};
-static const adamic_shape listing_shape = {2, ok_listing_names, two_references, NULL, ok_listing_kinds, false};
+static const adamic_shape listing_shape = {2, ok_listing_names, two_references, NULL, ok_listing_kinds};
 static const adamic_field_kind ok_status_kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_number, adamic_field_boolean};
-static const adamic_shape status_shape = {4, ok_status_names, status_references, NULL, ok_status_kinds, false};
+static const adamic_shape status_shape = {4, ok_status_names, status_references, NULL, ok_status_kinds};
 static const adamic_field_kind error_kinds[] = {adamic_field_reference, adamic_field_reference};
-static const adamic_shape error_shape = {2, error_names, two_references, NULL, error_kinds, false};
+static const adamic_shape error_shape = {2, error_names, two_references, NULL, error_kinds};
 // readDirectory's and fileStatus's results are plain objects on Node (oracle/adamic.mjs), so no
 // shape here is marked host (adamic.h) and Object.prototype's names answer on each by a run-time key
 // (union.c). Each is registered as a literal's is, with zero scalar tags, no evidence: a status's own
@@ -243,7 +243,7 @@ static adamic_object *real_path(const adamic_string *path, bool node) {
 	static const char prefix[] = "cannot resolve path ";
 	static const char *const names[] = {"kind", "path"};
 	static const adamic_field_kind realpath_kinds[] = {adamic_field_reference, adamic_field_reference};
-	static const adamic_shape shape = {2, names, two_references, NULL, realpath_kinds, true};
+	static const adamic_shape shape = {2, names, two_references, &adamic_host_methods, realpath_kinds};
 	adamic_output_flush();
 	char *name = adamic_path_bytes(path);
 	if (name == NULL) { return failure(prefix, sizeof prefix - 1, path, 0, false); }

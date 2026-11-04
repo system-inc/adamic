@@ -18,7 +18,7 @@ func TestEnvironmentMixedRegionStorage(t *testing.T) {
 static const char *const names[] = {"label"};
 static const bool references[] = {true};
 static const adamic_field_kind kinds[] = {adamic_field_reference};
-static const adamic_shape shape = {1, names, references, NULL, kinds, false};
+static const adamic_shape shape = {1, names, references, NULL, kinds};
 int main(void) {
  adamic_stack_thread_start();
  adamic_region region = ADAMIC_REGION;

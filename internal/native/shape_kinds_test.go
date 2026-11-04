@@ -164,9 +164,8 @@ func producerDescriptors(t *testing.T, source string) []shapeDescriptor {
 	var result []shapeDescriptor
 	for _, input := range inputs {
 		fields := strings.Split(input.fields, ",")
-		// The sixth is the host flag (#ey7aysy), which -Wextra makes every initializer spell.
-		if len(fields) != 6 {
-			t.Fatalf("shape must have six fields: %s", input.fields)
+		if len(fields) != 5 {
+			t.Fatalf("shape must have five fields: %s", input.fields)
 		}
 		count, err := strconv.Atoi(strings.TrimSpace(fields[0]))
 		if err != nil {

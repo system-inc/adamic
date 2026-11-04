@@ -45,7 +45,7 @@ static bool valid_code(adamic_maybe_number code) {
 	static const char *const names[] = {"name", "message", "code"};
 	static const bool references[] = {true, true, true};
 	static const adamic_field_kind kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_reference};
-	static const adamic_shape shape = {3, names, references, &adamic_error_methods, kinds, true};
+	static const adamic_shape shape = {3, names, references, &adamic_error_methods, kinds};
 	adamic_thrown = adamic_object_new(&shape);
 	adamic_thrown->slots[0].reference = adamic_retain(&range_name);
 	adamic_thrown->slots[1].reference = adamic_retain(message);

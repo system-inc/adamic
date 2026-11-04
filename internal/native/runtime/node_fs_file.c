@@ -22,7 +22,7 @@
 static const char *const error_fields[] = {"name", "message", "code"};
 static const bool error_refs[] = {true, true, true};
 static const adamic_field_kind error_kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_reference};
-static const adamic_shape error_shape = {3, error_fields, error_refs, &adamic_error_methods, error_kinds, true};
+static const adamic_shape error_shape = {3, error_fields, error_refs, &adamic_error_methods, error_kinds};
 
 static adamic_string *text(const char *bytes) {
     return adamic_decode_utf8((const unsigned char *)bytes, strlen(bytes));
@@ -417,7 +417,7 @@ bool adamic_fs_file_exists(const adamic_string *path) {
 static const char *const date_fields[] = {"_fsFileTime"};
 static const bool date_refs[] = {false};
 static const adamic_field_kind date_kinds[] = {adamic_field_number};
-static const adamic_shape date_shape = {1, date_fields, date_refs, NULL, date_kinds, true};
+static const adamic_shape date_shape = {1, date_fields, date_refs, &adamic_host_methods, date_kinds};
 
 adamic_object *adamic_fs_file_date_new(double milliseconds) {
     adamic_object *date = adamic_object_new(&date_shape);
@@ -437,7 +437,7 @@ static void realpath_system_error(const adamic_string *path, char *name, int err
     static const char *const names[] = {"name", "message", "code", "syscall", "path", "errno"};
     static const bool references[] = {true, true, true, true, true, false};
     static const adamic_field_kind kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_reference, adamic_field_reference, adamic_field_reference, adamic_field_number};
-    static const adamic_shape shape = {6, names, references, &adamic_error_methods, kinds, true};
+    static const adamic_shape shape = {6, names, references, &adamic_error_methods, kinds};
     adamic_object *original = adamic_thrown;
     adamic_object *result = adamic_object_new(&shape);
     for (size_t i = 0; i < 3; i++) { result->slots[i].reference = adamic_retain(original->slots[i].reference); }
@@ -467,7 +467,7 @@ void adamic_fs_file_realpath_walk_error(const adamic_string *path, int error, co
 static const char *const stat_fields[] = {"size", "mtimeMs", "mtime", "_fsFileMode", "atime"};
 static const bool stat_refs[] = {false, false, true, false, true};
 static const adamic_field_kind stat_kinds[] = {adamic_field_number, adamic_field_number, adamic_field_reference, adamic_field_number, adamic_field_reference};
-static const adamic_shape stat_shape = {5, stat_fields, stat_refs, NULL, stat_kinds, true};
+static const adamic_shape stat_shape = {5, stat_fields, stat_refs, &adamic_host_methods, stat_kinds};
 
 static adamic_object *file_stat_value(const struct stat *information) {
 #ifdef __APPLE__

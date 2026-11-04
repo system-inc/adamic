@@ -12,17 +12,17 @@ import (
 )
 
 // objectPrototypeHarness reads the key its argument names off an object by a run-time key. Given
-// "program", the object's shape is a literal's, its host flag false, so the read must give the same
-// immortal closure twice, whose code it then calls directly. Given "host", the shape is marked host,
-// as the runtime marks a Stats', and the read must stop.
+// "program", the object's shape is a literal's, with no methods, so the read must give the same
+// immortal closure twice, whose code it then calls directly. Given "host", the shape's methods are
+// adamic_host_methods, as a Stats' are, and the read must stop.
 const objectPrototypeHarness = `#include "adamic.h"
 #include <assert.h>
 #include <string.h>
 static const char *const names[] = {"present"};
 static const bool references[] = {true};
 static const adamic_field_kind kinds[] = {adamic_field_reference};
-static const adamic_shape shape = {1, names, references, NULL, kinds, false};
-static const adamic_shape host_shape = {1, names, references, NULL, kinds, true};
+static const adamic_shape shape = {1, names, references, NULL, kinds};
+static const adamic_shape host_shape = {1, names, references, &adamic_host_methods, kinds};
 int main(int count, char **arguments) {
  assert(count == 3);
  adamic_stack_thread_start();

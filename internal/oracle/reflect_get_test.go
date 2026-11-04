@@ -205,9 +205,9 @@ func reflectGetStop(t *testing.T, stdout, stop, key string) run {
 // Their mutants are union.c's guard put back on Object.prototype's names only, so
 // stop_host_stats_method.a's isFile reads undefined natively, and
 // TestReflectGetHostMutantJavaScript's. The rows from stop_host_dirent.a on pin each runtime shape
-// marked host to Node (host_shapes_test.go's table names each one's fixture); a shape's host flag
-// written false, stat_shape's in node_fs_file.c or the groups shape's in internal/regexp/native.go,
-// and its fixture answers natively.
+// marked host to Node (host_shapes_test.go's table names each one's fixture); a shape's host sentinel
+// dropped, stat_shape's in node_fs_file.c or the groups shape's in internal/regexp/native.go, and its
+// fixture answers natively.
 func TestReflectGetStopsAlikeOnBothBackends(t *testing.T) {
 	t.Parallel()
 	for _, probe := range reflectGetStops {
