@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+"""Step 6: per tsc file, the sum of its clean units (bytes, lines, -O0 and -O2 seconds, peak RSS) and how many of its units
+are clean, plus the worst unit by -O2 seconds and by seconds per MB.
+
+usage: rollup.py UNITS_CSV CLEAN_CSV LATENT_JSONL OUT_DIR
+UNITS_CSV is measure_units.py's units.csv; CLEAN_CSV is clean_units.py's output; LATENT_JSONL gives each file's unit counts.
+"""
+import collections, csv, json, os, sys
+
+units_csv, clean_csv, latent, out = sys.argv[1:5]
+rows = list(csv.DictReader(open(units_csv)))
+counts = collections.OrderedDict()
+for line in open(latent):
+    record = json.loads(line)
+    if 'units' not in record:
+        continue
+    name = record['file'].split('/src/compiler/')[-1]
+    status = collections.Counter(u['status'] for u in record['units'])
+    counts[name] = dict(total=len(record['units']), attempted=status['attempted'] + status['panic'], deferred=status['deferred_generic_instantiation'],
+                        split_checker_body=status['split_checker_body'])
+per = collections.defaultdict(lambda: dict(units=0, c_bytes=0, c_lines=0, o0=0.0, o2=0.0, rss_o0=0, rss_o2=0, failed=0))
+for r in rows:
+    f = per[r['file']]
+    f['units'] += 1
+    f['c_bytes'] += int(r['c_bytes']); f['c_lines'] += int(r['c_lines'])
+    if r['o0_exit'] == '0':
+        f['o0'] += float(r['o0_wall_s']); f['rss_o0'] = max(f['rss_o0'], int(r['o0_rss_kb']))
+    else:
+        f['failed'] += 1
+    if r['o2_exit'] == '0':
+        f['o2'] += float(r['o2_wall_s']); f['rss_o2'] = max(f['rss_o2'], int(r['o2_rss_kb']))
+os.makedirs(out, exist_ok=True)
+with open(os.path.join(out, 'per_file.csv'), 'w', newline='') as handle:
+    w = csv.writer(handle)
+    w.writerow(['file', 'units_total', 'units_attempted', 'units_deferred_generic', 'units_split_checker_body', 'units_clean', 'c_bytes', 'c_lines',
+                'o0_seconds_sum', 'o2_seconds_sum', 'peak_rss_kb_o0', 'peak_rss_kb_o2', 'units_failed_clang'])
+    for name in sorted(set(per) | set(counts)):
+        c, f = counts.get(name, {}), per.get(name, dict(units=0, c_bytes=0, c_lines=0, o0=0, o2=0, rss_o0=0, rss_o2=0, failed=0))
+        w.writerow([name, c.get('total', ''), c.get('attempted', ''), c.get('deferred', ''), c.get('split_checker_body', ''), f['units'], f['c_bytes'], f['c_lines'],
+                    round(f['o0'], 3), round(f['o2'], 3), f['rss_o0'], f['rss_o2'], f['failed']])
+ok = [r for r in rows if r['o2_exit'] == '0']
+by_seconds = max(ok, key=lambda r: float(r['o2_wall_s']))
+big = [r for r in ok if int(r['c_bytes']) >= 100_000]
+by_rate = max(big, key=lambda r: float(r['o2_wall_s']) / (int(r['c_bytes']) / 1e6)) if big else None
+summary = dict(units=len(rows), compiled_o2=len(ok), c_bytes=sum(int(r['c_bytes']) for r in rows),
+               o0_seconds=round(sum(float(r['o0_wall_s']) for r in rows if r['o0_exit'] == '0'), 2),
+               o2_seconds=round(sum(float(r['o2_wall_s']) for r in ok), 2),
+               worst_by_o2_seconds={k: by_seconds[k] for k in ('file', 'where', 'name', 'kind', 'c_bytes', 'largest_function', 'largest_function_lines', 'o2_wall_s', 'o2_rss_kb')},
+               worst_by_seconds_per_mb_over_100kb=({k: by_rate[k] for k in ('file', 'where', 'name', 'kind', 'c_bytes', 'largest_function', 'largest_function_lines', 'o2_wall_s', 'o2_rss_kb')}
+                                                  | {'o2_seconds_per_mb': round(float(by_rate['o2_wall_s']) / (int(by_rate['c_bytes']) / 1e6), 2)}) if by_rate else None)
+json.dump(summary, open(os.path.join(out, 'summary.json'), 'w'), indent=1)
+print(json.dumps(summary, indent=1))

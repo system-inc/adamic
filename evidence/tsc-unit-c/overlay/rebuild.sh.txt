@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Rebuild the unit-C instrument from the 9295787a worktree: overlay, gofmt, go build.
+set -euo pipefail
+S=/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad
+export PATH=$S/llvm/x/bin:$PATH
+cd "$S/w9295"
+python3 "$S/instr/make_unit_c_overlay.py" "$PWD" "$S/ov-unitc" "$S/instr" > "$S/logs/unitc-overlay.log" 2>&1
+gofmt -w "$S"/ov-unitc/*.go
+go build -buildvcs=false -overlay="$S/ov-unitc/overlay.json" -o "$S/unitc-census" ./stage3/census/latent/tool > "$S/logs/unitc-build.log" 2>&1
+echo built

@@ -1,0 +1,16 @@
+== array_from (internal/oracle/testdata/array_from.a, 41 lines)
+array_from {'identical': 11, 'field-layout': 1, 'module-init': 35, 'absent-module-init': 0, 'other': 0} differing functions: real bytes 1675 unit bytes 1765 ratio 1.054
+array_from: statement units with an initializer body=17 found as a run of the real initializer=17; missed=[]
+== adversarial_order (internal/oracle/testdata/adversarial_order.a, 90 lines)
+adversarial_order {'identical': 17, 'field-layout': 0, 'module-init': 25, 'absent-module-init': 24, 'other': 0} differing functions: real bytes 0 unit bytes 0 ratio 1.000
+adversarial_order: statement units with an initializer body=24 found as a run of the real initializer=23; missed=[(17, 'KindExpressionStatement', 59)]
+== borrow_loop_calls (internal/oracle/testdata/borrow_loop_calls.a, 357 lines)
+borrow_loop_calls {'identical': 40, 'field-layout': 9, 'module-init': 68, 'absent-module-init': 0, 'other': 24} differing functions: real bytes 74355 unit bytes 71245 ratio 0.958
+borrow_loop_calls: statement units with an initializer body=34 found as a run of the real initializer=29; missed=[(72, 'KindExpressionStatement', 6), (75, 'KindExpressionStatement', 20), (76, 'KindExpressionStatement', 20), (78, 'KindExpressionStatement', 10), (79, 'KindExpressionStatement', 10)]
+== user_iterators (internal/oracle/testdata/user_iterators.a, 483 lines)
+user_iterators {'identical': 475, 'field-layout': 157, 'module-init': 69, 'absent-module-init': 68, 'other': 7} differing functions: real bytes 1313810 unit bytes 1258877 ratio 0.958
+user_iterators: statement units with an initializer body=68 found as a run of the real initializer=22; missed=[(6, 'KindForOfStatement', 349), (7, 'KindForOfStatement', 350), (8, 'KindForOfStatement', 359), (10, 'KindExpressionStatement', 20), (11, 'KindTryStatement', 412), (12, 'KindTryStatement', 405), (13, 'KindTryStatement', 414), (14, 'KindTryStatement', 403), (16, 'KindExpressionStatement', 
+== mutant 1: real.c's size() return changed 2 -> 4 in array_from
+array_from_mutant {'identical': 10, 'field-layout': 1, 'module-init': 35, 'absent-module-init': 0, 'other': 1} differing functions: real bytes 2802 unit bytes 2892 ratio 1.032
+== mutant 2: unit 2's C loses a retain in array_from (statement-init check)
+array_from_mutant2: statement units with an initializer body=17 found as a run of the real initializer=16; missed=[(2, 'KindExpressionStatement', 16)]

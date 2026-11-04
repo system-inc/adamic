@@ -1,0 +1,124 @@
+Units whose status or findings differ between 9295787a (A) and e4c3a163 (B); same unit set: True 10709
+
+compiler/moduleNameResolver.ts:1582:1 tryLoadModuleUsingRootDirs  clean at A: False  clean at B: False
+   A NotYet lowering compiler/moduleNameResolver.ts:1583:10 a dictionary member narrowed to an array without an element-checked view
+   A NotYet lowering compiler/moduleNameResolver.ts:1595:27 a dictionary member narrowed to an array without an element-checked view
+   A NotYet lowering compiler/moduleNameResolver.ts:1634:31 a dictionary member narrowed to an array without an element-checked view
+   B NotYet lowering compiler/moduleNameResolver.ts:1583:10 a dictionary member narrowed to an array without an element-checked view
+   B NotYet lowering compiler/moduleNameResolver.ts:1595:27 a dictionary member narrowed to an array without an element-checked view
+   B NotYet lowering compiler/moduleNameResolver.ts:1634:31 a dictionary member narrowed to an array without an element-checked view
+   B NotYet lowering compiler/moduleNameResolver.ts:1626:13 reading resolvedFileName
+   B Refused lowering compiler/moduleNameResolver.ts:1625:66 a cast the runtime can't check
+   B Refused refusal_scan compiler/moduleNameResolver.ts:1625:66 a cast the runtime can't check
+   B Refused refusal_scan compiler/moduleNameResolver.ts:1644:70 a cast the runtime can't check
+
+compiler/moduleNameResolver.ts:1656:1 tryLoadModuleUsingBaseUrl  clean at A: False  clean at B: False
+   A NotYet lowering compiler/moduleNameResolver.ts:1657:11 destructuring a value
+   A NotYet lowering compiler/moduleNameResolver.ts:1658:10 reading baseUrl
+   A NotYet lowering compiler/moduleNameResolver.ts:1662:122 reading baseUrl
+   A NotYet lowering compiler/moduleNameResolver.ts:1664:50 reading baseUrl
+   A NotYet lowering compiler/moduleNameResolver.ts:1666:101 reading baseUrl
+   A NotYet lowering compiler/moduleNameResolver.ts:1668:31 reading candidate
+   B NotYet lowering compiler/moduleNameResolver.ts:1657:11 destructuring a value
+   B NotYet lowering compiler/moduleNameResolver.ts:1658:10 reading baseUrl
+   B NotYet lowering compiler/moduleNameResolver.ts:1662:122 reading baseUrl
+   B NotYet lowering compiler/moduleNameResolver.ts:1664:50 reading baseUrl
+   B NotYet lowering compiler/moduleNameResolver.ts:1666:101 reading baseUrl
+   B NotYet lowering compiler/moduleNameResolver.ts:1668:31 reading candidate
+   B Refused refusal_scan compiler/moduleNameResolver.ts:1668:44 a cast the runtime can't check
+
+compiler/moduleNameResolver.ts:1986:1 nodeLoadModuleByRelativeName  clean at A: True  clean at B: False
+   B NotYet lowering compiler/moduleNameResolver.ts:2009:14 reading candidateExists
+   B Refused lowering compiler/moduleNameResolver.ts:1993:19 a cast the runtime can't check
+   B Refused refusal_scan compiler/moduleNameResolver.ts:1993:19 a cast the runtime can't check
+   B Refused lowering compiler/moduleNameResolver.ts:2008:34 a cast the runtime can't check
+   B Refused refusal_scan compiler/moduleNameResolver.ts:2008:34 a cast the runtime can't check
+
+compiler/moduleNameResolver.ts:2131:1 tryAddingExtensions  clean at A: True  clean at B: False
+   B Refused lowering compiler/moduleNameResolver.ts:2136:36 a cast the runtime can't check
+   B Refused refusal_scan compiler/moduleNameResolver.ts:2136:36 a cast the runtime can't check
+
+compiler/moduleNameResolver.ts:2445:1 getPackageJsonInfo  clean at A: False  clean at B: False
+   A NotYet lowering compiler/moduleNameResolver.ts:2449:9 a call through ?. (an optional call)
+   A NotYet lowering compiler/moduleNameResolver.ts:2476:9 a call through ?. (an optional call)
+   A NotYet lowering compiler/moduleNameResolver.ts:2485:9 a call through ?. (an optional call)
+   A NotYet lowering compiler/moduleNameResolver.ts:925:1 a checked predicate target whose check would read past the depth bound (PackageJsonInfo)
+   B NotYet lowering compiler/moduleNameResolver.ts:2449:9 a call through ?. (an optional call)
+   B NotYet lowering compiler/moduleNameResolver.ts:925:1 a checked predicate target whose check would read past the depth bound (PackageJsonInfo)
+   B NotYet lowering compiler/moduleNameResolver.ts:2469:9 reading directoryExists
+   B Refused lowering compiler/moduleNameResolver.ts:2468:30 a cast the runtime can't check
+   B Refused refusal_scan compiler/moduleNameResolver.ts:2468:30 a cast the runtime can't check
+
+compiler/moduleNameResolver.ts:2489:1 loadNodeModuleFromDirectoryWorker  clean at A: False  clean at B: False
+   A NotYet lowering compiler/moduleNameResolver.ts:2519:13 an optional chain longer than one step
+   A Refused refusal_scan compiler/moduleNameResolver.ts:2494:56 optional property version in PackageJson absent from structural source PackageJsonPathFields, which 
+   A Refused refusal_scan compiler/moduleNameResolver.ts:2497:93 optional property version in PackageJson absent from structural source PackageJsonPathFields, which 
+   A Refused refusal_scan compiler/moduleNameResolver.ts:2498:116 optional property version in PackageJson absent from structural source PackageJsonPathFields, which 
+   B NotYet lowering compiler/moduleNameResolver.ts:2519:13 an optional chain longer than one step
+   B NotYet lowering compiler/moduleNameResolver.ts:2550:58 reading onlyRecordFailuresForIndex
+   B NotYet lowering compiler/moduleNameResolver.ts:2538:125 reading onlyRecordFailuresForPackageFile
+   B NotYet lowering compiler/moduleNameResolver.ts:2545:101 reading onlyRecordFailuresForPackageFile
+   B NotYet lowering compiler/moduleNameResolver.ts:2546:9 reading packageFileResult
+   B NotYet lowering compiler/moduleNameResolver.ts:2539:13 reading result
+   B Refused lowering compiler/moduleNameResolver.ts:2528:62 a cast the runtime can't check
+   B Refused refusal_scan compiler/moduleNameResolver.ts:2528:62 a cast the runtime can't check
+   B Refused lowering compiler/moduleNameResolver.ts:2529:64 a cast the runtime can't check
+   B Refused refusal_scan compiler/moduleNameResolver.ts:2529:64 a cast the runtime can't check
+   B Refused refusal_scan compiler/moduleNameResolver.ts:2494:56 optional property version in PackageJson absent from structural source PackageJsonPathFields, which 
+   B Refused refusal_scan compiler/moduleNameResolver.ts:2497:93 optional property version in PackageJson absent from structural source PackageJsonPathFields, which 
+   B Refused refusal_scan compiler/moduleNameResolver.ts:2498:116 optional property version in PackageJson absent from structural source PackageJsonPathFields, which 
+
+compiler/moduleNameResolver.ts:3064:1 loadModuleFromImmediateNodeModulesDirectory  clean at A: True  clean at B: False
+   B NotYet lowering compiler/moduleNameResolver.ts:3087:156 reading nodeModulesAtTypesExists
+   B NotYet lowering compiler/moduleNameResolver.ts:3067:10 reading nodeModulesFolderExists
+   B NotYet lowering compiler/moduleNameResolver.ts:3072:117 reading nodeModulesFolderExists
+   B NotYet lowering compiler/moduleNameResolver.ts:3080:40 reading nodeModulesFolderExists
+   B NotYet lowering compiler/moduleNameResolver.ts:3081:13 reading nodeModulesFolderExists
+   B NotYet lowering compiler/moduleNameResolver.ts:3073:13 reading packageResult
+   B Refused lowering compiler/moduleNameResolver.ts:3066:38 a cast the runtime can't check
+   B Refused refusal_scan compiler/moduleNameResolver.ts:3066:38 a cast the runtime can't check
+   B Refused refusal_scan compiler/moduleNameResolver.ts:3081:42 a cast the runtime can't check
+
+compiler/moduleNameResolver.ts:3091:1 loadModuleFromSpecificNodeModulesDirectory  clean at A: False  clean at B: False
+   A NotYet refusal_scan compiler/moduleNameResolver.ts:3103:26 a non-object representation passed through an opaque object parameter
+   A NotYet lowering compiler/moduleNameResolver.ts:3133:17 a union or optional field read in a program with record storage
+   A NotYet lowering compiler/moduleNameResolver.ts:3151:24 a union or optional field read in a program with record storage
+   A NotYet lowering compiler/moduleNameResolver.ts:3103:26 an optional chain longer than one step
+   B NotYet refusal_scan compiler/moduleNameResolver.ts:3103:26 a non-object representation passed through an opaque object parameter
+   B NotYet lowering compiler/moduleNameResolver.ts:3133:17 a union or optional field read in a program with record storage
+   B NotYet lowering compiler/moduleNameResolver.ts:3151:24 a union or optional field read in a program with record storage
+   B NotYet lowering compiler/moduleNameResolver.ts:3103:26 an optional chain longer than one step
+   B NotYet lowering compiler/moduleNameResolver.ts:3162:13 reading fromPaths
+   B NotYet lowering compiler/moduleNameResolver.ts:3161:130 reading packageDirectoryExists
+   B Refused lowering compiler/moduleNameResolver.ts:3159:71 a cast the runtime can't check
+   B Refused refusal_scan compiler/moduleNameResolver.ts:3159:71 a cast the runtime can't check
+
+compiler/moduleNameResolver.ts:3169:1 tryLoadModuleUsingPaths  clean at A: True  clean at B: False
+   B Refused lowering compiler/moduleNameResolver.ts:3192:74 a cast the runtime can't check
+   B Refused refusal_scan compiler/moduleNameResolver.ts:3192:74 a cast the runtime can't check
+
+compiler/moduleNameResolver.ts:3332:1 resolveFromTypeRoot  clean at A: False  clean at B: False
+   A NotYet lowering compiler/moduleNameResolver.ts:3333:10 a dictionary member narrowed to an array without an element-checked view
+   A NotYet lowering compiler/moduleNameResolver.ts:3334:28 a dictionary member narrowed to an array without an element-checked view
+   B NotYet lowering compiler/moduleNameResolver.ts:3333:10 a dictionary member narrowed to an array without an element-checked view
+   B NotYet lowering compiler/moduleNameResolver.ts:3334:28 a dictionary member narrowed to an array without an element-checked view
+   B Refused refusal_scan compiler/moduleNameResolver.ts:3336:34 a cast the runtime can't check
+
+compiler/moduleNameResolver.ts:538:1 resolveTypeReferenceDirective  clean at A: False  clean at B: False
+   A NotYet lowering compiler/moduleNameResolver.ts:674:21 a dictionary member narrowed to an array without an element-checked view
+   A NotYet lowering compiler/moduleNameResolver.ts:699:18 a dictionary member narrowed to an array without an element-checked view
+   A NotYet lowering compiler/moduleNameResolver.ts:626:41 assigning to an ObjectLiteralExpression
+   B NotYet lowering compiler/moduleNameResolver.ts:674:21 a dictionary member narrowed to an array without an element-checked view
+   B NotYet lowering compiler/moduleNameResolver.ts:699:18 a dictionary member narrowed to an array without an element-checked view
+   B NotYet lowering compiler/moduleNameResolver.ts:626:41 assigning to an ObjectLiteralExpression
+   B NotYet lowering compiler/moduleNameResolver.ts:671:22 reading directoryExists
+   B NotYet lowering compiler/moduleNameResolver.ts:684:85 reading directoryExists
+   B Refused lowering compiler/moduleNameResolver.ts:670:42 a cast the runtime can't check
+
+compiler/moduleNameResolver.ts:662:5 primaryLookup  clean at A: False  clean at B: False
+   A NotYet lowering compiler/moduleNameResolver.ts:674:21 a dictionary member narrowed to an array without an element-checked view
+   B NotYet lowering compiler/moduleNameResolver.ts:674:21 a dictionary member narrowed to an array without an element-checked view
+   B NotYet lowering compiler/moduleNameResolver.ts:671:22 reading directoryExists
+   B NotYet lowering compiler/moduleNameResolver.ts:684:85 reading directoryExists
+   B Refused lowering compiler/moduleNameResolver.ts:670:42 a cast the runtime can't check
+   B Refused refusal_scan compiler/moduleNameResolver.ts:670:42 a cast the runtime can't check

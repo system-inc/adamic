@@ -1,0 +1,377 @@
+SIGQUIT: quit
+PC=0x48c7a1 m=0 sigcode=0
+
+goroutine 0 gp=0x1ec39e0 m=0 mp=0x1ec4e60 [idle]:
+runtime.futex(0x1ec4fb8, 0x80, 0x0, 0x0, 0x0, 0x0)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/sys_linux_amd64.s:575 +0x21 fp=0x7ffe1f97ffb8 sp=0x7ffe1f97ffb0 pc=0x48c7a1
+runtime.futexsleep(0x1ec39e0?, 0x1f980030?, 0x45db08?)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/os_linux.go:73 +0x30 fp=0x7ffe1f980008 sp=0x7ffe1f97ffb8 pc=0x44a190
+runtime.notesleep(0x1ec4fb8)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/lock_futex.go:47 +0x87 fp=0x7ffe1f980040 sp=0x7ffe1f980008 pc=0x41f027
+runtime.mPark(...)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:1985
+runtime.stopm()
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:3023 +0x8c fp=0x7ffe1f980070 sp=0x7ffe1f980040 pc=0x454b6c
+runtime.findRunnable()
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:3811 +0xeb7 fp=0x7ffe1f980240 sp=0x7ffe1f980070 pc=0x4566f7
+runtime.schedule()
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:4179 +0xb1 fp=0x7ffe1f980280 sp=0x7ffe1f980240 pc=0x457811
+runtime.goschedImpl(0x1f8b6019e1e0, 0x1)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:4360 +0x1dc fp=0x7ffe1f9802d8 sp=0x7ffe1f980280 pc=0x457e9c
+runtime.gopreempt_m(...)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:4377
+runtime.newstack()
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/stack.go:1174 +0x3fa fp=0x7ffe1f980408 sp=0x7ffe1f9802d8 pc=0x4672fa
+runtime.morestack()
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/asm_amd64.s:650 +0x7b fp=0x7ffe1f980410 sp=0x7ffe1f980408 pc=0x48929b
+
+goroutine 1 gp=0x1f8b6019e1e0 m=nil [runnable]:
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func3({0xc8a10f?, 0x28?})
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:42 +0x4c fp=0x1f8b94ee1250 sp=0x1f8b94ee1248 pc=0xb8be6c
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a000}, 0x1e)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:55 +0x37f fp=0x1f8b94ee1330 sp=0x1f8b94ee1250 pc=0xb8bd1f
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61860}, 0x1, 0x1e)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94ee1840 sp=0x1f8b94ee1330 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a4e0?}, 0x1d)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94ee1b38 sp=0x1f8b94ee1840 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a4e0}, 0x1d)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94ee1c18 sp=0x1f8b94ee1b38 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61920}, 0x1, 0x1d)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94ee2128 sp=0x1f8b94ee1c18 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a680?}, 0x1c)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94ee2420 sp=0x1f8b94ee2128 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a680}, 0x1c)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94ee2500 sp=0x1f8b94ee2420 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61860}, 0x1, 0x1c)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94ee2a10 sp=0x1f8b94ee2500 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a4e0?}, 0x1b)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94ee2d08 sp=0x1f8b94ee2a10 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a4e0}, 0x1b)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94ee2de8 sp=0x1f8b94ee2d08 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61680}, 0x1, 0x1b)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94ee32f8 sp=0x1f8b94ee2de8 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a000?}, 0x1a)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94ee35f0 sp=0x1f8b94ee32f8 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a000}, 0x1a)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94ee36d0 sp=0x1f8b94ee35f0 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61860}, 0x1, 0x1a)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94ee3be0 sp=0x1f8b94ee36d0 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a4e0?}, 0x19)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94ee3ed8 sp=0x1f8b94ee3be0 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a4e0}, 0x19)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94ee3fb8 sp=0x1f8b94ee3ed8 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61680}, 0x1, 0x19)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94ee44c8 sp=0x1f8b94ee3fb8 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a000?}, 0x18)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94ee47c0 sp=0x1f8b94ee44c8 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a000}, 0x18)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94ee48a0 sp=0x1f8b94ee47c0 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61920}, 0x1, 0x18)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94ee4db0 sp=0x1f8b94ee48a0 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a680?}, 0x17)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94ee50a8 sp=0x1f8b94ee4db0 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a680}, 0x17)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94ee5188 sp=0x1f8b94ee50a8 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61860}, 0x1, 0x17)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94ee5698 sp=0x1f8b94ee5188 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a4e0?}, 0x16)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94ee5990 sp=0x1f8b94ee5698 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a4e0}, 0x16)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94ee5a70 sp=0x1f8b94ee5990 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61680}, 0x1, 0x16)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94ee5f80 sp=0x1f8b94ee5a70 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a000?}, 0x15)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94ee6278 sp=0x1f8b94ee5f80 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a000}, 0x15)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94ee6358 sp=0x1f8b94ee6278 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61860}, 0x1, 0x15)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94ee6868 sp=0x1f8b94ee6358 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a4e0?}, 0x14)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94ee6b60 sp=0x1f8b94ee6868 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a4e0}, 0x14)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94ee6c40 sp=0x1f8b94ee6b60 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61680}, 0x1, 0x14)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94ee7150 sp=0x1f8b94ee6c40 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a000?}, 0x13)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94ee7448 sp=0x1f8b94ee7150 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a000}, 0x13)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94ee7528 sp=0x1f8b94ee7448 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61860}, 0x1, 0x13)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94ee7a38 sp=0x1f8b94ee7528 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a4e0?}, 0x12)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94ee7d30 sp=0x1f8b94ee7a38 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a4e0}, 0x12)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94ee7e10 sp=0x1f8b94ee7d30 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61920}, 0x1, 0x12)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94ee8320 sp=0x1f8b94ee7e10 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a680?}, 0x11)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94ee8618 sp=0x1f8b94ee8320 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a680}, 0x11)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94ee86f8 sp=0x1f8b94ee8618 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61920}, 0x1, 0x11)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94ee8c08 sp=0x1f8b94ee86f8 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a680?}, 0x10)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94ee8f00 sp=0x1f8b94ee8c08 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a680}, 0x10)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94ee8fe0 sp=0x1f8b94ee8f00 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61860}, 0x1, 0x10)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94ee94f0 sp=0x1f8b94ee8fe0 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a4e0?}, 0xf)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94ee97e8 sp=0x1f8b94ee94f0 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a4e0}, 0xf)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94ee98c8 sp=0x1f8b94ee97e8 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61680}, 0x1, 0xf)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94ee9dd8 sp=0x1f8b94ee98c8 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a000?}, 0xe)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94eea0d0 sp=0x1f8b94ee9dd8 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a000}, 0xe)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94eea1b0 sp=0x1f8b94eea0d0 pc=0xb8ba98
+...8 frames elided...
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a000}, 0xb)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94eebc68 sp=0x1f8b94eebb88 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61680}, 0x1, 0xb)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94eec178 sp=0x1f8b94eebc68 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a000?}, 0xa)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94eec470 sp=0x1f8b94eec178 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a000}, 0xa)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94eec550 sp=0x1f8b94eec470 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61680}, 0x1, 0xa)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94eeca60 sp=0x1f8b94eec550 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a000?}, 0x9)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94eecd58 sp=0x1f8b94eeca60 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a000}, 0x9)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94eece38 sp=0x1f8b94eecd58 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61680}, 0x1, 0x9)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94eed348 sp=0x1f8b94eece38 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a000?}, 0x8)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94eed640 sp=0x1f8b94eed348 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a000}, 0x8)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94eed720 sp=0x1f8b94eed640 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61680}, 0x1, 0x8)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94eedc30 sp=0x1f8b94eed720 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a000?}, 0x7)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94eedf28 sp=0x1f8b94eedc30 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a000}, 0x7)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94eee008 sp=0x1f8b94eedf28 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61680}, 0x1, 0x7)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94eee518 sp=0x1f8b94eee008 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a000?}, 0x6)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94eee810 sp=0x1f8b94eee518 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a000}, 0x6)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94eee8f0 sp=0x1f8b94eee810 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61680}, 0x1, 0x6)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94eeee00 sp=0x1f8b94eee8f0 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a000?}, 0x5)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94eef0f8 sp=0x1f8b94eeee00 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a000}, 0x5)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94eef1d8 sp=0x1f8b94eef0f8 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61680}, 0x1, 0x5)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94eef6e8 sp=0x1f8b94eef1d8 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a000?}, 0x4)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94eef9e0 sp=0x1f8b94eef6e8 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a000}, 0x4)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94eefac0 sp=0x1f8b94eef9e0 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61680}, 0x1, 0x4)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94eeffd0 sp=0x1f8b94eefac0 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a000?}, 0x3)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94ef02c8 sp=0x1f8b94eeffd0 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a000}, 0x3)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94ef03a8 sp=0x1f8b94ef02c8 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61680}, 0x1, 0x3)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94ef08b8 sp=0x1f8b94ef03a8 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a000?}, 0x2)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94ef0bb0 sp=0x1f8b94ef08b8 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a000}, 0x2)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94ef0c90 sp=0x1f8b94ef0bb0 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61680}, 0x1, 0x2)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94ef11a0 sp=0x1f8b94ef0c90 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a000?}, 0x1)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94ef1498 sp=0x1f8b94ef11a0 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a000}, 0x1)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94ef1578 sp=0x1f8b94ef1498 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e01ba0, 0x1f8b92a61680}, 0x1, 0x1)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94ef1a88 sp=0x1f8b94ef1578 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).projectedSources(0x1f8b8f98c180, {0x1e01b20?, 0x1f8b9827a000?}, 0x0)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:240 +0x45f fp=0x1f8b94ef1d80 sp=0x1f8b94ef1a88 pc=0xb2bfdf
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations.func4({0x1e01b20, 0x1f8b9827a000}, 0x0)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:52 +0xf8 fp=0x1f8b94ef1e60 sp=0x1f8b94ef1d80 pc=0xb8ba98
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).reachingAllocations(0x1f8b8f98c180, {0x1e02b80, 0x1f8b835267b0}, 0x1, 0x0)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:95 +0x7d0 fp=0x1f8b94ef2370 sp=0x1f8b94ef1e60 pc=0xb2b150
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).ReachingAllocations(...)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/shape_flow.go:15
+github.com/system-inc/adamic/internal/lower.(*allocationFlowGraph).viewedFrom(0x1f8b8f98c180, {0x1f8b7a45e040, 0x4, 0x0?}, 0x1)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/view_lazy.go:247 +0xfb fp=0x1f8b94ef26c0 sp=0x1f8b94ef2370 pc=0xb4cd7b
+github.com/system-inc/adamic/internal/lower.viewedAllocations(0x1f8b9634af08, 0x1)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/view_lazy.go:226 +0x49 fp=0x1f8b94ef2700 sp=0x1f8b94ef26c0 pc=0xb4cc49
+github.com/system-inc/adamic/internal/lower.(*lowering).checkLazyViewReads(0x1f8b6b392d88)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/view_lazy.go:138 +0x65 fp=0x1f8b94ef2908 sp=0x1f8b94ef2700 pc=0xb4c905
+github.com/system-inc/adamic/internal/lower.(*lowering).findCycles(0x1f8b6b392d88, {0x1f8b71439c10, 0x1, 0x1})
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/cycles.go:155 +0x30a fp=0x1f8b94ef2988 sp=0x1f8b94ef2908 pc=0x9e03ea
+github.com/system-inc/adamic/internal/lower.(*lowering).latentEmitUnit.func8()
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/latent_unit_c.go:64 +0x25 fp=0x1f8b94ef29b8 sp=0x1f8b94ef2988 pc=0xb77785
+github.com/system-inc/adamic/internal/lower.(*lowering).latentEmitUnit(0x1f8b6b392d88, 0x1f8b6309c008, {0x1f8b60342c80, 0x74}, {0x1f8b78bb3a00?, 0x1f8b683a6a00?}, {0x1f8b62f0f69a?, 0x4dae85?}, {0xd52978, 0x17}, ...)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/latent_unit_c.go:83 +0xc4d fp=0x1f8b94ef2d68 sp=0x1f8b94ef29b8 pc=0xa4762d
+github.com/system-inc/adamic/internal/lower.latentFullSelected.func3(0x1f8b74c2f2d8, 0x1f8b94ef3230, 0x1f8b653f9bc0, 0x1f8b619770f8, 0x1f8b7c2d2d88, {0x1f8b619770f8, {0x1f8b71af5b80, 0x7a}, {0x1f8b71af5080, 0x7a}, ...}, ...)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/latent_units.go:217 +0x5a8 fp=0x1f8b94ef3150 sp=0x1f8b94ef2d68 pc=0xb78648
+github.com/system-inc/adamic/internal/lower.latentFullSelected({0x1e043e0, 0x1ee6440}, 0x1f8b653f9bc0, 0x1f8b94ef3d28, 0x0)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/latent_units.go:226 +0xd0e fp=0x1f8b94ef36b0 sp=0x1f8b94ef3150 pc=0xa48e8e
+github.com/system-inc/adamic/internal/lower.latentFull(...)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/latent_units.go:111
+github.com/system-inc/adamic/internal/lower.latentRun({0x1e043e0, 0x1ee6440}, 0x1f8b653f9bc0, 0x1f8b744dfd28)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/latent_hook.go:263 +0xba fp=0x1f8b94ef3b80 sp=0x1f8b94ef36b0 pc=0xa37c1a
+github.com/system-inc/adamic/internal/lower.Latent({0x1e043e0, 0x1ee6440}, 0x1f8b653f9bc0, 0x1f8b94ef3e60)
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/lower/latent_hook.go:245 +0x230 fp=0x1f8b94ef3d50 sp=0x1f8b94ef3b80 pc=0xa37870
+main.main()
+	/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/stage3/census/latent/tool/main.go:63 +0x585 fp=0x1f8b94ef3eb8 sp=0x1f8b94ef3d50 pc=0xc46325
+runtime.main()
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:302 +0x427 fp=0x1f8b94ef3fe0 sp=0x1f8b94ef3eb8 pc=0x4500e7
+runtime.goexit({})
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/asm_amd64.s:1264 +0x1 fp=0x1f8b94ef3fe8 sp=0x1f8b94ef3fe0 pc=0x48ac61
+
+goroutine 2 gp=0x1f8b6019ed20 m=nil [force gc (idle), 21 minutes]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:474 +0xca fp=0x1f8b601fcfa8 sp=0x1f8b601fcf88 pc=0x484baa
+runtime.goparkunlock(...)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:480
+runtime.forcegchelper()
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:387 +0xb3 fp=0x1f8b601fcfe0 sp=0x1f8b601fcfa8 pc=0x4503b3
+runtime.goexit({})
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/asm_amd64.s:1264 +0x1 fp=0x1f8b601fcfe8 sp=0x1f8b601fcfe0 pc=0x48ac61
+created by runtime.init.7 in goroutine 1
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:375 +0x1a
+
+goroutine 3 gp=0x1f8b6019f2c0 m=nil [GC sweep wait]:
+runtime.gopark(0x1?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:474 +0xca fp=0x1f8b601fd788 sp=0x1f8b601fd768 pc=0x484baa
+runtime.goparkunlock(...)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:480
+runtime.bgsweep(0x1f8b60224000)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/mgcsweep.go:324 +0x151 fp=0x1f8b601fd7c8 sp=0x1f8b601fd788 pc=0x43b791
+runtime.gcenable.gowrap1()
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/mgc.go:214 +0x17 fp=0x1f8b601fd7e0 sp=0x1f8b601fd7c8 pc=0x47c057
+runtime.goexit({})
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/asm_amd64.s:1264 +0x1 fp=0x1f8b601fd7e8 sp=0x1f8b601fd7e0 pc=0x48ac61
+created by runtime.gcenable in goroutine 1
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/mgc.go:214 +0x66
+
+goroutine 4 gp=0x1f8b6019f4a0 m=nil [GC scavenge wait]:
+runtime.gopark(0x1761c95?, 0x167e705?, 0x0?, 0x0?, 0x0?)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:474 +0xca fp=0x1f8b601fdf78 sp=0x1f8b601fdf58 pc=0x484baa
+runtime.goparkunlock(...)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:480
+runtime.(*scavengerState).park(0x1ec3500)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/mgcscavenge.go:425 +0x49 fp=0x1f8b601fdfa8 sp=0x1f8b601fdf78 pc=0x4392a9
+runtime.bgscavenge(0x1f8b60224000)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/mgcscavenge.go:658 +0x59 fp=0x1f8b601fdfc8 sp=0x1f8b601fdfa8 pc=0x439819
+runtime.gcenable.gowrap2()
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/mgc.go:215 +0x17 fp=0x1f8b601fdfe0 sp=0x1f8b601fdfc8 pc=0x47c017
+runtime.goexit({})
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/asm_amd64.s:1264 +0x1 fp=0x1f8b601fdfe8 sp=0x1f8b601fdfe0 pc=0x48ac61
+created by runtime.gcenable in goroutine 1
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/mgc.go:215 +0xa5
+
+goroutine 18 gp=0x1f8b602843c0 m=nil [GOMAXPROCS updater (idle), 21 minutes]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:474 +0xca fp=0x1f8b601f8788 sp=0x1f8b601f8768 pc=0x484baa
+runtime.goparkunlock(...)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:480
+runtime.updateMaxProcsGoroutine()
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:7146 +0xe7 fp=0x1f8b601f87e0 sp=0x1f8b601f8788 pc=0x45d7c7
+runtime.goexit({})
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/asm_amd64.s:1264 +0x1 fp=0x1f8b601f87e8 sp=0x1f8b601f87e0 pc=0x48ac61
+created by runtime.defaultGOMAXPROCSUpdateEnable in goroutine 1
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:7134 +0x37
+
+goroutine 19 gp=0x1f8b60284b40 m=nil [finalizer wait, 21 minutes]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:474 +0xca fp=0x1f8b601f8e20 sp=0x1f8b601f8e00 pc=0x484baa
+runtime.runFinalizers()
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/mfinal.go:210 +0x107 fp=0x1f8b601f8fe0 sp=0x1f8b601f8e20 pc=0x42ca07
+runtime.goexit({})
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/asm_amd64.s:1264 +0x1 fp=0x1f8b601f8fe8 sp=0x1f8b601f8fe0 pc=0x48ac61
+created by runtime.createfing in goroutine 1
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/mfinal.go:172 +0x3d
+
+goroutine 20 gp=0x1f8b60284f00 m=nil [cleanup wait, 21 minutes]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:474 +0xca fp=0x1f8b601f9768 sp=0x1f8b601f9748 pc=0x484baa
+runtime.goparkunlock(...)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:480
+runtime.(*cleanupQueue).dequeue(0x1ec37c0)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/mcleanup.go:522 +0xd3 fp=0x1f8b601f97a0 sp=0x1f8b601f9768 pc=0x429733
+runtime.runCleanups()
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/mcleanup.go:718 +0x45 fp=0x1f8b601f97e0 sp=0x1f8b601f97a0 pc=0x429da5
+runtime.goexit({})
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/asm_amd64.s:1264 +0x1 fp=0x1f8b601f97e8 sp=0x1f8b601f97e0 pc=0x48ac61
+created by runtime.(*cleanupQueue).createGs in goroutine 1
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/mcleanup.go:672 +0xa5
+
+goroutine 21 gp=0x1f8b605d4960 m=nil [GC worker (idle)]:
+runtime.gopark(0x3813cae4aa6?, 0x3?, 0x99?, 0xb4?, 0x0?)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:474 +0xca fp=0x1f8b601f9f40 sp=0x1f8b601f9f20 pc=0x484baa
+runtime.gcBgMarkWorker(0x1f8b602925b0)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/mgc.go:1807 +0xeb fp=0x1f8b601f9fc8 sp=0x1f8b601f9f40 pc=0x42fc4b
+runtime.gcBgMarkStartWorkers.gowrap1()
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/mgc.go:1711 +0x17 fp=0x1f8b601f9fe0 sp=0x1f8b601f9fc8 pc=0x47c557
+runtime.goexit({})
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/asm_amd64.s:1264 +0x1 fp=0x1f8b601f9fe8 sp=0x1f8b601f9fe0 pc=0x48ac61
+created by runtime.gcBgMarkStartWorkers in goroutine 1
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/mgc.go:1711 +0xfc
+
+goroutine 22 gp=0x1f8b605d4b40 m=nil [GC worker (idle)]:
+runtime.gopark(0x1ee7740?, 0x1?, 0xaa?, 0xf0?, 0x0?)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:474 +0xca fp=0x1f8b601fa740 sp=0x1f8b601fa720 pc=0x484baa
+runtime.gcBgMarkWorker(0x1f8b602925b0)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/mgc.go:1807 +0xeb fp=0x1f8b601fa7c8 sp=0x1f8b601fa740 pc=0x42fc4b
+runtime.gcBgMarkStartWorkers.gowrap1()
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/mgc.go:1711 +0x17 fp=0x1f8b601fa7e0 sp=0x1f8b601fa7c8 pc=0x47c557
+runtime.goexit({})
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/asm_amd64.s:1264 +0x1 fp=0x1f8b601fa7e8 sp=0x1f8b601fa7e0 pc=0x48ac61
+created by runtime.gcBgMarkStartWorkers in goroutine 1
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/mgc.go:1711 +0xfc
+
+goroutine 23 gp=0x1f8b605d4d20 m=nil [GC worker (idle)]:
+runtime.gopark(0x38371ce5905?, 0x3?, 0x90?, 0x5f?, 0x0?)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:474 +0xca fp=0x1f8b601faf40 sp=0x1f8b601faf20 pc=0x484baa
+runtime.gcBgMarkWorker(0x1f8b602925b0)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/mgc.go:1807 +0xeb fp=0x1f8b601fafc8 sp=0x1f8b601faf40 pc=0x42fc4b
+runtime.gcBgMarkStartWorkers.gowrap1()
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/mgc.go:1711 +0x17 fp=0x1f8b601fafe0 sp=0x1f8b601fafc8 pc=0x47c557
+runtime.goexit({})
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/asm_amd64.s:1264 +0x1 fp=0x1f8b601fafe8 sp=0x1f8b601fafe0 pc=0x48ac61
+created by runtime.gcBgMarkStartWorkers in goroutine 1
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/mgc.go:1711 +0xfc
+
+goroutine 24 gp=0x1f8b605d4f00 m=nil [GC worker (idle)]:
+runtime.gopark(0x38371cf110b?, 0x3?, 0xab?, 0xf9?, 0x0?)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/proc.go:474 +0xca fp=0x1f8b601fb740 sp=0x1f8b601fb720 pc=0x484baa
+runtime.gcBgMarkWorker(0x1f8b602925b0)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/mgc.go:1807 +0xeb fp=0x1f8b601fb7c8 sp=0x1f8b601fb740 pc=0x42fc4b
+runtime.gcBgMarkStartWorkers.gowrap1()
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/mgc.go:1711 +0x17 fp=0x1f8b601fb7e0 sp=0x1f8b601fb7c8 pc=0x47c557
+runtime.goexit({})
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/asm_amd64.s:1264 +0x1 fp=0x1f8b601fb7e8 sp=0x1f8b601fb7e0 pc=0x48ac61
+created by runtime.gcBgMarkStartWorkers in goroutine 1
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/mgc.go:1711 +0xfc
+
+rax    0xca
+rbx    0x0
+rcx    0x48c7a3
+rdx    0x0
+rdi    0x1ec4fb8
+rsi    0x80
+rbp    0x7ffe1f97fff8
+rsp    0x7ffe1f97ffb0
+r8     0x0
+r9     0x0
+r10    0x0
+r11    0x286
+r12    0x7ffe1f980030
+r13    0x3
+r14    0x1ec39e0
+r15    0x0
+rip    0x48c7a1
+rflags 0x286
+cs     0x33
+fs     0x0
+gs     0x0

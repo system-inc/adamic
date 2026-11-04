@@ -1,0 +1,70 @@
+#!/usr/bin/env python3
+"""Step 5: clock clang on each clean unit's C, one clang at a time, with the invocation docs/tsc-generated-c/measure.py uses.
+
+usage: measure_units.py --units UNITS_DIR --clang CLANG --repo REPO --out OUT [--limit N]
+Imports measure.py's own FLAGS, functions, clang_once and time_trace_top, so flags and timing are the earlier table's.
+Units under 300 KB of C run three times and the fastest is reported; larger ones run once. -ftime-trace is taken on the
+slowest -O2 unit afterwards.
+"""
+import argparse, csv, importlib.util, json, os, sys, tempfile
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--units', required=True)
+parser.add_argument('--clang', required=True)
+parser.add_argument('--repo', required=True)
+parser.add_argument('--out', required=True)
+parser.add_argument('--limit', type=int, default=0)
+parser.add_argument('--repeats', type=int, default=3)
+arguments = parser.parse_args()
+
+spec = importlib.util.spec_from_file_location('measure', os.path.join(arguments.repo, 'docs/tsc-generated-c/measure.py'))
+measure = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(measure)
+assert measure.RUNTIME == os.path.join(arguments.repo, 'internal/native/runtime'), measure.RUNTIME
+
+os.makedirs(arguments.out, exist_ok=True)
+rows = [json.loads(line) for line in open(os.path.join(arguments.units, 'units.jsonl'))]
+emitted = [row for row in rows if row['status'] == 'emitted']
+if arguments.limit:
+    emitted = emitted[:arguments.limit]
+results = []
+with tempfile.TemporaryDirectory(prefix='unitc-measure-') as directory:
+    for index, row in enumerate(emitted, 1):
+        path = os.path.join(arguments.units, row['c'])
+        text = open(path, encoding='utf-8', errors='replace').read()
+        found = measure.functions(text)
+        largest = max(found, key=lambda item: item[1]) if found else ('', 0)
+        out = dict(n=row['n'], file=row['file'].split('/src/compiler/')[-1], where=row['where'].split('/src/compiler/')[-1], name=row['name'],
+                   kind=row['kind'], c=row['c'], c_bytes=len(text.encode()), c_lines=text.count('\n'),
+                   c_functions=len(found), largest_function=largest[0], largest_function_lines=largest[1], clang={})
+        repeats = arguments.repeats if out['c_bytes'] < 300_000 else 1
+        for level in ('-O0', '-O2'):
+            samples = [measure.clang_once(arguments.clang, path, level, directory) for _ in range(repeats)]
+            best = min(samples, key=lambda sample: sample['wall_seconds'])
+            best['samples_wall_seconds'] = [sample['wall_seconds'] for sample in samples]
+            out['clang'][level] = best
+            if best['exit'] != 0:
+                break
+        results.append(out)
+        if index % 25 == 0:
+            print(index, len(emitted), flush=True)
+        with open(os.path.join(arguments.out, 'rows.json'), 'w') as handle:
+            json.dump(results, handle)
+    # The slowest -O2 unit that compiled, with the time trace.
+    compiled = [r for r in results if r['clang'].get('-O2', {}).get('exit') == 0]
+    if compiled:
+        slowest = max(compiled, key=lambda r: r['clang']['-O2']['wall_seconds'])
+        sample = measure.clang_once(arguments.clang, os.path.join(arguments.units, slowest['c']), '-O2', directory, trace=True)
+        trace = measure.time_trace_top(directory)
+        with open(os.path.join(arguments.out, 'slowest_trace.json'), 'w') as handle:
+            json.dump(dict(unit=slowest['c'], file=slowest['file'], where=slowest['where'], name=slowest['name'],
+                           wall_seconds_with_trace=sample['wall_seconds'], trace=trace), handle, indent=1)
+with open(os.path.join(arguments.out, 'units.csv'), 'w', newline='') as handle:
+    writer = csv.writer(handle)
+    writer.writerow(['n', 'file', 'where', 'name', 'kind', 'c_bytes', 'c_lines', 'c_functions', 'largest_function', 'largest_function_lines',
+                     'o0_exit', 'o0_wall_s', 'o0_rss_kb', 'o2_exit', 'o2_wall_s', 'o2_rss_kb', 'o2_samples'])
+    for r in results:
+        a, b = r['clang'].get('-O0', {}), r['clang'].get('-O2', {})
+        writer.writerow([r['n'], r['file'], r['where'], r['name'], r['kind'], r['c_bytes'], r['c_lines'], r['c_functions'],
+                         r['largest_function'], r['largest_function_lines'], a.get('exit'), a.get('wall_seconds'), a.get('max_rss_kb'),
+                         b.get('exit'), b.get('wall_seconds'), b.get('max_rss_kb'), b.get('samples_wall_seconds')])

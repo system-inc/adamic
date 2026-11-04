@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# runproof.sh NAME: run the instrument over proofs/NAME and print a one-line summary per status.
+set -euo pipefail
+S=/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad
+D="$S/proof/$1"
+rm -rf "${D:?}/units"
+cd "$D"
+LATENT_FULL=1 LATENT_C_DIR="$D/units" "$S/unitc-census" "$D" census.jsonl > run.log 2>&1
+python3 -I - "$D/units/units.jsonl" <<'PY'
+import json,sys,collections
+c=collections.Counter(); first={}
+for l in open(sys.argv[1]):
+    r=json.loads(l); k=(r['status'],r.get('phase','')); c[k]+=1; first.setdefault(k,r.get('error','')[:300])
+for k,v in c.items(): print(v,k,first[k].replace('\n',' | '))
+PY

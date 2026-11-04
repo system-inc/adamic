@@ -1,0 +1,14 @@
+def functions(text):
+    """name -> definition text, for each top-level `static ... name(...) {` ... `}` and `int main(`."""
+    out, lines, i = {}, text.split('\n'), 0
+    while i < len(lines):
+        line = lines[i]
+        if (line.startswith('static ') or line.startswith('int main(')) and line.endswith('{'):
+            name = line.split('(')[0].split()[-1].lstrip('*')
+            j = i
+            while lines[j] != '}':
+                j += 1
+            out[name] = '\n'.join(lines[i:j + 1])
+            i = j
+        i += 1
+    return out

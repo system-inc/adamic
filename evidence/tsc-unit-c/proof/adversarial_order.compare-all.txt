@@ -1,0 +1,289 @@
+adversarial_order: units=28 functions identical=18 different=24 absent=24
+  unit 1 (KindVariableStatement) adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16: ABSENT from real output
+  unit 1 (KindVariableStatement) adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35: DIFFERENT
+    --- real
+    +++ unit
+    @@ -1,6 +1,3 @@
+     static void adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35(void) {
+    -	adamic_string * adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[1];
+    -	adamic_closure * adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[1];
+    -	adamic_initialize_chunk_adversarial_order_a_340cdffcc5334b6c10618be595105c16(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    -	adamic_initialize_chunk_adversarial_order_a_980034281ca8f10cbecc92c53028da65(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    +	adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16();
+     }
+  unit 2 (KindVariableStatement) adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16: ABSENT from real output
+  unit 2 (KindVariableStatement) adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35: DIFFERENT
+    --- real
+    +++ unit
+    @@ -1,6 +1,3 @@
+     static void adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35(void) {
+    -	adamic_string * adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[1];
+    -	adamic_closure * adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[1];
+    -	adamic_initialize_chunk_adversarial_order_a_340cdffcc5334b6c10618be595105c16(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    -	adamic_initialize_chunk_adversarial_order_a_980034281ca8f10cbecc92c53028da65(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    +	adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16();
+     }
+  unit 3 (KindExpressionStatement) adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16: ABSENT from real output
+  unit 3 (KindExpressionStatement) adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35: DIFFERENT
+    --- real
+    +++ unit
+    @@ -1,6 +1,3 @@
+     static void adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35(void) {
+    -	adamic_string * adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[1];
+    -	adamic_closure * adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[1];
+    -	adamic_initialize_chunk_adversarial_order_a_340cdffcc5334b6c10618be595105c16(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    -	adamic_initialize_chunk_adversarial_order_a_980034281ca8f10cbecc92c53028da65(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    +	adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16();
+     }
+  unit 4 (KindVariableStatement) adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16: ABSENT from real output
+  unit 4 (KindVariableStatement) adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35: DIFFERENT
+    --- real
+    +++ unit
+    @@ -1,6 +1,3 @@
+     static void adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35(void) {
+    -	adamic_string * adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[1];
+    -	adamic_closure * adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[1];
+    -	adamic_initialize_chunk_adversarial_order_a_340cdffcc5334b6c10618be595105c16(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    -	adamic_initialize_chunk_adversarial_order_a_980034281ca8f10cbecc92c53028da65(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    +	adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16();
+     }
+  unit 5 (KindVariableStatement) adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16: ABSENT from real output
+  unit 5 (KindVariableStatement) adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35: DIFFERENT
+    --- real
+    +++ unit
+    @@ -1,6 +1,3 @@
+     static void adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35(void) {
+    -	adamic_string * adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[1];
+    -	adamic_closure * adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[1];
+    -	adamic_initialize_chunk_adversarial_order_a_340cdffcc5334b6c10618be595105c16(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    -	adamic_initialize_chunk_adversarial_order_a_980034281ca8f10cbecc92c53028da65(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    +	adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16();
+     }
+  unit 6 (KindExpressionStatement) adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16: ABSENT from real output
+  unit 6 (KindExpressionStatement) adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35: DIFFERENT
+    --- real
+    +++ unit
+    @@ -1,6 +1,3 @@
+     static void adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35(void) {
+    -	adamic_string * adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[1];
+    -	adamic_closure * adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[1];
+    -	adamic_initialize_chunk_adversarial_order_a_340cdffcc5334b6c10618be595105c16(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    -	adamic_initialize_chunk_adversarial_order_a_980034281ca8f10cbecc92c53028da65(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    +	adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16();
+     }
+  unit 7 (KindVariableStatement) adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16: ABSENT from real output
+  unit 7 (KindVariableStatement) adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35: DIFFERENT
+    --- real
+    +++ unit
+    @@ -1,6 +1,3 @@
+     static void adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35(void) {
+    -	adamic_string * adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[1];
+    -	adamic_closure * adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[1];
+    -	adamic_initialize_chunk_adversarial_order_a_340cdffcc5334b6c10618be595105c16(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    -	adamic_initialize_chunk_adversarial_order_a_980034281ca8f10cbecc92c53028da65(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    +	adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16();
+     }
+  unit 8 (KindExpressionStatement) adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16: ABSENT from real output
+  unit 8 (KindExpressionStatement) adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35: DIFFERENT
+    --- real
+    +++ unit
+    @@ -1,6 +1,3 @@
+     static void adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35(void) {
+    -	adamic_string * adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[1];
+    -	adamic_closure * adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[1];
+    -	adamic_initialize_chunk_adversarial_order_a_340cdffcc5334b6c10618be595105c16(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    -	adamic_initialize_chunk_adversarial_order_a_980034281ca8f10cbecc92c53028da65(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    +	adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16();
+     }
+  unit 9 (KindVariableStatement) adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16: ABSENT from real output
+  unit 9 (KindVariableStatement) adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35: DIFFERENT
+    --- real
+    +++ unit
+    @@ -1,6 +1,3 @@
+     static void adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35(void) {
+    -	adamic_string * adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[1];
+    -	adamic_closure * adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[1];
+    -	adamic_initialize_chunk_adversarial_order_a_340cdffcc5334b6c10618be595105c16(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    -	adamic_initialize_chunk_adversarial_order_a_980034281ca8f10cbecc92c53028da65(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    +	adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16();
+     }
+  unit 10 (KindVariableStatement) adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16: ABSENT from real output
+  unit 10 (KindVariableStatement) adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35: DIFFERENT
+    --- real
+    +++ unit
+    @@ -1,6 +1,3 @@
+     static void adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35(void) {
+    -	adamic_string * adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[1];
+    -	adamic_closure * adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[1];
+    -	adamic_initialize_chunk_adversarial_order_a_340cdffcc5334b6c10618be595105c16(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    -	adamic_initialize_chunk_adversarial_order_a_980034281ca8f10cbecc92c53028da65(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    +	adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16();
+     }
+  unit 11 (KindExpressionStatement) adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16: ABSENT from real output
+  unit 11 (KindExpressionStatement) adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35: DIFFERENT
+    --- real
+    +++ unit
+    @@ -1,6 +1,3 @@
+     static void adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35(void) {
+    -	adamic_string * adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[1];
+    -	adamic_closure * adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[1];
+    -	adamic_initialize_chunk_adversarial_order_a_340cdffcc5334b6c10618be595105c16(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    -	adamic_initialize_chunk_adversarial_order_a_980034281ca8f10cbecc92c53028da65(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    +	adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16();
+     }
+  unit 12 (KindVariableStatement) adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16: ABSENT from real output
+  unit 12 (KindVariableStatement) adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35: DIFFERENT
+    --- real
+    +++ unit
+    @@ -1,6 +1,3 @@
+     static void adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35(void) {
+    -	adamic_string * adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[1];
+    -	adamic_closure * adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[1];
+    -	adamic_initialize_chunk_adversarial_order_a_340cdffcc5334b6c10618be595105c16(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    -	adamic_initialize_chunk_adversarial_order_a_980034281ca8f10cbecc92c53028da65(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    +	adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16();
+     }
+  unit 13 (KindVariableStatement) adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16: ABSENT from real output
+  unit 13 (KindVariableStatement) adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35: DIFFERENT
+    --- real
+    +++ unit
+    @@ -1,6 +1,3 @@
+     static void adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35(void) {
+    -	adamic_string * adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[1];
+    -	adamic_closure * adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[1];
+    -	adamic_initialize_chunk_adversarial_order_a_340cdffcc5334b6c10618be595105c16(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    -	adamic_initialize_chunk_adversarial_order_a_980034281ca8f10cbecc92c53028da65(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    +	adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16();
+     }
+  unit 14 (KindExpressionStatement) adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16: ABSENT from real output
+  unit 14 (KindExpressionStatement) adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35: DIFFERENT
+    --- real
+    +++ unit
+    @@ -1,6 +1,3 @@
+     static void adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35(void) {
+    -	adamic_string * adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[1];
+    -	adamic_closure * adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[1];
+    -	adamic_initialize_chunk_adversarial_order_a_340cdffcc5334b6c10618be595105c16(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    -	adamic_initialize_chunk_adversarial_order_a_980034281ca8f10cbecc92c53028da65(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    +	adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16();
+     }
+  unit 15 (KindVariableStatement) adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16: ABSENT from real output
+  unit 15 (KindVariableStatement) adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35: DIFFERENT
+    --- real
+    +++ unit
+    @@ -1,6 +1,3 @@
+     static void adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35(void) {
+    -	adamic_string * adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[1];
+    -	adamic_closure * adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[1];
+    -	adamic_initialize_chunk_adversarial_order_a_340cdffcc5334b6c10618be595105c16(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    -	adamic_initialize_chunk_adversarial_order_a_980034281ca8f10cbecc92c53028da65(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    +	adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16();
+     }
+  unit 16 (KindVariableStatement) adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16: ABSENT from real output
+  unit 16 (KindVariableStatement) adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35: DIFFERENT
+    --- real
+    +++ unit
+    @@ -1,6 +1,3 @@
+     static void adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35(void) {
+    -	adamic_string * adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[1];
+    -	adamic_closure * adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[1];
+    -	adamic_initialize_chunk_adversarial_order_a_340cdffcc5334b6c10618be595105c16(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    -	adamic_initialize_chunk_adversarial_order_a_980034281ca8f10cbecc92c53028da65(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    +	adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16();
+     }
+  unit 17 (KindExpressionStatement) adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16: ABSENT from real output
+  unit 17 (KindExpressionStatement) adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35: DIFFERENT
+    --- real
+    +++ unit
+    @@ -1,6 +1,3 @@
+     static void adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35(void) {
+    -	adamic_string * adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[1];
+    -	adamic_closure * adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[1];
+    -	adamic_initialize_chunk_adversarial_order_a_340cdffcc5334b6c10618be595105c16(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    -	adamic_initialize_chunk_adversarial_order_a_980034281ca8f10cbecc92c53028da65(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    +	adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16();
+     }
+  unit 19 (KindExpressionStatement) adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16: ABSENT from real output
+  unit 19 (KindExpressionStatement) adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35: DIFFERENT
+    --- real
+    +++ unit
+    @@ -1,6 +1,3 @@
+     static void adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35(void) {
+    -	adamic_string * adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[1];
+    -	adamic_closure * adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[1];
+    -	adamic_initialize_chunk_adversarial_order_a_340cdffcc5334b6c10618be595105c16(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    -	adamic_initialize_chunk_adversarial_order_a_980034281ca8f10cbecc92c53028da65(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    +	adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16();
+     }
+  unit 20 (KindVariableStatement) adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16: ABSENT from real output
+  unit 20 (KindVariableStatement) adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35: DIFFERENT
+    --- real
+    +++ unit
+    @@ -1,6 +1,3 @@
+     static void adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35(void) {
+    -	adamic_string * adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[1];
+    -	adamic_closure * adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[1];
+    -	adamic_initialize_chunk_adversarial_order_a_340cdffcc5334b6c10618be595105c16(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    -	adamic_initialize_chunk_adversarial_order_a_980034281ca8f10cbecc92c53028da65(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    +	adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16();
+     }
+  unit 21 (KindVariableStatement) adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16: ABSENT from real output
+  unit 21 (KindVariableStatement) adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35: DIFFERENT
+    --- real
+    +++ unit
+    @@ -1,6 +1,3 @@
+     static void adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35(void) {
+    -	adamic_string * adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[1];
+    -	adamic_closure * adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[1];
+    -	adamic_initialize_chunk_adversarial_order_a_340cdffcc5334b6c10618be595105c16(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    -	adamic_initialize_chunk_adversarial_order_a_980034281ca8f10cbecc92c53028da65(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    +	adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16();
+     }
+  unit 24 (KindExpressionStatement) adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16: ABSENT from real output
+  unit 24 (KindExpressionStatement) adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35: DIFFERENT
+    --- real
+    +++ unit
+    @@ -1,6 +1,3 @@
+     static void adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35(void) {
+    -	adamic_string * adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[1];
+    -	adamic_closure * adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[1];
+    -	adamic_initialize_chunk_adversarial_order_a_340cdffcc5334b6c10618be595105c16(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    -	adamic_initialize_chunk_adversarial_order_a_980034281ca8f10cbecc92c53028da65(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    +	adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16();
+     }
+  unit 25 (KindVariableStatement) adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16: ABSENT from real output
+  unit 25 (KindVariableStatement) adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35: DIFFERENT
+    --- real
+    +++ unit
+    @@ -1,6 +1,3 @@
+     static void adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35(void) {
+    -	adamic_string * adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[1];
+    -	adamic_closure * adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[1];
+    -	adamic_initialize_chunk_adversarial_order_a_340cdffcc5334b6c10618be595105c16(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    -	adamic_initialize_chunk_adversarial_order_a_980034281ca8f10cbecc92c53028da65(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    +	adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16();
+     }
+  unit 26 (KindExpressionStatement) adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16: ABSENT from real output
+  unit 26 (KindExpressionStatement) adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35: DIFFERENT
+    --- real
+    +++ unit
+    @@ -1,6 +1,3 @@
+     static void adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35(void) {
+    -	adamic_string * adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[1];
+    -	adamic_closure * adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[1];
+    -	adamic_initialize_chunk_adversarial_order_a_340cdffcc5334b6c10618be595105c16(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    -	adamic_initialize_chunk_adversarial_order_a_980034281ca8f10cbecc92c53028da65(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    +	adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16();
+     }
+  unit 28 (KindExpressionStatement) adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16: ABSENT from real output
+  unit 28 (KindExpressionStatement) adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35: DIFFERENT
+    --- real
+    +++ unit
+    @@ -1,6 +1,3 @@
+     static void adamic_initialize_adversarial_order_a_abaa9198ff921bdb219040bf1316df35(void) {
+    -	adamic_string * adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[1];
+    -	adamic_closure * adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[1];
+    -	adamic_initialize_chunk_adversarial_order_a_340cdffcc5334b6c10618be595105c16(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    -	adamic_initialize_chunk_adversarial_order_a_980034281ca8f10cbecc92c53028da65(&adamic_init_storage_adamic_string___5b812f7904e3bd60e5b473254f2f2dcb[0], &adamic_init_storage_adamic_closure___7beaa52914a5a757aa93f514ed58ee44[0]);
+    +	adamic_initialize_adversarial_order_a_340cdffcc5334b6c10618be595105c16();
+     }

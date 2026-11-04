@@ -1,0 +1,107 @@
+{
+ "unit": "units-1/u00095.c",
+ "file": "diagnosticInformationMap.generated.ts",
+ "where": "diagnosticInformationMap.generated.ts:12:1",
+ "name": "",
+ "wall_seconds_with_trace": 2.24,
+ "trace": {
+  "outline": [
+   {
+    "phase": "ExecuteCompiler",
+    "seconds": 2.216
+   },
+   {
+    "phase": "Backend",
+    "seconds": 1.767
+   },
+   {
+    "phase": "CodeGenPasses",
+    "seconds": 1.093
+   },
+   {
+    "phase": "OptModule",
+    "seconds": 1.092
+   },
+   {
+    "phase": "OptFunction",
+    "seconds": 1.058
+   },
+   {
+    "phase": "RunPass",
+    "seconds": 1.055
+   },
+   {
+    "phase": "Optimizer",
+    "seconds": 0.67
+   },
+   {
+    "phase": "PassManager<Function>",
+    "seconds": 0.462
+   },
+   {
+    "phase": "Frontend",
+    "seconds": 0.444
+   },
+   {
+    "phase": "ModuleInlinerWrapperPass",
+    "seconds": 0.348
+   },
+   {
+    "phase": "ModuleToPostOrderCGSCCPassAdaptor",
+    "seconds": 0.342
+   },
+   {
+    "phase": "DevirtSCCRepeatedPass",
+    "seconds": 0.334
+   }
+  ],
+  "passes": [
+   {
+    "name": "X86 DAG->DAG Instruction Selection",
+    "seconds": 0.378
+   },
+   {
+    "name": "Greedy Register Allocator",
+    "seconds": 0.135
+   },
+   {
+    "name": "Machine Instruction Scheduler",
+    "seconds": 0.126
+   },
+   {
+    "name": "Live Variable Analysis",
+    "seconds": 0.046
+   },
+   {
+    "name": "X86 LEA Optimize",
+    "seconds": 0.042
+   },
+   {
+    "name": "Machine Common Subexpression Elimination",
+    "seconds": 0.026
+   },
+   {
+    "name": "Live Interval Analysis",
+    "seconds": 0.025
+   },
+   {
+    "name": "ReachingDefAnalysis",
+    "seconds": 0.021
+   }
+  ],
+  "functions": [
+   {
+    "name": "adamic_initialize_imported________expo___diagnosticInformationMap_generated_ts_9fbd46a3e4156d184e2c96eaa654bb0a",
+    "seconds": 0.206
+   },
+   {
+    "name": "adamic_initialize_chunk_imported________expo___diagnosticInformationMap_generated_ts_49bc729c11196170d78477904f131627",
+    "seconds": 0.023
+   },
+   {
+    "name": "adamic_initialize_chunk_imported________expo___diagnosticInformationMap_generated_ts_6647175db37895b7ee2eee3e48813dbb",
+    "seconds": 0.016
+   }
+  ]
+ }
+}

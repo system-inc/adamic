@@ -1,0 +1,30 @@
+{
+ "units": 4886,
+ "compiled_o2": 3908,
+ "c_bytes": 58709947,
+ "o0_seconds": 88.97,
+ "o2_seconds": 105.12,
+ "worst_by_o2_seconds": {
+  "file": "diagnosticInformationMap.generated.ts",
+  "where": "diagnosticInformationMap.generated.ts:12:1",
+  "name": "",
+  "kind": "KindVariableStatement",
+  "c_bytes": "6043752",
+  "largest_function": "adamic_initialize_chunk_imported________expo___diagnosticInformationMap_generated_ts_70d04835f5036edb68a699eed2eaeab3",
+  "largest_function_lines": "131",
+  "o2_wall_s": "1.84",
+  "o2_rss_kb": "110528"
+ },
+ "worst_by_seconds_per_mb_over_100kb": {
+  "file": "scanner.ts",
+  "where": "scanner.ts:4096:1",
+  "name": "",
+  "kind": "KindVariableStatement",
+  "c_bytes": "167902",
+  "largest_function": "adamic_initialize_chunk_imported________expo____0_____export_false___11___scanner_ts_382a99336f9d4f1d1b8e66c9f579b2db",
+  "largest_function_lines": "131",
+  "o2_wall_s": "0.2",
+  "o2_rss_kb": "64552",
+  "o2_seconds_per_mb": 1.19
+ }
+}

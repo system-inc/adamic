@@ -1,0 +1,52 @@
+"""Scratch instrument (#0gvtg3y). Copies the latent overlay builder and layers the unit-C hooks on it.
+
+usage: make_unit_c_overlay.py REPOSITORY SCRATCH_DIR INSTRUMENT_DIR
+Production files are read, never written; every change lands in SCRATCH_DIR through the Go overlay.
+"""
+import json, pathlib, subprocess, sys
+
+repository = pathlib.Path(sys.argv[1]).resolve()
+scratch = pathlib.Path(sys.argv[2]).resolve()
+mine = pathlib.Path(sys.argv[3]).resolve()
+territory = repository / 'stage3/census/latent'
+scratch.mkdir(parents=True, exist_ok=True)
+
+# 1. The latent builder, with only its own text templates swapped for ours (units.go.txt, main.go.txt).
+builder = (territory / 'make_overlay.py').read_text()
+builder = builder.replace("territory = pathlib.Path(__file__).resolve().parent",
+                          "territory = pathlib.Path(%r)\nmine = pathlib.Path(%r)" % (str(territory), str(mine)))
+for old, new in [("(territory / 'units.go.txt')", "(mine / 'units.go.txt')"),
+                 ("(territory / 'main.go.txt')", "(mine / 'main.go.txt')")]:
+    assert builder.count(old) == 1, old
+    builder = builder.replace(old, new)
+(mine / 'make_overlay_copy.py').write_text(builder)
+subprocess.run([sys.executable, str(mine / 'make_overlay_copy.py'), str(repository), str(scratch)], check=True)
+
+plan = json.loads((scratch / 'overlay.json').read_text())
+replace = plan['Replace']
+
+def add(name, text):
+    out = scratch / name.replace('/', '_')
+    out.write_text(text)
+    replace[str(repository / name)] = str(out)
+
+# 2. The lower-side finish and the sink hook.
+add('internal/lower/latent_unit_c.go', (mine / 'unit_c.go.txt').read_text())
+add('internal/native/latent_extern.go', (mine / 'latent_extern.go.txt').read_text())
+
+# 3. The emitter learns two things only: a function or global in the extern sets is declared extern and given no body.
+emit = (repository / 'internal/native/emit.go').read_text()
+def swap(text, old, new):
+    assert text.count(old) == 1, old
+    return text.replace(old, new)
+emit = swap(emit, '\tfor index, function := range program.Functions {\n\t\tif function.Async {',
+            '\tfor index, function := range program.Functions {\n\t\tif LatentExternFunctions[index] {\n\t\t\tcontinue\n\t\t}\n\t\tif function.Async {')
+emit = swap(emit, '\t\tglobals = true\n\t\tfmt.Fprintf(&builder, "static %s %s = %s;\\n", cType(local.Type), emitter.localName(index), zeroInitializer(local.Type))\n\t\tfmt.Fprintf(&builder, "static bool %s = false;\\n", emitter.readyName(index))\n\t\tif local.Uninitialized {\n\t\t\tfmt.Fprintf(&builder, "static bool %s_declared = false;\\n", emitter.readyName(index))\n\t\t}\n',
+            '\t\tglobals = true\n\t\tif LatentExternGlobals[index] {\n\t\t\tfmt.Fprintf(&builder, "extern %s %s;\\n", cType(local.Type), emitter.localName(index))\n\t\t\tfmt.Fprintf(&builder, "extern bool %s;\\n", emitter.readyName(index))\n\t\t\tif local.Uninitialized {\n\t\t\t\tfmt.Fprintf(&builder, "extern bool %s_declared;\\n", emitter.readyName(index))\n\t\t\t}\n\t\t\tcontinue\n\t\t}\n\t\tfmt.Fprintf(&builder, "static %s %s = %s;\\n", cType(local.Type), emitter.localName(index), zeroInitializer(local.Type))\n\t\tfmt.Fprintf(&builder, "static bool %s = false;\\n", emitter.readyName(index))\n\t\tif local.Uninitialized {\n\t\t\tfmt.Fprintf(&builder, "static bool %s_declared = false;\\n", emitter.readyName(index))\n\t\t}\n')
+emit = swap(emit, '\t\t\t\tfmt.Fprintf(&builder, "static %s %s;\\n", shape, emitter.functionName(index))\n\t\t\t} else {\n\t\t\t\tfmt.Fprintf(&builder, "static %s;\\n", emitter.signature(index))\n',
+            '\t\t\t\tfmt.Fprintf(&builder, "%s %s %s;\\n", latentStorage(index), shape, emitter.functionName(index))\n\t\t\t} else {\n\t\t\t\tfmt.Fprintf(&builder, "%s %s;\\n", latentStorage(index), emitter.signature(index))\n')
+emit += '\nfunc latentStorage(index int) string {\n\tif LatentExternFunctions[index] {\n\t\treturn "extern"\n\t}\n\treturn "static"\n}\n'
+add('internal/native/emit.go', emit)
+
+(scratch / 'overlay.json').write_text(json.dumps(plan))
+print('overlay ready', len(replace), 'replacements')

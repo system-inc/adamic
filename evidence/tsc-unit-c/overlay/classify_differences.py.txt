@@ -1,0 +1,47 @@
+"""Step 4, second half: why a unit's function differs from the real output's. Classifies each differing function pair.
+
+usage: classify_differences.py PROOF_DIR [--show-other N]
+A pair is 'field-layout' when every differing line (either side) reads or writes an object field, which the emitter decides
+from the whole program's layouts (native/fields.go uniformFieldOffsets). 'module-init' is a unit's outlined module
+initializer, which holds one statement where the real one holds all. 'other' is everything left, printed for reading.
+"""
+import json, pathlib, sys, difflib, re
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from compare_functions_lib import functions
+
+FIELD = re.compile(r'ADAMIC_UNIFORM_OBJECT|adamic_object_data_field|->shape == &adamic_shape_layout|adamic_object_check_data_write|adamic_cache_slot|adamic_object_set_data_field|->shape ==')
+proof = pathlib.Path(sys.argv[1])
+show = int(sys.argv[sys.argv.index('--show-other') + 1]) if '--show-other' in sys.argv else 0
+real = functions((proof / 'real.c').read_text())
+counts = {'identical': 0, 'field-layout': 0, 'module-init': 0, 'absent-module-init': 0, 'other': 0}
+others = []
+bytes_real = bytes_unit = 0
+for line in open(proof / 'units' / 'units.jsonl'):
+    row = json.loads(line)
+    if row['status'] != 'emitted':
+        continue
+    for name, body in functions((proof / 'units' / row['c']).read_text()).items():
+        if name == 'main':
+            continue
+        if re.match(r'adamic_initialize_(chunk_)?', name):
+            counts['absent-module-init' if name not in real else 'module-init'] += 1
+            continue
+        if name not in real:
+            counts['other'] += 1
+            others.append((row['n'], name, 'absent from real'))
+            continue
+        pair = (len(real[name]), len(body))
+        if real[name] == body:
+            counts['identical'] += 1
+            continue
+        bytes_real += pair[0]; bytes_unit += pair[1]
+        a, b = real[name].split('\n'), body.split('\n')
+        changed = [l[1:] for l in difflib.unified_diff(a, b, lineterm='', n=0) if l[:1] in '+-' and l[:3] not in ('+++', '---')]
+        if all(FIELD.search(l) for l in changed):
+            counts['field-layout'] += 1
+        else:
+            counts['other'] += 1
+            others.append((row['n'], name, '\n'.join(l[:300] for l in changed if not FIELD.search(l))[:900]))
+print(proof.name, counts, 'differing functions: real bytes', bytes_real, 'unit bytes', bytes_unit, 'ratio %.3f' % (bytes_unit / bytes_real if bytes_real else 1))
+for n, name, why in others[:show]:
+    print('  unit', n, name, '\n', why)

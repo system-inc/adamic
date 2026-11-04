@@ -1,0 +1,48 @@
+"""Step 4 proof: every function a unit's C defines, compared byte for byte with the same function in `adamic c`'s output.
+
+usage: compare_functions.py PROOF_DIR   (PROOF_DIR holds real.c and units/*.c from the instrument)
+"""
+import json, pathlib, sys, difflib, re
+
+def functions(text):
+    """name -> definition text, for each top-level `static ... name(...) {` ... `}`; `main` kept as 'main'."""
+    out, lines, i = {}, text.split('\n'), 0
+    while i < len(lines):
+        line = lines[i]
+        if (line.startswith('static ') or line.startswith('int main(')) and line.endswith('{'):
+            head = line.split('(')[0]
+            name = head.split()[-1].lstrip('*')
+            j = i
+            while lines[j] != '}':
+                j += 1
+            out[name] = '\n'.join(lines[i:j + 1])
+            i = j
+        i += 1
+    return out
+
+proof = pathlib.Path(sys.argv[1])
+real = functions((proof / 'real.c').read_text())
+rows = [json.loads(l) for l in open(proof / 'units' / 'units.jsonl')]
+identical = different = absent = 0
+details = []
+for row in rows:
+    if row['status'] != 'emitted':
+        continue
+    unit = functions((proof / 'units' / row['c']).read_text())
+    for name, body in unit.items():
+        if name == 'main':
+            continue
+        if name not in real:
+            absent += 1
+            details.append((row['n'], row['name'] or row['kind'], name, 'ABSENT from real output', ''))
+        elif real[name] == body:
+            identical += 1
+        else:
+            different += 1
+            diff = '\n'.join(difflib.unified_diff(real[name].split('\n'), body.split('\n'), 'real', 'unit', lineterm='', n=1))
+            details.append((row['n'], row['name'] or row['kind'], name, 'DIFFERENT', diff))
+print(f'{proof.name}: units={len(rows)} functions identical={identical} different={different} absent={absent}')
+for n, label, name, what, diff in details:
+    print(f'  unit {n} ({label}) {name}: {what}')
+    if diff:
+        print('\n'.join('    ' + l for l in diff.split('\n')[:40]))

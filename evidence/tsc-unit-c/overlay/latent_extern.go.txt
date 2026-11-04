@@ -1,0 +1,4 @@
+package native
+
+// Scratch instrument (#0gvtg3y): functions and globals outside a unit are declared, not defined.
+var LatentExternFunctions, LatentExternGlobals map[int]bool

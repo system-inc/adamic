@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+"""Post-pass of the instrument: drop `extern ...;` declarations whose name occurs nowhere outside extern lines.
+
+The emitter writes some prototypes twice, so the Go-side filter (a count of 1) kept them; this one counts occurrences in
+non-extern text. A real split would declare only what a unit reaches. usage: filter_externs.py DIR...  (rewrites *.c)
+"""
+import os, re, sys
+ID = re.compile(r'[A-Za-z_][A-Za-z0-9_]*')
+total_in = total_out = files = 0
+for directory in sys.argv[1:]:
+    for name in sorted(os.listdir(directory)):
+        if not name.endswith('.c'):
+            continue
+        path = os.path.join(directory, name)
+        lines = open(path, encoding='utf-8', errors='replace').read().split('\n')
+        body = [l for l in lines if not (l.startswith('extern ') and l.endswith(';'))]
+        used = set(ID.findall('\n'.join(body)))
+        kept = []
+        for l in lines:
+            if l.startswith('extern ') and l.endswith(';'):
+                head = l.split('(')[0] if '(' in l else l[:-1]
+                names = ID.findall(head)
+                if not names or names[-1] not in used:
+                    continue
+            kept.append(l)
+        total_in += sum(len(l) + 1 for l in lines); total_out += sum(len(l) + 1 for l in kept)
+        open(path, 'w', encoding='utf-8').write('\n'.join(kept))
+        files += 1
+print(files, 'files', total_in, '->', total_out, 'bytes')

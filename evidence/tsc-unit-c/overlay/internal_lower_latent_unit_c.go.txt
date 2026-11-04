@@ -1,0 +1,106 @@
+// Scratch instrument (#0gvtg3y): after a census unit lowers clean, run what lowerChecked runs after
+// lowering, then hand the unit's program to a sink that emits C. Never in production.
+package lower
+
+import (
+	"fmt"
+	"runtime/debug"
+	"time"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/flow"
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+type LatentUnitProgram struct {
+	File, Where, Name, Kind string
+	Program                 *ir.Program
+	ExternFunctions         map[int]bool
+	ExternGlobals           map[int]bool
+	// Phase and Error are set instead of Program when a step after lowering fails.
+	Phase, Error string
+	Seconds      float64
+}
+
+var LatentUnitSink func(LatentUnitProgram)
+
+// latentEmitUnit mirrors lowerChecked from "lowering.result.Main = append(forwarderValues, ...)" to its end.
+func (l *lowering) latentEmitUnit(file *ast.SourceFile, fileName, where, name, kind string, main []ir.Statement, unitFunction, baseFunctions, baseLocals int) {
+	if LatentUnitSink == nil {
+		return
+	}
+	out := LatentUnitProgram{File: fileName, Where: where, Name: name, Kind: kind}
+	started := time.Now()
+	phase := "start"
+	defer func() {
+		if failure := recover(); failure != nil {
+			out.Program, out.Phase, out.Error = nil, phase, fmt.Sprint("panic: ", failure, "\n", string(debug.Stack()))
+		}
+		out.Seconds = time.Since(started).Seconds()
+		LatentUnitSink(out)
+	}()
+	modules := []*ast.SourceFile{file}
+	l.entry = file
+	l.result.Source = "unit"
+	l.result.Main = append(append([]ir.Statement{}, l.forwarderValues...), main...)
+	if len(main) > 0 {
+		module := fileName
+		func() {
+			defer func() { _ = recover() }()
+			module = l.modulePath(file)
+		}()
+		l.result.MainModules = []ir.MainModule{{Module: module, Statements: len(main)}}
+	}
+	steps := []struct {
+		name string
+		run  func() error
+	}{
+		{"unlowerable", func() error { return l.unlowerable }},
+		{"finishClassCalls", func() error { l.finishClassCalls(); return nil }},
+		{"finishAccessors", l.finishAccessors},
+		{"finishToPrimitive", func() error { l.finishToPrimitive(); return nil }},
+		{"exceptions", l.exceptions},
+		{"checkLibrarySpreads", func() error { return l.checkLibrarySpreads(modules) }},
+		{"checkAccessorSpreads", l.checkAccessorSpreads},
+		{"checkRecordGuardedReads", l.checkRecordGuardedReads},
+		{"checkDynamicKeyedGetters", l.checkDynamicKeyedGetters},
+		{"NormalizeAsync", func() error { return flow.NormalizeAsync(l.result) }},
+		// findCycles is omitted: it walks the whole source file (not the unit) and, on binder.ts, recurses without bound in
+		// checkLazyViewReads (allocationFlowGraph.reachingAllocations). Its work is graph-region and cycle ownership marking.
+		{"checkViewOptionalWrites", l.checkViewOptionalWrites},
+		{"checkViewCopies", l.checkViewCopies},
+		{"checkViewWidenedReads", l.checkViewWidenedReads},
+		{"asyncPayloadFailures", func() error {
+			if len(l.asyncPayloadFailures) > 0 {
+				return l.asyncPayloadFailures[0]
+			}
+			return nil
+		}},
+		{"checkPromiseConsumption", l.checkPromiseConsumption},
+		{"checkViewLogicalWrites", l.checkViewLogicalWrites},
+		{"readiness", func() error { readiness(l.result); return nil }},
+		{"borrow", func() error { borrow(l.result); return nil }},
+		{"counters", func() error { counters(l.result); return nil }},
+		{"voidDiscards", l.voidDiscards},
+	}
+	for _, step := range steps {
+		phase = step.name
+		if err := step.run(); err != nil {
+			out.Phase, out.Error = step.name, err.Error()
+			return
+		}
+	}
+	phase = "extern"
+	out.ExternFunctions, out.ExternGlobals = map[int]bool{}, map[int]bool{}
+	for index := 0; index < baseFunctions && index < len(l.result.Functions); index++ {
+		if index != unitFunction && len(l.result.Functions[index].Body) == 0 {
+			out.ExternFunctions[index] = true
+		}
+	}
+	for index := 0; index < baseLocals && index < len(l.result.Locals); index++ {
+		if l.result.Locals[index].Global {
+			out.ExternGlobals[index] = true
+		}
+	}
+	out.Program = l.result
+}

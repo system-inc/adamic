@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+"""Step 1 and 2: the clean units in a latent census JSONL.
+
+A clean unit is attempted (status 'attempted'), with no NotYet, no Refused, no panic and no SkippedDependency finding
+attributed to it (finding.unit == unit.where). usage: clean_units.py LATENT.jsonl OUT.csv  (prints a summary)
+"""
+import csv, collections, json, sys
+
+path, out = sys.argv[1], sys.argv[2]
+statuses = collections.Counter()
+bad = {'NotYet', 'Refused', 'panic', 'SkippedDependency'}
+clean = []
+attempted = 0
+for line in open(path):
+    record = json.loads(line)
+    if 'units' not in record:
+        continue
+    file = record['file']
+    findings = collections.defaultdict(list)
+    for finding in record.get('findings') or []:
+        findings[finding['unit']].append(finding['kind'])
+    for unit in record['units']:
+        statuses[unit['status']] += 1
+        if unit['status'] != 'attempted':
+            continue
+        attempted += 1
+        kinds = set(findings.get(unit['where'], []))
+        if not kinds & bad and not kinds - {'Boundary'}:
+            clean.append((file.split('/src/')[-1], unit['where'].split('/src/')[-1], unit['kind'], unit.get('name', ''), unit.get('depth', 0), unit.get('top', '').split('/src/')[-1]))
+with open(out, 'w', newline='') as handle:
+    writer = csv.writer(handle)
+    writer.writerow(['file', 'where', 'kind', 'name', 'depth', 'top'])
+    writer.writerows(clean)
+print('units by status', dict(statuses))
+print('attempted', attempted, 'clean', len(clean))
+by_file = collections.Counter(c[0] for c in clean)
+print('files with a clean unit', len(by_file))

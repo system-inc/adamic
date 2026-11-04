@@ -1,0 +1,161 @@
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
+	"regexp"
+	"strings"
+	"os"
+	"path/filepath"
+	"sort"
+)
+
+func main() {
+	if len(os.Args) != 3 {
+		panic("usage: latent source-directory output.json")
+	}
+	var paths []string
+	err := filepath.WalkDir(os.Args[1], func(path string, entry os.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if !entry.IsDir() && (filepath.Ext(path) == ".ts" || filepath.Ext(path) == ".a") {
+			paths = append(paths, path)
+		}
+		return nil
+	})
+	if err != nil {
+		panic(err)
+	}
+	sort.Strings(paths)
+	output, err := os.Create(os.Args[2])
+	if err != nil {
+		panic(err)
+	}
+	defer output.Close()
+	encoder := json.NewEncoder(output)
+	program, err := load.LatentLoad(paths)
+	if err != nil {
+		panic(err)
+	}
+	if os.Getenv("LATENT_ASSERT_NO_OUTPUT") != "" {
+		output, failure := lower.Lower(context.Background(), program)
+		if output != nil || failure == nil || failure.Error() != "latent census: measurement only; no IR output" {
+			panic("measurement returned usable IR")
+		}
+		outputProgram, failure := load.Load(paths)
+		if outputProgram != nil || failure == nil {
+			panic("measurement loader exposed an output program")
+		}
+	}
+	installUnitSink()
+	diagnostics := program.LatentDiagnostics()
+	if diagnostics == nil {
+		diagnostics = []string{}
+	}
+	if err := encoder.Encode(map[string]any{"measurement": lower.LatentMeasurementLabel, "status": "measurement", "latent_mode": censusMode(), "checker_rejected": len(diagnostics) > 0, "diagnostics": diagnostics, "diagnostic_sites": program.LatentDiagnosticSites()}); err != nil {
+		panic(err)
+	}
+	lower.Latent(context.Background(), program, func(record lower.LatentFile) {
+		if err := encoder.Encode(record); err != nil {
+			panic(err)
+		}
+		if err := output.Sync(); err != nil { panic(err) }
+		fmt.Fprintln(os.Stderr, record.File, len(record.Units), len(record.Findings), lower.LatentMeasurementLabel)
+	})
+
+}
+
+func censusMode() string {
+	if os.Getenv("LATENT_SPECULATIVE") == "1" && os.Getenv("LATENT_MUTANT_NO_STUBS") != "1" {
+		return "speculative"
+	}
+	if os.Getenv("LATENT_FULL") == "1" {
+		return "full"
+	}
+	return "first-error"
+}
+
+// Scratch instrument (#0gvtg3y). LATENT_C_DIR receives one u<N>.c per clean unit and units.jsonl, one row per unit that
+// reached the sink: a program emitted, or the first error after lowering.
+var identifier = regexp.MustCompile(`[A-Za-z_][A-Za-z0-9_]*`)
+
+func installUnitSink() {
+	directory := os.Getenv("LATENT_C_DIR")
+	if directory == "" {
+		return
+	}
+	if err := os.MkdirAll(directory, 0o755); err != nil {
+		panic(err)
+	}
+	rows, err := os.Create(filepath.Join(directory, "units.jsonl"))
+	if err != nil {
+		panic(err)
+	}
+	encoder := json.NewEncoder(rows)
+	count := 0
+	lower.LatentUnitSink = func(unit lower.LatentUnitProgram) {
+		count++
+		row := map[string]any{"finish_seconds": unit.Seconds, "n": count, "file": unit.File, "where": unit.Where, "name": unit.Name, "kind": unit.Kind}
+		if unit.Error != "" {
+			row["status"], row["phase"], row["error"] = "post_lowering_error", unit.Phase, unit.Error
+		} else {
+			func() {
+				defer func() {
+					if failure := recover(); failure != nil {
+						row["status"], row["phase"], row["error"] = "emit_panic", "native.CWithOptions", fmt.Sprint(failure)
+					}
+				}()
+				native.LatentExternFunctions, native.LatentExternGlobals = unit.ExternFunctions, unit.ExternGlobals
+				source := native.CWithOptions(unit.Program, native.Options{Release: true})
+				native.LatentExternFunctions, native.LatentExternGlobals = nil, nil
+				full := len(source)
+				source, dropped := dropUnusedExterns(source)
+				name := fmt.Sprintf("u%05d.c", count)
+				if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
+					panic(err)
+				}
+				row["status"], row["c"] = "emitted", name
+				row["extern_functions"], row["extern_globals"] = len(unit.ExternFunctions), len(unit.ExternGlobals)
+				row["c_bytes_before_extern_filter"], row["extern_lines_dropped"] = full, dropped
+			}()
+		}
+		if err := encoder.Encode(row); err != nil {
+			panic(err)
+		}
+		rows.Sync()
+	}
+}
+
+// dropUnusedExterns removes extern declarations nothing in the unit names: the instrument declares every function
+// and global outside the unit, where a real split would declare only what the unit reaches.
+func dropUnusedExterns(source string) (string, int) {
+	counts := map[string]int{}
+	for _, name := range identifier.FindAllString(source, -1) {
+		counts[name]++
+	}
+	lines := strings.Split(source, "\n")
+	kept := lines[:0]
+	dropped := 0
+	for _, line := range lines {
+		if strings.HasPrefix(line, "extern ") && strings.HasSuffix(line, ";") {
+			declaration := line
+			if open := strings.Index(declaration, "("); open >= 0 {
+				declaration = declaration[:open]
+			} else {
+				declaration = strings.TrimSuffix(declaration, ";")
+			}
+			names := identifier.FindAllString(declaration, -1)
+			if len(names) > 0 && counts[names[len(names)-1]] <= 1 {
+				dropped++
+				continue
+			}
+		}
+		kept = append(kept, line)
+	}
+	return strings.Join(kept, "\n"), dropped
+}

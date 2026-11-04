@@ -1,0 +1,45 @@
+user_iterators {'identical': 475, 'field-layout': 157, 'module-init': 69, 'absent-module-init': 68, 'other': 7} differing functions: real bytes 1313810 unit bytes 1258877 ratio 0.958
+  unit 19 adamic_function_collect_iterator_9b9b273a7e33e14b4e43ef3c07de1ff5 
+ 				adamic_value adamic_temporary_body__b99337f112539b1e70511799aa4370dd_9 = adamic_local_36957680844485520580255513679852682069_mapper->code(adamic_local_36957680844485520580255513679852682069_mapper, (adamic_value[]){{.number = adamic_temporary_body__b99337f112539b1e70511799aa4370dd_8}, {.number =
+				adamic_value adamic_temporary_body__b99337f112539b1e70511799aa4370dd_9 = adamic_local_36957680844485520580255513679852682069_mapper->code(adamic_local_36957680844485520580255513679852682069_mapper, (adamic_value[]){{.number = adamic_temporary_body__b99337f112539b1e70511799aa4370dd_8}});
+  unit 22 adamic_function_collect_iterator_c148db99dd1474688f568bea6206c7b2 
+ 	adamic_value adamic_temporary_body__413d8005bfa72bd79ffedaba5ce401d2_2 = adamic_temporary_body__413d8005bfa72bd79ffedaba5ce401d2_1->code(adamic_temporary_body__413d8005bfa72bd79ffedaba5ce401d2_1, (adamic_value[]){{.reference = adamic_local_242663465614906524033686636316118119201_iterable}, {.number
+	if (adamic_thrown != NULL) {
+		adamic_release(adamic_temporary_body__413d8005bfa72bd79ffedaba5ce401d2_1);
+		return NULL;
+	}
+	adamic_value adamic_temporary_body__413d8005bfa72bd79ffedaba5ce401d2_2 = adamic_temporary_body__413d8005bfa72bd79ffedaba5ce401d2_1->code(adamic_temporary_body__413d8005bfa72bd79ffedaba5ce401d2_1, (adamic_value[]){{.reference = adamic_local_242663465614906524033686636316118119201_iterable}});
+			adamic_value adamic_temporary_body__413d8005bfa72bd79ffedaba5ce401d2_8 = adamic_local_246556888670592116144136895865692320999_iterator_next->code(adamic_local_246556888670592116
+  unit 23 adamic_function_invoke_method_a93e9b52dc10aa45700849d663172085 
+ 	adamic_value adamic_temporary_body__e2b11ecc45127ed56b3b96a934107a44_2 = adamic_temporary_body__e2b11ecc45127ed56b3b96a934107a44_1->code(adamic_temporary_body__e2b11ecc45127ed56b3b96a934107a44_1, (adamic_value[]){{.reference = adamic_local_115019000092624422127266836696728348899_argument}, {.number
+	if (adamic_thrown != NULL) {
+		adamic_release(adamic_temporary_body__e2b11ecc45127ed56b3b96a934107a44_1);
+		return NULL;
+	}
+	adamic_value adamic_temporary_body__e2b11ecc45127ed56b3b96a934107a44_2 = adamic_temporary_body__e2b11ecc45127ed56b3b96a934107a44_1->code(adamic_temporary_body__e2b11ecc45127ed56b3b96a934107a44_1, (adamic_value[]){{.reference = adamic_local_115019000092624422127266836696728348899_argument}});
+  unit 49 adamic_function_collect_iterator_7ba49c2784b1a598f3ad295096927288 
+ 	adamic_value adamic_temporary_body__ba88ffba1ee8f94b93e48e2fbfda31a0_2 = adamic_temporary_body__ba88ffba1ee8f94b93e48e2fbfda31a0_1->code(adamic_temporary_body__ba88ffba1ee8f94b93e48e2fbfda31a0_1, (adamic_value[]){{.reference = adamic_local_313906287481162286742742646807947988911_iterable}, {.number
+	if (adamic_thrown != NULL) {
+		adamic_release(adamic_temporary_body__ba88ffba1ee8f94b93e48e2fbfda31a0_1);
+		return NULL;
+	}
+	adamic_value adamic_temporary_body__ba88ffba1ee8f94b93e48e2fbfda31a0_2 = adamic_temporary_body__ba88ffba1ee8f94b93e48e2fbfda31a0_1->code(adamic_temporary_body__ba88ffba1ee8f94b93e48e2fbfda31a0_1, (adamic_value[]){{.reference = adamic_local_313906287481162286742742646807947988911_iterable}});
+			adamic_value adamic_temporary_body__ba88ffba1ee8f94b93e48e2fbfda31a0_8 = adamic_local_128808282856305173031298041233414302419_iterator_next->code(adamic_local_128808282856305173
+  unit 55 adamic_function_collect_iterator_5f952515d6f807fc46d25136950861b6 
+ 	adamic_value adamic_temporary_body__75133117af90369c1ce43d2021553147_2 = adamic_temporary_body__75133117af90369c1ce43d2021553147_1->code(adamic_temporary_body__75133117af90369c1ce43d2021553147_1, (adamic_value[]){{.reference = adamic_local_295328129141625673158586210517023165938_iterable}, {.number
+	if (adamic_thrown != NULL) {
+		adamic_release(adamic_temporary_body__75133117af90369c1ce43d2021553147_1);
+		return NULL;
+	}
+	adamic_value adamic_temporary_body__75133117af90369c1ce43d2021553147_2 = adamic_temporary_body__75133117af90369c1ce43d2021553147_1->code(adamic_temporary_body__75133117af90369c1ce43d2021553147_1, (adamic_value[]){{.reference = adamic_local_295328129141625673158586210517023165938_iterable}});
+			adamic_value adamic_temporary_body__75133117af90369c1ce43d2021553147_8 = adamic_local_299093862568612106797248903372919433066_iterator_next->code(adamic_local_299093862568612106
+  unit 70 adamic_function_collect_iterator_8c8e6e80286307c80606fc803c79b898 
+ 	adamic_value adamic_temporary_body__207a4a25e6cfa8a6a21703d41b100fe0_2 = adamic_temporary_body__207a4a25e6cfa8a6a21703d41b100fe0_1->code(adamic_temporary_body__207a4a25e6cfa8a6a21703d41b100fe0_1, (adamic_value[]){{.number = 0.0}, {.number = 0.0}});
+	if (adamic_thrown != NULL) {
+		adamic_release(adamic_temporary_body__207a4a25e6cfa8a6a21703d41b100fe0_1);
+		return NULL;
+	}
+	adamic_value adamic_temporary_body__207a4a25e6cfa8a6a21703d41b100fe0_2 = adamic_temporary_body__207a4a25e6cfa8a6a21703d41b100fe0_1->code(adamic_temporary_body__207a4a25e6cfa8a6a21703d41b100fe0_1, NULL);
+			adamic_value adamic_temporary_body__207a4a25e6cfa8a6a21703d41b100fe0_8 = adamic_local_330218600567928044397790548708609928181_iterator_next->code(adamic_local_330218600567928044397790548708609928181_iterator_next, (adamic_value[]){{.number = 0.0}, {.number = 0.0}});
+			if (adamic_thrown != NULL) {
+				adamic_release(

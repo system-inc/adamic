@@ -1,0 +1,183 @@
+--- /tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/internal/native/emit.go	2026-11-04 11:24:30.300444784 +0000
++++ /tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/ov-unitc/internal_native_emit.go	2026-11-04 12:22:52.379433596 +0000
+@@ -127,6 +127,14 @@
+ 			continue
+ 		}
+ 		globals = true
++		if LatentExternGlobals[index] {
++			fmt.Fprintf(&builder, "extern %s %s;\n", cType(local.Type), emitter.localName(index))
++			fmt.Fprintf(&builder, "extern bool %s;\n", emitter.readyName(index))
++			if local.Uninitialized {
++				fmt.Fprintf(&builder, "extern bool %s_declared;\n", emitter.readyName(index))
++			}
++			continue
++		}
+ 		fmt.Fprintf(&builder, "static %s %s = %s;\n", cType(local.Type), emitter.localName(index), zeroInitializer(local.Type))
+ 		fmt.Fprintf(&builder, "static bool %s = false;\n", emitter.readyName(index))
+ 		if local.Uninitialized {
+@@ -141,6 +149,9 @@
+ 	bodies := strings.Builder{}
+ 	emittedBodies := map[string]string{}
+ 	for index, function := range program.Functions {
++		if LatentExternFunctions[index] {
++			continue
++		}
+ 		if function.Async {
+ 			emitter.resetCounters()
+ 			bodies.WriteString(emitter.asyncFunction(index))
+@@ -240,9 +251,9 @@
+ 				if program.PackedCountNeeded(index) {
+ 					shape = "adamic_counted_code_function"
+ 				}
+-				fmt.Fprintf(&builder, "static %s %s;\n", shape, emitter.functionName(index))
++				fmt.Fprintf(&builder, "%s %s %s;\n", latentStorage(index), shape, emitter.functionName(index))
+ 			} else {
+-				fmt.Fprintf(&builder, "static %s;\n", emitter.signature(index))
++				fmt.Fprintf(&builder, "%s %s;\n", latentStorage(index), emitter.signature(index))
+ 			}
+ 		}
+ 	}
+@@ -635,3 +646,10 @@
+ 	e.caches = 0
+ 	e.regionValues = map[string]bool{}
+ }
++
++func latentStorage(index int) string {
++	if LatentExternFunctions[index] {
++		return "extern"
++	}
++	return "static"
++}
+
+--- /tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/stage3/census/latent/units.go.txt	2026-11-04 11:24:33.467638823 +0000
++++ /tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/instr/units.go.txt	2026-11-04 11:52:38.476348498 +0000
+@@ -192,9 +192,13 @@
+ 				}()
+ 				l := base.latentSnapshot()
+ 				l.latentAncestors = candidate.ancestors
++				findingsBefore, baseFunctions, baseLocals := len(latentFindings), len(base.result.Functions), len(base.result.Locals)
+ 				if node.Kind != ast.KindFunctionDeclaration {
+-					_, err := l.statement(node)
++					statements, err := l.statement(node)
+ 					latentRecord(err)
++					if len(latentFindings) == findingsBefore {
++						l.latentEmitUnit(file, record.File, unit.Where, unit.Name, unit.Kind, statements, -1, baseFunctions, baseLocals)
++					}
+ 					return
+ 				}
+ 				if node.Name() == nil {
+@@ -210,6 +214,9 @@
+ 				err := l.lowerFunction(index, node, -1)
+ 				latentRecord(err)
+ 				latentRecord(l.unlowerable)
++				if len(latentFindings) == findingsBefore {
++					l.latentEmitUnit(file, record.File, unit.Where, unit.Name, unit.Kind, nil, index, baseFunctions, baseLocals)
++				}
+ 				if err != nil {
+ 					start, end := unit.BodyStart, unit.BodyEnd
+ 					if end <= start {
+
+--- /tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/w9295/stage3/census/latent/main.go.txt	2026-11-04 11:24:33.463009475 +0000
++++ /tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad/instr/main.go.txt	2026-11-04 12:22:51.539845803 +0000
+@@ -6,6 +6,9 @@
+ 	"fmt"
+ 	"github.com/system-inc/adamic/internal/load"
+ 	"github.com/system-inc/adamic/internal/lower"
++	"github.com/system-inc/adamic/internal/native"
++	"regexp"
++	"strings"
+ 	"os"
+ 	"path/filepath"
+ 	"sort"
+@@ -49,6 +52,7 @@
+ 			panic("measurement loader exposed an output program")
+ 		}
+ 	}
++	installUnitSink()
+ 	diagnostics := program.LatentDiagnostics()
+ 	if diagnostics == nil {
+ 		diagnostics = []string{}
+@@ -75,3 +79,83 @@
+ 	}
+ 	return "first-error"
+ }
++
++// Scratch instrument (#0gvtg3y). LATENT_C_DIR receives one u<N>.c per clean unit and units.jsonl, one row per unit that
++// reached the sink: a program emitted, or the first error after lowering.
++var identifier = regexp.MustCompile(`[A-Za-z_][A-Za-z0-9_]*`)
++
++func installUnitSink() {
++	directory := os.Getenv("LATENT_C_DIR")
++	if directory == "" {
++		return
++	}
++	if err := os.MkdirAll(directory, 0o755); err != nil {
++		panic(err)
++	}
++	rows, err := os.Create(filepath.Join(directory, "units.jsonl"))
++	if err != nil {
++		panic(err)
++	}
++	encoder := json.NewEncoder(rows)
++	count := 0
++	lower.LatentUnitSink = func(unit lower.LatentUnitProgram) {
++		count++
++		row := map[string]any{"finish_seconds": unit.Seconds, "n": count, "file": unit.File, "where": unit.Where, "name": unit.Name, "kind": unit.Kind}
++		if unit.Error != "" {
++			row["status"], row["phase"], row["error"] = "post_lowering_error", unit.Phase, unit.Error
++		} else {
++			func() {
++				defer func() {
++					if failure := recover(); failure != nil {
++						row["status"], row["phase"], row["error"] = "emit_panic", "native.CWithOptions", fmt.Sprint(failure)
++					}
++				}()
++				native.LatentExternFunctions, native.LatentExternGlobals = unit.ExternFunctions, unit.ExternGlobals
++				source := native.CWithOptions(unit.Program, native.Options{Release: true})
++				native.LatentExternFunctions, native.LatentExternGlobals = nil, nil
++				full := len(source)
++				source, dropped := dropUnusedExterns(source)
++				name := fmt.Sprintf("u%05d.c", count)
++				if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
++					panic(err)
++				}
++				row["status"], row["c"] = "emitted", name
++				row["extern_functions"], row["extern_globals"] = len(unit.ExternFunctions), len(unit.ExternGlobals)
++				row["c_bytes_before_extern_filter"], row["extern_lines_dropped"] = full, dropped
++			}()
++		}
++		if err := encoder.Encode(row); err != nil {
++			panic(err)
++		}
++		rows.Sync()
++	}
++}
++
++// dropUnusedExterns removes extern declarations nothing in the unit names: the instrument declares every function
++// and global outside the unit, where a real split would declare only what the unit reaches.
++func dropUnusedExterns(source string) (string, int) {
++	counts := map[string]int{}
++	for _, name := range identifier.FindAllString(source, -1) {
++		counts[name]++
++	}
++	lines := strings.Split(source, "\n")
++	kept := lines[:0]
++	dropped := 0
++	for _, line := range lines {
++		if strings.HasPrefix(line, "extern ") && strings.HasSuffix(line, ";") {
++			declaration := line
++			if open := strings.Index(declaration, "("); open >= 0 {
++				declaration = declaration[:open]
++			} else {
++				declaration = strings.TrimSuffix(declaration, ";")
++			}
++			names := identifier.FindAllString(declaration, -1)
++			if len(names) > 0 && counts[names[len(names)-1]] <= 1 {
++				dropped++
++				continue
++			}
++		}
++		kept = append(kept, line)
++	}
++	return strings.Join(kept, "\n"), dropped
++}

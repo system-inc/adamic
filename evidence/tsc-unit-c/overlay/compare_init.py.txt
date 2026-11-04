@@ -1,0 +1,56 @@
+"""Step 4, module-init half: does the unit's outlined module initializer appear, statement for statement, inside the real one?
+
+A unit holding top-level statement S has an initializer whose body is only S's C. The real initializer holds every
+statement's C in order, in chunks. So the unit's body lines, with temporaries renumbered by first appearance (the real
+counter keeps counting across statements, the unit's starts again), should occur as a contiguous run of the real lines.
+usage: compare_init.py PROOF_DIR
+"""
+import json, pathlib, re, sys
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from compare_functions_lib import functions
+
+COUNTER = re.compile(r'(adamic_temporary_module_[A-Za-z0-9_]*_|adamic_(?:done|break|continue|label|catch)_?)(\d+)(?![0-9A-Za-z_])')
+
+def body(text):
+    # The emitter joins some statements without a newline, so compare token streams, not lines.
+    return ' '.join(text.split('\n')[1:-1]).split()
+
+def renumber(lines):
+    seen = {}
+    def sub(match):
+        key = match.group(0)
+        if key not in seen:
+            seen[key] = len(seen) + 1
+        return match.group(1) + 'N%d' % seen[key]
+    return [COUNTER.sub(sub, l) for l in lines]
+
+proof = pathlib.Path(sys.argv[1])
+real = functions((proof / 'real.c').read_text())
+real_lines = []
+for name, text in real.items():
+    if name.startswith('adamic_initialize') or name == 'main' or name.startswith('adamic_main_'):
+        real_lines += body(text)
+SHAPE = re.compile(r'(adamic_temporary_module_[A-Za-z0-9_]*_|adamic_(?:done|break|continue|label|catch)_?)\d+(?![0-9A-Za-z_])')
+real_shapes = [SHAPE.sub(r'\1N', l) for l in real_lines]
+matched = total = 0
+misses = []
+for line in open(proof / 'units' / 'units.jsonl'):
+    row = json.loads(line)
+    if row['status'] != 'emitted':
+        continue
+    unit = functions((proof / 'units' / row['c']).read_text())
+    inits = [n for n in unit if re.match(r'adamic_initialize_(?!chunk)', n)]
+    if not inits:
+        continue
+    want = body(unit[inits[0]])
+    if not want:
+        continue
+    total += 1
+    key = renumber(want)
+    shape = [SHAPE.sub(r'\1N', l) for l in want]
+    found = any(real_shapes[i:i + len(want)] == shape and renumber(real_lines[i:i + len(want)]) == key
+                for i in range(len(real_lines) - len(want) + 1) if real_shapes[i] == shape[0])
+    matched += found
+    if not found:
+        misses.append((row['n'], row['kind'], len(want)))
+print(f'{proof.name}: statement units with an initializer body={total} found as a run of the real initializer={matched}; missed={misses[:12]}')

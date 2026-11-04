@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# run_shard.sh KIND TREE I : KIND unitc|plain, TREE w9295|we4c3, shard I. Output beside the other scratch files.
+set -uo pipefail
+S=/tmp/claude-0/-home-user-adamic/52b15d60-cb17-5c07-9e30-3b1b185f5158/scratchpad
+KIND=$1; TREE=$2; I=$3
+case $KIND in unitc) BIN=$S/unitc-census;; plain) BIN=$S/latent-census; [ "$TREE" = we4c3 ] && BIN=$S/latent-census-e4;; esac
+FILES=$(sed "s#adapted-w9295#adapted-$TREE#g" "$S/shard$I.txt")
+OUT=$S/out-$KIND-$TREE; mkdir -p "$OUT"
+cd "$S/$TREE"
+export LATENT_FULL=1 LATENT_ONLY_FILE="$FILES" GOGC=30 GOMEMLIMIT=6GiB LATENT_TIMES=$OUT/times-$I.jsonl
+[ "$KIND" = unitc ] && export LATENT_C_DIR=$OUT/units-$I
+"$BIN" "$S/adapted-$TREE/src/compiler" "$OUT/census-$I.jsonl" > "$OUT/run-$I.log" 2>&1
+echo "$KIND $TREE shard $I exit=$?" >> "$S/shards.log"
