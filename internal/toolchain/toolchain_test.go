@@ -92,7 +92,7 @@ func TestAToolsEnvironmentIsWhatTheKeyReadsAndNothingElse(t *testing.T) {
 		t.Setenv(name, "set-"+name)
 	}
 	for name, value := range map[string]string{
-		"HOME": "/home/someone", "TMPDIR": "/scratch", "GOCACHE": "/cache", "GOCACHEPROG": "/bin/cacheprog", "ADAMIC_GOCACHE_STORE": "off",
+		"HOME": "/home/someone", "TMPDIR": "/scratch", "GOCACHE": "/cache", "GOCACHEPROG": "/bin/cacheprog", "ADAMIC_GOCACHE_STORE": "off", "GOCOVERDIR": "/scratch/cover",
 		// None of these may reach a tool.
 		"ADAMIC_JUNK": "/tmp", "GOENV": "/home/someone/go.env", "GIT_DIR": "/nonexistent", "GIT_INDEX_FILE": "/nonexistent", "GOROOT": "/other/go",
 		"GODEBUG": "x=1", "GO111MODULE": "off", "SDKROOT": "/sdk", "LD_LIBRARY_PATH": "/lib", "ZERO_AR_DATE": "",
@@ -107,7 +107,7 @@ func TestAToolsEnvironmentIsWhatTheKeyReadsAndNothingElse(t *testing.T) {
 	}
 	for name, want := range map[string]string{
 		"GOFLAGS": "-tags=request", "EXTRA": "1", "HOME": "/home/someone", "TMPDIR": "/scratch", "GOCACHE": "/cache", "GOCACHEPROG": "/bin/cacheprog",
-		"ADAMIC_GOCACHE_STORE": "off", "GOENV": "off", "ZERO_AR_DATE": "1",
+		"ADAMIC_GOCACHE_STORE": "off", "GOENV": "off", "ZERO_AR_DATE": "1", "GOCOVERDIR": "/scratch/cover",
 		"PATH": filepath.Join(tools, "bin") + string(filepath.ListSeparator) + "/usr/bin" + string(filepath.ListSeparator) + "/bin",
 	} {
 		if environment[name] != want {
