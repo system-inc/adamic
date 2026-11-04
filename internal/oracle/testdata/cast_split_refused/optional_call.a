@@ -1,0 +1,6 @@
+// a-check: refused a cast the runtime can't check
+// An optional call may give undefined instead of an array, so the proof never reads one.
+function pieces(text: string | undefined): number {
+	return (text?.split(/a/) as string[]).length;
+}
+console.log(pieces('xaz'));

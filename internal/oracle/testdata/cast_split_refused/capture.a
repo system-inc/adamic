@@ -1,0 +1,4 @@
+// a-check: refused a cast the runtime can't check
+// An unnamed capture that takes no part in a match is undefined in split's result, so the cast is a downcast.
+const pieces = 'xbz'.split(/(a)|b/) as string[];
+console.log(pieces.length);

@@ -1,0 +1,4 @@
+// a-check: refused a cast the runtime can't check
+// A named capture is a capture too: unmatched, it is undefined in split's result.
+const pieces = 'xbz'.split(/(?<x>a)|b/) as string[];
+console.log(pieces.length);

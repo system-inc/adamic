@@ -1,0 +1,7 @@
+// a-check: refused a cast the runtime can't check
+// semver.ts:287's shape: a const bound to a capture-free literal, but the proof reads only a literal written at
+// the call, so the separator held in a variable stays refused.
+const whitespaceRegExp = /\s+/;
+const range = '>=1.0.0 <2.0.0';
+const pieces = range.split(whitespaceRegExp) as string[];
+console.log(pieces.length);
