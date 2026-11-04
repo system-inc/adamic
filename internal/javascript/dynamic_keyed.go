@@ -138,7 +138,7 @@ func dynamicHostRuntime(program *ir.Program) string {
 	builder.WriteString("const adamicHostStop = key => panic(`" + message + " (reading '${key}')`);\n")
 	builder.WriteString("const adamicDynamicHas = (value, key) => adamicHostValue(value) ? adamicHostStop(key) : key in value;\n")
 	builder.WriteString("const adamicDynamicRead = (value, key) => adamicHostValue(value) ? adamicHostStop(key) : value[key];\n")
-	builder.WriteString("const adamicHostKeys = value => adamicHostValue(value) ? adamicHostStop('keys') : Object.keys(value);\n")
+	builder.WriteString("const adamicHostKeys = value => adamicHostValue(value) ? panic(" + quote(ir.DynamicKeysStop) + ") : Object.keys(value);\n")
 	builder.WriteString("const adamicHostHasOwn = (value, key) => adamicHostValue(value) ? adamicHostStop(key) : value.hasOwnProperty(key);\n")
 	builder.WriteString("const adamicHostCheck = (value, key) => adamicHostValue(value) ? adamicHostStop(key) : true;\n")
 	return builder.String()
