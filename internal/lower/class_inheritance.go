@@ -591,7 +591,12 @@ func (l *lowering) classViewRefusal(node *ast.Node) error {
 	if mismatch == nil {
 		return nil
 	}
-	target = mismatch
+	return l.nominalViewRefusal(node, mismatch)
+}
+
+// nominalViewRefusal is classViewRefusal's refusal of a value seen as target, a class it has no
+// nominal ancestry in.
+func (l *lowering) nominalViewRefusal(node *ast.Node, target *checker.Type) error {
 	return &Refused{Where: l.program.Where(node), What: "a value without nominal ancestry seen as " + l.checker.TypeToString(target), Fix: "construct that class or a subclass; use an interface for structural values (adamic/nominal-class)"}
 }
 

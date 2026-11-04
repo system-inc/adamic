@@ -236,7 +236,7 @@ adopt<Animal[]>(dogs);
 }
 const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
 adopt(dogs);
-`, "main.a:12:12: Adamic 0.1 refuses instantiating a generic function makes a value of type { name: string; } written where Dog is read; make the collection readonly, or use a type parameter for the value being written"},
+`, "main.a:16:7: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read; make the wider type readonly"},
 		{"a type parameter's constraint behind a readonly property", `interface Held<Pack> {
 	readonly pack: Pack;
 }
