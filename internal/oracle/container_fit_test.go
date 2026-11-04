@@ -16,11 +16,15 @@ import (
 // a function") where Node prints true, native clang refused the C that stored an object pointer in a map
 // slot, and through a field write the native build ran and crashed. Ruled by Adamic: one check keyed on
 // representation, NotYet at the value on every road into the slot (container_fit.go). Each probe pins the
-// whole stop, .a and .ts: a ReadonlyMap literal and a ReadonlySet literal written in place, a shaped value
-// passed as a parameter, returned, and written to a field, and a class instance implementing ReadonlySet. The
-// controls lower and agree with Node on sanitized, release and JavaScript: a real Map seen as a ReadonlyMap,
-// a real Set seen as a ReadonlySet, and an array seen as a ReadonlyArray.
-// Mutant: containerWhereOtherGoes answering false lowers every probe again, and each goes red.
+// whole stop, .a and .ts, one per road (Compiler's condition on #efx3yb9's proof): a ReadonlyMap literal and
+// a ReadonlySet literal as initializers, a shaped value passed as an argument, returned, assigned, written to
+// a field, to an array element and through push, given as a Map's value (set) and inside a Map's type
+// arguments, as a record literal's value, spread into a typed object, as a class field's initializer, and
+// through a function value whose parameter is the shape, and a class instance implementing ReadonlySet. A
+// spread into a typed record stops first at its own NotYet (records.go), on main too, and is pinned
+// with that stop. The controls lower and agree with Node on sanitized, release and JavaScript: a real Map
+// seen as a ReadonlyMap, a real Set seen as a ReadonlySet, and an array seen as a ReadonlyArray.
+// Mutant: containerWhereOtherGoes answering false lowers every probe but spread_record again, each red.
 func TestContainerInterfaceValueIsNotYetWhereAMapIsHeld(t *testing.T) {
 	t.Parallel()
 	const mapMembers = "\tget(key: string) { return backing.get(key); },\n" +
@@ -48,13 +52,27 @@ func TestContainerInterfaceValueIsNotYetWhereAMapIsHeld(t *testing.T) {
 		"isSupersetOf(): boolean { return false; }",
 		"isDisjointFrom(): boolean { return false; }",
 	}
-	for _, probe := range []struct{ name, source, where string }{
-		{"map_literal", backing + "const m: ReadonlyMap<string, number> = {\n" + mapMembers + "};\nconsole.log(String(m.has('a')));\n", ":2:40"},
-		{"set_literal", "const s: ReadonlySet<number> = {\nsize: 1,\n" + strings.Join(setMembers, ",\n") + ",\n};\nconsole.log(String(s.has(1)));\n", ":1:32"},
-		{"parameter", shaped + "function probe(m: ReadonlyMap<string, number>): boolean {\n\treturn m.has('a');\n}\nconsole.log(String(probe(shaped)));\n", ":15:26"},
-		{"return", shaped + "function make(): ReadonlyMap<string, number> {\n\treturn shaped;\n}\nconsole.log(String(make().has('a')));\n", ":13:9"},
-		{"field", shaped + "const holder: { m: ReadonlyMap<string, number> } = { m: new Map<string, number>() };\nholder.m = shaped;\nconsole.log(String(holder.m.has('a')));\n", ":13:12"},
-		{"set_class", "class Shaped {\nreadonly size = 1;\n" + strings.Join(setMembers, "\n") + "\n}\nconst s: ReadonlySet<number> = new Shaped();\nconsole.log(String(s.has(1)));\n", ":17:32"},
+	shapedSet := "const shaped = {\nsize: 1,\n" + strings.Join(setMembers, ",\n") + ",\n};\n"
+	const readSet = "if (s !== undefined) {\n\tconsole.log(String(s.has(1)));\n}\n"
+	const eachSet = "for (const s of items) {\n\tconsole.log(String(s.has(1)));\n}\n"
+	const containerFit = "a Map or Set interface implemented by a value that isn't a Map or Set"
+	for _, probe := range []struct{ name, source, where, stop string }{
+		{"map_literal", backing + "const m: ReadonlyMap<string, number> = {\n" + mapMembers + "};\nconsole.log(String(m.has('a')));\n", ":2:40", containerFit},
+		{"set_literal", "const s: ReadonlySet<number> = {\nsize: 1,\n" + strings.Join(setMembers, ",\n") + ",\n};\nconsole.log(String(s.has(1)));\n", ":1:32", containerFit},
+		{"parameter", shaped + "function probe(m: ReadonlyMap<string, number>): boolean {\n\treturn m.has('a');\n}\nconsole.log(String(probe(shaped)));\n", ":15:26", containerFit},
+		{"return", shaped + "function make(): ReadonlyMap<string, number> {\n\treturn shaped;\n}\nconsole.log(String(make().has('a')));\n", ":13:9", containerFit},
+		{"field", shaped + "const holder: { m: ReadonlyMap<string, number> } = { m: new Map<string, number>() };\nholder.m = shaped;\nconsole.log(String(holder.m.has('a')));\n", ":13:12", containerFit},
+		{"set_class", "class Shaped {\nreadonly size = 1;\n" + strings.Join(setMembers, "\n") + "\n}\nconst s: ReadonlySet<number> = new Shaped();\nconsole.log(String(s.has(1)));\n", ":17:32", containerFit},
+		{"assignment", shapedSet + "let s: ReadonlySet<number> = new Set<number>();\ns = shaped;\nconsole.log(String(s.has(1)));\n", ":18:5", containerFit},
+		{"element", shapedSet + "const items: ReadonlySet<number>[] = [new Set<number>()];\nitems[0] = shaped;\n" + eachSet, ":18:12", containerFit},
+		{"push", shapedSet + "const items: ReadonlySet<number>[] = [];\nitems.push(shaped);\n" + eachSet, ":18:12", containerFit},
+		{"map_value", shapedSet + "const m = new Map<string, ReadonlySet<number>>().set('k', shaped);\nconst s = m.get('k');\n" + readSet, ":17:59", containerFit},
+		{"map_type_arguments", shapedSet + "const inner = new Map<string, typeof shaped>();\ninner.set('k', shaped);\nconst m: ReadonlyMap<string, ReadonlySet<number>> = inner;\nconst s = m.get('k');\n" + readSet, ":19:53", containerFit},
+		{"record_value", shapedSet + "const record: Record<string, ReadonlySet<number>> = { a: shaped };\nconst s = record['a'];\n" + readSet, ":17:58", containerFit},
+		{"spread_object", shapedSet + "const source = { s: shaped };\nconst holder: { s: ReadonlySet<number> } = { ...source };\nconsole.log(String(holder.s.has(1)));\n", ":18:49", containerFit},
+		{"spread_record", shapedSet + "const source = { a: shaped };\nconst record: Record<string, ReadonlySet<number>> = { ...source };\nconst s = record['a'];\n" + readSet, ":18:55", "a spread into record storage from a fixed object"},
+		{"class_field", shapedSet + "class Holder {\n\ts: ReadonlySet<number> = shaped;\n}\nconsole.log(String(new Holder().s.has(1)));\n", ":18:27", containerFit},
+		{"function_value", shapedSet + "const take = (s: ReadonlySet<number>): boolean => s.has(1);\nconst f: (s: typeof shaped) => boolean = take;\nconsole.log(String(f(shaped)));\n", ":18:42", containerFit},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
 			t.Run(probe.name+extension, func(t *testing.T) {
@@ -69,7 +87,7 @@ func TestContainerInterfaceValueIsNotYetWhereAMapIsHeld(t *testing.T) {
 				}
 				_, err := lowered(t, path)
 				var notYet *lower.NotYet
-				want := path + probe.where + ": stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+				want := path + probe.where + ": stage 0 can't lower " + probe.stop + " yet"
 				if !errors.As(err, &notYet) || err.Error() != want {
 					t.Fatalf("want NotYet %q, got %v", want, err)
 				}
