@@ -62,12 +62,25 @@ const (
 	runtimeNotYetConversionSuffix = " to a string is not yet lowered\n"
 )
 
+// runtimeNotYetKeyless is the third closed allowlist, of keyless stops that aren't a conversion: each
+// message whole, said as "adamic: panic: <message>\n", and the ruling that made it. Object.keys of a
+// runtime host value names no key it was reading and converts nothing, so it has neither the keyed shape
+// nor the conversion sentence (#ey7aysy, Adamic, Nov 4, under #0sps03r). Only these exact words qualify,
+// matched against the whole stderr: a new message needs Adamic's ruling and its line here.
+var runtimeNotYetKeyless = map[string]string{
+	"this runtime value's own keys aren't enumerated yet": "#0sps03r",
+}
+
+// runtimeNotYetKeylessPrefix is what every keyless message is said after.
+const runtimeNotYetKeylessPrefix = "adamic: panic: "
+
 // taskReference is a task named as the lists name one, #id.
 var taskReference = regexp.MustCompile(`^#[0-9a-z]+$`)
 
 // runtimeNotYetForm is the allowlisted form the stop message says, with the ruling that made it, or
-// false: a keyed form of runtimeNotYetForms, or a keyless conversion of runtimeNotYetConversions, the
-// message whole. A compiler bug said out loud never qualifies, even if its words were listed.
+// false: a keyed form of runtimeNotYetForms, a keyless conversion of runtimeNotYetConversions, or a
+// whole keyless message of runtimeNotYetKeyless, the message whole in both keyless cases. A compiler bug
+// said out loud never qualifies, even if its words were listed.
 func runtimeNotYetForm(stderr string) (string, string, bool) {
 	if strings.Contains(stderr, "compiler bug") {
 		return "", "", false
@@ -79,6 +92,11 @@ func runtimeNotYetForm(stderr string) (string, string, bool) {
 	for what, ruling := range runtimeNotYetConversions {
 		if stderr == runtimeNotYetConversionPrefix+what+runtimeNotYetConversionSuffix {
 			return what, ruling, true
+		}
+	}
+	for message, ruling := range runtimeNotYetKeyless {
+		if stderr == runtimeNotYetKeylessPrefix+message+"\n" {
+			return message, ruling, true
 		}
 	}
 	return "", "", false

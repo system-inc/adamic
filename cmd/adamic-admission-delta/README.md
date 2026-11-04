@@ -168,11 +168,13 @@ the list when an entry lacks either task or its message is not one line of
 allowlist (`runtimeNotYetForms`), or, keyless, exactly
 `adamic: panic: converting <what> to a string is not yet lowered` with `<what>`
 one of the three on the second allowlist (`runtimeNotYetConversions`, #09dvwny:
-String and a template of an unknown), matched whole, never as a pattern. Each
-form names the ruling that made it, and the tool refuses an entry whose
-`ruling_task` is not its form's ruling. The first allowlist holds the nine
-`internal/ir` DynamicKeyedStops forms a ruled fixture reaches; a `compiler bug:`
-stop never qualifies, listed or allowlisted.
+String and a template of an unknown), matched whole, never as a pattern, or
+exactly `adamic: panic: <message>` with `<message>` one on the third allowlist
+(`runtimeNotYetKeyless`, #ey7aysy under #0sps03r: Object.keys of a runtime host
+value), matched whole too. Each form names the ruling that made it, and the tool
+refuses an entry whose `ruling_task` is not its form's ruling. The first
+allowlist holds the nine `internal/ir` DynamicKeyedStops forms a ruled fixture
+reaches; a `compiler bug:` stop never qualifies, listed or allowlisted.
 
 A listed program passes only when the tool sees all of it: both backends exit 70
 with exactly the entry's stderr, their stdout is the same bytes and is byte for
