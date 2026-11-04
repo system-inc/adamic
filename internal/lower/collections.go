@@ -128,7 +128,7 @@ func (l *lowering) newMapFrom(node *ast.Node, source *ast.Node, key ir.Type, val
 	}
 	pairKey, pairValue, isKnown := l.pairTypes(source)
 	if !isKnown {
-		// A generator's pairs are pairs, but a generator function is refused (docs/user-iterators.md),
+		// A generator's pairs are pairs, but a generator function isn't built yet (docs/user-iterators.md),
 		// so walking one waits on generators, not on this constructor.
 		if l.isLibraryType(l.checker.GetTypeAtLocation(ast.SkipParentheses(source)), "Generator") {
 			return nil, l.notYet(source, "new Map from a generator's pairs")

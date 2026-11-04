@@ -1,0 +1,6 @@
+// Spec: Generators are designed
+// Expect: notyet a generator function
+function* numbers(): Generator<number> {
+	yield 1;
+}
+for (const value of numbers()) console.log(String(value));

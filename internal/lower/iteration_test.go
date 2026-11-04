@@ -67,13 +67,21 @@ func TestIteratorDestructuringDoesNotLieAboutExhaustion(t *testing.T) {
 	}
 }
 
-func TestGeneratorsAreRefusedEvenWithoutYield(t *testing.T) {
+// Generators are ruled NotYet, never Refused (docs/rulings.md, open question 17): the stop says
+// support is intended. A yield stops at its function, and so does a generator with none.
+func TestGeneratorsAreNotYetEvenWithoutYield(t *testing.T) {
 	t.Parallel()
-	for _, source := range []string{"function* empty(){return 1;} empty();", "const empty=function*(){return 1;};empty();", "const source={*empty(){return 1;}};source.empty();"} {
+	for _, source := range []string{
+		"function* empty(){return 1;} empty();",
+		"const empty=function*(){return 1;};empty();",
+		"const source={*empty(){return 1;}};source.empty();",
+		"function* numbers(){yield 1;} for (const value of numbers()) console.log(String(value));",
+		"class Numbers{*each(){yield 1;}} for (const value of new Numbers().each()) console.log(String(value));",
+	} {
 		_, err := lowerSource(t, source)
-		var refused *Refused
-		if !errors.As(err, &refused) || !strings.Contains(refused.Fix, "suspended frames") {
-			t.Errorf("got %v, want the generator ownership refusal", err)
+		var gap *NotYet
+		if !errors.As(err, &gap) || !strings.Contains(gap.What, "a generator function") {
+			t.Errorf("%s: got %v, want the generator NotYet", source, err)
 		}
 	}
 }

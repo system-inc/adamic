@@ -40,7 +40,7 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		"2200 ambientRefusal",
 		"2300 operatorRefusal",
 		"2400 asyncGeneratorRefusal",
-		"2500 generatorRefusal",
+		"2500 generatorGap",
 		"2600 argumentsObjectRefusal",
 		"2700 nodeBufferAccessRefusal",
 		"2800 shorthandLibraryMethodGap",
