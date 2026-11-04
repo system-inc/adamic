@@ -2,6 +2,7 @@ package native
 
 import (
 	"reflect"
+	"strconv"
 	"testing"
 )
 
@@ -54,5 +55,27 @@ func TestLadderChainsFollowEachCheckList(t *testing.T) {
 		"L_done:;\n"
 	if got != text {
 		t.Errorf("ladder:\n%s\nwant:\n%s", got, text)
+	}
+}
+
+// A marker names its ladder as well as its check, so a statement's end replaces only its own: an
+// enclosing statement's marker that reaches a nested statement's text passes through untouched, to
+// be replaced by the enclosing statement, even where the nested ladder has a check of the same index.
+// Mutant: closeLadder reading every marker as its own, and the outer check's text becomes the inner
+// one's.
+func TestLadderMarkersReplaceOnlyTheirOwnStatements(t *testing.T) {
+	t.Parallel()
+	e := &emitter{}
+	outer := e.openLadder()
+	e.ladder.sites = []*throwSite{{text: "outer check\n"}}
+	outerSerial := e.ladder.serial
+	inner := e.openLadder()
+	e.ladder.sites = []*throwSite{{text: "inner check\n"}}
+	e.out.WriteString("\x00" + strconv.Itoa(e.ladder.serial) + ":0\x00")
+	e.out.WriteString("\x00" + strconv.Itoa(outerSerial) + ":0\x00")
+	e.closeLadder(inner)
+	e.closeLadder(outer)
+	if got := e.out.String(); got != "inner check\nouter check\n" {
+		t.Fatalf("markers replaced as %q, want each by its own statement's check", got)
 	}
 }
