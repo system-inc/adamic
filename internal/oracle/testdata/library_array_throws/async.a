@@ -1,0 +1,51 @@
+// An async function's try around new Array(length), and around Array.from({ length }): the
+// RangeError takes the flow graph's exception edge to the catch. Without a try, it rejects the
+// promise, and the caller's await throws it.
+async function filled(length: number): Promise<string> {
+	await Promise.resolve();
+	try {
+		const cells = new Array<number>(length).fill(7);
+		return `ok ${cells.join('')}`;
+	} catch (error) {
+		if (error instanceof Error) {
+			return `${error.name}|${error.message}`;
+		}
+		return 'not an error';
+	}
+}
+
+async function counted(length: number): Promise<void> {
+	const label = `from ${length}`;
+	try {
+		const made = Array.from({ length }, (_, index) => index * 2);
+		console.log(`${label}: ${made.join(',')}`);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(`${label} threw ${error.name}|${error.message}`);
+		}
+	}
+	await Promise.resolve();
+}
+
+async function bare(length: number): Promise<number> {
+	await Promise.resolve();
+	return new Array<string>(length).fill('x').length;
+}
+
+async function run(): Promise<string> {
+	const first = await filled(3);
+	const second = await filled(1.5);
+	await counted(4);
+	await counted(2 ** 32);
+	let text = `${first} ${second}`;
+	try {
+		const third = await bare(-2);
+		text = `${text} ${third}`;
+	} catch (error) {
+		if (error instanceof Error) {
+			text = `${text} rejected ${error.name}|${error.message}`;
+		}
+	}
+	return text;
+}
+console.log(await run());

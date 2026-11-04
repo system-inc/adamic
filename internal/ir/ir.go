@@ -786,7 +786,7 @@ type (
 	}
 
 	// ArrayFrom is Array.from({ length: Length }, Callback): a new array of Length elements (ToLength,
-	// and more than 2^32 - 1 panics as JavaScript throws), each the callback's result called with
+	// and more than 2^32 - 1 throws Node's RangeError, ir/array_length.go), each the callback's result called with
 	// undefined and its index, in order. First is the type of the callback's first parameter, which
 	// undefined is passed as (0 when it has none).
 	ArrayFrom struct {

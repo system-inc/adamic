@@ -1,0 +1,52 @@
+// An array length's RangeError leaves the function it's thrown in, and its caller's catch takes it,
+// through a call, through a function value and through a finally that runs on the way out.
+function row(width: number, cell: string): string {
+	const prefix = `width ${width}`;
+	return `${prefix}: ${new Array<string>(width).fill(cell).join('')}`;
+}
+
+function safe(width: number): string {
+	try {
+		return row(width, '#');
+	} catch (error) {
+		if (error instanceof Error) {
+			return `caught ${error.name}, ${error.message}`;
+		}
+		return 'not an error';
+	}
+}
+console.log(safe(4));
+console.log(safe(-4));
+
+// No catch here: the finally runs, and the error goes on to the caller's.
+function indices(count: number): string {
+	try {
+		return Array.from({ length: count }, (_, index) => `${index}`).join(',');
+	} finally {
+		console.log(`finally after ${count}`);
+	}
+}
+for (const count of [3, 2 ** 40]) {
+	try {
+		console.log(indices(count));
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(error.name);
+			console.log(error.message);
+		}
+	} finally {
+		console.log(`outer finally for ${count}`);
+	}
+}
+
+// Through a function value the runtime's loop calls: the array map was building is let go.
+for (const widths of [[1, 2], [1, 0.5, 2]]) {
+	try {
+		const rows = widths.map((width) => new Array<number>(width).fill(width).join('+'));
+		console.log(rows.join(' | '));
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(`${error.name}: ${error.message}`);
+		}
+	}
+}

@@ -1131,14 +1131,15 @@ double adamic_array_index_of(const adamic_array *array, adamic_value value, enum
 double adamic_array_search_from(const adamic_array *array, adamic_value value, enum adamic_equality equality, bool same_value_zero, double from, bool has_from, bool last);
 
 // adamic_array_from_length is the length Array.from({ length }) makes (array_from.c): ToLength of
-// the number, and a panic where JavaScript throws, past 2^32 - 1.
+// the number, and 0 with adamic_thrown set to Node's RangeError past 2^32 - 1.
 size_t adamic_array_from_length(double length);
 
 // adamic_array_reverse reverses in place and is the array; adamic_array_concat makes a new array of
 // every array's elements in order, references retained.
 adamic_array *adamic_array_reverse(adamic_array *array);
 
-// adamic_array_filled is new Array(length).fill(value), a new array the caller owns;
+// adamic_array_filled is new Array(length).fill(value), a new array the caller owns, or NULL with
+// adamic_thrown set to Node's RangeError for a length that isn't an integer from 0 to 2^32 - 1;
 // adamic_array_fill is array.fill(value, start, end), in place, and is the array. Both hold the value
 // once per element; the caller keeps its own.
 adamic_array *adamic_array_filled(double length, adamic_value value, enum adamic_ir_type element);
