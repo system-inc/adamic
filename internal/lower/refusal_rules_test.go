@@ -29,6 +29,7 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		"1200 indexSignatureStorageGap",
 		"1300 deleteRefusal",
 		"1400 syntaxRefusal",
+		"1450 thisParameterDeclarationGap",
 		"1500 jsonSchemaCallRefusal",
 		"1600 typedArrayUnsupported",
 		"1700 predicateArgumentsRefusal",
