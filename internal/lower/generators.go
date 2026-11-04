@@ -348,8 +348,8 @@ func (l *lowering) collectGenerator(node *ast.Node, function int) (ir.Expression
 // no-void-widening) have nothing to refuse in it. It holds only when the yielded type holds no void:
 // every value a step hands over is read. It is syntactic, since the refusal walk runs before any
 // function is lowered. It applies rulings.md's void-container classifier (judged by expression) to a
-// generator, as Adamic confirmed on #qk8rztp. cohere's adamic/no-void-read and no-void-widening don't
-// know this exemption yet (#z7zv50g), so the gate still refuses these programs: stricter, closed.
+// generator, as Adamic confirmed on #qk8rztp. cohere's gate never refused these programs: it has no
+// twin of no-void-read, and its no-void-widening judges function-type relations (#z7zv50g).
 func (l *lowering) generatorStepped(node *ast.Node) bool {
 	if node.Kind != ast.KindCallExpression {
 		return false
