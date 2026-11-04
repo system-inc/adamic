@@ -79,6 +79,47 @@ func (l *lowering) shapeFit(value *checker.Type, target *checker.Type, libraryAr
 	return "", true
 }
 
+// shapeFitReached is the converse's stop past containerFitDepth, where the walk no longer knows which
+// position meets which: a map or an array a value of type value can hold anywhere (eachReached), assignable
+// to a structural slot a value of type target can hold anywhere that it can't go to (shapeFit), or ""
+// when none is. A mention past containerMentionDepth stops, so it fails closed. It's asked both ways
+// round, since a function's parameters carry the other way.
+func (l *lowering) shapeFitReached(value *checker.Type, target *checker.Type) string {
+	var containers, shapes []*checker.Type
+	exhausted := l.eachReached(value, 0, map[*checker.Type]bool{}, func(reached *checker.Type) bool {
+		if held, known := l.representation(reached); known && (held == ir.Map || held == ir.Array) {
+			containers = append(containers, reached)
+		}
+		return false
+	})
+	exhausted = l.eachReached(target, 0, map[*checker.Type]bool{}, func(reached *checker.Type) bool {
+		if slot, known := l.representation(reached); known && (slot == ir.Object || slot == ir.Union) {
+			shapes = append(shapes, reached)
+		}
+		return false
+	}) || exhausted
+	if exhausted {
+		// What lies past the bound is unread, so it may hold a container and a shape that meet.
+		for _, container := range containers {
+			if held, _ := l.representation(container); held == ir.Map {
+				return shapeFitMapStop
+			}
+		}
+		return shapeFitArrayStop
+	}
+	for _, container := range containers {
+		for _, shape := range shapes {
+			if !l.checker.IsTypeAssignableTo(container, shape) {
+				continue
+			}
+			if stop, judged := l.shapeFit(container, shape, false); judged && stop != "" {
+				return stop
+			}
+		}
+	}
+	return ""
+}
+
 // shapeFitProtocol is whether a type is an instantiation of one of shapeFitProtocols as the library or
 // the prelude declares it, never a program's own interface of the same name.
 func (l *lowering) shapeFitProtocol(proven *checker.Type) bool {

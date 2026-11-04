@@ -56,12 +56,23 @@ func (l *lowering) containerWhereOtherGoes(value *checker.Type, target *checker.
 var containerHeld = []ir.Type{ir.Map, ir.Array}
 
 // mentionsHeld reports whether a value of type proven can hold a value held as one of held anywhere
-// inside: itself, a type argument, a field, a dictionary's values, or a parameter or result of its call
-// and construct signatures, read from their declarations so a generic method's own type parameters stay
-// the same types at every step. A library type holds only what its type arguments say (a Promise<number>
-// holds no map), and a type parameter what its constraint does. Each type is read once, and past
-// containerMentionDepth it answers yes.
+// inside (eachReached), and past containerMentionDepth it answers yes.
 func (l *lowering) mentionsHeld(proven *checker.Type, held []ir.Type, depth int, seen map[*checker.Type]bool) bool {
+	return l.eachReached(proven, depth, seen, func(reached *checker.Type) bool {
+		of, known := l.representation(reached)
+		return known && slices.Contains(held, of)
+	})
+}
+
+// eachReached calls visit with every type a value of type proven can hold, until visit answers true:
+// itself, a type argument, a field, a dictionary's values, or a parameter or result of its call and
+// construct signatures, read from their declarations so a generic method's own type parameters stay the
+// same types at every step. A library interface or class holds only what its type arguments say (a
+// Promise<number> holds no map), but an anonymous type the library declares, such as Map.forEach's
+// callback instantiated for a Map<string, Map<string, number>>, holds what its signatures and fields
+// do, since it has no type arguments to say it. A type parameter holds what its constraint does. Each type is read once. It answers true
+// when visit does, and past containerMentionDepth too, so a caller reading true as a mention fails closed.
+func (l *lowering) eachReached(proven *checker.Type, depth int, seen map[*checker.Type]bool, visit func(*checker.Type) bool) bool {
 	if proven == nil || seen[proven] {
 		return false
 	}
@@ -69,39 +80,39 @@ func (l *lowering) mentionsHeld(proven *checker.Type, held []ir.Type, depth int,
 		return true
 	}
 	seen[proven] = true
-	if of, known := l.representation(proven); known && slices.Contains(held, of) {
+	if visit(proven) {
 		return true
 	}
 	flags := proven.Flags()
 	if flags&checker.TypeFlagsUnionOrIntersection != 0 {
 		for _, member := range proven.Types() {
-			if l.mentionsHeld(member, held, depth+1, seen) {
+			if l.eachReached(member, depth+1, seen, visit) {
 				return true
 			}
 		}
 		return false
 	}
 	if flags&checker.TypeFlagsTypeParameter != 0 {
-		return l.mentionsHeld(l.checker.GetBaseConstraintOfType(proven), held, depth+1, seen)
+		return l.eachReached(l.checker.GetBaseConstraintOfType(proven), depth+1, seen, visit)
 	}
 	if flags&checker.TypeFlagsObject == 0 {
 		return false
 	}
 	for _, argument := range l.typeArguments(proven) {
-		if l.mentionsHeld(argument, held, depth+1, seen) {
+		if l.eachReached(argument, depth+1, seen, visit) {
 			return true
 		}
 	}
-	if l.librarySymbol(proven.Symbol()) {
+	if l.librarySymbol(proven.Symbol()) && proven.ObjectFlags()&checker.ObjectFlagsAnonymous == 0 {
 		return false
 	}
 	for _, field := range l.checker.GetPropertiesOfType(proven) {
-		if l.mentionsHeld(l.checker.GetTypeOfSymbol(field), held, depth+1, seen) {
+		if l.eachReached(l.checker.GetTypeOfSymbol(field), depth+1, seen, visit) {
 			return true
 		}
 	}
 	for _, info := range l.checker.GetIndexInfosOfType(proven) {
-		if l.mentionsHeld(info.ValueType(), held, depth+1, seen) {
+		if l.eachReached(info.ValueType(), depth+1, seen, visit) {
 			return true
 		}
 	}
@@ -111,11 +122,11 @@ func (l *lowering) mentionsHeld(proven *checker.Type, held []ir.Type, depth int,
 				signature = l.checker.GetSignatureFromDeclaration(declaration)
 			}
 			for _, parameter := range signature.Parameters() {
-				if l.mentionsHeld(l.checker.GetTypeOfSymbol(parameter), held, depth+1, seen) {
+				if l.eachReached(l.checker.GetTypeOfSymbol(parameter), depth+1, seen, visit) {
 					return true
 				}
 			}
-			if l.mentionsHeld(l.checker.GetReturnTypeOfSignature(signature), held, depth+1, seen) {
+			if l.eachReached(l.checker.GetReturnTypeOfSignature(signature), depth+1, seen, visit) {
 				return true
 			}
 		}
@@ -173,15 +184,15 @@ func (l *lowering) containerPairGoes(value *checker.Type, target *checker.Type, 
 		return stop
 	}
 	if depth > containerFitDepth {
-		// Anything else this deep stops if either side can hold a map at all, or, for the converse, an
-		// array.
+		// Anything else this deep stops if either side can hold a map at all, or, for the converse, if
+		// an array either side can hold could go where a shape the other side can hold is (shape_fit.go).
 		if l.mentionsHeld(value, []ir.Type{ir.Map}, 0, map[*checker.Type]bool{}) || l.mentionsHeld(target, []ir.Type{ir.Map}, 0, map[*checker.Type]bool{}) {
 			return containerFitStop
 		}
-		if l.mentionsHeld(value, []ir.Type{ir.Array}, 0, map[*checker.Type]bool{}) || l.mentionsHeld(target, []ir.Type{ir.Array}, 0, map[*checker.Type]bool{}) {
-			return shapeFitArrayStop
+		if stop := l.shapeFitReached(value, target); stop != "" {
+			return stop
 		}
-		return ""
+		return l.shapeFitReached(target, value)
 	}
 	if (l.checker.IsArrayType(value) || checker.IsTupleType(value)) && (l.checker.IsArrayType(target) || checker.IsTupleType(target)) {
 		values, targets := l.typeArguments(value), l.typeArguments(target)

@@ -15,27 +15,37 @@ import (
 // | undefined }` and an array as `{ indexOf(x: number): number }` each exited 70 on the JavaScript backend
 // where Node prints, and natively clang refused the C, or, through a union-held shape, the build ran and
 // crashed. Ruled by Adamic: NotYet at the value, keyed on representation, unless the slot reads it only by
-// members shape_fit.go's one table serves. Each probe pins the whole stop, .a and .ts: the r01, r02, r04,
-// r06 and r07 shapes (r03 works and is a control below; r05, a Promise, stops at its own refusal and isn't
-// here), a Set's size, an array's includes, an array as a shape reading length beside push (held as an
-// object, where even length fails in clang), an array as a union-held `{ indexOf(x: string): number }` and a
-// Map as `{ readonly size: number } | string` (both crashed natively), and the roads a Map takes there: a
-// return, a field write, an element write, push, an object literal's field, a callback's result, a cast, a
-// Map's type arguments, a function value whose parameter is the shape, a Map.forEach callback whose
-// parameter is (it segfaulted natively), and a Set where a program's own ReadonlySetLike is held, as a
-// parameter and an initializer. The table's one entry, an array where `{ readonly length: number }` is held,
-// is a control that lowers and agrees with Node on sanitized, release and JavaScript, through an argument,
-// an initializer read after a push, an object literal's field, a return and an optional slot, and so are a
-// plain object seen that way, a readonly array, a Set's union and isSubsetOf with a Set, whose
-// ReadonlySetLike parameter is the library call's own, and `new Set(xs)`, whose Iterable parameter is too.
-// Mutant: containerWhereShapeGoes answering "" lowers every probe again, each red, and the controls stay
-// green.
+// members shape_fit.go's one table serves, judged in #efx3yb9's walk (container_fit.go). Each probe pins the
+// whole stop, .a and .ts: the r01, r02, r04, r06 and r07 shapes (r03 works and is a control below; r05, a
+// Promise, stops at its own refusal and isn't here), a Set's size, an array's includes, an array as a shape
+// reading length beside push (held as an object, where even length fails in clang), an array as a union-held
+// `{ indexOf(x: string): number }` and a Map as `{ readonly size: number } | string` (both crashed
+// natively), and the roads a Map takes there: a return, a field write, an element write, push (of a Map held
+// in a name, and of a Map made right there, where push's T is the program's Lookup), Map.set's value where
+// the Map's V is Lookup, an object literal's field, an intersection's field, a callback's result, a cast, a
+// Map's type arguments, a function value whose parameter is the shape, and a Map.forEach callback whose
+// parameter is (it segfaulted natively). Past the walk's depth the converse fails closed (shapeFitReached):
+// an array five readonly fields down stops at its leaf, and six down too. The two library interfaces exempt
+// as a library call's own argument (shapeFitProtocols) each have a pin in a program's own slot: a Set where
+// a program's ReadonlySetLike is held, as a parameter and an initializer, stops here, and an array where a
+// program's Iterable<number> parameter is held stops at its own for...of. The table's one entry, an array
+// where `{ readonly length: number }` is held, is a control that lowers and agrees with Node on sanitized,
+// release and JavaScript, through an argument, an initializer read after a push, an object literal's field,
+// a return, an optional slot and five readonly fields down, and so are a plain object seen that way, a
+// readonly array, an array six fields down where an array is held, Set.union and isSubsetOf with a Set (the
+// prelude's ReadonlySetLike), and new Set(xs) and new Map(entries) (Iterable). Mutant:
+// containerWhereOtherGoes answering "" lowers every probe but iterable_parameter again, each red, and the
+// controls stay green.
 func TestContainerIsNotYetWhereAShapeIsHeld(t *testing.T) {
 	t.Parallel()
 	const mapStop = "a Map or Set going where a plain object type is held"
 	const arrayStop = "an array going where a plain object type is held"
 	const lookup = "interface Lookup { get(key: string): number | undefined; }\nconst m = new Map<string, number>([['a', 1]]);\n"
 	const other = "const other: Lookup = { get: (key: string) => (key === 'a' ? 2 : undefined) };\n"
+	// Readonly class fields five and six deep, so the view is one the program can't write through.
+	const nested = "class D { readonly e = new E(); }\nclass C { readonly d = new D(); }\nclass B { readonly c = new C(); }\nclass A { readonly b = new B(); }\n"
+	const deep = "class E { readonly f: number[] = [1, 2]; }\n" + nested
+	const deeper = "class F { readonly g: number[] = [1, 2]; }\nclass E { readonly f = new F(); }\n" + nested
 	for _, probe := range []struct{ name, source, node, where, stop string }{
 		{"r01_set_has", "const members = new Set<string>(['k']);\nfunction useShape(v: { has(x: string): boolean }): boolean { return v.has('k'); }\nconsole.log(String(useShape(members)));\n", "true\n", ":3:29", mapStop},
 		{"r02_set_size_initializer", "const members = new Set<string>(['k']);\nconst v: { readonly size: number } = members;\nconsole.log(String(v.size));\n", "1\n", ":2:38", mapStop},
@@ -58,6 +68,12 @@ func TestContainerIsNotYetWhereAShapeIsHeld(t *testing.T) {
 		{"foreach_parameter", lookup + "new Map<string, Map<string, number>>([['k', m]]).forEach((v: Lookup) => {\n\tconsole.log(String(v.get('a')));\n});\n", "1\n", ":3:58", mapStop},
 		{"setlike_parameter", "function hasOne(s: ReadonlySetLike<number>): boolean { return s.has(1); }\nconsole.log(String(hasOne(new Set<number>([1]))));\n", "true\n", ":2:27", mapStop},
 		{"setlike_initializer", "const s: ReadonlySetLike<number> = new Set<number>([1, 2]);\nconsole.log(String(s.size));\n", "2\n", ":1:36", mapStop},
+		{"push_literal", "interface Lookup { get(key: string): number | undefined; }\nconst items: Lookup[] = [];\nitems.push(new Map([['a', 1]]));\nconsole.log(String(items[0]?.get('a')));\n", "1\n", ":3:12", mapStop},
+		{"map_set_lookup", "interface Lookup { get(key: string): number | undefined; }\nconst m = new Map<string, Lookup>().set('k', new Map());\nconsole.log(String(m.get('k')?.get('a')));\n", "undefined\n", ":2:46", mapStop},
+		{"intersection_field", lookup + "const holder: { v: Lookup } & { tag?: string } = { v: m };\nconsole.log(String(holder.v.get('a')));\n", "1\n", ":3:55", mapStop},
+		{"depth_5", deep + "function use(v: { readonly b: { readonly c: { readonly d: { readonly e: { readonly f: { indexOf(x: number): number } } } } } }): number {\n\treturn v.b.c.d.e.f.indexOf(2);\n}\nconsole.log(String(use(new A())));\n", "1\n", ":9:24", arrayStop},
+		{"depth_6", deeper + "function use(v: { readonly b: { readonly c: { readonly d: { readonly e: { readonly f: { readonly g: { indexOf(x: number): number } } } } } } }): number {\n\treturn v.b.c.d.e.f.g.indexOf(2);\n}\nconsole.log(String(use(new A())));\n", "1\n", ":10:24", arrayStop},
+		{"iterable_parameter", "function total(xs: Iterable<number>): number {\n\tlet sum = 0;\n\tfor (const x of xs) {\n\t\tsum += x;\n\t}\n\treturn sum;\n}\nconsole.log(String(total([1, 2, 3])));\n", "6\n", ":3:18", "for...of over an object"},
 		{"function_value", "const take = (v: number[]): number => v.indexOf(2);\nconst f: (v: number[]) => number = take;\nconst g: (v: { indexOf(x: number): number }) => number = (v) => v.indexOf(2);\nconsole.log(String(f([1, 2]) + g([1, 2])));\n", "2\n", ":4:34", arrayStop},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
@@ -88,6 +104,9 @@ func TestContainerIsNotYetWhereAShapeIsHeld(t *testing.T) {
 		{"length_optional", "function count(v: { readonly length: number } | undefined): number { return v === undefined ? 0 : v.length; }\nconsole.log(String(count([1, 2, 3]) + count(undefined)));\n", "3\n"},
 		{"length_plain_object", "interface Sized { readonly length: number; readonly label: string }\nfunction count(v: { readonly length: number }): number { return v.length; }\nconst s: Sized = { length: 2, label: 'x' };\nconsole.log(String(count(s) + count([1])));\n", "3\n"},
 		{"readonly_array", "function count(v: readonly number[]): number { return v.length + v.indexOf(2); }\nconsole.log(String(count([1, 2, 3])));\n", "4\n"},
+		{"depth_5_length", deep + "function use(v: { readonly b: { readonly c: { readonly d: { readonly e: { readonly f: { readonly length: number } } } } } }): number {\n\treturn v.b.c.d.e.f.length;\n}\nconsole.log(String(use(new A())));\n", "2\n"},
+		{"depth_6_array", "const xs = [1, 2];\nconst value = { a: { b: { c: { d: { e: { f: xs } } } } } };\nconst view: { a: { b: { c: { d: { e: { f: number[] } } } } } } = value;\nconsole.log(String(view.a.b.c.d.e.f.length));\n", "2\n"},
+		{"map_from_entries", "const entries: [string, number][] = [['a', 1]];\nconst m = new Map<string, number>(entries);\nconsole.log(String(m.get('a')));\n", "1\n"},
 		{"set_union", "const left = new Set<number>([1, 2]);\nconst right: ReadonlySet<number> = new Set<number>([2, 3]);\nconsole.log(`${left.union(right).size} ${left.isSubsetOf(right)}`);\n", "3 false\n"},
 		{"set_from_array", "const xs = [1, 2, 2];\nconst s = new Set<number>(xs);\nconsole.log(String(s.size));\n", "2\n"},
 	} {
