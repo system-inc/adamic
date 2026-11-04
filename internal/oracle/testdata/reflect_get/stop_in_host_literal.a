@@ -1,0 +1,11 @@
+// Language's s10 (#ey7aysy): in tests by literal keys on a Stats and a matchAll iterator, which
+// answered isFile and dev no, mtime yes and input yes natively. They stop at the first, as every in
+// test on a host object does (Adamic's ruling at 23:03Z). Node prints isFile yes.
+import * as fs from 'node:fs';
+const stats: unknown = fs.statSync('.');
+console.log(`isFile ${typeof stats === 'object' && stats !== null && 'isFile' in stats ? 'yes' : 'no'}`);
+console.log(`dev ${typeof stats === 'object' && stats !== null && 'dev' in stats ? 'yes' : 'no'}`);
+console.log(`mtime ${typeof stats === 'object' && stats !== null && 'mtime' in stats ? 'yes' : 'no'}`);
+const iterator: unknown = 'ab'.matchAll(/a/g);
+console.log(`input ${typeof iterator === 'object' && iterator !== null && 'input' in iterator ? 'yes' : 'no'}`);
+console.log(`next ${typeof iterator === 'object' && iterator !== null && 'next' in iterator ? 'yes' : 'no'}`);

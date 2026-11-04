@@ -540,8 +540,8 @@ struct adamic_methods {
 extern const adamic_methods adamic_error_methods;
 bool adamic_error_is(const adamic_object *object);
 // adamic_host_methods, another empty table, marks a runtime shape whose object's prototype on Node
-// isn't Object's, a Stats, an iterator, a match's groups object or memoryUsage's, so a run-time key
-// read stops on it (union.c's host_object, #ey7aysy). The emitter
+// isn't Object's, a Stats, an iterator, a match's groups object or memoryUsage's, so an in test, a
+// read it narrows and a run-time key read all stop on it (union.c's host_stop, #ey7aysy). The emitter
 // never writes it, so every object a program makes is plain, as on Node; an Error keeps its own
 // sentinel. A runtime shape left unmarked reads as plain, so host_shapes_test.go holds every runtime
 // shape to a table that classifies it against Node.
