@@ -1,0 +1,77 @@
+{
+  "task": "#b5w3ycg",
+  "baseMain": "e4c3a1632aa33563574178f359dec4e44c78374f",
+  "adaptation": "90-void-widening",
+  "inventoryBefore": [
+    {
+      "adaptation": "90-void-widening",
+      "file": "src/compiler/binder.ts"
+    },
+    {
+      "adaptation": "90-void-widening",
+      "file": "src/compiler/checker.ts"
+    },
+    {
+      "adaptation": "90-void-widening",
+      "file": "src/compiler/emitter.ts"
+    },
+    {
+      "adaptation": "90-void-widening",
+      "file": "src/compiler/parser.ts"
+    },
+    {
+      "adaptation": "90-void-widening",
+      "file": "src/compiler/program.ts"
+    },
+    {
+      "adaptation": "90-void-widening",
+      "file": "src/compiler/symbolWalker.ts"
+    },
+    {
+      "adaptation": "90-void-widening",
+      "file": "src/compiler/transformers/es2017.ts"
+    },
+    {
+      "adaptation": "91-patcher-discard",
+      "file": "src/compiler/factory/nodeFactory.ts"
+    },
+    {
+      "adaptation": "91-patcher-discard",
+      "file": "src/compiler/utilities.ts"
+    },
+    {
+      "adaptation": "92-tty-host-results",
+      "file": "src/compiler/sys.ts"
+    },
+    {
+      "adaptation": "93-builtin-imports",
+      "file": "src/compiler/sys.ts"
+    }
+  ],
+  "remainingWholeFilePins": [],
+  "contract": "owner-contract-results.json",
+  "contractStates": [
+    "before",
+    "after"
+  ],
+  "foreignEditShiftsBytesAndLines": true,
+  "byteComparison": {
+    "byteIdentical": true,
+    "files": 81504,
+    "sourceFiles": 746,
+    "inventorySha256": "0c433e2b83456192ce9781654fe697b8402d866c8bddc6166d6e9a3946c644f8",
+    "excluded": "Git metadata only",
+    "left": "/workspace/scratch/owner-main",
+    "right": "/workspace/scratch/owner-after"
+  },
+  "laneGo": {
+    "command": "go test ./stage3/lane -skip '^TestShard_' -parallel=1 -count=1",
+    "exit": 0,
+    "result": "ok  \tgithub.com/system-inc/adamic/stage3/lane\t124.578s",
+    "oracleShardsSkippedBecauseProductBytesMatch": true
+  },
+  "shardGenerationCheck": {
+    "command": "python3 -B stage3/lane/generate_shards.py --check",
+    "exit": 0
+  }
+}

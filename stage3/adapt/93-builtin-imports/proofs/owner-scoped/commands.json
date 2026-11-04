@@ -1,0 +1,154 @@
+[
+  {
+    "name": "checks",
+    "command": [
+      "node",
+      "/workspace/adamic-owner-scoped/stage3/adapt/93-builtin-imports/proofs/check.cjs",
+      "/workspace/scratch/owner-fixtures/93-builtin-imports/control",
+      "/workspace/scratch/owner-fixtures/93-builtin-imports/after",
+      "/workspace/adamic-owner-scoped/stage3/adapt/93-builtin-imports/proofs/checks.json"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 0,
+    "seconds": 1.002,
+    "limit": 300,
+    "minFreeBytes": 13296066560
+  },
+  {
+    "name": "bindings",
+    "command": [
+      "node",
+      "/workspace/adamic-owner-scoped/stage3/adapt/93-builtin-imports/proofs/bindings.cjs",
+      "/workspace/scratch/owner-fixtures/93-builtin-imports/control",
+      "/workspace/scratch/owner-fixtures/93-builtin-imports/after",
+      "/workspace/adamic-owner-scoped/stage3/adapt/93-builtin-imports/proofs/bindings.json"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 0,
+    "seconds": 14.065,
+    "limit": 300,
+    "minFreeBytes": 13296058368
+  },
+  {
+    "name": "idempotence",
+    "command": [
+      "node",
+      "/workspace/adamic-owner-scoped/stage3/adapt/93-builtin-imports/adapt.cjs",
+      "/workspace/scratch/owner-fixtures/93-builtin-imports/after"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 0,
+    "seconds": 6.011,
+    "limit": 180,
+    "minFreeBytes": 13296242688
+  },
+  {
+    "name": "idempotence-no-write",
+    "command": [
+      "node",
+      "/workspace/adamic-owner-scoped/stage3/adapt/93-builtin-imports/adapt.cjs",
+      "/workspace/scratch/owner-fixtures/93-builtin-imports/after"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 0,
+    "seconds": 5.005,
+    "limit": 180,
+    "minFreeBytes": 13296238592
+  },
+  {
+    "name": "moved-target-mutant",
+    "command": [
+      "node",
+      "/workspace/adamic-owner-scoped/stage3/adapt/93-builtin-imports/adapt.cjs",
+      "/workspace/scratch/owner-fixtures/93-builtin-imports/after"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 1,
+    "seconds": 3.003,
+    "limit": 180,
+    "minFreeBytes": 13296238592
+  },
+  {
+    "name": "scope-mutant",
+    "command": [
+      "node",
+      "/workspace/adamic-owner-scoped/stage3/adapt/93-builtin-imports/proofs/check.cjs",
+      "/workspace/scratch/owner-fixtures/93-builtin-imports/control",
+      "/workspace/scratch/owner-fixtures/93-builtin-imports/after"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 1,
+    "seconds": 1.016,
+    "limit": 300,
+    "minFreeBytes": 13296267264
+  },
+  {
+    "name": "restored-checks",
+    "command": [
+      "node",
+      "/workspace/adamic-owner-scoped/stage3/adapt/93-builtin-imports/proofs/check.cjs",
+      "/workspace/scratch/owner-fixtures/93-builtin-imports/control",
+      "/workspace/scratch/owner-fixtures/93-builtin-imports/after",
+      "/workspace/adamic-owner-scoped/stage3/adapt/93-builtin-imports/proofs/checks.json"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 0,
+    "seconds": 1.01,
+    "limit": 300,
+    "minFreeBytes": 13296238592
+  },
+  {
+    "name": "control-install",
+    "command": [
+      "npm",
+      "ci",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/workspace/scratch/owner-fixtures/93-builtin-imports/control",
+    "exit": 0,
+    "seconds": 5.015,
+    "limit": 600,
+    "minFreeBytes": 13296238592
+  },
+  {
+    "name": "control-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/workspace/scratch/owner-fixtures/93-builtin-imports/control",
+    "exit": 0,
+    "seconds": 4.003,
+    "limit": 1200,
+    "minFreeBytes": 13296168960
+  },
+  {
+    "name": "after-install",
+    "command": [
+      "npm",
+      "ci",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/workspace/scratch/owner-fixtures/93-builtin-imports/after",
+    "exit": 0,
+    "seconds": 5.033,
+    "limit": 600,
+    "minFreeBytes": 13296308224
+  },
+  {
+    "name": "after-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/workspace/scratch/owner-fixtures/93-builtin-imports/after",
+    "exit": 0,
+    "seconds": 7.052,
+    "limit": 1200,
+    "minFreeBytes": 13296242688
+  }
+]

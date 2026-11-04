@@ -1,0 +1,61 @@
+{
+  "adaptation": "91-patcher-discard",
+  "results": [
+    {
+      "state": "before",
+      "foreign": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "function": "makeSynthetic"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "function": "getPos"
+        }
+      ],
+      "accepted": true,
+      "expectedBytes": true,
+      "noOpPreservesBytesAndMtime": true
+    },
+    {
+      "state": "before",
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "changedOwnerRefused": true,
+      "noWrite": true
+    },
+    {
+      "state": "before",
+      "file": "src/compiler/utilities.ts",
+      "changedOwnerRefused": true,
+      "noWrite": true
+    },
+    {
+      "state": "after",
+      "foreign": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "function": "makeSynthetic"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "function": "getPos"
+        }
+      ],
+      "accepted": true,
+      "expectedBytes": true,
+      "noOpPreservesBytesAndMtime": true
+    },
+    {
+      "state": "after",
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "changedOwnerRefused": true,
+      "noWrite": true
+    },
+    {
+      "state": "after",
+      "file": "src/compiler/utilities.ts",
+      "changedOwnerRefused": true,
+      "noWrite": true
+    }
+  ]
+}

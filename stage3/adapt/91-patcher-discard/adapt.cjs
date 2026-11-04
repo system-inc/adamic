@@ -18,10 +18,11 @@ function adapt(tree) {
         const file = program.getSourceFile(path.join(tree, target.file));
         assert(file && !file.parseDiagnostics.length, target.file);
         const pin = manifest.find(row => row.file === target.file);
-        const digest = crypto.createHash('sha256').update(file.text).digest('hex');
-        assert([pin.beforeSha256, pin.afterSha256].includes(digest), 'target source moved: ' + target.file);
         const owners = nodes(ts, file, n => ts.isFunctionDeclaration(n) && n.name?.text === target.owner);
         assert.equal(owners.length, 1, 'target owner moved');
+        const owner = owners[0];
+        const hash = text => crypto.createHash('sha256').update(text).digest('hex');
+        assert([pin.ownerBeforeSha256, pin.ownerAfterSha256].includes(hash(owner.getText(file))), 'target owner moved: ' + target.owner);
         const calls = nodes(ts, owners[0], n => ts.isCallExpression(n) && n.expression.getText(file) === 'forEach' && n.arguments[0]?.getText(file) === target.registry);
         assert.equal(calls.length, 1, 'patcher call moved');
         const call = calls[0], arrow = call.arguments[1];
@@ -45,8 +46,13 @@ function adapt(tree) {
         const location = file.getLineAndCharacterOfPosition(call.getStart(file));
         evidence.push({...target, line: location.line + 1, before: `forEach(${target.registry}, fn => ${before});`, after: `forEach(${target.registry}, fn => ${after});`});
         if (arrow.body.getText(file) === after) continue;
+        assert(arrow.body.getStart(file) >= owner.getStart(file) && arrow.body.end <= owner.end, 'edit outside owner');
         const text = file.text.slice(0, arrow.body.getStart(file)) + after + file.text.slice(arrow.body.end);
         assert.equal(ts.createSourceFile(file.fileName, text, ts.ScriptTarget.Latest, true).parseDiagnostics.length, 0);
+        const changed = ts.createSourceFile(file.fileName, text, ts.ScriptTarget.Latest, true);
+        const changedOwners = nodes(ts, changed, n => ts.isFunctionDeclaration(n) && n.name?.text === target.owner);
+        assert.equal(changedOwners.length, 1);
+        assert.equal(hash(changedOwners[0].getText(changed)), pin.ownerAfterSha256, 'unreviewed owner change');
         outputs.push([file, text]);
     }
     // Validate both targets before writing either file.

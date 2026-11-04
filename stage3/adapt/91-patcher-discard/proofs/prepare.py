@@ -57,9 +57,10 @@ try:
 finally: file.write_bytes(saved)
 file=after/'src/compiler/utilities.ts';saved=file.read_bytes()
 try:
- file.write_bytes(saved+b'\n')
+ assert saved.count(b'function setObjectAllocator(')==1
+ file.write_bytes(saved.replace(b'function setObjectAllocator(', b'function setObjectAllocator(/* changed owner */'))
  run('moved-target-mutant',['node',proof.parent/'adapt.cjs',after],120,expected=1)
- assert 'target source moved' in (logs/'moved-target-mutant.log').read_text()
+ assert 'target owner moved' in (logs/'moved-target-mutant.log').read_text()
 finally: file.write_bytes(saved)
 file=after/'src/testRunner/adapt91Registrant.ts'
 try:

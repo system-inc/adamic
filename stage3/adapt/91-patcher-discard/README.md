@@ -45,8 +45,8 @@ have only these two arrow-body differences:
 The utilities callback takes `ObjectAllocator`, rather than `NodeFactory`.
 The adapter resolves both callback signatures and requires exactly `void`,
 checks their parameter types and the compiler's `forEach` declaration, and
-validates both targets before writing either file. Complete before/after source
-hashes reject moved or otherwise changed targets. Rerunning makes zero edits.
+validates both targets before writing either file. Before/after hashes of createNodeFactory and setObjectAllocator reject changed
+owners, and an explicit span assertion confines each edit to its owner. Rerunning makes zero edits.
 The actual built and tested tree passes the same source-scope and idempotence
 checks after the suites. Full `stage3/apply.sh` passed; its incremental row is
 2 files, 2 lines added, 2 removed. The repository's patch table is untouched.
@@ -57,7 +57,7 @@ record byte-identical `built/local/typescript.d.ts` with and without 91:
 `477a56fb7b35a5f268be6131441c67d237b4646a9f8d2e1f50dc163879450051`.
 A real scratch declaration artifact with an added declaration fails the same
 byte checker. Appending an unrelated source comment fails the scope checker;
-appending a newline to a target fails the adapter's movement guard.
+changing text inside a pinned owner fails the adapter's movement guard.
 
 ## Registration references
 
@@ -193,3 +193,16 @@ Go 1.27.1, clang 20.1.8. The environment file is
 
 No new Adamic program or production compiler change is introduced. All committed
 paths are under this adaptation. No pull request is opened.
+
+The pins are owner-scoped so an adaptation can edit an unrelated function in the
+same file without invalidating this contract. `proofs/owner-contract.cjs` tests
+foreign edits and changed owners in every formerly pinned file, before and after
+application, including zero-write reruns with unchanged bytes and timestamps.
+Run it with `NODE_PATH=stage3/api/node_modules node proofs/owner-contract.cjs
+BEFORE AFTER SCRATCH`, using this adaptation's official apply snapshots.
+
+This guard follow-up uses fresh main `e4c3a1632aa33563574178f359dec4e44c78374f`.
+Fresh bounded evidence is under [proofs/owner-scoped](proofs/owner-scoped/);
+the earlier oracle evidence is retained unchanged. The full adapted product
+comparison covers all 81,504 files (746 under src), excluding only Git metadata.
+The product bytes match main, so the lane oracle is not repeated.

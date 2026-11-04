@@ -1,0 +1,22 @@
+--- before/nodeFactory.ts.js
++++ after/nodeFactory.ts.js
+@@ -689,7 +689,7 @@
+         replaceDecoratorsAndModifiers,
+         replacePropertyName,
+     };
+-    forEach(nodeFactoryPatchers, fn => fn(factory));
++    forEach(nodeFactoryPatchers, fn => { fn(factory); });
+     return factory;
+     // @api
+     function createNodeArray(elements, hasTrailingComma) {
+--- before/utilities.ts.js
++++ after/utilities.ts.js
+@@ -6876,7 +6876,7 @@
+ /** @internal */
+ export function setObjectAllocator(alloc) {
+     Object.assign(objectAllocator, alloc);
+-    forEach(objectAllocatorPatchers, fn => fn(objectAllocator));
++    forEach(objectAllocatorPatchers, fn => { fn(objectAllocator); });
+ }
+ /** @internal */
+ export function formatStringFromArgs(text, args) {

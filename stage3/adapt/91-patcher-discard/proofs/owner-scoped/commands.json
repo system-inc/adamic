@@ -1,0 +1,320 @@
+[
+  {
+    "name": "idempotence",
+    "command": [
+      "node",
+      "/workspace/adamic-owner-scoped/stage3/adapt/91-patcher-discard/adapt.cjs",
+      "/workspace/scratch/adapt91-after"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "limit": 120,
+    "exit": 0,
+    "seconds": 3.097
+  },
+  {
+    "name": "references",
+    "command": [
+      "node",
+      "/workspace/adamic-owner-scoped/stage3/adapt/91-patcher-discard/proofs/references.cjs",
+      "/workspace/scratch/adapt91-after",
+      "/workspace/adamic-owner-scoped/stage3/adapt/91-patcher-discard/proofs/references.json"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "limit": 300,
+    "exit": 0,
+    "seconds": 32.638
+  },
+  {
+    "name": "scope",
+    "command": [
+      "node",
+      "/workspace/adamic-owner-scoped/stage3/adapt/91-patcher-discard/proofs/scope.cjs",
+      "/workspace/scratch/adapt91-control",
+      "/workspace/scratch/adapt91-after",
+      "/workspace/scratch/adapt91-scope.json"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "limit": 300,
+    "exit": 0,
+    "seconds": 3.803
+  },
+  {
+    "name": "mutant-scope",
+    "command": [
+      "node",
+      "/workspace/adamic-owner-scoped/stage3/adapt/91-patcher-discard/proofs/scope.cjs",
+      "/workspace/scratch/adapt91-control",
+      "/workspace/scratch/adapt91-mutant",
+      "/workspace/scratch/adapt91-mutant-scope.json"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "limit": 300,
+    "exit": 0,
+    "seconds": 1.994
+  },
+  {
+    "name": "scope-mutant",
+    "command": [
+      "node",
+      "/workspace/adamic-owner-scoped/stage3/adapt/91-patcher-discard/proofs/scope.cjs",
+      "/workspace/scratch/adapt91-control",
+      "/workspace/scratch/adapt91-after",
+      "/workspace/scratch/adapt91-invalid-scope.json"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "limit": 300,
+    "exit": 1,
+    "seconds": 0.317
+  },
+  {
+    "name": "moved-target-mutant",
+    "command": [
+      "node",
+      "/workspace/adamic-owner-scoped/stage3/adapt/91-patcher-discard/adapt.cjs",
+      "/workspace/scratch/adapt91-after"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "limit": 120,
+    "exit": 1,
+    "seconds": 2.141
+  },
+  {
+    "name": "registrant-mutant",
+    "command": [
+      "node",
+      "/workspace/adamic-owner-scoped/stage3/adapt/91-patcher-discard/proofs/references.cjs",
+      "/workspace/scratch/adapt91-after",
+      "/workspace/scratch/adapt91-invalid-references.json"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "limit": 300,
+    "exit": 1,
+    "seconds": 32.136
+  },
+  {
+    "name": "overlay",
+    "command": [
+      "python3",
+      "/workspace/adamic-owner-scoped/stage3/census/latent/make_overlay.py",
+      "/workspace/adamic-owner-scoped",
+      "/workspace/scratch/adapt91-latent-overlay"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "limit": 300,
+    "exit": 0,
+    "seconds": 0.918
+  },
+  {
+    "name": "scan-overlay",
+    "command": [
+      "python3",
+      "/workspace/adamic-owner-scoped/stage3/adapt/91-patcher-discard/proofs/make-scan.py",
+      "/workspace/adamic-owner-scoped",
+      "/workspace/scratch/adapt91-latent-overlay/overlay.json",
+      "/workspace/scratch/adapt91-scan-overlay"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "limit": 300,
+    "exit": 0,
+    "seconds": 0.067
+  },
+  {
+    "name": "scan-build",
+    "command": [
+      "go",
+      "build",
+      "-buildvcs=false",
+      "-overlay=/workspace/scratch/adapt91-scan-overlay/overlay.json",
+      "-o",
+      "/workspace/scratch/adapt91-void-scan",
+      "./stage3/census/latent/tool"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "limit": 300,
+    "exit": 0,
+    "seconds": 22.34
+  },
+  {
+    "name": "scan-before",
+    "command": [
+      "/workspace/scratch/adapt91-void-scan",
+      "/workspace/scratch/adapt91-control/src/compiler",
+      "/workspace/scratch/adapt91-scan-before.jsonl"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "limit": 300,
+    "exit": 0,
+    "seconds": 35.963
+  },
+  {
+    "name": "scan-after",
+    "command": [
+      "/workspace/scratch/adapt91-void-scan",
+      "/workspace/scratch/adapt91-after/src/compiler",
+      "/workspace/scratch/adapt91-scan-after.jsonl"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "limit": 300,
+    "exit": 0,
+    "seconds": 37.493
+  },
+  {
+    "name": "scan-mutant",
+    "command": [
+      "/workspace/scratch/adapt91-void-scan",
+      "/workspace/scratch/adapt91-mutant/src/compiler",
+      "/workspace/scratch/adapt91-scan-mutant.jsonl"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "limit": 300,
+    "exit": 0,
+    "seconds": 66.535
+  },
+  {
+    "name": "scan-compare",
+    "command": [
+      "python3",
+      "/workspace/adamic-owner-scoped/stage3/adapt/91-patcher-discard/proofs/compare-scans.py",
+      "/workspace/scratch/adapt91-scan-before.jsonl",
+      "/workspace/scratch/adapt91-scan-after.jsonl",
+      "/workspace/scratch/adapt91-scan-mutant.jsonl",
+      "/workspace/adamic-owner-scoped/stage3/adapt/91-patcher-discard/proofs/scan-delta.json"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "limit": 300,
+    "exit": 0,
+    "seconds": 0.068
+  },
+  {
+    "name": "control-install",
+    "command": [
+      "npm",
+      "ci",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/workspace/scratch/adapt91-control",
+    "limit": 300,
+    "exit": 0,
+    "seconds": 6.949
+  },
+  {
+    "name": "control-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/workspace/scratch/adapt91-control",
+    "limit": 600,
+    "exit": 0,
+    "seconds": 65.732
+  },
+  {
+    "name": "after-install",
+    "command": [
+      "npm",
+      "ci",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/workspace/scratch/adapt91-after",
+    "limit": 300,
+    "exit": 0,
+    "seconds": 4.652
+  },
+  {
+    "name": "after-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/workspace/scratch/adapt91-after",
+    "limit": 600,
+    "exit": 0,
+    "seconds": 52.852
+  },
+  {
+    "name": "original-hooks",
+    "command": [
+      "node",
+      "/workspace/adamic-owner-scoped/stage3/adapt/91-patcher-discard/proofs/hooks.cjs",
+      "/workspace/scratch/adapt91-control/built/local/typescript.js",
+      "/workspace/adamic-owner-scoped/stage3/adapt/91-patcher-discard/proofs/hooks-before.json"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "limit": 60,
+    "exit": 0,
+    "seconds": 0.754
+  },
+  {
+    "name": "hooks-before",
+    "command": [
+      "node",
+      "/workspace/adamic-owner-scoped/stage3/adapt/91-patcher-discard/proofs/hooks-check.cjs",
+      "/workspace/scratch/adapt91-control/built/local/typescript.js",
+      "[1,0,1,0]",
+      "/workspace/adamic-owner-scoped/stage3/adapt/91-patcher-discard/proofs/hooks-control.json"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "limit": 60,
+    "exit": 0,
+    "seconds": 0.3
+  },
+  {
+    "name": "hooks-after",
+    "command": [
+      "node",
+      "/workspace/adamic-owner-scoped/stage3/adapt/91-patcher-discard/proofs/hooks-check.cjs",
+      "/workspace/scratch/adapt91-after/built/local/typescript.js",
+      "[1,1,1,1]",
+      "/workspace/adamic-owner-scoped/stage3/adapt/91-patcher-discard/proofs/hooks-after.json"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "limit": 60,
+    "exit": 0,
+    "seconds": 0.49
+  },
+  {
+    "name": "original-hooks-after",
+    "command": [
+      "node",
+      "/workspace/adamic-owner-scoped/stage3/adapt/91-patcher-discard/proofs/hooks.cjs",
+      "/workspace/scratch/adapt91-after/built/local/typescript.js",
+      "/workspace/scratch/adapt91-invalid-hooks.json"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "limit": 60,
+    "exit": 1,
+    "seconds": 0.549
+  },
+  {
+    "name": "api-compare",
+    "command": [
+      "python3",
+      "/workspace/adamic-owner-scoped/stage3/adapt/91-patcher-discard/proofs/compare-api.py",
+      "/workspace/scratch/adapt91-control/built/local/typescript.d.ts",
+      "/workspace/scratch/adapt91-after/built/local/typescript.d.ts",
+      "/workspace/adamic-owner-scoped/stage3/adapt/91-patcher-discard/proofs/api.json"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "limit": 60,
+    "exit": 0,
+    "seconds": 0.117
+  },
+  {
+    "name": "api-mutant",
+    "command": [
+      "python3",
+      "/workspace/adamic-owner-scoped/stage3/adapt/91-patcher-discard/proofs/compare-api.py",
+      "/workspace/scratch/adapt91-control/built/local/typescript.d.ts",
+      "/workspace/scratch/adapt91-api-mutant.d.ts.txt",
+      "/workspace/scratch/adapt91-invalid-api.json"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "limit": 60,
+    "exit": 1,
+    "seconds": 0.118
+  }
+]

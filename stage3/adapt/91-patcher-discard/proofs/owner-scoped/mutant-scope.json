@@ -1,0 +1,26 @@
+{
+  "typescript": "6.0.3",
+  "sourceFiles": 746,
+  "changed": [
+    "src/compiler/utilities.ts"
+  ],
+  "sites": [
+    {
+      "file": "src/compiler/utilities.ts",
+      "before": "forEach(objectAllocatorPatchers, fn => fn(objectAllocator));",
+      "after": "forEach(objectAllocatorPatchers, fn => { fn(objectAllocator); });",
+      "emits": [
+        {
+          "removeComments": false,
+          "before": "fn(objectAllocator)",
+          "after": "{ fn(objectAllocator); }"
+        },
+        {
+          "removeComments": true,
+          "before": "fn(objectAllocator)",
+          "after": "{ fn(objectAllocator); }"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+--- a/src/compiler/factory/nodeFactory.ts
++++ b/src/compiler/factory/nodeFactory.ts
+@@ -1164 +1164 @@
+-    forEach(nodeFactoryPatchers, fn => fn(factory));
++    forEach(nodeFactoryPatchers, fn => { fn(factory); });
+--- a/src/compiler/utilities.ts
++++ b/src/compiler/utilities.ts
+@@ -8582 +8582 @@
+-    forEach(objectAllocatorPatchers, fn => fn(objectAllocator));
++    forEach(objectAllocatorPatchers, fn => { fn(objectAllocator); });

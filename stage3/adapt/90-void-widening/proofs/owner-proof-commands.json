@@ -1,0 +1,251 @@
+[
+  {
+    "name": "install",
+    "command": [
+      "npm",
+      "ci",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/workspace/scratch/owner-90-proof-final/tree",
+    "exit": 0,
+    "limit": 600,
+    "seconds": 3.836
+  },
+  {
+    "name": "scan-before",
+    "command": [
+      "/workspace/scratch/adapt91-void-scan",
+      "/workspace/scratch/owner-90-proof-final/tree/src/compiler",
+      "/workspace/scratch/owner-90-proof-final/scan-before.jsonl"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 0,
+    "limit": 600,
+    "seconds": 40.491
+  },
+  {
+    "name": "scan-planted-mutant",
+    "command": [
+      "/workspace/scratch/adapt91-void-scan",
+      "/workspace/scratch/owner-90-proof-final/tree/src/compiler",
+      "/workspace/scratch/owner-90-proof-final/scan-planted-mutant.jsonl"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 0,
+    "limit": 600,
+    "seconds": 43.456
+  },
+  {
+    "name": "checker-before",
+    "command": [
+      "node",
+      "-e",
+      "const ts=require('typescript'),path=require('path');const {compiler}=require(process.argv[1]);const tree=process.argv[2];console.log(JSON.stringify(ts.getPreEmitDiagnostics(compiler(tree,ts)).map(d=>({file:d.file?path.relative(tree,d.file.fileName):'',code:d.code,message:ts.flattenDiagnosticMessageText(d.messageText,'\\n'),position:d.file&&d.start!==undefined?d.file.getLineAndCharacterOfPosition(d.start):null}))))",
+      "/workspace/adamic-owner-scoped/stage3/adapt/47-host-errors/adapt.cjs",
+      "/workspace/scratch/owner-90-proof-final/tree"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 0,
+    "limit": 600,
+    "seconds": 16.994
+  },
+  {
+    "name": "build-before",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/workspace/scratch/owner-90-proof-final/tree",
+    "exit": 0,
+    "limit": 900,
+    "seconds": 38.82
+  },
+  {
+    "name": "adapt",
+    "command": [
+      "node",
+      "/workspace/adamic-owner-scoped/stage3/adapt/90-void-widening/adapt.cjs",
+      "/workspace/scratch/owner-90-proof-final/tree"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 0,
+    "limit": 600,
+    "seconds": 20.804
+  },
+  {
+    "name": "scan-after",
+    "command": [
+      "/workspace/scratch/adapt91-void-scan",
+      "/workspace/scratch/owner-90-proof-final/tree/src/compiler",
+      "/workspace/scratch/owner-90-proof-final/scan-after.jsonl"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 0,
+    "limit": 600,
+    "seconds": 42.591
+  },
+  {
+    "name": "scan-binder-reversion",
+    "command": [
+      "/workspace/scratch/adapt91-void-scan",
+      "/workspace/scratch/owner-90-proof-final/tree/src/compiler",
+      "/workspace/scratch/owner-90-proof-final/scan-binder-reversion.jsonl"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 0,
+    "limit": 600,
+    "seconds": 41.9
+  },
+  {
+    "name": "checker-after",
+    "command": [
+      "node",
+      "-e",
+      "const ts=require('typescript'),path=require('path');const {compiler}=require(process.argv[1]);const tree=process.argv[2];console.log(JSON.stringify(ts.getPreEmitDiagnostics(compiler(tree,ts)).map(d=>({file:d.file?path.relative(tree,d.file.fileName):'',code:d.code,message:ts.flattenDiagnosticMessageText(d.messageText,'\\n'),position:d.file&&d.start!==undefined?d.file.getLineAndCharacterOfPosition(d.start):null}))))",
+      "/workspace/adamic-owner-scoped/stage3/adapt/47-host-errors/adapt.cjs",
+      "/workspace/scratch/owner-90-proof-final/tree"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 0,
+    "limit": 600,
+    "seconds": 12.226
+  },
+  {
+    "name": "checker-mutant",
+    "command": [
+      "node",
+      "-e",
+      "const ts=require('typescript'),path=require('path');const {compiler}=require(process.argv[1]);const tree=process.argv[2];console.log(JSON.stringify(ts.getPreEmitDiagnostics(compiler(tree,ts)).map(d=>({file:d.file?path.relative(tree,d.file.fileName):'',code:d.code,message:ts.flattenDiagnosticMessageText(d.messageText,'\\n'),position:d.file&&d.start!==undefined?d.file.getLineAndCharacterOfPosition(d.start):null}))))",
+      "/workspace/adamic-owner-scoped/stage3/adapt/47-host-errors/adapt.cjs",
+      "/workspace/scratch/owner-90-proof-final/tree"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 0,
+    "limit": 600,
+    "seconds": 12.621
+  },
+  {
+    "name": "erasure-0",
+    "command": [
+      "node",
+      "-e",
+      "const ts=require('typescript'),fs=require('fs'),assert=require('assert/strict');const a=fs.readFileSync(process.argv[1],'utf8'),b=fs.readFileSync(process.argv[2],'utf8');for(const removeComments of [false,true]){const emit=text=>ts.transpileModule(text,{compilerOptions:{target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext,removeComments}}).outputText;assert.equal(emit(a),emit(b));assert.notEqual(emit(a),emit(b+'\\nvoid 0;'));}console.log('PASS identity and runtime mutant in both comment modes');",
+      "/workspace/scratch/owner-90-proof-final/original/src/compiler/binder.ts",
+      "/workspace/scratch/owner-90-proof-final/tree/src/compiler/binder.ts"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 0,
+    "limit": 600,
+    "seconds": 1.708
+  },
+  {
+    "name": "erasure-1",
+    "command": [
+      "node",
+      "-e",
+      "const ts=require('typescript'),fs=require('fs'),assert=require('assert/strict');const a=fs.readFileSync(process.argv[1],'utf8'),b=fs.readFileSync(process.argv[2],'utf8');for(const removeComments of [false,true]){const emit=text=>ts.transpileModule(text,{compilerOptions:{target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext,removeComments}}).outputText;assert.equal(emit(a),emit(b));assert.notEqual(emit(a),emit(b+'\\nvoid 0;'));}console.log('PASS identity and runtime mutant in both comment modes');",
+      "/workspace/scratch/owner-90-proof-final/original/src/compiler/checker.ts",
+      "/workspace/scratch/owner-90-proof-final/tree/src/compiler/checker.ts"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 0,
+    "limit": 600,
+    "seconds": 11.468
+  },
+  {
+    "name": "erasure-2",
+    "command": [
+      "node",
+      "-e",
+      "const ts=require('typescript'),fs=require('fs'),assert=require('assert/strict');const a=fs.readFileSync(process.argv[1],'utf8'),b=fs.readFileSync(process.argv[2],'utf8');for(const removeComments of [false,true]){const emit=text=>ts.transpileModule(text,{compilerOptions:{target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext,removeComments}}).outputText;assert.equal(emit(a),emit(b));assert.notEqual(emit(a),emit(b+'\\nvoid 0;'));}console.log('PASS identity and runtime mutant in both comment modes');",
+      "/workspace/scratch/owner-90-proof-final/original/src/compiler/emitter.ts",
+      "/workspace/scratch/owner-90-proof-final/tree/src/compiler/emitter.ts"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 0,
+    "limit": 600,
+    "seconds": 2.097
+  },
+  {
+    "name": "erasure-3",
+    "command": [
+      "node",
+      "-e",
+      "const ts=require('typescript'),fs=require('fs'),assert=require('assert/strict');const a=fs.readFileSync(process.argv[1],'utf8'),b=fs.readFileSync(process.argv[2],'utf8');for(const removeComments of [false,true]){const emit=text=>ts.transpileModule(text,{compilerOptions:{target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext,removeComments}}).outputText;assert.equal(emit(a),emit(b));assert.notEqual(emit(a),emit(b+'\\nvoid 0;'));}console.log('PASS identity and runtime mutant in both comment modes');",
+      "/workspace/scratch/owner-90-proof-final/original/src/compiler/parser.ts",
+      "/workspace/scratch/owner-90-proof-final/tree/src/compiler/parser.ts"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 0,
+    "limit": 600,
+    "seconds": 2.584
+  },
+  {
+    "name": "erasure-4",
+    "command": [
+      "node",
+      "-e",
+      "const ts=require('typescript'),fs=require('fs'),assert=require('assert/strict');const a=fs.readFileSync(process.argv[1],'utf8'),b=fs.readFileSync(process.argv[2],'utf8');for(const removeComments of [false,true]){const emit=text=>ts.transpileModule(text,{compilerOptions:{target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext,removeComments}}).outputText;assert.equal(emit(a),emit(b));assert.notEqual(emit(a),emit(b+'\\nvoid 0;'));}console.log('PASS identity and runtime mutant in both comment modes');",
+      "/workspace/scratch/owner-90-proof-final/original/src/compiler/program.ts",
+      "/workspace/scratch/owner-90-proof-final/tree/src/compiler/program.ts"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 0,
+    "limit": 600,
+    "seconds": 2.369
+  },
+  {
+    "name": "erasure-5",
+    "command": [
+      "node",
+      "-e",
+      "const ts=require('typescript'),fs=require('fs'),assert=require('assert/strict');const a=fs.readFileSync(process.argv[1],'utf8'),b=fs.readFileSync(process.argv[2],'utf8');for(const removeComments of [false,true]){const emit=text=>ts.transpileModule(text,{compilerOptions:{target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext,removeComments}}).outputText;assert.equal(emit(a),emit(b));assert.notEqual(emit(a),emit(b+'\\nvoid 0;'));}console.log('PASS identity and runtime mutant in both comment modes');",
+      "/workspace/scratch/owner-90-proof-final/original/src/compiler/symbolWalker.ts",
+      "/workspace/scratch/owner-90-proof-final/tree/src/compiler/symbolWalker.ts"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 0,
+    "limit": 600,
+    "seconds": 0.527
+  },
+  {
+    "name": "erasure-6",
+    "command": [
+      "node",
+      "-e",
+      "const ts=require('typescript'),fs=require('fs'),assert=require('assert/strict');const a=fs.readFileSync(process.argv[1],'utf8'),b=fs.readFileSync(process.argv[2],'utf8');for(const removeComments of [false,true]){const emit=text=>ts.transpileModule(text,{compilerOptions:{target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext,removeComments}}).outputText;assert.equal(emit(a),emit(b));assert.notEqual(emit(a),emit(b+'\\nvoid 0;'));}console.log('PASS identity and runtime mutant in both comment modes');",
+      "/workspace/scratch/owner-90-proof-final/original/src/compiler/transformers/es2017.ts",
+      "/workspace/scratch/owner-90-proof-final/tree/src/compiler/transformers/es2017.ts"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 0,
+    "limit": 600,
+    "seconds": 0.722
+  },
+  {
+    "name": "build-after",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/workspace/scratch/owner-90-proof-final/tree",
+    "exit": 0,
+    "limit": 900,
+    "seconds": 37.391
+  },
+  {
+    "name": "rerun",
+    "command": [
+      "node",
+      "/workspace/adamic-owner-scoped/stage3/adapt/90-void-widening/adapt.cjs",
+      "/workspace/scratch/owner-90-proof-final/tree"
+    ],
+    "cwd": "/workspace/adamic-owner-scoped",
+    "exit": 0,
+    "limit": 600,
+    "seconds": 19.057
+  }
+]
