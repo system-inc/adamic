@@ -277,6 +277,8 @@ type lowering struct {
 	provenModuleReads map[*ast.Node]bool
 	// assignedSymbols is every symbol an identifier in the program assigns to (predicates.go's assignedSymbol).
 	assignedSymbols map[*ast.Symbol]bool
+	// crossFunctionWrites is every binding a function other than its own writes (narrowed_nullish.go).
+	crossFunctionWrites map[*ast.Symbol]bool
 
 	// predicateFalse is the false-direction walk's switch and memo (predicate_false_flow.go).
 	predicateFalse *predicateFalseFlow
