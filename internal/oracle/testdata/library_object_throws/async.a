@@ -1,0 +1,56 @@
+// An async function's try around a write to a frozen object: the TypeError takes the flow graph's
+// exception edge to the catch. Without a try, it rejects the promise, and the caller's await throws it.
+type Entry = { key: string; hits: number };
+
+async function touch(entry: Entry): Promise<string> {
+	await Promise.resolve();
+	try {
+		entry.hits = entry.hits + 1;
+		return `ok ${entry.key} ${entry.hits}`;
+	} catch (error) {
+		if (error instanceof Error) {
+			return `${error.name}|${error.message}`;
+		}
+		return 'not an error';
+	}
+}
+
+async function relabel(entry: Entry, key: string): Promise<void> {
+	const label = `relabel ${entry.key}`;
+	try {
+		entry.key = `${key}-${entry.hits}`;
+		console.log(`${label}: ${entry.key}`);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(`${label} threw ${error.name}|${error.message}`);
+		}
+	}
+	await Promise.resolve();
+}
+
+async function bare(entry: Entry): Promise<number> {
+	await Promise.resolve();
+	entry.hits = 0;
+	return entry.hits;
+}
+
+async function run(): Promise<string> {
+	const live: Entry = { key: 'live', hits: 0 };
+	const fixed: Entry = { key: 'fixed', hits: 0 };
+	Object.freeze(fixed);
+	const first = await touch(live);
+	const second = await touch(fixed);
+	await relabel(live, 'renamed');
+	await relabel(fixed, 'renamed');
+	let text = `${first} ${second}`;
+	try {
+		const third = await bare(fixed);
+		text = `${text} ${third}`;
+	} catch (error) {
+		if (error instanceof Error) {
+			text = `${text} rejected ${error.name}|${error.message}`;
+		}
+	}
+	return text;
+}
+console.log(await run());

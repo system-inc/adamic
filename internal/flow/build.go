@@ -540,7 +540,10 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 			if call, ok := value.Interface().(ir.StringFromCodes); ok && call.MayThrow() {
 				throws = true
 			}
-			if program.RecordWriteMayThrow(value.Interface()) {
+			if program.RecordWriteMayThrow(value.Interface()) || program.FrozenWriteMayThrow(value.Interface()) {
+				throws = true
+			}
+			if call, ok := value.Interface().(ir.RegExpCall); ok && program.GlobalFlagMayThrow(call) {
 				throws = true
 			}
 			// A read in its temporal dead zone, or a logical assignment's write, throws JavaScript's

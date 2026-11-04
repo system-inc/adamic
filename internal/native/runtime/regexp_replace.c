@@ -38,9 +38,11 @@ adamic_string *adamic_regex_replace_callback(adamic_string *input, adamic_object
 											 size_t group_check_count, size_t rest_slot) {
 	bool global = regex->slots[4].boolean;
 	if (require_global && !global) {
-		const char message[] = "TypeError: String.prototype.replaceAll called with "
+		// Node's TypeError on the pending word, and no string, as when the callback throws.
+		const char message[] = "String.prototype.replaceAll called with "
 							   "a non-global RegExp argument";
-		adamic_panic(message, sizeof message - 1);
+		adamic_throw_kind("TypeError", sizeof "TypeError" - 1, message, sizeof message - 1);
+		return NULL;
 	}
 	if (global)
 		regex->slots[1].number = 0;

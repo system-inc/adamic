@@ -819,14 +819,19 @@ static const char *const iterator_names[] = {"regex", "input", "done"};
 static const bool iterator_references[] = {true, true, false};
 static const adamic_field_kind iterator_kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_boolean};
 static const adamic_shape iterator_shape = {3, iterator_names, iterator_references, &adamic_host_methods, iterator_kinds};
-static void regex_require_global(const adamic_regex_program *p, const char *message) {
-	if (!(p->flags & 8))
-		adamic_panic(message, strlen(message));
+// regex_require_global leaves Node's TypeError on the pending word for a RegExp without the g flag,
+// and says whether the call may go on; the caller returns what its own emitter lets go.
+static bool regex_require_global(const adamic_regex_program *p, const char *message) {
+	if (p->flags & 8)
+		return true;
+	adamic_throw_kind("TypeError", sizeof "TypeError" - 1, message, strlen(message));
+	return false;
 }
 adamic_object *adamic_regex_match_all(adamic_string *input, adamic_object *regex) {
 	const adamic_regex_program *p = regex_program(regex);
-	regex_require_global(
-		p, "TypeError: String.prototype.matchAll called with a non-global RegExp argument");
+	// No iterator on a throw: the caller tests the pending word, and releasing NULL is nothing.
+	if (!regex_require_global(p, "String.prototype.matchAll called with a non-global RegExp argument"))
+		return NULL;
 	    adamic_object *copy = regex_copy_object(regex);
 	copy->slots[1].number = (double)regex_to_length(regex->slots[1].number);
 	adamic_object *iterator = adamic_object_new(&iterator_shape);
@@ -1046,9 +1051,10 @@ static void regex_substitution(adamic_array *pieces, adamic_string *input, size_
 adamic_string *adamic_regex_replace(adamic_string *input, adamic_object *regex,
 									adamic_string *replacement, bool require_global) {
 	const adamic_regex_program *p = regex_program(regex);
-	if (require_global)
-		regex_require_global(
-			p, "TypeError: String.prototype.replaceAll called with a non-global RegExp argument");
+	// An empty string on a throw, the caller's to let go once it has tested the pending word.
+	if (require_global &&
+		!regex_require_global(p, "String.prototype.replaceAll called with a non-global RegExp argument"))
+		return adamic_retain(&adamic_string_empty);
 	bool global = (p->flags & 8) != 0;
 	if (global)
 		regex->slots[1].number = 0;
