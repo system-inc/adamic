@@ -196,6 +196,9 @@ var reflectGetStops = []struct{ file, stdout, stop, key, node string }{
 	{"stop_in_host_error_code.a", "code ENOENT\n", "RuntimeValue", "code", "code ENOENT\nstats code none\n"},
 	{"stop_hasownproperty_host.a", "stats\n", "RuntimeValue", "_fsFileMode", "stats\ninternal false\n"},
 	{"stop_string_host.a", "iterator\n", "RuntimeValue", "toString", "iterator\nstring [object RegExp String Iterator]\n"},
+	{"stop_keys_host.a", "stats\n", "OwnKeys", "", "stats\nkeys true false\n"},
+	{"stop_keys_iterator.a", "iterator\n", "OwnKeys", "", "iterator\nkeys []\n"},
+	{"stop_keys_memory.a", "memory\n", "OwnKeys", "", "memory\nkeys rss,heapTotal,heapUsed,external,arrayBuffers\n"},
 	{"stop_error_stack.a", "before\n", "ErrorProperty", "stack", "before\nstring\n"},
 	{"stop_array.a", "before\n", "Array", "length", "before\nnumber\n"},
 	{"stop_literal_getter.a", "got\n", "ObjectLiteralGetter", "value", "got\nstring\n"},
@@ -205,6 +208,10 @@ var reflectGetStops = []struct{ file, stdout, stop, key, node string }{
 // words from internal/ir's one table with the key it was reading.
 func reflectGetStop(t *testing.T, stdout, stop, key string) run {
 	t.Helper()
+	// Object.keys of a host value stops in a whole message that names no key (ir.DynamicKeysStop).
+	if stop == "OwnKeys" {
+		return run{stdout: []byte(stdout), stderr: []byte("adamic: panic: " + ir.DynamicKeysStop + "\n"), exitCode: 70}
+	}
 	for _, entry := range ir.DynamicKeyedStops {
 		if entry.Name == stop {
 			return run{stdout: []byte(stdout), stderr: []byte("adamic: panic: " + entry.Message + " (reading '" + key + "')\n"), exitCode: 70}
@@ -235,7 +242,10 @@ func reflectGetStop(t *testing.T, stdout, stop, key string) run {
 // stop_hasownproperty_host.a and stop_string_host.a are the same ruling's other doors, hasOwnProperty
 // (adamic_object_has) and ToPrimitive's own-toString test (adamic_object_own_function); their
 // mutants are each guard dropped, so hasOwnProperty answers true and String answers [object Object]
-// natively.
+// natively. The stop_keys_ rows are Object.keys of a host value, stopping in the keyless message
+// (OwnKeys, Adamic's ruling at 08:28Z); their mutants are the keys guard dropped from
+// adamic_object_keys and from adamic_class_object_keys, and the fixture each path serves answers from
+// native's slots.
 func TestReflectGetStopsAlikeOnBothBackends(t *testing.T) {
 	t.Parallel()
 	for _, probe := range reflectGetStops {

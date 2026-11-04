@@ -1,0 +1,8 @@
+// Object.keys of a host object stops in a keyless message (#ey7aysy, Adamic's ruling at 08:28Z):
+// process.memoryUsage() has five own keys on Node, and native's shape holds only heapUsed. Node
+// prints keys rss,heapTotal,heapUsed,external,arrayBuffers.
+import process from 'node:process';
+
+const usage = process.memoryUsage();
+console.log('memory');
+console.log(`keys ${Object.keys(usage).join(',')}`);
