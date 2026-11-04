@@ -1,4 +1,4 @@
 // a-check: refused a cast the runtime can't check
 // A backreference needs the group it refers to, which split pushes into its result.
 const pieces = 'xaaz'.split(/(a)\1/) as string[];
-console.log(pieces.length);
+console.log(`${pieces.length}`);

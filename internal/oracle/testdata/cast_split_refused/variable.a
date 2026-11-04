@@ -4,4 +4,4 @@
 const whitespaceRegExp = /\s+/;
 const range = '>=1.0.0 <2.0.0';
 const pieces = range.split(whitespaceRegExp) as string[];
-console.log(pieces.length);
+console.log(`${pieces.length}`);

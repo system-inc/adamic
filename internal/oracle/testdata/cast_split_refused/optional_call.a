@@ -3,4 +3,4 @@
 function pieces(text: string | undefined): number {
 	return (text?.split(/a/) as string[]).length;
 }
-console.log(pieces('xaz'));
+console.log(`${pieces('xaz')}`);
