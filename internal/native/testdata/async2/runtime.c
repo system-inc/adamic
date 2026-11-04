@@ -69,6 +69,11 @@ int main(int argc, char **argv) {
         assert(adamic_is_shared(&environment->heap));
         assert(adamic_is_shared(environment->cells[0].value.reference));
         adamic_release(environment);
+    } else if (strcmp(argv[1], "canonical") == 0) {
+        /* An async frame's cell is no environment's: a canonical closure over it is a compiler bug. */
+        frame *owned = make_frame();
+        (void)adamic_closure_canonical(&owned->cells[0], code, 0, NULL);
+        assert(!"a canonical closure over an async frame's cell");
     } else if (strcmp(argv[1], "share") == 0) {
         frame *owned = make_frame();
         adamic_share(&owned->cells[0]);
