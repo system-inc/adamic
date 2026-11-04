@@ -10,6 +10,7 @@
 void adamic_release(void *value) { adamic_release_inline(value); }
 #endif
 #include "async.h"
+#include "generator.h"
 #include "count.h"
 #include "graph_regions.h"
 #include "slab_quarantine.h"
@@ -449,6 +450,9 @@ void adamic_heap_free_children(void *value, void (*let_go)(void *)) {
 		adamic_environment_drop_cells(environment->cells, environment->count, let_go);
 		break;
 	}
+	case adamic_kind_generator:
+		adamic_generator_free_children(value, let_go);
+		break;
 #endif
 	case adamic_kind_closure: {
 		adamic_closure *closure = value;

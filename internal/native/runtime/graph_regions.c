@@ -73,6 +73,9 @@ const char *adamic_region_unmovable(const adamic_heap *heap) {
 	case adamic_kind_async_frame: return "an async frame";
 	case adamic_kind_async_promise: return "a promise";
 	case adamic_kind_async_reaction: return "an async reaction";
+#ifdef ADAMIC_CANONICAL_CLOSURES
+	case adamic_kind_generator: return "a generator";
+#endif
 	}
 	return "an unknown kind";
 }
