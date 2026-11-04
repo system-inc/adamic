@@ -2,6 +2,7 @@ package fixtures
 
 import (
 	"encoding/json"
+	"github.com/system-inc/adamic/internal/hostconfiguration"
 	"go/ast"
 	"go/build"
 	"go/parser"
@@ -194,6 +195,15 @@ func TestFixtureDirectoriesHaveTopLevelTests(t *testing.T) {
 				t.Errorf("fixture unit names nonexistent fixture %s/%s", directory, file)
 			}
 			delete(selectedFiles, directory)
+		}
+		for index, row := range rows {
+			_, skip, err := hostconfiguration.Resolve(index+1, row.Configuration, os.Getenv)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if skip != "" {
+				t.Log(skip)
+			}
 		}
 		fixtures += len(rows)
 		t.Logf("%s directory=%s fixtures=%d", unit, directory, len(rows))

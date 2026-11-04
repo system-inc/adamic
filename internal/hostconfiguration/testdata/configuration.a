@@ -1,0 +1,3 @@
+// a-check: checked
+import process from "node:process";
+console.log(process.env.ADAMIC_HOST_CONFIGURATION_PROOF || "stock");

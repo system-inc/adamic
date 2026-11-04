@@ -12,6 +12,7 @@ import (
 	"sync"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/hostconfiguration"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -26,8 +27,9 @@ type hostStage struct {
 	What    string `json:"what"`
 }
 type hostMeasurement struct {
-	File string `json:"file"`
-	Node struct {
+	Configuration *hostconfiguration.Configuration `json:"configuration,omitempty"`
+	File          string                           `json:"file"`
+	Node          struct {
 		Stdout string `json:"stdout"`
 		Stderr string `json:"stderr"`
 		Exit   int    `json:"exit"`
@@ -69,11 +71,19 @@ func hostStatusFile(t *testing.T, index int, wasiOnly bool, statusPath string) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	truth := onNodeWith(t, inputRun{directory: repository}, path)
-	recorded := run{stdout: []byte(row.Node.Stdout), stderr: []byte(row.Node.Stderr), exitCode: row.Node.Exit}
-	if difference := disagreement(recorded, truth); difference != "" {
-		t.Fatalf("recorded Node %s: %s", row.File, difference)
-	}
+	truth := run{stdout: []byte(row.Node.Stdout), stderr: []byte(row.Node.Stderr), exitCode: row.Node.Exit}
+	nodeChecked := false
+	t.Run("node", func(t *testing.T) {
+		if why := hostconfiguration.Skip(index+1, row.Configuration); why != "" {
+			t.Skipf("host status row %d: the node step needs node-without-inspector; set ADAMIC_HOST_NODE_WITHOUT_INSPECTOR", index+1)
+		}
+		nodeBinary := hostconfiguration.Require(t, index+1, row.Configuration)
+		actualNode := hostNodeWith(t, inputRun{directory: repository}, nodeBinary, path)
+		if difference := disagreement(truth, actualNode); difference != "" {
+			t.Fatalf("recorded Node %s: %s", row.File, difference)
+		}
+		nodeChecked = true
+	})
 	program, err := load.Load([]string{path})
 	observed := hostStage{Outcome: "Compiles"}
 	var code, script string
@@ -107,22 +117,30 @@ func hostStatusFile(t *testing.T, index int, wasiOnly bool, statusPath string) {
 	} else {
 		directory := t.TempDir()
 		if !wasiOnly {
-			binary := filepath.Join(directory, "program")
-			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-				t.Fatal(err)
-			}
-			actual := executeInput(t, inputRun{directory: repository}, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
-			if difference := disagreement(truth, actual); difference != "" {
-				t.Fatalf("%s native: %s", row.File, difference)
-			}
-			js := filepath.Join(directory, "program.mjs")
-			if err := os.WriteFile(js, []byte(script), 0600); err != nil {
-				t.Fatal(err)
-			}
-			actual = onNodeWith(t, inputRun{directory: repository}, js)
-			if difference := disagreement(truth, actual); difference != "" {
-				t.Fatalf("%s JavaScript: %s", row.File, difference)
-			}
+			t.Run("native", func(t *testing.T) {
+				binary := filepath.Join(directory, "program")
+				if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+					t.Fatal(err)
+				}
+				actual := executeInput(t, inputRun{directory: repository}, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+				if difference := disagreement(truth, actual); difference != "" {
+					t.Fatalf("%s native: %s", row.File, difference)
+				}
+			})
+			t.Run("javascript", func(t *testing.T) {
+				js := filepath.Join(directory, "program.mjs")
+				if err := os.WriteFile(js, []byte(script), 0600); err != nil {
+					t.Fatal(err)
+				}
+				if why := hostconfiguration.Skip(index+1, row.Configuration); why != "" {
+					t.Skipf("host status row %d: the javascript step needs node-without-inspector; set ADAMIC_HOST_NODE_WITHOUT_INSPECTOR", index+1)
+				}
+				nodeBinary := hostconfiguration.Require(t, index+1, row.Configuration)
+				actual := hostNodeWith(t, inputRun{directory: repository}, nodeBinary, js)
+				if difference := disagreement(truth, actual); difference != "" {
+					t.Fatalf("%s JavaScript: %s", row.File, difference)
+				}
+			})
 		}
 		if wasiOnly {
 			wasm := filepath.Join(directory, "program.wasm")
@@ -137,20 +155,30 @@ func hostStatusFile(t *testing.T, index int, wasiOnly bool, statusPath string) {
 				if runnerErr != nil {
 					t.Fatal(runnerErr)
 				}
-				actual := executeInput(t, inputRun{directory: repository}, nil, "node", "--disable-warning=ExperimentalWarning", runner, wasm)
-				if reason := wasiRefusalReason(actual); reason != "" {
-					t.Logf("%s WASI refusal: %s", row.File, reason)
-				} else if difference := disagreement(truth, actual); difference != "" {
-					t.Fatalf("%s WASI: %s", row.File, difference)
-				}
+				t.Run("wasi", func(t *testing.T) {
+					if why := hostconfiguration.Skip(index+1, row.Configuration); why != "" {
+						t.Skipf("host status row %d: the wasi step needs node-without-inspector; set ADAMIC_HOST_NODE_WITHOUT_INSPECTOR", index+1)
+					}
+					nodeBinary := hostconfiguration.Require(t, index+1, row.Configuration)
+					actual := executeInput(t, inputRun{directory: repository}, nil, nodeBinary, "--disable-warning=ExperimentalWarning", runner, wasm)
+					if reason := wasiRefusalReason(actual); reason != "" {
+						t.Logf("%s WASI refusal: %s", row.File, reason)
+					} else if difference := disagreement(truth, actual); difference != "" {
+						t.Fatalf("%s WASI: %s", row.File, difference)
+					}
+				})
 			}
 		}
 	}
-	t.Logf("%s: current Node agrees; stage=%s diagnostic=%q", row.File, observed.Outcome, observed.What)
+	if nodeChecked {
+		t.Logf("%s: current Node agrees; stage=%s diagnostic=%q", row.File, observed.Outcome, observed.What)
+	} else {
+		t.Logf("%s: reference Node not verified; stage=%s diagnostic=%q", row.File, observed.Outcome, observed.What)
+	}
 	if observed == row.Stage {
 		return
 	}
-	if !*updateHostStatus || wasiOnly {
+	if !*updateHostStatus || wasiOnly || !nodeChecked {
 		t.Fatalf("host status changed: got %+v; recorded %+v", observed, row.Stage)
 	}
 	// Replace only this stage0 field. Keep original fixture provenance and Node bytes.
@@ -287,3 +315,13 @@ func TestHostStatusWASI_022(t *testing.T) { t.Parallel(); hostStatus(t, 22, true
 func TestHostStatusWASI_023(t *testing.T) { t.Parallel(); hostStatus(t, 23, true) }
 
 func TestHostStatusWASI_024(t *testing.T) { t.Parallel(); hostStatus(t, 24, true) }
+
+// Both the source oracle and generated JavaScript use the row's named Node build.
+func hostNodeWith(t *testing.T, how inputRun, binary, path string) run {
+	t.Helper()
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return executeInput(t, how, nil, binary, "--disable-warning=ExperimentalWarning", runner, path)
+}
