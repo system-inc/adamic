@@ -12,8 +12,11 @@ size_t adamic_array_from_length(double length) {
 		return 0;
 	}
 	if (length > 4294967295.0) {
-		static const char message[] = "RangeError: Invalid array length";
-		adamic_panic(message, sizeof message - 1);
+		// Node's RangeError on the pending word, and no elements, for the caller to test before it
+		// makes the array.
+		static const char message[] = "Invalid array length";
+		adamic_throw_kind("RangeError", sizeof "RangeError" - 1, message, sizeof message - 1);
+		return 0;
 	}
 	return (size_t)length;
 }

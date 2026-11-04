@@ -14,6 +14,10 @@ func (e *emitter) arrayFrom(from ir.ArrayFrom) string {
 	callback := e.value(from.Callback)
 	count, index := e.temporary(), e.temporary()
 	e.line("size_t %s = adamic_array_from_length(%s);", count, length)
+	// A length past 2^32 - 1 leaves a RangeError pending, tested before the array is made.
+	if from.MayThrow() {
+		e.checkThrown()
+	}
 	made := e.own(ir.Array, fmt.Sprintf("adamic_array_make(%s, %s)", count, arrayElement(from.Element)))
 	e.adoptGraph(made, "sizeof *"+made, e.graphTypes(from.GraphTypes) && !from.ProgramRegion)
 	e.programArray(made, from.ProgramRegion)

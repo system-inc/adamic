@@ -1,0 +1,43 @@
+// new Array(length) given a length that isn't an integer from 0 to 2^32 - 1, and Array.from({ length })
+// given one past it, throw Node's RangeError, and a catch takes it: its name and its message are two
+// fields, printed apart. The statement's temporaries, a label and a fill value built at run time among
+// them, are let go on the way to the catch, so the leak check holds it.
+for (const length of [3, 2.5, -1, 2 ** 32, NaN, 0]) {
+	const label = `new Array(${length})`;
+	try {
+		const word = `w${length}`;
+		console.log(`${label}: [${new Array<string>(length).fill(word).join(',')}]`);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(error.name);
+			console.log(error.message);
+		}
+	}
+}
+for (const length of [2 ** 32 - 2 ** 32 + 3, 2 ** 32, 2.5, -4, Infinity]) {
+	const label = `Array.from(${length})`;
+	try {
+		const made = Array.from({ length }, (_, index) => `${label}#${index}`);
+		console.log(`${label}: ${made.length} ${made.join(' ')}`);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(error.name);
+			console.log(error.message);
+		}
+	}
+}
+// The length is checked before the callback is ever called.
+let calls = 0;
+try {
+	const never = Array.from({ length: 2 ** 33 }, (_, index) => {
+		calls += 1;
+		return index;
+	});
+	console.log(`${never.length}`);
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(`${error.name}: ${error.message}`);
+	}
+}
+console.log(`calls ${calls}`);
+console.log('done');
