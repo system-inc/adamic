@@ -1,0 +1,24 @@
+// tsc's sys.ts:1619 returns what a computed require gives as the module of a ModuleImportResult,
+// inside a try whose catch returns the error. The require throws before the object is built, so no
+// member typed any reaches the return (host-any.md's Modelled row), and native throws the Error
+// naming the path, where stock Node would load the plugin (no-javascript-plugins,
+// backend_divergences_test.go). The source on Node, an ES module, has no require.
+import 'node:process';
+
+type ModuleImportResult<T = {}> =
+	| { module: T; modulePath?: string; error: undefined }
+	| { module: undefined; modulePath?: undefined; error: { stack?: string; message?: string } };
+
+function requirePlugin(modulePath: string): ModuleImportResult {
+	try {
+		return { module: require(modulePath), modulePath, error: undefined };
+	} catch (error) {
+		return { module: undefined, modulePath: undefined, error: { message: error instanceof Error ? error.message : 'unknown' } };
+	}
+}
+
+const result = requirePlugin('./plugin.js');
+if (result.error !== undefined) {
+	console.log('failed: ' + (result.error.message ?? 'no message'));
+}
+console.log('after');
