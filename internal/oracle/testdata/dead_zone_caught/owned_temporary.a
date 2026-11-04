@@ -1,0 +1,29 @@
+// A dead-zone read in the middle of an expression that already holds built strings, an argument and
+// a template's part: the caught throw lets go of each on the way out, as a panic never had to
+// (#bxmdk73, Compiler's ask). Node prints the error twice, then L0-3 and L0:3.
+let trace = '';
+function label(): string {
+	return `L${String(trace.length)}`;
+}
+function join(left: string, right: number): string {
+	return left + ':' + String(right);
+}
+function argument(): string {
+	return join(label(), later);
+}
+function template(): string {
+	return `${label()}-${String(later)}`;
+}
+try {
+	console.log(argument());
+} catch (error) {
+	if (error instanceof Error) console.log(`${error.name}|${error.message}`);
+}
+try {
+	console.log(template());
+} catch (error) {
+	if (error instanceof Error) console.log(`${error.name}|${error.message}`);
+}
+const later = 3;
+console.log(template());
+console.log(argument());
