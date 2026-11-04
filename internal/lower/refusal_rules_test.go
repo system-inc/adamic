@@ -56,6 +56,7 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		// a later rule anywhere in the module (refusalPass.deferred).
 		"3270 refuseAnyRelation",
 		"3300 refuseOptionalWidening",
+		"3350 narrowedNullishReadGap",
 		"3400 classViewRefusal",
 	}
 	var registered []string
