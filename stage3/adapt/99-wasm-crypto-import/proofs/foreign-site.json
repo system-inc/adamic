@@ -1,0 +1,8 @@
+{
+  "file": "sys.ts",
+  "owner": "invokeCallbacks",
+  "before": "(existing as string[]).push(...fileNames);",
+  "after": "if (Array.isArray(existing)) existing.push(...fileNames);",
+  "sourceRef": "typescript/axolotl-99j-2",
+  "sourceCommit": "e0063e177deb458b92993ac872fdcd3cf1fa7fa3"
+}

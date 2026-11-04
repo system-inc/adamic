@@ -92,9 +92,12 @@ function adapt(tree) {
     const program = compiler(tree, ts);
     const file = program.getSourceFile(path.join(tree, manifest[0].file));
     assert(file && !file.parseDiagnostics.length, 'cannot parse sys.ts');
-    const digest = hash(file.text);
-    assert([manifest[0].beforeSha256, manifest[0].afterSha256].includes(digest), 'target source moved: sys.ts');
-    const done = digest === manifest[0].afterSha256;
+    const owner = one(nodes(ts, file, n => ts.isFunctionDeclaration(n) && n.name?.text === 'getNodeSystem'), 'getNodeSystem');
+    const digest = hash(owner.getText(file));
+    assert([manifest[0].ownerBeforeSha256, manifest[0].ownerAfterSha256].includes(digest), 'uninventoried owner: getNodeSystem');
+    const done = digest === manifest[0].ownerAfterSha256;
+    const imports = file.statements.filter(n => ts.isImportDeclaration(n) && n.moduleSpecifier.text.startsWith('node:'));
+    assert.equal(hash(imports.map(n => n.getText(file)).join('\n')), done ? manifest[0].importsAfterSha256 : manifest[0].importsBeforeSha256, 'uninventoried node: import block');
     const checked = validateBindings(program, file, done);
     const edits = [];
     if (!done) {
@@ -115,18 +118,32 @@ function adapt(tree) {
         const nonNull = checked.receiver.parent;
         edits.push({start: nonNull.getStart(file), end: nonNull.end, text: local});
     }
+    const osImport = one(file.statements.filter(ts.isImportDeclaration).filter(n => n.getText(file) === 'import * as _os from "node:os";'), '93 os import');
+    const newline = file.text.includes('\r\n') ? '\r\n' : '\n';
+    let importInsertions = 0;
+    for (const edit of edits) {
+        const inOwner = edit.start >= owner.getStart(file) && edit.start < owner.end && edit.end >= edit.start && edit.end <= owner.end;
+        const importInsertion = edit.start === osImport.end && edit.end === osImport.end && edit.text === newline + importText;
+        assert(inOwner || importInsertion, 'edit outside getNodeSystem and node: import insertion');
+        if (importInsertion) importInsertions++;
+    }
+    assert.equal(importInsertions, done ? 0 : 1, 'crypto import insertion count moved');
     let text = file.text, boundary = text.length;
     for (const edit of edits.sort((a, b) => b.start - a.start)) {
         assert(edit.end <= boundary, 'overlapping crypto edits');
         text = text.slice(0, edit.start) + edit.text + text.slice(edit.end);
         boundary = edit.start;
     }
-    assert.equal(hash(text), manifest[0].afterSha256, 'unreviewed crypto import change');
+    const changedFile = ts.createSourceFile(file.fileName, text, ts.ScriptTarget.Latest, true);
+    const changedOwner = one(nodes(ts, changedFile, n => ts.isFunctionDeclaration(n) && n.name?.text === 'getNodeSystem'), 'changed getNodeSystem');
+    assert.equal(hash(changedOwner.getText(changedFile)), manifest[0].ownerAfterSha256, 'unreviewed crypto owner change');
+    const changedImports = changedFile.statements.filter(n => ts.isImportDeclaration(n) && n.moduleSpecifier.text.startsWith('node:'));
+    assert.equal(hash(changedImports.map(n => n.getText(changedFile)).join('\n')), manifest[0].importsAfterSha256, 'unreviewed crypto import change');
     assert.equal(ts.createSourceFile(file.fileName, text, ts.ScriptTarget.Latest, true).parseDiagnostics.length, 0);
     const planned = plannedProgram(program, file, text);
     const post = validateBindings(planned, planned.getSourceFile(file.fileName), true);
     assert.equal(fs.readFileSync(file.fileName, 'utf8'), file.text, 'source changed while planning');
-    // Validate all original bindings, planned bindings and full bytes before the sole write.
+    // Validate all original bindings, planned bindings and scoped hashes before the sole write.
     if (edits.length) fs.writeFileSync(file.fileName, text);
     return {files: edits.length ? 1 : 0, javascriptChanging: true, before: checked.evidence, after: post.evidence};
 }

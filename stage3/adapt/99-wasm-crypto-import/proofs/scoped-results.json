@@ -1,0 +1,35 @@
+{
+  "base": "4b8634a4a498a39d254ee8c325eb2711f84359d9",
+  "pins": {
+    "file": "src/compiler/sys.ts",
+    "ownerBeforeSha256": "bff1f70709db25f1264628951403bdd1d063f12206419443d200bcbb7280253a",
+    "ownerAfterSha256": "9d0f66d64f8d6c9a713b73b514429f485254c918e26791dae9540331a4aa357d",
+    "importsBeforeSha256": "3488104a4b05d29696a672f8055c093c823eb4d0b2ef5e17d4d9cb0bbaecd7a7",
+    "importsAfterSha256": "c24afbb7654f6cd3057985c10558464846d134085b4867626146a199a505c62f"
+  },
+  "wholeFileSha256": "a52755b55d8998df5fd5045fc0418c33bc7496502a131116a00d9bb4bc04b273",
+  "byteIdentical": true,
+  "all746SourceFilesIdentical": true,
+  "foreignEdit": {
+    "site": {
+      "file": "sys.ts",
+      "owner": "invokeCallbacks",
+      "before": "(existing as string[]).push(...fileNames);",
+      "after": "if (Array.isArray(existing)) existing.push(...fileNames);",
+      "sourceRef": "typescript/axolotl-99j-2",
+      "sourceCommit": "e0063e177deb458b92993ac872fdcd3cf1fa7fa3"
+    },
+    "ownerAfterSha256": "9d0f66d64f8d6c9a713b73b514429f485254c918e26791dae9540331a4aa357d",
+    "importsAfterSha256": "c24afbb7654f6cd3057985c10558464846d134085b4867626146a199a505c62f",
+    "foreignEditPreserved": true,
+    "wholeFileSha256": "8a4bd2136c672d865347086513d51c42ed521367bf271c1810232e14abf9f418"
+  },
+  "movedOwnerRejectedBeforeWrite": true,
+  "movedImportsRejectedBeforeWrite": true,
+  "spanEscapeCaughtBeforeWrite": true,
+  "spanDisabledControlWritesExtraEdit": true,
+  "rerunFiles": 0,
+  "laneLine": "{\"name\": \"stage3-lane-file-000\", \"status\": \"pass\", \"counts\": {\"pass\": 6, \"fail\": 0, \"skip\": 0}, \"seconds\": 7.771635332999949, \"errors\": []}",
+  "fullOraclesRerun": false,
+  "reason": "compiled source bytes are identical to the landed adapter"
+}
