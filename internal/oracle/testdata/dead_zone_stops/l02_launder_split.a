@@ -1,0 +1,9 @@
+import { view } from './l02_launder_split/back.a';
+function labelOf<T extends { other: number; label?: string }>(value: T): string { return value.label ?? 'none'; }
+function make(): string { return new Late().x; }
+let first = '';
+try { first = String('a,b'.split(labelOf(view)).length); } catch (error) { first = error instanceof Error ? error.name : 'other'; }
+class Late { x = 'late'; }
+console.log(first);
+console.log(String('a,b'.split(labelOf(view)).length));
+export { make as other };

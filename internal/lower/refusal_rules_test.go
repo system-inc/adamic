@@ -38,6 +38,7 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		// recordDeclaredKeyRefusal names, in .a, a view recordStorageView would call a storage gap.
 		"1975 recordDeclaredKeyRefusal",
 		"2000 recordStorageView",
+		"2050 classDeadZoneGap",
 		"2100 namespaceRefusal",
 		"2200 ambientRefusal",
 		"2300 operatorRefusal",
