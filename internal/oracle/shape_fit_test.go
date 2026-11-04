@@ -22,20 +22,24 @@ import (
 // `{ indexOf(x: string): number }` and a Map as `{ readonly size: number } | string` (both crashed
 // natively), and the roads a Map takes there: a return, a field write, an element write, push (of a Map held
 // in a name, and of a Map made right there, where push's T is the program's Lookup), Map.set's value where
-// the Map's V is Lookup, an object literal's field, an intersection's field, a callback's result, a cast, a
-// Map's type arguments, a function value whose parameter is the shape, and a Map.forEach callback whose
-// parameter is (it segfaulted natively). Past the walk's depth the converse fails closed (shapeFitReached):
-// an array five readonly fields down stops at its leaf, and six down too. The two library interfaces exempt
-// as a library call's own argument (shapeFitProtocols) each have a pin in a program's own slot: a Set where
-// a program's ReadonlySetLike is held, as a parameter and an initializer, stops here, and an array where a
-// program's Iterable<number> parameter is held stops at its own for...of. The table's one entry, an array
-// where `{ readonly length: number }` is held, is a control that lowers and agrees with Node on sanitized,
-// release and JavaScript, through an argument, an initializer read after a push, an object literal's field,
-// a return, an optional slot and five readonly fields down, and so are a plain object seen that way, a
+// the Map's V is Lookup, an object literal's field, an intersection's field, written as a literal and seen
+// through (both crashed natively, as did an array there), a callback's result, a cast, a Map's type
+// arguments, a function value whose parameter is the shape, and a Map.forEach callback whose parameter is
+// (it segfaulted natively). Past the walk's depth the converse fails closed (shapeFitReached): an array five
+// readonly fields down stops at its leaf, and six down too. The two library interfaces exempt as a library
+// call's own argument (shapeFitProtocols) each have a pin in a program's own slot: a Set where a program's
+// ReadonlySetLike is held, as a parameter and an initializer, stops here, and an array where a program's
+// Iterable<number> parameter is held stops at its own for...of. The table's one entry, an array where
+// `{ readonly length: number }` is held, is a control that lowers and agrees with Node on sanitized, release
+// and JavaScript, through an argument, an initializer read after a push, an object literal's field, a
+// return, an optional slot and five readonly fields down, and so are a plain object seen that way, a
 // readonly array, an array six fields down where an array is held, Set.union and isSubsetOf with a Set (the
-// prelude's ReadonlySetLike), and new Set(xs) and new Map(entries) (Iterable). Mutant:
-// containerWhereOtherGoes answering "" lowers every probe but iterable_parameter again, each red, and the
-// controls stay green.
+// prelude's ReadonlySetLike), and new Set(xs) and new Map(entries) (Iterable). Mutants (each red, the
+// controls green): the converse leaf answering "" (every probe but depth_6, which shapeFitReached still
+// stops, and iterable_parameter, at its own stop), the length entry dropped (the length controls),
+// shapeFitProtocols emptied (set_union, set_from_array, map_from_entries), shapeFitReached answering ""
+// (depth_6), eachReached cutting a library anonymous type off (foreach_parameter), and an intersection
+// skipped (intersection_view_map, intersection_view_array).
 func TestContainerIsNotYetWhereAShapeIsHeld(t *testing.T) {
 	t.Parallel()
 	const mapStop = "a Map or Set going where a plain object type is held"
@@ -71,6 +75,8 @@ func TestContainerIsNotYetWhereAShapeIsHeld(t *testing.T) {
 		{"push_literal", "interface Lookup { get(key: string): number | undefined; }\nconst items: Lookup[] = [];\nitems.push(new Map([['a', 1]]));\nconsole.log(String(items[0]?.get('a')));\n", "1\n", ":3:12", mapStop},
 		{"map_set_lookup", "interface Lookup { get(key: string): number | undefined; }\nconst m = new Map<string, Lookup>().set('k', new Map());\nconsole.log(String(m.get('k')?.get('a')));\n", "undefined\n", ":2:46", mapStop},
 		{"intersection_field", lookup + "const holder: { v: Lookup } & { tag?: string } = { v: m };\nconsole.log(String(holder.v.get('a')));\n", "1\n", ":3:55", mapStop},
+		{"intersection_view_map", lookup + "const source = { v: m, tag: 'x' };\nconst holder: { readonly v: Lookup } & { readonly tag: string } = source;\nconsole.log(String(holder.v.get('a')));\n", "1\n", ":4:67", mapStop},
+		{"intersection_view_array", "const source = { v: [1, 2], tag: 'x' };\nconst holder: { readonly v: { indexOf(x: number): number } } & { readonly tag: string } = source;\nconsole.log(String(holder.v.indexOf(2)));\n", "1\n", ":2:91", arrayStop},
 		{"depth_5", deep + "function use(v: { readonly b: { readonly c: { readonly d: { readonly e: { readonly f: { indexOf(x: number): number } } } } } }): number {\n\treturn v.b.c.d.e.f.indexOf(2);\n}\nconsole.log(String(use(new A())));\n", "1\n", ":9:24", arrayStop},
 		{"depth_6", deeper + "function use(v: { readonly b: { readonly c: { readonly d: { readonly e: { readonly f: { readonly g: { indexOf(x: number): number } } } } } } }): number {\n\treturn v.b.c.d.e.f.g.indexOf(2);\n}\nconsole.log(String(use(new A())));\n", "1\n", ":10:24", arrayStop},
 		{"iterable_parameter", "function total(xs: Iterable<number>): number {\n\tlet sum = 0;\n\tfor (const x of xs) {\n\t\tsum += x;\n\t}\n\treturn sum;\n}\nconsole.log(String(total([1, 2, 3])));\n", "6\n", ":3:18", "for...of over an object"},
