@@ -311,6 +311,13 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		if contextual := l.slotType(skipped); contextual != nil && l.tupleWhereArrayGoes(l.checker.GetTypeAtLocation(skipped), contextual, 0) {
 			return nil, l.notYet(skipped, "a tuple where an array goes (as "+l.checker.TypeToString(contextual)+")")
 		}
+		// So is a real Map, Set or array where a structural object type is held, unless the slot reads
+		// it only by members it's served by (shape_fit.go).
+		if contextual := l.slotType(skipped); contextual != nil {
+			if stop := l.containerWhereShapeGoes(l.checker.GetTypeAtLocation(skipped), contextual, l.libraryCallArgument(skipped), 0, map[[2]*checker.Type]bool{}); stop != "" {
+				return nil, l.notYet(skipped, stop)
+			}
+		}
 	}
 	if err != nil || value.Type() != ir.Weak {
 		if err == nil {

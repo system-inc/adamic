@@ -218,13 +218,11 @@ func TestCallbackWideningUnrepresentedParameter(t *testing.T) {
 	if diff := disagreement(run{stdout: []byte("1,2|3,4\n")}, node); diff != "" {
 		t.Fatal("Node: " + diff)
 	}
+	// The callback's parameter takes each element, an array, where Slice, a plain object type, is held, so
+	// it stops at the callback (lower's shape_fit.go, #nw6d7ws) before the intrinsic's adapter could refuse it.
 	_, err := lowered(t, path)
-	refused, ok := err.(*lower.Refused)
-	if !ok {
-		t.Fatalf("expected unrepresented parameter refusal, got %v", err)
-	}
-	if refused.What != "an intrinsic callback parameter x of type Slice receiving array element type number[] without a representation adapter" || refused.Fix != "annotate parameter x as the element type number[]" {
-		t.Fatalf("wrong refusal: %#v", refused)
+	if _, ok := err.(*lower.NotYet); !ok || err.Error() != path+":3:31: stage 0 can't lower an array going where a plain object type is held yet" {
+		t.Fatalf("expected the array's NotYet at the callback, got %v", err)
 	}
 }
 
