@@ -43,8 +43,10 @@ func (e *emitter) placeholderViewField(property ir.Property, object string) stri
 		unset += fmt.Sprintf(" || (%s == %d && %s->reference == NULL)", kind, present, slot)
 	}
 	e.line("} else if (!(%s)) {", unset)
-	savedOwned := e.owned
-	e.owned = nil
+	// A list of the branch's own, which the statement's ladder can't name past the branch: a check in
+	// it is written in place.
+	savedOwned, savedLadder := e.owned, e.ladder
+	e.owned, e.ladder = nil, nil
 	property.Optional, property.Absent, property.Unset = false, false, false
 	property.Of = present
 	value := e.viewFieldObject(property, object)
@@ -59,7 +61,7 @@ func (e *emitter) placeholderViewField(property ir.Property, object string) stri
 	for _, owned := range e.owned {
 		e.line("adamic_release(%s);", owned)
 	}
-	e.owned = savedOwned
+	e.owned, e.ladder = savedOwned, savedLadder
 	e.line("}")
 	if absent {
 		e.line("}")
