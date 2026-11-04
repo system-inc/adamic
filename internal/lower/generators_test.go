@@ -12,7 +12,9 @@ import (
 // value roads first (Compiler, 04:42): no slot but the consuming loop's own may hold a generator, so
 // a generator stored, passed, returned, put in an array, spread or read through a view each stops.
 // Then the forms the body or the declaration can take that its frame can't hold yet. Each row's
-// reason is a word of its stop, so a row that stops for some other reason goes red too.
+// reason is a word of its stop, so a row that stops for some other reason goes red too. Mutant: the
+// generator arm of expression.go's call taken out; five value-road rows go red, two of them on
+// checkGeneratorRoads' compiler bug, and none of the five compiles.
 func TestGeneratorFormsThisSliceDoesntLowerAreNotYet(t *testing.T) {
 	t.Parallel()
 	// TReturn is undefined, not void: a value road of a Generator<T, void> is refused earlier by the

@@ -1,5 +1,5 @@
 // A throw from the consuming loop's body, out to a try around it, lets go of the generator, which is
-// suspended in an endless loop.
+// suspended in an endless loop holding the label it was handed, a string built for it.
 function* counted(label: string): Generator<string, void, undefined> {
     let index = 0;
     while(true) {
@@ -8,9 +8,9 @@ function* counted(label: string): Generator<string, void, undefined> {
     }
 }
 try {
-    for(const item of counted('c')) {
+    for(const item of counted(`c${String(0)}`)) {
         console.log(item);
-        if(item === 'c3') {
+        if(item === 'c03') {
             throw new Error(`stop at ${item}`);
         }
     }
