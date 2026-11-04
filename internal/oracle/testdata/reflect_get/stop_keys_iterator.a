@@ -1,0 +1,6 @@
+// Object.keys of a host object stops in a keyless message (#ey7aysy, Adamic's ruling at 08:28Z): a
+// matchAll iterator has no own keys on Node, and native's shape holds its private regex, input and
+// done. Node prints keys [].
+const iterator = 'ab'.matchAll(/a/g);
+console.log('iterator');
+console.log(`keys [${Object.keys(iterator).join(',')}]`);
