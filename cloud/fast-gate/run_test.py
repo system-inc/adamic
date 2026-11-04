@@ -2641,9 +2641,10 @@ class PhaseInputs(unittest.TestCase):
                 command.append("--full")
             expected = realRun(command, input=base, capture_output=True, text=True, check=True, timeout=90).stdout
             # The determinism phase retired to internal/oracle's TestStage0EmitsDeterministically (#86znq4s), and stage 3's
-            # to stage3/lane's tests (#4gp2ytz): the lines the base lists that this doesn't.
+            # to stage3/lane's tests (#4gp2ytz), and smoke to oracle's own units (#r8ghgkt): the lines the base lists that
+            # this doesn't.
             expected = "".join(line for line in expected.splitlines(keepends=True)
-                               if line != "determinism\n" and line != "stage3\n" and not line.startswith("stage3 "))
+                               if line not in ("determinism\n", "smoke\n", "stage3\n") and not line.startswith("stage3 "))
             self.assertEqual(self.listing(full), expected)
 
     def test_every_listed_unit_has_nonempty_inputs(self):
