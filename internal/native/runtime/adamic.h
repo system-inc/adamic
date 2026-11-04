@@ -578,12 +578,15 @@ extern const adamic_methods adamic_error_methods;
 extern const adamic_methods adamic_coded_error_methods;
 bool adamic_error_is(const adamic_object *object);
 // adamic_host_methods, another empty table, marks a runtime shape whose object's prototype on Node
-// isn't Object's, a Stats, an iterator, a match's groups object or memoryUsage's, so a run-time key
-// read stops on it (union.c's host_object, #ey7aysy). The emitter
+// isn't Object's, a Stats, an iterator, a match's groups object or memoryUsage's, so an in test, a
+// read it narrows and a run-time key read all stop on it (union.c's host_stop, #ey7aysy). The emitter
 // never writes it, so every object a program makes is plain, as on Node; an Error keeps its own
 // sentinel. A runtime shape left unmarked reads as plain, so host_shapes_test.go holds every runtime
 // shape to a table that classifies it against Node.
 extern const adamic_methods adamic_host_methods;
+// adamic_host_stop stops, in the runtime value form naming the key, when the value is a host object
+// (union.c): every reader of a value's names by a key calls it before reading one.
+void adamic_host_stop(const adamic_heap *value, const adamic_string *key);
 // adamic_error_to_string is String(error) for an Error, Error.prototype.toString over its name and
 // message fields: the two joined by ": " when both are there, whichever one is when the other is
 // empty, and "" when both are. A coded error's is its class's own toString, name, " [", its code

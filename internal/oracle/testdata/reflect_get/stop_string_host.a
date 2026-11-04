@@ -1,0 +1,7 @@
+// String() of a host object viewed as unknown stops at ToPrimitive's lookup of its own toString
+// (#ey7aysy): a matchAll iterator's string is [object RegExp String Iterator] on Node, by its
+// prototype's tag, and both backends answered [object Object]. Node prints string [object RegExp
+// String Iterator].
+const seen: unknown = 'ab'.matchAll(/a/g);
+console.log('iterator');
+console.log(`string ${String(seen)}`);

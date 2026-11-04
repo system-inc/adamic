@@ -1,0 +1,8 @@
+// An in test on a host object stops (Adamic's ruling on #ey7aysy at 23:03Z): a Stats' isFile is
+// Stats.prototype's method on Node, which native's shape doesn't hold, so in answered no where Node
+// says yes. Node prints isFile yes.
+import * as fs from 'node:fs';
+
+const stats: unknown = fs.statSync('.');
+console.log('stats');
+console.log(`isFile ${typeof stats === 'object' && stats !== null && 'isFile' in stats ? 'yes' : 'no'}`);

@@ -309,6 +309,9 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	if strings.Contains(code, "adamicDynamicGet(") {
 		code = dynamicKeyedRuntime(program) + code
 	}
+	if strings.Contains(code, "adamicDynamicHas(") || strings.Contains(code, "adamicDynamicRead(") || strings.Contains(code, "adamicHostKeys(") || strings.Contains(code, "adamicHostHasOwn(") || strings.Contains(code, "adamicHostCheck(") {
+		code = dynamicHostRuntime(program) + code
+	}
 	if strings.Contains(code, "adamicUnknownKind(") {
 		code = unknownKindRuntime(program) + code
 	}
@@ -909,9 +912,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return read
 	case ir.HasProperty:
-		return "(" + quote(expression.Name) + " in " + e.value(expression.Object) + ")"
+		return "adamicDynamicHas(" + e.value(expression.Object) + ", " + quote(expression.Name) + ")"
 	case ir.DynamicProperty:
-		return "(" + e.value(expression.Object) + ")[" + quote(expression.Name) + "]"
+		return "adamicDynamicRead(" + e.value(expression.Object) + ", " + quote(expression.Name) + ")"
 	case ir.DynamicKeyedProperty:
 		return "adamicDynamicGet(" + e.value(expression.Object) + ", " + e.value(expression.Key) + ")"
 	case ir.Null:
@@ -1176,6 +1179,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		if expression.Method == "entries" {
 			return "Object.entries(" + e.values(expression.Arguments) + ").map(adamicTuple)"
 		}
+		if expression.Method == "keys" {
+			return "adamicHostKeys(" + e.values(expression.Arguments) + ")"
+		}
 		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
 	case ir.NumberCall:
 		if expression.Function == "toBoolean" {
@@ -1255,7 +1261,7 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.UnknownKind:
 		return "adamicUnknownKind(" + e.value(expression.Value) + ")"
 	case ir.OwnFunction:
-		return "((object) => Object.hasOwn(object, " + quote(expression.Name) + ") && object[" + quote(expression.Name) + "] instanceof AdamicClosure)(" + e.value(expression.Object) + ")"
+		return "((object) => adamicHostCheck(object, " + quote(expression.Name) + ") && Object.hasOwn(object, " + quote(expression.Name) + ") && object[" + quote(expression.Name) + "] instanceof AdamicClosure)(" + e.value(expression.Object) + ")"
 	case ir.ErrorToString:
 		// The toString of the error's class, as native's adamic_error_to_string: a Node-coded error's
 		// class has its own, name [code]: message, and every other error's is Error.prototype.toString.
@@ -1344,7 +1350,7 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.ArrayPop:
 		return e.value(expression.Array) + ".pop()"
 	case ir.ObjectKeys:
-		return "Object.keys(" + e.value(expression.Object) + ")"
+		return "adamicHostKeys(" + e.value(expression.Object) + ")"
 	case ir.ClosureSelf:
 		return "self"
 	case ir.LibraryGlobal:
@@ -1433,7 +1439,7 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.MapSize:
 		return e.value(expression.Map) + ".size"
 	case ir.HasOwn:
-		return e.value(expression.Object) + ".hasOwnProperty(" + e.value(expression.Key) + ")"
+		return "adamicHostHasOwn(" + e.value(expression.Object) + ", " + e.value(expression.Key) + ")"
 	case ir.ParallelMap:
 		return "adamicParallelMap(" + e.value(expression.Items) + ", " + e.value(expression.Work) + ")"
 	case ir.ReadTextFile:

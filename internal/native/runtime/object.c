@@ -78,6 +78,8 @@ adamic_object *adamic_object_copy(const adamic_object *source) { return adamic_o
 // adamic_object_has is object.hasOwnProperty(name): one of the shape's own names, not a method on a
 // prototype. A shape's names are C strings, so the lengths have to agree before the bytes do.
 bool adamic_object_has(const adamic_object *object, const adamic_string *name) {
+	// hasOwnProperty and ToPrimitive's own toString test: a host object's names aren't Node's own.
+	adamic_host_stop(&object->heap, name);
 	if (adamic_record_is(object)) return adamic_record_has_own(object, name);
 	for (size_t index = 0; index < object->shape->count; index++) {
 		const char *field = object->shape->names[index];
