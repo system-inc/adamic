@@ -1,6 +1,9 @@
 package lower
 
 import (
+	"os"
+	"path/filepath"
+	"regexp"
 	"strings"
 	"testing"
 
@@ -22,6 +25,7 @@ func TestHostAnyModelledRequireForms(t *testing.T) {
 			continue
 		}
 		rows++
+		hostAnyRequireEvidence(t, row["Fixtures and divergences"])
 		if row["Modelled type"] != "`never`" {
 			t.Fatalf("require's Modelled type must be never, got %q", row["Modelled type"])
 		}
@@ -75,5 +79,40 @@ func TestHostAnyModelledRequireForms(t *testing.T) {
 				t.Errorf("nodeCommonJSRequireThrows(%s) = %t; Modelled Forms require %t", probe.source, got, want)
 			}
 		})
+	}
+}
+
+// Evidence paths belong to the repository, not this package's working directory.
+func hostAnyRequireEvidence(t *testing.T, cell string) {
+	t.Helper()
+	root, err := filepath.Abs("../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	paths := regexp.MustCompile(`(?:[A-Za-z0-9_.-]+/)+[A-Za-z0-9_.-]+\.(?:ts|a)\b`).FindAllString(cell, -1)
+	if len(paths) == 0 {
+		t.Fatal("require's Modelled row names no fixture paths")
+	}
+	for _, path := range paths {
+		if info, err := os.Stat(filepath.Join(root, filepath.FromSlash(path))); err != nil || info.IsDir() {
+			t.Fatalf("require's Modelled fixture %s does not name a repository file: %v", path, err)
+		}
+	}
+	for path, names := range map[string][]string{
+		"internal/oracle/backend_divergences_test.go": {`"installed-layout"`, `"no-javascript-plugins"`},
+		"internal/oracle/installed_layout_test.go":    {"func TestInstalledLayoutIsNodes("},
+	} {
+		data, err := os.ReadFile(filepath.Join(root, filepath.FromSlash(path)))
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, name := range names {
+			if !strings.Contains(cell, strings.Trim(name, `"`)) && name != "func TestInstalledLayoutIsNodes(" {
+				t.Fatalf("require's Modelled row does not name %s", name)
+			}
+			if !strings.Contains(string(data), name) {
+				t.Fatalf("require's Modelled evidence %s is absent from %s", name, path)
+			}
+		}
 	}
 }
