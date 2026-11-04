@@ -1054,16 +1054,32 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if err != nil {
 				return nil, err
 			}
-			if left.Type() == ir.Record && of != ir.Record && of != ir.Union && !of.IsMaybe() {
-				// A record is an object, so it's falsy only when it's missing, and a bare record pointer
-				// is never null (record | null is boxed as a union). So record && x is x where the record
+			if from := left.Type(); from.IsReference() && from != ir.String && from != ir.Union && from != ir.Weak && of != from && of != ir.Union && !of.IsMaybe() {
+				// An object, array, Map or record is falsy only when it's missing, and a bare pointer to
+				// one is never null (one | null is boxed as a union). So left && x is x where the left
 				// is present and undefined where it isn't, which a reference result holds as its null
-				// pointer (table && table[key], a string | undefined). || would keep the record itself,
-				// which the result can't hold.
+				// pointer (holder.item && holder.item.name, a string | undefined). A number or boolean
+				// result says the checker proved the left present (node && node.kind === 1), so the
+				// missing arm never runs and holds only a placeholder, as a never arm's does. || would
+				// keep the left itself, which the result can't hold.
+				leftNode := node.AsBinaryExpression().Left
 				if operator == ast.KindAmpersandAmpersandToken && of.IsReference() && of != ir.Weak {
 					return ir.Conditional{Condition: ir.Truthy{Value: left}, WhenTrue: fit(right, of), WhenNot: ir.Undefined{Of: of}, Of: of}, nil
 				}
-				return nil, l.notYet(node, "a logical record operand converted to "+typeName(of)+" without a proven result representation")
+				if operator == ast.KindAmpersandAmpersandToken && (of == ir.Number || of == ir.Boolean) && !l.mayBeUndefined(leftNode) && !l.includesNull(l.checker.GetTypeAtLocation(leftNode)) {
+					var unreachable ir.Expression = ir.NumberConstant{}
+					if of == ir.Boolean {
+						unreachable = ir.BooleanConstant{}
+					}
+					return ir.Conditional{Condition: ir.Truthy{Value: left}, WhenTrue: fit(right, of), WhenNot: unreachable, Of: of}, nil
+				}
+				return nil, l.notYet(node, "a logical "+typeName(from)+" operand converted to "+typeName(of)+" without a proven result representation")
+			}
+			if left.Type() == ir.String && of != ir.String && of != ir.Union {
+				// A falsy string is "" (or undefined), which only a string or a union result can hold.
+				// The checker types string && x as x alone where a brand hides the string's falsy part
+				// (tsc's __String), so Node's "" would reach a slot that can't say it.
+				return nil, l.notYet(node, "a logical string operand converted to "+typeName(of)+", whose falsy \"\" the result can't hold")
 			}
 			return ir.Logical{Left: left, Right: fit(right, of), Of: of, KeepTruthy: operator == ast.KindBarBarToken}, nil
 		}
