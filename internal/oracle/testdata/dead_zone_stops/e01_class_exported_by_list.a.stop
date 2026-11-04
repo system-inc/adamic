@@ -1,0 +1,1 @@
+internal/oracle/testdata/dead_zone_stops/e01_class_exported_by_list.a:2:38: stage 0 can't lower a class used from a function that may run before the class's declaration (its temporal dead zone) yet
