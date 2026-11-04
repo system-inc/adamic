@@ -1,0 +1,382 @@
+{
+  "javascriptChanging": false,
+  "calls": 15,
+  "files": 27,
+  "onlyDirectoryDecisionChanged": true,
+  "emitted": [
+    {
+      "file": "corePublic.ts",
+      "removeComments": false,
+      "sha256": "7b3a6c31d78e176625829918ff261052ccc54832b6758fa3eec02deb003ea873"
+    },
+    {
+      "file": "corePublic.ts",
+      "removeComments": true,
+      "sha256": "d0f9dbd77c1a8d6b14187aeac6786252b0320ddfbc49073e11faf022c1c0c72a"
+    },
+    {
+      "file": "performanceCore.ts",
+      "removeComments": false,
+      "sha256": "6066466b00d6c50868edddc6e030513bef4f6a8e1d2e35978b49f4cc379567c2"
+    },
+    {
+      "file": "performanceCore.ts",
+      "removeComments": true,
+      "sha256": "1aca7a4485126380dd75703972b90035855bf3e47183afea6c8084f3c4f519f6"
+    },
+    {
+      "file": "types.ts",
+      "removeComments": false,
+      "sha256": "4839bedc439cad06969bad2a3d805a7c0b480f06df73fcff62d2cd0957009fc3"
+    },
+    {
+      "file": "types.ts",
+      "removeComments": true,
+      "sha256": "f041d720cfda4ccb137ffc32198ec3d2fce46dbf13404df737dc637e21290639"
+    },
+    {
+      "file": "expressionToTypeNode.ts",
+      "removeComments": false,
+      "sha256": "8b7de1c272fb371fce297be495f93434607e591d8adea283954de94dc85d9ca0"
+    },
+    {
+      "file": "expressionToTypeNode.ts",
+      "removeComments": true,
+      "sha256": "e7e5f8408ba75b3f1783e231b17da9ed426e7705530b8cf37662e605d657b76a"
+    },
+    {
+      "file": "executeCommandLine.ts",
+      "removeComments": false,
+      "sha256": "45e6631bc3c998248367d5bf9073928b04847e7196fbf82f9bef58ad7e7cde1e"
+    },
+    {
+      "file": "executeCommandLine.ts",
+      "removeComments": true,
+      "sha256": "57da0f6c06f53ab5ca58faa0ae1f70a61fc6221197cc306fe8a6800c507b5a9a"
+    },
+    {
+      "file": "builder.ts",
+      "removeComments": false,
+      "sha256": "64c6f623c9d5b7c51228ca2b1a692387f70991295f05fd2f789a3d26df1f4274"
+    },
+    {
+      "file": "builder.ts",
+      "removeComments": true,
+      "sha256": "0d65e879b795e51e14b6908f3848429d045becd1a020d8df04a24a177b1a545c"
+    },
+    {
+      "file": "builderPublic.ts",
+      "removeComments": false,
+      "sha256": "a7db9f9b2a7ede597cdd42abda22f16376cd1c9abcebc82a3bc216b7e0dd87da"
+    },
+    {
+      "file": "builderPublic.ts",
+      "removeComments": true,
+      "sha256": "a7db9f9b2a7ede597cdd42abda22f16376cd1c9abcebc82a3bc216b7e0dd87da"
+    },
+    {
+      "file": "builderState.ts",
+      "removeComments": false,
+      "sha256": "a10c531037dac9859cc26f8533c6086a1fff2e341a5c1ce33e482c2199c39702"
+    },
+    {
+      "file": "builderState.ts",
+      "removeComments": true,
+      "sha256": "d22d5fdd41ce7600393c910d3d5b80e3b194c9e6881338a1cb476a5e1c8ccebd"
+    },
+    {
+      "file": "builderStatePublic.ts",
+      "removeComments": false,
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "builderStatePublic.ts",
+      "removeComments": true,
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "file": "watch.ts",
+      "removeComments": false,
+      "sha256": "4ad8b4bc7e3f4fedf526daaddc3c8cbc67bac2b4b4a08b39c9f96e281e57fdbd"
+    },
+    {
+      "file": "watch.ts",
+      "removeComments": true,
+      "sha256": "974070739da8381718afb60f0ca2dd85a290682eaad06ce0557e7793ee065b52"
+    },
+    {
+      "file": "watchPublic.ts",
+      "removeComments": false,
+      "sha256": "5710b5377b9e3393801586573d04abec6efb5589c0e44a17255ae65b86e4be2e"
+    },
+    {
+      "file": "watchPublic.ts",
+      "removeComments": true,
+      "sha256": "df8f32cdbad3bef99af66b2c77bd494f49a0ed560d79621e229959da1c6847ae"
+    },
+    {
+      "file": "watchUtilities.ts",
+      "removeComments": false,
+      "sha256": "31ee0d78dc5c96818b4802a0d99e8c99b07affb2b4a68fda3faa512be2e1dcd3"
+    },
+    {
+      "file": "watchUtilities.ts",
+      "removeComments": true,
+      "sha256": "131f0aa508ca3f1b06755493ff8b69450a3090c9822dfcb1b00876de6cd26905"
+    },
+    {
+      "file": "resolutionCache.ts",
+      "removeComments": false,
+      "sha256": "292021472b79ca104dd66c526a4e281542568f6386ce8c2c4ee239b6dd8d2685"
+    },
+    {
+      "file": "resolutionCache.ts",
+      "removeComments": true,
+      "sha256": "8c94ed3a8d8e90a20661fdef1c1a2a95e254503aa6aa558e55bf169fd9ad4342"
+    },
+    {
+      "file": "tsbuild.ts",
+      "removeComments": false,
+      "sha256": "e4050f85b1a295486747247be22124242811906e77a347411ab73103251d3ee3"
+    },
+    {
+      "file": "tsbuild.ts",
+      "removeComments": true,
+      "sha256": "b5ca7a45c4ae987a474203accdf49d263c57c5a3e1d7d9c2208c17a7a0cf2814"
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "removeComments": false,
+      "sha256": "3fdf2a67d0eb1071e84a32e60c9c4eb7d04cf6617ebfc350f6cea6868a4e6827"
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "removeComments": true,
+      "sha256": "ef0c832d7ae3ff42656198826614554f820f99a3009296167455401ac3e8e18c"
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "removeComments": false,
+      "sha256": "a902312a8aca1a36a67e16991b8f62e7b05ead9d57ddc8c032a57ae510baf976"
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "removeComments": true,
+      "sha256": "d98524edf37e27df4013582dbb3876d717c1c5834c600bd5a7afd1af4179a47d"
+    },
+    {
+      "file": "moduleSpecifiers.ts",
+      "removeComments": false,
+      "sha256": "f0b0934269517a3d97682a72abf36e6da91860127b642f0614add2a8741a01f5"
+    },
+    {
+      "file": "moduleSpecifiers.ts",
+      "removeComments": true,
+      "sha256": "ad9721550d1c13490bbb7f5c7921432a0c541db62dccb3d4a08ef7cc60fa8b04"
+    },
+    {
+      "file": "sys.ts",
+      "removeComments": false,
+      "sha256": "692d490ce11cdc152a46599d18d60a06b87e6e392aae8b4c2b48b8676ee26179"
+    },
+    {
+      "file": "sys.ts",
+      "removeComments": true,
+      "sha256": "32c14c8753f849929bafed0bb17d495133ff98d7510a2c45bbb961340944a320"
+    },
+    {
+      "file": "program.ts",
+      "removeComments": false,
+      "sha256": "4b3ae9d8eadd82655941bd11f61a313f50729856e098a3cd2a93cbd0c29a7b80"
+    },
+    {
+      "file": "program.ts",
+      "removeComments": true,
+      "sha256": "898f030f282fbdf89753b8af061c52de615bc80ae6e3700cb3614ac6e1478e1d"
+    },
+    {
+      "file": "commandLineParser.ts",
+      "removeComments": false,
+      "sha256": "dc05a488396d003e9ec4d5ff78ef11af0e7e5f99d6264d5860872975b6ec7c5d"
+    },
+    {
+      "file": "commandLineParser.ts",
+      "removeComments": true,
+      "sha256": "d5b5e4470d3722f851cfa0cad537d9421138ba66aea7ee8e657025d3381ce6ed"
+    },
+    {
+      "file": "binder.ts",
+      "removeComments": false,
+      "sha256": "bda6c9db9dfd0fff3b2e7ccf3587927d4a1d83cd69f808fdb86d2b160b63b45e"
+    },
+    {
+      "file": "binder.ts",
+      "removeComments": true,
+      "sha256": "4512f8f1aa7779af879421b9c996aa46e5b018ed98ed11c85273f49f4bbb3376"
+    },
+    {
+      "file": "semver.ts",
+      "removeComments": false,
+      "sha256": "aad2f5e09d814d79614e01f03b41c24381d5b17515ce330e369c86d750fac160"
+    },
+    {
+      "file": "semver.ts",
+      "removeComments": true,
+      "sha256": "554baba24363a6c3706c3718b8e58b1d0f3e0cd8610579d024bef79c412e7fdf"
+    },
+    {
+      "file": "programDiagnostics.ts",
+      "removeComments": false,
+      "sha256": "773e15e1f4b8bee8f5541b7b1bb721975670afd20914509d7426ca32554bdac0"
+    },
+    {
+      "file": "programDiagnostics.ts",
+      "removeComments": true,
+      "sha256": "a900d5730207260609dba7653e9aed200d77ea785d1ea659c89d3d76deb61fb8"
+    },
+    {
+      "file": "tracing.ts",
+      "removeComments": false,
+      "sha256": "2e69b95adab4df929390988621d50ba2747e47da4f410ee921e7052862b723d1"
+    },
+    {
+      "file": "tracing.ts",
+      "removeComments": true,
+      "sha256": "63aca2923d4769f2419271688a67c0785b6a934354160aea7c63661500936ea0"
+    },
+    {
+      "file": "symbolWalker.ts",
+      "removeComments": false,
+      "sha256": "8e2063f73cb9c30b719e9db867b3f16c88cda3ab0661d0b5e796b16cd025b267"
+    },
+    {
+      "file": "symbolWalker.ts",
+      "removeComments": true,
+      "sha256": "85732328720dac5e7eef524c696476f5def1624e5972e546518a71414e4042f3"
+    },
+    {
+      "file": "performance.ts",
+      "removeComments": false,
+      "sha256": "6c599304121e3fb3e9e8bcaa13d5c785f0dcca06cd88f67b711be855a8b3e012"
+    },
+    {
+      "file": "performance.ts",
+      "removeComments": true,
+      "sha256": "6a0614b9bc71ded0025f7e03f13f7701abc240a70f1f3bfa3d960c69965650b7"
+    },
+    {
+      "file": "utilities.ts",
+      "removeComments": false,
+      "sha256": "c5bd8dfc727748991159c286afb95109e7cf1ac04210bb75979f10bff35e152e"
+    },
+    {
+      "file": "utilities.ts",
+      "removeComments": true,
+      "sha256": "f6b544c05e21bf835fefe716bab257328727007e1584e3d5aa11a7aa26caf911"
+    }
+  ],
+  "secondRunNoEditsOrWrites": true,
+  "fixtures": [
+    {
+      "name": "forbidden-call-cast-0",
+      "error": "directoryProbablyExists call must remain bare",
+      "noWrites": true
+    },
+    {
+      "name": "forbidden-call-cast-1",
+      "error": "directoryProbablyExists call must remain bare",
+      "noWrites": true
+    },
+    {
+      "name": "forbidden-call-cast-2",
+      "error": "directoryProbablyExists call must remain bare",
+      "noWrites": true
+    },
+    {
+      "name": "forbidden-call-cast-3",
+      "error": "directoryProbablyExists call must remain bare",
+      "noWrites": true
+    },
+    {
+      "name": "forbidden-call-cast-4",
+      "error": "directoryProbablyExists call must remain bare",
+      "noWrites": true
+    },
+    {
+      "name": "forbidden-call-cast-5",
+      "error": "directoryProbablyExists call must remain bare",
+      "noWrites": true
+    },
+    {
+      "name": "forbidden-call-cast-6",
+      "error": "directoryProbablyExists call must remain bare",
+      "noWrites": true
+    },
+    {
+      "name": "forbidden-call-cast-7",
+      "error": "directoryProbablyExists call must remain bare",
+      "noWrites": true
+    },
+    {
+      "name": "forbidden-call-cast-8",
+      "error": "directoryProbablyExists call must remain bare",
+      "noWrites": true
+    },
+    {
+      "name": "forbidden-call-cast-9",
+      "error": "directoryProbablyExists call must remain bare",
+      "noWrites": true
+    },
+    {
+      "name": "forbidden-call-cast-10",
+      "error": "directoryProbablyExists call must remain bare",
+      "noWrites": true
+    },
+    {
+      "name": "forbidden-call-cast-11",
+      "error": "directoryProbablyExists call must remain bare",
+      "noWrites": true
+    },
+    {
+      "name": "forbidden-call-cast-12",
+      "error": "directoryProbablyExists call must remain bare",
+      "noWrites": true
+    },
+    {
+      "name": "forbidden-call-cast-13",
+      "error": "directoryProbablyExists call must remain bare",
+      "noWrites": true
+    },
+    {
+      "name": "forbidden-call-cast-14",
+      "error": "directoryProbablyExists call must remain bare",
+      "noWrites": true
+    },
+    {
+      "name": "changed-call-argument",
+      "error": "bare helper call argument drift",
+      "noWrites": true
+    },
+    {
+      "name": "changed-helper-owner",
+      "error": "host producer invariant drift: directoryProbablyExists",
+      "noWrites": true
+    },
+    {
+      "name": "partial-helper-parameter",
+      "error": "changed or partly adapted directory helper owner",
+      "noWrites": true
+    },
+    {
+      "name": "duplicate-helper-owner",
+      "error": "host producer owner drift: directoryProbablyExists",
+      "noWrites": true
+    },
+    {
+      "name": "helper-parse-error",
+      "error": "host producer owner drift: directoryProbablyExists",
+      "noWrites": true
+    }
+  ],
+  "unrelatedOwnerEditAccepted": true
+}
