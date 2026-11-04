@@ -144,6 +144,9 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	if source.Flags()&checker.TypeFlagsAny != 0 || target.Flags()&checker.TypeFlagsAny != 0 {
 		return castProof{}, refused
 	}
+	if l.captureFreeSplit(as.Expression, target) {
+		return castProof{}, nil
+	}
 	if l.speculativeCast(node) {
 		return castProof{speculation: true}, nil
 	}

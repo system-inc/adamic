@@ -1,0 +1,4 @@
+// a-check: refused a cast the runtime can't check
+// A RegExp built with new RegExp(...) is a value, not a literal written at the call.
+const pieces = 'xaz'.split(new RegExp('a')) as string[];
+console.log(`${pieces.length}`);

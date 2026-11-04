@@ -1,0 +1,4 @@
+// a-check: type error TS1534
+// Annex B reads \1 with no group as an octal escape (U+0001) and Node splits on it, but the checker stops at the backreference first, so castProof never sees it.
+const pieces = 'xaz'.split(/a\1/) as string[];
+console.log(`${pieces.length}`);

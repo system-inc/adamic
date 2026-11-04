@@ -1,0 +1,4 @@
+// a-check: type error TS1507
+// Only a lookahead may be quantified (annex B); a quantified lookbehind is a syntax error in Node and a checker stop here.
+const pieces = 'xy'.split(/x(?<=(y))?/) as string[];
+console.log(`${pieces.length}`);

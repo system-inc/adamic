@@ -14,12 +14,11 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 	pattern, flags := "", ""
 	var evaluated []ir.Expression
 	if node.Kind == ast.KindRegularExpressionLiteral {
-		text := node.Text()
-		end := strings.LastIndex(text, "/")
-		if end <= 0 {
+		var written bool
+		pattern, flags, written = regexLiteralParts(node)
+		if !written {
 			return nil, l.notYet(node, "a malformed regular expression literal")
 		}
-		pattern, flags = text[1:end], text[end+1:]
 	} else {
 		var args []*ast.Node
 		if node.Kind == ast.KindNewExpression {
@@ -78,6 +77,17 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 	}
 	return ir.RegExpNew{Index: index, Source: l.constant(source), Flags: l.constant(ordered), Arguments: evaluated}, nil
 }
+
+// regexLiteralParts is a RegExp literal's pattern, between its slashes, and its flags, after the last one.
+func regexLiteralParts(node *ast.Node) (string, string, bool) {
+	text := node.Text()
+	end := strings.LastIndex(text, "/")
+	if end <= 0 {
+		return "", "", false
+	}
+	return text[1:end], text[end+1:], true
+}
+
 func (l *lowering) constantPattern(node *ast.Node, depth int) (string, bool) {
 	if depth > 32 {
 		return "", false
