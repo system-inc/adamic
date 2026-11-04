@@ -40,6 +40,10 @@
 //     configuration file under them is never read (GOENV=off below), so a home holds nothing a build reads.
 //   - TMPDIR: where go and the C compiler write scratch files, removed when they finish. -trimpath and cgo's own
 //     prefix maps keep the name out of the bytes.
+//   - GOCOVERDIR: where a program built with coverage writes its counters when it exits, read by nothing a build does,
+//     so it never changes a product's bytes. Passed so a covered child a test starts through Env (a test running its
+//     own binary again, os.Args[0]) writes its counters beside its parent's, where Loom's runner reads what the child
+//     executed (#2pxxnme, Node's refinement 3); dropped, the child writes none and its unit can't be narrowed.
 //   - PWD: how the caller spells its working directory (/var or /private/var on a Mac). A program trusts it only once
 //     it has checked it names its own directory (os.Getwd), so a tool run elsewhere ignores it, and one run where the
 //     caller stands spells its directory as the caller does, which a workspace file naming a module by that spelling
@@ -112,7 +116,7 @@ var goLocations = []string{"GOCACHE", "GOMODCACHE", "GOPATH", "GOTMPDIR", "GOCAC
 	"GONOSUMCHECK", "GONOPROXY", "GOPRIVATE", "GOINSECURE", "GOVCS", "GOAUTH"}
 
 // carried are the rest of what Env passes from the caller (the package doc says why for each). PATH is Env's own.
-var carried = []string{"HOME", "XDG_CACHE_HOME", "XDG_CONFIG_HOME", "TMPDIR", "PWD", "TZ", "DEVELOPER_DIR", "GOMAXPROCS", "GOGC", "GOMEMLIMIT",
+var carried = []string{"HOME", "XDG_CACHE_HOME", "XDG_CONFIG_HOME", "TMPDIR", "GOCOVERDIR", "PWD", "TZ", "DEVELOPER_DIR", "GOMAXPROCS", "GOGC", "GOMEMLIMIT",
 	"HTTP_PROXY", "HTTPS_PROXY", "NO_PROXY", "ALL_PROXY", "http_proxy", "https_proxy", "no_proxy", "all_proxy", "SSL_CERT_FILE", "SSL_CERT_DIR"}
 
 // gocacheSettings is the prefix of the shared Go cache's own settings (cmd/adamic-gocacheprog), passed with GOCACHEPROG.
