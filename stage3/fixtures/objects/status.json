@@ -297,15 +297,15 @@
     "tsc": [
       "src/compiler/core.ts:332"
     ],
-    "reason": "yield (generators)",
+    "reason": "a generator function",
     "node": {
       "stdout": "2,4,6\n",
       "stderr": "",
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/25_map_generator.a:3:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/objects/25_map_generator.a:3:1: stage 0 can't lower a generator function (its counted frame is being built, #qk8rztp) yet"
     }
   },
   {
