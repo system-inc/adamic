@@ -145,6 +145,24 @@
       "lifting_task": "#zhrjf2t",
       "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'isFile')\n"
     },
+    "3f72fc3049e03a2e953d2b02d90768dcd1f549709a3a5dc9e5345f90006c1fae": {
+      "path": "internal/oracle/testdata/reflect_get/stop_keys_host.a",
+      "ruling_task": "#0sps03r",
+      "lifting_task": "#zhrjf2t",
+      "stderr": "adamic: panic: this runtime value's own keys aren't enumerated yet\n"
+    },
+    "8d832a5cefb82c9952cf3f9c5c047899616552fa5147db48104f96bd9d27b145": {
+      "path": "internal/oracle/testdata/reflect_get/stop_keys_iterator.a",
+      "ruling_task": "#0sps03r",
+      "lifting_task": "#zhrjf2t",
+      "stderr": "adamic: panic: this runtime value's own keys aren't enumerated yet\n"
+    },
+    "93c0024cbb797d15f3d25795733bbbdf78927719cf4649aaded8f9f3f08782b3": {
+      "path": "internal/oracle/testdata/reflect_get/stop_keys_memory.a",
+      "ruling_task": "#0sps03r",
+      "lifting_task": "#zhrjf2t",
+      "stderr": "adamic: panic: this runtime value's own keys aren't enumerated yet\n"
+    },
     "52d247f51dbecd80396018b218cf9901674de0f8527b6fa57931cbbedde7b4c6": {
       "path": "internal/oracle/testdata/reflect_get/stop_literal_getter.a",
       "ruling_task": "#zhgxzjg",
