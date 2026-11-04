@@ -533,6 +533,12 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 			if call, ok := value.Interface().(ir.ArrayFrom); ok && call.MayThrow() {
 				throws = true
 			}
+			if call, ok := value.Interface().(ir.StringCall); ok && call.MayThrow(program.Strings) {
+				throws = true
+			}
+			if call, ok := value.Interface().(ir.StringFromCodes); ok && call.MayThrow() {
+				throws = true
+			}
 			if program.RecordWriteMayThrow(value.Interface()) || program.FrozenWriteMayThrow(value.Interface()) {
 				throws = true
 			}
