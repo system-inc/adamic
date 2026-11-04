@@ -59,7 +59,7 @@ func init() {
 
 // constraintRelation judges one binding, as constraintRelationRefusal says.
 func (l *lowering) constraintRelation(binding typeArgumentBinding) error {
-	if l.libraryTypeParameter(binding.parameter) {
+	if false && l.libraryTypeParameter(binding.parameter) { // library-judged run
 		return nil
 	}
 	if binding.argument == nil {
