@@ -83,7 +83,7 @@ func (e *emitter) checkThrown(holds ...string) {
 	site := e.thrownSite(holds, e.ladder.depth)
 	e.ladder.sites = append(e.ladder.sites, site)
 	e.ladder.batch = append(e.ladder.batch, site)
-	fmt.Fprintf(&e.out, "\x00%d\x00", len(e.ladder.sites)-1)
+	fmt.Fprintf(&e.out, "\x00%d:%d\x00", e.ladder.serial, len(e.ladder.sites)-1)
 }
 
 // thrownSite is one check's way out, in its parts. depth is the aside the statement's own list is
@@ -162,6 +162,12 @@ type ladder struct {
 	depth int
 	sites []*throwSite
 	batch []*throwSite
+
+	// serial names the ladder in its markers. A marker carries its ladder's serial as well as its
+	// check's index, so a statement replaces only its own: text an enclosing statement wrote, should
+	// it ever reach a nested statement's buffer, passes through to the ladder it belongs to, and is
+	// never read as a check of the nested statement's that has the same index.
+	serial int
 }
 
 // throwSite is one check: the indent it's at, what it lets go of first (its holds and its asides'
@@ -199,7 +205,8 @@ type ladderFrame struct {
 // replaced.
 func (e *emitter) openLadder() ladderFrame {
 	frame := ladderFrame{ladder: e.ladder, out: e.out}
-	e.ladder, e.out = &ladder{depth: len(e.outerOwned)}, strings.Builder{}
+	e.ladders++
+	e.ladder, e.out = &ladder{depth: len(e.outerOwned), serial: e.ladders}, strings.Builder{}
 	return frame
 }
 
@@ -223,17 +230,44 @@ func (e *emitter) closeLadder(frame ladderFrame) {
 			return
 		}
 		length := strings.IndexByte(text[start+1:], 0)
-		index, err := -1, error(nil)
-		if length >= 0 {
-			index, err = strconv.Atoi(text[start+1 : start+1+length])
+		if length < 0 {
+			panic("native: compiler bug: an unterminated throw marker")
 		}
-		if err != nil || index < 0 || index >= len(ladder.sites) {
+		serial, index, err := throwMarker(text[start+1 : start+1+length])
+		if err != nil {
+			panic("native: compiler bug: a throw marker that doesn't read: " + err.Error())
+		}
+		if serial != ladder.serial {
+			// An enclosing statement's check: its marker passes through for that statement's own end.
+			// With no enclosing ladder, nothing would ever replace it, so it's a compiler bug.
+			if frame.ladder == nil {
+				panic("native: compiler bug: a throw marker of no open statement")
+			}
+			e.out.WriteString(text[:start+length+2])
+			text = text[start+length+2:]
+			continue
+		}
+		if index < 0 || index >= len(ladder.sites) {
 			panic("native: compiler bug: a throw marker of no check in its statement")
 		}
 		e.out.WriteString(text[:start])
 		e.out.WriteString(ladder.sites[index].text)
 		text = text[start+length+2:]
 	}
+}
+
+// throwMarker reads a marker's "serial:index".
+func throwMarker(text string) (int, int, error) {
+	serialText, indexText, found := strings.Cut(text, ":")
+	if !found {
+		return 0, 0, fmt.Errorf("%q has no serial", text)
+	}
+	serial, err := strconv.Atoi(serialText)
+	if err != nil {
+		return 0, 0, err
+	}
+	index, err := strconv.Atoi(indexText)
+	return serial, index, err
 }
 
 // settleThrows decides, where the statement's own temporaries have just been let go of, between the
