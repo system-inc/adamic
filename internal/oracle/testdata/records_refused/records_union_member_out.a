@@ -1,4 +1,4 @@
-// a-check: refused a Options | Printer seen as Printer (fixed objects and records have different storage; copy explicitly)
+// a-check: refused a dictionary read through a declared property narrower than its values (Options | Printer seen as Printer: omitTrailingSemicolon is declared boolean
 type OptionValue = string | number | boolean | undefined;
 interface Options {
 	newLine?: number;

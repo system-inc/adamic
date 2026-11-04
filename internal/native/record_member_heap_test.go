@@ -114,9 +114,11 @@ console.log(read ? "present" : "absent");
 	}
 }
 
+// The lies are written by a computed key, which .a refuses at compile time when it can land under a
+// declared property (#npqr3sx), so the program is .ts, where the read's run-time check is the stop.
 func recordMemberHeapC(t *testing.T, source string) string {
 	t.Helper()
-	path := filepath.Join(t.TempDir(), "main.a")
+	path := filepath.Join(t.TempDir(), "main.ts")
 	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
 		t.Fatal(err)
 	}
