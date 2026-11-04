@@ -1,0 +1,9 @@
+// A host object stops for every key (#ey7aysy): a PerformanceMark's name is PerformanceEntry's
+// getter on Node, where native's shape holds it as its own field. Node prints string.
+import { performance } from 'node:perf_hooks';
+import { propertyOf } from './hostErrors.ts';
+
+const mark = performance.mark('adamic');
+console.log(`mark ${mark.name}`);
+const value = propertyOf(mark, 'name');
+console.log(typeof value);

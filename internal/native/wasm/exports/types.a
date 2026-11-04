@@ -20,5 +20,12 @@ export function many(first: string, values: readonly number[], second: string, e
  return first + second + `:${values.length}:${enabled}:${score}`;
 }
 export function bumpRecord(value: RecordValue): RecordValue { return { ...value, title: value.title + '!' }; }
+// A record argument is a plain object on Node, so a run-time key read answers on it, an
+// Object.prototype name included (#ey7aysy: wasm_exports.go's shape leaves host false).
+function propertyOf(value: unknown, key: string): unknown {
+ if (value === null || value === undefined) throw new TypeError(`Cannot read properties of ${value === null ? 'null' : 'undefined'} (reading '${key}')`);
+ return Reflect.get(Object(value), key, value);
+}
+export function recordKey(value: RecordValue, key: string): string { return typeof propertyOf(value, key); }
 let calls = 0;
 export function counter(): number { calls += 1; return calls; }

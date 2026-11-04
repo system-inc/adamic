@@ -145,7 +145,8 @@ bool adamic_object_own_function(const adamic_heap *value, const char *name) {
 
 // Program shape metadata is registered when an object of the shape is made: the emitter's and the
 // runtime's for its plain results, static, and the JSON decoder's, one for each canonical shape it
-// builds, which lives until exit (json_decode.c).
+// builds, which lives until exit (json_decode.c). The list answers a scalar slot's representation
+// (dynamic_slot); it no longer says whose prototype an object has, which its shape's methods do.
 // Objects are made in parallel tasks too, so an entry is pushed once under the lock and published with
 // release order; readers load the list head with acquire, and an entry's fields never change once
 // it's on the list.
@@ -470,28 +471,17 @@ static adamic_value prototype_method_called(adamic_closure *self, adamic_value *
 	adamic_panic(message, length);
 }
 
-// program_shape reports whether the program made objects of this shape. In a program with a run-time
-// key read the emitter registers each literal's shape as it makes one (emit_objects.go), and the
-// runtime registers each shape whose object is a plain one on Node, Object's prototype and no other:
-// each the JSON decoder builds (json_decode.c), and the results of decodeJson, readTextFile,
-// writeTextFile, readDirectory and fileStatus, and a collection's or matchAll's next() (json_decode.c,
-// input.c, directory.c, map_set.c, regexp.c). A host object's shape is never on the list.
-static bool program_shape(const adamic_shape *shape) {
-	for (const adamic_shape_types *entry = __atomic_load_n(&shape_types, __ATOMIC_ACQUIRE); entry != NULL; entry = entry->next) {
-		if (entry->shape == shape) return true;
-	}
-	return false;
-}
-
 // host_object is the one predicate for a value whose prototype on Node isn't Object's, a program
 // class's instance aside (#ey7aysy, Adamic's ruling on #0sps03r): an object with no class, not a
-// record, whose shape has fields and isn't registered. A record, a class instance, a shape the
-// program or the runtime registered and a zero-field shape are plain. The runtime's own objects whose
-// prototype on Node is another's, a Stats, a Dirent, an iterator, a match's groups object (whose is
-// null) or process.memoryUsage()'s, aren't registered, and so are host objects here. The JavaScript
-// backend's adamicDynamicGet names the same values by their prototype (dynamic_keyed.go).
+// record, whose shape's methods are adamic_host_methods (adamic.h). The runtime marks each of its own
+// shapes whose object's prototype on Node is another's, a Stats, a Dirent, an iterator, a match's
+// groups object (whose is null) or process.memoryUsage()'s, and host_shapes_test.go holds every
+// runtime shape to that marking. The emitter and the JSON decoder never write the sentinel, so an
+// object the program makes is plain, as on Node, whichever path made it. An Error keeps its own
+// sentinel and is carved out below. The JavaScript backend's adamicDynamicGet names the same values
+// by their prototype (dynamic_keyed.go).
 static bool host_object(const adamic_object *object) {
-	return object->class == NULL && !adamic_record_is(object) && object->shape->count != 0 && !program_shape(object->shape);
+	return object->class == NULL && !adamic_record_is(object) && object->shape->methods == &adamic_host_methods;
 }
 
 // prototype_value is what an object inherits from Object.prototype under the key, as an immortal
@@ -535,9 +525,9 @@ adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_stri
 	}
 	// A host object stops for every key, before its own slots are read: a slot may be internal (a
 	// matchAll iterator's input and regex), its name may be Node's prototype member (a Stats' isFile),
-	// or Node may hold a field native's shape doesn't (memoryUsage's rss). An Error is carved out: its
-	// own fields answer as Node's do, and its prototype's names stop below.
-	if (!error && host_object(object)) keyed_stop(adamic_dynamic_keyed_stop_runtime_value, key);
+	// or Node may hold a field native's shape doesn't (memoryUsage's rss). An Error isn't one: its own
+	// fields answer as Node's do, and its prototype's names stop below.
+	if (host_object(object)) keyed_stop(adamic_dynamic_keyed_stop_runtime_value, key);
 	if (object->class != NULL) {
 		const adamic_keyed_class *row = keyed_class(object, classes, count);
 		if (row == NULL) keyed_stop(adamic_dynamic_keyed_stop_unknown_class, key);
@@ -564,8 +554,8 @@ adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_stri
 		if (index < object->shape->count && adamic_object_present(object, index)) return dynamic_slot(object, index);
 	}
 	adamic_heap *inherited = prototype_value(key);
-	// Only an Error reaches here as a host object. Its prototype is Error.prototype, whose own members
-	// Object's closures would stand in for, so an Object.prototype name stops on it.
-	if (inherited != NULL && host_object(object)) keyed_stop(adamic_dynamic_keyed_stop_runtime_value, key);
+	// An Error's prototype is Error.prototype, whose own members Object's closures would stand in for,
+	// so an Object.prototype name stops on it, as on a host object.
+	if (inherited != NULL && error) keyed_stop(adamic_dynamic_keyed_stop_runtime_value, key);
 	return inherited;
 }

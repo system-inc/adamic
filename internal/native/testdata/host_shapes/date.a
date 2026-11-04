@@ -1,0 +1,13 @@
+// A Stats' Date is node_fs_file.c's date_shape, marked host. Lowering doesn't yet view an opaque host
+// value as unknown, so no program reads one by a run-time key. host_shapes_test.go requires this
+// program refused in exactly those words; when they lift, the shape needs a stop fixture.
+import * as fs from 'node:fs';
+
+function propertyOf(value: unknown, key: string): unknown {
+	if (value === null || value === undefined) {
+		throw new TypeError(`Cannot read properties of ${value === null ? 'null' : 'undefined'} (reading '${key}')`);
+	}
+	return Reflect.get(Object(value), key, value);
+}
+
+console.log(typeof propertyOf(fs.statSync('.').mtime, 'getTime'));

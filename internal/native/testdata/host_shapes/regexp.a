@@ -1,0 +1,12 @@
+// A regular expression literal is regexp.c's regex_shape, marked host. Lowering doesn't yet view an
+// opaque host value as unknown, so no program reads one by a run-time key. host_shapes_test.go
+// requires this program refused in exactly those words; when they lift, the shape needs a stop
+// fixture.
+function propertyOf(value: unknown, key: string): unknown {
+	if (value === null || value === undefined) {
+		throw new TypeError(`Cannot read properties of ${value === null ? 'null' : 'undefined'} (reading '${key}')`);
+	}
+	return Reflect.get(Object(value), key, value);
+}
+
+console.log(typeof propertyOf(/a/g, 'source'));

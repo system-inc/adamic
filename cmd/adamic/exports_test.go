@@ -69,7 +69,7 @@ func TestWASIExports(t *testing.T) {
 	if err = json.Unmarshal(bytes, &signatures); err != nil {
 		t.Fatal(err)
 	}
-	if signatures.Version != 1 || len(signatures.Exports) != 13 {
+	if signatures.Version != 1 || len(signatures.Exports) != 14 {
 		t.Fatalf("table: %s", bytes)
 	}
 	for _, export := range signatures.Exports {
