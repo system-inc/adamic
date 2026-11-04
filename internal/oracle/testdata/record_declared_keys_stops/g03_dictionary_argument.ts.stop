@@ -1,1 +1,1 @@
-lowers
+internal/oracle/testdata/record_declared_keys_stops/g03_dictionary_argument.ts:7:18: Adamic 0.1 refuses optional property outFile in Options absent from structural source Dict, which can hide fields; declare outFile on the source type, or build a fresh object with known fields (adamic/no-optional-widening)

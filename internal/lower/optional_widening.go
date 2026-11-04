@@ -224,6 +224,11 @@ func (l *lowering) refuseOptionalWidening(node *ast.Node) error {
 	if found == nil {
 		return nil
 	}
+	return l.optionalWideningRefusal(node, found)
+}
+
+// optionalWideningRefusal is the hiding rule's refusal of found at node.
+func (l *lowering) optionalWideningRefusal(node *ast.Node, found *optionalWidening) error {
 	return &Refused{Where: l.program.Where(node),
 		What: "optional property " + found.property + " in " + l.checker.TypeToString(found.target) + " absent from structural source " + l.checker.TypeToString(found.source) + ", which can hide fields",
 		Fix:  "declare " + found.property + " on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"}
