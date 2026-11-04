@@ -2,15 +2,15 @@
 """The fast gate, run on the gate box against a checkout of the candidate.
 
 It builds and vets the whole repository, tests every package affected by the candidate (reverse imports and declared compiler
-dependencies, from its diff against the base), runs the oracle smoke set, and checks the skip census over the
-run's log. It stops at the first failure: the first failing test or package build is printed
-first, every other step is killed, and status.txt goes red naming it. Tests always run with
--count=1; only compiles are reused, from Go's build cache.
+dependencies, from its diff against the base), and checks the skip census over the run's log. It
+stops at the first failure: the first failing test or package build is printed first, every other
+step is killed, and status.txt goes red naming it. Tests always run with -count=1; only compiles
+are reused, from Go's build cache.
 
 Usage: run.py --tree <checkout of the candidate> --sha <candidate> --base <main sha>
               --tools <tools checkout> --out <directory>
 
-For pool work, --phase <name> runs one non-test stage, and --phases build,vet,smoke,census
+For pool work, --phase <name> runs one non-test stage, and --phases build,vet,census
 writes one record of those stages. Pass --census <pool test.jsonl> to include the pool's tests in
 that census. --list-units --tree <tree> lists the unconditional fast units; supply --base, --sha
 and --tools (as for --select) to include this change's conditional executors.
@@ -81,7 +81,6 @@ unitKillSeconds = 90
 # budget is listed beside the verdict, never red (@system_adamic, Oct 9 00:41 MDT, live on Loom's pool first: the boxes'
 # 90 s product kill at load 53 redded every candidate on main's own products).
 productKillSeconds = 600
-smokeTest = "TestNativeAgreesWithNode"
 oracle = module + "/internal/oracle"
 # A command run by literal name: exec.Command("x", exec.CommandContext(ctx, "x", exec.LookPath("x").
 toolLiteral = re.compile(r'exec\.(?:Command\(|CommandContext\([A-Za-z_.()]+, |LookPath\()"([^"]+)"')
@@ -418,7 +417,7 @@ def unownedPaths(directories, embedded, changed):
 
 # listedGoLists holds each go list a --list-units pass ran, by tree and command (listUnits sets it to a dict, and None
 # outside one): a listing reads one checkout that nothing moves, and its askers ask the same listings of it, touched()
-# and coverage's and smoke's providers packageGraphCommand's, build's and vet's providers go list -json ./... (Hotty's
+# and coverage's provider packageGraphCommand's, build's and vet's providers go list -json ./... (Hotty's
 # measures on #q11k6k6 and #cb8bpe7: about 10 s on adamic once, then 1.5 to 1.8 s and about 1 s a repeat). Outside a
 # listing every caller runs its own, since a caller there (a test, a gate) may move the checkout between asks. Each
 # command runs in one environment wherever it's asked, so the command names its answer.
@@ -439,7 +438,7 @@ def listedGoList(tree, command, timeout, environment=None):
 
 def packageGraph(tree):
     """packageGraphCommand's answer in tree, in the environment the gate runs it in (Gate.spawn's go flags), so touched()
-    in a listing and coverage's and smoke's providers read one listing. The flags moved only go list's Stale and
+    in a listing and coverage's provider read one listing. The flags moved only go list's Stale and
     StaleReason (Pupa, Oct 31, adamic bdbea3709a: the two listings equal but for those lines), which goListFields no
     longer asks."""
     return listedGoList(tree, packageGraphCommand(), 300, dict(os.environ, **gateEnvironment))
@@ -478,8 +477,8 @@ def coverageChanged(tree, change, full):
     return [path for path in git(tree, "-c", "core.quotePath=false", "diff", "--name-only", *revisions).split("\n") if path]
 
 
-# coverageGoStatePathspec is what coverage reads of the tree at any change, and what smoke's declaration starts from
-# (#gw93f6b, #gamwqs2, Node's rulings), traced whole on Pupa: at a README edit (Oct 29, adamic cad2afb1c7,
+# coverageGoStatePathspec is what coverage reads of the tree at any change (#gw93f6b, #gamwqs2, Node's rulings), traced
+# whole on Pupa: at a README edit (Oct 29, adamic cad2afb1c7,
 # Pupa:~/scratch/judge-tools-trace/trace8.txt) and at Go changes (Oct 31, trace-go-coverage-*.txt: Optimizer's
 # internal/lower and catalog change de5c28cc11, and three more), every tracked file coverage opened was in it or the
 # phases' setup. go list -deps -test -json ./... (touched() and coverageReduced()) reads go.work and every module it
@@ -498,15 +497,6 @@ coverageGoStatePathspec = ["*.go", ":(glob)**/go.mod", ":(glob)**/go.sum", ":(gl
 # and this runner and its maps.
 phaseSetupPaths = ["cloud/fast-gate", "cloud/markdown-width/npm-bootstrap.json", "stage3/api/package.json",
                    "stage3/api/package-lock.json", "go.mod", "go.sum"]
-
-
-# smokeOraclePaths are what smoke reads of the tree beside the Go state and the files its packages embed (#gamwqs2,
-# Node's ruling), traced whole on Pupa (Oct 31, trace-go-smoke-*.txt, at four landed changes, internal/oracle's among
-# them, each with ASAN_OPTIONS=detect_leaks=0 so no test died at its exit under ptrace): go test ./internal/oracle runs
-# its fixtures, under internal/oracle/testdata, against the Node oracle's runtime and hooks in oracle, as wasiInputs
-# names them too, and git reads each .gitattributes beside the tree's files (toolsAttributesPathspec). A change to
-# smoke() or the oracle's runtime reads retraces before it's trusted again.
-smokeOraclePaths = ["oracle", "internal/oracle/testdata"]
 
 
 def phaseUnreadMode(mode):
@@ -533,7 +523,7 @@ def phaseUnread(tree, tools):
     the base phases' own declared inputs, the one reading their keys hash (phaseInputs, #tqxm4fa's rule, Node's ruling on
     #gamwqs2), never from a list of its own: a file is read when a phase's declared paths name it (git ls-files of them,
     the phases' setup among them), or it sits in the directory of a package a phase declares (its closure is that
-    package's files, so every file there reads as read, beside the files they embed, which smoke names), or a change to it
+    package's files, so every file there reads as read), or a change to it
     would select a phase of its own (phaseSelectsNone). A phase whose inputs are the whole tree leaves nothing unread.
     census is the judge's step, never planned; gofmt, the planner's, reads only the change's own .go files, all in the Go
     state. Raises when a declaration doesn't read, so a caller never takes a partial set."""
@@ -569,23 +559,6 @@ def phaseUnreadMain():
     lister.add_argument("--tools", required=True)
     arguments = lister.parse_args()
     print(json.dumps({"unread": phaseUnread(arguments.tree, arguments.tools)}))
-
-
-def smokeInputs(tree, change, full):
-    """smoke's declared inputs at any change (#gamwqs2): the Go state, which go test ./internal/oracle compiles, cohere's
-    included; every file a package of the tree embeds, by name, since go test compiles its bytes; the oracle's fixtures and
-    runtime (smokeOraclePaths); and every .gitattributes. Nothing by name: it runs the same fixtures whatever changed. With
-    go list unreadable its embeds can't be named, and it reads the whole tree. Its only reads outside this, in every trace,
-    are git's index refresh (diff-files, status), which reads a file whose stat moved since its index was written to say
-    whether the checkout is clean: that answers nothing whatever the file holds only because the runner's checkout of the
-    tree is clean when smoke starts (Node's named residual on #gamwqs2), so a runner that hands smoke a dirty checkout
-    breaks this declaration."""
-    listing = packageGraph(tree)
-    if listing.returncode != 0:
-        return treeInputs("smoke compiles packages whose embeds go list couldn't name")
-    embedded = sorted(goPackages(tree, listing.stdout)[1])
-    return {"packages": [], "paths": coverageGoStatePathspec + smokeOraclePaths + toolsAttributesPathspec + [":(literal)" + path for path in embedded],
-            "names": [], "note": "smoke reads the Go state, what its packages embed, the oracle's fixtures and runtime, and every .gitattributes"}
 
 
 def coverageInputs(tree, unit, full, change):
@@ -938,7 +911,7 @@ class Gate:
         self.exits = {}
         self.watchers = []
         self.planned = (["coverage", "tools", "build", "vet", "tests", "wasi", "catalog", "census"] if arguments.full
-                        else ["coverage", "tools", "build", "vet", "tests", "smoke", "census"])
+                        else ["coverage", "tools", "build", "vet", "tests", "census"])
         if os.path.isfile(os.path.join(arguments.tree, "internal/buildcache/cmd/buildcache-publish/main.go")):
             index = self.planned.index("tests") + 1
             self.planned[index:index] = ["audit", "upload"]
@@ -1009,7 +982,6 @@ class Gate:
         if self.arguments.full:
             self.runFull()
             return
-        smoke, smokeSource = self.smokeList()
         self.deferred = self.deferredList()
         self.runRequested()
         # Unquoted, so a path with non-ASCII bytes is itself and can match its package or a rule.
@@ -1050,7 +1022,7 @@ class Gate:
                          "env": dict(gateEnvironment, **self.sampling),
                          "deferred": {package: sorted(names) for package, names in sorted(self.deferred.items()) if package in packages},
                          "only_tests": {package: sorted(names) for package, names in sorted(self.onlyTests.items())},
-                         "executors_beyond_go_tests": sorted(executors | ({"smoke"} if smoke else set()))}
+                         "executors_beyond_go_tests": sorted(executors)}
             with open(os.path.join(self.arguments.out, "select.json"), "w") as handle:
                 json.dump(selection, handle, indent=2)
                 handle.write("\n")
@@ -1059,20 +1031,12 @@ class Gate:
             "changed_files": changed,
             "packages": packages,
             "unowned_files": unowned,
-            "smoke_list": "cloud/fast-gate/smoke.txt",
-            "smoke_list_source": smokeSource,
-            "smoke_list_blob": self.git(smokeSource["root"], "hash-object", os.path.join(smokeSource["root"], "cloud/fast-gate/smoke.txt")),
-            "smoke_fixtures": ["%s %s" % entry for entry in smoke],
         })
-        if not smoke:
-            self.fail("smoke", "no smoke list in the gated tree or the tools checkout")
-            return
         # Everything starts at once: the tests compile what they need through the same build cache,
         # and the first failure of any step still stops all of them.
         log = open(os.path.join(self.arguments.out, "test.jsonl"), "w")
         threads = [self.guarded("tools", self.toolsDeclared), self.guarded("build", self.build), self.guarded("vet", self.vet),
-                   self.guarded("tests", self.testSplit, packages, log),
-                   self.guarded("smoke", self.smoke, smoke, log)]
+                   self.guarded("tests", self.testSplit, packages, log)]
         if executors & {"workers", "bench-workers"}:
             self.planned.append("workers")
             threads.append(self.guarded("workers", self.workers, executors))
@@ -1119,7 +1083,7 @@ class Gate:
     def runPhase(self):
         """Pool phases share the gate's stage implementations and fail-closed record writer.
 
-        A supplied pool log is copied before smoke appends to it; census runs last so it sees both.
+        A supplied pool log is copied before a test phase (wasi, products) appends to it; census runs last so it sees both.
         """
         census = vars(self.arguments).get("census")
         allowed = wholePhases + ["products", "census"] if self.arguments.full else fastPhases
@@ -1146,7 +1110,7 @@ class Gate:
             except OSError:
                 self.fail("census", traceback.format_exc())
                 return
-        elif any(phase in self.planned for phase in ("smoke", "wasi")):
+        elif "wasi" in self.planned:
             # A reused output directory must not carry a previous run's test verdicts into this census.
             with open(logPath, "w"):
                 pass
@@ -1196,16 +1160,6 @@ class Gate:
                 self.catalogFull()
             else:
                 self.step("catalog", ["bash", "-n", "verify/catalog/check.sh"])
-        elif phase == "smoke":
-            smoke, source = self.smokeList()
-            if not smoke:
-                self.fail(phase, "no smoke list in the gated tree or the tools checkout")
-                return
-            self.result.update({"smoke_list": "cloud/fast-gate/smoke.txt", "smoke_list_source": source,
-                                "smoke_list_blob": self.git(source["root"], "hash-object", os.path.join(source["root"], "cloud/fast-gate/smoke.txt")),
-                                "smoke_fixtures": ["%s %s" % entry for entry in smoke]})
-            with open(logPath, "a") as log:
-                self.smoke(smoke, log)
         elif phase == "census":
             if not os.path.isfile(logPath):
                 self.fail("census", "no test.jsonl: supply the pool's merged log with --census")
@@ -1735,7 +1689,8 @@ class Gate:
     def deferredList(self):
         """Tests the landing gate leaves to the full gate on main (cloud/fast-gate/deferred.txt, by
         @system_adamic's ruling): each over 15 s warm and a mutant test, a randomized or differential
-        sweep, or a whole external suite. Read like the smoke list, from the gated tree first."""
+        sweep, or a whole external suite. Read from the gated tree first, and from the tools checkout when the tree
+        has none."""
         for root in (self.arguments.tree, self.arguments.tools):
             path = os.path.join(root, "cloud/fast-gate/deferred.txt")
             if os.path.exists(path):
@@ -1792,16 +1747,6 @@ class Gate:
         if unproven:
             self.fail("deferred", "requested deferred tests that didn't run to a verdict:\n" + "\n".join(unproven))
 
-    def smokeList(self):
-        for root, name in ((self.arguments.tree, "gated tree"), (self.arguments.tools, "tools checkout")):
-            path = os.path.join(root, "cloud/fast-gate/smoke.txt")
-            if os.path.exists(path):
-                with open(path) as handle:
-                    # "fixture" runs in TestNativeAgreesWithNode; "Lane fixture" in that lane.
-                    fixtures = [(line.split() if len(line.split()) == 2 else [smokeTest, line.strip()]) for line in handle if line.strip() and not line.startswith("#")]
-                return [tuple(entry) for entry in fixtures], {"root": root, "from": name}
-        return [], {"root": self.arguments.tools, "from": "missing"}
-
     def touched(self, changed):
         """Each changed file's package: its own directory's, one that embeds it, or the nearest package
         directory above it (its testdata, a lint rule's directory, a fixture subdirectory: what lives in
@@ -1809,7 +1754,7 @@ class Gate:
         expand production owners transitively; test imports are followed only once at the end.
         Test source and data edits select their owners only. Anything unowned goes to cover()."""
         if listedGoLists is not None:
-            # A listing pass: the one listing coverage's and smoke's providers read too, run in this gate's environment.
+            # A listing pass: the one listing coverage's provider reads too, run in this gate's environment.
             listing = packageGraph(self.arguments.tree)
         else:
             listing = self.command(packageGraphCommand(), cwd=self.arguments.tree, capture_output=True, text=True)
@@ -2027,7 +1972,7 @@ class Gate:
     def selectOracle(self):
         """What a change to internal/oracle has to run, when it only adds or edits fixtures: each changed
         fixture in every lane, the Test functions of test files it adds (their init registers the
-        fixture), TestCountsAreRecorded whole when counts.md changed, and the smoke set as always. The
+        fixture), and TestCountsAreRecorded whole when counts.md changed. The
         same coverage as the whole package for such a change, since nothing else in the package moved.
         Anything it can't classify (a changed helper, a deleted file, any other file) runs it whole."""
         tree, base, sha = self.arguments.tree, self.arguments.base, self.arguments.sha
@@ -2411,44 +2356,6 @@ class Gate:
             self.fail("tests", "%s exited %d\n%s" % (" ".join(command), process.returncode, (output + errors)[-4000:]))
             return None
         return output
-
-    @declaresInputs("smoke", lambda tree, unit, full, change: smokeInputs(tree, change, full))
-    def smoke(self, smoke, log):
-        """The pinned smoke set in one process, then a check that every entry passed in its lane: an entry
-        that didn't run is red, whether its fixture was missing from a lane that ran or its lane didn't run at
-        all, so a smoke can never be green on fewer fixtures than its list. A lane split into a family
-        (TestNativeAgreesWithNode_000 and on, 75a273db37) runs each fixture under one of its members, and
-        that member's pass is the lane's. Until Oct 13 a lane that didn't run was only listed as absent,
-        and from 75a273db37 on every smoke selected nothing and passed: 130 s of compiling and no fixture
-        (Tests, #rmp2hdj)."""
-        lanes = sorted({lane for lane, _ in smoke})
-        passed, seen = set(), set()
-
-        def watch(line):
-            try:
-                event = json.loads(line)
-            except ValueError:
-                return
-            test = event.get("Test") or ""
-            lane = smokeLane(test.split("/", 1)[0], lanes)
-            if lane:
-                seen.add(lane)
-                if event.get("Action") == "pass" and "/" in test:
-                    passed.add((lane, smokeFixture(test.split("/", 1)[1])))
-
-        self.watchers.append(watch)
-        self.test("smoke", ["go", "test", "-count=1"] + ([] if self.complete else ["-failfast"]) + ["-json", "-timeout", "30m", "-run", smokePattern(smoke), "./internal/oracle"], log)
-        if self.exits.get("smoke") != 0:
-            return
-        absent = sorted("%s %s" % entry for entry in smoke if entry[0] not in seen)
-        missing = sorted("%s %s" % entry for entry in smoke if entry not in passed)
-        self.result["smoke_absent_lanes"] = absent
-        self.result["smoke_passed"] = len([entry for entry in smoke if entry in passed])
-        if missing:
-            self.exits["smoke"] = 1
-            self.fail("smoke", "smoke passed %d of its %d entries; these didn't run: %s%s" % (
-                self.result["smoke_passed"], len(smoke), ", ".join(missing),
-                " (no test of lane %s ran)" % ", ".join(sorted({entry.split(" ", 1)[0] for entry in absent})) if absent else ""))
 
     def test(self, name, command, log, environment=None):
         started = time.monotonic()
@@ -2905,7 +2812,7 @@ class Gate:
         if getattr(self, "stopped", None) and self.failure is None:
             self.status("void: stopped before a verdict: " + self.stopped["reason"])
         elif green:
-            self.status("green: %s %s gate in %.1f s (%s), %d packages, %d pass, %d skip, smoke %d fixtures" % (self.arguments.sha, self.kind, wall, steps, len(self.result.get("package_list", self.result.get("packages", []))), self.counts["pass"], self.counts["skip"], len(self.result.get("smoke_fixtures", []))))
+            self.status("green: %s %s gate in %.1f s (%s), %d packages, %d pass, %d skip" % (self.arguments.sha, self.kind, wall, steps, len(self.result.get("package_list", self.result.get("packages", []))), self.counts["pass"], self.counts["skip"]))
         else:
             crash = " (the gate tool crashed, not the change)" if self.failure.get("tool_crash") else ""
             cancelled = ", cancelled after first failure" if getattr(self, "cancelled", False) else ""
@@ -3186,7 +3093,7 @@ def longTests(units):
 # The whole gate's phases a pool unit can run alone (run.py --full --phase); the Go test set is the pool's own.
 wholePhases = ["coverage", "tools", "build", "vet", "wasi", "catalog"]
 # The unconditional non-test units; conditional executors are listed with --base.
-fastBasePhases = ["coverage", "tools", "build", "vet", "smoke", "census"]
+fastBasePhases = ["coverage", "tools", "build", "vet", "census"]
 fastPhases = fastBasePhases + ["workers", "a-check", "catalog-apply", "catalog", "darwin"]
 
 
@@ -3289,7 +3196,8 @@ wasiSkip = "^TestWASI(Unit[0-9]+)?$"
 
 def fixturePattern(prefix, fixtures):
     """A -run pattern for these fixtures' subtests under the test and parent subtests in prefix,
-    level by level, as smokePattern builds it."""
+    level by level: Go splits both the pattern and each subtest name on '/' and matches level by level,
+    so alternation can't span a slash, and each level gets its own."""
     levels = [[part] for part in prefix]
     for fixture in fixtures:
         for depth, part in enumerate(fixture.split("/"), start=len(prefix)):
@@ -3298,51 +3206,6 @@ def fixturePattern(prefix, fixtures):
             if part not in levels[depth]:
                 levels[depth].append(part)
     return "/".join("^(%s)$" % "|".join(re.escape(part) for part in level) for level in levels)
-
-
-# A lane split into shards (#v5fgqc4: TestNativeAgreesWithNode/shard-003-0/<fixture>) runs each fixture one level down.
-smokeShard = re.compile(r"shard-[0-9]+(-[0-9]+)?$")
-# A lane split into a family of top-level tests (75a273db37: TestNativeAgreesWithNode_000, _001, ... and named solos such
-# as TestNativeAgreesWithNode_user_iterators) runs each fixture under one member: the suffix after the lane's name.
-smokeFamily = re.compile(r"_[0-9A-Za-z_]+")
-
-
-def smokeLane(name, lanes):
-    """The smoke lane a top-level test belongs to: the lane itself, or a member of its family. The longest lane wins,
-    so a lane whose name extends another's (TestInputAgreesWithNode_x) is never read as the shorter's member."""
-    owners = [lane for lane in lanes if name == lane or (name.startswith(lane) and smokeFamily.fullmatch(name[len(lane):]))]
-    return max(owners, key=len) if owners else None
-
-
-def smokeFixture(name):
-    """A smoke subtest's fixture, the shard level dropped: shard-003-0/bitwise is the fixture bitwise."""
-    head, _, rest = name.partition("/")
-    return rest if rest and smokeShard.match(head) else name
-
-
-def smokePattern(entries):
-    """A -run pattern for exactly these (lane, fixture) entries. Go splits both the pattern and each
-    subtest name on '/' and matches level by level, so alternation can't span a slash: each level gets
-    its own alternation, and a name shorter than the pattern ignores the levels past its end. A lane
-    may also run another lane's fixture that it has; the check after the run reads only its own.
-    A sharded lane holds its fixtures one level down (lane/shard-003-0/<fixture>), so the first level
-    also takes a shard name and every later level also takes the part one level up. A lane split into
-    a family of top-level tests (lane_000/<fixture>) is taken at the first level by its members' names.
-    What the wider pattern selects beyond the entries is only ever read by the exact check after the run."""
-    parts = [fixture.split("/") for _, fixture in entries]
-    depth = max((len(fixture) for fixture in parts), default=0)
-    # A lane's family members run its fixtures too: lane_000 and on, and a named solo such as lane_user_iterators.
-    levels = [["%s(%s)?" % (lane, smokeFamily.pattern) for lane in sorted({lane for lane, _ in entries})]]
-    for level in range(1, depth + 2):
-        names = []
-        for fixture in parts:
-            for index in (level - 1, level - 2):
-                if 0 <= index < len(fixture) and fixture[index].replace(".", "\\.") not in names:
-                    names.append(fixture[index].replace(".", "\\."))
-        if level == 1:
-            names.append(smokeShard.pattern.rstrip("$"))
-        levels.append(names)
-    return "/".join("^(%s)$" % "|".join(level) for level in levels)
 
 
 def git(directory, *arguments):

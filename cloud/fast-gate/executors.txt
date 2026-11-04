@@ -52,7 +52,7 @@ cohere      CohereSettings.json
 cohere      cohere-mirrors.json
 cohere      stage1/cohere/config/*
 # Read by path from outside a package's tree: the Node oracle runners the oracle's tests start, and
-# the root tsconfig.json, the compiler options internal/load gives every program (the smoke set runs too).
+# the root tsconfig.json, the compiler options internal/load gives every program.
 package:internal/oracle  oracle/*
 package:internal/load    tsconfig.json
 # A .gitignore outside a package isn't inert: a line that matched a tracked file would hide it from every
@@ -367,6 +367,8 @@ reads internal/oracle oracle/node.mjs
 # TestWASIAgreesWithNode, TestWASIOracleCatchesMutants, TestWASIRunnerCatchesMutants, TestWASIEmission via onWASI — internal/oracle/wasi_test.go:59
 # TestWASIRunnerCatchesMutants — internal/oracle/wasi_test.go:101
 reads internal/oracle oracle/wasi.mjs
+# TestEverySmokeEntryRunsInAnOracleUnit — internal/oracle/smoke_test.go:25
+reads internal/oracle cloud/fast-gate/smoke.txt
 # TestCSS and printer/profile tests via askedCases — stage1/cohere/css/testdata/cohere_side_test.go:119
 reads stage1/cohere/css *.[cC][sS][sS]
 # TestCSS and printer/profile tests via askedCases — stage1/cohere/css/testdata/cohere_side_test.go:119

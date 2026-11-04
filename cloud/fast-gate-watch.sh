@@ -985,7 +985,7 @@ borrowableBox() {
 # (cloud/pool-job.sh), goes to the boxes.
 poolTip() {
   local branch=$1 sha=$2
-  # A landing's pool job runs the fast gate's whole plan: Go tests, then run.py --phases build,vet,smoke,census as a
+  # A landing's pool job runs the fast gate's whole plan: Go tests, then run.py --phases build,vet,census as a
   # second record (Loom 77bca09, Oct 9 05:05Z), which push-main takes beside the first (--fast-gate, --also-gate).
   # Areas too since Loom af3ce75 (#vaf0xwc, Oct 9 09:45Z): their jobs run complete, with the stage 3 lane (pool-job.sh).
   [[ ${branch} == codex/* || ${branch} == devtools/* || ${branch} == cloud/land-* || ${branch} == area/* ]] || isFront "${branch}" || return 1

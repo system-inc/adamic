@@ -39,7 +39,7 @@ def stage(command):
     if command[:2] == ["go", "run"]:
         return "census"
     if command[:2] == ["go", "test"] and "-c" not in command:
-        return "wasi" if any("^" in part and "TestWASI" in part for part in command) and "-run" in command else ("smoke" if any(run.smokeTest in part for part in command) else "tests")
+        return "wasi" if any("^" in part and "TestWASI" in part for part in command) and "-run" in command else "tests"
     return "tests"
 
 
@@ -82,7 +82,7 @@ def landingProblems(sha, parts):
             problems.append("%s: %s" % (kind.replace("_", " "), " ".join(fast[kind])))
     if fast.get("uncached_tests") is not True:
         problems.append("its tests weren't run uncached")
-    planned = ("build", "vet", "tests", "smoke", "census")
+    planned = ("build", "vet", "tests", "census")
     ran = fast.get("steps_seconds") or {}
     missing = [stage for stage in planned if stage not in ran]
     if missing:
@@ -102,10 +102,6 @@ def landingProblems(sha, parts):
 
 
 class FakeProcess:
-    # What a fake smoke run passes, as smoke.txt's fixture under a member of its lane's family (75a273db37's layout);
-    # a test sets it to name what the run passed instead.
-    smokePasses = ["TestNativeAgreesWithNode_000/internal/oracle/testdata/a.a"]
-
     def __init__(self, command, stdout):
         self.pid = 0
         self.returncode = 0
@@ -121,8 +117,6 @@ class FakeProcess:
                 name = "TestWASI/" + ("requests" if "requests" in command[command.index("-run") + 1] else "a.a")
             package = command[command.index("-p") + 1] if "test2json" in command and "-p" in command else "p"
             lines = [json.dumps({"Action": "pass", "Package": package, "Test": name}) + "\n"]
-            if stage(command) == "smoke":
-                lines = [json.dumps({"Action": "pass", "Package": package, "Test": test}) + "\n" for test in self.smokePasses]
         self.lines = lines
         self.stdout = io.StringIO("".join(lines)) if stdout == subprocess.PIPE else None
 
@@ -141,8 +135,6 @@ class FailClosed(unittest.TestCase):
         self.directory = tempfile.mkdtemp()
         self.tree = os.path.join(self.directory, "tree")
         os.makedirs(os.path.join(self.tree, "cloud/fast-gate"))
-        with open(os.path.join(self.tree, "cloud/fast-gate/smoke.txt"), "w") as handle:
-            handle.write("internal/oracle/testdata/a.a\n")
         with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
             handle.write("inert *.md\nstage3 stage3/*\n")
         with open(os.path.join(self.tree, "cloud/fast-gate/tools.txt"), "w") as handle:
@@ -173,7 +165,7 @@ class FailClosed(unittest.TestCase):
         with mock.patch.object(run.subprocess, "Popen", side_effect=popen), \
                 mock.patch.object(run.Gate, "touched", lambda gate, changed: (gate.packageDirectories.update({"p": self.tree, run.module + "/stage1/cohere/tsprinter": self.tree}) or ["p"], list(unowned))), \
                 mock.patch.object(run.Gate, "command", side_effect=lambda command, **options: (mock.Mock(stdout="p\t" + self.tree + "\n") if "-f" in command else listing) if command[:2] == ["go", "list"] else realRun(command, **options)), \
-                mock.patch.object(run.Gate, silent, lambda *arguments: None) if silent else mock.patch.object(run, "smokeTest", run.smokeTest), \
+                mock.patch.object(run.Gate, silent, lambda *arguments: None) if silent else contextlib.nullcontext(), \
                 mock.patch.object(run.Gate, failing, lambda gate, *arguments: gate.fail(failing, "planted failure")) if failing else mock.patch.object(run, "longTestSeconds", run.longTestSeconds), \
                 mock.patch.object(run.Gate, "npmCli", lambda gate: "npm-cli.js"), \
                 mock.patch.object(sys, "argv", ["run.py"]), mock.patch("builtins.print"):
@@ -219,7 +211,7 @@ class FailClosed(unittest.TestCase):
             self.assertEqual(result["budget_over"], [])
 
     def test_every_stage_raising_is_red(self):
-        for full, stages in ((False, ["build", "vet", "tests", "smoke", "census"]), (True, ["build", "vet", "tests", "wasi", "census"])):
+        for full, stages in ((False, ["build", "vet", "tests", "census"]), (True, ["build", "vet", "tests", "wasi", "census"])):
             for broken in stages:
                 with self.subTest(full=full, stage=broken):
                     gate, status, result = self.gate(full=full, broken=broken)
@@ -307,7 +299,8 @@ class FailClosed(unittest.TestCase):
         # The tests' environment is the gate's own: uncached, with the sampling the landing gate uses.
         self.assertEqual(selection["env"]["ADAMIC_GATE_UNCACHED"], "1")
         self.assertEqual(selection["env"]["ADAMIC_GATE_SAMPLE"], self.sha)
-        self.assertIn("smoke", selection["executors_beyond_go_tests"])
+        # Nothing beyond the Go tests: the smoke phase retired (#r8ghgkt), and this change maps to no executor.
+        self.assertEqual(selection["executors_beyond_go_tests"], [])
         # Nothing but git ran: no build, vet or test.
         self.assertEqual([command[0] for command in launched if command[0] != "git"], [])
 
@@ -342,7 +335,7 @@ class FailClosed(unittest.TestCase):
                                         "steps_seconds": {"tests": 1}, "stages_exit": {"tests": 0}})
 
     def test_fast_phases_plan_only_themselves(self):
-        for phase in ("coverage", "tools", "build", "vet", "smoke", "census", "catalog"):
+        for phase in ("coverage", "tools", "build", "vet", "census", "catalog"):
             with self.subTest(phase=phase):
                 extra = {"phase": phase}
                 if phase == "census":
@@ -398,7 +391,8 @@ class FailClosed(unittest.TestCase):
         self.assertEqual(result["planned_stages"], ["coverage"])
 
     def test_unknown_and_whole_only_fast_phases_are_red(self):
-        for phase in ("no-such-phase", "wasi", "tests", "workers", "a-check", "catalog-apply", "darwin"):
+        # smoke retired (#r8ghgkt): a plan that still names it is refused, never run.
+        for phase in ("no-such-phase", "smoke", "wasi", "tests", "workers", "a-check", "catalog-apply", "darwin"):
             with self.subTest(phase=phase):
                 gate, status, result = self.gate(extra={"phase": phase})
                 self.assertTrue(status.startswith("red:"), status)
@@ -432,32 +426,31 @@ class FailClosed(unittest.TestCase):
         self.assertIn("requested tests ran: 0 in q: TestNoSuchFamily", gate.failure["detail"])
 
     def test_several_fast_phases_complete_the_pool_landing_record(self):
-        gate, status, result = self.gate(extra={"phases": "build,vet,smoke,census", "census": self.poolLog()})
+        gate, status, result = self.gate(extra={"phases": "build,vet,census", "census": self.poolLog()})
         self.assertTrue(status.startswith("green:"), status)
-        self.assertEqual(result["planned_stages"], ["build", "vet", "smoke", "census"])
+        self.assertEqual(result["planned_stages"], ["build", "vet", "census"])
         self.assertEqual(result["stages_exit"], {phase: 0 for phase in result["planned_stages"]})
         self.assertEqual(landingProblems(self.sha, [self.poolPart(), (status, result)]), [])
         with open(os.path.join(gate.arguments.out, "test.jsonl")) as handle:
             log = handle.read()
-        self.assertIn("TestPool", log)
-        self.assertIn(FakeProcess.smokePasses[0], log)  # smoke appended, rather than overwriting the pool's log
+        self.assertIn("TestPool", log)  # the census read the pool's log
 
-    def test_a_missing_smoke_or_red_vet_cannot_complete_the_pool_record(self):
-        gate, status, result = self.gate(extra={"phases": "build,vet,census", "census": self.poolLog()})
+    def test_a_missing_stage_or_red_vet_cannot_complete_the_pool_record(self):
+        gate, status, result = self.gate(extra={"phases": "build,census", "census": self.poolLog()})
         self.assertTrue(status.startswith("green:"), status)
-        self.assertTrue(any("smoke" in problem for problem in landingProblems(self.sha, [self.poolPart(), (status, result)])))
-        gate, status, result = self.gate(failing="vet", extra={"phases": "build,vet,smoke,census", "census": self.poolLog()})
+        self.assertIn("stages with no completion recorded: vet", landingProblems(self.sha, [self.poolPart(), (status, result)]))
+        gate, status, result = self.gate(failing="vet", extra={"phases": "build,vet,census", "census": self.poolLog()})
         self.assertIn("first failure at vet", status)
         self.assertFalse(result["vet_ok"])
         self.assertTrue(landingProblems(self.sha, [self.poolPart(), (status, result)]))
-        gate, status, result = self.gate(extra={"phases": "build,vet,smoke,census", "census": self.poolLog()})
+        gate, status, result = self.gate(extra={"phases": "build,vet,census", "census": self.poolLog()})
         result["sha"] = "b" * 40
         self.assertTrue(landingProblems(self.sha, [self.poolPart(), (status, result)]))
 
     def test_a_silent_fast_phase_is_red_even_in_a_combined_record(self):
-        for method, phase in (("build", "build"), ("vet", "vet"), ("smoke", "smoke"), ("checkCensus", "census")):
+        for method, phase in (("build", "build"), ("vet", "vet"), ("checkCensus", "census")):
             with self.subTest(phase=phase):
-                gate, status, result = self.gate(silent=method, extra={"phases": "build,vet,smoke,census", "census": self.poolLog()})
+                gate, status, result = self.gate(silent=method, extra={"phases": "build,vet,census", "census": self.poolLog()})
                 self.assertTrue(status.startswith("red:"), status)
                 self.assertIn(phase, result["failure"]["step"])
 
@@ -661,9 +654,8 @@ class Products(unittest.TestCase):
                 self.assertIn("-test.timeout=30m", commands[1])
 
     def test_all_fast_stages_start_concurrently(self):
-        barrier = threading.Barrier(5)
-        stages = {"toolsDeclared": "tools", "build": "build", "vet": "vet", "testSplit": "tests",
-                  "smoke": "smoke"}
+        barrier = threading.Barrier(4)
+        stages = {"toolsDeclared": "tools", "build": "build", "vet": "vet", "testSplit": "tests"}
         def target(stage):
             def concurrent(gate, *args):
                 barrier.wait(2)
@@ -931,111 +923,6 @@ class Coverage(FailClosed):
         self.assertEqual(result["a_check_exempt"], ["stage3/corpus/upstream.a"])
         self.assertEqual(list(result["a_check"]), ["stage3/probe.a"])
         self.assertEqual(result["executors"], {"stage3": 2})
-
-
-class SmokeShards(unittest.TestCase):
-    """#v5fgqc4's split moved TestNativeAgreesWithNode's fixtures under shard subtests, and smoke went red on 2aff1aa5
-    with 'smoke entries that didn't run' (Oct 9 13:41Z): smoke selects and reads a fixture under either layout."""
-    entries = [("TestNativeAgreesWithNode", "internal/oracle/testdata/bitwise"),
-               ("TestNativeAgreesWithNode", "internal/oracle/testdata/array_from_length.a")]
-
-    def selects(self, name):
-        # go test -run: the pattern and the name split on '/', each level matched by its own expression, and a name
-        # shorter than the pattern ignores the levels past its end.
-        levels = run.smokePattern(self.entries).split("/")
-        return all(re.search(levels[index], part) for index, part in enumerate(name.split("/")) if index < len(levels))
-
-    def test_a_fixture_is_selected_directly_under_its_lane_or_under_a_shard(self):
-        for name in ("TestNativeAgreesWithNode/internal/oracle/testdata/bitwise",
-                     "TestNativeAgreesWithNode/shard-003-0/internal/oracle/testdata/bitwise",
-                     "TestNativeAgreesWithNode/shard-019/internal/oracle/testdata/array_from_length.a",
-                     "TestNativeAgreesWithNode/shard-003-0"):
-            self.assertTrue(self.selects(name), name)
-        for name in ("TestNativeAgreesWithNode/internal/oracle/testdata/other",
-                     "TestNativeAgreesWithNode/shard-003-0/internal/oracle/testdata/other",
-                     "TestNativeAgreesWithNode/part-003/internal/oracle/testdata/bitwise",
-                     "TestInputAgreesWithNode/internal/oracle/testdata/bitwise"):
-            self.assertFalse(self.selects(name), name)
-
-    def test_a_sharded_fixture_s_pass_counts_as_its_entry(self):
-        self.assertEqual(run.smokeFixture("shard-003-0/internal/oracle/testdata/bitwise"), "internal/oracle/testdata/bitwise")
-        self.assertEqual(run.smokeFixture("internal/oracle/testdata/bitwise"), "internal/oracle/testdata/bitwise")
-        # A shard alone isn't a fixture, and only a shard level is dropped.
-        self.assertEqual(run.smokeFixture("shard-003-0"), "shard-003-0")
-        self.assertEqual(run.smokeFixture("part-003/internal/oracle/testdata/bitwise"), "part-003/internal/oracle/testdata/bitwise")
-
-
-class SmokeTruth(unittest.TestCase):
-    """From 75a273db37 oracle's lanes are families (TestNativeAgreesWithNode_000 and on), smoke's pattern named only
-    the bare lanes, and every smoke selected nothing and passed: a lane that didn't run was only listed as absent
-    (Tests, Oct 13, #rmp2hdj). Smoke now takes a family's members as its lane, and an entry that didn't pass is red."""
-    entries = [("TestNativeAgreesWithNode", "internal/oracle/testdata/bitwise.a"),
-               ("TestInputAgreesWithNode", "internal/oracle/testdata/walk.a")]
-
-    def test_a_family_member_is_its_lane_and_nothing_else_is(self):
-        lanes = sorted({lane for lane, _ in self.entries})
-        for name, lane in (("TestNativeAgreesWithNode", "TestNativeAgreesWithNode"),
-                           ("TestNativeAgreesWithNode_000", "TestNativeAgreesWithNode"),
-                           ("TestNativeAgreesWithNode_127", "TestNativeAgreesWithNode"),
-                           ("TestNativeAgreesWithNode_user_iterators", "TestNativeAgreesWithNode"),
-                           ("TestInputAgreesWithNode", "TestInputAgreesWithNode"),
-                           ("TestNativeAgreesWithNodeAgain", None),
-                           ("TestNativeAgreesWithNode_", None),
-                           ("TestWASIAgreesWithNode_000", None)):
-            self.assertEqual(run.smokeLane(name, lanes), lane, name)
-        # The longest lane owns a name both could claim.
-        self.assertEqual(run.smokeLane("TestA_b_000", ["TestA", "TestA_b"]), "TestA_b")
-
-    def test_the_pattern_selects_a_fixture_under_a_family_member(self):
-        levels = run.smokePattern(self.entries).split("/")
-
-        def selects(name):
-            return all(re.search(levels[index], part) for index, part in enumerate(name.split("/")) if index < len(levels))
-        for name in ("TestNativeAgreesWithNode_000/internal/oracle/testdata/bitwise.a",
-                     "TestNativeAgreesWithNode_user_iterators/internal/oracle/testdata/bitwise.a",
-                     "TestNativeAgreesWithNode/internal/oracle/testdata/bitwise.a",
-                     "TestInputAgreesWithNode/internal/oracle/testdata/walk.a"):
-            self.assertTrue(selects(name), name)
-        for name in ("TestNativeAgreesWithNodeAgain/internal/oracle/testdata/bitwise.a",
-                     "TestNativeAgreesWithNode_000/internal/oracle/testdata/other.a",
-                     "TestWASIAgreesWithNode_000/internal/oracle/testdata/bitwise.a"):
-            self.assertFalse(selects(name), name)
-
-    def smoke(self, passes):
-        with mock.patch.object(FakeProcess, "smokePasses", passes):
-            gate, status, result = FailClosed.gate(self.closed)
-        return status, result
-
-    def setUp(self):
-        self.closed = FailClosed()
-        self.closed.setUp()
-        with open(os.path.join(self.closed.tree, "cloud/fast-gate/smoke.txt"), "w") as handle:
-            handle.write("internal/oracle/testdata/a.a\nTestInputAgreesWithNode internal/oracle/testdata/walk.a\n")
-
-    def test_every_entry_passing_in_its_lane_or_a_family_member_is_green(self):
-        status, result = self.smoke(["TestNativeAgreesWithNode_031/internal/oracle/testdata/a.a",
-                                     "TestInputAgreesWithNode/internal/oracle/testdata/walk.a"])
-        self.assertTrue(status.startswith("green:"), status)
-        self.assertEqual((result["smoke_passed"], result["smoke_absent_lanes"]), (2, []))
-
-    def test_a_smoke_that_ran_no_fixture_is_red(self):
-        # The hole itself: nothing selected, every lane absent. Before #rmp2hdj this was green.
-        status, result = self.smoke([])
-        self.assertTrue(status.startswith("red:"), status)
-        self.assertIn("first failure at smoke", status)
-        self.assertEqual(result["smoke_passed"], 0)
-        self.assertIn("smoke passed 0 of its 2 entries", json.dumps(result["failure"]))
-        self.assertIn("no test of lane TestInputAgreesWithNode, TestNativeAgreesWithNode ran", json.dumps(result["failure"]))
-
-    def test_one_entry_short_is_red_naming_it(self):
-        for passes, missing in ((["TestNativeAgreesWithNode_031/internal/oracle/testdata/a.a"], "TestInputAgreesWithNode internal/oracle/testdata/walk.a"),
-                                (["TestNativeAgreesWithNode_031/internal/oracle/testdata/b.a",
-                                  "TestInputAgreesWithNode/internal/oracle/testdata/walk.a"], "TestNativeAgreesWithNode internal/oracle/testdata/a.a")):
-            with self.subTest(missing=missing):
-                status, result = self.smoke(passes)
-                self.assertTrue(status.startswith("red:"), status)
-                self.assertEqual(result["smoke_passed"], 1)
-                self.assertIn(missing, json.dumps(result["failure"]))
 
 
 class GateRuns(unittest.TestCase):
@@ -2316,7 +2203,8 @@ class PhaseUnitTests(unittest.TestCase):
         listed = realRun([sys.executable, run.__file__, "--list-units", "--tree", "/unused"],
                          capture_output=True, text=True, check=True, timeout=90).stdout.splitlines()
         self.assertEqual(listed, run.fastBasePhases)
-        self.assertIn("smoke", listed)
+        # smoke retired (#r8ghgkt): oracle's own units run every fixture it ran, so no plan lists it.
+        self.assertNotIn("smoke", listed)
         self.assertIn("census", listed)
         self.assertNotIn("tests", listed)
         self.assertNotIn("wasi", listed)
@@ -2538,7 +2426,7 @@ class CacheDrains(unittest.TestCase):
                 self.assertIn("store unavailable", row["detail"])
                 self.assertEqual(result["fail"], 0)
                 self.assertLess(calls.index("audit"), calls.index("upload"))
-                self.assertTrue(all(name not in ("tests", "wasi", "smoke") for name in calls[calls.index("audit"):]))
+                self.assertTrue(all(name not in ("tests", "wasi") for name in calls[calls.index("audit"):]))
                 for name in ("audit", "upload"):
                     self.assertIn(name, result["planned_stages"])
                     self.assertIn(name, result["steps_seconds"])
@@ -3073,72 +2961,6 @@ class CoverageBounded(unittest.TestCase):
         self.assertEqual(run.phaseInputs(self.tree, "coverage", False, None, None)["inputs"]["names"], [])
 
 
-class SmokeBounded(unittest.TestCase):
-    """Smoke keys on its own declaration at every change (#gamwqs2, Node's ruling): the Go state, every file a package
-    embeds by name, the oracle's fixtures and runtime, and every .gitattributes, so an edit of a file it reads moves its
-    key and an edit of any other leaves it. With go list unreadable it reads the whole tree. Mutants, each red here: the
-    embeds dropped; the oracle's paths dropped; the .gitattributes dropped; an embed named as a glob, never literally."""
-
-    setUp, write, commit, change, readmeOn = (CoverageBounded.setUp, CoverageBounded.write, CoverageBounded.commit,
-                                              CoverageBounded.change, CoverageBounded.readmeOn)
-
-    def inputs(self, change):
-        return run.phaseInputs(self.tree, "smoke", False, None, change)["inputs"]
-
-    def keyed(self, change):
-        realRun(["git", "-C", self.tree, "checkout", "-q", "--detach", change["sha"]], check=True)
-        inputs = self.inputs(change)
-        return inputs["paths"], inputs["names"], run.git(self.tree, "ls-files", "-s", "--", *inputs["paths"])
-
-    def test_edits_smoke_doesnt_read_key_alike(self):
-        readme = self.change(lambda: self.write("README.md", "# probe, edited\n"))
-        log = self.change(lambda: self.write("notes/counts.log", "6224\n"))
-        unruled = self.change(lambda: self.write("tools/unruled.txt", "y\n"))
-        self.assertNotIn(".", self.inputs(readme)["paths"])
-        self.assertEqual(self.keyed(readme), self.keyed(log))
-        self.assertEqual(self.keyed(readme), self.keyed(unruled))
-        listed = self.keyed(readme)[2]
-        self.assertNotIn("\tREADME.md", listed)
-        self.assertIn("\ta/doc.md", listed)  # embedded: kept by content
-        self.assertIn("160000 %s 0\tcohere" % self.cohere, listed)
-
-    def test_what_smoke_reads_moves_its_key(self):
-        readme = self.change(lambda: self.write("README.md", "# probe, edited\n"))
-        states = {
-            "an embedded markdown file": lambda: self.write("a/doc.md", "# embedded, edited\n"),
-            "a go source": lambda: self.write("sub/s.go", "package sub\n\nvar S = 1\n"),
-            "an oracle fixture": lambda: self.write("internal/oracle/testdata/case.a", "let x = 1;\n"),
-            "the oracle's runtime": lambda: self.write("oracle/runtime.mjs", "export {};\n"),
-            "a .gitattributes": lambda: self.write("notes/.gitattributes", "*.log text\n"),
-            "a driver script": lambda: self.write("stage3/drivers/parser/evidence/probe.py", "print(2)\n"),
-            "cohere moved": lambda: realRun(["git", "-C", self.tree, "update-index", "--cacheinfo", "160000,%s,cohere" % self.base], check=True),
-        }
-        for name, edit in states.items():
-            with self.subTest(name):
-                self.assertNotEqual(self.keyed(readme)[2], self.keyed(self.readmeOn(edit))[2])
-
-    def test_an_unembedded_name_that_reads_as_a_glob_never_stands_for_an_embedded_file(self):
-        # docs/a[b].md and docs/a*.md, unembedded, would match the embedded docs/ab.md as globs: embeds are named literally.
-        def laid():
-            self.write("docs/docs.go", 'package docs\n\nimport _ "embed"\n\n//go:embed ab.md\nvar AB string\n')
-            self.write("docs/ab.md", "# embedded\n")
-            self.write("docs/a[b].md", "# not embedded\n")
-            self.write("docs/a*.md", "# not embedded either\n")
-        tree = self.change(laid)["sha"]
-        readme = self.change(lambda: self.write("README.md", "# probe, edited\n"), tree)
-        listed = self.keyed(readme)[2]
-        self.assertIn("\tdocs/ab.md", listed)
-        self.assertNotIn("\tdocs/a[b].md", listed)
-        self.assertNotIn("\tdocs/a*.md", listed)
-        moved = self.change(lambda: self.write("docs/ab.md", "# embedded, edited\n"), tree)["sha"]
-        self.assertNotEqual(listed, self.keyed(self.change(lambda: self.write("README.md", "# probe, edited\n"), moved))[2])
-
-    def test_go_list_unreadable_reads_the_whole_tree(self):
-        broken = self.change(lambda: self.write("go.mod", "this isn't a module file\n"))
-        realRun(["git", "-C", self.tree, "checkout", "-q", "--detach", broken["sha"]], check=True)
-        self.assertEqual(self.inputs(broken)["paths"], ["."])
-
-
 class PhaseUnreadAgrees(unittest.TestCase):
     """run.py --phase-unread names the tracked files no phase reads when modified (#nz7hm5j, Node's ruling), and the
     listing agrees, both ways. For each file it names, a change editing it alone lists only the base phases, each with the
@@ -3146,18 +2968,20 @@ class PhaseUnreadAgrees(unittest.TestCase):
     own files) equal on both: no phase key can move, so a lookup deciding it empty is no false green. For each regular file
     it doesn't name, some phase reads what the edit moved, so the lookup sends it to the compare (one that moved nothing is
     an over-read). The set is derived from the base phases' declared inputs (#gamwqs2), so every file a phase declares
-    reads as read: the Go state, the files a package embeds, the oracle's fixtures and runtime (an inert-ruled one
-    included), cloud/fast-gate, a .gitattributes; and so is a file whose change selects a phase (an .a, a catalog patch's
-    target) and an inert executable, since the set names plain files alone. Mutants, red here: each of smoke's declared
-    pieces dropped (the embeds, the oracle's paths, the .gitattributes), coverage's Go state dropped, the selection tests
-    dropped (an .a, a catalog patch's target), and 100755 listed beside 100644."""
+    reads as read: the Go state, a file in a package's directory (an embedded one among them), cloud/fast-gate, a
+    .gitattributes; and so is a file whose change selects a phase (an .a, a catalog patch's target) and an inert
+    executable, since the set names plain files alone. An inert-ruled oracle fixture or runtime file reads as unread:
+    oracle's own test units read them, and no phase has since the smoke phase retired (#r8ghgkt). Mutants, red here: the
+    tools phase's .gitattributes dropped, coverage's Go state dropped, the selection tests dropped (an .a, a catalog
+    patch's target), and 100755 listed beside 100644."""
 
     setUp_, write, commit = CoverageBounded.setUp, CoverageBounded.write, CoverageBounded.commit
 
     def setUp(self):
         self.setUp_()
         # The shapes a file nothing else reads can still take, each under an inert rule: an .a (a-check), a .gitattributes
-        # (tools and smoke), a catalog undo patch's target (catalog-apply), and an oracle fixture and runtime file (smoke).
+        # (tools), a catalog undo patch's target (catalog-apply), and an oracle fixture and runtime file, which no phase
+        # reads since smoke retired.
         self.write("notes/gen.a", "a\n")
         self.write("notes/.gitattributes", "*.log text\n")
         self.write("notes/target.txt", "t\n")
@@ -3205,10 +3029,9 @@ class PhaseUnreadAgrees(unittest.TestCase):
     def test_the_set_and_the_listing_agree(self):
         unread = run.phaseUnread(self.tree, self.tree)
         for shaping in ("go.mod", "a/a.go", "notes/probe.c", "a/doc.md", "cloud/fast-gate/executors.txt", "notes/.gitattributes",
-                        "notes/gen.a", "notes/target.txt", "verify/catalog/01-probe.patch", "cohere", "notes/tool.log",
-                        "internal/oracle/testdata/note.txt", "oracle/note.txt"):
+                        "notes/gen.a", "notes/target.txt", "verify/catalog/01-probe.patch", "cohere", "notes/tool.log"):
             self.assertNotIn(shaping, unread)
-        self.assertTrue({"README.md", "docs/guide.md", "notes/counts.log"} <= set(unread), unread)
+        self.assertTrue({"README.md", "docs/guide.md", "notes/counts.log", "internal/oracle/testdata/note.txt", "oracle/note.txt"} <= set(unread), unread)
         tracked = [entry.split("\t", 1)[1] for entry in run.git(self.tree, "ls-files", "-s").splitlines() if entry.split(" ", 1)[0] in ("100644", "100755")]
         overRead = []
         for path in tracked:
@@ -3316,7 +3139,7 @@ class GoListRecordsReadInPlace(unittest.TestCase):
 
 class ListingRunsGoListOnce(unittest.TestCase):
     """One --list-units --with-inputs pass runs each go list once a tree (run.listedGoList, Hotty's measures on #q11k6k6
-    and #cb8bpe7): packageGraphCommand, which touched() and coverage's and smoke's providers share, and go list -json ./...,
+    and #cb8bpe7): packageGraphCommand, which touched() and coverage's provider share, and go list -json ./...,
     which build's and vet's providers share. It lists what it did without the share. Every process the pass starts is
     counted at Popen, so touched()'s, started through the gate's own spawn, is too. Mutants, red here: the pass's share
     dropped (each asker runs its own); touched() running its own in a listing; build's and vet's each running theirs."""
@@ -3353,9 +3176,9 @@ class ListingRunsGoListOnce(unittest.TestCase):
         return calls, output.getvalue()
 
     def test_each_go_list_runs_once_a_listing(self):
-        # Without the share: touched()'s, coverage's names (coverageReduced) and smoke's embeds; build's and vet's.
-        for name, edit, graphs in (("a markdown change", lambda: self.write("README.md", "# probe, edited\n"), 3),
-                                   ("a go change", lambda: self.write("sub/s.go", "package sub\n\nvar S = 2\n"), 3)):
+        # Without the share: touched()'s and coverage's names (coverageReduced); build's and vet's.
+        for name, edit, graphs in (("a markdown change", lambda: self.write("README.md", "# probe, edited\n"), 2),
+                                   ("a go change", lambda: self.write("sub/s.go", "package sub\n\nvar S = 2\n"), 2)):
             with self.subTest(name):
                 change = self.change(edit)
                 counts, rows = self.listed(change, True)

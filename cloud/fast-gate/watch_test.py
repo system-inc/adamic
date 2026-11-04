@@ -138,7 +138,7 @@ else
   done
   mode=$(cat "$TEST_ROOT/mode")
 fi
-if [ "$mode" = pass ]; then echo "green: $sha passed, 3 packages, $(cat "$TEST_ROOT/passes" 2>/dev/null || echo 900) pass, 0 skip, smoke 1 fixtures"
+if [ "$mode" = pass ]; then echo "green: $sha passed, 3 packages, $(cat "$TEST_ROOT/passes" 2>/dev/null || echo 900) pass, 0 skip"
 elif [ "$mode" = red ]; then echo "red: $sha failed"
 else
   echo 'VOID FAILURE'; echo 'void: no result'
@@ -1177,7 +1177,7 @@ class WatchTests(unittest.TestCase):
             self.assertNotIn('a newer run of the same sha starts', w.read('output'))
             self.assertFalse((w.state / 'race-lost' / str(holder.pid)).exists())
             # The old run, never stopped, ends green: a verdict, not a lost race.
-            log.write_text('green: %s passed, 3 packages, 900 pass, 0 skip, smoke 1 fixtures\n' % sha)
+            log.write_text('green: %s passed, 3 packages, 900 pass, 0 skip\n' % sha)
             holder.kill()
             holder.wait()  # a zombie still answers kill -0
             w.wait(lambda: 'done codex/old: ' in w.read('output'))
@@ -1469,7 +1469,7 @@ class WatchTests(unittest.TestCase):
     redAtTests = ('FIRST FAILURE (tests, at 3.0 s):\nFAIL github.com/system-inc/adamic/internal/buildcache TestEveryInputChangesTheKey\n'
                   'red: SHA fast gate, first failure at tests after 3.0 s (tests=3.0s), 1 fail, 4 pass\n')
     redAtCensus = 'FIRST FAILURE (census, at 2.0 s):\nundeclared skip site\nred: SHA fast gate, first failure at census after 2.0 s, 0 fail, 9 pass\n'
-    green = 'green: SHA fast gate in 5.0 s, 3 packages, 900 pass, 0 skip, smoke 1 fixtures\n'
+    green = 'green: SHA fast gate in 5.0 s, 3 packages, 900 pass, 0 skip\n'
 
     def mutantsStaged(self, mutants=suite):
         w = Watcher(0, canaryBox='box1', mode='hold', slots='box0 S\nbox0 S\nbox1 S\nbox1 S\n', mutants=mutants)
@@ -1558,7 +1558,7 @@ class WatchTests(unittest.TestCase):
         w = self.mutantsStaged(mutants=self.suite + thin)
         w.put('mutant-plain', self.redAtTests)
         w.put('mutant-census', self.redAtCensus)
-        w.put('mutant-thin', 'green: SHA fast gate in 9.0 s, 1 packages, 12 pass, 0 skip, smoke 1 fixtures\n')
+        w.put('mutant-thin', 'green: SHA fast gate in 9.0 s, 1 packages, 12 pass, 0 skip\n')
         w.put('initial', 'pass')
         w.wait(lambda: 'promoted tools tools-one' in w.read('output'))
         # The same input read green on enough tests means the floor is gone: the suite holds the tools.

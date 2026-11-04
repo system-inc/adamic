@@ -1,16 +1,15 @@
-# The fast gate's oracle smoke set: native (sanitized and release) against Node and the JavaScript
-# backend, one fixture per feature family, each the family's smallest (by source) that lowers and runs
-# unchecked. The fast gate runs TestNativeAgreesWithNode on exactly these. It changes only by a
-# reviewed commit, and the fast gate records this file's blob in fast.json. One exception to smallest:
-# normalize_form.a stands in for normalize_coverage_limit.a, which builds a 29.8-million-character
-# string and took 8.2 s alone on the Threadripper, more than every other fixture here.
+# The oracle's smoke list, internal/oracle/smoke_test.go's: the fixtures, one per feature family,
+# that oracle's own test units must run, a plain path for TestNativeAgreesWithNode and "Lane fixture"
+# for another lane. TestEverySmokeEntryRunsInAnOracleUnit holds every entry to a fixture its lane's
+# family runs, so a fixture dropped from its lane, or an entry naming a lane oracle doesn't run, is
+# red there. No gate phase runs this list: the fast gate's smoke phase ran TestNativeAgreesWithNode on
+# exactly these, a strict subset of what oracle's units already run, and it retired (#r8ghgkt).
 #
-# The set also grows from what actually broke (@system_adamic, Oct 7): an unchanged fixture that a
-# whole gate caught red joins in the lane that caught it, written "Lane fixture", while the set stays
-# under 30 s. Every entry must pass in its lane, or in a member of its lane's family (lane_000 and
-# on): an entry that didn't run is red, its lane missing from the tree included, so smoke is never green
-# on fewer fixtures than this list (Tests, Oct 13, #rmp2hdj: from 75a273db37 the pattern selected
-# nothing and every smoke passed on zero fixtures).
+# Each native entry is its family's smallest fixture (by source) that lowers and runs unchecked, with
+# one exception: normalize_form.a stands in for normalize_coverage_limit.a, which builds a
+# 29.8-million-character string and took 8.2 s alone on the Threadripper. The list also grows from
+# what actually broke (@system_adamic, Oct 7): an unchanged fixture that a whole gate caught red joins
+# in the lane that caught it. It changes only by a reviewed commit.
 internal/oracle/testdata/array_from_length.a
 internal/oracle/testdata/bitwise.a
 internal/oracle/testdata/borrow_chain_reassigned.a

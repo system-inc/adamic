@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# The fast gate: build, vet, the touched packages' tests, the oracle smoke set and the skip census,
+# The fast gate: build, vet, the touched packages' tests and the skip census,
 # on the gate box, stopping at the first failure. Run it from any checkout with a push credential:
 #
 #   cloud/fast-gate.sh <full sha> [--branch <name>] [--session <ai.db session id>]
