@@ -277,6 +277,8 @@ type lowering struct {
 	provenModuleReads map[*ast.Node]bool
 	// assignedSymbols is every symbol an identifier in the program assigns to (predicates.go's assignedSymbol).
 	assignedSymbols map[*ast.Symbol]bool
+	// accessorNames is every name a getter or setter in the program has (enum_tag_flow.go's accessorName).
+	accessorNames map[string]bool
 
 	// predicateFalse is the false-direction walk's switch and memo (predicate_false_flow.go).
 	predicateFalse *predicateFalseFlow
