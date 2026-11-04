@@ -408,8 +408,10 @@ console.log(String(firstPos(elements)));
 // through S's checked view (brandedIntersection, Adamic's ruling, Nov 1). So both lower and agree with Node
 // for isTypeElement and isClassElement alike, and so does TOut = TypeElement over a PropertySignature |
 // Node (Compiler's union pin), whose result reads through TypeElement's view. A lie stops at its first bad
-// read: inside the helper's body when the body reads a field, as castName does, and through tryCast, whose
-// body reads nothing, at the caller's. Mutants: the read compared as written, unconcreted, and these are
+// read through tryCast, whose body reads nothing, at the caller's. castName's lie, a Node that hides
+// name: 5 bound to TIn extends Positioned | undefined, is refused at that binding in the hiding rule's
+// words (#xywvn06), as castName's direct twin through a Positioned parameter is, before its body's read
+// could stop it. Mutants: the read compared as written, unconcreted, and these are
 // NotYet; the intersection's reads not routed to S's view (brandedIntersectionReceiver), and castName's
 // value.name, read through Positioned & TypeElement, is NotYet as a widened read, honest or lying.
 func TestBrandedSupertypeTryCastIsJudgedPerInstance(t *testing.T) {
@@ -446,7 +448,6 @@ const u = tryCast(p, isTypeElement); console.log(u === undefined ? "no" : String
 	const lie = `const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const n: Node = w;
 `
 	for _, probe := range []struct{ name, source, stderr string }{
-		{"castName lie", `console.log(String(castName(n, isTypeElementLie).pos));`, "adamic: panic: field read failed: value.name matches no member of string | undefined"},
 		{"tryCast lie", `const e = tryCast(n, isTypeElementLie); console.log(e === undefined ? "no" : String(e.name));`, "adamic: panic: field read failed: e.name matches no member of string | undefined"},
 		{"union lie", `const p: PropertySignature | Node = n; const u = tryCast(p, isTypeElementLie); console.log(u === undefined ? "no" : String(u.name));`, "adamic: panic: field read failed: u.name matches no member of string | undefined"},
 	} {
@@ -455,6 +456,14 @@ const u = tryCast(p, isTypeElement); console.log(u === undefined ? "no" : String
 			brandedStops(t, brandedPrelude+helpers+lie+probe.source, probe.stderr)
 		})
 	}
+	t.Run("castName lie", func(t *testing.T) {
+		t.Parallel()
+		_, err := lowerTypeScriptAssertionSource(t, brandedPrelude+helpers+lie+`console.log(String(castName(n, isTypeElementLie).pos));`)
+		var refused *Refused
+		if want := "main.ts:17:29: Adamic 0.1 refuses optional property name in Positioned absent from structural source Node, which can hide fields; declare name on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"; !errors.As(err, &refused) || !strings.HasSuffix(refused.Error(), want) {
+			t.Fatalf("got %v, want a refusal ending %q", err, want)
+		}
+	})
 }
 
 // A generic argument narrows to T & S, which concretes to the instance's own intersection. At T = Node,
