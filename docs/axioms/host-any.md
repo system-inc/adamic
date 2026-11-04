@@ -23,7 +23,7 @@ Lowering admits a Node member only when it's registered with a real lowering and
 
 The registered set at `dc8a6497` is 99 names (the console registry's three plus `RegisterNodeLibraryMembers` in library_node.go, library_node_fs_buffer.go, library_node_fs_directory.go, library_node_fs_file.go, library_node_host.go and library_node_process.go). Two more are bound by name without registration, both read only on `process.stdout`: `node:tty.WriteStream.isTTY` and `node:tty.WriteStream.columns` (library_node_host.go). Each `any` was joined to its member by the name `nodeLibraryMember` builds for its declaration.
 
-**Value-carrying `any`s inside a registered or bound member: none.** So this audit has no Modelled entries yet, and the relation walk's host list is empty.
+**Value-carrying `any`s inside a registered or bound member: none.** The two global require forms below are now Modelled as `never`: their calls throw instead of handing a value to the program. Their form-scoped entry does not exempt the declaration's `any` from the walk.
 
 ## Corrected
 
@@ -31,7 +31,13 @@ None for `any`. Host corrections that only add truth live in internal/load/host_
 
 ## Modelled
 
-None. A registered member whose declared type carries a value-carrying `any` gets an entry here before it's registered: the call, the lowering rule that supplies the real type, its adapter's argument and result checks, and a pin that goes red with the rule removed (library-any.md's standing rule, from M3). Language attacks it before it lands.
+| Declaration | Where | Polarity | Forms | Modelled type | Rule | Fixtures and divergences | Ruling |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `require(id): any` | module.d.ts:707 | Out | One literal source-map-support argument (string or no-substitution template), after parentheses, assertions and non-nulls<br>One module path computed at run time, with no spread | `never` | `nodeCommonJSRequireThrows` and `nodeCommonJSRequireValue` in internal/lower/library_node_commonjs.go; the call throws MODULE_NOT_FOUND or Diagnostics' named Error and never completes | internal/lower/testdata/commonjs_reasons/source-map-support.ts, internal/lower/testdata/commonjs_reasons/source-map-support-install.ts and internal/lower/testdata/commonjs_reasons/computed.ts; internal/oracle/testdata/node_commonjs_require_missing.a, internal/oracle/testdata/node_commonjs_require_missing_uncaught.a, internal/oracle/testdata/node_commonjs_require_computed.a and internal/oracle/testdata/node_commonjs_require_computed_uncaught.a; installed-layout and no-javascript-plugins in internal/oracle/backend_divergences_test.go; TestInstalledLayoutIsNodes in internal/oracle/installed_layout_test.go | @system_adamic on #redxes2, November 3, 2026 |
+
+A table with a Forms column is form-scoped. Its locations never enter the walk's declaration-wide allow-list, even when a Forms cell is empty. Every other require stays counted, including module.require. A declaration-wide Modelled table omits Forms.
+
+A registered member whose declared type carries a value-carrying `any` gets an entry here before it's registered: the call, the lowering rule that supplies the real type, its adapter's argument and result checks, and a pin that goes red with the rule removed (library-any.md's standing rule, from M3). Language attacks it before it lands.
 
 ## Registered members whose `any` carries no value
 
@@ -65,18 +71,18 @@ Every value-carrying `any` in an unregistered member, by declaring module. Each 
 | node:abortcontroller, node:domain, node:globals, node:storage, node:wasi, undici-types/diagnostics-channel, undici-types/dispatcher, undici-types/errors, undici-types/mock-interceptor | 1 each |
 | **Total** | **345** |
 
-Twelve of them are reachable as globals when a program uses Node's types without an import, and they are counted the same way, since their symbols are declared in the bundle and none is registered:
+Twelve of them are reachable as globals when a program uses Node's types without an import. Apart from the two Modelled global require forms, they are counted the same way, since their symbols are declared in the bundle and none is registered:
 
 | Global | Where | Polarity |
 | --- | --- | --- |
 | `module.exports` | module.d.ts:652 | Both |
-| `module.require(id): any`, `require(id): any` | module.d.ts:700, :707 | Out |
+| `module.require(id): any` | module.d.ts:700 | Out |
 | `performance.toJSON(): any` | perf_hooks.d.ts:116 | Out |
 | `process.on`, `once`, `off`, `addListener`, `prependListener`, `prependOnceListener`, `removeListener` and `listenerCount`: the listener's `...args` | process.d.ts:2102 to :2146 | Out |
 
 ## The list the walk reads
 
-The relation walk's host list is the Modelled section's ids, and today it's empty. The walk carries no host exemption of its own, so every host `any` it meets is counted. Registering a Node member is the point where this file has to change. Before a registration whose declared type carries a value-carrying `any` lands, the `any` gets a Modelled entry with its pin, or a correction in host_axioms.json. Otherwise it stays counted, and the program fails closed at the relation.
+Global require's other forms remain counted at module.d.ts:707. The relation walk's host list contains only declaration-wide Modelled locations. The new require row has a Forms column, so it contributes no location: its `never` model belongs only to the two throwing forms, not the declaration's `any` as a whole. The walk carries no host exemption of its own, so every host `any` it meets is counted. Registering a Node member is the point where this file has to change. Before a registration whose declared type carries a value-carrying `any` lands, the `any` gets a Modelled entry with its pin, or a correction in host_axioms.json. Otherwise it stays counted, and the program fails closed at the relation.
 
 TestHostAnyAudit (internal/lower/host_any_audit_test.go) holds that rule, so nobody has to remember it. It walks every registered Node name, and the two read by name on stdout, through its declared type with this file's polarity: union and intersection members, library containers' type arguments, call results, and callback parameters. It stops at a member no registration names, since rule 800 refuses that hop by name, and the host-object view check refuses it through a program type (#8k12t4s). A value-carrying host `any` it reaches that isn't in the Modelled table fails it, naming the registration and the `any`'s file and line. At main's registrations it reaches none.
 
