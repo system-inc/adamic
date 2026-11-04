@@ -41,7 +41,8 @@ func reflectGetFixture(t *testing.T, name string) string {
 // registration of an iterator result's shape dropped, so prototype_runtime_plain.a stops natively at
 // its map entry; dynamic_slot's representation bytes read only for an object with a write order, as
 // before #rany24c, so decoded_scalar_reads.a's decoded number panics natively; directory.c's byte
-// for a status's size dropped, so that row panics.
+// for a status's size dropped, so that row panics; emptySpread's representation bytes dropped
+// (reuse.go), so undefined_spread.a's absent fields panic natively (#2ncah99).
 func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ file, stdout string }{
@@ -56,6 +57,7 @@ func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 		{"prototype_decoded.a", "1 function function true\n3 function\nfunction\nfunction true\n"},
 		{"prototype_runtime_plain.a", prototypeRuntimePlainAnswers},
 		{"decoded_scalar_reads.a", decodedScalarReadsAnswers},
+		{"undefined_spread.a", undefinedSpreadAnswers},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()
@@ -92,6 +94,18 @@ concatenated: "first"
 substring: "second"
 null: "Cannot read properties of null (reading 'code')"
 undefined: "Cannot read properties of undefined (reading 'code')"
+`
+
+// undefinedSpreadAnswers is what undefined_spread.a prints on Node.
+const undefinedSpreadAnswers = `keyed x undefined
+keyed name undefined
+static x undefined
+tagged x undefined
+tagged name string given
+copied x number 3
+copied name string p
+spread count number 2
+spread on boolean true
 `
 
 // prototypeNamesAnswers is what prototype_names.a prints on Node.
