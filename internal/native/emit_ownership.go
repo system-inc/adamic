@@ -35,12 +35,13 @@ func (e *emitter) hold(name string) {
 	e.scopes[len(e.scopes)-1] = append(e.scopes[len(e.scopes)-1], name)
 }
 
-// end releases what the statement just emitted owned.
+// end releases what the statement just emitted owned, and settles its checks' ladder after.
 func (e *emitter) end() {
 	for index := len(e.owned) - 1; index >= 0; index-- {
 		e.line("adamic_release(%s);", e.owned[index])
 	}
 	e.owned = nil
+	e.settleThrows()
 }
 
 // releaseGlobals lets go of every global main declared, the last declared first, once main has run

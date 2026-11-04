@@ -13,12 +13,13 @@ func (e *emitter) phantomMember(expression ir.PhantomMember) string {
 		e.indent++
 		errorValue := e.makeError(expression.Failure)
 		e.line("adamic_thrown = adamic_retain(%s);", errorValue)
-		e.checkThrown()
+		// The error temporary only exists on the throwing path, in this branch. The check releases
+		// it as a hold, first, as it would the statement's last temporary; neither the statement's
+		// cleanup nor its ladder may name it past the branch.
+		e.owned = e.owned[:len(e.owned)-1]
+		e.checkThrown(errorValue)
 		e.indent--
 		e.line("}")
-		// The error temporary only exists on the throwing path. checkThrown has released it;
-		// normal statement cleanup must not refer to a name scoped inside that branch.
-		e.owned = e.owned[:len(e.owned)-1]
 	} else {
 		e.line("(void)%s;", value)
 	}

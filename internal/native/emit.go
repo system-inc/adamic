@@ -502,6 +502,10 @@ type emitter struct {
 	handlers   []*handler
 	outerOwned [][]string
 
+	// ladder is the checks of the statement being emitted, which may share one way out
+	// (exceptions.go), or nil where a check is written in place.
+	ladder *ladder
+
 	// function is the function being emitted, and functionDepth the scope depth its body starts at.
 	asyncSlots    map[int]int
 	asyncBorrows  map[int]bool
