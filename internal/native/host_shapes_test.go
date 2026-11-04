@@ -54,7 +54,8 @@ import (
 //     failing closed.
 //
 // A row whose shape no longer exists fails too, so the table can't rot. The JavaScript backend's
-// wrappers for a native host object are held here as well (hostShapeWrappers). Mutants:
+// wrappers for a native host object are held here as well (hostShapeWrappers), and so are the
+// runtime's entrances by which a name reaches an unknown value (hostShapeEntrances). Mutants:
 // TestHostShapesClosureMutants, run every time; and, by hand, stat_shape's sentinel dropped
 // (node_fs_file.c), so the C disagrees with its row here and stop_host_stats_method.a answers
 // natively, a row removed, so this test names its shape, and tsgo_query.a changed to lower, or to
@@ -199,6 +200,91 @@ var hostShapeWrappers = []struct {
 }{
 	{"internal/javascript/library_map_set.go", "class AdamicIterator {", "new AdamicIterator(", hostShapeRuntime + "map_set.c  iterator_shape[0]"},
 	{"internal/javascript/library_node_process.go", "class AdamicHostObject {}", "Object.setPrototypeOf(usage, AdamicHostObject.prototype)", hostShapeRuntime + "node_process.c adamic_node_memory_usage shape[0]"},
+}
+
+// hostShapeEntrances are the runtime's entrances by which a name or a key reaches a value viewed as
+// unknown: an in test, the read it narrows and a run-time key read (Adamic's ruling on #ey7aysy at
+// 23:03Z). Each must test the host predicate before a slot is consulted, every adamic_has_ or
+// adamic_dynamic_ function a runtime header declares must be one of them, so a fourth reader of a
+// value's slots by name fails here until it's guarded and listed, and the emitter must call each.
+var hostShapeEntrances = []string{"adamic_has_property", "adamic_dynamic_property", "adamic_dynamic_property_keyed"}
+
+var entranceDeclaration = regexp.MustCompile(`\b(adamic_(?:has|dynamic)_\w*)\s*\(`)
+
+// entranceProblems holds union.c, the runtime's headers and the emitter to hostShapeEntrances.
+func entranceProblems(union string, headers map[string]string, emitter string) []string {
+	var problems []string
+	tokens, err := cTokens(strings.ReplaceAll(union, "\\\n", "  "))
+	if err != nil {
+		return []string{"union.c: " + err.Error()}
+	}
+	guarded := map[string]bool{}
+	depth, scope := 0, ""
+	for index, current := range tokens {
+		switch current.text {
+		case "{":
+			if depth == 0 {
+				scope = braceScope(tokens, index)
+			}
+			depth++
+		case "}":
+			depth--
+			if depth == 0 {
+				scope = ""
+			}
+		case "host_stop", "host_object":
+			if depth > 0 && index+1 < len(tokens) && tokens[index+1].text == "(" {
+				guarded[scope] = true
+			}
+		}
+	}
+	for _, entrance := range hostShapeEntrances {
+		if !guarded[entrance] {
+			problems = append(problems, "union.c's "+entrance+" doesn't test host_stop or host_object, so a host object's slots answer through it")
+		}
+		if !strings.Contains(emitter, entrance+"(") {
+			problems = append(problems, "the emitter no longer calls "+entrance+"; hostShapeEntrances names what it calls")
+		}
+	}
+	names := make([]string, 0, len(headers))
+	for name := range headers {
+		names = append(names, name)
+	}
+	slices.Sort(names)
+	for _, name := range names {
+		for _, match := range entranceDeclaration.FindAllStringSubmatch(headers[name], -1) {
+			if !slices.Contains(hostShapeEntrances, match[1]) {
+				problems = append(problems, fmt.Sprintf("%s declares %s, a reader by name hostShapeEntrances doesn't hold: guard it with host_stop and list it", name, match[1]))
+			}
+		}
+	}
+	return problems
+}
+
+// entranceSources reads union.c, the runtime's headers and the emitter's expressions.
+func entranceSources(t *testing.T) (string, map[string]string, string) {
+	t.Helper()
+	union, err := os.ReadFile(filepath.Join("runtime", "union.c"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	paths, err := filepath.Glob(filepath.Join("runtime", "*.h"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	headers := map[string]string{}
+	for _, path := range paths {
+		text, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		headers[filepath.Base(path)] = string(text)
+	}
+	emitter, err := os.ReadFile("emit_expressions.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	return string(union), headers, string(emitter)
 }
 
 // foundShape is a shape the scanner found, under hostShapeRow's key, with what its C says.
@@ -806,6 +892,9 @@ func TestHostShapesClosure(t *testing.T) {
 	for _, problem := range hostShapeProblems(t, hostShapeTable, shapes, unclassified) {
 		t.Error(problem)
 	}
+	for _, problem := range entranceProblems(entranceSources(t)) {
+		t.Error(problem)
+	}
 }
 
 // The closure test's own mutants, run every time: a row dropped, and the test names its shape; a
@@ -848,6 +937,15 @@ func TestHostShapesClosureMutants(t *testing.T) {
 	found, refused := fileShapes("mutant.c", "static adamic_shape *grow(size_t count) { adamic_shape *shape = malloc(sizeof *shape); return shape; }\n")
 	if len(refused) != 0 || len(found) != 1 || found[0].scope != "grow" || found[0].host {
 		t.Errorf("an allocating builder wasn't found as one: %+v %q", found, refused)
+	}
+	union, headers, emitter := entranceSources(t)
+	unguarded := strings.Replace(union, "\thost_stop(value, name);\n\treturn has_property(value, name);", "\treturn has_property(value, name);", 1)
+	if unguarded == union || !mentions(entranceProblems(unguarded, headers, emitter), "adamic_has_property doesn't test") {
+		t.Errorf("an entrance unguarded went unnamed")
+	}
+	headers["mutant.h"] = "adamic_heap *adamic_dynamic_property_raw(adamic_heap *value, const char *name);\n"
+	if !mentions(entranceProblems(union, headers, emitter), "declares adamic_dynamic_property_raw") {
+		t.Errorf("a fourth reader by name went unnamed")
 	}
 	lowers := filepath.Join(t.TempDir(), "tsgo_query.a")
 	if err := os.WriteFile(lowers, []byte("console.log('lowers');\n"), 0o644); err != nil {

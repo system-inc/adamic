@@ -302,6 +302,9 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	if strings.Contains(code, "adamicDynamicGet(") {
 		code = dynamicKeyedRuntime(program) + code
 	}
+	if strings.Contains(code, "adamicDynamicHas(") || strings.Contains(code, "adamicDynamicRead(") {
+		code = dynamicHostRuntime(program) + code
+	}
 	if strings.Contains(code, "adamicUnknownKind(") {
 		code = unknownKindRuntime(program) + code
 	}
@@ -896,9 +899,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return read
 	case ir.HasProperty:
-		return "(" + quote(expression.Name) + " in " + e.value(expression.Object) + ")"
+		return "adamicDynamicHas(" + e.value(expression.Object) + ", " + quote(expression.Name) + ")"
 	case ir.DynamicProperty:
-		return "(" + e.value(expression.Object) + ")[" + quote(expression.Name) + "]"
+		return "adamicDynamicRead(" + e.value(expression.Object) + ", " + quote(expression.Name) + ")"
 	case ir.DynamicKeyedProperty:
 		return "adamicDynamicGet(" + e.value(expression.Object) + ", " + e.value(expression.Key) + ")"
 	case ir.Null:

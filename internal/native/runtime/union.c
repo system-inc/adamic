@@ -188,7 +188,25 @@ static bool array_key(const char *name, size_t *result) {
 	return true;
 }
 
-bool adamic_has_property(const adamic_heap *value, const char *name) {
+static bool host_object(const adamic_object *object);
+_Noreturn static void keyed_stop(enum adamic_dynamic_keyed_stop stop, const adamic_string *key);
+
+// host_stop is the guard at each entrance by which a name or a key reaches a value viewed as
+// unknown: an in test (adamic_has_property), a read narrowed by one (adamic_dynamic_property) and a
+// run-time key read (adamic_dynamic_property_keyed, which tests host_object itself, after its own
+// earlier stops). On a host object each stops in the runtime value form before a slot or a slot's
+// name is consulted, since the object's own names aren't Node's (Adamic's ruling on #ey7aysy at
+// 23:03Z): a Stats holds _fsFileMode and lacks isFile. An Error isn't a host object, so it answers
+// its own names on all three as Node does. host_shapes_test.go names the three entrances.
+static void host_stop(const adamic_heap *value, const char *name) {
+	if (value == NULL || value == &adamic_null || value->kind != adamic_kind_object || !host_object((const adamic_object *)value)) return;
+	adamic_string key = {{0, adamic_kind_string, 0}, strlen(name), name, 0, NULL, NULL, 0};
+	keyed_stop(adamic_dynamic_keyed_stop_runtime_value, &key);
+}
+
+// has_property answers an in test past the guard: an array's own properties are read through it, so
+// a match's index answers though the object holding it is marked host.
+static bool has_property(const adamic_heap *value, const char *name) {
 	if (value == NULL || value == &adamic_null) {
 		adamic_panic("in on null or undefined", sizeof "in on null or undefined" - 1);
 	}
@@ -226,12 +244,17 @@ bool adamic_has_property(const adamic_heap *value, const char *name) {
 		const adamic_array *array = (const adamic_array *)value;
 		size_t index;
 		if (array_key(name, &index)) return index < array->length;
-		if (array->metadata != NULL && adamic_has_property(&array->metadata->heap, name)) return true;
-		if (array->properties != NULL && adamic_has_property(&array->properties->heap, name)) return true;
+		if (array->metadata != NULL && has_property(&array->metadata->heap, name)) return true;
+		if (array->properties != NULL && has_property(&array->properties->heap, name)) return true;
 		static const char *const names[] = {"length", "at", "concat", "copyWithin", "fill", "find", "findIndex", "findLast", "findLastIndex", "lastIndexOf", "pop", "push", "reverse", "shift", "unshift", "slice", "sort", "splice", "includes", "indexOf", "join", "keys", "entries", "values", "forEach", "filter", "flat", "flatMap", "map", "every", "some", "reduce", "reduceRight", "toReversed", "toSorted", "toSpliced", "with"};
 		return object_prototype_name(name) || named(name, names, sizeof names / sizeof names[0]);
 	}
 	adamic_panic("in on an unsupported runtime value", sizeof "in on an unsupported runtime value" - 1);
+}
+
+bool adamic_has_property(const adamic_heap *value, const char *name) {
+	host_stop(value, name);
+	return has_property(value, name);
 }
 
 static adamic_heap *dynamic_slot(const adamic_object *object, size_t index) {
@@ -266,7 +289,8 @@ static adamic_heap *dynamic_slot(const adamic_object *object, size_t index) {
 	adamic_panic("dynamic read of a host scalar without type metadata", sizeof "dynamic read of a host scalar without type metadata" - 1);
 }
 
-adamic_heap *adamic_dynamic_property(adamic_heap *value, const char *name) {
+// dynamic_property is a narrowed read past the guard, as has_property is an in test.
+static adamic_heap *dynamic_property(adamic_heap *value, const char *name) {
 	if (value != NULL && value->kind == adamic_kind_closure && strcmp(name, "length") == 0) {
 		return adamic_box_number((double)((adamic_closure *)value)->source_length);
 	}
@@ -295,10 +319,15 @@ adamic_heap *adamic_dynamic_property(adamic_heap *value, const char *name) {
 				if (strcmp(name, array->metadata->shape->names[index]) == 0) return dynamic_slot(array->metadata, index);
 			}
 		}
-		if (array->properties != NULL) return adamic_dynamic_property(&array->properties->heap, name);
+		if (array->properties != NULL) return dynamic_property(&array->properties->heap, name);
 		return NULL;
 	}
 	adamic_panic("dynamic property read on an unsupported runtime value", sizeof "dynamic property read on an unsupported runtime value" - 1);
+}
+
+adamic_heap *adamic_dynamic_property(adamic_heap *value, const char *name) {
+	host_stop(value, name);
+	return dynamic_property(value, name);
 }
 
 // A run-time key is any string, a slice, a view or one with bytes of its own, so it's compared with a

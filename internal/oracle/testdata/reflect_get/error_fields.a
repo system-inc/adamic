@@ -2,13 +2,19 @@
 // carve-out from #ey7aysy's host stop, on both backends, since stage3's adapters read caught errors
 // through this propertyOf. A caught fs error's code and message, and a thrown Error's message and
 // name. A key that isn't an Error's own field reads undefined on each, as on Node, so the carve-out
-// can't hand out a field the runtime adds later (Language's condition on #ey7aysy).
+// can't hand out a field the runtime adds later (Language's condition on #ey7aysy). The carve-out
+// holds for an in test and the read it narrows too (Adamic's ruling on #ey7aysy at 23:03Z): each
+// error's names answer in as Node's do, and errorCode, tsc's helper shape, reads a caught code.
 import { readFileSync } from 'node:fs';
-import { propertyOf } from './hostErrors.ts';
+import { errorCode, propertyOf } from './hostErrors.ts';
 
 function show(label: string, value: unknown): void {
 	if (typeof value === 'string') console.log(`${label}: "${value}"`);
 	else console.log(`${label}: ${typeof value}`);
+}
+
+function has(value: unknown, key: string): string {
+	return typeof value === 'object' && value !== null && key in value ? 'yes' : 'no';
 }
 
 try {
@@ -17,6 +23,8 @@ try {
 	show('code', propertyOf(error, 'code'));
 	show('message', propertyOf(error, 'message'));
 	show('caught foo', propertyOf(error, 'foo'));
+	console.log(`caught in: code ${has(error, 'code')} message ${has(error, 'message')} foo ${has(error, 'foo')}`);
+	show('errorCode', errorCode(error));
 }
 try {
 	throw new Error('thrown');
@@ -24,4 +32,5 @@ try {
 	show('thrown', propertyOf(error, 'message'));
 	show('name', propertyOf(error, 'name'));
 	show('thrown foo', propertyOf(error, 'foo'));
+	console.log(`thrown in: message ${has(error, 'message')} name ${has(error, 'name')} foo ${has(error, 'foo')}`);
 }
