@@ -151,9 +151,9 @@ static adamic_object *emptied(size_t slot) {
     return thrown;
 }
 int main(void) {
-    adamic_array *one = adamic_array_new(1, false);
+    adamic_array *one = adamic_array_make(1, adamic_ir_Number);
     adamic_array_push(one, (adamic_value){.number = 0});
-    adamic_array *none = adamic_array_new(0, false);
+    adamic_array *none = adamic_array_make(0, adamic_ir_Number);
     adamic_fs_file_read_file(&nul, &read_flag); show(take());
     adamic_fs_file_open(&file, &bad_flag, 0666); show(take());
     adamic_fs_file_read_sync(0, one, 0, 1, 1.5); show(take());
