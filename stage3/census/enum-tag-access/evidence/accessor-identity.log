@@ -1,0 +1,21 @@
+{
+  "unique_sites": 4,
+  "base_open_sites": 2,
+  "by_name": {
+    "pos": 4
+  },
+  "by_stage": {
+    "code_between": 4
+  },
+  "name_stage": [
+    {
+      "name": "pos",
+      "stage": "code_between",
+      "sites": 4
+    }
+  ],
+  "selected_files": 37,
+  "matched_findings": 3642,
+  "canonical_findings_sha256": "9416bd92ae23cb9250fce8f024b6fd72d2162e9c1a471cc83fa0afe97c41b615",
+  "method": "Complete program, original refusal scans for files with head open-tag sites; unit lowering omitted; selected scan findings canonically byte-identical to original head."
+}

@@ -1,0 +1,43 @@
+{
+  "base_open": 1006,
+  "head_open": 987,
+  "open_outcomes": {
+    "unchanged": 932,
+    "no finding": 74
+  },
+  "base_totals": {
+    "NotYet": 559,
+    "Refused": 4036
+  },
+  "head_totals": {
+    "NotYet": 559,
+    "Refused": 4017
+  },
+  "moved_units": 0,
+  "unit_regressions": 0,
+  "newly_observed_sites": 54,
+  "timing": {
+    "base": {
+      "wall_seconds": 572.126311085,
+      "cpu_seconds": 660.7895280000015
+    },
+    "head": {
+      "wall_seconds": 539.507428975,
+      "cpu_seconds": 628.5839620000028
+    }
+  },
+  "first_observed_stop_changes": 7,
+  "site_regressions": 54,
+  "new_open_findings": 55,
+  "unit_status": {
+    "base": {
+      "attempted": 4056,
+      "deferred_generic_instantiation": 498
+    },
+    "head": {
+      "attempted": 4056,
+      "deferred_generic_instantiation": 498
+    }
+  },
+  "instantiation_witness_changes": 0
+}

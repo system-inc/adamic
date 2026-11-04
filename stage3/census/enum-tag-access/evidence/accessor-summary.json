@@ -1,0 +1,73 @@
+{
+  "unique_sites": 4,
+  "base_open_sites": 2,
+  "by_name": {
+    "pos": 4
+  },
+  "by_stage": {
+    "code_between": 4
+  },
+  "name_stage": [
+    {
+      "name": "pos",
+      "stage": "code_between",
+      "sites": 4
+    }
+  ],
+  "sites": [
+    "src/compiler/utilities.ts:11916:47",
+    "src/compiler/utilities.ts:11916:64",
+    "src/compiler/utilities.ts:11917:47",
+    "src/compiler/utilities.ts:11917:64"
+  ],
+  "trace": [
+    {
+      "diagnostic_end": 492683,
+      "diagnostic_kind": "KindPropertyAccessExpression",
+      "diagnostic_start": 492661,
+      "name": "pos",
+      "phase": "refusal_scan",
+      "reference_where": "src/compiler/utilities.ts:11916:47",
+      "stage": "code_between",
+      "unit": "src/compiler/utilities.ts:11494:1",
+      "where": "src/compiler/utilities.ts:11916:47"
+    },
+    {
+      "diagnostic_end": 492683,
+      "diagnostic_kind": "KindIdentifier",
+      "diagnostic_start": 492679,
+      "name": "pos",
+      "phase": "refusal_scan",
+      "reference_where": "src/compiler/utilities.ts:11916:47",
+      "stage": "code_between",
+      "unit": "src/compiler/utilities.ts:11494:1",
+      "where": "src/compiler/utilities.ts:11916:64"
+    },
+    {
+      "diagnostic_end": 492756,
+      "diagnostic_kind": "KindPropertyAccessExpression",
+      "diagnostic_start": 492734,
+      "name": "pos",
+      "phase": "refusal_scan",
+      "reference_where": "src/compiler/utilities.ts:11917:47",
+      "stage": "code_between",
+      "unit": "src/compiler/utilities.ts:11494:1",
+      "where": "src/compiler/utilities.ts:11917:47"
+    },
+    {
+      "diagnostic_end": 492756,
+      "diagnostic_kind": "KindIdentifier",
+      "diagnostic_start": 492752,
+      "name": "pos",
+      "phase": "refusal_scan",
+      "reference_where": "src/compiler/utilities.ts:11917:47",
+      "stage": "code_between",
+      "unit": "src/compiler/utilities.ts:11494:1",
+      "where": "src/compiler/utilities.ts:11917:64"
+    }
+  ],
+  "selected_files": 37,
+  "matched_findings": 3642,
+  "canonical_findings_sha256": "9416bd92ae23cb9250fce8f024b6fd72d2162e9c1a471cc83fa0afe97c41b615",
+  "method": "Complete program, original refusal scans for files with head open-tag sites; unit lowering omitted; selected scan findings canonically byte-identical to original head."
+}
