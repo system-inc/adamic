@@ -1,0 +1,15 @@
+[
+  {
+    "name": "control-apply",
+    "command": [
+      "bash",
+      "stage3/apply.sh",
+      "/workspace/scratch/crypto-scoped-proof/main"
+    ],
+    "cwd": "/workspace/scratch/crypto-import-scoped",
+    "exit": 0,
+    "seconds": 269.17,
+    "limit": 1800,
+    "minFreeBytes": 19125903360
+  }
+]
