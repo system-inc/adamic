@@ -1,0 +1,9 @@
+// A host object stops for every key (#ey7aysy): a Dirent's isFile is Dirent.prototype's method on
+// Node, and native's Dirent shape holds its name and type. Node prints function.
+import * as fs from 'node:fs';
+import { propertyOf } from './hostErrors.ts';
+
+const entries = fs.readdirSync('.', { withFileTypes: true });
+console.log(`entries ${entries.length > 0}`);
+const value = propertyOf(entries[0], 'isFile');
+console.log(typeof value);
