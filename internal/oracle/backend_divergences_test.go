@@ -78,6 +78,26 @@ var ruledBackendDivergences = []struct {
 		native:     run{stdout: []byte("before\nresolving first\ncaught: " + noJavaScriptPlugins("./first.js") + "\nresolving plugin\n"), stderr: []byte("adamic: panic: Error: " + noJavaScriptPlugins("./plugin.js") + "\n"), exitCode: 70},
 		javascript: run{stdout: []byte("before\nresolving first\ncaught: " + noJavaScriptPlugins("./first.js") + "\nresolving plugin\n"), stderr: []byte("adamic: panic: Error: " + noJavaScriptPlugins("./plugin.js") + "\n"), exitCode: 70},
 	},
+	// tsc's own forms, sys.ts:1597's cast and 1619's return, which the host audit's Modelled row lets
+	// past the cast and any-relation rules (#3sh9398).
+	{
+		fixture:    "internal/oracle/testdata/node_commonjs_require_missing_cast.a",
+		name:       "installed-layout",
+		ruling:     "@system_adamic, task #redxes2, Nov 3",
+		reason:     installedLayoutReason,
+		node:       &run{stdout: []byte("ReferenceError none require is not defined\nafter\n")},
+		native:     run{stdout: []byte(installedLayoutName + " " + installedLayoutCode + " " + installedLayoutMessage + "\nafter\n")},
+		javascript: run{stdout: []byte(installedLayoutName + " " + installedLayoutCode + " " + installedLayoutMessage + "\nafter\n")},
+	},
+	{
+		fixture:    "internal/oracle/testdata/node_commonjs_require_computed_return.a",
+		name:       "no-javascript-plugins",
+		ruling:     "@system_adamic, task #redxes2, Nov 3",
+		reason:     noJavaScriptPluginsReason,
+		node:       &run{stdout: []byte("failed: require is not defined\nafter\n")},
+		native:     run{stdout: []byte("failed: " + noJavaScriptPlugins("./plugin.js") + "\nafter\n")},
+		javascript: run{stdout: []byte("failed: " + noJavaScriptPlugins("./plugin.js") + "\nafter\n")},
+	},
 }
 
 // The two rows' reasons, one per row, shared by its fixtures.
@@ -145,6 +165,8 @@ func init() {
 		"internal/oracle/testdata/node_commonjs_require_missing_uncaught.a",
 		"internal/oracle/testdata/node_commonjs_require_computed.a",
 		"internal/oracle/testdata/node_commonjs_require_computed_uncaught.a",
+		"internal/oracle/testdata/node_commonjs_require_missing_cast.a",
+		"internal/oracle/testdata/node_commonjs_require_computed_return.a",
 	} {
 		fixtures = append(fixtures, struct {
 			path    string
