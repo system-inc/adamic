@@ -1,0 +1,12 @@
+// A throw after one yield, out of Array.from at the top level: nothing after it prints (Diagnostics'
+// must 1, for Array.from).
+function* each(values: number[]) {
+    for(const value of values) {
+        if(value === 2) {
+            throw new Error(`bad ${String(value)}`);
+        }
+        yield value;
+    }
+}
+console.log(Array.from(each([1, 2, 3])).join(','));
+console.log('after');

@@ -25,9 +25,10 @@ func TestGeneratorFormsThisSliceDoesntLowerAreNotYet(t *testing.T) {
 		{"passed as an argument", numbers + "function take(source: object): number { return source === undefined ? 0 : 1; } console.log(String(take(numbers(2))));", "used other than by a for-of"},
 		{"returned", numbers + "function make(): Generator<number, undefined, undefined> { return numbers(2); } for (const value of make()) { console.log(String(value)); }", "used other than by a for-of"},
 		{"put in an array", numbers + "const all = [numbers(1), numbers(2)]; console.log(String(all.length));", "used other than by a for-of"},
-		{"spread", numbers + "console.log([...numbers(3)].join(','));", "spread, Array.from or destructuring"},
-		{"Array.from", numbers + "console.log(Array.from(numbers(3)).join(','));", "spread, Array.from or destructuring"},
-		{"destructured", numbers + "const [first] = numbers(3); console.log(String(first));", "spread, Array.from or destructuring"},
+		{"Array.from with a mapper", numbers + "console.log(Array.from(numbers(3), (value: number): number => value * 2).join(','));", "Array.from with a mapper"},
+		{"new Set", numbers + "console.log(String(new Set(numbers(3)).size));", "consumed by new Set"},
+		{"destructured", numbers + "const [first] = numbers(3); console.log(String(first));", "consumed by destructuring"},
+		{"spread inside a generator", numbers + "function* outer(): Generator<number, undefined, undefined> { const all = [...numbers(2)]; yield all.length; } for (const value of outer()) { console.log(String(value)); }", "inside an async function or a generator"},
 		{"read through a view", numbers + "const view: Iterable<number> = numbers(2); for (const value of view) { console.log(String(value)); }", "used other than by a for-of"},
 		{"the function as a value", numbers + "const make = numbers; for (const value of make(2)) { console.log(String(value)); }", "used as a value"},
 		{"a generator expression", "const make = function* (): Generator<number, void, undefined> { yield 1; }; for (const value of make()) { console.log(String(value)); }", "a generator function"},
@@ -41,7 +42,7 @@ func TestGeneratorFormsThisSliceDoesntLowerAreNotYet(t *testing.T) {
 		{"a closure over a parameter", "function* scaled(by: number): Generator<number, void, undefined> { const times = (value: number): number => value * by; yield times(2); } for (const value of scaled(3)) { console.log(String(value)); }", "a closure captures"},
 		{"returning a value", "function* finished(): Generator<number, string, undefined> { yield 1; return 'end'; } for (const value of finished()) { console.log(String(value)); }", "returning a value"},
 		{"a defaulted parameter", "function* from(start = 1): Generator<number, void, undefined> { yield start; } for (const value of from()) { console.log(String(value)); }", "plain required name"},
-		{"a declared SetIterator", "function* each(): SetIterator<number> { yield 1; } for (const value of each()) { console.log(String(value)); }", "declared to return"},
+		{"a declared ArrayIterator", "function* each(): ArrayIterator<number> { yield 1; } for (const value of each()) { console.log(String(value)); }", "declared to return"},
 		{"a union yield", "function* mixed(): Generator<number | string, void, undefined> { yield 1; yield 'a'; } for (const value of mixed()) { console.log(String(value)); }", "one present slot"},
 		{"consumed inside a generator", numbers + "function* outer(): Generator<number, void, undefined> { for (const value of numbers(2)) { yield value; } } for (const value of outer()) { console.log(String(value)); }", "inside an async function or a generator"},
 		{"consumed inside an async function", numbers + "async function run(): Promise<void> { for (const value of numbers(2)) { console.log(String(value)); } } await run();", "inside an async function or a generator"},
@@ -131,5 +132,35 @@ func TestGeneratorRoadsBackstopFailsOnAStoredGenerator(t *testing.T) {
 	program.Main = append(program.Main, ir.Declare{Local: local, Value: call})
 	if err := checkGeneratorRoads(program); err == nil {
 		t.Fatal("a generator call stored in an ordinary local passed the backstop")
+	}
+}
+
+// A plain function* infers Generator<T, void, unknown>, whose void is only its last value. A spread and
+// Array.from step it to its end and never read that value, so the void rules let them through
+// (generatorStepped), and a destructuring, which this slice doesn't lower, is still refused by
+// adamic/no-void-read as before. Mutant: generatorStepped's call taken out of refuseVoidContainerRead;
+// the spread row reads Refused (as a spread). Taken out of refuseVoidWidening; the Array.from row
+// reads Refused (seen as any).
+func TestGeneratorVoidReturnIsNeverReadBySpreadOrArrayFrom(t *testing.T) {
+	t.Parallel()
+	const plain = "function* numbers(limit: number) { for (let index = 0; index < limit; index++) { yield index; } }\n"
+	for _, source := range []string{
+		plain + "console.log([...numbers(3)].join(','));",
+		plain + "console.log([0, ...numbers(2)].join(','));",
+		plain + "console.log(Array.from(numbers(3)).join(','));",
+	} {
+		if _, err := lowerSource(t, source); err != nil {
+			t.Errorf("%s: %v", source, err)
+		}
+	}
+	_, err := lowerSource(t, plain+"const [first] = numbers(3); console.log(String(first));")
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.Contains(refused.Error(), "adamic/no-void-read") {
+		t.Errorf("destructuring a plain function*: got %v, want adamic/no-void-read's refusal", err)
+	}
+	// A yielded type that holds void is read by every step, so the rules still judge it.
+	_, err = lowerSource(t, "function* voids(): Generator<void[], void, undefined> { yield []; }\nconsole.log(String([...voids()].length));")
+	if !errors.As(err, &refused) {
+		t.Errorf("spreading a generator of void[]: got %v, want a void rule's refusal", err)
 	}
 }

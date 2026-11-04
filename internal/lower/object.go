@@ -266,7 +266,11 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 		if !known || declared != element {
 			for _, item := range items {
 				if item.Kind == ast.KindSpreadElement {
-					if plan, err := l.planIteration(item.AsSpreadElement().Expression); err != nil {
+					if function, isGenerator := l.generatorCallee(item.AsSpreadElement().Expression); isGenerator {
+						if l.result.Functions[function].Yields != declared {
+							return nil, l.generatorNotYet(item, "spread into an array held differently from what it yields")
+						}
+					} else if plan, err := l.planIteration(item.AsSpreadElement().Expression); err != nil {
 						return nil, err
 					} else if plan != nil {
 						return nil, l.notYet(node, "a custom spread whose element representation differs from its destination")

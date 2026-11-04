@@ -1,0 +1,18 @@
+// A throw before any yield, at the frame's first step, read by Array.from in a try (Diagnostics'
+// must 3 on #qk8rztp): the error leaves the frame for the caller, and the frame is finished. String
+// of an Error doesn't lower yet, so it prints the two String would join.
+function* counted(limit: number) {
+    if(limit > 0) {
+        throw new RangeError(`n ${String(limit)}`);
+    }
+    yield limit;
+}
+try {
+    console.log(Array.from(counted(1)).join(','));
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(`${error.name}: ${error.message}`);
+    }
+}
+console.log(Array.from(counted(0)).join(','));
