@@ -136,6 +136,11 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	if l.phantomCast(source, target) {
 		return castProof{}, nil
 	}
+	// A value the host audit models as never is never had, so its cast has nothing to check, whatever
+	// the operand's declared any says (host-any.md's Modelled rows).
+	if l.hostModelledNever(as.Expression) {
+		return castProof{}, nil
+	}
 	refused := &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: l.castRepair(node)}
 	inner := ast.SkipParentheses(as.Expression)
 	if inner.Kind == ast.KindAsExpression && l.checker.GetTypeAtLocation(inner).Flags()&checker.TypeFlagsUnknown != 0 {

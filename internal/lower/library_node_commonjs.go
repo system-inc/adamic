@@ -2,6 +2,7 @@ package lower
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
@@ -121,7 +122,9 @@ func (l *lowering) nodeCommonJSRequireRoot(node *ast.Node) *ast.Node {
 // first line of its message (host_require_missing). A computed require evaluates its argument, then
 // throws an Error naming the path. Either way the value is never had: as a statement it's
 // undefined, as gc's call is, and anywhere else a placeholder of the value's type that the throw
-// keeps from being read.
+// keeps from being read. A value typed with require's own any has no type to hold, so its placeholder
+// is held as the slot it's written into holds it (sys.ts:1619's `module: require(modulePath)`), and
+// with no such slot it's NotYet as before.
 func (l *lowering) nodeCommonJSRequireValue(node *ast.Node) (ir.Expression, bool, error) {
 	call := l.nodeCommonJSRequireRoot(node)
 	if call == nil {
@@ -129,9 +132,18 @@ func (l *lowering) nodeCommonJSRequireValue(node *ast.Node) (ir.Expression, bool
 	}
 	effects := ir.Effects{Result: ir.Undefined{}}
 	if outer := nodeGlobalsOuter(node); outer.Parent == nil || outer.Parent.Kind != ast.KindExpressionStatement {
-		of, err := l.typeOf(node)
-		if err != nil {
-			return nil, true, err
+		var of ir.Type
+		if slot := l.slotType(node); slot != nil && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsAny != 0 {
+			if held, known := l.representation(slot); known && held != ir.Weak {
+				of = held
+			}
+		}
+		if of == 0 {
+			typed, err := l.typeOf(node)
+			if err != nil {
+				return nil, true, err
+			}
+			of = typed
 		}
 		effects.Result = placeholderZero(of)
 	}
