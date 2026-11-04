@@ -1,0 +1,5 @@
+import { fill, later } from './n05_module_binding/back.a';
+if (later === undefined) {
+  fill();
+  console.log(String(later));
+}
