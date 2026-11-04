@@ -60,7 +60,7 @@ func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 		{"decoded_scalar_reads.a", decodedScalarReadsAnswers},
 		{"undefined_spread.a", undefinedSpreadAnswers},
 		{"spread_plain.a", "constructor function\ngiven x number constructor function\nwidth number constructor function\n"},
-		{"error_fields.a", "code: \"ENOENT\"\nmessage: \"ENOENT: no such file or directory, open '/nonexistent-adamic-reflect-get/file'\"\ncaught foo: undefined\ncaught in: code yes message yes foo no\nerrorCode: \"ENOENT\"\nthrown: \"thrown\"\nname: \"Error\"\nthrown foo: undefined\nthrown in: message yes name yes foo no\n"},
+		{"error_fields.a", "code: \"ENOENT\"\nmessage: \"ENOENT: no such file or directory, open '/nonexistent-adamic-reflect-get/file'\"\ncaught foo: undefined\ncaught in: code yes message yes foo no\nerrorCode: \"ENOENT\"\ncoded code: \"ERR_INVALID_ARG_VALUE\"\ncoded name: \"TypeError\"\ncoded foo: undefined\ncoded in: code yes message yes foo no\nthrown: \"thrown\"\nname: \"Error\"\nthrown foo: undefined\nthrown in: message yes name yes foo no\n"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()
