@@ -23,11 +23,14 @@ import (
 // (g04), and one written above still stops when it only runs after the let (g05, undefined on both
 // backends where Node prints 4). A function exported by an export list after the class, under another
 // name (e01, with e01_class_exported_by_list/back calling it), stops when the code before the class
-// makes any call, as one with the export modifier does.
+// makes any call, as one with the export modifier does. An instance field's initializer runs when its
+// class is made, so a class named there stops when that class is made before the named one's
+// declaration (c10, where all three backends printed late where Node throws), and lowers and agrees
+// when it's made only after (c11).
 // Mutants: classDeadZoneGap returning nil lowers c01; the logical assignment's module-binding stop
 // dropped lowers g01; mayRunBefore without the class's own running parts turns c05 to c08 red; the
 // may-run-before logical assignment stop dropped lowers g04; the export read from the modifier alone
-// lowers e01.
+// lowers e01; holdingStatement not counting an instance field's initializer lowers c10.
 func TestDeadZoneStopsArePinned(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/dead_zone_stops"
@@ -78,7 +81,7 @@ func TestDeadZoneStopsArePinned(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 30 {
-		t.Fatalf("found %d programs, want 30", programs)
+	if programs != 34 {
+		t.Fatalf("found %d programs, want 34", programs)
 	}
 }

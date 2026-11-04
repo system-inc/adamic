@@ -9,7 +9,8 @@ import (
 // Stage 0 gives a class no readiness: its constructor is static code, so new Late() inside a function
 // works whenever the function runs, and a call that runs before class Late { } is reached prints what
 // Node refuses. tsc rejects a use before the declaration at the module's own top level (TS2449), so
-// the road is a function, a method or an arrow holding the reference that runs before the declaration.
+// the road is a function, a method, an arrow or an instance field's initializer (holdingStatement)
+// holding the reference that runs before the declaration.
 // It can only run then if the code before the binding is initialized can reach it, so a reference is
 // not yet exactly when mayRunBefore says the top-level statement holding it may run before the class's
 // declaration. A reference inside the class's own body can't run before its binding is ready: the
@@ -41,11 +42,17 @@ func (l *lowering) classDeadZoneGap(node *ast.Node) error {
 func init() { refusalRules.register(2050, "classDeadZoneGap", (*lowering).classDeadZoneGap) }
 
 // holdingStatement is the top-level statement holding node, and whether node sits inside a function,
-// method or arrow there, so it runs when that is called rather than when the statement is reached.
+// method or arrow there, or in an instance field's initializer, which runs as its class's constructor
+// does, so it runs when that is called or made rather than when the statement is reached. A static
+// field's initializer runs with its class's definition, so it doesn't count (and tsc rejects a class
+// used there before its declaration, TS2449).
 func holdingStatement(node *ast.Node) (*ast.Node, bool) {
 	inFunction := false
 	for at := node; at.Parent != nil; at = at.Parent {
 		if ast.IsFunctionLike(at) {
+			inFunction = true
+		}
+		if at.Parent.Kind == ast.KindPropertyDeclaration && at.Parent.AsPropertyDeclaration().Initializer == at && !ast.HasStaticModifier(at.Parent) {
 			inFunction = true
 		}
 		if at.Parent.Kind == ast.KindSourceFile {
