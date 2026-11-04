@@ -128,6 +128,14 @@ static void reentering_resume(adamic_generator *generator, adamic_value *yielded
 }
 static const adamic_generator_code reentering = {"reentering", reentering_resume};
 
+/* return() called on a generator while its own body runs: the panic names the verb called. */
+static void returning_resume(adamic_generator *generator, adamic_value *yielded) {
+    (void)yielded;
+    adamic_generator_return(generator);
+    assert(!"a running generator returned");
+}
+static const adamic_generator_code returning = {"returning", returning_resume};
+
 int main(int argc, char **argv) {
     assert(argc == 2);
     const char *mode = argv[1];
@@ -207,6 +215,10 @@ int main(int argc, char **argv) {
         adamic_generator *generator = adamic_generator_new(0, &reentering);
         (void)adamic_generator_next(generator);
         assert(!"reentrant next returned");
+    } else if (strcmp(mode, "returning") == 0) {
+        adamic_generator *generator = adamic_generator_new(0, &returning);
+        (void)adamic_generator_next(generator);
+        assert(!"returning next returned");
     } else {
         assert(!"unknown mode");
     }

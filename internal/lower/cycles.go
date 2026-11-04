@@ -625,6 +625,10 @@ func (f *cycleFinder) reachLinks(node cycleNode) []cycleNode {
 	}
 	switch {
 	case f.l.isLibraryType(proven, "MapIterator", "SetIterator"):
+		// A type can't say whether it's a collection's iterator or a generator declared as one. No
+		// slot this walks holds a generator's call while generators aren't values (#qk8rztp S1,
+		// TestNoSlotTheIteratorArmWalksHoldsAGenerator); once one can, this arm must add the frame's
+		// links too (Lower, q6).
 		links = append(links, f.libraryIteratorCaptures(proven)...)
 	case f.isFunction(proven):
 		// Construct signatures can hide constructor objects behind an interface.

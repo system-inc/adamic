@@ -89,9 +89,9 @@ func generatorRuntimeGuard(t *testing.T, mode, want, old, replacement, diagnosti
 			t.Logf("%s mutant caught by %s: %s", mode, diagnostic, firstSanitizerLine(output))
 			continue
 		}
-		if mode == "reentrant" {
-			if exit != 70 || !strings.Contains(stderr.String(), "adamic: panic: compiler bug: reentering resumed while running") {
-				t.Fatalf("reentrant: %v\n%s", err, output)
+		if panic, panics := runningPanics[mode]; panics {
+			if exit != 70 || !strings.Contains(stderr.String(), panic) {
+				t.Fatalf("%s: %v\n%s", mode, err, output)
 			}
 			continue
 		}
@@ -156,9 +156,23 @@ func TestGeneratorRuntimeDropError(t *testing.T) {
 	generatorRuntimeGuard(t, "drop_error", "1\n", "if (generator->error != NULL) { drop(generator->error); }", "(void)0;", "heap values leaked")
 }
 
+// runningPanics is what each mode that calls into a running generator must panic with: the
+// compiler-bug stop names the generator and the verb it was called with.
+var runningPanics = map[string]string{
+	"reentrant": "adamic: panic: compiler bug: reentering resumed while running",
+	"returning": "adamic: panic: compiler bug: returning returned while running",
+}
+
 func TestGeneratorRuntimeReentrant(t *testing.T) {
 	t.Parallel()
 	generatorRuntimeGuard(t, "reentrant", "", "", "", "")
+}
+
+// return() on a running generator names return (Diagnostics' should 6 on #qk8rztp). Mutant, run by
+// hand on generator.c: the return arm's word put back to "resumed"; this mode goes red on the text.
+func TestGeneratorRuntimeReturnWhileRunning(t *testing.T) {
+	t.Parallel()
+	generatorRuntimeGuard(t, "returning", "", "", "", "")
 }
 
 func TestGeneratorRuntimeInitialize(t *testing.T) {
