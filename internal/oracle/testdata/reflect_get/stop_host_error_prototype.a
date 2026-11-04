@@ -1,0 +1,9 @@
+// An Error's own fields answer a run-time key read (error_fields.a), but Error.prototype isn't
+// Object's, so an Object.prototype name stops on an Error the runtime made, whose shape is marked
+// host (#ey7aysy). Node prints function.
+import { propertyOf } from './hostErrors.ts';
+
+const error = new Error('made');
+console.log(`error ${error.message}`);
+const value = propertyOf(error, 'valueOf');
+console.log(typeof value);
