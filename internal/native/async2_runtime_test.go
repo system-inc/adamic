@@ -112,6 +112,14 @@ func TestAsync2RuntimeCanonicalOwner(t *testing.T) {
 	async2RuntimeGuard(t, "canonical", "closure.c", "\tadamic_environment *owner = canonical_owner(identity);", "\tadamic_environment *owner = (adamic_environment *)identity->owner;", "Assertion")
 }
 
+// counted_canonical() takes its owner through the same helper, and this harness doesn't define
+// ADAMIC_CLOSURE_CONVENTION, so its call site isn't built here. Mutant: the helper's check itself
+// dropped, which both callers share, and the harness's call returns.
+func TestAsync2RuntimeCanonicalOwnerHelper(t *testing.T) {
+	t.Parallel()
+	async2RuntimeGuard(t, "canonical", "closure.c", "if (identity->owner == NULL || identity->owner->kind != adamic_kind_environment) {", "if (false) {", "Assertion")
+}
+
 func TestAsync2RuntimeShare(t *testing.T) {
 	t.Parallel()
 	async2RuntimeGuard(t, "share", "share.c", "value = ((adamic_cell *)value)->owner;", "(void)heap;", "Assertion")
