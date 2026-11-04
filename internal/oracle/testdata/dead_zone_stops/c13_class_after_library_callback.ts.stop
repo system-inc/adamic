@@ -1,0 +1,1 @@
+internal/oracle/testdata/dead_zone_stops/c13_class_after_library_callback.ts:1:51: stage 0 can't lower a class used from a function that may run before the class's declaration (its temporal dead zone) yet
