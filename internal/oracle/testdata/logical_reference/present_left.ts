@@ -1,4 +1,4 @@
-// A left the checker proves present (an object, an array or a Map, never missing by its type) makes
+// A left the checker proves present (an object, an array, a Map or a record, never missing by its type) makes
 // left && right the right alone, a boolean or a number: tsc's `node && node.kind === 1`. The left is
 // still evaluated first, once (#v5k6t3k).
 interface Node {
@@ -22,8 +22,14 @@ function counted(values: number[]): number {
 function sized(table: Map<string, Node>): boolean {
 	return table && table.size > 0;
 }
+function entry(record: Record<string, string>): number {
+	return record && Object.keys(record).length + 1;
+}
 const table = new Map<string, Node>();
 table.set("a", node(4));
 console.log(String(isFirst(node(1))) + " " + String(isFirst(node(2))));
 console.log(String(kindOf(node(3))) + " " + String(counted([1, 2, 3])) + " " + String(sized(table)) + " " + String(sized(new Map<string, Node>())));
+const record: Record<string, string> = {};
+record["k" + String(reads)] = "v";
+console.log(String(entry(record)) + " " + String(entry({})));
 console.log("reads " + String(reads));
