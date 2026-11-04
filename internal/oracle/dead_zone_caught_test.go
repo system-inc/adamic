@@ -35,7 +35,25 @@ func TestDeadZoneThrowsAreCaughtAsNodes(t *testing.T) {
 			loomViewsDAgrees(t, directory+"/"+entry.Name())
 		})
 	}
-	if programs != 5 {
-		t.Fatalf("%d programs in %s, want 5: a program added or removed needs this count changed with it", programs, directory)
+	if programs != 6 {
+		t.Fatalf("%d programs in %s, want 6: a program added or removed needs this count changed with it", programs, directory)
+	}
+}
+
+// A caught dead-zone throw in the middle of an expression lets go of everything the expression
+// already held: built strings, a call's argument, a template's part. A panic never had to, so this is
+// the one test that a throw site's cleanup (the inline release or the statement's ladder,
+// internal/native/exceptions.go) frees on the way out. It agrees with Node in
+// TestDeadZoneThrowsAreCaughtAsNodes; here it must also leak nothing. Mutants: a ladder rung that
+// skips its release, and an inline site that skips its owned list; each leaks the strings it held.
+func TestDeadZoneOwnedTemporaryLetsGo(t *testing.T) {
+	t.Parallel()
+	program, err := lowered(t, repository+"/internal/oracle/testdata/dead_zone_caught/owned_temporary.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, binary := natively(t, program)
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatalf("a caught dead-zone throw leaked what its expression held: %s", report)
 	}
 }
