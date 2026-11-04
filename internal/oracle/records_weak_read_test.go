@@ -237,13 +237,13 @@ func TestWeakReadRecordPath(t *testing.T) {
 	}
 }
 
-// Lower's road hunt: each way a program might hand a record to a weak read, written as a program. A
-// road that lowers with a weak_field_read in it reaches the record path through the language, and fails
-// loudly. Every other one must stop, Refused or NotYet; this first version asserts only that it stops,
+// The road hunt: each way a program might hand a record to a weak read, written as a program, Lower's
+// list (json_parse through returned) and Language's (callback through union). A road that lowers with a
+// weak_field_read in it reaches the record path through the language, and fails loudly. Every other one must stop, Refused or NotYet; this first version asserts only that it stops,
 // and logs the stop's whole text, to be pinned exactly next.
 func TestWeakReadRoads(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"json_parse", "json_decode", "generic", "cast", "cast_unknown", "spread", "returned"} {
+	for _, name := range []string{"json_parse", "json_decode", "generic", "cast", "cast_unknown", "spread", "returned", "callback", "array_element", "array_view", "map_view", "field", "union"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			program, err := lowered(t, weakReadPath(t, filepath.Join("roads", name+".ts")))
