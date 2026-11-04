@@ -67,10 +67,10 @@ func (l *lowering) containerWhereOtherGoes(value *checker.Type, target *checker.
 			return false
 		}
 		// A map's keys and values go where the slot's go.
-		return l.pairwiseContainerWhereOtherGoes(l.checker.GetTypeArguments(value), l.checker.GetTypeArguments(target), visited)
+		return l.pairwiseContainerWhereOtherGoes(l.typeArguments(value), l.typeArguments(target), visited)
 	}
 	if (l.checker.IsArrayType(value) || checker.IsTupleType(value)) && (l.checker.IsArrayType(target) || checker.IsTupleType(target)) {
-		values, targets := l.checker.GetTypeArguments(value), l.checker.GetTypeArguments(target)
+		values, targets := l.typeArguments(value), l.typeArguments(target)
 		if l.checker.IsArrayType(target) && len(targets) == 1 {
 			// Every element of a tuple goes where the array's element goes.
 			for _, element := range values {
