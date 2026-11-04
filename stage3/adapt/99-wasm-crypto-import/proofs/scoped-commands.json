@@ -1,0 +1,192 @@
+[
+  {
+    "name": "pins",
+    "command": [
+      "node",
+      "/workspace/scratch/crypto-import-scoped/stage3/adapt/99-wasm-crypto-import/proofs/scoped-hashes.cjs",
+      "/workspace/scratch/crypto-scoped-proof/main-before.ts",
+      "/workspace/scratch/crypto-scoped-proof/main/src/compiler/sys.ts",
+      "/workspace/scratch/crypto-import-scoped/stage3/adapt/99-wasm-crypto-import/proofs/targets.json"
+    ],
+    "cwd": "/workspace/scratch/crypto-import-scoped",
+    "exit": 0,
+    "seconds": 1.001,
+    "limit": 600,
+    "minFreeBytes": 19123490816
+  },
+  {
+    "name": "apply",
+    "command": [
+      "bash",
+      "stage3/apply.sh",
+      "/workspace/scratch/crypto-scoped-proof/scoped"
+    ],
+    "cwd": "/workspace/scratch/crypto-import-scoped",
+    "exit": 0,
+    "seconds": 268.231,
+    "limit": 1800,
+    "minFreeBytes": 18203262976
+  },
+  {
+    "name": "rerun",
+    "command": [
+      "node",
+      "/workspace/scratch/crypto-import-scoped/stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+      "/workspace/scratch/crypto-scoped-proof/scoped"
+    ],
+    "cwd": "/workspace/scratch/crypto-import-scoped",
+    "exit": 0,
+    "seconds": 4.012,
+    "limit": 600,
+    "minFreeBytes": 18253594624
+  },
+  {
+    "name": "moved-owner",
+    "command": [
+      "node",
+      "/workspace/scratch/crypto-import-scoped/stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+      "/workspace/scratch/crypto-scoped-proof/scoped"
+    ],
+    "cwd": "/workspace/scratch/crypto-import-scoped",
+    "exit": 1,
+    "seconds": 2.022,
+    "limit": 600,
+    "minFreeBytes": 18253590528
+  },
+  {
+    "name": "moved-imports",
+    "command": [
+      "node",
+      "/workspace/scratch/crypto-import-scoped/stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+      "/workspace/scratch/crypto-scoped-proof/scoped"
+    ],
+    "cwd": "/workspace/scratch/crypto-import-scoped",
+    "exit": 1,
+    "seconds": 2.02,
+    "limit": 600,
+    "minFreeBytes": 18253582336
+  },
+  {
+    "name": "bindings",
+    "command": [
+      "node",
+      "/workspace/scratch/crypto-import-scoped/stage3/adapt/99-wasm-crypto-import/proofs/bindings.cjs",
+      "/workspace/scratch/crypto-scoped-proof/probe",
+      "/workspace/scratch/crypto-scoped-proof/scoped",
+      "/workspace/scratch/crypto-import-scoped/stage3/adapt/99-wasm-crypto-import/proofs/scoped-bindings.json"
+    ],
+    "cwd": "/workspace/scratch/crypto-import-scoped",
+    "exit": 0,
+    "seconds": 7.007,
+    "limit": 600,
+    "minFreeBytes": 18234998784
+  },
+  {
+    "name": "scope",
+    "command": [
+      "node",
+      "/workspace/scratch/crypto-import-scoped/stage3/adapt/99-wasm-crypto-import/proofs/check.cjs",
+      "/workspace/scratch/crypto-scoped-proof/probe",
+      "/workspace/scratch/crypto-scoped-proof/scoped",
+      "/workspace/scratch/crypto-import-scoped/stage3/adapt/99-wasm-crypto-import/proofs/scoped-checks.json"
+    ],
+    "cwd": "/workspace/scratch/crypto-import-scoped",
+    "exit": 0,
+    "seconds": 1.001,
+    "limit": 600,
+    "minFreeBytes": 18234994688
+  },
+  {
+    "name": "foreign-edit",
+    "command": [
+      "node",
+      "/workspace/scratch/crypto-import-scoped/stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+      "/workspace/scratch/crypto-scoped-proof/probe"
+    ],
+    "cwd": "/workspace/scratch/crypto-import-scoped",
+    "exit": 0,
+    "seconds": 4.008,
+    "limit": 600,
+    "minFreeBytes": 18234802176
+  },
+  {
+    "name": "span-escape",
+    "command": [
+      "node",
+      "/workspace/scratch/crypto-import-scoped/stage3/adapt/99-wasm-crypto-import/.span-escape-adapter.cjs",
+      "/workspace/scratch/crypto-scoped-proof/probe"
+    ],
+    "cwd": "/workspace/scratch/crypto-import-scoped",
+    "exit": 1,
+    "seconds": 2.002,
+    "limit": 600,
+    "minFreeBytes": 18234785792
+  },
+  {
+    "name": "span-disabled-control",
+    "command": [
+      "node",
+      "/workspace/scratch/crypto-import-scoped/stage3/adapt/99-wasm-crypto-import/.span-escape-no-guard.cjs",
+      "/workspace/scratch/crypto-scoped-proof/probe"
+    ],
+    "cwd": "/workspace/scratch/crypto-import-scoped",
+    "exit": 0,
+    "seconds": 4.02,
+    "limit": 600,
+    "minFreeBytes": 18234769408
+  },
+  {
+    "name": "install",
+    "command": [
+      "npm",
+      "ci",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/workspace/scratch/crypto-scoped-proof/scoped",
+    "exit": 0,
+    "seconds": 3.012,
+    "limit": 600,
+    "minFreeBytes": 18106044416
+  },
+  {
+    "name": "build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/workspace/scratch/crypto-scoped-proof/scoped",
+    "exit": 0,
+    "seconds": 25.043,
+    "limit": 1200,
+    "minFreeBytes": 17977929728
+  },
+  {
+    "name": "harness",
+    "command": [
+      "node",
+      "/workspace/scratch/crypto-scoped-proof/scoped/node_modules/hereby/bin/hereby.js",
+      "tests"
+    ],
+    "cwd": "/workspace/scratch/crypto-scoped-proof/scoped",
+    "exit": 0,
+    "seconds": 1.005,
+    "limit": 600,
+    "minFreeBytes": 17975341056
+  },
+  {
+    "name": "lane-unit",
+    "command": [
+      "python3",
+      "stage3/lane/shard.py",
+      "stage3-lane-file-000",
+      "/workspace/scratch/crypto-scoped-proof/lane-results"
+    ],
+    "cwd": "/workspace/scratch/crypto-import-scoped",
+    "exit": 0,
+    "seconds": 8.006,
+    "limit": 600,
+    "minFreeBytes": 17950457856
+  }
+]

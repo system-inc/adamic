@@ -2,7 +2,7 @@ Three independently bound negative programs
 
 Task #redxes2, head 1.
 
-Mutation: Three separate virtual programs: append const _crypto = {}; add an _crypto parameter to createSHA256Hash; append void _crypto;. The whole-file hash gate is bypassed so these exercise the semantic binding guard itself.
+Mutation: Three separate virtual programs: append const _crypto = {}; add an _crypto parameter to createSHA256Hash; append void _crypto;. The scoped hash gate is bypassed so these exercise the semantic binding guard itself.
 
 Command:
 

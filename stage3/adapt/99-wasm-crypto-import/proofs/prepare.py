@@ -40,7 +40,8 @@ for old,new in [
 ]:
  assert after.count(old)==1,old;after=after.replace(old,new)
 h=lambda b:hashlib.sha256(b).hexdigest()
-(P/'targets.json').write_text(json.dumps([dict(file='src/compiler/sys.ts',beforeSha256=h(before),afterSha256=h(after))],indent=2)+'\n')
+(D/'pins-before.ts').write_bytes(before);(D/'pins-after.ts').write_bytes(after)
+run('scoped-pins',['node',P/'scoped-hashes.cjs',D/'pins-before.ts',D/'pins-after.ts',P/'targets.json'],limit=180)
 run('after-apply',['bash','stage3/apply.sh',D/'after'],limit=1800)
 assert (D/'after/src/compiler/sys.ts').read_bytes()==after
 # Generated reports are retained here, never copied over main's committed table or plans.
@@ -52,10 +53,12 @@ run('idempotence-no-write',['node',P.parent/'adapt.cjs',D/'after'],limit=180)
 assert json.loads((P/'logs/idempotence-no-write.log').read_text())['files']==0
 assert file.read_bytes()==saved and file.stat().st_mtime_ns==stamp
 try:
- file.write_bytes(saved+b'\n');stamp=file.stat().st_mtime_ns
+ needle=b'const isMacOs = process.platform === "darwin";';assert saved.count(needle)==1
+ mutant=saved.replace(needle,b'const isMacOs = process.platform === "darw1n";')
+ file.write_bytes(mutant);stamp=file.stat().st_mtime_ns
  run('moved-target-mutant',['node',P.parent/'adapt.cjs',D/'after'],expected=1,limit=180)
- assert 'target source moved: sys.ts' in (P/'logs/moved-target-mutant.log').read_text()
- assert file.read_bytes()==saved+b'\n' and file.stat().st_mtime_ns==stamp
+ assert 'uninventoried owner: getNodeSystem' in (P/'logs/moved-target-mutant.log').read_text()
+ assert file.read_bytes()==mutant and file.stat().st_mtime_ns==stamp
 finally:file.write_bytes(saved)
 run('scope-only-mutant',['node',P/'scope-mutant.cjs',D/'control',D/'after'],expected=1,limit=300)
 assert 'PASS TestCryptoTranspileScope:' in (P/'logs/scope-only-mutant.log').read_text()

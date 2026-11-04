@@ -19,9 +19,12 @@ assert preparation['apiSha256']==comparison['api']['sha256'] and preparation['ap
 refs={x:s.check_output(['git','-C',str(D/'after'),'rev-parse',f'refs/stage3/{name}-{x}'],text=True).strip() for x in ['before','after']}
 numstat=s.check_output(['git','-C',str(D/'after'),'diff','--numstat',refs['before'],refs['after']],text=True);assert numstat=='4\t11\tsrc/compiler/sys.ts\n',numstat
 for phase in ['before','after']:
- b=s.check_output(['git','-C',str(D/'after'),'show',refs[phase]+':src/compiler/sys.ts']);assert h(b)==json.loads((P/'targets.json').read_text())[0][phase+'Sha256']
+ b=s.check_output(['git','-C',str(D/'after'),'show',refs[phase]+':src/compiler/sys.ts'])
+ scoped=json.loads(s.check_output(['node',str(P/'scoped-hashes.cjs'),'-'],input=b))
+ pins=json.loads((P/'targets.json').read_text())[0]
+ assert scoped['ownerSha256']==pins['owner'+phase.title()+'Sha256'] and scoped['importsSha256']==pins['imports'+phase.title()+'Sha256']
 assert (D/'control/src/compiler/sys.ts').read_bytes()==s.check_output(['git','-C',str(D/'after'),'show',refs['before']+':src/compiler/sys.ts'])
-assert h((D/'after/src/compiler/sys.ts').read_bytes())==json.loads((P/'targets.json').read_text())[0]['afterSha256']
+assert (D/'after/src/compiler/sys.ts').read_bytes()==s.check_output(['git','-C',str(D/'after'),'show',refs['after']+':src/compiler/sys.ts'])
 protected=['stage3/patch-set.md','stage3/lane','stage3/oracle','stage3/fixtures','stage3/meter']
 assert not s.check_output(['git','diff',base,'--',*protected],cwd=R),'shared harness, fixtures or reports changed'
 order=sorted(p.name for p in (R/'stage3/adapt').iterdir() if p.is_dir());assert order[-1]==name and order[-2]=='99-correctness-axolotl-i'
@@ -41,10 +44,10 @@ def redlines(name,contains):
  text=logtext(name);matches=[l for l in text.splitlines() if any(x in l for x in contains)];assert matches,(name,contains);return '\n'.join(matches)
 def md(name,title,command,body):
  edits={
-  'bindings.mutant.md':'Three separate virtual programs: append const _crypto = {}; add an _crypto parameter to createSHA256Hash; append void _crypto;. The whole-file hash gate is bypassed so these exercise the semantic binding guard itself.',
+  'bindings.mutant.md':'Three separate virtual programs: append const _crypto = {}; add an _crypto parameter to createSHA256Hash; append void _crypto;. The scoped hash gate is bypassed so these exercise the semantic binding guard itself.',
   'scope.mutant.md':'Add | null to clearTimeout\'s private ambient parameter type. The command first passes both transpile comparisons, then fails exact source undo.',
   'runtime-scope.mutant.md':'Replace return process.stdout.columns ?? 0; with return process.stdout.columns ?? 1; before the check, as prepare.py does.',
-  'moved-target.mutant.md':'Append one newline byte to sys.ts before invoking the adapter. prepare.py checks that both mutant bytes and nanosecond mtime stay unchanged until restoration.',
+  'moved-target.mutant.md':'Change darwin to darw1n inside getNodeSystem before invoking the adapter. prepare.py checks that both mutant bytes and nanosecond mtime stay unchanged until restoration.',
   'ternary.mutant.md':'Replace createHash: createSHA256Hash, with createHash: _crypto ? createSHA256Hash : generateDjb2Hash,. The command plants it on disk and calls the semantic guard directly, bypassing the hash gate.',
   'oracle.mutant.md':'Append an extra baseline mutant line to the completed oracle-after/baseline.diff, leaving both API snapshots unchanged. Both api_check and the real lane CLI must reject it.',
  }
@@ -53,7 +56,7 @@ prefix='stage3/adapt/'+name+'/proofs/';pair=str(D/'control')+' '+str(D/'after')
 md('bindings.mutant.md','Three independently bound negative programs','node '+prefix+'bindings.cjs '+pair+' '+str(P/'bindings.json'),redlines('bindings.log',['CAUGHT ']))
 md('scope.mutant.md','An erased type edit is caught only by the exact source proof','node '+prefix+'scope-mutant.cjs '+pair,redlines('scope-only-mutant.log',['PASS TestCryptoTranspileScope:','AssertionError [ERR_ASSERTION]: TestCryptoSourceScope:']))
 md('runtime-scope.mutant.md','An unrelated terminal-width runtime edit is outside the adaptation','node '+prefix+'check.cjs '+pair,redlines('runtime-scope-mutant.log',['AssertionError [ERR_ASSERTION]: TestCryptoSourceScope:']))
-md('moved-target.mutant.md','A newline moves the whole-file target before any write','node '+prefix+'../adapt.cjs '+str(D/'after'),redlines('moved-target-mutant.log',['AssertionError [ERR_ASSERTION]: target source moved:']))
+md('moved-target.mutant.md','A changed owner byte is rejected before any write','node '+prefix+'../adapt.cjs '+str(D/'after'),redlines('moved-target-mutant.log',['AssertionError [ERR_ASSERTION]: uninventoried owner: getNodeSystem']))
 md('ternary.mutant.md','Leaving the crypto conditional is a bare namespace value','node '+prefix+'ternary-mutant.cjs '+str(D/'after'),redlines('ternary-mutant.log',['AssertionError [ERR_ASSERTION]: collision or bare namespace use:']))
 md('oracle.mutant.md','An extra baseline line is caught by the real lane byte checker','CRYPTO_PROOF_SCRATCH='+str(D)+' python3 '+prefix+'oracles.py',redlines('oracle-baseline-mutant.log',['baseline.diff does not exactly describe','FAIL stage3']))
 (P/'earlier-reader.md').write_text('98-e is an earlier reader, not a later pass\n\nThe official apply runs 98-e before '+name+'. Its store guard at `stage3/adapt/98-axolotl-e/adapt.cjs:141` reads the conditional property that this adaptation removes. Running it alone on the final output is intentionally rejected. This is its input moving, not a defect in its guard.\n\n```sh\nnode stage3/adapt/98-axolotl-e/adapt.cjs '+str(D/'after')+'\n```\n\nExit 1. Exact red:\n\n```text\n'+redlines('earlier-reader.log',['the nodeSystem store: want one, got 0'])+'\n```\n\n`apply.py` sorts at line '+str(sort)+', then executes its sole non-setup adapter loop at lines '+str(loop.lineno)+'-'+str(runs[0].lineno)+'. There is no post-adaptation pass. The separate 00-setup generation occurs before the pristine snapshot. `order.json` records the complete order. No adapter sorts after this one, and no shared runner was changed. The failed standalone rerun writes no source bytes; the restored whole-source check passes immediately afterwards.\n')

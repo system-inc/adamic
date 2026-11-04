@@ -76,11 +76,41 @@ That is its input moving, not a bug in its guard. It writes no source on the
 failed rerun; the complete source check passes afterwards. `earlier-reader.md`
 retains the command and exact red. No earlier adapter was modified.
 
+## Scoped pins
+
+This guard-only follow-up is based on main
+`4b8634a4a498a39d254ee8c325eb2711f84359d9`. Correctness's 99j narrows a statement
+in invokeCallbacks, outside the crypto owner; a whole-file pin stopped that
+independent edit. Following 95-checker-axolotl-a's re-cut in main 4b8634a4,
+targets.json now pins getNodeSystem's FunctionDeclaration.getText(file) and
+the top-level node: imports' getText joined by LF in source order. Done follows
+the owner hash, and both planned after hashes must match. Every edit must be
+inside the owner, except the single insertion at the os import's end. The
+binding, virtual-program, parse and source-changed checks remain unchanged.
+
+Both fresh official applies exit 0. All 746 resulting source files are
+byte-identical; sys.ts remains the landed a2f6e3d1 output,
+`a52755b55d8998df5fd5045fc0418c33bc7496502a131116a00d9bb4bc04b273`.
+A zero-file rerun preserves bytes and mtime. The original full oracle evidence
+below therefore stands; neither full oracle was rerun. A fresh upstream build,
+harness build and actual stage3-lane-file-000 unit pass (6/0/0).
+
+scoped-results.json records the four hashes and unit line. The exact 99j-shaped
+foreign edit passes with identical owned hashes. Owner/import mutations fail
+before writing. A broken adapter's extra callback edit fails only the new span
+assertion, as its disabled-assertion control proves. See foreign-edit.mutant.md,
+edit-span.mutant.md and moved-target.mutant.md. To reproduce, apply the unchanged
+base into CRYPTO_SCOPED_SCRATCH/main, then run proofs/scoped.py from this checkout
+with fresh scratch and the pinned parser. scoped-main-commands.json and
+scoped-commands.json retain commands, exits, bounds and wall times.
+
 ## Complete guards and source proof
 
-The adapter copies 93's full-file hashes, validate-before-write discipline and
-single conditional write. The before pin is the final official main sys.ts,
-including 98-e and 99-i, rather than 93's intermediate snapshot:
+The adapter keeps 93's validate-before-write discipline and single conditional
+write. The current owner/import pins are described under Scoped pins below.
+The original full-file observations below describe the emitted bytes, rather
+than current guard inputs; the input is the final official main sys.ts,
+including 98-e and 99-i:
 
 - Before: `f9ff61b6a486c60e6738b334fe2e483ced5e53bfb2e462fadc4bdc9749d25336`.
 - After: `a52755b55d8998df5fd5045fc0418c33bc7496502a131116a00d9bb4bc04b273`.
@@ -92,12 +122,12 @@ possible write, a separate virtual program resolves every remaining use to
 the namespace import: exactly one qualified property-access receiver, no bare
 namespace value and no competing declaration. The SHA-256 call and its argument
 are pinned too. A rerun reports zero files and preserves bytes and nanosecond
-mtime. An added newline is rejected before writing, also preserving the
-mutant's bytes and mtime.
+mtime. A changed byte inside getNodeSystem is rejected before writing, also
+preserving the mutant's bytes and mtime.
 
 `bindings.cjs` independently binds both trees and plants a module collision,
 an enclosing parameter shadow and a bare namespace value. These negative
-programs bypass the whole-file digest guard, so it cannot mask a broken binding
+programs bypass the scoped digest guard, so it cannot mask a broken binding
 check. All three are caught. The separate retained-ternary mutant changes the
 actual after source, invokes that same semantic guard without its digest gate,
 and is rejected as `collision or bare namespace use: _crypto`. It is restored

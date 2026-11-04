@@ -1,19 +1,17 @@
-A newline moves the whole-file target before any write
+Owner-local moved-target evidence
 
-Task #redxes2, head 1.
-
-Mutation: Append one newline byte to sys.ts before invoking the adapter. prepare.py checks that both mutant bytes and nanosecond mtime stay unchanged until restoration.
+Mutation: in getNodeSystem, change `const isMacOs = process.platform === "darwin";` to use `"darw1n"`. The old newline-outside-owner probe is intentionally no longer a target movement.
 
 Command:
 
 ```sh
-node stage3/adapt/99-wasm-crypto-import/proofs/../adapt.cjs /workspace/scratch/wasm-crypto-proof/after
+node stage3/adapt/99-wasm-crypto-import/adapt.cjs /workspace/scratch/crypto-scoped-proof/scoped
 ```
 
-Exact observed output:
+Exit 1, exact red:
 
 ```text
-AssertionError [ERR_ASSERTION]: target source moved: sys.ts
+AssertionError [ERR_ASSERTION]: uninventoried owner: getNodeSystem
 ```
 
-Every on-disk mutant is restored in `finally`; virtual binding mutants write no files. Complete raw output is retained under `logs/`.
+The rejected call leaves mutant bytes and nanosecond mtime unchanged. scoped.py restores the exact saved bytes in finally; the full output is logs/scoped-moved-owner.log.gz. prepare.py now produces this same owner-local mutant.
