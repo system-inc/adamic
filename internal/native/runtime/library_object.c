@@ -101,6 +101,10 @@ static adamic_string *key_string(const char *name) {
 }
 
 adamic_array *adamic_object_keys(const adamic_object *object) {
+ // A host object's names aren't Node's own keys (a Stats lacks dev and holds _fsFileMode), so its
+ // keys stop (#ey7aysy).
+ const adamic_string keys_key = {{0, adamic_kind_string, 0}, 4, "keys", 0, NULL, NULL, 0};
+ adamic_host_stop(&object->heap, &keys_key);
  // Class descriptors hide private storage and track static own-property presence.
  if (adamic_record_is(object)) return adamic_record_keys(object);
  if (object->class != NULL) return adamic_class_object_keys(object);

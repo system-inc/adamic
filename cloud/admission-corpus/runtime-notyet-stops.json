@@ -13,6 +13,12 @@
       "lifting_task": "#xf4n18n",
       "stderr": "adamic: panic: an Error property Node sets and the native Error lacks isn't read yet (reading 'stack')\n"
     },
+    "5b60d577718b4fdb702b5adb3f3c2dc904aab008b96c59d1b5d94bc05424bbfc": {
+      "path": "internal/oracle/testdata/reflect_get/stop_hasownproperty_host.a",
+      "ruling_task": "#0sps03r",
+      "lifting_task": "#zhrjf2t",
+      "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading '_fsFileMode')\n"
+    },
     "36e791eea8d979d01f9e098a893ef6e459365de89553eb20f6758fc01abc63ab": {
       "path": "internal/oracle/testdata/reflect_get/stop_host_dirent.a",
       "ruling_task": "#0sps03r",
@@ -109,6 +115,36 @@
       "lifting_task": "#zhrjf2t",
       "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'size')\n"
     },
+    "f8a2954f9c6f0d7f4c068effaf7c6d10a2776f547b55ad0203b4cd4998d47993": {
+      "path": "internal/oracle/testdata/reflect_get/stop_in_host_error_code.a",
+      "ruling_task": "#0sps03r",
+      "lifting_task": "#zhrjf2t",
+      "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'code')\n"
+    },
+    "f4e34758a984c46e7c79a0dddac9ad3d52221b5854487090dce61843047d2963": {
+      "path": "internal/oracle/testdata/reflect_get/stop_in_host_internal.a",
+      "ruling_task": "#0sps03r",
+      "lifting_task": "#zhrjf2t",
+      "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading '_fsFileMode')\n"
+    },
+    "5f8e23812752e665ff3722690b27c8bdcaf5e66b2a37a9342a63c28bdbc28e27": {
+      "path": "internal/oracle/testdata/reflect_get/stop_in_host_iterator.a",
+      "ruling_task": "#0sps03r",
+      "lifting_task": "#zhrjf2t",
+      "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'input')\n"
+    },
+    "e29fa09069d73f10ddff4eb24b857166d25272e2fca24bbf746235e7183d7bef": {
+      "path": "internal/oracle/testdata/reflect_get/stop_in_host_literal.a",
+      "ruling_task": "#0sps03r",
+      "lifting_task": "#zhrjf2t",
+      "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'isFile')\n"
+    },
+    "fd360608a1a88886ecbb1b816dadce8151adbc537786bed220c046fcf15b0a10": {
+      "path": "internal/oracle/testdata/reflect_get/stop_in_host_method.a",
+      "ruling_task": "#0sps03r",
+      "lifting_task": "#zhrjf2t",
+      "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'isFile')\n"
+    },
     "52d247f51dbecd80396018b218cf9901674de0f8527b6fa57931cbbedde7b4c6": {
       "path": "internal/oracle/testdata/reflect_get/stop_literal_getter.a",
       "ruling_task": "#zhgxzjg",
@@ -180,6 +216,12 @@
       "ruling_task": "#0sps03r",
       "lifting_task": "#tr1zpbv",
       "stderr": "adamic: panic: a class instance's constructor isn't read by a run-time key yet (reading 'constructor')\n"
+    },
+    "d4af2c5e32e0d38e06e6d53bd7a19931ac210c25c84bea11c991d8dbf8135f0a": {
+      "path": "internal/oracle/testdata/reflect_get/stop_string_host.a",
+      "ruling_task": "#0sps03r",
+      "lifting_task": "#zhrjf2t",
+      "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'toString')\n"
     }
   }
 }

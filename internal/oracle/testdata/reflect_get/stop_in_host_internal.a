@@ -1,0 +1,12 @@
+// An in test on a host object stops in the runtime value form, as a run-time key read on it does
+// (Adamic's ruling on #ey7aysy at 23:03Z, Language's s9): a Stats has no own _fsFileMode on Node, and
+// native's shape holds one, so in answered yes and the read it narrowed panicked. Node prints internal
+// absent, then size number.
+import * as fs from 'node:fs';
+
+const stats: unknown = fs.statSync('.');
+console.log('stats');
+if (typeof stats === 'object' && stats !== null && '_fsFileMode' in stats) console.log(`internal ${typeof stats._fsFileMode}`);
+else console.log('internal absent');
+if (typeof stats === 'object' && stats !== null && 'size' in stats) console.log(`size ${typeof stats.size}`);
+else console.log('size absent');
