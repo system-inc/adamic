@@ -202,7 +202,7 @@ func TestGraphCompilerArrayTakeMutant(t *testing.T) {
 func TestGraphCompilerObjectBytesMutant(t *testing.T) {
 	t.Parallel()
 	graphCompilerWitness(t, graphLinkSource, func(code string) string {
-		return regexp.MustCompile(`adamic_object_size\([^)]*\)`).ReplaceAllString(code, `sizeof(adamic_object)`)
+		return regexp.MustCompile(`adamic_object_allocation_size\([^)]*\)`).ReplaceAllString(code, `sizeof(adamic_object)`)
 	})
 }
 
