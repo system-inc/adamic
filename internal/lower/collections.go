@@ -26,6 +26,13 @@ func keyable(valueType ir.Type) bool {
 // entries, and map.keys(), map.values(), map.entries(), set.keys() and set.values().
 func (l *lowering) iterated(node *ast.Node) (ir.Expression, ir.Type, error) {
 	node = ast.SkipParentheses(node)
+	// A call to a program's generator is collected as the generator it is, before any reading of its
+	// declared iterator type (#qk8rztp, Compiler's risk 2). Collecting steps it to its end, which is
+	// right only for a consumer that reads every value: an array literal's spread (object.go) is one,
+	// and new Map and new Set, which could stop early, stop a generator before they reach here.
+	if function, isGenerator := l.generatorCallee(node); isGenerator {
+		return l.collectGenerator(node, function)
+	}
 	if element, iterator := l.libraryIteratorElement(node); iterator {
 		value, err := l.expression(node)
 		if err != nil {
@@ -137,6 +144,9 @@ func (l *lowering) newMapFrom(node *ast.Node, source *ast.Node, key ir.Type, val
 	}
 	if pairKey != key || pairValue != value {
 		return nil, l.notYet(source, "new Map from pairs held otherwise than the Map's keys and values")
+	}
+	if _, isGenerator := l.generatorCallee(source); isGenerator {
+		return nil, l.generatorNotYet(source, "consumed by new Map")
 	}
 	pairs, element, err := l.iterated(source)
 	if err != nil {

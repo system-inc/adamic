@@ -46,8 +46,11 @@ func Build(program *ir.Program, function int) *Function {
 	order := EvaluationOrder(1)
 	for _, block := range builder.function.Blocks {
 		order += EvaluationOrder(len(block.Instructions))
-		if suspend, ok := block.Terminal.(*Suspend); ok {
-			suspend.Order = order
+		switch terminal := block.Terminal.(type) {
+		case *Suspend:
+			terminal.Order = order
+		case *Yield:
+			terminal.Order = order
 		}
 		order++
 	}
@@ -188,6 +191,10 @@ func (b *builder) statement(at *ir.Statement) {
 	case ir.Evaluate:
 		if wait, ok := statement.Value.(ir.Await); ok {
 			b.suspend(at, wait, -1)
+			return
+		}
+		if yield, ok := statement.Value.(ir.Yield); ok {
+			b.yield(at, yield)
 			return
 		}
 		b.emit(at, 0, statement.Value, b.uses(statement.Value), nil)
@@ -551,6 +558,11 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				if program.CallMayThrow(value.Interface().(ir.Call)) {
 					throws = true
 				}
+			case generatorNextType:
+				// A step runs the generator's body, which a throw can leave.
+				if program.GeneratorNextMayThrow(value.Interface().(ir.GeneratorNext)) {
+					throws = true
+				}
 			case callClosureType, arrayMapType, arrayVisitType, arrayReduceType, arrayFromType, mapForEachType:
 				// A call through a function value, written out or made by the runtime's loop.
 				if program.ClosureMayThrow(value.Interface().(ir.Expression)) {
@@ -584,6 +596,8 @@ var (
 	arrayFromType   = reflect.TypeOf(ir.ArrayFrom{})
 	arraySortType   = reflect.TypeOf(ir.ArraySort{})
 	mapForEachType  = reflect.TypeOf(ir.MapForEach{})
+
+	generatorNextType = reflect.TypeOf(ir.GeneratorNext{})
 )
 
 func (b *builder) linkLabels(names []string, target BlockId) {
@@ -605,4 +619,18 @@ func (b *builder) suspend(at *ir.Statement, wait ir.Await, local int) {
 	if local >= 0 {
 		b.function.AddInstruction(b.current, &Instruction{At: at, Part: 1, Defines: b.defines(local)})
 	}
+}
+
+// yield evaluates the yielded value as its block's last instruction, then leaves for the consumer;
+// the next step goes on in a new block. The emitter reads the value from that last instruction, so
+// one that could throw would end its block first and leave the yield with nothing to hand over:
+// normalization makes the value a read of its own snapshot, which can't.
+func (b *builder) yield(at *ir.Statement, yield ir.Yield) {
+	b.emit(at, 0, yield.Value, b.uses(yield.Value), nil)
+	if len(b.current.Instructions) == 0 {
+		panic("flow: a yield whose value can throw was not normalized")
+	}
+	next := b.function.NewBlock()
+	b.current.Terminal = &Yield{Next: next.Id}
+	b.current = next
 }

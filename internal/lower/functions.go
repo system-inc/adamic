@@ -80,7 +80,15 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		function.Boundary.Parameters = append(function.Boundary.Parameters, ir.BoundaryParameter{})
 		function.Receiver = true
 	}
-	if declaration.Kind != ast.KindConstructor {
+	if generatorDeclaration(declaration) {
+		// Rule 2500 lets only the generators this slice lowers reach a signature.
+		if !loweredGenerator(declaration) {
+			return l.generatorNotYet(declaration, "of this form")
+		}
+		if err := l.generatorSignature(&function, declaration); err != nil {
+			return err
+		}
+	} else if declaration.Kind != ast.KindConstructor {
 		signature := l.checker.GetSignatureFromDeclaration(declaration)
 		returns := l.concrete(l.checker.GetReturnTypeOfSignature(signature))
 		function.Boundary.Return = l.boundarySchema(declaration, returns)
@@ -377,7 +385,7 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 	function.Body = append(function.Body, lowered...)
 	l.finishNestedEnvironment(&function, index)
 	l.result.Functions[index] = function
-	return nil
+	return l.checkGeneratorBody(index, declaration)
 }
 
 // Descriptor construction must not intern boundary-only literals into codegen's

@@ -32,8 +32,17 @@ func (f Function) BodyReturns() Type {
 	if f.Async {
 		return f.AsyncReturns
 	}
+	if f.Generator {
+		// A generator's body returns no value its consumer reads: return v is not yet built.
+		return 0
+	}
 	return f.Returns
 }
+
+// Suspends is a function whose body runs on a counted frame and can stop part way and go on later:
+// an async function at an await, a generator at a yield. Each reader of Async decides whether it
+// means this or async alone.
+func (f Function) Suspends() bool { return f.Async || f.Generator }
 
 // GeneratedType has an unexported provenance identity. Source names, fields and brands cannot
 // construct it. Only these canonical protocol identities are accepted by the cycle finder.

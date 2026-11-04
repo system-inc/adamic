@@ -6,8 +6,10 @@ import (
 	"slices"
 )
 
-// NormalizeAsync exposes awaits after ordinary lowering. All operands before a suspension
-// are snapshots, including mutable reads. Conditional operands remain conditional.
+// NormalizeAsync exposes awaits and yields after ordinary lowering. All operands before a suspension
+// are snapshots, including mutable reads. Conditional operands remain conditional. A generator's body
+// is normalized as an async body is, so every local lives in a frame cell (rule 3: anything live
+// across a yield is a frame local, never a C local).
 func NormalizeAsync(program *ir.Program) error {
 	if containsAwait(reflect.ValueOf(program.Main)) {
 		index := len(program.Functions)
@@ -31,11 +33,11 @@ func NormalizeAsync(program *ir.Program) error {
 	}
 	for index := range program.Functions {
 		function := &program.Functions[index]
-		if !function.Async {
+		if !function.Suspends() {
 			continue
 		}
 		if function.NestedFrame || function.FrameIdentity != 0 {
-			return &AsyncError{Site: function.AsyncSite, What: "async nested declarations need a canonical suspension environment"}
+			return &AsyncError{Site: function.AsyncSite, What: suspending(*function, "nested declarations need a canonical suspension environment")}
 		}
 		normalizer := asyncNormalizer{program: program, function: index}
 		completion := asyncCompletion{n: &normalizer, loops: map[int]bool{}, names: map[int]string{}}
@@ -48,7 +50,7 @@ func NormalizeAsync(program *ir.Program) error {
 		for local, declared := range program.Locals {
 			if !declared.Global && declared.Function == index {
 				if declared.Type == ir.MaybeBoolean {
-					return &AsyncError{Site: function.AsyncSite, What: "async slots holding boolean or undefined are not yet proven"}
+					return &AsyncError{Site: function.AsyncSite, What: suspending(*function, "slots holding boolean or undefined are not yet proven")}
 				}
 				if declared.Captured && !declared.IterationCell {
 					program.Locals[local].Preallocated = true
@@ -80,12 +82,22 @@ type asyncNormalizer struct {
 }
 
 var awaitType = reflect.TypeOf(ir.Await{})
+var yieldType = reflect.TypeOf(ir.Yield{})
 
+// suspending names what a stop is about: an async function's, or a generator's.
+func suspending(function ir.Function, what string) string {
+	if function.Generator {
+		return "generator " + what
+	}
+	return "async " + what
+}
+
+// containsAwait finds a suspension: an await, or a generator's yield.
 func containsAwait(value reflect.Value) bool {
 	if !value.IsValid() {
 		return false
 	}
-	if value.Type() == awaitType {
+	if value.Type() == awaitType || value.Type() == yieldType {
 		return true
 	}
 	switch value.Kind() {
@@ -340,9 +352,20 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 		case ir.Labeled:
 			value.Body, err = n.statements(value.Body)
 			statement = value
+		case ir.Evaluate:
+			if yield, ok := value.Value.(ir.Yield); ok {
+				// The yielded value is a snapshot, so the yield's own instruction is a read that can't
+				// throw (flow.Build's yield) and the value is held by a cell until it is handed over.
+				yield.Value = n.expression(yield.Value, &before, true)
+				statement = ir.Evaluate{Value: yield}
+				break
+			}
+			if containsAwait(reflect.ValueOf(statement)) {
+				statement = n.operands(reflect.ValueOf(statement), &before).Interface().(ir.Statement)
+			}
 		case ir.ForOf:
 			if value.RegexIterator || (value.Iterable.Type() != ir.Array && value.Iterable.Type() != ir.String && value.Iterable.Type() != ir.Map) || (value.Pattern != nil && value.MapPart == "") {
-				return nil, n.errorAt(value, "async for-of over this iterable or pattern is not yet proven")
+				return nil, n.errorAt(value, suspending(n.program.Functions[n.function], "for-of over this iterable or pattern is not yet proven"))
 			}
 			if value.Iterable.Type() != ir.Array {
 				iterable := n.expression(value.Iterable, &before, true)
@@ -480,6 +503,9 @@ func asyncSourceSite(value any) int {
 	inspectAsyncIR(reflect.ValueOf(value), func(node any) {
 		if awaited, ok := node.(ir.Await); ok && site == 0 {
 			site = awaited.Site
+		}
+		if yielded, ok := node.(ir.Yield); ok && site == 0 {
+			site = yielded.Site
 		}
 	})
 	return site

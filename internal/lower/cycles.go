@@ -590,7 +590,7 @@ func (f *cycleFinder) reachLinks(node cycleNode) []cycleNode {
 		local := f.l.result.Locals[node.cell-1]
 		if local.EnvironmentCell && local.Function >= 0 {
 			owner := f.l.result.Functions[local.Function]
-			if owner.Async {
+			if owner.Suspends() {
 				for _, held := range owner.FrameEnvironment {
 					if f.l.result.Locals[held].Captured {
 						links = append(links, cycleNode{cell: held + 1})
@@ -625,6 +625,10 @@ func (f *cycleFinder) reachLinks(node cycleNode) []cycleNode {
 	}
 	switch {
 	case f.l.isLibraryType(proven, "MapIterator", "SetIterator"):
+		// A type can't say whether it's a collection's iterator or a generator declared as one. No
+		// slot this walks holds a generator's call while generators aren't values (#qk8rztp S1,
+		// TestNoSlotTheIteratorArmWalksHoldsAGenerator); once one can, this arm must add the frame's
+		// links too (Lower, q6).
 		links = append(links, f.libraryIteratorCaptures(proven)...)
 	case f.isFunction(proven):
 		// Construct signatures can hide constructor objects behind an interface.

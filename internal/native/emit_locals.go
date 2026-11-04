@@ -90,7 +90,7 @@ func (e *emitter) deadZone(node any, local int, ready string) {
 	if !e.program.DeadZoneMayThrow(node) {
 		panic(fmt.Sprintf("native: a temporal-dead-zone test of %s on a node ir.Program's DeadZoneMayThrow doesn't count", e.program.Locals[local].Name))
 	}
-	if len(e.handlers) == 0 && e.function != nil && !e.function.Async && !e.function.MayThrow {
+	if len(e.handlers) == 0 && e.function != nil && !e.function.Suspends() && !e.function.MayThrow {
 		// The throw would leave a function its callers believe can't throw, so none would test it.
 		panic(fmt.Sprintf("native: a temporal-dead-zone throw of %s leaves %s, which lowering didn't mark as one that can throw", e.program.Locals[local].Name, e.function.Name))
 	}

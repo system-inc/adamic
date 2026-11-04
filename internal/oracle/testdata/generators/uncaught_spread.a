@@ -1,0 +1,12 @@
+// A throw after one yield, out of a spread at the top level: nothing after it prints, and the throw
+// is tested before the collecting loop reads done (Diagnostics' must 1, for spread).
+function* each(values: number[]) {
+    for(const value of values) {
+        if(value === 2) {
+            throw new Error(`bad ${String(value)}`);
+        }
+        yield value;
+    }
+}
+console.log([...each([1, 2, 3])].join(','));
+console.log('after');

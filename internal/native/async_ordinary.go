@@ -19,7 +19,6 @@ func (e *emitter) asyncFunction(index int) string {
 	if e.debug {
 		sourceLines = asyncSourceLines(function.Body)
 	}
-	var lastSourceLine ir.SourceLine
 	cells := slices.Clone(function.FrameEnvironment)
 	e.asyncSlots = map[int]int{}
 	e.asyncBorrows = asyncBorrowedSlots(e.program, index)
@@ -70,107 +69,29 @@ func (e *emitter) asyncFunction(index int) string {
 	}
 	e.line("default: adamic_unreachable();")
 	e.line("}")
-	for _, blocks := range regions.Blocks {
-		for _, id := range blocks {
-			block, _ := graph.Block(id)
-			e.line("adamic_async_block_%d: {", id)
-			e.indent++
-			e.asyncHandler = ""
-			switch terminal := block.Terminal.(type) {
-			case *flow.MayThrow:
-				e.asyncHandler = fmt.Sprintf("adamic_async_block_%d", terminal.Handler)
-			case *flow.Goto:
-				// Only an explicit throw uses its normal Goto as an exception edge.
-				if len(block.Instructions) > 0 {
-					last := graph.Instructions[block.Instructions[len(block.Instructions)-1]]
-					if _, throwing := (*last.At).(ir.Throw); throwing {
-						e.asyncHandler = fmt.Sprintf("adamic_async_block_%d", terminal.Block)
-					}
-				}
+	e.suspensionBlocks(graph, regions, "adamic_async_block", sourceLines, func(block *flow.BasicBlock, result ir.Expression, waiting string) {
+		switch terminal := block.Terminal.(type) {
+		case *flow.Suspend:
+			e.line("base->state = %d;", regions.Owner[terminal.Fulfilled])
+			e.line("adamic_async_await(base, %s);", waiting)
+			e.end()
+			e.line("return;")
+		case *flow.Return:
+			value, refs := "(adamic_value){.number = 0}", false
+			if result != nil {
+				value = borrowed(result.Type(), e.value(result))
+				refs = result.Type().IsReference()
 			}
-			var condition, waiting string
-			var result ir.Expression
-			for _, instructionID := range block.Instructions {
-				instruction := graph.Instructions[instructionID]
-				if source, ok := sourceLines[instruction.At]; ok && source != lastSourceLine {
-					e.statement(source)
-					lastSourceLine = source
-				}
-				statement := *instruction.At
-				if attempt, ok := statement.(ir.Try); ok && instruction.Part == 1 {
-					if attempt.CatchLocal >= 0 {
-						e.declareLocal(attempt.CatchLocal, "frame->error", true)
-					} else {
-						e.line("adamic_release(frame->error);")
-					}
-					e.line("frame->error = NULL;")
-					continue
-				}
-				switch statement := statement.(type) {
-				case ir.Switch:
-					if instruction.Part > 0 {
-						condition = e.snapshot(ir.Boolean, e.decide(ir.Binary{Operator: ir.Equal, Left: statement.Value, Right: instruction.Expression}))
-					}
-				case ir.If, ir.Loop:
-					condition = e.snapshot(ir.Boolean, e.decide(instruction.Expression))
-				case ir.Return:
-					result = statement.Value
-				case ir.Declare:
-					if _, ok := statement.Value.(ir.Await); ok {
-						if instruction.Part == 1 {
-							continue
-						}
-						waiting = e.value(instruction.Expression)
-					} else {
-						e.statementAt(instruction.At)
-					}
-				case ir.Evaluate:
-					if _, ok := statement.Value.(ir.Await); ok {
-						if instruction.Part == 1 {
-							continue
-						}
-						waiting = e.value(instruction.Expression)
-					} else {
-						e.statementAt(instruction.At)
-					}
-				default:
-					e.statementAt(instruction.At)
-				}
-			}
-			switch terminal := block.Terminal.(type) {
-			case *flow.Goto:
-				e.line("goto adamic_async_block_%d;", terminal.Block)
-			case *flow.MayThrow:
-				e.line("goto adamic_async_block_%d;", terminal.Next)
-			case *flow.If:
-				e.line("if (%s) goto adamic_async_block_%d; else goto adamic_async_block_%d;", condition, terminal.Consequent, terminal.Alternate)
-			case *flow.Suspend:
-				e.line("base->state = %d;", regions.Owner[terminal.Fulfilled])
-				e.line("adamic_async_await(base, %s);", waiting)
-				e.end()
-				e.line("return;")
-			case *flow.Return:
-				value, refs := "(adamic_value){.number = 0}", false
-				if result != nil {
-					value = borrowed(result.Type(), e.value(result))
-					refs = result.Type().IsReference()
-				}
-				e.line("adamic_async_settle(base->output, %s, %t, false);", value, refs)
-				e.end()
-				e.line("adamic_async_finish_%s(frame); return;", identity)
-			case *flow.Throw:
-				e.line("adamic_async_settle(base->output, (adamic_value){.reference = frame->error}, true, true);")
-				e.line("adamic_async_finish_%s(frame); return;", identity)
-			case *flow.Unreachable:
-				e.line("adamic_unreachable();")
-			default:
-				panic(fmt.Sprintf("native: unproved async terminal %T", terminal))
-			}
-			e.asyncHandler = ""
-			e.indent--
-			e.line("}")
+			e.line("adamic_async_settle(base->output, %s, %t, false);", value, refs)
+			e.end()
+			e.line("adamic_async_finish_%s(frame); return;", identity)
+		case *flow.Throw:
+			e.line("adamic_async_settle(base->output, (adamic_value){.reference = frame->error}, true, true);")
+			e.line("adamic_async_finish_%s(frame); return;", identity)
+		default:
+			panic(fmt.Sprintf("native: unproved async terminal %T", terminal))
 		}
-	}
+	})
 	if e.debug {
 		e.line(sourceLineReset)
 	}
@@ -247,4 +168,100 @@ func (e *emitter) asyncMain() {
 	e.line("adamic_async_run();")
 	e.line("if (root->rejected) { adamic_thrown = root->value.reference; adamic_uncaught(); }")
 	e.line("adamic_release(root);")
+}
+
+// suspensionBlocks emits every region's blocks of a suspending function, an async function's or a
+// generator's, each under label and its block id: the instructions, with the same expression,
+// statement, store and exception emitters as a synchronous function, and the jumps between blocks.
+// The terminals that leave the function (a suspension, a return, a throw) are its protocol's, and
+// leave is handed the block, its return's value and the value its last instruction made for a
+// suspension. Under --debug each instruction carries its source line (#jhyfmk4).
+func (e *emitter) suspensionBlocks(graph *flow.Function, regions flow.AsyncRegions, label string, sourceLines map[*ir.Statement]ir.SourceLine, leave func(block *flow.BasicBlock, result ir.Expression, waiting string)) {
+	var lastSourceLine ir.SourceLine
+	for _, blocks := range regions.Blocks {
+		for _, id := range blocks {
+			block, _ := graph.Block(id)
+			e.line("%s_%d: {", label, id)
+			e.indent++
+			e.asyncHandler = ""
+			switch terminal := block.Terminal.(type) {
+			case *flow.MayThrow:
+				e.asyncHandler = fmt.Sprintf("%s_%d", label, terminal.Handler)
+			case *flow.Goto:
+				// Only an explicit throw uses its normal Goto as an exception edge.
+				if len(block.Instructions) > 0 {
+					last := graph.Instructions[block.Instructions[len(block.Instructions)-1]]
+					if _, throwing := (*last.At).(ir.Throw); throwing {
+						e.asyncHandler = fmt.Sprintf("%s_%d", label, terminal.Block)
+					}
+				}
+			}
+			var condition, waiting string
+			var result ir.Expression
+			for _, instructionID := range block.Instructions {
+				instruction := graph.Instructions[instructionID]
+				if source, ok := sourceLines[instruction.At]; ok && source != lastSourceLine {
+					e.statement(source)
+					lastSourceLine = source
+				}
+				statement := *instruction.At
+				if attempt, ok := statement.(ir.Try); ok && instruction.Part == 1 {
+					if attempt.CatchLocal >= 0 {
+						e.declareLocal(attempt.CatchLocal, "frame->error", true)
+					} else {
+						e.line("adamic_release(frame->error);")
+					}
+					e.line("frame->error = NULL;")
+					continue
+				}
+				switch statement := statement.(type) {
+				case ir.Switch:
+					if instruction.Part > 0 {
+						condition = e.snapshot(ir.Boolean, e.decide(ir.Binary{Operator: ir.Equal, Left: statement.Value, Right: instruction.Expression}))
+					}
+				case ir.If, ir.Loop:
+					condition = e.snapshot(ir.Boolean, e.decide(instruction.Expression))
+				case ir.Return:
+					result = statement.Value
+				case ir.Declare:
+					if _, ok := statement.Value.(ir.Await); ok {
+						if instruction.Part == 1 {
+							continue
+						}
+						waiting = e.value(instruction.Expression)
+					} else {
+						e.statementAt(instruction.At)
+					}
+				case ir.Evaluate:
+					_, awaits := statement.Value.(ir.Await)
+					_, yields := statement.Value.(ir.Yield)
+					if awaits || yields {
+						if instruction.Part == 1 {
+							continue
+						}
+						waiting = e.value(instruction.Expression)
+					} else {
+						e.statementAt(instruction.At)
+					}
+				default:
+					e.statementAt(instruction.At)
+				}
+			}
+			switch terminal := block.Terminal.(type) {
+			case *flow.Goto:
+				e.line("goto %s_%d;", label, terminal.Block)
+			case *flow.MayThrow:
+				e.line("goto %s_%d;", label, terminal.Next)
+			case *flow.If:
+				e.line("if (%s) goto %s_%d; else goto %s_%d;", condition, label, terminal.Consequent, label, terminal.Alternate)
+			case *flow.Unreachable:
+				e.line("adamic_unreachable();")
+			default:
+				leave(block, result, waiting)
+			}
+			e.asyncHandler = ""
+			e.indent--
+			e.line("}")
+		}
+	}
 }

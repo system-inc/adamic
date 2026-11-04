@@ -235,8 +235,14 @@ func (l *lowering) exceptions() error {
 				l.result.ClosuresMayThrow = true
 				changed = true
 			}
-			if !functions[index].Async && !functions[index].MayThrow && l.throwsOut(functions[index].Body) {
+			if !functions[index].Suspends() && !functions[index].MayThrow && l.throwsOut(functions[index].Body) {
 				functions[index].MayThrow = true
+				changed = true
+			}
+			// A generator's call runs none of its body and never throws; its steps run the body, so
+			// they are what a throw leaving the body leaves.
+			if functions[index].Generator && !functions[index].ResumeMayThrow && l.throwsOut(functions[index].Body) {
+				functions[index].ResumeMayThrow = true
 				changed = true
 			}
 		}
@@ -289,6 +295,8 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			if l.result.CallMayThrow(node) {
 				found = true
 			}
+		case ir.GeneratorNext:
+			found = found || l.result.GeneratorNextMayThrow(node)
 		case ir.RegExpCall:
 			if node.Replacement != nil && l.result.ClosuresMayThrow {
 				found = true

@@ -53,8 +53,9 @@ func (a *analysis) merge(into, from roots) {
 	}
 }
 
-// Analyze returns every function in declaration position order. Ties retain IR order.
-func Analyze(program *ir.Program) []Function {
+// summarize works out every local's aliases and contents and every function's returns and writes,
+// the may sets Analyze judges each function by.
+func summarize(program *ir.Program) *analysis {
 	n := len(program.Functions)
 	a := &analysis{program: program, aliases: make([]roots, len(program.Locals)), contents: make([]roots, len(program.Locals)), returns: make([]roots, n), writes: make([]roots, n), edges: make([][]int, n), direct: make([]string, n), globals: roots{}}
 	for i, local := range program.Locals {
@@ -90,6 +91,13 @@ func Analyze(program *ir.Program) []Function {
 			break
 		}
 	}
+	return a
+}
+
+// Analyze returns every function in declaration position order. Ties retain IR order.
+func Analyze(program *ir.Program) []Function {
+	n := len(program.Functions)
+	a := summarize(program)
 	pure := make([]bool, n)
 	reasons := make([]string, n)
 	work := make([]bool, n)
@@ -369,6 +377,11 @@ func (a *analysis) walk(body []ir.Statement) {
 			if a.current >= 0 {
 				a.merge(a.returns[a.current], a.contained(node.Value))
 			}
+		case ir.Yield:
+			// What a generator yields is what a step of its call is, as a return is a call's.
+			if a.current >= 0 {
+				a.merge(a.returns[a.current], a.contained(node.Value))
+			}
 		case ir.WriteLine:
 			a.fail("impure: console")
 		case ir.Panic, ir.Coalesce:
@@ -534,6 +547,10 @@ func (a *analysis) origins(value ir.Expression) roots {
 		for _, local := range a.program.Functions[node.Function].Environment {
 			add(result, a.aliases[local])
 		}
+	case ir.GeneratorNext:
+		// A step is one of the values the generator's call stands for: its yields, substituted at
+		// the call that made it.
+		add(result, a.origins(node.Generator))
 	case ir.Property:
 		add(result, a.elements(node.Object))
 	case ir.ArrayIndex:

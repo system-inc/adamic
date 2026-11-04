@@ -61,7 +61,7 @@ func viewReadOf(program *ir.Program, expression ir.Expression) viewRead {
 		ir.ArrayMap, ir.ArrayOfScalars, ir.ArrayPop, ir.ArrayPush, ir.ArrayReduce, ir.ArrayReverse, ir.ArraySearch, ir.ArraySlice,
 		ir.ArraySort, ir.ArraySplice, ir.ArrayVisit, ir.Await, ir.Binary, ir.BooleanToString, ir.Box, ir.Call,
 		ir.CallClosure, ir.CharCodeAt, ir.Coalesce, ir.CodePoints, ir.CollectionIterator, ir.Comma, ir.Concat,
-		ir.Conditional, ir.Defined, ir.Effects, ir.ErrorToString, ir.FileStatus, ir.HasAccessor, ir.HasOwn, ir.HasProperty,
+		ir.Conditional, ir.Defined, ir.Effects, ir.ErrorToString, ir.FileStatus, ir.GeneratorDone, ir.GeneratorNext, ir.HasAccessor, ir.HasOwn, ir.HasProperty,
 		ir.InstanceOf, ir.IsNull, ir.IsUndefined, ir.JSONDecode, ir.JSONStringify, ir.JoinEnter, ir.Length, ir.Logical,
 		ir.LogicalAssignment, ir.MakeError, ir.MapClear, ir.MapDelete, ir.MapEntries, ir.MapForEach, ir.MapGet,
 		ir.MapHas, ir.MapKeys, ir.MapNew, ir.MapSet, ir.MapSize, ir.MapValues, ir.MathCall, ir.MaybeOf,
@@ -72,7 +72,7 @@ func viewReadOf(program *ir.Program, expression ir.Expression) viewRead {
 		ir.StringCall, ir.StringFromCodes, ir.StringIndex, ir.StringIterator, ir.StringLength, ir.ToFixed, ir.Trim,
 		ir.Truthy, ir.TypeOf, ir.TypedArrayFill, ir.TypedArrayNew, ir.TypedArraySet, ir.TypedArraySort,
 		ir.TypedArraySubarray, ir.Unary, ir.UnionToString, ir.UnknownKind, ir.Unwrap, ir.Utf8At, ir.Utf8Length, ir.Void, ir.WeakOf,
-		ir.WeakTarget, ir.WriteTextFile:
+		ir.WeakTarget, ir.WriteTextFile, ir.Yield:
 		return viewReadsNoField
 	}
 	return 0

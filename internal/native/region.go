@@ -459,7 +459,7 @@ const stackEnvironmentSlots = 64
 func (plan *regionPlan) planEnvironments() {
 	plan.asyncLocals = map[int]bool{}
 	for local, binding := range plan.program.Locals {
-		if !binding.Global && binding.Function >= 0 && binding.Function < len(plan.program.Functions) && plan.program.Functions[binding.Function].Async {
+		if !binding.Global && binding.Function >= 0 && binding.Function < len(plan.program.Functions) && plan.program.Functions[binding.Function].Suspends() {
 			plan.asyncLocals[local] = true
 		}
 	}
@@ -468,7 +468,7 @@ func (plan *regionPlan) planEnvironments() {
 		for position, parameter := range function.Parameters {
 			// Captured parameters can be forwarded through a closure not visible at
 			// this call site. They remain conservative even if the closure is local.
-			plan.environmentArguments[index][position] = function.Async || plan.program.Locals[parameter].Captured
+			plan.environmentArguments[index][position] = function.Suspends() || plan.program.Locals[parameter].Captured
 		}
 	}
 	for changed := true; changed; {
@@ -488,7 +488,7 @@ func (plan *regionPlan) planEnvironments() {
 	}
 	for _, function := range plan.program.Functions {
 		// Suspended cells are owned by the counted async frame.
-		if function.Async {
+		if function.Suspends() {
 			continue
 		}
 		for index := range function.Body {
@@ -698,7 +698,7 @@ func (plan *regionPlan) environmentCalleeEscapes(targets ir.FunctionTargets, ret
 		return true
 	}
 	for _, target := range targets.Functions {
-		if plan.program.Functions[target].Async {
+		if plan.program.Functions[target].Suspends() {
 			return true
 		}
 	}

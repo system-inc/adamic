@@ -14,6 +14,24 @@ import (
 // missing (alwaysUndefined), which is exactly what it holds.
 func (l *lowering) arrayFrom(node *ast.Node) (ir.Expression, bool, error) {
 	arguments := node.AsCallExpression().Arguments.Nodes
+	// A call to a program's generator is collected by its origin, before the declared-iterator
+	// paths below can read its type (#qk8rztp, Compiler's risk 2).
+	if len(arguments) > 0 {
+		if function, isGenerator := l.generatorCallee(arguments[0]); isGenerator {
+			if len(arguments) > 1 {
+				return nil, true, l.generatorNotYet(node, "consumed by Array.from with a mapper")
+			}
+			element, err := l.elementType(node)
+			if err != nil {
+				return nil, true, err
+			}
+			value, yields, err := l.collectGenerator(arguments[0], function)
+			if err == nil && yields != element {
+				return nil, true, l.generatorNotYet(node, "consumed by Array.from into an array held differently from what it yields")
+			}
+			return value, true, err
+		}
+	}
 	// Collection iterators already yield fitted slots. Preserve those references
 	// when copying, including boxed union values.
 	if len(arguments) == 1 {

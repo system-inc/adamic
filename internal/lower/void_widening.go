@@ -11,6 +11,9 @@ import (
 // A void call has already discarded its result. No runtime check can recover it
 // when another view of the function promises a value, even through a union.
 func (l *lowering) refuseVoidWidening(node *ast.Node) error {
+	if l.generatorStepped(node) {
+		return nil // A spread or Array.from never reads a generator's last value (generators.go).
+	}
 	name, source, target := l.relationSite(node)
 	if target == nil || source == nil {
 		return nil

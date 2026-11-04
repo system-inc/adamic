@@ -238,21 +238,14 @@ func (l *lowering) asyncGeneratorRefusal(node *ast.Node) error {
 
 func init() { refusalRules.register(2400, "asyncGeneratorRefusal", (*lowering).asyncGeneratorRefusal) }
 
-// generatorGap stops a synchronous generator function as not yet built. Generators are designed
-// (#yvgst44) and ruled NotYet, never Refused (docs/rulings.md, open question 17), so the stop says
-// intended support. It runs at the ordinal the refusal held, so every program stops where it did.
-// A yield needs no rule of its own: it sits inside a generator function, which stops first.
+// generatorGap stops a synchronous generator function this slice doesn't lower as not yet built.
+// Generators are designed (#yvgst44) and ruled NotYet, never Refused (docs/rulings.md, open question
+// 17), so the stop says intended support. It runs at the ordinal the refusal held, so every program
+// it still stops stops where it did. A named, non-generic function* declared at a module's top level
+// goes on to lowering (#qk8rztp S1c), which stops what it holds that isn't built yet in its own words
+// (generators.go); a yield needs no rule of its own: it sits inside a generator function.
 func (l *lowering) generatorGap(node *ast.Node) error {
-	generator := false
-	switch node.Kind {
-	case ast.KindFunctionDeclaration:
-		generator = node.AsFunctionDeclaration().AsteriskToken != nil
-	case ast.KindFunctionExpression:
-		generator = node.AsFunctionExpression().AsteriskToken != nil
-	case ast.KindMethodDeclaration:
-		generator = node.AsMethodDeclaration().AsteriskToken != nil
-	}
-	if generator {
+	if generatorDeclaration(node) && !loweredGenerator(node) {
 		return l.notYet(node, "a generator function (its counted frame is being built, #qk8rztp)")
 	}
 	return nil

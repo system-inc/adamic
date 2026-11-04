@@ -165,6 +165,11 @@ type iterationPlan struct {
 }
 
 func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
+	if _, isGenerator := l.generatorCallee(where); isGenerator {
+		// Destructuring a generator's call isn't built; a for-of, a spread and Array.from route one by
+		// origin before they plan (forOf, iterated, arrayFrom), so only destructuring reaches here.
+		return nil, l.generatorNotYet(where, "consumed by destructuring")
+	}
 	source := l.concrete(l.checker.GetTypeAtLocation(where))
 	entry := l.iteratorMember(source)
 	if entry == nil {
@@ -386,7 +391,7 @@ func (l *lowering) forOfUser(node *ast.Node, plan *iterationPlan, name *ast.Node
 		}
 		return child.Kind == ast.KindAwaitExpression || child.ForEachChild(suspends)
 	}
-	if (l.function != nil && l.function.Async) || suspends(node) {
+	if (l.function != nil && l.function.Suspends()) || suspends(node) {
 		return nil, l.notYet(node, "async for-of over a user iterator")
 	}
 	source, err := l.expression(node.AsForInOrOfStatement().Expression)

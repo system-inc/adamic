@@ -23,7 +23,7 @@ func borrow(program *ir.Program) {
 	}
 	findAssigned(program.Main, assigned)
 	for _, function := range program.Functions {
-		if function.Closure || function.Async {
+		if function.Closure || function.Suspends() {
 			continue
 		}
 		for _, parameter := range function.Parameters {

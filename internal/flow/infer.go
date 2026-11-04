@@ -133,7 +133,7 @@ func (n *inference) run() {
 			n.list = nil
 			n.instruction = id
 			n.run1(n.function.Instructions[id])
-			if _, suspends := block.Terminal.(*Suspend); suspends && position == len(block.Instructions)-1 {
+			if Suspends(block.Terminal) && position == len(block.Instructions)-1 {
 				// Other queued tasks may mutate anything reachable outside this activation.
 				n.mutateEscaped()
 			}
@@ -579,6 +579,9 @@ func writes(expression ir.Expression) bool {
 		return call.Method != "split" && call.Method != "matchAll" && call.Method != "iteratorDone"
 	case ir.ArraySplice, ir.ArrayFill, ir.ArraySort, ir.MapSet, ir.MapDelete, ir.MapClear, ir.SetAdd:
 		return true
+	case ir.GeneratorNext:
+		// A step moves the generator it's handed on, and its body may write what the frame holds.
+		return true
 	}
 	return false
 }
@@ -598,6 +601,9 @@ func callsBack(expression ir.Expression) bool {
 	// Fail closed for encoding: lowering refuses getter-bearing operands;
 	// schema field reads must never introduce an untracked callback.
 	case ir.JSONEncode, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort, ir.MapForEach, ir.ParallelMap:
+		return true
+	// A step runs the generator's body, which may call anything.
+	case ir.GeneratorNext:
 		return true
 	}
 	return false

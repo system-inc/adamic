@@ -1,0 +1,29 @@
+// A labeled continue and a labeled break to an outer loop each let go of the inner loop's generator
+// once (Memory, 04:42 on #qk8rztp).
+function* numbered(label: string, count: number): Generator<string, void, undefined> {
+    for(let index = 0; index < count; index++) {
+        yield label + String(index);
+    }
+}
+outer: for(const round of [`r${String(1)}`, `r${String(2)}`, `r${String(3)}`]) {
+    for(const item of numbered(round, 5)) {
+        if(round === 'r1' && item.endsWith('1')) {
+            continue outer;
+        }
+        if(item.endsWith('2')) {
+            break outer;
+        }
+        console.log(item);
+    }
+}
+let rounds = 0;
+again: while(rounds < 3) {
+    rounds++;
+    for(const item of numbered(`w${String(rounds)}`, 4)) {
+        if(item.endsWith('1')) {
+            continue again;
+        }
+        console.log(item);
+    }
+}
+console.log(`after ${String(rounds)}`);
