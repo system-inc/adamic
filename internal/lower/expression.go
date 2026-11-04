@@ -313,7 +313,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		}
 		// So is a value held other than as a map where a map is held, literals included: a literal is
 		// made as an object, never as the slot's map (container_fit.go).
-		if contextual := l.slotType(skipped); contextual != nil && l.containerWhereOtherGoes(l.checker.GetTypeAtLocation(skipped), contextual, 0, map[[2]*checker.Type]bool{}) {
+		if contextual := l.slotType(skipped); contextual != nil && l.containerWhereOtherGoes(l.checker.GetTypeAtLocation(skipped), contextual) {
 			return nil, l.notYet(skipped, containerFitStop)
 		}
 	}
