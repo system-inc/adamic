@@ -14,7 +14,7 @@ function run(): void {
     leaf.weight = 7;
     leaf.label = `leaf${4}`;
     console.log(Object.keys(leaf).join(','));
-    console.log(JSON.stringify(leaf));
+    console.log(JSON.stringify(leaf) ?? 'undefined');
     console.log(branch.name);
 }
 run();
