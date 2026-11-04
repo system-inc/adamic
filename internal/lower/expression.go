@@ -312,9 +312,13 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 			return nil, l.notYet(skipped, "a tuple where an array goes (as "+l.checker.TypeToString(contextual)+")")
 		}
 		// So is a value held other than as a map where a map is held, literals included: a literal is
-		// made as an object, never as the slot's map (container_fit.go).
-		if contextual := l.slotType(skipped); contextual != nil && l.containerWhereOtherGoes(l.checker.GetTypeAtLocation(skipped), contextual) {
-			return nil, l.notYet(skipped, containerFitStop)
+		// made as an object, never as the slot's map (container_fit.go). And so is a real Map, Set or
+		// array where a structural object type is held, unless the slot reads it only by members it's
+		// served by (shape_fit.go).
+		if contextual := l.slotType(skipped); contextual != nil {
+			if stop := l.containerWhereOtherGoes(l.checker.GetTypeAtLocation(skipped), contextual, l.libraryCallArgument(skipped)); stop != "" {
+				return nil, l.notYet(skipped, stop)
+			}
 		}
 	}
 	if err != nil || value.Type() != ir.Weak {
