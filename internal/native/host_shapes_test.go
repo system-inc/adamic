@@ -40,9 +40,9 @@ import (
 //
 // A row is one of three verdicts:
 //   - Host: the object's prototype on Node isn't Object's, so the shape's methods must be
-//     adamic_host_methods, or, for an Error, adamic_error_methods. Its pin is a
+//     adamic_host_methods, or, for an Error, adamic_error_methods or adamic_coded_error_methods. Its pin is a
 //     reflect_get stop fixture that stops on it on both backends where Node answers; or, for an
-//     Error, the Error rule (its initializer's methods are adamic_error_methods, and
+//     Error, the Error rule (its initializer's methods are one of the two Error sentinels, and
 //     stop_host_error_prototype.a pins an Object.prototype name stopping on one); or, for a shape
 //     no program holds, why not. That last one is prose, and so host only: if a program ever does
 //     hold one, it stops rather than answering wrong.
@@ -156,8 +156,10 @@ var hostShapeTable = []hostShapeRow{
 	{file: hostShapeRuntime + "map_set.c", name: "string_state_shape", verdict: hostShapeHost, internal: "a string iterator's state, held in its next closure's cell, which no program reads"},
 	{file: hostShapeRuntime + "node_crypto.c", name: "shape", verdict: hostShapeUnreachable, refusal: "hash.a", refused: nullableRefusal},
 	{file: hostShapeRuntime + "node_fs_directory.c", name: "error_shape", verdict: hostShapeHost, errorShape: true},
+	{file: hostShapeRuntime + "node_fs_directory.c", name: "coded_error_shape", verdict: hostShapeHost, errorShape: true},
 	{file: hostShapeRuntime + "node_fs_directory.c", name: "dirent_shape", verdict: hostShapeHost, stop: "stop_host_dirent.a"},
 	{file: hostShapeRuntime + "node_fs_file.c", name: "error_shape", verdict: hostShapeHost, errorShape: true, stop: "stop_host_fs_error_prototype.a"},
+	{file: hostShapeRuntime + "node_fs_file.c", name: "coded_error_shape", verdict: hostShapeHost, errorShape: true},
 	{file: hostShapeRuntime + "node_fs_file.c", name: "date_shape", verdict: hostShapeUnreachable, refusal: "date.a", refused: opaqueRefusal},
 	{file: hostShapeRuntime + "node_fs_file.c", scope: "realpath_system_error", name: "shape", verdict: hostShapeHost, errorShape: true},
 	{file: hostShapeRuntime + "node_fs_file.c", name: "stat_shape", verdict: hostShapeHost, stop: "stop_host_stats_method.a"},
@@ -588,10 +590,10 @@ func fileShapes(file, source string) ([]foundShape, []string) {
 		case current.text == "names" && (at(index-1) == "." || at(index-1) == ">" && at(index-2) == "-") && at(index+1) == "=" && at(index+2) != "=":
 			builder(index)
 			continue
-		case current.text == "methods" && (at(index-1) == "." || at(index-1) == ">" && at(index-2) == "-") && at(index+1) == "=" && at(index+2) != "=" && (at(index+3) == "adamic_host_methods" || at(index+3) == "adamic_error_methods"):
+		case current.text == "methods" && (at(index-1) == "." || at(index-1) == ">" && at(index-2) == "-") && at(index+1) == "=" && at(index+2) != "=" && (at(index+3) == "adamic_host_methods" || errorSentinel(at(index+3))):
 			if found := builder(index); found != nil {
 				found.host = found.host || at(index+3) == "adamic_host_methods"
-				found.errorShape = found.errorShape || at(index+3) == "adamic_error_methods"
+				found.errorShape = found.errorShape || errorSentinel(at(index+3))
 			}
 			continue
 		case current.text != "adamic_shape":
@@ -796,7 +798,13 @@ func shapeInitializer(tokens []cToken) (host, errorShape bool, problem string) {
 			return false, false, "a shape initializer with more than five fields"
 		}
 	}
-	return methods == "& adamic_host_methods", methods == "& adamic_error_methods", ""
+	return methods == "& adamic_host_methods", strings.HasPrefix(methods, "& ") && errorSentinel(strings.TrimPrefix(methods, "& ")), ""
+}
+
+// errorSentinel reports whether a methods table is one adamic_error_is reads as an Error's (exceptions.c):
+// adamic_error_methods, or adamic_coded_error_methods for a Node-coded host error.
+func errorSentinel(name string) bool {
+	return name == "adamic_error_methods" || name == "adamic_coded_error_methods"
 }
 
 // generatorShape matches a shape initializer a Go generator writes into C, its fields captured.
@@ -871,7 +879,7 @@ func generatedShapes(root string) ([]foundShape, []string, error) {
 							continue
 						}
 						host := strings.TrimSpace(fields[3]) == "&adamic_host_methods"
-						errorShape := len(fields) > 3 && strings.TrimSpace(fields[3]) == "&adamic_error_methods"
+						errorShape := strings.HasPrefix(strings.TrimSpace(fields[3]), "&") && errorSentinel(strings.TrimPrefix(strings.TrimSpace(fields[3]), "&"))
 						shapes = append(shapes, foundShape{file: relative, scope: scope, index: count, line: files.Position(literal.Pos()).Line, host: host, errorShape: errorShape})
 						count++
 					}
@@ -932,7 +940,7 @@ func hostShapeProblems(t *testing.T, table []hostShapeRow, shapes []foundShape, 
 			problems = append(problems, fmt.Sprintf("%s:%d: %s is an Error's shape, but its row doesn't say so", shape.file, shape.line, key))
 		}
 		if row.errorShape && !shape.errorShape {
-			problems = append(problems, fmt.Sprintf("%s:%d: %s's row says it's an Error's shape, but its methods aren't adamic_error_methods", shape.file, shape.line, key))
+			problems = append(problems, fmt.Sprintf("%s:%d: %s's row says it's an Error's shape, but its methods aren't an Error sentinel", shape.file, shape.line, key))
 		}
 	}
 	for _, row := range table {
