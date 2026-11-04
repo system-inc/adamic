@@ -1,0 +1,28 @@
+// A RegExp literal's split cast to string[] is proven when the literal has no capturing group, named or
+// unnamed (#b5w3ycg): split pushes undefined only for a capture that took no part in a match. The tsc
+// shapes (emitter.ts:4105 and :4976, parser.ts:10784), then separators that look like groups and hold
+// none: a parenthesis in a class and escaped, a non-capturing group, both lookbehinds, a limit, a
+// parenthesized literal and a readonly view. Every element is read as a string, so one that isn't fails.
+function show(pieces: readonly string[]): string {
+	let shown = '';
+	for (const piece of pieces) {
+		shown += `[${piece.toUpperCase()} ${piece.length}]`;
+	}
+	return `${pieces.length}${shown}`;
+}
+for (const text of ['a\r\nb', 'a\nb', 'a\rb', '', 'one\n\ntwo\r\n']) {
+	const lines = text.split(/\r\n?|\n/) as string[];
+	console.log(`${JSON.stringify(lines)} ${show(lines)}`);
+}
+for (const text of ['  alpha beta\tgamma  ', 'single', '']) {
+	console.log(show(text.trim().split(/\s+/) as string[]));
+}
+console.log(show('a(b(c'.split(/[(]/) as string[]));
+console.log(show('a(b(c'.split(/\(/) as string[]));
+console.log(show('xaybz'.split(/(?:a)|b/) as string[]));
+console.log(show('xabcbab'.split(/(?<=a)b/) as string[]));
+console.log(show('xbcab'.split(/(?<!a)b/) as string[]));
+console.log(show('a b c d'.split(/\s/, 2) as string[]));
+console.log(show('a;b'.split((/;/)) as string[]));
+const viewed = 'p,q,r'.split(/,/) as readonly string[];
+console.log(show(viewed));

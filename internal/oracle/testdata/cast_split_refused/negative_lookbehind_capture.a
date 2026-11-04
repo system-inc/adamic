@@ -1,0 +1,4 @@
+// a-check: refused a cast the runtime can't check
+// A capture inside a negative lookbehind never takes part in a match, so split pushes undefined for it.
+const pieces = 'bacab'.split(/(?<!(b))a/) as string[];
+console.log(`${pieces.length}`);
