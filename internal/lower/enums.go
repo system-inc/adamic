@@ -369,7 +369,13 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 				// A union whose tags can lie is admitted only where every step that refined this read
 				// is a comparison its incoming type proves (enum_tag_flow.go).
 				hazard := l.enumTagHazardOf(declared, "")
-				if hazard != enumTagNoHazard && !l.enumTagRefinementProven(node, declared) {
+				// A property's refused read is its name, which has no flow node: the walk follows the
+				// access the checker narrows (#qeanycw).
+				reference := node
+				if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Name() == node {
+					reference = parent
+				}
+				if hazard != enumTagNoHazard && !l.enumTagRefinementProven(reference, declared) {
 					if hazard == enumTagSharedValueHazard {
 						return &Refused{Where: l.program.Where(node), What: "an object refinement by tags from different numeric enums that share a value", Fix: "give the members tags from one enum, or tags with distinct values (adamic/enum-tag)"}
 					}
