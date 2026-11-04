@@ -1,0 +1,12 @@
+(named.name);
+(named.name);
+(named.name);
+(propertyName);
+(propertyName.expression);
+(propertyName.escapedText);
+(propertyName);
+(propertyName);
+(propertyName);
+(visitedAccessorName);
+(visitedAccessorName);
+unit_324;
