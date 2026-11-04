@@ -4,7 +4,8 @@
 // name. A key that isn't an Error's own field reads undefined on each, as on Node, so the carve-out
 // can't hand out a field the runtime adds later (Language's condition on #ey7aysy). The carve-out
 // holds for an in test and the read it narrows too (Adamic's ruling on #ey7aysy at 23:03Z): each
-// error's names answer in as Node's do, and errorCode, tsc's helper shape, reads a caught code.
+// error's names answer in as Node's do, and errorCode, tsc's helper shape, reads a caught code. A
+// Node-coded host error (a path with a null byte, adamic_coded_error_methods) is an Error alike.
 import { readFileSync } from 'node:fs';
 import { errorCode, propertyOf } from './hostErrors.ts';
 
@@ -37,6 +38,14 @@ try {
 	show('caught foo', propertyOf(error, 'foo'));
 	console.log(`caught in: code ${hasCode(error)} message ${hasMessage(error)} foo ${hasFoo(error)}`);
 	show('errorCode', errorCode(error));
+}
+try {
+	readFileSync('a\0b', 'utf8');
+} catch (error) {
+	show('coded code', propertyOf(error, 'code'));
+	show('coded name', propertyOf(error, 'name'));
+	show('coded foo', propertyOf(error, 'foo'));
+	console.log(`coded in: code ${hasCode(error)} message ${hasMessage(error)} foo ${hasFoo(error)}`);
 }
 try {
 	throw new Error('thrown');
