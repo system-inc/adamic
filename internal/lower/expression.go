@@ -1064,8 +1064,8 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 				// is present and undefined where it isn't, which a reference result holds as its null
 				// pointer (holder.item && holder.item.name, a string | undefined). A number or boolean
 				// result says the checker proved the left present (node && node.kind === 1), so the
-				// missing arm never runs and holds only a placeholder, as a never arm's does. || would
-				// keep the left itself, which the result can't hold.
+				// missing arm runs only if a type was a lie somewhere: it stops there, loud, rather than
+				// read as 0 or false. || would keep the left itself, which the result can't hold.
 				leftNode := node.AsBinaryExpression().Left
 				if operator == ast.KindAmpersandAmpersandToken && of.IsReference() && of != ir.Weak {
 					return ir.Conditional{Condition: ir.Truthy{Value: left}, WhenTrue: fit(right, of), WhenNot: ir.Undefined{Of: of}, Of: of}, nil
@@ -1075,7 +1075,8 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 					if of == ir.Boolean {
 						unreachable = ir.BooleanConstant{}
 					}
-					return ir.Conditional{Condition: ir.Truthy{Value: left}, WhenTrue: fit(right, of), WhenNot: unreachable, Of: of}, nil
+					stop := ir.Panic{Message: ir.StringConstant{Index: l.constant("compiler bug: a left of && proven present was missing")}}
+					return ir.Conditional{Condition: ir.Truthy{Value: left}, WhenTrue: fit(right, of), WhenNot: ir.Effects{Body: []ir.Statement{stop}, Result: unreachable}, Of: of}, nil
 				}
 				return nil, l.notYet(node, "a logical "+typeName(from)+" operand converted to "+typeName(of)+" without a proven result representation")
 			}
