@@ -130,21 +130,3 @@ adamic_string *adamic_fs_file_host_platform(void) {
     adamic_panic(message, sizeof message - 1);
 #endif
 }
-
-// A require of a module that isn't installed (#redxes2): Node's MODULE_NOT_FOUND, its name, code and
-// the first line of its message. Node's message goes on with the require stack, the requiring
-// file's own path, which a native binary has no reproducible answer for yet (installed-layout,
-// internal/oracle's ruled divergences). It always throws.
-double adamic_fs_file_host_require_missing(const adamic_string *specifier) {
-    static const char *const names[] = {"name", "message", "code"};
-    static const bool references[] = {true, true, true};
-    static const adamic_field_kind kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_reference};
-    static const adamic_shape shape = {3, names, references, &adamic_error_methods, kinds};
-    adamic_string opening = ADAMIC_STRING("Cannot find module '"), closing = ADAMIC_STRING("'");
-    adamic_object *error = adamic_object_new(&shape);
-    error->slots[0].reference = text("Error", 5);
-    error->slots[1].reference = adamic_string_concat(3, (adamic_string *const[]){&opening, (adamic_string *)specifier, &closing});
-    error->slots[2].reference = text("MODULE_NOT_FOUND", 16);
-    adamic_thrown = error;
-    return 0;
-}
