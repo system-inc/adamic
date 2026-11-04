@@ -96,6 +96,12 @@ type Options struct {
 	// stderr as it exits (runtime/count.h). Only a counted build does; the counts table is made of them.
 	Count bool
 
+	// LadderEveryStatement, for tests, writes a statement's throw checks as one ladder whenever it
+	// has any, not only where the ladder is shorter than the checks in place (exceptions.go), so the
+	// ladder's releases run on programs whose checks would otherwise be written in place. Only
+	// CWithOptions reads it.
+	LadderEveryStatement bool
+
 	// cpu, for tests, compiles for a particular processor (-march), so a test on an x86 machine can
 	// see what fused multiply-adds would do, as on arm64.
 	cpu string

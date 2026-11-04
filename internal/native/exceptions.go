@@ -256,6 +256,16 @@ func (e *emitter) closeLadder(frame ladderFrame) {
 	}
 }
 
+// unmarked is a program's or a unit's finished C, which no throw marker may reach: every one is
+// replaced when its statement closes, and one left over would be a check with no text, compiled as
+// a stray byte or, worse, read past.
+func unmarked(text string) string {
+	if strings.IndexByte(text, 0) >= 0 {
+		panic("native: compiler bug: a throw marker reached the C")
+	}
+	return text
+}
+
 // throwMarker reads a marker's "serial:index".
 func throwMarker(text string) (int, int, error) {
 	serialText, indexText, found := strings.Cut(text, ":")
@@ -271,8 +281,8 @@ func throwMarker(text string) (int, int, error) {
 }
 
 // settleThrows decides, where the statement's own temporaries have just been let go of, between the
-// ladder for its checks so far and their text in place, whichever is shorter, and writes the ladder
-// here if it's the one.
+// ladder for its checks so far and their text in place, whichever is shorter (or the ladder whenever
+// there's one, under Options.LadderEveryStatement), and writes the ladder here if it's the one.
 func (e *emitter) settleThrows() {
 	ladder := e.ladder
 	// An end inside an aside's work (an expression's effects) isn't the statement's, and its
@@ -288,7 +298,7 @@ func (e *emitter) settleThrows() {
 		inline += strings.Count(site.inline, "\n")
 		shared += strings.Count(site.jump(""), "\n")
 	}
-	if shared >= inline {
+	if shared >= inline && !e.ladderEveryStatement {
 		for _, site := range batch {
 			site.text = site.inline
 		}

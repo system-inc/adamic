@@ -341,9 +341,9 @@ func splitC(source string) (string, []compilationUnit, error) {
 	}
 	units = append([]compilationUnit{{"state.c", state.String()}}, groups...)
 	for i := range units {
-		units[i].source = resolveSourceLines("#include \"units.h\"\n"+units[i].source, "/adamic-units/"+units[i].name)
+		units[i].source = unmarked(resolveSourceLines("#include \"units.h\"\n"+units[i].source, "/adamic-units/"+units[i].name))
 	}
-	return header.String(), units, nil
+	return unmarked(header.String()), units, nil
 }
 
 var unitBuilds sync.Map
