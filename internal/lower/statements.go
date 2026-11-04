@@ -260,6 +260,16 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 		// return panic('why'): panic never returns, so there is nothing to return, and it is the panic.
 		return l.expressionStatement(expression)
 	}
+	if l.function.BodyReturns() != 0 && l.isNever(expression) {
+		// return fail(), fail returning never: its effects run, and the placeholder after them is held
+		// as the function returns (a number's 0, a string's null pointer), never as the call's own
+		// representation, which C would refuse to return from a double or a string function.
+		value, err := l.neverValue(expression, l.function.BodyReturns())
+		if err != nil {
+			return nil, err
+		}
+		return []ir.Statement{ir.Return{Value: value}}, nil
+	}
 	// A generic return specialized to void still evaluates the call before returning.
 	if l.function.BodyReturns() == 0 && expression.Kind == ast.KindCallExpression && l.concrete(l.checker.GetTypeAtLocation(expression)).Flags()&checker.TypeFlagsVoid != 0 {
 		statements, err := l.expressionStatement(expression)
