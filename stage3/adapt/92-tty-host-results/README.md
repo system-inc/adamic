@@ -28,8 +28,8 @@ executeCommandLine.ts:859, :889 and :1008. Replacing undefined with false keeps
 all these branches and selected output functions the same. NO_COLOR/FORCE_COLOR
 precedence is unchanged. These positions were checked on the adapted tree.
 
-The adapter pins the complete before/after sys.ts hashes and unchanged System
-signatures. It validates both targets before writing, and a rerun writes zero
+The adapter pins the before/after text of getWidthOfTerminal and writeOutputIsTTY
+inside getNodeSystem, and checks the unchanged System signatures. It validates both targets before writing, and a rerun writes zero
 files. It changes only the two return expressions. Emitted JavaScript is
 intentionally different in those two bodies; baseline and oracle equality,
 not JavaScript byte identity, is the acceptance criterion.
@@ -58,8 +58,7 @@ TestTTYSourceScope inventories all 746 source files and finds only sys.ts
 changed. Removing the two expression edits restores its exact source bytes.
 Comments-retained and comments-removed transpilation differ only at those two
 return expressions. The System interface text is byte-identical. The adapter's
-idempotence run reports zero files, and its moved-target guard rejects an added
-newline before writing. TestTTYConsumerEquivalence passes 63 cases using the
+idempotence run reports zero files, and its changed-owner guard rejects a mutation inside a method before writing. TestTTYConsumerEquivalence passes 63 cases using the
 actual method bodies, both actual width readers, defaultIsPretty and createColors.
 A wrong numeric fallback (1) makes that witness fail.
 
@@ -125,3 +124,30 @@ The official apply command regenerated the patch table, including older stale
 rows; there is no hand merge. No internal/load, library_node_host.go, fixture
 status, oracle implementation, lane checker, expected count or API sanction is
 changed by B1. Compressed raw logs use the same layout as adaptation 91.
+
+The pins are owner-scoped so an adaptation can edit an unrelated function in the
+same file without invalidating this contract. `proofs/owner-contract.cjs` tests
+foreign edits and changed owners in every formerly pinned file, before and after
+application, including zero-write reruns with unchanged bytes and timestamps.
+Run it with `NODE_PATH=stage3/api/node_modules node proofs/owner-contract.cjs
+BEFORE AFTER SCRATCH`, using this adaptation's official apply snapshots.
+
+The earlier bounded evidence under [proofs/owner-scoped](proofs/owner-scoped/)
+was recorded on main `e4c3a1632aa33563574178f359dec4e44c78374f`; its oracle
+evidence is retained unchanged. The current change is based on
+`9295787a403578ffd8762fb0e29cee61035285f6` from
+`typescript/adapt32-directory-exists`. Adaptation 91 is inherited unchanged
+from that branch. Fresh rebase validation is recorded under
+[proofs/owner-scoped/rebased](proofs/owner-scoped/rebased/), using that branch's
+own adapted product as the control, including its utilities.ts declaration edit.
+
+For the bounded replay, set TTY_PROOF_SCRATCH to the directory containing
+control and after prefix snapshots, and TTY_PREFIX_SNAPSHOTS=1, then run
+proofs/prepare.py. This uses the shared full-apply evidence instead of the
+historical standalone apply-log paths.
+
+The rebased run passes the contract fixtures before and after application,
+including foreign edits that shift lines, changed-owner refusals and zero-write
+reruns. All 81,504 product files (746 under src) match the pending branch's own
+adapted tree, excluding Git metadata. Shard generation and the serial lane Go
+checks pass. The oracle shards are not repeated because the product bytes match.

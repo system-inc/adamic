@@ -1,0 +1,147 @@
+{
+  "baseBranch": "origin/typescript/adapt32-directory-exists",
+  "baseCommit": "9295787a403578ffd8762fb0e29cee61035285f6",
+  "adaptation": "93-builtin-imports",
+  "changedDirectories": [
+    "90-void-widening",
+    "92-tty-host-results",
+    "93-builtin-imports"
+  ],
+  "inherited91Tree": "51160d71ee5a17289696f2b388ada67729851937",
+  "inventoryBefore": [
+    {
+      "adaptation": "90-void-widening",
+      "file": "src/compiler/binder.ts"
+    },
+    {
+      "adaptation": "90-void-widening",
+      "file": "src/compiler/checker.ts"
+    },
+    {
+      "adaptation": "90-void-widening",
+      "file": "src/compiler/emitter.ts"
+    },
+    {
+      "adaptation": "90-void-widening",
+      "file": "src/compiler/parser.ts"
+    },
+    {
+      "adaptation": "90-void-widening",
+      "file": "src/compiler/program.ts"
+    },
+    {
+      "adaptation": "90-void-widening",
+      "file": "src/compiler/symbolWalker.ts"
+    },
+    {
+      "adaptation": "90-void-widening",
+      "file": "src/compiler/transformers/es2017.ts"
+    },
+    {
+      "adaptation": "92-tty-host-results",
+      "file": "src/compiler/sys.ts"
+    },
+    {
+      "adaptation": "93-builtin-imports",
+      "file": "src/compiler/sys.ts"
+    }
+  ],
+  "contract": {
+    "adaptation": "93-builtin-imports",
+    "results": [
+      {
+        "state": "before",
+        "foreign": [
+          {
+            "file": "src/compiler/sys.ts",
+            "function": "sysLog"
+          }
+        ],
+        "accepted": true,
+        "expectedBytes": true,
+        "noOpPreservesBytesAndMtime": true
+      },
+      {
+        "state": "before",
+        "file": "src/compiler/sys.ts",
+        "changedOwnerRefused": true,
+        "noWrite": true
+      },
+      {
+        "state": "before",
+        "file": "src/compiler/sys.ts",
+        "foreignImportAccepted": true,
+        "changedImportOwnerRefused": true,
+        "noWrite": true
+      },
+      {
+        "state": "after",
+        "foreign": [
+          {
+            "file": "src/compiler/sys.ts",
+            "function": "sysLog"
+          }
+        ],
+        "accepted": true,
+        "expectedBytes": true,
+        "noOpPreservesBytesAndMtime": true
+      },
+      {
+        "state": "after",
+        "file": "src/compiler/sys.ts",
+        "changedOwnerRefused": true,
+        "noWrite": true
+      },
+      {
+        "state": "after",
+        "file": "src/compiler/sys.ts",
+        "foreignImportAccepted": true,
+        "changedImportOwnerRefused": true,
+        "noWrite": true
+      }
+    ]
+  },
+  "stages": [
+    {
+      "adaptation": "90-void-widening",
+      "beforeTree": "b8913ec68dd80d8510e01923464c772dbcf8a112",
+      "afterTree": "57608c583f93f24057fbe4c3d4384afe5a37f4ac"
+    },
+    {
+      "adaptation": "92-tty-host-results",
+      "beforeTree": "62c4dad5819be8dfa899990b7c938657cc90bca5",
+      "afterTree": "1b928179a3fb4a10bd965b446915840ea0150113"
+    },
+    {
+      "adaptation": "93-builtin-imports",
+      "beforeTree": "1b928179a3fb4a10bd965b446915840ea0150113",
+      "afterTree": "da643ef6eea2e3d2d71c0f5c6ab48f33a1f54778"
+    }
+  ],
+  "byteComparison": {
+    "byteIdentical": true,
+    "files": 81504,
+    "sourceFiles": 746,
+    "inventorySha256": "5ecfc38516ab840388c6e1f69a9e7dcf52e43297cf0edc8da814625a625aa411",
+    "excluded": "Git metadata only",
+    "left": "/workspace/scratch/owner2-control",
+    "right": "/workspace/scratch/owner2-after"
+  },
+  "utilitiesComparison": {
+    "file": "src/compiler/utilities.ts",
+    "pendingBranchDiffersFromMain": true,
+    "pendingControlEqualsRebasedOutput": true,
+    "mainSha256": "e8f6c9b1c9e25531f9a904606886a597e52fa8749d9cbb78ca3cadd09fc6b36b",
+    "pendingBaseSha256": "ad246678fc97945a1c1ef2b446c8c5c93cefe3e51e3793c7acd1558f6f1ba96f"
+  },
+  "shardGenerationCheck": {
+    "command": "python3 -B stage3/lane/generate_shards.py --check",
+    "exit": 0
+  },
+  "laneGoTest": {
+    "command": "go test ./stage3/lane -skip '^TestShard_' -parallel=1 -count=1",
+    "exit": 0,
+    "result": "ok  \tgithub.com/system-inc/adamic/stage3/lane\t121.949s",
+    "oracleShardsExcludedBecauseProductBytesMatch": true
+  }
+}

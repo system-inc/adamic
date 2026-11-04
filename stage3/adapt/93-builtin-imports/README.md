@@ -35,10 +35,10 @@ are untouched. Only sys.ts changes in the adapted source tree.
 
 ## Complete guards and binding proof
 
-The adapter retains 92's complete before/after hashes, validate-before-write
-discipline and sole conditional write. targets.json pins both entire sys.ts
-byte sequences. A rerun reports zero files and preserves its timestamp; an
-added newline is rejected before writing, preserving the mutant's exact bytes
+The adapter retains validate-before-write discipline and its sole conditional
+write. targets.json pins getNodeSystem, the hostErrors import anchor and the node: import block
+before and after; every edit must lie in the owner or at the exact import insertion. A rerun reports zero files and preserves its timestamp; an
+changed owner is rejected before writing, preserving the mutant's exact bytes
 and timestamp.
 
 Before editing, the TypeScript checker must resolve every qualified access to
@@ -54,7 +54,7 @@ resolve all 27 accesses to the three new import bindings, with no locals left.
 The same checks apply on a rerun. proofs/bindings.cjs independently runs the
 before/after census and directly exercises the semantic guard against a module
 collision, an enclosing function-parameter shadow and a bare namespace value.
-These probes bypass the file-hash guard, so its rejection cannot mask a broken
+These probes bypass the owner-hash guard, so its rejection cannot mask a broken
 binding check. All three must be caught; bindings.json records exact messages.
 
 TestBuiltinSourceScope inventories all 746 source files and finds only sys.ts
@@ -152,3 +152,30 @@ exit 1), then restored check.cjs and built-witness.cjs CONTROL AFTER PROJECT
 OUTPUT_JSON. Run proofs/oracles.py on a quiet box, then proofs/archive.py.
 NODE_PATH must name stage3/api/node_modules. No shared oracle or lane source
 changes. Compressed raw logs follow 92's layout under proofs/logs.
+
+The pins are owner-scoped so an adaptation can edit an unrelated function in the
+same file without invalidating this contract. `proofs/owner-contract.cjs` tests
+foreign edits and changed owners in every formerly pinned file, before and after
+application, including zero-write reruns with unchanged bytes and timestamps.
+Run it with `NODE_PATH=stage3/api/node_modules node proofs/owner-contract.cjs
+BEFORE AFTER SCRATCH`, using this adaptation's official apply snapshots.
+
+The earlier bounded evidence under [proofs/owner-scoped](proofs/owner-scoped/)
+was recorded on main `e4c3a1632aa33563574178f359dec4e44c78374f`; its oracle
+evidence is retained unchanged. The current change is based on
+`9295787a403578ffd8762fb0e29cee61035285f6` from
+`typescript/adapt32-directory-exists`. Adaptation 91 is inherited unchanged
+from that branch. Fresh rebase validation is recorded under
+[proofs/owner-scoped/rebased](proofs/owner-scoped/rebased/), using that branch's
+own adapted product as the control, including its utilities.ts declaration edit.
+
+For the bounded replay, set BUILTIN_PROOF_SCRATCH to the directory containing
+control and after prefix snapshots, and BUILTIN_PREFIX_SNAPSHOTS=1, then run
+proofs/prepare.py. The contract also accepts a separate type-only import and
+rejects a mutation of the pinned import anchor, before and after application.
+
+The rebased run passes the contract fixtures before and after application,
+including foreign edits that shift lines, changed-owner refusals and zero-write
+reruns. All 81,504 product files (746 under src) match the pending branch's own
+adapted tree, excluding Git metadata. Shard generation and the serial lane Go
+checks pass. The oracle shards are not repeated because the product bytes match.
