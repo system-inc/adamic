@@ -154,3 +154,42 @@ A quick table check validates all eight literals and 13,750 same-package
 substring comparisons for rows 1 through 25, with no overlaps. The helpers,
 fixture suite and oracle readers pass with these messages; all five source
 mutants above still exit 1 at their intended assertions.
+
+
+Fresh-checkout dependency pin (40848821 follow-up)
+------------------------------------------------
+
+This harness also requires setup.sh's pinned TypeScript 6.0.3 API and the
+existing TestProduct_FixtureOracleHook. No stage3/api/node_modules installation
+is assumed. The script proof passes CENSUS_TYPESCRIPT from the resolved tsc
+installation, as adaptation 47's verifier already accepts; stock-check uses the
+loader's bundled Node declarations with that explicit API.
+
+In a source-only checkout of 40848821, with an empty environment except runner
+and toolchain settings, TestHostConfigurationScriptReaders/node exits 1:
+
+    Error: Cannot find module '/tmp/host-key-2-proof/stage3/api/node_modules/typescript'
+
+The prebuilt fixture proof with empty Go and product caches also exits 1: all
+four execute subtests (unset, selected, unknown and wrong-recorded) hit their
+30-second child deadline while compiling fixtureOracleHook. The parent now
+fetches that declared product before launching bounded child proofs. The
+standalone, prebuilt, wholly empty-cache fallback can still exceed the existing
+hook recipe's three-minute build bound on this box; the fresh-cache passing
+proof prepares products first, as the gate does.
+
+Mutant: remove the Go caller's CENSUS_TYPESCRIPT binding (replace the cmd.Env
+assignment with `_ = api`). Run:
+
+    go test ./internal/hostconfiguration -run '^TestHostConfigurationScriptReaders$' -count=1
+
+With no stage3/api/node_modules, this exits 1 at
+TestHostConfigurationScriptReaders/node:
+
+    Error: Cannot find module 'typescript'
+    --- FAIL: TestHostConfigurationScriptReaders (0.66s)
+
+Restored, the whole helper package passes (6 top-level tests), loading and
+checking the real pinned API. The fixture proof uses the same existing product
+recipe and preserves its wrong-recorded-bytes negative control. No skip is
+added for either missing input.

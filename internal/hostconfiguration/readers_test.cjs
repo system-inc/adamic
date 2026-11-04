@@ -6,7 +6,9 @@ const path = require('node:path');
 const vm = require('node:vm');
 const childProcess = require('node:child_process');
 const root = path.resolve(__dirname, '../..');
-const ts = require(path.join(root, 'stage3/api/node_modules/typescript'));
+// The Go caller supplies setup.sh's pinned API, as adapt/47's verifier accepts it.
+const ts = require(process.env.CENSUS_TYPESCRIPT || 'typescript');
+assert.equal(ts.version, '6.0.3');
 const original = JSON.parse(fs.readFileSync(path.join(root, 'stage3/fixtures/host/status.json')));
 const selector = path.join(__dirname, 'configuration.cjs');
 const registry = require('./configurations.json');
