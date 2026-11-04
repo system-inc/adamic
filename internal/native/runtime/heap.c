@@ -295,14 +295,28 @@ void *adamic_heap_graph_storage(void *value, size_t size) {
 	if (size > SIZE_MAX - sizeof(adamic_graph_header)) {
 		adamic_panic("region allocation too large", sizeof "region allocation too large" - 1);
 	}
+	// The copy must take the whole allocation, or a field past size is lost with the original.
+	if (old->kind == adamic_kind_object && size != adamic_object_allocation_size((adamic_object *)old)) {
+		adamic_panic("compiler bug: adoption copies short of an object's storage", sizeof "compiler bug: adoption copies short of an object's storage" - 1);
+	}
+	// A node array's metadata object follows its header in the same allocation (construction.c), past
+	// the sizeof *array an adoption copies, so moving one would leave metadata naming freed memory.
+	if (old->kind == adamic_kind_array && ((adamic_array *)old)->metadata == (adamic_object *)(void *)((adamic_array *)old + 1)) {
+		adamic_panic("compiler bug: an array with interior metadata can't be adopted", sizeof "compiler bug: an array with interior metadata can't be adopted" - 1);
+	}
 	adamic_heap *storage = allocate_storage(size + sizeof(adamic_graph_header), old->kind);
 	uint32_t slab = storage->slab;
 	adamic_graph_header *prefix = (adamic_graph_header *)storage;
 	adamic_heap *heap = (adamic_heap *)(prefix + 1);
 	memcpy(heap, old, size);
-	// A value that points into itself (a small Map's inline entries, on area/library) must point into
-	// its new home before the old one is freed.
+	// A value that points into itself must point into its new home before the old one is freed: a
+	// small Map's inline entries (on area/library), and a constructed object's write order, which
+	// keeps its offset from the object.
 	if (old->kind == adamic_kind_map) { adamic_map_relocated((adamic_map *)old, (adamic_map *)heap); }
+	if (old->kind == adamic_kind_object && ((adamic_object *)old)->write_order != NULL) {
+		size_t order_offset = (size_t)((unsigned char *)((adamic_object *)old)->write_order - (unsigned char *)old);
+		((adamic_object *)heap)->write_order = (size_t *)(void *)((unsigned char *)heap + order_offset);
+	}
 	heap->slab = slab | ADAMIC_GRAPH_FLAG;
 	*prefix = (adamic_graph_header){NULL, NULL};
 	deallocate(old);
