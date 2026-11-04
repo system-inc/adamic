@@ -21,16 +21,22 @@ import (
 // assigned, written to a field, to an array element, in an array literal and through push, given as a Map's
 // value (set) and inside a Map's type arguments, as a record literal's value, spread into a typed object, as
 // a class field's initializer, and through a function value whose parameter is the shape, and a class
-// instance implementing ReadonlySet. Two roads stop first at their own stops, on main too, and are pinned
+// instance implementing ReadonlySet, and handed by Map.forEach to a callback whose parameter is a ReadonlyMap
+// (foreach_class, the library's own anonymous callback type; stopped on b4478772 already, since the
+// callback's own parameter mentions the map). Two roads stop first at their own stops, on main too, and are pinned
 // with them: a spread into a typed record (records.go's NotYet) and a class instance's field spread into a
-// typed object (adamic/nominal-class). Depth: a class implementing ReadonlyMap five fields down lowered on
+// typed object (adamic/nominal-class). Intersections, both ways: a shaped value moved whole into
+// { readonly m: ReadonlyMap } & { readonly tag: 1 } (slot_intersection), and { m: FakeMap } & { tag: 1 } seen as
+// { readonly m: ReadonlyMap } (value_intersection), each lowered and crashed natively on b4478772. A slot that
+// is itself ReadonlyMap & { tag: 1 } has no representation (objectIntersection gives none to a collection
+// part), so every value of it is NotYet already, and map_member_intersection pins that stop. Depth: a class implementing ReadonlyMap five fields down lowered on
 // main (native crashed, JavaScript printed false); the map slot is judged at any depth, so depth_5 stops
 // at its leaf and a real Map there (depth_5_real_map, a control) lowers. Six down the walk is past its
 // bound and fails closed: depth_6 stops, and so does depth_6_real_map, a real Map six fields into a literal
 // (the cost of failing closed, said so). The controls lower and agree with Node on sanitized, release and
 // JavaScript: a real Map seen as a ReadonlyMap, a real Set seen as a ReadonlySet, an array seen as a
-// ReadonlyArray, and a real Map five fields down.
-// Mutant: containerWhereOtherGoes answering false lowers the probes that stop at it, each red; the two
+// ReadonlyArray, a real Map five fields down, and a real Map moved whole into the intersection slot.
+// Mutant: containerWhereOtherGoes answering "" lowers the probes that stop at it, each red; the two
 // pinned at their own stops stay green.
 func TestContainerInterfaceValueIsNotYetWhereAMapIsHeld(t *testing.T) {
 	t.Parallel()
@@ -89,6 +95,7 @@ func TestContainerInterfaceValueIsNotYetWhereAMapIsHeld(t *testing.T) {
 		{"spread_object", shapedSet + "const source = { s: shaped };\nconst holder: { s: ReadonlySet<number> } = { ...source };\nconsole.log(String(holder.s.has(1)));\n", ":18:49", containerFit},
 		{"spread_record", shapedSet + "const source = { a: shaped };\nconst record: Record<string, ReadonlySet<number>> = { ...source };\nconst s = record['a'];\n" + readSet, ":18:55", "stage 0 can't lower a spread into record storage from a fixed object yet"},
 		{"class_field", shapedSet + "class Holder {\n\ts: ReadonlySet<number> = shaped;\n}\nconsole.log(String(new Holder().s.has(1)));\n", ":18:27", containerFit},
+		{"foreach_class", "const backing = new Map<string, number>([['a', 1]]);\nclass Fake implements ReadonlyMap<string, number> {\n\treadonly size = 1;\n\tget(key: string): number | undefined { return backing.get(key); }\n\thas(key: string): boolean { return key === 'a'; }\n\tforEach(): void {}\n\tkeys() { return backing.keys(); }\n\tvalues() { return backing.values(); }\n\tentries() { return backing.entries(); }\n\t[Symbol.iterator]() { return backing.entries(); }\n}\nnew Map<string, Fake>([['k', new Fake()]]).forEach((v: ReadonlyMap<string, number>) => console.log(String(v.has('a'))));\n", ":12:52", containerFit},
 		{"function_value", shapedSet + "const take = (s: ReadonlySet<number>): boolean => s.has(1);\nconst f: (s: typeof shaped) => boolean = take;\nconsole.log(String(f(shaped)));\n", ":18:42", containerFit},
 		{"assignment_literal", backing + "let m: ReadonlyMap<string, number> = backing;\nm = {\n" + mapMembers + "};\nconsole.log(String(m.has('a')));\n", ":3:5", containerFit},
 		{"array_literal_element", backing + "const xs: ReadonlyMap<string, number>[] = [{\n" + mapMembers + "}];\nfor (const m of xs) {\n\tconsole.log(String(m.has('a')));\n}\n", ":2:44", containerFit},
@@ -98,6 +105,9 @@ func TestContainerInterfaceValueIsNotYetWhereAMapIsHeld(t *testing.T) {
 		{"depth_5", backing + fakeMap + "const v: { a: { b: { c: { d: { e: FakeMap } } } } } = { a: { b: { c: { d: { e: new FakeMap() } } } } };\nconst w: { readonly a: { readonly b: { readonly c: { readonly d: { readonly e: ReadonlyMap<string, number> } } } } } = v;\nconsole.log(String(w.a.b.c.d.e.has('a')));\n", ":13:120", containerFit},
 		{"depth_6", backing + fakeMap + "const v: { a: { b: { c: { d: { e: { f: FakeMap } } } } } } = { a: { b: { c: { d: { e: { f: new FakeMap() } } } } } };\nconst w: { readonly a: { readonly b: { readonly c: { readonly d: { readonly e: { readonly f: ReadonlyMap<string, number> } } } } } } = v;\nconsole.log(String(w.a.b.c.d.e.f.has('a')));\n", ":13:136", containerFit},
 		{"depth_6_real_map", "const real = new Map<string, number>([['a', 1]]);\nconst v: { a: { b: { c: { d: { e: { f: Map<string, number> } } } } } } = { a: { b: { c: { d: { e: { f: real } } } } } };\nconst w: { readonly a: { readonly b: { readonly c: { readonly d: { readonly e: { readonly f: ReadonlyMap<string, number> } } } } } } = v;\nconsole.log(String(w.a.b.c.d.e.f.has('a')));\n", ":2:74", containerFit},
+		{"slot_intersection", shaped + "type Holder = { readonly m: ReadonlyMap<string, number> } & { readonly tag: 1 };\nconst inner = { m: shaped, tag: 1 as const };\nconst h: Holder = inner;\nconsole.log(String(h.m.has('a')));\n", ":14:19", containerFit},
+		{"value_intersection", backing + fakeMap + "const v: { m: FakeMap } & { tag: 1 } = { m: new FakeMap(), tag: 1 };\nconst w: { readonly m: ReadonlyMap<string, number> } = v;\nconsole.log(String(w.m.has('a')));\n", ":13:56", containerFit},
+		{"map_member_intersection", backing + fakeMap + "type Tagged = ReadonlyMap<string, number> & { readonly tag: 1 };\nclass TaggedFake extends FakeMap {\n\treadonly tag = 1 as const;\n}\nfunction probe(m: Tagged): boolean {\n\treturn m.has('a');\n}\nconsole.log(String(probe(new TaggedFake())));\n", ":16:16", "stage 0 can't lower a value of type Tagged yet"},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
 			t.Run(probe.name+extension, func(t *testing.T) {
@@ -124,6 +134,7 @@ func TestContainerInterfaceValueIsNotYetWhereAMapIsHeld(t *testing.T) {
 		{"real_map", "const real = new Map<string, number>([['a', 1]]);\nconst m: ReadonlyMap<string, number> = real;\nfunction probe(view: ReadonlyMap<string, number>): boolean {\n\treturn view.has('a');\n}\nconsole.log(String(m.has('a') && probe(real)));\nfor (const [key, value] of m) {\n\tconsole.log(`${key} ${value}`);\n}\n", "true\na 1\n"},
 		{"real_set", "const real = new Set<number>([1, 2]);\nconst s: ReadonlySet<number> = real;\nfunction probe(view: ReadonlySet<number>): number {\n\treturn view.size;\n}\nconsole.log(String(s.has(2) && probe(real) === 2));\nfor (const value of s) {\n\tconsole.log(String(value));\n}\n", "true\n1\n2\n"},
 		{"depth_5_real_map", "const real = new Map<string, number>([['a', 1]]);\nconst v: { a: { b: { c: { d: { e: Map<string, number> } } } } } = { a: { b: { c: { d: { e: real } } } } };\nconst w: { readonly a: { readonly b: { readonly c: { readonly d: { readonly e: ReadonlyMap<string, number> } } } } } = v;\nconsole.log(String(w.a.b.c.d.e.has('a')));\n", "true\n"},
+		{"intersection_real_map", "const real = new Map<string, number>([['a', 1]]);\ntype Holder = { readonly m: ReadonlyMap<string, number> } & { readonly tag: 1 };\nconst inner = { m: real, tag: 1 as const };\nconst h: Holder = inner;\nconsole.log(String(h.m.has('a')));\n", "true\n"},
 		{"array", "const xs: ReadonlyArray<number> = [10, 20];\nlet total = 0;\nfor (const x of xs) {\n\ttotal += x;\n}\nconsole.log(String(total + xs.length));\n", "32\n"},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
