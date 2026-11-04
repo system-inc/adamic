@@ -87,6 +87,10 @@ void adamic_share(void *value) {
 		switch (heap->kind) {
 		case adamic_kind_async_frame: case adamic_kind_async_promise: case adamic_kind_async_reaction:
 			adamic_panic("async values cannot cross worker threads", 39);
+#ifdef ADAMIC_CANONICAL_CLOSURES
+		case adamic_kind_generator:
+			adamic_panic("generators cannot cross worker threads", sizeof "generators cannot cross worker threads" - 1);
+#endif
 		case adamic_kind_string: append(&pending, ((adamic_string *)heap)->owner); break;
 		case adamic_kind_object: {
 			adamic_object *object = (adamic_object *)heap;

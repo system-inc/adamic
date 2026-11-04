@@ -21,6 +21,7 @@ var gccRuntimeUnits = []string{
 	"dtoa.c",
 	"exceptions.c",
 	"from_codes.c",
+	"generator.c",
 	"graph_regions.c",
 	"heap.c",
 	"host_runtime.c",
@@ -159,6 +160,9 @@ func TestGCCRuntimeExceptions(t *testing.T)         { t.Parallel(); checkGCCRunt
 
 func TestProduct_GCCRuntimeFromCodes(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "from_codes.c") }
 func TestGCCRuntimeFromCodes(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "from_codes.c") }
+
+func TestProduct_GCCRuntimeGenerator(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "generator.c") }
+func TestGCCRuntimeGenerator(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "generator.c") }
 
 func TestProduct_GCCRuntimeGraphRegions(t *testing.T) {
 	t.Parallel()

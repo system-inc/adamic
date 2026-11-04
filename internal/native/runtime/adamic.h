@@ -93,6 +93,7 @@ enum adamic_kind {
 	adamic_kind_async_reaction,
 #ifdef ADAMIC_CANONICAL_CLOSURES
 	adamic_kind_environment,
+	adamic_kind_generator,
 #endif
 };
 
