@@ -509,6 +509,10 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				walk(value.Elem())
 			}
 		case reflect.Struct:
+			if ir.MeasureStringChecks && ir.MeasuredStringOperation(value.Interface()) {
+				// The #xpkpx8p instrument: design (a)'s edge on every string-making operation.
+				throws = true
+			}
 			if literal, ok := value.Interface().(ir.ObjectLiteral); ok && program.ObjectSpreadMayThrow(literal) {
 				throws = true
 			}

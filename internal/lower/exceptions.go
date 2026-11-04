@@ -255,6 +255,11 @@ func (l *lowering) exceptions() error {
 func (l *lowering) throwsOut(statements []ir.Statement) bool {
 	found := false
 	walk(statements, func(node any) bool {
+		if ir.MeasureStringChecks && ir.MeasuredStringOperation(node) {
+			// The #xpkpx8p instrument: design (a)'s edge on every string-making operation.
+			found = true
+			return false
+		}
 		switch node := node.(type) {
 		case ir.Try:
 			if node.HasCatch {

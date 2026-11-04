@@ -33,7 +33,7 @@ func cProgram(program *ir.Program, handler, lines int, options ...Options) strin
 	// The emit phase's line on $ADAMIC_BUILD_LOG, once a program: a split build divides this one translation unit after
 	// it's emitted (splitC), so a program in units still emits here once.
 	defer buildlog.Phase("emit", time.Now())
-	emitter := &emitter{program: program}
+	emitter := &emitter{program: program, measureStringChecks: ir.MeasureStringChecks}
 	if len(options) > 0 {
 		emitter.debug = options[0].Debug
 		emitter.ladderEveryStatement = options[0].LadderEveryStatement
@@ -510,6 +510,10 @@ type emitter struct {
 	ladders int
 	// ladderEveryStatement is Options.LadderEveryStatement.
 	ladderEveryStatement bool
+
+	// measureStringChecks is ir.MeasureStringChecks, the #xpkpx8p instrument: the pending word is
+	// tested after every string-making operation (ir.MeasuredStringOperation).
+	measureStringChecks bool
 
 	// function is the function being emitted, and functionDepth the scope depth its body starts at.
 	asyncSlots    map[int]int

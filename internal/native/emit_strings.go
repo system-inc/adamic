@@ -38,6 +38,10 @@ func (e *emitter) appendTo(local int, parts []ir.Expression) {
 	}
 	name := e.localName(local)
 	e.line("%s = adamic_string_append(%s, %d, (adamic_string *const[]){%s});", name, name, len(values), strings.Join(values, ", "))
+	if e.measureStringChecks {
+		// The #xpkpx8p instrument: the append is the Concat this assignment holds.
+		e.checkThrown()
+	}
 }
 
 func (e *emitter) stringCall(call ir.StringCall) string {
