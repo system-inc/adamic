@@ -1,0 +1,8 @@
+// hasOwnProperty on a host object stops in the runtime value form naming its argument (#ey7aysy,
+// Adamic's ruling at 23:03Z that every way a key reaches a host value stops): a Stats has no own
+// _fsFileMode on Node, and native's shape holds one, so it answered true. Node prints internal false.
+import * as fs from 'node:fs';
+
+const stats = fs.statSync('.');
+console.log('stats');
+console.log(`internal ${stats.hasOwnProperty('_fsFileMode')}`);

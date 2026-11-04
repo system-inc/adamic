@@ -1,0 +1,6 @@
+// Object.values and Object.entries of a Stats would hand out its slots (adamic_object_values), but
+// lowering refuses a result without one homogeneous value type. host_shapes_test.go requires this
+// program refused in exactly those words.
+import * as fs from 'node:fs';
+const stats = fs.statSync('.');
+console.log(`values ${Object.values(stats).length > 5} entries ${Object.entries(stats).some(([key]) => key === '_fsFileMode')}`);

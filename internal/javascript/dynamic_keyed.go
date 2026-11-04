@@ -110,3 +110,36 @@ func dynamicKeyedRuntime(program *ir.Program) string {
 	builder.WriteString("};\n")
 	return builder.String()
 }
+
+// dynamicHostRuntime guards an in test and the read it narrows on a value viewed as unknown
+// (ir.HasProperty, ir.DynamicProperty), Object.keys (ir.ObjectKeys, ir.ObjectCall), hasOwnProperty
+// (ir.HasOwn) and ToPrimitive's own-member test (ir.OwnFunction), as native guards
+// adamic_has_property, adamic_dynamic_property, adamic_class_object_keys, adamic_object_keys,
+// adamic_object_has and adamic_object_own_function (union.c's adamic_host_stop, Adamic's ruling on
+// #ey7aysy at 23:03Z): a host value stops in the runtime value form before its properties are
+// consulted. A host value here is one whose prototype isn't Object's and that native holds as a
+// plain object's kind, so an array, a collection, a typed array, a closure, a promise, an Error and a
+// program class's instance aren't hosts, as native's host_object passes each of them by; an Error
+// answers its own names as Node's does. adamicDynamicGet's host test names the same values for a
+// run-time key read.
+func dynamicHostRuntime(program *ir.Program) string {
+	message := ""
+	for _, stop := range ir.DynamicKeyedStops {
+		if stop.Name == "RuntimeValue" {
+			message = stop.Message
+		}
+	}
+	instance := ""
+	if len(program.Classes) > 0 {
+		instance = " && adamicClassIdentities.get(value) === undefined"
+	}
+	var builder strings.Builder
+	builder.WriteString("const adamicHostValue = value => typeof value === 'object' && value !== null && !Array.isArray(value) && !(value instanceof Map || value instanceof Set) && !ArrayBuffer.isView(value) && !(value instanceof AdamicClosure) && !(value instanceof Promise) && !(value instanceof Error) && Object.getPrototypeOf(value) !== Object.prototype" + instance + ";\n")
+	builder.WriteString("const adamicHostStop = key => panic(`" + message + " (reading '${key}')`);\n")
+	builder.WriteString("const adamicDynamicHas = (value, key) => adamicHostValue(value) ? adamicHostStop(key) : key in value;\n")
+	builder.WriteString("const adamicDynamicRead = (value, key) => adamicHostValue(value) ? adamicHostStop(key) : value[key];\n")
+	builder.WriteString("const adamicHostKeys = value => adamicHostValue(value) ? adamicHostStop('keys') : Object.keys(value);\n")
+	builder.WriteString("const adamicHostHasOwn = (value, key) => adamicHostValue(value) ? adamicHostStop(key) : value.hasOwnProperty(key);\n")
+	builder.WriteString("const adamicHostCheck = (value, key) => adamicHostValue(value) ? adamicHostStop(key) : true;\n")
+	return builder.String()
+}
