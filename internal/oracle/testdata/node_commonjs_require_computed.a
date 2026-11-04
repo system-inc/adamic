@@ -1,0 +1,27 @@
+// tsc's sys.require loads a plugin from a path it resolved, inside a try whose catch returns the
+// error. Native tsc can't run JavaScript, so a require of a computed path evaluates the path and
+// throws an Error naming it, where stock Node would load the plugin (no-javascript-plugins,
+// backend_divergences_test.go). The source on Node runs as an ES module, with no require, so it never
+// gets to the path.
+import 'node:process';
+
+let built = 0;
+
+function pluginPath(): string {
+	built++;
+	return './plugin-' + String(built) + '.js';
+}
+
+function errorCode(error: unknown): string {
+	return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : 'none';
+}
+
+try {
+	require(pluginPath());
+	console.log('loaded');
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(error.name + ' ' + errorCode(error) + ' ' + error.message.split('\n')[0]);
+	}
+}
+console.log('paths built: ' + String(built));

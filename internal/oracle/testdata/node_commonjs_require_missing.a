@@ -1,0 +1,33 @@
+// tsc's sys.ts installs source-map-support by require, inside a try whose catch ignores the error.
+// tsc 6.0.3 ships no dependencies, so where it's installed Node throws MODULE_NOT_FOUND, and native
+// throws that, with the first line of Node's message (installed-layout, backend_divergences_test.go).
+// The source on Node runs as an ES module, where there's no require at all. Node's globals, require
+// among them, are typed only for a program that imports a node: module.
+import 'node:process';
+
+function errorCode(error: unknown): string {
+	return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : 'none';
+}
+
+function describe(error: Error): string {
+	return error.name + ' ' + errorCode(error) + ' ' + error.message.split('\n')[0];
+}
+
+try {
+	require('source-map-support').install();
+	console.log('installed');
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(describe(error));
+	}
+}
+
+try {
+	require(`source-map-support`);
+	console.log('loaded');
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(describe(error));
+	}
+}
+console.log('after');
