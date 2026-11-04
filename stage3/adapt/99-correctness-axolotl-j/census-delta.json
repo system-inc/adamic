@@ -1,0 +1,1855 @@
+{
+  "provenance": {
+    "method": "Derived from the existing sequential main and fifteen-site first-error censuses, as explicitly authorized. Restore the builder null-path cast and its main getBuildInfo unit observations. Keep the other fourteen removals; no new sites. This is not a newly executed fourteen-site census.",
+    "compiler_commit": "5d521b9076fc432852013274416c1fdbab72581b",
+    "new_branch_base": "95f07db0bb7ede61e91b2dfe2e0582f51c1e28b0",
+    "scope": "Prior compiler pin, identical adaptation composition apart from the restored builder statement. No new-main compiler census is claimed.",
+    "inputs": {
+      "99j-baseline-latent.jsonl": "13c83b0aa7b668598502ae9ad5963150c3e25502ae57bb69d5afbb21307fbf26",
+      "99j-shipped-latent.jsonl": "d1519a109ad2a6ff4661f0c40fb7a3d1cffb44cf78e2d548a044556e0087ef3c",
+      "99j-census-delta.json": "3e5665d3b1199faeacf37262dc3fc88ee15b1535442c947fda62c1454a6714fd"
+    },
+    "validation": "Fresh fourteen-site builder source equals old shipped source with exactly the first check reverted; its entire toReusableCompilerOptionValue equals main. All five other changed files equal old shipped bytes. Both old getBuildInfo lowering stop observations match."
+  },
+  "normalizations": [
+    "Known before/shipped scratch tree prefixes are normalized in locations, error text, and rendered import-type reasons. Embedded source coordinates are mapped through unchanged source lines. Exact AST/statement identities match moved sites. Every matched complete error text is checked equal after only these location normalizations."
+  ],
+  "counts": {
+    "NotYet": {
+      "before": 560,
+      "after": 560,
+      "delta": 0
+    },
+    "Refused": {
+      "before": 4294,
+      "after": 4280,
+      "delta": -14
+    },
+    "SkippedDependency": {
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    },
+    "error": {
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    },
+    "panic": {
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    }
+  },
+  "new_sites": [],
+  "removed_sites": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/builder.ts:2254:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/builder.ts:2304:26",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/builder.ts:2304:26: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "comparison_tree": "baseline",
+      "file": "src/compiler/builder.ts",
+      "units": [
+        "src/compiler/builder.ts:2254:1"
+      ],
+      "index": 281,
+      "fingerprints": [
+        "[\"src/compiler/builder.ts\",[\"createBuilderProgramUsingIncrementalBuildInfo\"],\"AsExpression\",\"6ccdd50ac27fa90c6164b4a750ef3dce64bbe1c11152253ae55a69aa3fe319c2\",\"3694948a7b44bf774ff4e5e344ba4b111148d163efad0c927405a6b3c4295673\"]",
+        "[\"src/compiler/builder.ts\",[\"createBuilderProgramUsingIncrementalBuildInfo\"],\"NonNullExpression\",\"963458243c6c09f8a6156c5c2dc109392d84ba2f1d08e831ceab83f39f5a412a\",\"3694948a7b44bf774ff4e5e344ba4b111148d163efad0c927405a6b3c4295673\"]",
+        "[\"src/compiler/builder.ts\",[\"createBuilderProgramUsingIncrementalBuildInfo\"],\"CallExpression\",\"be5e4371bc3fa06a684d04b7ed40cdf3c829fe0b800a347ce4ec3b93781cddbc\",\"3694948a7b44bf774ff4e5e344ba4b111148d163efad0c927405a6b3c4295673\"]",
+        "[\"src/compiler/builder.ts\",[\"createBuilderProgramUsingIncrementalBuildInfo\"],\"PropertyAccessExpression\",\"6a27637a6825438f15f0f5578e87aea492ec5e8e972066a13915e1dad22050b4\",\"3694948a7b44bf774ff4e5e344ba4b111148d163efad0c927405a6b3c4295673\"]",
+        "[\"src/compiler/builder.ts\",[\"createBuilderProgramUsingIncrementalBuildInfo\"],\"NonNullExpression\",\"a54c832f831e453cc97a84fa9879504b29362fa5b776a007bb61afa3e4013941\",\"3694948a7b44bf774ff4e5e344ba4b111148d163efad0c927405a6b3c4295673\"]",
+        "[\"src/compiler/builder.ts\",[\"createBuilderProgramUsingIncrementalBuildInfo\"],\"Identifier\",\"a388c2621d36f98eb6b43cc470a8d8da8ce0ef5ab6df120f4f5dd2e5874364b6\",\"3694948a7b44bf774ff4e5e344ba4b111148d163efad0c927405a6b3c4295673\"]"
+      ],
+      "movedCastKeys": [
+        "[\"src/compiler/builder.ts\",[\"createBuilderProgramUsingIncrementalBuildInfo\"],\"AsExpression\",\"6ccdd50ac27fa90c6164b4a750ef3dce64bbe1c11152253ae55a69aa3fe319c2\"]"
+      ],
+      "sourceLine": "[emitSignatures!.get(key)! as string] :",
+      "scope": [
+        "createBuilderProgramUsingIncrementalBuildInfo"
+      ],
+      "snippets": [
+        "emitSignatures!.get(key)! as string",
+        "emitSignatures!.get(key)!",
+        "emitSignatures!.get(key)",
+        "emitSignatures!.get",
+        "emitSignatures!",
+        "emitSignatures"
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:53981:47",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/checker.ts:53981:47: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "comparison_tree": "baseline",
+      "file": "src/compiler/checker.ts",
+      "units": [
+        "src/compiler/checker.ts:1486:1"
+      ],
+      "index": 1854,
+      "fingerprints": [
+        "[\"src/compiler/checker.ts\",[\"createTypeChecker\",\"compareTypes\"],\"AsExpression\",\"1085a0145c09e7e9a0c17853cbce57e26beb867be5bc20623f14181b468be43d\",\"ca472bc5a89a7c644333ee355ac8cd78df7aafdcdd673571a0bd2e386ad5f95d\"]",
+        "[\"src/compiler/checker.ts\",[\"createTypeChecker\",\"compareTypes\"],\"PropertyAccessExpression\",\"863bcbcca2b79a31dd2b48735bd2643474b850c66fb23d0b63de65214ec4dd93\",\"ca472bc5a89a7c644333ee355ac8cd78df7aafdcdd673571a0bd2e386ad5f95d\"]",
+        "[\"src/compiler/checker.ts\",[\"createTypeChecker\",\"compareTypes\"],\"ParenthesizedExpression\",\"25ab1a354d0970fc78a749a1ded4102f95fd913d14526f86c87aa8595149fcab\",\"ca472bc5a89a7c644333ee355ac8cd78df7aafdcdd673571a0bd2e386ad5f95d\"]"
+      ],
+      "movedCastKeys": [
+        "[\"src/compiler/checker.ts\",[\"createTypeChecker\",\"compareTypes\"],\"AsExpression\",\"1085a0145c09e7e9a0c17853cbce57e26beb867be5bc20623f14181b468be43d\"]"
+      ],
+      "sourceLine": "const c = compareComparableValues((t1 as LiteralType).value as string, (t2 as LiteralType).value as string);",
+      "scope": [
+        "createTypeChecker",
+        "compareTypes"
+      ],
+      "snippets": [
+        "(t1 as LiteralType).value as string",
+        "(t1 as LiteralType).value",
+        "(t1 as LiteralType)"
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:53981:84",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/checker.ts:53981:84: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "comparison_tree": "baseline",
+      "file": "src/compiler/checker.ts",
+      "units": [
+        "src/compiler/checker.ts:1486:1"
+      ],
+      "index": 1855,
+      "fingerprints": [
+        "[\"src/compiler/checker.ts\",[\"createTypeChecker\",\"compareTypes\"],\"AsExpression\",\"9e4d90c9e2f1a3a78546fb0d5ea797afbe4c48f9ed7eef876a8ba503367156f0\",\"ca472bc5a89a7c644333ee355ac8cd78df7aafdcdd673571a0bd2e386ad5f95d\"]",
+        "[\"src/compiler/checker.ts\",[\"createTypeChecker\",\"compareTypes\"],\"PropertyAccessExpression\",\"83dbd5a12e86e3d21ac0baf0be1a69f156084fc1f05eaba91a1d5085a84a9d03\",\"ca472bc5a89a7c644333ee355ac8cd78df7aafdcdd673571a0bd2e386ad5f95d\"]",
+        "[\"src/compiler/checker.ts\",[\"createTypeChecker\",\"compareTypes\"],\"ParenthesizedExpression\",\"1ede2e6bdc2ed6a47bbc703fd638e824e5258bb19d65b21a6e36942af7fd820e\",\"ca472bc5a89a7c644333ee355ac8cd78df7aafdcdd673571a0bd2e386ad5f95d\"]"
+      ],
+      "movedCastKeys": [
+        "[\"src/compiler/checker.ts\",[\"createTypeChecker\",\"compareTypes\"],\"AsExpression\",\"9e4d90c9e2f1a3a78546fb0d5ea797afbe4c48f9ed7eef876a8ba503367156f0\"]"
+      ],
+      "sourceLine": "const c = compareComparableValues((t1 as LiteralType).value as string, (t2 as LiteralType).value as string);",
+      "scope": [
+        "createTypeChecker",
+        "compareTypes"
+      ],
+      "snippets": [
+        "(t2 as LiteralType).value as string",
+        "(t2 as LiteralType).value",
+        "(t2 as LiteralType)"
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:53988:47",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/checker.ts:53988:47: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "comparison_tree": "baseline",
+      "file": "src/compiler/checker.ts",
+      "units": [
+        "src/compiler/checker.ts:1486:1"
+      ],
+      "index": 1856,
+      "fingerprints": [
+        "[\"src/compiler/checker.ts\",[\"createTypeChecker\",\"compareTypes\"],\"AsExpression\",\"a9367a598b51b4feeac4bf5615995d047d83ef2b0e8c13ed9104a0a155c4fae4\",\"4d51252f2d2945f0b69f78567615a18f8074d05fc9156dae4e6eeb0041a4b3b5\"]",
+        "[\"src/compiler/checker.ts\",[\"createTypeChecker\",\"compareTypes\"],\"PropertyAccessExpression\",\"863bcbcca2b79a31dd2b48735bd2643474b850c66fb23d0b63de65214ec4dd93\",\"4d51252f2d2945f0b69f78567615a18f8074d05fc9156dae4e6eeb0041a4b3b5\"]",
+        "[\"src/compiler/checker.ts\",[\"createTypeChecker\",\"compareTypes\"],\"ParenthesizedExpression\",\"25ab1a354d0970fc78a749a1ded4102f95fd913d14526f86c87aa8595149fcab\",\"4d51252f2d2945f0b69f78567615a18f8074d05fc9156dae4e6eeb0041a4b3b5\"]"
+      ],
+      "movedCastKeys": [
+        "[\"src/compiler/checker.ts\",[\"createTypeChecker\",\"compareTypes\"],\"AsExpression\",\"a9367a598b51b4feeac4bf5615995d047d83ef2b0e8c13ed9104a0a155c4fae4\"]"
+      ],
+      "sourceLine": "const c = compareComparableValues((t1 as LiteralType).value as number, (t2 as LiteralType).value as number);",
+      "scope": [
+        "createTypeChecker",
+        "compareTypes"
+      ],
+      "snippets": [
+        "(t1 as LiteralType).value as number",
+        "(t1 as LiteralType).value",
+        "(t1 as LiteralType)"
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:53988:84",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/checker.ts:53988:84: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "comparison_tree": "baseline",
+      "file": "src/compiler/checker.ts",
+      "units": [
+        "src/compiler/checker.ts:1486:1"
+      ],
+      "index": 1857,
+      "fingerprints": [
+        "[\"src/compiler/checker.ts\",[\"createTypeChecker\",\"compareTypes\"],\"AsExpression\",\"57a2b1b1a505a3d385bb3049d6810444229ac32b03fb5a68e0bf942d514ea96b\",\"4d51252f2d2945f0b69f78567615a18f8074d05fc9156dae4e6eeb0041a4b3b5\"]",
+        "[\"src/compiler/checker.ts\",[\"createTypeChecker\",\"compareTypes\"],\"PropertyAccessExpression\",\"83dbd5a12e86e3d21ac0baf0be1a69f156084fc1f05eaba91a1d5085a84a9d03\",\"4d51252f2d2945f0b69f78567615a18f8074d05fc9156dae4e6eeb0041a4b3b5\"]",
+        "[\"src/compiler/checker.ts\",[\"createTypeChecker\",\"compareTypes\"],\"ParenthesizedExpression\",\"1ede2e6bdc2ed6a47bbc703fd638e824e5258bb19d65b21a6e36942af7fd820e\",\"4d51252f2d2945f0b69f78567615a18f8074d05fc9156dae4e6eeb0041a4b3b5\"]"
+      ],
+      "movedCastKeys": [
+        "[\"src/compiler/checker.ts\",[\"createTypeChecker\",\"compareTypes\"],\"AsExpression\",\"57a2b1b1a505a3d385bb3049d6810444229ac32b03fb5a68e0bf942d514ea96b\"]"
+      ],
+      "sourceLine": "const c = compareComparableValues((t1 as LiteralType).value as number, (t2 as LiteralType).value as number);",
+      "scope": [
+        "createTypeChecker",
+        "compareTypes"
+      ],
+      "snippets": [
+        "(t2 as LiteralType).value as number",
+        "(t2 as LiteralType).value",
+        "(t2 as LiteralType)"
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/commandLineParser.ts:2795:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/commandLineParser.ts:2819:120",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/commandLineParser.ts:2819:120: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "comparison_tree": "baseline",
+      "file": "src/compiler/commandLineParser.ts",
+      "units": [
+        "src/compiler/commandLineParser.ts:2795:1"
+      ],
+      "index": 1921,
+      "fingerprints": [
+        "[\"src/compiler/commandLineParser.ts\",[\"serializeOptionBaseObject\"],\"AsExpression\",\"5358cf84b9f12215beb111ffd5380e71010acfbbf0266a1fa3d5c6e8eda8080f\",\"23d87014e58fddc46dc3bc9fed96408e7e0d726baeaef732ef4823f30a0016d3\"]",
+        "[\"src/compiler/commandLineParser.ts\",[\"serializeOptionBaseObject\"],\"Identifier\",\"cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619\",\"23d87014e58fddc46dc3bc9fed96408e7e0d726baeaef732ef4823f30a0016d3\"]"
+      ],
+      "movedCastKeys": [
+        "[\"src/compiler/commandLineParser.ts\",[\"serializeOptionBaseObject\"],\"AsExpression\",\"5358cf84b9f12215beb111ffd5380e71010acfbbf0266a1fa3d5c6e8eda8080f\"]"
+      ],
+      "sourceLine": "result.set(name, getRelativePathFromFile(pathOptions.configFilePath, getNormalizedAbsolutePath(value as string, getDirectoryPath(pathOptions.configFilePath)), getCanonicalFileName!));",
+      "scope": [
+        "serializeOptionBaseObject"
+      ],
+      "snippets": [
+        "value as string",
+        "value"
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/commandLineParser.ts:3006:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/commandLineParser.ts:3015:35",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/commandLineParser.ts:3015:35: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "comparison_tree": "baseline",
+      "file": "src/compiler/commandLineParser.ts",
+      "units": [
+        "src/compiler/commandLineParser.ts:3006:1"
+      ],
+      "index": 1937,
+      "fingerprints": [
+        "[\"src/compiler/commandLineParser.ts\",[\"convertToOptionValueWithAbsolutePaths\"],\"AsExpression\",\"5358cf84b9f12215beb111ffd5380e71010acfbbf0266a1fa3d5c6e8eda8080f\",\"47ee4a4fb786e06f30bfdf7e71c9648c066f7c1add7af3318fa917610f744f16\"]",
+        "[\"src/compiler/commandLineParser.ts\",[\"convertToOptionValueWithAbsolutePaths\"],\"Identifier\",\"cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619\",\"47ee4a4fb786e06f30bfdf7e71c9648c066f7c1add7af3318fa917610f744f16\"]"
+      ],
+      "movedCastKeys": [
+        "[\"src/compiler/commandLineParser.ts\",[\"convertToOptionValueWithAbsolutePaths\"],\"AsExpression\",\"5358cf84b9f12215beb111ffd5380e71010acfbbf0266a1fa3d5c6e8eda8080f\"]"
+      ],
+      "sourceLine": "return toAbsolutePath(value as string);",
+      "scope": [
+        "convertToOptionValueWithAbsolutePaths"
+      ],
+      "snippets": [
+        "value as string",
+        "value"
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/commandLineParser.ts:3075:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/commandLineParser.ts:3155:32",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/commandLineParser.ts:3155:32: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "comparison_tree": "baseline",
+      "file": "src/compiler/commandLineParser.ts",
+      "units": [
+        "src/compiler/commandLineParser.ts:3075:1"
+      ],
+      "index": 1942,
+      "fingerprints": [
+        "[\"src/compiler/commandLineParser.ts\",[\"parseJsonConfigFileContentWorker\",\"getConfigFileSpecs\"],\"AsExpression\",\"6eb96b92e192306b6401dbd4134d3df88247d44e57347983d8a347e25d499ad4\",\"f6482fdedfed0c5d18fd68ba2d434af67d0e776f6f1ee80d9686af3b18c28642\"]",
+        "[\"src/compiler/commandLineParser.ts\",[\"parseJsonConfigFileContentWorker\",\"getConfigFileSpecs\"],\"CallExpression\",\"3a3bbdedfd4b1477921f88041e9cdefdb63b892fb3bebb84fc07b09a1f8f794c\",\"f6482fdedfed0c5d18fd68ba2d434af67d0e776f6f1ee80d9686af3b18c28642\"]",
+        "[\"src/compiler/commandLineParser.ts\",[\"parseJsonConfigFileContentWorker\",\"getConfigFileSpecs\"],\"Identifier\",\"dfc3376b8266c66e8c24736645128a5f93ccf1df6f381286ffbda654fec8f21c\",\"f6482fdedfed0c5d18fd68ba2d434af67d0e776f6f1ee80d9686af3b18c28642\"]"
+      ],
+      "movedCastKeys": [
+        "[\"src/compiler/commandLineParser.ts\",[\"parseJsonConfigFileContentWorker\",\"getConfigFileSpecs\"],\"AsExpression\",\"6eb96b92e192306b6401dbd4134d3df88247d44e57347983d8a347e25d499ad4\"]"
+      ],
+      "sourceLine": "excludeSpecs = filter([outDir, declarationDir], d => !!d) as string[];",
+      "scope": [
+        "parseJsonConfigFileContentWorker",
+        "getConfigFileSpecs"
+      ],
+      "snippets": [
+        "filter([outDir, declarationDir], d => !!d) as string[]",
+        "filter([outDir, declarationDir], d => !!d)",
+        "filter"
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/commandLineParser.ts:3821:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/commandLineParser.ts:3845:88",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/commandLineParser.ts:3845:88: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "comparison_tree": "baseline",
+      "file": "src/compiler/commandLineParser.ts",
+      "units": [
+        "src/compiler/commandLineParser.ts:3821:1"
+      ],
+      "index": 1978,
+      "fingerprints": [
+        "[\"src/compiler/commandLineParser.ts\",[\"convertJsonOption\"],\"AsExpression\",\"5358cf84b9f12215beb111ffd5380e71010acfbbf0266a1fa3d5c6e8eda8080f\",\"bbb911ff690917d854d578637af29d77c48f0a1c4ad83109f198ca56f68dc275\"]",
+        "[\"src/compiler/commandLineParser.ts\",[\"convertJsonOption\"],\"Identifier\",\"cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619\",\"bbb911ff690917d854d578637af29d77c48f0a1c4ad83109f198ca56f68dc275\"]"
+      ],
+      "movedCastKeys": [
+        "[\"src/compiler/commandLineParser.ts\",[\"convertJsonOption\"],\"AsExpression\",\"5358cf84b9f12215beb111ffd5380e71010acfbbf0266a1fa3d5c6e8eda8080f\"]"
+      ],
+      "sourceLine": "return convertJsonOptionOfCustomType(opt as CommandLineOptionOfCustomType, value as string, errors, valueExpression, sourceFile);",
+      "scope": [
+        "convertJsonOption"
+      ],
+      "snippets": [
+        "value as string",
+        "value"
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/program.ts:1516:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/program.ts:2211:55",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/program.ts:2211:55: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "comparison_tree": "baseline",
+      "file": "src/compiler/program.ts",
+      "units": [
+        "src/compiler/program.ts:1516:1"
+      ],
+      "index": 3141,
+      "fingerprints": [
+        "[\"src/compiler/program.ts\",[\"createProgram\",\"resolveTypeReferenceDirectiveNamesReusingOldState\"],\"AsExpression\",\"812c43802677b0d2a53afc1816b9c754ef1f8b41430ab32f07b68de1ba826ed1\",\"ed69546004a009f719d271ca2349e7c7ac562b8ff08eb9362e6e1b157f30f5d8\"]",
+        "[\"src/compiler/program.ts\",[\"createProgram\",\"resolveTypeReferenceDirectiveNamesReusingOldState\"],\"Identifier\",\"627ec747cdce8aa0764128fed3f5412001afb130083c6188f0842d216f2b8afd\",\"ed69546004a009f719d271ca2349e7c7ac562b8ff08eb9362e6e1b157f30f5d8\"]"
+      ],
+      "movedCastKeys": [
+        "[\"src/compiler/program.ts\",[\"createProgram\",\"resolveTypeReferenceDirectiveNamesReusingOldState\"],\"AsExpression\",\"812c43802677b0d2a53afc1816b9c754ef1f8b41430ab32f07b68de1ba826ed1\"]"
+      ],
+      "sourceLine": "!hasInvalidatedResolutions(toPath(containingFile as string)),",
+      "scope": [
+        "createProgram",
+        "resolveTypeReferenceDirectiveNamesReusingOldState"
+      ],
+      "snippets": [
+        "containingFile as string",
+        "containingFile"
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/sys.ts:596:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:721:30",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/sys.ts:721:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "comparison_tree": "baseline",
+      "file": "src/compiler/sys.ts",
+      "units": [
+        "src/compiler/sys.ts:596:1"
+      ],
+      "index": 3327,
+      "fingerprints": [
+        "[\"src/compiler/sys.ts\",[\"createDirectoryWatcherSupportingRecursive\",\"invokeCallbacks\"],\"AsExpression\",\"6105451d9f0e60806c788f1eefd2fe9d64cdc6c7c91878f146087f49085c5759\",\"f90f8a633729d4edfcfcc56e4348748430801b6a4a3c188c21413cc539c93332\"]",
+        "[\"src/compiler/sys.ts\",[\"createDirectoryWatcherSupportingRecursive\",\"invokeCallbacks\"],\"Identifier\",\"afafb16ac47b9b3da9825787ce354896fce376ae6cb1b5a157fa682a122011a1\",\"f90f8a633729d4edfcfcc56e4348748430801b6a4a3c188c21413cc539c93332\"]"
+      ],
+      "movedCastKeys": [
+        "[\"src/compiler/sys.ts\",[\"createDirectoryWatcherSupportingRecursive\",\"invokeCallbacks\"],\"AsExpression\",\"6105451d9f0e60806c788f1eefd2fe9d64cdc6c7c91878f146087f49085c5759\"]"
+      ],
+      "sourceLine": "(existing as string[]).push(...fileNames);",
+      "scope": [
+        "createDirectoryWatcherSupportingRecursive",
+        "invokeCallbacks"
+      ],
+      "snippets": [
+        "existing as string[]",
+        "existing"
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/transformers/generators.ts:336:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/transformers/generators.ts:3057:35",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/transformers/generators.ts:3057:35: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "comparison_tree": "baseline",
+      "file": "src/compiler/transformers/generators.ts",
+      "units": [
+        "src/compiler/transformers/generators.ts:336:1"
+      ],
+      "index": 3929,
+      "fingerprints": [
+        "[\"src/compiler/transformers/generators.ts\",[\"transformGenerators\",\"writeOperation\"],\"AsExpression\",\"e3ccad4f9b8d230415942dc13971b82bf1bdb5f47429fe8e2271e8122f7902f4\",\"11a697af6c35f7114ade6687bac1a7a4d35aa23a427e46f8b8dbf64efa7cc6b4\"]",
+        "[\"src/compiler/transformers/generators.ts\",[\"transformGenerators\",\"writeOperation\"],\"ElementAccessExpression\",\"fce9be5bd5ed23079ec459d98e51df540f7a94b75ebd63b9998fb528e4a09d62\",\"11a697af6c35f7114ade6687bac1a7a4d35aa23a427e46f8b8dbf64efa7cc6b4\"]",
+        "[\"src/compiler/transformers/generators.ts\",[\"transformGenerators\",\"writeOperation\"],\"Identifier\",\"090772cf4068973daad3f715eb788d39fe2c02be42efd86de81f0e59198d6237\",\"11a697af6c35f7114ade6687bac1a7a4d35aa23a427e46f8b8dbf64efa7cc6b4\"]"
+      ],
+      "movedCastKeys": [
+        "[\"src/compiler/transformers/generators.ts\",[\"transformGenerators\",\"writeOperation\"],\"AsExpression\",\"e3ccad4f9b8d230415942dc13971b82bf1bdb5f47429fe8e2271e8122f7902f4\"]"
+      ],
+      "sourceLine": "return writeBreak(args[0] as Label, location);",
+      "scope": [
+        "transformGenerators",
+        "writeOperation"
+      ],
+      "snippets": [
+        "args[0] as Label",
+        "args[0]",
+        "args"
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/transformers/generators.ts:336:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/transformers/generators.ts:3059:43",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/transformers/generators.ts:3059:43: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "comparison_tree": "baseline",
+      "file": "src/compiler/transformers/generators.ts",
+      "units": [
+        "src/compiler/transformers/generators.ts:336:1"
+      ],
+      "index": 3930,
+      "fingerprints": [
+        "[\"src/compiler/transformers/generators.ts\",[\"transformGenerators\",\"writeOperation\"],\"AsExpression\",\"e3ccad4f9b8d230415942dc13971b82bf1bdb5f47429fe8e2271e8122f7902f4\",\"109cb41c4c58af4c4848f4201ac250e08694cadff85c5aa23415ab832d84bcc1\"]",
+        "[\"src/compiler/transformers/generators.ts\",[\"transformGenerators\",\"writeOperation\"],\"ElementAccessExpression\",\"fce9be5bd5ed23079ec459d98e51df540f7a94b75ebd63b9998fb528e4a09d62\",\"109cb41c4c58af4c4848f4201ac250e08694cadff85c5aa23415ab832d84bcc1\"]",
+        "[\"src/compiler/transformers/generators.ts\",[\"transformGenerators\",\"writeOperation\"],\"Identifier\",\"090772cf4068973daad3f715eb788d39fe2c02be42efd86de81f0e59198d6237\",\"109cb41c4c58af4c4848f4201ac250e08694cadff85c5aa23415ab832d84bcc1\"]"
+      ],
+      "movedCastKeys": [
+        "[\"src/compiler/transformers/generators.ts\",[\"transformGenerators\",\"writeOperation\"],\"AsExpression\",\"e3ccad4f9b8d230415942dc13971b82bf1bdb5f47429fe8e2271e8122f7902f4\"]"
+      ],
+      "sourceLine": "return writeBreakWhenTrue(args[0] as Label, args[1] as Expression, location);",
+      "scope": [
+        "transformGenerators",
+        "writeOperation"
+      ],
+      "snippets": [
+        "args[0] as Label",
+        "args[0]",
+        "args"
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/transformers/generators.ts:336:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/transformers/generators.ts:3061:44",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/transformers/generators.ts:3061:44: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "comparison_tree": "baseline",
+      "file": "src/compiler/transformers/generators.ts",
+      "units": [
+        "src/compiler/transformers/generators.ts:336:1"
+      ],
+      "index": 3932,
+      "fingerprints": [
+        "[\"src/compiler/transformers/generators.ts\",[\"transformGenerators\",\"writeOperation\"],\"AsExpression\",\"e3ccad4f9b8d230415942dc13971b82bf1bdb5f47429fe8e2271e8122f7902f4\",\"62e1bac435a013cac30d2b92a7df661211038f83a380846e17c057a640b839e3\"]",
+        "[\"src/compiler/transformers/generators.ts\",[\"transformGenerators\",\"writeOperation\"],\"ElementAccessExpression\",\"fce9be5bd5ed23079ec459d98e51df540f7a94b75ebd63b9998fb528e4a09d62\",\"62e1bac435a013cac30d2b92a7df661211038f83a380846e17c057a640b839e3\"]",
+        "[\"src/compiler/transformers/generators.ts\",[\"transformGenerators\",\"writeOperation\"],\"Identifier\",\"090772cf4068973daad3f715eb788d39fe2c02be42efd86de81f0e59198d6237\",\"62e1bac435a013cac30d2b92a7df661211038f83a380846e17c057a640b839e3\"]"
+      ],
+      "movedCastKeys": [
+        "[\"src/compiler/transformers/generators.ts\",[\"transformGenerators\",\"writeOperation\"],\"AsExpression\",\"e3ccad4f9b8d230415942dc13971b82bf1bdb5f47429fe8e2271e8122f7902f4\"]"
+      ],
+      "sourceLine": "return writeBreakWhenFalse(args[0] as Label, args[1] as Expression, location);",
+      "scope": [
+        "transformGenerators",
+        "writeOperation"
+      ],
+      "snippets": [
+        "args[0] as Label",
+        "args[0]",
+        "args"
+      ]
+    }
+  ],
+  "matched_sites": 4840,
+  "sites": [
+    {
+      "id": 1,
+      "file": "src/compiler/builder.ts",
+      "owner": "toReusableCompilerOptionValue",
+      "cast": "value as string",
+      "left": true,
+      "before": {
+        "statementWhere": "src/compiler/builder.ts:1466:17",
+        "castWhere": "src/compiler/builder.ts:1466:64",
+        "ownerChain": [
+          "getBuildInfo",
+          "toReusableCompilerOptionValue"
+        ],
+        "unitWhere": "src/compiler/builder.ts:1235:1",
+        "unitName": "getBuildInfo",
+        "statement": "return relativeToBuildInfoEnsuringAbsolutePath(value as string);"
+      },
+      "after": {
+        "statementWhere": "src/compiler/builder.ts:1466:17",
+        "castWhere": "src/compiler/builder.ts:1466:64",
+        "ownerChain": [
+          "getBuildInfo",
+          "toReusableCompilerOptionValue"
+        ],
+        "unitWhere": "src/compiler/builder.ts:1235:1",
+        "unitName": "getBuildInfo",
+        "statement": "return relativeToBuildInfoEnsuringAbsolutePath(value as string);"
+      },
+      "original_cast_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/builder.ts:1235:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/builder.ts:1466:64",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/builder.ts:1466:64: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "comparison_tree": "baseline",
+          "file": "src/compiler/builder.ts",
+          "units": [
+            "src/compiler/builder.ts:1235:1"
+          ]
+        }
+      ],
+      "before_unit": {
+        "name": "getBuildInfo",
+        "where": "src/compiler/builder.ts:1235:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "Refused",
+            "where": "src/compiler/core.ts:1337:1",
+            "reason": "overload 1 of arrayFrom result U[] cannot be served by implementation result (T | U)[]",
+            "text": "src/compiler/core.ts:1337:1: Adamic 0.1 refuses overload 1 of arrayFrom result U[] cannot be served by implementation result (T | U)[]; make the implementation result covariant with every overload result"
+          }
+        ]
+      },
+      "after_unit": {
+        "name": "getBuildInfo",
+        "where": "src/compiler/builder.ts:1235:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "Refused",
+            "where": "src/compiler/core.ts:1337:1",
+            "reason": "overload 1 of arrayFrom result U[] cannot be served by implementation result (T | U)[]",
+            "text": "src/compiler/core.ts:1337:1: Adamic 0.1 refuses overload 1 of arrayFrom result U[] cannot be served by implementation result (T | U)[]; make the implementation result covariant with every overload result"
+          }
+        ]
+      },
+      "original_cast_seen": true,
+      "retained_cast_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/builder.ts:1235:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/builder.ts:1466:64",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/builder.ts:1466:64: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "comparison_tree": "baseline",
+          "file": "src/compiler/builder.ts",
+          "units": [
+            "src/compiler/builder.ts:1235:1"
+          ]
+        }
+      ],
+      "derivation": "Unchanged main source and main unit observations restored; no 14-site census run is claimed."
+    },
+    {
+      "id": 2,
+      "file": "src/compiler/builder.ts",
+      "owner": "createBuilderProgramUsingIncrementalBuildInfo",
+      "cast": "emitSignatures!.get(key)! as string",
+      "left": false,
+      "before": {
+        "statementWhere": "src/compiler/builder.ts:2300:17",
+        "castWhere": "src/compiler/builder.ts:2304:26",
+        "ownerChain": [
+          "createBuilderProgramUsingIncrementalBuildInfo"
+        ],
+        "unitWhere": "src/compiler/builder.ts:2254:1",
+        "unitName": "createBuilderProgramUsingIncrementalBuildInfo",
+        "statement": "emitSignatures!.set(\n                    key,\n                    !isString(value[1]) && !value[1].length ?\n                        // File signature is emit signature but differs in map\n                        [emitSignatures!.get(key)! as string] :\n                        value[1],\n                );"
+      },
+      "after": {
+        "statementWhere": "src/compiler/builder.ts:2300:17",
+        "castWhere": null,
+        "ownerChain": [
+          "createBuilderProgramUsingIncrementalBuildInfo"
+        ],
+        "unitWhere": "src/compiler/builder.ts:2254:1",
+        "unitName": "createBuilderProgramUsingIncrementalBuildInfo",
+        "statement": "emitSignatures!.set(\n                    key,\n                    !isString(value[1]) && !value[1].length ?\n                        // File signature is emit signature but differs in map\n                        [((signature: EmitSignature | undefined) => {\n                            Debug.assert(typeof signature === \"string\");\n                            return signature;\n                        })(emitSignatures!.get(key))] :\n                        value[1],\n                );"
+      },
+      "original_cast_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/builder.ts:2254:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/builder.ts:2304:26",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/builder.ts:2304:26: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "comparison_tree": "baseline",
+          "file": "src/compiler/builder.ts",
+          "units": [
+            "src/compiler/builder.ts:2254:1"
+          ]
+        }
+      ],
+      "before_unit": {
+        "name": "createBuilderProgramUsingIncrementalBuildInfo",
+        "where": "src/compiler/builder.ts:2254:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/builder.ts:2377:13",
+            "reason": "new Map from a generator's pairs",
+            "text": "src/compiler/builder.ts:2377:13: stage 0 can't lower new Map from a generator's pairs yet"
+          }
+        ]
+      },
+      "after_unit": {
+        "name": "createBuilderProgramUsingIncrementalBuildInfo",
+        "where": "src/compiler/builder.ts:2254:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/builder.ts:2380:13",
+            "reason": "new Map from a generator's pairs",
+            "text": "src/compiler/builder.ts:2380:13: stage 0 can't lower new Map from a generator's pairs yet"
+          }
+        ]
+      },
+      "original_cast_seen": true
+    },
+    {
+      "id": 3,
+      "file": "src/compiler/checker.ts",
+      "owner": "compareTypes",
+      "cast": "(t1 as LiteralType).value as string",
+      "left": false,
+      "before": {
+        "statementWhere": "src/compiler/checker.ts:53981:13",
+        "castWhere": "src/compiler/checker.ts:53981:47",
+        "ownerChain": [
+          "createTypeChecker",
+          "compareTypes"
+        ],
+        "unitWhere": "src/compiler/checker.ts:1486:1",
+        "unitName": "createTypeChecker",
+        "statement": "const c = compareComparableValues((t1 as LiteralType).value as string, (t2 as LiteralType).value as string);"
+      },
+      "after": {
+        "statementWhere": "src/compiler/checker.ts:53981:13",
+        "castWhere": null,
+        "ownerChain": [
+          "createTypeChecker",
+          "compareTypes"
+        ],
+        "unitWhere": "src/compiler/checker.ts:1486:1",
+        "unitName": "createTypeChecker",
+        "statement": "const value1 = (t1 as LiteralType).value;\n            const value2 = (t2 as LiteralType).value;\n            Debug.assert(typeof value1 === \"string\" && typeof value2 === \"string\");\n            const c = compareComparableValues(value1, value2);"
+      },
+      "original_cast_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/checker.ts:1486:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/checker.ts:53981:47",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/checker.ts:53981:47: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "comparison_tree": "baseline",
+          "file": "src/compiler/checker.ts",
+          "units": [
+            "src/compiler/checker.ts:1486:1"
+          ]
+        }
+      ],
+      "before_unit": {
+        "name": "createTypeChecker",
+        "where": "src/compiler/checker.ts:1486:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/checker.ts:2968:55",
+            "reason": "a value of type ParameterPropertyDeclaration",
+            "text": "src/compiler/checker.ts:2968:55: stage 0 can't lower a value of type ParameterPropertyDeclaration yet"
+          }
+        ]
+      },
+      "after_unit": {
+        "name": "createTypeChecker",
+        "where": "src/compiler/checker.ts:1486:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/checker.ts:2968:55",
+            "reason": "a value of type ParameterPropertyDeclaration",
+            "text": "src/compiler/checker.ts:2968:55: stage 0 can't lower a value of type ParameterPropertyDeclaration yet"
+          }
+        ]
+      },
+      "original_cast_seen": true
+    },
+    {
+      "id": 4,
+      "file": "src/compiler/checker.ts",
+      "owner": "compareTypes",
+      "cast": "(t2 as LiteralType).value as string",
+      "left": false,
+      "before": {
+        "statementWhere": "src/compiler/checker.ts:53981:13",
+        "castWhere": "src/compiler/checker.ts:53981:84",
+        "ownerChain": [
+          "createTypeChecker",
+          "compareTypes"
+        ],
+        "unitWhere": "src/compiler/checker.ts:1486:1",
+        "unitName": "createTypeChecker",
+        "statement": "const c = compareComparableValues((t1 as LiteralType).value as string, (t2 as LiteralType).value as string);"
+      },
+      "after": {
+        "statementWhere": "src/compiler/checker.ts:53981:13",
+        "castWhere": null,
+        "ownerChain": [
+          "createTypeChecker",
+          "compareTypes"
+        ],
+        "unitWhere": "src/compiler/checker.ts:1486:1",
+        "unitName": "createTypeChecker",
+        "statement": "const value1 = (t1 as LiteralType).value;\n            const value2 = (t2 as LiteralType).value;\n            Debug.assert(typeof value1 === \"string\" && typeof value2 === \"string\");\n            const c = compareComparableValues(value1, value2);"
+      },
+      "original_cast_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/checker.ts:1486:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/checker.ts:53981:84",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/checker.ts:53981:84: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "comparison_tree": "baseline",
+          "file": "src/compiler/checker.ts",
+          "units": [
+            "src/compiler/checker.ts:1486:1"
+          ]
+        }
+      ],
+      "before_unit": {
+        "name": "createTypeChecker",
+        "where": "src/compiler/checker.ts:1486:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/checker.ts:2968:55",
+            "reason": "a value of type ParameterPropertyDeclaration",
+            "text": "src/compiler/checker.ts:2968:55: stage 0 can't lower a value of type ParameterPropertyDeclaration yet"
+          }
+        ]
+      },
+      "after_unit": {
+        "name": "createTypeChecker",
+        "where": "src/compiler/checker.ts:1486:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/checker.ts:2968:55",
+            "reason": "a value of type ParameterPropertyDeclaration",
+            "text": "src/compiler/checker.ts:2968:55: stage 0 can't lower a value of type ParameterPropertyDeclaration yet"
+          }
+        ]
+      },
+      "original_cast_seen": true
+    },
+    {
+      "id": 5,
+      "file": "src/compiler/checker.ts",
+      "owner": "compareTypes",
+      "cast": "(t1 as LiteralType).value as number",
+      "left": false,
+      "before": {
+        "statementWhere": "src/compiler/checker.ts:53988:13",
+        "castWhere": "src/compiler/checker.ts:53988:47",
+        "ownerChain": [
+          "createTypeChecker",
+          "compareTypes"
+        ],
+        "unitWhere": "src/compiler/checker.ts:1486:1",
+        "unitName": "createTypeChecker",
+        "statement": "const c = compareComparableValues((t1 as LiteralType).value as number, (t2 as LiteralType).value as number);"
+      },
+      "after": {
+        "statementWhere": "src/compiler/checker.ts:53991:13",
+        "castWhere": null,
+        "ownerChain": [
+          "createTypeChecker",
+          "compareTypes"
+        ],
+        "unitWhere": "src/compiler/checker.ts:1486:1",
+        "unitName": "createTypeChecker",
+        "statement": "const value1 = (t1 as LiteralType).value;\n            const value2 = (t2 as LiteralType).value;\n            Debug.assert(typeof value1 === \"number\" && typeof value2 === \"number\");\n            const c = compareComparableValues(value1, value2);"
+      },
+      "original_cast_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/checker.ts:1486:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/checker.ts:53988:47",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/checker.ts:53988:47: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "comparison_tree": "baseline",
+          "file": "src/compiler/checker.ts",
+          "units": [
+            "src/compiler/checker.ts:1486:1"
+          ]
+        }
+      ],
+      "before_unit": {
+        "name": "createTypeChecker",
+        "where": "src/compiler/checker.ts:1486:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/checker.ts:2968:55",
+            "reason": "a value of type ParameterPropertyDeclaration",
+            "text": "src/compiler/checker.ts:2968:55: stage 0 can't lower a value of type ParameterPropertyDeclaration yet"
+          }
+        ]
+      },
+      "after_unit": {
+        "name": "createTypeChecker",
+        "where": "src/compiler/checker.ts:1486:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/checker.ts:2968:55",
+            "reason": "a value of type ParameterPropertyDeclaration",
+            "text": "src/compiler/checker.ts:2968:55: stage 0 can't lower a value of type ParameterPropertyDeclaration yet"
+          }
+        ]
+      },
+      "original_cast_seen": true
+    },
+    {
+      "id": 6,
+      "file": "src/compiler/checker.ts",
+      "owner": "compareTypes",
+      "cast": "(t2 as LiteralType).value as number",
+      "left": false,
+      "before": {
+        "statementWhere": "src/compiler/checker.ts:53988:13",
+        "castWhere": "src/compiler/checker.ts:53988:84",
+        "ownerChain": [
+          "createTypeChecker",
+          "compareTypes"
+        ],
+        "unitWhere": "src/compiler/checker.ts:1486:1",
+        "unitName": "createTypeChecker",
+        "statement": "const c = compareComparableValues((t1 as LiteralType).value as number, (t2 as LiteralType).value as number);"
+      },
+      "after": {
+        "statementWhere": "src/compiler/checker.ts:53991:13",
+        "castWhere": null,
+        "ownerChain": [
+          "createTypeChecker",
+          "compareTypes"
+        ],
+        "unitWhere": "src/compiler/checker.ts:1486:1",
+        "unitName": "createTypeChecker",
+        "statement": "const value1 = (t1 as LiteralType).value;\n            const value2 = (t2 as LiteralType).value;\n            Debug.assert(typeof value1 === \"number\" && typeof value2 === \"number\");\n            const c = compareComparableValues(value1, value2);"
+      },
+      "original_cast_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/checker.ts:1486:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/checker.ts:53988:84",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/checker.ts:53988:84: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "comparison_tree": "baseline",
+          "file": "src/compiler/checker.ts",
+          "units": [
+            "src/compiler/checker.ts:1486:1"
+          ]
+        }
+      ],
+      "before_unit": {
+        "name": "createTypeChecker",
+        "where": "src/compiler/checker.ts:1486:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/checker.ts:2968:55",
+            "reason": "a value of type ParameterPropertyDeclaration",
+            "text": "src/compiler/checker.ts:2968:55: stage 0 can't lower a value of type ParameterPropertyDeclaration yet"
+          }
+        ]
+      },
+      "after_unit": {
+        "name": "createTypeChecker",
+        "where": "src/compiler/checker.ts:1486:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/checker.ts:2968:55",
+            "reason": "a value of type ParameterPropertyDeclaration",
+            "text": "src/compiler/checker.ts:2968:55: stage 0 can't lower a value of type ParameterPropertyDeclaration yet"
+          }
+        ]
+      },
+      "original_cast_seen": true
+    },
+    {
+      "id": 7,
+      "file": "src/compiler/commandLineParser.ts",
+      "owner": "serializeOptionBaseObject",
+      "cast": "value as string",
+      "left": false,
+      "before": {
+        "statementWhere": "src/compiler/commandLineParser.ts:2819:25",
+        "castWhere": "src/compiler/commandLineParser.ts:2819:120",
+        "ownerChain": [
+          "serializeOptionBaseObject"
+        ],
+        "unitWhere": "src/compiler/commandLineParser.ts:2795:1",
+        "unitName": "serializeOptionBaseObject",
+        "statement": "result.set(name, getRelativePathFromFile(pathOptions.configFilePath, getNormalizedAbsolutePath(value as string, getDirectoryPath(pathOptions.configFilePath)), getCanonicalFileName!));"
+      },
+      "after": {
+        "statementWhere": "src/compiler/commandLineParser.ts:2819:25",
+        "castWhere": null,
+        "ownerChain": [
+          "serializeOptionBaseObject"
+        ],
+        "unitWhere": "src/compiler/commandLineParser.ts:2795:1",
+        "unitName": "serializeOptionBaseObject",
+        "statement": "Debug.assert(typeof value === \"string\");\n                        result.set(name, getRelativePathFromFile(pathOptions.configFilePath, getNormalizedAbsolutePath(value, getDirectoryPath(pathOptions.configFilePath)), getCanonicalFileName!));"
+      },
+      "original_cast_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/commandLineParser.ts:2795:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/commandLineParser.ts:2819:120",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/commandLineParser.ts:2819:120: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "comparison_tree": "baseline",
+          "file": "src/compiler/commandLineParser.ts",
+          "units": [
+            "src/compiler/commandLineParser.ts:2795:1"
+          ]
+        }
+      ],
+      "before_unit": {
+        "name": "serializeOptionBaseObject",
+        "where": "src/compiler/commandLineParser.ts:2795:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/commandLineParser.ts:2800:20",
+            "reason": "a Map of CompilerOptionsValue",
+            "text": "src/compiler/commandLineParser.ts:2800:20: stage 0 can't lower a Map of CompilerOptionsValue yet"
+          }
+        ]
+      },
+      "after_unit": {
+        "name": "serializeOptionBaseObject",
+        "where": "src/compiler/commandLineParser.ts:2795:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/commandLineParser.ts:2800:20",
+            "reason": "a Map of CompilerOptionsValue",
+            "text": "src/compiler/commandLineParser.ts:2800:20: stage 0 can't lower a Map of CompilerOptionsValue yet"
+          }
+        ]
+      },
+      "original_cast_seen": true
+    },
+    {
+      "id": 8,
+      "file": "src/compiler/commandLineParser.ts",
+      "owner": "serializeOptionBaseObject",
+      "cast": "value as string[]",
+      "left": true,
+      "before": {
+        "statementWhere": "src/compiler/commandLineParser.ts:2822:25",
+        "castWhere": "src/compiler/commandLineParser.ts:2822:43",
+        "ownerChain": [
+          "serializeOptionBaseObject"
+        ],
+        "unitWhere": "src/compiler/commandLineParser.ts:2795:1",
+        "unitName": "serializeOptionBaseObject",
+        "statement": "result.set(name, (value as string[]).map(v => getRelativePathFromFile(pathOptions.configFilePath, getNormalizedAbsolutePath(v, getDirectoryPath(pathOptions.configFilePath)), getCanonicalFileName!)));"
+      },
+      "after": {
+        "statementWhere": "src/compiler/commandLineParser.ts:2823:25",
+        "castWhere": "src/compiler/commandLineParser.ts:2823:43",
+        "ownerChain": [
+          "serializeOptionBaseObject"
+        ],
+        "unitWhere": "src/compiler/commandLineParser.ts:2795:1",
+        "unitName": "serializeOptionBaseObject",
+        "statement": "result.set(name, (value as string[]).map(v => getRelativePathFromFile(pathOptions.configFilePath, getNormalizedAbsolutePath(v, getDirectoryPath(pathOptions.configFilePath)), getCanonicalFileName!)));"
+      },
+      "original_cast_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/commandLineParser.ts:2795:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/commandLineParser.ts:2822:43",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/commandLineParser.ts:2822:43: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "comparison_tree": "baseline",
+          "file": "src/compiler/commandLineParser.ts",
+          "units": [
+            "src/compiler/commandLineParser.ts:2795:1"
+          ]
+        }
+      ],
+      "before_unit": {
+        "name": "serializeOptionBaseObject",
+        "where": "src/compiler/commandLineParser.ts:2795:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/commandLineParser.ts:2800:20",
+            "reason": "a Map of CompilerOptionsValue",
+            "text": "src/compiler/commandLineParser.ts:2800:20: stage 0 can't lower a Map of CompilerOptionsValue yet"
+          }
+        ]
+      },
+      "after_unit": {
+        "name": "serializeOptionBaseObject",
+        "where": "src/compiler/commandLineParser.ts:2795:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/commandLineParser.ts:2800:20",
+            "reason": "a Map of CompilerOptionsValue",
+            "text": "src/compiler/commandLineParser.ts:2800:20: stage 0 can't lower a Map of CompilerOptionsValue yet"
+          }
+        ]
+      },
+      "retained_cast_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/commandLineParser.ts:2795:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/commandLineParser.ts:2823:43",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/commandLineParser.ts:2823:43: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "comparison_tree": "shipped",
+          "file": "src/compiler/commandLineParser.ts",
+          "units": [
+            "src/compiler/commandLineParser.ts:2795:1"
+          ]
+        }
+      ],
+      "original_cast_seen": true
+    },
+    {
+      "id": 9,
+      "file": "src/compiler/commandLineParser.ts",
+      "owner": "convertToOptionValueWithAbsolutePaths",
+      "cast": "value as string",
+      "left": false,
+      "before": {
+        "statementWhere": "src/compiler/commandLineParser.ts:3015:13",
+        "castWhere": "src/compiler/commandLineParser.ts:3015:35",
+        "ownerChain": [
+          "convertToOptionValueWithAbsolutePaths"
+        ],
+        "unitWhere": "src/compiler/commandLineParser.ts:3006:1",
+        "unitName": "convertToOptionValueWithAbsolutePaths",
+        "statement": "return toAbsolutePath(value as string);"
+      },
+      "after": {
+        "statementWhere": "src/compiler/commandLineParser.ts:3016:13",
+        "castWhere": null,
+        "ownerChain": [
+          "convertToOptionValueWithAbsolutePaths"
+        ],
+        "unitWhere": "src/compiler/commandLineParser.ts:3007:1",
+        "unitName": "convertToOptionValueWithAbsolutePaths",
+        "statement": "Debug.assert(typeof value === \"string\");\n            return toAbsolutePath(value);"
+      },
+      "original_cast_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/commandLineParser.ts:3006:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/commandLineParser.ts:3015:35",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/commandLineParser.ts:3015:35: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "comparison_tree": "baseline",
+          "file": "src/compiler/commandLineParser.ts",
+          "units": [
+            "src/compiler/commandLineParser.ts:3006:1"
+          ]
+        }
+      ],
+      "before_unit": {
+        "name": "convertToOptionValueWithAbsolutePaths",
+        "where": "src/compiler/commandLineParser.ts:3006:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/commandLineParser.ts:3054:28",
+            "reason": "a value of type any",
+            "text": "src/compiler/commandLineParser.ts:3054:28: stage 0 can't lower a value of type any yet"
+          }
+        ]
+      },
+      "after_unit": {
+        "name": "convertToOptionValueWithAbsolutePaths",
+        "where": "src/compiler/commandLineParser.ts:3007:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/commandLineParser.ts:3056:28",
+            "reason": "a value of type any",
+            "text": "src/compiler/commandLineParser.ts:3056:28: stage 0 can't lower a value of type any yet"
+          }
+        ]
+      },
+      "original_cast_seen": true
+    },
+    {
+      "id": 10,
+      "file": "src/compiler/commandLineParser.ts",
+      "owner": "getConfigFileSpecs",
+      "cast": "filter([outDir, declarationDir], d => !!d) as string[]",
+      "left": false,
+      "before": {
+        "statementWhere": "src/compiler/commandLineParser.ts:3155:17",
+        "castWhere": "src/compiler/commandLineParser.ts:3155:32",
+        "ownerChain": [
+          "parseJsonConfigFileContentWorker",
+          "getConfigFileSpecs"
+        ],
+        "unitWhere": "src/compiler/commandLineParser.ts:3075:1",
+        "unitName": "parseJsonConfigFileContentWorker",
+        "statement": "excludeSpecs = filter([outDir, declarationDir], d => !!d) as string[];"
+      },
+      "after": {
+        "statementWhere": "src/compiler/commandLineParser.ts:3157:17",
+        "castWhere": null,
+        "ownerChain": [
+          "parseJsonConfigFileContentWorker",
+          "getConfigFileSpecs"
+        ],
+        "unitWhere": "src/compiler/commandLineParser.ts:3077:1",
+        "unitName": "parseJsonConfigFileContentWorker",
+        "statement": "excludeSpecs = filter([outDir, declarationDir], (d): d is string => !!d);"
+      },
+      "original_cast_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/commandLineParser.ts:3075:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/commandLineParser.ts:3155:32",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/commandLineParser.ts:3155:32: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "comparison_tree": "baseline",
+          "file": "src/compiler/commandLineParser.ts",
+          "units": [
+            "src/compiler/commandLineParser.ts:3075:1"
+          ]
+        }
+      ],
+      "before_unit": {
+        "name": "parseJsonConfigFileContentWorker",
+        "where": "src/compiler/commandLineParser.ts:3075:1",
+        "status": "deferred_generic_instantiation",
+        "instantiated": true,
+        "stops": []
+      },
+      "after_unit": {
+        "name": "parseJsonConfigFileContentWorker",
+        "where": "src/compiler/commandLineParser.ts:3077:1",
+        "status": "deferred_generic_instantiation",
+        "instantiated": true,
+        "stops": []
+      },
+      "original_cast_seen": true
+    },
+    {
+      "id": 11,
+      "file": "src/compiler/commandLineParser.ts",
+      "owner": "handleOptionConfigDirTemplateSubstitution",
+      "cast": "value as string[]",
+      "left": true,
+      "before": {
+        "statementWhere": "src/compiler/commandLineParser.ts:3295:21",
+        "castWhere": "src/compiler/commandLineParser.ts:3295:87",
+        "ownerChain": [
+          "handleOptionConfigDirTemplateSubstitution"
+        ],
+        "unitWhere": "src/compiler/commandLineParser.ts:3276:1",
+        "unitName": "handleOptionConfigDirTemplateSubstitution",
+        "statement": "const listResult = getSubstitutedStringArrayWithConfigDirTemplate(value as string[], basePath);"
+      },
+      "after": {
+        "statementWhere": "src/compiler/commandLineParser.ts:3297:21",
+        "castWhere": "src/compiler/commandLineParser.ts:3297:87",
+        "ownerChain": [
+          "handleOptionConfigDirTemplateSubstitution"
+        ],
+        "unitWhere": "src/compiler/commandLineParser.ts:3278:1",
+        "unitName": "handleOptionConfigDirTemplateSubstitution",
+        "statement": "const listResult = getSubstitutedStringArrayWithConfigDirTemplate(value as string[], basePath);"
+      },
+      "original_cast_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/commandLineParser.ts:3276:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/commandLineParser.ts:3295:87",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/commandLineParser.ts:3295:87: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "comparison_tree": "baseline",
+          "file": "src/compiler/commandLineParser.ts",
+          "units": [
+            "src/compiler/commandLineParser.ts:3276:1"
+          ]
+        }
+      ],
+      "before_unit": {
+        "name": "handleOptionConfigDirTemplateSubstitution",
+        "where": "src/compiler/commandLineParser.ts:3276:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/commandLineParser.ts:3287:17",
+            "reason": "a case whose type differs from the switch's",
+            "text": "src/compiler/commandLineParser.ts:3287:17: stage 0 can't lower a case whose type differs from the switch's yet"
+          }
+        ]
+      },
+      "after_unit": {
+        "name": "handleOptionConfigDirTemplateSubstitution",
+        "where": "src/compiler/commandLineParser.ts:3278:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/commandLineParser.ts:3289:17",
+            "reason": "a case whose type differs from the switch's",
+            "text": "src/compiler/commandLineParser.ts:3289:17: stage 0 can't lower a case whose type differs from the switch's yet"
+          }
+        ]
+      },
+      "retained_cast_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/commandLineParser.ts:3278:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/commandLineParser.ts:3297:87",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/commandLineParser.ts:3297:87: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "comparison_tree": "shipped",
+          "file": "src/compiler/commandLineParser.ts",
+          "units": [
+            "src/compiler/commandLineParser.ts:3278:1"
+          ]
+        }
+      ],
+      "original_cast_seen": true
+    },
+    {
+      "id": 12,
+      "file": "src/compiler/commandLineParser.ts",
+      "owner": "convertJsonOption",
+      "cast": "value as string",
+      "left": false,
+      "before": {
+        "statementWhere": "src/compiler/commandLineParser.ts:3845:13",
+        "castWhere": "src/compiler/commandLineParser.ts:3845:88",
+        "ownerChain": [
+          "convertJsonOption"
+        ],
+        "unitWhere": "src/compiler/commandLineParser.ts:3821:1",
+        "unitName": "convertJsonOption",
+        "statement": "return convertJsonOptionOfCustomType(opt as CommandLineOptionOfCustomType, value as string, errors, valueExpression, sourceFile);"
+      },
+      "after": {
+        "statementWhere": "src/compiler/commandLineParser.ts:3847:13",
+        "castWhere": null,
+        "ownerChain": [
+          "convertJsonOption"
+        ],
+        "unitWhere": "src/compiler/commandLineParser.ts:3823:1",
+        "unitName": "convertJsonOption",
+        "statement": "return typeof value === \"string\" ? convertJsonOptionOfCustomType(opt as CommandLineOptionOfCustomType, value, errors, valueExpression, sourceFile) : undefined;"
+      },
+      "original_cast_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/commandLineParser.ts:3821:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/commandLineParser.ts:3845:88",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/commandLineParser.ts:3845:88: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "comparison_tree": "baseline",
+          "file": "src/compiler/commandLineParser.ts",
+          "units": [
+            "src/compiler/commandLineParser.ts:3821:1"
+          ]
+        }
+      ],
+      "before_unit": {
+        "name": "convertJsonOption",
+        "where": "src/compiler/commandLineParser.ts:3821:1",
+        "status": "deferred_generic_instantiation",
+        "instantiated": false,
+        "stops": []
+      },
+      "after_unit": {
+        "name": "convertJsonOption",
+        "where": "src/compiler/commandLineParser.ts:3823:1",
+        "status": "deferred_generic_instantiation",
+        "instantiated": false,
+        "stops": []
+      },
+      "original_cast_seen": true
+    },
+    {
+      "id": 13,
+      "file": "src/compiler/program.ts",
+      "owner": "resolveTypeReferenceDirectiveNamesReusingOldState",
+      "cast": "containingFile as string",
+      "left": false,
+      "before": {
+        "statementWhere": "src/compiler/program.ts:2196:9",
+        "castWhere": "src/compiler/program.ts:2211:55",
+        "ownerChain": [
+          "createProgram",
+          "resolveTypeReferenceDirectiveNamesReusingOldState"
+        ],
+        "unitWhere": "src/compiler/program.ts:1516:1",
+        "unitName": "createProgram",
+        "statement": "return resolveNamesReusingOldState({\n            entries: typeDirectiveNames,\n            containingFile,\n            containingSourceFile,\n            redirectedReference: containingSourceFile && getRedirectReferenceForResolution(containingSourceFile),\n            nameAndModeGetter: typeReferenceResolutionNameAndModeGetter,\n            resolutionWorker: resolveTypeReferenceDirectiveNamesWorker,\n            getResolutionFromOldProgram: (name, mode) =>\n                containingSourceFile ?\n                    oldProgram?.getResolvedTypeReferenceDirective(containingSourceFile, name, mode) :\n                    oldProgram?.getAutomaticTypeDirectiveResolutions()?.get(name, mode),\n            getResolved: getResolvedTypeReferenceDirectiveFromResolution,\n            canReuseResolutionsInFile: () =>\n                containingSourceFile ?\n                    containingSourceFile === oldProgram?.getSourceFile(containingSourceFile.fileName) && !hasInvalidatedResolutions(containingSourceFile.path) :\n                    !hasInvalidatedResolutions(toPath(containingFile as string)),\n        });"
+      },
+      "after": {
+        "statementWhere": "src/compiler/program.ts:2196:9",
+        "castWhere": null,
+        "ownerChain": [
+          "createProgram",
+          "resolveTypeReferenceDirectiveNamesReusingOldState"
+        ],
+        "unitWhere": "src/compiler/program.ts:1516:1",
+        "unitName": "createProgram",
+        "statement": "return resolveNamesReusingOldState({\n            entries: typeDirectiveNames,\n            containingFile,\n            containingSourceFile,\n            redirectedReference: containingSourceFile && getRedirectReferenceForResolution(containingSourceFile),\n            nameAndModeGetter: typeReferenceResolutionNameAndModeGetter,\n            resolutionWorker: resolveTypeReferenceDirectiveNamesWorker,\n            getResolutionFromOldProgram: (name, mode) =>\n                containingSourceFile ?\n                    oldProgram?.getResolvedTypeReferenceDirective(containingSourceFile, name, mode) :\n                    oldProgram?.getAutomaticTypeDirectiveResolutions()?.get(name, mode),\n            getResolved: getResolvedTypeReferenceDirectiveFromResolution,\n            canReuseResolutionsInFile: () =>\n                typeof containingFile !== \"string\" ?\n                    containingFile === oldProgram?.getSourceFile(containingFile.fileName) && !hasInvalidatedResolutions(containingFile.path) :\n                    !hasInvalidatedResolutions(toPath(containingFile)),\n        });"
+      },
+      "original_cast_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/program.ts:1516:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/program.ts:2211:55",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/program.ts:2211:55: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "comparison_tree": "baseline",
+          "file": "src/compiler/program.ts",
+          "units": [
+            "src/compiler/program.ts:1516:1"
+          ]
+        }
+      ],
+      "before_unit": {
+        "name": "createProgram",
+        "where": "src/compiler/program.ts:1516:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/program.ts:3268:14",
+            "reason": "a function returning SortedReadonlyArray<Diagnostic>",
+            "text": "src/compiler/program.ts:3268:14: stage 0 can't lower a function returning SortedReadonlyArray<Diagnostic> yet"
+          }
+        ]
+      },
+      "after_unit": {
+        "name": "createProgram",
+        "where": "src/compiler/program.ts:1516:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/program.ts:3268:14",
+            "reason": "a function returning SortedReadonlyArray<Diagnostic>",
+            "text": "src/compiler/program.ts:3268:14: stage 0 can't lower a function returning SortedReadonlyArray<Diagnostic> yet"
+          }
+        ]
+      },
+      "original_cast_seen": true
+    },
+    {
+      "id": 14,
+      "file": "src/compiler/sys.ts",
+      "owner": "invokeCallbacks",
+      "cast": "existing as string[]",
+      "left": false,
+      "before": {
+        "statementWhere": "src/compiler/sys.ts:721:29",
+        "castWhere": "src/compiler/sys.ts:721:30",
+        "ownerChain": [
+          "createDirectoryWatcherSupportingRecursive",
+          "invokeCallbacks"
+        ],
+        "unitWhere": "src/compiler/sys.ts:596:1",
+        "unitName": "createDirectoryWatcherSupportingRecursive",
+        "statement": "(existing as string[]).push(...fileNames);"
+      },
+      "after": {
+        "statementWhere": "src/compiler/sys.ts:721:29",
+        "castWhere": null,
+        "ownerChain": [
+          "createDirectoryWatcherSupportingRecursive",
+          "invokeCallbacks"
+        ],
+        "unitWhere": "src/compiler/sys.ts:596:1",
+        "unitName": "createDirectoryWatcherSupportingRecursive",
+        "statement": "if (Array.isArray(existing)) existing.push(...fileNames);"
+      },
+      "original_cast_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/sys.ts:596:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/sys.ts:721:30",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/sys.ts:721:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "comparison_tree": "baseline",
+          "file": "src/compiler/sys.ts",
+          "units": [
+            "src/compiler/sys.ts:596:1"
+          ]
+        }
+      ],
+      "before_unit": {
+        "name": "createDirectoryWatcherSupportingRecursive",
+        "where": "src/compiler/sys.ts:596:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "Refused",
+            "where": "src/compiler/sys.ts:600:5",
+            "reason": "a method in object destructuring",
+            "text": "src/compiler/sys.ts:600:5: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this"
+          }
+        ]
+      },
+      "after_unit": {
+        "name": "createDirectoryWatcherSupportingRecursive",
+        "where": "src/compiler/sys.ts:596:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "Refused",
+            "where": "src/compiler/sys.ts:600:5",
+            "reason": "a method in object destructuring",
+            "text": "src/compiler/sys.ts:600:5: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this"
+          }
+        ]
+      },
+      "original_cast_seen": true
+    },
+    {
+      "id": 15,
+      "file": "src/compiler/transformers/generators.ts",
+      "owner": "writeOperation",
+      "cast": "args[0] as Label",
+      "left": false,
+      "before": {
+        "statementWhere": "src/compiler/transformers/generators.ts:3057:17",
+        "castWhere": "src/compiler/transformers/generators.ts:3057:35",
+        "ownerChain": [
+          "transformGenerators",
+          "writeOperation"
+        ],
+        "unitWhere": "src/compiler/transformers/generators.ts:336:1",
+        "unitName": "transformGenerators",
+        "statement": "return writeBreak(args[0] as Label, location);"
+      },
+      "after": {
+        "statementWhere": "src/compiler/transformers/generators.ts:3057:17",
+        "castWhere": null,
+        "ownerChain": [
+          "transformGenerators",
+          "writeOperation"
+        ],
+        "unitWhere": "src/compiler/transformers/generators.ts:336:1",
+        "unitName": "transformGenerators",
+        "statement": "const breakLabel = args[0];\n                Debug.assert(typeof breakLabel === \"number\");\n                return writeBreak(breakLabel, location);"
+      },
+      "original_cast_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/transformers/generators.ts:336:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/transformers/generators.ts:3057:35",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/transformers/generators.ts:3057:35: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "comparison_tree": "baseline",
+          "file": "src/compiler/transformers/generators.ts",
+          "units": [
+            "src/compiler/transformers/generators.ts:336:1"
+          ]
+        }
+      ],
+      "before_unit": {
+        "name": "transformGenerators",
+        "where": "src/compiler/transformers/generators.ts:336:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/transformers/generators.ts:1387:43",
+            "reason": "a value of type InitializedVariableDeclaration",
+            "text": "src/compiler/transformers/generators.ts:1387:43: stage 0 can't lower a value of type InitializedVariableDeclaration yet"
+          }
+        ]
+      },
+      "after_unit": {
+        "name": "transformGenerators",
+        "where": "src/compiler/transformers/generators.ts:336:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/transformers/generators.ts:1387:43",
+            "reason": "a value of type InitializedVariableDeclaration",
+            "text": "src/compiler/transformers/generators.ts:1387:43: stage 0 can't lower a value of type InitializedVariableDeclaration yet"
+          }
+        ]
+      },
+      "original_cast_seen": true
+    },
+    {
+      "id": 16,
+      "file": "src/compiler/transformers/generators.ts",
+      "owner": "writeOperation",
+      "cast": "args[0] as Label",
+      "left": false,
+      "before": {
+        "statementWhere": "src/compiler/transformers/generators.ts:3059:17",
+        "castWhere": "src/compiler/transformers/generators.ts:3059:43",
+        "ownerChain": [
+          "transformGenerators",
+          "writeOperation"
+        ],
+        "unitWhere": "src/compiler/transformers/generators.ts:336:1",
+        "unitName": "transformGenerators",
+        "statement": "return writeBreakWhenTrue(args[0] as Label, args[1] as Expression, location);"
+      },
+      "after": {
+        "statementWhere": "src/compiler/transformers/generators.ts:3061:17",
+        "castWhere": null,
+        "ownerChain": [
+          "transformGenerators",
+          "writeOperation"
+        ],
+        "unitWhere": "src/compiler/transformers/generators.ts:336:1",
+        "unitName": "transformGenerators",
+        "statement": "const breakWhenTrueLabel = args[0];\n                Debug.assert(typeof breakWhenTrueLabel === \"number\");\n                return writeBreakWhenTrue(breakWhenTrueLabel, args[1] as Expression, location);"
+      },
+      "original_cast_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/transformers/generators.ts:336:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/transformers/generators.ts:3059:43",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/transformers/generators.ts:3059:43: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "comparison_tree": "baseline",
+          "file": "src/compiler/transformers/generators.ts",
+          "units": [
+            "src/compiler/transformers/generators.ts:336:1"
+          ]
+        }
+      ],
+      "before_unit": {
+        "name": "transformGenerators",
+        "where": "src/compiler/transformers/generators.ts:336:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/transformers/generators.ts:1387:43",
+            "reason": "a value of type InitializedVariableDeclaration",
+            "text": "src/compiler/transformers/generators.ts:1387:43: stage 0 can't lower a value of type InitializedVariableDeclaration yet"
+          }
+        ]
+      },
+      "after_unit": {
+        "name": "transformGenerators",
+        "where": "src/compiler/transformers/generators.ts:336:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/transformers/generators.ts:1387:43",
+            "reason": "a value of type InitializedVariableDeclaration",
+            "text": "src/compiler/transformers/generators.ts:1387:43: stage 0 can't lower a value of type InitializedVariableDeclaration yet"
+          }
+        ]
+      },
+      "original_cast_seen": true
+    },
+    {
+      "id": 17,
+      "file": "src/compiler/transformers/generators.ts",
+      "owner": "writeOperation",
+      "cast": "args[0] as Label",
+      "left": false,
+      "before": {
+        "statementWhere": "src/compiler/transformers/generators.ts:3061:17",
+        "castWhere": "src/compiler/transformers/generators.ts:3061:44",
+        "ownerChain": [
+          "transformGenerators",
+          "writeOperation"
+        ],
+        "unitWhere": "src/compiler/transformers/generators.ts:336:1",
+        "unitName": "transformGenerators",
+        "statement": "return writeBreakWhenFalse(args[0] as Label, args[1] as Expression, location);"
+      },
+      "after": {
+        "statementWhere": "src/compiler/transformers/generators.ts:3065:17",
+        "castWhere": null,
+        "ownerChain": [
+          "transformGenerators",
+          "writeOperation"
+        ],
+        "unitWhere": "src/compiler/transformers/generators.ts:336:1",
+        "unitName": "transformGenerators",
+        "statement": "const breakWhenFalseLabel = args[0];\n                Debug.assert(typeof breakWhenFalseLabel === \"number\");\n                return writeBreakWhenFalse(breakWhenFalseLabel, args[1] as Expression, location);"
+      },
+      "original_cast_findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/transformers/generators.ts:336:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/transformers/generators.ts:3061:44",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/transformers/generators.ts:3061:44: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "comparison_tree": "baseline",
+          "file": "src/compiler/transformers/generators.ts",
+          "units": [
+            "src/compiler/transformers/generators.ts:336:1"
+          ]
+        }
+      ],
+      "before_unit": {
+        "name": "transformGenerators",
+        "where": "src/compiler/transformers/generators.ts:336:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/transformers/generators.ts:1387:43",
+            "reason": "a value of type InitializedVariableDeclaration",
+            "text": "src/compiler/transformers/generators.ts:1387:43: stage 0 can't lower a value of type InitializedVariableDeclaration yet"
+          }
+        ]
+      },
+      "after_unit": {
+        "name": "transformGenerators",
+        "where": "src/compiler/transformers/generators.ts:336:1",
+        "status": "attempted",
+        "instantiated": false,
+        "stops": [
+          {
+            "kind": "NotYet",
+            "where": "src/compiler/transformers/generators.ts:1387:43",
+            "reason": "a value of type InitializedVariableDeclaration",
+            "text": "src/compiler/transformers/generators.ts:1387:43: stage 0 can't lower a value of type InitializedVariableDeclaration yet"
+          }
+        ]
+      },
+      "original_cast_seen": true
+    }
+  ],
+  "original_measurement_totals": {
+    "main": {
+      "NotYet": 560,
+      "Refused": 4294,
+      "SkippedDependency": 0,
+      "error": 0,
+      "panic": 0
+    },
+    "fifteen_site": {
+      "NotYet": 560,
+      "Refused": 4279,
+      "SkippedDependency": 0,
+      "error": 0,
+      "panic": 0
+    }
+  }
+}
