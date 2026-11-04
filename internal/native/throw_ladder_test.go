@@ -79,3 +79,21 @@ func TestLadderMarkersReplaceOnlyTheirOwnStatements(t *testing.T) {
 		t.Fatalf("markers replaced as %q, want each by its own statement's check", got)
 	}
 }
+
+// No throw marker may reach a program's or a unit's finished C: cProgram and splitC both hand
+// their text through unmarked, which says so out loud. A marker left in the text, here put there
+// directly, is the panic; clean text passes through as it is.
+func TestThrowMarkerReachingTheCPanics(t *testing.T) {
+	t.Parallel()
+	const clean = "int adamic_x;\n"
+	if got := unmarked(clean); got != clean {
+		t.Fatalf("clean C came back as %q", got)
+	}
+	defer func() {
+		if recovered := recover(); recovered != "native: compiler bug: a throw marker reached the C" {
+			t.Fatalf("want the marker's panic, got %v", recovered)
+		}
+	}()
+	unmarked(clean + "\x001:0\x00" + clean)
+	t.Fatal("a marker reached the C without a panic")
+}
