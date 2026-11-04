@@ -209,6 +209,14 @@ void adamic_host_stop(const adamic_heap *value, const adamic_string *key) {
 	keyed_stop(adamic_dynamic_keyed_stop_runtime_value, key);
 }
 
+// adamic_host_stop_keys stops Object.keys of a host object in a message of its own, with no key, since
+// an enumeration reads none (Adamic's ruling on #ey7aysy at 08:28Z; ir.DynamicKeysStop's words).
+void adamic_host_stop_keys(const adamic_heap *value) {
+	if (value == NULL || value == &adamic_null || value->kind != adamic_kind_object || !host_object((const adamic_object *)value)) return;
+	static const char message[] = "this runtime value's own keys aren't enumerated yet";
+	adamic_panic(message, sizeof message - 1);
+}
+
 static void host_stop(const adamic_heap *value, const char *name) {
 	adamic_string key = {{0, adamic_kind_string, 0}, strlen(name), name, 0, NULL, NULL, 0};
 	adamic_host_stop(value, &key);

@@ -583,6 +583,8 @@ extern const adamic_methods adamic_host_methods;
 // adamic_host_stop stops, in the runtime value form naming the key, when the value is a host object
 // (union.c): every reader of a value's names by a key calls it before reading one.
 void adamic_host_stop(const adamic_heap *value, const adamic_string *key);
+// adamic_host_stop_keys stops Object.keys of a host object, with a message that names no key.
+void adamic_host_stop_keys(const adamic_heap *value);
 // adamic_error_to_string is String(error) for an Error, Error.prototype.toString over its name and
 // message fields: the two joined by ": " when both are there, whichever one is when the other is
 // empty, and "" when both are. A coded error's is its class's own toString, name, " [", its code
