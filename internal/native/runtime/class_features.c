@@ -42,8 +42,7 @@ size_t adamic_public_index(const adamic_shape *shape, size_t position) {
 adamic_array *adamic_class_object_keys(const adamic_object *object) {
     // Object.keys of an object whose type lowering knows, a library class's among them: a Stats' or a
     // memoryUsage()'s names aren't Node's own keys, so a host object's keys stop (#ey7aysy).
-    const adamic_string keys_key = {{0, adamic_kind_string, 0}, 4, "keys", 0, NULL, NULL, 0};
-    adamic_host_stop(&object->heap, &keys_key);
+    adamic_host_stop_keys(&object->heap);
     if (object->write_order != NULL) return adamic_object_keys(object);
     if (adamic_record_is(object)) { return adamic_record_keys(object); }
     const adamic_shape *shape = object->class == NULL ? object->shape : object->class->public_shape;
