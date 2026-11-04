@@ -12,7 +12,7 @@ import (
 // lowers to an error holding its header's text, never to a program (#6c4swvt).
 var recordViewPins = []string{
 	"records_pick_readonly_field", "records_pick_hidden_contract", "records_pick_values", "records_pick_of_pick", "records_readonly_view",
-	"records_union_member_out", "records_union_member_write", "records_union_member_optional_write",
+	"records_union_member_out", "records_union_member_out_storage", "records_union_member_write", "records_union_member_optional_write",
 	"records_literal_fixed_branch",
 }
 
