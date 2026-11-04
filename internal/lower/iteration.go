@@ -166,9 +166,9 @@ type iterationPlan struct {
 
 func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
 	if _, isGenerator := l.generatorCallee(where); isGenerator {
-		// Spread, Array.from and destructuring of a generator's call are the next slice's; a for-of
-		// over one never plans here (forOf routes it by origin first).
-		return nil, l.generatorNotYet(where, "consumed by spread, Array.from or destructuring")
+		// Destructuring a generator's call isn't built; a for-of, a spread and Array.from route one by
+		// origin before they plan (forOf, iterated, arrayFrom), so only destructuring reaches here.
+		return nil, l.generatorNotYet(where, "consumed by destructuring")
 	}
 	source := l.concrete(l.checker.GetTypeAtLocation(where))
 	entry := l.iteratorMember(source)

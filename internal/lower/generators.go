@@ -54,9 +54,11 @@ func (l *lowering) generatorSignature(function *ir.Function, declaration *ast.No
 		}
 	}
 	returns := l.concrete(l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(declaration)))
-	// The checker's own Generator, inferred or written, or the IterableIterator a body may be declared
-	// to return. A declared MapIterator or SetIterator waits for the origin rule (#qk8rztp S2).
-	if !l.isLibraryType(returns, "Generator", "IterableIterator") {
+	// The checker's own Generator, inferred or written, or an iterator type a body may be declared to
+	// return. Every consumer routes a generator's call by its origin, never by this declared type
+	// (Compiler's risk 2), so a generator declared MapIterator or SetIterator is stepped as a generator,
+	// never read as a collection's iterator.
+	if !l.isLibraryType(returns, "Generator", "IterableIterator", "MapIterator", "SetIterator") {
 		return l.generatorNotYet(declaration.Name(), "declared to return "+l.checker.TypeToString(returns))
 	}
 	arguments := l.checker.GetTypeArguments(returns)
@@ -291,4 +293,96 @@ func checkGeneratorRoads(program *ir.Program) error {
 		}
 	}
 	return nil
+}
+
+// collectGenerator lowers [...gen(a)] and Array.from(gen(a)) by the generator's origin: a helper of
+// its own per call site takes the call's arguments, makes the generator, steps it to its end pushing
+// each value, and returns the array. Its arguments are evaluated where the spread or Array.from
+// stands, before the generator is made, as JavaScript evaluates them, and the generator is the
+// helper's local, held only by its loop, so the helper's way out, a return or a throw, lets go of it.
+func (l *lowering) collectGenerator(node *ast.Node, function int) (ir.Expression, ir.Type, error) {
+	if l.function != nil && l.function.Suspends() {
+		return nil, 0, l.generatorNotYet(node, "consumed by spread or Array.from inside an async function or a generator")
+	}
+	made, err := l.generatorCall(node, function)
+	if err != nil {
+		return nil, 0, err
+	}
+	call := made.(ir.Call)
+	yields := l.result.Functions[function].Yields
+	helper := len(l.result.Functions)
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: "collect_generator", Returns: ir.Array})
+	var parameters []int
+	var arguments []ir.Expression
+	for _, parameter := range l.result.Functions[function].Parameters {
+		of := l.result.Locals[parameter].Type
+		local := l.iterationLocal(l.result.Locals[parameter].Name, of, helper)
+		parameters = append(parameters, local)
+		arguments = append(arguments, ir.Read{Local: local, Of: of})
+	}
+	if len(arguments) != len(call.Arguments) {
+		return nil, 0, l.generatorNotYet(node, "called with other than one argument per parameter")
+	}
+	generator := l.iterationLocal("generator", ir.Generator, helper)
+	step := l.iterationLocal("generator_step", yields, helper)
+	output := l.iterationLocal("collected", ir.Array, helper)
+	held := ir.Read{Local: generator, Of: ir.Generator}
+	collected := ir.Read{Local: output, Of: ir.Array}
+	loop := ir.Loop{Condition: ir.BooleanConstant{Value: true}, Body: []ir.Statement{
+		ir.Declare{Local: step, Value: ir.GeneratorNext{Generator: held, Function: function, Of: yields}},
+		ir.If{Condition: ir.GeneratorDone{Generator: held}, Then: []ir.Statement{ir.Break{}}},
+		ir.Evaluate{Value: ir.ArrayPush{Array: collected, Value: ir.Read{Local: step, Of: yields}, Element: yields, Site: l.iterationArrayWriteSite(node)}},
+	}}
+	body := []ir.Statement{
+		ir.Declare{Local: output, Value: ir.ArrayLiteral{Element: yields}},
+		ir.Block{Body: []ir.Statement{ir.Declare{Local: generator, Value: ir.Call{Function: function, Arguments: arguments, Returns: ir.Generator}}, loop}},
+		ir.Return{Value: collected},
+	}
+	l.result.Functions[helper] = ir.Function{Name: "collect_generator", Returns: ir.Array, Parameters: parameters, Body: body}
+	return ir.Call{Function: helper, Arguments: call.Arguments, Returns: ir.Array}, yields, nil
+}
+
+// generatorStepped is a direct call to a generator this slice lowers that a spread or Array.from
+// consumes. Both step it to its end and never read its last result's value, so a TReturn of void,
+// what a plain function* infers, is never read there, and the void rules (adamic/no-void-read,
+// no-void-widening) have nothing to refuse in it. It holds only when the yielded type holds no void:
+// every value a step hands over is read. It is syntactic, since the refusal walk runs before any
+// function is lowered.
+func (l *lowering) generatorStepped(node *ast.Node) bool {
+	if node.Kind != ast.KindCallExpression {
+		return false
+	}
+	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+	if !ast.IsIdentifier(callee) {
+		return false
+	}
+	symbol := l.symbol(callee)
+	if symbol == nil || len(symbol.Declarations) != 1 || !loweredGenerator(symbol.Declarations[0]) {
+		return false
+	}
+	site := node
+	for site.Parent != nil && site.Parent.Kind == ast.KindParenthesizedExpression {
+		site = site.Parent
+	}
+	parent := site.Parent
+	switch {
+	case parent == nil:
+		return false
+	case parent.Kind == ast.KindSpreadElement && parent.Parent != nil && parent.Parent.Kind == ast.KindArrayLiteralExpression:
+	case parent.Kind == ast.KindCallExpression && l.arrayFromCall(parent) && len(parent.AsCallExpression().Arguments.Nodes) == 1 && parent.AsCallExpression().Arguments.Nodes[0] == site:
+	default:
+		return false
+	}
+	returns := l.checker.GetTypeAtLocation(node)
+	if !l.isLibraryType(returns, "Generator") {
+		return false
+	}
+	arguments := l.checker.GetTypeArguments(returns)
+	return len(arguments) == 3 && !l.isVoidValue(arguments[0]) && !l.holdsVoid(arguments[0])
+}
+
+// arrayFromCall is a call of the library's Array.from.
+func (l *lowering) arrayFromCall(call *ast.Node) bool {
+	callee := ast.SkipParentheses(call.AsCallExpression().Expression)
+	return callee.Kind == ast.KindPropertyAccessExpression && callee.Name().Text() == "from" && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Array")
 }

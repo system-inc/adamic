@@ -30,6 +30,9 @@ func (l *lowering) refuseVoidContainerRead(node *ast.Node) error {
 	if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) || ast.IsDeclarationName(node) || ast.IsAssignmentTarget(node) {
 		return nil
 	}
+	if l.generatorStepped(node) {
+		return nil // A spread or Array.from never reads a generator's last value (generators.go).
+	}
 	if node.Kind == ast.KindExpressionWithTypeArguments {
 		return nil // A heritage clause names a type, and holds no value.
 	}

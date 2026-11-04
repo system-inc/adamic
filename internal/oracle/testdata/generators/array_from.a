@@ -1,0 +1,9 @@
+// Array.from steps a plain function* to its end, as a spread does.
+function* squares(label: string, limit: number) {
+    for(let index = 1; index <= limit; index++) {
+        yield `${label}${String(index * index)}`;
+    }
+}
+const listed = Array.from(squares(`s${String(2)}`, 4));
+console.log(listed.join(' '));
+console.log(String(Array.from(squares('none', 0)).length));

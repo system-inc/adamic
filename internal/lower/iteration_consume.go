@@ -96,6 +96,9 @@ func (l *lowering) collectIteration(where, sourceNode, callbackNode *ast.Node, p
 }
 
 func (l *lowering) iteratedType(node *ast.Node) (*iterationPlan, ir.Type, error) {
+	if function, isGenerator := l.generatorCallee(node); isGenerator {
+		return nil, l.result.Functions[function].Yields, nil
+	}
 	if plan, err := l.planIteration(node); err != nil {
 		return nil, 0, err
 	} else if plan != nil {
