@@ -21,12 +21,14 @@ import (
 // object, where even length fails in clang), an array as a union-held `{ indexOf(x: string): number }` and a
 // Map as `{ readonly size: number } | string` (both crashed natively), and the roads a Map takes there: a
 // return, a field write, an element write, push, an object literal's field, a callback's result, a cast, a
-// Map's type arguments, and a function value whose parameter is the shape. The table's one entry, an array
-// where `{ readonly length: number }` is held, is a control that lowers and agrees with Node on sanitized,
-// release and JavaScript, through an argument, an initializer read after a push, an object literal's field,
-// a return and an optional slot, and so are a plain object seen that way, a readonly array, and `new
-// Set(xs)`, whose Iterable parameter is a library protocol. Mutant: containerWhereShapeGoes answering ""
-// lowers every probe again, each red, and the controls stay green.
+// Map's type arguments, and a function value whose parameter is the shape, and a Set where a program's own
+// ReadonlySetLike is held, as a parameter and an initializer. The table's one entry, an array where
+// `{ readonly length: number }` is held, is a control that lowers and agrees with Node on sanitized, release
+// and JavaScript, through an argument, an initializer read after a push, an object literal's field, a return
+// and an optional slot, and so are a plain object seen that way, a readonly array, a Set's union and
+// isSubsetOf with a Set, whose ReadonlySetLike parameter is the library call's own, and `new Set(xs)`, whose
+// Iterable parameter is too. Mutant: containerWhereShapeGoes answering "" lowers every probe again, each
+// red, and the controls stay green.
 func TestContainerIsNotYetWhereAShapeIsHeld(t *testing.T) {
 	t.Parallel()
 	const mapStop = "a Map or Set going where a plain object type is held"
@@ -52,6 +54,8 @@ func TestContainerIsNotYetWhereAShapeIsHeld(t *testing.T) {
 		{"callback", lookup + "function run(make: () => Lookup): string { return String(make().get('a')); }\nconsole.log(run(() => m));\n", "1\n", ":4:23", mapStop},
 		{"cast", lookup + "const v = m as Lookup;\nconsole.log(String(v.get('a')));\n", "1\n", ":3:11", mapStop},
 		{"map_type_arguments", lookup + "const inner = new Map<string, Map<string, number>>([['k', m]]);\nconst outer: ReadonlyMap<string, Lookup> = inner;\nconsole.log(String(outer.get('k')?.get('a')));\n", "1\n", ":4:44", mapStop},
+		{"setlike_parameter", "function hasOne(s: ReadonlySetLike<number>): boolean { return s.has(1); }\nconsole.log(String(hasOne(new Set<number>([1]))));\n", "true\n", ":2:27", mapStop},
+		{"setlike_initializer", "const s: ReadonlySetLike<number> = new Set<number>([1, 2]);\nconsole.log(String(s.size));\n", "2\n", ":1:36", mapStop},
 		{"function_value", "const take = (v: number[]): number => v.indexOf(2);\nconst f: (v: number[]) => number = take;\nconst g: (v: { indexOf(x: number): number }) => number = (v) => v.indexOf(2);\nconsole.log(String(f([1, 2]) + g([1, 2])));\n", "2\n", ":4:34", arrayStop},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
@@ -82,6 +86,7 @@ func TestContainerIsNotYetWhereAShapeIsHeld(t *testing.T) {
 		{"length_optional", "function count(v: { readonly length: number } | undefined): number { return v === undefined ? 0 : v.length; }\nconsole.log(String(count([1, 2, 3]) + count(undefined)));\n", "3\n"},
 		{"length_plain_object", "interface Sized { readonly length: number; readonly label: string }\nfunction count(v: { readonly length: number }): number { return v.length; }\nconst s: Sized = { length: 2, label: 'x' };\nconsole.log(String(count(s) + count([1])));\n", "3\n"},
 		{"readonly_array", "function count(v: readonly number[]): number { return v.length + v.indexOf(2); }\nconsole.log(String(count([1, 2, 3])));\n", "4\n"},
+		{"set_union", "const left = new Set<number>([1, 2]);\nconst right: ReadonlySet<number> = new Set<number>([2, 3]);\nconsole.log(`${left.union(right).size} ${left.isSubsetOf(right)}`);\n", "3 false\n"},
 		{"set_from_array", "const xs = [1, 2, 2];\nconst s = new Set<number>(xs);\nconsole.log(String(s.size));\n", "2\n"},
 	} {
 		for _, extension := range []string{".a", ".ts"} {

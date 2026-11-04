@@ -4,6 +4,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // A real Map, Set or array is held as itself (ir.Map, ir.Array), but tsc lets it go anywhere its members
@@ -29,11 +30,6 @@ var shapeFitServed = map[[2]ir.Type]map[string]bool{
 	{ir.Array, ir.Union}: {"length": true},
 }
 
-// shapeFitProtocols are the library's interfaces a library call takes a container through (new Set(xs)'s
-// Iterable, Array.from's ArrayLike), read by that call's own lowering and never as a kept object. A
-// program's own Iterable parameter stops where it's read (for...of over an object).
-var shapeFitProtocols = []string{"Iterable", "IterableIterator", "Iterator", "AsyncIterable", "AsyncIterableIterator", "ArrayLike", "PromiseLike"}
-
 // containerWhereShapeGoes is the stop for a value of type value going where target is expected that
 // carries a value held as a map or an array to where a structural object type is held, reading it by a
 // member shapeFitServed doesn't serve, or "" if it carries none. It looks where tupleWhereArrayGoes does:
@@ -42,7 +38,13 @@ var shapeFitProtocols = []string{"Iterable", "IterableIterator", "Iterator", "As
 // on representation alone, never on the syntax that made the value. A union value stops if any member
 // does; a union slot stops only if every member that takes the value does. It walks four positions deep
 // with a seen set: a library generic's signatures make a new instantiation at every step.
-func (l *lowering) containerWhereShapeGoes(value *checker.Type, target *checker.Type, depth int, visited map[[2]*checker.Type]bool) string {
+//
+// libraryArgument says the value is a library call's own argument (libraryCallArgument), where a library
+// generic it's seen as (new Set(xs)'s Iterable<T>, union's ReadonlySetLike<T>) is that call's protocol,
+// read by the call's own lowering (librarySetMethod takes only a concrete library Set there), never kept
+// as an object. Only the top position and the members of a union there are the call's; a program's own
+// ReadonlySetLike<T> slot is judged like any other, since a Set in it fails the same way.
+func (l *lowering) containerWhereShapeGoes(value *checker.Type, target *checker.Type, libraryArgument bool, depth int, visited map[[2]*checker.Type]bool) string {
 	if value == nil || target == nil || value == target || depth > 4 || visited[[2]*checker.Type{value, target}] {
 		return ""
 	}
@@ -50,7 +52,7 @@ func (l *lowering) containerWhereShapeGoes(value *checker.Type, target *checker.
 	if value.Flags()&checker.TypeFlagsUnion != 0 {
 		// Any member that may be there.
 		for _, member := range value.Types() {
-			if stop := l.containerWhereShapeGoes(member, target, depth+1, visited); stop != "" {
+			if stop := l.containerWhereShapeGoes(member, target, libraryArgument, depth+1, visited); stop != "" {
 				return stop
 			}
 		}
@@ -64,7 +66,7 @@ func (l *lowering) containerWhereShapeGoes(value *checker.Type, target *checker.
 			if !l.checker.IsTypeAssignableTo(value, member) {
 				continue
 			}
-			if stop = l.containerWhereShapeGoes(value, member, depth+1, visited); stop == "" {
+			if stop = l.containerWhereShapeGoes(value, member, libraryArgument, depth+1, visited); stop == "" {
 				return ""
 			}
 		}
@@ -75,10 +77,10 @@ func (l *lowering) containerWhereShapeGoes(value *checker.Type, target *checker.
 	}
 	held, valueKnown := l.representation(value)
 	slot, slotKnown := l.representation(target)
-	if valueKnown && slotKnown && (held == ir.Map || held == ir.Array) && (slot == ir.Object || slot == ir.Union) && target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) != 0 && !l.checker.IsArrayType(target) && !checker.IsTupleType(target) && !l.isLibraryType(target, shapeFitProtocols...) {
+	if valueKnown && slotKnown && (held == ir.Map || held == ir.Array) && (slot == ir.Object || slot == ir.Union) && target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) != 0 && !l.checker.IsArrayType(target) && !checker.IsTupleType(target) && !(libraryArgument && libraryGeneric(target)) {
 		// A structural slot: every member it declares must be one the value is served by. A union-held
-		// slot declaring none ({}, object) reads nothing of it, but an object-held one is handed the
-		// container as an object all the same.
+		// slot declaring none ({}) reads nothing of it, but an object-held one is handed the container as
+		// an object all the same.
 		members := l.checker.GetPropertiesOfType(target)
 		if slot == ir.Union && len(members) == 0 {
 			return ""
@@ -106,7 +108,7 @@ func (l *lowering) containerWhereShapeGoes(value *checker.Type, target *checker.
 		if l.checker.IsArrayType(target) && len(targets) == 1 {
 			// Every element of a tuple goes where the array's element goes.
 			for _, element := range values {
-				if stop := l.containerWhereShapeGoes(element, targets[0], depth+1, visited); stop != "" {
+				if stop := l.containerWhereShapeGoes(element, targets[0], false, depth+1, visited); stop != "" {
 					return stop
 				}
 			}
@@ -122,7 +124,7 @@ func (l *lowering) containerWhereShapeGoes(value *checker.Type, target *checker.
 	if len(valueSignatures) == 1 && len(targetSignatures) == 1 {
 		// A function: what it returns goes where the target's result goes, and what the target is
 		// called with goes to its parameters.
-		if stop := l.containerWhereShapeGoes(l.checker.GetReturnTypeOfSignature(valueSignatures[0]), l.checker.GetReturnTypeOfSignature(targetSignatures[0]), depth+1, visited); stop != "" {
+		if stop := l.containerWhereShapeGoes(l.checker.GetReturnTypeOfSignature(valueSignatures[0]), l.checker.GetReturnTypeOfSignature(targetSignatures[0]), false, depth+1, visited); stop != "" {
 			return stop
 		}
 		valueParameters, targetParameters := valueSignatures[0].Parameters(), targetSignatures[0].Parameters()
@@ -131,7 +133,7 @@ func (l *lowering) containerWhereShapeGoes(value *checker.Type, target *checker.
 		}
 		for index := range valueParameters {
 			if index < len(targetParameters) {
-				if stop := l.containerWhereShapeGoes(l.checker.GetTypeOfSymbol(targetParameters[index]), l.checker.GetTypeOfSymbol(valueParameters[index]), depth+1, visited); stop != "" {
+				if stop := l.containerWhereShapeGoes(l.checker.GetTypeOfSymbol(targetParameters[index]), l.checker.GetTypeOfSymbol(valueParameters[index]), false, depth+1, visited); stop != "" {
 					return stop
 				}
 			}
@@ -140,7 +142,7 @@ func (l *lowering) containerWhereShapeGoes(value *checker.Type, target *checker.
 	}
 	for _, field := range l.checker.GetPropertiesOfType(target) {
 		if inside := l.checker.GetPropertyOfType(value, field.Name); inside != nil {
-			if stop := l.containerWhereShapeGoes(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(field), depth+1, visited); stop != "" {
+			if stop := l.containerWhereShapeGoes(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(field), false, depth+1, visited); stop != "" {
 				return stop
 			}
 		}
@@ -149,14 +151,14 @@ func (l *lowering) containerWhereShapeGoes(value *checker.Type, target *checker.
 		// A dictionary's values: the value's own dictionary values, and each field it has.
 		for _, own := range l.checker.GetIndexInfosOfType(value) {
 			if own.KeyType() == info.KeyType() {
-				if stop := l.containerWhereShapeGoes(own.ValueType(), info.ValueType(), depth+1, visited); stop != "" {
+				if stop := l.containerWhereShapeGoes(own.ValueType(), info.ValueType(), false, depth+1, visited); stop != "" {
 					return stop
 				}
 			}
 		}
 		for _, field := range l.checker.GetPropertiesOfType(value) {
 			if field.Flags&ast.SymbolFlagsMethod == 0 {
-				if stop := l.containerWhereShapeGoes(l.checker.GetTypeOfSymbol(field), info.ValueType(), depth+1, visited); stop != "" {
+				if stop := l.containerWhereShapeGoes(l.checker.GetTypeOfSymbol(field), info.ValueType(), false, depth+1, visited); stop != "" {
 					return stop
 				}
 			}
@@ -168,10 +170,21 @@ func (l *lowering) containerWhereShapeGoes(value *checker.Type, target *checker.
 func (l *lowering) pairwiseContainerWhereShapeGoes(values []*checker.Type, targets []*checker.Type, depth int, visited map[[2]*checker.Type]bool) string {
 	for index := range values {
 		if index < len(targets) {
-			if stop := l.containerWhereShapeGoes(values[index], targets[index], depth+1, visited); stop != "" {
+			if stop := l.containerWhereShapeGoes(values[index], targets[index], false, depth+1, visited); stop != "" {
 				return stop
 			}
 		}
 	}
 	return ""
+}
+
+// libraryGeneric is whether a type is an instantiated generic the library or the prelude declares
+// (Iterable<T>, ArrayLike<T>, the prelude's ReadonlySetLike<T>), as librarySignature reads a declaration.
+func libraryGeneric(proven *checker.Type) bool {
+	symbol := proven.Symbol()
+	if proven.Flags()&checker.TypeFlagsObject == 0 || proven.ObjectFlags()&checker.ObjectFlagsReference == 0 || symbol == nil || len(symbol.Declarations) == 0 {
+		return false
+	}
+	file := ast.GetSourceFileOfNode(symbol.Declarations[0])
+	return load.IsLibrary(file) || load.IsPrelude(file)
 }
