@@ -94,10 +94,14 @@ func (e *emitter) logicalAssignment(expression ir.LogicalAssignment) string {
 		e.store(write.Local, value, false)
 	case ir.SetProperty:
 		if viewed {
-			e.writeProperty(write, receiver, value)
+			e.writeProperty(write, receiver, value, owned...)
 			break
 		}
 		e.line("adamic_object_check_write(%s, %s);", receiver, key)
+		// A frozen object's TypeError lets go of the right side's temporaries on the way out.
+		if e.program.FrozenWriteMayThrow(write) {
+			e.checkThrown(owned...)
+		}
 		slot := e.temporary()
 		e.line("adamic_value *%s = adamic_object_write_field(%s, %s, &%s);", slot, receiver, key, e.cache())
 		if storage.IsReference() {

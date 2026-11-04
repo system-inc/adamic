@@ -13,7 +13,6 @@ func TestRegExpNativeRefusals(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
 		"function made(pattern: string): RegExp { return new RegExp(pattern); }",
-		"try { console.log('a'.replaceAll(/a/, 'b')); } catch {}",
 		"const regex = /a/; regex.exec = (input: string): RegExpExecArray | null => null;",
 		"const regex = /a/; const copy = {...regex};",
 	} {

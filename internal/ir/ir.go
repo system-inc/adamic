@@ -92,6 +92,11 @@ type Program struct {
 	// or delete that meets such a key throws, as on Node, so one whose key may be one of these tests
 	// for it (RecordWriteMayThrow); in a program without any, none does.
 	HiddenRecordKeys SortedMap[string, bool]
+
+	// ObjectsMayFreeze says the program calls Object.freeze somewhere. A write to a frozen object
+	// throws Node's TypeError, and which objects a freeze reaches isn't known across aliases and calls,
+	// so in such a program every object write can throw (FrozenWriteMayThrow); in one without, none does.
+	ObjectsMayFreeze bool
 }
 
 // PlaceholderCheck records one readiness or storage-arm boundary in the checked-sites report.

@@ -520,7 +520,10 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 			if call, ok := value.Interface().(ir.NumberFormat); ok && call.MayThrow() {
 				throws = true
 			}
-			if program.RecordWriteMayThrow(value.Interface()) {
+			if program.RecordWriteMayThrow(value.Interface()) || program.FrozenWriteMayThrow(value.Interface()) {
+				throws = true
+			}
+			if call, ok := value.Interface().(ir.RegExpCall); ok && program.GlobalFlagMayThrow(call) {
 				throws = true
 			}
 			switch value.Type() {

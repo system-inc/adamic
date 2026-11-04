@@ -44,6 +44,10 @@ func (e *emitter) objectCall(call ir.ObjectCall) string {
 	case "assign":
 		for _, source := range arguments[1:] {
 			e.line("adamic_object_assign(%s, %s);", arguments[0], source)
+			// A frozen target leaves Node's TypeError pending at its first key, and writes no other.
+			if e.program.FrozenWriteMayThrow(call) {
+				e.checkThrown()
+			}
 		}
 		return e.own(ir.Object, fmt.Sprintf("adamic_retain(%s)", arguments[0]))
 	}

@@ -33,6 +33,13 @@ func (e *emitter) regexCall(call ir.RegExpCall) string {
 		arguments = append(arguments, fmt.Sprint(call.Method == "replaceAll"))
 	}
 	invocation := "adamic_regex_" + method + "(" + strings.Join(arguments, ", ") + ")"
+	if e.program.GlobalFlagMayThrow(call) {
+		// A RegExp without the g flag leaves Node's TypeError pending, tested once the result, an
+		// empty string or no iterator, is owned (ir.Program's GlobalFlagMayThrow).
+		result := e.own(call.Returns, invocation)
+		e.checkThrown()
+		return result
+	}
 	if call.Returns.IsReference() {
 		return e.own(call.Returns, invocation)
 	}
