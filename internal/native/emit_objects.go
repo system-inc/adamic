@@ -333,13 +333,13 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 		table = "&" + name + "_methods"
 	}
 	if len(fields) == 0 {
-		e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_shape %s = {0, NULL, NULL, %s, NULL};", name, table))
+		e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_shape %s = {0, NULL, NULL, %s, NULL, false};", name, table))
 	} else {
 		e.declarations = append(e.declarations,
 			fmt.Sprintf("static const char *const %s_names[] = {%s};", name, strings.Join(names, ", ")),
 			fmt.Sprintf("static const bool %s_references[] = {%s};", name, strings.Join(references, ", ")),
 			fmt.Sprintf("static const adamic_field_kind %s_kinds[] = {%s};", name, strings.Join(storage, ", ")),
-			fmt.Sprintf("static const adamic_shape %s = {%d, %s_names, %s_references, %s, %s_kinds};", name, len(fields), name, name, table, name))
+			fmt.Sprintf("static const adamic_shape %s = {%d, %s_names, %s_references, %s, %s_kinds, false};", name, len(fields), name, name, table, name))
 	}
 	if len(fields) > 0 && e.dynamicProperties() {
 		e.declarations = append(e.declarations,

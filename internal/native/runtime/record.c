@@ -22,13 +22,13 @@ static const adamic_field_kind record_kinds[] = {adamic_field_reference};
 // key read boxes a value by it (adamic_dynamic_property_keyed). The three are alike in content and told
 // apart by address alone, so a linker's identical-data folding (--icf=all, -fmerge-all-constants) would
 // read every record as one kind; the records harness makes one of each and reads its kind back.
-static const adamic_shape record_number_shape = {1, record_names, record_references, NULL, record_kinds};
-static const adamic_shape record_boolean_shape = {1, record_names, record_references, NULL, record_kinds};
-static const adamic_shape record_reference_shape = {1, record_names, record_references, NULL, record_kinds};
+static const adamic_shape record_number_shape = {1, record_names, record_references, NULL, record_kinds, false};
+static const adamic_shape record_boolean_shape = {1, record_names, record_references, NULL, record_kinds, false};
+static const adamic_shape record_reference_shape = {1, record_names, record_references, NULL, record_kinds, false};
 static const char *const iteration_names[] = {"0", "1", "key"};
 static const bool iteration_references[] = {true, true, false};
 static const adamic_field_kind iteration_kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_number};
-static const adamic_shape iteration_shape = {3, iteration_names, iteration_references, NULL, iteration_kinds};
+static const adamic_shape iteration_shape = {3, iteration_names, iteration_references, NULL, iteration_kinds, true};
 
 static adamic_map *table(const adamic_record *record) {
 	return record->slots[0].reference;

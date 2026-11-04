@@ -48,26 +48,28 @@ uint64_t adamic_map_number_hash(double number) {
 static const char *const iterator_names[] = {"next"};
 static const bool iterator_references[] = {true};
 static const adamic_field_kind iterator_kinds[] = {adamic_field_reference};
-static const adamic_shape iterator_shape = {1, iterator_names, iterator_references, NULL, iterator_kinds};
+static const adamic_shape iterator_shape = {1, iterator_names, iterator_references, NULL, iterator_kinds, true};
 static const char *const state_names[] = {"iterator", "part", "key", "value", "set"};
 static const bool state_references[] = {true, false, false, false, false};
 static const adamic_field_kind state_kinds[] = {adamic_field_reference, adamic_field_number, adamic_field_number, adamic_field_number, adamic_field_boolean};
-static const adamic_shape state_shape = {5, state_names, state_references, NULL, state_kinds};
+static const adamic_shape state_shape = {5, state_names, state_references, NULL, state_kinds, true};
 static const char *const result_names[] = {"done", "value"};
 static const bool result_reference[] = {false, true};
 static const bool result_scalar[] = {false, false};
 static const adamic_field_kind result_kinds[][2] = {{adamic_field_boolean, adamic_field_number}, {adamic_field_boolean, adamic_field_boolean}, {adamic_field_boolean, adamic_field_reference}};
-static const adamic_shape result_shapes[] = {{2, result_names, result_scalar, NULL, result_kinds[0]}, {2, result_names, result_scalar, NULL, result_kinds[1]}, {2, result_names, result_reference, NULL, result_kinds[2]}};
-// An iterator's result is a plain object on Node, as the iterator itself isn't, so each result shape
-// is registered as a literal's is (union.c) and Object.prototype's names answer on it by a run-time
-// key. The scalar tags are zero, no evidence: a result's own representation bytes, written below,
-// vary with what it holds, and union.c's dynamic_slot reads those first.
+static const adamic_shape result_shapes[] = {{2, result_names, result_scalar, NULL, result_kinds[0], false}, {2, result_names, result_scalar, NULL, result_kinds[1], false}, {2, result_names, result_reference, NULL, result_kinds[2], false}};
+// An iterator's result is a plain object on Node, as the iterator itself isn't, so no result shape is
+// marked host (adamic.h), where the iterator's and its state's are, and Object.prototype's names
+// answer on a result by a run-time key (union.c). Each is registered as a literal's is, with zero
+// scalar tags, no evidence: a result's own representation bytes, written below, vary with what it
+// holds, and union.c's dynamic_slot reads those first. An entries() pair is an array on Node, a
+// tuple here, and marked host as well.
 static const int result_types[2];
 static adamic_shape_types result_metadata[] = {{&result_shapes[0], result_types, NULL, false}, {&result_shapes[1], result_types, NULL, false}, {&result_shapes[2], result_types, NULL, false}};
 static const char *const pair_names[] = {"0", "1"};
 static const bool pair_references[][2] = {{false, false}, {false, true}, {true, false}, {true, true}};
 static const adamic_field_kind pair_kinds[][2] = {{adamic_field_number, adamic_field_number}, {adamic_field_number, adamic_field_boolean}, {adamic_field_number, adamic_field_reference}, {adamic_field_boolean, adamic_field_number}, {adamic_field_boolean, adamic_field_boolean}, {adamic_field_boolean, adamic_field_reference}, {adamic_field_reference, adamic_field_number}, {adamic_field_reference, adamic_field_boolean}, {adamic_field_reference, adamic_field_reference}};
-static const adamic_shape pair_shapes[] = {{2, pair_names, pair_references[0], NULL, pair_kinds[0]}, {2, pair_names, pair_references[0], NULL, pair_kinds[1]}, {2, pair_names, pair_references[1], NULL, pair_kinds[2]}, {2, pair_names, pair_references[0], NULL, pair_kinds[3]}, {2, pair_names, pair_references[0], NULL, pair_kinds[4]}, {2, pair_names, pair_references[1], NULL, pair_kinds[5]}, {2, pair_names, pair_references[2], NULL, pair_kinds[6]}, {2, pair_names, pair_references[2], NULL, pair_kinds[7]}, {2, pair_names, pair_references[3], NULL, pair_kinds[8]}};
+static const adamic_shape pair_shapes[] = {{2, pair_names, pair_references[0], NULL, pair_kinds[0], true}, {2, pair_names, pair_references[0], NULL, pair_kinds[1], true}, {2, pair_names, pair_references[1], NULL, pair_kinds[2], true}, {2, pair_names, pair_references[0], NULL, pair_kinds[3], true}, {2, pair_names, pair_references[0], NULL, pair_kinds[4], true}, {2, pair_names, pair_references[1], NULL, pair_kinds[5], true}, {2, pair_names, pair_references[2], NULL, pair_kinds[6], true}, {2, pair_names, pair_references[2], NULL, pair_kinds[7], true}, {2, pair_names, pair_references[3], NULL, pair_kinds[8], true}};
 
 // These are ir.Type's scalar representations; all other accepted collection elements are counted.
 static bool collection_reference(int type) {
@@ -155,7 +157,7 @@ adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int 
 static const char *const string_state_names[] = {"string", "offset"};
 static const bool string_state_references[] = {true, false};
 static const adamic_field_kind string_state_kinds[] = {adamic_field_reference, adamic_field_number};
-static const adamic_shape string_state_shape = {2, string_state_names, string_state_references, NULL, string_state_kinds};
+static const adamic_shape string_state_shape = {2, string_state_names, string_state_references, NULL, string_state_kinds, true};
 
 static adamic_code_function string_next;
 

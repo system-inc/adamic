@@ -1,0 +1,25 @@
+// An object a spread makes is plain on Node, Object's prototype and own fields, whatever it copies,
+// so a run-time key read answers on it on both backends (#ey7aysy, Language's s1 and s5): a spread of
+// undefined makes a new object from a shape the emitter never registered (reuse.go's spreadCopy),
+// and a spread of a class instance copies the class's shape without its class. s1 added a field to
+// the spread, which doesn't lower yet, so the spread here adds none, and reads only Object's
+// constructor on the new object: its x, an absent number, panics natively for want of a scalar tag,
+// since nothing registers that shape's tags or writes its representation bytes. propertyOf is
+// hostErrors.ts's, written here: that file's errorCode reads with in, which doesn't lower yet beside
+// a possibly absent spread.
+function propertyOf(value: unknown, key: string): unknown {
+	if (value === null || value === undefined) {
+		throw new TypeError(`Cannot read properties of ${value === null ? 'null' : 'undefined'} (reading '${key}')`);
+	}
+	return Reflect.get(Object(value), key, value);
+}
+
+interface Point { readonly x: number; readonly y: number; }
+function copyOf(point: Point | undefined): { readonly x?: number; readonly y?: number } { return { ...point }; }
+const made = copyOf(undefined);
+console.log(`constructor ${typeof propertyOf(made, 'constructor')}`);
+const given = copyOf({ x: 2, y: 3 });
+console.log(`given x ${typeof propertyOf(given, 'x')} constructor ${typeof propertyOf(given, 'constructor')}`);
+class Box { readonly width: number = 2; readonly label: string = 'b'; }
+const copy = { ...new Box() };
+console.log(`width ${typeof propertyOf(copy, 'width')} constructor ${typeof propertyOf(copy, 'constructor')}`);

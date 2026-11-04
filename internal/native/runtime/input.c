@@ -187,12 +187,13 @@ static const char *const ok_names[] = {"kind", "text"};
 static const char *const error_names[] = {"kind", "message"};
 static const bool both_references[] = {true, true};
 static const adamic_field_kind ok_kinds[] = {adamic_field_reference, adamic_field_reference};
-static const adamic_shape ok_shape = {2, ok_names, both_references, NULL, ok_kinds};
+static const adamic_shape ok_shape = {2, ok_names, both_references, NULL, ok_kinds, false};
 static const adamic_field_kind error_kinds[] = {adamic_field_reference, adamic_field_reference};
-static const adamic_shape error_shape = {2, error_names, both_references, NULL, error_kinds};
-// readTextFile's and writeTextFile's results are plain objects on Node (oracle/adamic.mjs), so each
-// shape is registered as a literal's is (union.c) and Object.prototype's names answer on it by a
-// run-time key. They hold references only, so their zeroed scalar tags are never read.
+static const adamic_shape error_shape = {2, error_names, both_references, NULL, error_kinds, false};
+// readTextFile's and writeTextFile's results are plain objects on Node (oracle/adamic.mjs), so no
+// shape here is marked host (adamic.h) and Object.prototype's names answer on each by a run-time key
+// (union.c). Each is registered as a literal's is; they hold references only, so their zeroed scalar
+// tags are never read.
 static const int result_types[2];
 static adamic_shape_types ok_metadata = {&ok_shape, result_types, NULL, false};
 static adamic_shape_types error_metadata = {&error_shape, result_types, NULL, false};
@@ -364,7 +365,7 @@ adamic_object *adamic_read_text_file(const adamic_string *path) {
 // The shape writeTextFile's success comes in.
 static const char *const written_names[] = {"kind"};
 static const adamic_field_kind written_kinds[] = {adamic_field_reference};
-static const adamic_shape written_shape = {1, written_names, both_references, NULL, written_kinds};
+static const adamic_shape written_shape = {1, written_names, both_references, NULL, written_kinds, false};
 static adamic_shape_types written_metadata = {&written_shape, result_types, NULL, false};
 
 // write_all writes every byte, through partial writes and interrupted calls, and returns 0 or the

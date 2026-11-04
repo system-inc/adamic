@@ -17,7 +17,7 @@ func TestViewSnapshotPayloadOwnership(t *testing.T) {
 static const char *const names[]={"value"};
 static const bool references[]={false};
 static const adamic_field_kind kinds[]={adamic_field_number};
-static const adamic_shape shape={1,names,references,NULL,kinds};
+static const adamic_shape shape={1,names,references,NULL,kinds,false};
 int main(void){
  adamic_object *object=adamic_object_new(&shape);
  adamic_slot_cache cache={0};

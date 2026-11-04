@@ -102,7 +102,7 @@ static adamic_timer_handle start(double delay, bool repeat, double number, bool 
         static const char *const names[] = {"next", "label"};
         static const bool references[] = {true, true};
         static const adamic_field_kind kinds[] = {adamic_field_reference, adamic_field_reference};
-        static const adamic_shape shape = {2, names, references, NULL, kinds};
+        static const adamic_shape shape = {2, names, references, NULL, kinds, false};
         adamic_object *node = adamic_object_new(&shape);
         node = adamic_graph_adopt(node, adamic_object_size(2));
         node->slots[0].reference = adamic_graph_hold(node, node);

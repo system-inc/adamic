@@ -71,7 +71,7 @@ int main(int argc, char **argv) {
   assert(adamic_counted.retains==3 && adamic_counted.releases==4);
  } else if(strcmp(argv[1],"graph")==0) {
   adamic_cell *a=adamic_graph_adopt(adamic_cell_new((adamic_value){.number=7},false),sizeof(adamic_cell));
-  static const adamic_shape shape={0,NULL,NULL,NULL,NULL};
+  static const adamic_shape shape={0,NULL,NULL,NULL,NULL,false};
   adamic_object *b=adamic_graph_adopt(adamic_object_new(&shape),adamic_object_size(0));
   adamic_graph_merge(a,b); adamic_release(b);
   assert(b->heap.references==0);

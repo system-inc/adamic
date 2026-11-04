@@ -391,6 +391,13 @@ extern char adamic_literal_mark;
 //
 // methods are, for the objects a class makes, the class's methods by name, and NULL for any other
 // object: a call through an interface the class implements finds one there (adamic_object_callee).
+//
+// host marks a runtime shape whose object's prototype on Node isn't Object's, a Stats, an iterator,
+// a match's groups object or an Error, so a run-time key read stops on it (union.c's host_object,
+// #ey7aysy). Every initializer spells it, as -Wextra requires of each field: the emitter's are false,
+// so an object the program makes, by any path, is plain, as it is on Node, and a shape built at run
+// time is false unless its builder sets it. A runtime shape written false reads as plain, so
+// host_shapes_test.go holds every runtime shape's flag to a table that classifies it against Node.
 typedef struct adamic_methods adamic_methods;
 // One byte per slot: optional scalars and unowned implementation words use number.
 enum adamic_field_kind { adamic_field_number, adamic_field_boolean, adamic_field_reference };
@@ -401,6 +408,7 @@ typedef struct adamic_shape {
 	const bool *references;
 	const adamic_methods *methods;
 	const adamic_field_kind *kinds;
+	bool host;
 } adamic_shape;
 
 static inline void adamic_shape_check(const adamic_shape *shape) {

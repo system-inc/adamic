@@ -61,7 +61,7 @@ static adamic_string absent = ADAMIC_STRING("/adamic-error-is-absent/missing");
 static const char *const plain_names[] = {"name"};
 static const bool plain_references[] = {true};
 static const adamic_field_kind plain_kinds[] = {adamic_field_reference};
-static const adamic_shape plain_shape = {1, plain_names, plain_references, NULL, plain_kinds};
+static const adamic_shape plain_shape = {1, plain_names, plain_references, NULL, plain_kinds, false};
 static adamic_object *take(void) {
     adamic_object *thrown = adamic_thrown;
     adamic_thrown = NULL;

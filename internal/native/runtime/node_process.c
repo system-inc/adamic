@@ -116,7 +116,7 @@ static void host_directory_error(int error, const char *operation, const adamic_
     static const char *const directory_error_names[] = {"name", "message", "code"};
     static const bool references[] = {true, true, true};
     static const adamic_field_kind kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_reference};
-    static const adamic_shape shape = {3, directory_error_names, references, &adamic_error_methods, kinds};
+    static const adamic_shape shape = {3, directory_error_names, references, &adamic_error_methods, kinds, true};
     static adamic_string error_name = ADAMIC_STRING("Error");
     adamic_string *prefix = adamic_decode_utf8((const unsigned char *)code, strlen(code));
     adamic_string *reason = adamic_decode_utf8((const unsigned char *)description, strlen(description));
@@ -197,10 +197,10 @@ adamic_object *adamic_node_memory_usage(void) {
     static const char *const memory_names[] = {"heapUsed"};
     static const bool references[] = {false};
     static const adamic_field_kind kinds[] = {adamic_field_number};
-    static const adamic_shape shape = {1, memory_names, references, NULL, kinds};
-    // Node's object has four more fields this one has no honest answer for yet, so it isn't
-    // registered: a run-time key read stops on it as on a host object (union.c's host_object, Adamic's
-    // ruling on #ey7aysy), and only lowering's static read of heapUsed reaches the slot.
+    static const adamic_shape shape = {1, memory_names, references, NULL, kinds, true};
+    // Node's object has four more fields this one has no honest answer for yet, so its shape is
+    // marked host: a run-time key read stops on it (union.c's host_object, Adamic's ruling on
+    // #ey7aysy), and only lowering's static read of heapUsed reaches the slot.
     adamic_object *result = adamic_object_new(&shape);
     result->slots[0].number = observations.heapUsed;
     return result;
@@ -210,7 +210,7 @@ static adamic_object *entry(const adamic_string *name, bool measure, double star
     static const char *const entry_names[] = {"name", "entryType", "startTime", "duration"};
     static const bool references[] = {true, true, false, false};
     static const adamic_field_kind kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_number, adamic_field_number};
-    static const adamic_shape shape = {4, entry_names, references, NULL, kinds};
+    static const adamic_shape shape = {4, entry_names, references, NULL, kinds, true};
     static adamic_string mark_type = ADAMIC_STRING("mark"), measure_type = ADAMIC_STRING("measure");
     adamic_object *result = adamic_object_new(&shape);
     result->slots[0].reference = adamic_retain((adamic_string *)name);
@@ -282,7 +282,7 @@ adamic_object *adamic_node_stdout_handle(void) {
     static const char *const handle_names[] = {"setBlocking"};
     static const bool references[] = {true};
     static const adamic_field_kind kinds[] = {adamic_field_reference};
-    static const adamic_shape shape = {1, handle_names, references, NULL, kinds};
+    static const adamic_shape shape = {1, handle_names, references, NULL, kinds, true};
     static adamic_closure method = {.heap = {0, adamic_kind_closure, 0}, .code = set_blocking, .count = 0};
     adamic_object *handle = adamic_object_new(&shape);
     handle->slots[0].reference = &method;
@@ -360,7 +360,7 @@ adamic_object *adamic_node_performance(void) {
         static const char *const performance_names[] = {"timeOrigin", "now", "mark", "measure", "clearMarks", "clearMeasures"};
         static const bool references[] = {false, true, true, true, true, true};
         static const adamic_field_kind kinds[] = {adamic_field_number, adamic_field_reference, adamic_field_reference, adamic_field_reference, adamic_field_reference, adamic_field_reference};
-        static const adamic_shape shape = {6, performance_names, references, NULL, kinds};
+        static const adamic_shape shape = {6, performance_names, references, NULL, kinds, true};
         performance_object = adamic_object_new(&shape);
         performance_object->slots[0].number = adamic_host_time_origin();
         for (size_t index = 0; index < 5; index++) { performance_object->slots[index+1].reference = performance_methods[index]; }
