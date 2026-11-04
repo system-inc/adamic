@@ -23,13 +23,17 @@ import (
 // a class field's initializer, and through a function value whose parameter is the shape, and a class
 // instance implementing ReadonlySet. Two roads stop first at their own stops, on main too, and are pinned
 // with them: a spread into a typed record (records.go's NotYet) and a class instance's field spread into a
-// typed object (adamic/nominal-class). Depth: a class implementing ReadonlyMap five fields down lowered on
+// typed object (adamic/nominal-class). Intersections, both ways: a shaped value moved whole into
+// { readonly m: ReadonlyMap } & { readonly tag: 1 } (slot_intersection), and { m: FakeMap } & { tag: 1 } seen as
+// { readonly m: ReadonlyMap } (value_intersection), each lowered and crashed natively on b4478772. A slot that
+// is itself ReadonlyMap & { tag: 1 } has no representation (objectIntersection gives none to a collection
+// part), so every value of it is NotYet already, and map_member_intersection pins that stop. Depth: a class implementing ReadonlyMap five fields down lowered on
 // main (native crashed, JavaScript printed false); the map slot is judged at any depth, so depth_5 stops
 // at its leaf and a real Map there (depth_5_real_map, a control) lowers. Six down the walk is past its
 // bound and fails closed: depth_6 stops, and so does depth_6_real_map, a real Map six fields into a literal
 // (the cost of failing closed, said so). The controls lower and agree with Node on sanitized, release and
 // JavaScript: a real Map seen as a ReadonlyMap, a real Set seen as a ReadonlySet, an array seen as a
-// ReadonlyArray, and a real Map five fields down.
+// ReadonlyArray, a real Map five fields down, and a real Map moved whole into the intersection slot.
 // Mutant: containerWhereOtherGoes answering false lowers the probes that stop at it, each red; the two
 // pinned at their own stops stay green.
 func TestContainerInterfaceValueIsNotYetWhereAMapIsHeld(t *testing.T) {
@@ -98,6 +102,9 @@ func TestContainerInterfaceValueIsNotYetWhereAMapIsHeld(t *testing.T) {
 		{"depth_5", backing + fakeMap + "const v: { a: { b: { c: { d: { e: FakeMap } } } } } = { a: { b: { c: { d: { e: new FakeMap() } } } } };\nconst w: { readonly a: { readonly b: { readonly c: { readonly d: { readonly e: ReadonlyMap<string, number> } } } } } = v;\nconsole.log(String(w.a.b.c.d.e.has('a')));\n", ":13:120", containerFit},
 		{"depth_6", backing + fakeMap + "const v: { a: { b: { c: { d: { e: { f: FakeMap } } } } } } = { a: { b: { c: { d: { e: { f: new FakeMap() } } } } } };\nconst w: { readonly a: { readonly b: { readonly c: { readonly d: { readonly e: { readonly f: ReadonlyMap<string, number> } } } } } } = v;\nconsole.log(String(w.a.b.c.d.e.f.has('a')));\n", ":13:136", containerFit},
 		{"depth_6_real_map", "const real = new Map<string, number>([['a', 1]]);\nconst v: { a: { b: { c: { d: { e: { f: Map<string, number> } } } } } } = { a: { b: { c: { d: { e: { f: real } } } } } };\nconst w: { readonly a: { readonly b: { readonly c: { readonly d: { readonly e: { readonly f: ReadonlyMap<string, number> } } } } } } = v;\nconsole.log(String(w.a.b.c.d.e.f.has('a')));\n", ":2:74", containerFit},
+		{"slot_intersection", shaped + "type Holder = { readonly m: ReadonlyMap<string, number> } & { readonly tag: 1 };\nconst inner = { m: shaped, tag: 1 as const };\nconst h: Holder = inner;\nconsole.log(String(h.m.has('a')));\n", ":14:19", containerFit},
+		{"value_intersection", backing + fakeMap + "const v: { m: FakeMap } & { tag: 1 } = { m: new FakeMap(), tag: 1 };\nconst w: { readonly m: ReadonlyMap<string, number> } = v;\nconsole.log(String(w.m.has('a')));\n", ":13:56", containerFit},
+		{"map_member_intersection", backing + fakeMap + "type Tagged = ReadonlyMap<string, number> & { readonly tag: 1 };\nclass TaggedFake extends FakeMap {\n\treadonly tag = 1 as const;\n}\nfunction probe(m: Tagged): boolean {\n\treturn m.has('a');\n}\nconsole.log(String(probe(new TaggedFake())));\n", ":16:16", "stage 0 can't lower a value of type Tagged yet"},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
 			t.Run(probe.name+extension, func(t *testing.T) {
@@ -124,6 +131,7 @@ func TestContainerInterfaceValueIsNotYetWhereAMapIsHeld(t *testing.T) {
 		{"real_map", "const real = new Map<string, number>([['a', 1]]);\nconst m: ReadonlyMap<string, number> = real;\nfunction probe(view: ReadonlyMap<string, number>): boolean {\n\treturn view.has('a');\n}\nconsole.log(String(m.has('a') && probe(real)));\nfor (const [key, value] of m) {\n\tconsole.log(`${key} ${value}`);\n}\n", "true\na 1\n"},
 		{"real_set", "const real = new Set<number>([1, 2]);\nconst s: ReadonlySet<number> = real;\nfunction probe(view: ReadonlySet<number>): number {\n\treturn view.size;\n}\nconsole.log(String(s.has(2) && probe(real) === 2));\nfor (const value of s) {\n\tconsole.log(String(value));\n}\n", "true\n1\n2\n"},
 		{"depth_5_real_map", "const real = new Map<string, number>([['a', 1]]);\nconst v: { a: { b: { c: { d: { e: Map<string, number> } } } } } = { a: { b: { c: { d: { e: real } } } } };\nconst w: { readonly a: { readonly b: { readonly c: { readonly d: { readonly e: ReadonlyMap<string, number> } } } } } = v;\nconsole.log(String(w.a.b.c.d.e.has('a')));\n", "true\n"},
+		{"intersection_real_map", "const real = new Map<string, number>([['a', 1]]);\ntype Holder = { readonly m: ReadonlyMap<string, number> } & { readonly tag: 1 };\nconst inner = { m: real, tag: 1 as const };\nconst h: Holder = inner;\nconsole.log(String(h.m.has('a')));\n", "true\n"},
 		{"array", "const xs: ReadonlyArray<number> = [10, 20];\nlet total = 0;\nfor (const x of xs) {\n\ttotal += x;\n}\nconsole.log(String(total + xs.length));\n", "32\n"},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
