@@ -150,6 +150,42 @@ func TestRuntimeNotYetConversionForms(t *testing.T) {
 	}
 }
 
+// A keyless stop that isn't a conversion is the third shape (#ey7aysy): Object.keys of a runtime host value,
+// said whole, reads under #0sps03r, and nothing near it does. Mutants: runtimeNotYetForm without the
+// keyless table refuses the ruled message; matching it by prefix accepts "a near miss".
+func TestRuntimeNotYetKeylessForms(t *testing.T) {
+	t.Parallel()
+	source, stop, list := runtimeNotYetFixture(t)
+	path := filepath.Join(t.TempDir(), "stops.json")
+	read := func(stderr, ruling string) error {
+		keyless := stop
+		keyless.Stderr, keyless.RulingTask, keyless.LiftingTask = stderr, ruling, "#ey7aysy"
+		writeRuntimeNotYetList(t, path, runtimeNotYetStopList{Comment: list.Comment, Stops: map[string]runtimeNotYetStop{contentHash(source): keyless}})
+		_, err := readRuntimeNotYetStops(path)
+		return err
+	}
+	ruled := "adamic: panic: this runtime value's own keys aren't enumerated yet\n"
+	if err := read(ruled, "#0sps03r"); err != nil {
+		t.Errorf("the ruled keyless message refused: %v", err)
+	}
+	for name, stderr := range map[string]string{
+		"a message off the list": "adamic: panic: this runtime value's own values aren't enumerated yet\n",
+		"a near miss":            "adamic: panic: this runtime value's own keys aren't enumerated yet, at all\n",
+		"no newline":             "adamic: panic: this runtime value's own keys aren't enumerated yet",
+		"two lines":              ruled + ruled,
+		"no panic prefix":        "this runtime value's own keys aren't enumerated yet\n",
+		"a key read after it":    "adamic: panic: this runtime value's own keys aren't enumerated yet (reading 'keys')\n",
+		"as a conversion":        "adamic: panic: converting this runtime value's own keys aren't enumerated yet to a string is not yet lowered\n",
+	} {
+		if err := read(stderr, "#0sps03r"); err == nil {
+			t.Errorf("%s accepted: %q", name, stderr)
+		}
+	}
+	if err := read(ruled, "#zhgxzjg"); err == nil {
+		t.Error("the keyless message under another ruling accepted")
+	}
+}
+
 // internal/ir's two compiler-bug stops are never a NotYet, listed or allowlisted. Not parallel: it widens
 // the allowlist for its run, before the parallel tests resume.
 func TestRuntimeNotYetCompilerBugNeverQualifies(t *testing.T) {
