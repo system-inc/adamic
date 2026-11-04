@@ -91,11 +91,12 @@ adamic_string *adamic_string_from_code_points(size_t count, const double values[
 	codes buffer = {NULL, 0, 0};
 	for (size_t index = 0; index < count; index++) {
 		double value = values[index];
-		// Anything but an integer from 0 to 0x10FFFF is a RangeError, which 0.1 makes a panic, in V8's
-		// words: "Invalid code point " and the value as String() writes it.
+		// Anything but an integer from 0 to 0x10FFFF is Node's RangeError, in V8's words: "Invalid code
+		// point " and the value as String() writes it. It's left on the pending word, with an empty
+		// string the caller lets go (number.c).
 		if (!(value >= 0 && value <= 0x10ffff && value == trunc(value))) {
 			free(buffer.bytes);
-			static const char prefix[] = "RangeError: Invalid code point ";
+			static const char prefix[] = "Invalid code point ";
 			adamic_string *written = adamic_string_from_number(value);
 			size_t length = sizeof prefix - 1 + written->length;
 			char *message = malloc(length);
@@ -105,7 +106,10 @@ adamic_string *adamic_string_from_code_points(size_t count, const double values[
 			}
 			memcpy(message, prefix, sizeof prefix - 1);
 			memcpy(message + sizeof prefix - 1, written->bytes, written->length);
-			adamic_panic(message, length);
+			adamic_release(written);
+			adamic_throw_kind("RangeError", sizeof "RangeError" - 1, message, length);
+			free(message);
+			return adamic_retain(&adamic_string_empty);
 		}
 		codes_point(&buffer, (unsigned)value);
 	}
