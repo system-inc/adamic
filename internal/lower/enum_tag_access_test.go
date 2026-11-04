@@ -56,8 +56,11 @@ func TestEnumTagAccessLocalShapes(t *testing.T) {
 
 // What the local rule still refuses, each with the open-enum refusal. Mutants, each named in the
 // commit: codeBetween always false (the resetting calls, the alias write and the call in the chain
-// lower), and proves counting a step outside the local tests (the loop row lowers, where reset runs
-// after the read in source order and before it on the next pass).
+// lower); proves counting a step outside the local tests (the loop row lowers, where reset runs
+// after the read in source order and before it on the next pass); codeBetween counting from where
+// the step ends (the call inside the step lowers, which runs after the step reads h.n); and the
+// exact predicate's field allowed a getter (the getter of the compared field by predicate lowers).
+// A predicate whose body writes the path (Lower's attack) is never exact, so it never proves.
 func TestEnumTagAccessRefusals(t *testing.T) {
 	t.Parallel()
 	const reset = "function reset(m: M): void { m.n = b; }\n"
@@ -69,6 +72,10 @@ func TestEnumTagAccessRefusals(t *testing.T) {
 		{"early return", "function show(h: H): string { if (!isA(h.n)) { return 'b'; } return `a ${h.n.a}`; }\nconsole.log(show(ha));\n"},
 		{"read in a loop under the test", reset + "function show(m: M): string { let out = ''; if (isA(m.n)) { let i = 0; while (i < 2) { if (i === 1) { out = `a ${m.n.a}`; } reset(m); i = i + 1; } } return out; }\nconsole.log(show({ n: a }));\n"},
 		{"getter of that name in the program", "class Lazy implements H { get n(): N { return a; } }\nfunction show(h: H): string { return isA(h.n) ? `a ${h.n.a}` : 'b'; }\nconsole.log(show(new Lazy()));\n"},
+		{"writing predicate", "const holder: M = { n: a };\nfunction isAw(n: N): n is A { holder.n = b; return n.kind === K.A; }\nfunction show(h: H): string { return isAw(h.n) ? `a ${h.n.a}` : 'b'; }\nconsole.log(show(holder));\n"},
+		{"call inside the step", "function kindOf(): K.A { return K.A; }\nfunction show(h: H): string { return h.n.kind === kindOf() ? `a ${h.n.a}` : 'b'; }\nconsole.log(show(ha));\n"},
+		{"getter of the compared field, by predicate", "class Odd { get kind(): K.A { return K.A; } }\nfunction show(h: H): string { return isA(h.n) ? `a ${h.n.a}` : 'b'; }\nconst odd = new Odd();\nconsole.log(show(ha) + String(odd.kind));\n"},
+		{"getter of the compared field, by comparison", "class Odd { get kind(): K.A { return K.A; } }\nfunction show(h: H): string { return h.n.kind === K.A ? `a ${h.n.a}` : 'b'; }\nconst odd = new Odd();\nconsole.log(show(ha) + String(odd.kind));\n"},
 		{"constructor's this", "class C { readonly n: N; readonly out: string; constructor(n: N) { this.n = n; this.out = isA(this.n) ? `a ${this.n.a}` : 'b'; } }\nconsole.log(new C(a).out);\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {

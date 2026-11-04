@@ -69,13 +69,16 @@ func enumTagContainsReference(receiver *checker.Checker, source, target *ast.Nod
 // another member in h.n while the checker's narrowing of it stands. So every step that narrows it
 // sits in the test of a conditional whose branch holds the read, of an `&&` whose right holds it, or
 // of an if whose block holds it, with no loop, label or function between, and nothing that can run
-// program code completes between that step and the read (accessLocalTests, codeBetween).
+// program code completes from where that step starts to the read (accessLocalTests, codeBetween):
+// code inside the step runs after it reads h.n too, as `h.n.kind === kindOf()` does. The exact
+// predicate's own call is the one exception, since its body reads one plain field and compares it,
+// and that field's name may have no accessor anywhere in the program.
 func (l *lowering) enumTagRefinementProven(reference *ast.Node, declared *checker.Type) bool {
 	data := reference.FlowNodeData()
 	if data == nil || data.FlowNode == nil {
 		return false
 	}
-	walk := &enumTagWalk{l: l, reference: reference, declared: declared, seen: map[*ast.FlowNode]bool{}, firstProof: -1}
+	walk := &enumTagWalk{l: l, reference: reference, declared: declared, seen: map[*ast.FlowNode]bool{}, firstProof: -1, exempt: map[*ast.Node]bool{}}
 	if reference.Kind == ast.KindPropertyAccessExpression {
 		tests, local := l.accessLocalTests(reference)
 		if !local {
@@ -86,7 +89,7 @@ func (l *lowering) enumTagRefinementProven(reference *ast.Node, declared *checke
 	if !walk.visit(data.FlowNode) || walk.proved == 0 {
 		return false
 	}
-	return walk.tests == nil || !l.codeBetween(walk.firstProof, reference)
+	return walk.tests == nil || !l.codeBetween(walk.firstProof, reference, walk.exempt)
 }
 
 type enumTagWalk struct {
@@ -95,10 +98,12 @@ type enumTagWalk struct {
 	declared  *checker.Type
 	seen      map[*ast.FlowNode]bool
 	proved    int
-	// tests are the local tests an access reference's narrowing steps must sit in, and firstProof is
-	// where the earliest such step ends; both are unset for a name, which no call can change.
+	// tests are the local tests an access reference's narrowing steps must sit in, firstProof is where
+	// the earliest such step starts, and exempt holds the exact predicate calls among them; all are
+	// unused for a name, which no call can change.
 	tests      []*ast.Node
 	firstProof int
+	exempt     map[*ast.Node]bool
 }
 
 // proves counts a step that narrows the reference. For an access reference it must sit in one of
@@ -114,8 +119,8 @@ func (w *enumTagWalk) proves(node *ast.Node) bool {
 	for _, test := range w.tests {
 		if node.Pos() >= test.Pos() && node.End() <= test.End() {
 			w.proved++
-			if w.firstProof < 0 || node.End() < w.firstProof {
-				w.firstProof = node.End()
+			if w.firstProof < 0 || node.Pos() < w.firstProof {
+				w.firstProof = node.Pos()
 			}
 			return true
 		}
@@ -224,9 +229,26 @@ func (w *enumTagWalk) stepAt(flow *ast.FlowNode, at *ast.Node, field string) boo
 	return false
 }
 
+// predicateProves counts an exact predicate's call as a narrowing step. For an access reference the
+// call is exempt from codeBetween, but its body's field read runs inside it, so that field's name may
+// have no getter anywhere in the program (accessorName).
+func (w *enumTagWalk) predicateProves(at *ast.Node, call kindCall) bool {
+	if w.tests != nil && w.l.accessorName(call.field) {
+		return false
+	}
+	if !w.proves(at) {
+		return false
+	}
+	if w.tests != nil {
+		w.exempt[call.call] = true
+	}
+	return true
+}
+
 // kindCall is a direct call to an exact kind predicate whose argument is the reference: the
 // comparison `reference.field === member` its body makes, and whether a `!` turns it around.
 type kindCall struct {
+	call    *ast.Node
 	field   string
 	member  *checker.Type
 	negated bool
@@ -373,7 +395,7 @@ func (w *enumTagWalk) exactKindCall(node *ast.Node) (kindCall, bool) {
 	if field == "" || constant == nil {
 		return kindCall{}, false
 	}
-	return kindCall{field: field, member: constant, negated: negated}, true
+	return kindCall{call: node, field: field, member: constant, negated: negated}, true
 }
 
 // kindPredicateStep judges an exact kind predicate's call as the comparison its body makes. It
@@ -431,7 +453,7 @@ func (w *enumTagWalk) kindPredicateStep(flow *ast.FlowNode, call kindCall) bool 
 	if !checker.Checker_isTypeIdenticalTo(w.l.checker, after, w.l.checker.GetUnionType(kept)) {
 		return false
 	}
-	return w.proves(flow.Node)
+	return w.predicateProves(flow.Node, call)
 }
 
 // directField is the field a recognized comparison reads off the reference: `r.f === x`, `!==`,
@@ -584,9 +606,10 @@ func (l *lowering) accessorName(name string) bool {
 }
 
 // codeBetween is whether anything that can run program code completes after from, where an access
-// reference's earliest narrowing step ends, and before the read starts, anywhere in the function
+// reference's earliest narrowing step starts, and before the read starts, anywhere in the function
 // that holds the read. A nested function's body runs only when called, and the call is what counts.
-func (l *lowering) codeBetween(from int, read *ast.Node) bool {
+// An exempt node, an exact predicate's call, isn't counted, though its arguments are.
+func (l *lowering) codeBetween(from int, read *ast.Node, exempt map[*ast.Node]bool) bool {
 	container := read.Parent
 	for container != nil && !ast.IsFunctionLike(container) && container.Kind != ast.KindSourceFile {
 		container = container.Parent
@@ -600,7 +623,7 @@ func (l *lowering) codeBetween(from int, read *ast.Node) bool {
 		if found || node.Pos() >= read.Pos() {
 			return found
 		}
-		if node.End() > from && node.End() <= read.Pos() && l.mayRunCode(node) {
+		if node.End() > from && node.End() <= read.Pos() && !exempt[node] && l.mayRunCode(node) {
 			found = true
 			return true
 		}
