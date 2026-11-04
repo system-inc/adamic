@@ -295,8 +295,9 @@ func (e *emitter) statement(statement ir.Statement) {
 }
 
 // writeProperty writes value into object's field, both already evaluated, as object.name = value does:
-// through a checked view, the write is checked and a scalar going into a union slot is boxed.
-func (e *emitter) writeProperty(statement ir.SetProperty, object, value string) {
+// through a checked view, the write is checked and a scalar going into a union slot is boxed. holds
+// are what a caller's aside owns, let go too if the write throws.
+func (e *emitter) writeProperty(statement ir.SetProperty, object, value string, holds ...string) {
 	if statement.Object.Type() == ir.Array {
 		object = e.snapshot(ir.Object, "("+object+")->metadata")
 	}
@@ -307,6 +308,11 @@ func (e *emitter) writeProperty(statement ir.SetProperty, object, value string) 
 	e.line("\tadamic_panic(message, sizeof message - 1);")
 	e.line("}")
 	e.line("adamic_object_check_data_write(%s, %s);", object, cString(statement.Name))
+	// A frozen object leaves Node's TypeError pending, tested before the value is kept, so the value
+	// is still the statement's to let go (ir.Program's FrozenWriteMayThrow).
+	if e.program.FrozenWriteMayThrow(statement) {
+		e.checkThrown(holds...)
+	}
 	records := e.hasRecordStorage()
 	keptValue := value
 	if statement.Value.Type().IsReference() {

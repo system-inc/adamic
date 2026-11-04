@@ -1,0 +1,73 @@
+// matchAll and replaceAll given a RegExp without the g flag throw Node's TypeError, and a catch takes
+// it: its name and its message are two fields, printed apart. The statement's temporaries, a label
+// built at run time among them, are let go on the way to the catch, so the leak check holds it.
+function replaced(name: string, text: string, pattern: RegExp): void {
+	const label = `replaceAll ${name}`;
+	try {
+		console.log(`${label}: ${text.replaceAll(pattern, '-')}`);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(error.name);
+			console.log(error.message);
+		}
+	}
+}
+function matched(name: string, text: string, pattern: RegExp): void {
+	const label = `matchAll ${name}`;
+	try {
+		const found: string[] = [];
+		for (const match of text.matchAll(pattern)) {
+			found.push(`${match.index}:${match[0]}`);
+		}
+		console.log(`${label}: ${found.join(',')}`);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(error.name);
+			console.log(error.message);
+		}
+	}
+}
+const global = /a/g;
+const single = /a/;
+replaced('global', 'banana', global);
+replaced('single', 'banana', single);
+matched('global', 'banana', global);
+matched('single', 'banana', single);
+
+// A literal in the try itself: the flag is checked before any match, so text with none throws too.
+try {
+	console.log('xyz'.replaceAll(/a/, 'b'));
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(error.name);
+		console.log(error.message);
+	}
+}
+try {
+	console.log(`${'xyz'.matchAll(/a/i).next().done}`);
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(error.name);
+		console.log(error.message);
+	}
+}
+
+// A function replacement is checked the same way, before it's ever called.
+let calls = 0;
+try {
+	console.log('banana'.replaceAll(/a/g, (match: string) => {
+		calls += 1;
+		return match.toUpperCase();
+	}));
+	console.log('banana'.replaceAll(/n/, (match: string) => {
+		calls += 1;
+		return match.toUpperCase();
+	}));
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(error.name);
+		console.log(error.message);
+	}
+}
+console.log(`calls ${calls}`);
+console.log('done');

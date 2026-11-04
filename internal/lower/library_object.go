@@ -272,8 +272,8 @@ func (l *lowering) exactObject(node *ast.Node, depth int) bool {
 	return l.exactObject(variable.Initializer, depth+1)
 }
 
-// objectCanFreeze is conservative across aliases and calls. A try around a write in a program
-// that freezes objects is NotYet until library TypeErrors participate in exception cleanup.
+// objectCanFreeze is conservative across aliases and calls: any Object.freeze in the program makes
+// every object write one that can throw Node's TypeError (ir.Program's ObjectsMayFreeze).
 func (l *lowering) objectCanFreeze() bool {
 	found := false
 	walk(l.result.Main, func(node any) bool {

@@ -1,0 +1,65 @@
+// A write to a frozen object throws Node's TypeError, and a catch takes it: its name and its message
+// are two fields, printed apart. The value being written, a string built at run time, is let go on
+// the way to the catch, and the object keeps what it held, so the leak check holds it.
+const point = { x: 1, label: 'p' + '1' };
+const view: { x: number; label: string } = point;
+console.log(`${Object.isFrozen(point)} ${point.label}`);
+view.label = `${point.label}+`;
+Object.freeze(point);
+for (const suffix of ['a', 'b']) {
+	const label = `label ${suffix}`;
+	try {
+		view.label = `${label}!`;
+		console.log('wrote');
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(error.name);
+			console.log(error.message);
+		}
+	}
+}
+try {
+	view.x = view.x + 1;
+	console.log('wrote');
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(error.name);
+		console.log(error.message);
+	}
+}
+console.log(`${point.x} ${point.label}`);
+
+// A logical assignment writes only when its test passes, and only that write throws.
+const counter = { count: 0, name: 'counter' };
+const counted: { count: number; name: string } = counter;
+Object.freeze(counter);
+try {
+	counted.name ||= 'never';
+	console.log(`kept ${counted.name}`);
+	counted.count ||= 5;
+	console.log('wrote');
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(error.name);
+		console.log(error.message);
+	}
+}
+
+// Object.assign throws at the frozen target's first key in property order, an index first, and
+// writes no other.
+const target = { b: 1, '2': 2, a: 3 };
+const open = { b: 0, '2': 0, a: 0 };
+Object.assign(open, { a: 9, '2': 8, b: 7 });
+console.log(`${open.a} ${open.b}`);
+Object.freeze(target);
+try {
+	Object.assign(target, { a: 9, '2': 8, b: 7 });
+	console.log('assigned');
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(error.name);
+		console.log(error.message);
+	}
+}
+console.log(`${target.a} ${target.b}`);
+console.log('done');

@@ -1,0 +1,60 @@
+// replaceAll's and matchAll's TypeError leaves the function it's thrown in, and its caller's catch
+// takes it, through a call, through a function value and through a finally that runs on the way out.
+function dashed(text: string, pattern: RegExp): string {
+	const prefix = `text ${text}`;
+	return `${prefix} is ${text.replaceAll(pattern, '-')}`;
+}
+
+function safe(text: string, pattern: RegExp): string {
+	try {
+		return dashed(text, pattern);
+	} catch (error) {
+		if (error instanceof Error) {
+			return `caught ${error.name}, ${error.message}`;
+		}
+		return 'not an error';
+	}
+}
+console.log(safe('a-b-a', /a/g));
+console.log(safe('a-b-a', /a/));
+
+// No catch here: the finally runs, and the error goes on to the caller's.
+function counted(text: string, pattern: RegExp): number {
+	try {
+		let count = 0;
+		for (const match of text.matchAll(pattern)) {
+			count += match[0].length;
+		}
+		return count;
+	} finally {
+		console.log(`finally after ${text}`);
+	}
+}
+function outer(text: string, pattern: RegExp): void {
+	try {
+		console.log(`${counted(text, pattern)}`);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(error.name);
+			console.log(error.message);
+		}
+	} finally {
+		console.log(`outer finally for ${text}`);
+	}
+}
+outer('aXa', /a/g);
+outer('aXa', /a/);
+
+// Through a function value the runtime's loop calls: the array map was building is let go.
+function each(texts: string[], pattern: RegExp): void {
+	try {
+		const results = texts.map((text) => text.replaceAll(pattern, '_'));
+		console.log(results.join(' '));
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(`${error.name}: ${error.message}`);
+		}
+	}
+}
+each(['ab', 'ba'], /a/g);
+each(['ab', 'ba'], /b/);

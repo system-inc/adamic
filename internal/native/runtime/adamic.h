@@ -709,6 +709,8 @@ adamic_object *adamic_object_freeze(adamic_object *object);
 bool adamic_object_has_own(const adamic_object *object, const adamic_string *key);
 struct adamic_array *adamic_object_keys(const adamic_object *object);
 struct adamic_array *adamic_object_values(const adamic_object *object, enum adamic_ir_type element, bool entries);
+// A write to a frozen object, and Object.assign into one, set adamic_thrown to Node's TypeError and
+// write nothing: the caller tests it before writing (ir.Program's FrozenWriteMayThrow).
 void adamic_object_assign(adamic_object *target, const adamic_object *source);
 void adamic_object_check_write(const adamic_object *object, const char *name);
 // Keep frozen-object failures out of the ordinary write's call path.

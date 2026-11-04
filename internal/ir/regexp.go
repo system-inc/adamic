@@ -1,5 +1,7 @@
 package ir
 
+import "strings"
+
 // RegExpProgram contains constants compiled and checked before native emission.
 type RegExpProgram struct{ Pattern, Flags, Declarations string }
 type RegExpNew struct {
@@ -19,6 +21,18 @@ type RegExpCall struct {
 }
 
 func (r RegExpCall) Type() Type { return r.Returns }
+
+// GlobalFlagMayThrow says a matchAll or replaceAll can throw Node's TypeError for a RegExp without
+// the g flag (runtime/regexp.c and regexp_replace.c set it on the pending word): unless the pattern
+// is a literal made right there with it, whose flags can't change. Lowering counts the calls that
+// can, the flow graph gives them an exception edge, and the emitter tests the word after each one.
+func (p *Program) GlobalFlagMayThrow(call RegExpCall) bool {
+	if call.Method != "matchAll" && call.Method != "replaceAll" {
+		return false
+	}
+	made, literal := call.Arguments[0].(RegExpNew)
+	return !literal || !strings.Contains(p.Regexps[made.Index].Flags, "g")
+}
 
 // RegExpProperty reads result-array metadata, preserving optional access.
 type RegExpProperty struct {
