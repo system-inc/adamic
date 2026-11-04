@@ -204,8 +204,18 @@ type Function struct {
 	// Returns is the result's type, or 0 for void.
 	Returns      Type
 	Async        bool
-	AsyncSite    int  // diagnostic source site of the async declaration
+	AsyncSite    int  // diagnostic source site of the async or generator declaration
 	AsyncReturns Type // body payload; Returns is Promise for an async function
+
+	// Generator is a function* declaration: a call makes its frame and runs none of the body, and
+	// each GeneratorNext runs the body to its next yield (ir/generator.go). Returns is Generator, and
+	// Yields is what each yield hands the consumer, one slot wide.
+	Generator bool
+	Yields    Type
+	// ResumeMayThrow is a generator whose body a throw can leave: a GeneratorNext of it is then a
+	// call that can throw, and its consumer tests for one before it reads done. Lowering works it out
+	// beside MayThrow, which stays false for a generator, since its call runs none of the body.
+	ResumeMayThrow bool
 
 	Body []Statement
 
@@ -285,6 +295,11 @@ const (
 	Float64Array
 	Promise
 	Uint16Array
+
+	// Generator is a generator object: one counted frame (runtime/generator.h) whose cells hold the
+	// body's locals between steps. Until generators are values (#qk8rztp S2), the only slot that holds
+	// one is the local a for-of over a generator's call steps, and a call dropped as a statement.
+	Generator
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |
@@ -317,7 +332,7 @@ func (t Type) Present() Type {
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
-	return t == String || t == Object || t == Array || t == Map || t == Record || t == Closure || t == Union || t == Weak || t == Promise || t.IsTypedArray()
+	return t == String || t == Object || t == Array || t == Map || t == Record || t == Closure || t == Union || t == Weak || t == Promise || t == Generator || t.IsTypedArray()
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.

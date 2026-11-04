@@ -590,7 +590,7 @@ func (f *cycleFinder) reachLinks(node cycleNode) []cycleNode {
 		local := f.l.result.Locals[node.cell-1]
 		if local.EnvironmentCell && local.Function >= 0 {
 			owner := f.l.result.Functions[local.Function]
-			if owner.Async {
+			if owner.Suspends() {
 				for _, held := range owner.FrameEnvironment {
 					if f.l.result.Locals[held].Captured {
 						links = append(links, cycleNode{cell: held + 1})

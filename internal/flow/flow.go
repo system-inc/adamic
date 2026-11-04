@@ -208,6 +208,26 @@ type Suspend struct {
 
 func (*Suspend) terminal() {}
 
+// Yield hands the value its block's last instruction read to the generator's consumer and returns
+// to it; the next step goes on at Next. A throw into the body at a yield is not yet built (#qk8rztp
+// S5), so there is no edge for one: nothing resumes a generator but its next step.
+type Yield struct {
+	Next  BlockId
+	Order EvaluationOrder
+}
+
+func (*Yield) terminal() {}
+
+// Suspends reports whether control leaves the function at a terminal and comes back later, with
+// anything the function's values reach changed by whatever ran meanwhile: an await or a yield.
+func Suspends(terminal Terminal) bool {
+	switch terminal.(type) {
+	case *Suspend, *Yield:
+		return true
+	}
+	return false
+}
+
 // NewFunction makes an empty function ready to build.
 func NewFunction(name string) *Function {
 	return &Function{Name: name, blocksById: map[BlockId]*BasicBlock{}, nextBlock: 1}
@@ -284,6 +304,8 @@ func EachSuccessor(terminal Terminal, visit func(block BlockId)) {
 	case *Suspend:
 		visit(terminal.Fulfilled)
 		visit(terminal.Rejected)
+	case *Yield:
+		visit(terminal.Next)
 	case *MayThrow:
 		visit(terminal.Next)
 		visit(terminal.Handler)
@@ -324,6 +346,8 @@ func TerminalOrder(terminal Terminal) EvaluationOrder {
 	case *Unreachable:
 		return terminal.Order
 	case *Suspend:
+		return terminal.Order
+	case *Yield:
 		return terminal.Order
 	case *MayThrow:
 		return terminal.Order

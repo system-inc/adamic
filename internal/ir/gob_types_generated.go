@@ -54,6 +54,8 @@ var gobTypes = []any{
 	Evaluate{},
 	FileStatus{},
 	ForOf{},
+	GeneratorDone{},
+	GeneratorNext{},
 	HasAccessor{},
 	HasOwn{},
 	HasProperty{},
@@ -158,4 +160,5 @@ var gobTypes = []any{
 	WeakTarget{},
 	WriteLine{},
 	WriteTextFile{},
+	Yield{},
 }

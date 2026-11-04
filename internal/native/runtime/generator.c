@@ -74,7 +74,7 @@ void adamic_generator_return(adamic_generator *generator) {
             adamic_generator_finish(generator);
             break;
         case adamic_generator_status_running:
-            running(generator, "resumed");
+            running(generator, "returned");
         case adamic_generator_status_done:
             break;
     }

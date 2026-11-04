@@ -44,7 +44,19 @@ iterator views. Frame destruction releases held values mechanically; it must not
 yield from `finally`, so `return` need not finish it. Delegating `yield*` needs its own iterator
 records and completion precedence. Reentrant resume must raise the same catchable failure as
 Node, rather than corrupt the frame. Each resume path must release exactly the slots it leaves
-and preserve the ones needed by a later resume. These rules require dedicated frame IR and
-ownership tests. Until that work exists, every `function*` and generator method stops as not yet
-built (NotYet, not Refused: generators are designed and intended), including an empty generator
-with no `yield`. No collector is proposed as a fallback.
+and preserve the ones needed by a later resume. No collector is proposed as a fallback.
+
+The first slice (#qk8rztp S1c) builds that frame for one shape: a named, non-generic `function*`
+declared at a module's top level, with plain parameters, whose body yields only as a statement
+(`yield value;`) and never inside `try`, consumed by a for-of directly over a call to it, or made
+and dropped by a call as a statement. The body runs on runtime/generator.h's counted frame, every
+local in a cell, cut into regions at each yield as an async body is at each await; a yield kills
+the cells its resume never reads. The for-of steps the call by its origin, whatever iterator type
+it is declared to return, and a step that throws is tested before done. The consuming loop's block
+holds the generator, so every way out of it lets go of the frame once, which is the whole of
+IteratorClose while no `finally` exists. Every other generator form stops as not yet built
+(NotYet, not Refused: generators are designed and intended): expressions, methods, nested and
+generic declarations at rule 2500, and in their own words at lowering a generator held anywhere
+but its loop, spread, `Array.from`, destructuring, `yield*`, a yield's result, a yield inside
+`try`, `return` with a value, a closure capturing a body local, and a consumer inside an async
+function or a generator.

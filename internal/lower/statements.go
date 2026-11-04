@@ -149,6 +149,8 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		return statements, err
 	}
 	switch expression.Kind {
+	case ast.KindYieldExpression:
+		return l.yieldStatement(expression)
 	case ast.KindAwaitExpression, ast.KindNonNullExpression, ast.KindVoidExpression:
 		value, err := l.expression(expression)
 		if err != nil {
@@ -164,6 +166,15 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		}
 		if err := l.optionalCall(expression); err != nil {
 			return nil, err
+		}
+		if function, isGenerator := l.generatorCallee(expression); isGenerator {
+			// The generator is made and dropped at once: its frame lets go of the arguments it kept,
+			// and none of its body runs, as on Node.
+			call, err := l.generatorCall(expression, function)
+			if err != nil {
+				return nil, err
+			}
+			return []ir.Statement{ir.Evaluate{Value: call}}, nil
 		}
 		if l.isConsole(expression.AsCallExpression().Expression) {
 			statement, err := l.console(expression)
@@ -237,6 +248,9 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 		return nil, errors.New("lower: " + l.program.Where(node) + ": return outside a function, and the checker let it through")
 	}
 	expression := node.AsReturnStatement().Expression
+	if expression != nil && l.function.Generator {
+		return nil, l.generatorNotYet(node, "returning a value (its last result's value isn't built yet)")
+	}
 	if expression == nil {
 		returned := ir.Return{}
 		if l.function.BodyReturns() != 0 {

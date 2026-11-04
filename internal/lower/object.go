@@ -1088,6 +1088,15 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 	if statement.AwaitModifier != nil {
 		return nil, l.notYet(node, "for await")
 	}
+	// A call to a program's generator is stepped as the generator it is, whatever iterator type it
+	// is declared to return (#qk8rztp, Compiler's risk 2).
+	if function, isGenerator := l.generatorCallee(statement.Expression); isGenerator {
+		initializer := statement.Initializer
+		if initializer.Kind != ast.KindVariableDeclarationList || initializer.Flags&ast.NodeFlagsBlockScoped == 0 || len(initializer.AsVariableDeclarationList().Declarations.Nodes) != 1 {
+			return nil, l.generatorNotYet(initializer, "consumed by a for-of that doesn't declare one variable with const or let")
+		}
+		return l.forOfGenerator(node, function, initializer.AsVariableDeclarationList().Declarations.Nodes[0].Name())
+	}
 	initializer := statement.Initializer
 	if initializer.Kind != ast.KindVariableDeclarationList || initializer.Flags&ast.NodeFlagsBlockScoped == 0 {
 		return nil, l.notYet(initializer, "a for...of that doesn't declare its variable with const or let")

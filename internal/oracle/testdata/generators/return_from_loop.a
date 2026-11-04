@@ -1,0 +1,16 @@
+// A return from inside the consuming loop lets go of the generator on its way out.
+function* doubled(word: string): Generator<string, void, undefined> {
+    for(const letter of word) {
+        yield letter + letter;
+    }
+}
+function find(word: string, wanted: string): string {
+    for(const pair of doubled(word)) {
+        if(pair === wanted) {
+            return `found ${pair}`;
+        }
+    }
+    return `missing ${wanted}`;
+}
+console.log(find(`abc${String(4)}`, 'cc'));
+console.log(find(`xy${String(1)}`, 'zz'));

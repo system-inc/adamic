@@ -43,6 +43,12 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.promiseValue(expression)
 	case ir.Await:
 		panic("native: await was not exposed before state cutting")
+	case ir.Yield:
+		panic("native: yield was not exposed before state cutting")
+	case ir.GeneratorNext:
+		return e.generatorNext(expression)
+	case ir.GeneratorDone:
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_generator_done(%s)", e.value(expression.Generator)))
 	case ir.RegExpNew:
 		for _, argument := range expression.Arguments {
 			e.value(argument)

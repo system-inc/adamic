@@ -1,0 +1,12 @@
+// A string the body builds is held in a frame cell across two yields and read after the last one;
+// the last step finishes the frame, which lets go of every cell.
+function* words(prefix: string, count: number): Generator<string, void, undefined> {
+    const built = `${prefix}-${String(count)}`;
+    yield `${built}a`;
+    yield `${built}b`;
+    console.log(`held ${built}`);
+}
+for(const word of words('w', 2)) {
+    console.log(word);
+}
+console.log('done');
