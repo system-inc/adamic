@@ -1,0 +1,54 @@
+// A helper's RangeError, from normalize or from String.fromCodePoint, reaches its caller's catch: directly,
+// through a function value map calls, and through a finally without a catch.
+function normalized(text: string, form: string): string {
+	return text.normalize(form);
+}
+
+function pointed(code: number): string {
+	return String.fromCodePoint(code);
+}
+
+function guarded(form: string): string {
+	try {
+		return `${normalized('Å', form).length}`;
+	} catch (error) {
+		if (error instanceof Error) {
+			return `${error.name}|${error.message}`;
+		}
+		return 'not an error';
+	}
+}
+
+function spelled(codes: number[]): string {
+	try {
+		return codes.map((code) => pointed(code)).join('');
+	} catch (error) {
+		if (error instanceof Error) {
+			return `${error.name}|${error.message}`;
+		}
+		return 'not an error';
+	}
+}
+
+function settled(code: number): string {
+	try {
+		return pointed(code);
+	} finally {
+		console.log(`finally ${code}`);
+	}
+}
+
+console.log(guarded('NFD'));
+console.log(guarded('NFX'));
+console.log(spelled([65, 66, 67]));
+console.log(spelled([65, 66, 1.25]));
+for (const code of [68, -2]) {
+	try {
+		console.log(settled(code));
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(`caught ${error.name}|${error.message}`);
+		}
+	}
+}
+console.log('done');
