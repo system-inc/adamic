@@ -143,12 +143,14 @@ func TestWASIFileAgreesWithNode_004(t *testing.T) { t.Parallel(); wasiFileAgrees
 
 func TestWASIHostShardCoverage(t *testing.T) {
 	t.Parallel()
-	if len(inputFixtures) != 22 || len(fsFileFixtures) != 6 {
+	if len(inputFixtures) != 22 || len(fsFileFixtures) != 7 {
 		t.Fatalf("host fixture registry changed: input=%d files=%d; regenerate host shards", len(inputFixtures), len(fsFileFixtures))
 	}
 }
 
 func TestWASIFileAgreesWithNode_005(t *testing.T) { t.Parallel(); wasiFileAgreesWithNode(t, 5) }
+
+func TestWASIFileAgreesWithNode_006(t *testing.T) { t.Parallel(); wasiFileAgreesWithNode(t, 6) }
 
 func TestWASIHostRefusalClassification(t *testing.T) {
 	t.Parallel()
