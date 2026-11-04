@@ -1,0 +1,3 @@
+import { other } from '../l04_patched_prototype.a';
+String.prototype.split = function (): string[] { return [other()]; };
+export const ready = true;

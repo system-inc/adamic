@@ -1,0 +1,3 @@
+import { other } from '../l02_launder_split.ts';
+const source = { other: 1, label: { toString(): string { return other(); } } };
+export const view: { other: number } = source;

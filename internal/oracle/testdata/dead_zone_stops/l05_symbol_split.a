@@ -1,0 +1,8 @@
+import { splitter } from './l05_symbol_split/back.a';
+function make(): string { return new Late().x; }
+let first = '';
+try { first = String('a,b'.split(splitter).length); } catch (error) { first = error instanceof Error ? error.name : 'other'; }
+class Late { x = 'late'; }
+console.log(first);
+console.log(String('a,b'.split(splitter).length));
+export { make as other };

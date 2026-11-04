@@ -160,6 +160,7 @@ var signatureReaders = map[string]string{
 	"declaredKeyBindings":               "the callee's instantiation, to judge each type argument it binds against its constraint by the declared-key rule; an argument's slot is judged as a view (recordViewSite)",
 	"detachedOwnOpaqueArgument":         "a parameter's declaration, to find the own-property helper by name",
 	"instantiateFunction":               "the callee's instantiation, to lower a generic function",
+	"libraryCallOnPrimitives":           "the callee's declaration, whether the library or the prelude declares it, to judge a call that can't reach program code",
 	"libraryCallResult":                 "the callee's declaration, whether the library declares it",
 	"notePlaceholderSlots":              "a program parameter's symbol, to carry a placeholder into it; lib's any parameter is never a placeholder",
 	"predicateArguments":                "the callee's declaration and type predicate, to check the predicate's argument",
