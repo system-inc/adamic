@@ -16,6 +16,9 @@ func TestHostConfigurationFixtureReaders(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	// Fetch the existing product before starting a 30-second child proof. A runner
+	// supplies it, while a fresh local proof may need to compile the oracle first.
+	fixtureOracleHook(t, repository)
 	executable, err := os.Executable()
 	if err != nil {
 		t.Fatal(err)

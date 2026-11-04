@@ -159,7 +159,21 @@ func TestHostConfigurationScriptReaders(t *testing.T) {
 		t.Run(command[0], func(t *testing.T) {
 			ctx, cancel := context.WithTimeout(t.Context(), 20*time.Second)
 			defer cancel()
-			out, err := exec.CommandContext(ctx, command[0], command[1:]...).CombinedOutput()
+			cmd := exec.CommandContext(ctx, command[0], command[1:]...)
+			if command[0] == "node" {
+				// setup.sh pins tsc and its adjacent API; no npm install lives in a runner's tree.
+				tsc, err := exec.LookPath("tsc")
+				if err != nil {
+					t.Fatal(err)
+				}
+				tsc, err = filepath.EvalSymlinks(tsc)
+				if err != nil {
+					t.Fatal(err)
+				}
+				api := filepath.Join(filepath.Dir(tsc), "../lib/typescript.js")
+				cmd.Env = append(os.Environ(), "CENSUS_TYPESCRIPT="+api)
+			}
+			out, err := cmd.CombinedOutput()
 			if err != nil {
 				t.Fatalf("reader proofs: %v\n%s", err, out)
 			}

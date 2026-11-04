@@ -6,8 +6,10 @@ const repo=path.resolve(process.argv[2]);
 const logs=path.resolve(process.argv[3]);
 fs.mkdirSync(logs,{recursive:true});
 const bucket=__dirname;
-const nodeModules=fs.realpathSync(repo+'/stage3/api/node_modules');
-const ts=require(nodeModules+'/typescript');
+// An explicit gate API uses the same bundled Node declarations the loader serves.
+// Preserve the installed stage3 API path for the standalone adaptation proof.
+const nodeModules=fs.realpathSync(repo+(process.env.CENSUS_TYPESCRIPT?'/internal/load/node_types/node_modules':'/stage3/api/node_modules'));
+const ts=require(process.env.CENSUS_TYPESCRIPT||nodeModules+'/typescript');
 if(ts.version!=='6.0.3'||require(nodeModules+'/@types/node/package.json').version!=='25.3.3')throw Error('pin');
 const options={strict:true,noUncheckedIndexedAccess:true,exactOptionalPropertyTypes:true,erasableSyntaxOnly:false,verbatimModuleSyntax:true,allowImportingTsExtensions:true,noEmit:true,module:ts.ModuleKind.ESNext,moduleDetection:ts.ModuleDetectionKind.Force,moduleResolution:ts.ModuleResolutionKind.Bundler,target:ts.ScriptTarget.ES2024,lib:['lib.es2024.d.ts'],types:[]};
 let prelude=fs.readFileSync(repo+'/internal/load/prelude.d.ts','utf8').replace('declare const console: {\n\tlog(message: string): void;\n\terror(message: string): void;\n};','declare var console: Console;');
