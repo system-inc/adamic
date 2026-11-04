@@ -21,8 +21,9 @@ func TestMain(m *testing.M) {
 
 // The adapted tree is settled by this package's own test binary, so its key holds this package's recipe, never lane's,
 // which every lane test file's edit would move. It holds no empty directory, which the house's lay would drop
-// (#rhj78rk), and git reads its .keep files as no ref. Mutant: keepEmptyDirectories never called, red (.git/refs/heads
-// is empty).
+// (#rhj78rk), and git reads its .keep files as no ref: refs/heads and refs/tags list none, as the pin is checked out
+// detached, and no ref of apply.py's own refs/stage3 names one. Mutant: keepEmptyDirectories never called, red
+// (.git/refs/heads is empty).
 func TestProduct_Stage3AdaptedTree(t *testing.T) {
 	t.Parallel()
 	product := Product(t)
@@ -40,8 +41,11 @@ func TestProduct_Stage3AdaptedTree(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if refs, err := toolchain.GitCommandIn(tree, "for-each-ref").Output(); err != nil || len(bytes.TrimSpace(refs)) > 0 {
-		t.Fatalf("the adapted tree's refs read %q (%v), want none: the pin is checked out detached", refs, err)
+	if refs, err := toolchain.GitCommandIn(tree, "for-each-ref", "refs/heads", "refs/tags").Output(); err != nil || len(bytes.TrimSpace(refs)) > 0 {
+		t.Fatalf("the adapted tree's branches and tags read %q (%v), want none: the pin is checked out detached", refs, err)
+	}
+	if refs, err := toolchain.GitCommandIn(tree, "for-each-ref", "--format=%(refname)").Output(); err != nil || bytes.Contains(refs, []byte(".keep")) {
+		t.Fatalf("the adapted tree's refs read %q (%v), want none naming a .keep", refs, err)
 	}
 	head, err := toolchain.GitCommandIn(tree, "rev-parse", "HEAD").Output()
 	if err != nil {
