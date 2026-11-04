@@ -91,6 +91,12 @@ func logicalConverted(from, to ir.Type, value string) (string, bool) {
 			return fmt.Sprintf("((adamic_number_box *)%s)->number", value), false
 		case ir.Boolean:
 			return fmt.Sprintf("((adamic_boolean_box *)%s)->boolean", value), false
+		case ir.MaybeNumber:
+			// The checker typed the falsy union number | undefined: undefined is the missing pointer,
+			// and anything else is a number's box (left is a snapshot, read once).
+			return fmt.Sprintf("(%s == NULL ? (adamic_maybe_number){false, 0.0} : (adamic_maybe_number){true, ((adamic_number_box *)%s)->number})", value, value), false
+		case ir.MaybeBoolean:
+			return fmt.Sprintf("(%s == NULL ? (adamic_maybe_boolean){false, false} : (adamic_maybe_boolean){true, ((adamic_boolean_box *)%s)->boolean})", value, value), false
 		default:
 			return fmt.Sprintf("((%s)%s)", cType(to), value), false
 		}
