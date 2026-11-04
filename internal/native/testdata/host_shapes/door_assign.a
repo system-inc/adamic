@@ -1,0 +1,6 @@
+// Object.assign from a Stats would copy its slots (adamic_object_assign walks the source's names),
+// but lowering refuses a source whose shape a literal or const binding doesn't prove.
+// host_shapes_test.go requires this program refused in exactly those words.
+import * as fs from 'node:fs';
+const copy = Object.assign({}, fs.statSync('.'));
+console.log(`assign ${Object.keys(copy).includes('dev')} ${Object.keys(copy).includes('_fsFileMode')}`);
