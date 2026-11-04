@@ -1,0 +1,4 @@
+// a-check: refused a cast the runtime can't check
+// A capture inside a lookbehind is a capture, pushed into split's result.
+const pieces = 'xab'.split(/(?<=(a))b/) as string[];
+console.log(`${pieces.length}`);
