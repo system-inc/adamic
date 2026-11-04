@@ -1,0 +1,4 @@
+// a-check: refused a cast the runtime can't check
+// A capture inside a lookahead is a capture: Node splits 'a-b' into ['a', 'b', 'b'], the group's text pushed too.
+const pieces = 'a-b'.split(/-(?=(b))/) as string[];
+console.log(`${pieces.length}`);
