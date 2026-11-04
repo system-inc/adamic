@@ -150,7 +150,7 @@
     "proof": "This receiving host contract accepts the existing compiler/directory host whose optional createHash may be explicitly undefined. Its consumer tests absence before invoking it. The owning optional slot truthfully admits absence; callable parameters/results and original method variance are preserved. This prevents moving the watch diagnostic to a receiving file."
   },
   {
-    "kind": "optional-helper-call",
+    "kind": "bare-helper-call",
     "file": "moduleNameResolver.ts",
     "function": "primaryLookup",
     "call": "directoryProbablyExists",
@@ -160,12 +160,16 @@
       "typeRoot",
       "host"
     ],
-    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
     "public": false,
-    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+    "proof": "Keep this exact call bare. The internal directoryProbablyExists host parameter now explicitly admits undefined, which its unchanged presence test already handles. No callee or argument cast is inserted. Callee and argument reads remain at their original evaluation points. See directory-exists.cjs for the owner-scoped declaration contract.",
+    "ownerPath": [
+      "resolveTypeReferenceDirective",
+      "primaryLookup"
+    ],
+    "expression": "directoryProbablyExists(typeRoot, host)"
   },
   {
-    "kind": "optional-helper-call",
+    "kind": "bare-helper-call",
     "file": "moduleNameResolver.ts",
     "function": "tryLoadModuleUsingRootDirs",
     "call": "directoryProbablyExists",
@@ -175,12 +179,15 @@
       "containingDirectory",
       "state.host"
     ],
-    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
     "public": false,
-    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+    "proof": "Keep this exact call bare. The internal directoryProbablyExists host parameter now explicitly admits undefined, which its unchanged presence test already handles. No callee or argument cast is inserted. Callee and argument reads remain at their original evaluation points. See directory-exists.cjs for the owner-scoped declaration contract.",
+    "ownerPath": [
+      "tryLoadModuleUsingRootDirs"
+    ],
+    "expression": "directoryProbablyExists(containingDirectory, state.host)"
   },
   {
-    "kind": "optional-helper-call",
+    "kind": "bare-helper-call",
     "file": "moduleNameResolver.ts",
     "function": "tryLoadModuleUsingRootDirs",
     "call": "directoryProbablyExists",
@@ -190,12 +197,15 @@
       "baseDirectory",
       "state.host"
     ],
-    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
     "public": false,
-    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+    "proof": "Keep this exact call bare. The internal directoryProbablyExists host parameter now explicitly admits undefined, which its unchanged presence test already handles. No callee or argument cast is inserted. Callee and argument reads remain at their original evaluation points. See directory-exists.cjs for the owner-scoped declaration contract.",
+    "ownerPath": [
+      "tryLoadModuleUsingRootDirs"
+    ],
+    "expression": "directoryProbablyExists(baseDirectory, state.host)"
   },
   {
-    "kind": "optional-helper-call",
+    "kind": "bare-helper-call",
     "file": "moduleNameResolver.ts",
     "function": "tryLoadModuleUsingBaseUrl",
     "call": "directoryProbablyExists",
@@ -205,12 +215,15 @@
       "getDirectoryPath(candidate)",
       "state.host"
     ],
-    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
     "public": false,
-    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+    "proof": "Keep this exact call bare. The internal directoryProbablyExists host parameter now explicitly admits undefined, which its unchanged presence test already handles. No callee or argument cast is inserted. Callee and argument reads remain at their original evaluation points. See directory-exists.cjs for the owner-scoped declaration contract.",
+    "ownerPath": [
+      "tryLoadModuleUsingBaseUrl"
+    ],
+    "expression": "directoryProbablyExists(getDirectoryPath(candidate), state.host)"
   },
   {
-    "kind": "optional-helper-call",
+    "kind": "bare-helper-call",
     "file": "moduleNameResolver.ts",
     "function": "nodeLoadModuleByRelativeName",
     "call": "directoryProbablyExists",
@@ -220,12 +233,15 @@
       "parentOfCandidate",
       "state.host"
     ],
-    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
     "public": false,
-    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+    "proof": "Keep this exact call bare. The internal directoryProbablyExists host parameter now explicitly admits undefined, which its unchanged presence test already handles. No callee or argument cast is inserted. Callee and argument reads remain at their original evaluation points. See directory-exists.cjs for the owner-scoped declaration contract.",
+    "ownerPath": [
+      "nodeLoadModuleByRelativeName"
+    ],
+    "expression": "directoryProbablyExists(parentOfCandidate, state.host)"
   },
   {
-    "kind": "optional-helper-call",
+    "kind": "bare-helper-call",
     "file": "moduleNameResolver.ts",
     "function": "nodeLoadModuleByRelativeName",
     "call": "directoryProbablyExists",
@@ -235,12 +251,15 @@
       "candidate",
       "state.host"
     ],
-    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
     "public": false,
-    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+    "proof": "Keep this exact call bare. The internal directoryProbablyExists host parameter now explicitly admits undefined, which its unchanged presence test already handles. No callee or argument cast is inserted. Callee and argument reads remain at their original evaluation points. See directory-exists.cjs for the owner-scoped declaration contract.",
+    "ownerPath": [
+      "nodeLoadModuleByRelativeName"
+    ],
+    "expression": "directoryProbablyExists(candidate, state.host)"
   },
   {
-    "kind": "optional-helper-call",
+    "kind": "bare-helper-call",
     "file": "moduleNameResolver.ts",
     "function": "tryAddingExtensions",
     "call": "directoryProbablyExists",
@@ -250,12 +269,15 @@
       "directory",
       "state.host"
     ],
-    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
     "public": false,
-    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+    "proof": "Keep this exact call bare. The internal directoryProbablyExists host parameter now explicitly admits undefined, which its unchanged presence test already handles. No callee or argument cast is inserted. Callee and argument reads remain at their original evaluation points. See directory-exists.cjs for the owner-scoped declaration contract.",
+    "ownerPath": [
+      "tryAddingExtensions"
+    ],
+    "expression": "directoryProbablyExists(directory, state.host)"
   },
   {
-    "kind": "optional-helper-call",
+    "kind": "bare-helper-call",
     "file": "moduleNameResolver.ts",
     "function": "getPackageJsonInfo",
     "call": "directoryProbablyExists",
@@ -265,12 +287,15 @@
       "packageDirectory",
       "host"
     ],
-    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
     "public": false,
-    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+    "proof": "Keep this exact call bare. The internal directoryProbablyExists host parameter now explicitly admits undefined, which its unchanged presence test already handles. No callee or argument cast is inserted. Callee and argument reads remain at their original evaluation points. See directory-exists.cjs for the owner-scoped declaration contract.",
+    "ownerPath": [
+      "getPackageJsonInfo"
+    ],
+    "expression": "directoryProbablyExists(packageDirectory, host)"
   },
   {
-    "kind": "optional-helper-call",
+    "kind": "bare-helper-call",
     "file": "moduleNameResolver.ts",
     "function": "loadNodeModuleFromDirectoryWorker",
     "call": "directoryProbablyExists",
@@ -280,12 +305,15 @@
       "getDirectoryPath(packageFile)",
       "state.host"
     ],
-    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
     "public": false,
-    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+    "proof": "Keep this exact call bare. The internal directoryProbablyExists host parameter now explicitly admits undefined, which its unchanged presence test already handles. No callee or argument cast is inserted. Callee and argument reads remain at their original evaluation points. See directory-exists.cjs for the owner-scoped declaration contract.",
+    "ownerPath": [
+      "loadNodeModuleFromDirectoryWorker"
+    ],
+    "expression": "directoryProbablyExists(getDirectoryPath(packageFile), state.host)"
   },
   {
-    "kind": "optional-helper-call",
+    "kind": "bare-helper-call",
     "file": "moduleNameResolver.ts",
     "function": "loadNodeModuleFromDirectoryWorker",
     "call": "directoryProbablyExists",
@@ -295,12 +323,15 @@
       "candidate",
       "state.host"
     ],
-    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
     "public": false,
-    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+    "proof": "Keep this exact call bare. The internal directoryProbablyExists host parameter now explicitly admits undefined, which its unchanged presence test already handles. No callee or argument cast is inserted. Callee and argument reads remain at their original evaluation points. See directory-exists.cjs for the owner-scoped declaration contract.",
+    "ownerPath": [
+      "loadNodeModuleFromDirectoryWorker"
+    ],
+    "expression": "directoryProbablyExists(candidate, state.host)"
   },
   {
-    "kind": "optional-helper-call",
+    "kind": "bare-helper-call",
     "file": "moduleNameResolver.ts",
     "function": "loadModuleFromImmediateNodeModulesDirectory",
     "call": "directoryProbablyExists",
@@ -310,12 +341,15 @@
       "nodeModulesFolder",
       "state.host"
     ],
-    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
     "public": false,
-    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+    "proof": "Keep this exact call bare. The internal directoryProbablyExists host parameter now explicitly admits undefined, which its unchanged presence test already handles. No callee or argument cast is inserted. Callee and argument reads remain at their original evaluation points. See directory-exists.cjs for the owner-scoped declaration contract.",
+    "ownerPath": [
+      "loadModuleFromImmediateNodeModulesDirectory"
+    ],
+    "expression": "directoryProbablyExists(nodeModulesFolder, state.host)"
   },
   {
-    "kind": "optional-helper-call",
+    "kind": "bare-helper-call",
     "file": "moduleNameResolver.ts",
     "function": "loadModuleFromImmediateNodeModulesDirectory",
     "call": "directoryProbablyExists",
@@ -325,12 +359,15 @@
       "nodeModulesAtTypes",
       "state.host"
     ],
-    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
     "public": false,
-    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+    "proof": "Keep this exact call bare. The internal directoryProbablyExists host parameter now explicitly admits undefined, which its unchanged presence test already handles. No callee or argument cast is inserted. Callee and argument reads remain at their original evaluation points. See directory-exists.cjs for the owner-scoped declaration contract.",
+    "ownerPath": [
+      "loadModuleFromImmediateNodeModulesDirectory"
+    ],
+    "expression": "directoryProbablyExists(nodeModulesAtTypes, state.host)"
   },
   {
-    "kind": "optional-helper-call",
+    "kind": "bare-helper-call",
     "file": "moduleNameResolver.ts",
     "function": "loadModuleFromSpecificNodeModulesDirectory",
     "call": "directoryProbablyExists",
@@ -340,12 +377,15 @@
       "packageDirectory",
       "state.host"
     ],
-    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
     "public": false,
-    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+    "proof": "Keep this exact call bare. The internal directoryProbablyExists host parameter now explicitly admits undefined, which its unchanged presence test already handles. No callee or argument cast is inserted. Callee and argument reads remain at their original evaluation points. See directory-exists.cjs for the owner-scoped declaration contract.",
+    "ownerPath": [
+      "loadModuleFromSpecificNodeModulesDirectory"
+    ],
+    "expression": "directoryProbablyExists(packageDirectory, state.host)"
   },
   {
-    "kind": "optional-helper-call",
+    "kind": "bare-helper-call",
     "file": "moduleNameResolver.ts",
     "function": "tryLoadModuleUsingPaths",
     "call": "directoryProbablyExists",
@@ -355,12 +395,15 @@
       "getDirectoryPath(candidate)",
       "state.host"
     ],
-    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
     "public": false,
-    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+    "proof": "Keep this exact call bare. The internal directoryProbablyExists host parameter now explicitly admits undefined, which its unchanged presence test already handles. No callee or argument cast is inserted. Callee and argument reads remain at their original evaluation points. See directory-exists.cjs for the owner-scoped declaration contract.",
+    "ownerPath": [
+      "tryLoadModuleUsingPaths"
+    ],
+    "expression": "directoryProbablyExists(getDirectoryPath(candidate), state.host)"
   },
   {
-    "kind": "optional-helper-call",
+    "kind": "bare-helper-call",
     "file": "moduleNameResolver.ts",
     "function": "resolveFromTypeRoot",
     "call": "directoryProbablyExists",
@@ -370,8 +413,11 @@
       "typeRoot",
       "state.host"
     ],
-    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
     "public": false,
-    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+    "proof": "Keep this exact call bare. The internal directoryProbablyExists host parameter now explicitly admits undefined, which its unchanged presence test already handles. No callee or argument cast is inserted. Callee and argument reads remain at their original evaluation points. See directory-exists.cjs for the owner-scoped declaration contract.",
+    "ownerPath": [
+      "resolveFromTypeRoot"
+    ],
+    "expression": "directoryProbablyExists(typeRoot, state.host)"
   }
 ]

@@ -49,7 +49,7 @@ for row in scope['sites']:
  b=Path(str(scratch/'adapt91-scope.json')+'.'+name+'.after.js.txt').read_text()
  emitdiff+=''.join(difflib.unified_diff(a.splitlines(True),b.splitlines(True),fromfile='before/'+name+'.js',tofile='after/'+name+'.js'))
 (proof/'transpile.diff').write_text(emitdiff)
-# Prove the exact source scope and movement guards fail for unrelated changes.
+# The complete source-delta proof still rejects unrelated edits; owner pins allow them.
 file=after/'src/compiler/core.ts';saved=file.read_bytes()
 try:
  file.write_bytes(saved+b'\n// unrelated scope mutant\n')
@@ -57,9 +57,9 @@ try:
 finally: file.write_bytes(saved)
 file=after/'src/compiler/utilities.ts';saved=file.read_bytes()
 try:
- file.write_bytes(saved+b'\n')
+ file.write_bytes(saved.replace(b'forEach(objectAllocatorPatchers,', b'/* changed owner */ forEach(objectAllocatorPatchers,', 1))
  run('moved-target-mutant',['node',proof.parent/'adapt.cjs',after],120,expected=1)
- assert 'target source moved' in (logs/'moved-target-mutant.log').read_text()
+ assert 'target owner moved' in (logs/'moved-target-mutant.log').read_text()
 finally: file.write_bytes(saved)
 file=after/'src/testRunner/adapt91Registrant.ts'
 try:

@@ -1,5 +1,53 @@
 # Required indexed reads in the program partition
 
+## Current directoryProbablyExists correction, task b5w3ycg
+
+Composition status: PASS on the measured base below. Adaptation 91's unrelated
+whole-file pin initially rejected this declaration change. Its pins now cover
+createNodeFactory and setObjectAllocator only; its other checks and Node
+witnesses are preserved. No separate 99k adapter is present. The earlier census
+was intentionally stopped on the user's instruction, not for memory.
+
+The November 4 ruling replaces the fifteen local helper casts with one truthful
+internal declaration in utilities.ts. Adaptation 32 itself now owns that parameter
+change. There is no separate 99k adaptation. The helper's unchanged presence test
+already accepts an explicitly undefined directoryExists property.
+
+`directory-exists.cjs` changes only
+`host: { directoryExists?: (directoryName: string) => boolean; }` to
+`host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }`.
+It parses stock TypeScript 6.0.3, pins the helper function's before/after text
+hashes, preserves its internal tag and runtime body, and compares emitted
+JavaScript with comments both kept and removed before proposing the edit.
+The utility file is a declaration-only exception to this partition's indexed-read
+inventory. All existing indexed-read and other owner sites remain unchanged.
+
+The fifteen `bare-helper-call` rows in public-host-sites.json retain the exact
+callee, arguments, named function ancestry and occurrence counts. They insert
+nothing and reject any cast or changed call spelling. All 27 files are planned
+before writes; the declaration and calls are idempotent. verify.cjs now checks
+both comment settings for all 27 files. Historical resumed-watch measurements
+below retain their original dates and results; their call-view decision is
+explicitly superseded, not a current contract.
+
+Current proof commands, with the real pre-32, legacy-32-after and corrected-32-after
+snapshots from full apply's `refs/stage3/32-indexed-reads-program-{before,after}`:
+
+```sh
+export NODE_PATH="$PWD/stage3/api/node_modules"
+unit=stage3/adapt/32-indexed-reads-program
+node "$unit/verify.cjs" PRE_32_TREE CORRECTED_32_TREE > verify.log 2>&1
+node "$unit/directory-exists-contract.cjs" PRE_32_TREE LEGACY_32_TREE > directory-contract.log 2>&1
+node "$unit/mutant.cjs" PRE_32_TREE CORRECTED_32_TREE NEW_SEMVER_MUTANT > semver-mutant.log 2>&1
+node "$unit/binder-mutant.cjs" PRE_32_TREE CORRECTED_32_TREE NEW_BINDER_MUTANT > binder-mutant.log 2>&1
+```
+
+The directory contract compares all 27 output files with legacy 32 and permits
+only the fifteen removed callee views and the one parameter union. It checks
+both emitted comment settings, all fifteen forbidden-cast mutants, changed
+arguments and helper owners, parse errors, duplicate owners, unrelated edits,
+and byte/mtime stability with zero edits on an actual second adapter run.
+
 Current ruling: the ten public method conversions are revoked and restored.
 **watch.ts is 0 -> 2 and honestly leaves zero**; both omission rewrites are
 declined by public key-presence counterexamples. The method-restoration section
@@ -827,7 +875,7 @@ no zero is claimed for it or nodeFactory.ts.
 On the pushed handoff batch, watch.ts is **2 -> 0**, whole-tree findings
 **321 -> 314** with no new findings, and original whole files **53 -> 54 of 78**.
 [The resumed proof](resumed-watch/README.md) records the 15 owning declarations,
-15 erased local helper views, 11 exact public host owners, and all mutants.
+the historical 15 local helper views (superseded by the declaration correction below), 11 exact public host owners, and all mutants.
 Default oracle: **106,367 passing, empty baseline diff**. Both newly sanctioned
 handoff API lines and the existing 20/40/70 exceptions are checked mechanically.
 Tracing already uses adaptation 47 and retains exactly four Node host bindings;
@@ -879,3 +927,54 @@ Default oracle passes 106,367 tests with an empty baseline diff. The explicit
 three-property lane manifest passes; the supplied default lane manifest still
 rejects exactly those retained sanctioned owners. watch.ts is 0 -> 2, the only
 file leaving zero; original zero files are 55 -> 54 of 78. All 13 mutants pass.
+
+## Fresh composed proof for b5w3ycg
+
+Measured on main `d0c13607bfb1228c68d41c5f1e129dfc84dbcce1` plus the
+32 correction and 91 owner-pin correction. [Results](proof/directory-exists/results.json)
+record full apply, a byte-identical full-apply replay, zero-edit/zero-write
+adapter reruns, the 27-file two-comment-setting JavaScript proof and its twenty
+refusal fixtures, the existing semver/binder mutants, both 79-root whole-program
+type checks exiting zero, the unchanged public declarations, the lane PASS and
+all 106,367 test identities matching main. Shard generation and the requested
+Go lane fixtures pass. No other adapter or sanctioned API record was edited.
+
+The first-error censuses ran in sequence with LATENT_FULL=0 and
+LATENT_ASSERT_NO_OUTPUT=1. Both contain 79 files and zero checker diagnostics.
+Unique Refused findings are 4,294 to 4,279; NotYet findings are 559 to 560.
+Exactly the fifteen cast sites disappear. The one new site is
+moduleNameResolver.ts:674:21: a dictionary member narrowed to an array without
+an element-checked view. [The full delta](proof/directory-exists/census-delta.json)
+retains the baseline and current stops, attempting units and exact diagnostic text.
+
+All rows below are in moduleNameResolver.ts. Some units retain an earlier stop
+they already had before the cast was reached. "No recorded stop" is an isolated
+census-unit observation, not a whole-program native compilation claim. The
+primaryLookup row is measured within the resolveTypeReferenceDirective unit.
+
+| Baseline call line | Enclosing function | Bare call | Unit's current stop |
+| --- | --- | --- | --- |
+| 670 | resolveTypeReferenceDirective / primaryLookup | `directoryProbablyExists(typeRoot, host)` | NotYet 674:21: a dictionary member narrowed to an array without an element-checked view |
+| 1625 | tryLoadModuleUsingRootDirs | `directoryProbablyExists(containingDirectory, state.host)` | NotYet 1583:10: a dictionary member narrowed to an array without an element-checked view |
+| 1644 | tryLoadModuleUsingRootDirs | `directoryProbablyExists(baseDirectory, state.host)` | NotYet 1583:10: a dictionary member narrowed to an array without an element-checked view |
+| 1668 | tryLoadModuleUsingBaseUrl | `directoryProbablyExists(getDirectoryPath(candidate), state.host)` | NotYet 1657:11: destructuring a value |
+| 1993 | nodeLoadModuleByRelativeName | `directoryProbablyExists(parentOfCandidate, state.host)` | No recorded stop (attempted) |
+| 2008 | nodeLoadModuleByRelativeName | `directoryProbablyExists(candidate, state.host)` | No recorded stop (attempted) |
+| 2136 | tryAddingExtensions | `directoryProbablyExists(directory, state.host)` | No recorded stop (attempted) |
+| 2468 | getPackageJsonInfo | `directoryProbablyExists(packageDirectory, host)` | NotYet 2449:9: a call through ?. (an optional call) |
+| 2528 | loadNodeModuleFromDirectoryWorker | `directoryProbablyExists(getDirectoryPath(packageFile), state.host)` | NotYet 2519:13: an optional chain longer than one step |
+| 2529 | loadNodeModuleFromDirectoryWorker | `directoryProbablyExists(candidate, state.host)` | NotYet 2519:13: an optional chain longer than one step |
+| 3066 | loadModuleFromImmediateNodeModulesDirectory | `directoryProbablyExists(nodeModulesFolder, state.host)` | No recorded stop (attempted) |
+| 3081 | loadModuleFromImmediateNodeModulesDirectory | `directoryProbablyExists(nodeModulesAtTypes, state.host)` | No recorded stop (attempted) |
+| 3159 | loadModuleFromSpecificNodeModulesDirectory | `directoryProbablyExists(packageDirectory, state.host)` | NotYet 3103:26: an optional chain longer than one step |
+| 3192 | tryLoadModuleUsingPaths | `directoryProbablyExists(getDirectoryPath(candidate), state.host)` | No recorded stop (attempted) |
+| 3336 | resolveFromTypeRoot | `directoryProbablyExists(typeRoot, state.host)` | NotYet 3333:10: a dictionary member narrowed to an array without an element-checked view |
+
+The public files are 593,502-byte typescript.d.ts and 866-byte tsserverlibrary.d.ts;
+both are byte-identical before/after. The lane has 106,366 passing, one sanctioned
+Public APIs failure and zero pending. XML identity comparison decoded control-character references reversibly. Raw logs
+and raw census streams remain under /workspace/scratch with the adapt32-91 prefix.
+
+The separate requested inventory is /workspace/scratch/remaining-whole-file-pins.md:
+90-void-widening still pins seven complete files, and 92-tty-host-results and
+93-builtin-imports each pin sys.ts. None was changed.

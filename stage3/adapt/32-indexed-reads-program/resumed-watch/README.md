@@ -1,3 +1,8 @@
+Current contract: the directoryProbablyExists declaration correction in the
+parent README supersedes the local-call-view decision measured here. The old
+measurements are retained as historical evidence and are not claimed as a fresh
+run of that correction.
+
 # watch.ts at zero under the public-owner sanction
 
 The input is this branch's pushed handoff batch on integration 86cc9b7, with
@@ -16,15 +21,18 @@ BuilderProgramHost's function property keeps its original parameter variance.
 The receiving cache and directory host owners are widened too, preventing
 errors from shifting into previously completed files.
 
-Widening ModuleResolutionHost exposes 15 calls to directoryProbablyExists.
-Its parameter's optional property excludes explicit undefined, although its
-body already handles absence with !host.directoryExists ||
-host.directoryExists(directoryName). Utilities belongs to 30 and is unchanged.
-Each existing call receives an erased local function view describing that same
-implemented contract. Callee and argument reads stay at the original evaluation
-points. Parsed stock-runtime hashes guard both returned-host producers, maybeBind,
-the utility helper and the Buffer reader. Exactly six owned files change;
-watch.ts itself and every other partition's source remain byte-identical.
+The historical run below used local helper views at fifteen calls. That decision
+is superseded by task b5w3ycg (November 4): adaptation 32 now widens the internal
+directoryProbablyExists host parameter in utilities.ts and requires all fifteen
+calls to stay bare. The body already handles absence with !host.directoryExists ||
+host.directoryExists(directoryName). No call cast is inserted. The current
+public-host-sites.json rows and directory-exists.cjs define this contract.
+
+The producer runtime hashes still guard both returned-host producers, maybeBind,
+the utility helper and the Buffer reader. The six-file historical source list
+and oracle results below describe the retained old measurement only. Current
+correction proofs are separate; utilities.ts is now the declaration-only owner
+exception, and moduleNameResolver.ts receives no helper-view edits.
 
 The adapter recognizes only adaptation 47's seven already-reviewed Buffer
 assertions on full-tree reruns, inserting none. This compatibility landed with
@@ -44,7 +52,7 @@ exact API proof. Stock JavaScript bytes match untouched input for all 26 files;
 CRLF and a zero-edit second run pass. Mutants remove the required owner (one
 watch TS2375 returns), replace a required ! by ?? 0 (emission and ledger fail),
 change the returned host producer (runtime hash fails before any write), remove
-one helper view (occurrence/type guard fails), and add an unrelated API declaration
+one historical helper view (the old guard result is superseded by the current bare-call and declaration mutants), and add an unrelated API declaration
 (exact reconstruction fails). All mutants are run and archived.
 
 Tracing's catch already uses adaptation 47 errorMessage(e), retaining its

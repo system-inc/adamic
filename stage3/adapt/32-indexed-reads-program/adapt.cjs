@@ -3,11 +3,12 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const sites = require("./sites.json");
-const files = ["corePublic.ts", "performanceCore.ts", "types.ts", "expressionToTypeNode.ts", "executeCommandLine.ts", "builder.ts", "builderPublic.ts", "builderState.ts", "builderStatePublic.ts", "watch.ts", "watchPublic.ts", "watchUtilities.ts", "resolutionCache.ts", "tsbuild.ts", "tsbuildPublic.ts", "moduleNameResolver.ts", "moduleSpecifiers.ts", "sys.ts", "program.ts", "commandLineParser.ts", "binder.ts", "semver.ts", "programDiagnostics.ts", "tracing.ts", "symbolWalker.ts", "performance.ts"];
+const files = ["corePublic.ts", "performanceCore.ts", "types.ts", "expressionToTypeNode.ts", "executeCommandLine.ts", "builder.ts", "builderPublic.ts", "builderState.ts", "builderStatePublic.ts", "watch.ts", "watchPublic.ts", "watchUtilities.ts", "resolutionCache.ts", "tsbuild.ts", "tsbuildPublic.ts", "moduleNameResolver.ts", "moduleSpecifiers.ts", "sys.ts", "program.ts", "commandLineParser.ts", "binder.ts", "semver.ts", "programDiagnostics.ts", "tracing.ts", "symbolWalker.ts", "performance.ts", "utilities.ts"];
 
 // Addresses are parsed expressions plus their occurrence in the pinned file.
 // Survey line/column fields are documentation, never edit offsets.
 function plan(ts, file, text, check = false, zeroOnly = false) {
+    if (file === "utilities.ts") return require("./directory-exists.cjs").plan(ts, file, text, check);
     const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
     if (source.parseDiagnostics.length) throw new Error(`cannot parse ${file}`);
     const groups = new Map();

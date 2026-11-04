@@ -25,7 +25,6 @@
   ],
   "declared_public_host_owners": 11,
   "declared_total_host_owners": 15,
-  "local_helper_call_views": 15,
   "already_accepted_handoff_api_owners": 2,
   "api": "complete pristine-owner reconstruction; legacy 20/40/70, two handoffs, exactly 11 host owners; 40 physical lines added; all 60930 other references identical",
   "oracle": {
@@ -88,5 +87,13 @@
     "/tmp/adapt32-handoffs-input/src/compiler/performanceCore.ts:35:84: error TS2591: Cannot find name 'perf_hooks'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
   ],
   "stock_javascript": "all 26 files byte-identical to untouched input",
-  "idempotence": "zero edits; CRLF retained"
+  "idempotence": "zero edits; CRLF retained",
+  "historical_local_helper_call_views": 15,
+  "directory_helper_decision_superseded": {
+    "task": "b5w3ycg",
+    "current_local_helper_call_views": 0,
+    "current_internal_parameter_unions": 1,
+    "current_bare_call_guards": 15,
+    "note": "Historical measurements above are retained, not recomputed. The current declaration-only correction and its fresh proofs supersede the old helper-view decision."
+  }
 }

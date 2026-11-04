@@ -17,11 +17,13 @@ for (const file of require("../00-setup/test-shards.cjs").select(files)) {
     // No U-zero operands are selected in this partition.
     // All required-read assertions must disappear under the independent stock emitter.
     // Compare directly with untouched input, independent of the adapter planner.
-    const expected = ts.transpileModule(before, { fileName: file, compilerOptions: options });
-    const actual = ts.transpileModule(after, { fileName: file, compilerOptions: options });
-    if (actual.outputText !== expected.outputText) {
-        const hash = text => createHash("sha256").update(text).digest("hex");
-        throw new Error(`unexpected emitted JavaScript change in ${file}: ${hash(expected.outputText)} != ${hash(actual.outputText)}`);
+    for (const removeComments of [false, true]) {
+        const expected = ts.transpileModule(before, { fileName: file, compilerOptions: {...options, removeComments} });
+        const actual = ts.transpileModule(after, { fileName: file, compilerOptions: {...options, removeComments} });
+        if (actual.outputText !== expected.outputText) {
+            const hash = text => createHash("sha256").update(text).digest("hex");
+            throw new Error(`unexpected emitted JavaScript change in ${file}: ${hash(expected.outputText)} != ${hash(actual.outputText)} (removeComments=${removeComments})`);
+        }
     }
     plan(ts, file, after, true);
     assert.equal(plan(ts, file, after).text, after, `not idempotent: ${file}`);

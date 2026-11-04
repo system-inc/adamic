@@ -1,5 +1,30 @@
 # 91: discard patcher callback results
 
+## Owner-scoped pin correction, task b5w3ycg
+
+Adaptation 32 now truthfully widens directoryProbablyExists's internal host
+parameter instead of inserting fifteen call casts. That unrelated change in
+utilities.ts met 91's old whole-file pin during full apply. The two pins in
+proofs/targets.json now cover only the exact enclosing function text before or
+after 91: createNodeFactory and setObjectAllocator. No whole-file source hash
+gates this adapter. Its callback type, arrow-body, forEach resolution,
+registrant search and Node witness checks are unchanged.
+
+`proofs/owner-contract.cjs PRE_91_TREE` proves that an edit elsewhere in
+utilities.ts and an edit to directoryProbablyExists's parameter are accepted,
+while changed owner functions are refused before either file is written. It
+also proves a second run preserves target bytes and mtimes. The existing
+prepare.py movement mutant now changes the owner rather than appending an
+unrelated newline; the independent complete-source delta proof still rejects
+unrelated changes when comparing the two semantic 91 trees.
+
+The historical measurements below are retained. Fresh composed results are
+recorded after execution. Run the new fixture with the stock parser:
+
+```sh
+NODE_PATH="$PWD/stage3/api/node_modules" node stage3/adapt/91-patcher-discard/proofs/owner-contract.cjs PRE_91_TREE > owner-contract.log 2>&1
+```
+
 Conditions 1 through 5 pass; only the two arrow bodies change.
 The void-widening source scan falls from 5 rows to 1, with no new finding.
 Control and with-91 each have 106,366 passing, one sanctioned API failure, zero pending.
@@ -45,8 +70,8 @@ have only these two arrow-body differences:
 The utilities callback takes `ObjectAllocator`, rather than `NodeFactory`.
 The adapter resolves both callback signatures and requires exactly `void`,
 checks their parameter types and the compiler's `forEach` declaration, and
-validates both targets before writing either file. Complete before/after source
-hashes reject moved or otherwise changed targets. Rerunning makes zero edits.
+validates both targets before writing either file. Before/after hashes of createNodeFactory and setObjectAllocator reject changed
+owner functions; unrelated source outside those functions is permitted. Rerunning makes zero edits.
 The actual built and tested tree passes the same source-scope and idempotence
 checks after the suites. Full `stage3/apply.sh` passed; its incremental row is
 2 files, 2 lines added, 2 removed. The repository's patch table is untouched.
@@ -57,7 +82,8 @@ record byte-identical `built/local/typescript.d.ts` with and without 91:
 `477a56fb7b35a5f268be6131441c67d237b4646a9f8d2e1f50dc163879450051`.
 A real scratch declaration artifact with an added declaration fails the same
 byte checker. Appending an unrelated source comment fails the scope checker;
-appending a newline to a target fails the adapter's movement guard.
+a changed owner fails the adapter's movement guard. An unrelated utility edit
+and the directoryProbablyExists parameter change are accepted by the new owner contract.
 
 ## Registration references
 
@@ -193,3 +219,25 @@ Go 1.27.1, clang 20.1.8. The environment file is
 
 No new Adamic program or production compiler change is introduced. All committed
 paths are under this adaptation. No pull request is opened.
+
+## Fresh owner-scope validation for b5w3ycg
+
+On main d0c13607 plus the 32 declaration correction, full apply passes.
+[The new fixture](proofs/owner-scoped/contract.json) accepts unrelated utility
+code and the directory-helper parameter change, refuses changes to both owners
+before writes, and proves a zero-write rerun. The original registrant search,
+body-only scope checks, reversion scan and unchanged Node witnesses all pass;
+[scope](proofs/owner-scoped/scope.json), [scan](proofs/owner-scoped/scan-delta.json)
+and [preparation](proofs/owner-scoped/preparation.json) retain the results.
+
+The documented serial four-worker oracle proof passes with exactly 106,366
+passing, one sanctioned API failure and zero pending on both trees, identical
+baseline diff bytes, unchanged public declaration bytes, and unchanged memory
+events. Clean cached file pages were released before each suite to prevent the
+builds' retained cache from meeting the memory limit. The prior resource-gate
+attempts are retained in [prior-memory-gates.json](proofs/owner-scoped/prior-memory-gates.json);
+none had an OOM or OOM-kill. No memory guard was weakened.
+
+The separate required eight-worker composed lane also passes; all 106,367 test
+identities match untouched main, including the sanctioned failure. The complete
+32/91 result is recorded under 32's proof/directory-exists/.

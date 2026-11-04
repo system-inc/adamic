@@ -1,0 +1,1230 @@
+{
+  "mode": "first-error",
+  "roots": 79,
+  "diagnosticsBefore": 0,
+  "diagnosticsAfter": 0,
+  "uniqueCounts": {
+    "main": {
+      "NotYet": 559,
+      "Refused": 4294
+    },
+    "after": {
+      "NotYet": 560,
+      "Refused": 4279
+    }
+  },
+  "removed": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/moduleNameResolver.ts:1582:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/moduleNameResolver.ts:1625:66",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/moduleNameResolver.ts:1625:66: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/moduleNameResolver.ts:1582:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/moduleNameResolver.ts:1644:70",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/moduleNameResolver.ts:1644:70: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/moduleNameResolver.ts:1656:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/moduleNameResolver.ts:1668:44",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/moduleNameResolver.ts:1668:44: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/moduleNameResolver.ts:1986:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "src/compiler/moduleNameResolver.ts:1993:19",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/moduleNameResolver.ts:1993:19: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/moduleNameResolver.ts:1986:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/moduleNameResolver.ts:2008:34",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/moduleNameResolver.ts:2008:34: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/moduleNameResolver.ts:2131:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "src/compiler/moduleNameResolver.ts:2136:36",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/moduleNameResolver.ts:2136:36: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/moduleNameResolver.ts:2445:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/moduleNameResolver.ts:2468:30",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/moduleNameResolver.ts:2468:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/moduleNameResolver.ts:2489:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/moduleNameResolver.ts:2528:62",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/moduleNameResolver.ts:2528:62: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/moduleNameResolver.ts:2489:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/moduleNameResolver.ts:2529:64",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/moduleNameResolver.ts:2529:64: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/moduleNameResolver.ts:3064:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "src/compiler/moduleNameResolver.ts:3066:38",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/moduleNameResolver.ts:3066:38: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/moduleNameResolver.ts:3064:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/moduleNameResolver.ts:3081:42",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/moduleNameResolver.ts:3081:42: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/moduleNameResolver.ts:3091:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/moduleNameResolver.ts:3159:71",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/moduleNameResolver.ts:3159:71: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/moduleNameResolver.ts:3169:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "src/compiler/moduleNameResolver.ts:3192:74",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/moduleNameResolver.ts:3192:74: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/moduleNameResolver.ts:3332:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/moduleNameResolver.ts:3336:34",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/moduleNameResolver.ts:3336:34: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/moduleNameResolver.ts:538:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "src/compiler/moduleNameResolver.ts:670:42",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/moduleNameResolver.ts:670:42: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    }
+  ],
+  "added": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/moduleNameResolver.ts:538:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/moduleNameResolver.ts:674:21",
+      "reason": "a dictionary member narrowed to an array without an element-checked view",
+      "text": "src/compiler/moduleNameResolver.ts:674:21: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet"
+    }
+  ],
+  "sites": [
+    {
+      "file": "moduleNameResolver.ts",
+      "owner": "primaryLookup",
+      "ownerPath": [
+        "resolveTypeReferenceDirective",
+        "primaryLookup"
+      ],
+      "before": "(directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean)(typeRoot, host)",
+      "after": "directoryProbablyExists(typeRoot, host)",
+      "line": 670,
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:538:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 21660,
+        "body_end": 32204,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "resolveTypeReferenceDirective"
+      },
+      "oldUnit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:538:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 21660,
+        "body_end": 32323,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "resolveTypeReferenceDirective"
+      },
+      "stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:538:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:674:21",
+          "reason": "a dictionary member narrowed to an array without an element-checked view",
+          "text": "src/compiler/moduleNameResolver.ts:674:21: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet"
+        }
+      ],
+      "oldStops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:538:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:670:42",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/moduleNameResolver.ts:670:42: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ],
+      "removedCastFindings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:538:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:670:42",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/moduleNameResolver.ts:670:42: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ]
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "owner": "tryLoadModuleUsingRootDirs",
+      "ownerPath": [
+        "tryLoadModuleUsingRootDirs"
+      ],
+      "before": "(directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean)(containingDirectory, state.host)",
+      "after": "directoryProbablyExists(containingDirectory, state.host)",
+      "line": 1625,
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:1582:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 74231,
+        "body_end": 77514,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "tryLoadModuleUsingRootDirs"
+      },
+      "oldUnit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:1582:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 74350,
+        "body_end": 77871,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "tryLoadModuleUsingRootDirs"
+      },
+      "stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:1582:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:1583:10",
+          "reason": "a dictionary member narrowed to an array without an element-checked view",
+          "text": "src/compiler/moduleNameResolver.ts:1583:10: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet"
+        }
+      ],
+      "oldStops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:1582:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:1583:10",
+          "reason": "a dictionary member narrowed to an array without an element-checked view",
+          "text": "src/compiler/moduleNameResolver.ts:1583:10: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet"
+        }
+      ],
+      "removedCastFindings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:1582:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:1625:66",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/moduleNameResolver.ts:1625:66: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ]
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "owner": "tryLoadModuleUsingRootDirs",
+      "ownerPath": [
+        "tryLoadModuleUsingRootDirs"
+      ],
+      "before": "(directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean)(baseDirectory, state.host)",
+      "after": "directoryProbablyExists(baseDirectory, state.host)",
+      "line": 1644,
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:1582:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 74231,
+        "body_end": 77514,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "tryLoadModuleUsingRootDirs"
+      },
+      "oldUnit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:1582:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 74350,
+        "body_end": 77871,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "tryLoadModuleUsingRootDirs"
+      },
+      "stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:1582:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:1583:10",
+          "reason": "a dictionary member narrowed to an array without an element-checked view",
+          "text": "src/compiler/moduleNameResolver.ts:1583:10: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet"
+        }
+      ],
+      "oldStops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:1582:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:1583:10",
+          "reason": "a dictionary member narrowed to an array without an element-checked view",
+          "text": "src/compiler/moduleNameResolver.ts:1583:10: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet"
+        }
+      ],
+      "removedCastFindings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:1582:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:1644:70",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/moduleNameResolver.ts:1644:70: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ]
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "owner": "tryLoadModuleUsingBaseUrl",
+      "ownerPath": [
+        "tryLoadModuleUsingBaseUrl"
+      ],
+      "before": "(directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean)(getDirectoryPath(candidate), state.host)",
+      "after": "directoryProbablyExists(getDirectoryPath(candidate), state.host)",
+      "line": 1668,
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:1656:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 77686,
+        "body_end": 78326,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "tryLoadModuleUsingBaseUrl"
+      },
+      "oldUnit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:1656:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 78043,
+        "body_end": 78802,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "tryLoadModuleUsingBaseUrl"
+      },
+      "stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:1656:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:1657:11",
+          "reason": "destructuring a value",
+          "text": "src/compiler/moduleNameResolver.ts:1657:11: stage 0 can't lower destructuring a value yet"
+        }
+      ],
+      "oldStops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:1656:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:1657:11",
+          "reason": "destructuring a value",
+          "text": "src/compiler/moduleNameResolver.ts:1657:11: stage 0 can't lower destructuring a value yet"
+        }
+      ],
+      "removedCastFindings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:1656:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:1668:44",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/moduleNameResolver.ts:1668:44: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ]
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "owner": "nodeLoadModuleByRelativeName",
+      "ownerPath": [
+        "nodeLoadModuleByRelativeName"
+      ],
+      "before": "(directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean)(parentOfCandidate, state.host)",
+      "after": "directoryProbablyExists(parentOfCandidate, state.host)",
+      "line": 1993,
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:1986:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 96502,
+        "body_end": 98568,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "nodeLoadModuleByRelativeName"
+      },
+      "oldUnit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:1986:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 96978,
+        "body_end": 99282,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "nodeLoadModuleByRelativeName"
+      },
+      "stops": [],
+      "oldStops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:1986:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:1993:19",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/moduleNameResolver.ts:1993:19: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ],
+      "removedCastFindings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:1986:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:1993:19",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/moduleNameResolver.ts:1993:19: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ]
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "owner": "nodeLoadModuleByRelativeName",
+      "ownerPath": [
+        "nodeLoadModuleByRelativeName"
+      ],
+      "before": "(directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean)(candidate, state.host)",
+      "after": "directoryProbablyExists(candidate, state.host)",
+      "line": 2008,
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:1986:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 96502,
+        "body_end": 98568,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "nodeLoadModuleByRelativeName"
+      },
+      "oldUnit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:1986:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 96978,
+        "body_end": 99282,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "nodeLoadModuleByRelativeName"
+      },
+      "stops": [],
+      "oldStops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:1986:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:1993:19",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/moduleNameResolver.ts:1993:19: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ],
+      "removedCastFindings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:1986:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:2008:34",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/moduleNameResolver.ts:2008:34: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ]
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "owner": "tryAddingExtensions",
+      "ownerPath": [
+        "tryAddingExtensions"
+      ],
+      "before": "(directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean)(directory, state.host)",
+      "after": "directoryProbablyExists(directory, state.host)",
+      "line": 2136,
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:2131:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 104651,
+        "body_end": 108557,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "tryAddingExtensions"
+      },
+      "oldUnit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:2131:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 105365,
+        "body_end": 109390,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "tryAddingExtensions"
+      },
+      "stops": [],
+      "oldStops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:2131:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:2136:36",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/moduleNameResolver.ts:2136:36: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ],
+      "removedCastFindings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:2131:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:2136:36",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/moduleNameResolver.ts:2136:36: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ]
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "owner": "getPackageJsonInfo",
+      "ownerPath": [
+        "getPackageJsonInfo"
+      ],
+      "before": "(directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean)(packageDirectory, host)",
+      "after": "directoryProbablyExists(packageDirectory, host)",
+      "line": 2468,
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:2445:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 120467,
+        "body_end": 122859,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "getPackageJsonInfo"
+      },
+      "oldUnit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:2445:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 121300,
+        "body_end": 123811,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "getPackageJsonInfo"
+      },
+      "stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:2445:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:2449:9",
+          "reason": "a call through ?. (an optional call)",
+          "text": "src/compiler/moduleNameResolver.ts:2449:9: stage 0 can't lower a call through ?. (an optional call) yet"
+        }
+      ],
+      "oldStops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:2445:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:2449:9",
+          "reason": "a call through ?. (an optional call)",
+          "text": "src/compiler/moduleNameResolver.ts:2449:9: stage 0 can't lower a call through ?. (an optional call) yet"
+        }
+      ],
+      "removedCastFindings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:2445:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:2468:30",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/moduleNameResolver.ts:2468:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ]
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "owner": "loadNodeModuleFromDirectoryWorker",
+      "ownerPath": [
+        "loadNodeModuleFromDirectoryWorker"
+      ],
+      "before": "(directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean)(getDirectoryPath(packageFile), state.host)",
+      "after": "directoryProbablyExists(getDirectoryPath(packageFile), state.host)",
+      "line": 2528,
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:2489:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 123079,
+        "body_end": 127211,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "loadNodeModuleFromDirectoryWorker"
+      },
+      "oldUnit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:2489:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 124031,
+        "body_end": 128401,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "loadNodeModuleFromDirectoryWorker"
+      },
+      "stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:2489:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:2519:13",
+          "reason": "an optional chain longer than one step",
+          "text": "src/compiler/moduleNameResolver.ts:2519:13: stage 0 can't lower an optional chain longer than one step yet"
+        }
+      ],
+      "oldStops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:2489:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:2519:13",
+          "reason": "an optional chain longer than one step",
+          "text": "src/compiler/moduleNameResolver.ts:2519:13: stage 0 can't lower an optional chain longer than one step yet"
+        }
+      ],
+      "removedCastFindings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:2489:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:2528:62",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/moduleNameResolver.ts:2528:62: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ]
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "owner": "loadNodeModuleFromDirectoryWorker",
+      "ownerPath": [
+        "loadNodeModuleFromDirectoryWorker"
+      ],
+      "before": "(directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean)(candidate, state.host)",
+      "after": "directoryProbablyExists(candidate, state.host)",
+      "line": 2529,
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:2489:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 123079,
+        "body_end": 127211,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "loadNodeModuleFromDirectoryWorker"
+      },
+      "oldUnit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:2489:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 124031,
+        "body_end": 128401,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "loadNodeModuleFromDirectoryWorker"
+      },
+      "stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:2489:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:2519:13",
+          "reason": "an optional chain longer than one step",
+          "text": "src/compiler/moduleNameResolver.ts:2519:13: stage 0 can't lower an optional chain longer than one step yet"
+        }
+      ],
+      "oldStops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:2489:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:2519:13",
+          "reason": "an optional chain longer than one step",
+          "text": "src/compiler/moduleNameResolver.ts:2519:13: stage 0 can't lower an optional chain longer than one step yet"
+        }
+      ],
+      "removedCastFindings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:2489:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:2529:64",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/moduleNameResolver.ts:2529:64: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ]
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "owner": "loadModuleFromImmediateNodeModulesDirectory",
+      "ownerPath": [
+        "loadModuleFromImmediateNodeModulesDirectory"
+      ],
+      "before": "(directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean)(nodeModulesFolder, state.host)",
+      "after": "directoryProbablyExists(nodeModulesFolder, state.host)",
+      "line": 3066,
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:3064:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 162547,
+        "body_end": 163942,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "loadModuleFromImmediateNodeModulesDirectory"
+      },
+      "oldUnit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:3064:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 163737,
+        "body_end": 165370,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "loadModuleFromImmediateNodeModulesDirectory"
+      },
+      "stops": [],
+      "oldStops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:3064:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:3066:38",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/moduleNameResolver.ts:3066:38: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ],
+      "removedCastFindings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:3064:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:3066:38",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/moduleNameResolver.ts:3066:38: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ]
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "owner": "loadModuleFromImmediateNodeModulesDirectory",
+      "ownerPath": [
+        "loadModuleFromImmediateNodeModulesDirectory"
+      ],
+      "before": "(directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean)(nodeModulesAtTypes, state.host)",
+      "after": "directoryProbablyExists(nodeModulesAtTypes, state.host)",
+      "line": 3081,
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:3064:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 162547,
+        "body_end": 163942,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "loadModuleFromImmediateNodeModulesDirectory"
+      },
+      "oldUnit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:3064:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 163737,
+        "body_end": 165370,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "loadModuleFromImmediateNodeModulesDirectory"
+      },
+      "stops": [],
+      "oldStops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:3064:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:3066:38",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/moduleNameResolver.ts:3066:38: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ],
+      "removedCastFindings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:3064:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:3081:42",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/moduleNameResolver.ts:3081:42: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ]
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "owner": "loadModuleFromSpecificNodeModulesDirectory",
+      "ownerPath": [
+        "loadModuleFromSpecificNodeModulesDirectory"
+      ],
+      "before": "(directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean)(packageDirectory, state.host)",
+      "after": "directoryProbablyExists(packageDirectory, state.host)",
+      "line": 3159,
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:3091:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 164261,
+        "body_end": 168574,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "loadModuleFromSpecificNodeModulesDirectory"
+      },
+      "oldUnit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:3091:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 165689,
+        "body_end": 170121,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "loadModuleFromSpecificNodeModulesDirectory"
+      },
+      "stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:3091:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:3103:26",
+          "reason": "an optional chain longer than one step",
+          "text": "src/compiler/moduleNameResolver.ts:3103:26: stage 0 can't lower an optional chain longer than one step yet"
+        }
+      ],
+      "oldStops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:3091:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:3103:26",
+          "reason": "an optional chain longer than one step",
+          "text": "src/compiler/moduleNameResolver.ts:3103:26: stage 0 can't lower an optional chain longer than one step yet"
+        }
+      ],
+      "removedCastFindings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:3091:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:3159:71",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/moduleNameResolver.ts:3159:71: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ]
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "owner": "tryLoadModuleUsingPaths",
+      "ownerPath": [
+        "tryLoadModuleUsingPaths"
+      ],
+      "before": "(directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean)(getDirectoryPath(candidate), state.host)",
+      "after": "directoryProbablyExists(getDirectoryPath(candidate), state.host)",
+      "line": 3192,
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:3169:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 168854,
+        "body_end": 170540,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "tryLoadModuleUsingPaths"
+      },
+      "oldUnit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:3169:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 170401,
+        "body_end": 172206,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "tryLoadModuleUsingPaths"
+      },
+      "stops": [],
+      "oldStops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:3169:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:3192:74",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/moduleNameResolver.ts:3192:74: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ],
+      "removedCastFindings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:3169:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:3192:74",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/moduleNameResolver.ts:3192:74: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ]
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "owner": "resolveFromTypeRoot",
+      "ownerPath": [
+        "resolveFromTypeRoot"
+      ],
+      "before": "(directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean)(typeRoot, state.host)",
+      "after": "directoryProbablyExists(typeRoot, state.host)",
+      "line": 3336,
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:3332:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 177095,
+        "body_end": 178201,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "resolveFromTypeRoot"
+      },
+      "oldUnit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "src/compiler/moduleNameResolver.ts:3332:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 178761,
+        "body_end": 179986,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "resolveFromTypeRoot"
+      },
+      "stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:3332:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:3333:10",
+          "reason": "a dictionary member narrowed to an array without an element-checked view",
+          "text": "src/compiler/moduleNameResolver.ts:3333:10: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet"
+        }
+      ],
+      "oldStops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:3332:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:3333:10",
+          "reason": "a dictionary member narrowed to an array without an element-checked view",
+          "text": "src/compiler/moduleNameResolver.ts:3333:10: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet"
+        }
+      ],
+      "removedCastFindings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "src/compiler/moduleNameResolver.ts:3332:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:3336:34",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/moduleNameResolver.ts:3336:34: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ]
+    }
+  ],
+  "resources": {
+    "main": {
+      "command": [
+        "/workspace/scratch/adapt32-91-latent-census",
+        "/workspace/scratch/adapt32-91-main-tree/src/compiler",
+        "/workspace/scratch/adapt32-91-main-latent.jsonl"
+      ],
+      "exit": 0,
+      "wallSeconds": 1354.7572815080002,
+      "peakRssKiB": 6925488,
+      "userSeconds": 1785.647313,
+      "systemSeconds": 34.966489,
+      "environment": {
+        "LATENT_FULL": "0",
+        "LATENT_ASSERT_NO_OUTPUT": "1",
+        "LATENT_SPECULATIVE": "0",
+        "LATENT_TIMES": "/workspace/scratch/adapt32-91-main-latent-times.jsonl"
+      }
+    },
+    "after": {
+      "command": [
+        "/workspace/scratch/adapt32-91-latent-census",
+        "/workspace/scratch/adapt91-after/src/compiler",
+        "/workspace/scratch/adapt32-91-after-latent.jsonl"
+      ],
+      "exit": 0,
+      "wallSeconds": 1417.1510457059994,
+      "peakRssKiB": 6880920,
+      "userSeconds": 1835.515209,
+      "systemSeconds": 35.610195,
+      "environment": {
+        "LATENT_FULL": "0",
+        "LATENT_ASSERT_NO_OUTPUT": "1",
+        "LATENT_SPECULATIVE": "0",
+        "LATENT_TIMES": "/workspace/scratch/adapt32-91-after-latent-times.jsonl"
+      }
+    }
+  }
+}
