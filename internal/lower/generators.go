@@ -137,17 +137,25 @@ func (l *lowering) yieldStatement(node *ast.Node) ([]ir.Statement, error) {
 	return []ir.Statement{ir.Evaluate{Value: ir.Yield{Value: value, Site: l.asyncSite(node)}}}, nil
 }
 
-// generatorCallee is the generator function a call calls directly by name, and whether it is one.
+// generatorCallee is the generator function a call calls, and whether it is one. A call by name is
+// read from its callee; any other callee (a namespace's member, (0, gen)) from the signature the
+// checker resolved, so a generator called another way still routes by its origin, never by its
+// declared iterator type, and generatorCall stops it there.
 func (l *lowering) generatorCallee(node *ast.Node) (int, bool) {
 	node = ast.SkipParentheses(node)
 	if node.Kind != ast.KindCallExpression {
 		return 0, false
 	}
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+	named := callee
 	if !ast.IsIdentifier(callee) {
-		return 0, false
+		signature := l.checker.GetResolvedSignature(node)
+		if signature == nil || signature.Declaration() == nil || !loweredGenerator(signature.Declaration()) {
+			return 0, false
+		}
+		named = signature.Declaration().Name()
 	}
-	index, isFunction := l.functions[l.symbol(callee)]
+	index, isFunction := l.functions[l.symbol(named)]
 	if !isFunction || !l.result.Functions[index].Generator {
 		return 0, false
 	}
@@ -158,6 +166,11 @@ func (l *lowering) generatorCallee(node *ast.Node) (int, bool) {
 // of its body. Only the two consumers that keep the generator to themselves call it.
 func (l *lowering) generatorCall(node *ast.Node, function int) (ir.Expression, error) {
 	call := ast.SkipParentheses(node).AsCallExpression()
+	if !ast.IsIdentifier(ast.SkipParentheses(call.Expression)) {
+		// A callee other than the generator's name could do something before the call (a getter, a
+		// comma's left), which no consumer here evaluates yet (Compiler, on #qk8rztp).
+		return nil, l.generatorNotYet(node, "called other than by its name")
+	}
 	if call.QuestionDotToken != nil {
 		return nil, l.generatorNotYet(node, "called optionally")
 	}
