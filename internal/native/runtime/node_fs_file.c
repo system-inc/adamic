@@ -23,8 +23,9 @@ static const char *const error_fields[] = {"name", "message", "code"};
 static const bool error_refs[] = {true, true, true};
 static const adamic_field_kind error_kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_reference};
 // One layout, two shapes, picked at each raise by how Node builds the error. error_shape is an errno
-// error's, and the two coded errors Node prints plain as well: ERR_STRING_TOO_LONG, `Error: Cannot
-// create a string longer than ...`, and a descriptor's ERR_OUT_OF_RANGE (file_descriptor).
+// error's, and the coded errors Node prints plain as well: ERR_STRING_TOO_LONG, `Error: Cannot
+// create a string longer than ...`, a descriptor's ERR_OUT_OF_RANGE (file_descriptor), and a missing
+// module's MODULE_NOT_FOUND (adamic_fs_file_host_require_missing).
 // coded_error_shape is an error Node builds with makeNodeErrorWithCode or as a SystemError, whose
 // toString brackets the code (exceptions.c).
 static const adamic_shape error_shape = {3, error_fields, error_refs, &adamic_error_methods, error_kinds};
@@ -753,3 +754,17 @@ double adamic_fs_file_utimes_atime_date(const adamic_string *path,const adamic_o
 double adamic_fs_file_utimes_mtime_date(const adamic_string *path,double atime,const adamic_object *mtime) {return fs_utimes(path,atime,adamic_fs_file_date_time(mtime)/1000,false,true);}
 
 #include "node_watch_file_impl.h"
+
+// A require of a module that isn't installed (#redxes2): Node's MODULE_NOT_FOUND, a plain Error with
+// its name, code and the first line of its message. Node's message goes on with the require stack,
+// the requiring file's own path, which a native binary has no reproducible answer for yet
+// (installed-layout, internal/oracle's ruled divergences). It always throws.
+double adamic_fs_file_host_require_missing(const adamic_string *specifier) {
+    adamic_string opening = ADAMIC_STRING("Cannot find module '"), closing = ADAMIC_STRING("'");
+    adamic_object *error = adamic_object_new(&error_shape);
+    error->slots[0].reference = text("Error");
+    error->slots[1].reference = adamic_string_concat(3, (adamic_string *const[]){&opening, (adamic_string *)specifier, &closing});
+    error->slots[2].reference = text("MODULE_NOT_FOUND");
+    adamic_thrown = error;
+    return 0;
+}
