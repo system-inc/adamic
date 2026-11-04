@@ -21,7 +21,9 @@ import (
 // assigned, written to a field, to an array element, in an array literal and through push, given as a Map's
 // value (set) and inside a Map's type arguments, as a record literal's value, spread into a typed object, as
 // a class field's initializer, and through a function value whose parameter is the shape, and a class
-// instance implementing ReadonlySet. Two roads stop first at their own stops, on main too, and are pinned
+// instance implementing ReadonlySet, and handed by Map.forEach to a callback whose parameter is a ReadonlyMap
+// (foreach_class, the library's own anonymous callback type; stopped on b4478772 already, since the
+// callback's own parameter mentions the map). Two roads stop first at their own stops, on main too, and are pinned
 // with them: a spread into a typed record (records.go's NotYet) and a class instance's field spread into a
 // typed object (adamic/nominal-class). Intersections, both ways: a shaped value moved whole into
 // { readonly m: ReadonlyMap } & { readonly tag: 1 } (slot_intersection), and { m: FakeMap } & { tag: 1 } seen as
@@ -34,7 +36,7 @@ import (
 // (the cost of failing closed, said so). The controls lower and agree with Node on sanitized, release and
 // JavaScript: a real Map seen as a ReadonlyMap, a real Set seen as a ReadonlySet, an array seen as a
 // ReadonlyArray, a real Map five fields down, and a real Map moved whole into the intersection slot.
-// Mutant: containerWhereOtherGoes answering false lowers the probes that stop at it, each red; the two
+// Mutant: containerWhereOtherGoes answering "" lowers the probes that stop at it, each red; the two
 // pinned at their own stops stay green.
 func TestContainerInterfaceValueIsNotYetWhereAMapIsHeld(t *testing.T) {
 	t.Parallel()
@@ -93,6 +95,7 @@ func TestContainerInterfaceValueIsNotYetWhereAMapIsHeld(t *testing.T) {
 		{"spread_object", shapedSet + "const source = { s: shaped };\nconst holder: { s: ReadonlySet<number> } = { ...source };\nconsole.log(String(holder.s.has(1)));\n", ":18:49", containerFit},
 		{"spread_record", shapedSet + "const source = { a: shaped };\nconst record: Record<string, ReadonlySet<number>> = { ...source };\nconst s = record['a'];\n" + readSet, ":18:55", "stage 0 can't lower a spread into record storage from a fixed object yet"},
 		{"class_field", shapedSet + "class Holder {\n\ts: ReadonlySet<number> = shaped;\n}\nconsole.log(String(new Holder().s.has(1)));\n", ":18:27", containerFit},
+		{"foreach_class", "const backing = new Map<string, number>([['a', 1]]);\nclass Fake implements ReadonlyMap<string, number> {\n\treadonly size = 1;\n\tget(key: string): number | undefined { return backing.get(key); }\n\thas(key: string): boolean { return key === 'a'; }\n\tforEach(): void {}\n\tkeys() { return backing.keys(); }\n\tvalues() { return backing.values(); }\n\tentries() { return backing.entries(); }\n\t[Symbol.iterator]() { return backing.entries(); }\n}\nnew Map<string, Fake>([['k', new Fake()]]).forEach((v: ReadonlyMap<string, number>) => console.log(String(v.has('a'))));\n", ":12:52", containerFit},
 		{"function_value", shapedSet + "const take = (s: ReadonlySet<number>): boolean => s.has(1);\nconst f: (s: typeof shaped) => boolean = take;\nconsole.log(String(f(shaped)));\n", ":18:42", containerFit},
 		{"assignment_literal", backing + "let m: ReadonlyMap<string, number> = backing;\nm = {\n" + mapMembers + "};\nconsole.log(String(m.has('a')));\n", ":3:5", containerFit},
 		{"array_literal_element", backing + "const xs: ReadonlyMap<string, number>[] = [{\n" + mapMembers + "}];\nfor (const m of xs) {\n\tconsole.log(String(m.has('a')));\n}\n", ":2:44", containerFit},

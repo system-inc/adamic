@@ -2,6 +2,7 @@ package oracle
 
 import (
 	"github.com/system-inc/adamic/internal/lower"
+	"os"
 	"path/filepath"
 	"testing"
 )
@@ -218,12 +219,33 @@ func TestCallbackWideningUnrepresentedParameter(t *testing.T) {
 	if diff := disagreement(run{stdout: []byte("1,2|3,4\n")}, node); diff != "" {
 		t.Fatal("Node: " + diff)
 	}
+	// The callback's parameter takes each element, an array, where Slice, a plain object type, is held, so
+	// it stops at the callback (lower's shape_fit.go, #nw6d7ws) before the intrinsic's adapter could refuse it.
+	_, err := lowered(t, path)
+	if _, ok := err.(*lower.NotYet); !ok || err.Error() != path+":3:31: stage 0 can't lower an array going where a plain object type is held yet" {
+		t.Fatalf("expected the array's NotYet at the callback, got %v", err)
+	}
+}
+
+// The adapter's refusal still has a witness: a Promise element going to a callback parameter held as an
+// object (PromiseLike<number>), a pair the container checks don't judge, since only a map or an array goes
+// to a plain object type there.
+func TestCallbackWideningUnrepresentedPromiseParameter(t *testing.T) {
+	t.Parallel()
+	path := filepath.Join(t.TempDir(), "promise_like.a")
+	if err := os.WriteFile(path, []byte("const tasks = [Promise.resolve(1)];\nconsole.log(tasks.map((p: PromiseLike<number>): string => typeof p).join(','));\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	node := onNode(t, path)
+	if diff := disagreement(run{stdout: []byte("object\n")}, node); diff != "" {
+		t.Fatal("Node: " + diff)
+	}
 	_, err := lowered(t, path)
 	refused, ok := err.(*lower.Refused)
 	if !ok {
 		t.Fatalf("expected unrepresented parameter refusal, got %v", err)
 	}
-	if refused.What != "an intrinsic callback parameter x of type Slice receiving array element type number[] without a representation adapter" || refused.Fix != "annotate parameter x as the element type number[]" {
+	if refused.What != "an intrinsic callback parameter p of type PromiseLike<number> receiving array element type Promise<number> without a representation adapter" || refused.Fix != "annotate parameter p as the element type Promise<number>" {
 		t.Fatalf("wrong refusal: %#v", refused)
 	}
 }
