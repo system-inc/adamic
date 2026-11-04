@@ -351,8 +351,11 @@ adamic_array *adamic_array_reverse(adamic_array *array) {
 adamic_array *adamic_array_filled(double length, adamic_value value, enum adamic_ir_type element) {
 	// new Array(length): an integer from 0 to 2^32 - 1, or JavaScript throws.
 	if (!(length >= 0) || length > 4294967295.0 || length != trunc(length)) {
-		static const char message[] = "RangeError: Invalid array length";
-		adamic_panic(message, sizeof message - 1);
+		// Node's RangeError on the pending word, and no array, for the caller to test before it owns
+		// one.
+		static const char message[] = "Invalid array length";
+		adamic_throw_kind("RangeError", sizeof "RangeError" - 1, message, sizeof message - 1);
+		return NULL;
 	}
 	adamic_array *array = adamic_array_make((size_t)length, element);
 	for (size_t index = 0; index < (size_t)length; index++) {

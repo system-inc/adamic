@@ -275,6 +275,8 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			found = found || node.MayThrow()
 		case ir.NumberFormat:
 			found = found || node.MayThrow()
+		case ir.ArrayFill:
+			found = found || node.MayThrow()
 		case ir.ObjectLiteral:
 			found = found || l.result.ObjectSpreadMayThrow(node)
 		case ir.ObjectCall:
@@ -297,8 +299,13 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			if (node.Replacement != nil && l.result.ClosuresMayThrow) || l.result.GlobalFlagMayThrow(node) {
 				found = true
 			}
-		case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
+		case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.MapForEach:
 			if l.result.ClosureMayThrow(node.(ir.Expression)) {
+				found = true
+			}
+		case ir.ArrayFrom:
+			// Its length past 2^32 - 1, or the callback it calls.
+			if node.MayThrow() || l.result.ClosureMayThrow(node) {
 				found = true
 			}
 		case ir.ParallelMap:
@@ -364,15 +371,8 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 			}
 		case ir.TypedArraySet:
 			failing = "typed array set range validation"
-		case ir.ArrayFill:
-			if node.Array == nil && !ir.ConstantWithin(node.Length, 0, 4294967295) {
-				failing = "new Array(length)"
-			}
 		case ir.ArrayFrom:
 			callsClosures = true
-			if !ir.ConstantWithin(node.Length, math.Inf(-1), 4294967295) {
-				failing = "Array.from({ length })"
-			}
 		}
 		return failing == ""
 	})

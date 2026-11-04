@@ -449,7 +449,16 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		if expression.Array == nil {
 			length := e.value(expression.Length)
 			value := e.value(expression.Value)
-			return e.programArray(e.graphArray(fmt.Sprintf("adamic_array_filled(%s, %s, %s)", length, borrowed(expression.Element, value), arrayElement(expression.Element)), expression.GraphTypes, expression.ProgramRegion), expression.ProgramRegion)
+			filled := fmt.Sprintf("adamic_array_filled(%s, %s, %s)", length, borrowed(expression.Element, value), arrayElement(expression.Element))
+			if expression.MayThrow() {
+				// A length out of range leaves a RangeError pending and makes no array, tested before
+				// there's one to own.
+				made := e.temporary()
+				e.line("adamic_array *%s = %s;", made, filled)
+				e.checkThrown()
+				filled = made
+			}
+			return e.programArray(e.graphArray(filled, expression.GraphTypes, expression.ProgramRegion), expression.ProgramRegion)
 		}
 		array := e.value(expression.Array)
 		value := e.value(expression.Value)
