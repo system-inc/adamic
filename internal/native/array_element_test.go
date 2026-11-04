@@ -68,7 +68,8 @@ func arrayElementWitness(t *testing.T, source string, instrument func(string) st
 		err := command.Run()
 		return out.Bytes(), diagnostic.Bytes(), err
 	}
-	truth, diagnostic, err := run(nil, "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", path)
+	// The source decodes JSON, so Node takes its type descriptors from the prebuilt json-types product.
+	truth, diagnostic, err := run([]string{"ADAMIC_JSON_TYPES=" + jsonTypes(t)}, "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", path)
 	if err != nil {
 		t.Fatalf("source Node: %v\n%s", err, diagnostic)
 	}
