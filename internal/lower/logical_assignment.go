@@ -35,15 +35,20 @@ func (l *lowering) logicalAssignment(node *ast.Node) (ir.Expression, error) {
 		if !known || l.caught[l.symbol(target)] || l.alwaysUndefined[l.symbol(target)] {
 			return nil, l.notYet(target, "a logical assignment to this binding")
 		}
-		// A logical assignment to a module binding that can run while the binding is in its dead zone
-		// leaves it undefined on both backends once that dead-zone throw is caught, where Node assigns it
-		// (#aw65psm: later ??= 4 in a function above let later: number | undefined = undefined, called
-		// once early from a try and once after, prints undefined where Node prints 4). Its cause isn't
-		// found yet, so that shape stops until it is (mayRunInDeadZone). A write that can't run before
-		// the declaration (tsc's own `deferredX ||= ...`, in a function nothing before its let reaches)
-		// lowers as before.
-		if l.result.Locals[local].Global && l.checked(local) && mayRunInDeadZone(target, l.symbol(target)) {
+		// A logical assignment to a module binding checked for its dead zone goes wrong on both backends
+		// on two roads whose cause isn't found yet, so both stop until it is (#aw65psm). Written above
+		// the binding's declaration, it leaves the binding undefined where Node assigns it, even when it
+		// only runs after the declaration: later ??= 4 in a function above let later: number | undefined
+		// = undefined, called once after it, prints undefined where Node prints 4. Written below, in a
+		// function that may run before the declaration (mayRunInDeadZone), a call that runs it in the
+		// dead zone throws a ReferenceError native's catch doesn't take, and the JavaScript backend's
+		// later call leaves the binding undefined. A write below that can't run before the declaration
+		// (tsc's own `deferredX ||= ...`, in a function nothing before its let reaches) lowers as before.
+		if l.result.Locals[local].Global && l.checked(local) && writtenAboveDeclaration(target, l.symbol(target)) {
 			return nil, l.notYet(target, "a logical assignment to a module binding from code above its declaration (its temporal dead zone)")
+		}
+		if l.result.Locals[local].Global && l.checked(local) && mayRunInDeadZone(target, l.symbol(target)) {
+			return nil, l.notYet(target, "a logical assignment to a module binding from a function that may run before its declaration (its temporal dead zone)")
 		}
 		of := l.result.Locals[local].Type
 		l.result.Locals[local].ExpressionAssigned = true
@@ -133,11 +138,21 @@ func (l *lowering) logicalAssignment(node *ast.Node) (ir.Expression, error) {
 	return assignment, nil
 }
 
+// writtenAboveDeclaration is whether target sits in the same file as its binding's declaration and
+// above it.
+func writtenAboveDeclaration(target *ast.Node, symbol *ast.Symbol) bool {
+	if symbol == nil || symbol.ValueDeclaration == nil {
+		return true
+	}
+	declaration := symbol.ValueDeclaration
+	return ast.GetSourceFileOfNode(declaration) == ast.GetSourceFileOfNode(target) && target.Pos() < declaration.Pos()
+}
+
 // mayRunInDeadZone is whether a write to target, in the same file as its binding's declaration, may
 // run before that declaration has initialized it. Top-level code runs in order, so a write there may
-// exactly when it's written above the declaration. A write inside a function runs when the function
-// is called, wherever it's written (a hoisted function below the let can be called above it), so it
-// may when mayRunBefore says the top-level statement holding it may run before the one declaring the
+// only when it's written above the declaration. A write inside a function runs when the function is
+// called, wherever it's written (a hoisted function below the let can be called above it), so it may
+// when mayRunBefore says the top-level statement holding it may run before the one declaring the
 // binding.
 func mayRunInDeadZone(target *ast.Node, symbol *ast.Symbol) bool {
 	if symbol == nil || symbol.ValueDeclaration == nil {
@@ -146,10 +161,15 @@ func mayRunInDeadZone(target *ast.Node, symbol *ast.Symbol) bool {
 	if ast.GetSourceFileOfNode(symbol.ValueDeclaration) != ast.GetSourceFileOfNode(target) {
 		return false
 	}
-	declaration, _ := holdingStatement(symbol.ValueDeclaration)
 	top, inFunction := holdingStatement(target)
-	if !inFunction || declaration == nil || top == nil {
+	if !inFunction {
 		return target.Pos() < symbol.ValueDeclaration.Pos()
+	}
+	declaration, _ := holdingStatement(symbol.ValueDeclaration)
+	if declaration == nil || top == nil {
+		// Both sit in one source file, so each has a top-level statement; one without is a shape this
+		// judgment doesn't know, and it stops.
+		return true
 	}
 	return mayRunBefore(declaration, top)
 }
