@@ -17,14 +17,21 @@ import (
 // slot, and through a field write the native build ran and crashed. Ruled by Adamic: one check keyed on
 // representation, NotYet at the value on every road into the slot (container_fit.go). Each probe pins the
 // whole stop, .a and .ts, one per road (Compiler's condition on #efx3yb9's proof): a ReadonlyMap literal and
-// a ReadonlySet literal as initializers, a shaped value passed as an argument, returned, assigned, written to
-// a field, to an array element and through push, given as a Map's value (set) and inside a Map's type
-// arguments, as a record literal's value, spread into a typed object, as a class field's initializer, and
-// through a function value whose parameter is the shape, and a class instance implementing ReadonlySet. A
-// spread into a typed record stops first at its own NotYet (records.go), on main too, and is pinned
-// with that stop. The controls lower and agree with Node on sanitized, release and JavaScript: a real Map
-// seen as a ReadonlyMap, a real Set seen as a ReadonlySet, and an array seen as a ReadonlyArray.
-// Mutant: containerWhereOtherGoes answering false lowers every probe but spread_record again, each red.
+// a ReadonlySet literal as initializers, a shaped value or a literal passed as an argument, returned,
+// assigned, written to a field, to an array element, in an array literal and through push, given as a Map's
+// value (set) and inside a Map's type arguments, as a record literal's value, spread into a typed object, as
+// a class field's initializer, and through a function value whose parameter is the shape, and a class
+// instance implementing ReadonlySet. Two roads stop first at their own stops, on main too, and are pinned
+// with them: a spread into a typed record (records.go's NotYet) and a class instance's field spread into a
+// typed object (adamic/nominal-class). Depth: a class implementing ReadonlyMap five fields down lowered on
+// main (native crashed, JavaScript printed false); the map slot is judged at any depth, so depth_5 stops
+// at its leaf and a real Map there (depth_5_real_map, a control) lowers. Six down the walk is past its
+// bound and fails closed: depth_6 stops, and so does depth_6_real_map, a real Map six fields into a literal
+// (the cost of failing closed, said so). The controls lower and agree with Node on sanitized, release and
+// JavaScript: a real Map seen as a ReadonlyMap, a real Set seen as a ReadonlySet, an array seen as a
+// ReadonlyArray, and a real Map five fields down.
+// Mutant: containerWhereOtherGoes answering false lowers the probes that stop at it, each red; the two
+// pinned at their own stops stay green.
 func TestContainerInterfaceValueIsNotYetWhereAMapIsHeld(t *testing.T) {
 	t.Parallel()
 	const mapMembers = "\tget(key: string) { return backing.get(key); },\n" +
@@ -55,7 +62,7 @@ func TestContainerInterfaceValueIsNotYetWhereAMapIsHeld(t *testing.T) {
 	shapedSet := "const shaped = {\nsize: 1,\n" + strings.Join(setMembers, ",\n") + ",\n};\n"
 	const readSet = "if (s !== undefined) {\n\tconsole.log(String(s.has(1)));\n}\n"
 	const eachSet = "for (const s of items) {\n\tconsole.log(String(s.has(1)));\n}\n"
-	const containerFit = "a Map or Set interface implemented by a value that isn't a Map or Set"
+	const containerFit = "stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
 	const fakeMap = "class FakeMap implements ReadonlyMap<string, number> {\n" +
 		"\treadonly size = 1;\n" +
 		"\tget(key: string): number | undefined { return backing.get(key); }\n" +
@@ -80,16 +87,17 @@ func TestContainerInterfaceValueIsNotYetWhereAMapIsHeld(t *testing.T) {
 		{"map_type_arguments", shapedSet + "const inner = new Map<string, typeof shaped>();\ninner.set('k', shaped);\nconst m: ReadonlyMap<string, ReadonlySet<number>> = inner;\nconst s = m.get('k');\n" + readSet, ":19:53", containerFit},
 		{"record_value", shapedSet + "const record: Record<string, ReadonlySet<number>> = { a: shaped };\nconst s = record['a'];\n" + readSet, ":17:58", containerFit},
 		{"spread_object", shapedSet + "const source = { s: shaped };\nconst holder: { s: ReadonlySet<number> } = { ...source };\nconsole.log(String(holder.s.has(1)));\n", ":18:49", containerFit},
-		{"spread_record", shapedSet + "const source = { a: shaped };\nconst record: Record<string, ReadonlySet<number>> = { ...source };\nconst s = record['a'];\n" + readSet, ":18:55", "a spread into record storage from a fixed object"},
+		{"spread_record", shapedSet + "const source = { a: shaped };\nconst record: Record<string, ReadonlySet<number>> = { ...source };\nconst s = record['a'];\n" + readSet, ":18:55", "stage 0 can't lower a spread into record storage from a fixed object yet"},
 		{"class_field", shapedSet + "class Holder {\n\ts: ReadonlySet<number> = shaped;\n}\nconsole.log(String(new Holder().s.has(1)));\n", ":18:27", containerFit},
 		{"function_value", shapedSet + "const take = (s: ReadonlySet<number>): boolean => s.has(1);\nconst f: (s: typeof shaped) => boolean = take;\nconsole.log(String(f(shaped)));\n", ":18:42", containerFit},
-		{"assignment_literal", backing + "let m: ReadonlyMap<string, number> = backing;\nm = {\n" + mapMembers + "};\nconsole.log(String(m.has('a')));\n", ":0:0", containerFit},
-		{"array_literal_element", backing + "const xs: ReadonlyMap<string, number>[] = [{\n" + mapMembers + "}];\nfor (const m of xs) {\n\tconsole.log(String(m.has('a')));\n}\n", ":0:0", containerFit},
-		{"push_literal", backing + "const xs: ReadonlyMap<string, number>[] = [];\nxs.push({\n" + mapMembers + "});\nfor (const m of xs) {\n\tconsole.log(String(m.has('a')));\n}\n", ":0:0", containerFit},
-		{"map_value_literal", "const m = new Map<string, ReadonlySet<number>>().set('k', {\nsize: 1,\n" + strings.Join(setMembers, ",\n") + ",\n});\nconst s = m.get('k');\n" + readSet, ":0:0", containerFit},
-		{"spread_class", "class FakeSet {\nreadonly size = 1;\n" + strings.Join(setMembers, "\n") + "\n}\nconst src = { m: new FakeSet() };\nconst r: { m: ReadonlySet<number> } = { ...src };\nconsole.log(String(r.m.has(1)));\n", ":0:0", containerFit},
-		{"depth_5", backing + fakeMap + "const v: { a: { b: { c: { d: { e: FakeMap } } } } } = { a: { b: { c: { d: { e: new FakeMap() } } } } };\nconst w: { readonly a: { readonly b: { readonly c: { readonly d: { readonly e: ReadonlyMap<string, number> } } } } } = v;\nconsole.log(String(w.a.b.c.d.e.has('a')));\n", ":0:0", containerFit},
-		{"depth_6", backing + fakeMap + "const v: { a: { b: { c: { d: { e: { f: FakeMap } } } } } } = { a: { b: { c: { d: { e: { f: new FakeMap() } } } } } };\nconst w: { readonly a: { readonly b: { readonly c: { readonly d: { readonly e: { readonly f: ReadonlyMap<string, number> } } } } } } = v;\nconsole.log(String(w.a.b.c.d.e.f.has('a')));\n", ":0:0", containerFit},
+		{"assignment_literal", backing + "let m: ReadonlyMap<string, number> = backing;\nm = {\n" + mapMembers + "};\nconsole.log(String(m.has('a')));\n", ":3:5", containerFit},
+		{"array_literal_element", backing + "const xs: ReadonlyMap<string, number>[] = [{\n" + mapMembers + "}];\nfor (const m of xs) {\n\tconsole.log(String(m.has('a')));\n}\n", ":2:44", containerFit},
+		{"push_literal", backing + "const xs: ReadonlyMap<string, number>[] = [];\nxs.push({\n" + mapMembers + "});\nfor (const m of xs) {\n\tconsole.log(String(m.has('a')));\n}\n", ":3:9", containerFit},
+		{"map_value_literal", "const m = new Map<string, ReadonlySet<number>>().set('k', {\nsize: 1,\n" + strings.Join(setMembers, ",\n") + ",\n});\nconst s = m.get('k');\n" + readSet, ":1:59", containerFit},
+		{"spread_class", "class FakeSet {\nreadonly size = 1;\n" + strings.Join(setMembers, "\n") + "\n}\nconst src = { m: new FakeSet() };\nconst r: { m: ReadonlySet<number> } = { ...src };\nconsole.log(String(r.m.has(1)));\n", ":18:39", "Adamic 0.1 refuses a value without nominal ancestry seen as FakeSet; construct that class or a subclass; use an interface for structural values (adamic/nominal-class)"},
+		{"depth_5", backing + fakeMap + "const v: { a: { b: { c: { d: { e: FakeMap } } } } } = { a: { b: { c: { d: { e: new FakeMap() } } } } };\nconst w: { readonly a: { readonly b: { readonly c: { readonly d: { readonly e: ReadonlyMap<string, number> } } } } } = v;\nconsole.log(String(w.a.b.c.d.e.has('a')));\n", ":13:120", containerFit},
+		{"depth_6", backing + fakeMap + "const v: { a: { b: { c: { d: { e: { f: FakeMap } } } } } } = { a: { b: { c: { d: { e: { f: new FakeMap() } } } } } };\nconst w: { readonly a: { readonly b: { readonly c: { readonly d: { readonly e: { readonly f: ReadonlyMap<string, number> } } } } } } = v;\nconsole.log(String(w.a.b.c.d.e.f.has('a')));\n", ":13:136", containerFit},
+		{"depth_6_real_map", "const real = new Map<string, number>([['a', 1]]);\nconst v: { a: { b: { c: { d: { e: { f: Map<string, number> } } } } } } = { a: { b: { c: { d: { e: { f: real } } } } } };\nconst w: { readonly a: { readonly b: { readonly c: { readonly d: { readonly e: { readonly f: ReadonlyMap<string, number> } } } } } } = v;\nconsole.log(String(w.a.b.c.d.e.f.has('a')));\n", ":2:74", containerFit},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
 			t.Run(probe.name+extension, func(t *testing.T) {
@@ -104,9 +112,10 @@ func TestContainerInterfaceValueIsNotYetWhereAMapIsHeld(t *testing.T) {
 				}
 				_, err := lowered(t, path)
 				var notYet *lower.NotYet
-				want := path + probe.where + ": stage 0 can't lower " + probe.stop + " yet"
-				if !errors.As(err, &notYet) || err.Error() != want {
-					t.Fatalf("want NotYet %q, got %v", want, err)
+				var refused *lower.Refused
+				want := path + probe.where + ": " + probe.stop
+				if !errors.As(err, &notYet) && !errors.As(err, &refused) || err.Error() != want {
+					t.Fatalf("want the stop %q, got %v", want, err)
 				}
 			})
 		}
