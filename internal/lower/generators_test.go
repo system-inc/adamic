@@ -163,4 +163,19 @@ func TestGeneratorVoidReturnIsNeverReadBySpreadOrArrayFrom(t *testing.T) {
 	if !errors.As(err, &refused) {
 		t.Errorf("spreading a generator of void[]: got %v, want a void rule's refusal", err)
 	}
+	// Adamic's conditions (#qk8rztp, 20:22Z). A generator whose yields are void calls is read at
+	// every step, so spread and Array.from of it stay refused; the mutant that drops the yielded-type
+	// test admits both. Only a direct call is exempt: a stored generator, spread, stays refused; the
+	// mutant that widens the exemption to any Generator-typed expression lets it through to lowering.
+	const voids = "function f(): void {}\nfunction* g() { yield f(); }\n"
+	for _, source := range []string{
+		voids + "console.log(String([...g()].length));",
+		voids + "console.log(String(Array.from(g()).length));",
+		plain + "const stored = numbers(3); console.log([...stored].join(','));",
+	} {
+		_, err := lowerSource(t, source)
+		if !errors.As(err, &refused) || !strings.Contains(refused.Error(), "adamic/no-void") {
+			t.Errorf("%s: got %v, want a void rule's refusal", source, err)
+		}
+	}
 }
