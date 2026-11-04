@@ -1,0 +1,20 @@
+// a-check: refused adamic/cycle-capable
+// A construction cast makes Leaf with its unwritten fields absent. It's written into a slot typed
+// Tree | Leaf | undefined, which is in the Program region's strongly connected types, so the literal is
+// adopted as a member. Its keys are then read in write order, which adoption must carry with it. Leaf
+// keeps three fields so its construction storage is longer than a plain object's.
+interface Leaf { size: number; label: string; weight: number; }
+interface Tree { name: string; next: Tree | Leaf | undefined; }
+function run(): void {
+    const root: Tree = { name: `root${1}`, next: undefined };
+    const branch: Tree = { name: `branch${2}`, next: root };
+    root.next = { size: 3 } as Leaf;
+    const leaf = root.next;
+    console.log(Object.keys(leaf).join(','));
+    leaf.weight = 7;
+    leaf.label = `leaf${4}`;
+    console.log(Object.keys(leaf).join(','));
+    console.log(JSON.stringify(leaf));
+    console.log(branch.name);
+}
+run();

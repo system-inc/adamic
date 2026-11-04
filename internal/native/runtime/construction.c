@@ -46,6 +46,10 @@ adamic_object *adamic_object_construct(const adamic_shape *shape) {
  return object;
 }
 
+size_t adamic_object_allocation_size(const adamic_object *object) {
+ return object->write_order == NULL ? adamic_object_size(object->shape->count) : construction_size(object->shape);
+}
+
 adamic_array *adamic_node_array_make(size_t capacity, enum adamic_ir_type element, const adamic_shape *extras) {
  size_t metadata_size = construction_size(extras);
  if (metadata_size > SIZE_MAX - sizeof(adamic_array) || capacity > SIZE_MAX / sizeof(adamic_value)) {

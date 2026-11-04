@@ -105,6 +105,6 @@ func TestGraphOracleCanonicalCacheMutant(t *testing.T) {
 func TestGraphOracleFullObjectBytesMutant(t *testing.T) {
 	t.Parallel()
 	graphOracleMutant(t, "graph_regions_list.a", func(code string) string {
-		return regexp.MustCompile(`adamic_object_size\([^)]*\)`).ReplaceAllString(code, `sizeof(adamic_object)`)
+		return regexp.MustCompile(`adamic_object_allocation_size\([^)]*\)`).ReplaceAllString(code, `sizeof(adamic_object)`)
 	})
 }
