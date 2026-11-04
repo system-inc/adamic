@@ -1,0 +1,47 @@
+{
+  "first": {
+    "files": 6,
+    "edits": 12,
+    "javascriptChanging": true,
+    "behaviorChanging": false
+  },
+  "second": {
+    "files": 0,
+    "edits": 0,
+    "javascriptChanging": true,
+    "behaviorChanging": false
+  },
+  "noWriteSecondRun": true,
+  "refusalFixtures": [
+    "half-statement-0",
+    "half-statement-1",
+    "half-statement-2",
+    "half-statement-3",
+    "half-statement-4",
+    "half-statement-5",
+    "half-statement-6",
+    "half-statement-7",
+    "half-statement-8",
+    "half-statement-9",
+    "half-statement-10",
+    "half-statement-11",
+    "mixed-builder.ts",
+    "mixed-checker.ts",
+    "mixed-commandLineParser.ts",
+    "mixed-program.ts",
+    "mixed-sys.ts",
+    "mixed-transformers-generators.ts",
+    "changed-owner",
+    "parse-error"
+  ],
+  "unrelatedEditAccepted": true,
+  "unrelatedSecondRun": {
+    "files": 0,
+    "edits": 0,
+    "javascriptChanging": true,
+    "behaviorChanging": false
+  },
+  "leftStatementsUntouched": true,
+  "witnessByteIdentical": true,
+  "tree": "/tmp/adamic-gate/99j-contract-YcGesL/first"
+}
