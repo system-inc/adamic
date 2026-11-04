@@ -505,6 +505,8 @@ type emitter struct {
 	// ladder is the checks of the statement being emitted, which may share one way out
 	// (exceptions.go), or nil where a check is written in place.
 	ladder *ladder
+	// ladders counts the ladders opened, each one's serial.
+	ladders int
 
 	// function is the function being emitted, and functionDepth the scope depth its body starts at.
 	asyncSlots    map[int]int
