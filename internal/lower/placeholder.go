@@ -95,6 +95,8 @@ func (l *lowering) placeholderResetRefusal(target *ast.Node, local int) error {
 		what, fix = "a for-of loop variable", "declare a local with let in the loop body and assign the placeholder to it, or give the loop variable a value of its type"
 	case !l.result.Locals[local].Captured && root != nil && root.Kind == ast.KindVariableDeclaration && root.Parent.Parent.Kind == ast.KindForInStatement:
 		what, fix = "a for-in loop variable", "declare a local with let in the loop body and assign the placeholder to it, or give the loop variable a value of its type"
+	case l.result.Locals[local].Function >= 0 && l.result.Functions[l.result.Locals[local].Function].Generator:
+		what, fix = "a local of a generator function", "give the local a value of its type, or hold the placeholder in a local of a function that isn't a generator"
 	case l.result.Locals[local].Function >= 0 && l.result.Functions[l.result.Locals[local].Function].Async:
 		what, fix = "a local of an async function", "give the local a value of its type, or hold the placeholder in a local of a synchronous function"
 	case l.result.Locals[local].Function < 0 && moduleAwaits(ast.GetSourceFileOfNode(target).AsNode()):

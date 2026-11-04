@@ -821,7 +821,7 @@ func (a *analysis) block(block *flow.BasicBlock, entry *state) (*state, *state) 
 		}
 		a.run(id)
 	}
-	if _, suspends := block.Terminal.(*flow.Suspend); suspends {
+	if flow.Suspends(block.Terminal) {
 		// The environment owns these values, but confinement across queued work is unproved.
 		for _, held := range a.state.locals {
 			a.state.escape(held)
@@ -1043,6 +1043,15 @@ func (a *analysis) value(expression ir.Expression) value {
 	switch expression := expression.(type) {
 	case ir.Await:
 		return a.call([]value{a.value(expression.Value)}, expression.Of)
+	case ir.Yield:
+		// The consumer runs before the body goes on, and may do anything with what was handed over.
+		return a.call([]value{a.value(expression.Value)}, 0)
+	case ir.GeneratorNext:
+		// The body runs, holding whatever the frame holds, and may hand back any of it.
+		return a.call([]value{a.value(expression.Generator)}, expression.Of)
+	case ir.GeneratorDone:
+		a.value(expression.Generator)
+		return value{}
 	case ir.PromiseValue:
 		return a.call([]value{a.value(expression.Value)}, ir.Promise)
 	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined, ir.JSONNull, ir.Null:
@@ -1546,7 +1555,9 @@ func (a *analysis) value(expression ir.Expression) value {
 		for _, argument := range expression.Arguments {
 			operands = append(operands, a.value(argument))
 		}
-		if a.proof.top || a.proof.program.CallExpandsArguments(expression) {
+		if a.proof.top || a.proof.program.CallExpandsArguments(expression) || expression.Returns == ir.Generator {
+			// A generator's call keeps every argument in its frame for steps to come, which its
+			// summary, made for a call that returns, can't say.
 			return a.call(operands, expression.Returns)
 		}
 		before := a.state.copy()

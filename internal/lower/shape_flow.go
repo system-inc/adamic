@@ -177,7 +177,7 @@ func (graph *allocationFlowGraph) projectionIndex() *allocationProjection {
 			stores = append(stores, value)
 		case ir.SetIndex, ir.ArrayPush, ir.ArraySplice, ir.ArrayPop:
 			index.arrayMutation = true
-		case ir.CallClosure, ir.ObjectCall:
+		case ir.CallClosure, ir.ObjectCall, ir.GeneratorNext, ir.Yield:
 			index.opaqueCalls = true
 		}
 		return true

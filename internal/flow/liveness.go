@@ -8,6 +8,19 @@ package flow
 // Only the variables the graph tracks are here (flow.go): a global or a captured variable is never
 // in a set, and a caller must treat it as always live.
 func LiveOut(function *Function) map[InstructionId]map[DeclarationId]bool {
+	_, result := liveness(function)
+	return result
+}
+
+// LiveIn is, for every block, the variables whose value on entry to it something may still read:
+// what a generator's frame must keep across the yield that resumes there (internal/native). The
+// same caveat holds: an untracked variable is in no set, and is always live.
+func LiveIn(function *Function) map[BlockId]map[DeclarationId]bool {
+	liveIn, _ := liveness(function)
+	return liveIn
+}
+
+func liveness(function *Function) (map[BlockId]map[DeclarationId]bool, map[InstructionId]map[DeclarationId]bool) {
 	declaration := func(place Place) DeclarationId { return function.Identifiers[place.Identifier].Declaration }
 	liveIn := map[BlockId]map[DeclarationId]bool{}
 	result := map[InstructionId]map[DeclarationId]bool{}
@@ -51,5 +64,5 @@ func LiveOut(function *Function) map[InstructionId]map[DeclarationId]bool {
 			}
 		}
 	}
-	return result
+	return liveIn, result
 }

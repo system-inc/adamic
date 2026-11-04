@@ -1726,6 +1726,10 @@ func scanLowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.
 	if err := lowering.checkAccessorSpreads(); err != nil {
 		return nil, err
 	}
+	// As lowerCheckedWithCycleTypes does, so a generator program stops or lowers alike in both.
+	if err := checkGeneratorRoads(lowering.result); err != nil {
+		return nil, err
+	}
 	if err := flow.NormalizeAsync(lowering.result); err != nil {
 		where := entry.AsNode()
 		var located *flow.AsyncError
@@ -1764,6 +1768,9 @@ func scanLowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.
 	if discovery || plan != nil {
 		if lowering.result.HasAsync() {
 			return nil, &Refused{Where: program.Where(entry.AsNode()), What: "Program region with async work", Fix: "keep Program members in the one-shot synchronous CLI"}
+		}
+		if lowering.result.HasGenerators() {
+			return nil, &NotYet{Where: program.Where(entry.AsNode()), What: "a Program region in a program with generator functions (#qk8rztp)"}
 		}
 	}
 	if plan != nil {

@@ -1,0 +1,11 @@
+// A parameter is kept by the frame past the call that made it: the argument the call was handed is
+// a string built for it, gone by the time the body reads it after a yield.
+function* echo(text: string): Generator<string, void, undefined> {
+    yield 'first';
+    yield `${text} again`;
+}
+let base = 's';
+for(const line of echo(`${base}x`)) {
+    base += 'y';
+    console.log(`${line} ${base}`);
+}

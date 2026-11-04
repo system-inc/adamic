@@ -1,0 +1,23 @@
+// A throw from the consuming loop's body, out to a try around it, lets go of the generator, which is
+// suspended in an endless loop.
+function* counted(label: string): Generator<string, void, undefined> {
+    let index = 0;
+    while(true) {
+        index++;
+        yield label + String(index);
+    }
+}
+try {
+    for(const item of counted('c')) {
+        console.log(item);
+        if(item === 'c3') {
+            throw new Error(`stop at ${item}`);
+        }
+    }
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(error.message);
+    }
+}
+console.log('after');

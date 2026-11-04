@@ -28,6 +28,7 @@ func TypeTags() map[string]Type {
 		"UndefinedRepresentation": UndefinedRepresentation,
 		"Record":                  Record,
 		"Promise":                 Promise,
+		"Generator":               Generator,
 	}
 }
 
