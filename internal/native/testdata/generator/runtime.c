@@ -111,6 +111,16 @@ static void throwing_resume(adamic_generator *generator, adamic_value *yielded) 
 }
 static const adamic_generator_code throwing = {"throwing", throwing_resume};
 
+/* A throw that leaves error set when finish runs: finish still owns it. */
+static void abandoning_resume(adamic_generator *generator, adamic_value *yielded) {
+    (void)yielded;
+    adamic_string *message = adamic_string_from_number(8);
+    generator->error = adamic_error_new(message);
+    adamic_release(message);
+    adamic_generator_finish(generator);
+}
+static const adamic_generator_code abandoning = {"abandoning", abandoning_resume};
+
 static void reentering_resume(adamic_generator *generator, adamic_value *yielded) {
     (void)yielded;
     (void)adamic_generator_next(generator);
@@ -179,6 +189,19 @@ int main(int argc, char **argv) {
         adamic_string *message = adamic_error_to_string(thrown);
         print((adamic_value){.reference = message});
         adamic_release(thrown);
+        adamic_release(generator);
+    } else if (strcmp(mode, "finish_error") == 0) {
+        adamic_generator *generator = adamic_generator_new(0, &abandoning);
+        adamic_value value = adamic_generator_next(generator);
+        assert(value.reference == NULL && adamic_generator_done(generator) && generator->error == NULL);
+        adamic_release(generator);
+    } else if (strcmp(mode, "drop_error") == 0) {
+        /* error is NULL at every suspension the emitter makes; the walk still drops one it finds. */
+        adamic_generator *generator = counting_new();
+        print(adamic_generator_next(generator));
+        adamic_string *message = adamic_string_from_number(9);
+        generator->error = adamic_error_new(message);
+        adamic_release(message);
         adamic_release(generator);
     } else if (strcmp(mode, "reentrant") == 0) {
         adamic_generator *generator = adamic_generator_new(0, &reentering);

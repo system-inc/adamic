@@ -144,6 +144,18 @@ func TestGeneratorRuntimeThrow(t *testing.T) {
 	generatorRuntimeGuard(t, "throw", "5\nError: 6\n", "", "", "")
 }
 
+// finish owns an error still set when it runs. Mutant: finish forgets it, and the count leaks.
+func TestGeneratorRuntimeFinishError(t *testing.T) {
+	t.Parallel()
+	generatorRuntimeGuard(t, "finish_error", "", "generator->error = NULL;\n        adamic_release(error);", "generator->error = NULL;\n        (void)error;", "heap values leaked")
+}
+
+// The drop walk drops an error it finds. Mutant: the walk skips error, and the count leaks.
+func TestGeneratorRuntimeDropError(t *testing.T) {
+	t.Parallel()
+	generatorRuntimeGuard(t, "drop_error", "1\n", "if (generator->error != NULL) { drop(generator->error); }", "(void)0;", "heap values leaked")
+}
+
 func TestGeneratorRuntimeReentrant(t *testing.T) {
 	t.Parallel()
 	generatorRuntimeGuard(t, "reentrant", "", "", "", "")
