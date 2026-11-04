@@ -1,0 +1,7 @@
+// A spread of a Stats would copy its shape, host sentinel and internal slots included
+// (adamic_object_copy_checked), but lowering refuses it. host_shapes_test.go requires this program
+// refused in exactly those words.
+import * as fs from 'node:fs';
+
+const copy = { ...fs.statSync('.') };
+console.log(`size ${typeof copy.size}`);

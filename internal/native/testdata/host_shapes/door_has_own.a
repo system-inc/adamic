@@ -1,0 +1,6 @@
+// Object.hasOwn on a Stats would read its slot names (adamic_object_has_own), but lowering refuses a
+// key that isn't a literal naming a declared public field or method, and _fsFileMode isn't one.
+// host_shapes_test.go requires this program refused in exactly those words.
+import * as fs from 'node:fs';
+const stats = fs.statSync('.');
+console.log(`hasOwn size ${Object.hasOwn(stats, 'size')} internal ${Object.hasOwn(stats, '_fsFileMode')} dev ${Object.hasOwn(stats, 'dev')}`);

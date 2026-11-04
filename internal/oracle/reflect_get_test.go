@@ -58,7 +58,7 @@ func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 		{"prototype_runtime_plain.a", prototypeRuntimePlainAnswers},
 		{"decoded_scalar_reads.a", decodedScalarReadsAnswers},
 		{"spread_plain.a", "constructor function\ngiven x number constructor function\nwidth number constructor function\n"},
-		{"error_fields.a", "code: \"ENOENT\"\nmessage: \"ENOENT: no such file or directory, open '/nonexistent-adamic-reflect-get/file'\"\ncaught foo: undefined\nthrown: \"thrown\"\nname: \"Error\"\nthrown foo: undefined\n"},
+		{"error_fields.a", "code: \"ENOENT\"\nmessage: \"ENOENT: no such file or directory, open '/nonexistent-adamic-reflect-get/file'\"\ncaught foo: undefined\ncaught in: code yes message yes foo no\nerrorCode: \"ENOENT\"\nthrown: \"thrown\"\nname: \"Error\"\nthrown foo: undefined\nthrown in: message yes name yes foo no\n"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()
@@ -175,6 +175,13 @@ var reflectGetStops = []struct{ file, stdout, stop, key, node string }{
 	{"stop_host_groups.a", "groups true\n", "RuntimeValue", "letter", "groups true\nstring\n"},
 	{"stop_host_error_prototype.a", "error made\n", "RuntimeValue", "valueOf", "error made\nfunction\n"},
 	{"stop_host_fs_error_prototype.a", "caught\n", "RuntimeValue", "hasOwnProperty", "caught\nfunction\n"},
+	{"stop_in_host_internal.a", "stats\n", "RuntimeValue", "_fsFileMode", "stats\ninternal absent\nsize number\n"},
+	{"stop_in_host_method.a", "stats\n", "RuntimeValue", "isFile", "stats\nisFile yes\n"},
+	{"stop_in_host_iterator.a", "iterator\n", "RuntimeValue", "input", "iterator\ninput no\n"},
+	{"stop_in_host_literal.a", "", "RuntimeValue", "isFile", "isFile yes\ndev yes\nmtime yes\ninput no\nnext yes\n"},
+	{"stop_in_host_error_code.a", "code ENOENT\n", "RuntimeValue", "code", "code ENOENT\nstats code none\n"},
+	{"stop_hasownproperty_host.a", "stats\n", "RuntimeValue", "_fsFileMode", "stats\ninternal false\n"},
+	{"stop_string_host.a", "iterator\n", "RuntimeValue", "toString", "iterator\nstring [object RegExp String Iterator]\n"},
 	{"stop_error_stack.a", "before\n", "ErrorProperty", "stack", "before\nstring\n"},
 	{"stop_array.a", "before\n", "Array", "length", "before\nnumber\n"},
 	{"stop_literal_getter.a", "got\n", "ObjectLiteralGetter", "value", "got\nstring\n"},
@@ -197,7 +204,7 @@ func reflectGetStop(t *testing.T, stdout, stop, key string) run {
 // TestReflectGetPrivateMutantJavaScript's. stop_prototype_class.a's is the JavaScript helper finding a
 // class's accessors through adamicFindAccessor, which takes Object's constructor for an accessor
 // without a getter, so that backend stops in the setter-only stop's words. stop_host_object.a's are
-// union.c's program_shape test dropped, so a Stats' constructor reads as Object's closure natively,
+// union.c's host_object test dropped, so a Stats' constructor reads as Object's closure natively,
 // and the helper's prototype test dropped, so the JavaScript backend reads Node's Stats.
 // stop_host_iterator.a's is the JavaScript backend's AdamicIterator made a plain object again
 // (library_map_set.go), so that backend hands out Object as a Map iterator's constructor.
@@ -207,7 +214,14 @@ func reflectGetStop(t *testing.T, stdout, stop, key string) run {
 // TestReflectGetHostMutantJavaScript's. The rows from stop_host_dirent.a on pin each runtime shape
 // marked host to Node (host_shapes_test.go's table names each one's fixture); a shape's host sentinel
 // dropped, stat_shape's in node_fs_file.c or the groups shape's in internal/regexp/native.go, and its
-// fixture answers natively.
+// fixture answers natively. The stop_in_host_ rows are an in test on a host object (Adamic's ruling on
+// #ey7aysy at 23:03Z). Their mutant is union.c's host_stop dropped from adamic_has_property, so
+// stop_in_host_method.a's isFile answers no natively (stop_in_host_internal.a still stops, at the
+// read the in test narrows, which keeps its own guard), and TestReflectGetInMutantJavaScript's.
+// stop_hasownproperty_host.a and stop_string_host.a are the same ruling's other doors, hasOwnProperty
+// (adamic_object_has) and ToPrimitive's own-toString test (adamic_object_own_function); their
+// mutants are each guard dropped, so hasOwnProperty answers true and String answers [object Object]
+// natively.
 func TestReflectGetStopsAlikeOnBothBackends(t *testing.T) {
 	t.Parallel()
 	for _, probe := range reflectGetStops {
@@ -259,6 +273,31 @@ func TestReflectGetHostMutantJavaScript(t *testing.T) {
 	want := reflectGetStop(t, "directory\n", "RuntimeValue", "isFile")
 	if disagreement(want, got) == "" {
 		t.Fatalf("the host check's mutant survived: exit %d, stdout %q, stderr %q", got.exitCode, got.stdout, got.stderr)
+	}
+}
+
+// The JavaScript backend's in test stops on a host value as native's adamic_has_property does
+// (#ey7aysy, Adamic's ruling at 23:03Z). Mutant: adamicDynamicHas answering key in value whatever
+// the value, so stop_in_host_internal.a prints internal absent there and stops later, at the read of
+// size its next in test narrows, which adamicDynamicRead guards.
+func TestReflectGetInMutantJavaScript(t *testing.T) {
+	t.Parallel()
+	program, err := lowered(t, reflectGetFixture(t, "stop_in_host_internal.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	code := javascript.JavaScript(program)
+	const check = "const adamicDynamicHas = (value, key) => adamicHostValue(value) ? adamicHostStop(key) : key in value;\n"
+	if strings.Count(code, check) != 1 {
+		t.Fatal("the in test's host check is not in the runtime once")
+	}
+	mutated := filepath.Join(t.TempDir(), "program.mjs")
+	if err := os.WriteFile(mutated, []byte(strings.Replace(code, check, "const adamicDynamicHas = (value, key) => key in value;\n", 1)), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	got := onNode(t, mutated)
+	if disagreement(reflectGetStop(t, "stats\n", "RuntimeValue", "_fsFileMode"), got) == "" {
+		t.Fatalf("the in test's mutant survived: exit %d, stdout %q, stderr %q", got.exitCode, got.stdout, got.stderr)
 	}
 }
 

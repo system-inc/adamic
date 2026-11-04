@@ -1,0 +1,6 @@
+// Object.prototype.hasOwnProperty.call on a host value viewed as unknown is NotYet, so only a typed
+// host reaches adamic_object_has, which stops on it. host_shapes_test.go requires this program
+// refused in exactly those words.
+import * as fs from 'node:fs';
+const seen: unknown = fs.statSync('.');
+if (typeof seen === 'object' && seen !== null) console.log(`hasOwnProperty internal ${Object.prototype.hasOwnProperty.call(seen, '_fsFileMode')} dev ${Object.prototype.hasOwnProperty.call(seen, 'dev')}`);

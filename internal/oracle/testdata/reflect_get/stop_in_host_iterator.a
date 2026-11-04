@@ -1,0 +1,6 @@
+// An in test on a host object stops (Adamic's ruling on #ey7aysy at 23:03Z): a matchAll iterator has
+// no input on Node, and native's shape holds its private input, so in answered yes. Node prints input
+// no.
+const iterator: unknown = 'ab'.matchAll(/a/g);
+console.log('iterator');
+console.log(`input ${typeof iterator === 'object' && iterator !== null && 'input' in iterator ? 'yes' : 'no'}`);

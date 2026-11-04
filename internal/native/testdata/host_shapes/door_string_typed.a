@@ -1,0 +1,6 @@
+// String() of a value typed as a Stats is NotYet (ToPrimitive isn't lowered for an object type), so
+// only a host viewed as unknown reaches ToPrimitive's own-member test, which stops on it.
+// host_shapes_test.go requires this program refused in exactly those words.
+import * as fs from 'node:fs';
+const stats = fs.statSync('.');
+console.log(`string ${String(stats)}`);
