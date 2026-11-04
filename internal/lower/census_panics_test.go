@@ -60,13 +60,16 @@ func TestCensusQualifiedCast(t *testing.T) {
 	}
 }
 
-// A failing generic validation inside an arrow must preserve its enclosing stack.
+// A generic call inside an arrow that binds string[] to T extends (string | undefined)[] is refused at
+// its argument, the binding's relation site (#xywvn06), as append(result as (string | undefined)[], ...)
+// would be. The instantiation's own validation, which named the write in the body, stays behind it as a
+// witness the binding no longer lets this program reach.
 func TestCensusGenericRefusalInsideClosure(t *testing.T) {
 	t.Parallel()
 	source := censusPanicSource(t, "generic_closure.a")
 	_, err := lowerSource(t, source)
-	if err == nil || !strings.Contains(err.Error(), "instantiating a generic function makes a value of type string | undefined written where string is read") {
-		t.Fatalf("want named generic mutation refusal, got %v", err)
+	if err == nil || !strings.Contains(err.Error(), "main.a:7:35: Adamic 0.1 refuses a value of type string[] seen as (string | undefined)[], which can write string | undefined where string is read") {
+		t.Fatalf("want the binding's invariant-mutable refusal, got %v", err)
 	}
 }
 

@@ -31,7 +31,7 @@ import (
 // alone: admitting a declared property seen through a wider index signature (declaredKeyWidened's
 // first direction) turns r03, r07, r26 and v01 red; admitting a dictionary read through a declared
 // property (its second) turns r05, r15 and r16 red; admitting the write (declaredKeyWrite's refusal
-// dropped) turns r01, r02 and v06 red; leaving the type arguments unjudged (declaredKeyBindings
+// dropped) turns r01, r02 and v06 red; leaving the type arguments unjudged (declaredKeyBinding
 // dropped) turns n05 red. Admitting a dictionary read through a declared property also turns n29, n30 and
 // n31 red.
 func TestRecordDeclaredKeysAreRefusedInA(t *testing.T) {
@@ -102,8 +102,11 @@ func TestRecordDeclaredKeysAreRefusedInA(t *testing.T) {
 // Options, and r21 at its Readonly<Options> view's storage gap, a line before its widening: both fail
 // closed. In .ts, every road keeps the stop it had before the .a refusal: the storage views, the named
 // write and the optional widening stop where they did, and the type-argument roads too, whose .a
-// twins are refused. Each program that lowers agrees with Node on
-// release and sanitized native and on the JavaScript backend. Mutant: the key folding dropped
+// twins are refused, but those whose type argument is inferred from an argument. A binding is a relation
+// site (#xywvn06), so each of n05, n26, n28, g01, g02 (its constructor's T, bound at the new) and g03
+// stops at the argument as its direct twin through a parameter of the constraint's type does, at the
+// storage view between a record with declared properties and a dictionary. Each program that lowers
+// agrees with Node on release and sanitized native and on the JavaScript backend. Mutant: the key folding dropped
 // (writtenNames judging a folded key as any name) refuses the scanner's shape here.
 func TestRecordDeclaredKeyStopsArePinned(t *testing.T) {
 	t.Parallel()

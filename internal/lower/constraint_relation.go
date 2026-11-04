@@ -18,8 +18,10 @@ import (
 //     parameter replaced by its constraint, every other bound as the call binds it, by the whole
 //     registry (refuseInSlot), so a fresh literal stays fresh and a refusal is the direct twin's own,
 //     at the argument. A function written in place there was typed by the checker from the real
-//     instantiation, not lib's any, so it's judged on the type-to-type road against that slot, its
-//     expression body as what it returns (boundFunctionRefusal).
+//     instantiation, not lib's any, so it's judged on the type-to-type road against that slot as that
+//     value, its expression body as what it returns (boundArgumentRefusal). An argument tsc wouldn't
+//     take into that slot holds the type parameter where it's taken in, not given out, and isn't judged
+//     there.
 //   - Written (read<X>(x), new Box<X>(), extends Box<X>), defaulted, or inferred from no argument (the
 //     result's slot): the type argument is judged against the constraint on the registry's
 //     type-to-type road (typeRelationRefusal), at the type argument written, or at the site.
@@ -88,7 +90,6 @@ func (l *lowering) boundArgumentsRefusal(binding typeArgumentBinding) (judged bo
 		if given == slot {
 			continue
 		}
-		judged = true
 		if argument.Kind == ast.KindSpreadElement {
 			return true, l.notYet(argument, "a spread argument "+l.checker.TypeToString(binding.parameter)+"'s type argument can be inferred from, judged against its constraint "+l.checker.TypeToString(binding.constraint))
 		}
@@ -98,6 +99,14 @@ func (l *lowering) boundArgumentsRefusal(binding typeArgumentBinding) (judged bo
 			}
 			slot = l.checker.GetElementTypeOfArrayType(slot)
 		}
+		// Only a slot tsc's relation takes the argument into is one the registry can judge it in, as it
+		// judges only what tsc accepted. One it doesn't is a place the type parameter is taken in, not
+		// given out, a parameter of a callback (value: TIn) => value is TOut, and the binding is judged by
+		// its other arguments, or on the type-to-type road when it has none.
+		if !l.checker.IsTypeAssignableTo(l.checker.GetTypeAtLocation(argument), slot) {
+			continue
+		}
+		judged = true
 		if err := l.boundArgumentRefusal(argument, slot); err != nil {
 			return true, err
 		}
