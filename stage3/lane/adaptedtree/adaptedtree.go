@@ -173,7 +173,38 @@ func build(handed buildcache.Handed, directory string) error {
 	if err != nil {
 		return err
 	}
+	if err := keepEmptyDirectories(filepath.Join(tree, ".git")); err != nil {
+		return err
+	}
 	return os.RemoveAll(home)
+}
+
+// keepEmptyDirectories writes an empty .keep into each directory under root that holds nothing (#rhj78rk, Node's
+// ruling). The house's lay keeps no empty directory, and git finds a repository only with refs/ beside objects/ and
+// HEAD: a laid copy of this tree's .git, whose refs/heads and refs/tags are empty since the pin is checked out
+// detached, would read "not a git repository" to stage3/lane/check.py's API check. git's loose-ref walk skips every name
+// beginning with a dot, as no ref name may begin with one, so a .keep is read as no ref and the tree reads as before.
+func keepEmptyDirectories(root string) error {
+	empty := []string{}
+	err := filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
+		if err != nil || !entry.IsDir() {
+			return err
+		}
+		entries, err := os.ReadDir(path)
+		if err == nil && len(entries) == 0 {
+			empty = append(empty, path)
+		}
+		return err
+	})
+	if err != nil {
+		return err
+	}
+	for _, directory := range empty {
+		if err := os.WriteFile(filepath.Join(directory, ".keep"), nil, 0o644); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // pinOf is the commit inputs' pin flag names, the one the key holds.
