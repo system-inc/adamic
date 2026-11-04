@@ -10,12 +10,12 @@ import (
 // works whenever the function runs, and a call that runs before class Late { } is reached prints what
 // Node refuses. tsc rejects a use before the declaration at the module's own top level (TS2449), so
 // the road is a function, a method or an arrow holding the reference that runs before the declaration.
-// It can only run then if the code before the declaration can reach it, so a reference is not yet
-// exactly when classReferenceMayRunEarly says the top-level statement holding it is reachable from
-// the statements before the class. A reference inside the class's own body can't run before its
-// declaration, since nothing can make an instance or reach a static before it. A reference from
-// another module is judged where the modules are ordered (import cycles' own checks). Readiness for
-// classes lifts this.
+// It can only run then if the code before the binding is initialized can reach it, so a reference is
+// not yet exactly when mayRunBefore says the top-level statement holding it may run before the class's
+// declaration. A reference inside the class's own body can't run before its binding is ready: the
+// class's inner binding is initialized before its static parts run, and nothing outside can make an
+// instance or reach a static before then. A reference from another module is judged where the modules
+// are ordered (import cycles' own checks). Readiness for classes lifts this.
 func (l *lowering) classDeadZoneGap(node *ast.Node) error {
 	if node.Kind != ast.KindIdentifier || ast.IsPartOfTypeNode(node) {
 		return nil
@@ -31,21 +31,8 @@ func (l *lowering) classDeadZoneGap(node *ast.Node) error {
 	if node == declaration.Name() || ast.GetSourceFileOfNode(node) != ast.GetSourceFileOfNode(declaration) {
 		return nil
 	}
-	inFunction := false
-	var top *ast.Node
-	for at := node; at.Parent != nil; at = at.Parent {
-		if at == declaration {
-			return nil
-		}
-		if ast.IsFunctionLike(at) {
-			inFunction = true
-		}
-		if at.Parent.Kind == ast.KindSourceFile {
-			top = at
-			break
-		}
-	}
-	if !inFunction || top == nil || top == declaration || !classReferenceMayRunEarly(declaration, top) {
+	top, inFunction := holdingStatement(node)
+	if !inFunction || top == nil || top == declaration || !mayRunBefore(declaration, top) {
 		return nil
 	}
 	return l.notYet(node, "a class used from a function that may run before the class's declaration (its temporal dead zone)")
@@ -53,15 +40,34 @@ func (l *lowering) classDeadZoneGap(node *ast.Node) error {
 
 func init() { refusalRules.register(2050, "classDeadZoneGap", (*lowering).classDeadZoneGap) }
 
-// classReferenceMayRunEarly is whether the function in top, the top-level statement holding a
-// reference to declaration's class, may run before declaration does. A statement that isn't a
-// declaration and comes before the class may run any function it holds at once, so it may. One after
-// the class runs after it. A function declaration, class or variable holding the function runs it only
-// when its name is called or reached, and a hoisted function declaration can be called from before
-// the class wherever it sits, so it may run early exactly when the code before the class can reach one
-// of its names (reachedBefore). An exported one can also be reached through another module, so it may
-// whenever the code before the class makes any call at all.
-func classReferenceMayRunEarly(declaration, top *ast.Node) bool {
+// holdingStatement is the top-level statement holding node, and whether node sits inside a function,
+// method or arrow there, so it runs when that is called rather than when the statement is reached.
+func holdingStatement(node *ast.Node) (*ast.Node, bool) {
+	inFunction := false
+	for at := node; at.Parent != nil; at = at.Parent {
+		if ast.IsFunctionLike(at) {
+			inFunction = true
+		}
+		if at.Parent.Kind == ast.KindSourceFile {
+			return at, inFunction
+		}
+	}
+	return nil, inFunction
+}
+
+// mayRunBefore is whether the function in top, a top-level statement, may run before declaration, the
+// top-level statement declaring a binding (a class, or the variable statement of a let or a const),
+// has initialized it. What runs first is the statements before declaration and declaration's own
+// running parts: a class's heritage, static initializers, static blocks and computed names run during
+// its definition, and a variable's initializers before it's assigned. A statement that isn't a
+// declaration and comes before declaration may run any function it holds at once, so it may. One after
+// declaration runs after it. A function declaration, class or variable holding the function runs it
+// only when its name is called or reached, and a hoisted function declaration can be called from before
+// declaration wherever it sits, so it may run early exactly when that first-running code can reach one
+// of its names (reachedBefore). An exported one, by its modifier or by an export list or export
+// assignment naming it (exportedNames), can also be reached through another module, so it may whenever
+// that code makes any call at all.
+func mayRunBefore(declaration, top *ast.Node) bool {
 	statements := declaration.Parent.AsSourceFile().Statements.Nodes
 	position, at := -1, -1
 	for index, statement := range statements {
@@ -97,8 +103,16 @@ func classReferenceMayRunEarly(declaration, top *ast.Node) bool {
 	for _, statement := range statements[:position] {
 		running = append(running, runningParts(statement)...)
 	}
-	if ast.HasSyntacticModifier(top, ast.ModifierFlagsExport) && anyCall(running) {
-		return true
+	running = append(running, runningParts(declaration)...)
+	if anyCall(running) {
+		exported := ast.HasSyntacticModifier(top, ast.ModifierFlagsExport)
+		listed := exportedNames(statements)
+		for _, name := range names {
+			exported = exported || listed[name]
+		}
+		if exported {
+			return true
+		}
 	}
 	reached := reachedBefore(statements, running)
 	for _, name := range names {
@@ -107,6 +121,32 @@ func classReferenceMayRunEarly(declaration, top *ast.Node) bool {
 		}
 	}
 	return false
+}
+
+// exportedNames are the local names a module exports apart from an export modifier: each one an
+// export list without a module specifier names (make in export { make as other }), and each one an
+// export assignment's expression mentions (export default make), compared as text as reachedBefore is.
+func exportedNames(statements []*ast.Node) map[string]bool {
+	names := map[string]bool{}
+	for _, statement := range statements {
+		switch statement.Kind {
+		case ast.KindExportDeclaration:
+			exported := statement.AsExportDeclaration()
+			if exported.ModuleSpecifier != nil || exported.ExportClause == nil || exported.ExportClause.Kind != ast.KindNamedExports {
+				continue
+			}
+			for _, specifier := range exported.ExportClause.AsNamedExports().Elements.Nodes {
+				local := specifier.AsExportSpecifier().PropertyName
+				if local == nil {
+					local = specifier.Name()
+				}
+				names[local.Text()] = true
+			}
+		case ast.KindExportAssignment:
+			mentionedNames(statement.AsExportAssignment().Expression, names)
+		}
+	}
+	return names
 }
 
 // declaredNames are the names a top-level function, class or variable statement binds, and none for
@@ -167,7 +207,7 @@ func runningParts(statement *ast.Node) []*ast.Node {
 	return []*ast.Node{statement}
 }
 
-// reachedBefore is every name the code before the class can reach: each identifier its running parts
+// reachedBefore is every name the first-running code can reach: each identifier its running parts
 // mention, and then, until nothing new is found, each identifier in a top-level function,
 // class or variable statement anywhere in the module whose name is already reached. Names are
 // compared as text, so shadowing only adds names, which only stops more.
