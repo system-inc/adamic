@@ -75,7 +75,7 @@ func hostStatusFile(t *testing.T, index int, wasiOnly bool, statusPath string) {
 	nodeChecked := false
 	t.Run("node", func(t *testing.T) {
 		if why := hostconfiguration.Skip(index+1, row.Configuration); why != "" {
-			t.Skip(why)
+			t.Skipf("host status row %d: the node step needs node-without-inspector; set ADAMIC_HOST_NODE_WITHOUT_INSPECTOR", index+1)
 		}
 		nodeBinary := hostconfiguration.Require(t, index+1, row.Configuration)
 		actualNode := hostNodeWith(t, inputRun{directory: repository}, nodeBinary, path)
@@ -133,7 +133,7 @@ func hostStatusFile(t *testing.T, index int, wasiOnly bool, statusPath string) {
 					t.Fatal(err)
 				}
 				if why := hostconfiguration.Skip(index+1, row.Configuration); why != "" {
-					t.Skip(why)
+					t.Skipf("host status row %d: the javascript step needs node-without-inspector; set ADAMIC_HOST_NODE_WITHOUT_INSPECTOR", index+1)
 				}
 				nodeBinary := hostconfiguration.Require(t, index+1, row.Configuration)
 				actual := hostNodeWith(t, inputRun{directory: repository}, nodeBinary, js)
@@ -157,7 +157,7 @@ func hostStatusFile(t *testing.T, index int, wasiOnly bool, statusPath string) {
 				}
 				t.Run("wasi", func(t *testing.T) {
 					if why := hostconfiguration.Skip(index+1, row.Configuration); why != "" {
-						t.Skip(why)
+						t.Skipf("host status row %d: the wasi step needs node-without-inspector; set ADAMIC_HOST_NODE_WITHOUT_INSPECTOR", index+1)
 					}
 					nodeBinary := hostconfiguration.Require(t, index+1, row.Configuration)
 					actual := executeInput(t, inputRun{directory: repository}, nil, nodeBinary, "--disable-warning=ExperimentalWarning", runner, wasm)

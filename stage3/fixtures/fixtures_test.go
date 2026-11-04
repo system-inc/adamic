@@ -384,7 +384,7 @@ func testFixtureDirectory(t *testing.T, directory string, selectedFiles ...strin
 					nodeChecked := false
 					recordedNodeAgrees := t.Run("node", func(t *testing.T) {
 						if why := hostconfiguration.Skip(index+1, entry.Configuration); why != "" {
-							t.Skip(why)
+							t.Skipf("fixture row %d: the node step needs node-without-inspector; set ADAMIC_HOST_NODE_WITHOUT_INSPECTOR", index+1)
 						}
 						nodeBinary := hostconfiguration.Require(t, index+1, entry.Configuration)
 						actualNode := execute(t, repository, nil, nodeBinary, "--disable-warning=ExperimentalWarning", nodeRunner, path)
@@ -460,7 +460,7 @@ func testFixtureDirectory(t *testing.T, directory string, selectedFiles ...strin
 								}
 								t.Run("javascript", func(t *testing.T) {
 									if why := hostconfiguration.Skip(index+1, entry.Configuration); why != "" {
-										t.Skip(why)
+										t.Skipf("fixture row %d: the CheckedStop javascript check needs node-without-inspector; set ADAMIC_HOST_NODE_WITHOUT_INSPECTOR", index+1)
 									}
 									nodeBinary := hostconfiguration.Require(t, index+1, entry.Configuration)
 									checkedNode := execute(t, repository, nil, nodeBinary, "--disable-warning=ExperimentalWarning", nodeRunner, checkedPath)

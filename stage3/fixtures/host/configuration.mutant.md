@@ -144,3 +144,13 @@ with valid metadata: both must fail, never skip. The current-head rerun catches
 all five source mutants: ignored configuration, accepted stock probe, error as a
 skip, row-wide skip, and stock Node for generated JavaScript. The wrong-recorded
 bytes and deleted-field controls remain caught by the unmutated reader tests.
+
+
+Literal-message classification: the eight Go sites use site-unique literal
+Skipf messages, with exactly one `%d` for the row. Their Skip conditions are
+unchanged. The Go assertions distinguish the fixture's execution skip from the
+manifest's log; Python and CJS continue printing their original named messages.
+A quick table check validates all eight literals and 13,750 same-package
+substring comparisons for rows 1 through 25, with no overlaps. The helpers,
+fixture suite and oracle readers pass with these messages; all five source
+mutants above still exit 1 at their intended assertions.

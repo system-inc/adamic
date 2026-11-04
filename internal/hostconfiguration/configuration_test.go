@@ -32,7 +32,7 @@ func TestHostConfigurationReaderUsesDeclaredNode(t *testing.T) {
 			t.Fatal(err)
 		}
 		if why := Skip(1, row.Configuration); why != "" {
-			t.Skip(why)
+			t.Skipf("configuration reader row %d: the node step needs node-without-inspector; set ADAMIC_HOST_NODE_WITHOUT_INSPECTOR", 1)
 		}
 		node := Require(t, 1, row.Configuration)
 		fixture, err := filepath.Abs("testdata/configuration.a")
@@ -95,7 +95,7 @@ func TestHostConfigurationReaderUsesDeclaredNode(t *testing.T) {
 		t.Fatalf("deleted-field mutant survived: %v\n%s", err, out)
 	}
 	out, err = invoke("unset", rows[0], "")
-	if err != nil || !strings.Contains(out, "row 1 needs node-without-inspector; set "+switchName) || !strings.Contains(out, "--- SKIP:") {
+	if err != nil || !strings.Contains(out, "configuration reader row 1: the node step needs node-without-inspector; set "+switchName) || !strings.Contains(out, "--- SKIP:") {
 		t.Fatalf("want named skip: %v\n%s", err, out)
 	}
 	out, err = invoke("verified stub selected", rows[0], nodeStub(t, node, ""))

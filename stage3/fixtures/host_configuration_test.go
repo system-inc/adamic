@@ -137,8 +137,14 @@ func TestHostConfigurationFixtureReaders(t *testing.T) {
 				if reader == "execute" && strings.Contains(string(out), "/configuration.a/javascript") {
 					t.Fatalf("Compiles row unexpectedly ran the JavaScript backend: %s", out)
 				}
-				if mode == "unset" && !strings.Contains(string(out), "row 1 needs node-without-inspector; set ADAMIC_HOST_NODE_WITHOUT_INSPECTOR") {
-					t.Fatalf("missing named skip:\n%s", out)
+				if mode == "unset" {
+					want := "row 1 needs node-without-inspector; set ADAMIC_HOST_NODE_WITHOUT_INSPECTOR"
+					if reader == "execute" {
+						want = "fixture row 1: the node step needs node-without-inspector; set ADAMIC_HOST_NODE_WITHOUT_INSPECTOR"
+					}
+					if !strings.Contains(string(out), want) {
+						t.Fatalf("missing named skip:\n%s", out)
+					}
 				}
 				if mode == "selected" && strings.Contains(string(out), "needs node-without-inspector") {
 					t.Fatalf("selected recipe skipped:\n%s", out)

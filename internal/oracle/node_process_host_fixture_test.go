@@ -42,7 +42,7 @@ func nodeProcessHostNewLine(t *testing.T, statusPath string) {
 			truth = run{stdout: []byte(row.Node.Stdout), stderr: []byte(row.Node.Stderr), exitCode: row.Node.Exit}
 			t.Run("node", func(t *testing.T) {
 				if why := hostconfiguration.Skip(index+1, row.Configuration); why != "" {
-					t.Skip(why)
+					t.Skipf("node process host row %d: the node step needs node-without-inspector; set ADAMIC_HOST_NODE_WITHOUT_INSPECTOR", index+1)
 				}
 				nodeBinary := hostconfiguration.Require(t, index+1, row.Configuration)
 				actualNode := hostNodeWith(t, inputRun{}, nodeBinary, path)
@@ -79,7 +79,7 @@ func nodeProcessHostNewLine(t *testing.T, statusPath string) {
 	}
 	t.Run("javascript", func(t *testing.T) {
 		if why := hostconfiguration.Skip(rowNumber, configuration); why != "" {
-			t.Skip(why)
+			t.Skipf("node process host row %d: the javascript step needs node-without-inspector; set ADAMIC_HOST_NODE_WITHOUT_INSPECTOR", rowNumber)
 		}
 		nodeBinary := hostconfiguration.Require(t, rowNumber, configuration)
 		if difference := disagreement(truth, hostNodeWith(t, inputRun{}, nodeBinary, script)); difference != "" {
