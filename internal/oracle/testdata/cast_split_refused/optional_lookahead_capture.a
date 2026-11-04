@@ -1,0 +1,4 @@
+// a-check: refused a cast the runtime can't check
+// Annex B lets a lookahead be quantified; skipped, its capture is undefined: ['', undefined, 'y', undefined, 'z'].
+const pieces = 'xyxz'.split(/x(?=(y))?/) as string[];
+console.log(`${pieces.length}`);

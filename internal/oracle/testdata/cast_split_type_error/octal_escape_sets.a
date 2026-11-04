@@ -1,0 +1,4 @@
+// a-check: type error TS1534
+// With the v flag \1 with no group is a syntax error; the checker stops at it.
+const pieces = 'xaz'.split(/a\1/v) as string[];
+console.log(`${pieces.length}`);

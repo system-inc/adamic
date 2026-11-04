@@ -15,6 +15,14 @@ import (
 // new RegExp(...) is a value the proof would have to follow, and isn't followed. A readonly string[] target is
 // admitted too, as a view that writes nothing needs the same proof as one that may write strings. Both arrays
 // hold their elements as String, a missing one a null reference (ir.Maybe), so the value is the array itself.
+//
+// The proof leans on String.prototype.split dispatching to RegExp.prototype[Symbol.split] unchanged, which holds only
+// while a program can't write a built-in prototype. No one rule names those writes; each way to one is refused:
+// reading RegExp.prototype, String.prototype or a value's constructor is "inherited library member ... read as an own
+// field" (property access lowering's guard in object.go, prototype.go's prototypeRead); Object.getPrototypeOf,
+// setPrototypeOf, create and defineProperty are refused in library_object.go's objectCallArguments; and
+// String.prototype.split read as a value is methodValueRefusal (refusals.go, ordinal 2900). A literal written at the
+// call is a fresh RegExp, so no write to an instance reaches it.
 func (l *lowering) captureFreeSplit(expression *ast.Node, target *checker.Type) bool {
 	call := ast.SkipParentheses(expression)
 	if call.Kind != ast.KindCallExpression || !l.checker.IsArrayType(target) || l.checker.GetElementTypeOfArrayType(target) != l.checker.GetStringType() {
