@@ -297,6 +297,11 @@ func TestAnyReturnsFixture(t *testing.T) {
 	runPythonCommand(t, "stage3/census/any-returns", []string{"NODE_PATH=" + filepath.Join(repositoryRoot(t), "stage3/api/node_modules")}, "test_fixture.py")
 }
 
+func TestCensusPairPython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "stage3/census/pair", "test_pair")
+}
+
 // runPython runs modules' unittest suites from directory, with a stage3 cache of the test's own, and fails with
 // unittest's output when any of them fails.
 func runPython(t *testing.T, directory string, modules ...string) {
