@@ -220,7 +220,7 @@ static bool valid(const adamic_string *path, bool target) {
 static const char *const dirent_names[] = {"name", "type"};
 static const bool dirent_refs[] = {true, false};
 static const adamic_field_kind dirent_shape_kinds[] = {adamic_field_reference, adamic_field_number};
-static const adamic_shape dirent_shape = {2, dirent_names, dirent_refs, NULL, dirent_shape_kinds};
+static const adamic_shape dirent_shape = {2, dirent_names, dirent_refs, &adamic_host_methods, dirent_shape_kinds};
 typedef struct {
 	char *name;
 	unsigned type;

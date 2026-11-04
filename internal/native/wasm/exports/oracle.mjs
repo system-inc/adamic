@@ -28,6 +28,7 @@ add('noResult', ['', '🦀\ud800']);
 add('heavy', [-0, 42]);
 add('handleRequest', ['', '🦀\ud800']);
 add('bumpRecord', [{title: '🦀', values: [-0, NaN], inner: {enabled: true, score: -0, words: ['\\ud800']}}]);
+for (const key of ['title', 'inner', 'constructor', 'absent']) cases.push(['recordKey', [{title: 'keyed', values: [1], inner: {enabled: true, score: 1, words: []}}, key]]);
 cases.push(['counter', []]);
 cases.push(['many', ['first'.repeat(16000), [0, -0, NaN], 'second'.repeat(16000), true, -0]]);
 cases.push(['surrogate', []]);
