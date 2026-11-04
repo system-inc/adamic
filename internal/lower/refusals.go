@@ -20,7 +20,6 @@ type refusal struct {
 // something 0.1 refuses for good, never that stage 0 hasn't got to it yet.
 var refusals = map[ast.Kind]refusal{
 	ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
-	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
 	ast.KindWithStatement:     {"with", "name the object you mean"},
 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
@@ -228,8 +227,8 @@ func (l *lowering) operatorRefusal(node *ast.Node) error {
 
 func init() { refusalRules.register(2300, "operatorRefusal", (*lowering).operatorRefusal) }
 
-// Async generators have a separate ruling from synchronous generators.
-// Keep this refusal when synchronous generator lowering removes its check below.
+// Async generators have a separate ruling from synchronous generators, and stay refused when
+// synchronous generators lower (#yvgst44).
 func (l *lowering) asyncGeneratorRefusal(node *ast.Node) error {
 	if asyncGenerator(node) {
 		return &Refused{Where: l.program.Where(node), What: "an async generator function", Fix: "use synchronous iteration; async generators need a separate ownership and cancellation ruling"}
@@ -239,10 +238,11 @@ func (l *lowering) asyncGeneratorRefusal(node *ast.Node) error {
 
 func init() { refusalRules.register(2400, "asyncGeneratorRefusal", (*lowering).asyncGeneratorRefusal) }
 
-// generatorRefusal refuses a synchronous generator function. Covered async syntax is lowered by
-// async.go. Unsupported lifecycle and Promise operations get specific NotYet there; permanent
-// refusals here still apply.
-func (l *lowering) generatorRefusal(node *ast.Node) error {
+// generatorGap stops a synchronous generator function as not yet built. Generators are designed
+// (#yvgst44) and ruled NotYet, never Refused (docs/rulings.md, open question 17), so the stop says
+// intended support. It runs at the ordinal the refusal held, so every program stops where it did.
+// A yield needs no rule of its own: it sits inside a generator function, which stops first.
+func (l *lowering) generatorGap(node *ast.Node) error {
 	generator := false
 	switch node.Kind {
 	case ast.KindFunctionDeclaration:
@@ -253,12 +253,12 @@ func (l *lowering) generatorRefusal(node *ast.Node) error {
 		generator = node.AsMethodDeclaration().AsteriskToken != nil
 	}
 	if generator {
-		return &Refused{Where: l.program.Where(node), What: "a generator function", Fix: "use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"}
+		return l.notYet(node, "a generator function (its counted frame is being built, #qk8rztp)")
 	}
 	return nil
 }
 
-func init() { refusalRules.register(2500, "generatorRefusal", (*lowering).generatorRefusal) }
+func init() { refusalRules.register(2500, "generatorGap", (*lowering).generatorGap) }
 
 // shorthandLibraryMethodGap stops a shorthand property whose variable holds a library method value.
 func (l *lowering) shorthandLibraryMethodGap(node *ast.Node) error {

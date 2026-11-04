@@ -51,7 +51,7 @@ func TestLibraryMapSetIteratorCopyTypesRefused(t *testing.T) {
 	}
 }
 
-// A generator gives [key, value] pairs, but generator functions are refused, so new Map from one names
+// A generator gives [key, value] pairs, but generator functions aren't built yet, so new Map from one names
 // generators rather than calling its pairs something else (tsc's mapIterator and mapDefinedIterator
 // sources, #assd1cf). Any other iterable keeps the old reason. Mutant: the generator branch dropped, and
 // the first source says it isn't pairs.

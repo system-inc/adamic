@@ -45,5 +45,6 @@ yield from `finally`, so `return` need not finish it. Delegating `yield*` needs 
 records and completion precedence. Reentrant resume must raise the same catchable failure as
 Node, rather than corrupt the frame. Each resume path must release exactly the slots it leaves
 and preserve the ones needed by a later resume. These rules require dedicated frame IR and
-ownership tests. Until that work exists, every `function*` and generator method is refused,
-including an empty generator with no `yield`. No collector is proposed as a fallback.
+ownership tests. Until that work exists, every `function*` and generator method stops as not yet
+built (NotYet, not Refused: generators are designed and intended), including an empty generator
+with no `yield`. No collector is proposed as a fallback.
