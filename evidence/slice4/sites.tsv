@@ -1,0 +1,1013 @@
+file	line	col	shape	note	new_or_old	source_type	target_type	line_shift_to_d8eb_tree	same_start_nest	cast_text
+src/compiler/binder.ts	496	42	interface downcast	to union of subtypes	old	{ flags: FlowFlags; id: number; node: unknown; antecedent: FlowNode | FlowNode[] | undefined; }	FlowNode	0		{ flags, id: 0, node, antecedent } as FlowNode
+src/compiler/binder.ts	984	47	union member		old	Mutable<HasContainerFlags>	IsContainer	0		node as IsContainer
+src/compiler/binder.ts	986	18	other	union to overlapping union	old	FunctionExpression | ArrowFunction | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration | CallSignature	HasLocals	0		container as HasLocals
+src/compiler/binder.ts	987	37	other	union to overlapping union	old	FunctionExpression | ArrowFunction | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration | CallSignature	HasLocals	0		container as HasLocals
+src/compiler/binder.ts	991	35	union member		old	Mutable<HasContainerFlags>	IsBlockScopedContainer	0		node as IsBlockScopedContainer
+src/compiler/binder.ts	993	18	other	union to overlapping union	old	IsBlockScopedContainer	HasLocals	0		blockScopeContainer as HasLocals
+src/compiler/binder.ts	1008	19	union member		old	Mutable<HasContainerFlags>	FunctionLikeDeclaration	0		node as FunctionLikeDeclaration
+src/compiler/binder.ts	1016	40	union member		old	Mutable<FunctionExpression> | Mutable<ArrowFunction> | Mutable<MethodDeclaration> | Mutable<GetAccessorDeclaration> | Mu	FunctionExpression | ArrowFunction | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration	0		node as FunctionExpression | ArrowFunction | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration
+src/compiler/binder.ts	1031	130	union member		old	Mutable<HasContainerFlags>	ClassStaticBlockDeclaration | FunctionLikeDeclaration	0		node as FunctionLikeDeclaration | ClassStaticBlockDeclaration
+src/compiler/binder.ts	1034	18	union member		old	Mutable<HasContainerFlags>	ClassStaticBlockDeclaration | FunctionLikeDeclaration	0		node as FunctionLikeDeclaration | ClassStaticBlockDeclaration
+src/compiler/binder.ts	1136	43	interface downcast	to union of subtypes	old	Node	ForInOrOfStatement	0		node as ForInOrOfStatement
+src/compiler/binder.ts	1143	35	interface downcast	to union of subtypes	old	Node	ReturnStatement | ThrowStatement	0		node as ReturnStatement | ThrowStatement
+src/compiler/binder.ts	1147	46	interface downcast	to union of subtypes	old	Node	BreakOrContinueStatement	0		node as BreakOrContinueStatement
+src/compiler/binder.ts	1194	42	interface downcast	to union of subtypes	old	Node	AccessExpression	0		node as AccessExpression
+src/compiler/binder.ts	1205	36	interface downcast	to union of subtypes	old	Node	JSDocTypedefTag | JSDocEnumTag | JSDocCallbackTag	0		node as JSDocTypedefTag | JSDocCallbackTag | JSDocEnumTag
+src/compiler/binder.ts	1258	47	interface downcast	to union of subtypes	old	Expression	ParenthesizedExpression | NonNullExpression	0		expr as ParenthesizedExpression | NonNullExpression
+src/compiler/binder.ts	1279	47	interface downcast	to union of subtypes	old	Expression	ParenthesizedExpression | PropertyAccessExpression | NonNullExpression	0		expr as PropertyAccessExpression | ParenthesizedExpression | NonNullExpression
+src/compiler/binder.ts	1357	16	union member		old	FlowNode	FlowLabel	0		createFlowNode(FlowFlags.BranchLabel, /*node*/ undefined, /*antecedent*/ undefined) as FlowLabel
+src/compiler/binder.ts	1361	16	union member		old	FlowNode	FlowLabel	0		createFlowNode(FlowFlags.LoopLabel, /*node*/ undefined, /*antecedent*/ undefined) as FlowLabel
+src/compiler/binder.ts	1365	16	union member		old	FlowNode	FlowReduceLabel	0		createFlowNode(FlowFlags.ReduceLabel, { target, antecedents }, antecedent) as FlowReduceLabel
+src/compiler/binder.ts	1398	16	union member		old	FlowNode	FlowCondition	0		createFlowNode(flags, expression, antecedent) as FlowCondition
+src/compiler/binder.ts	1403	16	union member		old	FlowNode	FlowSwitchClause	0		createFlowNode(FlowFlags.SwitchClause, { switchStatement, clauseStart, clauseEnd }, antecedent) as FlowSwitchClause
+src/compiler/binder.ts	1409	24	union member		old	FlowNode	FlowAssignment | FlowArrayMutation	0		createFlowNode(flags, node, antecedent) as FlowAssignment | FlowArrayMutation
+src/compiler/binder.ts	1419	16	union member		old	FlowNode	FlowCall	0		createFlowNode(FlowFlags.Call, node, antecedent) as FlowCall
+src/compiler/binder.ts	1439	25	interface downcast	to union of subtypes	old	Node	DoStatement | IfStatement | WhileStatement	0		parent as IfStatement | WhileStatement | DoStatement
+src/compiler/binder.ts	1442	25	interface downcast	to union of subtypes	old	Node	ForStatement | ConditionalExpression	0		parent as ForStatement | ConditionalExpression
+src/compiler/binder.ts	2469	26	interface downcast	to union of subtypes	old	Node | undefined	IsContainer | undefined	0		getEnclosingContainer(host) as IsContainer | undefined
+src/compiler/binder.ts	2470	36	interface downcast	to union of subtypes	old	Node	IsBlockScopedContainer | undefined	0		getEnclosingBlockScopeContainer(host) as IsBlockScopedContainer | undefined
+src/compiler/binder.ts	2539	47	interface downcast	to union of subtypes	old	Node | undefined	IsContainer | undefined	0		getEnclosingContainer(host) as IsContainer | undefined
+src/compiler/binder.ts	2540	57	interface downcast	to union of subtypes	old	Node	IsBlockScopedContainer | undefined	0		getEnclosingBlockScopeContainer(host) as IsBlockScopedContainer | undefined
+src/compiler/binder.ts	2756	23	other	unrelated or partial overlap	old	Node	TracingNode	0		node as TracingNode
+src/compiler/binder.ts	2793	31	interface downcast	to union of subtypes	old	Node	HasContainerFlags	0		node as HasContainerFlags
+src/compiler/binder.ts	2868	22	interface downcast	to union of subtypes	old	Node	Identifier | ThisExpression	0		node as Identifier | ThisExpression
+src/compiler/binder.ts	2879	18	interface downcast	to union of subtypes	old	Node	MetaProperty | SuperExpression	0		node as MetaProperty | SuperExpression
+src/compiler/binder.ts	2885	30	interface downcast	to union of subtypes	old	Node	ElementAccessExpression | PropertyAccessExpression	0		node as PropertyAccessExpression | ElementAccessExpression
+src/compiler/binder.ts	2920	45	interface downcast	to union of subtypes	old	Expression	AccessExpression	0		(node as BinaryExpression).left as AccessExpression
+src/compiler/binder.ts	2965	43	interface downcast	to union of subtypes	old	Node	PropertyDeclaration | PropertySignature	0		node as PropertyDeclaration | PropertySignature
+src/compiler/binder.ts	2995	54	interface downcast	to union of subtypes	old	Node	SignatureDeclaration | JSDocSignature	0		node as SignatureDeclaration | JSDocSignature
+src/compiler/binder.ts	2999	48	interface downcast	to union of subtypes	old	Node	TypeLiteralNode | JSDocTypeLiteral | MappedTypeNode	0		node as TypeLiteralNode | MappedTypeNode | JSDocTypeLiteral
+src/compiler/binder.ts	3006	47	interface downcast	to union of subtypes	old	Node	FunctionExpression | ArrowFunction	0		node as FunctionExpression | ArrowFunction
+src/compiler/binder.ts	3012	67	interface downcast	to intersection	old	Node	BindableObjectDefinePropertyCall	0		node as BindableObjectDefinePropertyCall
+src/compiler/binder.ts	3014	63	interface downcast	to intersection	old	Node	BindableObjectDefinePropertyCall	0		node as BindableObjectDefinePropertyCall
+src/compiler/binder.ts	3016	66	interface downcast	to intersection	old	Node	BindableObjectDefinePropertyCall	0		node as BindableObjectDefinePropertyCall
+src/compiler/binder.ts	3032	49	interface downcast	to union of subtypes	old	Node	ClassLikeDeclaration	0		node as ClassLikeDeclaration
+src/compiler/binder.ts	3070	55	interface downcast	to union of subtypes	old	Node	Block | ModuleBlock	0		node as Block | ModuleBlock
+src/compiler/binder.ts	3089	136	interface downcast	to union of subtypes	old	Node	JSDocTypedefTag | JSDocEnumTag | JSDocCallbackTag	0		node as JSDocTypedefTag | JSDocCallbackTag | JSDocEnumTag
+src/compiler/binder.ts	3372	63	interface downcast	to union of subtypes	old	LeftHandSideExpression	EntityNameExpression	0		(node.arguments[0] as PropertyAccessExpression).expression as EntityNameExpression
+src/compiler/binder.ts	3372	64	other	union to overlapping union	old	BindableStaticNameExpression	PropertyAccessExpression	0		node.arguments[0] as PropertyAccessExpression
+src/compiler/binder.ts	3387	32	union member		old	EntityNameExpression | (LeftHandSideExpression & BindableStaticNameExpression)	BindableStaticAccessExpression	0		lhs.expression as BindableStaticAccessExpression
+src/compiler/builder.ts	408	46	union member		old	readonly Diagnostic[] | readonly ReusableDiagnostic[]	readonly ReusableDiagnostic[]	0		emitDiagnostics as readonly ReusableDiagnostic[]
+src/compiler/builder.ts	409	47	union member		old	readonly Diagnostic[] | readonly ReusableDiagnostic[]	readonly Diagnostic[]	0		emitDiagnostics as readonly Diagnostic[]
+src/compiler/builder.ts	423	50	union member		old	readonly Diagnostic[] | readonly ReusableDiagnostic[]	readonly ReusableDiagnostic[]	0		diagnostics as readonly ReusableDiagnostic[]
+src/compiler/builder.ts	424	51	union member		old	readonly Diagnostic[] | readonly ReusableDiagnostic[]	readonly Diagnostic[]	0		diagnostics as readonly Diagnostic[]
+src/compiler/builder.ts	545	66	generic		old	DiagnosticMessageChain[] | ReusableDiagnosticMessageChain[] | undefined	T[]	0		chain.next as T[]
+src/compiler/builder.ts	551	66	generic		old	DiagnosticMessageChain[] | ReusableDiagnosticMessageChain[] | undefined	T[]	0		chain.next as T[]
+src/compiler/builder.ts	554	65	generic		old	DiagnosticMessageChain[] | ReusableDiagnosticMessageChain[] | undefined	T[]	0		chain.next as T[]
+src/compiler/builder.ts	555	34	union member		old	DiagnosticMessageChain | ReusableDiagnosticMessageChain	DiagnosticMessageChain	0		chain as DiagnosticMessageChain
+src/compiler/builder.ts	555	73	union member		old	DiagnosticMessageChain | ReusableDiagnosticMessageChain	DiagnosticMessageChain	0		chain as DiagnosticMessageChain
+src/compiler/builder.ts	610	113	union member		old	ReusableDiagnosticMessageChain	ReusableRepopulateInfoChain	0		chain as ReusableRepopulateInfoChain
+src/compiler/builder.ts	1182	15	interface downcast	to union of subtypes	old	BuildInfo	IncrementalBuildInfo	0		info as IncrementalBuildInfo
+src/compiler/builder.ts	1449	21	union member		old	CompilerOptionsValue | TsConfigSourceFile	CompilerOptionsValue	0		options[name] as CompilerOptionsValue
+src/compiler/builder.ts	1460	32	other	union to overlapping union	old	CompilerOptionsValue	readonly string[]	0		value as readonly string[]
+src/compiler/builder.ts	1466	64	union member		old	CompilerOptionsValue	string	0		value as string
+src/compiler/builder.ts	1590	16	union member		old	BuilderProgram | CompilerHost | undefined	CompilerHost	0		oldProgramOrHost as CompilerHost
+src/compiler/builder.ts	1591	22	union member		old	BuilderProgram | readonly Diagnostic[] | undefined	BuilderProgram	0		configFileParsingDiagnosticsOrOldProgram as BuilderProgram
+src/compiler/builder.ts	1596	22	union member		old	BuilderProgram | readonly Diagnostic[] | undefined	BuilderProgram	0		configFileParsingDiagnosticsOrOldProgram as BuilderProgram
+src/compiler/builder.ts	1599	22	union member		old	CompilerOptions | BuilderProgramHost | undefined	CompilerOptions	0		hostOrOptions as CompilerOptions
+src/compiler/builder.ts	1600	19	union member		old	BuilderProgram | CompilerHost | undefined	CompilerHost	0		oldProgramOrHost as CompilerHost
+src/compiler/builder.ts	1605	16	union member		old	BuilderProgram | CompilerHost | undefined	CompilerHost	0		oldProgramOrHost as CompilerHost
+src/compiler/builder.ts	1609	16	union member		old	CompilerOptions | BuilderProgramHost | undefined	BuilderProgramHost	0		hostOrOptions as BuilderProgramHost
+src/compiler/builder.ts	1610	22	union member		old	BuilderProgram | CompilerHost | undefined	BuilderProgram	0		oldProgramOrHost as BuilderProgram
+src/compiler/builder.ts	1611	40	union member		old	BuilderProgram | readonly Diagnostic[] | undefined	readonly Diagnostic[]	0		configFileParsingDiagnosticsOrOldProgram as readonly Diagnostic[]
+src/compiler/builder.ts	1829	58	union member		old	SourceFile | Program	SourceFile	0		affected as SourceFile
+src/compiler/builder.ts	1840	62	union member		old	SourceFile | Program	SourceFile	0		affected as SourceFile
+src/compiler/builder.ts	1846	40	union member		old	SourceFile | Program	SourceFile	0		affected as SourceFile
+src/compiler/builder.ts	2106	20	interface downcast		old	readonly Diagnostic[] | undefined	readonly DiagnosticWithLocation[] | undefined	0		( !sourceFile ? diagnostics : state.emitDiagnosticsPerFile?.get(sourceFile.resolvedPath) ) as readonly DiagnosticWithLocation[] | undefined
+src/compiler/builder.ts	2143	44	union member		old	SourceFile | Program	SourceFile	0		affected as SourceFile
+src/compiler/builder.ts	2233	9	interface downcast		old	IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo	FileInfo	0		fileInfo as BuilderState.FileInfo
+src/compiler/builder.ts	2304	26	union member		old	EmitSignature	string	0		emitSignatures!.get(key)! as string
+src/compiler/checker.ts	2940	63	other	to any	new	(this: NodeLinks) => void	any	0		NodeLinks as any
+src/compiler/checker.ts	3014	45	interface downcast		new	Node | undefined	BindingElement	0		getAncestor(usage, SyntaxKind.BindingElement) as BindingElement
+src/compiler/checker.ts	3020	59	interface downcast		new	Node | undefined	Declaration	0		getAncestor(declaration, SyntaxKind.VariableDeclaration) as Declaration
+src/compiler/checker.ts	3241	53	union member		new	(void & { __escapedIdentifier: void; }) | Identifier	Identifier	0		nameArg as Identifier
+src/compiler/checker.ts	3349	229	interface downcast		new	Node | undefined	Identifier	0		errorLocation as Identifier
+src/compiler/checker.ts	3397	110	union member		new	(void & { __escapedIdentifier: void; }) | Identifier | PrivateIdentifier	Identifier	0		nameArg as Identifier
+src/compiler/checker.ts	3456	28	interface downcast	to union of subtypes	new	LeftHandSideExpression	EntityNameExpression	0		(node as ExpressionWithTypeArguments).expression as EntityNameExpression
+src/compiler/checker.ts	3557	27	interface downcast		new	Node | undefined	TypeLiteralNode | undefined	0		findAncestor(node.parent, n => isComputedPropertyName(n) || isPropertySignature(n) ? false : isTypeLiteralNode(n) || "quit") as TypeLiteralNode | undefined
+src/compiler/checker.ts	3711	26	interface downcast		new	Expression	StringLiteral	0		(getLeftmostAccessExpression(commonJSPropertyAccess.expression) as CallExpression).arguments[0] as StringLiteral
+src/compiler/checker.ts	4042	37	interface downcast		new	Declaration | undefined	VariableDeclaration	0		symbol.valueDeclaration as VariableDeclaration
+src/compiler/checker.ts	4257	59	interface downcast	to union of subtypes	new	Declaration	ImportEqualsDeclaration | VariableDeclaration	0		node as ImportEqualsDeclaration | VariableDeclaration
+src/compiler/checker.ts	4266	51	interface downcast	to union of subtypes	new	Declaration	BindingElement | ImportSpecifier	0		node as ImportSpecifier | BindingElement
+src/compiler/checker.ts	4271	52	interface downcast	to union of subtypes	new	Declaration	BinaryExpression | ExportAssignment	0		node as ExportAssignment | BinaryExpression
+src/compiler/checker.ts	4280	52	interface downcast	to union of subtypes	new	Declaration	AccessExpression	0		node as AccessExpression
+src/compiler/checker.ts	4566	36	interface downcast		new	Expression	StringLiteral	0		(namespace.valueDeclaration.initializer as CallExpression).arguments[0] as StringLiteral
+src/compiler/checker.ts	4673	51	interface downcast	to union of subtypes	new	Expression	BindableStaticNameExpression	0		host.parent.parent.left as BindableStaticNameExpression
+src/compiler/checker.ts	5103	65	interface downcast	to union of subtypes	new	Type	StructuredType	0		moduleType as StructuredType
+src/compiler/checker.ts	5299	25	interface downcast	to intersection	new	ExportDeclaration	ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; }	0		exportStar as ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; }
+src/compiler/checker.ts	5649	26	union member	member subtype	new	StructuredType	ResolvedType	0		type as ResolvedType
+src/compiler/checker.ts	5717	45	interface downcast	to union of subtypes	new	Node	ClassLikeDeclaration | InterfaceDeclaration	0		location as ClassLikeDeclaration | InterfaceDeclaration
+src/compiler/checker.ts	6019	47	interface downcast	to union of subtypes	new	Node	SourceFile | AmbientModuleDeclaration	0		node as AmbientModuleDeclaration | SourceFile
+src/compiler/checker.ts	6315	27	interface downcast		new	SyntacticTypeNodeBuilderContext	NodeBuilderContext	0		context as NodeBuilderContext
+src/compiler/checker.ts	6318	47	interface downcast		new	SyntacticTypeNodeBuilderContext	NodeBuilderContext	0		context as NodeBuilderContext
+src/compiler/checker.ts	6345	50	interface downcast		new	SyntacticTypeNodeBuilderContext	NodeBuilderContext	0		context as NodeBuilderContext
+src/compiler/checker.ts	6348	33	interface downcast		new	SyntacticTypeNodeBuilderContext	NodeBuilderContext	0		syntacticContext as NodeBuilderContext
+src/compiler/checker.ts	6355	33	interface downcast		new	SyntacticTypeNodeBuilderContext	NodeBuilderContext	0		syntacticContext as NodeBuilderContext
+src/compiler/checker.ts	6361	33	interface downcast		new	SyntacticTypeNodeBuilderContext	NodeBuilderContext	0		syntacticContext as NodeBuilderContext
+src/compiler/checker.ts	6377	106	interface downcast		new	SyntacticTypeNodeBuilderContext	NodeBuilderContext	0		context as NodeBuilderContext
+src/compiler/checker.ts	6380	33	interface downcast		new	SyntacticTypeNodeBuilderContext	NodeBuilderContext	0		syntacticContext as NodeBuilderContext
+src/compiler/checker.ts	6387	42	interface downcast		new	SyntacticTypeNodeBuilderContext	NodeBuilderContext	0		context as NodeBuilderContext
+src/compiler/checker.ts	6390	33	interface downcast		new	SyntacticTypeNodeBuilderContext	NodeBuilderContext	0		syntacticContext as NodeBuilderContext
+src/compiler/checker.ts	6399	42	interface downcast		new	SyntacticTypeNodeBuilderContext	NodeBuilderContext	0		context as NodeBuilderContext
+src/compiler/checker.ts	6404	42	interface downcast		new	SyntacticTypeNodeBuilderContext	NodeBuilderContext	0		context as NodeBuilderContext
+src/compiler/checker.ts	6408	37	interface downcast		new	SyntacticTypeNodeBuilderContext	NodeBuilderContext	0		context as NodeBuilderContext
+src/compiler/checker.ts	6411	54	interface downcast		new	SyntacticTypeNodeBuilderContext	NodeBuilderContext	0		context as NodeBuilderContext
+src/compiler/checker.ts	6414	83	interface downcast		new	SyntacticTypeNodeBuilderContext	NodeBuilderContext	0		context as NodeBuilderContext
+src/compiler/checker.ts	6417	33	interface downcast		new	SyntacticTypeNodeBuilderContext	NodeBuilderContext	0		syntacticContext as NodeBuilderContext
+src/compiler/checker.ts	6447	41	interface downcast		new	SyntacticTypeNodeBuilderContext	NodeBuilderContext	0		context as NodeBuilderContext
+src/compiler/checker.ts	6450	33	interface downcast		new	SyntacticTypeNodeBuilderContext	NodeBuilderContext	0		syntacticContext as NodeBuilderContext
+src/compiler/checker.ts	6829	29	interface downcast	to union of subtypes	new	TypeNode	ImportTypeNode | TypeReferenceNode	0		parentName as TypeReferenceNode | ImportTypeNode
+src/compiler/checker.ts	6834	26	other	to any	new	ImportTypeNode	any	0		parentName as any
+src/compiler/checker.ts	7129	40	interface downcast		new	AnonymousType | undefined	MappedType	0		type.target as MappedType
+src/compiler/checker.ts	7275	77	generic		new	T	TypeReference & T	0		type as TypeReference & T
+src/compiler/checker.ts	7275	128	generic		new	T	TypeReference & T	0		type as TypeReference & T
+src/compiler/checker.ts	7276	75	generic		new	T	ConditionalType & T	0		type as ConditionalType & T
+src/compiler/checker.ts	7496	45	interface downcast	to union of subtypes	new	TypeNode	ImportTypeNode | TypeReferenceNode	0		symbolToTypeNode(parent, context, SymbolFlags.Type, typeArgumentSlice) as TypeReferenceNode | ImportTypeNode
+src/compiler/checker.ts	7630	47	interface downcast	to union of subtypes	new	Expression	EntityNameExpression	0		e.name.expression as EntityNameExpression
+src/compiler/checker.ts	8415	24	interface downcast	to union of subtypes	new	Node	BindingName	0		elideInitializerAndSetEmitFlags(node) as BindingName
+src/compiler/checker.ts	8731	74	union member		new	EntityName | undefined	EntityName	0		nonRootParts as EntityName
+src/compiler/checker.ts	8731	102	union member		new	readonly TypeNode[] | readonly TypeParameterDeclaration[] | undefined	readonly TypeNode[]	0		typeParameterNodes as readonly TypeNode[]
+src/compiler/checker.ts	8736	121	union member		new	readonly TypeNode[] | readonly TypeParameterDeclaration[] | undefined	readonly TypeNode[]	0		typeParameterNodes as readonly TypeNode[]
+src/compiler/checker.ts	8751	68	interface downcast		new	NodeArray<TypeNode | TypeParameterDeclaration> | undefined	NodeArray<TypeNode>	0		lastTypeArgs as NodeArray<TypeNode>
+src/compiler/checker.ts	8802	105	union member		new	readonly TypeNode[] | readonly TypeParameterDeclaration[] | undefined	readonly TypeNode[]	0		typeParameterNodes as readonly TypeNode[]
+src/compiler/checker.ts	9006	40	interface downcast	to union of subtypes	new	Type	StringLiteralType | NumberLiteralType	0		nameType as StringLiteralType | NumberLiteralType
+src/compiler/checker.ts	9200	49	generic		new	Node	T	0		attachSymbolToLeftmostIdentifier(node) as T
+src/compiler/checker.ts	9241	57	generic		new	Node	T	0		attachSymbolToLeftmostIdentifier(node) as T
+src/compiler/checker.ts	9255	49	generic		new	Node	T	0		attachSymbolToLeftmostIdentifier(node) as T
+src/compiler/checker.ts	9422	43	interface downcast		new	Statement	ModuleDeclaration	0		statements[nsIndex] as ModuleDeclaration
+src/compiler/checker.ts	9471	33	interface downcast		new	Statement[]	ExportDeclaration[]	0		filter(statements, d => isExportDeclaration(d) && !d.moduleSpecifier && !!d.exportClause && isNamedExports(d.exportClause)) as ExportDeclaration[]
+src/compiler/checker.ts	9485	35	interface downcast		new	Statement[]	ExportDeclaration[]	0		filter(statements, d => isExportDeclaration(d) && !!d.moduleSpecifier && !!d.exportClause && isNamedExports(d.exportClause)) as ExportDeclaration[]
+src/compiler/checker.ts	9512	40	interface downcast	to intersection	new	Statement	ExportDeclaration & { readonly exportClause: NamedExports; }	0		statements[index] as ExportDeclaration & { readonly exportClause: NamedExports; }
+src/compiler/checker.ts	9521	75	interface downcast	to union of subtypes	new	Statement	FunctionDeclaration | ClassDeclaration | InterfaceDeclaration | EnumDeclaration | ExportAssignment | ExportDeclaration |	0		statements[index] as Extract<HasModifiers, Statement>
+src/compiler/checker.ts	9718	69	other	union to overlapping union	new	__String | undefined	string | undefined	0		alias?.escapedText as string | undefined
+src/compiler/checker.ts	9936	40	interface downcast		new	(FunctionExpression | ArrowFunction | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration | CallSignatur	CallSignatureDeclaration[]	0		serializeSignatures(SignatureKind.Call, interfaceType, baseType, SyntaxKind.CallSignature) as CallSignatureDeclaration[]
+src/compiler/checker.ts	9937	45	interface downcast		new	(FunctionExpression | ArrowFunction | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration | CallSignatur	ConstructSignatureDeclaration[]	0		serializeSignatures(SignatureKind.Construct, interfaceType, baseType, SyntaxKind.ConstructSignature) as ConstructSignatureDeclaration[]
+src/compiler/checker.ts	10045	37	union member	member subtype	new	Expression | ComputedPropertyName	ModuleName	0		symbolToNode(symbol, context, /*meaning*/ SymbolFlags.All) as ModuleName
+src/compiler/checker.ts	10129	46	interface downcast	to union of subtypes	new	Expression | undefined	StringLiteral | NumericLiteral | undefined	0		initializer as StringLiteral | NumericLiteral | undefined
+src/compiler/checker.ts	10210	42	interface downcast	to union of subtypes	new	Node	SourceFile | NamespaceDeclaration	0		enclosingDeclaration as SourceFile | NamespaceDeclaration
+src/compiler/checker.ts	10234	133	interface downcast		new	Statement[]	(FunctionDeclaration | ClassDeclaration | InterfaceDeclaration | EnumDeclaration | ExportAssignment | ExportDeclaration 	0		defaultReplaced as Extract<HasModifiers, Statement>[]
+src/compiler/checker.ts	10354	21	interface downcast		new	(FunctionExpression | ArrowFunction | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration | CallSignatur	ConstructorDeclaration[]	0		serializeSignatures(SignatureKind.Construct, staticType, staticBaseType, SyntaxKind.Constructor) as ConstructorDeclaration[]
+src/compiler/checker.ts	10667	199	interface downcast	to union of subtypes	new	Declaration	PropertyAssignment | ShorthandPropertyAssignment | PropertyAccessExpression	0		aliasDecl as ShorthandPropertyAssignment | PropertyAssignment | PropertyAccessExpression
+src/compiler/checker.ts	10950	32	double cast		new	unknown	T[]	0	nest	results as unknown as T[]
+src/compiler/checker.ts	10953	72	other	to any	new	Symbol	any	0		p as any
+src/compiler/checker.ts	11190	21	other	literal, enum or brand conversion	new	0	TypeFlags	0		0 as TypeFlags
+src/compiler/checker.ts	11248	36	interface downcast	to union of subtypes	new	Type	StringLiteralType | NumberLiteralType	0		nameType as StringLiteralType | NumberLiteralType
+src/compiler/checker.ts	11518	41	union member		new	TypeSystemEntity	Symbol	0		target as Symbol
+src/compiler/checker.ts	11520	41	union member		new	TypeSystemEntity	Symbol	0		target as Symbol
+src/compiler/checker.ts	11522	27	union member	member subtype	new	TypeSystemEntity	InterfaceType	0		target as InterfaceType
+src/compiler/checker.ts	11524	27	union member		new	TypeSystemEntity	Signature	0		target as Signature
+src/compiler/checker.ts	11526	27	union member		new	TypeSystemEntity	Type	0		target as Type
+src/compiler/checker.ts	11528	27	union member	member subtype	new	TypeSystemEntity	TypeReference	0		target as TypeReference
+src/compiler/checker.ts	11530	27	union member	member subtype	new	TypeSystemEntity	InterfaceType	0		target as InterfaceType
+src/compiler/checker.ts	11532	41	union member		new	TypeSystemEntity	Symbol	0		target as Symbol
+src/compiler/checker.ts	11534	37	union member	member subtype	new	TypeSystemEntity	ParameterDeclaration	0		target as ParameterDeclaration
+src/compiler/checker.ts	11713	50	union member	member subtype	new	Node | BindingElement	PropertyAssignment | BindingElement	0		ancestor as BindingElement | PropertyAssignment
+src/compiler/checker.ts	11715	50	union member	member subtype	new	Node | ObjectLiteralExpression | BindingPattern	Expression	0		node.parent as Expression
+src/compiler/checker.ts	11717	25	union member		new	Node | VariableDeclaration	VariableDeclaration	0		ancestor as VariableDeclaration
+src/compiler/checker.ts	11726	48	union member		new	Expression | BindingElement	BindingElement	0		node as BindingElement
+src/compiler/checker.ts	11726	89	union member		new	Expression | BindingElement	BindingElement	0		node as BindingElement
+src/compiler/checker.ts	11729	48	union member		new	Expression | PropertyAssignment | ShorthandPropertyAssignment	PropertyAssignment | ShorthandPropertyAssignment	0		node as PropertyAssignment | ShorthandPropertyAssignment
+src/compiler/checker.ts	11731	23	union member	member subtype	new	Node | ObjectLiteralExpression | BindingPattern	BindingPattern | ArrayLiteralExpression	0		parent as BindingPattern | ArrayLiteralExpression
+src/compiler/checker.ts	11736	89	interface downcast	to union of subtypes	new	Type	StringLiteralType | NumberLiteralType	0		type as StringLiteralType | NumberLiteralType
+src/compiler/checker.ts	11866	45	union member		new	ParameterDeclaration | PropertyDeclaration | PropertySignature | VariableDeclaration | BindingElement | JSDocPropertyLik	BindingElement	0		declaration as BindingElement
+src/compiler/checker.ts	12213	58	interface downcast	to intersection	new	CallExpression	BindableObjectDefinePropertyCall	0		expression as BindableObjectDefinePropertyCall
+src/compiler/checker.ts	12892	81	other	unrelated or partial overlap	new	Declaration	HasInitializer	0		declaration as HasInitializer
+src/compiler/checker.ts	13044	59	other	unrelated or partial overlap	new	Expression	PropertyAssignment | BindableStaticNameExpression	0		node.left as BindableStaticNameExpression | PropertyAssignment
+src/compiler/checker.ts	13076	156	interface downcast	to union of subtypes	new	Node	Expression | MethodDeclaration	0		node as Expression | MethodDeclaration
+src/compiler/checker.ts	13077	119	interface downcast	to union of subtypes	new	Node	FunctionLikeDeclaration	0		node as FunctionLikeDeclaration
+src/compiler/checker.ts	13088	135	interface downcast	to union of subtypes	new	Node	DeclarationWithTypeParameters	0		node as DeclarationWithTypeParameters
+src/compiler/checker.ts	13091	82	interface downcast	to union of subtypes	new	Node	ClassLikeDeclaration | InterfaceDeclaration	0		node as ClassLikeDeclaration | InterfaceDeclaration
+src/compiler/checker.ts	13143	37	interface downcast	to union of subtypes	new	Declaration	InterfaceDeclaration | JSDocTypedefTag | TypeAliasDeclaration | JSDocCallbackTag	0		node as InterfaceDeclaration | TypeAliasDeclaration | JSDocTypedefTag | JSDocCallbackTag
+src/compiler/checker.ts	13257	77	interface downcast	to union of subtypes	new	Declaration	ClassLikeDeclaration	0		declaration as ClassLikeDeclaration
+src/compiler/checker.ts	13411	67	union member		new	BaseType	ObjectType	0		baseType as ObjectType
+src/compiler/checker.ts	13706	66	interface downcast	to union of subtypes	new	Declaration	VariableLikeDeclaration	0		declaration as VariableLikeDeclaration
+src/compiler/checker.ts	13712	66	interface downcast	to union of subtypes	new	Declaration	FunctionExpression | ArrowFunction | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration | FunctionDecla	0		declaration as FunctionLikeDeclaration | AccessorDeclaration
+src/compiler/checker.ts	13963	33	interface downcast		new	SymbolTable	Map<__String, TransientSymbol>	0		createSymbolTable() as Map<__String, TransientSymbol>
+src/compiler/checker.ts	13973	91	interface downcast	to union of subtypes	new	Node	LateBoundDeclaration | LateBoundBinaryExpressionDeclaration	0	nest	member as Node as LateBoundDeclaration | LateBoundBinaryExpressionDeclaration
+src/compiler/checker.ts	13984	73	interface downcast	to union of subtypes	new	Declaration	BinaryExpression | CallExpression	0		member as BinaryExpression | CallExpression
+src/compiler/checker.ts	14147	16	interface downcast		new	AllocatedSignature	Signature	0		sig as Signature
+src/compiler/checker.ts	14731	34	interface downcast		new	TransientSymbol	ReverseMappedSymbol	0		createSymbol(SymbolFlags.Property | prop.flags & optionalMask, prop.escapedName, checkFlags) as ReverseMappedSymbol
+src/compiler/checker.ts	14737	21	union member	member subtype	new	InstantiableType | UnionOrIntersectionType	IndexedAccessType	0		type.constraintType.type as IndexedAccessType
+src/compiler/checker.ts	14738	21	union member	member subtype	new	InstantiableType | UnionOrIntersectionType	IndexedAccessType	0		type.constraintType.type as IndexedAccessType
+src/compiler/checker.ts	14743	39	union member	member subtype	new	InstantiableType | UnionOrIntersectionType	IndexedAccessType	0		type.constraintType.type as IndexedAccessType
+src/compiler/checker.ts	14744	77	union member	member subtype	new	InstantiableType | UnionOrIntersectionType	ReplaceableIndexedAccessType	0		type.constraintType.type as ReplaceableIndexedAccessType
+src/compiler/checker.ts	14820	29	interface downcast		new	AnonymousType | undefined	MappedType	0		type.target as MappedType
+src/compiler/checker.ts	14849	38	interface downcast		new	Symbol | undefined	MappedSymbol | undefined	0		members.get(propName) as MappedSymbol | undefined
+src/compiler/checker.ts	14862	34	interface downcast		new	TransientSymbol	MappedSymbol	0		createSymbol(SymbolFlags.Property | (isOptional ? SymbolFlags.Optional : 0), propName, lateFlag | CheckFlags.Mapped | (isReadonly ? CheckFlags.Readonly : 0) | (stripOptional ? CheckFlags.StripOptional
+src/compiler/checker.ts	14894	64	interface downcast		new	AnonymousType | undefined	MappedType	0		mappedType.target as MappedType
+src/compiler/checker.ts	14951	75	interface downcast		new	TypeNode | undefined	TypeOperatorNode	0		getConstraintDeclarationForMappedType(type) as TypeOperatorNode
+src/compiler/checker.ts	15023	15	union member	member subtype	new	StructuredType	ResolvedType	0		type as ResolvedType
+src/compiler/checker.ts	15026	49	union member	member subtype	new	StructuredType	TypeReference	0		type as TypeReference
+src/compiler/checker.ts	15029	52	union member	member subtype	new	StructuredType	InterfaceType	0		type as InterfaceType
+src/compiler/checker.ts	15031	27	union member	member subtype	new	StructuredType	ReverseMappedType	0		type as ReverseMappedType
+src/compiler/checker.ts	15032	53	union member	member subtype	new	StructuredType	ReverseMappedType	0		type as ReverseMappedType
+src/compiler/checker.ts	15037	27	union member	member subtype	new	StructuredType	MappedType	0		type as MappedType
+src/compiler/checker.ts	15038	46	union member	member subtype	new	StructuredType	MappedType	0		type as MappedType
+src/compiler/checker.ts	15045	41	union member		new	StructuredType	UnionType	0		type as UnionType
+src/compiler/checker.ts	15048	48	union member		new	StructuredType	IntersectionType	0		type as IntersectionType
+src/compiler/checker.ts	15054	16	union member	member subtype	new	StructuredType	ResolvedType	0		type as ResolvedType
+src/compiler/checker.ts	15111	42	interface downcast	to union of subtypes	new	Type	StructuredType	0		type as StructuredType
+src/compiler/checker.ts	15150	81	union member	member subtype	new	InstantiableType | UnionOrIntersectionType	IndexedAccessType	0		type as IndexedAccessType
+src/compiler/checker.ts	15151	81	union member	member subtype	new	InstantiableType | UnionOrIntersectionType	ConditionalType	0		type as ConditionalType
+src/compiler/checker.ts	15401	40	union member	member subtype	new	InstantiableType | UnionOrIntersectionType	MappedType	0		(t as IndexType).type as MappedType
+src/compiler/checker.ts	16122	16	interface downcast	to union of subtypes	new	{ kind: TypePredicateKind; parameterName: string | undefined; parameterIndex: number | undefined; type: Type | undefined	TypePredicate	0		{ kind, parameterName, parameterIndex, type } as TypePredicate
+src/compiler/checker.ts	16355	38	interface downcast	to union of subtypes	new	Node	ElementAccessExpression | PropertyAccessExpression	0		node as PropertyAccessExpression | ElementAccessExpression
+src/compiler/checker.ts	16481	33	union member		new	SignatureDeclaration | JSDocSignature | undefined	FunctionLikeDeclaration	0		signature.declaration as FunctionLikeDeclaration
+src/compiler/checker.ts	16481	123	union member		new	SignatureDeclaration | JSDocSignature | undefined	FunctionLikeDeclaration	0		signature.declaration as FunctionLikeDeclaration
+src/compiler/checker.ts	16524	41	union member		new	ParameterDeclaration | JSDocParameterTag	ParameterDeclaration	0		declaration.parameters[0] as ParameterDeclaration
+src/compiler/checker.ts	17809	45	interface downcast	to union of subtypes	new	Node	NamedTupleMember | ParenthesizedTypeNode | OptionalTypeNode | JSDocTypeReferencingNode	0		node as ParenthesizedTypeNode | OptionalTypeNode | JSDocTypeReferencingNode | NamedTupleMember
+src/compiler/checker.ts	17814	30	interface downcast	to union of subtypes	new	Node	UnionOrIntersectionTypeNode	0		node as UnionOrIntersectionTypeNode
+src/compiler/checker.ts	17881	29	other	literal, enum or brand conversion	new	0	ElementFlags	0		0 as ElementFlags
+src/compiler/checker.ts	17907	22	interface downcast	to intersection	new	ObjectType	TupleType & InterfaceTypeWithDeclaredMembers	0		createObjectType(ObjectFlags.Tuple | ObjectFlags.Reference) as TupleType & InterfaceTypeWithDeclaredMembers
+src/compiler/checker.ts	18220	27	interface downcast		new	Type[]	(TemplateLiteralType | StringMappingType)[]	0		filter(types, isPatternLiteralType) as (TemplateLiteralType | StringMappingType)[]
+src/compiler/checker.ts	18235	54	union member		new	TemplateLiteralType | StringMappingType	TemplateLiteralType	0		template as TemplateLiteralType
+src/compiler/checker.ts	18337	51	other	literal, enum or brand conversion	new	0	TypeFlags	0		0 as TypeFlags
+src/compiler/checker.ts	18454	18	interface downcast	to intersection	new	UnionType	UnionType & IntrinsicType	0		type as UnionType & IntrinsicType
+src/compiler/checker.ts	18602	47	interface downcast		new	Type	UnionType	0		types[index] as UnionType
+src/compiler/checker.ts	18661	68	other	literal, enum or brand conversion	new	0	TypeFlags	0		0 as TypeFlags
+src/compiler/checker.ts	18820	42	interface downcast		new	Type	UnionType	0		types[j] as UnionType
+src/compiler/checker.ts	18887	52	interface downcast		new	AnonymousType | undefined	MappedType	0		type.target as MappedType
+src/compiler/checker.ts	18952	30	union member		new	DeclarationName | undefined	Identifier | StringLiteral | NoSubstitutionTemplateLiteral | NumericLiteral | ComputedPropertyName | PrivateIdentifier |	0		getNameOfDeclaration(prop.valueDeclaration) as PropertyName | JsxAttributeName
+src/compiler/checker.ts	19408	89	interface downcast	to union of subtypes	new	Type	StringLiteralType | NumberLiteralType	0		indexType as StringLiteralType | NumberLiteralType
+src/compiler/checker.ts	19622	88	interface downcast		new	AnonymousType | undefined	MappedType	0		objectType.target as MappedType
+src/compiler/checker.ts	19644	58	interface downcast	to union of subtypes	new	Type	StringLiteralType | NumberLiteralType	0		t as StringLiteralType | NumberLiteralType
+src/compiler/checker.ts	20308	51	interface downcast		new	LiteralType	StringLiteralType	0		createLiteralType(TypeFlags.StringLiteral, value) as StringLiteralType
+src/compiler/checker.ts	20314	51	interface downcast		new	LiteralType	NumberLiteralType	0		createLiteralType(TypeFlags.NumberLiteral, value) as NumberLiteralType
+src/compiler/checker.ts	20321	49	interface downcast		new	LiteralType	BigIntLiteralType	0		createLiteralType(TypeFlags.BigIntLiteral, value) as BigIntLiteralType
+src/compiler/checker.ts	20374	81	union member		new	Node | ClassLikeDeclaration | InterfaceDeclaration	ClassLikeDeclaration | InterfaceDeclaration	0		parent as ClassLikeDeclaration | InterfaceDeclaration
+src/compiler/checker.ts	20416	57	interface downcast	to union of subtypes	new	TypeNode	NamedTupleMember | RestTypeNode	0		node as RestTypeNode | NamedTupleMember
+src/compiler/checker.ts	20458	18	other	literal, enum or brand conversion	new	SyntaxKind.NullKeyword	TypeNodeSyntaxKind	0		SyntaxKind.NullKeyword as TypeNodeSyntaxKind
+src/compiler/checker.ts	20468	18	other	literal, enum or brand conversion	new	SyntaxKind.ThisKeyword	TypeNodeSyntaxKind	0		SyntaxKind.ThisKeyword as TypeNodeSyntaxKind
+src/compiler/checker.ts	20470	48	other	unrelated or partial overlap	new	TypeNode	ThisExpression | ThisTypeNode	0		node as ThisExpression | ThisTypeNode
+src/compiler/checker.ts	20483	56	interface downcast	to union of subtypes	new	TypeNode	ArrayTypeNode | TupleTypeNode	0		node as ArrayTypeNode | TupleTypeNode
+src/compiler/checker.ts	20499	45	interface downcast	to union of subtypes	new	TypeNode	NamedTupleMember | ParenthesizedTypeNode | JSDocTypeExpression | JSDocTypeReferencingNode	0		node as ParenthesizedTypeNode | JSDocTypeReferencingNode | JSDocTypeExpression | NamedTupleMember
+src/compiler/checker.ts	20510	78	interface downcast	to union of subtypes	new	TypeNode	JSDocFunctionType | TypeLiteralNode | JSDocSignature | JSDocTypeLiteral | FunctionOrConstructorTypeNode	0		node as TypeLiteralNode | FunctionOrConstructorTypeNode | JSDocTypeLiteral | JSDocFunctionType | JSDocSignature
+src/compiler/checker.ts	20528	18	other	literal, enum or brand conversion	new	SyntaxKind.Identifier	TypeNodeSyntaxKind	0		SyntaxKind.Identifier as TypeNodeSyntaxKind
+src/compiler/checker.ts	20529	18	other	literal, enum or brand conversion	new	SyntaxKind.QualifiedName	TypeNodeSyntaxKind	0		SyntaxKind.QualifiedName as TypeNodeSyntaxKind
+src/compiler/checker.ts	20530	18	other	literal, enum or brand conversion	new	SyntaxKind.PropertyAccessExpression	TypeNodeSyntaxKind	0		SyntaxKind.PropertyAccessExpression as TypeNodeSyntaxKind
+src/compiler/checker.ts	20740	73	union member	member subtype	new	AnonymousType | DeferredTypeReference	TypeReference	0		type as TypeReference
+src/compiler/checker.ts	20741	75	union member	member subtype	new	AnonymousType | DeferredTypeReference	InstantiationExpressionType	0		type as InstantiationExpressionType
+src/compiler/checker.ts	20783	100	union member		new	AnonymousType | DeferredTypeReference	DeferredTypeReference	0		type as DeferredTypeReference
+src/compiler/checker.ts	20783	140	union member		new	AnonymousType | DeferredTypeReference	DeferredTypeReference	0		type as DeferredTypeReference
+src/compiler/checker.ts	20793	30	interface downcast	to union of subtypes	new	Type	ObjectFlagsType	0		result as ObjectFlagsType
+src/compiler/checker.ts	20799	30	interface downcast	to union of subtypes	new	Type	ObjectFlagsType	0		result as ObjectFlagsType
+src/compiler/checker.ts	20853	30	interface downcast	to union of subtypes	new	Node	FunctionLikeDeclaration	0		node as FunctionLikeDeclaration
+src/compiler/checker.ts	20853	74	interface downcast	to union of subtypes	new	Node	FunctionLikeDeclaration	0		node as FunctionLikeDeclaration
+src/compiler/checker.ts	20854	31	interface downcast	to union of subtypes	new	Node	FunctionLikeDeclaration	0		node as FunctionLikeDeclaration
+src/compiler/checker.ts	20855	31	interface downcast	to union of subtypes	new	Node	FunctionLikeDeclaration	0		node as FunctionLikeDeclaration
+src/compiler/checker.ts	20856	28	interface downcast	to union of subtypes	new	Node	FunctionLikeDeclaration	0		node as FunctionLikeDeclaration
+src/compiler/checker.ts	20856	88	interface downcast	to union of subtypes	new	Node	FunctionLikeDeclaration	0		node as FunctionLikeDeclaration
+src/compiler/checker.ts	20958	72	interface downcast		new	AnonymousType | undefined	MappedType	0		type.target as MappedType
+src/compiler/checker.ts	21072	51	interface downcast	to union of subtypes	new	Type	TypeReference | MappedType | AnonymousType	0		type as TypeReference | AnonymousType | MappedType
+src/compiler/checker.ts	21187	66	union member	member subtype	new	Expression | MethodDeclaration	FunctionExpression | ArrowFunction | MethodDeclaration	0		node as FunctionExpression | ArrowFunction | MethodDeclaration
+src/compiler/checker.ts	21199	44	union member		new	Expression | PropertyAssignment	PropertyAssignment	0		node as PropertyAssignment
+src/compiler/checker.ts	21206	41	union member		new	Expression | JsxAttribute	JsxAttribute	0		node as JsxAttribute
+src/compiler/checker.ts	21212	40	union member	member subtype	new	Expression | JsxExpression	YieldExpression | JsxExpression	0		node as JsxExpression | YieldExpression
+src/compiler/checker.ts	21231	41	union member		new	ConciseBody	Block	0		node.body as Block
+src/compiler/checker.ts	21242	107	union member		new	ConciseBody	Block	0		node.body as Block
+src/compiler/checker.ts	21395	40	interface downcast	to union of subtypes	new	Expression	ParenthesizedExpression | AsExpression | JsxExpression	0		node as AsExpression | ParenthesizedExpression | JsxExpression
+src/compiler/checker.ts	22077	44	union member		new	TypePredicate	IdentifierTypePredicate	0		target as IdentifierTypePredicate
+src/compiler/checker.ts	22079	127	union member		new	TypePredicate	IdentifierTypePredicate	0		target as IdentifierTypePredicate
+src/compiler/checker.ts	22482	30	interface downcast		new	DiagnosticRelatedInformation[] | undefined	[DiagnosticRelatedInformation, ...DiagnosticRelatedInformation[]] | undefined	0		relatedInfo?.slice() as [DiagnosticRelatedInformation, ...DiagnosticRelatedInformation[]] | undefined
+src/compiler/checker.ts	23031	61	interface downcast	to union of subtypes	new	Declaration	ObjectLiteralElementLike	0		prop.valueDeclaration as ObjectLiteralElementLike
+src/compiler/checker.ts	23925	40	union member	member subtype	new	InstantiableType | UnionOrIntersectionType	MappedType	0		(source as IndexType).type as MappedType
+src/compiler/checker.ts	25481	142	other	literal, enum or brand conversion	new	0	TypeFlags	0		0 as TypeFlags
+src/compiler/checker.ts	26335	61	union member		new	Expression | MethodDeclaration	MethodDeclaration	0		node as MethodDeclaration
+src/compiler/checker.ts	26398	14	interface downcast	to union of subtypes	new	Type	ObjectFlagsType	0		type as ObjectFlagsType
+src/compiler/checker.ts	27216	37	interface downcast	to union of subtypes	new	Type	UnionType | IntersectionType	0		constraintType as (UnionType | IntersectionType)
+src/compiler/checker.ts	27300	118	other	literal, enum or brand conversion	new	0	TypeFlags	0		0 as TypeFlags
+src/compiler/checker.ts	27807	41	interface downcast	to union of subtypes	new	Node	ParenthesizedExpression | NonNullExpression	0		node as NonNullExpression | ParenthesizedExpression
+src/compiler/checker.ts	27813	58	interface downcast	to union of subtypes	new	Node	AccessExpression	0		node as AccessExpression
+src/compiler/checker.ts	27815	50	interface downcast	to union of subtypes	new	Node	AccessExpression	0		node as AccessExpression
+src/compiler/checker.ts	27842	53	interface downcast	to union of subtypes	new	Node	ParenthesizedExpression | NonNullExpression	0		target as NonNullExpression | ParenthesizedExpression
+src/compiler/checker.ts	27866	45	interface downcast	to union of subtypes	new	Node	ParenthesizedExpression | SatisfiesExpression | NonNullExpression	0		source as NonNullExpression | ParenthesizedExpression | SatisfiesExpression
+src/compiler/checker.ts	27869	68	interface downcast	to union of subtypes	new	Node	AccessExpression	0		source as AccessExpression
+src/compiler/checker.ts	27873	98	interface downcast	to union of subtypes	new	Node	AccessExpression	0		source as AccessExpression
+src/compiler/checker.ts	27873	139	interface downcast	to union of subtypes	new	Node	AccessExpression	0		target as AccessExpression
+src/compiler/checker.ts	27912	91	interface downcast	to union of subtypes	new	Type	StringLiteralType | NumberLiteralType	0		type as StringLiteralType | NumberLiteralType
+src/compiler/checker.ts	28423	65	union member		new	Expression | VariableDeclaration	VariableDeclaration	0		node as VariableDeclaration
+src/compiler/checker.ts	28424	38	union member		new	Expression | VariableDeclaration	VariableDeclaration	0		node as VariableDeclaration
+src/compiler/checker.ts	28481	67	interface downcast	to union of subtypes	new	Expression	StringLiteralLike	0		clause.expression as StringLiteralLike
+src/compiler/checker.ts	28630	55	union member		new	FlowType	Type	0		flowType as Type
+src/compiler/checker.ts	28842	23	interface downcast	to union of subtypes	new	Node | undefined	Block | SourceFile | ModuleBlock	0		findAncestor(node, isFunctionOrModuleBlock) as Block | ModuleBlock | SourceFile
+src/compiler/checker.ts	28878	25	union member		new	FlowNode	FlowAssignment | FlowCondition | FlowArrayMutation	0		flow as FlowAssignment | FlowCondition | FlowArrayMutation
+src/compiler/checker.ts	28881	56	union member		new	FlowNode	FlowCall	0		flow as FlowCall
+src/compiler/checker.ts	28885	52	union member		new	FlowNode	FlowCall	0		flow as FlowCall
+src/compiler/checker.ts	28894	25	union member		new	FlowNode	FlowCall	0		flow as FlowCall
+src/compiler/checker.ts	28898	30	union member		new	FlowNode	FlowLabel	0		flow as FlowLabel
+src/compiler/checker.ts	28901	38	union member		new	FlowNode	FlowLabel	0		flow as FlowLabel
+src/compiler/checker.ts	28911	31	union member		new	FlowNode	FlowSwitchClause	0		flow as FlowSwitchClause
+src/compiler/checker.ts	28915	25	union member		new	FlowNode	FlowSwitchClause	0		flow as FlowSwitchClause
+src/compiler/checker.ts	28920	33	union member		new	FlowNode	FlowReduceLabel	0		flow as FlowReduceLabel
+src/compiler/checker.ts	28922	38	union member		new	FlowNode	FlowReduceLabel	0		flow as FlowReduceLabel
+src/compiler/checker.ts	28923	59	union member		new	FlowNode	FlowReduceLabel	0		flow as FlowReduceLabel
+src/compiler/checker.ts	28947	25	union member		new	FlowNode	FlowAssignment | FlowCondition | FlowSwitchClause | FlowArrayMutation	0		flow as FlowAssignment | FlowCondition | FlowArrayMutation | FlowSwitchClause
+src/compiler/checker.ts	28950	22	union member		new	FlowNode	FlowCall	0		flow as FlowCall
+src/compiler/checker.ts	28953	25	union member		new	FlowNode	FlowCall	0		flow as FlowCall
+src/compiler/checker.ts	28957	31	union member		new	FlowNode	FlowLabel	0		flow as FlowLabel
+src/compiler/checker.ts	28961	25	union member		new	FlowNode	FlowLabel	0		flow as FlowLabel
+src/compiler/checker.ts	28964	33	union member		new	FlowNode	FlowReduceLabel	0		flow as FlowReduceLabel
+src/compiler/checker.ts	28966	38	union member		new	FlowNode	FlowReduceLabel	0		flow as FlowReduceLabel
+src/compiler/checker.ts	28967	53	union member		new	FlowNode	FlowReduceLabel	0		flow as FlowReduceLabel
+src/compiler/checker.ts	28993	45	interface downcast	to union of subtypes	new	Node	AccessExpression	0		node as AccessExpression
+src/compiler/checker.ts	29063	52	union member		new	FlowNode	FlowAssignment	0		flow as FlowAssignment
+src/compiler/checker.ts	29065	33	union member		new	FlowNode	FlowAssignment	0		flow as FlowAssignment
+src/compiler/checker.ts	29070	46	union member		new	FlowNode	FlowCall	0		flow as FlowCall
+src/compiler/checker.ts	29072	33	union member		new	FlowNode	FlowCall	0		flow as FlowCall
+src/compiler/checker.ts	29077	51	union member		new	FlowNode	FlowCondition	0		flow as FlowCondition
+src/compiler/checker.ts	29080	50	union member		new	FlowNode	FlowSwitchClause	0		flow as FlowSwitchClause
+src/compiler/checker.ts	29083	26	union member		new	FlowNode	FlowLabel	0		flow as FlowLabel
+src/compiler/checker.ts	29084	33	union member		new	FlowNode	FlowLabel	0		flow as FlowLabel
+src/compiler/checker.ts	29088	50	union member		new	FlowNode	FlowLabel	0		flow as FlowLabel
+src/compiler/checker.ts	29089	48	union member		new	FlowNode	FlowLabel	0		flow as FlowLabel
+src/compiler/checker.ts	29092	55	union member		new	FlowNode	FlowArrayMutation	0		flow as FlowArrayMutation
+src/compiler/checker.ts	29094	33	union member		new	FlowNode	FlowArrayMutation	0		flow as FlowArrayMutation
+src/compiler/checker.ts	29099	37	union member		new	FlowNode	FlowReduceLabel	0		flow as FlowReduceLabel
+src/compiler/checker.ts	29101	42	union member		new	FlowNode	FlowReduceLabel	0		flow as FlowReduceLabel
+src/compiler/checker.ts	29102	47	union member		new	FlowNode	FlowReduceLabel	0		flow as FlowReduceLabel
+src/compiler/checker.ts	29107	40	union member		new	FlowNode	FlowStart	0		flow as FlowStart
+src/compiler/checker.ts	29140	36	union member		new	Expression | VariableDeclaration | BindingElement	VariableDeclaration | BindingElement	0		node as VariableDeclaration | BindingElement
+src/compiler/checker.ts	29325	82	union member		new	FlowNode	FlowSwitchClause	0		antecedent as FlowSwitchClause
+src/compiler/checker.ts	29325	136	union member		new	FlowNode	FlowSwitchClause	0		antecedent as FlowSwitchClause
+src/compiler/checker.ts	29327	34	union member		new	FlowNode	FlowSwitchClause	0		antecedent as FlowSwitchClause
+src/compiler/checker.ts	30199	46	interface downcast	to union of subtypes	new	Expression	ParenthesizedExpression | SatisfiesExpression | NonNullExpression	0		expr as ParenthesizedExpression | NonNullExpression | SatisfiesExpression
+src/compiler/checker.ts	30548	52	interface downcast	to union of subtypes	new	Node	PropertyAccessExpression | QualifiedName	0		location as PropertyAccessExpression | QualifiedName
+src/compiler/checker.ts	30552	47	interface downcast	to union of subtypes	new	Node	JsxOpeningLikeElement | JsxOpeningFragment	0		location as JsxOpeningLikeElement | JsxOpeningFragment
+src/compiler/checker.ts	30554	57	interface downcast	to union of subtypes	new	Node	MethodSignature | FunctionLikeDeclaration	0		location as FunctionLikeDeclaration | MethodSignature
+src/compiler/checker.ts	30560	53	interface downcast	to union of subtypes	new	Node	HasDecorators	0		location as HasDecorators
+src/compiler/checker.ts	30850	53	other	union to overlapping union	new	ModuleReference	EntityNameExpression	0		node.moduleReference as EntityNameExpression
+src/compiler/checker.ts	31206	88	interface downcast	to union of subtypes	new	Declaration	VariableLikeDeclaration	0		declaration as VariableLikeDeclaration
+src/compiler/checker.ts	31353	26	interface downcast	to union of subtypes	new	Node	PrefixUnaryExpression | PostfixUnaryExpression	0		current.parent as PrefixUnaryExpression | PostfixUnaryExpression
+src/compiler/checker.ts	31597	21	interface downcast		new	Expression	PropertyAccessExpression	0		container.parent.parent.parent.arguments[0] as PropertyAccessExpression
+src/compiler/checker.ts	31611	21	interface downcast		new	Expression	PropertyAccessExpression	0		container.parent.parent.arguments[0] as PropertyAccessExpression
+src/compiler/checker.ts	31786	38	union member		new	Node | ClassLikeDeclaration | TypeLiteralNode | InterfaceDeclaration	ClassLikeDeclaration	0		container.parent as ClassLikeDeclaration
+src/compiler/checker.ts	32018	29	interface downcast	to union of subtypes	new	Node	VariableLikeDeclaration	0		node.parent as VariableLikeDeclaration
+src/compiler/checker.ts	32336	103	interface downcast	to union of subtypes	new	Expression	AccessExpression	0		declaration.left as AccessExpression
+src/compiler/checker.ts	32339	24	interface downcast	to union of subtypes	new	Expression	AccessExpression	0		declaration.left as AccessExpression
+src/compiler/checker.ts	32621	53	interface downcast	to union of subtypes	new	Expression	ParenthesizedExpression | PropertyAccessExpression	0		node as PropertyAccessExpression | ParenthesizedExpression
+src/compiler/checker.ts	32809	53	interface downcast	to union of subtypes	new	Node	CallExpression | NewExpression	0		parent as CallExpression | NewExpression
+src/compiler/checker.ts	32814	46	interface downcast	to union of subtypes	new	Node	AssertionExpression	0		parent as AssertionExpression
+src/compiler/checker.ts	32814	103	interface downcast	to union of subtypes	new	Node	AssertionExpression	0		parent as AssertionExpression
+src/compiler/checker.ts	32814	171	interface downcast	to union of subtypes	new	Node	AssertionExpression	0		parent as AssertionExpression
+src/compiler/checker.ts	32819	65	interface downcast	to union of subtypes	new	Node	PropertyAssignment | ShorthandPropertyAssignment	0		parent as PropertyAssignment | ShorthandPropertyAssignment
+src/compiler/checker.ts	32857	57	interface downcast	to union of subtypes	new	Node	JsxAttribute | JsxSpreadAttribute	0		parent as JsxAttribute | JsxSpreadAttribute
+src/compiler/checker.ts	32860	62	interface downcast	to union of subtypes	new	Node	JsxOpeningLikeElement	0		parent as JsxOpeningLikeElement
+src/compiler/checker.ts	33318	62	union member		new	Expression | BindingElement	BindingElement	0		node as BindingElement
+src/compiler/checker.ts	33319	77	union member		new	Expression | PropertyAssignment	PropertyAssignment	0		node as PropertyAssignment
+src/compiler/checker.ts	33320	72	union member		new	Expression | ShorthandPropertyAssignment	ShorthandPropertyAssignment	0		node as ShorthandPropertyAssignment
+src/compiler/checker.ts	33338	205	interface downcast		new	AnonymousType | undefined	MappedType	0		t.target as MappedType
+src/compiler/checker.ts	33507	53	interface downcast	to union of subtypes	new	Declaration	ElementWithComputedPropertyName	0		properties[i]!.declarations?.[0]! as ElementWithComputedPropertyName
+src/compiler/checker.ts	33868	48	union member		new	JsxAttributeValue | undefined	JsxExpression	0		attributeDecl.initializer as JsxExpression
+src/compiler/checker.ts	34995	46	other	union to overlapping union	new	PropertyAccessExpression | QualifiedName	Expression	0		node as Expression
+src/compiler/checker.ts	35482	31	union member		new	ForInitializer	VariableDeclarationList	0		initializer as VariableDeclarationList
+src/compiler/checker.ts	36738	41	interface downcast		new	readonly DiagnosticRelatedInformation[]	DiagnosticRelatedInformation[]	0		flatMap(diags, d => (d as Diagnostic).relatedInformation) as DiagnosticRelatedInformation[]
+src/compiler/checker.ts	36779	63	interface downcast	to union of subtypes	new	Declaration	FunctionLikeDeclaration	0		implDecl as FunctionLikeDeclaration
+src/compiler/checker.ts	37220	28	union member		new	BaseType	IntersectionType	0		firstBase as IntersectionType
+src/compiler/checker.ts	37223	47	union member		new	BaseType	IntersectionType	0		firstBase as IntersectionType
+src/compiler/checker.ts	37242	55	union member	member subtype	new	BaseType	InterfaceType	0		firstBase as InterfaceType
+src/compiler/checker.ts	37848	55	interface downcast		new	Expression	StringLiteral	0		node.arguments![0] as StringLiteral
+src/compiler/checker.ts	37897	53	interface downcast	to union of subtypes	new	Node	CallExpression | Decorator | NewExpression	0		node as Decorator | CallExpression | NewExpression
+src/compiler/checker.ts	37902	53	interface downcast	to union of subtypes	new	Node	JsxOpeningLikeElement	0		node as JsxOpeningLikeElement
+src/compiler/checker.ts	38103	47	interface downcast	to union of subtypes	new	Node	ElementAccessExpression | PropertyAccessExpression	0		node as PropertyAccessExpression | ElementAccessExpression
+src/compiler/checker.ts	38227	40	interface downcast	to intersection	new	ResolvedType	ResolvedType & InstantiationExpressionType	0		createAnonymousType(createSymbol(SymbolFlags.None, InternalSymbolName.InstantiationExpression), resolved.members, callSignatures, constructSignatures, resolved.indexInfos) as ResolvedType & Instantiat
+src/compiler/checker.ts	38643	33	interface downcast		new	Declaration | undefined	ParameterDeclaration	0		signature.parameters[i]!.valueDeclaration as ParameterDeclaration
+src/compiler/checker.ts	38680	33	interface downcast		new	Declaration | undefined	ParameterDeclaration	0		parameter.valueDeclaration as ParameterDeclaration
+src/compiler/checker.ts	38720	33	interface downcast		new	Declaration | undefined	ParameterDeclaration | undefined	0		parameter.valueDeclaration as ParameterDeclaration | undefined
+src/compiler/checker.ts	38934	34	interface downcast	to union of subtypes	new	NamedDeclaration	ClassDeclaration | ClassExpression	0		parent as ClassDeclaration | ClassExpression
+src/compiler/checker.ts	38944	34	interface downcast	to union of subtypes	new	NamedDeclaration	MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration	0		parent as MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration
+src/compiler/checker.ts	39030	34	interface downcast	to union of subtypes	new	NamedDeclaration	ClassDeclaration | ClassExpression	0		parent as ClassDeclaration | ClassExpression
+src/compiler/checker.ts	39087	34	interface downcast	to union of subtypes	new	NamedDeclaration	MethodDeclaration | AccessorDeclaration | PropertyDeclaration	0		parent as MethodDeclaration | AccessorDeclaration | PropertyDeclaration
+src/compiler/checker.ts	39323	32	union member		new	ConciseBody | undefined	Block	0		func.body as Block
+src/compiler/checker.ts	39421	32	union member		new	ConciseBody | undefined	Block	0		func.body as Block
+src/compiler/checker.ts	39497	56	union member		new	ConciseBody | undefined	Block	0		func.body as Block
+src/compiler/checker.ts	40346	26	union member		new	Expression | ShorthandPropertyAssignment	ShorthandPropertyAssignment	0		exprOrAssignment as ShorthandPropertyAssignment
+src/compiler/checker.ts	40358	23	union member		new	Expression | ShorthandPropertyAssignment	ShorthandPropertyAssignment	0		exprOrAssignment as ShorthandPropertyAssignment
+src/compiler/checker.ts	41535	72	union member		new	Expression | MethodDeclaration | QualifiedName	Expression	0		node as Expression
+src/compiler/checker.ts	41754	119	other	unrelated or partial overlap	new	Expression | QualifiedName	TracingNode	0		node as TracingNode
+src/compiler/checker.ts	41775	137	union member	member subtype	new	Expression | QualifiedName	Identifier	0		node as Identifier
+src/compiler/checker.ts	41792	40	union member	member subtype	new	Expression | QualifiedName	EntityNameOrEntityNameExpression	0		node as EntityNameOrEntityNameExpression
+src/compiler/checker.ts	41800	42	interface downcast		new	Declaration | undefined	EnumDeclaration	0		type.symbol.valueDeclaration as EnumDeclaration
+src/compiler/checker.ts	41847	69	interface downcast	to union of subtypes	new	Expression	StringLiteralLike	0		node as StringLiteralLike
+src/compiler/checker.ts	41872	43	union member		new	Expression | QualifiedName	QualifiedName	0		node as QualifiedName
+src/compiler/checker.ts	41890	69	interface downcast	to union of subtypes	new	Expression	FunctionExpression | ArrowFunction	0		node as FunctionExpression | ArrowFunction
+src/compiler/checker.ts	41895	39	interface downcast	to union of subtypes	new	Expression	AssertionExpression	0		node as AssertionExpression
+src/compiler/checker.ts	42092	32	interface downcast	to union of subtypes	new	Node	SignatureDeclaration	0		node.parent as SignatureDeclaration
+src/compiler/checker.ts	42139	49	other	union to overlapping union	new	CallSignatureDeclaration | ConstructSignatureDeclaration | FunctionTypeNode | ConstructorTypeNode | FunctionDeclaration 	FunctionLikeDeclaration	0		node as FunctionLikeDeclaration
+src/compiler/checker.ts	42885	51	union member	member subtype	new	TypeNode | NamedTupleMember	NamedTupleMember | RestTypeNode	0		e as RestTypeNode | NamedTupleMember
+src/compiler/checker.ts	43182	46	interface downcast	to union of subtypes	new	Node	FunctionLikeDeclaration	0		subsequentNode as FunctionLikeDeclaration
+src/compiler/checker.ts	43183	45	interface downcast	to union of subtypes	new	Node	FunctionLikeDeclaration	0		subsequentNode as FunctionLikeDeclaration
+src/compiler/checker.ts	43207	40	interface downcast	to union of subtypes	new	Node	FunctionLikeDeclaration	0		subsequentNode as FunctionLikeDeclaration
+src/compiler/checker.ts	43235	30	interface downcast	to union of subtypes	new	Declaration	SignatureDeclaration | ClassDeclaration | ClassExpression	0		current as SignatureDeclaration | ClassDeclaration | ClassExpression
+src/compiler/checker.ts	43260	58	other	union to overlapping union	new	MethodDeclaration | MethodSignature | FunctionDeclaration | ConstructorDeclaration	FunctionLikeDeclaration	0		node as FunctionLikeDeclaration
+src/compiler/checker.ts	43276	47	other	union to overlapping union	new	MethodDeclaration | MethodSignature | FunctionDeclaration | ConstructorDeclaration	FunctionLikeDeclaration	0		node as FunctionLikeDeclaration
+src/compiler/checker.ts	43286	57	other	union to overlapping union	new	MethodDeclaration | MethodSignature | FunctionDeclaration | ConstructorDeclaration	FunctionLikeDeclaration	0		node as FunctionLikeDeclaration
+src/compiler/checker.ts	43346	32	interface downcast	to union of subtypes	new	Node	JSDocCallbackTag | JSDocOverloadTag	0		signature.declaration.parent as JSDocOverloadTag | JSDocCallbackTag
+src/compiler/checker.ts	43447	34	interface downcast	to union of subtypes	new	Node	BinaryExpression | ExportAssignment	0		d as ExportAssignment | BinaryExpression
+src/compiler/checker.ts	43461	72	interface downcast	to union of subtypes	new	Node	BinaryExpression | ExportAssignment | ImportEqualsDeclaration | ImportClause | NamespaceImport	0		d as ImportEqualsDeclaration | NamespaceImport | ImportClause | ExportAssignment | BinaryExpression
+src/compiler/checker.ts	44103	75	interface downcast	to union of subtypes	new	TypeNode	UnionOrIntersectionTypeNode	0		node as UnionOrIntersectionTypeNode
+src/compiler/checker.ts	44122	29	interface downcast	to union of subtypes	new	TypeNode	NamedTupleMember | ParenthesizedTypeNode	0		typeNode as ParenthesizedTypeNode | NamedTupleMember
+src/compiler/checker.ts	45085	32	union member		new	SignatureDeclaration | undefined	FunctionLikeDeclaration	0		getContainingFunction(node) as FunctionLikeDeclaration
+src/compiler/checker.ts	45130	86	union member		new	SignatureDeclaration | undefined	FunctionLikeDeclaration	0		getContainingFunction(node) as FunctionLikeDeclaration
+src/compiler/checker.ts	45284	128	other	unrelated or partial overlap	new	VariableDeclaration	TracingNode	0		node as TracingNode
+src/compiler/checker.ts	45519	27	interface downcast	to union of subtypes	new	Node	StringLiteral | NoSubstitutionTemplateLiteral	0		node as StringLiteral | NoSubstitutionTemplateLiteral
+src/compiler/checker.ts	45539	53	union member		new	ForInitializer	VariableDeclarationList	0		node.initializer as VariableDeclarationList
+src/compiler/checker.ts	45545	46	union member		new	ForInitializer	VariableDeclarationList	0		node.initializer as VariableDeclarationList
+src/compiler/checker.ts	45587	42	union member		new	ForInitializer	VariableDeclarationList	0		node.initializer as VariableDeclarationList
+src/compiler/checker.ts	45635	31	union member		new	ForInitializer	VariableDeclarationList	0		node.initializer as VariableDeclarationList
+src/compiler/checker.ts	45639	42	union member		new	ForInitializer	VariableDeclarationList	0		node.initializer as VariableDeclarationList
+src/compiler/checker.ts	46773	88	other	unrelated or partial overlap	new	ClassElement	DynamicNamedDeclaration	0		member as DynamicNamedDeclaration
+src/compiler/checker.ts	47990	95	interface downcast		new	Declaration | undefined	EnumMember	0		symbol.valueDeclaration as EnumMember
+src/compiler/checker.ts	48019	103	interface downcast		new	Declaration | undefined	EnumMember	0		member.valueDeclaration as EnumMember
+src/compiler/checker.ts	48120	96	interface downcast	to union of subtypes	new	Declaration	FunctionLikeDeclaration	0		declaration as FunctionLikeDeclaration
+src/compiler/checker.ts	48293	31	interface downcast	to union of subtypes	new	Node	VariableDeclaration | BindingElement	0		node as VariableDeclaration | BindingElement
+src/compiler/checker.ts	48545	50	interface downcast		new	Declaration | undefined	EnumDeclaration	0		target.valueDeclaration as EnumDeclaration
+src/compiler/checker.ts	49116	50	interface downcast	to union of subtypes	new	Node	SignatureDeclaration	0		node as SignatureDeclaration
+src/compiler/checker.ts	49119	47	interface downcast	to union of subtypes	new	Node	MethodDeclaration | MethodSignature	0		node as MethodDeclaration | MethodSignature
+src/compiler/checker.ts	49126	49	interface downcast	to union of subtypes	new	Node	AccessorDeclaration	0		node as AccessorDeclaration
+src/compiler/checker.ts	49141	53	interface downcast	to union of subtypes	new	Node	UnionOrIntersectionTypeNode	0		node as UnionOrIntersectionTypeNode
+src/compiler/checker.ts	49145	44	interface downcast	to union of subtypes	new	Node	ParenthesizedTypeNode | OptionalTypeNode | RestTypeNode	0		node as ParenthesizedTypeNode | OptionalTypeNode | RestTypeNode
+src/compiler/checker.ts	49175	46	interface downcast	to union of subtypes	new	Node	JSDocLink | JSDocLinkCode | JSDocLinkPlain	0		node as JSDocLink | JSDocLinkCode | JSDocLinkPlain
+src/compiler/checker.ts	49199	57	interface downcast	to union of subtypes	new	Node	JSDocPublicTag | JSDocPrivateTag | JSDocProtectedTag	0		node as JSDocPublicTag | JSDocProtectedTag | JSDocPrivateTag
+src/compiler/checker.ts	49233	54	interface downcast	to union of subtypes	new	Node	BreakOrContinueStatement	0		node as BreakOrContinueStatement
+src/compiler/checker.ts	49446	40	double cast		new	unknown	JSDocCallbackTag	0	nest	paramTag.parent.parent as unknown as JSDocCallbackTag
+src/compiler/checker.ts	49493	121	other	unrelated or partial overlap	new	Node	TracingNode	0		node as TracingNode
+src/compiler/checker.ts	49506	36	interface downcast	to union of subtypes	new	Node	CallLikeExpression	0		node as CallLikeExpression
+src/compiler/checker.ts	49516	42	interface downcast	to union of subtypes	new	Node	AccessorDeclaration	0		node as AccessorDeclaration
+src/compiler/checker.ts	49533	40	interface downcast	to union of subtypes	new	Node	AssertionExpression | JSDocTypeAssertion	0		node as AssertionExpression | JSDocTypeAssertion
+src/compiler/checker.ts	49793	80	interface downcast	to union of subtypes	new	Node	ModuleDeclaration | SourceFile	0		location as ModuleDeclaration | SourceFile
+src/compiler/checker.ts	49814	83	interface downcast	to union of subtypes	new	Node	ClassDeclaration | InterfaceDeclaration	0		location as ClassDeclaration | InterfaceDeclaration
+src/compiler/checker.ts	50032	20	interface downcast	to union of subtypes	new	Node	PropertyAccessEntityNameExpression | QualifiedName | JSDocMemberName	0		name.parent as QualifiedName | PropertyAccessEntityNameExpression | JSDocMemberName
+src/compiler/checker.ts	50064	61	interface downcast	to intersection	new	Node	TypeParameterDeclaration & { parent: JSDocTemplateTag; }	0		name.parent as TypeParameterDeclaration & { parent: JSDocTemplateTag; }
+src/compiler/checker.ts	50078	58	interface downcast	to union of subtypes	new	Node	JsxOpeningLikeElement	0		name.parent as JsxOpeningLikeElement
+src/compiler/checker.ts	50263	70	interface downcast	to union of subtypes	new	Node	PropertyAccessExpression | PrivateIdentifier | EntityName	0		node as EntityName | PrivateIdentifier | PropertyAccessExpression
+src/compiler/checker.ts	50281	48	interface downcast	to union of subtypes	new	Node	ThisExpression | ThisTypeNode	0		node as ThisExpression | ThisTypeNode
+src/compiler/checker.ts	50321	94	interface downcast	to union of subtypes	new	Node	StringLiteral | NumericLiteral	0		node as StringLiteral | NumericLiteral
+src/compiler/checker.ts	50352	58	interface downcast	to union of subtypes	new	Node	JsxOpeningLikeElement	0		node.parent as JsxOpeningLikeElement
+src/compiler/checker.ts	50767	55	interface downcast	to union of subtypes	new	Node	ExportSpecifier | ImportSpecifier | ImportClause | NamespaceImport	0		node as ImportClause | NamespaceImport | ImportSpecifier | ExportSpecifier
+src/compiler/checker.ts	51063	55	other	unrelated or partial overlap	new	ClassElement	MethodDeclaration | MethodSignature | AccessorDeclaration | PropertyDeclaration | PropertySignature	0		node.parent as PropertyDeclaration | PropertySignature | MethodDeclaration | MethodSignature | AccessorDeclaration
+src/compiler/checker.ts	51094	28	interface downcast		new	Declaration | undefined	EnumMember	0		symbol.valueDeclaration as EnumMember
+src/compiler/checker.ts	51207	83	union member		new	AccessorDeclaration | undefined	SetAccessorDeclaration	0		otherAccessor as SetAccessorDeclaration
+src/compiler/checker.ts	51208	83	union member		new	AccessorDeclaration | undefined	GetAccessorDeclaration	0		otherAccessor as GetAccessorDeclaration
+src/compiler/checker.ts	51461	27	interface downcast		new	Node | undefined	SourceFile	0		getParseTreeNode(node) as SourceFile
+src/compiler/checker.ts	51494	55	interface downcast	to union of subtypes	new	Expression	EntityNameExpression	0		e.name.expression as EntityNameExpression
+src/compiler/checker.ts	51509	30	interface downcast		new	NodeArray<ModifierLike>	MutableNodeArray<Modifier>	0		((node as Mutable<typeof node>).modifiers ||= factory.createNodeArray()) as MutableNodeArray<Modifier>
+src/compiler/checker.ts	51652	35	interface downcast		new	ObjectType | undefined	GenericType	0		getGlobalTypeOrUndefined("ReadonlyArray" as __String, /*arity*/ 1) as GenericType
+src/compiler/checker.ts	51654	26	interface downcast		new	ObjectType | undefined	GenericType	0		getGlobalTypeOrUndefined("ThisType" as __String, /*arity*/ 1) as GenericType
+src/compiler/checker.ts	51703	60	other	literal, enum or brand conversion	new	0	ExternalEmitHelpers	0		0 as ExternalEmitHelpers
+src/compiler/checker.ts	52382	41	interface downcast		new	DiagnosticWithLocation[]	[DiagnosticWithLocation, ...DiagnosticWithLocation[]]	0		nonSimpleParameters.map((parameter, index) => ( index === 0 ? createDiagnosticForNode(parameter, Diagnostics.Non_simple_parameter_declared_here) : createDiagnosticForNode(parameter, Diagnostics.and_he
+src/compiler/checker.ts	52830	34	union member		new	ForInitializer	VariableDeclarationList	0		forInOrOfStatement.initializer as VariableDeclarationList
+src/compiler/checker.ts	53981	47	union member		new	string | number | PseudoBigInt	string	0		(t1 as LiteralType).value as string
+src/compiler/checker.ts	53981	84	union member		new	string | number | PseudoBigInt	string	0		(t2 as LiteralType).value as string
+src/compiler/checker.ts	53988	47	union member		new	string | number | PseudoBigInt	number	0		(t1 as LiteralType).value as number
+src/compiler/checker.ts	53988	84	union member		new	string | number | PseudoBigInt	number	0		(t2 as LiteralType).value as number
+src/compiler/checker.ts	54188	52	union member		new	TypeMapper	{ kind: TypeMapKind.Simple; source: Type; target: Type; }	0		m2 as typeof m1
+src/compiler/checker.ts	54192	49	union member		new	TypeMapper	{ kind: TypeMapKind.Simple; source: Type; target: Type; }	0		m2 as typeof m1
+src/compiler/checker.ts	54195	57	union member		new	TypeMapper	{ kind: TypeMapKind.Array; sources: readonly Type[]; targets: readonly Type[] | undefined; }	0		m2 as typeof m1
+src/compiler/checker.ts	54199	54	union member		new	TypeMapper	{ kind: TypeMapKind.Array; sources: readonly Type[]; targets: readonly Type[] | undefined; }	0		m2 as typeof m1
+src/compiler/checker.ts	54202	59	union member		new	TypeMapper	{ kind: TypeMapKind.Composite | TypeMapKind.Merged; mapper1: TypeMapper; mapper2: TypeMapper; }	0		m2 as typeof m1
+src/compiler/checker.ts	54206	56	union member		new	TypeMapper	{ kind: TypeMapKind.Composite | TypeMapKind.Merged; mapper1: TypeMapper; mapper2: TypeMapper; }	0		m2 as typeof m1
+src/compiler/commandLineParser.ts	1906	66	union member		old	CommandLineOptionOfCustomType | CommandLineOptionOfStringType | CommandLineOptionOfNumberType | CommandLineOptionOfBoole	CommandLineOptionOfCustomType	-1		opt.element as CommandLineOptionOfCustomType
+src/compiler/commandLineParser.ts	2106	63	union member		old	CommandLineOptionOfCustomType | TsConfigOnlyOption	CommandLineOptionOfCustomType	-1		opt as CommandLineOptionOfCustomType
+src/compiler/commandLineParser.ts	2182	26	interface downcast		old	OptionsBase	BuildOptions	-1		options as BuildOptions
+src/compiler/commandLineParser.ts	2292	85	other	unrelated or partial overlap	old	{ fileName: string; parseDiagnostics: Diagnostic[]; }	TsConfigSourceFile	-1		{ fileName, parseDiagnostics: [textOrDiagnostic] } as TsConfigSourceFile
+src/compiler/commandLineParser.ts	2471	24	union member		old	AdamicJsonRecoveryValue | undefined	AdamicJsonRecoveryObject	-1		convertToJson(sourceFile, firstObject, errors, /*returnValue*/ true, jsonConversionNotifier) as AdamicJsonRecoveryObject
+src/compiler/commandLineParser.ts	2476	12	union member		old	AdamicJsonRecoveryValue | undefined	AdamicJsonRecoveryObject	-1		convertToJson(sourceFile, rootExpression, errors, /*returnValue*/ true, jsonConversionNotifier) as AdamicJsonRecoveryObject
+src/compiler/commandLineParser.ts	2588	86	union member		old	CommandLineOption | undefined	TsConfigOnlyOption	-1		option as TsConfigOnlyOption
+src/compiler/commandLineParser.ts	2593	32	union member		old	CommandLineOption	CommandLineOptionOfListType	-1		option as CommandLineOptionOfListType
+src/compiler/commandLineParser.ts	2810	27	union member		old	CompilerOptionsValue | TsConfigSourceFile	CompilerOptionsValue	-1		options[name] as CompilerOptionsValue
+src/compiler/commandLineParser.ts	2819	120	union member		old	CompilerOptionsValue	string	-1		value as string
+src/compiler/commandLineParser.ts	2822	43	union member		old	CompilerOptionsValue	string[]	-1		value as string[]
+src/compiler/commandLineParser.ts	2830	43	other	union to overlapping union	new	CompilerOptionsValue	readonly (string | number)[]	-1		value as readonly (string | number)[]
+src/compiler/commandLineParser.ts	2949	124	other	union to overlapping union	old	string | number | boolean | (string | number)[] | MapLike<string[]> | PluginImport[] | ProjectReference[] | TsConfigSour	PresetValue	-1		(value ?? defaultValue) as PresetValue
+src/compiler/commandLineParser.ts	2974	50	union member		old	PresetValue	string | number	-1		value as string | number
+src/compiler/commandLineParser.ts	2995	17	union member		old	CompilerOptionsValue | TsConfigSourceFile	CompilerOptionsValue	-1		options[name] as CompilerOptionsValue
+src/compiler/commandLineParser.ts	3009	28	other	union to overlapping union	old	string | number | boolean | string[] | (string | number)[] | MapLike<string[]> | PluginImport[] | ProjectReference[]	readonly string[]	-1		value as readonly string[]
+src/compiler/commandLineParser.ts	3015	35	union member		old	string | number | boolean | string[] | (string | number)[] | MapLike<string[]> | PluginImport[] | ProjectReference[]	string	-1		value as string
+src/compiler/commandLineParser.ts	3092	21	interface downcast		old	OptionsBase | undefined	CompilerOptions	-1		handleOptionConfigDirTemplateSubstitution( extend(existingOptions, parsedConfig.options || {}), configDirTemplateSubstitutionOptions, basePath, ) as CompilerOptions
+src/compiler/commandLineParser.ts	3155	32	interface downcast		old	(string | undefined)[]	string[]	-1		filter([outDir, declarationDir], d => !!d) as string[]
+src/compiler/commandLineParser.ts	3247	32	generic		old	readonly unknown[]	T[]	-1		raw[prop] as T[]
+src/compiler/commandLineParser.ts	3273	12	interface downcast		old	OptionsBase | undefined	WatchOptions | undefined	-1		handleOptionConfigDirTemplateSubstitution(watchOptions, configDirTemplateSubstitutionWatchOptions, basePath) as WatchOptions | undefined
+src/compiler/commandLineParser.ts	3295	87	union member		old	CompilerOptionsValue | TsConfigSourceFile	string[]	-1		value as string[]
+src/compiler/commandLineParser.ts	3300	98	union member		old	CompilerOptionsValue | TsConfigSourceFile	MapLike<string[]>	-1		value as MapLike<string[]>
+src/compiler/commandLineParser.ts	3571	26	interface downcast		old	Expression | undefined	ArrayLiteralExpression | undefined	-1		valueExpression as ArrayLiteralExpression | undefined
+src/compiler/commandLineParser.ts	3577	115	interface downcast		old	Expression | undefined	ArrayLiteralExpression | undefined	-1		valueExpression as ArrayLiteralExpression | undefined
+src/compiler/commandLineParser.ts	3837	98	interface downcast		old	Expression | undefined	ArrayLiteralExpression | undefined	-1		valueExpression as ArrayLiteralExpression | undefined
+src/compiler/commandLineParser.ts	3841	95	interface downcast		old	Expression | undefined	ArrayLiteralExpression | undefined	-1		valueExpression as ArrayLiteralExpression | undefined
+src/compiler/commandLineParser.ts	3845	50	union member		old	CommandLineOption	CommandLineOptionOfCustomType	-1		opt as CommandLineOptionOfCustomType
+src/compiler/commandLineParser.ts	3845	88	generic		old	(TRaw & undefined) | (TRaw & null) | (TRaw & string) | (TRaw & number) | (TRaw & false) | (TRaw & true) | (TRaw & (strin	string	-1		value as string
+src/compiler/commandLineParser.ts	4191	12	other	primitive narrowing (literal, enum or brand)	old	string	CanonicalKey	-1		(useCaseSensitiveFileNames ? path : toFileNameLowerCase(path)) as CanonicalKey
+src/compiler/core.ts	356	37	generic		old	unknown[]	U[]	0	nest	array.slice(0, i) as unknown[] as U[]
+src/compiler/core.ts	365	12	generic		old	unknown[]	U[]	0	nest	array as unknown[] as U[]
+src/compiler/core.ts	736	36	double cast		old	any	SortedReadonlyArray<T>	0	nest	emptyArray as any as SortedReadonlyArray<T>
+src/compiler/core.ts	759	12	double cast		old	any	SortedReadonlyArray<T>	0	nest	deduplicated as any as SortedReadonlyArray<T>
+src/compiler/core.ts	764	12	double cast		old	any	SortedArray<T>	0	nest	[] as any as SortedArray<T>
+src/compiler/core.ts	810	89	double cast		old	any	Comparer<T>	0	nest	compareStringsCaseSensitive as any as Comparer<T>
+src/compiler/core.ts	1039	12	generic		old	readonly T[]	SortedReadonlyArray<T>	0	nest	(array.length === 0 ? emptyArray : array.slice().sort(comparer)) as readonly T[] as SortedReadonlyArray<T>
+src/compiler/core.ts	1066	100	other	to any	old	any[]	any	0		Array.prototype as any
+src/compiler/core.ts	1067	27	other	to any	old	readonly T[] | undefined	any	0		array as any
+src/compiler/core.ts	1316	26	generic		old	MapLike<T> | T[]	MapLike<T>	0		collection as MapLike<T>
+src/compiler/core.ts	1474	12	other	unrelated or partial overlap	old	Record<string, T[]>	{ [P in K as `${P}`]?: T[] | undefined; }	0		result as { [P in K as `${P}`]?: T[]; }
+src/compiler/core.ts	1482	27	other	to any	old	T	any	0		object as any
+src/compiler/core.ts	1496	29	other	to any	old	{}	any	0		{} as any
+src/compiler/core.ts	1499	14	other	to any	old	T1 & T2	any	0		result as any
+src/compiler/core.ts	1499	36	other	to any	old	T2	any	0		second as any
+src/compiler/core.ts	1505	14	other	to any	old	T1 & T2	any	0		result as any
+src/compiler/core.ts	1505	36	other	to any	old	T1	any	0		first as any
+src/compiler/core.ts	1516	14	other	to any	old	T1	any	0		first as any
+src/compiler/core.ts	1543	17	generic		old	Map<K, V[]>	MultiMap<K, V>	0		new Map<K, V[]>() as MultiMap<K, V>
+src/compiler/core.ts	1586	24	generic		old	T | undefined	T	0		elements[headIndex] as T
+src/compiler/core.ts	2585	16	generic		old	T[]	U[]	0		array.slice(0, index) as U[]
+src/compiler/core.ts	2601	16	generic		old	T[]	Exclude<T, U>[]	0		array.slice(index) as Exclude<T, U>[]
+src/compiler/core.ts	2611	14	other	to any	old	{ nextTick?: unknown; browser?: unknown; }	any	0		process as any
+src/compiler/debug.ts	167	31	interface downcast		old	string[]	AssertionKeys[]	0		getOwnKeys(assertionCache) as AssertionKeys[]
+src/compiler/debug.ts	170	22	other	to any	old	typeof Debug	any	0		Debug as any
+src/compiler/debug.ts	190	14	other	to any	old	typeof Debug	any	0		Debug as any
+src/compiler/debug.ts	558	37	other	from any	old	any	FlowNode	0		Object.create(Object.prototype) as FlowNode
+src/compiler/debug.ts	598	38	other	from any	old	any	NodeArray<Node>	0		Object.create(Array.prototype) as NodeArray<Node>
+src/compiler/debug.ts	834	32	interface downcast	to intersection	old	Type	DebugType	0		this.source as DebugType
+src/compiler/debug.ts	834	87	interface downcast	to intersection	old	Type	DebugType	0		this.target as DebugType
+src/compiler/debug.ts	837	25	interface downcast		old	readonly Type[]	readonly DebugType[]	0		this.sources as readonly DebugType[]
+src/compiler/debug.ts	838	25	interface downcast		old	readonly Type[] | undefined	readonly DebugType[]	0		this.targets as readonly DebugType[]
+src/compiler/debug.ts	845	39	interface downcast	to intersection	old	Type	DebugType	0		s as DebugType
+src/compiler/debug.ts	845	84	interface downcast	to intersection	old	Type	DebugType	0		t() as DebugType
+src/compiler/debug.ts	849	36	double cast		old	unknown	DebugTypeMapper	0	nest	this.mapper1 as unknown as DebugTypeMapper
+src/compiler/debug.ts	850	8	double cast		old	unknown	DebugTypeMapper	0	nest	this.mapper2 as unknown as DebugTypeMapper
+src/compiler/debug.ts	963	56	union member		old	FlowNode	FlowLabel	0		f as FlowLabel
+src/compiler/emitter.ts	1143	12	other	object to a shape	old	object | undefined	BuildInfo | undefined	0		readJsonOrUndefined(buildInfoFile, buildInfoText) as BuildInfo | undefined
+src/compiler/emitter.ts	1618	52	interface downcast	to union of subtypes	old	Node	AccessorDeclaration	0		node as AccessorDeclaration
+src/compiler/emitter.ts	1854	56	interface downcast	to union of subtypes	old	Node	JSDocVariadicType | RestTypeNode	0		node as RestTypeNode | JSDocVariadicType
+src/compiler/emitter.ts	1869	49	interface downcast	to union of subtypes	old	Node	JSDocImplementsTag | JSDocAugmentsTag	0		node as JSDocImplementsTag | JSDocAugmentsTag
+src/compiler/emitter.ts	1893	52	interface downcast	to union of subtypes	old	Node	JSDocSatisfiesTag | JSDocReturnTag | JSDocTypeTag | JSDocThisTag | JSDocThrowsTag	0		node as JSDocTypeTag | JSDocReturnTag | JSDocThisTag | JSDocTypeTag | JSDocThrowsTag | JSDocSatisfiesTag
+src/compiler/emitter.ts	1927	55	interface downcast	to union of subtypes	old	Node	NumericLiteral | BigIntLiteral	0		node as NumericLiteral | BigIntLiteral
+src/compiler/emitter.ts	4105	31	other	upcast or identity	old	string[]	string[]	0		text.split(/\r\n?|\n/) as string[]
+src/compiler/emitter.ts	4976	23	other	upcast or identity	old	string[]	string[]	0		text.split(/\r\n?|\n/) as string[]
+src/compiler/emitter.ts	5350	32	interface downcast	to union of subtypes	old	Node	DoStatement | LabeledStatement | WhileStatement | WithStatement	0		node as LabeledStatement | WithStatement | DoStatement | WhileStatement
+src/compiler/emitter.ts	5359	32	interface downcast	to union of subtypes	old	Node	ForStatement | ForInOrOfStatement	0		node as ForStatement | ForInOrOfStatement
+src/compiler/emitter.ts	5360	32	interface downcast	to union of subtypes	old	Node	ForStatement | ForInOrOfStatement	0		node as ForStatement | ForInOrOfStatement
+src/compiler/emitter.ts	5370	26	interface downcast	to union of subtypes	old	Node	CaseOrDefaultClause	0		node as CaseOrDefaultClause
+src/compiler/emitter.ts	5402	26	interface downcast	to union of subtypes	old	Node	BindingPattern	0		node as BindingPattern
+src/compiler/emitter.ts	5734	52	interface downcast	to union of subtypes	old	Node	EnumDeclaration | ModuleDeclaration	0		node as ModuleDeclaration | EnumDeclaration
+src/compiler/emitter.ts	5738	65	interface downcast	to union of subtypes	old	Node	ExportDeclaration | ImportDeclaration	0		node as ImportDeclaration | ExportDeclaration
+src/compiler/emitter.ts	5742	31	interface downcast	to union of subtypes	old	Node	FunctionDeclaration | ClassDeclaration	0		node as ClassDeclaration | FunctionDeclaration
+src/compiler/emitter.ts	5757	56	interface downcast	to union of subtypes	old	Node	MethodDeclaration | AccessorDeclaration	0		node as MethodDeclaration | AccessorDeclaration
+src/compiler/emitter.ts	6375	32	other	unrelated or partial overlap	old	(node: Node, emit: EmitFunction, _parenthesizerRule: ParenthesizerRuleOrSelector<Node> | undefined, _index: number) => v	EmitListItemFunction<T>	0		emitListItemNoParenthesizer as EmitListItemFunction<T>
+src/compiler/emitter.ts	6376	49	other	unrelated or partial overlap	old	(node: Node, emit: EmitFunction, parenthesizerRuleSelector: OrdinalParentheizerRuleSelector<Node> | undefined, index: nu	EmitListItemFunction<T>	0		emitListItemWithParenthesizerRuleSelector as EmitListItemFunction<T>
+src/compiler/emitter.ts	6377	9	other	unrelated or partial overlap	old	(node: Node, emit: EmitFunction, parenthesizerRule: ParenthesizerRule<Node> | undefined, _index: number) => void	EmitListItemFunction<T>	0		emitListItemWithParenthesizerRule as EmitListItemFunction<T>
+src/compiler/expressionToTypeNode.ts	167	12	other	unrelated or partial overlap	old	{ type: TypeNode | undefined; reportFallback: boolean; }	SyntacticResult	0		{ type, reportFallback } as SyntacticResult
+src/compiler/expressionToTypeNode.ts	469	22	union member		old	SignatureDeclaration | ParameterDeclaration | PropertyDeclaration | PropertySignature	Mutable<ParameterDeclaration>	0		visited as Mutable<ParameterDeclaration>
+src/compiler/expressionToTypeNode.ts	709	124	interface downcast	to union of subtypes	old	Expression	TypeAssertion | AsExpression	0		initializer as AsExpression | TypeAssertion
+src/compiler/expressionToTypeNode.ts	917	38	interface downcast	to union of subtypes	old	Expression	TypeAssertion | AsExpression	0		node as AsExpression | TypeAssertion
+src/compiler/expressionToTypeNode.ts	944	37	union member	member subtype	old	Expression | JsxAttributeValue	PrimitiveLiteral	0		node as PrimitiveLiteral
+src/compiler/expressionToTypeNode.ts	1265	21	interface downcast	to union of subtypes	old	TypeNode	UnionTypeNode | IntersectionTypeNode	0		node as UnionTypeNode | IntersectionTypeNode
+src/compiler/factory/emitHelpers.ts	424	62	other	unrelated or partial overlap	old	{}	EmitNode	0		{} as EmitNode
+src/compiler/factory/emitHelpers.ts	517	62	other	unrelated or partial overlap	old	{}	EmitNode	0		{} as EmitNode
+src/compiler/factory/emitNode.ts	43	40	other	unrelated or partial overlap	old	{ annotatedNodes: Node[]; }	EmitNode	0		{ annotatedNodes: [node] } as EmitNode
+src/compiler/factory/emitNode.ts	50	25	other	unrelated or partial overlap	old	{}	EmitNode	0		{} as EmitNode
+src/compiler/factory/nodeFactory.ts	1026	20	interface downcast		old	(left: Expression, right: Expression) => Mutable<BinaryExpression>	{ (left: ObjectLiteralExpression | ArrayLiteralExpression, right: Expression): DestructuringAssignment; (left: Expressio	0		getBinaryCreateFunction(SyntaxKind.EqualsToken) as NodeFactory["createAssignment"]
+src/compiler/factory/nodeFactory.ts	1177	44	generic		old	NodeArray<T>	MutableNodeArray<T>	0		elements as MutableNodeArray<T>
+src/compiler/factory/nodeFactory.ts	1186	27	generic		old	T[]	MutableNodeArray<T>	0		elements.slice() as MutableNodeArray<T>
+src/compiler/factory/nodeFactory.ts	1199	23	generic		old	readonly T[]	MutableNodeArray<T>	0		(length >= 1 && length <= 4 ? elements.slice() : elements) as MutableNodeArray<T>
+src/compiler/factory/nodeFactory.ts	1210	16	interface downcast		old	Node	Mutable<T>	0		baseFactory.createBaseNode(kind) as Mutable<T>
+src/compiler/factory/nodeFactory.ts	1216	10	other	unrelated or partial overlap	old	Mutable<T>	{ localSymbol: Symbol | undefined; }	0		node as { localSymbol: Declaration["localSymbol"] | undefined }
+src/compiler/factory/nodeFactory.ts	1296	24	interface downcast		old	Mutable<TemplateLiteralLikeNode>	NoSubstitutionTemplateLiteral	0		createTemplateLiteralLikeNode(kind, text, /*rawText*/ undefined, /*templateFlags*/ 0) as NoSubstitutionTemplateLiteral
+src/compiler/factory/nodeFactory.ts	1314	22	interface downcast		old	Mutable<Identifier>	Mutable<GeneratedIdentifier>	0		createBaseIdentifier(escapeLeadingUnderscores(text)) as Mutable<GeneratedIdentifier>
+src/compiler/factory/nodeFactory.ts	1437	16	interface downcast		old	Node	Mutable<T>	0		baseFactory.createBaseTokenNode(kind) as Mutable<T>
+src/compiler/factory/nodeFactory.ts	1496	18	interface downcast		old	Mutable<Token<SyntaxKind.SuperKeyword>>	Mutable<SuperExpression>	0	nest	node as Mutable<Token<SyntaxKind.SuperKeyword>> as Mutable<SuperExpression>
+src/compiler/factory/nodeFactory.ts	1507	18	interface downcast		old	Mutable<Token<SyntaxKind.ThisKeyword>>	Mutable<ThisExpression>	0	nest	node as Mutable<Token<SyntaxKind.ThisKeyword>> as Mutable<ThisExpression>
+src/compiler/factory/nodeFactory.ts	2554	22	generic		old	Mutable<UnionTypeNode | IntersectionTypeNode>	T	0		createUnionOrIntersectionTypeNode(node.kind, types, parenthesize) as T
+src/compiler/factory/nodeFactory.ts	2560	16	union member		old	Mutable<UnionTypeNode | IntersectionTypeNode>	UnionTypeNode	0		createUnionOrIntersectionTypeNode(SyntaxKind.UnionType, types, parenthesizerRules().parenthesizeConstituentTypesOfUnionType) as UnionTypeNode
+src/compiler/factory/nodeFactory.ts	2570	16	union member		old	Mutable<UnionTypeNode | IntersectionTypeNode>	IntersectionTypeNode	0		createUnionOrIntersectionTypeNode(SyntaxKind.IntersectionType, types, parenthesizerRules().parenthesizeConstituentTypesOfIntersectionType) as IntersectionTypeNode
+src/compiler/factory/nodeFactory.ts	3590	16	interface downcast		old	Mutable<TemplateLiteralLikeNode>	TemplateHead	0		createTemplateLiteralLikeNode(SyntaxKind.TemplateHead, text, rawText, templateFlags) as TemplateHead
+src/compiler/factory/nodeFactory.ts	3596	16	interface downcast		old	Mutable<TemplateLiteralLikeNode>	TemplateMiddle	0		createTemplateLiteralLikeNode(SyntaxKind.TemplateMiddle, text, rawText, templateFlags) as TemplateMiddle
+src/compiler/factory/nodeFactory.ts	3602	16	interface downcast		old	Mutable<TemplateLiteralLikeNode>	TemplateTail	0		createTemplateLiteralLikeNode(SyntaxKind.TemplateTail, text, rawText, templateFlags) as TemplateTail
+src/compiler/factory/nodeFactory.ts	5496	10	other	unrelated or partial overlap	old	Mutable<T>	{ typeExpression: JSDocTypeExpression | undefined; }	0		node as { typeExpression: JSDocTypeExpression | undefined }
+src/compiler/factory/nodeFactory.ts	6145	14	other	to any	old	Mutable<SourceFile>	any	0		node as any
+src/compiler/factory/nodeFactory.ts	6145	33	other	to any	old	SourceFile	any	0		source as any
+src/compiler/factory/nodeFactory.ts	6327	23	interface downcast		old	Mutable<Identifier>	Mutable<GeneratedIdentifier>	0		createBaseIdentifier(node.escapedText) as Mutable<GeneratedIdentifier>
+src/compiler/factory/nodeFactory.ts	6351	23	interface downcast		old	Mutable<PrivateIdentifier>	Mutable<GeneratedPrivateIdentifier>	0		createBasePrivateIdentifier(node.escapedText) as Mutable<GeneratedPrivateIdentifier>
+src/compiler/factory/nodeFactory.ts	6377	20	generic		old	Mutable<SourceFile>	T & SourceFile	0		cloneSourceFile(node) as T & SourceFile
+src/compiler/factory/nodeFactory.ts	6380	20	generic		old	GeneratedIdentifier	T & GeneratedIdentifier	0		cloneGeneratedIdentifier(node) as T & GeneratedIdentifier
+src/compiler/factory/nodeFactory.ts	6383	20	generic		old	Identifier	T & Identifier	0		cloneIdentifier(node) as T & Identifier
+src/compiler/factory/nodeFactory.ts	6386	20	generic		old	GeneratedPrivateIdentifier	T & GeneratedPrivateIdentifier	0		cloneGeneratedPrivateIdentifier(node) as T & GeneratedPrivateIdentifier
+src/compiler/factory/nodeFactory.ts	6389	20	generic		old	PrivateIdentifier	T & PrivateIdentifier	0		clonePrivateIdentifier(node) as T & PrivateIdentifier
+src/compiler/factory/nodeFactory.ts	6392	48	generic		old	Node	T	0		baseFactory.createBaseTokenNode(node.kind) as T
+src/compiler/factory/nodeFactory.ts	6393	13	generic		old	Node	T	0		baseFactory.createBaseNode(node.kind) as T
+src/compiler/factory/nodeFactory.ts	6961	16	union member		old	Statement | Block | undefined	Statement	0		singleOrUndefined(nodes) as Statement
+src/compiler/factory/nodeFactory.ts	7047	42	interface downcast		old	Statement	PrologueDirective	0		statements[i] as PrologueDirective
+src/compiler/factory/nodeFactory.ts	7051	43	interface downcast		old	Statement	PrologueDirective	0		declarations[i] as PrologueDirective
+src/compiler/factory/nodeFactory.ts	7447	39	other	unrelated or partial overlap	old	{}	EmitNode	0		{} as EmitNode
+src/compiler/factory/utilities.ts	472	85	union member	member subtype	old	AccessorDeclaration	AccessorDeclaration & { readonly name: Identifier | StringLiteral | NoSubstitutionTemplateLiteral | NumericLiteral | Com	0		property as typeof property & { readonly name: Exclude<PropertyName, PrivateIdentifier>; }
+src/compiler/factory/utilities.ts	901	59	other	unrelated or partial overlap	old	Expression	BindingOrAssignmentElement	0		bindingElement.expression as BindingOrAssignmentElement
+src/compiler/factory/utilities.ts	944	62	other	unrelated or partial overlap	old	Expression	BindingOrAssignmentElement	0		bindingElement.initializer as BindingOrAssignmentElement
+src/compiler/factory/utilities.ts	953	62	other	unrelated or partial overlap	old	Expression	BindingOrAssignmentElement	0		bindingElement.expression as BindingOrAssignmentElement
+src/compiler/factory/utilities.ts	966	54	other	unrelated or partial overlap	old	LeftHandSideExpression	BindingOrAssignmentElement	0		bindingElement.left as BindingOrAssignmentElement
+src/compiler/factory/utilities.ts	971	54	other	unrelated or partial overlap	old	Expression	BindingOrAssignmentElement	0		bindingElement.expression as BindingOrAssignmentElement
+src/compiler/factory/utilities.ts	1083	20	other	union to overlapping union	old	NodeArray<BindingElement> | NodeArray<ArrayBindingElement> | NodeArray<Expression>	readonly BindingOrAssignmentElement[]	0		name.elements as readonly BindingOrAssignmentElement[]
+src/compiler/factory/utilities.ts	1087	20	other	unrelated or partial overlap	old	NodeArray<ObjectLiteralElementLike>	readonly BindingOrAssignmentElement[]	0		name.properties as readonly BindingOrAssignmentElement[]
+src/compiler/factory/utilities.ts	1688	20	interface downcast	to intersection	old	AssignmentExpression<EqualsToken>	AssignmentExpression<EqualsToken> & { readonly left: GeneratedIdentifier; }	0		node as AssignmentExpression<EqualsToken> & { readonly left: GeneratedIdentifier; }
+src/compiler/moduleNameResolver.ts	670	42	other	upcast or identity	new	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	0		directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean
+src/compiler/moduleNameResolver.ts	926	15	union member		old	PackageJsonInfoCacheEntry | undefined	PackageJsonInfo | undefined	0		entry as PackageJsonInfo | undefined
+src/compiler/moduleNameResolver.ts	931	25	union member		old	PackageJsonInfoCacheEntry	PackageJsonInfo	0		entry as PackageJsonInfo
+src/compiler/moduleNameResolver.ts	954	60	other	to any	old	object	any	0		value as any
+src/compiler/moduleNameResolver.ts	1625	66	other	upcast or identity	old	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	0		directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean
+src/compiler/moduleNameResolver.ts	1644	70	other	upcast or identity	old	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	0		directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean
+src/compiler/moduleNameResolver.ts	1668	44	other	upcast or identity	old	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	0		directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean
+src/compiler/moduleNameResolver.ts	1993	19	other	upcast or identity	old	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	0		directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean
+src/compiler/moduleNameResolver.ts	2008	34	other	upcast or identity	old	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	0		directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean
+src/compiler/moduleNameResolver.ts	2118	21	other	primitive narrowing (literal, enum or brand)	old	string | undefined	Extension	0		tryExtractTSExtension(candidate) as Extension
+src/compiler/moduleNameResolver.ts	2136	36	other	upcast or identity	old	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	0		directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean
+src/compiler/moduleNameResolver.ts	2293	85	other	object to a shape	old	object	MapLike<unknown>	0		exports as MapLike<unknown>
+src/compiler/moduleNameResolver.ts	2295	47	other	object to a shape	old	object	MapLike<unknown>	0		exports as MapLike<unknown>
+src/compiler/moduleNameResolver.ts	2349	39	other	object to a shape	old	object	MapLike<unknown>	0		target as MapLike<unknown>
+src/compiler/moduleNameResolver.ts	2351	55	other	object to a shape	old	object	MapLike<unknown>	0		target as MapLike<unknown>
+src/compiler/moduleNameResolver.ts	2468	30	other	upcast or identity	old	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	0		directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean
+src/compiler/moduleNameResolver.ts	2528	62	other	upcast or identity	old	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	0		directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean
+src/compiler/moduleNameResolver.ts	2529	64	other	upcast or identity	old	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	0		directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean
+src/compiler/moduleNameResolver.ts	2626	223	other	object to a shape	old	object	MapLike<unknown>	0		scope.contents.packageJsonContent.exports as MapLike<unknown>
+src/compiler/moduleNameResolver.ts	2630	27	other	object to a shape	old	object	MapLike<unknown>	0		scope.contents.packageJsonContent.exports as MapLike<unknown>
+src/compiler/moduleNameResolver.ts	2637	34	other	object to a shape	old	object	MapLike<unknown>	0		scope.contents.packageJsonContent.exports as MapLike<unknown>
+src/compiler/moduleNameResolver.ts	2712	25	other	object to a shape	old	object	MapLike<unknown>	0		lookupTable as MapLike<unknown>
+src/compiler/moduleNameResolver.ts	2715	54	other	object to a shape	old	object	MapLike<unknown>	0		lookupTable as MapLike<unknown>
+src/compiler/moduleNameResolver.ts	2718	29	other	object to a shape	old	object	MapLike<unknown>	0		lookupTable as MapLike<unknown>
+src/compiler/moduleNameResolver.ts	2724	29	other	object to a shape	old	object	MapLike<unknown>	0		lookupTable as MapLike<unknown>
+src/compiler/moduleNameResolver.ts	2729	29	other	object to a shape	old	object	MapLike<unknown>	0		lookupTable as MapLike<unknown>
+src/compiler/moduleNameResolver.ts	2817	52	other	object to a shape	old	object	MapLike<unknown>	0		target as MapLike<unknown>
+src/compiler/moduleNameResolver.ts	2820	44	other	object to a shape	old	object	MapLike<unknown>	0		target as MapLike<unknown>
+src/compiler/moduleNameResolver.ts	3058	33	generic		old	string	P	0		ancestorDirectory as P
+src/compiler/moduleNameResolver.ts	3066	38	other	upcast or identity	old	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	0		directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean
+src/compiler/moduleNameResolver.ts	3081	42	other	upcast or identity	old	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	0		directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean
+src/compiler/moduleNameResolver.ts	3159	71	other	upcast or identity	old	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	0		directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean
+src/compiler/moduleNameResolver.ts	3192	74	other	upcast or identity	old	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	0		directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean
+src/compiler/moduleNameResolver.ts	3336	34	other	upcast or identity	old	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean	0		directoryProbablyExists as (directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean
+src/compiler/moduleSpecifiers.ts	590	28	interface downcast		old	ModuleSpecifierEnding[]	[ModuleSpecifierEnding, ...ModuleSpecifierEnding[]]	0		getAllowedEndingsInPrefererredOrder(importMode) as [ModuleSpecifierEnding, ...ModuleSpecifierEnding[]]
+src/compiler/moduleSpecifiers.ts	880	18	interface downcast	to intersection	old	Declaration | undefined	(ModuleDeclaration & { name: StringLiteral; }) | undefined	0		moduleSymbol.declarations?.find( d => isNonGlobalAmbientModule(d) && (!isExternalModuleAugmentation(d) || !isExternalModuleNameRelative(getTextOfIdentifierOrLiteral(d.name))), ) as (ModuleDeclaration 
+src/compiler/moduleSpecifiers.ts	906	34	interface downcast	to union of subtypes	old	Expression	Identifier | PropertyAccessExpression	0		(topNamespace.parent.parent.symbol.exports?.get("export=" as __String)?.valueDeclaration as ExportAssignment)?.expression as PropertyAccessExpression | Identifier
+src/compiler/moduleSpecifiers.ts	906	35	interface downcast		old	Declaration | undefined	ExportAssignment	0		topNamespace.parent.parent.symbol.exports?.get("export=" as __String)?.valueDeclaration as ExportAssignment
+src/compiler/moduleSpecifiers.ts	915	40	other	union to overlapping union	old	SourceFile | ModuleBody	ModuleDeclaration	0		namespaceDeclaration.parent as ModuleDeclaration
+src/compiler/moduleSpecifiers.ts	920	34	interface downcast	to intersection	old	AmbientModuleDeclaration	(AmbientModuleDeclaration & { name: StringLiteral; }) | undefined	0		ambientModuleDeclareCandidates[0] as (AmbientModuleDeclaration & { name: StringLiteral; }) | undefined
+src/compiler/moduleSpecifiers.ts	1109	38	other	object to a shape	old	object	MapLike<unknown>	0		exports as MapLike<unknown>
+src/compiler/moduleSpecifiers.ts	1111	36	other	object to a shape	old	object	MapLike<unknown>	0		exports as MapLike<unknown>
+src/compiler/moduleSpecifiers.ts	1123	107	other	object to a shape	old	object	MapLike<unknown>	0		exports as MapLike<unknown>
+src/compiler/moduleSpecifiers.ts	1129	35	other	object to a shape	old	object	MapLike<unknown>	0		exports as MapLike<unknown>
+src/compiler/moduleSpecifiers.ts	1134	123	other	object to a shape	old	object	MapLike<unknown>	0		exports as MapLike<unknown>
+src/compiler/moduleSpecifiers.ts	1160	31	other	from any	old	any	MapLike<unknown>	0		imports as MapLike<unknown>
+src/compiler/moduleSpecifiers.ts	1165	122	other	from any	old	any	MapLike<unknown>	0		imports as MapLike<unknown>
+src/compiler/moduleSpecifiers.ts	1198	28	interface downcast		old	ModuleSpecifierEnding[]	[ModuleSpecifierEnding, ...ModuleSpecifierEnding[]]	0		preferences.getAllowedEndingsInPreferredOrder() as [ModuleSpecifierEnding, ...ModuleSpecifierEnding[]]
+src/compiler/parser.ts	1253	17	interface downcast		old	ForEachChildTable	Record<SyntaxKind, ForEachChildFunction<any>>	0		forEachChildTable as Record<SyntaxKind, ForEachChildFunction<any>>
+src/compiler/parser.ts	1622	30	other	unrelated or partial overlap	old	ReadonlyMap<never, never>	ReadonlyPragmaMap	0		emptyMap as ReadonlyPragmaMap
+src/compiler/parser.ts	1684	42	interface downcast	to union of subtypes	old	LiteralExpression	StringLiteral | NumericLiteral	0		parseLiteralNode() as StringLiteral | NumericLiteral
+src/compiler/parser.ts	1712	30	interface downcast	to intersection	old	Token<SyntaxKind.EndOfFileToken>	EndOfFileToken	0		parseExpectedToken(SyntaxKind.EndOfFileToken, Diagnostics.Unexpected_token) as EndOfFileToken
+src/compiler/parser.ts	1822	31	interface downcast		old	{}	PragmaContext	0	nest	sourceFile as {} as PragmaContext
+src/compiler/parser.ts	1823	34	interface downcast		old	{}	PragmaContext	0	nest	sourceFile as {} as PragmaContext
+src/compiler/parser.ts	2557	16	generic		old	Token<SyntaxKind>	T	0		finishNode(factoryCreateToken(kind), pos) as T
+src/compiler/parser.ts	2564	16	generic		old	Token<SyntaxKind>	T	0		finishNode(factoryCreateToken(kind), pos) as T
+src/compiler/parser.ts	2634	16	generic		old	Identifier | StringLiteral | TemplateLiteralLikeNode | NumericLiteral | MissingDeclaration | Token<T["kind"]>	T	0		finishNode(result, pos) as T
+src/compiler/parser.ts	2716	26	interface downcast	to union of subtypes	old	LiteralExpression	StringLiteral | NumericLiteral | BigIntLiteral	0		parseLiteralNode() as StringLiteral | NumericLiteral | BigIntLiteral
+src/compiler/parser.ts	3119	20	generic		old	Node	T	0		consumeNode(node) as T
+src/compiler/parser.ts	3570	22	generic		old	NodeArray<T>	MissingList<T>	0		createNodeArray<T>([], getNodePos()) as MissingList<T>
+src/compiler/parser.ts	3576	19	interface downcast		old	NodeArray<Node>	MissingList<Node>	0		arr as MissingList<Node>
+src/compiler/parser.ts	3751	16	interface downcast	to union of subtypes	old	LiteralLikeNode	TemplateMiddle | TemplateTail	0		fragment as TemplateMiddle | TemplateTail
+src/compiler/parser.ts	3815	46	interface downcast	to union of subtypes	old	TypeNode	FunctionOrConstructorTypeNode	0		node as FunctionOrConstructorTypeNode
+src/compiler/parser.ts	4566	48	union member		old	SyntaxKind	SyntaxKind.WithKeyword | SyntaxKind.AssertKeyword	0		currentToken as SyntaxKind.WithKeyword | SyntaxKind.AssertKeyword
+src/compiler/parser.ts	5695	63	union member		old	SyntaxKind	PrefixUnaryOperator	0		token() as PrefixUnaryOperator
+src/compiler/parser.ts	5878	67	union member		old	SyntaxKind	PrefixUnaryOperator	0		token() as PrefixUnaryOperator
+src/compiler/parser.ts	5889	30	union member		old	SyntaxKind	PostfixUnaryOperator	0		token() as PostfixUnaryOperator
+src/compiler/parser.ts	6249	16	other	union to overlapping union	old	Identifier | PropertyAccessExpression | ThisExpression	JsxTagNameExpression	0		expression as JsxTagNameExpression
+src/compiler/parser.ts	6974	26	interface downcast	to union of subtypes	old	IterationStatement	ForStatement | ForInOrOfStatement	0		finishNode(node, pos) as ForStatement | ForInOrOfStatement
+src/compiler/parser.ts	8003	46	union member		old	SyntaxKind	SyntaxKind.ConstKeyword | SyntaxKind.DefaultKeyword | SyntaxKind.ExportKeyword | SyntaxKind.InKeyword | SyntaxKind.Priva	0		kind as Modifier["kind"]
+src/compiler/parser.ts	8845	32	other	unrelated or partial overlap	old	{ languageVariant: LanguageVariant.Standard; text: string; }	SourceFile	0		{ languageVariant: LanguageVariant.Standard, text: content } as SourceFile
+src/compiler/parser.ts	9216	27	union member		old	SyntaxKind	SyntaxKind.JSDocCommentTextToken | JSDocSyntaxKind	0		token() as JSDocSyntaxKind | SyntaxKind.JSDocCommentTextToken
+src/compiler/parser.ts	9508	39	interface downcast		old	readonly (JSDocText | JSDocLink | JSDocLinkCode | JSDocLinkPlain)[]	JSDocComment[]	0		concatenate([finishNode(textOnly, commentStart, commentEnd)], comments) as JSDocComment[]
+src/compiler/parser.ts	9575	30	interface downcast	to intersection	old	ExpressionWithTypeArguments	ExpressionWithTypeArguments & { expression: Identifier | PropertyAccessEntityNameExpression; }	0		factory.createExpressionWithTypeArguments(expression, typeArguments) as ExpressionWithTypeArguments & { expression: Identifier | PropertyAccessEntityNameExpression; }
+src/compiler/parser.ts	9695	47	union member		old	false | JSDocTemplateTag | JSDocParameterTag | JSDocPropertyTag | JSDocTypeTag | JSDocThisTag	JSDocTemplateTag | JSDocParameterTag	0		parseChildParameterOrPropertyTag(PropertyLikeParse.CallbackParameter, indent) as JSDocParameterTag | JSDocTemplateTag
+src/compiler/parser.ts	9755	24	union member		old	false | JSDocTemplateTag | JSDocParameterTag | JSDocPropertyTag | JSDocTypeTag | JSDocThisTag	false | JSDocTemplateTag | JSDocPropertyTag | JSDocTypeTag	0		parseChildParameterOrPropertyTag(PropertyLikeParse.Property, indent) as JSDocTypeTag | JSDocPropertyTag | JSDocTemplateTag | false
+src/compiler/parser.ts	10089	24	union member		old	Node | NodeArray<Node>	NodeArray<Node>	0		element as NodeArray<Node>
+src/compiler/parser.ts	10092	23	union member		old	Node | NodeArray<Node>	Node	0		element as Node
+src/compiler/parser.ts	10207	14	other	to any	old	Node | NodeArray<Node>	any	0		element as any
+src/compiler/parser.ts	10208	28	other	from any	old	any	Node	0		(element as any).parent as Node
+src/compiler/parser.ts	10208	29	other	to any	old	Node | NodeArray<Node>	any	0		element as any
+src/compiler/parser.ts	10633	25	generic		old	PragmaPseudoMap[TKey][]	{ arguments: { types?: { value: string; pos: number; end: number; } | undefined; } & { lib?: { value: string; pos: numbe	0		toArray(entryOrList) as PragmaPseudoMap["reference"][]
+src/compiler/parser.ts	10657	21	generic		old	PragmaPseudoMap[TKey][]	{ arguments: { path: string; } & { name?: string | undefined; }; range: CommentRange; }[]	0		toArray(entryOrList) as PragmaPseudoMap["amd-dependency"][]
+src/compiler/parser.ts	10669	47	generic		old	PragmaPseudoMap[TKey]	{ arguments: { name: string; }; range: CommentRange; }	0		entry as PragmaPseudoMap["amd-module"]
+src/compiler/parser.ts	10673	43	generic		old	PragmaPseudoMap[TKey]	{ arguments: { name: string; }; range: CommentRange; }	0		entryOrList as PragmaPseudoMap["amd-module"]
+src/compiler/parser.ts	10717	22	other	primitive narrowing (literal, enum or brand)	old	string	keyof ConcretePragmaSpecs	0		tripleSlash[1]!.toLowerCase() as keyof PragmaPseudoMap
+src/compiler/parser.ts	10718	24	other	union to overlapping union	old	{ readonly args: readonly [{ readonly name: "types"; readonly optional: true; readonly captureSpan: true; }, { readonly 	PragmaDefinition<string, string, string, string>	0		commentPragmas[name] as PragmaDefinition
+src/compiler/parser.ts	10745	26	interface downcast	to union of subtypes	old	{ name: keyof ConcretePragmaSpecs; args: { arguments: { [index: string]: string | { value: string; pos: number; end: num	PragmaPseudoMapEntry	0		{ name, args: { arguments: argument, range } } as PragmaPseudoMapEntry
+src/compiler/parser.ts	10748	26	other	unrelated or partial overlap	old	{ name: keyof ConcretePragmaSpecs; args: { arguments: {}; range: CommentRange; }; }	PragmaPseudoMapEntry	0		{ name, args: { arguments: {}, range } } as PragmaPseudoMapEntry
+src/compiler/parser.ts	10769	18	other	primitive narrowing (literal, enum or brand)	old	string	keyof ConcretePragmaSpecs	0		match[1]!.toLowerCase() as keyof PragmaPseudoMap
+src/compiler/parser.ts	10770	20	other	union to overlapping union	old	{ readonly args: readonly [{ readonly name: "types"; readonly optional: true; readonly captureSpan: true; }, { readonly 	PragmaDefinition<string, string, string, string>	0		commentPragmas[name] as PragmaDefinition
+src/compiler/parser.ts	10777	18	other	unrelated or partial overlap	old	{ name: keyof ConcretePragmaSpecs; args: { arguments: { [index: string]: string | undefined; }; range: CommentRange; }; 	PragmaPseudoMapEntry	0		{ name, args: { arguments: argument, range } } as PragmaPseudoMapEntry
+src/compiler/parser.ts	10784	18	other	upcast or identity	old	string[]	string[]	0		text.trim().split(/\s+/) as string[]
+src/compiler/parser.ts	10821	68	other	union to overlapping union	old	JsxTagNameExpression	PropertyAccessExpression	0		rhs as PropertyAccessExpression
+src/compiler/parser.ts	10822	31	other	unrelated or partial overlap	old	LeftHandSideExpression	JsxTagNameExpression	0		(lhs as PropertyAccessExpression).expression as JsxTagNameExpression
+src/compiler/parser.ts	10822	101	other	unrelated or partial overlap	old	LeftHandSideExpression	JsxTagNameExpression	0		(rhs as PropertyAccessExpression).expression as JsxTagNameExpression
+src/compiler/parser.ts	10822	102	other	union to overlapping union	old	JsxTagNameExpression	PropertyAccessExpression	0		rhs as PropertyAccessExpression
+src/compiler/path.ts	513	45	generic		old	""	T	0		"" as T
+src/compiler/path.ts	516	12	generic		old	string	T	0		root + pathComponents.slice(1, length).join(directorySeparator) as T
+src/compiler/path.ts	1103	28	generic		old	string	P	0		getDirectoryPath(directory) as P
+src/compiler/performanceCore.ts	35	37	other	from any	old	any	{ performance?: Performance | undefined; }	0		require("perf_hooks") as { performance?: Performance | undefined }
+src/compiler/program.ts	1191	13	union member		old	ReferenceFileLocation | SyntheticReferenceFileLocation	ReferenceFileLocation	0		location as ReferenceFileLocation
+src/compiler/program.ts	2210	55	union member		old	string | SourceFile	string	0		containingFile as string
+src/compiler/program.ts	3008	30	interface downcast	to union of subtypes	old	Node	MethodDeclaration | ParameterDeclaration | PropertyDeclaration	0		parent as ParameterDeclaration | PropertyDeclaration | MethodDeclaration
+src/compiler/program.ts	3022	30	interface downcast	to union of subtypes	old	Node	ParameterDeclaration | PropertyDeclaration | VariableDeclaration | FunctionLikeDeclaration	0		parent as FunctionLikeDeclaration | VariableDeclaration | ParameterDeclaration | PropertyDeclaration
+src/compiler/program.ts	3043	30	interface downcast	to union of subtypes	old	Node	ImportOrExportSpecifier	0		node as ImportOrExportSpecifier
+src/compiler/program.ts	3080	31	interface downcast	to union of subtypes	old	Node	FunctionLikeDeclaration	0		node as FunctionLikeDeclaration
+src/compiler/program.ts	3151	40	interface downcast	to union of subtypes	old	Node	DeclarationWithTypeParameterChildren	0		parent as DeclarationWithTypeParameterChildren
+src/compiler/program.ts	3167	52	interface downcast		old	NodeArray<Node>	NodeArray<ModifierLike>	0		nodes as NodeArray<ModifierLike>
+src/compiler/program.ts	3284	116	double cast		old	any	SortedReadonlyArray<Diagnostic>	0	nest	emptyArray as any as SortedReadonlyArray<Diagnostic>
+src/compiler/program.ts	3409	38	union member		old	ModuleBody | undefined	ModuleBlock	0		(node as ModuleDeclaration).body as ModuleBlock
+src/compiler/program.ts	4028	26	interface downcast		old	SourceFile | undefined	JsonSourceFile | undefined	0		host.getSourceFile(refPath, ScriptTarget.JSON) as JsonSourceFile | undefined
+src/compiler/program.ts	4379	63	other	to any	old	string	any	0		moduleKindName as any
+src/compiler/programDiagnostics.ts	191	36	union member		old	ReferenceFileLocation | SyntheticReferenceFileLocation	ReferenceFileLocation	0		getReferencedFileLocation(program, reason) as ReferenceFileLocation
+src/compiler/resolutionCache.ts	563	14	other	to any	old	ResolvedModuleFull | undefined	any	0		primaryResult.resolvedModule as any
+src/compiler/semver.ts	287	34	other	upcast or identity	old	string[]	string[]	0		range.split(whitespaceRegExp) as string[]
+src/compiler/symbolWalker.ts	207	22	other	to any	old	Declaration	any	0		d as any
+src/compiler/symbolWalker.ts	207	41	other	to any	old	Declaration	any	0		d as any
+src/compiler/symbolWalker.ts	208	35	other	from any	old	any	TypeQueryNode	0		(d as any).type as TypeQueryNode
+src/compiler/symbolWalker.ts	208	36	other	to any	old	Declaration	any	0		d as any
+src/compiler/sys.ts	286	23	interface downcast		old	WatchedFileWithUnchangedPolls[]	PollingIntervalQueue	-3	nest	[] as WatchedFileWithUnchangedPolls[] as PollingIntervalQueue
+src/compiler/sys.ts	518	17	generic		old	(param1: any, param2: never, param3: any) => void | undefined	T	-3		( // Cant infer types correctly so lets satisfy checker (param1: any, param2: never, param3: any) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3)) ) as T
+src/compiler/sys.ts	624	33	interface downcast		old	GetCanonicalFileName	(fileName: string) => Path	-3		createGetCanonicalFileName(useCaseSensitiveFileNames) as (fileName: string) => Path
+src/compiler/sys.ts	721	30	union member		old	true | string[]	string[]	-3		existing as string[]
+src/compiler/sys.ts	1610	32	other	from any	old	any	{ setBlocking?: ((value: boolean) => void) | undefined; }	0		(process.stdout as any)?._handle as { setBlocking?: (value: boolean) => void; }
+src/compiler/tracing.ts	232	34	other	to any	old	Type	any	0		type as any
+src/compiler/tracing.ts	318	33	other	to any	old	Type	any	0		type as any
+src/compiler/transformer.ts	338	108	double cast		old	any	SourceFile	0	nest	node as any as SourceFile
+src/compiler/transformers/classFields.ts	495	57	interface downcast	to union of subtypes	old	Node	PrefixUnaryExpression | PostfixUnaryExpression	0		node as PrefixUnaryExpression | PostfixUnaryExpression
+src/compiler/transformers/classFields.ts	524	21	interface downcast	to union of subtypes	old	Node	MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration | ConstructorDeclaration	0		node as ConstructorDeclaration | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration
+src/compiler/transformers/classFields.ts	545	57	interface downcast	to union of subtypes	old	Node	PrefixUnaryExpression | PostfixUnaryExpression	0		node as PrefixUnaryExpression | PostfixUnaryExpression
+src/compiler/transformers/classFields.ts	578	47	interface downcast	to union of subtypes	old	Node	AssignmentPattern	0		node as AssignmentPattern
+src/compiler/transformers/classFields.ts	599	21	interface downcast	to union of subtypes	old	Node	MethodDeclaration | AccessorDeclaration	0		node as MethodDeclaration | AccessorDeclaration
+src/compiler/transformers/classFields.ts	601	21	interface downcast	to union of subtypes	old	Node	MethodDeclaration | AccessorDeclaration	0		node as MethodDeclaration | AccessorDeclaration
+src/compiler/transformers/classFields.ts	2050	35	interface downcast		old	Identifier	GeneratedIdentifier	0		factory.cloneNode(temp) as GeneratedIdentifier
+src/compiler/transformers/classFields.ts	2971	22	other	union to overlapping union	old	__String | undefined	string | undefined	0		tryGetTextOfPropertyName(name) as string | undefined
+src/compiler/transformers/classFields.ts	3066	16	other	unrelated or partial overlap	old	LeftHandSideExpression	ArrayAssignmentElement	0		visitDestructuringAssignmentTarget(node) as ArrayAssignmentElement
+src/compiler/transformers/classThis.ts	48	12	interface downcast	to intersection	old	ClassStaticBlockDeclaration	ClassThisAssignmentBlock	0		block as ClassThisAssignmentBlock
+src/compiler/transformers/declarations.ts	662	51	interface downcast	to union of subtypes	old	Node | undefined	CanHaveLiteralInitializer	0		getParseTreeNode(node) as CanHaveLiteralInitializer
+src/compiler/transformers/declarations.ts	723	16	interface downcast		old	Node | undefined	NamedDeclaration	0		getParseTreeNode(node) as NamedDeclaration
+src/compiler/transformers/declarations.ts	988	36	other	union to overlapping union	old	VisitResult<ExportAssignment | LateVisibilityPaintedStatement | undefined>	Statement | readonly Statement[] | undefined	0		lateStatementReplacementMap.get(key) as Statement | readonly Statement[] | undefined
+src/compiler/transformers/declarations.ts	1029	48	interface downcast		old	Node | undefined	Declaration	0		getParseTreeNode(input) as Declaration
+src/compiler/transformers/declarations.ts	1271	71	other	union to overlapping union	old	DeclarationDiagnosticProducing	Declaration	0		input as Declaration
+src/compiler/transformers/declarations.ts	1463	42	interface downcast	to union of subtypes	old	Node	SourceFile | NamespaceDeclaration	0		enclosingDeclaration as SourceFile | NamespaceDeclaration
+src/compiler/transformers/declarations.ts	1590	25	other	union to overlapping union	old	VisitResult<ExportAssignment | LateVisibilityPaintedStatement | undefined>	ModuleBody	0		body as ModuleBody
+src/compiler/transformers/declarations.ts	1753	17	generic		old	T | undefined	Node	0		node as Node
+src/compiler/transformers/declarations.ts	1806	26	other	union to overlapping union	old	DeclarationDiagnosticProducing	NamedDeclaration	0		node as NamedDeclaration
+src/compiler/transformers/declarations.ts	1807	37	other	union to overlapping union	old	DeclarationDiagnosticProducing	NamedDeclaration	0		node as NamedDeclaration
+src/compiler/transformers/declarations.ts	1808	22	interface downcast		old	NamedDeclaration	LateBoundDeclaration	0	nest	node as NamedDeclaration as LateBoundDeclaration
+src/compiler/transformers/declarations/diagnostics.ts	179	24	other	union to overlapping union	old	DeclarationDiagnosticProducing	NamedDeclaration	0		node as NamedDeclaration
+src/compiler/transformers/declarations/diagnostics.ts	210	24	other	union to overlapping union	old	DeclarationDiagnosticProducing	NamedDeclaration	0		node as NamedDeclaration
+src/compiler/transformers/declarations/diagnostics.ts	313	24	other	union to overlapping union	old	DeclarationDiagnosticProducing	NamedDeclaration	0		node as NamedDeclaration
+src/compiler/transformers/declarations/diagnostics.ts	351	25	other	union to overlapping union	old	DeclarationDiagnosticProducing	NamedDeclaration	0		node as NamedDeclaration
+src/compiler/transformers/declarations/diagnostics.ts	352	24	other	union to overlapping union	old	DeclarationDiagnosticProducing	NamedDeclaration	0		node as NamedDeclaration
+src/compiler/transformers/declarations/diagnostics.ts	427	24	other	union to overlapping union	old	DeclarationDiagnosticProducing	NamedDeclaration	0		node as NamedDeclaration
+src/compiler/transformers/declarations/diagnostics.ts	560	24	other	union to overlapping union	old	DeclarationDiagnosticProducing	NamedDeclaration	0		node as NamedDeclaration
+src/compiler/transformers/declarations/diagnostics.ts	582	44	union member	member subtype	old	Node | FunctionExpression | ArrowFunction | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration | CallSi	Declaration	0		node.parent.parent as Declaration
+src/compiler/transformers/declarations/diagnostics.ts	590	24	other	union to overlapping union	old	DeclarationDiagnosticProducing	NamedDeclaration	0		node as NamedDeclaration
+src/compiler/transformers/es2015.ts	676	54	interface downcast	to union of subtypes	old	Node	BreakOrContinueStatement	0		node as BreakOrContinueStatement
+src/compiler/transformers/es2015.ts	683	48	interface downcast	to union of subtypes	old	Node	DoStatement | WhileStatement	0		node as DoStatement | WhileStatement
+src/compiler/transformers/es2015.ts	765	49	interface downcast	to union of subtypes	old	Node	AccessorDeclaration	0		node as AccessorDeclaration
+src/compiler/transformers/es2015.ts	826	16	interface downcast	to intersection	old	Identifier	CapturedThis	0		factory.createUniqueName("_this", GeneratedIdentifierFlags.Optimistic | GeneratedIdentifierFlags.FileLevel) as CapturedThis
+src/compiler/transformers/es2015.ts	1237	31	interface downcast	to union of subtypes	old	Node	MethodDeclaration | AccessorDeclaration | PropertyDeclaration	0		node as AccessorDeclaration | MethodDeclaration | PropertyDeclaration
+src/compiler/transformers/es2015.ts	1494	31	interface downcast		old	Statement	ExpressionStatement	0		body.statements[superCallIndex] as ExpressionStatement
+src/compiler/transformers/es2015.ts	1643	31	interface downcast	to union of subtypes	old	Node	MethodDeclaration | AccessorDeclaration | PropertyDeclaration	0		node as AccessorDeclaration | MethodDeclaration | PropertyDeclaration
+src/compiler/transformers/es2015.ts	1729	31	interface downcast	to union of subtypes	old	Node	MethodDeclaration | AccessorDeclaration | PropertyDeclaration	0		node as AccessorDeclaration | MethodDeclaration | PropertyDeclaration
+src/compiler/transformers/es2015.ts	2267	80	interface downcast	to union of subtypes	old	ClassElement	AccessorDeclaration	0		member as AccessorDeclaration
+src/compiler/transformers/es2015.ts	2957	48	interface downcast	to union of subtypes	old	IterationStatement	DoStatement | WhileStatement	0		node as DoStatement | WhileStatement
+src/compiler/transformers/es2015.ts	3557	38	interface downcast	to union of subtypes	old	IterationStatement	ForInStatement | ForOfStatement | ForStatement	0		node as ForStatement | ForInStatement | ForOfStatement
+src/compiler/transformers/es2015.ts	3559	39	union member		old	ForInitializer	VariableDeclarationList	0		initializer as VariableDeclarationList
+src/compiler/transformers/es2015.ts	4824	16	interface downcast	to intersection	old	Identifier	SyntheticSuper	0		factory.createUniqueName("_super", GeneratedIdentifierFlags.Optimistic | GeneratedIdentifierFlags.FileLevel) as SyntheticSuper
+src/compiler/transformers/es2017.ts	800	58	union member		old	ConciseBody | undefined	Block	0		node.body as Block
+src/compiler/transformers/es2018.ts	745	42	interface downcast	to union of subtypes	old	Node	ForInitializer	0		skipParentheses(node.initializer) as ForInitializer
+src/compiler/transformers/es2020.ts	158	74	interface downcast	to union of subtypes	old	Expression	AccessExpression	0		node as AccessExpression
+src/compiler/transformers/esDecorators.ts	471	57	interface downcast	to union of subtypes	old	Node	PrefixUnaryExpression | PostfixUnaryExpression	0		node as PrefixUnaryExpression | PostfixUnaryExpression
+src/compiler/transformers/esDecorators.ts	536	57	interface downcast	to union of subtypes	old	Node	PrefixUnaryExpression | PostfixUnaryExpression	0		node as PrefixUnaryExpression | PostfixUnaryExpression
+src/compiler/transformers/esDecorators.ts	2071	20	other	unrelated or partial overlap	old	BinaryExpression	ArrayAssignmentElement	0		factory.updateBinaryExpression(node, assignmentTarget, node.operatorToken, initializer) as ArrayAssignmentElement
+src/compiler/transformers/esDecorators.ts	2074	20	interface downcast	to union of subtypes	old	Expression	ArrayAssignmentElement	0		visitDestructuringAssignmentTarget(node) as ArrayAssignmentElement
+src/compiler/transformers/generators.ts	469	49	interface downcast	to union of subtypes	old	Node	AccessorDeclaration	0		node as AccessorDeclaration
+src/compiler/transformers/generators.ts	2201	23	union member		old	CodeBlock	WithBlock	0		endBlock() as WithBlock
+src/compiler/transformers/generators.ts	2249	27	union member		old	CodeBlock | undefined	ExceptionBlock	0		peekBlock() as ExceptionBlock
+src/compiler/transformers/generators.ts	2271	27	union member		old	CodeBlock | undefined	ExceptionBlock	0		peekBlock() as ExceptionBlock
+src/compiler/transformers/generators.ts	2288	27	union member		old	CodeBlock	ExceptionBlock	0		endBlock() as ExceptionBlock
+src/compiler/transformers/generators.ts	2342	23	union member		old	CodeBlock	SwitchBlock	0		endBlock() as SwitchBlock
+src/compiler/transformers/generators.ts	2381	23	union member		old	CodeBlock	SwitchBlock	0		endBlock() as SwitchBlock
+src/compiler/transformers/generators.ts	2409	23	union member		old	CodeBlock	LabeledBlock	0		endBlock() as LabeledBlock
+src/compiler/transformers/generators.ts	3049	35	union member		old	number | Expression | Statement | undefined	Statement	0		args[0] as Statement
+src/compiler/transformers/generators.ts	3055	36	union member		old	number | Expression | Statement | undefined	Expression	0		args[0] as Expression
+src/compiler/transformers/generators.ts	3055	59	interface downcast		old	Expression | undefined	Expression	0		args[1] as Expression
+src/compiler/transformers/generators.ts	3057	35	union member		old	number | Expression | Statement | undefined	number	0		args[0] as Label
+src/compiler/transformers/generators.ts	3059	43	union member		old	number | Expression | Statement | undefined	number	0		args[0] as Label
+src/compiler/transformers/generators.ts	3059	61	interface downcast		old	Expression | undefined	Expression	0		args[1] as Expression
+src/compiler/transformers/generators.ts	3061	44	union member		old	number | Expression | Statement | undefined	number	0		args[0] as Label
+src/compiler/transformers/generators.ts	3061	62	interface downcast		old	Expression | undefined	Expression	0		args[1] as Expression
+src/compiler/transformers/generators.ts	3063	35	union member		old	number | Expression | Statement | undefined	Expression	0		args[0] as Expression
+src/compiler/transformers/generators.ts	3065	39	union member		old	number | Expression | Statement | undefined	Expression	0		args[0] as Expression
+src/compiler/transformers/generators.ts	3067	36	union member		old	number | Expression | Statement | undefined	Expression	0		args[0] as Expression
+src/compiler/transformers/generators.ts	3069	35	union member		old	number | Expression | Statement | undefined	Expression	0		args[0] as Expression
+src/compiler/transformers/jsx.ts	114	48	interface downcast	to intersection	old	VariableDeclaration	VariableDeclaration & { name: Identifier; }	0		declaration as VariableDeclaration & { name: Identifier; }
+src/compiler/transformers/jsx.ts	308	54	union member		old	JsxChild	JsxExpression	0		nonWhitespaceChildren[0] as JsxExpression
+src/compiler/transformers/jsx.ts	319	25	union member		old	JsxAttribute | JsxSpreadAttribute | undefined	JsxAttribute | undefined	0		find(node.attributes.properties, p => !!p.name && isIdentifier(p.name) && p.name.escapedText === "key") as JsxAttribute | undefined
+src/compiler/transformers/jsx.ts	342	74	union member		old	JsxChild	JsxExpression	0		nonWhitespaceChildren[0] as JsxExpression
+src/compiler/transformers/jsx.ts	485	41	interface downcast	to union of subtypes	old	Node	ObjectLiteralElementLike	0		Debug.checkDefined(visitNode(prop, visitor)) as ObjectLiteralElementLike
+src/compiler/transformers/module/module.ts	830	57	interface downcast	to union of subtypes	old	Node	PrefixUnaryExpression | PostfixUnaryExpression	0		node as PrefixUnaryExpression | PostfixUnaryExpression
+src/compiler/transformers/module/module.ts	1439	38	union member		old	ImportEqualsDeclaration | NamespaceImport | NamespaceExport | undefined	NamespaceImport | undefined	0		getNamespaceDeclarationNode(node) as NamespaceImport | undefined
+src/compiler/transformers/module/module.ts	1880	88	interface downcast	to intersection	old	VariableDeclaration	InitializedVariableDeclaration	0		variable as InitializedVariableDeclaration
+src/compiler/transformers/module/system.ts	1583	60	interface downcast	to union of subtypes	old	Node	PrefixUnaryExpression | PostfixUnaryExpression	0		node as PrefixUnaryExpression | PostfixUnaryExpression
+src/compiler/transformers/namedEvaluation.ts	116	12	interface downcast	to intersection	old	ClassStaticBlockDeclaration	ClassNamedEvaluationHelperBlock	0		block as ClassNamedEvaluationHelperBlock
+src/compiler/transformers/ts.ts	352	39	interface downcast	to union of subtypes	old	Node	Block | SourceFile | ModuleBlock | CaseBlock	0		node as SourceFile | CaseBlock | ModuleBlock | Block
+src/compiler/transformers/ts.ts	363	22	interface downcast	to union of subtypes	old	Node	FunctionDeclaration | ClassDeclaration	0		node as ClassDeclaration | FunctionDeclaration
+src/compiler/transformers/ts.ts	364	53	interface downcast	to union of subtypes	old	Node	FunctionDeclaration | ClassDeclaration	0		node as ClassDeclaration | FunctionDeclaration
+src/compiler/transformers/ts.ts	418	47	interface downcast	to union of subtypes	old	Node	ExportAssignment | ExportDeclaration | ImportDeclaration | ImportEqualsDeclaration	0		node as ImportDeclaration | ImportEqualsDeclaration | ExportAssignment | ExportDeclaration
+src/compiler/transformers/ts.ts	789	49	interface downcast	to union of subtypes	old	Node	AssertionExpression	0		node as AssertionExpression
+src/compiler/transformers/ts.ts	1201	52	interface downcast	to union of subtypes	old	Declaration	ClassLikeDeclaration	0		node as ClassLikeDeclaration
+src/compiler/transformers/ts.ts	2192	55	other	union to overlapping union	old	Identifier | NamespaceDeclaration | JSDocNamespaceDeclaration	ModuleDeclaration	0		node.body as ModuleDeclaration
+src/compiler/transformers/ts.ts	2202	37	union member		old	ModuleBody | undefined	ModuleBlock	0		getInnerMostModuleDeclarationFromDottedModule(node)!.body as ModuleBlock
+src/compiler/transformers/ts.ts	2249	88	other	union to overlapping union	old	NamespaceDeclaration | JSDocNamespaceDeclaration | undefined	ModuleDeclaration	0		moduleDeclaration.body as ModuleDeclaration
+src/compiler/transformers/ts.ts	2250	44	other	union to overlapping union	old	NamespaceDeclaration | JSDocNamespaceDeclaration | undefined	ModuleDeclaration	0		moduleDeclaration.body as ModuleDeclaration
+src/compiler/transformers/typeSerializer.ts	323	66	interface downcast	to union of subtypes	old	TypeNode	UnionOrIntersectionTypeNode	0		node as UnionOrIntersectionTypeNode
+src/compiler/transformers/typeSerializer.ts	326	66	interface downcast	to union of subtypes	old	TypeNode	UnionOrIntersectionTypeNode	0		node as UnionOrIntersectionTypeNode
+src/compiler/transformers/typeSerializer.ts	358	43	interface downcast	to union of subtypes	old	TypeNode	JSDocNonNullableType | JSDocNullableType | JSDocOptionalType	0		node as JSDocNullableType | JSDocNonNullableType | JSDocOptionalType
+src/compiler/transformers/typeSerializer.ts	374	34	union member		old	LiteralExpression | PrefixUnaryExpression	PrefixUnaryExpression	0		node as PrefixUnaryExpression
+src/compiler/transformers/typeSerializer.ts	378	66	interface downcast	to union of subtypes	old	UnaryExpression	NumericLiteral | BigIntLiteral	0		operand as NumericLiteral | BigIntLiteral
+src/compiler/transformers/utilities.ts	234	43	union member		old	NamedExportBindings | undefined	NamespaceExport	0		(node as ExportDeclaration).exportClause as NamespaceExport
+src/compiler/transformers/utilities.ts	590	12	interface downcast		old	readonly ClassElement[]	PropertyDeclaration[]	0		filter(node.members, m => isInitializedOrStaticProperty(m, requireInitializer, isStatic)) as PropertyDeclaration[]
+src/compiler/transformers/utilities.ts	708	49	interface downcast	to union of subtypes	old	ClassElement	AccessorDeclaration	0		member as AccessorDeclaration
+src/compiler/transformers/utilities.ts	710	48	interface downcast	to union of subtypes	old	ClassElement	AccessorDeclaration	0		member as AccessorDeclaration
+src/compiler/tsbuild.ts	179	16	other	primitive narrowing (literal, enum or brand)	old	string	ResolvedConfigFileName	0		project as ResolvedConfigFileName
+src/compiler/tsbuild.ts	182	12	other	primitive narrowing (literal, enum or brand)	old	string	ResolvedConfigFileName	0		combinePaths(project, "tsconfig.json") as ResolvedConfigFileName
+src/compiler/tsbuildPublic.ts	260	31	union member		old	AnyBuildOrder	CircularBuildOrder	0		buildOrder as CircularBuildOrder
+src/compiler/tsbuildPublic.ts	431	27	generic		new	SolutionBuilderHost<T> | SolutionBuilderWithWatchHost<T>	SolutionBuilderWithWatchHost<T>	0		hostOrHostWithWatch as SolutionBuilderWithWatchHost<T>
+src/compiler/tsbuildPublic.ts	437	76	other	primitive narrowing (literal, enum or brand)	new	string	ResolvedConfigFileName	0		fileName as ResolvedConfigFileName
+src/compiler/tsbuildPublic.ts	437	144	other	primitive narrowing (literal, enum or brand)	new	string	ResolvedConfigFileName	0		fileName as ResolvedConfigFileName
+src/compiler/tsbuildPublic.ts	492	125	other	primitive narrowing (literal, enum or brand)	new	string | undefined	ResolvedConfigFileName	0		configFilePath as ResolvedConfigFileName
+src/compiler/tsbuildPublic.ts	564	26	other	primitive narrowing (literal, enum or brand)	old	Path	ResolvedConfigFilePath	0		toPath(state, fileName) as ResolvedConfigFilePath
+src/compiler/tsbuildPublic.ts	570	15	union member		old	ConfigFileCacheEntry	ParsedCommandLine	0		entry as ParsedCommandLine
+src/compiler/tsbuildPublic.ts	734	42	union member		old	AnyBuildOrder	BuildOrder	0		createBuildOrder(state, [resolvedProject]) as BuildOrder
+src/compiler/tsbuildPublic.ts	992	23	double cast		old	any	SemanticDiagnosticsBuilderProgram	0	nest	program as any as SemanticDiagnosticsBuilderProgram
+src/compiler/tsbuildPublic.ts	993	22	double cast		old	any	SemanticDiagnosticsBuilderProgram	0	nest	program as any as SemanticDiagnosticsBuilderProgram
+src/compiler/tsbuildPublic.ts	1330	13	union member		old	AnyBuildOrder	BuildOrder	0		buildOrder as BuildOrder
+src/compiler/tsbuildPublic.ts	1337	13	union member		old	AnyBuildOrder	BuildOrder	0		buildOrder as BuildOrder
+src/compiler/tsbuildPublic.ts	1355	12	double cast		old	any	T	0	nest	readBuilderProgram(parsed.options, compilerHost) as any as T
+src/compiler/tsbuildPublic.ts	1372	15	union member		old	Date | FileWatcherWithModifiedTime	FileWatcherWithModifiedTime	0		value as FileWatcherWithModifiedTime
+src/compiler/tsbuildPublic.ts	1387	24	union member		old	Date | FileWatcherWithModifiedTime	FileWatcherWithModifiedTime	0		existing as FileWatcherWithModifiedTime
+src/compiler/tsbuildPublic.ts	1549	11	interface downcast	to union of subtypes	old	BuildInfo	IncrementalBuildInfo | NonIncrementalBuildInfo	0		buildInfo as IncrementalBuildInfo | NonIncrementalBuildInfo
+src/compiler/tsbuildPublic.ts	1550	14	interface downcast	to union of subtypes	old	BuildInfo	IncrementalBuildInfo | NonIncrementalBuildInfo	0		buildInfo as IncrementalBuildInfo | NonIncrementalBuildInfo
+src/compiler/tsbuildPublic.ts	1582	18	union member		old	IncrementalBuildInfo	IncrementalMultiFileEmitBuildInfo	0		incrementalBuildInfo as IncrementalMultiFileEmitBuildInfo
+src/compiler/tsbuildPublic.ts	1583	18	union member		old	IncrementalBuildInfo	IncrementalBundleEmitBuildInfo	0		incrementalBuildInfo as IncrementalBundleEmitBuildInfo
+src/compiler/tsbuildPublic.ts	1733	18	union member		old	Unbuildable | UpToDate | OutputMissing | ErrorReadingFile | OutOfDateWithSelf | OutOfDateWithUpstream | OutOfDateBuildIn	UpToDate	0		refStatus as Status.UpToDate
+src/compiler/tsbuildPublic.ts	1733	72	union member		old	Unbuildable | UpToDate | OutputMissing | ErrorReadingFile | OutOfDateWithSelf | OutOfDateWithUpstream | OutOfDateBuildIn	UpToDate	0		refStatus as Status.UpToDate
+src/compiler/tsbuildPublic.ts	2308	40	union member		old	ConfigFileCacheEntry | undefined	Diagnostic	0		state.configFileCache.get(proj) as Diagnostic
+src/compiler/utilities.ts	630	24	generic		old	Declaration	T	0		declaration as T
+src/compiler/utilities.ts	640	12	generic		old	Declaration[]	T[]	0		filter(symbol.declarations || emptyArray, d => d.kind === kind) as T[]
+src/compiler/utilities.ts	988	12	interface downcast		old	Node | undefined	SourceFile	0		node as SourceFile
+src/compiler/utilities.ts	2486	16	other	unrelated or partial overlap	old	DiagnosticRelatedInformation	DiagnosticMessageChain	0		diagnostic as DiagnosticMessageChain
+src/compiler/utilities.ts	2576	56	interface downcast	to union of subtypes	old	Node	CaseOrDefaultClause	0		node as CaseOrDefaultClause
+src/compiler/utilities.ts	2577	26	interface downcast	to union of subtypes	old	Node	CaseOrDefaultClause	0		node as CaseOrDefaultClause
+src/compiler/utilities.ts	2577	80	interface downcast	to union of subtypes	old	Node	CaseOrDefaultClause	0		node as CaseOrDefaultClause
+src/compiler/utilities.ts	2577	131	interface downcast	to union of subtypes	old	Node	CaseOrDefaultClause	0		node as CaseOrDefaultClause
+src/compiler/utilities.ts	2582	54	interface downcast	to union of subtypes	old	Node	ReturnStatement | YieldExpression	0		node as ReturnStatement | YieldExpression
+src/compiler/utilities.ts	2857	38	interface downcast	to union of subtypes	old	Node	HasType	0		parent as HasType
+src/compiler/utilities.ts	2866	38	interface downcast	to union of subtypes	old	Node	FunctionLikeDeclaration	0		parent as FunctionLikeDeclaration
+src/compiler/utilities.ts	2870	38	interface downcast	to union of subtypes	old	Node	SignatureDeclaration	0		parent as SignatureDeclaration
+src/compiler/utilities.ts	2876	38	interface downcast	to union of subtypes	old	Node	CallExpression | TaggedTemplateExpression	0		parent as CallExpression | TaggedTemplateExpression
+src/compiler/utilities.ts	2989	21	interface downcast	to union of subtypes	old	Declaration	ObjectTypeDeclaration	0		node as ObjectTypeDeclaration
+src/compiler/utilities.ts	3247	24	interface downcast	to union of subtypes	old	Node	ArrowFunction | ThisContainer	0		node as ThisContainer | ArrowFunction
+src/compiler/utilities.ts	3364	24	interface downcast	to union of subtypes	old	Node	SuperContainerOrFunctions	0		node as SuperContainerOrFunctions
+src/compiler/utilities.ts	3405	13	interface downcast	to union of subtypes	old	Node	ElementAccessExpression | PropertyAccessExpression	0		node as PropertyAccessExpression | ElementAccessExpression
+src/compiler/utilities.ts	3416	13	interface downcast	to union of subtypes	old	Node	ElementAccessExpression | PropertyAccessExpression	0		node as PropertyAccessExpression | ElementAccessExpression
+src/compiler/utilities.ts	3441	19	interface downcast	to union of subtypes	old	LeftHandSideExpression	EntityNameExpression	0		(node as ExpressionWithTypeArguments).expression as EntityNameExpression
+src/compiler/utilities.ts	3445	14	other	literal, enum or brand conversion	old	SyntaxKind.Identifier	TypeNodeSyntaxKind	0		SyntaxKind.Identifier as TypeNodeSyntaxKind
+src/compiler/utilities.ts	3446	14	other	literal, enum or brand conversion	old	SyntaxKind.QualifiedName	TypeNodeSyntaxKind	0		SyntaxKind.QualifiedName as TypeNodeSyntaxKind
+src/compiler/utilities.ts	3447	21	interface downcast	to union of subtypes	old	Node	EntityName	0	nest	node as Node as EntityName
+src/compiler/utilities.ts	3503	21	interface downcast	to union of subtypes	old	Node	FunctionLikeDeclaration	0		node as FunctionLikeDeclaration
+src/compiler/utilities.ts	3512	21	interface downcast	to union of subtypes	old	Node	FunctionLikeDeclaration	0		parent as FunctionLikeDeclaration
+src/compiler/utilities.ts	3516	37	interface downcast	to union of subtypes	old	Node	FunctionLikeDeclaration	0		parent as FunctionLikeDeclaration
+src/compiler/utilities.ts	3562	26	interface downcast	to union of subtypes	old	Node	FunctionLikeDeclaration	0		node as FunctionLikeDeclaration
+src/compiler/utilities.ts	3625	17	interface downcast	to union of subtypes	old	Node	JsxOpeningLikeElement	0		parent as JsxOpeningLikeElement
+src/compiler/utilities.ts	3714	21	interface downcast	to union of subtypes	old	Node	HasInitializer	0		parent as HasInitializer
+src/compiler/utilities.ts	3732	40	interface downcast	to union of subtypes	old	Node	ForInOrOfStatement	0		parent as ForInOrOfStatement
+src/compiler/utilities.ts	3737	30	interface downcast	to union of subtypes	old	Node	AssertionExpression	0		parent as AssertionExpression
+src/compiler/utilities.ts	3785	77	interface downcast		old	Expression	StringLiteral	0		(getLeftmostAccessExpression(node.initializer) as CallExpression).arguments[0] as StringLiteral
+src/compiler/utilities.ts	4258	26	interface downcast	to union of subtypes	old	LeftHandSideExpression	PropertyAccessEntityNameExpression | BindableStaticElementAccessExpression	0		nextToLast.expression as Exclude<BindableStaticNameExpression, Identifier>
+src/compiler/utilities.ts	4386	20	interface downcast	to union of subtypes	old	Node	AnyValidImportOrReExport	0		node.parent as AnyValidImportOrReExport
+src/compiler/utilities.ts	4388	20	other	unrelated or partial overlap	old	ImportEqualsDeclaration	AnyValidImportOrReExport	0		(node.parent as ExternalModuleReference).parent as AnyValidImportOrReExport
+src/compiler/utilities.ts	4390	122	interface downcast	to intersection	old	CallExpression	RequireOrImportCall	0		node.parent as RequireOrImportCall
+src/compiler/utilities.ts	4395	20	interface downcast		old	ImportTypeNode | undefined	ValidImportTypeNode | undefined	0		tryCast(node.parent.parent, isImportTypeNode) as ValidImportTypeNode | undefined
+src/compiler/utilities.ts	4469	21	interface downcast	to union of subtypes	old	Node	MethodDeclaration | ParameterDeclaration | PropertyDeclaration	0		node as ParameterDeclaration | MethodDeclaration | PropertyDeclaration
+src/compiler/utilities.ts	4832	32	union member		old	Node | HasJSDoc	SignatureDeclaration | ClassDeclaration | InterfaceDeclaration	0		node.parent.parent.parent as SignatureDeclaration | InterfaceDeclaration | ClassDeclaration
+src/compiler/utilities.ts	4838	15	interface downcast	to union of subtypes	old	Node	HasTypeArguments	0		node as HasTypeArguments
+src/compiler/utilities.ts	4864	41	interface downcast	to union of subtypes	old	Node	PrefixUnaryExpression | PostfixUnaryExpression	0		parent as PrefixUnaryExpression | PostfixUnaryExpression
+src/compiler/utilities.ts	4869	44	interface downcast	to union of subtypes	old	Node	ForInOrOfStatement	0		parent as ForInOrOfStatement
+src/compiler/utilities.ts	5099	27	interface downcast	to union of subtypes	old	Expression	BindableStaticNameExpression	0		binExp.left as BindableStaticNameExpression
+src/compiler/utilities.ts	5133	21	interface downcast	to union of subtypes	old	Node	NamedDeclaration | PropertyAccessExpression	0		parent as NamedDeclaration | PropertyAccessExpression
+src/compiler/utilities.ts	5140	21	interface downcast	to union of subtypes	old	Node	BindingElement | ImportSpecifier	0		parent as BindingElement | ImportSpecifier
+src/compiler/utilities.ts	5354	21	interface downcast	to union of subtypes	old	Node	FunctionLikeDeclaration	0		node as FunctionLikeDeclaration
+src/compiler/utilities.ts	5355	21	interface downcast	to union of subtypes	old	Node	FunctionLikeDeclaration	0		node as FunctionLikeDeclaration
+src/compiler/utilities.ts	5503	42	interface downcast	to union of subtypes	old	Expression	AnonymousFunctionDefinition	0		node as AnonymousFunctionDefinition
+src/compiler/utilities.ts	5695	17	interface downcast	to union of subtypes	old	Expression	PrefixUnaryExpression | PostfixUnaryExpression	0		expression as PrefixUnaryExpression | PostfixUnaryExpression
+src/compiler/utilities.ts	6061	30	interface downcast		old	Diagnostic[]	SortedArray<Diagnostic>	0	nest	[] as Diagnostic[] as SortedArray<Diagnostic>
+src/compiler/utilities.ts	6062	34	interface downcast		old	string[]	SortedArray<string>	0	nest	[] as string[] as SortedArray<string>
+src/compiler/utilities.ts	6099	31	interface downcast		old	Diagnostic[]	SortedArray<DiagnosticWithLocation>	0	nest	[] as Diagnostic[] as SortedArray<DiagnosticWithLocation>
+src/compiler/utilities.ts	6100	63	interface downcast		old	SortedArray<Diagnostic>	SortedArray<DiagnosticWithLocation>	0		diagnostics as SortedArray<DiagnosticWithLocation>
+src/compiler/utilities.ts	6108	38	interface downcast		old	Diagnostic[]	SortedArray<Diagnostic>	0		nonFileDiagnostics.slice() as SortedArray<Diagnostic>
+src/compiler/utilities.ts	6895	19	interface downcast	to union of subtypes	old	Node	HasType	0		node as HasType
+src/compiler/utilities.ts	6902	13	interface downcast	to union of subtypes	old	Node	HasType	0		node as HasType
+src/compiler/utilities.ts	8012	39	interface downcast	to union of subtypes	old	Node	EnumDeclaration | ModuleDeclaration	0		parseNode.parent as EnumDeclaration | ModuleDeclaration
+src/compiler/utilities.ts	8107	34	interface downcast	to union of subtypes	old	Node	PrefixUnaryExpression | PostfixUnaryExpression	0		parent as PrefixUnaryExpression | PostfixUnaryExpression
+src/compiler/utilities.ts	8128	30	interface downcast	to union of subtypes	old	Node	ForInStatement | ForOfStatement	0		parent as ForInStatement | ForOfStatement
+src/compiler/utilities.ts	8225	45	generic		old	ReadonlyMap<K, U> | ReadonlySet<K>	Map<K, U>	0		newMap as Map<K, U>
+src/compiler/utilities.ts	8253	37	generic		old	ReadonlyMap<K, U> | ReadonlySet<K> | undefined	ReadonlyMap<K, U>	0		newMap as ReadonlyMap<K, U>
+src/compiler/utilities.ts	8260	46	generic		old	K | U	U & K	0		valueInNewMap as U & K
+src/compiler/utilities.ts	8281	54	interface downcast	to union of subtypes	old	Type	ObjectFlagsType	0		type as ObjectFlagsType
+src/compiler/utilities.ts	8450	25	interface downcast	to union of subtypes	old	Expression	ElementAccessExpression | PropertyAccessExpression | CallExpression | AsExpression | SatisfiesExpression | NonNullExpres	0		node as CallExpression | PropertyAccessExpression | ElementAccessExpression | AsExpression | NonNullExpression | PartiallyEmittedExpression | SatisfiesExpression
+src/compiler/utilities.ts	8556	82	other	to any	old	(this: Mutable<Node>, kind: SyntaxKind, pos: number, end: number) => void	any	0		Node as any
+src/compiler/utilities.ts	8557	32	other	to any	old	(this: Mutable<Node>, kind: SyntaxKind, pos: number, end: number) => void	any	0		Token as any
+src/compiler/utilities.ts	8558	37	other	to any	old	(this: Mutable<Node>, kind: SyntaxKind, pos: number, end: number) => void	any	0		Identifier as any
+src/compiler/utilities.ts	8559	44	other	to any	old	(this: Mutable<Node>, kind: SyntaxKind, pos: number, end: number) => void	any	0		Node as any
+src/compiler/utilities.ts	8560	37	other	to any	old	(this: Mutable<Node>, kind: SyntaxKind, pos: number, end: number) => void	any	0		Node as any
+src/compiler/utilities.ts	8561	33	interface downcast	to intersection	old	(this: Partial<Symbol> & { links?: TransientSymbolLinks | undefined; }, flags: SymbolFlags, name: __String) => void	((this: Partial<Symbol> & { links?: TransientSymbolLinks | undefined; }, flags: SymbolFlags, name: __String) => void) & 	0		Symbol as typeof Symbol & ReturnType<ObjectAllocator["getSymbolConstructor"]>
+src/compiler/utilities.ts	8562	31	other	to any	old	(this: Type, checker: TypeChecker, flags: TypeFlags) => void	any	0		Type as any
+src/compiler/utilities.ts	8563	36	interface downcast	to intersection	old	(this: Partial<AllocatedSignature>, checker: TypeChecker, flags: SignatureFlags) => void	((this: Partial<AllocatedSignature>, checker: TypeChecker, flags: SignatureFlags) => void) & (new (checker: TypeChecker,	0		Signature as typeof Signature & ReturnType<ObjectAllocator["getSignatureConstructor"]>
+src/compiler/utilities.ts	8564	42	interface downcast	to intersection	old	(this: Partial<SourceMapSource>, fileName: string, text: string, skipTrivia?: ((pos: number) => number) | undefined) => 	((this: Partial<SourceMapSource>, fileName: string, text: string, skipTrivia?: ((pos: number) => number) | undefined) =>	0		SourceMapSource as typeof SourceMapSource & ReturnType<ObjectAllocator["getSourceMapSourceConstructor"]>
+src/compiler/utilities.ts	8641	20	union member		old	DiagnosticRelatedInformation | DiagnosticWithDetachedLocation	DiagnosticWithDetachedLocation	0		diagnostic as DiagnosticWithDetachedLocation
+src/compiler/utilities.ts	9403	62	other	primitive narrowing (literal, enum or brand)	old	string	StrictOptionName	0		option.name as StrictOptionName
+src/compiler/utilities.ts	10007	158	other	primitive narrowing (literal, enum or brand)	old	string	Extension	0		x.extension as Extension
+src/compiler/utilities.ts	10197	12	generic		old	string	T	0		changeAnyExtension(path, newExtension, extensionsToRemove, /*ignoreCase*/ false) as T
+src/compiler/utilities.ts	10455	120	other	object to a shape	old	object	MapLike<unknown>	0		a as MapLike<unknown>
+src/compiler/utilities.ts	10455	143	other	object to a shape	old	object	MapLike<unknown>	0		b as MapLike<unknown>
+src/compiler/utilities.ts	10612	28	interface downcast		old	Node | undefined	HeritageClause | undefined	0		findAncestor(node.parent, parent => { switch (parent.kind) { case SyntaxKind.HeritageClause: return true; case SyntaxKind.PropertyAccessExpression: case SyntaxKind.ExpressionWithTypeArguments: return 
+src/compiler/utilities.ts	10841	43	interface downcast	to union of subtypes	old	Node	TypeLiteralNode | InterfaceDeclaration	0		parent as TypeLiteralNode | InterfaceDeclaration
+src/compiler/utilities.ts	10844	21	interface downcast	to union of subtypes	old	Node	UnionOrIntersectionTypeNode	0		parent as UnionOrIntersectionTypeNode
+src/compiler/utilities.ts	10850	21	interface downcast	to union of subtypes	old	Node	NamedExports | NamedImports | ArrayLiteralExpression | TupleTypeNode | CommaListExpression	0		parent as TupleTypeNode | ArrayLiteralExpression | CommaListExpression | NamedImports | NamedExports
+src/compiler/utilities.ts	10856	40	interface downcast	to union of subtypes	old	Node	CallExpression | NewExpression	0		parent as CallExpression | NewExpression
+src/compiler/utilities.ts	10857	18	interface downcast	to union of subtypes	old	Node	CallExpression | NewExpression	0		parent as CallExpression | NewExpression
+src/compiler/utilities.ts	10858	18	interface downcast	to union of subtypes	old	Node	CallExpression | NewExpression	0		parent as CallExpression | NewExpression
+src/compiler/utilities.ts	10861	40	interface downcast	to union of subtypes	old	Node	JsxElement | JsxFragment	0		parent as JsxElement | JsxFragment
+src/compiler/utilities.ts	10864	40	interface downcast	to union of subtypes	old	Node	JsxSelfClosingElement | JsxOpeningElement	0		parent as JsxOpeningElement | JsxSelfClosingElement
+src/compiler/utilities.ts	10869	21	interface downcast	to union of subtypes	old	Node	Block | ModuleBlock | CaseOrDefaultClause	0		parent as Block | CaseOrDefaultClause | ModuleBlock
+src/compiler/utilities.ts	10874	44	interface downcast	to union of subtypes	old	Node	ClassLikeDeclaration	0		parent as ClassLikeDeclaration
+src/compiler/utilities.ts	11095	23	interface downcast	to union of subtypes	old	Declaration	PropertyDeclaration | PropertySignature	0		declaration as PropertyDeclaration | PropertySignature
+src/compiler/utilities.ts	11110	81	interface downcast	to union of subtypes	old	Node	AccessExpression	0		node as AccessExpression
+src/compiler/utilities.ts	11175	17	union member		old	UniqueESSymbolType | StringLiteralType | NumberLiteralType	UniqueESSymbolType	0		type as UniqueESSymbolType
+src/compiler/utilities.ts	11178	47	union member		old	UniqueESSymbolType | StringLiteralType | NumberLiteralType	StringLiteralType | NumberLiteralType	0		type as StringLiteralType | NumberLiteralType
+src/compiler/utilities.ts	11409	41	interface downcast	to union of subtypes	old	Expression	StringLiteralLike	0		expr as StringLiteralLike
+src/compiler/utilities.ts	11530	53	union member		old	(void & { __escapedIdentifier: void; }) | Identifier	Identifier	0		nameArg as Identifier
+src/compiler/utilities.ts	11606	66	interface downcast	to union of subtypes	old	Node	ModuleDeclaration | SourceFile	0		location as SourceFile | ModuleDeclaration
+src/compiler/utilities.ts	11671	65	interface downcast	to union of subtypes	old	Node	ClassLikeDeclaration	0		location.parent as ClassLikeDeclaration
+src/compiler/utilities.ts	11687	64	interface downcast	to union of subtypes	old	Node	ClassLikeDeclaration | InterfaceDeclaration	0		location as ClassLikeDeclaration | InterfaceDeclaration
+src/compiler/utilities.ts	11736	68	interface downcast	to union of subtypes	old	Node	ClassLikeDeclaration | InterfaceDeclaration	0		grandparent as ClassLikeDeclaration | InterfaceDeclaration
+src/compiler/utilities.ts	11911	34	interface downcast	to union of subtypes	old	Node	FunctionLikeDeclaration	0		location as FunctionLikeDeclaration
+src/compiler/utilities.ts	11952	55	interface downcast	to union of subtypes	old	Node	MethodDeclaration | AccessorDeclaration | PropertyAssignment	0		node as MethodDeclaration | AccessorDeclaration | PropertyAssignment
+src/compiler/utilities.ts	11979	54	interface downcast	to union of subtypes	old	Node	SignatureDeclaration | PropertyDeclaration	0		location as SignatureDeclaration | PropertyDeclaration
+src/compiler/utilities.ts	11981	47	interface downcast	to union of subtypes	old	Node	FunctionExpression | ArrowFunction	0		location as FunctionExpression | ArrowFunction
+src/compiler/utilities.ts	11985	14	interface downcast	to union of subtypes	old	Node	FunctionExpression | ArrowFunction	0		location as FunctionExpression | ArrowFunction
+src/compiler/utilities.ts	12186	22	generic		old	Expression	RequireStringLiteralLikeArgument extends true ? StringLiteralLike : Expression	0		node.arguments[0] as RequireStringLiteralLikeArgument extends true ? StringLiteralLike : Expression
+src/compiler/utilities.ts	12189	22	generic		old	Expression	RequireStringLiteralLikeArgument extends true ? StringLiteralLike : Expression	0		node.arguments[0] as RequireStringLiteralLikeArgument extends true ? StringLiteralLike : Expression
+src/compiler/utilities.ts	12192	14	other	unrelated or partial overlap	old	(node: CallExpression | (IncludeTypeSpaceImports extends false ? never : JSDocImportTag | ImportTypeNode), argument: Req	(node: CallExpression | JSDocImportTag | ImportTypeNode, argument: StringLiteralLike) => void	0		cb as (node: CallExpression | JSDocImportTag | ImportTypeNode, argument: StringLiteralLike) => void
+src/compiler/utilities.ts	12197	18	other	unrelated or partial overlap	old	(node: CallExpression | (IncludeTypeSpaceImports extends false ? never : JSDocImportTag | ImportTypeNode), argument: Req	(node: CallExpression | JSDocImportTag | ImportTypeNode, argument: StringLiteralLike) => void	0		cb as (node: CallExpression | JSDocImportTag | ImportTypeNode, argument: StringLiteralLike) => void
+src/compiler/utilities.ts	12345	12	generic		old	Node	T	0		clone as T
+src/compiler/utilities.ts	12359	47	generic		old	Node	T	0	nest	setOriginalNode(factory.createStringLiteralFromNode(node), node) as Node as T
+src/compiler/utilities.ts	12360	38	generic		old	Node	T	0	nest	setOriginalNode(factory.createNumericLiteral(node.text, node.numericLiteralFlags), node) as Node as T
+src/compiler/utilitiesPublic.ts	774	16	generic		old	Node | undefined	T | undefined	0		node as T | undefined
+src/compiler/utilitiesPublic.ts	954	20	union member	member subtype	old	Expression | Declaration	Identifier	0		declaration as Identifier
+src/compiler/utilitiesPublic.ts	957	30	union member	member subtype	old	Expression | Declaration	JSDocPropertyLikeTag	0		declaration as JSDocPropertyLikeTag
+src/compiler/utilitiesPublic.ts	965	26	union member	member subtype	old	Expression | Declaration	BinaryExpression | CallExpression	0		declaration as BinaryExpression | CallExpression
+src/compiler/utilitiesPublic.ts	971	79	interface downcast	to union of subtypes	old	Expression	AccessExpression	0		(expr as BinaryExpression).left as AccessExpression
+src/compiler/utilitiesPublic.ts	975	29	union member	member subtype	old	BinaryExpression | CallExpression	BindableObjectDefinePropertyCall	0		expr as BindableObjectDefinePropertyCall
+src/compiler/utilitiesPublic.ts	981	42	union member	member subtype	old	Expression | Declaration	JSDocTypedefTag	0		declaration as JSDocTypedefTag
+src/compiler/utilitiesPublic.ts	983	48	union member	member subtype	old	Expression | Declaration	JSDocEnumTag	0		declaration as JSDocEnumTag
+src/compiler/utilitiesPublic.ts	985	36	union member	member subtype	old	Expression | Declaration	ExportAssignment	0		declaration as ExportAssignment
+src/compiler/utilitiesPublic.ts	989	26	union member	member subtype	old	Expression | Declaration	ElementAccessExpression	0		declaration as ElementAccessExpression
+src/compiler/utilitiesPublic.ts	994	13	union member		old	Expression | Declaration	NamedDeclaration	0		declaration as NamedDeclaration
+src/compiler/utilitiesPublic.ts	2565	15	interface downcast	to union of subtypes	old	Node	HasType	0		node as HasType
+src/compiler/utilitiesPublic.ts	2574	15	interface downcast	to union of subtypes	old	Node	HasInitializer	0		node as HasInitializer
+src/compiler/utilitiesPublic.ts	2626	13	union member		old	Node | FileReference	Node	0		node as Node
+src/compiler/utilitiesPublic.ts	2626	65	union member		old	Node | FileReference	Node	0		node as Node
+src/compiler/utilitiesPublic.ts	2652	27	interface downcast	to union of subtypes	old	Node	SignatureDeclaration	0		parseTreeNode.parent as SignatureDeclaration
+src/compiler/utilitiesPublic.ts	2653	49	interface downcast	to union of subtypes	old	Node	SignatureDeclaration	0		parseTreeNode.parent as SignatureDeclaration
+src/compiler/visitorPublic.ts	603	17	other	unrelated or partial overlap	old	VisitEachChildTable	Record<SyntaxKind, VisitEachChildFunction<any> | undefined>	0		visitEachChildTable as Record<SyntaxKind, VisitEachChildFunction<any> | undefined>
+src/compiler/watch.ts	221	39	other	to any	old	System	any	0		system as any
+src/compiler/watch.ts	335	15	generic		old	Program | BuilderProgram	T	0		program as T
+src/compiler/watch.ts	862	41	double cast		new	any	CreateProgram<T>	0	nest	createEmitAndSemanticDiagnosticsBuilderProgram as any as CreateProgram<T>
+src/compiler/watchPublic.ts	150	38	double cast		old	any	CreateProgram<T>	0	nest	createEmitAndSemanticDiagnosticsBuilderProgram as any as CreateProgram<T>
+src/compiler/watchPublic.ts	151	24	double cast		old	any	T	0	nest	readBuilderProgram(options, host) as any as T
+src/compiler/watchPublic.ts	374	27	union member		old	readonly FileExtensionInfo[] | WatchOptions | undefined	WatchOptions	0		watchOptionsOrExtraFileExtensions as WatchOptions
+src/compiler/watchPublic.ts	375	32	union member		old	WatchOptions | readonly ProjectReference[] | undefined	readonly ProjectReference[]	0		projectReferencesOrWatchOptionsToExtend as readonly ProjectReference[]
+src/compiler/watchPublic.ts	386	35	union member		old	WatchOptions | readonly ProjectReference[] | undefined	WatchOptions	0		projectReferencesOrWatchOptionsToExtend as WatchOptions
+src/compiler/watchPublic.ts	387	34	union member		old	readonly FileExtensionInfo[] | WatchOptions | undefined	readonly FileExtensionInfo[]	0		watchOptionsOrExtraFileExtensions as readonly FileExtensionInfo[]
+src/compiler/watchPublic.ts	493	26	interface downcast	to intersection	new	CompilerHost	CompilerHost & ResolutionCacheHost	0		createCompilerHostFromProgramHost(host, () => compilerOptions!, directoryStructureHost) as CompilerHost & ResolutionCacheHost
+src/compiler/watchPublic.ts	555	22	double cast		new	any	T	0	nest	readBuilderProgram(compilerOptions, compilerHost) as any as T
+src/compiler/watchPublic.ts	744	24	generic		new	FileMayBePresentOnHost	FilePresenceUnknownOnHost	0		hostSourceFile as FilePresenceUnknownOnHost
+src/compiler/watchPublic.ts	772	22	generic		new	FilePresenceUnknownOnHost | FilePresentOnHost	FilePresentOnHost	0		hostSourceFile as FilePresentOnHost
+src/compiler/watchPublic.ts	808	18	generic		new	FilePresenceUnknownOnHost | FilePresentOnHost	FilePresenceUnknownOnHost	0		hostSourceFile as FilePresenceUnknownOnHost
+src/compiler/watchPublic.ts	833	23	generic		new	FilePresenceUnknownOnHost | FilePresentOnHost	FilePresentOnHost	0		hostSourceFileInfo as FilePresentOnHost
+src/compiler/watchUtilities.ts	124	34	interface downcast		old	GetCanonicalFileName	(name: string) => Canonicalized	0		createGetCanonicalFileName(useCaseSensitiveFileNames) as ((name: string) => Canonicalized)
+src/compiler/watchUtilities.ts	156	51	interface downcast		old	Canonicalized[]	SortedArray<Canonicalized>	0		entries.files.map(getCanonicalFileName).sort() as SortedArray<Canonicalized>
+src/compiler/watchUtilities.ts	157	57	interface downcast		old	Canonicalized[]	SortedArray<Canonicalized>	0		entries.directories.map(getCanonicalFileName).sort() as SortedArray<Canonicalized>
+src/compiler/watchUtilities.ts	159	16	interface downcast		old	MutableFileSystemEntries	SortedAndCanonicalizedMutableFileSystemEntries	0		entries as SortedAndCanonicalizedMutableFileSystemEntries
+src/compiler/watchUtilities.ts	629	64	union member		old	Program | BuilderProgram	BuilderProgram	0		program as BuilderProgram
+src/compiler/watchUtilities.ts	644	20	union member		old	readonly string[] | Program | BuilderProgram | undefined	readonly string[]	0		program as readonly string[]
+src/compiler/watchUtilities.ts	736	14	union member	member subtype	old	((file: string, cb: FileWatcherCallback, flags: PollingInterval, options: WatchOptions | undefined, detailInfo1: X, deta	(file: string, cb: FileWatcherCallback | DirectoryWatcherCallback, flags: PollingInterval | WatchDirectoryFlags, options	0		factory[key] as (file: string, cb: FileWatcherCallback | DirectoryWatcherCallback, flags: PollingInterval | WatchDirectoryFlags, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y) => 
+src/compiler/watchUtilities.ts	811	15	union member	member subtype	old	((file: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined, deta	(file: string, cb: FileWatcherCallback | DirectoryWatcherCallback, flags: PollingInterval | WatchDirectoryFlags, options	0		plainInvokeFactory[key] as (file: string, cb: FileWatcherCallback | DirectoryWatcherCallback, flags: PollingInterval | WatchDirectoryFlags, options: WatchOptions | undefined, detailInfo1: X, detailInf
+src/compiler/watchUtilities.ts	818	18	union member	member subtype	old	FileWatcherCallback | DirectoryWatcherCallback	(...eventArgs: [fileName: string, eventKind: FileWatcherEventKind, modifiedTime?: Date | undefined] | [fileName: string]	0		cb as (...eventArgs: typeof args) => void
+src/compiler/watchUtilities.ts	839	13	double cast		old	unknown	WatchFileKind	0	nest	fallbackPolling as unknown as WatchFileKind
