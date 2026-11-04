@@ -157,7 +157,6 @@ var signatureReaders = map[string]string{
 	"checkedPredicateInferredReference": "the callee's type predicate, to read the reference it narrows",
 	"checkedPredicateResult":            "the callee's declaration, to check a predicate's claim at the call",
 	"classGenericCall":                  "the callee's instantiation, to lower a generic class's method",
-	"declaredKeyBindings":               "the callee's instantiation, to judge each type argument it binds against its constraint by the declared-key rule; an argument's slot is judged as a view (recordViewSite)",
 	"detachedOwnOpaqueArgument":         "a parameter's declaration, to find the own-property helper by name",
 	"instantiateFunction":               "the callee's instantiation, to lower a generic function",
 	"libraryCallResult":                 "the callee's declaration, whether the library declares it",
@@ -167,6 +166,7 @@ var signatureReaders = map[string]string{
 	"recordInterveningMutation":         "the callee's declaration, to look for a write in its body",
 	"recordPrototypeKey":                "the callee's declaration, to follow an argument into its parameter's key",
 	"speculativeCast":                   "the callee's callback parameter, to recognize tsc's speculation helpers by shape",
+	"typeArgumentBindings":              "the callee's instantiation, to find each type argument it binds to a constrained type parameter; an argument it's inferred from is judged against its parameter typed by the constraint (refuseInSlot), never by the parameter's slot",
 }
 
 // refuseNode walks a value as refuse walks a module, by a copy of refuse's visit closure, since refuse
