@@ -1,0 +1,338 @@
+{
+ "compiler": {
+  "casts": 11913855,
+  "reads": 3226672,
+  "sites_executed": 522,
+  "sites_with_reads": 260,
+  "top20": [
+   [
+    "src/compiler/utilities.ts:11094",
+    "ParameterDeclaration",
+    488874,
+    488874
+   ],
+   [
+    "src/compiler/utilitiesPublic.ts:2574",
+    "HasInitializer",
+    446538,
+    446538
+   ],
+   [
+    "src/compiler/utilities.ts:4859",
+    "BinaryExpression",
+    201158,
+    145938
+   ],
+   [
+    "src/compiler/utilities.ts:8110",
+    "BinaryExpression",
+    173640,
+    86820
+   ],
+   [
+    "src/compiler/checker.ts:43234",
+    "SignatureDeclaration | ClassDeclaration | ClassExpression",
+    127521,
+    15340
+   ],
+   [
+    "src/compiler/checker.ts:30203",
+    "PrefixUnaryExpression",
+    113071,
+    113071
+   ],
+   [
+    "src/compiler/checker.ts:30204",
+    "PrefixUnaryExpression",
+    113071,
+    113071
+   ],
+   [
+    "src/compiler/binder.ts:1279",
+    "ParenthesizedExpression | PropertyAccessExpression | NonNullExpression",
+    107598,
+    107598
+   ],
+   [
+    "src/compiler/utilities.ts:11976",
+    "SignatureDeclaration | PropertyDeclaration",
+    106702,
+    106702
+   ],
+   [
+    "src/compiler/utilities.ts:3416",
+    "ElementAccessExpression | PropertyAccessExpression",
+    94884,
+    94884
+   ],
+   [
+    "src/compiler/utilities.ts:6895",
+    "HasType",
+    89789,
+    89789
+   ],
+   [
+    "src/compiler/utilities.ts:4469",
+    "MethodDeclaration | ParameterDeclaration | PropertyDeclaration",
+    79060,
+    79060
+   ],
+   [
+    "src/compiler/utilities.ts:2708",
+    "CallExpression",
+    77425,
+    77425
+   ],
+   [
+    "src/compiler/utilities.ts:8115",
+    "PropertyAccessExpression",
+    72386,
+    72386
+   ],
+   [
+    "src/compiler/utilities.ts:2702",
+    "CallExpression",
+    52607,
+    52607
+   ],
+   [
+    "src/compiler/checker.ts:31203",
+    "VariableDeclaration",
+    48443,
+    48443
+   ],
+   [
+    "src/compiler/utilitiesPublic.ts:1539",
+    "ImportSpecifier",
+    45112,
+    45112
+   ],
+   [
+    "src/compiler/utilitiesPublic.ts:1539",
+    "ImportSpecifier",
+    45108,
+    45108
+   ],
+   [
+    "src/compiler/checker.ts:32823",
+    "ArrayLiteralExpression",
+    34210,
+    16502
+   ],
+   [
+    "src/compiler/binder.ts:2249",
+    "PropertyAccessExpression",
+    32418,
+    10974
+   ]
+  ],
+  "topcasts": [
+   [
+    "src/compiler/utilities.ts:6799",
+    "Identifier",
+    2571635
+   ],
+   [
+    "src/compiler/checker.ts:27856",
+    "Identifier",
+    797317
+   ],
+   [
+    "src/compiler/checker.ts:27856",
+    "Identifier",
+    797317
+   ],
+   [
+    "src/compiler/utilities.ts:11094",
+    "ParameterDeclaration",
+    488874
+   ],
+   [
+    "src/compiler/utilitiesPublic.ts:2574",
+    "HasInitializer",
+    446538
+   ]
+  ],
+  "sites_for_80pct_reads": 22,
+  "checker_only": [
+   4822525,
+   722686,
+   607
+  ],
+  "unique_only": [
+   9727863,
+   1971377,
+   1263
+  ],
+  "top20_share": 0.7901686319526745,
+  "top5_share": 0.44557705276520204
+ },
+ "services": {
+  "casts": 4655391,
+  "reads": 1254260,
+  "sites_executed": 475,
+  "sites_with_reads": 244,
+  "top20": [
+   [
+    "src/compiler/utilities.ts:11094",
+    "ParameterDeclaration",
+    198209,
+    198209
+   ],
+   [
+    "src/compiler/utilitiesPublic.ts:2574",
+    "HasInitializer",
+    180768,
+    180768
+   ],
+   [
+    "src/compiler/utilities.ts:4859",
+    "BinaryExpression",
+    50527,
+    38717
+   ],
+   [
+    "src/compiler/utilities.ts:8110",
+    "BinaryExpression",
+    46226,
+    23113
+   ],
+   [
+    "src/compiler/checker.ts:30203",
+    "PrefixUnaryExpression",
+    44115,
+    44115
+   ],
+   [
+    "src/compiler/checker.ts:30204",
+    "PrefixUnaryExpression",
+    44115,
+    44115
+   ],
+   [
+    "src/compiler/utilities.ts:6895",
+    "HasType",
+    43468,
+    43468
+   ],
+   [
+    "src/compiler/binder.ts:1279",
+    "ParenthesizedExpression | PropertyAccessExpression | NonNullExpression",
+    40147,
+    40147
+   ],
+   [
+    "src/compiler/utilities.ts:3416",
+    "ElementAccessExpression | PropertyAccessExpression",
+    38922,
+    38922
+   ],
+   [
+    "src/compiler/utilitiesPublic.ts:1539",
+    "ImportSpecifier",
+    38534,
+    38534
+   ],
+   [
+    "src/compiler/utilitiesPublic.ts:1539",
+    "ImportSpecifier",
+    38532,
+    38532
+   ],
+   [
+    "src/compiler/checker.ts:43234",
+    "SignatureDeclaration | ClassDeclaration | ClassExpression",
+    32186,
+    3885
+   ],
+   [
+    "src/compiler/utilities.ts:11976",
+    "SignatureDeclaration | PropertyDeclaration",
+    31099,
+    31099
+   ],
+   [
+    "src/compiler/utilities.ts:4469",
+    "MethodDeclaration | ParameterDeclaration | PropertyDeclaration",
+    28476,
+    28476
+   ],
+   [
+    "src/compiler/utilities.ts:8115",
+    "PropertyAccessExpression",
+    28362,
+    28362
+   ],
+   [
+    "src/compiler/utilities.ts:2708",
+    "CallExpression",
+    27008,
+    27008
+   ],
+   [
+    "src/compiler/utilities.ts:3391",
+    "CallExpression",
+    22356,
+    22356
+   ],
+   [
+    "src/compiler/checker.ts:27759",
+    "StringLiteral",
+    19996,
+    19996
+   ],
+   [
+    "src/compiler/binder.ts:2249",
+    "PropertyAccessExpression",
+    18391,
+    6196
+   ],
+   [
+    "src/compiler/checker.ts:31203",
+    "VariableDeclaration",
+    17249,
+    17249
+   ]
+  ],
+  "topcasts": [
+   [
+    "src/compiler/utilities.ts:6799",
+    "Identifier",
+    980984
+   ],
+   [
+    "src/compiler/checker.ts:27856",
+    "Identifier",
+    322339
+   ],
+   [
+    "src/compiler/checker.ts:27856",
+    "Identifier",
+    322339
+   ],
+   [
+    "src/compiler/utilities.ts:11094",
+    "ParameterDeclaration",
+    198209
+   ],
+   [
+    "src/compiler/checker.ts:27858",
+    "Identifier",
+    190794
+   ]
+  ],
+  "sites_for_80pct_reads": 21,
+  "checker_only": [
+   1877929,
+   256075,
+   607
+  ],
+  "unique_only": [
+   3880193,
+   835937,
+   1263
+  ],
+  "top20_share": 0.7882624017348875,
+  "top5_share": 0.4144635083634972
+ }
+}

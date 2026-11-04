@@ -1,0 +1,24 @@
+										}
+									}
+									if (adamic_local_72285475836124202682621975067940622040_n == NULL) {
+										static const char message[] = "undefined where the checker narrowed it away: a call since the narrowing put it back";
+										adamic_panic(message, sizeof message - 1);
+									}
+									adamic_object *t18 = adamic_local_72285475836124202682621975067940622040_n;
+									adamic_value t19 = adamic_object_view(t18, "kind", &cache2, 1, "numbe
+									if (!(adamic_same_number(t19.number, (0x1p+00)))) {
+										static const char message[] = "cast failed: this Node is not a Ident";
+										adamic_panic(message, sizeof message - 1);
+									}
+									adamic_object * l_v = adamic_retain(t18);
+									double t20 = adamic_global_253675802114782128285115210893711997290_total;
+									adamic_value t21 = adamic_object_view(l_v, "a", &cache3, 1, "number", "v.a");
+									double t22 = t21.number;
+									adamic_value t23 = adamic_object_view(l_v, "b", &cache4, 1, "number", "v.b");
+									double t24 = t23.number;
+									adamic_value t25 = adamic_object_view(l_v, "c", &cache5, 1, "number", "v.c");
+									double t26 = t25.number;
+									adamic_value t27 = adamic_object_view(l_v, "d", &cache6, 1, "number", "v.d");
+									double t28 = t27.number;
+									adamic_global_253675802114782128285115210893711997290_total = (t20 + (((t22 + adamic_temporary_module_b_view_4_ts_7
+									adamic_release(l_v);

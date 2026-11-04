@@ -1,0 +1,21 @@
+{
+ "allAs": {
+  "total": 6231,
+  "nodeSource": 1794
+ },
+ "selected": 1679,
+ "uniqueSelected": 1263,
+ "byShape": {
+  "interface downcast": 1421,
+  "union member": 258
+ },
+ "staticReadSites": 793,
+ "readsByVia": {
+  "direct/read": 646,
+  "binding/read": 129,
+  "destructure-direct/read": 8,
+  "direct/write": 5,
+  "binding/write": 2,
+  "destructure-binding/read": 3
+ }
+}

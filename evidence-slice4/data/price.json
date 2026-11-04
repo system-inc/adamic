@@ -1,0 +1,110 @@
+{
+ "compiler": {
+  "cast_s": 0.131052405,
+  "read_s": 0.030008049600000003,
+  "total_s": 0.1610604546,
+  "share_of_node": 0.011912755517751481,
+  "inferred_inlined_total_s": 0.0210974545,
+  "sites_for_50pct": 9,
+  "sites_for_80pct": 33,
+  "top5": [
+   [
+    "src/compiler/utilities.ts:6799",
+    "Identifier",
+    2571635,
+    0,
+    0.0283,
+    "17.6%"
+   ],
+   [
+    "src/compiler/utilities.ts:11094",
+    "ParameterDeclaration",
+    488874,
+    488874,
+    0.0099,
+    "6.2%"
+   ],
+   [
+    "src/compiler/utilitiesPublic.ts:2574",
+    "HasInitializer",
+    446538,
+    446538,
+    0.0091,
+    "5.6%"
+   ],
+   [
+    "src/compiler/checker.ts:27856",
+    "Identifier",
+    797317,
+    0,
+    0.0088,
+    "5.4%"
+   ],
+   [
+    "src/compiler/checker.ts:27856",
+    "Identifier",
+    797317,
+    0,
+    0.0088,
+    "5.4%"
+   ]
+  ],
+  "top5_share": 0.402444055935255,
+  "top20_share": 0.6940146287156946,
+  "checker_only_s": 0.059768754800000004
+ },
+ "services": {
+  "cast_s": 0.051209301,
+  "read_s": 0.011664618,
+  "total_s": 0.062873919,
+  "share_of_node": 0.009046607050359713,
+  "inferred_inlined_total_s": 0.0082373465,
+  "sites_for_50pct": 8,
+  "sites_for_80pct": 32,
+  "top5": [
+   [
+    "src/compiler/utilities.ts:6799",
+    "Identifier",
+    980984,
+    0,
+    0.0108,
+    "17.2%"
+   ],
+   [
+    "src/compiler/utilities.ts:11094",
+    "ParameterDeclaration",
+    198209,
+    198209,
+    0.004,
+    "6.4%"
+   ],
+   [
+    "src/compiler/utilitiesPublic.ts:2574",
+    "HasInitializer",
+    180768,
+    180768,
+    0.0037,
+    "5.8%"
+   ],
+   [
+    "src/compiler/checker.ts:27856",
+    "Identifier",
+    322339,
+    0,
+    0.0035,
+    "5.6%"
+   ],
+   [
+    "src/compiler/checker.ts:27856",
+    "Identifier",
+    322339,
+    0,
+    0.0035,
+    "5.6%"
+   ]
+  ],
+  "top5_share": 0.40677462939760445,
+  "top20_share": 0.6933682549675327,
+  "checker_only_s": 0.0230387165
+ }
+}
