@@ -94,11 +94,6 @@ func runtimeNotYetForm(stderr string) (string, string, bool) {
 			return what, ruling, true
 		}
 	}
-	for message, ruling := range runtimeNotYetKeyless {
-		if stderr == runtimeNotYetKeylessPrefix+message+"\n" {
-			return message, ruling, true
-		}
-	}
 	return "", "", false
 }
 func readRuntimeNotYetStops(path string) (runtimeNotYetStopList, error) {
