@@ -1,0 +1,1 @@
+internal/oracle/testdata/record_declared_keys_refused/r15_from_entries.a:7:7: Adamic 0.1 refuses a dictionary read through a declared property narrower than its values ({ [k: string]: number; } seen as Options: outFile is declared string | undefined, and the index signature holds number); give the record no declared keys, or write the declared property by its name
