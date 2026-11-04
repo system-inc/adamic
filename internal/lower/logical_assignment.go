@@ -35,6 +35,16 @@ func (l *lowering) logicalAssignment(node *ast.Node) (ir.Expression, error) {
 		if !known || l.caught[l.symbol(target)] || l.alwaysUndefined[l.symbol(target)] {
 			return nil, l.notYet(target, "a logical assignment to this binding")
 		}
+		// A logical assignment to a module binding from a function written before the binding's own
+		// declaration, so it can run while the binding is in its dead zone, leaves it undefined on both
+		// backends once that dead-zone throw is caught, where Node assigns it (#aw65psm: later ??= 4 in a
+		// function above let later: number | undefined = undefined, called once early from a try and once
+		// after, prints undefined where Node prints 4). Its cause isn't found yet, so that shape stops
+		// until it is. A write below the declaration can't run in the dead zone (tsc's own
+		// `deferredX ||= ...`, below its let), so it lowers as before.
+		if l.result.Locals[local].Global && l.checked(local) && writtenAboveDeclaration(target, l.symbol(target)) {
+			return nil, l.notYet(target, "a logical assignment to a module binding from code above its declaration (its temporal dead zone)")
+		}
 		of := l.result.Locals[local].Type
 		l.result.Locals[local].ExpressionAssigned = true
 		assignment.Read = ir.Read{Local: local, Of: of, Checked: l.checked(local)}
@@ -121,4 +131,14 @@ func (l *lowering) logicalAssignment(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(target, "a logical assignment to this target")
 	}
 	return assignment, nil
+}
+
+// writtenAboveDeclaration is whether target sits in the same file as its binding's declaration and
+// above it, the only place a write can run before the declaration does.
+func writtenAboveDeclaration(target *ast.Node, symbol *ast.Symbol) bool {
+	if symbol == nil || symbol.ValueDeclaration == nil {
+		return true
+	}
+	declaration := symbol.ValueDeclaration
+	return ast.GetSourceFileOfNode(declaration) == ast.GetSourceFileOfNode(target) && target.Pos() < declaration.Pos()
 }
