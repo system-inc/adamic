@@ -36,12 +36,13 @@ func reflectGetFixture(t *testing.T, name string) string {
 // property_of.a's empty message reads undefined; record.c's number and boolean shapes swapped, so
 // records.a's booleans read as numbers; one closure dropped from union.c's prototype_methods, so
 // prototype_names.a reads that name as undefined; a closure made for each read in place of the
-// immortal one, so prototype_names.a's identities print false; json_decode.c's registration of the
-// shapes it builds dropped, so prototype_decoded.a stops natively at its first constructor; map_set.c's
-// registration of an iterator result's shape dropped, so prototype_runtime_plain.a stops natively at
-// its map entry; dynamic_slot's representation bytes read only for an object with a write order, as
-// before #rany24c, so decoded_scalar_reads.a's decoded number panics natively; directory.c's byte
-// for a status's size dropped, so that row panics.
+// immortal one, so prototype_names.a's identities print false; json_decode.c's canonical shapes
+// marked host, so prototype_decoded.a stops natively at its first constructor; map_set.c's iterator
+// result shapes marked host, so prototype_runtime_plain.a stops natively at its map entry (a plain
+// shape's flag is what answers now, #ey7aysy, not its registration); dynamic_slot's representation
+// bytes read only for an object with a write order, as before #rany24c, so decoded_scalar_reads.a's
+// decoded number panics natively; directory.c's byte for a status's size dropped, so that row
+// panics.
 func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ file, stdout string }{
@@ -56,6 +57,7 @@ func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 		{"prototype_decoded.a", "1 function function true\n3 function\nfunction\nfunction true\n"},
 		{"prototype_runtime_plain.a", prototypeRuntimePlainAnswers},
 		{"decoded_scalar_reads.a", decodedScalarReadsAnswers},
+		{"spread_plain.a", "constructor function\ngiven x number constructor function\nwidth number constructor function\n"},
 		{"error_fields.a", "code: \"ENOENT\"\nmessage: \"ENOENT: no such file or directory, open '/nonexistent-adamic-reflect-get/file'\"\ncaught foo: undefined\nthrown: \"thrown\"\nname: \"Error\"\nthrown foo: undefined\n"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
@@ -167,6 +169,12 @@ var reflectGetStops = []struct{ file, stdout, stop, key, node string }{
 	{"stop_host_iterator_next.a", "iterator\n", "RuntimeValue", "next", "iterator\nfunction\n"},
 	{"stop_host_memory_field.a", "memory\n", "RuntimeValue", "rss", "memory\nnumber\n"},
 	{"stop_host_memory_heap.a", "memory number\n", "RuntimeValue", "heapUsed", "memory number\nnumber\n"},
+	{"stop_host_dirent.a", "entries true\n", "RuntimeValue", "isFile", "entries true\nfunction\n"},
+	{"stop_host_performance_mark.a", "mark adamic\n", "RuntimeValue", "name", "mark adamic\nstring\n"},
+	{"stop_host_handle.a", "handle true\n", "RuntimeValue", "setBlocking", "handle true\nfunction\n"},
+	{"stop_host_groups.a", "groups true\n", "RuntimeValue", "letter", "groups true\nstring\n"},
+	{"stop_host_error_prototype.a", "error made\n", "RuntimeValue", "valueOf", "error made\nfunction\n"},
+	{"stop_host_fs_error_prototype.a", "caught\n", "RuntimeValue", "hasOwnProperty", "caught\nfunction\n"},
 	{"stop_error_stack.a", "before\n", "ErrorProperty", "stack", "before\nstring\n"},
 	{"stop_array.a", "before\n", "Array", "length", "before\nnumber\n"},
 	{"stop_literal_getter.a", "got\n", "ObjectLiteralGetter", "value", "got\nstring\n"},
@@ -196,7 +204,10 @@ func reflectGetStop(t *testing.T, stdout, stop, key string) run {
 // The stop_host_ rows after stop_host_object.a are #ey7aysy's: a host object stops for every key.
 // Their mutants are union.c's guard put back on Object.prototype's names only, so
 // stop_host_stats_method.a's isFile reads undefined natively, and
-// TestReflectGetHostMutantJavaScript's.
+// TestReflectGetHostMutantJavaScript's. The rows from stop_host_dirent.a on pin each runtime shape
+// marked host to Node (host_shapes_test.go's table names each one's fixture); a shape's host sentinel
+// dropped, stat_shape's in node_fs_file.c or the groups shape's in internal/regexp/native.go, and its
+// fixture answers natively.
 func TestReflectGetStopsAlikeOnBothBackends(t *testing.T) {
 	t.Parallel()
 	for _, probe := range reflectGetStops {

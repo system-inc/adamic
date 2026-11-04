@@ -1,0 +1,9 @@
+// A host object stops for every key (#ey7aysy): a match's groups object has a null prototype on Node,
+// and native's shape, which the regular expression's compiler writes, holds each group as its own.
+// Node prints string.
+import { propertyOf } from './hostErrors.ts';
+
+const match = /(?<letter>x)/.exec('x');
+console.log(`groups ${match !== null}`);
+const value = propertyOf(match?.groups, 'letter');
+console.log(typeof value);

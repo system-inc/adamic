@@ -1,0 +1,13 @@
+// An Object.prototype name stops on a caught fs error as on a thrown one (stop_host_error_prototype.a):
+// its shape is marked host (#ey7aysy), though its own code and message answer (error_fields.a). Node
+// prints function.
+import { readFileSync } from 'node:fs';
+import { propertyOf } from './hostErrors.ts';
+
+try {
+	readFileSync('/nonexistent-adamic-reflect-get/file', 'utf8');
+} catch (error) {
+	console.log('caught');
+	const value = propertyOf(error, 'hasOwnProperty');
+	console.log(typeof value);
+}

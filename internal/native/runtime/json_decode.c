@@ -242,9 +242,10 @@ static adamic_object *make_object(size_t count) {
 }
 // Field-read caches keep shape identity across object lifetimes. Canonical shapes therefore live
 // until program exit; a shape embedded in a freed object could be mistaken for a later layout.
-// Each is registered as a literal's shape is (union.c), so a run-time key read takes a decoded
-// object for one the program made, whose prototype is Object's on Node, and Object.prototype's
-// names answer. Its scalar tags are zero, no evidence, as union.c's dynamic_slot reads them: the
+// A decoded object's prototype is Object's on Node, so a canonical shape is plain: it copies
+// make_object's shape, whose methods the allocation zeroed, and Object.prototype's names answer on
+// it by a run-time key (union.c). Each is registered as a literal's shape is, and its scalar tags
+// are zero, no evidence, as union.c's dynamic_slot reads them: the
 // entry is shared by every schema whose fields store alike, a number field's and a null field's
 // among them, so no one schema's representations may stand for the rest. Each object's own
 // representation bytes, written as validate fills its slots, answer a scalar read instead.
@@ -371,8 +372,9 @@ static const adamic_shape ok_shape = {2, ok_names, references, NULL, reference_k
 static const adamic_shape number_shape = {2, ok_names, number_references, NULL, number_kinds};
 static const adamic_shape boolean_shape = {2, ok_names, number_references, NULL, boolean_kinds};
 static const adamic_shape error_shape = {2, error_names, references, NULL, reference_kinds};
-// decodeJson's result is a plain object on Node (json_decode.mjs), so each of its shapes is
-// registered as the decoder's own are, and Object.prototype's names answer on it by a run-time key.
+// decodeJson's result is a plain object on Node (json_decode.mjs), so none of its shapes is marked
+// host (adamic.h) and Object.prototype's names answer on it by a run-time key. Each is registered as
+// the decoder's own are.
 static const int result_types[2];
 static adamic_shape_types ok_metadata = {&ok_shape, result_types, NULL, false};
 static adamic_shape_types number_metadata = {&number_shape, result_types, NULL, false};

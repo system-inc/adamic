@@ -16,6 +16,9 @@ const adamic_methods adamic_error_methods = {0, NULL, NULL};
 // A Node-coded host error's shape names these instead, one Node builds with makeNodeErrorWithCode or
 // as a SystemError, whose class's toString brackets the code (error_text).
 const adamic_methods adamic_coded_error_methods = {0, NULL, NULL};
+// A host object's shape names these (adamic.h): empty, so a method lookup or an in test that walks
+// a shape's methods finds nothing in them.
+const adamic_methods adamic_host_methods = {0, NULL, NULL};
 
 static const char *const error_names[] = {"name", "message"};
 static const bool error_references[] = {true, true};

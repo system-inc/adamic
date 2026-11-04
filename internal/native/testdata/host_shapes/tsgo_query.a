@@ -1,0 +1,7 @@
+// tsgoQuery's answer is tsgo.c's shape, marked host. A program reaches it only when built with the
+// typescript-go checker linked; an ordinary build refuses the call, so no ordinary program reads it by
+// a run-time key. host_shapes_test.go requires this program refused in exactly those words.
+import { tsgoQuery } from 'adamic';
+
+const answer = tsgoQuery(0, 'main.ts', 0);
+console.log(typeof Reflect.get(Object(answer), 'type', answer));
