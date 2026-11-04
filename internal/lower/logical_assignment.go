@@ -47,7 +47,7 @@ func (l *lowering) logicalAssignment(node *ast.Node) (ir.Expression, error) {
 		if l.result.Locals[local].Global && l.checked(local) && writtenAboveDeclaration(target, l.symbol(target)) {
 			return nil, l.notYet(target, "a logical assignment to a module binding from code above its declaration (its temporal dead zone)")
 		}
-		if l.result.Locals[local].Global && l.checked(local) && mayRunInDeadZone(target, l.symbol(target)) {
+		if l.result.Locals[local].Global && l.checked(local) && l.mayRunInDeadZone(target, l.symbol(target)) {
 			return nil, l.notYet(target, "a logical assignment to a module binding from a function that may run before its declaration (its temporal dead zone)")
 		}
 		of := l.result.Locals[local].Type
@@ -154,7 +154,7 @@ func writtenAboveDeclaration(target *ast.Node, symbol *ast.Symbol) bool {
 // called, wherever it's written (a hoisted function below the let can be called above it), so it may
 // when mayRunBefore says the top-level statement holding it may run before the one declaring the
 // binding.
-func mayRunInDeadZone(target *ast.Node, symbol *ast.Symbol) bool {
+func (l *lowering) mayRunInDeadZone(target *ast.Node, symbol *ast.Symbol) bool {
 	if symbol == nil || symbol.ValueDeclaration == nil {
 		return true
 	}
@@ -171,5 +171,5 @@ func mayRunInDeadZone(target *ast.Node, symbol *ast.Symbol) bool {
 		// judgment doesn't know, and it stops.
 		return true
 	}
-	return mayRunBefore(declaration, top)
+	return l.mayRunBefore(declaration, top)
 }

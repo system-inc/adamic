@@ -2,6 +2,7 @@ package lower
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 )
 
 // A class binding is in its temporal dead zone until its declaration runs, as a let's is, and Node
@@ -33,7 +34,7 @@ func (l *lowering) classDeadZoneGap(node *ast.Node) error {
 		return nil
 	}
 	top, inFunction := holdingStatement(node)
-	if !inFunction || top == nil || top == declaration || !mayRunBefore(declaration, top) {
+	if !inFunction || top == nil || top == declaration || !l.mayRunBefore(declaration, top) {
 		return nil
 	}
 	return l.notYet(node, "a class used from a function that may run before the class's declaration (its temporal dead zone)")
@@ -73,8 +74,8 @@ func holdingStatement(node *ast.Node) (*ast.Node, bool) {
 // declaration wherever it sits, so it may run early exactly when that first-running code can reach one
 // of its names (reachedBefore). An exported one, by its modifier or by an export list or export
 // assignment naming it (exportedNames), can also be reached through another module, so it may whenever
-// that code makes any call at all.
-func mayRunBefore(declaration, top *ast.Node) bool {
+// that code makes a call that may reach program code (anyProgramCall).
+func (l *lowering) mayRunBefore(declaration, top *ast.Node) bool {
 	statements := declaration.Parent.AsSourceFile().Statements.Nodes
 	position, at := -1, -1
 	for index, statement := range statements {
@@ -111,7 +112,7 @@ func mayRunBefore(declaration, top *ast.Node) bool {
 		running = append(running, runningParts(statement)...)
 	}
 	running = append(running, runningParts(declaration)...)
-	if anyCall(running) {
+	if l.anyProgramCall(running) {
 		exported := ast.HasSyntacticModifier(top, ast.ModifierFlagsExport)
 		listed := exportedNames(statements)
 		for _, name := range names {
@@ -254,21 +255,82 @@ func mentionedNames(node *ast.Node, into map[string]bool) {
 	visit(node)
 }
 
-// anyCall is whether any of the running parts makes a call, a new or a tagged template.
-func anyCall(statements []*ast.Node) bool {
+// anyProgramCall is whether any of the running parts makes a call, a new or a tagged template that
+// may reach program code. A call or new doesn't when it's proven not to: its signature is the bundled
+// library's or the prelude's, and its receiver and every argument are primitive-typed, with no function
+// value to call back and no object whose toString or valueOf could run (print.ts's
+// `const knownUnits = '...'.split(' ')`). Its arguments are still searched for calls of their own. Any
+// other call counts, a tagged template always does, and what can't be resolved counts.
+func (l *lowering) anyProgramCall(parts []*ast.Node) bool {
 	found := false
 	var visit ast.Visitor
 	visit = func(inner *ast.Node) bool {
-		if inner.Kind == ast.KindCallExpression || inner.Kind == ast.KindNewExpression || inner.Kind == ast.KindTaggedTemplateExpression {
+		switch inner.Kind {
+		case ast.KindCallExpression, ast.KindNewExpression:
+			if !l.libraryCallOnPrimitives(inner) {
+				found = true
+				return true
+			}
+		case ast.KindTaggedTemplateExpression:
 			found = true
 			return true
 		}
 		return inner.ForEachChild(visit)
 	}
-	for _, statement := range statements {
-		if visit(statement) {
+	for _, part := range parts {
+		if visit(part) {
 			break
 		}
 	}
 	return found
+}
+
+// libraryCallOnPrimitives is whether call, a call or a new, resolves to a library or prelude signature
+// and takes only primitive-typed values: its receiver, when its callee is a member, and every argument.
+func (l *lowering) libraryCallOnPrimitives(call *ast.Node) bool {
+	signature := l.checker.GetResolvedSignature(call)
+	if signature == nil || !librarySignature(signature) {
+		return false
+	}
+	values := []*ast.Node{}
+	var callee *ast.Node
+	if call.Kind == ast.KindCallExpression {
+		callee = ast.SkipParentheses(call.AsCallExpression().Expression)
+		values = append(values, nodesOf(call.AsCallExpression().Arguments)...)
+	} else {
+		callee = ast.SkipParentheses(call.AsNewExpression().Expression)
+		values = append(values, nodesOf(call.AsNewExpression().Arguments)...)
+	}
+	switch callee.Kind {
+	case ast.KindIdentifier:
+	case ast.KindPropertyAccessExpression:
+		values = append(values, callee.AsPropertyAccessExpression().Expression)
+	case ast.KindElementAccessExpression:
+		values = append(values, callee.AsElementAccessExpression().Expression, callee.AsElementAccessExpression().ArgumentExpression)
+	default:
+		return false
+	}
+	for _, value := range values {
+		if value.Kind == ast.KindSpreadElement || !primitiveTyped(l.checker.GetTypeAtLocation(value)) {
+			return false
+		}
+	}
+	return true
+}
+
+// primitiveTyped is whether every value of a type is a primitive: a primitive type, or a union of them.
+// Any, unknown, an object, a function or a type parameter isn't.
+func primitiveTyped(proven *checker.Type) bool {
+	if proven == nil {
+		return false
+	}
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range proven.Types() {
+			if member.Flags()&checker.TypeFlagsPrimitive == 0 {
+				return false
+			}
+		}
+		return true
+	}
+	return proven.Flags()&checker.TypeFlagsPrimitive != 0
 }
