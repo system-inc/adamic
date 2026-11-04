@@ -575,8 +575,10 @@ adamic_string *adamic_string_normalize(const adamic_string *string, const adamic
 	} else if (form_is(form, "NFKD")) {
 		compatibility = true, composed = false;
 	} else {
-		static const char message[] = "RangeError: The normalization form should be one of NFC, NFD, NFKC, NFKD.";
-		adamic_panic(message, sizeof message - 1);
+		// Node's RangeError on the pending word, and an empty string the caller lets go (number.c).
+		static const char message[] = "The normalization form should be one of NFC, NFD, NFKC, NFKD.";
+		adamic_throw_kind("RangeError", sizeof "RangeError" - 1, message, sizeof message - 1);
+		return adamic_retain(&adamic_string_empty);
 	}
 	// ASCII is the same in every form.
 	bool ascii = true;

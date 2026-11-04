@@ -277,6 +277,10 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			found = found || node.MayThrow()
 		case ir.ArrayFill:
 			found = found || node.MayThrow()
+		case ir.StringCall:
+			found = found || node.MayThrow(l.result.Strings)
+		case ir.StringFromCodes:
+			found = found || node.MayThrow()
 		case ir.ObjectLiteral:
 			found = found || l.result.ObjectSpreadMayThrow(node)
 		case ir.ObjectCall:
@@ -362,11 +366,8 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 				callsClosures = true
 			}
 		case ir.StringCall:
-			switch {
-			case node.Method == "repeat" && !ir.ConstantWithin(node.Arguments[0], 0, math.MaxFloat64):
+			if node.Method == "repeat" && !ir.ConstantWithin(node.Arguments[0], 0, math.MaxFloat64) {
 				failing = "repeat"
-			case node.Method == "normalize" && len(node.Arguments) > 0 && !isNormalizationForm(node.Arguments[0], l.result.Strings):
-				failing = "normalize"
 			}
 		case ir.TypedArrayNew:
 			if !node.FromArray && !ir.ConstantWithin(node.Source, 0, 9007199254740991) {
@@ -391,18 +392,6 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 		}
 	}
 	return failing
-}
-
-func isNormalizationForm(value ir.Expression, strings []string) bool {
-	constant, isConstant := value.(ir.StringConstant)
-	if !isConstant {
-		return false
-	}
-	switch strings[constant.Index] {
-	case "NFC", "NFD", "NFKC", "NFKD":
-		return true
-	}
-	return false
 }
 
 // walk visits every IR statement and expression in a value, depth first, while visit says to go on
