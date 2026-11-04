@@ -161,6 +161,18 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		if !ast.IsIdentifier(parameter.Name()) {
 			return l.notYet(parameter, "a parameter that isn't a plain name")
 		}
+		// A this parameter names the receiver's type and takes no argument: f(this: void, n) is called
+		// as f(1). Declared here as a local it shifts every argument after it by one, so a function
+		// declaration printed NaN where Node prints 2, and a method, whose receiver is already its first
+		// parameter, shifts the same way (#j8mt4pr). Every declaration's parameters pass through this
+		// loop, so it stops here when another parameter follows, until this is dropped from the lowered
+		// parameters, the real fix. With nothing after it nothing shifts, and the body's this is the
+		// receiver, so an object literal's value(this: { flags: number }) lowers and agrees with Node
+		// (namespace_method_receiver.a). A function expression, a nested declaration, a namespace
+		// function and a function used as a value stop sooner, in their own words.
+		if parameter.Name().Text() == "this" && position < len(declaration.Parameters())-1 {
+			return l.notYet(parameter, "a function or method with a this parameter followed by another parameter (dynamic receivers are not implemented)")
+		}
 		local, err := l.declareLocal(parameter.Name())
 		if err != nil {
 			return err
