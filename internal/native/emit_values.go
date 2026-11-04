@@ -2,6 +2,7 @@
 package native
 
 import (
+	"fmt"
 	"github.com/system-inc/adamic/internal/ir"
 	"strconv"
 )
@@ -34,8 +35,12 @@ func cType(valueType ir.Type) string {
 		return "adamic_heap *"
 	case ir.Weak:
 		return "adamic_weak *"
+	case ir.String:
+		return "adamic_string *"
 	}
-	return "adamic_string *"
+	// A type with no case here has no C representation yet. Falling back to a string pointer would
+	// compile a value of it as one, silently (#tky5538).
+	panic(fmt.Sprintf("native: compiler bug: no C type for ir.Type %d", valueType))
 }
 
 // member is the adamic_value member that holds a value of the type.
