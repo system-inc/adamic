@@ -1,0 +1,38 @@
+// normalize given a form that isn't one of the four, and String.fromCodePoint given a code that isn't a
+// code point, throw Node's RangeError, and a catch takes it: its name and its message are two fields,
+// printed apart. The statement's temporaries, a label built at run time among them, are let go on the
+// way to the catch, so the leak check holds it.
+for (const form of ['NFC', 'nfc', 'NFKD', '']) {
+	const label = `normalize(${form})`;
+	try {
+		console.log(`${label}: ${'é'.normalize(form).length}`);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(error.name);
+			console.log(error.message);
+		}
+	}
+}
+// V8 writes the code as String() does: 1.5, -1, 1114112, NaN, Infinity.
+for (const code of [0x1f30d, 1.5, -1, 0x110000, NaN, Infinity]) {
+	const label = `fromCodePoint(104, ${code}, 105)`;
+	try {
+		console.log(`${label}: ${String.fromCodePoint(104, code, 105)}`);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(error.name);
+			console.log(error.message);
+		}
+	}
+}
+// A spread's codes are known only as it runs.
+const codes: number[] = [72, 105];
+for (const extra of [33, 3.5]) {
+	codes.push(extra);
+	try {
+		console.log(String.fromCodePoint(...codes));
+	} catch (error) {
+		console.log(error instanceof Error ? `${error.name}: ${error.message}` : 'not an error');
+	}
+}
+console.log('done');
