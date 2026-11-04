@@ -62,6 +62,9 @@ func (e *emitter) statementAt(at *ir.Statement) {
 }
 
 func (e *emitter) statement(statement ir.Statement) {
+	// Each statement's checks share a ladder of their own (exceptions.go).
+	frame := e.openLadder()
+	defer e.closeLadder(frame)
 	switch statement := statement.(type) {
 	case ir.SourceLine:
 		if e.debug {
