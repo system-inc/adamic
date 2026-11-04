@@ -95,7 +95,7 @@ func runtimeNotYetForm(stderr string) (string, string, bool) {
 		}
 	}
 	for message, ruling := range runtimeNotYetKeyless {
-		if stderr == runtimeNotYetKeylessPrefix+message+"\n" {
+		if strings.HasPrefix(stderr, runtimeNotYetKeylessPrefix+message) {
 			return message, ruling, true
 		}
 	}
