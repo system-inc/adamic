@@ -54,7 +54,10 @@ import (
 //     failing closed.
 //
 // A row whose shape no longer exists fails too, so the table can't rot. The JavaScript backend's
-// wrappers for a native host object are held here as well (hostShapeWrappers). Mutants:
+// wrappers for a native host object are held here as well (hostShapeWrappers), and so are the
+// runtime's entrances by which a name reaches an unknown value (hostShapeEntrances), and every runtime
+// function that reads a shape's names must call the host guard or be in hostShapeReaders with why it
+// needn't. Mutants:
 // TestHostShapesClosureMutants, run every time; and, by hand, stat_shape's sentinel dropped
 // (node_fs_file.c), so the C disagrees with its row here and stop_host_stats_method.a answers
 // natively, a row removed, so this test names its shape, and tsgo_query.a changed to lower, or to
@@ -199,6 +202,256 @@ var hostShapeWrappers = []struct {
 }{
 	{"internal/javascript/library_map_set.go", "class AdamicIterator {", "new AdamicIterator(", hostShapeRuntime + "map_set.c  iterator_shape[0]"},
 	{"internal/javascript/library_node_process.go", "class AdamicHostObject {}", "Object.setPrototypeOf(usage, AdamicHostObject.prototype)", hostShapeRuntime + "node_process.c adamic_node_memory_usage shape[0]"},
+}
+
+// hostShapeEntrances are the runtime's entrances by which a name or a key reaches a value viewed as
+// unknown: an in test, the read it narrows and a run-time key read (Adamic's ruling on #ey7aysy at
+// 23:03Z). Each must test the host predicate before a slot is consulted, every adamic_has_ or
+// adamic_dynamic_ function a runtime header declares must be one of them, so a fourth reader of a
+// value's slots by name fails here until it's guarded and listed, and the emitter must call each.
+var hostShapeEntrances = []string{"adamic_has_property", "adamic_dynamic_property", "adamic_dynamic_property_keyed"}
+
+var entranceDeclaration = regexp.MustCompile(`\b(adamic_(?:has|dynamic)_\w*)\s*\(`)
+
+// entranceProblems holds union.c, the runtime's headers and the emitter to hostShapeEntrances.
+func entranceProblems(union string, headers map[string]string, emitter string) []string {
+	var problems []string
+	tokens, err := cTokens(strings.ReplaceAll(union, "\\\n", "  "))
+	if err != nil {
+		return []string{"union.c: " + err.Error()}
+	}
+	guarded := map[string]bool{}
+	depth, scope := 0, ""
+	for index, current := range tokens {
+		switch current.text {
+		case "{":
+			if depth == 0 {
+				scope = braceScope(tokens, index)
+			}
+			depth++
+		case "}":
+			depth--
+			if depth == 0 {
+				scope = ""
+			}
+		case "host_stop", "host_object":
+			if depth > 0 && index+1 < len(tokens) && tokens[index+1].text == "(" {
+				guarded[scope] = true
+			}
+		}
+	}
+	for _, entrance := range hostShapeEntrances {
+		if !guarded[entrance] {
+			problems = append(problems, "union.c's "+entrance+" doesn't test host_stop or host_object, so a host object's slots answer through it")
+		}
+		if !strings.Contains(emitter, entrance+"(") {
+			problems = append(problems, "the emitter no longer calls "+entrance+"; hostShapeEntrances names what it calls")
+		}
+	}
+	names := make([]string, 0, len(headers))
+	for name := range headers {
+		names = append(names, name)
+	}
+	slices.Sort(names)
+	for _, name := range names {
+		for _, match := range entranceDeclaration.FindAllStringSubmatch(headers[name], -1) {
+			if !slices.Contains(hostShapeEntrances, match[1]) {
+				problems = append(problems, fmt.Sprintf("%s declares %s, a reader by name hostShapeEntrances doesn't hold: guard it with host_stop and list it", name, match[1]))
+			}
+		}
+	}
+	return problems
+}
+
+// entranceSources reads union.c, the runtime's headers and the emitter's expressions.
+func entranceSources(t *testing.T) (string, map[string]string, string) {
+	t.Helper()
+	union, err := os.ReadFile(filepath.Join("runtime", "union.c"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	paths, err := filepath.Glob(filepath.Join("runtime", "*.h"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	headers := map[string]string{}
+	for _, path := range paths {
+		text, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		headers[filepath.Base(path)] = string(text)
+	}
+	emitter, err := os.ReadFile("emit_expressions.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	return string(union), headers, string(emitter)
+}
+
+// hostShapeReaders is every runtime function that reads a shape's names without the host guard
+// (adamic_host_stop, host_stop or host_object), with why it needn't call it. Any other function that
+// reads ->names or .names, other than to assign them, must call the guard first, or this test names
+// it: a new reader of a value's names by a key fails here until it's guarded or listed. A reader
+// whose host door is closed by lowering names the program that pins the refusal, which must be
+// refused in exactly those words.
+var hostShapeReaders = []struct {
+	file, function, reason string
+	refusal, refused       string
+}{
+	{"adamic.h", "adamic_shape_check", "checks a shape's own kinds and names no key", "", ""},
+	{"class_features.c", "adamic_public_index", "a class instance's public shape, never a host's", "", ""},
+	{"json_decode.c", "make_object", "lays out the decoder's own plain shape", "", ""},
+	{"json_decode.c", "canonical_shape", "copies the decoder's own plain shape", "", ""},
+	{"json_decode.c", "validate", "fills the decoder's own plain object", "", ""},
+	{"json_encode.c", "encode_field", "reads only the fields an encoder schema names from the value's static type", "", ""},
+	{"library_language.c", "adamic_plain_object_keys", "nothing the emitter writes calls it, and a write-ordered object goes through adamic_object_keys", "", ""},
+	{"library_object.c", "adamic_object_has_own", "Object.hasOwn takes only a literal naming a declared public field", "door_has_own.a", "Object.hasOwn"},
+	{"library_object.c", "adamic_object_ordered", "orders the slots of an object its callers have already admitted", "", ""},
+	{"library_object.c", "adamic_object_values", "Object.values and Object.entries of a host are refused", "door_values.a", "Object.values"},
+	{"library_object.c", "adamic_object_assign", "Object.assign from a host source is refused", "door_assign.a", "Object.assign"},
+	{"object.c", "adamic_object_copy_checked", "a spread of a host is refused", "door_spread.a", "an object spread through a view that may hold library class Stats (its internal fields are not own enumerable properties)"},
+	{"object.c", "adamic_object_find", "a static read by a name the program's type declares, which lowering maps to the shape's own field", "", ""},
+	{"object.c", "adamic_object_callee", "a method call by a name the program's type declares", "", ""},
+	{"object.c", "adamic_object_optional_find", "a static read by a name the program's type declares", "", ""},
+	{"object.c", "adamic_object_view_write", "a static write by a name the program's type declares", "", ""},
+	{"regexp.c", "regex_storage", "the regular expression runtime reading its own objects", "", ""},
+	{"regexp.c", "adamic_regex_done", "the regular expression runtime reading its own objects", "", ""},
+	{"regexp.c", "adamic_regex_group_lookup", "the regular expression runtime reading its own objects", "", ""},
+	{"regexp.c", "adamic_regex_property", "the regular expression runtime reading its own objects", "", ""},
+	{"regexp_compile_runtime.c", "adamic_regex_compile_new", "copies the run-time compiler's own groups shape", "", ""},
+	{"union.c", "has_property", "reached past host_stop at adamic_has_property, or for an array's own properties", "", ""},
+	{"union.c", "dynamic_property", "reached past host_stop at adamic_dynamic_property, or for an array's own properties", "", ""},
+	{"union.c", "keyed_slot", "called by adamic_dynamic_property_keyed after its host_object test", "", ""},
+}
+
+// hostShapeDoors are the closed doors with no runtime reader of their own: lowering refuses the
+// program before any function reads the host's names, so the refusal is the pin.
+var hostShapeDoors = []struct{ refusal, refused string }{
+	{"door_keys_unknown.a", "Object.keys on a non-object"},
+	{"door_has_own_property_unknown.a", "hasOwnProperty on a union of differently held members (mixed value descriptors are not represented)"},
+	{"door_string_typed.a", "String conversion of an object, array, map or function (ToPrimitive is not lowered)"},
+	{"door_template_typed.a", "a template interpolating an object, an array, a map, a function or undefined"},
+}
+
+// nameReaders finds, in one C file, each function that reads a shape's names other than to assign
+// them, and whether it calls the host guard.
+func nameReaders(source string) (map[string]bool, error) {
+	tokens, err := cTokens(strings.ReplaceAll(source, "\\\n", "  "))
+	if err != nil {
+		return nil, err
+	}
+	readers := map[string]bool{}
+	guarded := map[string]bool{}
+	depth, scope := 0, ""
+	for index, current := range tokens {
+		switch current.text {
+		case "{":
+			if depth == 0 {
+				scope = braceScope(tokens, index)
+			}
+			depth++
+			continue
+		case "}":
+			depth--
+			if depth == 0 {
+				scope = ""
+			}
+			continue
+		}
+		if depth == 0 || scope == "" || strings.HasPrefix(scope, "struct") {
+			continue
+		}
+		next := func(offset int) string {
+			if index+offset < len(tokens) {
+				return tokens[index+offset].text
+			}
+			return ""
+		}
+		member := index > 0 && tokens[index-1].text == "." || index > 1 && tokens[index-1].text == ">" && tokens[index-2].text == "-"
+		if current.text == "names" && member && !(next(1) == "=" && next(2) != "=") {
+			readers[scope] = true
+		}
+		if (current.text == "host_stop" || current.text == "adamic_host_stop" || current.text == "host_object") && next(1) == "(" {
+			guarded[scope] = true
+		}
+	}
+	unguarded := map[string]bool{}
+	for function := range readers {
+		unguarded[function] = !guarded[function]
+	}
+	return unguarded, nil
+}
+
+// readerProblems holds every runtime reader of a shape's names to the guard or to hostShapeReaders.
+func readerProblems(sources map[string]string) []string {
+	var problems []string
+	allowed := map[string]bool{}
+	for _, reader := range hostShapeReaders {
+		allowed[reader.file+" "+reader.function] = true
+	}
+	seen := map[string]bool{}
+	files := make([]string, 0, len(sources))
+	for file := range sources {
+		files = append(files, file)
+	}
+	slices.Sort(files)
+	for _, file := range files {
+		readers, err := nameReaders(sources[file])
+		if err != nil {
+			problems = append(problems, file+": "+err.Error())
+			continue
+		}
+		functions := make([]string, 0, len(readers))
+		for function := range readers {
+			functions = append(functions, function)
+		}
+		slices.Sort(functions)
+		for _, function := range functions {
+			key := file + " " + function
+			seen[key] = true
+			switch {
+			case readers[function] && !allowed[key]:
+				problems = append(problems, fmt.Sprintf("%s's %s reads a shape's names without adamic_host_stop: guard it, or list it in hostShapeReaders with why it needn't be", file, function))
+			case !readers[function] && allowed[key]:
+				problems = append(problems, fmt.Sprintf("%s's %s calls the host guard now; remove it from hostShapeReaders", file, function))
+			}
+		}
+	}
+	for _, reader := range hostShapeReaders {
+		if !seen[reader.file+" "+reader.function] {
+			problems = append(problems, fmt.Sprintf("hostShapeReaders names %s's %s, which no longer reads a shape's names; remove it", reader.file, reader.function))
+		}
+		if reader.refusal != "" {
+			if problem := refusalProblem(filepath.Join("testdata", "host_shapes", reader.refusal), reader.refused); problem != "" {
+				problems = append(problems, fmt.Sprintf("%s's %s: %s", reader.file, reader.function, problem))
+			}
+		}
+	}
+	for _, door := range hostShapeDoors {
+		if problem := refusalProblem(filepath.Join("testdata", "host_shapes", door.refusal), door.refused); problem != "" {
+			problems = append(problems, "hostShapeDoors: "+problem)
+		}
+	}
+	return problems
+}
+
+// readerSources reads every runtime C file and header by its name.
+func readerSources(t *testing.T) map[string]string {
+	t.Helper()
+	paths, err := filepath.Glob(filepath.Join("runtime", "*.[ch]"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	sources := map[string]string{}
+	for _, path := range paths {
+		text, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		sources[filepath.Base(path)] = string(text)
+	}
+	return sources
 }
 
 // foundShape is a shape the scanner found, under hostShapeRow's key, with what its C says.
@@ -806,6 +1059,12 @@ func TestHostShapesClosure(t *testing.T) {
 	for _, problem := range hostShapeProblems(t, hostShapeTable, shapes, unclassified) {
 		t.Error(problem)
 	}
+	for _, problem := range entranceProblems(entranceSources(t)) {
+		t.Error(problem)
+	}
+	for _, problem := range readerProblems(readerSources(t)) {
+		t.Error(problem)
+	}
 }
 
 // The closure test's own mutants, run every time: a row dropped, and the test names its shape; a
@@ -848,6 +1107,25 @@ func TestHostShapesClosureMutants(t *testing.T) {
 	found, refused := fileShapes("mutant.c", "static adamic_shape *grow(size_t count) { adamic_shape *shape = malloc(sizeof *shape); return shape; }\n")
 	if len(refused) != 0 || len(found) != 1 || found[0].scope != "grow" || found[0].host {
 		t.Errorf("an allocating builder wasn't found as one: %+v %q", found, refused)
+	}
+	union, headers, emitter := entranceSources(t)
+	unguarded := strings.Replace(union, "\thost_stop(value, name);\n\treturn has_property(value, name);", "\treturn has_property(value, name);", 1)
+	if unguarded == union || !mentions(entranceProblems(unguarded, headers, emitter), "adamic_has_property doesn't test") {
+		t.Errorf("an entrance unguarded went unnamed")
+	}
+	headers["mutant.h"] = "adamic_heap *adamic_dynamic_property_raw(adamic_heap *value, const char *name);\n"
+	if !mentions(entranceProblems(union, headers, emitter), "declares adamic_dynamic_property_raw") {
+		t.Errorf("a fourth reader by name went unnamed")
+	}
+	sources := readerSources(t)
+	sources["mutant.c"] = "#include \"adamic.h\"\nbool mutant_has(const adamic_object *object, const char *name) {\n\tfor (size_t index = 0; index < object->shape->count; index++) if (strcmp(object->shape->names[index], name) == 0) return true;\n\treturn false;\n}\n"
+	if !mentions(readerProblems(sources), "mutant.c's mutant_has reads a shape's names without adamic_host_stop") {
+		t.Errorf("a new unguarded reader of a shape's names went unnamed")
+	}
+	delete(sources, "mutant.c")
+	sources["object.c"] = strings.Replace(sources["object.c"], "\tadamic_host_stop(&object->heap, name);\n", "", 1)
+	if !mentions(readerProblems(sources), "object.c's adamic_object_has reads a shape's names without adamic_host_stop") {
+		t.Errorf("adamic_object_has's guard dropped went unnamed")
 	}
 	lowers := filepath.Join(t.TempDir(), "tsgo_query.a")
 	if err := os.WriteFile(lowers, []byte("console.log('lowers');\n"), 0o644); err != nil {

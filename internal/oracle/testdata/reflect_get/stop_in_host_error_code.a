@@ -1,0 +1,8 @@
+// Language's s11 (#ey7aysy): errorCode, tsc's own helper shape, on a caught fs error and then on a
+// Stats. The Error's code answers, the carve-out; the Stats stops at its in test (Adamic's ruling at
+// 23:03Z), where native answered from its shape. Node prints code ENOENT, then stats code none.
+import * as fs from 'node:fs';
+import { errorCode } from './hostErrors.ts';
+try { fs.statSync('/no/such/path'); } catch (error) { console.log(`code ${errorCode(error) ?? 'none'}`); }
+const stats: unknown = fs.statSync('.');
+console.log(`stats code ${errorCode(stats) ?? 'none'}`);
