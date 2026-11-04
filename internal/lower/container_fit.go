@@ -149,7 +149,13 @@ func (l *lowering) containerPairGoes(value *checker.Type, target *checker.Type, 
 		if known && held != ir.Map {
 			return true
 		}
-		if !known || !l.isLibraryType(value, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
+		if !known {
+			// An intersection Adamic holds no way at all (Fake & { tag: 1 }, a class or a collection
+			// inside) can't be proven a map, so it fails closed. Any other unread type is some other
+			// check's to stop.
+			return value.Flags()&checker.TypeFlagsIntersection != 0
+		}
+		if !l.isLibraryType(value, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
 			return false
 		}
 		// A map's keys and values go where the slot's go.
@@ -173,7 +179,12 @@ func (l *lowering) containerPairGoes(value *checker.Type, target *checker.Type, 
 		}
 		return l.pairwiseContainerPairGoes(values, targets, depth, visited)
 	}
-	if value.Flags()&checker.TypeFlagsObject == 0 || target.Flags()&checker.TypeFlagsObject == 0 {
+	if value.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 || target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 {
+		// An intersection carries no TypeFlagsObject, but its fields and signatures read as an object's
+		// do, so it's walked the same way: { m: ReadonlyMap } & { tag: 1 } fed { m: shaped, tag: 1 }, or
+		// { m: Fake } & { tag: 1 } seen as { readonly m: ReadonlyMap }, both lowered and crashed natively
+		// on b4478772 (#efx3yb9, Compiler's must). containerWhereOtherGoes walks only when a side can
+		// hold a map, so this costs nothing elsewhere.
 		return false
 	}
 	if value.ObjectFlags()&checker.ObjectFlagsReference != 0 && target.ObjectFlags()&checker.ObjectFlagsReference != 0 && value.Target() != nil && value.Target() == target.Target() {
