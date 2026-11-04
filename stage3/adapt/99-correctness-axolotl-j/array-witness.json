@@ -1,0 +1,59 @@
+[
+  {
+    "label": "main",
+    "test": "ordinary",
+    "status": "returned",
+    "sameOptions": true,
+    "result": [
+      "plain"
+    ],
+    "reads": 0
+  },
+  {
+    "label": "main",
+    "test": "own-every",
+    "status": "returned",
+    "sameOptions": true,
+    "result": [
+      "plain"
+    ],
+    "reads": 0
+  },
+  {
+    "label": "main",
+    "test": "string-accessor",
+    "status": "returned",
+    "sameOptions": false,
+    "result": [
+      "/base/.//out"
+    ],
+    "reads": 2
+  },
+  {
+    "label": "99j-probe",
+    "test": "ordinary",
+    "status": "returned",
+    "sameOptions": true,
+    "result": [
+      "plain"
+    ],
+    "reads": 0
+  },
+  {
+    "label": "99j-probe",
+    "test": "own-every",
+    "status": "threw",
+    "message": "unexpected every call",
+    "reads": 0
+  },
+  {
+    "label": "99j-probe",
+    "test": "string-accessor",
+    "status": "returned",
+    "sameOptions": true,
+    "result": [
+      "plain"
+    ],
+    "reads": 3
+  }
+]

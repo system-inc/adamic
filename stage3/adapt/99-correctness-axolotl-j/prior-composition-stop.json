@@ -1,0 +1,98 @@
+{
+  "status": "stopped_at_webassembly_whole_file_pin",
+  "base_commit": "4b8634a4a498a39d254ee8c325eb2711f84359d9",
+  "prior_revision": "e0063e177deb458b92993ac872fdcd3cf1fa7fa3",
+  "adapter_sha256": "996765af89941a9aee140f6b3dfd8629d8b22430862c48d77a0791b27025f880",
+  "contract_command": [
+    "node",
+    "stage3/adapt/99-correctness-axolotl-j/contract.cjs",
+    "/workspace/scratch/99j-before"
+  ],
+  "contract": {
+    "first": {
+      "files": 6,
+      "edits": 12,
+      "javascriptChanging": true,
+      "behaviorChanging": false
+    },
+    "second": {
+      "files": 0,
+      "edits": 0,
+      "javascriptChanging": true,
+      "behaviorChanging": false
+    },
+    "noWriteSecondRun": true,
+    "refusalFixtures": [
+      "half-statement-0",
+      "half-statement-1",
+      "half-statement-2",
+      "half-statement-3",
+      "half-statement-4",
+      "half-statement-5",
+      "half-statement-6",
+      "half-statement-7",
+      "half-statement-8",
+      "half-statement-9",
+      "half-statement-10",
+      "half-statement-11",
+      "mixed-builder.ts",
+      "mixed-checker.ts",
+      "mixed-commandLineParser.ts",
+      "mixed-program.ts",
+      "mixed-sys.ts",
+      "mixed-transformers-generators.ts",
+      "changed-owner",
+      "parse-error"
+    ],
+    "unrelatedEditAccepted": true,
+    "unrelatedSecondRun": {
+      "files": 0,
+      "edits": 0,
+      "javascriptChanging": true,
+      "behaviorChanging": false
+    },
+    "leftStatementsUntouched": true,
+    "witnessByteIdentical": true,
+    "tree": "/tmp/adamic-gate/99j-contract-YcGesL/first"
+  },
+  "full_apply": {
+    "command": [
+      "bash",
+      "stage3/apply.sh",
+      "--build-product",
+      "/workspace/scratch/99j3-shipped"
+    ],
+    "environment": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/scratch/upstream"
+    },
+    "exit": 1,
+    "exact_stop": "AssertionError [ERR_ASSERTION]: target source moved: sys.ts",
+    "log_sha256": "8aee21d294719d0c8a90a247c0d528b6b66b0207cc1e157c92ea6d00f5c0e3fa",
+    "committed_log": "prior-apply-stop.log.gz",
+    "sys_before_sha256": "f9ff61b6a486c60e6738b334fe2e483ced5e53bfb2e462fadc4bdc9749d25336",
+    "sys_after_99j_sha256": "44c66da53fd15d6a3141b569beef229a60d5e5d03f10582a4c247dd64a0be505",
+    "wasm_expected_before_sha256": "f9ff61b6a486c60e6738b334fe2e483ced5e53bfb2e462fadc4bdc9749d25336",
+    "wasm_expected_after_sha256": "a52755b55d8998df5fd5045fc0418c33bc7496502a131116a00d9bb4bc04b273",
+    "before_matches_wasm_pin": true,
+    "only_sys_change_is_99j_invokeCallbacks": true
+  },
+  "initial_configuration_attempt": {
+    "exit": 1,
+    "reason": "ADAMIC_TYPESCRIPT_SOURCE missing; corrected for the full apply above",
+    "log": "/workspace/scratch/99j3-apply-source-config.log"
+  },
+  "not_rerun": [
+    "second full apply",
+    "lane oracle",
+    "generate_shards.py --check",
+    "stage3/lane Go tests",
+    "79-root checker",
+    "latent census"
+  ],
+  "historical_proofs": "prior-proof-results.json",
+  "contract_environment": {
+    "NODE_PATH": "stage3/api/node_modules"
+  },
+  "contract_sha256": "09d03b774609cf982c71b2211fb6371870bd4975eb2922d935e47deba6a3b9ee",
+  "pin_scope": "nine enclosing functions"
+}
