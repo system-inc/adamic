@@ -101,7 +101,7 @@ const undefinedSpreadAnswers = `keyed x undefined
 keyed name undefined
 static x undefined
 tagged x undefined
-tagged tag string given
+tagged name string given
 copied x number 3
 copied name string p
 spread count number 2

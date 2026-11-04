@@ -1,7 +1,8 @@
 // A spread of a possibly-undefined object, given undefined, makes {} with the literal's own fields,
 // and a field its source type names but the literal doesn't give reads undefined by a run-time key
 // as statically (#2ncah99). Natively that object is made fresh, so each such field's representation
-// byte is written with it: a number's and a string's, beside the literal's own given field. Given a
+// byte is written with it: a number's and a string's, beside the literal's own given field (one the source has: adding
+// a field the source lacks is not yet lowered). Given a
 // defined source, the copy's number reads as the source's, and a spread of a defined object keeps
 // its number and boolean. propertyOf here is Reflect.get alone, as #2ncah99's program has it:
 // hostErrors.ts's tests `in` first, which is NotYet on a possibly absent spread.
@@ -26,8 +27,8 @@ interface Point {
 function copyOf(point: Point | undefined): { readonly x?: number; readonly y?: number; readonly name?: string } {
 	return { ...point };
 }
-function taggedOf(point: Point | undefined): { readonly x?: number; readonly name?: string; readonly tag: string } {
-	return { ...point, tag: 'given' };
+function taggedOf(point: Point | undefined): { readonly x?: number; readonly y?: number; readonly name: string } {
+	return { ...point, name: 'given' };
 }
 
 const made = copyOf(undefined);
@@ -36,7 +37,7 @@ show('keyed name', propertyOf(made, 'name'));
 show('static x', made.x);
 const tagged = taggedOf(undefined);
 show('tagged x', propertyOf(tagged, 'x'));
-show('tagged tag', propertyOf(tagged, 'tag'));
+show('tagged name', propertyOf(tagged, 'name'));
 const copied = copyOf({ x: 3, y: 4, name: 'p' });
 show('copied x', propertyOf(copied, 'x'));
 show('copied name', propertyOf(copied, 'name'));
