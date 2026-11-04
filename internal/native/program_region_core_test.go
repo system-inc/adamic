@@ -211,7 +211,7 @@ func TestProgramCellWeakInvalidationMutant(t *testing.T) {
 }
 func TestProgramAllocationTailMutant(t *testing.T) {
 	t.Parallel()
-	programRegionCoreMutant(t, "short-adoption", "heap-buffer-overflow")
+	programRegionCoreMutant(t, "short-adoption", "compiler bug: adoption copies short of an object's storage")
 }
 
 func programMembershipFault(t *testing.T, mode string) {
