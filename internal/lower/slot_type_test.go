@@ -158,6 +158,7 @@ var signatureReaders = map[string]string{
 	"checkedPredicateResult":            "the callee's declaration, to check a predicate's claim at the call",
 	"classGenericCall":                  "the callee's instantiation, to lower a generic class's method",
 	"detachedOwnOpaqueArgument":         "a parameter's declaration, to find the own-property helper by name",
+	"generatorCallee":                   "the callee's declaration, to route a generator called other than by its name by its origin",
 	"instantiateFunction":               "the callee's instantiation, to lower a generic function",
 	"libraryCallResult":                 "the callee's declaration, whether the library declares it",
 	"notePlaceholderSlots":              "a program parameter's symbol, to carry a placeholder into it; lib's any parameter is never a placeholder",
