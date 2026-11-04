@@ -1,0 +1,1 @@
+internal/oracle/testdata/dead_zone_stops/g01_nullish_assignment_global.a:1:25: stage 0 can't lower a logical assignment to a module binding from code above its declaration (its temporal dead zone) yet
