@@ -176,7 +176,15 @@ func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
 	var found *optionalWidening
 	switch node.Kind {
 	case ast.KindAsExpression:
-		found = l.optionalValue(node.AsAsExpression().Expression, l.checker.GetTypeAtLocation(node))
+		// The cast relates its operand to its own type, and its own type then goes into its slot as a
+		// named value's does: f(wide as Node) into a Positioned hides name as const node = wide as Node;
+		// f(node) does (#8v8112n). x as const is its operand's own literal type, and its operand is judged
+		// as itself.
+		as := node.AsAsExpression()
+		found = l.optionalValue(as.Expression, l.checker.GetTypeAtLocation(node))
+		if found == nil && !(as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const") {
+			found = l.optionalInSlot(node)
+		}
 	case ast.KindShorthandPropertyAssignment:
 		target := l.slotType(node.Parent)
 		if target != nil {
@@ -201,22 +209,31 @@ func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
 			found = l.optionalWidened(l.checker.GetTypeAtLocation(expression), target, skip, map[[2]*checker.Type]bool{})
 		}
 	default:
-		if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) || l.genericFunction(node) {
+		if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) {
 			return nil
 		}
-		var target *checker.Type
-		if viewSite(node) {
-			target = l.slotType(node)
-		}
-		if target == nil {
-			target = l.impliedTarget(node)
-		}
-		if target == nil {
-			return nil
-		}
-		found = l.optionalValue(node, target)
+		found = l.optionalInSlot(node)
 	}
 	return found
+}
+
+// optionalInSlot judges a value against the slot it goes into: the one written for it, or the one tsc
+// implied (impliedTarget). A generic function is instantiated to its slot rather than seen through it.
+func (l *lowering) optionalInSlot(node *ast.Node) *optionalWidening {
+	if l.genericFunction(node) {
+		return nil
+	}
+	var target *checker.Type
+	if viewSite(node) {
+		target = l.slotType(node)
+	}
+	if target == nil {
+		target = l.impliedTarget(node)
+	}
+	if target == nil {
+		return nil
+	}
+	return l.optionalValue(node, target)
 }
 
 func (l *lowering) refuseOptionalWidening(node *ast.Node) error {
