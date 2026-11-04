@@ -63,13 +63,30 @@ func enumTagContainsReference(receiver *checker.Checker, source, target *ast.Nod
 // the type flowing into it, or a step that changes nothing but null and undefined there, and at
 // least one such step explains the narrowing. Anything else, a flow node the walk doesn't know
 // among them, leaves the refinement unproven.
+//
+// A reference that is a property access (`h.n`) is proven only under Lower's local rule (#qeanycw,
+// Adamic's ruling on #00rd54t, Nov 4): no flow node marks an ordinary call, and a call can store
+// another member in h.n while the checker's narrowing of it stands. So every step that narrows it
+// sits in the test of a conditional whose branch holds the read, of an `&&` whose right holds it, or
+// of an if whose block holds it, with no loop, label or function between, and nothing that can run
+// program code completes between that step and the read (accessLocalTests, codeBetween).
 func (l *lowering) enumTagRefinementProven(reference *ast.Node, declared *checker.Type) bool {
 	data := reference.FlowNodeData()
 	if data == nil || data.FlowNode == nil {
 		return false
 	}
-	walk := &enumTagWalk{l: l, reference: reference, declared: declared, seen: map[*ast.FlowNode]bool{}}
-	return walk.visit(data.FlowNode) && walk.proved > 0
+	walk := &enumTagWalk{l: l, reference: reference, declared: declared, seen: map[*ast.FlowNode]bool{}, firstProof: -1}
+	if reference.Kind == ast.KindPropertyAccessExpression {
+		tests, local := l.accessLocalTests(reference)
+		if !local {
+			return false
+		}
+		walk.tests = tests
+	}
+	if !walk.visit(data.FlowNode) || walk.proved == 0 {
+		return false
+	}
+	return walk.tests == nil || !l.codeBetween(walk.firstProof, reference)
 }
 
 type enumTagWalk struct {
@@ -78,6 +95,32 @@ type enumTagWalk struct {
 	declared  *checker.Type
 	seen      map[*ast.FlowNode]bool
 	proved    int
+	// tests are the local tests an access reference's narrowing steps must sit in, and firstProof is
+	// where the earliest such step ends; both are unset for a name, which no call can change.
+	tests      []*ast.Node
+	firstProof int
+}
+
+// proves counts a step that narrows the reference. For an access reference it must sit in one of
+// its local tests (node nil, a switch clause's, never does).
+func (w *enumTagWalk) proves(node *ast.Node) bool {
+	if w.tests == nil {
+		w.proved++
+		return true
+	}
+	if node == nil {
+		return false
+	}
+	for _, test := range w.tests {
+		if node.Pos() >= test.Pos() && node.End() <= test.End() {
+			w.proved++
+			if w.firstProof < 0 || node.End() < w.firstProof {
+				w.firstProof = node.End()
+			}
+			return true
+		}
+	}
+	return false
 }
 
 func (w *enumTagWalk) visit(flow *ast.FlowNode) bool {
@@ -127,7 +170,7 @@ func (w *enumTagWalk) visit(flow *ast.FlowNode) bool {
 			flow = flow.Antecedent
 		case flow.Flags&ast.FlowFlagsSwitchClause != 0:
 			data := flow.Node.AsFlowSwitchClauseData()
-			if !w.step(flow, w.directField(data.SwitchStatement.AsSwitchStatement().Expression)) {
+			if !w.stepAt(flow, nil, w.directField(data.SwitchStatement.AsSwitchStatement().Expression)) {
 				return false
 			}
 			flow = flow.Antecedent
@@ -158,21 +201,25 @@ func (w *enumTagWalk) visit(flow *ast.FlowNode) bool {
 // point but null and undefined, which a pointer test proves; a step judged at its own point, not by
 // what later steps would leave, can't be hidden behind a redundant comparison after it.
 func (w *enumTagWalk) step(flow *ast.FlowNode, field string) bool {
+	return w.stepAt(flow, flow.Node, field)
+}
+
+// stepAt is step with the node the step's narrowing is written at, which proves places for an
+// access reference.
+func (w *enumTagWalk) stepAt(flow *ast.FlowNode, at *ast.Node, field string) bool {
 	before := predicateFlowType(w.l.checker, w.reference, w.declared, w.declared, nil, flow.Antecedent)
 	if field != "" {
 		if w.l.enumTagHazardOf(before, field) != enumTagNoHazard {
 			return false
 		}
-		w.proved++
-		return true
+		return w.proves(at)
 	}
 	after := predicateFlowType(w.l.checker, w.reference, w.declared, w.declared, nil, flow)
 	if checker.Checker_isTypeIdenticalTo(w.l.checker, after, before) {
 		return true
 	}
 	if checker.Checker_isTypeIdenticalTo(w.l.checker, after, w.l.checker.GetNonNullableType(before)) {
-		w.proved++
-		return true
+		return w.proves(at)
 	}
 	return false
 }
@@ -384,8 +431,7 @@ func (w *enumTagWalk) kindPredicateStep(flow *ast.FlowNode, call kindCall) bool 
 	if !checker.Checker_isTypeIdenticalTo(w.l.checker, after, w.l.checker.GetUnionType(kept)) {
 		return false
 	}
-	w.proved++
-	return true
+	return w.proves(flow.Node)
 }
 
 // directField is the field a recognized comparison reads off the reference: `r.f === x`, `!==`,
@@ -437,4 +483,199 @@ func (w *enumTagWalk) fieldRead(node *ast.Node) string {
 		}
 	}
 	return name
+}
+
+// accessLocalTests is where an access reference's narrowing may be written (#qeanycw): the tests of
+// the conditionals, `&&` chains and ifs that hold the read, walking out from it until a function, a
+// class, a loop or a label, any of which would let code run between a test and the read that no
+// source order shows. The reference must be a chain of plain data fields off a name: no optional
+// link, no element access, no `this` (a constructor still writes its readonly fields), and no link
+// a getter or setter could serve, judged by name over the program and failing closed (accessorName).
+func (l *lowering) accessLocalTests(read *ast.Node) ([]*ast.Node, bool) {
+	for node := read; ; {
+		access := node.AsPropertyAccessExpression()
+		if access.QuestionDotToken != nil || node.Flags&ast.NodeFlagsOptionalChain != 0 || l.accessorName(access.Name().Text()) || !l.plainDataLink(node) {
+			return nil, false
+		}
+		if access.Expression.Kind == ast.KindIdentifier {
+			break
+		}
+		if access.Expression.Kind != ast.KindPropertyAccessExpression {
+			return nil, false
+		}
+		node = access.Expression
+	}
+	tests := []*ast.Node{}
+	child := read
+	for parent := read.Parent; parent != nil; child, parent = parent, parent.Parent {
+		if ast.IsFunctionLike(parent) || ast.IsClassLike(parent) || parent.Kind == ast.KindSourceFile {
+			break
+		}
+		switch parent.Kind {
+		case ast.KindForStatement, ast.KindForInStatement, ast.KindForOfStatement, ast.KindWhileStatement, ast.KindDoStatement, ast.KindLabeledStatement:
+			return tests, len(tests) != 0
+		case ast.KindConditionalExpression:
+			conditional := parent.AsConditionalExpression()
+			if child == conditional.WhenTrue || child == conditional.WhenFalse {
+				tests = append(tests, conditional.Condition)
+			}
+		case ast.KindBinaryExpression:
+			binary := parent.AsBinaryExpression()
+			if binary.OperatorToken.Kind == ast.KindAmpersandAmpersandToken && child == binary.Right {
+				tests = append(tests, binary.Left)
+			}
+		case ast.KindIfStatement:
+			statement := parent.AsIfStatement()
+			if child != statement.Expression {
+				tests = append(tests, statement.Expression)
+			}
+		}
+	}
+	return tests, len(tests) != 0
+}
+
+// plainDataLink is whether one link of an access path is a data field on every object member its
+// object can be: never an accessor or a method, whose every read can answer differently.
+func (l *lowering) plainDataLink(link *ast.Node) bool {
+	access := link.AsPropertyAccessExpression()
+	owner := l.checker.GetTypeAtLocation(access.Expression)
+	members := []*checker.Type{owner}
+	if owner.Flags()&checker.TypeFlagsUnion != 0 {
+		members = owner.Types()
+	}
+	for _, member := range members {
+		if member.Flags()&checker.TypeFlagsPrimitive != 0 {
+			continue
+		}
+		property := l.checker.GetPropertyOfType(member, access.Name().Text())
+		if property == nil || property.Flags&(ast.SymbolFlagsGetAccessor|ast.SymbolFlagsSetAccessor|ast.SymbolFlagsMethod) != 0 {
+			return false
+		}
+	}
+	return true
+}
+
+// accessorName is whether some getter or setter the program writes, in a class or an object literal,
+// has this name. An interface's readonly field can be served by a class's getter, which the field's
+// own symbol never shows, so the name decides, and an accessor with a computed name makes every name
+// one (fail closed). Declaration files write no accessor bodies. Collected once.
+func (l *lowering) accessorName(name string) bool {
+	if l.writtenAccessorNames == nil {
+		l.writtenAccessorNames = map[string]bool{}
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if node.Kind == ast.KindGetAccessor || node.Kind == ast.KindSetAccessor {
+				if key := node.Name(); key != nil && (key.Kind == ast.KindIdentifier || key.Kind == ast.KindStringLiteral || key.Kind == ast.KindPrivateIdentifier) {
+					l.writtenAccessorNames[key.Text()] = true
+				} else {
+					l.writtenAccessorNames[""] = true
+				}
+			}
+			node.ForEachChild(visit)
+			return false
+		}
+		for _, file := range l.program.Files() {
+			if !file.IsDeclarationFile {
+				file.AsNode().ForEachChild(visit)
+			}
+		}
+	}
+	return l.writtenAccessorNames[name] || l.writtenAccessorNames[""]
+}
+
+// codeBetween is whether anything that can run program code completes after from, where an access
+// reference's earliest narrowing step ends, and before the read starts, anywhere in the function
+// that holds the read. A nested function's body runs only when called, and the call is what counts.
+func (l *lowering) codeBetween(from int, read *ast.Node) bool {
+	container := read.Parent
+	for container != nil && !ast.IsFunctionLike(container) && container.Kind != ast.KindSourceFile {
+		container = container.Parent
+	}
+	if container == nil {
+		return true
+	}
+	found := false
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if found || node.Pos() >= read.Pos() {
+			return found
+		}
+		if node.End() > from && node.End() <= read.Pos() && l.mayRunCode(node) {
+			found = true
+			return true
+		}
+		if ast.IsFunctionLike(node) {
+			return false
+		}
+		node.ForEachChild(visit)
+		return found
+	}
+	container.ForEachChild(visit)
+	return found
+}
+
+// mayRunCode is whether evaluating node can run program code beyond its parts', or change what the
+// read sees: a call of any kind, new, a tagged template, await, yield, delete, a class (its static
+// parts run), a spread or a destructuring pattern (iterators and getters), instanceof
+// (Symbol.hasInstance), an element access, a property read a getter of that name could serve, an
+// operator or a template substitution that converts an object to a primitive, and any write to a
+// property or an element, which may store through another name for the read's object (`g.n = b`
+// with g the same object as h makes no flow node for h.n).
+func (l *lowering) mayRunCode(node *ast.Node) bool {
+	switch node.Kind {
+	case ast.KindCallExpression, ast.KindNewExpression, ast.KindTaggedTemplateExpression, ast.KindAwaitExpression, ast.KindYieldExpression,
+		ast.KindDeleteExpression, ast.KindClassExpression, ast.KindSpreadElement, ast.KindSpreadAssignment, ast.KindObjectBindingPattern,
+		ast.KindArrayBindingPattern, ast.KindElementAccessExpression, ast.KindForOfStatement, ast.KindForInStatement:
+		return true
+	case ast.KindPropertyAccessExpression:
+		return l.accessorName(node.AsPropertyAccessExpression().Name().Text())
+	case ast.KindTemplateSpan:
+		return !l.primitiveTyped(node.AsTemplateSpan().Expression)
+	case ast.KindPrefixUnaryExpression:
+		unary := node.AsPrefixUnaryExpression()
+		if unary.Operator == ast.KindPlusPlusToken || unary.Operator == ast.KindMinusMinusToken {
+			return writesStorage(unary.Operand)
+		}
+		return (unary.Operator == ast.KindPlusToken || unary.Operator == ast.KindMinusToken || unary.Operator == ast.KindTildeToken) && !l.primitiveTyped(unary.Operand)
+	case ast.KindPostfixUnaryExpression:
+		return writesStorage(node.AsPostfixUnaryExpression().Operand)
+	case ast.KindBinaryExpression:
+		binary := node.AsBinaryExpression()
+		if ast.IsAssignmentOperator(binary.OperatorToken.Kind) && writesStorage(binary.Left) {
+			return true
+		}
+		switch binary.OperatorToken.Kind {
+		case ast.KindInstanceOfKeyword:
+			return true
+		case ast.KindEqualsEqualsEqualsToken, ast.KindExclamationEqualsEqualsToken, ast.KindAmpersandAmpersandToken, ast.KindBarBarToken,
+			ast.KindQuestionQuestionToken, ast.KindCommaToken, ast.KindInKeyword, ast.KindEqualsToken, ast.KindBarBarEqualsToken,
+			ast.KindAmpersandAmpersandEqualsToken, ast.KindQuestionQuestionEqualsToken:
+			// A write's target is a property access or element access judged on its own, or a name.
+			return binary.Left.Kind == ast.KindObjectLiteralExpression || binary.Left.Kind == ast.KindArrayLiteralExpression
+		}
+		return !l.primitiveTyped(binary.Left) || !l.primitiveTyped(binary.Right)
+	}
+	return false
+}
+
+// writesStorage is whether a write's target is a property or an element, not a plain name.
+func writesStorage(target *ast.Node) bool {
+	target = ast.SkipParentheses(target)
+	return target.Kind == ast.KindPropertyAccessExpression || target.Kind == ast.KindElementAccessExpression
+}
+
+// primitiveTyped is whether every member of node's type is a primitive, whose conversion runs no
+// program code.
+func (l *lowering) primitiveTyped(node *ast.Node) bool {
+	of := l.checker.GetTypeAtLocation(node)
+	members := []*checker.Type{of}
+	if of.Flags()&checker.TypeFlagsUnion != 0 {
+		members = of.Types()
+	}
+	for _, member := range members {
+		if member.Flags()&checker.TypeFlagsPrimitive == 0 {
+			return false
+		}
+	}
+	return true
 }
