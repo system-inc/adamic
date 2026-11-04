@@ -50,8 +50,10 @@ func async2RuntimeGuard(t *testing.T, mode, file, old, replacement, diagnostic s
 		}
 		binary := buildHarnessWithLibrary(t, string(source), flags, compiler, library)
 		command, release := boundedrun.Command(5*time.Second, binary, mode)
+		// A mode that ends at a runtime stop, and the words it stops with.
+		stops := map[string]string{"share": "async values cannot cross worker thread", "canonical": "compiler bug: a canonical closure over a cell no environment owns"}
 		leaks := "1"
-		if mode == "share" {
+		if _, stop := stops[mode]; stop {
 			leaks = "0"
 		} // The refusal intentionally exits with a live frame.
 		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks="+leaks+":halt_on_error=1")
@@ -70,9 +72,9 @@ func async2RuntimeGuard(t *testing.T, mode, file, old, replacement, diagnostic s
 		if readErr != nil {
 			t.Fatal(readErr)
 		}
-		if mode == "share" && !mutant {
-			if command.ProcessState == nil || command.ProcessState.ExitCode() != 70 || !strings.Contains(string(output), "async values cannot cross worker thread") {
-				t.Fatalf("share guard: %v\n%s", err, output)
+		if stop, stops := stops[mode]; stops && !mutant {
+			if command.ProcessState == nil || command.ProcessState.ExitCode() != 70 || !strings.Contains(string(output), stop) {
+				t.Fatalf("%s guard: %v\n%s", mode, err, output)
 			}
 		} else if mutant {
 			if err == nil || !strings.Contains(string(output), diagnostic) {
@@ -101,6 +103,15 @@ func TestAsync2RuntimeEnvironment(t *testing.T) {
 	t.Parallel()
 	async2RuntimeGuard(t, "environment", "closure.c", "if (cells[index].references) { drop(cells[index].value.reference); }", "if (false && cells[index].references) { drop(cells[index].value.reference); }", "Assertion")
 }
+
+// A canonical closure's cell must be an environment's: the cache is read and written through it as
+// one, so an async frame's or a generator's cell would have its words overwritten (Memory, on
+// #qk8rztp S1a). Mutant: canonical() takes the owner unchecked, and the harness's call returns.
+func TestAsync2RuntimeCanonicalOwner(t *testing.T) {
+	t.Parallel()
+	async2RuntimeGuard(t, "canonical", "closure.c", "\tadamic_environment *owner = canonical_owner(identity);", "\tadamic_environment *owner = (adamic_environment *)identity->owner;", "Assertion")
+}
+
 func TestAsync2RuntimeShare(t *testing.T) {
 	t.Parallel()
 	async2RuntimeGuard(t, "share", "share.c", "value = ((adamic_cell *)value)->owner;", "(void)heap;", "Assertion")

@@ -72,11 +72,21 @@ void adamic_environment_drop_cells(adamic_cell *cells, size_t count, void (*drop
 	}
 }
 
+// The cache of canonical closures lives on an environment, so a cell some other frame owns (an
+// async frame's, a generator's) would have its words read and written as one. Emission keeps those
+// cells out of canonical closures; this says so out loud if it ever doesn't.
+static adamic_environment *canonical_owner(const adamic_cell *identity) {
+	if (identity->owner == NULL || identity->owner->kind != adamic_kind_environment) {
+		adamic_panic("compiler bug: a canonical closure over a cell no environment owns", sizeof "compiler bug: a canonical closure over a cell no environment owns" - 1);
+	}
+	return (adamic_environment *)identity->owner;
+}
+
 // A live value is unique for its code and activation. If no owner kept it, a
 // later reference can recreate it: no surviving reference can observe that gap.
 // Captured cells keep the frame alive; its cache never keeps a closure alive.
 static adamic_closure *canonical(adamic_cell *identity, adamic_code code, size_t count, adamic_cell *const cells[], bool graph ADAMIC_CANONICAL_DISCARD) {
-	adamic_environment *owner = (adamic_environment *)identity->owner;
+	adamic_environment *owner = canonical_owner(identity);
 	for (adamic_closure *held = owner->functions; held != NULL; held = held->canonical_next) {
 #ifdef ADAMIC_CLOSURE_CONVENTION
         if (held->counted) { continue; }
@@ -105,7 +115,7 @@ static adamic_closure *canonical(adamic_cell *identity, adamic_code code, size_t
 
 #ifdef ADAMIC_CLOSURE_CONVENTION
 static adamic_closure *counted_canonical(adamic_cell *identity, adamic_counted_code code, size_t count, adamic_cell *const cells[], bool graph ADAMIC_CANONICAL_DISCARD) {
- adamic_environment *owner = (adamic_environment *)identity->owner;
+ adamic_environment *owner = canonical_owner(identity);
  for (adamic_closure *held = owner->functions; held != NULL; held = held->canonical_next) {
  if (held->counted && held->counted_code == code) { return adamic_retain(held); }
  }
