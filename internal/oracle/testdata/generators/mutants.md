@@ -19,6 +19,23 @@ the counted build (allocations against frees); LeakSanitizer is the box's.
 | A scope exit skips the generator | native/emit_ownership.go, `releaseScopes`: a name ending `_generator` not released | every fixture that finishes but drop_start.a, a counted leak of at least the frame |
 | A labeled exit skips the generator | native/labels.go, `labeledJump`: the same filter, on a labeled break or continue only | labeled_exit.a alone, a counted leak of 10 |
 
+Wave 2, run against the six fixtures it added:
+
+| Mutant | Edit | Red |
+|---|---|---|
+| Throw leaves `frame->error` in place (Diagnostics' must 3) | as above | first_throw.a prints `RangeError: RangeError: ` and freed bytes natively; it and uncaught_spread.a and uncaught_from.a, ASan heap-use-after-free |
+| `ResumeMayThrow` forced false | as above | uncaught_spread.a and uncaught_from.a print `1`, `after` and exit 0; first_throw.a prints an empty line where Node catches, and leaks 2 |
+| The step's thrown test removed | as above | green on all six. The collect helper is a function whose body can throw, so its caller tests the pending exception after the helper's call, and the helper's partial array is let go of there; the test inside the helper only stops it pushing sooner. The `ResumeMayThrow` row is the one that reaches the caller's test |
+| A for-of routes a declared iterator by type | lower/object.go, `forOf`: the generator arm skipped for a call typed SetIterator or MapIterator | declared_iterators.a, which then stops NotYet (planIteration's generator arm), never compiling as a Set's iterator |
+| A spread routes a declared iterator by type | lower/collections.go, `iterated`: the same, so libraryIteratorElement reads the call's declared type | declared_iterators.a, NotYet at the call (the call guard in expression.go) |
+| Array.from routes a declared iterator by type | lower/from.go, `arrayFrom`: the same | declared_iterators.a, NotYet at the call |
+
+The other wave 2 pins have their mutants in their tests: generatorStepped taken out of each void
+rule (TestGeneratorVoidReturnIsNeverReadBySpreadOrArrayFrom, internal/lower), the consumer's
+generator local given a checker type (TestNoSlotTheIteratorArmWalksHoldsAGenerator), the return
+arm's word put back to `resumed` (TestGeneratorRuntimeReturnWhileRunning, internal/native), and
+the resume emitted with no source lines (TestDebugGeneratorSourceLines, internal/native).
+
 Two mutants the brief names don't apply to this slice:
 
 - **IterationCell's references flag false (M-f).** A generator's frame never holds an IterationCell:

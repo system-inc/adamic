@@ -139,7 +139,7 @@ func TestGeneratorRoadsBackstopFailsOnAStoredGenerator(t *testing.T) {
 // Array.from step it to its end and never read that value, so the void rules let them through
 // (generatorStepped), and a destructuring, which this slice doesn't lower, is still refused by
 // adamic/no-void-read as before. Mutant: generatorStepped's call taken out of refuseVoidContainerRead;
-// the spread row reads Refused (as a spread). Taken out of refuseVoidWidening; the Array.from row
+// both spread rows read Refused (as a spread). Taken out of refuseVoidWidening; the Array.from row
 // reads Refused (seen as any).
 func TestGeneratorVoidReturnIsNeverReadBySpreadOrArrayFrom(t *testing.T) {
 	t.Parallel()
