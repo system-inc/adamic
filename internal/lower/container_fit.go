@@ -25,16 +25,18 @@ const containerFitStop = "a Map or Set interface implemented by a value that isn
 // keys or values, as a field of an object or a value of a dictionary, or as a function's result, or the
 // other way round for a function's parameters. It's keyed on representation alone, so it asks nothing
 // of the syntax that made the value (Adamic's ruling on #efx3yb9). A value of any, never or a type
-// representation can't read is some other check's to stop, and isn't judged here.
-func (l *lowering) containerWhereOtherGoes(value *checker.Type, target *checker.Type, visited map[[2]*checker.Type]bool) bool {
-	if value == nil || target == nil || value == target || visited[[2]*checker.Type{value, target}] {
+// representation can't read is some other check's to stop, and isn't judged here. It walks as deep as
+// tupleWhereArrayGoes does, four positions, and no pair twice: a library generic's signatures (Promise's
+// then) make a new instantiation at every step, so a seen set alone never ends the walk.
+func (l *lowering) containerWhereOtherGoes(value *checker.Type, target *checker.Type, depth int, visited map[[2]*checker.Type]bool) bool {
+	if value == nil || target == nil || value == target || depth > 4 || visited[[2]*checker.Type{value, target}] {
 		return false
 	}
 	visited[[2]*checker.Type{value, target}] = true
 	if value.Flags()&checker.TypeFlagsUnion != 0 {
 		// Any member that may be there.
 		for _, member := range value.Types() {
-			if l.containerWhereOtherGoes(member, target, visited) {
+			if l.containerWhereOtherGoes(member, target, depth+1, visited) {
 				return true
 			}
 		}
@@ -49,7 +51,7 @@ func (l *lowering) containerWhereOtherGoes(value *checker.Type, target *checker.
 				continue
 			}
 			taken = true
-			if !l.containerWhereOtherGoes(value, member, visited) {
+			if !l.containerWhereOtherGoes(value, member, depth+1, visited) {
 				return false
 			}
 		}
@@ -67,20 +69,20 @@ func (l *lowering) containerWhereOtherGoes(value *checker.Type, target *checker.
 			return false
 		}
 		// A map's keys and values go where the slot's go.
-		return l.pairwiseContainerWhereOtherGoes(l.typeArguments(value), l.typeArguments(target), visited)
+		return l.pairwiseContainerWhereOtherGoes(l.typeArguments(value), l.typeArguments(target), depth, visited)
 	}
 	if (l.checker.IsArrayType(value) || checker.IsTupleType(value)) && (l.checker.IsArrayType(target) || checker.IsTupleType(target)) {
 		values, targets := l.typeArguments(value), l.typeArguments(target)
 		if l.checker.IsArrayType(target) && len(targets) == 1 {
 			// Every element of a tuple goes where the array's element goes.
 			for _, element := range values {
-				if l.containerWhereOtherGoes(element, targets[0], visited) {
+				if l.containerWhereOtherGoes(element, targets[0], depth+1, visited) {
 					return true
 				}
 			}
 			return false
 		}
-		return l.pairwiseContainerWhereOtherGoes(values, targets, visited)
+		return l.pairwiseContainerWhereOtherGoes(values, targets, depth, visited)
 	}
 	if value.Flags()&checker.TypeFlagsObject == 0 || target.Flags()&checker.TypeFlagsObject == 0 {
 		return false
@@ -90,7 +92,7 @@ func (l *lowering) containerWhereOtherGoes(value *checker.Type, target *checker.
 	if len(valueSignatures) == 1 && len(targetSignatures) == 1 {
 		// A function: what it returns goes where the target's result goes, and what the target is
 		// called with goes to its parameters.
-		if l.containerWhereOtherGoes(l.checker.GetReturnTypeOfSignature(valueSignatures[0]), l.checker.GetReturnTypeOfSignature(targetSignatures[0]), visited) {
+		if l.containerWhereOtherGoes(l.checker.GetReturnTypeOfSignature(valueSignatures[0]), l.checker.GetReturnTypeOfSignature(targetSignatures[0]), depth+1, visited) {
 			return true
 		}
 		valueParameters, targetParameters := valueSignatures[0].Parameters(), targetSignatures[0].Parameters()
@@ -98,26 +100,26 @@ func (l *lowering) containerWhereOtherGoes(value *checker.Type, target *checker.
 			targetParameters = nil
 		}
 		for index := range valueParameters {
-			if index < len(targetParameters) && l.containerWhereOtherGoes(l.checker.GetTypeOfSymbol(targetParameters[index]), l.checker.GetTypeOfSymbol(valueParameters[index]), visited) {
+			if index < len(targetParameters) && l.containerWhereOtherGoes(l.checker.GetTypeOfSymbol(targetParameters[index]), l.checker.GetTypeOfSymbol(valueParameters[index]), depth+1, visited) {
 				return true
 			}
 		}
 		return false
 	}
 	for _, field := range l.checker.GetPropertiesOfType(target) {
-		if inside := l.checker.GetPropertyOfType(value, field.Name); inside != nil && l.containerWhereOtherGoes(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(field), visited) {
+		if inside := l.checker.GetPropertyOfType(value, field.Name); inside != nil && l.containerWhereOtherGoes(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(field), depth+1, visited) {
 			return true
 		}
 	}
 	for _, info := range l.checker.GetIndexInfosOfType(target) {
 		// A dictionary's values: the value's own dictionary values, and each field it has.
 		for _, own := range l.checker.GetIndexInfosOfType(value) {
-			if own.KeyType() == info.KeyType() && l.containerWhereOtherGoes(own.ValueType(), info.ValueType(), visited) {
+			if own.KeyType() == info.KeyType() && l.containerWhereOtherGoes(own.ValueType(), info.ValueType(), depth+1, visited) {
 				return true
 			}
 		}
 		for _, field := range l.checker.GetPropertiesOfType(value) {
-			if field.Flags&ast.SymbolFlagsMethod == 0 && l.containerWhereOtherGoes(l.checker.GetTypeOfSymbol(field), info.ValueType(), visited) {
+			if field.Flags&ast.SymbolFlagsMethod == 0 && l.containerWhereOtherGoes(l.checker.GetTypeOfSymbol(field), info.ValueType(), depth+1, visited) {
 				return true
 			}
 		}
@@ -125,9 +127,9 @@ func (l *lowering) containerWhereOtherGoes(value *checker.Type, target *checker.
 	return false
 }
 
-func (l *lowering) pairwiseContainerWhereOtherGoes(values []*checker.Type, targets []*checker.Type, visited map[[2]*checker.Type]bool) bool {
+func (l *lowering) pairwiseContainerWhereOtherGoes(values []*checker.Type, targets []*checker.Type, depth int, visited map[[2]*checker.Type]bool) bool {
 	for index := range values {
-		if index < len(targets) && l.containerWhereOtherGoes(values[index], targets[index], visited) {
+		if index < len(targets) && l.containerWhereOtherGoes(values[index], targets[index], depth+1, visited) {
 			return true
 		}
 	}
