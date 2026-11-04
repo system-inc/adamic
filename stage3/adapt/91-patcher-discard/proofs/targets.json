@@ -1,12 +1,14 @@
 [
   {
     "file": "src/compiler/factory/nodeFactory.ts",
-    "beforeSha256": "6719964224eebda39ea2aea8447bdbbf1858e579430abe1f11555f0891d49ce3",
-    "afterSha256": "bfac415cab939ce57ea75c724782afd5ab264d10c7188605aaef7485be0569de"
+    "owner": "createNodeFactory",
+    "ownerBeforeSha256": "553d211c0d455a6badb5bf74a6555a8bd45189d259ba1b7276d7ac30e24c10a0",
+    "ownerAfterSha256": "5d4de2d08b291cb02f8abb4cbc7a2a6aca135e07ba14a5a85e30aad7b0734104"
   },
   {
     "file": "src/compiler/utilities.ts",
-    "beforeSha256": "be42957f4ef90d32fcb912717ebe55d8a531820f0724ee56d24d62cc35001269",
-    "afterSha256": "e8f6c9b1c9e25531f9a904606886a597e52fa8749d9cbb78ca3cadd09fc6b36b"
+    "owner": "setObjectAllocator",
+    "ownerBeforeSha256": "5839848fa599a7973ea9afa4c03e88a71acb51622ba975cf5cd84fb61b36edd9",
+    "ownerAfterSha256": "cd61489dc35e7c32e0b61f2a94fc58eeaf14523e53bab348c41cf4d856fe8d80"
   }
 ]

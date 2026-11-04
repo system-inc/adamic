@@ -18,10 +18,10 @@ function adapt(tree) {
         const file = program.getSourceFile(path.join(tree, target.file));
         assert(file && !file.parseDiagnostics.length, target.file);
         const pin = manifest.find(row => row.file === target.file);
-        const digest = crypto.createHash('sha256').update(file.text).digest('hex');
-        assert([pin.beforeSha256, pin.afterSha256].includes(digest), 'target source moved: ' + target.file);
         const owners = nodes(ts, file, n => ts.isFunctionDeclaration(n) && n.name?.text === target.owner);
         assert.equal(owners.length, 1, 'target owner moved');
+        const digest = crypto.createHash('sha256').update(owners[0].getText(file)).digest('hex');
+        assert([pin.ownerBeforeSha256, pin.ownerAfterSha256].includes(digest), 'target owner moved: ' + target.file + ':' + target.owner);
         const calls = nodes(ts, owners[0], n => ts.isCallExpression(n) && n.expression.getText(file) === 'forEach' && n.arguments[0]?.getText(file) === target.registry);
         assert.equal(calls.length, 1, 'patcher call moved');
         const call = calls[0], arrow = call.arguments[1];

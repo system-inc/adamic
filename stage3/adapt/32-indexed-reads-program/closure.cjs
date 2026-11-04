@@ -24,27 +24,25 @@ function plan(ts, file, text, check) {
             else if (actual !== site.before || !ts.isMethodSignature(n)) throw new Error("restored method signature drift");
             continue;
         }
-        if (site.kind === "optional-helper-call") {
-            const found=[];
+        if (site.kind === "bare-helper-call") {
+            const found = [];
             function visit(n) {
-                if(ts.isCallExpression(n)) {
-                    const callee=n.expression;
-                    const base=ts.isParenthesizedExpression(callee)&&ts.isAsExpression(callee.expression)?callee.expression.expression:callee;
-                    let owner=n.parent;
-                    while(owner&&!(ts.isFunctionDeclaration(owner)&&owner.name))owner=owner.parent;
-                    if(base.getText(sf)===site.call&&owner?.name.text===site.function)found.push(n);
+                if (ts.isCallExpression(n)) {
+                    const callee = n.expression;
+                    const base = ts.isParenthesizedExpression(callee) && ts.isAsExpression(callee.expression) ? callee.expression.expression : callee;
+                    const ownerPath = [];
+                    for (let owner = n.parent; owner; owner = owner.parent) {
+                        if (ts.isFunctionDeclaration(owner) && owner.name) ownerPath.unshift(owner.name.text);
+                    }
+                    if (base.getText(sf) === site.call && JSON.stringify(ownerPath) === JSON.stringify(site.ownerPath)) found.push(n);
                 }
-                ts.forEachChild(n,visit);
+                ts.forEachChild(n, visit);
             }
             visit(sf);
-            if(found.length!==site.total)throw new Error("optional helper call count drift");
-            const n=found[site.occurrence-1],before=site.call,after="("+site.call+" as "+site.type+")";
-            if(JSON.stringify(n.arguments.map(a=>a.getText(sf)))!==JSON.stringify(site.arguments))throw new Error("optional helper call argument drift");
-            if(n.expression.getText(sf)===before) {
-                if(check)throw new Error("optional helper call view missing");
-                edits.push({at:n.expression.getStart(sf),end:n.expression.end,text:after});
-            }
-            else if(n.expression.getText(sf)!==after)throw new Error("optional helper call view drift");
+            if (found.length !== site.total) throw new Error("bare helper call count drift");
+            const n = found[site.occurrence - 1];
+            if (JSON.stringify(n.arguments.map(a => a.getText(sf))) !== JSON.stringify(site.arguments)) throw new Error("bare helper call argument drift");
+            if (n.expression.getText(sf) !== site.call || n.getText(sf) !== site.expression) throw new Error("directoryProbablyExists call must remain bare");
             continue;
         }
         if (site.kind === "internal-property") {

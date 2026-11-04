@@ -1,0 +1,93 @@
+{
+  "status": "pass",
+  "base": "d0c13607bfb1228c68d41c5f1e129dfc84dbcce1",
+  "javascriptChanging": false,
+  "fullApply": true,
+  "fullApplyReplayByteIdentical": true,
+  "adapter32SecondRunNoEditsOrWrites": true,
+  "adapter91SecondRunNoEditsOrWrites": true,
+  "types": {
+    "roots": 79,
+    "mainExit": 0,
+    "afterExit": 0
+  },
+  "publicDeclarationsByteIdentical": true,
+  "latent": {
+    "mode": "first-error",
+    "main": {
+      "NotYet": 559,
+      "Refused": 4294
+    },
+    "after": {
+      "NotYet": 560,
+      "Refused": 4279
+    },
+    "removedCastSites": 15,
+    "newSites": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/moduleNameResolver.ts:538:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "src/compiler/moduleNameResolver.ts:674:21",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "src/compiler/moduleNameResolver.ts:674:21: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet"
+      }
+    ],
+    "resources": {
+      "main": {
+        "command": [
+          "/workspace/scratch/adapt32-91-latent-census",
+          "/workspace/scratch/adapt32-91-main-tree/src/compiler",
+          "/workspace/scratch/adapt32-91-main-latent.jsonl"
+        ],
+        "exit": 0,
+        "wallSeconds": 1354.7572815080002,
+        "peakRssKiB": 6925488,
+        "userSeconds": 1785.647313,
+        "systemSeconds": 34.966489,
+        "environment": {
+          "LATENT_FULL": "0",
+          "LATENT_ASSERT_NO_OUTPUT": "1",
+          "LATENT_SPECULATIVE": "0",
+          "LATENT_TIMES": "/workspace/scratch/adapt32-91-main-latent-times.jsonl"
+        }
+      },
+      "after": {
+        "command": [
+          "/workspace/scratch/adapt32-91-latent-census",
+          "/workspace/scratch/adapt91-after/src/compiler",
+          "/workspace/scratch/adapt32-91-after-latent.jsonl"
+        ],
+        "exit": 0,
+        "wallSeconds": 1417.1510457059994,
+        "peakRssKiB": 6880920,
+        "userSeconds": 1835.515209,
+        "systemSeconds": 35.610195,
+        "environment": {
+          "LATENT_FULL": "0",
+          "LATENT_ASSERT_NO_OUTPUT": "1",
+          "LATENT_SPECULATIVE": "0",
+          "LATENT_TIMES": "/workspace/scratch/adapt32-91-after-latent-times.jsonl"
+        }
+      }
+    }
+  },
+  "lane": "pass",
+  "testCounts": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "all106367TestIdentitiesMatchMain": true,
+  "generateShardsCheck": true,
+  "laneGoTests": {
+    "pass": true,
+    "GOMAXPROCS": 2,
+    "command": "go test -count=1 -skip 'TestShard_|TestProduct_' ./stage3/lane/"
+  },
+  "logsPrefix": "/workspace/scratch/adapt32-91-",
+  "remainingWholeFilePinsNote": "/workspace/scratch/remaining-whole-file-pins.md"
+}

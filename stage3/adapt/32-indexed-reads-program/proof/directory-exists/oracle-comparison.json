@@ -1,0 +1,24 @@
+{
+  "counts": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "allMainAndComposedIdentitiesIdentical": true,
+  "all91ControlAndAfterIdentitiesIdentical": true,
+  "identities": 106367,
+  "identitySha256": "1cf2910b4871b5a4f12b95887c2387b6737622d748dca50afbe57639e881ccac",
+  "lane": "pass",
+  "dts": {
+    "typescript.d.ts": {
+      "byteIdentical": true,
+      "bytes": 593502,
+      "sha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b"
+    },
+    "tsserverlibrary.d.ts": {
+      "byteIdentical": true,
+      "bytes": 866,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
+    }
+  }
+}
