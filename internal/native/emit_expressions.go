@@ -759,17 +759,26 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		if expression.CodePoints {
 			function = "adamic_string_from_code_points"
 		}
+		var result string
 		if expression.Spread != nil {
-			return e.own(ir.String, fmt.Sprintf("%s_of(%s)", function, e.value(expression.Spread)))
+			result = e.own(ir.String, fmt.Sprintf("%s_of(%s)", function, e.value(expression.Spread)))
+		} else {
+			codes := make([]string, 0, len(expression.Codes))
+			for _, code := range expression.Codes {
+				codes = append(codes, e.value(code))
+			}
+			if len(codes) == 0 {
+				result = e.own(ir.String, function+"(0, NULL)")
+			} else {
+				result = e.own(ir.String, fmt.Sprintf("%s(%d, (const double[]){%s})", function, len(codes), strings.Join(codes, ", ")))
+			}
 		}
-		codes := make([]string, 0, len(expression.Codes))
-		for _, code := range expression.Codes {
-			codes = append(codes, e.value(code))
+		// A code point out of range leaves a RangeError pending, and an empty result, let go with the
+		// rest (from_codes.c).
+		if expression.MayThrow() {
+			e.checkThrown()
 		}
-		if len(codes) == 0 {
-			return e.own(ir.String, function+"(0, NULL)")
-		}
-		return e.own(ir.String, fmt.Sprintf("%s(%d, (const double[]){%s})", function, len(codes), strings.Join(codes, ", ")))
+		return result
 	case ir.RecordCoalesce:
 		return e.recordCoalesce(expression)
 	case ir.RecordCall:

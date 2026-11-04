@@ -1,0 +1,50 @@
+// An async function's try around normalize, and around String.fromCodePoint: the RangeError takes the flow
+// graph's exception edge to the catch. Without a try, it rejects the promise, and the caller's await
+// throws it.
+async function shaped(text: string, form: string): Promise<string> {
+	await Promise.resolve();
+	try {
+		const normal = text.normalize(form);
+		return `ok ${normal.length}`;
+	} catch (error) {
+		if (error instanceof Error) {
+			return `${error.name}|${error.message}`;
+		}
+		return 'not an error';
+	}
+}
+
+async function pointed(code: number): Promise<void> {
+	const label = `fromCodePoint(${code})`;
+	try {
+		console.log(`${label}: ${String.fromCodePoint(code)}`);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(`${label} threw ${error.name}|${error.message}`);
+		}
+	}
+	await Promise.resolve();
+}
+
+async function bare(code: number): Promise<string> {
+	await Promise.resolve();
+	return String.fromCodePoint(code);
+}
+
+async function run(): Promise<string> {
+	const first = await shaped('Å', 'NFD');
+	const second = await shaped('Å', 'NFZ');
+	await pointed(97);
+	await pointed(-1);
+	let text = `${first} ${second}`;
+	try {
+		const third = await bare(0x110000);
+		text = `${text} ${third}`;
+	} catch (error) {
+		if (error instanceof Error) {
+			text = `${text} rejected ${error.name}|${error.message}`;
+		}
+	}
+	return text;
+}
+console.log(await run());

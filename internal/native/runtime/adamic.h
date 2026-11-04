@@ -1324,8 +1324,8 @@ adamic_string *adamic_string_allocate(size_t length);
 adamic_string *adamic_string_to_upper(const adamic_string *string);
 adamic_string *adamic_string_to_lower(const adamic_string *string);
 
-// normalize (normalize.c): NFC, NFD, NFKC or NFKD as form names it, and a panic, as JavaScript's
-// RangeError, for any other form. It returns a string the caller owns.
+// normalize (normalize.c): NFC, NFD, NFKC or NFKD as form names it. It returns a string the caller
+// owns: the empty string when any other form sets adamic_thrown to Node's RangeError.
 adamic_string *adamic_string_normalize(const adamic_string *string, const adamic_string *form);
 
 // adamic_string_units is a string's length in UTF-16 units, counted once. adamic_string_locate is
@@ -1555,8 +1555,8 @@ double adamic_shift_right(double left, double right);
 double adamic_shift_right_unsigned(double left, double right);
 
 // String.fromCharCode and String.fromCodePoint over their arguments, already evaluated in order
-// (from_codes.c): each a string the caller owns. fromCodePoint panics with V8's RangeError where a
-// value isn't a code point.
+// (from_codes.c): each a string the caller owns. Where a value isn't a code point, fromCodePoint sets
+// adamic_thrown to Node's RangeError and returns the empty string.
 adamic_string *adamic_string_from_char_codes(size_t count, const double values[]);
 adamic_string *adamic_string_from_code_points(size_t count, const double values[]);
 
