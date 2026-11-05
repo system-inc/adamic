@@ -284,12 +284,16 @@ forced module detection, bundler resolution, ES2024 target/lib and empty types.
 Only emit settings are overridden: noEmit is disabled, noCheck avoids another
 checker pass, TS extensions are rewritten, and output/source-map paths are set.
 Each probe retains the effective settings in `compiler-options.json`.
-`root_order_artifacts` lists the excluded file failures; `readiness_node_checks`
+`root_order_artifacts` lists the excluded readiness stops; `readiness_node_checks`
 also retains clean and inconclusive probes. Every artifact's root, stop, reason
 and Node result appears beside lowering counts in single, paired and daily
 README tables, without truncation. This ruling changes the file's meter score,
-not its raw outcome or latent finding-site totals; no successful IR after that
-first stop is claimed. Probe logs remain in each run's `node-readiness/`.
+not its raw outcome or latent finding-site totals. An artifact root counts as
+lowering whole only when its own file has attempted entry-census units and no
+finding of any kind in that file. Otherwise `lowering_stop` records the first
+file-local entry finding (kind, reason, location), labeled `entry census`,
+and the table shows it behind the artifact. Unattempted files stay unproven.
+No successful IR after the per-root first stop is claimed. Probe logs remain in each run's `node-readiness/`.
 
 For a partial historical ordinary census, `python3 -E -S -B
 stage3/meter/report.py --root-order-only <adapted-tree> <run/main>` writes and
@@ -303,3 +307,7 @@ The Node runner has its own real-tool tests in
 `node_readiness_test.py`. Go wrappers in `meter_test.go` run all meter Python
 suites; new tests keep the existing `*_test.py` naming and the stage3 Python
 suite census stays unchanged.
+
+The `artifact-implies-whole` mutant must go red on
+`RootOrderTests.test_artifact_with_entry_refusal_does_not_lower_whole`; an
+entry-census refusal in an artifact root's own file still prevents whole lowering.

@@ -25,7 +25,8 @@ The diagnostic-map root throws at scanner.ts:136:26, before the anticipated
 commandLineParser FixedPollingInterval read. The types.ts root throws at
 diagnosticInformationMap.generated.ts:13:64. These are the observed Node stack
 locations; the census stop locations below remain unchanged. All three roots
-qualify as artifacts against the saved entry evidence. A nonzero exit without
+qualify as artifacts against the saved entry evidence. This excludes only the
+readiness stop, and does not prove that the root file lowers whole. A nonzero exit without
 an error line, an emit failure, or a timeout still proves no artifact.
 
 ## Replays
@@ -40,12 +41,12 @@ The artifact-only command completed and printed:
 ```text
 Recorded roots only; census coverage is not asserted.
 
-Lowering, recorded roots: 4/69; root-order artifacts: 2.
+Lowering, recorded roots: 3/69; root-order artifacts: 2.
 
-| Root | Stop | Reason | Node result | Classification |
-| --- | --- | --- | --- | --- |
-| src/compiler/debug.ts | src/compiler/semver.ts:71:9 | a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration | Node throws here as well; exit 1; TypeError: Cannot read properties of undefined (reading &#x27;assert&#x27;) | root-order artifact |
-| src/compiler/diagnosticInformationMap.generated.ts | src/compiler/commandLineParser.ts:293:35 | reading an enum before its runtime initialization; move the call after the enum declaration | Node throws here as well; exit 1; TypeError: Cannot read properties of undefined (reading &#x27;AbstractKeyword&#x27;) | root-order artifact |
+| Root | Stop | Reason | Node result | Classification | File result from entry census |
+| --- | --- | --- | --- | --- | --- |
+| src/compiler/debug.ts | src/compiler/semver.ts:71:9 | a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration | Node throws here as well; exit 1; TypeError: Cannot read properties of undefined (reading &#x27;assert&#x27;) | root-order artifact | Refused src/compiler/debug.ts:167:31: a cast the runtime can&#x27;t check (read from the entry census) |
+| src/compiler/diagnosticInformationMap.generated.ts | src/compiler/commandLineParser.ts:293:35 | reading an enum before its runtime initialization; move the call after the enum declaration | Node throws here as well; exit 1; TypeError: Cannot read properties of undefined (reading &#x27;AbstractKeyword&#x27;) | root-order artifact | units attempted; no findings; lowers whole |
 ```
 
 S2a complete ordinary census: `268b0a5e6b1f29b05dce9389071bdb5abd6eb2aa`,
@@ -59,16 +60,24 @@ adapted source was produced by the same adapters. Only absolute tree prefixes
 were remapped, not outcomes, findings or unit statuses.
 
 The normal single-tree report completed with checker 79/79, own file 79/79,
-and lowering 5/79 (two ordinary accepted roots and three artifacts). It printed
-this table in report.md:
+and lowering 3/79: two ordinary accepted roots plus diagnosticInformationMap.
+The previous 5/79 inference from three artifacts was wrong. Debug has an entry
+refusal at debug.ts:167:31 and types has an entry refusal at types.ts:4560:38.
+Both stay out of the lowering count. DiagnosticInformationMap has attempted
+entry units with no file-local findings, so it counts as lowering whole.
+The first finding is selected in entry-stream order by its actual location,
+even if another file's unit encountered it. Every finding kind prevents a pass.
+The same predicate now governs normal and partial-report totals.
 
-Lowering, file roots: 5/79; root-order artifacts: 3.
+The report retains all three artifacts and prints the next stops behind them:
 
-| Root | Stop | Reason | Node result | Classification |
-| --- | --- | --- | --- | --- |
-| src/compiler/debug.ts | src/compiler/semver.ts:71:9 | a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration | Node throws here as well; exit 1; TypeError: Cannot read properties of undefined (reading &#x27;assert&#x27;) | root-order artifact |
-| src/compiler/diagnosticInformationMap.generated.ts | src/compiler/commandLineParser.ts:293:35 | reading an enum before its runtime initialization; move the call after the enum declaration | Node throws here as well; exit 1; TypeError: Cannot read properties of undefined (reading &#x27;AbstractKeyword&#x27;) | root-order artifact |
-| src/compiler/types.ts | src/compiler/diagnosticInformationMap.generated.ts:13:45 | reading an enum before its runtime initialization; move the call after the enum declaration | Node throws here as well; exit 1; TypeError: Cannot read properties of undefined (reading &#x27;Error&#x27;) | root-order artifact |
+Lowering, file roots: 3/79; root-order artifacts: 3.
+
+| Root | Stop | Reason | Node result | Classification | File result from entry census |
+| --- | --- | --- | --- | --- | --- |
+| src/compiler/debug.ts | src/compiler/semver.ts:71:9 | a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration | Node throws here as well; exit 1; TypeError: Cannot read properties of undefined (reading &#x27;assert&#x27;) | root-order artifact | Refused src/compiler/debug.ts:167:31: a cast the runtime can&#x27;t check (read from the entry census) |
+| src/compiler/diagnosticInformationMap.generated.ts | src/compiler/commandLineParser.ts:293:35 | reading an enum before its runtime initialization; move the call after the enum declaration | Node throws here as well; exit 1; TypeError: Cannot read properties of undefined (reading &#x27;AbstractKeyword&#x27;) | root-order artifact | units attempted; no findings; lowers whole |
+| src/compiler/types.ts | src/compiler/diagnosticInformationMap.generated.ts:13:45 | reading an enum before its runtime initialization; move the call after the enum declaration | Node throws here as well; exit 1; TypeError: Cannot read properties of undefined (reading &#x27;Error&#x27;) | root-order artifact | Refused src/compiler/types.ts:4560:38: a primitive brand member _isResolvedConfigFileName whose type is not void (read from the entry census) |
 
 Commands after extracting and remapping the saved streams into scratch:
 
@@ -92,9 +101,9 @@ python3 -E -S -B stage3/meter/check-unit-time-mutant.py > /workspace/scratch/roo
 Python results:
 
 ```text
-.........s..........ss.....ss...............................
+.........s..........ss.....ss.................................
 ----------------------------------------------------------------------
-Ran 60 tests in 11.657s
+Ran 62 tests in 12.068s
 
 OK (skipped=5)
 ```
@@ -108,21 +117,36 @@ mutant is still caught by its named test with `KeyError: 'latent_time'`.
 The generator hook fixture now stubs the three IR types that the current
 state-copy generator names, preserving its populated-hook rejection mutant.
 
-## Direction and import-graph mutants
+## Direction, whole-file and import-graph mutants
 
 Each runs a scratch reporter or Node runner and requires its exact named test
-to fail with an assertion. No production compiler is mutated. The third mutant
-disables verbatimModuleSyntax and turns the planted runtime error into a clean
-exit, which the value-import regression rejects.
+to fail with an assertion. No production compiler is mutated. The new
+artifact-implies-whole mutant unconditionally passes artifact roots and must
+fail test_artifact_with_entry_refusal_does_not_lower_whole. A separate test
+also pins that missing attempted root units cannot establish whole lowering.
 
 ```text
+artifact-implies-whole: test_artifact_with_entry_refusal_does_not_lower_whole
+F
+======================================================================
+FAIL: test_artifact_with_entry_refusal_does_not_lower_whole (report_test.RootOrderTests.test_artifact_with_entry_refusal_does_not_lower_whole)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/meter/report_test.py", line 575, in test_artifact_with_entry_refusal_does_not_lower_whole
+    self.assertFalse(self.root_row(result)['lowering'])
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 1 test in 0.008s
+
+FAILED (failures=1)
 ignore-entry-readiness: test_entry_order_readiness_still_counts_against_root_file
 F
 ======================================================================
 FAIL: test_entry_order_readiness_still_counts_against_root_file (report_test.RootOrderTests.test_entry_order_readiness_still_counts_against_root_file)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "/workspace/adamic/stage3/meter/report_test.py", line 475, in test_entry_order_readiness_still_counts_against_root_file
+  File "/workspace/adamic/stage3/meter/report_test.py", line 476, in test_entry_order_readiness_still_counts_against_root_file
     self.assertFalse(self.root_row(result)['lowering'])
 AssertionError: True is not false
 
@@ -136,12 +160,12 @@ F
 FAIL: test_root_only_readiness_with_node_throw_is_visible_artifact (report_test.RootOrderTests.test_root_only_readiness_with_node_throw_is_visible_artifact)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "/workspace/adamic/stage3/meter/report_test.py", line 484, in test_root_only_readiness_with_node_throw_is_visible_artifact
+  File "/workspace/adamic/stage3/meter/report_test.py", line 485, in test_root_only_readiness_with_node_throw_is_visible_artifact
     self.assertTrue(self.root_row(result)['lowering'])
 AssertionError: False is not true
 
 ----------------------------------------------------------------------
-Ran 1 test in 0.007s
+Ran 1 test in 0.008s
 
 FAILED (failures=1)
 elide-value-import-used-only-as-type: test_value_import_used_only_as_type_keeps_its_evaluation_edge
@@ -155,10 +179,10 @@ Traceback (most recent call last):
 AssertionError: False is not true : {'node_version': 'v24.19.0', 'build_exit': 0, 'exit': 0, 'timeout': False, 'first_error': '', 'throws': False}
 
 ----------------------------------------------------------------------
-Ran 1 test in 0.257s
+Ran 1 test in 0.301s
 
 FAILED (failures=1)
-Both root-order mutants and the value-import elision mutant went red on their named tests.
+All three root-order mutants and the value-import elision mutant went red on their named tests.
 ```
 
 `RootOrderTests.test_root_only_readiness_with_clean_node_still_counts` separately

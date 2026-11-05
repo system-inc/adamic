@@ -110,7 +110,7 @@ class ReportTests(unittest.TestCase):
         text = (self.run / 'report.md').read_text()
         self.assertIn(MEASUREMENT, text)
         self.assertIn('Lowering, main: 1/4; root-order artifacts: 0.', text)
-        self.assertIn('| Root | Stop | Reason | Node result | Classification |', text)
+        self.assertIn('| Root | Stop | Reason | Node result | Classification | File result from entry census |', text)
         self.assertIn('| area-only blocker | OWNER BLANK |', text)
         self.assertLess(text.index('### Unowned'), text.index('Latent lowering, main:'))
         self.assertEqual(result['trees']['main']['latent_lowering']['totals']['NotYet'], 0)
@@ -449,9 +449,10 @@ class RootOrderTests(unittest.TestCase):
         entry.parent.mkdir(parents=True)
         entry.write_text('export {};\n')
         directory = self.run / 'tsc'
-        write_entry(self.tree, directory, sources=[entry, self.stop])
+        write_entry(self.tree, directory, sources=[entry, self.stop, self.root])
         path = directory / 'latent.jsonl'
         rows = [json.loads(line) for line in path.read_text().splitlines()]
+        rows[3]['units'] = [{'status': 'attempted'}]
         rows[2]['units'] = [{'status': 'attempted' if attempted else 'skipped_checker_body'}]
         if entry_reason:
             # Attribute by finding location even when a different file's unit found it.
@@ -484,7 +485,8 @@ class RootOrderTests(unittest.TestCase):
         self.assertTrue(self.root_row(result)['lowering'])
         self.assertEqual(result['totals']['lowering'], 2)
         artifact = {'root': 'src/compiler/later.ts', 'where': 'src/compiler/good.ts:7:9',
-                    'reason': self.reason, 'node': self.node}
+                    'reason': self.reason, 'node': self.node,
+                    'entry_file_attempted': True, 'entry_next_stop': None}
         self.assertEqual(result['root_order_artifacts'], [artifact])
         self.assertEqual(result['readiness_node_checks'], [artifact])
         text = (self.run / 'report.md').read_text()
@@ -558,3 +560,38 @@ class RootOrderTests(unittest.TestCase):
         result = self.render()
         self.assertTrue(self.root_row(result)['lowering'])
         self.assertEqual(result['root_order_artifacts'][0]['reason'], sorted(READINESS_REASONS)[1])
+
+    def test_artifact_with_entry_refusal_does_not_lower_whole(self):
+        from report import ENTRY_MEASUREMENT
+        self.readiness()
+        path = self.run / 'tsc/latent.jsonl'
+        rows = [json.loads(line) for line in path.read_text().splitlines()]
+        # A finding in this file counts even when another file's unit encountered it.
+        rows[1]['findings'] = [{'kind': 'Refused', 'where': f'{self.root}:167:31',
+                                'reason': 'a cast the runtime cannot check',
+                                'text': 'refused', 'measurement': ENTRY_MEASUREMENT}]
+        path.write_text(''.join(json.dumps(row) + '\n' for row in rows))
+        result = self.render()
+        self.assertFalse(self.root_row(result)['lowering'])
+        self.assertEqual(result['totals']['lowering'], 1)
+        self.assertEqual(len(result['root_order_artifacts']), 1)
+        stop = {'kind': 'Refused', 'where': 'src/compiler/later.ts:167:31',
+                'reason': 'a cast the runtime cannot check', 'source': 'entry census'}
+        self.assertEqual(self.root_row(result)['lowering_stop'], stop)
+        self.assertEqual(self.root_row(result)['lowering_evidence'], 'entry census')
+        self.assertEqual(result['root_order_artifacts'][0]['entry_next_stop'], stop)
+        text = (self.run / 'report.md').read_text()
+        self.assertIn('Refused src/compiler/later.ts:167:31: a cast the runtime cannot check (read from the entry census)', text)
+        self.assertIn('root-order artifact', text)
+
+    def test_artifact_without_attempted_root_units_does_not_lower_whole(self):
+        self.readiness()
+        path = self.run / 'tsc/latent.jsonl'
+        rows = [json.loads(line) for line in path.read_text().splitlines()]
+        rows[3]['units'] = []
+        path.write_text(''.join(json.dumps(row) + '\n' for row in rows))
+        result = self.render()
+        self.assertFalse(self.root_row(result)['lowering'])
+        self.assertEqual(result['totals']['lowering'], 1)
+        self.assertEqual(len(result['root_order_artifacts']), 1)
+        self.assertIn('no units attempted; lowering unproven', (self.run / 'report.md').read_text())
