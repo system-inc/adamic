@@ -1,0 +1,13 @@
+// Date.now handed to a parameter of exactly its type and called there more than once, and kept in a
+// field of that type and called through it.
+function elapsed(clock: () => number, rounds: number): boolean {
+    const start = clock();
+    let last = start;
+    for(let index = 0; index < rounds; index++) {
+        last = clock();
+    }
+    return start > 0 && last >= start;
+}
+console.log(`elapsed ${String(elapsed(Date.now, 4))}`);
+const holder: { readonly clock: () => number } = { clock: Date.now };
+console.log(`through a field ${String(Math.abs(holder.clock() - Date.now()) < 60000)}`);
