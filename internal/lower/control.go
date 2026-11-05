@@ -94,6 +94,9 @@ func (l *lowering) whileStatement(node *ast.Node) ([]ir.Statement, error) {
 
 // condition applies JavaScript ToBoolean to one evaluation of its operand.
 func (l *lowering) condition(node *ast.Node) (ir.Expression, error) {
+	if test, handled, err := l.methodPresenceCondition(node); handled {
+		return test, err
+	}
 	value, err := l.expression(node)
 	if err != nil {
 		return nil, err

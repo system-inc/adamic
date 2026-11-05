@@ -405,6 +405,11 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 
 // property lowers object.name, array.length, and Math's constants.
 func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+	if l.methodPresenceTest(node) {
+		// Admitted as an observation (method_presence.go), so its consumer lowers it; one that doesn't
+		// isn't built, and reading the method here would detach it.
+		return nil, l.notYet(node, "a method read only to test for it, where that test doesn't lower through methodPresence")
+	}
 	if value, found, err := l.nodeStdoutIsTTYRead(node); found {
 		return value, err
 	}
