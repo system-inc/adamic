@@ -1,0 +1,23 @@
+case	GOMAXPROCS=1, CPU 0 seconds	GOMAXPROCS=4, CPUs 0-3 seconds
+test_api_sanction_ambiguous_owner	2.207	1.39
+test_api_sanction_ambiguous_path_without_line_is_rejected	2.2	1.431
+test_api_sanction_applied_and_guard_accepts	3.936	2.595
+test_api_sanction_before_mismatch_names_row	2.149	1.37
+test_api_sanction_duplicate_claim	2.246	1.471
+test_api_sanction_function_return_applied_and_guard_accepts	3.921	2.656
+test_api_sanction_hard_coded_claim	2.33	1.366
+test_api_sanction_insert_applied_and_guard_accepts	3.94	2.696
+test_api_sanction_insert_existing_name_is_rejected	4.284	3.4
+test_api_sanction_insert_invalid_fields_are_rejected	4.256	3.09
+test_api_sanction_insert_non_declaration_is_rejected	6.609	4.495
+test_api_sanction_insert_undo_is_rejected	3.682	3.019
+test_api_sanction_invalid_replace_is_rejected	2.116	1.496
+test_api_sanction_line_applied_and_guard_accepts	4.183	2.421
+test_api_sanction_member_applied_and_guard_accepts	3.695	2.528
+test_api_sanction_member_before_requires_full_text	2.264	1.311
+test_api_sanction_member_undo_is_rejected	4.19	2.481
+test_api_sanction_missing_owner	2.386	1.464
+test_api_sanction_non_integer_line_is_rejected	2.5	1.396
+test_api_sanction_overloaded_function_is_rejected	2.251	1.38
+test_api_sanction_undo_is_rejected	4.102	2.554
+test_api_sanction_wrong_line_names_path_and_line	4.613	2.908
