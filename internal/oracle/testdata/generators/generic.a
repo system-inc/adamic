@@ -1,0 +1,26 @@
+// A generic function* lowers once per instantiation, where it's called: at string and at number,
+// each instance its own frame and its own yielded slot, consumed by a for-of, a spread and
+// Array.from. Every string is built, so a step that hands over a borrowed one shows.
+function* each<T>(items: readonly T[]) {
+    for(const item of items) {
+        yield item;
+    }
+}
+const words = [`a${String(1)}`, `b${String(2)}`];
+for(const word of each(words)) {
+    console.log(`${word}!`);
+}
+const numbers = [1, 2, 3];
+let total = 0;
+for(const value of each(numbers)) {
+    total += value;
+}
+console.log(`n${String(total)}`);
+console.log([...each(words), ...each([`c${String(3)}`])].join(','));
+console.log(String([...each(numbers)].length));
+console.log(
+    Array.from(each(numbers))
+        .map((value: number): string => `v${String(value)}`)
+        .join(' '),
+);
+console.log(Array.from(each(words)).join(' '));

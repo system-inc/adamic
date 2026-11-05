@@ -165,7 +165,9 @@ type iterationPlan struct {
 }
 
 func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
-	if _, isGenerator := l.generatorCallee(where); isGenerator {
+	if _, isGenerator, err := l.generatorCallee(where); err != nil {
+		return nil, err
+	} else if isGenerator {
 		// Destructuring a generator's call isn't built; a for-of, a spread and Array.from route one by
 		// origin before they plan (forOf, iterated, arrayFrom), so only destructuring reaches here.
 		return nil, l.generatorNotYet(where, "consumed by destructuring")

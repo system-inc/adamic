@@ -1,0 +1,21 @@
+// mapIterator's shape over an array: the mapper captures a string its caller built, and the caller's
+// own hold on that string, and on the mapper, is gone before the first step, so the frame's retain
+// of the mapper parameter is what keeps both alive across every step.
+function* mapArray<T, U>(xs: readonly T[], mapFn: (x: T) => U) {
+    for(const x of xs) {
+        yield mapFn(x);
+    }
+}
+function ending(suffix: string): (x: number) => string {
+    return (x: number): string => `${String(x)}${suffix}`;
+}
+function suffixed(xs: readonly number[]): string[] {
+    const out: string[] = [];
+    for(const line of mapArray(xs, ending(`s${String(xs.length)}`))) {
+        out.push(line);
+    }
+    return out;
+}
+console.log(suffixed([1, 2, 3]).join(' '));
+console.log([...mapArray([7, 8], ending(`t${String(2)}`))].join(' '));
+console.log(Array.from(mapArray([9], ending(`u${String(1)}`))).join(' '));

@@ -167,7 +167,9 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		if err := l.optionalCall(expression); err != nil {
 			return nil, err
 		}
-		if function, isGenerator := l.generatorCallee(expression); isGenerator {
+		if function, isGenerator, err := l.generatorCallee(expression); err != nil {
+			return nil, err
+		} else if isGenerator {
 			// The generator is made and dropped at once: its frame lets go of the arguments it kept,
 			// and none of its body runs, as on Node.
 			call, err := l.generatorCall(expression, function)

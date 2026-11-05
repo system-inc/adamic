@@ -46,3 +46,22 @@ Two mutants the brief names don't apply to this slice:
 - **The done test ordered before the thrown test.** The thrown test is part of the step's own
   statement and the done test is the next statement, so the only reordering that changes anything
   puts the test after the loop's `break`, which is the thrown test removed for the step that threw.
+
+Wave 3 (S2a, generic generators lowered per instance), run against the three fixtures it added:
+
+| Mutant | Edit | Red |
+|---|---|---|
+| Every instance shares one key | lower/generic.go, `instantiateFunctionSignature`: `key += "," + l.genericTypeKey(concrete)` made `key += ","`, so a second instantiation reuses the first's function | generic.a alone, NotYet at 15:11: the number for-of finds the string instance, held differently from what it yields. The other two instantiate one generator once |
+| The entry's retain of a closure parameter dropped | native/generator.go, the entry: `if of.IsReference() {` made `if of.IsReference() && of != ir.Closure {` | generic_map.a, ASan heap-use-after-free in the resume, reading the mapper `ending` made, which nothing but the frame held; and generic_throw.a, whose named mapper's value adapter is released once too often. No fixture before these passed a function to a generator |
+| A call through a function value never throws | lower/exceptions.go, `throwsOut`: `ir.CallClosure` taken out of its arm, so a generator whose body throws only through its mapper isn't `ResumeMayThrow` | generic_throw.a alone, natively and sanitized: prints `consumed` and an empty line where Node catches, and leaks 2 |
+
+The lowering's own pins have their mutants in their tests (internal/lower): generatorCallee's
+generic arm taken out (TestGenericGeneratorsLowerPerInstance and every road row), call()'s generator
+guard at the generic branch taken out (TestGenericGeneratorRoadsAreNotYet's value rows, two of them
+on checkGeneratorRoads' compiler bug), and loweredGenerator refusing type parameters again (the
+void instantiation row of TestGeneratorVoidReturnIsNeverReadBySpreadOrArrayFrom, now not yet at rule
+2500 where it must be a void rule's refusal). Two mutants read by testing are equivalent on these
+programs: generatorStepped reading `T` from the declaration (the spread's array is `void[]`, refused
+whatever the exemption says), and generatorSignature reading its result without `concrete`
+(representation reads a bare `T` through the instance's substitution; only an unread instance's
+words change, `T` for `unknown`, red on that row alone).

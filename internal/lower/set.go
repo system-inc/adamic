@@ -54,7 +54,9 @@ func (l *lowering) newSet(node *ast.Node) (ir.Expression, error) {
 	}
 	// From anything iterable: an array, a string's code points, a Set, a Map's entries, or what keys()
 	// and values() give (collections.go).
-	if _, isGenerator := l.generatorCallee(arguments.Nodes[0]); isGenerator {
+	if _, isGenerator, err := l.generatorCallee(arguments.Nodes[0]); err != nil {
+		return nil, err
+	} else if isGenerator {
 		return nil, l.generatorNotYet(arguments.Nodes[0], "consumed by new Set")
 	}
 	values, from, err := l.iterated(arguments.Nodes[0])

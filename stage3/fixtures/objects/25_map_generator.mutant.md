@@ -7,4 +7,13 @@ Command: GOFLAGS=-buildvcs=false go test -count=1 -v ./stage3/fixtures -run 'Tes
 Result with the mutant: exit 1, red in objects on exactly 25_map_generator.a/stage0, back at the old refusal. Restored, checked with cmp, the same command passes (darwin/arm64, the stage0 record only).
 
     fixtures_test.go:476: gap changed: update status.json and check the native output; got {Outcome:Refused What:stage3/fixtures/objects/25_map_generator.a:3:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md) Stdout:}; recorded {Outcome:NotYet What:stage3/fixtures/objects/25_map_generator.a:3:1: stage 0 can't lower a generator function (its counted frame is being built, #qk8rztp) yet Stdout:}
+
 --- FAIL: TestFixturesObjects/objects/25_map_generator.a/stage0
+
+## S2a: generic generators lowered per instance (#qk8rztp)
+
+What moved: mapIterator is a generic top-level `function*`, which now lowers once per instantiation, where it's called, so rule 2500 no longer stops it at 3:1. The spread instantiates it at number, and its body lowers as far as its for-of over `iter`, an `Iterable<T>` the body can't step until the erased view is built (S2b), and stops there, at 4:21, NotYet, "for...of over an object". The census reason names that construct. The fixture is unchanged, and the record still checks the outcome and the exact text.
+
+Mutant: loweredGenerator in internal/lower/generators.go refuses type parameters again (`len(node.TypeParameters()) == 0 &&` put back), on top of this change; the change's status.json stays.
+Command: GOFLAGS=-buildvcs=false go test -count=1 -v ./stage3/fixtures -run 'TestFixturesObjects$'
+Result with the mutant: exit 1, red in objects on exactly 25_map_generator.a/stage0, back at 3:1, rule 2500's generator stop. Restored, checked with cmp, the same command passes (darwin/arm64).

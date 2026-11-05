@@ -266,7 +266,9 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 		if !known || declared != element {
 			for _, item := range items {
 				if item.Kind == ast.KindSpreadElement {
-					if function, isGenerator := l.generatorCallee(item.AsSpreadElement().Expression); isGenerator {
+					if function, isGenerator, err := l.generatorCallee(item.AsSpreadElement().Expression); err != nil {
+						return nil, err
+					} else if isGenerator {
 						if l.result.Functions[function].Yields != declared {
 							return nil, l.generatorNotYet(item, "spread into an array held differently from what it yields")
 						}
@@ -1094,7 +1096,9 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 	}
 	// A call to a program's generator is stepped as the generator it is, whatever iterator type it
 	// is declared to return (#qk8rztp, Compiler's risk 2).
-	if function, isGenerator := l.generatorCallee(statement.Expression); isGenerator {
+	if function, isGenerator, err := l.generatorCallee(statement.Expression); err != nil {
+		return nil, err
+	} else if isGenerator {
 		initializer := statement.Initializer
 		if initializer.Kind != ast.KindVariableDeclarationList || initializer.Flags&ast.NodeFlagsBlockScoped == 0 || len(initializer.AsVariableDeclarationList().Declarations.Nodes) != 1 {
 			return nil, l.generatorNotYet(initializer, "consumed by a for-of that doesn't declare one variable with const or let")

@@ -297,7 +297,7 @@
     "tsc": [
       "src/compiler/core.ts:332"
     ],
-    "reason": "a generator function",
+    "reason": "for...of over an object",
     "node": {
       "stdout": "2,4,6\n",
       "stderr": "",
@@ -305,7 +305,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/25_map_generator.a:3:1: stage 0 can't lower a generator function (its counted frame is being built, #qk8rztp) yet"
+      "what": "stage3/fixtures/objects/25_map_generator.a:4:21: stage 0 can't lower for...of over an object yet"
     }
   },
   {

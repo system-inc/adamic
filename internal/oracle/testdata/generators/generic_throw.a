@@ -1,0 +1,39 @@
+// An instance whose mapper throws on every second step: the error leaves the frame, through the
+// consumer, out to the try around the consumer's caller, and the frame is finished; then the same
+// instance, collected by Array.from, throws out of its helper into a try of its own.
+function* mapArray<T, U>(xs: readonly T[], mapFn: (x: T) => U) {
+    for(const x of xs) {
+        yield mapFn(x);
+    }
+}
+let calls = 0;
+function labeled(x: number): string {
+    calls++;
+    if(calls % 2 === 0) {
+        throw new Error(`step ${String(calls)} of ${String(x)}`);
+    }
+    return `x${String(x)}`;
+}
+function consume(xs: readonly number[]): void {
+    for(const line of mapArray(xs, labeled)) {
+        console.log(line);
+    }
+    console.log('consumed');
+}
+try {
+    consume([1, 2, 3]);
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(`caught ${error.message}`);
+    }
+}
+try {
+    console.log(Array.from(mapArray([4, 5], labeled)).join(','));
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(`caught again ${error.message}`);
+    }
+}
+console.log(`after ${String(calls)}`);

@@ -35,11 +35,13 @@ func generatorDeclaration(node *ast.Node) bool {
 	return false
 }
 
-// loweredGenerator is a generator declaration this slice lowers: a named, non-generic function*
-// declared at a module's top level. Rule 2500 stops every other generator before lowering.
+// loweredGenerator is a generator declaration this slice lowers: a named function* declared at a
+// module's top level. A generic one is lowered once per instantiation, where it's called, as every
+// generic function is (generic.go), and its yielded type is judged at that instance. Rule 2500 stops
+// every other generator before lowering.
 func loweredGenerator(node *ast.Node) bool {
 	return node.Kind == ast.KindFunctionDeclaration && node.AsFunctionDeclaration().AsteriskToken != nil &&
-		node.Parent != nil && node.Parent.Kind == ast.KindSourceFile && node.Name() != nil && len(node.TypeParameters()) == 0 &&
+		node.Parent != nil && node.Parent.Kind == ast.KindSourceFile && node.Name() != nil &&
 		!ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync)
 }
 
@@ -53,6 +55,9 @@ func (l *lowering) generatorSignature(function *ir.Function, declaration *ast.No
 			return l.generatorNotYet(parameter, "with a parameter that isn't a plain required name")
 		}
 	}
+	// Under a generic instance's type mapper, concrete reads the result this instantiation made of it,
+	// so the yielded type below is judged per instance: an unread type parameter stays itself, and
+	// has no representation.
 	returns := l.concrete(l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(declaration)))
 	// The checker's own Generator, inferred or written, or an iterator type a body may be declared to
 	// return. Every consumer routes a generator's call by its origin, never by this declared type
@@ -140,26 +145,34 @@ func (l *lowering) yieldStatement(node *ast.Node) ([]ir.Statement, error) {
 // generatorCallee is the generator function a call calls, and whether it is one. A call by name is
 // read from its callee; any other callee (a namespace's member, (0, gen)) from the signature the
 // checker resolved, so a generator called another way still routes by its origin, never by its
-// declared iterator type, and generatorCall stops it there.
-func (l *lowering) generatorCallee(node *ast.Node) (int, bool) {
+// declared iterator type, and generatorCall stops it there. A generic generator's function is its
+// instance for this call, lowered here if no call has made it yet, which is why this can fail.
+func (l *lowering) generatorCallee(node *ast.Node) (int, bool, error) {
 	node = ast.SkipParentheses(node)
 	if node.Kind != ast.KindCallExpression {
-		return 0, false
+		return 0, false, nil
 	}
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	named := callee
 	if !ast.IsIdentifier(callee) {
 		signature := l.checker.GetResolvedSignature(node)
 		if signature == nil || signature.Declaration() == nil || !loweredGenerator(signature.Declaration()) {
-			return 0, false
+			return 0, false, nil
 		}
 		named = signature.Declaration().Name()
 	}
+	if declaration, isGeneric := l.generics[l.symbol(named)]; isGeneric && loweredGenerator(declaration) {
+		index, err := l.instantiateFunction(node, declaration)
+		if err != nil {
+			return 0, false, err
+		}
+		return index, l.result.Functions[index].Generator, nil
+	}
 	index, isFunction := l.functions[l.symbol(named)]
 	if !isFunction || !l.result.Functions[index].Generator {
-		return 0, false
+		return 0, false, nil
 	}
-	return index, true
+	return index, true, nil
 }
 
 // generatorCall lowers a direct call to a generator function, which makes its frame and runs none

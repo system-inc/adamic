@@ -11,7 +11,9 @@ checked) and `internal/lower/generators_test.go` (every form below that stays no
 
 A `function*` lowers when it is:
 
-- declared at a module's top level, by name, with no type parameters, and not `async`;
+- declared at a module's top level, by name, and not `async`; a generic one lowers once per
+  instantiation, where it's called, as every generic function does, so two instantiations are two
+  functions with frames of their own, and each instance's `T` is judged as below;
 - given only plain, required parameters: no default, no `?`, no rest, no pattern, no `this`;
 - declared, or inferred, to return `Generator<T, ...>`, `IterableIterator<T>`, `SetIterator<T>` or
   `MapIterator<T>`, where `T` is held in one present slot: a number, a boolean, a string, an object,
@@ -86,9 +88,12 @@ words, for everything else.
   Destructuring takes only the steps its pattern asks and must close the rest; the constructors and
   the mapper wait for the same value form. Destructuring a plain `function*` is refused before that,
   by adamic/no-void-read, which reads its `void` last value as a void position.
-- **A generator expression, a method, a nested or generic declaration.** A nested generator captures
-  its parent's frame, which needs a canonical environment a generator's cells can be; a method needs
-  `this`; a generic generator is lowered per instance.
+- **A generator expression, a method, a nested declaration.** A nested generator captures its
+  parent's frame, which needs a canonical environment a generator's cells can be; a method needs
+  `this`.
+- **A generic generator's instance whose `T` isn't one present slot**, a union or `unknown` among
+  them, and a parameter typed by a view, `Iterable<T>`, which a for-of in the body can't step until
+  the erased view is built (#qk8rztp S2b). tsc's own `mapIterator` stops there, at its for-of.
 - **`yield*`.** Delegation forwards `next`, `return` and `throw` and closes its inner iterator.
 - **A yield inside `try`**, and with it any `finally` around a yield. A throw or a return delivered
   at a yield, and `return()` running a `finally`, need resume modes the frame doesn't have yet.

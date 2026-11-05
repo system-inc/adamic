@@ -17,7 +17,9 @@ func (l *lowering) arrayFrom(node *ast.Node) (ir.Expression, bool, error) {
 	// A call to a program's generator is collected by its origin, before the declared-iterator
 	// paths below can read its type (#qk8rztp, Compiler's risk 2).
 	if len(arguments) > 0 {
-		if function, isGenerator := l.generatorCallee(arguments[0]); isGenerator {
+		if function, isGenerator, err := l.generatorCallee(arguments[0]); err != nil {
+			return nil, true, err
+		} else if isGenerator {
 			if len(arguments) > 1 {
 				return nil, true, l.generatorNotYet(node, "consumed by Array.from with a mapper")
 			}

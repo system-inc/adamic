@@ -637,6 +637,10 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 			return l.functionValue(node, function)
 		}
 		if declaration, isGeneric := l.generics[l.symbol(node)]; !isLocal && isGeneric {
+			if generatorDeclaration(declaration) {
+				// As functionValue stops a non-generic generator, before any instance is asked for.
+				return nil, l.generatorNotYet(node, "used as a value")
+			}
 			return l.genericFunctionValue(node, declaration)
 		}
 		if !isLocal && l.isLibraryGlobal(node, "String") {
@@ -1330,6 +1334,11 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 		instance, err := l.instantiateFunction(node, declaration)
 		if err != nil {
 			return nil, err
+		}
+		if l.result.Functions[instance].Generator {
+			// A generic generator's instance, called anywhere but by a consumer, stops as a
+			// non-generic generator's call does below.
+			return nil, l.generatorNotYet(node, "whose generator is used other than by a for-of over its call or a call as a statement")
 		}
 		if l.result.Functions[instance].Closure {
 			arguments := []ir.Expression{}

@@ -34,7 +34,7 @@ func TestGeneratorFormsThisSliceDoesntLowerAreNotYet(t *testing.T) {
 		{"a generator expression", "const make = function* (): Generator<number, void, undefined> { yield 1; }; for (const value of make()) { console.log(String(value)); }", "a generator function"},
 		{"a generator method", "class Counter { *each(): Generator<number, void, undefined> { yield 1; } } for (const value of new Counter().each()) { console.log(String(value)); }", "a generator function"},
 		{"a nested generator", "function outer(): void { function* inner(): Generator<number, void, undefined> { yield 1; } for (const value of inner()) { console.log(String(value)); } } outer();", "a generator function"},
-		{"a generic generator", "function* each<T>(items: T[]): Generator<T, void, undefined> { for (const item of items) { yield item; } } for (const value of each([1, 2])) { console.log(String(value)); }", "a generator function"},
+		{"a generic generator's union instance", "function* each<T>(items: T[]): Generator<T, void, undefined> { for (const item of items) { yield item; } } for (const value of each<number | string>([1, 'a'])) { console.log(String(value)); }", "one present slot"},
 		{"yield*", numbers + "function* again(): Generator<number, undefined, undefined> { yield* numbers(2); } for (const value of again()) { console.log(String(value)); }", "delegating with yield*"},
 		{"a yield inside try", "function* guarded(): Generator<number, void, undefined> { try { yield 1; } catch (error) { console.log('caught'); } } for (const value of guarded()) { console.log(String(value)); }", "yielding inside try"},
 		{"a yield's result", "function* sent(): Generator<number, void, undefined> { const got = yield 1; console.log(String(got)); } for (const value of sent()) { console.log(String(value)); }", "a yield's result"},
@@ -180,11 +180,15 @@ func TestGeneratorVoidReturnIsNeverReadBySpreadOrArrayFrom(t *testing.T) {
 			t.Errorf("%s: got %v, want a void rule's refusal", source, err)
 		}
 	}
-	// Language's other attack: a generic generator spread at a void instantiation. It is no lowered
-	// generator, so the exemption never applies to it, and today rule 2500 stops it before the void
-	// rules do. The slice that lowers generics must keep it unadmitted, by judging T at the call.
+	// Language's other attack: a generic generator spread at a void instantiation. Generic generators
+	// lower (#qk8rztp S2a), so it is a void rule that keeps it unadmitted, never a generic generator's
+	// not yet: generatorStepped reads T from the call's own instantiated type, void here, so the
+	// exemption doesn't apply. Read by testing, it isn't the only layer: the spread's array is void[]
+	// and its read is refused whatever generatorStepped says, so a generatorStepped reading T from the
+	// declaration is an equivalent mutant on this program. Mutant: loweredGenerator refuses type
+	// parameters again; rule 2500 stops this not yet before the void rules, and it goes red.
 	generic := "function f(): void {}\nfunction* each<T>(value: T) { yield value; }\nconsole.log(String([...each(f())].length));"
-	if _, err := lowerSource(t, generic); err == nil {
-		t.Errorf("a generic generator spread at a void instantiation lowered; want it refused or not yet")
+	if _, err := lowerSource(t, generic); !errors.As(err, &refused) || !strings.Contains(refused.Error(), "adamic/no-void") {
+		t.Errorf("a generic generator spread at a void instantiation: got %v, want a void rule's refusal", err)
 	}
 }
