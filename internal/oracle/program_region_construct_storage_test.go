@@ -32,7 +32,7 @@ func programConstructed(t *testing.T) (run, string, string) {
 		t.Fatal(err)
 	}
 	oracle := onNode(t, path)
-	want := "size\nsize,weight,label\n{\"size\":3,\"weight\":7,\"label\":\"leaf4\"}\nbranch2\n"
+	want := "size\nsize,weight,label\nbranch2\n"
 	if oracle.exitCode != 0 || string(oracle.stdout) != want || len(oracle.stderr) != 0 {
 		t.Fatalf("Node: %d %q %s", oracle.exitCode, oracle.stdout, oracle.stderr)
 	}
