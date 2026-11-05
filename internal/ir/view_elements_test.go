@@ -10,7 +10,7 @@ import (
 func TestViewElementGobRoundTrip(t *testing.T) {
 	t.Parallel()
 	RegisterGob()
-	want := ViewElement{Value: Read{Local: 3, Of: Union}, Contract: 7, Where: "kids[0]", ViewType: "Node", Of: Object}
+	want := ViewElement{Array: Read{Local: 3, Of: Array}, Index: NumberConstant{Value: -1}, Relative: true, Contract: 7, Where: "kids[0]", ViewType: "Node", Of: Object}
 	var source Expression = want
 	var encoded bytes.Buffer
 	if err := gob.NewEncoder(&encoded).Encode(&source); err != nil {
