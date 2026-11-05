@@ -23,7 +23,11 @@ import (
 // Map entry and an as const literal (c06, host_map_union.a's and gaps.a's) lower and agree. An annotated
 // pattern is a slot its bindings read through, and n07, a number[] destructured as readonly
 // (number | string)[], stops.
-// k01, a number[] passed as readonly unknown[], keeps its erased-storage stop. Each program's whole stop
+// k01, a number[] passed as readonly unknown[], keeps its erased-storage stop. An any element is left to
+// the rules that judge a library's any result, and each road stops or agrees there (Compiler's question on
+// ec279b23): Object.values' any[] into readonly number[] lowers and agrees (c07), and into readonly
+// (number | string)[] stops at Object.values' own homogeneous-value refusal (k02). Whoever lifts that
+// refusal meets k02, and owes this walk an any element it can name. Each program's whole stop
 // is pinned in its .stop file, or "lowers". Mutant: elementsHeldOtherwise judging only fresh values again,
 // and every n row lowers and goes red here.
 func TestNamedContainerLayout(t *testing.T) {
@@ -79,7 +83,7 @@ func TestNamedContainerLayout(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 28 {
-		t.Fatalf("found %d programs, want 28", programs)
+	if programs != 32 {
+		t.Fatalf("found %d programs, want 32", programs)
 	}
 }
