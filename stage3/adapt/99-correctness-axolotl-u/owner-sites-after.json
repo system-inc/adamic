@@ -1,0 +1,22 @@
+[
+  {
+    "owner": "isDeclarationWithTypeParameters",
+    "where": "/workspace/scratch/99u-measured/src/compiler/utilities.ts:2232:100"
+  },
+  {
+    "owner": "isDeclarationWithTypeParameterChildren",
+    "where": "/workspace/scratch/99u-measured/src/compiler/utilities.ts:2244:114"
+  },
+  {
+    "owner": "isPrimitiveLiteralValue",
+    "where": "/workspace/scratch/99u-measured/src/compiler/utilities.ts:12030:107"
+  },
+  {
+    "owner": "hasInferredType",
+    "where": "/workspace/scratch/99u-measured/src/compiler/utilities.ts:12064:70"
+  },
+  {
+    "owner": "createGetIsolatedDeclarationErrors.getDiagnostic",
+    "where": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:673:40"
+  }
+]

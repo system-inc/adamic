@@ -1,0 +1,64 @@
+[
+  {
+    "type": "TypeMapper",
+    "file": "debug.ts",
+    "owner": "Debug.DebugTypeMapper.__debugToString",
+    "status": "left by explicit instruction: callback result contracts cannot be checked by any runtime test"
+  },
+  {
+    "type": "DeclarationWithTypeParameters",
+    "file": "utilities.ts",
+    "owner": "isDeclarationWithTypeParameters",
+    "runs": 5100,
+    "wouldFail": 4230,
+    "status": "stopped: oracle would-fail"
+  },
+  {
+    "type": "DeclarationWithTypeParameterChildren",
+    "file": "utilities.ts",
+    "owner": "isDeclarationWithTypeParameterChildren",
+    "runs": 5120,
+    "wouldFail": 4230,
+    "status": "stopped: oracle would-fail"
+  },
+  {
+    "type": "PrimitiveLiteral",
+    "file": "utilities.ts",
+    "owner": "isPrimitiveLiteralValue",
+    "runs": 7027,
+    "wouldFail": 1788,
+    "status": "stopped: oracle would-fail"
+  },
+  {
+    "type": "HasInferredType",
+    "file": "utilities.ts",
+    "owner": "hasInferredType",
+    "runs": 399823,
+    "wouldFail": 19422,
+    "status": "stopped: oracle would-fail"
+  },
+  {
+    "type": "ArrowFunction | FunctionExpression",
+    "file": "expressionToTypeNode.ts",
+    "owner": "createSyntacticTypeNodeBuilder.typeFromExpression",
+    "runs": 3435,
+    "wouldFail": 0,
+    "status": "checked"
+  },
+  {
+    "type": "WithIsolatedDeclarationDiagnostic",
+    "file": "transformers/declarations/diagnostics.ts",
+    "owner": "createGetIsolatedDeclarationErrors.getDiagnostic",
+    "runs": 1014,
+    "wouldFail": 26,
+    "status": "stopped: oracle would-fail"
+  },
+  {
+    "type": "ModuleResolutionHost",
+    "file": "moduleSpecifiers.ts",
+    "owner": "getAllModulePathsWorker",
+    "runs": 1170,
+    "wouldFail": 0,
+    "status": "stopped: optional getDirectories callback result contract is not checked by callability"
+  }
+]

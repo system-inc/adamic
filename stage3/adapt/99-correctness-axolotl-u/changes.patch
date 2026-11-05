@@ -1,0 +1,63 @@
+--- a/src/compiler/utilities.ts
++++ b/src/compiler/utilities.ts
+@@ -2233 +2232,0 @@
+-    Debug.type<DeclarationWithTypeParameters>(node);
+@@ -2240 +2238,0 @@
+-            assertType<DeclarationWithTypeParameterChildren>(node);
+@@ -2247 +2244,0 @@
+-    Debug.type<DeclarationWithTypeParameterChildren>(node);
+@@ -2270 +2267 @@
+-            assertType<never>(node);
++            assertType<Exclude<SyntaxKind, DeclarationWithTypeParameterChildren["kind"]>>(node.kind);
+@@ -12034 +12030,0 @@
+-    Debug.type<PrimitiveLiteral>(node);
+@@ -12044,0 +12041 @@
++            Debug.assert(isPrefixUnaryExpression(node));
+@@ -12053 +12050 @@
+-            assertType<never>(node);
++            assertType<Exclude<SyntaxKind, PrimitiveLiteral["kind"]>>(node.kind);
+@@ -12068 +12064,0 @@
+-    Debug.type<HasInferredType>(node);
+@@ -12085 +12081 @@
+-            assertType<never>(node);
++            assertType<Exclude<SyntaxKind, HasInferredType["kind"]>>(node.kind);
+--- a/src/compiler/transformers/declarations/diagnostics.ts
++++ b/src/compiler/transformers/declarations/diagnostics.ts
+@@ -36,0 +37,9 @@
++    isComputedPropertyName,
++    isShorthandPropertyAssignment,
++    isSpreadAssignment,
++    isArrayLiteralExpression,
++    isSpreadElement,
++    isFunctionExpression,
++    isArrowFunction,
++    isPropertyAssignment,
++    isClassExpression,
+@@ -672 +680,0 @@
+-        Debug.type<WithIsolatedDeclarationDiagnostic>(node);
+@@ -675,0 +684 @@
++                Debug.assert(isGetAccessor(node) || isSetAccessor(node));
+@@ -679,0 +689 @@
++                Debug.assert(isComputedPropertyName(node) || isShorthandPropertyAssignment(node) || isSpreadAssignment(node));
+@@ -682,0 +693 @@
++                Debug.assert(isArrayLiteralExpression(node) || isSpreadElement(node));
+@@ -688,0 +700 @@
++                Debug.assert(isMethodDeclaration(node) || isConstructSignatureDeclaration(node) || isFunctionExpression(node) || isArrowFunction(node) || isFunctionDeclaration(node));
+@@ -690,0 +703 @@
++                Debug.assert(isBindingElement(node));
+@@ -693,0 +707 @@
++                Debug.assert(isPropertyDeclaration(node) || isVariableDeclaration(node));
+@@ -695,0 +710 @@
++                Debug.assert(isParameter(node));
+@@ -697,0 +713 @@
++                Debug.assert(isPropertyAssignment(node));
+@@ -699,0 +716 @@
++                Debug.assert(isClassExpression(node));
+@@ -702,2 +719,2 @@
+-                assertType<never>(node);
+-                return createExpressionError(node as Expression);
++                assertType<Exclude<SyntaxKind, WithIsolatedDeclarationDiagnostic["kind"]>>(node.kind);
++                return createExpressionError(node);
+@@ -790 +807 @@
+-    function createExpressionError(node: Expression, diagnosticMessage?: DiagnosticMessage) {
++    function createExpressionError(node: Node, diagnosticMessage?: DiagnosticMessage) {

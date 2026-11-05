@@ -1,0 +1,21 @@
+{
+  "rawEventsBefore": 212734,
+  "rawEventsAfter": 212734,
+  "normalizedOccurrences": 106367,
+  "rawMultisetsMatch": true,
+  "normalizedMultisetsMatch": true,
+  "added": 0,
+  "removed": 0,
+  "outcomes": {
+    "pass": 106366,
+    "fail": 1,
+    "pending": 0
+  },
+  "failures": [
+    {
+      "title": "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change",
+      "count": 1
+    }
+  ],
+  "normalizedSha256": "1de5705e5a5982dc8172377c138f37e6c65f6e8a60dbe76f160a85a181152371"
+}

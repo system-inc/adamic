@@ -1,0 +1,231 @@
+{
+  "base": "b0efce6dce1cd7445ed8a570aecac387a4a7d684",
+  "guards": [
+    {
+      "name": "skipPartiallyEmittedExpressions",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 1433,
+      "body": "export function skipPartiallyEmittedExpressions(node: Node) {\n    return skipOuterExpressions(node, OuterExpressionKinds.PartiallyEmittedExpressions);\n}",
+      "directGuard": false,
+      "readsBeyondKind": "No node fields beyond kind in this body."
+    },
+    {
+      "name": "isLeftHandSideExpressionKind",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 1999,
+      "body": "function isLeftHandSideExpressionKind(kind: SyntaxKind): boolean {\n    switch (kind) {\n        case SyntaxKind.PropertyAccessExpression:\n        case SyntaxKind.ElementAccessExpression:\n        case SyntaxKind.NewExpression:\n        case SyntaxKind.CallExpression:\n        case SyntaxKind.JsxElement:\n        case SyntaxKind.JsxSelfClosingElement:\n        case SyntaxKind.JsxFragment:\n        case SyntaxKind.TaggedTemplateExpression:\n        case SyntaxKind.ArrayLiteralExpression:\n        case SyntaxKind.ParenthesizedExpression:\n        case SyntaxKind.ObjectLiteralExpression:\n        case SyntaxKind.ClassExpression:\n        case SyntaxKind.FunctionExpression:\n        case SyntaxKind.Identifier:\n        case SyntaxKind.PrivateIdentifier: // technically this is only an Expression if it's in a `#field in expr` BinaryExpression\n        case SyntaxKind.RegularExpressionLiteral:\n        case SyntaxKind.NumericLiteral:\n        case SyntaxKind.BigIntLiteral:\n        case SyntaxKind.StringLiteral:\n        case SyntaxKind.NoSubstitutionTemplateLiteral:\n        case SyntaxKind.TemplateExpression:\n        case SyntaxKind.FalseKeyword:\n        case SyntaxKind.NullKeyword:\n        case SyntaxKind.ThisKeyword:\n        case SyntaxKind.TrueKeyword:\n        case SyntaxKind.SuperKeyword:\n        case SyntaxKind.NonNullExpression:\n        case SyntaxKind.ExpressionWithTypeArguments:\n        case SyntaxKind.MetaProperty:\n        case SyntaxKind.ImportKeyword: // technically this is only an Expression if it's in a CallExpression\n        case SyntaxKind.MissingDeclaration:\n            return true;\n        default:\n            return false;\n    }\n}",
+      "directGuard": false,
+      "readsBeyondKind": "No node fields beyond kind in this body."
+    },
+    {
+      "name": "isUnaryExpressionKind",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 2043,
+      "body": "function isUnaryExpressionKind(kind: SyntaxKind): boolean {\n    switch (kind) {\n        case SyntaxKind.PrefixUnaryExpression:\n        case SyntaxKind.PostfixUnaryExpression:\n        case SyntaxKind.DeleteExpression:\n        case SyntaxKind.TypeOfExpression:\n        case SyntaxKind.VoidExpression:\n        case SyntaxKind.AwaitExpression:\n        case SyntaxKind.TypeAssertionExpression:\n            return true;\n        default:\n            return isLeftHandSideExpressionKind(kind);\n    }\n}",
+      "directGuard": false,
+      "readsBeyondKind": "No node fields beyond kind in this body."
+    },
+    {
+      "name": "isExpression",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 2086,
+      "body": "export function isExpression(node: Node): node is Expression {\n    return isExpressionKind(skipPartiallyEmittedExpressions(node).kind);\n}",
+      "directGuard": true,
+      "readsBeyondKind": "Indirectly: skips PartiallyEmittedExpression wrappers through node.expression. The selected kind tests use kind only."
+    },
+    {
+      "name": "isExpressionKind",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 2090,
+      "body": "function isExpressionKind(kind: SyntaxKind): boolean {\n    switch (kind) {\n        case SyntaxKind.ConditionalExpression:\n        case SyntaxKind.YieldExpression:\n        case SyntaxKind.ArrowFunction:\n        case SyntaxKind.BinaryExpression:\n        case SyntaxKind.SpreadElement:\n        case SyntaxKind.AsExpression:\n        case SyntaxKind.OmittedExpression:\n        case SyntaxKind.CommaListExpression:\n        case SyntaxKind.PartiallyEmittedExpression:\n        case SyntaxKind.SatisfiesExpression:\n            return true;\n        default:\n            return isUnaryExpressionKind(kind);\n    }\n}",
+      "directGuard": false,
+      "readsBeyondKind": "No node fields beyond kind in this body."
+    },
+    {
+      "name": "isSetAccessor",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 2538,
+      "body": "export function isSetAccessor(node: Node): node is SetAccessorDeclaration {\n    return node.kind === SyntaxKind.SetAccessor;\n}",
+      "directGuard": true,
+      "readsBeyondKind": "No node fields beyond kind in this body."
+    },
+    {
+      "name": "isGetAccessor",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 2542,
+      "body": "export function isGetAccessor(node: Node): node is GetAccessorDeclaration {\n    return node.kind === SyntaxKind.GetAccessor;\n}",
+      "directGuard": true,
+      "readsBeyondKind": "No node fields beyond kind in this body."
+    },
+    {
+      "name": "isComputedPropertyName",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 397,
+      "body": "export function isComputedPropertyName(node: Node): node is ComputedPropertyName {\n    return node.kind === SyntaxKind.ComputedPropertyName;\n}",
+      "directGuard": true,
+      "readsBeyondKind": "No node fields beyond kind in this body."
+    },
+    {
+      "name": "isParameter",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 408,
+      "body": "export function isParameter(node: Node): node is ParameterDeclaration {\n    return node.kind === SyntaxKind.Parameter;\n}",
+      "directGuard": true,
+      "readsBeyondKind": "No node fields beyond kind in this body."
+    },
+    {
+      "name": "isPropertyDeclaration",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 422,
+      "body": "export function isPropertyDeclaration(node: Node): node is PropertyDeclaration {\n    return node.kind === SyntaxKind.PropertyDeclaration;\n}",
+      "directGuard": true,
+      "readsBeyondKind": "No node fields beyond kind in this body."
+    },
+    {
+      "name": "isMethodDeclaration",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 430,
+      "body": "export function isMethodDeclaration(node: Node): node is MethodDeclaration {\n    return node.kind === SyntaxKind.MethodDeclaration;\n}",
+      "directGuard": true,
+      "readsBeyondKind": "No node fields beyond kind in this body."
+    },
+    {
+      "name": "isConstructSignatureDeclaration",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 454,
+      "body": "export function isConstructSignatureDeclaration(node: Node): node is ConstructSignatureDeclaration {\n    return node.kind === SyntaxKind.ConstructSignature;\n}",
+      "directGuard": true,
+      "readsBeyondKind": "No node fields beyond kind in this body."
+    },
+    {
+      "name": "isBindingElement",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 570,
+      "body": "export function isBindingElement(node: Node): node is BindingElement {\n    return node.kind === SyntaxKind.BindingElement;\n}",
+      "directGuard": true,
+      "readsBeyondKind": "No node fields beyond kind in this body."
+    },
+    {
+      "name": "isArrayLiteralExpression",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 576,
+      "body": "export function isArrayLiteralExpression(node: Node): node is ArrayLiteralExpression {\n    return node.kind === SyntaxKind.ArrayLiteralExpression;\n}",
+      "directGuard": true,
+      "readsBeyondKind": "No node fields beyond kind in this body."
+    },
+    {
+      "name": "isFunctionExpression",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 612,
+      "body": "export function isFunctionExpression(node: Node): node is FunctionExpression {\n    return node.kind === SyntaxKind.FunctionExpression;\n}",
+      "directGuard": true,
+      "readsBeyondKind": "No node fields beyond kind in this body."
+    },
+    {
+      "name": "isArrowFunction",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 616,
+      "body": "export function isArrowFunction(node: Node): node is ArrowFunction {\n    return node.kind === SyntaxKind.ArrowFunction;\n}",
+      "directGuard": true,
+      "readsBeyondKind": "No node fields beyond kind in this body."
+    },
+    {
+      "name": "isPrefixUnaryExpression",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 636,
+      "body": "export function isPrefixUnaryExpression(node: Node): node is PrefixUnaryExpression {\n    return node.kind === SyntaxKind.PrefixUnaryExpression;\n}",
+      "directGuard": true,
+      "readsBeyondKind": "No node fields beyond kind in this body."
+    },
+    {
+      "name": "isSpreadElement",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 660,
+      "body": "export function isSpreadElement(node: Node): node is SpreadElement {\n    return node.kind === SyntaxKind.SpreadElement;\n}",
+      "directGuard": true,
+      "readsBeyondKind": "No node fields beyond kind in this body."
+    },
+    {
+      "name": "isClassExpression",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 664,
+      "body": "export function isClassExpression(node: Node): node is ClassExpression {\n    return node.kind === SyntaxKind.ClassExpression;\n}",
+      "directGuard": true,
+      "readsBeyondKind": "No node fields beyond kind in this body."
+    },
+    {
+      "name": "isVariableDeclaration",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 792,
+      "body": "export function isVariableDeclaration(node: Node): node is VariableDeclaration {\n    return node.kind === SyntaxKind.VariableDeclaration;\n}",
+      "directGuard": true,
+      "readsBeyondKind": "No node fields beyond kind in this body."
+    },
+    {
+      "name": "isFunctionDeclaration",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 800,
+      "body": "export function isFunctionDeclaration(node: Node): node is FunctionDeclaration {\n    return node.kind === SyntaxKind.FunctionDeclaration;\n}",
+      "directGuard": true,
+      "readsBeyondKind": "No node fields beyond kind in this body."
+    },
+    {
+      "name": "isPropertyAssignment",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 995,
+      "body": "export function isPropertyAssignment(node: Node): node is PropertyAssignment {\n    return node.kind === SyntaxKind.PropertyAssignment;\n}",
+      "directGuard": true,
+      "readsBeyondKind": "No node fields beyond kind in this body."
+    },
+    {
+      "name": "isShorthandPropertyAssignment",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 999,
+      "body": "export function isShorthandPropertyAssignment(node: Node): node is ShorthandPropertyAssignment {\n    return node.kind === SyntaxKind.ShorthandPropertyAssignment;\n}",
+      "directGuard": true,
+      "readsBeyondKind": "No node fields beyond kind in this body."
+    },
+    {
+      "name": "isSpreadAssignment",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1003,
+      "body": "export function isSpreadAssignment(node: Node): node is SpreadAssignment {\n    return node.kind === SyntaxKind.SpreadAssignment;\n}",
+      "directGuard": true,
+      "readsBeyondKind": "No node fields beyond kind in this body."
+    },
+    {
+      "name": "isOuterExpression",
+      "file": "src/compiler/factory/utilities.ts",
+      "line": 631,
+      "body": "export function isOuterExpression(node: Node, kinds: OuterExpressionKinds = OuterExpressionKinds.All): node is OuterExpression {\n    switch (node.kind) {\n        case SyntaxKind.ParenthesizedExpression:\n            if (kinds & OuterExpressionKinds.ExcludeJSDocTypeAssertion && isJSDocTypeAssertion(node)) {\n                return false;\n            }\n            return (kinds & OuterExpressionKinds.Parentheses) !== 0;\n        case SyntaxKind.TypeAssertionExpression:\n        case SyntaxKind.AsExpression:\n            return (kinds & OuterExpressionKinds.TypeAssertions) !== 0;\n        case SyntaxKind.SatisfiesExpression:\n            return (kinds & (OuterExpressionKinds.TypeAssertions | OuterExpressionKinds.Satisfies)) !== 0;\n        case SyntaxKind.ExpressionWithTypeArguments:\n            return (kinds & OuterExpressionKinds.ExpressionsWithTypeArguments) !== 0;\n        case SyntaxKind.NonNullExpression:\n            return (kinds & OuterExpressionKinds.NonNullAssertions) !== 0;\n        case SyntaxKind.PartiallyEmittedExpression:\n            return (kinds & OuterExpressionKinds.PartiallyEmittedExpressions) !== 0;\n    }\n    return false;\n}",
+      "directGuard": false,
+      "readsBeyondKind": "General helper can call isJSDocTypeAssertion for a ParenthesizedExpression when ExcludeJSDocTypeAssertion is enabled; isExpression passes only PartiallyEmittedExpressions, so that path is disabled."
+    },
+    {
+      "name": "skipOuterExpressions",
+      "file": "src/compiler/factory/utilities.ts",
+      "line": 660,
+      "body": "export function skipOuterExpressions(node: Node, kinds = OuterExpressionKinds.All) {\n    while (isOuterExpression(node, kinds)) {\n        node = node.expression;\n    }\n    return node;\n}",
+      "directGuard": false,
+      "readsBeyondKind": "Yes: node.expression while unwrapping."
+    },
+    {
+      "name": "isNumericLiteral",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 235,
+      "body": "export function isNumericLiteral(node: Node): node is NumericLiteral {\n    return node.kind === SyntaxKind.NumericLiteral;\n}",
+      "directGuard": false,
+      "existingOperandGuard": true,
+      "readsBeyondKind": "No."
+    },
+    {
+      "name": "isBigIntLiteral",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 239,
+      "body": "export function isBigIntLiteral(node: Node): node is BigIntLiteral {\n    return node.kind === SyntaxKind.BigIntLiteral;\n}",
+      "directGuard": false,
+      "existingOperandGuard": true,
+      "readsBeyondKind": "No."
+    }
+  ]
+}

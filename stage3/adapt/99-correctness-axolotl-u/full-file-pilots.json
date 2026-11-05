@@ -1,0 +1,24 @@
+{
+  "runs": [
+    {
+      "pid": 11356,
+      "command": [
+        "/workspace/scratch/99u-bin/latent",
+        "/workspace/scratch/99u-main/src/compiler",
+        "/workspace/scratch/99u-census-before.jsonl"
+      ],
+      "status": "superseded, incomplete, not used as completed census proof"
+    },
+    {
+      "pid": 17104,
+      "command": [
+        "/workspace/scratch/99u-bin/latent",
+        "/workspace/scratch/99u-measured/src/compiler",
+        "/workspace/scratch/99u-census-after.jsonl"
+      ],
+      "status": "superseded, incomplete, not used as completed census proof"
+    }
+  ],
+  "replacement": "Unmodified ordinary per-file driver over every root, plus all five complete owners selected through the existing guarded LatentReplay full attempt path. All 79 roots are loaded in each owner observation. No source reduction or refusal suppression.",
+  "compilerBase": "5ff432f962b1c7c9145533946c46a35450ebfacc"
+}

@@ -1,0 +1,113 @@
+{
+  "base": "31d7a244808fa8092643926d21ab9d310a54cce3",
+  "guards": {
+    "G07": [
+      308,
+      0
+    ],
+    "G03": [
+      126,
+      0
+    ],
+    "G01": [
+      288,
+      0
+    ],
+    "G05": [
+      311,
+      0
+    ],
+    "G08": [
+      88,
+      0
+    ],
+    "G04": [
+      23,
+      0
+    ],
+    "G09": [
+      61,
+      0
+    ],
+    "G06": [
+      24,
+      0
+    ],
+    "G02": [
+      29,
+      0
+    ],
+    "G11": [
+      26,
+      12
+    ],
+    "G10": [
+      18,
+      0
+    ]
+  },
+  "identity": {
+    "rawEventsBefore": 212734,
+    "rawEventsAfter": 212734,
+    "normalizedOccurrences": 106367,
+    "rawMultisetsMatch": true,
+    "normalizedMultisetsMatch": true,
+    "added": 0,
+    "removed": 0,
+    "outcomes": {
+      "pass": 106366,
+      "fail": 1,
+      "pending": 0
+    },
+    "failures": [
+      {
+        "title": "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change",
+        "count": 1
+      }
+    ],
+    "normalizedSha256": "1de5705e5a5982dc8172377c138f37e6c65f6e8a60dbe76f160a85a181152371"
+  },
+  "oracle": {
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ],
+    "phases": {
+      "install": {
+        "command": [
+          "npm",
+          "ci",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "exit": 0,
+        "seconds": 2.256
+      },
+      "build": {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exit": 0,
+        "seconds": 20.402
+      },
+      "tests": {
+        "command": [
+          "npm",
+          "test",
+          "--",
+          "--workers=8",
+          "--lint=false",
+          "--no-colors"
+        ],
+        "exit": 1,
+        "seconds": 268.121
+      }
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "sourceFiles": 746,
+  "changedSourceFiles": [
+    "compiler/transformers/declarations/diagnostics.ts",
+    "compiler/utilities.ts"
+  ],
+  "onlyPlannedOwnerAndImportEdits": true,
+  "measuredAndAppliedSourceByteIdentical": true,
+  "declarations": [
+    {
+      "name": "typescript.d.ts",
+      "byteIdentical": true,
+      "bytes": 593502,
+      "sha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b"
+    },
+    {
+      "name": "tsserverlibrary.d.ts",
+      "byteIdentical": true,
+      "bytes": 866,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
+    }
+  ],
+  "owners": [
+    {
+      "owner": "isDeclarationWithTypeParameters",
+      "file": "utilities.ts",
+      "exported": true,
+      "beforeSha256": "9112ce124a6daebb3844fd98a33cb754cbd3ea10615c90725143b78ae06370f5",
+      "afterSha256": "347ce66ef69ee2050506c54bc0d7404850159959b061b16d17884afe36309570"
+    },
+    {
+      "owner": "isDeclarationWithTypeParameterChildren",
+      "file": "utilities.ts",
+      "exported": true,
+      "beforeSha256": "f0f131c52390e123c4ee13e77e7aaa1cfed77a7252f47022851b2f260d959925",
+      "afterSha256": "47b4ffb82f46a27b4b2223e3c4db27a49c1e3db4667cf33c8a7bf67f0421f413"
+    },
+    {
+      "owner": "isPrimitiveLiteralValue",
+      "file": "utilities.ts",
+      "exported": true,
+      "beforeSha256": "cf136bceda48a00bf1779a1a38b40fa6f3c9fec82d45516d651986b44bb03ae8",
+      "afterSha256": "89e104c824c5f743716bc81f7a138698d37aaac1e1daff2ae595cd80bcd826d5"
+    },
+    {
+      "owner": "hasInferredType",
+      "file": "utilities.ts",
+      "exported": true,
+      "beforeSha256": "3bd45bc56d8bd8c1a467369a2e4ebe9043a664c0e2eca18d827e5ba1bdc8e0c4",
+      "afterSha256": "9056cfc9db7c341b7a33b6ea5d2bb183bd053770ada507ec0330a38a436479a3"
+    },
+    {
+      "owner": "createGetIsolatedDeclarationErrors.getDiagnostic",
+      "file": "transformers/declarations/diagnostics.ts",
+      "exported": false,
+      "beforeSha256": "b80e3eb31d8f1c262e11fbb3a90cc32edc88831c8aaeda618f4a822a0ed7d05f",
+      "afterSha256": "8f009bdfedd00cb81913ecbba6055c0018e0bf910f0e0021cb02faf879abd24f"
+    }
+  ],
+  "unchangedFiles": [
+    {
+      "file": "compiler/debug.ts",
+      "sha256": "7dcbaf5c3365d9eaff05463dd4ff2acd06ea761ac59ba45b885aff4ad1c4474d",
+      "byteIdentical": true
+    },
+    {
+      "file": "compiler/moduleSpecifiers.ts",
+      "sha256": "c47362305fba2170d24acf89f8e4ab97949639510fe4f4e9849a7a27ddeefccd",
+      "byteIdentical": true
+    },
+    {
+      "file": "compiler/expressionToTypeNode.ts",
+      "sha256": "0ec43231c051abbc554fd34154fd80b46f54771f67fe3675d5c24bbebd4f183b",
+      "byteIdentical": true
+    }
+  ]
+}

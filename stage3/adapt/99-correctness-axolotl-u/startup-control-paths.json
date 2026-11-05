@@ -1,0 +1,79 @@
+[
+  {
+    "id": "G01",
+    "kindReads": 2,
+    "path": "exact instrumented lexical owner",
+    "plantedKind": "PrefixUnaryExpression",
+    "laterKind": "Unknown"
+  },
+  {
+    "id": "G02",
+    "kindReads": 3,
+    "path": "exact instrumented lexical owner",
+    "plantedKind": "GetAccessor",
+    "laterKind": "Unknown"
+  },
+  {
+    "id": "G03",
+    "kindReads": 4,
+    "path": "exact instrumented lexical owner",
+    "plantedKind": "ComputedPropertyName",
+    "laterKind": "Unknown"
+  },
+  {
+    "id": "G04",
+    "kindReads": 3,
+    "path": "exact instrumented lexical owner",
+    "plantedKind": "ArrayLiteralExpression",
+    "laterKind": "Unknown"
+  },
+  {
+    "id": "G05",
+    "kindReads": 6,
+    "path": "exact instrumented lexical owner",
+    "plantedKind": "MethodDeclaration",
+    "laterKind": "Unknown"
+  },
+  {
+    "id": "G06",
+    "kindReads": 2,
+    "path": "exact instrumented lexical owner",
+    "plantedKind": "BindingElement",
+    "laterKind": "Unknown"
+  },
+  {
+    "id": "G07",
+    "kindReads": 3,
+    "path": "exact instrumented lexical owner",
+    "plantedKind": "PropertyDeclaration",
+    "laterKind": "Unknown"
+  },
+  {
+    "id": "G08",
+    "kindReads": 2,
+    "path": "exact instrumented lexical owner",
+    "plantedKind": "Parameter",
+    "laterKind": "Unknown"
+  },
+  {
+    "id": "G09",
+    "kindReads": 2,
+    "path": "exact instrumented lexical owner",
+    "plantedKind": "PropertyAssignment",
+    "laterKind": "Unknown"
+  },
+  {
+    "id": "G10",
+    "kindReads": 2,
+    "path": "exact instrumented lexical owner",
+    "plantedKind": "ClassExpression",
+    "laterKind": "Unknown"
+  },
+  {
+    "id": "G11",
+    "kindReads": 3,
+    "path": "exact instrumented lexical owner",
+    "plantedKind": "Unknown",
+    "laterKind": "Unknown"
+  }
+]
