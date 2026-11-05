@@ -46,7 +46,8 @@ reaches the TReturn, a stored generator among them, stays judged by the void rul
 A `for...of` over a parameter or local typed `Iterable<T>` or `IterableIterator<T>`, a view, lowers
 when every value that can reach it is a Map's or a Set's `keys()`, `values()` or `entries()`, held
 as the view reads `T`. It runs that iterator's own loop. `Iterable<string>` is held as a union,
-since a string fits it too, and its loop reads the slot as the iterator through a checked unbox.
+since a string fits it too, and its loop reads the slot as the iterator through a checked unbox. A
+parameter typed either `| undefined` is a view too, read past its undefined test (S2c-3).
 Lowering proves it once every call is in (lower/iterable_views.go, held by
 `internal/oracle/testdata/iterable_views/`). Any other origin, or one that holds its steps
 otherwise, stops as not yet built: an array, a generator, a string, a Map itself, a program's own
@@ -62,10 +63,13 @@ generator to an object's slot. The parameter's only use, counted in the lowered 
 for-of over it, in a function that doesn't suspend, read `arguments`, assign it or let a closure
 capture it. The parameter may be typed `Iterable<T> | undefined` or `IterableIterator<T> | undefined`
 too, as tsc's `firstOrUndefinedIterator`'s is, when it is held as an object, whose undefined is a
-missing pointer: its `=== undefined` and `!== undefined` tests are tests, not reads, and anything
-else that reads it, a truthiness test or a null test among them, still counts (#qk8rztp S2c-3).
-`| null`, `?` and a default stay not yet built, and so does `Iterable<string> | undefined`, held as a
-union. That for-of becomes a dispatch on what the object is at run time: a generator steps by
+missing pointer: any number of its `=== undefined` and `!== undefined` tests, before the for-of,
+after it or in a loop's condition around it, are tests, not reads, and anything else that reads it,
+a truthiness test, a null test, `typeof`, `??` or `?.` among them, still counts, as does a test
+inside a closure, which captures it (#qk8rztp S2c-3, Adamic's ruling). Past its test the for-of
+reads it through the narrowing's check, which the proof sees through and the loop keeps, so an
+undefined the proof missed stops the program in that check's words. `| null`, `?` and a default
+stay not yet built, and so does `Iterable<string> | undefined`, held as a union. That for-of becomes a dispatch on what the object is at run time: a generator steps by
 its own next, a Map's or a Set's iterator by the collection loop's own step, so one parameter can be
 fed both at different call sites, and anything else is a compiler bug that stops the program, naming
 the site. Every way out of the loop finishes a generator, as Node's `return()` does, so a later pass
