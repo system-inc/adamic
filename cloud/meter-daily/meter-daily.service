@@ -20,6 +20,6 @@ PrivateTmp=yes
 # The box's toolchain, read through an ACL: traverse on /home/ahra, read on ~/adamic-tools.
 Environment=ADAMIC_METER_TOOLS_ENV=/home/ahra/adamic-tools/env.sh
 ExecStart=/usr/bin/bash /srv/adamic-meter/run.sh
-# run.sh gives the meter 2 h (timeout 7200); this leaves room for the clone, fetch, submodules and npm around it.
-TimeoutStartSec=2h30m
+# run.sh gives the meter 3 h (timeout 10800, up from 2 h for #20pb346); this leaves room for the clone, fetch, submodules and npm around it.
+TimeoutStartSec=3h30m
 Nice=10

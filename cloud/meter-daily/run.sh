@@ -68,7 +68,7 @@ finish() {
 	fi
 	local detail
 	detail=$(grep -v '^[[:space:]]*$' "$log" 2> /dev/null | tail -n 1 || true)
-	[ "$code" = 124 ] && [ "$step" = meter ] && detail="timed out after 2 h; $detail"
+	[ "$code" = 124 ] && [ "$step" = meter ] && detail="timed out after 3 h; $detail"
 	record Failed "$code" "$detail"
 	say "failed at $step (exit $code); nothing pushed; log $log"
 }
@@ -162,13 +162,15 @@ say "npm $(npm --version)"
 } > "$toolchain"
 
 begin meter
-say "running stage3/meter/twice-daily.sh (per-ref, first-error, 2 h limit) on $sha"
+say "running stage3/meter/twice-daily.sh (per-ref, first-error, 3 h limit) on $sha"
 # STAGE3_METER_MAIN_REF is the sha checked out above, so the launcher and both measured trees are one commit even
-# when main moves between this fetch and the meter's own.
+# when main moves between this fetch and the meter's own. The limit is 3 h, up from 2: on Nov 5 the latent census
+# of tsc's entry slowed past 2 h (#20pb346, tracing.ts's dumpTypes 41 s to 157 s) and the run was killed with no
+# record. It goes back to 2 h when #20pb346's cause is fixed; a hang still fails here, an hour later.
 (
 	cd "$work"
 	STAGE3_METER_COMPILER=per-ref STAGE3_METER_LATENT=first-error STAGE3_METER_RUNS=$runs STAGE3_METER_MAIN_REF=$sha \
-		timeout --kill-after=60s 7200 bash stage3/meter/twice-daily.sh
+		timeout --kill-after=60s 10800 bash stage3/meter/twice-daily.sh
 ) >> "$log" 2>&1
 run=$(sed -n 's/^run: //p' "$log" | tail -n 1)
 [ -n "$run" ] && [ -f "$run/report.md" ] && [ -f "$run/report.json" ] || { say "the meter exited 0 but left no report in '$run'"; exit 1; }
