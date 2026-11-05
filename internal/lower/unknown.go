@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"slices"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -172,11 +173,20 @@ func (l *lowering) unknownView(node *ast.Node, own, contextual *checker.Type) er
 			return l.notYet(node, "an object with a nullable field viewed as unknown or object (null and undefined slot tags)")
 		}
 	}
-	if l.nullableReferenceArray(present, map[*checker.Type]bool{}) {
+	if l.reaches(present, l.nullableReferenceArray, map[*checker.Type]bool{}) {
 		return l.notYet(node, "an array with a nullable element viewed as unknown or object (null and undefined element tags)")
 	}
 	if checker.IsTupleType(present) {
 		return l.notYet(node, "a tuple viewed as unknown or object (array presence metadata)")
+	}
+	// A tuple an unknown holds is read by a run-time key as an array (#g187f1e), which natively it
+	// isn't: its shape says neither its length on Node, where an element is optional or rest, nor
+	// whether a null pointer in a slot is null or undefined.
+	if l.reaches(present, variableTuple, map[*checker.Type]bool{}) {
+		return l.notYet(node, "a tuple with an optional or rest element viewed as unknown or object (no length descriptor)")
+	}
+	if l.reaches(present, l.nullableReferenceTuple, map[*checker.Type]bool{}) {
+		return l.notYet(node, "a tuple with a nullable element viewed as unknown or object (null and undefined slot tags)")
 	}
 	if l.isLibraryType(present, "Map", "ReadonlyMap", "Set", "ReadonlySet", "RegExp", "Date", "Stats", "Hash", "Buffer") {
 		return l.notYet(node, "an opaque host or collection value viewed as unknown or object (dynamic property metadata)")
@@ -184,15 +194,12 @@ func (l *lowering) unknownView(node *ast.Node, own, contextual *checker.Type) er
 	return nil
 }
 
-// nullableReferenceArray says whether a value of this type reaches, through its fields, its index
-// signatures' values, its elements or a union's members, an array whose elements may be null and are
-// held as references (a Point | null, a number[] | null, a null). Such an array holds null as a null
-// pointer, which a run-time key read (union.c's keyed_array_element) can't tell from undefined, so it
-// would read a null element as undefined (#ys4naww, Language's k07, k12 and k02). A string | null or a Point | null | undefined is
-// boxed as a Union, whose null is its own, and reads right. The walk follows the reach, not only the
-// value's own fields, because an unknown hands out what it holds one read at a time: an object's
-// field or a record's value holding such an array passes the nullable-field test above.
-func (l *lowering) nullableReferenceArray(proven *checker.Type, seen map[*checker.Type]bool) bool {
+// reaches says whether a value of this type is, or reaches through its fields, its index signatures'
+// values, its elements or a union's members, an object type found says yes to. The walk follows the
+// reach, not only the value's own fields, because an unknown hands out what it holds one read at a
+// time: an object's field or a record's value holding such a value passes the nullable-field test
+// above.
+func (l *lowering) reaches(proven *checker.Type, found func(*checker.Type) bool, seen map[*checker.Type]bool) bool {
 	proven = l.concrete(proven)
 	if seen[proven] {
 		return false
@@ -200,7 +207,7 @@ func (l *lowering) nullableReferenceArray(proven *checker.Type, seen map[*checke
 	seen[proven] = true
 	if proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
 		for _, member := range proven.Types() {
-			if l.nullableReferenceArray(member, seen) {
+			if l.reaches(member, found, seen) {
 				return true
 			}
 		}
@@ -209,30 +216,60 @@ func (l *lowering) nullableReferenceArray(proven *checker.Type, seen map[*checke
 	if proven.Flags()&checker.TypeFlagsObject == 0 {
 		return false
 	}
+	if found(proven) {
+		return true
+	}
 	if l.checker.IsArrayType(proven) {
-		element := l.checker.GetElementTypeOfArrayType(proven)
-		if l.includesNull(element) {
-			// A representation not known refuses too, so the guard doesn't lean on valueType's NotYet
-			// for an element it can't place.
-			if held, known := l.representation(element); !known || held != ir.Union {
-				return true
-			}
-		}
-		return l.nullableReferenceArray(element, seen)
+		return l.reaches(l.checker.GetElementTypeOfArrayType(proven), found, seen)
 	}
 	for _, field := range l.checker.GetPropertiesOfType(proven) {
-		if l.nullableReferenceArray(l.checker.GetTypeOfSymbol(field), seen) {
+		if l.reaches(l.checker.GetTypeOfSymbol(field), found, seen) {
 			return true
 		}
 	}
 	// A record's values, a string or number index signature's, are handed out by a key read as a
 	// field's are (Language's z1).
 	for _, info := range l.checker.GetIndexInfosOfType(proven) {
-		if l.nullableReferenceArray(info.ValueType(), seen) {
+		if l.reaches(info.ValueType(), found, seen) {
 			return true
 		}
 	}
 	return false
+}
+
+// nullableReferenceArray says whether this is an array whose elements may be null and are held as
+// references (a Point | null, a number[] | null, a null). Such an array holds null as a null pointer,
+// which a run-time key read (union.c's keyed_array_element) can't tell from undefined, so it would
+// read a null element as undefined (#ys4naww, Language's k07, k12 and k02). A string | null or a
+// Point | null | undefined is boxed as a Union, whose null is its own, and reads right.
+func (l *lowering) nullableReferenceArray(proven *checker.Type) bool {
+	return l.checker.IsArrayType(proven) && l.nullableReference(l.checker.GetElementTypeOfArrayType(proven))
+}
+
+// nullableReferenceTuple says whether this is a tuple with an element that may be null and is held
+// as a reference, whose slot holds null as a null pointer, as such an array does, so union.c's
+// keyed_tuple_slot would read it as undefined (#g187f1e).
+func (l *lowering) nullableReferenceTuple(proven *checker.Type) bool {
+	return checker.IsTupleType(proven) && slices.ContainsFunc(l.checker.GetTypeArguments(proven), l.nullableReference)
+}
+
+// nullableReference says whether a value of this type may be null and isn't held as a Union, whose
+// null is its own. A representation not known says yes too, so the guard doesn't lean on valueType's
+// NotYet for an element it can't place.
+func (l *lowering) nullableReference(element *checker.Type) bool {
+	if !l.includesNull(element) {
+		return false
+	}
+	held, known := l.representation(element)
+	return !known || held != ir.Union
+}
+
+// variableTuple says whether this is a tuple with an optional or rest element, whose length on Node
+// natively its shape can't say: a left-out optional element is a slot holding undefined (tupleLiteral),
+// as one written undefined is, so [1] and [1, undefined] of [number, string?] are alike natively, where
+// Node's lengths are 1 and 2. The static read refuses that length too (tupleLength).
+func variableTuple(proven *checker.Type) bool {
+	return checker.IsTupleType(proven) && checker.TupleType_combinedFlags(proven.TargetTupleType())&checker.ElementFlagsNonRequired != 0
 }
 
 // A key that could denote a getter or a prototype method cannot yet be read dynamically.

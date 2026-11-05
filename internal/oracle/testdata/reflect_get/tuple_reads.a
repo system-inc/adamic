@@ -1,0 +1,33 @@
+// A tuple an unknown holds answers a run-time key by the array rule, as Node's does (#g187f1e): its
+// elements, undefined past them, its length, Array.prototype's functions, and undefined for any
+// other key. Each maker's: a literal in an object's field, Object.entries' pairs and a /d match's
+// indices pair (made by the runtime without representation bytes); tuple_collections.a's.
+import { propertyOf } from './hostErrors.ts';
+
+function show(label: string, value: unknown): void {
+	if (typeof value === 'string') console.log(`${label} string ${value}`);
+	else if (typeof value === 'number') console.log(`${label} number ${String(value)}`);
+	else if (typeof value === 'boolean') console.log(`${label} boolean ${value ? 'true' : 'false'}`);
+	else console.log(`${label} ${typeof value}`);
+}
+
+function read(label: string, tuple: unknown): void {
+	show(`${label} 0`, propertyOf(tuple, '0'));
+	show(`${label} 1`, propertyOf(tuple, '1'));
+	show(`${label} 2`, propertyOf(tuple, '2'));
+	show(`${label} length`, propertyOf(tuple, 'length'));
+	console.log(`${label} map is an array's: ${String(propertyOf(tuple, 'map') === propertyOf([0], 'map'))}`);
+	show(`${label} missing`, propertyOf(tuple, 'missing'));
+}
+
+const holder = { pair: [1.5, 'one'] as [number, string], flags: [true, 2] as [boolean, number] };
+read('literal', propertyOf(holder, 'pair'));
+read('flags', propertyOf(holder, 'flags'));
+const numberEntries = Object.entries({ a: 1, b: 2 });
+read('number entry', propertyOf(numberEntries, '1'));
+const stringEntries = Object.entries({ c: 'see' });
+read('string entry', propertyOf(stringEntries, '0'));
+const booleanEntries = Object.entries({ on: true, off: false });
+read('boolean entry', propertyOf(booleanEntries, '1'));
+const match = /b/d.exec('abc');
+if (match !== null) read('indices', propertyOf(propertyOf(match, 'indices'), '0'));
