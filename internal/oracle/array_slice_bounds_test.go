@@ -10,6 +10,7 @@ import (
 )
 
 func TestArraySliceBounds(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/array_slice_bounds.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -58,6 +59,7 @@ func TestArraySliceBounds(t *testing.T) {
 }
 
 func TestArraySliceBoundsNullRefused(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/array_slice_bounds_null.a"))
 	if err != nil {
 		t.Fatal(err)
