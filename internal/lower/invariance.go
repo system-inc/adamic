@@ -535,7 +535,7 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		if viewSite(node) {
 			contextual = l.slotType(node)
 		}
-		if contextual == nil {
+		if contextual == nil && !l.conditionalBranchInSlot(node) {
 			// With no type written for it, a value can still be taken into a wider one tsc made: the
 			// union of a conditional's branches reduced to the wider (flag ? dogs : animals is an
 			// Animal[]), a literal's elements likewise, a function's returns likewise.
@@ -558,6 +558,30 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		return nil
 	}
 	return l.wideningRefusal(node, own, contextual, found)
+}
+
+// conditionalBranchInSlot is whether node is a branch of a conditional that goes straight into a typed
+// slot. The conditional's own type, its branches' union reduced to the wider, is then held by nothing:
+// the value goes into the slot, and refuseWidening judges each branch against that slot at the
+// conditional (freshOrWidened's conditional arm). Judging a branch against the reduced union as well
+// refused tsc's `this._alternatives = spec ? parseRange(spec) : emptyArray` (semver.ts:211, #2vjqseg),
+// a never[] seen as Comparator[][] that no reference ever holds at that type, where the slot is
+// readonly. A conditional with no slot keeps its implied target: in `const all = flag ? dogs :
+// animals` the variable holds the union, and a push through it writes into either branch.
+func (l *lowering) conditionalBranchInSlot(node *ast.Node) bool {
+	child := node
+	for child.Parent != nil && child.Parent.Kind == ast.KindParenthesizedExpression {
+		child = child.Parent
+	}
+	parent := child.Parent
+	if parent == nil || parent.Kind != ast.KindConditionalExpression {
+		return false
+	}
+	conditional := parent.AsConditionalExpression()
+	if conditional.WhenTrue != child && conditional.WhenFalse != child {
+		return false
+	}
+	return viewSite(parent) && l.slotType(parent) != nil
 }
 
 // castSlotWidened judges an as or satisfies at a view site as the value it is: the cast's own type

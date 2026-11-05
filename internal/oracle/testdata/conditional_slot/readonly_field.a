@@ -1,0 +1,21 @@
+// tsc's semver.ts:211 (#2vjqseg): a conditional whose branches are a Comparator[][] and a shared
+// never[] goes straight into a readonly field, so its reduced union is held by nothing, and each
+// branch is judged against the readonly slot, which can't write.
+const emptyArray: never[] = [];
+function parse(spec: string): number[][] {
+    const alternatives: number[][] = [];
+    for (const part of spec.split('|')) {
+        alternatives.push([part.length]);
+    }
+    return alternatives;
+}
+class Range {
+    private readonly alternatives: readonly (readonly number[])[];
+    constructor(spec: string) {
+        this.alternatives = spec ? parse(spec) : emptyArray;
+    }
+    count(): number {
+        return this.alternatives.length;
+    }
+}
+console.log(`${String(new Range('ab|c').count())} ${String(new Range('').count())} ${String(emptyArray.length)}`);
