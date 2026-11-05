@@ -12,6 +12,11 @@ import (
 func (e *emitter) releaseScopes(depth int) {
 	for scope := len(e.scopes) - 1; scope >= depth; scope-- {
 		for index := len(e.scopes[scope]) - 1; index >= 0; index-- {
+			if e.closes[e.scopes[scope][index]] {
+				// A view's for-of left: a generator it holds is finished, as Node's return() leaves
+				// it, so a later pass over it finds it done and its cells are let go of now.
+				e.line("adamic_iterator_close(%s);", e.scopes[scope][index])
+			}
 			if e.regions != nil {
 				if cleanup := e.regions.cleanups[e.scopes[scope][index]]; cleanup != "" {
 					e.line("%s", cleanup)

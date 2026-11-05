@@ -112,7 +112,11 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("const adamicUnready = (name) => { throw new ReferenceError(`Cannot access '${name}' before initialization`); };\n\n")
 	if program.HasGenerators() {
 		// A step and its done test are two nodes (ir/generator.go): the step keeps what next() said.
-		builder.WriteString("const adamicGeneratorSteps = new WeakMap();\nconst adamicGeneratorNext = (generator) => { const step = generator.next(); adamicGeneratorSteps.set(generator, step.done === true); return step.value; };\nconst adamicGeneratorDone = (generator) => adamicGeneratorSteps.get(generator);\n\n")
+		builder.WriteString("const adamicGeneratorSteps = new WeakMap();\nconst adamicGeneratorNext = (generator) => { const step = generator.next(); adamicGeneratorSteps.set(generator, step.done === true); return step.value; };\nconst adamicGeneratorDone = (generator) => adamicGeneratorSteps.get(generator);\n")
+		// An iterable view's dispatch reads the kind from the prototype chain every generator object
+		// has, %GeneratorPrototype%, never from a name a program's object could also carry
+		// (Symbol.toStringTag), and closes a generator as a for-of's exit does.
+		builder.WriteString("const adamicGeneratorPrototype = Object.getPrototypeOf((function* () {}).prototype);\nconst adamicIsGenerator = (value) => value !== null && typeof value === 'object' && adamicGeneratorPrototype.isPrototypeOf(value);\nconst adamicIteratorClose = (value) => { if (adamicIsGenerator(value)) value.return(undefined); };\n\n")
 	}
 	if len(program.Classes) > 0 {
 		builder.WriteString(classCountRuntime("const adamicClassIdentities = new WeakMap();\nconst adamicClass = (value, id) => { const metadata = adamicClasses[id - 1]; if (metadata.literal) { const result = {}; for (const name of metadata.publicKeys) { const descriptor = Object.hasOwn(metadata.accessors, name) ? metadata.accessors[name] : undefined; if (descriptor) Object.defineProperty(result, name, {enumerable: true, get: descriptor.get === undefined ? undefined : () => adamicGetAccessor(result, name), set: descriptor.set === undefined ? undefined : (next) => adamicSetAccessor(result, name, next)}); else result[name] = value[name]; } for (const name of metadata.privateFields) Object.defineProperty(result, name, {value: value[name], enumerable: false}); value = result; } else for (const name of metadata.privateFields) Object.defineProperty(value, name, {enumerable: false}); if (metadata.static) { const storage = value; value = function () {}; adamicStaticMethods.set(value, Object.getPrototypeOf(storage)); if (metadata.parent) Object.setPrototypeOf(value, storage[metadata.parent]); for (const name of metadata.privateFields) Object.defineProperty(value, name, {value: storage[name], writable: true, configurable: true}); } adamicClassIdentities.set(value, id); return value; };\nconst adamicInstanceOf = (value, wanted) => { for (let id = adamicClassIdentities.get(value); id; id = adamicClasses[id - 1].base) { if (id === wanted || (adamicClasses[wanted - 1].definition && adamicClasses[id - 1].definition === adamicClasses[wanted - 1].definition)) return true; } return false; };\nconst adamicVirtual = (value, slot, ...args) => adamicDirect(adamicClasses[adamicClassIdentities.get(value) - 1].methods[slot], [value, ...args]);\n", counted))
@@ -636,7 +640,20 @@ func (e *emitter) statement(at *ir.Statement) {
 		e.line("}")
 	case ir.Block:
 		e.line("{")
-		e.nested(statement.Body)
+		if statement.Closes != 0 && len(statement.Body) > 1 {
+			// An iterable view's dispatch: its first statement declares the local it holds, and every
+			// way out of the rest closes what that holds, as a for-of's exit calls return().
+			e.nested(statement.Body[:1])
+			e.line("\ttry {")
+			e.indent++
+			e.nested(statement.Body[1:])
+			e.indent--
+			e.line("\t} finally {")
+			e.line("\t\tadamicIteratorClose(%s);", e.value(ir.Read{Local: statement.Closes - 1, Of: ir.Object}))
+			e.line("\t}")
+		} else {
+			e.nested(statement.Body)
+		}
 		e.line("}")
 	case ir.Loop:
 		e.loop(at, statement)
@@ -867,6 +884,11 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "adamicGeneratorNext(" + e.value(expression.Generator) + ")"
 	case ir.GeneratorDone:
 		return "adamicGeneratorDone(" + e.value(expression.Generator) + ")"
+	case ir.IterableOf:
+		// The generator itself, where an Iterable<T> slot holds it.
+		return e.value(expression.Value)
+	case ir.IsGenerator:
+		return "adamicIsGenerator(" + e.value(expression.Value) + ")"
 	case ir.PromiseValue:
 		name := "resolve"
 		if expression.Reject {

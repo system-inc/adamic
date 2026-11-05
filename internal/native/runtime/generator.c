@@ -26,8 +26,12 @@ adamic_value adamic_generator_next(adamic_generator *generator) {
     switch (generator->status) {
         case adamic_generator_status_start:
         case adamic_generator_status_suspended:
+            /* The step holds the generator, so a resume that lets go of the last other holder
+             * doesn't free the frame it is running on (Memory, q3 on #qk8rztp). */
+            adamic_retain(generator);
             generator->status = adamic_generator_status_running;
             generator->code->resume(generator, &yielded);
+            adamic_release(generator);
             return yielded;
         case adamic_generator_status_running:
             running(generator, "resumed");
@@ -71,12 +75,21 @@ void adamic_generator_return(adamic_generator *generator) {
     switch (generator->status) {
         case adamic_generator_status_start:
         case adamic_generator_status_suspended:
+            /* As a step does: finish's releases can't free the frame it is finishing. */
+            adamic_retain(generator);
             adamic_generator_finish(generator);
+            adamic_release(generator);
             break;
         case adamic_generator_status_running:
             running(generator, "returned");
         case adamic_generator_status_done:
             break;
+    }
+}
+
+void adamic_iterator_close(void *value) {
+    if (value != NULL && ((const adamic_heap *)value)->kind == adamic_kind_generator) {
+        adamic_generator_return(value);
     }
 }
 

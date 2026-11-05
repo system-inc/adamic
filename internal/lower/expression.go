@@ -1337,7 +1337,11 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 		}
 		if l.result.Functions[instance].Generator {
 			// A generic generator's instance, called anywhere but by a consumer, stops as a
-			// non-generic generator's call does below.
+			// non-generic generator's call does below, and goes into an Iterable<T> parameter as
+			// one does.
+			if l.iterableArgument(node) {
+				return l.iterableOfGenerator(node, instance)
+			}
 			return nil, l.generatorNotYet(node, "whose generator is used other than by a for-of over its call or a call as a statement")
 		}
 		if l.result.Functions[instance].Closure {
@@ -1369,8 +1373,12 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, "a call to "+describe(callee))
 	}
 	if l.result.Functions[function].Generator {
-		// The two consumers that keep a generator to themselves lower its call before this; a
-		// generator anywhere else is a value no slot can hold yet (#qk8rztp S2).
+		// The two consumers that keep a generator to themselves lower its call before this, and one
+		// passed straight into a one-body function's Iterable<T> parameter goes in through
+		// IterableOf (#qk8rztp S2c-1); a generator anywhere else is a value no slot can hold yet.
+		if l.iterableArgument(node) {
+			return l.iterableOfGenerator(node, function)
+		}
 		return nil, l.generatorNotYet(node, "whose generator is used other than by a for-of over its call or a call as a statement")
 	}
 	value, err := l.callFunction(call, function)

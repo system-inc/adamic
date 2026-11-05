@@ -1,0 +1,23 @@
+// Lower's outer-loop pin (#qk8rztp S2c-1): the parameter outlives its for-of, so a for-of that
+// breaks on its first value finishes the generator, as Node's return() leaves it, and the second
+// pass over the same parameter finds it done and prints nothing. Memory's: the frame's cells are let
+// go of at that break, not when the caller lets go of the generator.
+function* counted(limit: number): Generator<number, void, undefined> {
+    const label = `frame ${String(limit)}`;
+    for(let index = 0; index < limit; index++) {
+        console.log(`${label} yields ${String(index)}`);
+        yield index * 10;
+    }
+    console.log(`${label} ends`);
+}
+function firstOfEachPass(items: Iterable<number>): void {
+    for(let pass = 0; pass < 3; pass++) {
+        console.log(`pass ${String(pass)}`);
+        for (const item of items) {
+            console.log(`first ${String(item)}`);
+            break;
+        }
+    }
+}
+firstOfEachPass(counted(4));
+console.log('after');

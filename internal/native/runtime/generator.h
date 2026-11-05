@@ -44,6 +44,9 @@ void adamic_generator_kill(adamic_generator *, size_t index);
 /* Completion and throw: every counted cell and error released and NULLed. */
 void adamic_generator_finish(adamic_generator *);
 void adamic_generator_return(adamic_generator *);
+/* An iterable view's for-of left (ir.Block's Closes): a generator it held is returned, so a later
+ * pass finds it done; any other iterator is left as it is. */
+void adamic_iterator_close(void *);
 void adamic_generator_free_children(void *, void (*)(void *));
 #endif
 #endif

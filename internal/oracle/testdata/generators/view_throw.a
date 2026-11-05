@@ -1,0 +1,27 @@
+// A generator handed into an Iterable<T> parameter throws on its third step, mid-loop: the throw
+// leaves the callee's for-of, finishing the generator, and the caller catches it (#qk8rztp S2c-1).
+function* risky(limit: number): Generator<number, void, undefined> {
+    for(let index = 0; index < limit; index++) {
+        if(index === 2) {
+            throw new Error(`stopped at ${String(index)}`);
+        }
+        yield index * 3;
+    }
+}
+function total(items: Iterable<number>): number {
+    let sum = 0;
+    for (const value of items) {
+        sum += value;
+        console.log(`got ${String(value)}`);
+    }
+    return sum;
+}
+try {
+    console.log(String(total(risky(5))));
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(`caught ${error.message}`);
+    }
+}
+console.log(String(total(risky(2))));

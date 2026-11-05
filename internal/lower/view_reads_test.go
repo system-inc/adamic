@@ -91,6 +91,8 @@ var viewNoField = []viewReadExample{
 	{ir.HasOwn{}, "tests for an own field without reading its value"},
 	{ir.HasProperty{}, "tests for a field without reading its value"},
 	{ir.InstanceOf{}, "tests a class chain"},
+	{ir.IterableOf{}, "a generator where an Iterable<T> slot holds it, whose steps hand over what its body yields; it holds no field a view checks"},
+	{ir.IsGenerator{}, "tests a view's object's heap kind"},
 	{ir.IsNull{}, "tests a reference"},
 	{ir.IsUndefined{}, "tests a reference"},
 	{ir.JSONDecode{}, "parses a string"},

@@ -525,6 +525,10 @@ type emitter struct {
 	asyncHandler  string
 	function      *ir.Function
 	functionDepth int
+
+	// closes are the C names of the locals an iterable view's dispatch holds (ir.Block's Closes):
+	// releaseScopes closes each before letting go of it, at every way out of its block.
+	closes map[string]bool
 }
 
 func (e *emitter) line(format string, arguments ...any) {
