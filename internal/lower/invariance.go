@@ -524,8 +524,12 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 			return nil
 		}
 		if pattern := destructuringTarget(node); pattern != nil {
-			// [a, b] = tuple keeps nothing of the pattern: each element is read out and stored into
-			// its name, so each element is the view, seen as its name's type, and the pattern isn't one.
+			// [a, b] = tuple and { a, b } = value keep nothing of the pattern: each element or field
+			// is read out and stored into its target, so each is the view, seen as its target's type,
+			// and the pattern isn't one.
+			if pattern.Kind == ast.KindObjectLiteralExpression {
+				return l.refuseFieldWidening(node, pattern)
+			}
 			return l.refuseElementWidening(node, pattern)
 		}
 		if viewSite(node) {
@@ -1047,16 +1051,32 @@ func (l *lowering) carriedProperty(literal *checker.Type, name *ast.Node) (*chec
 	return nil, false
 }
 
-// destructuringTarget is the array pattern a value is assigned into, [a, b] = value, or nil.
+// destructuringTarget is the array or object pattern a value is assigned into, [a, b] = value or
+// { a, b } = value, or nil.
 func destructuringTarget(node *ast.Node) *ast.Node {
 	for node.Parent != nil && node.Parent.Kind == ast.KindParenthesizedExpression {
 		node = node.Parent
 	}
 	if parent := node.Parent; parent != nil && parent.Kind == ast.KindBinaryExpression {
 		binary := parent.AsBinaryExpression()
-		if binary.OperatorToken.Kind == ast.KindEqualsToken && binary.Right == node && binary.Left.Kind == ast.KindArrayLiteralExpression {
+		if binary.OperatorToken.Kind == ast.KindEqualsToken && binary.Right == node && (binary.Left.Kind == ast.KindArrayLiteralExpression || binary.Left.Kind == ast.KindObjectLiteralExpression) {
 			return binary.Left
 		}
+	}
+	return nil
+}
+
+// refuseWholeWidening judges a value assigned into a pattern as one value seen as the pattern's
+// type, the way any other value at a view site is judged, for a value whose parts the pattern
+// doesn't read out one by one. A fresh literal, ({ x: options[name] } = { x: 3 }), keeps
+// freshOrWidened's exemption: it's made as the pattern's type and held by nothing else.
+func (l *lowering) refuseWholeWidening(node *ast.Node, own *checker.Type) error {
+	contextual := l.slotType(node)
+	if contextual == nil {
+		return nil
+	}
+	if found := l.freshOrWidened(node, own, contextual); found != nil {
+		return l.wideningRefusal(node, own, contextual, found)
 	}
 	return nil
 }
@@ -1067,14 +1087,7 @@ func destructuringTarget(node *ast.Node) *ast.Node {
 func (l *lowering) refuseElementWidening(node *ast.Node, pattern *ast.Node) error {
 	own := l.checker.GetTypeAtLocation(node)
 	if !checker.IsTupleType(own) {
-		contextual := l.slotType(node)
-		if contextual == nil {
-			return nil
-		}
-		if found := l.widened(own, contextual, map[[2]*checker.Type]bool{}); found != nil {
-			return &Refused{Where: l.program.Where(node), What: "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read", Fix: "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"}
-		}
-		return nil
+		return l.refuseWholeWidening(node, own)
 	}
 	elements := l.checker.GetTypeArguments(own)
 	for index, target := range pattern.AsArrayLiteralExpression().Elements.Nodes {
@@ -1087,6 +1100,87 @@ func (l *lowering) refuseElementWidening(node *ast.Node, pattern *ast.Node) erro
 		}
 	}
 	return nil
+}
+
+// patternField is one field an object pattern reads out of a value: the value's field, the target
+// it's stored into with that target's declared type, and the default stored there when the field
+// is undefined, or nil.
+type patternField struct {
+	source       *checker.Type
+	target       *ast.Node
+	targetType   *checker.Type
+	defaultValue *ast.Node
+}
+
+// refuseFieldWidening refuses { a, b: c } = value when a field is seen through its target's type
+// as a view that can write what the field can't hold: ({ pets } = kennel()) puts kennel's Dog[] in
+// an Animal[]. A default is judged against its target too. A value the pattern can't read field by
+// field is judged whole, as anywhere.
+func (l *lowering) refuseFieldWidening(node *ast.Node, pattern *ast.Node) error {
+	own := l.checker.GetTypeAtLocation(node)
+	fields, readable := l.patternFields(own, pattern)
+	if !readable {
+		return l.refuseWholeWidening(node, own)
+	}
+	for _, field := range fields {
+		if found := l.widened(field.source, field.targetType, map[[2]*checker.Type]bool{}); found != nil {
+			return &Refused{Where: l.program.Where(field.target), What: "a value of type " + l.checker.TypeToString(field.source) + " seen as " + l.checker.TypeToString(field.targetType) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read", Fix: "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"}
+		}
+		if field.defaultValue == nil {
+			continue
+		}
+		fallback := l.checker.GetTypeAtLocation(field.defaultValue)
+		if found := l.widened(fallback, field.targetType, map[[2]*checker.Type]bool{}); found != nil {
+			return &Refused{Where: l.program.Where(field.defaultValue), What: "a value of type " + l.checker.TypeToString(fallback) + " seen as " + l.checker.TypeToString(field.targetType) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read", Fix: "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"}
+		}
+	}
+	return nil
+}
+
+// patternFields lists the fields an object pattern reads out of a value of type own, each by a
+// name own declares. readable is false where the pattern can't be read field by field: own is a
+// union or an intersection, an element is a rest or has a computed key, a target is a nested
+// pattern, an element access or carries its own default ({ a: b = 1 }), or own doesn't declare
+// the name.
+func (l *lowering) patternFields(own *checker.Type, pattern *ast.Node) (fields []patternField, readable bool) {
+	if own.Flags()&checker.TypeFlagsUnionOrIntersection != 0 {
+		return nil, false
+	}
+	for _, property := range pattern.AsObjectLiteralExpression().Properties.Nodes {
+		var field patternField
+		switch property.Kind {
+		case ast.KindShorthandPropertyAssignment:
+			// { a } and { a = 1 }: the field goes into the variable a names.
+			symbol := l.checker.GetShorthandAssignmentValueSymbol(property)
+			if symbol == nil {
+				return nil, false
+			}
+			field.target = property.Name()
+			field.targetType = l.checker.GetTypeOfSymbol(symbol)
+			field.defaultValue = property.AsShorthandPropertyAssignment().ObjectAssignmentInitializer
+		case ast.KindPropertyAssignment:
+			// { a: b } and { a: this.b }: an assignment target's type is its declared type.
+			initializer := property.AsPropertyAssignment().Initializer
+			if !ast.IsIdentifier(initializer) && !ast.IsPropertyAccessExpression(initializer) {
+				return nil, false
+			}
+			field.target = initializer
+			field.targetType = l.checker.GetTypeAtLocation(initializer)
+		default:
+			return nil, false
+		}
+		name := property.Name()
+		if name == nil || !ast.IsIdentifier(name) && !ast.IsStringLiteral(name) && !ast.IsNumericLiteral(name) {
+			return nil, false
+		}
+		symbol := l.checker.GetPropertyOfType(own, name.Text())
+		if symbol == nil || field.targetType == nil {
+			return nil, false
+		}
+		field.source = l.checker.GetTypeOfSymbol(symbol)
+		fields = append(fields, field)
+	}
+	return fields, true
 }
 
 // genericFunction reports whether an expression is a function with type parameters of its own,

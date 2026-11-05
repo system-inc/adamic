@@ -54,6 +54,9 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 	if target.Kind == ast.KindArrayLiteralExpression && binary.OperatorToken.Kind == ast.KindEqualsToken {
 		return l.destructuringAssignment(target, binary.Right)
 	}
+	if target.Kind == ast.KindObjectLiteralExpression && binary.OperatorToken.Kind == ast.KindEqualsToken {
+		return l.objectDestructuringAssignment(target, binary.Right)
+	}
 	if target.Kind == ast.KindElementAccessExpression && isCompound {
 		return l.updateIndex(node, target, operator, binary.Right)
 	}
@@ -210,6 +213,97 @@ func (l *lowering) destructuringAssignment(pattern *ast.Node, valueNode *ast.Nod
 		statements = append(statements, ir.Assign{Local: local, Value: field, Checked: l.checked(local)})
 	}
 	// The held tuple is the block's, released when it ends.
+	return []ir.Statement{ir.Block{Body: statements}}, nil
+}
+
+// objectDestructuringAssignment lowers { a, b: c } = value: the value is evaluated whole and held,
+// then each name is assigned its field, read by name, in order, as JavaScript assigns them, and made
+// what the name holds: a number field going to a number | string name is boxed on the way. A target
+// that isn't a plain name, a default, a rest, a computed key, or a value that isn't one object, is
+// not lowered yet.
+func (l *lowering) objectDestructuringAssignment(pattern *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
+	destructured := l.checker.GetTypeAtLocation(valueNode)
+	if destructured.Flags()&checker.TypeFlagsUnionOrIntersection != 0 {
+		return nil, l.notYet(pattern, "destructuring a union or an intersection into { names }")
+	}
+	switch ast.SkipParentheses(valueNode).Kind {
+	case ast.KindIdentifier, ast.KindPropertyAccessExpression, ast.KindElementAccessExpression, ast.KindCallExpression:
+		// A value with storage of its own, held as its type says.
+	default:
+		// A literal written here, ({ a, b } = { a: b, b: a }), is stored as the pattern it's written
+		// into, a number | string slot, while its own type says number: a field read by that type reads
+		// the box as a number.
+		return nil, l.notYet(valueNode, "destructuring a value made in the assignment itself")
+	}
+	value, err := l.expression(valueNode)
+	if err != nil {
+		return nil, err
+	}
+	if value.Type() != ir.Object {
+		return nil, l.notYet(pattern, "destructuring a "+typeName(value.Type()))
+	}
+	held := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: ir.Object, Function: l.functionIndex})
+	statements := []ir.Statement{ir.Declare{Local: held, Value: value}}
+	for _, property := range pattern.AsObjectLiteralExpression().Properties.Nodes {
+		var target *ast.Node
+		switch property.Kind {
+		case ast.KindShorthandPropertyAssignment:
+			// { a } reads a into a.
+			if property.AsShorthandPropertyAssignment().ObjectAssignmentInitializer != nil {
+				return nil, l.notYet(property, "a default in a destructuring assignment")
+			}
+			target = property.Name()
+		case ast.KindPropertyAssignment:
+			// { a: b } reads a into b.
+			target = ast.SkipParentheses(property.AsPropertyAssignment().Initializer)
+		default:
+			return nil, l.notYet(property, describe(property)+" in a destructuring assignment")
+		}
+		name := property.Name()
+		if name == nil || !ast.IsIdentifier(name) && name.Kind != ast.KindStringLiteral {
+			return nil, l.notYet(property, "a computed field name")
+		}
+		if !ast.IsIdentifier(target) {
+			return nil, l.notYet(target, "assigning to "+describe(target)+" in a destructuring assignment")
+		}
+		// A shorthand's name is the pattern's property; flagValueSymbol is the variable it writes.
+		variable := l.flagValueSymbol(target)
+		local, isLocal := l.localOf(target, variable)
+		if !isLocal || l.alwaysUndefined[variable] {
+			return nil, l.notYet(target, "assigning to "+describe(target)+" in a destructuring assignment")
+		}
+		if l.result.Locals[local].NestedFunction != 0 {
+			return nil, l.notYet(target, "rebinding a nested function declaration")
+		}
+		if l.caught[variable] {
+			return nil, l.notYet(target, "assigning to what a catch caught")
+		}
+		field := name.Text()
+		symbol, err := l.destructuredField(property, destructured, field)
+		if err != nil {
+			return nil, err
+		}
+		fieldType := l.checker.GetTypeOfSymbol(symbol)
+		of, isKnown := l.representation(fieldType)
+		if !isKnown || slotless(of) {
+			return nil, l.notYet(property, "a destructured field of type "+l.checker.TypeToString(fieldType))
+		}
+		read := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of, Absent: symbol.Flags&ast.SymbolFlagsOptional != 0}
+		read.View = sourceExpression(property) + " (field " + field + ")"
+		read.ViewReceiverTypeID = l.viewFieldReceiverTypeID(nil, destructured)
+		read.ViewTypeID = l.viewTypeID(fieldType)
+		read.ViewWhere = l.program.Where(property)
+		read.ViewType = l.checker.TypeToString(fieldType)
+		read.ViewAllowed = l.viewLiterals(fieldType)
+		to := l.result.Locals[local].Type
+		assigned := fit(ir.Expression(read), to)
+		if assigned.Type() != to {
+			return nil, l.notYet(property, "a destructured field of type "+l.checker.TypeToString(fieldType)+" given to a "+typeName(to))
+		}
+		statements = append(statements, ir.Assign{Local: local, Value: assigned, Checked: l.checked(local)})
+	}
+	// The held value is the block's, released when it ends.
 	return []ir.Statement{ir.Block{Body: statements}}, nil
 }
 
