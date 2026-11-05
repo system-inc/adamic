@@ -90,8 +90,8 @@ func TestRecordDeclaredKeysAreRefusedInA(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 43 {
-		t.Fatalf("found %d refused programs, want 43", programs)
+	if programs != 44 {
+		t.Fatalf("found %d refused programs, want 44", programs)
 	}
 }
 
@@ -165,7 +165,7 @@ func TestRecordDeclaredKeyStopsArePinned(t *testing.T) {
 			}
 		})
 	}
-	if programs != 60 {
-		t.Fatalf("found %d programs, want 60", programs)
+	if programs != 61 {
+		t.Fatalf("found %d programs, want 61", programs)
 	}
 }

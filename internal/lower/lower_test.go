@@ -404,6 +404,40 @@ let packs: readonly Animal[][] = [];
 let count = 0;
 [packs, count] = pack([[{ name: 'Rex', bark: 'woof' }]]);
 `, "main.a:16:2: Adamic 0.1 refuses a value of type Dog[][] seen as readonly Animal[][], which can write Animal where Dog is read"},
+		{"a destructuring assignment's field seen wider", `function kennel(dogs: Dog[]): { pets: Dog[]; count: number } {
+	return { pets: dogs, count: dogs.length };
+}
+let pets: Animal[] = [];
+let count = 0;
+({ pets, count } = kennel([{ name: 'Rex', bark: 'woof' }]));
+`, "main.a:16:4: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read"},
+		{"a destructuring assignment's field seen wider through a property it's stored into", `class Pen {
+	pets: Animal[] = [];
+}
+function kennel(dogs: Dog[]): { pets: Dog[] } {
+	return { pets: dogs };
+}
+const pen = new Pen();
+({ pets: pen.pets } = kennel([{ name: 'Rex', bark: 'woof' }]));
+`, "main.a:18:10: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read"},
+		{"a destructuring assignment's default seen wider", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+function kennel(): { pets?: Animal[] } {
+	return {};
+}
+let pets: Animal[] = [];
+({ pets = dogs } = kennel());
+`, "main.a:16:11: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read"},
+		{"a destructuring assignment with a rest, judged whole", `function kennel(dogs: Dog[]): { pets: Dog[]; count: number } {
+	return { pets: dogs, count: dogs.length };
+}
+let pets: Animal[] = [];
+let rest = { count: 0 };
+({ pets, ...rest } = kennel([{ name: 'Rex', bark: 'woof' }]));
+`, "main.a:16:22: Adamic 0.1 refuses a value of type { pets: Dog[]; count: number; } seen as { count: number; pets: Animal[]; }, which can write Animal[] where Dog[] is read"},
+		{"a named object destructured whole into wider targets", `const point: { x: number } = { x: 3 };
+const slots: (string | number)[] = [];
+({ x: slots[0] } = point);
+`, "main.a:13:20: Adamic 0.1 refuses a value of type { x: number; } seen as { x: string | number; }, which can write string | number where number is read"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -440,6 +474,32 @@ let either: string | number = 0;
 let maybeCount: number | undefined = undefined;
 [maybeCount, either] = swap(['twelve', 12]);
 console.log(` + "`${maybeCount ?? -1} ${either}`" + `);
+`},
+		{"a fresh literal destructured whole into a wider target", `let a: string | number = 'none';
+const slots: (string | number)[] = [];
+({ x: a } = { x: 3 });
+({ x: slots[0] } = { x: 4 });
+`},
+		{"a destructuring assignment's fields going into wider names, as tsc's Version constructor does", `function parse(text: string): { major: number; minor: number; prerelease: string } {
+	return { major: text.length, minor: 2, prerelease: 'beta.1' };
+}
+class Version {
+	readonly major: number;
+	readonly minor: number;
+	readonly prerelease: readonly string[];
+	constructor(major: number | string, minor = 0, prerelease: string | readonly string[] = '') {
+		if (typeof major === 'string') {
+			const result = parse(major);
+			({ major, minor, prerelease } = result);
+		}
+		this.major = major;
+		this.minor = minor;
+		this.prerelease = typeof prerelease === 'string' ? prerelease.split('.') : prerelease;
+	}
+}
+const parsed = new Version('1.2.3');
+const given = new Version(4, 5, ['rc']);
+console.log(` + "`${parsed.major}.${parsed.minor}-${parsed.prerelease.join('.')} ${given.major}.${given.minor}-${given.prerelease.join('.')}`" + `);
 `},
 		{"an array seen as a readonly wider array", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
 const animals: readonly Animal[] = dogs;
