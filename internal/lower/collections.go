@@ -371,25 +371,8 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 				}
 				field = declared.PropertyName.Text()
 			}
-			property := l.checker.GetPropertyOfType(destructured, field)
-			if property == nil {
-				return nil, l.notYet(binding, "destructuring a field the type doesn't name")
-			}
-			ownResultField := l.iteratorResultField(property)
-			if l.inheritedLibrarySymbol(property) && !ownResultField {
-				return nil, l.prototypeRead(binding, field)
-			}
-			if property.Flags&ast.SymbolFlagsMethod != 0 {
-				return nil, &Refused{Where: l.program.Where(binding), What: "a method in object destructuring", Fix: "call it on its receiver or wrap that call in an arrow; destructuring would lose this"}
-			}
-			for _, root := range l.checker.GetRootSymbols(property) {
-				for _, declaration := range root.Declarations {
-					if load.IsLibrary(ast.GetSourceFileOfNode(declaration)) && !ownResultField {
-						return nil, l.notYet(binding, "an inherited library member in object destructuring, which is not an own field")
-					}
-				}
-			}
-			if err := l.erasedMethodField(binding, destructured, field); err != nil {
+			property, err := l.destructuredField(binding, destructured, field)
+			if err != nil {
 				return nil, err
 			}
 			fieldType = l.checker.GetTypeOfSymbol(property)
@@ -413,6 +396,34 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 		statements = append(statements, l.initializeLocal(local, value)...)
 	}
 	return statements, nil
+}
+
+// destructuredField is the field { x } reads off a value of type destructured, in a declaration or
+// an assignment: one the type names and holds as its own, never a method, an inherited library
+// member or an erased method.
+func (l *lowering) destructuredField(where *ast.Node, destructured *checker.Type, field string) (*ast.Symbol, error) {
+	property := l.checker.GetPropertyOfType(destructured, field)
+	if property == nil {
+		return nil, l.notYet(where, "destructuring a field the type doesn't name")
+	}
+	ownResultField := l.iteratorResultField(property)
+	if l.inheritedLibrarySymbol(property) && !ownResultField {
+		return nil, l.prototypeRead(where, field)
+	}
+	if property.Flags&ast.SymbolFlagsMethod != 0 {
+		return nil, &Refused{Where: l.program.Where(where), What: "a method in object destructuring", Fix: "call it on its receiver or wrap that call in an arrow; destructuring would lose this"}
+	}
+	for _, root := range l.checker.GetRootSymbols(property) {
+		for _, declaration := range root.Declarations {
+			if load.IsLibrary(ast.GetSourceFileOfNode(declaration)) && !ownResultField {
+				return nil, l.notYet(where, "an inherited library member in object destructuring, which is not an own field")
+			}
+		}
+	}
+	if err := l.erasedMethodField(where, destructured, field); err != nil {
+		return nil, err
+	}
+	return property, nil
 }
 
 // destructureString uses the same UTF-16 length read as string.length. The caller
