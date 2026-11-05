@@ -1,0 +1,212 @@
+[
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 13753,
+    "owner": "resolveDeclaredMembers",
+    "sha256": "ab341381bdd5d9735661ea7a0fd5f7d5dc70d5e09917d22ad3400e87f91ab882",
+    "text": "function resolveDeclaredMembers(type: InterfaceType): InterfaceTypeWithDeclaredMembers {\r\n        if (!(type as InterfaceTypeWithDeclaredMembers).declaredProperties) {\r\n            const symbol = type.symbol;\r\n            const members = getMembersOfSymbol(symbol);\r\n            (type as InterfaceTypeWithDeclaredMembers).declaredProperties = getNamedMembers(members, symbol);\r\n            // Start with signatures at empty array in case of recursive types\r\n            (type as InterfaceTypeWithDeclaredMembers).declaredCallSignatures = emptyArray;\r\n            (type as InterfaceTypeWithDeclaredMembers).declaredConstructSignatures = emptyArray;\r\n            (type as InterfaceTypeWithDeclaredMembers).declaredIndexInfos = emptyArray;\r\n\r\n            (type as InterfaceTypeWithDeclaredMembers).declaredCallSignatures = getSignaturesOfSymbol(members.get(InternalSymbolName.Call));\r\n            (type as InterfaceTypeWithDeclaredMembers).declaredConstructSignatures = getSignaturesOfSymbol(members.get(InternalSymbolName.New));\r\n            (type as InterfaceTypeWithDeclaredMembers).declaredIndexInfos = getIndexInfosOfSymbol(symbol);\r\n        }\r\n        return type as InterfaceTypeWithDeclaredMembers;\r\n    }"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 14116,
+    "owner": "resolveTypeReferenceMembers",
+    "sha256": "d8b5edad944b7dd91419ad9dd18191d531f96cf61e6da63f30dc7d42bb9b0691",
+    "text": "function resolveTypeReferenceMembers(type: TypeReference): void {\r\n        const source = resolveDeclaredMembers(type.target);\r\n        const typeParameters = concatenate(source.typeParameters, [source.thisType!]);\r\n        const typeArguments = getTypeArguments(type);\r\n        const paddedTypeArguments = typeArguments.length === typeParameters.length ? typeArguments : concatenate(typeArguments, [type]);\r\n        resolveObjectTypeMembers(type, source, typeParameters, paddedTypeArguments);\r\n    }"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 15022,
+    "owner": "resolveStructuredTypeMembers",
+    "sha256": "7e207c4269ca33df8258eb762392e19456c77454d817ff2189fb18b14bb9893d",
+    "text": "function resolveStructuredTypeMembers(type: StructuredType): ResolvedType {\r\n        if (!(type as ResolvedType).members) {\r\n            if (type.flags & TypeFlags.Object) {\r\n                if ((type as ObjectType).objectFlags & ObjectFlags.Reference) {\r\n                    resolveTypeReferenceMembers(type as TypeReference);\r\n                }\r\n                else if ((type as ObjectType).objectFlags & ObjectFlags.ClassOrInterface) {\r\n                    resolveClassOrInterfaceMembers(type as InterfaceType);\r\n                }\r\n                else if ((type as ReverseMappedType).objectFlags & ObjectFlags.ReverseMapped) {\r\n                    resolveReverseMappedTypeMembers(type as ReverseMappedType);\r\n                }\r\n                else if ((type as ObjectType).objectFlags & ObjectFlags.Anonymous) {\r\n                    resolveAnonymousTypeMembers(type as AnonymousType);\r\n                }\r\n                else if ((type as MappedType).objectFlags & ObjectFlags.Mapped) {\r\n                    resolveMappedTypeMembers(type as MappedType);\r\n                }\r\n                else {\r\n                    Debug.fail(\"Unhandled object type \" + Debug.formatObjectFlags(type.objectFlags));\r\n                }\r\n            }\r\n            else if (type.flags & TypeFlags.Union) {\r\n                resolveUnionTypeMembers(type as UnionType);\r\n            }\r\n            else if (type.flags & TypeFlags.Intersection) {\r\n                resolveIntersectionTypeMembers(type as IntersectionType);\r\n            }\r\n            else {\r\n                Debug.fail(\"Unhandled type \" + Debug.formatTypeFlags(type.flags));\r\n            }\r\n        }\r\n        return type as ResolvedType;\r\n    }"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 16958,
+    "owner": "getTypeArguments",
+    "sha256": "c42bc3b30369a29bade4d1bf968960581c119c559b32a99eef8b8a2f504ca993",
+    "text": "function getTypeArguments(type: Omit<TypeReference, \"target\"> & { readonly target: GenericType; }): readonly Type[] {\r\n        if (!type.resolvedTypeArguments) {\r\n            if (!pushTypeResolution(type, TypeSystemPropertyName.ResolvedTypeArguments)) {\r\n                return concatenate(type.target.outerTypeParameters, type.target.localTypeParameters?.map(() => errorType)) || emptyArray;\r\n            }\r\n            const node = type.node;\r\n            const typeArguments = !node ? emptyArray :\r\n                node.kind === SyntaxKind.TypeReference ? concatenate(type.target.outerTypeParameters, getEffectiveTypeArguments(node, type.target.localTypeParameters!)) :\r\n                node.kind === SyntaxKind.ArrayType ? [getTypeFromTypeNode(node.elementType)] :\r\n                map(node.elements, getTypeFromTypeNode);\r\n            if (popTypeResolution()) {\r\n                type.resolvedTypeArguments ??= type.mapper ? instantiateTypes(typeArguments, type.mapper) : typeArguments;\r\n            }\r\n            else {\r\n                type.resolvedTypeArguments ??= concatenate(type.target.outerTypeParameters, type.target.localTypeParameters?.map(() => errorType) || emptyArray);\r\n                error(\r\n                    type.node || currentNode,\r\n                    type.target.symbol ? Diagnostics.Type_arguments_for_0_circularly_reference_themselves : Diagnostics.Tuple_type_arguments_circularly_reference_themselves,\r\n                    type.target.symbol && symbolToString(type.target.symbol),\r\n                );\r\n            }\r\n        }\r\n        return type.resolvedTypeArguments;\r\n    }"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 41529,
+    "owner": "instantiateTypeWithSingleGenericCallSignature",
+    "sha256": "10434d215da8cce84be718649b134ee1862ad3bd342dfe3a2b268f289fbeaca2",
+    "text": "function instantiateTypeWithSingleGenericCallSignature(node: Expression | MethodDeclaration | QualifiedName, type: Type, checkMode?: CheckMode) {\r\n        if (checkMode && checkMode & (CheckMode.Inferential | CheckMode.SkipGenericFunctions)) {\r\n            const callSignature = getSingleSignature(type, SignatureKind.Call, /*allowMembers*/ true);\r\n            const constructSignature = getSingleSignature(type, SignatureKind.Construct, /*allowMembers*/ true);\r\n            const signature = callSignature || constructSignature;\r\n            if (signature && signature.typeParameters) {\r\n                const contextualType = getApparentTypeOfContextualType(node as Expression, ContextFlags.NoConstraints);\r\n                if (contextualType) {\r\n                    const contextualSignature = getSingleSignature(getNonNullableType(contextualType), callSignature ? SignatureKind.Call : SignatureKind.Construct, /*allowMembers*/ false);\r\n                    if (contextualSignature && !contextualSignature.typeParameters) {\r\n                        if (checkMode & CheckMode.SkipGenericFunctions) {\r\n                            skippedGenericFunction(node, checkMode);\r\n                            return anyFunctionType;\r\n                        }\r\n                        const context = getInferenceContext(node)!;\r\n                        // We have an expression that is an argument of a generic function for which we are performing\r\n                        // type argument inference. The expression is of a function type with a single generic call\r\n                        // signature and a contextual function type with a single non-generic call signature. Now check\r\n                        // if the outer function returns a function type with a single non-generic call signature and\r\n                        // if some of the outer function type parameters have no inferences so far. If so, we can\r\n                        // potentially add inferred type parameters to the outer function return type.\r\n                        const returnType = context.signature && getReturnTypeOfSignature(context.signature);\r\n                        const returnSignature = returnType && getSingleCallOrConstructSignature(returnType);\r\n                        if (returnSignature && !returnSignature.typeParameters && !every(context.inferences, hasInferenceCandidates)) {\r\n                            // Instantiate the signature with its own type parameters as type arguments, possibly\r\n                            // renaming the type parameters to ensure they have unique names.\r\n                            const uniqueTypeParameters = getUniqueTypeParameters(context, signature.typeParameters);\r\n                            const instantiatedSignature = getSignatureInstantiationWithoutFillingInTypeArguments(signature, uniqueTypeParameters);\r\n                            // Infer from the parameters of the instantiated signature to the parameters of the\r\n                            // contextual signature starting with an empty set of inference candidates.\r\n                            const inferences = map(context.inferences, info => createInferenceInfo(info.typeParameter));\r\n                            applyToParameterTypes(instantiatedSignature, contextualSignature, (source, target) => {\r\n                                inferTypes(inferences, source, target, /*priority*/ 0, /*contravariant*/ true);\r\n                            });\r\n                            if (some(inferences, hasInferenceCandidates)) {\r\n                                // We have inference candidates, indicating that one or more type parameters are referenced\r\n                                // in the parameter types of the contextual signature. Now also infer from the return type.\r\n                                applyToReturnTypes(instantiatedSignature, contextualSignature, (source, target) => {\r\n                                    inferTypes(inferences, source, target);\r\n                                });\r\n                                // If the type parameters for which we produced candidates do not have any inferences yet,\r\n                                // we adopt the new inference candidates and add the type parameters of the expression type\r\n                                // to the set of inferred type parameters for the outer function return type.\r\n                                if (!hasOverlappingInferences(context.inferences, inferences)) {\r\n                                    mergeInferences(context.inferences, inferences);\r\n                                    context.inferredTypeParameters = concatenate(context.inferredTypeParameters, uniqueTypeParameters);\r\n                                    return getOrCreateTypeFromSignature(instantiatedSignature);\r\n                                }\r\n                            }\r\n                        }\r\n                        return getOrCreateTypeFromSignature(instantiateSignatureInContextOf(signature, contextualSignature, context));\r\n                    }\r\n                }\r\n            }\r\n        }\r\n        return type;\r\n    }"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 41621,
+    "owner": "getUniqueTypeParameters",
+    "sha256": "33e06506177d3427a32583b4c982001247b550ddb30d6a11615fdb3d01f8c4b7",
+    "text": "function getUniqueTypeParameters(context: InferenceContext, typeParameters: readonly TypeParameter[]): readonly TypeParameter[] {\r\n        const result: TypeParameter[] = [];\r\n        let oldTypeParameters: TypeParameter[] | undefined;\r\n        let newTypeParameters: TypeParameter[] | undefined;\r\n        for (const tp of typeParameters) {\r\n            const name = tp.symbol.escapedName;\r\n            if (hasTypeParameterByName(context.inferredTypeParameters, name) || hasTypeParameterByName(result, name)) {\r\n                const newName = getUniqueTypeParameterName(concatenate(context.inferredTypeParameters, result), name);\r\n                const symbol = createSymbol(SymbolFlags.TypeParameter, newName);\r\n                const newTypeParameter = createTypeParameter(symbol);\r\n                newTypeParameter.target = tp;\r\n                oldTypeParameters = append(oldTypeParameters, tp);\r\n                newTypeParameters = append(newTypeParameters, newTypeParameter);\r\n                result.push(newTypeParameter);\r\n            }\r\n            else {\r\n                result.push(tp);\r\n            }\r\n        }\r\n        if (newTypeParameters) {\r\n            const mapper = createTypeMapper(oldTypeParameters!, newTypeParameters);\r\n            for (const tp of newTypeParameters) {\r\n                tp.mapper = mapper;\r\n            }\r\n        }\r\n        return result;\r\n    }"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 41653,
+    "owner": "getUniqueTypeParameterName",
+    "sha256": "6bee97232d084a2dff6cabe3a800a910a18928c7556b88cae60303c8b72b68ec",
+    "text": "function getUniqueTypeParameterName(typeParameters: readonly TypeParameter[], baseName: __String) {\r\n        let len = (baseName as string).length;\r\n        while (len > 1 && (baseName as string).charCodeAt(len - 1) >= CharacterCodes._0 && (baseName as string).charCodeAt(len - 1) <= CharacterCodes._9) len--;\r\n        const s = (baseName as string).slice(0, len);\r\n        for (let index = 1; true; index++) {\r\n            const augmentedName = s + index as __String;\r\n            if (!hasTypeParameterByName(typeParameters, augmentedName)) {\r\n                return augmentedName;\r\n            }\r\n        }\r\n    }"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 42675,
+    "owner": "getEffectiveTypeArguments",
+    "sha256": "ef5e66245a7155147e022d870faec5b22e5e723ebf68b59597e721f6e700551d",
+    "text": "function getEffectiveTypeArguments(node: TypeReferenceNode | ExpressionWithTypeArguments | NodeWithTypeArguments, typeParameters: readonly TypeParameter[]): Type[] {\r\n        return fillMissingTypeArguments(map(node.typeArguments!, getTypeFromTypeNode), typeParameters, getMinTypeArgumentCount(typeParameters), isInJSFile(node));\r\n    }"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 49690,
+    "owner": "getDiagnostics",
+    "sha256": "b290f3b492d74f8177ce16159c9b5e3847335d6a17746ee873a7428aa5272a39",
+    "text": "function getDiagnostics(sourceFile: SourceFile, ct: CancellationToken, nodesToCheck?: Node[]): Diagnostic[] {\r\n        try {\r\n            // Record the cancellation token so it can be checked later on during checkSourceElement.\r\n            // Do this in a finally block so we can ensure that it gets reset back to nothing after\r\n            // this call is done.\r\n            cancellationToken = ct;\r\n            return getDiagnosticsWorker(sourceFile, nodesToCheck);\r\n        }\r\n        finally {\r\n            cancellationToken = undefined;\r\n        }\r\n    }"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 49724,
+    "owner": "getDiagnosticsWorker",
+    "sha256": "1fe412b4c844916484debf956ca1109378f5e1d4c242798f42afc8bf9be580a2",
+    "text": "function getDiagnosticsWorker(sourceFile: SourceFile, nodesToCheck: Node[] | undefined): Diagnostic[] {\r\n        if (sourceFile) {\r\n            ensurePendingDiagnosticWorkComplete();\r\n            // Some global diagnostics are deferred until they are needed and\r\n            // may not be reported in the first call to getGlobalDiagnostics.\r\n            // We should catch these changes and report them.\r\n            const previousGlobalDiagnostics = diagnostics.getGlobalDiagnostics();\r\n            const previousGlobalDiagnosticsSize = previousGlobalDiagnostics.length;\r\n\r\n            checkSourceFileWithEagerDiagnostics(sourceFile, nodesToCheck);\r\n            const semanticDiagnostics = diagnostics.getDiagnostics(sourceFile.fileName);\r\n            if (nodesToCheck) {\r\n                // No need to get global diagnostics.\r\n                return semanticDiagnostics;\r\n            }\r\n            const currentGlobalDiagnostics = diagnostics.getGlobalDiagnostics();\r\n            if (currentGlobalDiagnostics !== previousGlobalDiagnostics) {\r\n                // If the arrays are not the same reference, new diagnostics were added.\r\n                const deferredGlobalDiagnostics = relativeComplement(previousGlobalDiagnostics, currentGlobalDiagnostics, compareDiagnostics);\r\n                return concatenate(deferredGlobalDiagnostics, semanticDiagnostics);\r\n            }\r\n            else if (previousGlobalDiagnosticsSize === 0 && currentGlobalDiagnostics.length > 0) {\r\n                // If the arrays are the same reference, but the length has changed, a single\r\n                // new diagnostic was added as DiagnosticCollection attempts to reuse the\r\n                // same array.\r\n                return concatenate(currentGlobalDiagnostics, semanticDiagnostics);\r\n            }\r\n\r\n            return semanticDiagnostics;\r\n        }\r\n\r\n        // Global diagnostics are always added when a file is not provided to\r\n        // getDiagnostics\r\n        forEach(host.getSourceFiles(), file => checkSourceFileWithEagerDiagnostics(file));\r\n        return diagnostics.getDiagnostics();\r\n    }"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 49761,
+    "owner": "getGlobalDiagnostics",
+    "sha256": "786d4d2258c979ff6d906204be383e01d74db2cbb553092b24dcc35947e0f87e",
+    "text": "function getGlobalDiagnostics(): Diagnostic[] {\r\n        ensurePendingDiagnosticWorkComplete();\r\n        return diagnostics.getGlobalDiagnostics();\r\n    }"
+  },
+  {
+    "file": "src/compiler/core.ts",
+    "line": 656,
+    "owner": "concatenate",
+    "sha256": "bf87f603db1e51078e2245978ae6ecd867ee73145f4ebf383d4acb9bcc4fe193",
+    "text": "export function concatenate<T>(array1: T[], array2: T[]): T[];"
+  },
+  {
+    "file": "src/compiler/core.ts",
+    "line": 658,
+    "owner": "concatenate",
+    "sha256": "5da4ddf6ff782720cc9585c5c7f99324ede2e31c42f76026e8c0851ffcf45f4c",
+    "text": "export function concatenate<T>(array1: readonly T[], array2: readonly T[]): readonly T[];"
+  },
+  {
+    "file": "src/compiler/core.ts",
+    "line": 660,
+    "owner": "concatenate",
+    "sha256": "a0326d23ccce42fb5ae029946ace86e261b251206ba3dcb95180f3148292a9ef",
+    "text": "export function concatenate<T>(array1: T[], array2: T[] | undefined): T[];"
+  },
+  {
+    "file": "src/compiler/core.ts",
+    "line": 662,
+    "owner": "concatenate",
+    "sha256": "748afb729b27fb13f094aa2f7b115c092273d961e089d9ea9b925cb426adf232",
+    "text": "export function concatenate<T>(array1: T[] | undefined, array2: T[]): T[];"
+  },
+  {
+    "file": "src/compiler/core.ts",
+    "line": 664,
+    "owner": "concatenate",
+    "sha256": "55d6185c7411c00dc091f1074fff71d79eb142238af488d3b7ff43755f324c5a",
+    "text": "export function concatenate<T>(array1: readonly T[], array2: readonly T[] | undefined): readonly T[];"
+  },
+  {
+    "file": "src/compiler/core.ts",
+    "line": 666,
+    "owner": "concatenate",
+    "sha256": "5eb3e5e5344b5ea78f41c0e69373e125fe5612790b2cdfe42d59b61400c35105",
+    "text": "export function concatenate<T>(array1: readonly T[] | undefined, array2: readonly T[]): readonly T[];"
+  },
+  {
+    "file": "src/compiler/core.ts",
+    "line": 668,
+    "owner": "concatenate",
+    "sha256": "6a7384823abef6e31c1f4c3f345c7d1537c9d48dff8f029b99091aca8165b30c",
+    "text": "export function concatenate<T>(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined;"
+  },
+  {
+    "file": "src/compiler/core.ts",
+    "line": 670,
+    "owner": "concatenate",
+    "sha256": "40bb84a6a4ae2902786e51a971067cc7072045d5a6c41602bc07079b5b1c9e9f",
+    "text": "export function concatenate<T>(array1: readonly T[] | undefined, array2: readonly T[] | undefined): readonly T[] | undefined;"
+  },
+  {
+    "file": "src/compiler/core.ts",
+    "line": 672,
+    "owner": "concatenate",
+    "sha256": "655efed131b61fb8fa680f3c81e4fda96262ded5730e76d9eca14685faca7fb2",
+    "text": "export function concatenate<T>(array1: readonly T[] | undefined, array2: readonly T[] | undefined): readonly T[] | undefined {\r\n    if (array2 === undefined || array2.length === 0) return array1;\r\n    if (array1 === undefined || array1.length === 0) return array2;\r\n    return [...array1, ...array2];\r\n}"
+  },
+  {
+    "file": "src/compiler/core.ts",
+    "line": 871,
+    "owner": "relativeComplement",
+    "sha256": "c1c158e06fd668a8fc8ca4d46fcf23d118396338112ee9a51ca618ed9501c090",
+    "text": "export function relativeComplement<T>(arrayA: T[] | undefined, arrayB: T[] | undefined, comparer: Comparer<T>): T[] | undefined {\r\n    if (!arrayB || !arrayA || arrayB.length === 0 || arrayA.length === 0) return arrayB;\r\n    const result: T[] = [];\r\n    loopB:\r\n    for (let offsetA = 0, offsetB = 0; offsetB < arrayB.length; offsetB++) {\r\n        if (offsetB > 0) {\r\n            // Ensure `arrayB` is properly sorted.\r\n            Debug.assertGreaterThanOrEqual(comparer(arrayB[offsetB]!, arrayB[offsetB - 1]!), Comparison.EqualTo);\r\n        }\r\n\r\n        loopA:\r\n        for (const startA = offsetA; offsetA < arrayA.length; offsetA++) {\r\n            if (offsetA > startA) {\r\n                // Ensure `arrayA` is properly sorted. We only need to perform this check if\r\n                // `offsetA` has changed since we entered the loop.\r\n                Debug.assertGreaterThanOrEqual(comparer(arrayA[offsetA]!, arrayA[offsetA - 1]!), Comparison.EqualTo);\r\n            }\r\n\r\n            switch (comparer(arrayB[offsetB]!, arrayA[offsetA]!)) {\r\n                case Comparison.LessThan:\r\n                    // If B is less than A, B does not exist in arrayA. Add B to the result and\r\n                    // move to the next element in arrayB without changing the current position\r\n                    // in arrayA.\r\n                    result.push(arrayB[offsetB]!);\r\n                    continue loopB;\r\n                case Comparison.EqualTo:\r\n                    // If B is equal to A, B exists in arrayA. Move to the next element in\r\n                    // arrayB without adding B to the result or changing the current position\r\n                    // in arrayA.\r\n                    continue loopB;\r\n                case Comparison.GreaterThan:\r\n                    // If B is greater than A, we need to keep looking for B in arrayA. Move to\r\n                    // the next element in arrayA and recheck.\r\n                    continue loopA;\r\n            }\r\n        }\r\n    }\r\n    return result;\r\n}"
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 6117,
+    "owner": "getGlobalDiagnostics",
+    "sha256": "91be66ef71d69a8d0324c3a20b25602d60da4c56be81f0afbeb3b1dd852280e8",
+    "text": "function getGlobalDiagnostics(): Diagnostic[] {\r\n        hasReadNonFileDiagnostics = true;\r\n        return nonFileDiagnostics;\r\n    }"
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 6122,
+    "owner": "getDiagnostics",
+    "sha256": "e5654e3f77325af6063f739d9df19ba392bb11a4dcdea62b248ad8c45a162d1f",
+    "text": "function getDiagnostics(fileName: string): DiagnosticWithLocation[];"
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 6123,
+    "owner": "getDiagnostics",
+    "sha256": "0b522507dd5bd8550deb1f92d155814573aeb09c22e100fd64dfa25d0faabaf4",
+    "text": "function getDiagnostics(): Diagnostic[];"
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 6124,
+    "owner": "getDiagnostics",
+    "sha256": "7f1cee8a6258f581c90fcb10c99296e7c2c01755fc56f5a5ad9164505f2c1e5f",
+    "text": "function getDiagnostics(fileName?: string): Diagnostic[] {\r\n        if (fileName) {\r\n            return fileDiagnostics.get(fileName) || [];\r\n        }\r\n\r\n        const fileDiags: Diagnostic[] = flatMapToMutable(filesWithDiagnostics, f => fileDiagnostics.get(f));\r\n        if (!nonFileDiagnostics.length) {\r\n            return fileDiags;\r\n        }\r\n        fileDiags.unshift(...nonFileDiagnostics);\r\n        return fileDiags;\r\n    }"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "line": 6623,
+    "owner": "InterfaceType",
+    "sha256": "ee7f775d2801eba0e2cd7bccdfc024d9703fb4caa95d18273188917edf945aa8",
+    "text": "export interface InterfaceType extends ObjectType {\r\n    typeParameters: TypeParameter[] | undefined;      // Type parameters (undefined if non-generic)\r\n    outerTypeParameters: TypeParameter[] | undefined; // Outer type parameters (undefined if none)\r\n    localTypeParameters: TypeParameter[] | undefined; // Local type parameters (undefined if none)\r\n    thisType: TypeParameter | undefined;              // The \"this\" type (undefined if none)\r\n    /** @internal */\r\n    resolvedBaseConstructorType?: Type;               // Resolved base constructor type of class\r\n    /** @internal */\r\n    resolvedBaseTypes: BaseType[];                    // Resolved base types\r\n    /** @internal */\r\n    baseTypesResolved?: boolean;\r\n}"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "line": 6657,
+    "owner": "TypeReference",
+    "sha256": "908ce8d504c05a022db72d9e0857309cf8c6e2dc1a7ecd3408631c5b27aa3d40",
+    "text": "export interface TypeReference extends ObjectType {\r\n    target: GenericType; // Type reference target\r\n    node?: TypeReferenceNode | ArrayTypeNode | TupleTypeNode;\r\n    /** @internal */\r\n    mapper?: TypeMapper | undefined;\r\n    /** @internal */\r\n    resolvedTypeArguments?: readonly Type[] | undefined; // Resolved type reference type arguments\r\n    /** @internal */\r\n    literalType?: TypeReference; // Clone of type with ObjectFlags.ArrayLiteral set\r\n    /** @internal */\r\n    cachedEquivalentBaseType?: Type | undefined; // Only set on references to class or interfaces with a single base type and no augmentations\r\n}"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "line": 6694,
+    "owner": "GenericType",
+    "sha256": "bf053e1808eb1d7ffd5008bbcc0a3bc7c7b98e247b847faa6d357a9a1ac35a7d",
+    "text": "export interface GenericType extends InterfaceType, TypeReference {\r\n    /** @internal */\r\n    instantiations: Map<string, TypeReference>; // Generic instantiation cache\r\n    /** @internal */\r\n    variances?: VarianceFlags[]; // Variance of each type parameter\r\n}"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "line": 7168,
+    "owner": "InferenceContext",
+    "sha256": "495450fd3626eca99c3734e1988b670589a3d64b220d076500a4bf9aa281c7f1",
+    "text": "export interface InferenceContext {\r\n    inferences: InferenceInfo[];                  // Inferences made for each type parameter\r\n    signature?: Signature | undefined;                        // Generic signature for which inferences are made (if any)\r\n    flags: InferenceFlags;                        // Inference flags\r\n    compareTypes: TypeComparer;                   // Type comparer function\r\n    mapper: TypeMapper;                           // Mapper that fixes inferences\r\n    nonFixingMapper: TypeMapper;                  // Mapper that doesn't fix inferences\r\n    returnMapper?: TypeMapper | undefined;                    // Type mapper for inferences from return types (if any)\r\n    outerReturnMapper?: TypeMapper;               // Type mapper for inferences from return types of outer function (if any)\r\n    inferredTypeParameters?: readonly TypeParameter[]; // Inferred type parameters for function result\r\n    intraExpressionInferenceSites?: IntraExpressionInferenceSite[] | undefined;\r\n}"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "line": 10091,
+    "owner": "DiagnosticCollection",
+    "sha256": "368a76e1bc149ab6d57ca0213a5b8733a48dcec34aa32e2ac5587235a17252ca",
+    "text": "export interface DiagnosticCollection {\r\n    // Adds a diagnostic to this diagnostic collection.\r\n    add(diagnostic: Diagnostic): void;\r\n\r\n    // Returns the first existing diagnostic that is equivalent to the given one (sans related information)\r\n    lookup(diagnostic: Diagnostic): Diagnostic | undefined;\r\n\r\n    // Gets all the diagnostics that aren't associated with a file.\r\n    getGlobalDiagnostics(): Diagnostic[];\r\n\r\n    // If fileName is provided, gets all the diagnostics associated with that file name.\r\n    // Otherwise, returns all the diagnostics (global and file associated) in this collection.\r\n    getDiagnostics(): Diagnostic[];\r\n    getDiagnostics(fileName: string): DiagnosticWithLocation[];\r\n}"
+  }
+]
