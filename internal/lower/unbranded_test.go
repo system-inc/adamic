@@ -174,3 +174,22 @@ func TestUnbrandedPresenceControls(t *testing.T) {
 		}
 	}
 }
+
+// A brand still typed void (rulings.md, Oct 29: a program that brands with void fails closed under the
+// void-container rule) used as a value, by length alone and by a read of its elements. This head probes
+// what each does and logs it; each must stop, NotYet or Refused, and the words are pinned once seen.
+func TestUnbrandedVoidBrandStops(t *testing.T) {
+	t.Parallel()
+	const declaration = "interface VoidSorted<T> extends Array<T> { \" __b\": void; }\n"
+	for _, row := range []struct{ name, body string }{
+		{"its length", "return xs === undefined ? 0 : xs.length;"},
+		{"its elements read", "return xs === undefined ? 0 : xs.join(',').length;"},
+	} {
+		source := declaration + "function count(xs: VoidSorted<number> | undefined): number { " + row.body + " }\nconsole.log(String(count(undefined)));\nconsole.log(String(count([1, 2] as unknown as VoidSorted<number>)));\n"
+		_, err := lowerSourceAs(t, source, ".ts")
+		t.Logf("%s: %v", row.name, err)
+		if err == nil {
+			t.Errorf("%s: a void brand lowers whole, want a stop", row.name)
+		}
+	}
+}
