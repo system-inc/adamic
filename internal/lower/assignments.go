@@ -108,22 +108,71 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 	return append(statements, ir.Assign{Local: local, Value: fit(value, l.result.Locals[local].Type), Checked: l.checked(local) && !l.result.Locals[local].NamespaceState}), nil
 }
 
-// tupleField reads element index of the tuple held in the local held, as the tuple's element type
-// holds it, and makes it what the name it goes to holds: a string element going to a string | number
-// name is boxed on the way.
-func (l *lowering) tupleField(where *ast.Node, held int, elements []*checker.Type, index int, to ir.Type) (ir.Expression, error) {
+// tupleField reads element index of the tuple value, held in the local held, as the element is stored
+// (tupleElementStorage), and makes it what the name it goes to holds: a string element going to a
+// string | number name is boxed on the way.
+func (l *lowering) tupleField(where *ast.Node, valueNode *ast.Node, value ir.Expression, held int, index int, to ir.Type) (ir.Expression, error) {
+	of, slot, err := l.tupleElementStorage(where, valueNode, value, index)
+	if err != nil {
+		return nil, err
+	}
+	// A union is one counted reference, read as destructureFrom reads one: when every member is one a
+	// template writes.
+	if slotless(of) && !(of == ir.Union && l.writable(slot)) {
+		return nil, l.notYet(where, "a tuple element of type "+l.checker.TypeToString(slot))
+	}
+	field := fit(ir.Expression(ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: strconv.Itoa(index), Of: of}), to)
+	if field.Type() != to {
+		return nil, l.notYet(where, "a tuple element of type "+l.checker.TypeToString(slot)+" given to a "+typeName(to))
+	}
+	return field, nil
+}
+
+// tupleElementStorage is how element index of the tuple value is stored, and the type it's stored as.
+// A literal written here is stored as the slots it's written into, the pattern's, while the checker
+// narrows each element by what's written in it: with both lets number | string, [second, first] is
+// [string, number], and reading the first's number | string slot as a number printed a box's pointer
+// bits (#fsb6n82). So a literal's elements are read as its lowered fields hold them, and the slot it
+// was made for must say the same. A value read from where it's held (a local, a field, an element, a
+// call's result) is stored as its own type. Anything else may hold a literal the checker narrows the
+// same way ((0, [second, first]), or a conditional between two), so it is not yet.
+func (l *lowering) tupleElementStorage(where *ast.Node, valueNode *ast.Node, value ir.Expression, index int) (ir.Type, *checker.Type, error) {
+	written := ast.SkipParentheses(valueNode)
+	var elements []*checker.Type
+	if literal, isLiteral := value.(ir.ObjectLiteral); isLiteral {
+		tuple := l.tupleType(written)
+		if !literal.Tuple || written.Kind != ast.KindArrayLiteralExpression || tuple == nil {
+			return 0, nil, l.notYet(where, "destructuring a value whose element storage isn't known")
+		}
+		elements = l.checker.GetTypeArguments(tuple)
+		if index >= len(elements) {
+			return 0, nil, l.notYet(where, "a name past its tuple's elements")
+		}
+		for _, field := range literal.Fields {
+			if field.Name != strconv.Itoa(index) {
+				continue
+			}
+			if of, isKnown := l.representation(elements[index]); !isKnown || of != field.Value.Type() {
+				return 0, nil, l.notYet(where, "destructuring a value whose element storage isn't known")
+			}
+			return field.Value.Type(), elements[index], nil
+		}
+		return 0, nil, l.notYet(where, "destructuring a value whose element storage isn't known")
+	}
+	switch written.Kind {
+	case ast.KindIdentifier, ast.KindPropertyAccessExpression, ast.KindElementAccessExpression, ast.KindCallExpression:
+	default:
+		return 0, nil, l.notYet(where, "destructuring a value whose element storage isn't known")
+	}
+	elements = l.checker.GetTypeArguments(l.checker.GetTypeAtLocation(valueNode))
 	if index >= len(elements) {
-		return nil, l.notYet(where, "a name past its tuple's elements")
+		return 0, nil, l.notYet(where, "a name past its tuple's elements")
 	}
 	of, isKnown := l.representation(elements[index])
-	if !isKnown || slotless(of) {
-		return nil, l.notYet(where, "a tuple element of type "+l.checker.TypeToString(elements[index]))
+	if !isKnown {
+		return 0, nil, l.notYet(where, "a tuple element of type "+l.checker.TypeToString(elements[index]))
 	}
-	value := fit(ir.Expression(ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: strconv.Itoa(index), Of: of}), to)
-	if value.Type() != to {
-		return nil, l.notYet(where, "a tuple element of type "+l.checker.TypeToString(elements[index])+" given to a "+typeName(to))
-	}
-	return value, nil
+	return of, elements[index], nil
 }
 
 // destructuringAssignment lowers [a, b] = tuple: the tuple is evaluated whole and held, then each
@@ -140,7 +189,6 @@ func (l *lowering) destructuringAssignment(pattern *ast.Node, valueNode *ast.Nod
 	if value.Type() != ir.Object {
 		return nil, l.notYet(pattern, "destructuring a "+typeName(value.Type()))
 	}
-	elements := l.checker.GetTypeArguments(l.checker.GetTypeAtLocation(valueNode))
 	held := len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "tuple", Type: ir.Object, Function: l.functionIndex})
 	statements := []ir.Statement{ir.Declare{Local: held, Value: value}}
@@ -155,7 +203,7 @@ func (l *lowering) destructuringAssignment(pattern *ast.Node, valueNode *ast.Nod
 		if l.result.Locals[local].NestedFunction != 0 {
 			return nil, l.notYet(element, "rebinding a nested function declaration")
 		}
-		field, err := l.tupleField(element, held, elements, index, l.result.Locals[local].Type)
+		field, err := l.tupleField(element, valueNode, value, held, index, l.result.Locals[local].Type)
 		if err != nil {
 			return nil, err
 		}
