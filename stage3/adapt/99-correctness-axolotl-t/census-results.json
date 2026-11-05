@@ -1,0 +1,1484 @@
+{
+  "before": {
+    "roots": 79,
+    "groups": [
+      {
+        "roots": 1,
+        "kind": "NotYet",
+        "where": "src/compiler/commandLineParser.ts:293:35",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+      },
+      {
+        "roots": 1,
+        "kind": "NotYet",
+        "where": "src/compiler/debug.ts:243:59",
+        "reason": "a generic instantiation whose type argument for T, constrained to Node, can't be read"
+      },
+      {
+        "roots": 1,
+        "kind": "NotYet",
+        "where": "src/compiler/diagnosticInformationMap.generated.ts:13:45",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+      },
+      {
+        "roots": 1,
+        "kind": "NotYet",
+        "where": "src/compiler/semver.ts:71:9",
+        "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+      },
+      {
+        "roots": 73,
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold"
+      },
+      {
+        "roots": 2,
+        "kind": "accepted",
+        "where": "",
+        "reason": ""
+      }
+    ],
+    "editedFiles": [
+      {
+        "file": "src/compiler/debug.ts",
+        "kind": "NotYet",
+        "where": "src/compiler/semver.ts:71:9",
+        "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+      },
+      {
+        "file": "src/compiler/expressionToTypeNode.ts",
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold"
+      }
+    ],
+    "header": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "status": "measurement"
+    },
+    "fileTotals": {
+      "debug.ts": {
+        "units": 105,
+        "rawFindings": 209
+      },
+      "expressionToTypeNode.ts": {
+        "units": 68,
+        "rawFindings": 287
+      }
+    }
+  },
+  "after": {
+    "roots": 79,
+    "groups": [
+      {
+        "roots": 1,
+        "kind": "NotYet",
+        "where": "src/compiler/commandLineParser.ts:293:35",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+      },
+      {
+        "roots": 1,
+        "kind": "NotYet",
+        "where": "src/compiler/debug.ts:243:59",
+        "reason": "a generic instantiation whose type argument for T, constrained to Node, can't be read"
+      },
+      {
+        "roots": 1,
+        "kind": "NotYet",
+        "where": "src/compiler/diagnosticInformationMap.generated.ts:13:45",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+      },
+      {
+        "roots": 1,
+        "kind": "NotYet",
+        "where": "src/compiler/semver.ts:71:9",
+        "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+      },
+      {
+        "roots": 73,
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold"
+      },
+      {
+        "roots": 2,
+        "kind": "accepted",
+        "where": "",
+        "reason": ""
+      }
+    ],
+    "editedFiles": [
+      {
+        "file": "src/compiler/debug.ts",
+        "kind": "NotYet",
+        "where": "src/compiler/semver.ts:71:9",
+        "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+      },
+      {
+        "file": "src/compiler/expressionToTypeNode.ts",
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold"
+      }
+    ],
+    "header": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "status": "measurement"
+    },
+    "fileTotals": {
+      "debug.ts": {
+        "units": 105,
+        "rawFindings": 206
+      },
+      "expressionToTypeNode.ts": {
+        "units": 68,
+        "rawFindings": 289
+      }
+    }
+  },
+  "sites": [
+    {
+      "id": "CW144",
+      "file": "debug.ts",
+      "owner": "Debug.DebugTypeMapper.__debugToString",
+      "before": {
+        "line": 813,
+        "column": 31,
+        "start": 39991,
+        "end": 40039,
+        "ownerStart": 39644,
+        "ownerEnd": 41266
+      },
+      "after": {
+        "line": 816,
+        "column": 21,
+        "start": 40350,
+        "end": 40437,
+        "ownerStart": 39794,
+        "ownerEnd": 44393
+      },
+      "census": {
+        "before": {
+          "atSite": [
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:813:32"
+            }
+          ],
+          "withinOwner": [
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:813:32"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:813:87"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:816:25"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:817:25"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:824:39"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:824:84"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:828:36"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:829:8"
+            }
+          ]
+        },
+        "after": {
+          "atSite": [],
+          "withinOwner": []
+        }
+      }
+    },
+    {
+      "id": "CW145",
+      "file": "debug.ts",
+      "owner": "Debug.DebugTypeMapper.__debugToString",
+      "before": {
+        "line": 813,
+        "column": 86,
+        "start": 40046,
+        "end": 40094,
+        "ownerStart": 39644,
+        "ownerEnd": 41266
+      },
+      "after": {
+        "line": 820,
+        "column": 21,
+        "start": 40766,
+        "end": 40853,
+        "ownerStart": 39794,
+        "ownerEnd": 44393
+      },
+      "census": {
+        "before": {
+          "atSite": [
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:813:87"
+            }
+          ],
+          "withinOwner": [
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:813:32"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:813:87"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:816:25"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:817:25"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:824:39"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:824:84"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:828:36"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:829:8"
+            }
+          ]
+        },
+        "after": {
+          "atSite": [],
+          "withinOwner": []
+        }
+      }
+    },
+    {
+      "id": "CW146",
+      "file": "debug.ts",
+      "owner": "Debug.DebugTypeMapper.__debugToString",
+      "before": {
+        "line": 816,
+        "column": 25,
+        "start": 40241,
+        "end": 40277,
+        "ownerStart": 39644,
+        "ownerEnd": 41266
+      },
+      "after": {
+        "line": 831,
+        "column": 29,
+        "start": 41499,
+        "end": 41581,
+        "ownerStart": 39794,
+        "ownerEnd": 44393
+      },
+      "census": {
+        "before": {
+          "atSite": [
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:816:25"
+            }
+          ],
+          "withinOwner": [
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:813:32"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:813:87"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:816:25"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:817:25"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:824:39"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:824:84"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:828:36"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:829:8"
+            }
+          ]
+        },
+        "after": {
+          "atSite": [],
+          "withinOwner": []
+        }
+      }
+    },
+    {
+      "id": "CW147",
+      "file": "debug.ts",
+      "owner": "Debug.DebugTypeMapper.__debugToString",
+      "before": {
+        "line": 817,
+        "column": 25,
+        "start": 40304,
+        "end": 40340,
+        "ownerStart": 39644,
+        "ownerEnd": 41266
+      },
+      "after": {
+        "line": 835,
+        "column": 29,
+        "start": 41963,
+        "end": 42045,
+        "ownerStart": 39794,
+        "ownerEnd": 44393
+      },
+      "census": {
+        "before": {
+          "atSite": [
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:817:25"
+            }
+          ],
+          "withinOwner": [
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:813:32"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:813:87"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:816:25"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:817:25"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:824:39"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:824:84"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:828:36"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:829:8"
+            }
+          ]
+        },
+        "after": {
+          "atSite": [],
+          "withinOwner": []
+        }
+      }
+    },
+    {
+      "id": "CW148",
+      "file": "debug.ts",
+      "owner": "Debug.DebugTypeMapper.__debugToString",
+      "before": {
+        "line": 824,
+        "column": 38,
+        "start": 40731,
+        "end": 40769,
+        "ownerStart": 39644,
+        "ownerEnd": 41266
+      },
+      "after": {
+        "line": 846,
+        "column": 29,
+        "start": 42597,
+        "end": 42679,
+        "ownerStart": 39794,
+        "ownerEnd": 44393
+      },
+      "census": {
+        "before": {
+          "atSite": [
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:824:39"
+            }
+          ],
+          "withinOwner": [
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:813:32"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:813:87"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:816:25"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:817:25"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:824:39"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:824:84"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:828:36"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:829:8"
+            }
+          ]
+        },
+        "after": {
+          "atSite": [],
+          "withinOwner": []
+        }
+      }
+    },
+    {
+      "id": "CW149",
+      "file": "debug.ts",
+      "owner": "Debug.DebugTypeMapper.__debugToString",
+      "before": {
+        "line": 824,
+        "column": 83,
+        "start": 40776,
+        "end": 40816,
+        "ownerStart": 39644,
+        "ownerEnd": 41266
+      },
+      "after": {
+        "line": 850,
+        "column": 29,
+        "start": 43022,
+        "end": 43109,
+        "ownerStart": 39794,
+        "ownerEnd": 44393
+      },
+      "census": {
+        "before": {
+          "atSite": [
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:824:84"
+            }
+          ],
+          "withinOwner": [
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:813:32"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:813:87"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:816:25"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:817:25"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:824:39"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:824:84"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:828:36"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:829:8"
+            }
+          ]
+        },
+        "after": {
+          "atSite": [],
+          "withinOwner": []
+        }
+      }
+    },
+    {
+      "id": "CW150",
+      "file": "debug.ts",
+      "owner": "Debug.DebugTypeMapper.__debugToString",
+      "before": {
+        "line": 828,
+        "column": 35,
+        "start": 40977,
+        "end": 41039,
+        "ownerStart": 39644,
+        "ownerEnd": 41266
+      },
+      "after": {
+        "line": 858,
+        "column": 21,
+        "start": 43610,
+        "end": 43700,
+        "ownerStart": 39794,
+        "ownerEnd": 44393
+      },
+      "census": {
+        "before": {
+          "atSite": [
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:828:36"
+            }
+          ],
+          "withinOwner": [
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:813:32"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:813:87"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:816:25"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:817:25"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:824:39"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:824:84"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:828:36"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:829:8"
+            }
+          ]
+        },
+        "after": {
+          "atSite": [],
+          "withinOwner": []
+        }
+      }
+    },
+    {
+      "id": "CW151",
+      "file": "debug.ts",
+      "owner": "Debug.DebugTypeMapper.__debugToString",
+      "before": {
+        "line": 829,
+        "column": 7,
+        "start": 41075,
+        "end": 41137,
+        "ownerStart": 39644,
+        "ownerEnd": 41266
+      },
+      "after": {
+        "line": 862,
+        "column": 21,
+        "start": 44060,
+        "end": 44150,
+        "ownerStart": 39794,
+        "ownerEnd": 44393
+      },
+      "census": {
+        "before": {
+          "atSite": [
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:829:8"
+            }
+          ],
+          "withinOwner": [
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:813:32"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:813:87"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:816:25"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:817:25"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:824:39"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:824:84"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:828:36"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:829:8"
+            }
+          ]
+        },
+        "after": {
+          "atSite": [],
+          "withinOwner": []
+        }
+      }
+    },
+    {
+      "id": "CW143",
+      "file": "debug.ts",
+      "owner": "Debug.enableDebugInfo",
+      "before": {
+        "line": 774,
+        "column": 33,
+        "start": 38208,
+        "end": 38271,
+        "ownerStart": 27198,
+        "ownerEnd": 38685
+      },
+      "after": {
+        "line": 775,
+        "column": 49,
+        "start": 38339,
+        "end": 38407,
+        "ownerStart": 27198,
+        "ownerEnd": 38835
+      },
+      "census": {
+        "before": {
+          "atSite": [
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.SourceFile",
+              "where": "src/compiler/debug.ts:774:52"
+            }
+          ],
+          "withinOwner": [
+            {
+              "kind": "NotYet",
+              "phase": "refusal_scan",
+              "reason": "a non-object representation passed through an opaque object parameter",
+              "where": "src/compiler/debug.ts:692:30"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.SourceFile",
+              "where": "src/compiler/debug.ts:774:52"
+            },
+            {
+              "kind": "NotYet",
+              "phase": "lowering",
+              "reason": "new an Identifier",
+              "where": "src/compiler/debug.ts:596:33"
+            },
+            {
+              "kind": "Boundary",
+              "phase": "lowering",
+              "reason": "failed statement; state rolled back; continued at next statement or declaration",
+              "where": "src/compiler/debug.ts:596:9"
+            },
+            {
+              "kind": "NotYet",
+              "phase": "lowering",
+              "reason": "new an Identifier",
+              "where": "src/compiler/debug.ts:597:33"
+            },
+            {
+              "kind": "Boundary",
+              "phase": "lowering",
+              "reason": "failed statement; state rolled back; continued at next statement or declaration",
+              "where": "src/compiler/debug.ts:597:9"
+            },
+            {
+              "kind": "Refused",
+              "phase": "lowering",
+              "reason": "Object.defineProperties",
+              "where": "src/compiler/debug.ts:600:9"
+            },
+            {
+              "kind": "Boundary",
+              "phase": "lowering",
+              "reason": "failed statement; state rolled back; continued at next statement or declaration",
+              "where": "src/compiler/debug.ts:600:9"
+            },
+            {
+              "kind": "Refused",
+              "phase": "lowering",
+              "reason": "Object.defineProperties",
+              "where": "src/compiler/debug.ts:617:9"
+            },
+            {
+              "kind": "Boundary",
+              "phase": "lowering",
+              "reason": "failed statement; state rolled back; continued at next statement or declaration",
+              "where": "src/compiler/debug.ts:617:9"
+            },
+            {
+              "kind": "Refused",
+              "phase": "lowering",
+              "reason": "Object.defineProperties",
+              "where": "src/compiler/debug.ts:671:9"
+            },
+            {
+              "kind": "Boundary",
+              "phase": "lowering",
+              "reason": "failed statement; state rolled back; continued at next statement or declaration",
+              "where": "src/compiler/debug.ts:671:9"
+            },
+            {
+              "kind": "Refused",
+              "phase": "lowering",
+              "reason": "inherited library member prototype read as an own field",
+              "where": "src/compiler/debug.ts:692:30"
+            },
+            {
+              "kind": "Boundary",
+              "phase": "lowering",
+              "reason": "failed statement; state rolled back; continued at next statement or declaration",
+              "where": "src/compiler/debug.ts:692:13"
+            }
+          ]
+        },
+        "after": {
+          "atSite": [],
+          "withinOwner": [
+            {
+              "kind": "NotYet",
+              "phase": "refusal_scan",
+              "reason": "a non-object representation passed through an opaque object parameter",
+              "where": "src/compiler/debug.ts:692:30"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.SourceFile",
+              "where": "src/compiler/debug.ts:774:70"
+            },
+            {
+              "kind": "NotYet",
+              "phase": "lowering",
+              "reason": "new an Identifier",
+              "where": "src/compiler/debug.ts:596:33"
+            },
+            {
+              "kind": "Boundary",
+              "phase": "lowering",
+              "reason": "failed statement; state rolled back; continued at next statement or declaration",
+              "where": "src/compiler/debug.ts:596:9"
+            },
+            {
+              "kind": "NotYet",
+              "phase": "lowering",
+              "reason": "new an Identifier",
+              "where": "src/compiler/debug.ts:597:33"
+            },
+            {
+              "kind": "Boundary",
+              "phase": "lowering",
+              "reason": "failed statement; state rolled back; continued at next statement or declaration",
+              "where": "src/compiler/debug.ts:597:9"
+            },
+            {
+              "kind": "Refused",
+              "phase": "lowering",
+              "reason": "Object.defineProperties",
+              "where": "src/compiler/debug.ts:600:9"
+            },
+            {
+              "kind": "Boundary",
+              "phase": "lowering",
+              "reason": "failed statement; state rolled back; continued at next statement or declaration",
+              "where": "src/compiler/debug.ts:600:9"
+            },
+            {
+              "kind": "Refused",
+              "phase": "lowering",
+              "reason": "Object.defineProperties",
+              "where": "src/compiler/debug.ts:617:9"
+            },
+            {
+              "kind": "Boundary",
+              "phase": "lowering",
+              "reason": "failed statement; state rolled back; continued at next statement or declaration",
+              "where": "src/compiler/debug.ts:617:9"
+            },
+            {
+              "kind": "Refused",
+              "phase": "lowering",
+              "reason": "Object.defineProperties",
+              "where": "src/compiler/debug.ts:671:9"
+            },
+            {
+              "kind": "Boundary",
+              "phase": "lowering",
+              "reason": "failed statement; state rolled back; continued at next statement or declaration",
+              "where": "src/compiler/debug.ts:671:9"
+            },
+            {
+              "kind": "Refused",
+              "phase": "lowering",
+              "reason": "inherited library member prototype read as an own field",
+              "where": "src/compiler/debug.ts:692:30"
+            },
+            {
+              "kind": "Boundary",
+              "phase": "lowering",
+              "reason": "failed statement; state rolled back; continued at next statement or declaration",
+              "where": "src/compiler/debug.ts:692:13"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "CW154",
+      "file": "debug.ts",
+      "owner": "Debug.formatControlFlowGraph.hasAntecedents",
+      "before": {
+        "line": 942,
+        "column": 13,
+        "start": 44637,
+        "end": 44707,
+        "ownerStart": 44539,
+        "ownerEnd": 44718
+      },
+      "after": {
+        "line": 982,
+        "column": 13,
+        "start": 48007,
+        "end": 48128,
+        "ownerStart": 47666,
+        "ownerEnd": 48186
+      },
+      "census": {
+        "before": {
+          "atSite": [
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:942:56"
+            },
+            {
+              "kind": "Refused",
+              "phase": "lowering",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:942:56"
+            },
+            {
+              "kind": "Boundary",
+              "phase": "lowering",
+              "reason": "failed statement; state rolled back; continued at next statement or declaration",
+              "where": "src/compiler/debug.ts:942:13"
+            }
+          ],
+          "withinOwner": [
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:942:56"
+            },
+            {
+              "kind": "Refused",
+              "phase": "lowering",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/debug.ts:942:56"
+            },
+            {
+              "kind": "Boundary",
+              "phase": "lowering",
+              "reason": "failed statement; state rolled back; continued at next statement or declaration",
+              "where": "src/compiler/debug.ts:942:13"
+            }
+          ]
+        },
+        "after": {
+          "atSite": [
+            {
+              "kind": "NotYet",
+              "phase": "lowering",
+              "reason": "reading hasAntecedentList",
+              "where": "src/compiler/debug.ts:982:26"
+            },
+            {
+              "kind": "Boundary",
+              "phase": "lowering",
+              "reason": "failed statement; state rolled back; continued at next statement or declaration",
+              "where": "src/compiler/debug.ts:982:13"
+            }
+          ],
+          "withinOwner": [
+            {
+              "kind": "NotYet",
+              "phase": "lowering",
+              "reason": "in when a possibly absent spread has no property presence descriptors",
+              "where": "src/compiler/debug.ts:980:39"
+            },
+            {
+              "kind": "Boundary",
+              "phase": "lowering",
+              "reason": "failed statement; state rolled back; continued at next statement or declaration",
+              "where": "src/compiler/debug.ts:980:13"
+            },
+            {
+              "kind": "NotYet",
+              "phase": "lowering",
+              "reason": "reading hasAntecedentList",
+              "where": "src/compiler/debug.ts:981:32"
+            },
+            {
+              "kind": "Boundary",
+              "phase": "lowering",
+              "reason": "failed statement; state rolled back; continued at next statement or declaration",
+              "where": "src/compiler/debug.ts:981:13"
+            },
+            {
+              "kind": "NotYet",
+              "phase": "lowering",
+              "reason": "reading hasAntecedentList",
+              "where": "src/compiler/debug.ts:982:26"
+            },
+            {
+              "kind": "Boundary",
+              "phase": "lowering",
+              "reason": "failed statement; state rolled back; continued at next statement or declaration",
+              "where": "src/compiler/debug.ts:982:13"
+            },
+            {
+              "kind": "NotYet",
+              "phase": "lowering",
+              "reason": "reading antecedent",
+              "where": "src/compiler/debug.ts:983:20"
+            },
+            {
+              "kind": "Boundary",
+              "phase": "lowering",
+              "reason": "failed statement; state rolled back; continued at next statement or declaration",
+              "where": "src/compiler/debug.ts:983:13"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "ArrowFunction | FunctionExpression",
+      "file": "expressionToTypeNode.ts",
+      "owner": "createSyntacticTypeNodeBuilder.typeFromExpression",
+      "before": {
+        "line": 913,
+        "column": 17,
+        "start": 48298,
+        "end": 48351,
+        "ownerStart": 46904,
+        "ownerEnd": 51644
+      },
+      "after": {
+        "line": 913,
+        "column": 17,
+        "start": 48298,
+        "end": 48487,
+        "ownerStart": 46904,
+        "ownerEnd": 51781
+      },
+      "census": {
+        "before": {
+          "atSite": [
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:913:64"
+            }
+          ],
+          "withinOwner": [
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:895:42"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:896:50"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:896:93"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:898:44"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:900:62"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:906:143"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:913:64"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:914:46"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:914:89"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/expressionToTypeNode.ts:917:38"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:917:38"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:920:41"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:932:45"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:934:46"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:936:60"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/expressionToTypeNode.ts:944:37"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:950:70"
+            },
+            {
+              "kind": "NotYet",
+              "phase": "lowering",
+              "reason": "a value of type PrimitiveLiteral",
+              "where": "src/compiler/expressionToTypeNode.ts:944:21"
+            },
+            {
+              "kind": "Boundary",
+              "phase": "lowering",
+              "reason": "failed statement; state rolled back; continued at next statement or declaration",
+              "where": "src/compiler/expressionToTypeNode.ts:893:9"
+            }
+          ]
+        },
+        "after": {
+          "atSite": [
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:913:56"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:913:66"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:913:108"
+            }
+          ],
+          "withinOwner": [
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:895:42"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:896:50"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:896:93"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:898:44"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:900:62"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:906:143"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:913:56"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:913:66"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:913:108"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:914:46"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:914:89"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/expressionToTypeNode.ts:917:38"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:917:38"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:920:41"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:932:45"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:934:46"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:936:60"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "a cast the runtime can't check",
+              "where": "src/compiler/expressionToTypeNode.ts:944:37"
+            },
+            {
+              "kind": "Refused",
+              "phase": "refusal_scan",
+              "reason": "an object refinement using an open numeric enum as a literal tag",
+              "where": "src/compiler/expressionToTypeNode.ts:950:70"
+            },
+            {
+              "kind": "NotYet",
+              "phase": "lowering",
+              "reason": "a value of type PrimitiveLiteral",
+              "where": "src/compiler/expressionToTypeNode.ts:944:21"
+            },
+            {
+              "kind": "Boundary",
+              "phase": "lowering",
+              "reason": "failed statement; state rolled back; continued at next statement or declaration",
+              "where": "src/compiler/expressionToTypeNode.ts:893:9"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

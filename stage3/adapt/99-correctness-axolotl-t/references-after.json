@@ -1,0 +1,60 @@
+{
+  "ts": "6.0.3",
+  "groups": 1,
+  "rows": [
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 344,
+      "definition": true,
+      "text": "export function type<T>(value: unknown): asserts value is T;"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 345,
+      "definition": true,
+      "text": "export function type(_value: unknown) {}"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 809,
+      "definition": false,
+      "text": "type<TypeMapper>(this)"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 2233,
+      "definition": false,
+      "text": "Debug.type<DeclarationWithTypeParameters>(node)"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 2247,
+      "definition": false,
+      "text": "Debug.type<DeclarationWithTypeParameterChildren>(node)"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 12034,
+      "definition": false,
+      "text": "Debug.type<PrimitiveLiteral>(node)"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 12068,
+      "definition": false,
+      "text": "Debug.type<HasInferredType>(node)"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "line": 813,
+      "definition": false,
+      "text": "Debug.type<ModuleResolutionHost>(host)"
+    },
+    {
+      "file": "src/compiler/transformers/declarations/diagnostics.ts",
+      "line": 672,
+      "definition": false,
+      "text": "Debug.type<WithIsolatedDeclarationDiagnostic>(node)"
+    }
+  ]
+}

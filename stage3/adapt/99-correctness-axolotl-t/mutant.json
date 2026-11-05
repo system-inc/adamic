@@ -1,0 +1,8 @@
+{
+  "mutant": true,
+  "status": "red",
+  "expected": "reject a label whose antecedent is an iterable object rather than an array",
+  "result": {
+    "returned": "\nBranch  \n"
+  }
+}

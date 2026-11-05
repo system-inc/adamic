@@ -1,0 +1,22 @@
+{
+  "sourceFiles": 711,
+  "changedSources": [
+    "src/compiler/debug.ts",
+    "src/compiler/expressionToTypeNode.ts"
+  ],
+  "publicDeclarations": [
+    {
+      "file": "typescript.d.ts",
+      "bytes": 593502,
+      "sha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+      "identical": true
+    },
+    {
+      "file": "tsserverlibrary.d.ts",
+      "bytes": 866,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+      "identical": true
+    }
+  ],
+  "witnessIdentical": true
+}

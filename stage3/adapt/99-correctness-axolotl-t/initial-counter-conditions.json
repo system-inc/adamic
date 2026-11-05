@@ -1,0 +1,78 @@
+[
+  {
+    "id": "CW144",
+    "condition": "typeof this.source === \"object\" && this.source !== null && \"__debugTypeToString\" in this.source && typeof (this.source as any).__debugTypeToString === \"function\""
+  },
+  {
+    "id": "CW145",
+    "condition": "typeof this.target === \"object\" && this.target !== null && \"__debugTypeToString\" in this.target && typeof (this.target as any).__debugTypeToString === \"function\""
+  },
+  {
+    "id": "CW148",
+    "condition": "typeof s === \"object\" && s !== null && \"__debugTypeToString\" in s && typeof (s as any).__debugTypeToString === \"function\""
+  },
+  {
+    "id": "CW149",
+    "condition": "typeof value === \"object\" && value !== null && \"__debugTypeToString\" in value && typeof (value as any).__debugTypeToString === \"function\""
+  },
+  {
+    "id": "CW150",
+    "condition": "typeof this.mapper1 === \"object\" && this.mapper1 !== null && \"__debugToString\" in this.mapper1 && typeof (this.mapper1 as any).__debugToString === \"function\""
+  },
+  {
+    "id": "CW151",
+    "condition": "typeof this.mapper2 === \"object\" && this.mapper2 !== null && \"__debugToString\" in this.mapper2 && typeof (this.mapper2 as any).__debugToString === \"function\""
+  },
+  {
+    "id": "CW146-array",
+    "condition": "Array.isArray(values)"
+  },
+  {
+    "id": "CW146-element",
+    "condition": "typeof value === \"object\" && value !== null && \"__debugTypeToString\" in value && typeof (value as any).__debugTypeToString === \"function\""
+  },
+  {
+    "id": "CW147-array",
+    "condition": "values === undefined || Array.isArray(values)"
+  },
+  {
+    "id": "CW147-element",
+    "condition": "typeof value === \"object\" && value !== null && \"__debugTypeToString\" in value && typeof (value as any).__debugTypeToString === \"function\""
+  },
+  {
+    "id": "CW143",
+    "condition": "sourceFile.kind === SyntaxKind.SourceFile"
+  },
+  {
+    "id": "CW154",
+    "condition": "\"antecedent\" in f && (f.antecedent === undefined || Array.isArray(f.antecedent))"
+  },
+  {
+    "id": "DeclarationWithTypeParameterChildren",
+    "condition": "node.kind === SyntaxKind.CallSignature || node.kind === SyntaxKind.ConstructSignature || node.kind === SyntaxKind.MethodSignature || node.kind === SyntaxKind.IndexSignature || node.kind === SyntaxKind.FunctionType || node.kind === SyntaxKind.ConstructorType || node.kind === SyntaxKind.JSDocFunctionType || node.kind === SyntaxKind.ClassDeclaration || node.kind === SyntaxKind.ClassExpression || node.kind === SyntaxKind.InterfaceDeclaration || node.kind === SyntaxKind.TypeAliasDeclaration || node.kind === SyntaxKind.JSDocTemplateTag || node.kind === SyntaxKind.FunctionDeclaration || node.kind === SyntaxKind.MethodDeclaration || node.kind === SyntaxKind.Constructor || node.kind === SyntaxKind.GetAccessor || node.kind === SyntaxKind.SetAccessor || node.kind === SyntaxKind.FunctionExpression || node.kind === SyntaxKind.ArrowFunction"
+  },
+  {
+    "id": "DeclarationWithTypeParameters",
+    "condition": "node.kind === SyntaxKind.CallSignature || node.kind === SyntaxKind.ConstructSignature || node.kind === SyntaxKind.MethodSignature || node.kind === SyntaxKind.IndexSignature || node.kind === SyntaxKind.FunctionType || node.kind === SyntaxKind.ConstructorType || node.kind === SyntaxKind.JSDocFunctionType || node.kind === SyntaxKind.ClassDeclaration || node.kind === SyntaxKind.ClassExpression || node.kind === SyntaxKind.InterfaceDeclaration || node.kind === SyntaxKind.TypeAliasDeclaration || node.kind === SyntaxKind.JSDocTemplateTag || node.kind === SyntaxKind.FunctionDeclaration || node.kind === SyntaxKind.MethodDeclaration || node.kind === SyntaxKind.Constructor || node.kind === SyntaxKind.GetAccessor || node.kind === SyntaxKind.SetAccessor || node.kind === SyntaxKind.FunctionExpression || node.kind === SyntaxKind.ArrowFunction || node.kind === SyntaxKind.JSDocCallbackTag || node.kind === SyntaxKind.JSDocTypedefTag || node.kind === SyntaxKind.JSDocSignature"
+  },
+  {
+    "id": "HasInferredType",
+    "condition": "node.kind === SyntaxKind.Parameter || node.kind === SyntaxKind.PropertySignature || node.kind === SyntaxKind.PropertyDeclaration || node.kind === SyntaxKind.BindingElement || node.kind === SyntaxKind.PropertyAccessExpression || node.kind === SyntaxKind.ElementAccessExpression || node.kind === SyntaxKind.BinaryExpression || node.kind === SyntaxKind.VariableDeclaration || node.kind === SyntaxKind.ExportAssignment || node.kind === SyntaxKind.PropertyAssignment || node.kind === SyntaxKind.ShorthandPropertyAssignment || node.kind === SyntaxKind.JSDocParameterTag || node.kind === SyntaxKind.JSDocPropertyTag"
+  },
+  {
+    "id": "PrimitiveLiteral",
+    "condition": "node.kind === SyntaxKind.TrueKeyword || node.kind === SyntaxKind.FalseKeyword || node.kind === SyntaxKind.NumericLiteral || node.kind === SyntaxKind.StringLiteral || node.kind === SyntaxKind.NoSubstitutionTemplateLiteral || node.kind === SyntaxKind.BigIntLiteral || (node.kind === SyntaxKind.PrefixUnaryExpression && (((node as any).operator === SyntaxKind.PlusToken && (node as any).operand.kind === SyntaxKind.NumericLiteral) || ((node as any).operator === SyntaxKind.MinusToken && ((node as any).operand.kind === SyntaxKind.NumericLiteral || (node as any).operand.kind === SyntaxKind.BigIntLiteral))))"
+  },
+  {
+    "id": "ArrowFunction | FunctionExpression",
+    "condition": "node.kind === SyntaxKind.ArrowFunction || node.kind === SyntaxKind.FunctionExpression"
+  },
+  {
+    "id": "WithIsolatedDeclarationDiagnostic",
+    "condition": "node.kind === SyntaxKind.GetAccessor || node.kind === SyntaxKind.SetAccessor || node.kind === SyntaxKind.ShorthandPropertyAssignment || node.kind === SyntaxKind.SpreadAssignment || node.kind === SyntaxKind.ComputedPropertyName || node.kind === SyntaxKind.ArrayLiteralExpression || node.kind === SyntaxKind.SpreadElement || node.kind === SyntaxKind.FunctionDeclaration || node.kind === SyntaxKind.FunctionExpression || node.kind === SyntaxKind.ArrowFunction || node.kind === SyntaxKind.MethodDeclaration || node.kind === SyntaxKind.ConstructSignature || node.kind === SyntaxKind.BindingElement || node.kind === SyntaxKind.VariableDeclaration || node.kind === SyntaxKind.PropertyDeclaration || node.kind === SyntaxKind.Parameter || node.kind === SyntaxKind.PropertyAssignment || node.kind === SyntaxKind.ClassExpression"
+  },
+  {
+    "id": "ModuleResolutionHost",
+    "condition": "typeof host.readFile === \"function\" && (!(\"getDirectories\" in host) || host.getDirectories === undefined || typeof host.getDirectories === \"function\")"
+  }
+]

@@ -1,0 +1,33 @@
+{
+  "invalidFixtureCopy": {
+    "counts": {
+      "passing": 106352,
+      "failing": 15,
+      "pending": 0
+    },
+    "baseline_diffs": [
+      "api/typescript.d.ts",
+      "project/nodeModulesImportHigher/amd/nodeModulesImportHigher.errors.txt",
+      "project/nodeModulesImportHigher/amd/nodeModulesImportHigher.json",
+      "project/nodeModulesImportHigher/node/nodeModulesImportHigher.errors.txt",
+      "project/nodeModulesImportHigher/node/nodeModulesImportHigher.json",
+      "project/nodeModulesMaxDepthExceeded/amd/maxDepthExceeded/built/root.js",
+      "project/nodeModulesMaxDepthExceeded/amd/nodeModulesMaxDepthExceeded.errors.txt",
+      "project/nodeModulesMaxDepthExceeded/amd/nodeModulesMaxDepthExceeded.json",
+      "project/nodeModulesMaxDepthExceeded/node/maxDepthExceeded/built/root.js",
+      "project/nodeModulesMaxDepthExceeded/node/nodeModulesMaxDepthExceeded.errors.txt",
+      "project/nodeModulesMaxDepthExceeded/node/nodeModulesMaxDepthExceeded.json",
+      "project/nodeModulesMaxDepthIncreased/amd/nodeModulesMaxDepthIncreased.errors.txt",
+      "project/nodeModulesMaxDepthIncreased/amd/nodeModulesMaxDepthIncreased.json",
+      "project/nodeModulesMaxDepthIncreased/node/nodeModulesMaxDepthIncreased.errors.txt",
+      "project/nodeModulesMaxDepthIncreased/node/nodeModulesMaxDepthIncreased.json"
+    ],
+    "reason": "A recursive copy ignore filter omitted tracked node_modules fixture files. The final copy excludes only the root node_modules and built directories. Final identities match main."
+  },
+  "overlappingCensusPilot": {
+    "reason": "Stopped after partial output to avoid memory contention; its results are not the final census."
+  },
+  "earlierAcceptedCandidates": {
+    "reason": "Superseded to preserve getter reads, avoid native-array restrictions, and check antecedent presence through a single object view. Final proof files describe final source."
+  }
+}

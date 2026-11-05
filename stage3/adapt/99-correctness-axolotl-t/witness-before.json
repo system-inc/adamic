@@ -1,0 +1,60 @@
+{
+  "type": "1",
+  "mappers": {
+    "simple": "1 -> 1",
+    "array": "1 -> 1",
+    "any": "1 -> any",
+    "deferred": "1 -> 1",
+    "merged": "m1: 1 -> 1\nm2: 1 -> 1",
+    "composite": "m1: 1 -> 1\nm2: 1 -> 1",
+    "function": "(witness)"
+  },
+  "deferredCalls": 1,
+  "flow": "\nBranch ─ Start  \n",
+  "source": "const value = 1;",
+  "node": "const value = 1;",
+  "accessorArray": {
+    "text": "first -> first",
+    "sourceReads": 1,
+    "targetReads": 1,
+    "events": [
+      "sources",
+      "targets",
+      "format first",
+      "format first"
+    ]
+  },
+  "arrayLike": "first -> first",
+  "accessorMethod": {
+    "text": "getter first -> first",
+    "formatterReads": 1
+  },
+  "accessorLabel": {
+    "text": "\nBranch ─ Start  \n",
+    "antecedentReads": 2
+  },
+  "assertionLevels": [
+    {
+      "level": 0,
+      "message": "Debug Failure. False expression: witness"
+    },
+    {
+      "level": 1,
+      "message": "Debug Failure. False expression: witness"
+    },
+    {
+      "level": 2,
+      "message": "Debug Failure. False expression: witness"
+    },
+    {
+      "level": 3,
+      "message": "Debug Failure. False expression: witness"
+    }
+  ],
+  "emission": {
+    "files": {
+      "emit.d.ts": "export declare const arrow: () => number;\nexport declare const fn: () => number;\n"
+    },
+    "diagnostics": []
+  }
+}

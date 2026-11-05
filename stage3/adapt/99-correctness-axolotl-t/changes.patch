@@ -1,0 +1,82 @@
+--- before/src/compiler/debug.ts
++++ after/src/compiler/debug.ts
+@@ -774,2 +774,3 @@
+-                                const sourceFile = parseNode && getSourceFileOfNode(parseNode);
+-                                text = sourceFile ? getSourceTextOfNodeFromSourceFile(sourceFile, parseNode, includeTrivia) : "";
++                                const sourceFile: Node | undefined = parseNode && getSourceFileOfNode(parseNode);
++                                if (sourceFile) Debug.assert(ts.isSourceFile(sourceFile), "Expected a source file.");
++                                text = sourceFile && parseNode ? getSourceTextOfNodeFromSourceFile(sourceFile, parseNode, includeTrivia) : "";
+@@ -812,7 +813,25 @@
+-                case TypeMapKind.Simple:
+-                    return `${(this.source as DebugType).__debugTypeToString()} -> ${(this.target as DebugType).__debugTypeToString()}`;
+-                case TypeMapKind.Array:
+-                    return zipWith<DebugType, DebugType | string, unknown>(
+-                        this.sources as readonly DebugType[],
+-                        this.targets as readonly DebugType[] || map(this.sources, () => "any"),
+-                        (s, t) => `${s.__debugTypeToString()} -> ${typeof t === "string" ? t : t.__debugTypeToString()}`,
++                case TypeMapKind.Simple: {
++                    const source = this.source;
++                    const sourceFormatter = typeof source === "object" && source !== null && "__debugTypeToString" in source ? source.__debugTypeToString : undefined;
++                    Debug.assert(typeof sourceFormatter === "function", "Expected a debug type formatter.");
++                    const sourceText = `${Reflect.apply(sourceFormatter, source, [])}`;
++                    const target = this.target;
++                    const targetFormatter = typeof target === "object" && target !== null && "__debugTypeToString" in target ? target.__debugTypeToString : undefined;
++                    Debug.assert(typeof targetFormatter === "function", "Expected a debug type formatter.");
++                    return `${sourceText} -> ${Reflect.apply(targetFormatter, target, [])}`;
++                }
++                case TypeMapKind.Array: {
++                    const sources = this.sources;
++                    const targets = this.targets;
++                    return zipWith<Type, Type | string, unknown>(
++                        sources,
++                        targets || map(this.sources, () => "any"),
++                        (s, t) => {
++                            const sFormatter = typeof s === "object" && s !== null && "__debugTypeToString" in s ? s.__debugTypeToString : undefined;
++                            Debug.assert(typeof sFormatter === "function", "Expected a debug type formatter.");
++                            const sourceText = `${Reflect.apply(sFormatter, s, [])}`;
++                            if (targets === undefined && typeof t === "string") return `${sourceText} -> ${t}`;
++                            const tFormatter = typeof t === "object" && t !== null && "__debugTypeToString" in t ? t.__debugTypeToString : undefined;
++                            Debug.assert(typeof tFormatter === "function", "Expected a debug type formatter.");
++                            return `${sourceText} -> ${Reflect.apply(tFormatter, t, [])}`;
++                        },
+@@ -819,0 +839 @@
++                }
+@@ -824 +844,9 @@
+-                        (s, t) => `${(s as DebugType).__debugTypeToString()} -> ${(t() as DebugType).__debugTypeToString()}`,
++                        (s, t) => {
++                            const sFormatter = typeof s === "object" && s !== null && "__debugTypeToString" in s ? s.__debugTypeToString : undefined;
++                            Debug.assert(typeof sFormatter === "function", "Expected a debug type formatter.");
++                            const sourceText = `${Reflect.apply(sFormatter, s, [])}`;
++                            const target = t();
++                            const targetFormatter = typeof target === "object" && target !== null && "__debugTypeToString" in target ? target.__debugTypeToString : undefined;
++                            Debug.assert(typeof targetFormatter === "function", "Expected a debug type formatter.");
++                            return `${sourceText} -> ${Reflect.apply(targetFormatter, target, [])}`;
++                        },
+@@ -827,3 +855,11 @@
+-                case TypeMapKind.Composite:
+-                    return `m1: ${(this.mapper1 as unknown as DebugTypeMapper).__debugToString().split("\n").join("\n    ")}
+-m2: ${(this.mapper2 as unknown as DebugTypeMapper).__debugToString().split("\n").join("\n    ")}`;
++                case TypeMapKind.Composite: {
++                    const mapper1: object = this.mapper1;
++                    const mapper1Formatter = typeof mapper1 === "object" && mapper1 !== null && "__debugToString" in mapper1 ? mapper1.__debugToString : undefined;
++                    Debug.assert(typeof mapper1Formatter === "function", "Expected a debug mapper formatter.");
++                    const text1 = `${Reflect.apply(mapper1Formatter, mapper1, []).split("\n").join("\n    ")}`;
++                    const mapper2: object = this.mapper2;
++                    const mapper2Formatter = typeof mapper2 === "object" && mapper2 !== null && "__debugToString" in mapper2 ? mapper2.__debugToString : undefined;
++                    Debug.assert(typeof mapper2Formatter === "function", "Expected a debug mapper formatter.");
++                    return `m1: ${text1}
++m2: ${Reflect.apply(mapper2Formatter, mapper2, []).split("\n").join("\n    ")}`;
++                }
+@@ -942 +978,6 @@
+-            return !!(f.flags & FlowFlags.Label) && !!(f as FlowLabel).antecedent;
++            if (!(f.flags & FlowFlags.Label)) return false;
++            const value: object = f;
++            const hasAntecedentList = "antecedent" in value;
++            const antecedent = hasAntecedentList ? value.antecedent : undefined;
++            Debug.assert(hasAntecedentList && (antecedent === undefined || Array.isArray(antecedent)), "Expected label antecedents.");
++            return antecedent !== undefined;
+--- before/src/compiler/expressionToTypeNode.ts
++++ after/src/compiler/expressionToTypeNode.ts
+@@ -913 +913 @@
+-                Debug.type<ArrowFunction | FunctionExpression>(node);
++                Debug.assert(isFunctionLikeDeclaration(node) && (node.kind === SyntaxKind.ArrowFunction || node.kind === SyntaxKind.FunctionExpression), "Expected a function expression or arrow function.");
