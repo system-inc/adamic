@@ -20,11 +20,23 @@ import (
 // The storage is decided where the value is made, and it's what every slot that holds the value reads,
 // as #fsb6n82 found for a literal's tuple. A union slot is any member the value is assignable to, and
 // narrowing can pick any of them, so every such container member must read the elements as they're
-// stored, not one. Only a value made right there is judged: one lowering builds at a representation it
-// can name. A named container seen through a wider readonly slot is a ruling of its own, not made here.
+// stored, not one. An array literal is judged at the representation lowering built it with. Any other
+// value is judged at its own type, the one it was stored as when it was made, a named one included:
+// invariant-mutable lets a named number[] go where readonly (number | string)[] is held, since that slot
+// can't write, but its reads still worked the numbers as boxes and segfaulted natively, and a
+// Map<string, number> read through ReadonlyMap<string, number | string> printed undefined (#3vsp1ds).
 
 // elementFitDepth bounds elementsSeenAs. A container reached no sooner is judged, so it fails closed.
 const elementFitDepth = 16
+
+// elementFitKey is what elementsSeenAs's answer at the top depends on, the memo's key: the value's
+// type, the slot's, how a literal stored its elements, and whether it's a literal, whose elements are
+// judged at their own sites. The walk reads nothing else, so one answer serves every site of a pair.
+type elementFitKey struct {
+	own, slot *checker.Type
+	built     ir.Type
+	shallow   bool
+}
 
 // elementMismatch is where a container's elements are stored otherwise than a slot reads them: the two
 // element types, or which side Adamic can't name a representation for, or neither when the walk went
@@ -58,12 +70,23 @@ func (l *lowering) elementsHeldOtherwise(node *ast.Node, slot *checker.Type) str
 			return "a " + l.checker.TypeToString(l.checker.GetTypeAtLocation(node)) + " where " + l.checker.TypeToString(slot) + " goes, its elements stored in a way Adamic can't name here"
 		}
 		built = element
-	case !l.freshValue(node):
-		// An object literal's fields are values at their own slots, and a named value isn't made here.
+	case node.Kind == ast.KindObjectLiteralExpression:
+		// An object literal's fields are values at their own slots, each judged there.
+		return ""
+	}
+	if !l.slotSet(node) && patternInitializer(node) {
 		return ""
 	}
 	own := l.checker.GetTypeAtLocation(node)
-	found := l.elementsSeenAs(own, slot, built, node.Kind == ast.KindArrayLiteralExpression, 0, map[[2]*checker.Type]bool{})
+	key := elementFitKey{own: own, slot: slot, built: built, shallow: node.Kind == ast.KindArrayLiteralExpression}
+	found, answered := l.elementFits[key]
+	if !answered {
+		found = l.elementsSeenAs(own, slot, built, key.shallow, 0, map[[2]*checker.Type]bool{})
+		if l.elementFits == nil {
+			l.elementFits = map[elementFitKey]*elementMismatch{}
+		}
+		l.elementFits[key] = found
+	}
 	if found == nil {
 		return ""
 	}
@@ -75,6 +98,39 @@ func (l *lowering) elementsHeldOtherwise(node *ast.Node, slot *checker.Type) str
 		return where + ", with no representation Adamic can name for the " + found.unnamed + " elements (" + l.checker.TypeToString(found.stored) + " stored, read as " + l.checker.TypeToString(found.read) + ")"
 	}
 	return where + ": its " + l.checker.TypeToString(found.stored) + " elements are stored as " + heldName(found.held) + " and read there as " + l.checker.TypeToString(found.read) + ", held as " + heldName(found.as) + " (build it as the slot's type where it's made, or copy its elements into one)"
+}
+
+// patternInitializer is whether node is what a destructuring pattern takes apart, through parentheses
+// and as const: the initializer of a variable declaration whose name is a binding pattern with no type
+// of its own, or the right side of an assignment to an array or object literal pattern. tsc gives such
+// a value the pattern's type as its contextual type, every element any ([any, any] for
+// const [key, value] = entry) or the targets' declared types ([number | string, number | string] for
+// [first, second] = tuple), but no slot holds the value at it: each element is read where the value
+// is held and written into its own binding or target, which judges it there (#fsb6n82's swap). An
+// annotated declaration's type is a slot its bindings read through, so it's still judged.
+func patternInitializer(node *ast.Node) bool {
+	for node.Parent != nil {
+		parent := node.Parent
+		switch parent.Kind {
+		case ast.KindParenthesizedExpression:
+			node = parent
+			continue
+		case ast.KindAsExpression:
+			if as := parent.AsAsExpression(); as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+				node = parent
+				continue
+			}
+		case ast.KindVariableDeclaration:
+			declaration := parent.AsVariableDeclaration()
+			return declaration.Initializer == node && declaration.Type == nil && ast.IsBindingPattern(declaration.Name())
+		case ast.KindBinaryExpression:
+			binary := parent.AsBinaryExpression()
+			target := ast.SkipParentheses(binary.Left)
+			return binary.OperatorToken.Kind == ast.KindEqualsToken && binary.Right == node && (target.Kind == ast.KindArrayLiteralExpression || target.Kind == ast.KindObjectLiteralExpression)
+		}
+		return false
+	}
+	return false
 }
 
 // elementsSeenAs finds, in a value of type stored seen as type viewed, a container whose elements (an
@@ -116,6 +172,12 @@ func (l *lowering) elementsSeenAs(stored *checker.Type, viewed *checker.Type, bu
 						literal := built != 0 && index == 0 && l.checker.IsArrayType(container)
 						if storedArguments[index] == viewedArguments[index] && !literal {
 							// One type is held one way, whatever it is.
+							continue
+						}
+						if !literal && storedArguments[index].Flags()&(checker.TypeFlagsNever|checker.TypeFlagsAny) != 0 {
+							// A container of never holds no element to read otherwise (tsc's emptyArray, a
+							// never[] seen as readonly (readonly number[])[]), and an any element is judged
+							// where any meets a typed slot (any_relations.go), not here.
 							continue
 						}
 						held, heldKnown := l.kept(storedArguments[index])
