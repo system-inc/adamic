@@ -3363,32 +3363,38 @@ func TestARuntimeArchivesKeyMovesWithItsImportClosureAlone(t *testing.T) {
 }
 
 // A lean caller opens the lean recipe to its builds only by naming its census (#gr5y0yf item 1, Node's condition 1), and
-// a census it names is a test its package's test binary runs on the line: a top-level func Test<Name>(t *testing.T) in
-// a _test.go file of that package, one go builds for linux/amd64. An entry naming none fails closed, to the whole recipe
-// (leanRecipeTaken), and so does any package that isn't a lean caller. Mutants that each fail it: an entry naming a
-// census that doesn't exist; one naming a census in a file built for another platform; one naming a function that
-// isn't a test; leanRecipeTaken true for a caller naming no census.
+// every test its census names is one its package's test binary runs on the line: a top-level func Test<Name>(t
+// *testing.T) in a _test.go file of that package, one go builds for linux/amd64. An entry naming none fails closed, to
+// the whole recipe (leanRecipeTaken), and so does any package that isn't a lean caller. runtimeproducts' census names
+// both its tests, its build's reach and its path's reads, since either alone leaves the gate open without the other's
+// proof. Mutants that each fail it: an entry naming a census test that doesn't exist, or a renamed one, as
+// TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds renamed in census_test.go; one naming a test in a file built for
+// another platform; one naming a function that isn't a test; runtimeproducts' census without its path's test;
+// leanRecipeTaken true for a caller naming no census test.
 func TestEveryLeanCallersCensusIsATestOfItsPackage(t *testing.T) {
 	t.Parallel()
 	root := repositoryRootForTest(t)
-	named := 0
 	for _, caller := range leanCallers {
-		if caller.census == (leanCensus{}) {
+		if len(caller.census.tests) == 0 {
 			if leanRecipeTaken(modulePath + "/" + caller.pkg) {
 				t.Errorf("%s names no census and takes the lean recipe", caller.pkg)
 			}
 			continue
 		}
-		named++
-		if why := censusMissing(root, caller.census); why != "" {
-			t.Errorf("%s names its census %s %s, which %s", caller.pkg, caller.census.pkg, caller.census.test, why)
+		for _, test := range caller.census.tests {
+			if why := censusMissing(root, caller.census.pkg, test); why != "" {
+				t.Errorf("%s names its census %s %s, which %s", caller.pkg, caller.census.pkg, test, why)
+			}
 		}
 		if !leanRecipeTaken(modulePath + "/" + caller.pkg) {
 			t.Errorf("%s names its census and keeps the whole recipe", caller.pkg)
 		}
 	}
-	if named == 0 {
-		t.Error("no lean caller names a census; want runtimeproducts' TestTheRuntimeBuildReachesOnlyItsDeclaredFiles")
+	runtimeproducts := slices.IndexFunc(leanCallers, func(reviewed leanCaller) bool { return reviewed.pkg == "internal/native/runtimeproducts" })
+	for _, want := range []string{"TestTheRuntimeBuildReachesOnlyItsDeclaredFiles", "TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds"} {
+		if runtimeproducts < 0 || !slices.Contains(leanCallers[runtimeproducts].census.tests, want) {
+			t.Errorf("runtimeproducts' census doesn't name %s", want)
+		}
 	}
 	if !leanRecipeTaken("") || leanRecipeTaken(modulePath+"/stage1/cohere/lint") {
 		t.Error("buildcache's own build must take the lean recipe, and a package that isn't a lean caller never")
@@ -3398,29 +3404,29 @@ func TestEveryLeanCallersCensusIsATestOfItsPackage(t *testing.T) {
 	write(t, fixture, "census/census_test.go", "package census\n\nimport \"testing\"\n\nfunc TestTheCensus(t *testing.T) {}\n\nfunc helperCensus(t *testing.T) {}\n")
 	write(t, fixture, "census/darwin_test.go", "//go:build darwin\n\npackage census\n\nimport \"testing\"\n\nfunc TestOnTheMac(t *testing.T) {}\n")
 	write(t, fixture, "census/census.go", "package census\n\nimport \"testing\"\n\nfunc TestInTheLibrary(t *testing.T) {}\n")
-	if why := censusMissing(fixture, leanCensus{pkg: "census", test: "TestTheCensus"}); why != "" {
+	if why := censusMissing(fixture, "census", "TestTheCensus"); why != "" {
 		t.Errorf("a census that runs: %s", why)
 	}
 	for _, missing := range []string{"TestNoSuchCensus", "TestOnTheMac", "helperCensus", "TestInTheLibrary"} {
-		if censusMissing(fixture, leanCensus{pkg: "census", test: missing}) == "" {
+		if censusMissing(fixture, "census", missing) == "" {
 			t.Errorf("%s was taken for a census its package runs", missing)
 		}
 	}
-	if censusMissing(fixture, leanCensus{pkg: "nowhere", test: "TestTheCensus"}) == "" {
+	if censusMissing(fixture, "nowhere", "TestTheCensus") == "" {
 		t.Error("a census in a package that isn't there was taken")
 	}
 }
 
-// censusMissing says why census isn't a test its package's test binary runs on the line (linux/amd64), under root, or ""
-// when it is one: a func with census.test's name, no receiver, no type parameters and one *testing.T parameter, in a
-// _test.go file of census.pkg's directory that go builds there.
-func censusMissing(root string, census leanCensus) string {
-	directory := filepath.Join(root, filepath.FromSlash(census.pkg))
+// censusMissing says why test, one a census names, isn't a test pkg's test binary runs on the line (linux/amd64), under
+// root, or "" when it is one: a func with test's name, no receiver, no type parameters and one *testing.T parameter, in
+// a _test.go file of pkg's directory that go builds there.
+func censusMissing(root, pkg, test string) string {
+	directory := filepath.Join(root, filepath.FromSlash(pkg))
 	entries, err := os.ReadDir(directory)
 	if err != nil {
 		return "is in no package there: " + err.Error()
 	}
-	if !strings.HasPrefix(census.test, "Test") {
+	if !strings.HasPrefix(test, "Test") {
 		return "isn't named as a test"
 	}
 	line := build.Default
@@ -3438,7 +3444,7 @@ func censusMissing(root string, census leanCensus) string {
 		}
 		for _, declaration := range file.Decls {
 			function, ok := declaration.(*ast.FuncDecl)
-			if !ok || function.Name.Name != census.test || function.Recv != nil || function.Type.TypeParams != nil {
+			if !ok || function.Name.Name != test || function.Recv != nil || function.Type.TypeParams != nil {
 				continue
 			}
 			parameters := function.Type.Params.List

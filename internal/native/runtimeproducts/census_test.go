@@ -832,10 +832,10 @@ func repositoryRoot(t *testing.T) string {
 // An archive's build reaches nothing of internal/native but the files its key declares (runtimeFiles), and no package
 // of the tree but buildcache's slice, so its lean recipe keys all the code that makes it and no compiler file (Node's
 // rails on #earlycut): what native.RuntimeRequest.Build reaches, every init and initializer that writes what it reads or
-// calls anything, no environment but runtimeEnvironment's, and nothing the census can't follow. It's the census
-// buildcache's leanCallers names for this package, the gate that opens the lean recipe, runtimeproducts' import closure,
-// to an archive (#gr5y0yf item 1), with TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds holding the path to it. Mutants:
-// jobserver.go left out of runtimeFiles; an environment read planted in compileRuntime.
+// calls anything, no environment but runtimeEnvironment's, and nothing the census can't follow. It's one of the two
+// tests buildcache's leanCallers names as this package's census, the gate that opens the lean recipe, runtimeproducts'
+// import closure, to an archive (#gr5y0yf item 1), with TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds, the other,
+// holding the path to it. Mutants: jobserver.go left out of runtimeFiles; an environment read planted in compileRuntime.
 func TestTheRuntimeBuildReachesOnlyItsDeclaredFiles(t *testing.T) {
 	t.Parallel()
 	root := repositoryRoot(t)
@@ -876,8 +876,10 @@ func TestProduct_RuntimeProductsCensusExports(t *testing.T) {
 // its reason, and nothing the census can't follow. clang's environment is toolchain.Env's, buildcache's slice.
 // Each package of the path is held by a census of its own from the entries buildPath names, and a reach into another
 // package must be one of that package's entries, or a keyedValues function, whose result the key holds. Its recipe is
-// the import closure (buildcache's leanRecipeOf), so declared is each package whole. Mutants that each fail it: an
-// os.Getenv planted in Build; Build reading another package's variable; native's entries left without UseJobserver.
+// the import closure (buildcache's leanRecipeOf), so declared is each package whole. It's the other test buildcache's
+// leanCallers names as this package's census, beside TestTheRuntimeBuildReachesOnlyItsDeclaredFiles. Mutants that each
+// fail it: an os.Getenv planted in Build; Build reading another package's variable; native's entries left without
+// UseJobserver.
 func TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds(t *testing.T) {
 	t.Parallel()
 	root := repositoryRoot(t)
