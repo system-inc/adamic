@@ -69,6 +69,7 @@ var localFields = map[string]localField{
 	"Await.Site":                      {why: "a suspension site, numbered for its diagnostics"},
 	"Yield.Site":                      {why: "a suspension site, numbered for its diagnostics"},
 	"IterableOf.Site":                 {why: "a generator argument's site, numbered for its diagnostics"},
+	"Concat.Site":                     {why: "a template's or concatenation's site, numbered for its diagnostics"},
 	"ArrayFrom.CallbackType":          {why: "the checker's id of a callback's type"},
 	"ArrayMap.CallbackType":           {why: "the checker's id of a callback's type"},
 	"ArrayReduce.CallbackType":        {why: "the checker's id of a callback's type"},
