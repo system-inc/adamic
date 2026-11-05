@@ -25,7 +25,7 @@ var asyncReviewCases = []struct{ path, output, reason, location string }{
 	{"accepted/branch.a", "value:7|caught:branch\n", "", ""},
 	{"accepted/closure.a", "seed1:3|seed1:caught:closure\n", "", ""},
 	{"accepted/method.a", "worker2:4|worker2:caught:method\n", "", ""},
-	{"accepted/concurrent.a", "one:start\ntwo:start\none:resume\ntwo:resume\none:ok|caught:two\n", "", ""},
+	{"accepted/concurrent_plain.a", "one:start\ntwo:start\none:resume\ntwo:resume\none:ok\ntwo:ok\n", "", ""},
 	{"accepted/recursion.a", "2:1:leaf|caught:recursive\n", "", ""},
 	{"accepted/snapshot_reference.a", "before1right\n", "", ""},
 	{"refused/unawaited_rejection.a", "done\n", "a promise not awaited in the same function", "unawaited_rejection.a:5:"},
@@ -34,6 +34,10 @@ var asyncReviewCases = []struct{ path, output, reason, location string }{
 	{"refused/hidden_return.a", "number\n", "async return of a non-primitive structurally typed value", "hidden_return.a:4:"},
 	{"refused/modules/main.a", "a1\nb\na2\n", "top-level await outside the entry module", "suspended.a:2:"},
 	{"refused/maybe_boolean_and.a", "undefined\n", "await inside maybe-boolean logical operands", "maybe_boolean_and.a:3:"},
+	// Its task makes strings outside a try, each of which can throw past V8's longest string
+	// (ir.StringLengthMayThrow), so it may reject, and awaiting the first task's promise can leave the
+	// second's rejection unobserved (#c3bk0fp). accepted/concurrent_plain.a keeps the interleaving.
+	{"refused/concurrent.a", "one:start\ntwo:start\none:resume\ntwo:resume\none:ok|caught:two\n", "a promise not awaited in the same function before an escaping completion", "concurrent.a:14:"},
 }
 
 func init() {
@@ -105,8 +109,12 @@ func TestAsyncReviewLoop(t *testing.T)       { t.Parallel(); asyncReview(t, "acc
 func TestAsyncReviewBranch(t *testing.T)     { t.Parallel(); asyncReview(t, "accepted/branch.a") }
 func TestAsyncReviewClosure(t *testing.T)    { t.Parallel(); asyncReview(t, "accepted/closure.a") }
 func TestAsyncReviewMethod(t *testing.T)     { t.Parallel(); asyncReview(t, "accepted/method.a") }
-func TestAsyncReviewConcurrent(t *testing.T) { t.Parallel(); asyncReview(t, "accepted/concurrent.a") }
-func TestAsyncReviewRecursion(t *testing.T)  { t.Parallel(); asyncReview(t, "accepted/recursion.a") }
+func TestAsyncReviewConcurrent(t *testing.T) { t.Parallel(); asyncReview(t, "refused/concurrent.a") }
+func TestAsyncReviewConcurrentPlain(t *testing.T) {
+	t.Parallel()
+	asyncReview(t, "accepted/concurrent_plain.a")
+}
+func TestAsyncReviewRecursion(t *testing.T) { t.Parallel(); asyncReview(t, "accepted/recursion.a") }
 func TestAsyncReviewSnapshotReference(t *testing.T) {
 	t.Parallel()
 	asyncReview(t, "accepted/snapshot_reference.a")
@@ -148,7 +156,7 @@ func asyncReviewProgram(t *testing.T, name string) (string, run) {
 
 func TestAsyncReviewNativeSuspensionRemovedMutant(t *testing.T) {
 	t.Parallel()
-	control, source := asyncReviewProgram(t, "concurrent")
+	control, source := asyncReviewProgram(t, "concurrent_plain")
 	suspension := regexp.MustCompile(`adamic_async_await\(base, [^;]+\);`)
 	location := suspension.FindStringIndex(control)
 	if location == nil {
@@ -168,7 +176,7 @@ func TestAsyncReviewNativeSuspensionRemovedMutant(t *testing.T) {
 
 func TestAsyncReviewJavaScriptSuspensionRemovedMutant(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_review/accepted/concurrent.a"))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_review/accepted/concurrent_plain.a"))
 	if err != nil {
 		t.Fatal(err)
 	}
