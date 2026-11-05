@@ -326,17 +326,16 @@ func (l *lowering) generatorParameter(call ir.Call, position int, of ir.Iterable
 	return nil
 }
 
-// generatorView admits a view a generator feeds, a collection's iterator feeding it too or not, and
-// rewrites its loop into the dispatch, or stops at what S2c-1 doesn't build: a view held as a union
-// (Iterable<string>), and one fed by more than one generator function. The step itself resumes through the frame's own code (adamic_generator_next
+// generatorView admits a view a generator feeds, a collection's iterator feeding it too or not, held
+// as an object or as a union (Iterable<string>), and rewrites its loop into the dispatch, or stops at
+// what S2c-1 doesn't build: a view fed by more than one generator function. The step itself resumes
+// through the frame's own code (adamic_generator_next
 // calls generator->code->resume, and JavaScript's next() is the generator's own), so several
 // functions could share it; what can't is GeneratorNext's one Function, whose ResumeMayThrow says
 // whether the step's caller tests for a throw (Lower's seam).
 func (l *lowering) generatorView(index int, generators []iterableOrigin) error {
 	view := l.iterableViews[index]
 	switch {
-	case view.iterated.Type() == ir.Union:
-		return l.notYet(view.where, "a view held as a union (Iterable<string>) that a generator feeds, whose arm isn't built yet (#qk8rztp S2c-1)")
 	case view.holder < 0 || view.function < 0:
 		return fmt.Errorf("lower: compiler bug: the iterable view at %s has no loop to dispatch", l.program.Where(view.where))
 	}
@@ -402,6 +401,14 @@ func (l *lowering) dispatchView(view iterableView, function int) error {
 			}},
 		}
 		loop.Body = append([]ir.Statement{ir.Declare{Local: item.Local}, dispatch}, loop.Body[3:]...)
+		if view.iterated.Type() == ir.Union {
+			// An Iterable<string> slot is a union, which S2b-1b's arm unboxes through Narrow's checked
+			// Object arm, whose tag test would stop on a generator. Here the dispatch is that test: the
+			// unbox is a plain pointer cast of the union's reference, whose heap kind IsGenerator and
+			// IsCollectionIterator read, and a string or anything else reaches the loud default
+			// (Lower's (e) on #qk8rztp). Narrow's Object arm stays as it is for every other caller.
+			declared.Value = ir.Narrow{Value: view.iterated, To: ir.Object}
+		}
 		rewritten = true
 		return ir.Block{Body: []ir.Statement{declared, loop}, Closes: view.holder + 1}
 	}
