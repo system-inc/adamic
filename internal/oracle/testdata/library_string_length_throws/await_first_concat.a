@@ -1,0 +1,6 @@
+// Language's c7 (#c3bk0fp): the await first in the template consumes the promise before the
+// concatenation can throw, so the program lowers and agrees with Node.
+async function later(text: string): Promise<string> { return `${text}!`; }
+const big = "x";
+async function run(): Promise<string> { const first = later("a"); return `${await first}${big}`; }
+console.log(await run());
