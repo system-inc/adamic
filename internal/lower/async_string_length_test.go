@@ -10,8 +10,8 @@ import (
 // that makes one may reject, and the promise consumption proof keeps that edge (Adamic's ruling on
 // #c3bk0fp). word below rejects only that way. Two of its promises pending, awaited in one template,
 // stop as NotYet named for the string-length limit, at word's template: if the first await throws,
-// the second's rejection goes unobserved. One pending promise awaited first in a template still lowers,
-// since nothing in the statement can throw before that await observes it. A template between a
+// the second's rejection goes unobserved. One pending promise awaited first in a template still lowers:
+// lowering gives a nested await a declaration of its own before the proof runs, which consumes it. A template between a
 // pending promise and its await stops the same way, at that template. A callee that throws for
 // another reason, with nothing else between, keeps the general stop.
 func TestAsyncStringLengthConsumption(t *testing.T) {
@@ -52,30 +52,36 @@ func TestAsyncStringLengthConsumption(t *testing.T) {
 // in one statement, and in each something can run code or throw before the second await, or before
 // the first: a concatenation after the first await, an argument or an operand between the two, a
 // condition evaluated first, a callee, a property read, a computed key, a tagged template's tag, a
-// destructuring default, a comma expression. Each stops, named for the string-length limit: being
-// first consumes the first promise only, never the statement's later awaits.
+// destructuring default, a comma expression. Each stops: named for the string-length limit where the
+// proof is what stops it, since an await consumes its own promise only, never the statement's later
+// awaits; and a computed key, a tagged template and a destructuring default stop earlier, at
+// lowering's own NotYet for each, and are pinned there, so lowering one of them shows up here.
 func TestAsyncStringLengthProbes(t *testing.T) {
 	t.Parallel()
 	const word = "async function word(text: string): Promise<string> {\n\treturn `${text}!`;\n}\n"
 	const setup = word + "const big = 'x';\nconst more = 'y';\nconst p = word('a');\nconst q = word('b');\n"
-	for _, probe := range []struct{ name, source string }{
+	for _, probe := range []struct{ name, source, want string }{
 		{"a: a concatenation between the awaits", setup + "console.log(`${await p}${big}${await q}`);\n"},
 		{"b: an argument between the awaits", setup + "function f(a: string, b: string, c: string): string {\n\treturn a + b + c;\n}\nconsole.log(f(await p, big + more, await q));\n"},
 		{"c: a binary chain", setup + "console.log((await p) + big + (await q));\n"},
 		{"d: a condition first", setup + "const flag = big === 'x';\nconsole.log(flag ? await p : `${big}${await q}`);\n"},
 		{"a1: a callee first", setup + "function show(text: string): string {\n\treturn text;\n}\nconsole.log(show(`${await p}|${await q}`));\n"},
 		{"a2: a property read first", setup + "const box = { x: 'k' };\nconsole.log(`${box.x}${await p}|${await q}`);\n"},
-		{"a3: a computed key first", setup + "const key = 'k';\nconst record = { [key]: `${await p}|${await q}` };\nconsole.log(record.k);\n"},
-		{"a4: a tagged template's tag first", setup + "function tag(parts: TemplateStringsArray, ...values: string[]): string {\n\treturn values.join('|');\n}\nconsole.log(tag`${await p}|${await q}`);\n"},
-		{"a5: a destructuring default", setup + "const holder: { v?: string } = {};\nconst { v = `${await p}|${await q}` } = holder;\nconsole.log(v);\n"},
+		{"a3: a computed key first", setup + "const key = 'k';\nconst record = { [key]: `${await p}|${await q}` };\nconsole.log(record.k);\n", "a computed field name"},
+		{"a4: a tagged template's tag first", setup + "function tag(parts: TemplateStringsArray, ...values: string[]): string {\n\treturn values.join('|');\n}\nconsole.log(tag`${await p}|${await q}`);\n", "a value of type TemplateStringsArray"},
+		{"a5: a destructuring default", setup + "const holder: { v?: string } = {};\nconst { v = `${await p}|${await q}` } = holder;\nconsole.log(v);\n", "a destructured name that isn't plain"},
 		{"a6: a comma expression", setup + "console.log((big.length, `${await p}|${await q}`));\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSource(t, probe.source)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || notYet.What != stringLengthConsumption {
-				t.Fatalf("want NotYet %q, got %v", stringLengthConsumption, err)
+			want := probe.want
+			if want == "" {
+				want = stringLengthConsumption
+			}
+			if !errors.As(err, &notYet) || notYet.What != want {
+				t.Fatalf("want NotYet %q, got %v", want, err)
 			}
 		})
 	}
