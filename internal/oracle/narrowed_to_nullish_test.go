@@ -31,7 +31,10 @@ import (
 // backends printed undefined. So does one in a program with a write that could reach any name,
 // Object.assign in a callee (f05) or a computed key in the read's own function (f06), which the checker
 // doesn't see as a write of the name, and one of a name a number spells, an element an array method
-// writes (f07). Their controls lower and agree with Node on release native, sanitized native and the
+// writes (f07). A getter of the name stops the read whatever its flow says, since it answers each read
+// itself: one whose value changes with other state, read after a check and a call that writes nothing
+// named x (f11), and one read right after an assignment its setter takes (f12), where Node prints 4 and
+// both backends printed undefined. Their controls lower and agree with Node on release native, sanitized native and the
 // JavaScript backend: a callee that doesn't write the binding (n02), a local no other function writes,
 // read narrowed after a call (c01), a binding narrowed to number before the call that writes it (c02,
 // narrowed.go's own road), a field the callee writes but nothing narrowed (c03), a field read with
@@ -46,7 +49,8 @@ import (
 // stop here lowers instead, printing undefined where Node prints 4. assignedJustBefore forced to answer
 // no, and c05 stops. passedAtDeclaredType's parameter test dropped, and n17 lowers. The property rule's
 // stop forced off, and f01 to f10 lower; the write that could reach any name ignored, and f05 and f06
-// lower; code between the property's assignment and its read always assumed, and c04 stops.
+// lower; code between the property's assignment and its read always assumed, and c04 stops; the getter
+// test (accessorName) dropped, and f11 and f12 lower.
 func TestNarrowedToNullishReadsArePinned(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/narrowed_to_nullish"

@@ -215,13 +215,14 @@ func (l *lowering) declaredByLibrary(symbol *ast.Symbol) bool {
 // the same way: after b.x = undefined, a call that writes b.x = 4 leaves the checker's undefined in place,
 // and String(b.x) printed undefined. A property has no declaration that keeps its writes in one function:
 // any alias of its object can write it, in any function, the read's own included (o2.x = 4 with o2 the
-// same object as o, or a recursive call back into it). So two questions, each failing closed. When the
-// read's narrowing is a plain assignment the flow walks straight back to, and nothing that can run
-// program code completes between it and the read (codeBetween), the read sees what was assigned and
-// lowers. Otherwise it stops when its name is written anywhere in the program but that assignment, or
-// the program has a write that could reach any name (propertyWritesOf), or a number spells the name:
-// t[0], o['1'] or o.NaN, whose elements an array's own methods write behind a call, as o[i] = 4 does. A
-// read through a key that isn't a literal is never narrowed.
+// same object as o, or a recursive call back into it). A getter of the name, or a program with a write
+// that could reach any name or install a getter (propertyWritesOf), stops every such read first, since
+// a getter answers each read itself. Then two questions, each failing closed. When the read's
+// narrowing is a plain assignment the flow walks straight back to, and nothing that can run program
+// code completes between it and the read (codeBetween), the read sees what was assigned and lowers.
+// Otherwise it stops when its name is written anywhere in the program but that assignment, or a number
+// spells the name: t[0], o['1'] or o.NaN, whose elements an array's own methods write behind a call,
+// as o[i] = 4 does. A read through a key that isn't a literal is never narrowed.
 func (l *lowering) narrowedNullishPropertyReadGap(node *ast.Node) error {
 	if !l.isExpression(node) || (ast.IsAssignmentTarget(node) && pureWrite(node)) {
 		return nil
@@ -244,13 +245,20 @@ func (l *lowering) narrowedNullishPropertyReadGap(node *ast.Node) error {
 			return nil // Declared to hold nothing else, as for a binding.
 		}
 	}
+	// A getter answers each read itself, so neither an assignment just before nor a missing write
+	// proves what it gives: get x() { return n > 0 ? 4 : undefined; } changes with n alone. One the
+	// program writes by name (accessorName), or one a descriptor installs (defineProperty, under
+	// everyName), stops the read whatever the flow says.
+	writes := l.propertyWritesOf()
+	if writes.everyName || l.accessorName(key.Text()) {
+		return l.notYet(node, "a read narrowed to "+absent+" of a property a call may write")
+	}
 	narrowing := l.narrowingAssignment(node)
 	if narrowing != nil && !l.codeBetween(narrowing.Parent.End(), node, nil) {
 		return nil
 	}
-	writes := l.propertyWritesOf()
 	_, notNumeric := strconv.ParseFloat(key.Text(), 64) // A name a number spells parses, NaN and Infinity among them.
-	stop := writes.everyName || notNumeric == nil
+	stop := notNumeric == nil
 	for _, target := range writes.named[key.Text()] {
 		stop = stop || target != narrowing
 	}
