@@ -1,0 +1,29 @@
+{
+  "observed_utc": "2026-11-05T20:47:10.836142+00:00",
+  "head_pid": 9441,
+  "driver_pid": 800,
+  "processes": {
+    "head": {
+      "pid": 9441,
+      "state": "Z",
+      "parent_pid": 1
+    },
+    "driver": {
+      "pid": 800,
+      "state": "Z",
+      "parent_pid": 1
+    }
+  },
+  "head_completed_timers": 3865,
+  "last_completed_timer": {
+    "file": "/workspace/adamic/stage3/census/any-members/scratch/adapted/src/compiler/utilitiesPublic.ts",
+    "where": "/workspace/adamic/stage3/census/any-members/scratch/adapted/src/compiler/utilitiesPublic.ts:1748:1",
+    "wall_seconds": 0.099087952,
+    "cpu_seconds": 0.09928899999977148
+  },
+  "last_timer_mtime_utc": "2026-11-05T20:45:21.924659+00:00",
+  "head_driver_exit_record_present": false,
+  "head_driver_end_record_present": false,
+  "cause": "Not established. Processes were found defunct after the tool wait was aborted and the environment was reannounced as starting.",
+  "goroutine_dump": "Unavailable: the process was already dead when inspected. No live stall was observed before interruption."
+}
