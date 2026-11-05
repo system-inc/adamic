@@ -1014,7 +1014,7 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 		left, right = l.concatenated(left), l.concatenated(right)
 	}
 	if operator == ast.KindPlusToken && both(ir.String) {
-		return ir.Concat{Parts: []ir.Expression{left, right}}, nil
+		return ir.Concat{Parts: []ir.Expression{left, right}, Site: l.stringSite(node)}, nil
 	}
 	if lowered, isArithmetic := arithmetic[operator]; isArithmetic && both(ir.Number) {
 		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
@@ -1226,7 +1226,7 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 			parts = append(parts, ir.StringConstant{Index: l.constant(literal)})
 		}
 	}
-	return ir.Concat{Parts: parts}, nil
+	return ir.Concat{Parts: parts, Site: l.stringSite(node)}, nil
 }
 
 func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {

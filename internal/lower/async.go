@@ -114,6 +114,13 @@ func (l *lowering) asyncSite(node *ast.Node) int {
 	return len(l.asyncSites)
 }
 
+// stringSite is a template's or a +'s diagnostic site, ir.Concat's Site: where a stop that a string
+// past V8's longest causes is reported (async_consumption.go).
+func (l *lowering) stringSite(node *ast.Node) int {
+	l.stringSites = append(l.stringSites, node)
+	return len(l.stringSites)
+}
+
 // A structural type can hide then. A const binding does not freeze its object:
 // Object.assign or an escaped alias can add then before adoption. Only primitives
 // or fresh allocations at the adoption point prove assimilation does nothing.

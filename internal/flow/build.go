@@ -490,6 +490,18 @@ func (b *builder) try(at *ir.Statement, statement ir.Try) {
 // that can be longer than V8's longest (ir.StringLengthMayThrow). A throw
 // statement isn't one of these: it always throws, and its block goes straight to its handler.
 func CanThrow(program *ir.Program, instruction *Instruction) bool {
+	return canThrow(program, instruction, true)
+}
+
+// CanThrowBeyondStringLength is CanThrow with the instruction's own strings past V8's longest set
+// aside: whether it can throw for any other reason. Lowering's promise consumption proof asks it to
+// tell a stop the string-length limit causes from any other (async_consumption.go). A call is still
+// one that can throw when its callee can, whatever the reason.
+func CanThrowBeyondStringLength(program *ir.Program, instruction *Instruction) bool {
+	return canThrow(program, instruction, false)
+}
+
+func canThrow(program *ir.Program, instruction *Instruction, lengths bool) bool {
 	var node any = instruction.Expression
 	if instruction.Expression == nil {
 		switch statement := (*instruction.At).(type) {
@@ -542,7 +554,7 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				throws = true
 			}
 			// A string made past V8's longest (ir/string_throws.go).
-			if ir.StringLengthMayThrow(value.Interface()) {
+			if lengths && ir.StringLengthMayThrow(value.Interface()) {
 				throws = true
 			}
 			if call, ok := value.Interface().(ir.StringFromCodes); ok && call.MayThrow() {
