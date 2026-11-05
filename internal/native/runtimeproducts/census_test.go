@@ -833,9 +833,9 @@ func repositoryRoot(t *testing.T) string {
 // of the tree but buildcache's slice, so its lean recipe keys all the code that makes it and no compiler file (Node's
 // rails on #earlycut): what native.RuntimeRequest.Build reaches, every init and initializer that writes what it reads or
 // calls anything, no environment but runtimeEnvironment's, and nothing the census can't follow. It's the census
-// buildcache's leanCallers names for this package, the gate that opens the lean recipe to an archive (#gr5y0yf item 1):
-// while it holds, a compiler edit outside the files an archive declares leaves its key alone. Mutants: jobserver.go left
-// out of runtimeFiles; an environment read planted in compileRuntime.
+// buildcache's leanCallers names for this package, the gate that opens the lean recipe, runtimeproducts' import closure,
+// to an archive (#gr5y0yf item 1), with TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds holding the path to it. Mutants:
+// jobserver.go left out of runtimeFiles; an environment read planted in compileRuntime.
 func TestTheRuntimeBuildReachesOnlyItsDeclaredFiles(t *testing.T) {
 	t.Parallel()
 	root := repositoryRoot(t)
