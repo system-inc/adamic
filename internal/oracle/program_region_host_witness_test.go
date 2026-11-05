@@ -8,6 +8,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native/runtimeproducts"
 	"os"
 	"path/filepath"
 	"strings"
@@ -65,7 +66,7 @@ func programHost14WASM(t *testing.T, counted bool) string {
 	options := native.Options{Target: "wasm32-wasi", Count: counted}
 	var err error
 	if counted {
-		archive := filepath.Join(programRegionRuntime(t, options, native.Features(code)), "runtime.a")
+		archive := filepath.Join(runtimeproducts.ProgramArchive(t, options, native.Features(code)), "runtime.a")
 		err = native.BuildWithRuntime(code, binary, options, archive)
 	} else {
 		err = native.Build(code, binary, options)
@@ -88,7 +89,7 @@ func TestProduct_ProgramHost14WASICounted(t *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	programRegionRuntime(t, native.Options{Target: "wasm32-wasi", Count: true}, []string{"ADAMIC_NODE_HOST"})
+	runtimeproducts.ProgramArchive(t, native.Options{Target: "wasm32-wasi", Count: true}, []string{"ADAMIC_NODE_HOST"})
 }
 func TestProgramRegionHost14DefaultWASIAgreesWithNode(t *testing.T) {
 	t.Parallel()

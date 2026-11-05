@@ -10,8 +10,9 @@
 // supplier for it (Supply), which a runner reads and never builds: one it lacks fails the build as not built.
 //
 // A unit fetches only the products its own package's product tests touch, so each package whose tests read an archive
-// has a product test for it: internal/oracle builds every one (TestProduct_NativeRuntimes*, Build), under oracle.test,
-// the binary its unit and stage3/fixtures' hook read them as; stage3/fixtures finds the sanitized ones its hook links
+// has a product test for it: internal/oracle builds every one (TestProduct_NativeRuntimes*, Build, and its program
+// region tests' archives, TestProduct_ProgramRuntimes*, ProgramArchive), under oracle.test, the binary its unit and
+// stage3/fixtures' hook read them as; stage3/fixtures finds the sanitized ones its hook links
 // (TestProduct_FixtureRuntimesSanitized*, Find), after oracle's in the tree's product order, and never builds them,
 // since one name key two packages build settles twice (buildcache.BuiltElsewhere). The recipe is here, not in oracle's
 // tests, so stage3/fixtures can key what it finds (#43k99f8).
@@ -83,6 +84,20 @@ var Variants = []Variant{
 	{"counted", native.Options{Count: true}, ""},
 	{"wasm", native.Options{Target: "wasm32-wasi"}, oracleWASI},
 	{"wasm-request", native.Options{Target: "wasm32-wasi", Request: true, Count: true}, oracleWASI},
+}
+
+// ProgramVariants are the ways internal/oracle's program region tests build a program, each with its own archive
+// (ProgramArchive): a program region sanitized for the comparison and the leak check, released as a user's build, and
+// counted for the counts table, and the counted wasm build the host witness compares its default mode with
+// (TestProgramRegionHost14DefaultWASIAgreesWithNode), which a program region can't take (native.ValidateOptions) and
+// which runs only where Requires is set. They're a list apart from Variants, since Declared reads Variants: a program
+// region's options there would have Supply, which refuses any request Declared doesn't declare, build that archive
+// mid-test instead.
+var ProgramVariants = []Variant{
+	{"program-sanitized", native.Options{ProgramRegion: true, Sanitize: true}, ""},
+	{"program-release", native.Options{ProgramRegion: true}, ""},
+	{"program-counted", native.Options{ProgramRegion: true, Count: true}, ""},
+	{"wasm-counted", native.Options{Target: "wasm32-wasi", Count: true}, oracleWASI},
 }
 
 // Groups is how many product tests each variant's archives are cut into.
@@ -220,8 +235,36 @@ func Archive(t testing.TB, name string, features []string, owners string, group 
 	return buildcache.BuiltElsewhere(t, what, Inputs(request), fmt.Sprintf("%s%d", owners, index%Groups), func(directory string) error { return request.Build(directory, 4, jobserver) })
 }
 
-// variantNamed is the variant named name, skipping the test when the variant requires a setting it doesn't have: the
-// one setting a variant requires is oracleWASI, and a variant naming another is skipped until it's read here by name.
+// ProgramArchive is the directory holding the archive a program region's build links, for options, one of
+// ProgramVariants, and a program turning on features, one of Sets: internal/oracle's TestProduct_ProgramRuntimes shards
+// build each ahead with it, and the builds of its tests that link one ask it the same way, so the two can't key one
+// archive apart. It's lean, built here as Build builds, so its key is runtimeproducts' import closure: built in oracle,
+// it was keyed by oracle's whole test binary, its test files with it, and every edit of an oracle test rebuilt all of
+// them. Options or a feature set it doesn't declare fail the test, naming the list to add them to, before any request is
+// made, and a variant whose setting isn't set skips it. One unit at a time, as a test waits on it.
+func ProgramArchive(t testing.TB, options native.Options, features []string) string {
+	t.Helper()
+	if !slices.ContainsFunc(Sets, func(set Set) bool { return slices.Equal(set.Features, features) }) {
+		t.Fatalf("runtimeproducts: undeclared Program runtime feature set: %v: add the set to Sets", features)
+	}
+	index := slices.IndexFunc(ProgramVariants, func(variant Variant) bool { return variant.Options == options })
+	if index < 0 {
+		t.Fatalf("runtimeproducts: undeclared Program runtime options: %+v: add them to ProgramVariants", options)
+	}
+	skipUnlessSet(t, ProgramVariants[index])
+	request, err := native.RuntimeRequestFor(options, features...)
+	if err != nil {
+		t.Fatal(err)
+	}
+	jobserver, err := ccjobserver.Process()
+	if err != nil {
+		t.Fatal(err)
+	}
+	return buildcache.LeanProduct(t, Inputs(request), func(directory string) error { return request.Build(directory, 1, jobserver) })
+}
+
+// variantNamed is the variant named name, skipping the test when the variant requires a setting it doesn't have
+// (skipUnlessSet).
 func variantNamed(t testing.TB, name string) Variant {
 	t.Helper()
 	index := slices.IndexFunc(Variants, func(variant Variant) bool { return variant.Name == name })
@@ -229,8 +272,15 @@ func variantNamed(t testing.TB, name string) Variant {
 		t.Fatalf("no runtime variant %q", name)
 	}
 	variant := Variants[index]
+	skipUnlessSet(t, variant)
+	return variant
+}
+
+// skipUnlessSet skips the test when variant requires a setting it doesn't have: the one setting a variant requires is
+// oracleWASI, and a variant naming another is skipped until it's read here by name.
+func skipUnlessSet(t testing.TB, variant Variant) {
+	t.Helper()
 	if variant.Requires != "" && (variant.Requires != oracleWASI || os.Getenv(oracleWASI) != "1") {
 		t.Skipf("set %s=1", variant.Requires)
 	}
-	return variant
 }
