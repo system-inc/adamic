@@ -1,0 +1,16 @@
+// tsc's debug.ts repeat: tests the string for repeat, then calls it, with a loop for a host that
+// lacks it. The receiver is a parameter, a built string, and the empty one.
+function repeat(ch: string, length: number): string {
+    if(ch.repeat) {
+        return length > 0 ? ch.repeat(length) : '';
+    }
+    let result = '';
+    for(let index = 0; index < length; index++) {
+        result += ch;
+    }
+    return result;
+}
+console.log(`[${repeat('ab', 3)}]`);
+console.log(`[${repeat(`-${String(4)}`, 2)}]`);
+console.log(`[${repeat('', 5)}]`);
+console.log(`[${repeat('x', 0)}]`);

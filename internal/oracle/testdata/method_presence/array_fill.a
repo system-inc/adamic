@@ -1,0 +1,20 @@
+// tsc's debug.ts fill: tests the array for fill, then calls it, with a loop for a host that lacks it.
+// The receiver is a generic parameter, read once by the test and once by the call.
+function fill<T>(array: T[], value: T): T[] {
+    if(array.fill) {
+        array.fill(value);
+    } else {
+        for(let index = 0; index < array.length; index++) {
+            array[index] = value;
+        }
+    }
+    return array;
+}
+const numbers: number[] = [];
+for(let index = 0; index < 4; index++) {
+    numbers.push(index * 3);
+}
+console.log(fill(numbers, 7).join(','));
+const words = ['one', 'two', 'three'];
+console.log(fill(words, `w${String(words.length)}`).join(' '));
+console.log(String(fill<number>([], 1).length));
