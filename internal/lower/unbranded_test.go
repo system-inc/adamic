@@ -1,10 +1,12 @@
 package lower
 
 import (
+	"context"
 	"errors"
 	"strings"
 	"testing"
 
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 )
@@ -214,5 +216,39 @@ func TestUnbrandedVoidBrandStops(t *testing.T) {
 		case !row.refused && (!errors.As(err, &stopped) || !strings.Contains(stopped.Error(), row.want)):
 			t.Errorf("%s: got %v, want NotYet containing %q", row.name, err, row.want)
 		}
+	}
+}
+
+// A cast is judged on the brand (Compiler's condition on #gb0fqaa), so castAssignableAt's array skip never
+// takes a phantom extension for an array, though isLibraryType now unbrands and lowering holds its value
+// as its base. No program tells the two apart today, since a mint is judged against its unbranded base,
+// so this asks arrayLikeType of each parameter's type directly. Mutant: arrayLikeType's phantomExtension
+// guard removed; SortedReadonlyArray reads as an array, through isLibraryType's unbranding.
+func TestUnbrandedCastSeesTheBrand(t *testing.T) {
+	t.Parallel()
+	source := brandMintPrelude + "function kinds(sortedReadonly: SortedReadonlyArray<number>, sorted: SortedArray<number>, readonlyPlain: readonly number[], plain: number[]): number { return sortedReadonly.length + sorted.length + readonlyPlain.length + plain.length; }\nconsole.log(String(kinds([] as unknown as SortedReadonlyArray<number>, [] as unknown as SortedArray<number>, [], [])));\n"
+	program, err := load.Load([]string{writeAgreementSource(t, "main.ts", source)})
+	if err != nil {
+		t.Fatalf("Load: %v", err)
+	}
+	checked, release := program.Checker(context.Background(), program.Files()[0])
+	t.Cleanup(release)
+	l := &lowering{program: program, checker: checked}
+	want := map[string]bool{"sortedReadonly": false, "sorted": false, "readonlyPlain": true, "plain": true}
+	seen := 0
+	for _, statement := range program.Files()[0].Statements.Nodes {
+		if statement.Kind != ast.KindFunctionDeclaration || statement.Name() == nil || statement.Name().Text() != "kinds" {
+			continue
+		}
+		for _, parameter := range statement.Parameters() {
+			name := parameter.Name().Text()
+			seen++
+			if got := l.arrayLikeType(checked.GetTypeAtLocation(parameter.Name())); got != want[name] {
+				t.Errorf("arrayLikeType of %s's type is %v, want %v", name, got, want[name])
+			}
+		}
+	}
+	if seen != len(want) {
+		t.Fatalf("judged %d parameters, want %d", seen, len(want))
 	}
 }
