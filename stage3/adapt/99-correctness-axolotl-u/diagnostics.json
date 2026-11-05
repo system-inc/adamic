@@ -1,0 +1,876 @@
+{
+  "ts": "6.0.3",
+  "tree": "/workspace/scratch/99u-main",
+  "rows": [
+    {
+      "mode": "before",
+      "roots": 79,
+      "totalDiagnostics": 59,
+      "sites": [
+        {
+          "file": "utilities.ts",
+          "owner": "isDeclarationWithTypeParameters",
+          "diagnostics": []
+        },
+        {
+          "file": "utilities.ts",
+          "owner": "isDeclarationWithTypeParameterChildren",
+          "diagnostics": []
+        },
+        {
+          "file": "utilities.ts",
+          "owner": "isPrimitiveLiteralValue",
+          "diagnostics": []
+        },
+        {
+          "file": "utilities.ts",
+          "owner": "hasInferredType",
+          "diagnostics": []
+        },
+        {
+          "file": "transformers/declarations/diagnostics.ts",
+          "owner": "getDiagnostic",
+          "diagnostics": []
+        }
+      ]
+    },
+    {
+      "mode": "delete",
+      "roots": 79,
+      "totalDiagnostics": 78,
+      "sites": [
+        {
+          "file": "utilities.ts",
+          "owner": "isDeclarationWithTypeParameters",
+          "diagnostics": [
+            {
+              "code": 2345,
+              "line": 2240,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'DeclarationWithTypeParameterChildren'.\n  Type 'Node' is missing the following properties from type 'JSDocTemplateTag': constraint, typeParameters, tagName"
+            }
+          ]
+        },
+        {
+          "file": "utilities.ts",
+          "owner": "isDeclarationWithTypeParameterChildren",
+          "diagnostics": [
+            {
+              "code": 2345,
+              "line": 2270,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'never'."
+            }
+          ]
+        },
+        {
+          "file": "utilities.ts",
+          "owner": "isPrimitiveLiteralValue",
+          "diagnostics": [
+            {
+              "code": 2339,
+              "line": 12045,
+              "message": "Property 'operator' does not exist on type 'Expression'."
+            },
+            {
+              "code": 2339,
+              "line": 12046,
+              "message": "Property 'operand' does not exist on type 'Expression'."
+            },
+            {
+              "code": 2339,
+              "line": 12046,
+              "message": "Property 'operand' does not exist on type 'Expression'."
+            },
+            {
+              "code": 2339,
+              "line": 12048,
+              "message": "Property 'operator' does not exist on type 'Expression'."
+            },
+            {
+              "code": 2339,
+              "line": 12049,
+              "message": "Property 'operand' does not exist on type 'Expression'."
+            },
+            {
+              "code": 2345,
+              "line": 12053,
+              "message": "Argument of type 'Expression' is not assignable to parameter of type 'never'."
+            }
+          ]
+        },
+        {
+          "file": "utilities.ts",
+          "owner": "hasInferredType",
+          "diagnostics": [
+            {
+              "code": 2345,
+              "line": 12085,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'never'."
+            }
+          ]
+        },
+        {
+          "file": "transformers/declarations/diagnostics.ts",
+          "owner": "getDiagnostic",
+          "diagnostics": [
+            {
+              "code": 2345,
+              "line": 676,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'GetAccessorDeclaration | SetAccessorDeclaration'.\n  Type 'Node' is missing the following properties from type 'SetAccessorDeclaration': name, _functionLikeDeclarationBrand, parameters, _declarationBrand, and 7 more."
+            },
+            {
+              "code": 2345,
+              "line": 680,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'ShorthandPropertyAssignment | SpreadAssignment | ComputedPropertyName'.\n  Property 'expression' is missing in type 'Node' but required in type 'ComputedPropertyName'."
+            },
+            {
+              "code": 2345,
+              "line": 683,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'ArrayLiteralExpression | SpreadElement'.\n  Type 'Node' is missing the following properties from type 'SpreadElement': expression, _expressionBrand"
+            },
+            {
+              "code": 2345,
+              "line": 689,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'FunctionExpression | ArrowFunction | MethodDeclaration | ConstructSignatureDeclaration | FunctionDeclaration'.\n  Type 'Node' is missing the following properties from type 'FunctionDeclaration': _functionLikeDeclarationBrand, parameters, _declarationBrand, symbol, and 3 more."
+            },
+            {
+              "code": 2345,
+              "line": 691,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'BindingElement'.\n  Type 'Node' is missing the following properties from type 'BindingElement': name, _declarationBrand, symbol, _flowContainerBrand"
+            },
+            {
+              "code": 2345,
+              "line": 694,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'VariableDeclaration | PropertyDeclaration'.\n  Type 'Node' is missing the following properties from type 'PropertyDeclaration': name, _classElementBrand, _declarationBrand, symbol, _jsdocContainerBrand"
+            },
+            {
+              "code": 2345,
+              "line": 696,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'ParameterDeclaration'.\n  Type 'Node' is missing the following properties from type 'ParameterDeclaration': name, _declarationBrand, symbol, _jsdocContainerBrand"
+            },
+            {
+              "code": 2339,
+              "line": 698,
+              "message": "Property 'initializer' does not exist on type 'Node'."
+            },
+            {
+              "code": 2345,
+              "line": 700,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'Expression'.\n  Property '_expressionBrand' is missing in type 'Node' but required in type 'Expression'."
+            },
+            {
+              "code": 2345,
+              "line": 702,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'never'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "local",
+      "roots": 79,
+      "totalDiagnostics": 78,
+      "sites": [
+        {
+          "file": "utilities.ts",
+          "owner": "isDeclarationWithTypeParameters",
+          "diagnostics": [
+            {
+              "code": 2345,
+              "line": 2240,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'DeclarationWithTypeParameterChildren'.\n  Type 'Node' is missing the following properties from type 'JSDocTemplateTag': constraint, typeParameters, tagName"
+            }
+          ]
+        },
+        {
+          "file": "utilities.ts",
+          "owner": "isDeclarationWithTypeParameterChildren",
+          "diagnostics": [
+            {
+              "code": 2345,
+              "line": 2270,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'never'."
+            }
+          ]
+        },
+        {
+          "file": "utilities.ts",
+          "owner": "isPrimitiveLiteralValue",
+          "diagnostics": [
+            {
+              "code": 2339,
+              "line": 12045,
+              "message": "Property 'operator' does not exist on type 'Expression'."
+            },
+            {
+              "code": 2339,
+              "line": 12046,
+              "message": "Property 'operand' does not exist on type 'Expression'."
+            },
+            {
+              "code": 2339,
+              "line": 12046,
+              "message": "Property 'operand' does not exist on type 'Expression'."
+            },
+            {
+              "code": 2339,
+              "line": 12048,
+              "message": "Property 'operator' does not exist on type 'Expression'."
+            },
+            {
+              "code": 2339,
+              "line": 12049,
+              "message": "Property 'operand' does not exist on type 'Expression'."
+            },
+            {
+              "code": 2345,
+              "line": 12053,
+              "message": "Argument of type 'Expression' is not assignable to parameter of type 'never'."
+            }
+          ]
+        },
+        {
+          "file": "utilities.ts",
+          "owner": "hasInferredType",
+          "diagnostics": [
+            {
+              "code": 2345,
+              "line": 12085,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'never'."
+            }
+          ]
+        },
+        {
+          "file": "transformers/declarations/diagnostics.ts",
+          "owner": "getDiagnostic",
+          "diagnostics": [
+            {
+              "code": 2345,
+              "line": 676,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'GetAccessorDeclaration | SetAccessorDeclaration'.\n  Type 'Node' is missing the following properties from type 'SetAccessorDeclaration': name, _functionLikeDeclarationBrand, parameters, _declarationBrand, and 7 more."
+            },
+            {
+              "code": 2345,
+              "line": 680,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'ShorthandPropertyAssignment | SpreadAssignment | ComputedPropertyName'.\n  Property 'expression' is missing in type 'Node' but required in type 'ComputedPropertyName'."
+            },
+            {
+              "code": 2345,
+              "line": 683,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'ArrayLiteralExpression | SpreadElement'.\n  Type 'Node' is missing the following properties from type 'SpreadElement': expression, _expressionBrand"
+            },
+            {
+              "code": 2345,
+              "line": 689,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'FunctionExpression | ArrowFunction | MethodDeclaration | ConstructSignatureDeclaration | FunctionDeclaration'.\n  Type 'Node' is missing the following properties from type 'FunctionDeclaration': _functionLikeDeclarationBrand, parameters, _declarationBrand, symbol, and 3 more."
+            },
+            {
+              "code": 2345,
+              "line": 691,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'BindingElement'.\n  Type 'Node' is missing the following properties from type 'BindingElement': name, _declarationBrand, symbol, _flowContainerBrand"
+            },
+            {
+              "code": 2345,
+              "line": 694,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'VariableDeclaration | PropertyDeclaration'.\n  Type 'Node' is missing the following properties from type 'PropertyDeclaration': name, _classElementBrand, _declarationBrand, symbol, _jsdocContainerBrand"
+            },
+            {
+              "code": 2345,
+              "line": 696,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'ParameterDeclaration'.\n  Type 'Node' is missing the following properties from type 'ParameterDeclaration': name, _declarationBrand, symbol, _jsdocContainerBrand"
+            },
+            {
+              "code": 2339,
+              "line": 698,
+              "message": "Property 'initializer' does not exist on type 'Node'."
+            },
+            {
+              "code": 2345,
+              "line": 700,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'Expression'.\n  Property '_expressionBrand' is missing in type 'Node' but required in type 'Expression'."
+            },
+            {
+              "code": 2345,
+              "line": 702,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'never'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "existing-guards",
+      "roots": 79,
+      "totalDiagnostics": 64,
+      "sites": [
+        {
+          "file": "utilities.ts",
+          "owner": "isDeclarationWithTypeParameters",
+          "castCount": 0,
+          "diagnostics": [
+            {
+              "code": 2345,
+              "line": 2239,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'DeclarationWithTypeParameterChildren'.\n  Type 'Node' is missing the following properties from type 'JSDocTemplateTag': constraint, typeParameters, tagName"
+            }
+          ]
+        },
+        {
+          "file": "utilities.ts",
+          "owner": "isDeclarationWithTypeParameterChildren",
+          "castCount": 0,
+          "diagnostics": [
+            {
+              "code": 2345,
+              "line": 2268,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'never'."
+            }
+          ]
+        },
+        {
+          "file": "utilities.ts",
+          "owner": "isPrimitiveLiteralValue",
+          "castCount": 0,
+          "diagnostics": [
+            {
+              "code": 2345,
+              "line": 12051,
+              "message": "Argument of type 'Expression' is not assignable to parameter of type 'never'."
+            }
+          ]
+        },
+        {
+          "file": "utilities.ts",
+          "owner": "hasInferredType",
+          "castCount": 0,
+          "diagnostics": [
+            {
+              "code": 2345,
+              "line": 12082,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'never'."
+            }
+          ]
+        },
+        {
+          "file": "transformers/declarations/diagnostics.ts",
+          "owner": "getDiagnostic",
+          "castCount": 0,
+          "diagnostics": [
+            {
+              "code": 2345,
+              "line": 720,
+              "message": "Argument of type 'Node' is not assignable to parameter of type 'never'."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "base": "5ff432f962b1c7c9145533946c46a35450ebfacc",
+  "measurementOnly": true,
+  "options": {
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true,
+    "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": false,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "module": 99,
+    "moduleDetection": 3,
+    "moduleResolution": 100,
+    "target": 11,
+    "lib": [
+      "lib.es2024.d.ts"
+    ],
+    "types": []
+  },
+  "thirdForm": {
+    "tree": "/workspace/scratch/99u-third",
+    "missingImportsAdded": [
+      "isComputedPropertyName",
+      "isShorthandPropertyAssignment",
+      "isSpreadAssignment",
+      "isArrayLiteralExpression",
+      "isSpreadElement",
+      "isFunctionExpression",
+      "isArrowFunction",
+      "isPropertyAssignment",
+      "isClassExpression",
+      "isExpression"
+    ],
+    "changes": [
+      {
+        "file": "utilities.ts",
+        "owner": "isDeclarationWithTypeParameters",
+        "before": "export function isDeclarationWithTypeParameters(node: Node): node is DeclarationWithTypeParameters {\r\n    Debug.type<DeclarationWithTypeParameters>(node);\r\n    switch (node.kind) {\r\n        case SyntaxKind.JSDocCallbackTag:\r\n        case SyntaxKind.JSDocTypedefTag:\r\n        case SyntaxKind.JSDocSignature:\r\n            return true;\r\n        default:\r\n            assertType<DeclarationWithTypeParameterChildren>(node);\r\n            return isDeclarationWithTypeParameterChildren(node);\r\n    }\r\n}",
+        "after": "export function isDeclarationWithTypeParameters(node: Node): node is DeclarationWithTypeParameters {\r\n    switch (node.kind) {\r\n        case SyntaxKind.JSDocCallbackTag:\r\n        case SyntaxKind.JSDocTypedefTag:\r\n        case SyntaxKind.JSDocSignature:\r\n            return true;\r\n        default:\r\n            assertType<DeclarationWithTypeParameterChildren>(node);\r\n            return isDeclarationWithTypeParameterChildren(node);\r\n    }\r\n}",
+        "beforeSha256": "89c3b66bccb84e23134c7631b273f8f292183434908f7d0ff199622eafa9b9b6",
+        "afterSha256": "bd21f4302aa519dddb9a9746cb31fb7ff5fb97939cf2f610393b93c21a25bbf8"
+      },
+      {
+        "file": "utilities.ts",
+        "owner": "isDeclarationWithTypeParameterChildren",
+        "before": "export function isDeclarationWithTypeParameterChildren(node: Node): node is DeclarationWithTypeParameterChildren {\r\n    Debug.type<DeclarationWithTypeParameterChildren>(node);\r\n    switch (node.kind) {\r\n        case SyntaxKind.CallSignature:\r\n        case SyntaxKind.ConstructSignature:\r\n        case SyntaxKind.MethodSignature:\r\n        case SyntaxKind.IndexSignature:\r\n        case SyntaxKind.FunctionType:\r\n        case SyntaxKind.ConstructorType:\r\n        case SyntaxKind.JSDocFunctionType:\r\n        case SyntaxKind.ClassDeclaration:\r\n        case SyntaxKind.ClassExpression:\r\n        case SyntaxKind.InterfaceDeclaration:\r\n        case SyntaxKind.TypeAliasDeclaration:\r\n        case SyntaxKind.JSDocTemplateTag:\r\n        case SyntaxKind.FunctionDeclaration:\r\n        case SyntaxKind.MethodDeclaration:\r\n        case SyntaxKind.Constructor:\r\n        case SyntaxKind.GetAccessor:\r\n        case SyntaxKind.SetAccessor:\r\n        case SyntaxKind.FunctionExpression:\r\n        case SyntaxKind.ArrowFunction:\r\n            return true;\r\n        default:\r\n            assertType<never>(node);\r\n            return false;\r\n    }\r\n}",
+        "after": "export function isDeclarationWithTypeParameterChildren(node: Node): node is DeclarationWithTypeParameterChildren {\r\n    switch (node.kind) {\r\n        case SyntaxKind.CallSignature:\r\n        case SyntaxKind.ConstructSignature:\r\n        case SyntaxKind.MethodSignature:\r\n        case SyntaxKind.IndexSignature:\r\n        case SyntaxKind.FunctionType:\r\n        case SyntaxKind.ConstructorType:\r\n        case SyntaxKind.JSDocFunctionType:\r\n        case SyntaxKind.ClassDeclaration:\r\n        case SyntaxKind.ClassExpression:\r\n        case SyntaxKind.InterfaceDeclaration:\r\n        case SyntaxKind.TypeAliasDeclaration:\r\n        case SyntaxKind.JSDocTemplateTag:\r\n        case SyntaxKind.FunctionDeclaration:\r\n        case SyntaxKind.MethodDeclaration:\r\n        case SyntaxKind.Constructor:\r\n        case SyntaxKind.GetAccessor:\r\n        case SyntaxKind.SetAccessor:\r\n        case SyntaxKind.FunctionExpression:\r\n        case SyntaxKind.ArrowFunction:\r\n            return true;\r\n        default:\r\n            assertType<never>(node);\r\n            return false;\r\n    }\r\n}",
+        "beforeSha256": "cfe574d27731ae6bbe765510a1421e9bac4abe281ffb0eb9bdb9a139e27ecc50",
+        "afterSha256": "ecc2fcd9258a4e83e684e0856bac9caf44c17639bb396e55ecc68fab2cf6cc79"
+      },
+      {
+        "file": "utilities.ts",
+        "owner": "isPrimitiveLiteralValue",
+        "before": "export function isPrimitiveLiteralValue(node: Expression, includeBigInt = true): node is PrimitiveLiteral {\r\n    Debug.type<PrimitiveLiteral>(node);\r\n    switch (node.kind) {\r\n        case SyntaxKind.TrueKeyword:\r\n        case SyntaxKind.FalseKeyword:\r\n        case SyntaxKind.NumericLiteral:\r\n        case SyntaxKind.StringLiteral:\r\n        case SyntaxKind.NoSubstitutionTemplateLiteral:\r\n            return true;\r\n        case SyntaxKind.BigIntLiteral:\r\n            return includeBigInt;\r\n        case SyntaxKind.PrefixUnaryExpression:\r\n            if (node.operator === SyntaxKind.MinusToken) {\r\n                return isNumericLiteral(node.operand) || (includeBigInt && isBigIntLiteral(node.operand));\r\n            }\r\n            if (node.operator === SyntaxKind.PlusToken) {\r\n                return isNumericLiteral(node.operand);\r\n            }\r\n            return false;\r\n        default:\r\n            assertType<never>(node);\r\n            return false;\r\n    }\r\n}",
+        "after": "export function isPrimitiveLiteralValue(node: Expression, includeBigInt = true): node is PrimitiveLiteral {\r\n    switch (node.kind) {\r\n        case SyntaxKind.TrueKeyword:\r\n        case SyntaxKind.FalseKeyword:\r\n        case SyntaxKind.NumericLiteral:\r\n        case SyntaxKind.StringLiteral:\r\n        case SyntaxKind.NoSubstitutionTemplateLiteral:\r\n            return true;\r\n        case SyntaxKind.BigIntLiteral:\r\n            return includeBigInt;\r\n        case SyntaxKind.PrefixUnaryExpression:\r\n            Debug.assert(isPrefixUnaryExpression(node));\r\n            if (node.operator === SyntaxKind.MinusToken) {\r\n                return isNumericLiteral(node.operand) || (includeBigInt && isBigIntLiteral(node.operand));\r\n            }\r\n            if (node.operator === SyntaxKind.PlusToken) {\r\n                return isNumericLiteral(node.operand);\r\n            }\r\n            return false;\r\n        default:\r\n            assertType<never>(node);\r\n            return false;\r\n    }\r\n}",
+        "beforeSha256": "63c18bccbfec00d30cfae45c60aead7b97dfd38ae455de56dadac1fc93f7aa11",
+        "afterSha256": "2e5106f1382c5dfb6c846c891da06a1d8731400508be5b9648d5ead1c1a76258"
+      },
+      {
+        "file": "utilities.ts",
+        "owner": "hasInferredType",
+        "before": "export function hasInferredType(node: Node): node is HasInferredType {\r\n    Debug.type<HasInferredType>(node);\r\n    switch (node.kind) {\r\n        case SyntaxKind.Parameter:\r\n        case SyntaxKind.PropertySignature:\r\n        case SyntaxKind.PropertyDeclaration:\r\n        case SyntaxKind.BindingElement:\r\n        case SyntaxKind.PropertyAccessExpression:\r\n        case SyntaxKind.ElementAccessExpression:\r\n        case SyntaxKind.BinaryExpression:\r\n        case SyntaxKind.VariableDeclaration:\r\n        case SyntaxKind.ExportAssignment:\r\n        case SyntaxKind.PropertyAssignment:\r\n        case SyntaxKind.ShorthandPropertyAssignment:\r\n        case SyntaxKind.JSDocParameterTag:\r\n        case SyntaxKind.JSDocPropertyTag:\r\n            return true;\r\n        default:\r\n            assertType<never>(node);\r\n            return false;\r\n    }\r\n}",
+        "after": "export function hasInferredType(node: Node): node is HasInferredType {\r\n    switch (node.kind) {\r\n        case SyntaxKind.Parameter:\r\n        case SyntaxKind.PropertySignature:\r\n        case SyntaxKind.PropertyDeclaration:\r\n        case SyntaxKind.BindingElement:\r\n        case SyntaxKind.PropertyAccessExpression:\r\n        case SyntaxKind.ElementAccessExpression:\r\n        case SyntaxKind.BinaryExpression:\r\n        case SyntaxKind.VariableDeclaration:\r\n        case SyntaxKind.ExportAssignment:\r\n        case SyntaxKind.PropertyAssignment:\r\n        case SyntaxKind.ShorthandPropertyAssignment:\r\n        case SyntaxKind.JSDocParameterTag:\r\n        case SyntaxKind.JSDocPropertyTag:\r\n            return true;\r\n        default:\r\n            assertType<never>(node);\r\n            return false;\r\n    }\r\n}",
+        "beforeSha256": "913033f97a775d0c81d9fdef142c3e87c494efab6340d0e37bd20564eb77f3b4",
+        "afterSha256": "ea50cfe8b8fb4b03b058b88c5c92844e9297be4b4ef6464247796329b8fbbb16"
+      },
+      {
+        "file": "transformers/declarations/diagnostics.ts",
+        "owner": "getDiagnostic",
+        "before": "function getDiagnostic(node: Node) {\r\n        const heritageClause = findAncestor(node, isHeritageClause);\r\n        if (heritageClause) {\r\n            return createDiagnosticForNode(node, Diagnostics.Extends_clause_can_t_contain_an_expression_with_isolatedDeclarations);\r\n        }\r\n        if ((isPartOfTypeNode(node) || isTypeQueryNode(node.parent)) && (isEntityName(node) || isEntityNameExpression(node))) {\r\n            return createEntityInTypeNodeError(node);\r\n        }\r\n        Debug.type<WithIsolatedDeclarationDiagnostic>(node);\r\n        switch (node.kind) {\r\n            case SyntaxKind.GetAccessor:\r\n            case SyntaxKind.SetAccessor:\r\n                return createAccessorTypeError(node);\r\n            case SyntaxKind.ComputedPropertyName:\r\n            case SyntaxKind.ShorthandPropertyAssignment:\r\n            case SyntaxKind.SpreadAssignment:\r\n                return createObjectLiteralError(node);\r\n            case SyntaxKind.ArrayLiteralExpression:\r\n            case SyntaxKind.SpreadElement:\r\n                return createArrayLiteralError(node);\r\n            case SyntaxKind.MethodDeclaration:\r\n            case SyntaxKind.ConstructSignature:\r\n            case SyntaxKind.FunctionExpression:\r\n            case SyntaxKind.ArrowFunction:\r\n            case SyntaxKind.FunctionDeclaration:\r\n                return createReturnTypeError(node);\r\n            case SyntaxKind.BindingElement:\r\n                return createBindingElementError(node);\r\n            case SyntaxKind.PropertyDeclaration:\r\n            case SyntaxKind.VariableDeclaration:\r\n                return createVariableOrPropertyError(node);\r\n            case SyntaxKind.Parameter:\r\n                return createParameterError(node);\r\n            case SyntaxKind.PropertyAssignment:\r\n                return createExpressionError(node.initializer);\r\n            case SyntaxKind.ClassExpression:\r\n                return createClassExpressionError(node);\r\n            default:\r\n                assertType<never>(node);\r\n                return createExpressionError(node as Expression);\r\n        }\r\n    }",
+        "after": "function getDiagnostic(node: Node) {\r\n        const heritageClause = findAncestor(node, isHeritageClause);\r\n        if (heritageClause) {\r\n            return createDiagnosticForNode(node, Diagnostics.Extends_clause_can_t_contain_an_expression_with_isolatedDeclarations);\r\n        }\r\n        if ((isPartOfTypeNode(node) || isTypeQueryNode(node.parent)) && (isEntityName(node) || isEntityNameExpression(node))) {\r\n            return createEntityInTypeNodeError(node);\r\n        }\r\n        switch (node.kind) {\r\n            case SyntaxKind.GetAccessor:\r\n            case SyntaxKind.SetAccessor:\r\n                Debug.assert(isGetAccessor(node) || isSetAccessor(node));\r\n                return createAccessorTypeError(node);\r\n            case SyntaxKind.ComputedPropertyName:\r\n            case SyntaxKind.ShorthandPropertyAssignment:\r\n            case SyntaxKind.SpreadAssignment:\r\n                Debug.assert(isComputedPropertyName(node) || isShorthandPropertyAssignment(node) || isSpreadAssignment(node));\r\n                return createObjectLiteralError(node);\r\n            case SyntaxKind.ArrayLiteralExpression:\r\n            case SyntaxKind.SpreadElement:\r\n                Debug.assert(isArrayLiteralExpression(node) || isSpreadElement(node));\r\n                return createArrayLiteralError(node);\r\n            case SyntaxKind.MethodDeclaration:\r\n            case SyntaxKind.ConstructSignature:\r\n            case SyntaxKind.FunctionExpression:\r\n            case SyntaxKind.ArrowFunction:\r\n            case SyntaxKind.FunctionDeclaration:\r\n                Debug.assert(isMethodDeclaration(node) || isConstructSignatureDeclaration(node) || isFunctionExpression(node) || isArrowFunction(node) || isFunctionDeclaration(node));\r\n                return createReturnTypeError(node);\r\n            case SyntaxKind.BindingElement:\r\n                Debug.assert(isBindingElement(node));\r\n                return createBindingElementError(node);\r\n            case SyntaxKind.PropertyDeclaration:\r\n            case SyntaxKind.VariableDeclaration:\r\n                Debug.assert(isPropertyDeclaration(node) || isVariableDeclaration(node));\r\n                return createVariableOrPropertyError(node);\r\n            case SyntaxKind.Parameter:\r\n                Debug.assert(isParameter(node));\r\n                return createParameterError(node);\r\n            case SyntaxKind.PropertyAssignment:\r\n                Debug.assert(isPropertyAssignment(node));\r\n                return createExpressionError(node.initializer);\r\n            case SyntaxKind.ClassExpression:\r\n                Debug.assert(isClassExpression(node));\r\n                return createClassExpressionError(node);\r\n            default:\r\n                assertType<never>(node);\r\n                Debug.assert(isExpression(node));\r\n                return createExpressionError(node);\r\n        }\r\n    }",
+        "beforeSha256": "ac30c43da4a04794a30ce27464231c320e24a84204987c67933a1215aace3373",
+        "afterSha256": "3de1e6ce49cfd3d5e2eb87d0aa8e6afee69599c6f7d6ea021847055d8a6cd428"
+      }
+    ],
+    "patches": [
+      {
+        "file": "utilities.ts",
+        "patch": "--- main/src/compiler/utilities.ts\n+++ measured-third/src/compiler/utilities.ts\n@@ -2230,7 +2230,6 @@\n \n /** @internal */\n export function isDeclarationWithTypeParameters(node: Node): node is DeclarationWithTypeParameters {\n-    Debug.type<DeclarationWithTypeParameters>(node);\n     switch (node.kind) {\n         case SyntaxKind.JSDocCallbackTag:\n         case SyntaxKind.JSDocTypedefTag:\n@@ -2244,7 +2243,6 @@\n \n /** @internal */\n export function isDeclarationWithTypeParameterChildren(node: Node): node is DeclarationWithTypeParameterChildren {\n-    Debug.type<DeclarationWithTypeParameterChildren>(node);\n     switch (node.kind) {\n         case SyntaxKind.CallSignature:\n         case SyntaxKind.ConstructSignature:\n@@ -12031,7 +12029,6 @@\n \n /** @internal */\n export function isPrimitiveLiteralValue(node: Expression, includeBigInt = true): node is PrimitiveLiteral {\n-    Debug.type<PrimitiveLiteral>(node);\n     switch (node.kind) {\n         case SyntaxKind.TrueKeyword:\n         case SyntaxKind.FalseKeyword:\n@@ -12042,6 +12039,7 @@\n         case SyntaxKind.BigIntLiteral:\n             return includeBigInt;\n         case SyntaxKind.PrefixUnaryExpression:\n+            Debug.assert(isPrefixUnaryExpression(node));\n             if (node.operator === SyntaxKind.MinusToken) {\n                 return isNumericLiteral(node.operand) || (includeBigInt && isBigIntLiteral(node.operand));\n             }\n@@ -12065,7 +12063,6 @@\n \n /** @internal */\n export function hasInferredType(node: Node): node is HasInferredType {\n-    Debug.type<HasInferredType>(node);\n     switch (node.kind) {\n         case SyntaxKind.Parameter:\n         case SyntaxKind.PropertySignature:\n"
+      },
+      {
+        "file": "transformers/declarations/diagnostics.ts",
+        "patch": "--- main/src/compiler/transformers/declarations/diagnostics.ts\n+++ measured-third/src/compiler/transformers/declarations/diagnostics.ts\n@@ -34,6 +34,16 @@\n     hasSyntacticModifier,\n     type ImportEqualsDeclaration,\n     type IndexSignatureDeclaration,\n+    isComputedPropertyName,\n+    isShorthandPropertyAssignment,\n+    isSpreadAssignment,\n+    isArrayLiteralExpression,\n+    isSpreadElement,\n+    isFunctionExpression,\n+    isArrowFunction,\n+    isPropertyAssignment,\n+    isClassExpression,\n+    isExpression,\n     isAsExpression,\n     isBinaryExpression,\n     isBindingElement,\n@@ -669,38 +679,47 @@\n         if ((isPartOfTypeNode(node) || isTypeQueryNode(node.parent)) && (isEntityName(node) || isEntityNameExpression(node))) {\n             return createEntityInTypeNodeError(node);\n         }\n-        Debug.type<WithIsolatedDeclarationDiagnostic>(node);\n         switch (node.kind) {\n             case SyntaxKind.GetAccessor:\n             case SyntaxKind.SetAccessor:\n+                Debug.assert(isGetAccessor(node) || isSetAccessor(node));\n                 return createAccessorTypeError(node);\n             case SyntaxKind.ComputedPropertyName:\n             case SyntaxKind.ShorthandPropertyAssignment:\n             case SyntaxKind.SpreadAssignment:\n+                Debug.assert(isComputedPropertyName(node) || isShorthandPropertyAssignment(node) || isSpreadAssignment(node));\n                 return createObjectLiteralError(node);\n             case SyntaxKind.ArrayLiteralExpression:\n             case SyntaxKind.SpreadElement:\n+                Debug.assert(isArrayLiteralExpression(node) || isSpreadElement(node));\n                 return createArrayLiteralError(node);\n             case SyntaxKind.MethodDeclaration:\n             case SyntaxKind.ConstructSignature:\n             case SyntaxKind.FunctionExpression:\n             case SyntaxKind.ArrowFunction:\n             case SyntaxKind.FunctionDeclaration:\n+                Debug.assert(isMethodDeclaration(node) || isConstructSignatureDeclaration(node) || isFunctionExpression(node) || isArrowFunction(node) || isFunctionDeclaration(node));\n                 return createReturnTypeError(node);\n             case SyntaxKind.BindingElement:\n+                Debug.assert(isBindingElement(node));\n                 return createBindingElementError(node);\n             case SyntaxKind.PropertyDeclaration:\n             case SyntaxKind.VariableDeclaration:\n+                Debug.assert(isPropertyDeclaration(node) || isVariableDeclaration(node));\n                 return createVariableOrPropertyError(node);\n             case SyntaxKind.Parameter:\n+                Debug.assert(isParameter(node));\n                 return createParameterError(node);\n             case SyntaxKind.PropertyAssignment:\n+                Debug.assert(isPropertyAssignment(node));\n                 return createExpressionError(node.initializer);\n             case SyntaxKind.ClassExpression:\n+                Debug.assert(isClassExpression(node));\n                 return createClassExpressionError(node);\n             default:\n                 assertType<never>(node);\n-                return createExpressionError(node as Expression);\n+                Debug.assert(isExpression(node));\n+                return createExpressionError(node);\n         }\n     }\n \n"
+      }
+    ],
+    "allDiagnostics": [
+      {
+        "file": "src/compiler/debug.ts",
+        "code": 2339,
+        "line": 179,
+        "message": "Property 'captureStackTrace' does not exist on type 'ErrorConstructor'."
+      },
+      {
+        "file": "src/compiler/debug.ts",
+        "code": 2339,
+        "line": 180,
+        "message": "Property 'captureStackTrace' does not exist on type 'ErrorConstructor'."
+      },
+      {
+        "file": "src/compiler/debug.ts",
+        "code": 2584,
+        "line": 844,
+        "message": "Cannot find name 'console'. Do you need to change your target library? Try changing the 'lib' compiler option to include 'dom'."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 50,
+        "message": "Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 51,
+        "message": "Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 52,
+        "message": "Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 53,
+        "message": "Cannot find name 'node:crypto'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2503,
+        "line": 55,
+        "message": "Cannot find namespace 'NodeJS'."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2503,
+        "line": 56,
+        "message": "Cannot find namespace 'NodeJS'."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2339,
+        "line": 80,
+        "message": "Property 'stackTraceLimit' does not exist on type 'ErrorConstructor'."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2339,
+        "line": 81,
+        "message": "Property 'stackTraceLimit' does not exist on type 'ErrorConstructor'."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1475,
+        "message": "Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1478,
+        "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1479,
+        "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1485,
+        "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2304,
+        "line": 1492,
+        "message": "Cannot find name '__filename'."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2304,
+        "line": 1492,
+        "message": "Cannot find name '__dirname'."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2304,
+        "line": 1492,
+        "message": "Cannot find name '__filename'."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1494,
+        "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1495,
+        "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1510,
+        "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1511,
+        "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1512,
+        "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1518,
+        "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1522,
+        "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1525,
+        "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1528,
+        "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1560,
+        "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2304,
+        "line": 1569,
+        "message": "Cannot find name 'global'."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2304,
+        "line": 1570,
+        "message": "Cannot find name 'global'."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1572,
+        "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1582,
+        "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1586,
+        "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1586,
+        "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1588,
+        "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1588,
+        "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1588,
+        "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2345,
+        "line": 1588,
+        "message": "Argument of type 'unknown' is not assignable to parameter of type 'string'."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1588,
+        "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1591,
+        "message": "Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1600,
+        "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1603,
+        "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1608,
+        "message": "Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1609,
+        "message": "Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1613,
+        "message": "Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1623,
+        "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1644,
+        "message": "Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1644,
+        "message": "Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1666,
+        "message": "Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 7006,
+        "line": 1690,
+        "message": "Parameter 'err' implicitly has an 'any' type."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 7031,
+        "line": 1690,
+        "message": "Binding element 'profile' implicitly has an 'any' type."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1693,
+        "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2304,
+        "line": 1722,
+        "message": "Cannot find name '__filename'."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1740,
+        "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1740,
+        "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1782,
+        "message": "Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1847,
+        "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1847,
+        "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "code": 2591,
+        "line": 1877,
+        "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      },
+      {
+        "file": "src/compiler/transformers/declarations/diagnostics.ts",
+        "code": 2345,
+        "line": 720,
+        "message": "Argument of type 'Node' is not assignable to parameter of type 'never'."
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "code": 2345,
+        "line": 2239,
+        "message": "Argument of type 'Node' is not assignable to parameter of type 'DeclarationWithTypeParameterChildren'.\n  Type 'Node' is missing the following properties from type 'JSDocTemplateTag': constraint, typeParameters, tagName"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "code": 2345,
+        "line": 2268,
+        "message": "Argument of type 'Node' is not assignable to parameter of type 'never'."
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "code": 2345,
+        "line": 12051,
+        "message": "Argument of type 'Expression' is not assignable to parameter of type 'never'."
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "code": 2345,
+        "line": 12082,
+        "message": "Argument of type 'Node' is not assignable to parameter of type 'never'."
+      }
+    ]
+  },
+  "historicalOracle": {
+    "referenceCommit": "9b3410c37fd40d75161d628ac75d90740abd4d4e",
+    "measuredBase": "a7b6da7f622bd768a99a443706490e80667dd547",
+    "source": "stage3/adapt/99-correctness-axolotl-t/counter-results.json",
+    "freshOracleRun": false,
+    "counters": {
+      "DeclarationWithTypeParameters": {
+        "runs": 5100,
+        "outsideX": 4230
+      },
+      "DeclarationWithTypeParameterChildren": {
+        "runs": 5120,
+        "outsideX": 4230
+      },
+      "PrimitiveLiteral": {
+        "runs": 7027,
+        "outsideX": 1788
+      },
+      "HasInferredType": {
+        "runs": 399823,
+        "outsideX": 19422
+      },
+      "WithIsolatedDeclarationDiagnostic": {
+        "runs": 1014,
+        "outsideX": 26
+      }
+    },
+    "primitiveDefaultEvidence": {
+      "title": "transpile tests tests/cases/transpile/declarationComputedPropertyNames.ts transpile test declarationComputedPropertyNames has expected declaration output",
+      "outsideX": 9,
+      "basis": "Historical title counter plus source-path inference, not a new branch counter. Object D has nine computed names outside the literal switch cases and none is PrefixUnaryExpression. canGetTypeFromObjectLiteral calls isPrimitiveLiteralValue on each computed-name expression.",
+      "fixture": "tests/cases/transpile/declarationComputedPropertyNames.ts",
+      "caller": "src/compiler/expressionToTypeNode.ts:1045"
+    }
+  }
+}
