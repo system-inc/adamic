@@ -40,7 +40,7 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 	}
 	build := func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) }
 	// Retain the strict adapter boundary for the array lane on compiler/views-v4.
-	if target.Flags()&checker.TypeFlagsObject != 0 && (l.checker.IsArrayType(target) || checker.IsTupleType(target)) {
+	if target.Flags()&checker.TypeFlagsObject != 0 && (l.isArrayType(target) || checker.IsTupleType(target)) {
 		if viewArrayContractHook == nil {
 			return 0, l.notYet(node, "an array checked-view contract")
 		}

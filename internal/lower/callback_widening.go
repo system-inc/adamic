@@ -41,7 +41,7 @@ func (l *lowering) adaptArrayCallback(node *ast.Node, callback ir.Expression, su
 		}
 		target := l.concrete(l.checker.GetTypeOfSymbol(parameter))
 		if rest {
-			target = l.checker.GetElementTypeOfArrayType(target)
+			target = l.elementTypeOfArray(target)
 		}
 		if target == nil {
 			return nil, 0, l.notYet(node, "an intrinsic callback with an unknown rest element representation")

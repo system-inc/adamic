@@ -73,7 +73,7 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 	}
 	// Container elements are views too. Avoid walking library methods, whose generic signatures
 	// describe operations rather than value fields.
-	if (l.checker.IsArrayType(source) || checker.IsTupleType(source)) && (l.checker.IsArrayType(target) || checker.IsTupleType(target)) {
+	if (l.isArrayType(source) || checker.IsTupleType(source)) && (l.isArrayType(target) || checker.IsTupleType(target)) {
 		sources, targets := l.checker.GetTypeArguments(source), l.checker.GetTypeArguments(target)
 		for index, inside := range sources {
 			at := index

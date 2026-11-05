@@ -204,7 +204,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 			// Only an array reference has type arguments to read. The checker dereferences nil for
 			// anything else, such as the union of tuples tsc's createConstructorTypeNode takes as
 			// Parameters<typeof createConstructorTypeNode1 | typeof createConstructorTypeNode2> (#egxccg8).
-			if !l.checker.IsArrayType(proven) {
+			if !l.isArrayType(proven) {
 				return l.notYet(parameter, "a rest parameter that isn't an array")
 			}
 			elements := l.checker.GetTypeArguments(proven)

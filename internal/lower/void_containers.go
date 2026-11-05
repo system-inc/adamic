@@ -461,8 +461,8 @@ func (l *lowering) voidKeeps(source, target *checker.Type, depth int, seen map[[
 	if source.Flags()&checker.TypeFlagsObject == 0 || target.Flags()&checker.TypeFlagsObject == 0 {
 		return false
 	}
-	if checker.Checker_isArrayOrTupleType(l.checker, source) || checker.Checker_isArrayOrTupleType(l.checker, target) {
-		if !checker.Checker_isArrayOrTupleType(l.checker, source) || !checker.Checker_isArrayOrTupleType(l.checker, target) {
+	if l.isArrayType(source) || checker.IsTupleType(source) || l.isArrayType(target) || checker.IsTupleType(target) {
+		if !(l.isArrayType(source) || checker.IsTupleType(source)) || !(l.isArrayType(target) || checker.IsTupleType(target)) {
 			return false
 		}
 		if checker.IsTupleType(source) {
@@ -602,7 +602,7 @@ func (l *lowering) voidHolding(t *checker.Type) string {
 			}
 		}
 	}
-	if checker.Checker_isArrayOrTupleType(l.checker, t) {
+	if l.isArrayType(t) || checker.IsTupleType(t) {
 		return "its elements"
 	}
 	if t.ObjectFlags()&checker.ObjectFlagsReference != 0 && t.Target() != nil {
