@@ -88,6 +88,11 @@ func cycleCompareProgram(t *testing.T, path string) {
 	cycleCompareProgramModes(t, path, regions...)
 }
 
+// cycleFrozenGeneratorGuard is the frozen scanning reference's stop for a Program region in a program
+// with generators, a guard the real pipeline lifted (#8xcz03h). With the region on, the reference
+// still stops there, so that mode has nothing to compare against.
+const cycleFrozenGeneratorGuard = "a Program region in a program with generator functions (#qk8rztp)"
+
 func cycleCompareProgramModes(t *testing.T, path string, regions ...bool) {
 	t.Helper()
 	absolute, err := filepath.Abs(filepath.Join("../..", path))
@@ -113,6 +118,11 @@ func cycleCompareProgramModes(t *testing.T, path string, regions ...bool) {
 		// Only the IR and resolved strings are compared below. Do not retain the
 		// scanning checker's quadratic relation cache while building the indexed copy.
 		loaded = nil
+		var frozenGuard *NotYet
+		if region && errors.As(scanErr, &frozenGuard) && frozenGuard.What == cycleFrozenGeneratorGuard {
+			t.Logf("%s: ProgramRegion=true not compared: the frozen scanning reference refuses a Program region with generators, a guard the real pipeline lifted in #8xcz03h", path)
+			continue
+		}
 		if cycleProgramStressInputs[path] {
 			t.Logf("%s: scanning snapshot ready, ProgramRegion=%t; release its checker", path, region)
 			runtime.GC()

@@ -183,11 +183,20 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 		if lowering.result.HasAsync() {
 			return nil, &Refused{Where: program.Where(entry.AsNode()), What: "Program region with async work", Fix: "keep Program members in the one-shot synchronous CLI"}
 		}
-		if lowering.result.HasGenerators() {
-			// A generator's frame can't be a region member (adamic_region_unmovable), and which
-			// types it reaches isn't proven yet (Memory, q9).
-			return nil, &NotYet{Where: program.Where(entry.AsNode()), What: "a Program region in a program with generator functions (#qk8rztp)"}
-		}
+		// A program with generators may have a Program region (#8xcz03h), since no generator frame
+		// can join one or reach a member by a road the cycle walk doesn't see:
+		//  1. A frame has no captured cell: checkGeneratorBody stops a captured local and a nested
+		//     function in a generator, and FrameEnvironment holds only captured locals
+		//     (TestProgramRegionGeneratorCapturedLocalStops, TestProgramRegionGeneratorNestedFunctionStops).
+		//  2. A generator's call is an ir.Call, which programAllocation never stamps, and
+		//     internal/native/generator.go adopts nothing, so no frame is adopted
+		//     (internal/oracle's TestProgramRegionGeneratorsNotAdopted).
+		//  3. No generator value reaches a slot: expression.go stops every value use but an Iterable<T>
+		//     argument, and checkGeneratorRoads holds the lowered program to that
+		//     (TestProgramRegionGeneratorStoredInFieldStops, TestProgramRegionGeneratorPushedIntoArrayStops,
+		//     TestProgramRegionGeneratorCapturedByClosureStops).
+		// When a generator can be stored in a slot (#qk8rztp S2c-4), the cycle walk needs the frame's
+		// links, and these pins are that work's done-when.
 	}
 	if plan != nil {
 		if err := lowering.applyProgramMetadata(plan); err != nil {
