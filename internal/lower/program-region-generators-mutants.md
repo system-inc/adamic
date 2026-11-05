@@ -7,7 +7,7 @@ each pinned (lower.go names them where the guard stood):
 |---|---|
 | A generator's frame has no captured cell | TestProgramRegionGeneratorCapturedLocalStops, TestProgramRegionGeneratorNestedFunctionStops |
 | No generator frame is adopted into the region | internal/oracle's TestProgramRegionGeneratorsNotAdopted |
-| No generator value reaches a slot | TestProgramRegionGeneratorStoredInFieldStops, TestProgramRegionGeneratorPushedIntoArrayStops, TestProgramRegionGeneratorCapturedByClosureStops, and on the callee side of an Iterable<T> parameter, TestProgramRegionGeneratorParameterStoredInFieldStops, TestProgramRegionGeneratorParameterCapturedByClosureStops |
+| No generator value reaches a slot | TestProgramRegionGeneratorStoredInFieldStops, TestProgramRegionGeneratorPushedIntoArrayStops, TestProgramRegionGeneratorHeldInLocalStops, and on the callee side of an Iterable<T> parameter, TestProgramRegionGeneratorParameterStoredInFieldStops, TestProgramRegionGeneratorParameterCapturedByClosureStops |
 
 TestProgramRegionGeneratorProgramEngages is the control: the shared tree and generator lower with the region on and
 its Tree literals in it, so each pin stops on its own road.
