@@ -130,6 +130,18 @@ static adamic_value collection_next(adamic_closure *self, adamic_value *argument
 	return (adamic_value){.reference = result};
 }
 
+bool adamic_collection_iterator_is(const void *value) {
+	if (value == NULL || ((const adamic_heap *)value)->kind != adamic_kind_object) {
+		return false;
+	}
+	const adamic_object *object = value;
+	if (object->shape != &iterator_shape) {
+		return false;
+	}
+	const adamic_closure *next = object->slots[0].reference;
+	return next != NULL && next->code == collection_next;
+}
+
 adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int key, int value, bool set) {
 	adamic_object *state = adamic_object_new(&state_shape);
 	state->slots[0].reference = adamic_map_iterate(collection);

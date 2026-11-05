@@ -91,6 +91,7 @@ var writesNothing = []struct {
 	{ir.HasProperty{}, "tests for a field without reading it"},
 	{ir.InstanceOf{}, "tests a class chain"},
 	{ir.IterableOf{}, "the generator its call made, seen as the object an Iterable<T> slot holds"},
+	{ir.IsCollectionIterator{}, "tests whether a reference is a collection's iterator"},
 	{ir.IsGenerator{}, "tests a reference's heap kind"},
 	{ir.IsNull{}, "tests a reference"},
 	{ir.IsUndefined{}, "tests a reference"},

@@ -1,0 +1,31 @@
+// arrayFrom<Symbol>'s shape (#qk8rztp S2c-1): one instance of tsc's arrayFrom, its implementation
+// signature alone, fed a generator's call at one call site (checker.ts:24402's) and a Map's keys()
+// at another (checker.ts:10011's). Its for-of over the parameter is one slot both kinds reach, so
+// each pass dispatches on what the object is: the generator steps by its own next, the Map's iterator
+// by the collection loop's own step, and the loop's body is the one both share.
+interface SymbolLike {
+    readonly escapedName: string;
+    readonly flags: number;
+}
+export function arrayFrom<T, U>(iterator: Iterable<T>, map?: (t: T) => U): (T | U)[] {
+    const result: (T | U)[] = [];
+    for (const value of iterator) {
+        result.push(map ? map(value) : value);
+    }
+    return result;
+}
+function* symbolsOf(names: readonly string[], base: number): Generator<SymbolLike, void, undefined> {
+    for(let index = 0; index < names.length; index++) {
+        yield { escapedName: `${names[index] ?? ''}${String(base + index)}`, flags: base * index };
+    }
+}
+const table = new Map<SymbolLike, number>();
+for(let index = 0; index < 3; index++) {
+    table.set({ escapedName: `key${'#'.repeat(index)}`, flags: index * 4 }, index);
+}
+const fromGenerator = arrayFrom(symbolsOf(['alpha', 'beta', 'gamma'], 2), (symbol: SymbolLike) => symbol);
+const fromKeys = arrayFrom(table.keys(), (symbol: SymbolLike) => symbol);
+const again = arrayFrom(symbolsOf(['delta'], 7), (symbol: SymbolLike) => symbol);
+console.log(fromGenerator.map((symbol: SymbolLike): string => `${symbol.escapedName}:${String(symbol.flags)}`).join(','));
+console.log(fromKeys.map((symbol: SymbolLike): string => `${symbol.escapedName}:${String(symbol.flags)}`).join(','));
+console.log(again.map((symbol: SymbolLike): string => symbol.escapedName).join(','));

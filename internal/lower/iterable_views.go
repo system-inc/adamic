@@ -202,7 +202,6 @@ func (l *lowering) checkIterableViews() error {
 		unproven := slices.Clone(reaches.Reasons)
 		var differently []string
 		var generators []iterableOrigin
-		collections := 0
 		for _, number := range reaches.Sites {
 			if number < 1 || number > len(origins) {
 				unproven = append(unproven, "an allocation")
@@ -213,7 +212,8 @@ func (l *lowering) checkIterableViews() error {
 			case origin.generator != 0:
 				generators = append(generators, origin)
 			case origin.collection:
-				collections++
+				// The dispatch's collection arm steps it, or the loop itself does when no generator
+				// feeds the view.
 			default:
 				unproven = append(unproven, origin.name)
 				continue
@@ -229,7 +229,7 @@ func (l *lowering) checkIterableViews() error {
 			return l.notYet(view.where, "a view over an iterable whose origins yield values held differently ("+strings.Join(differently, "; ")+", read as "+iterableHeldName(view.held)+")")
 		}
 		if len(generators) != 0 {
-			if err := l.generatorView(index, generators, collections); err != nil {
+			if err := l.generatorView(index, generators); err != nil {
 				return err
 			}
 		}
@@ -326,20 +326,17 @@ func (l *lowering) generatorParameter(call ir.Call, position int, of ir.Iterable
 	return nil
 }
 
-// generatorView admits a view a generator feeds, and rewrites its loop into the dispatch, or stops
-// at what S2c-1 doesn't build: a view held as a union (Iterable<string>), one a collection's
-// iterator feeds as well, which needs the dispatch's second arm, and one fed by more than one
-// generator function. The step itself resumes through the frame's own code (adamic_generator_next
+// generatorView admits a view a generator feeds, a collection's iterator feeding it too or not, and
+// rewrites its loop into the dispatch, or stops at what S2c-1 doesn't build: a view held as a union
+// (Iterable<string>), and one fed by more than one generator function. The step itself resumes through the frame's own code (adamic_generator_next
 // calls generator->code->resume, and JavaScript's next() is the generator's own), so several
 // functions could share it; what can't is GeneratorNext's one Function, whose ResumeMayThrow says
 // whether the step's caller tests for a throw (Lower's seam).
-func (l *lowering) generatorView(index int, generators []iterableOrigin, collections int) error {
+func (l *lowering) generatorView(index int, generators []iterableOrigin) error {
 	view := l.iterableViews[index]
 	switch {
 	case view.iterated.Type() == ir.Union:
 		return l.notYet(view.where, "a view held as a union (Iterable<string>) that a generator feeds, whose arm isn't built yet (#qk8rztp S2c-1)")
-	case collections != 0:
-		return l.notYet(view.where, "a view that both a generator and a collection's iterator feed, whose dispatch has its generator arm only (#qk8rztp S2c-1)")
 	case view.holder < 0 || view.function < 0:
 		return fmt.Errorf("lower: compiler bug: the iterable view at %s has no loop to dispatch", l.program.Where(view.where))
 	}
@@ -353,12 +350,19 @@ func (l *lowering) generatorView(index int, generators []iterableOrigin, collect
 
 // dispatchView rewrites a view's loop, lowered as a collection iterator's (libraryIteratorLoop), into
 // its per-step dispatch on what the object is at run time, never its static type (Compiler's
-// condition, Lower's (b)). The body is the one forOf lowered, kept as it is. A generator steps by
-// GeneratorNext and GeneratorDone, as forOfGenerator's loop does, and anything else is a compiler
-// bug said out loud, naming the site, since the proof listed every origin (Lower's condition 5).
+// condition, Lower's (b)). The body is the one forOf lowered, kept as it is, and the step's value is
+// assigned to the loop's item, declared at the top of each pass, by whichever arm steps:
+//
+//   - a generator, by GeneratorNext and GeneratorDone, as forOfGenerator's loop does;
+//   - a collection's iterator, by libraryIteratorStep, the collection loop's own step, never a copy
+//     (Lower's condition 4);
+//   - anything else is a compiler bug said out loud, naming the site, since the proof listed every
+//     origin (Lower's condition 5).
+//
 // The block closes what it holds at every way out (ir.Block's Closes), so a break, a return, a
-// throw or a jump to an outer label finishes the generator, as Node's return() does, and a later
-// pass over it finds it done (Lower's must).
+// throw or a jump to an outer label finishes a generator, as Node's return() does, and a later pass
+// over it finds it done (Lower's must); a collection's iterator has no return(), and the close
+// leaves it as it is.
 func (l *lowering) dispatchView(view iterableView, function int) error {
 	yields := l.result.Functions[function].Yields
 	held := ir.Read{Local: view.holder, Of: ir.Object}
@@ -375,18 +379,29 @@ func (l *lowering) dispatchView(view iterableView, function int) error {
 		if !isDeclare || declared.Local != view.holder || !isLoop || len(loop.Body) < 3 {
 			return node
 		}
+		libraryStep, isStep := loop.Body[0].(ir.Declare)
 		item, isItem := loop.Body[2].(ir.Declare)
-		if !isItem {
+		if !isStep || !isItem {
 			return node
 		}
-		pass := []ir.Statement{
-			ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsGenerator{Value: held}}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}},
+		collectionArm, value := libraryIteratorStep(held, ir.Read{Local: libraryStep.Local, Of: ir.Object}, l.result.Locals[item.Local].Type)
+		collectionArm = append(collectionArm, ir.Assign{Local: item.Local, Value: value})
+		generatorArm := []ir.Statement{
 			// The step is tested for a throw before done is read, as forOfGenerator's is.
 			ir.Declare{Local: step.Local, Value: ir.GeneratorNext{Generator: held, Function: function, Of: yields}},
 			ir.If{Condition: ir.GeneratorDone{Generator: held}, Then: []ir.Statement{ir.Break{}}},
-			ir.Declare{Local: item.Local, Value: step},
+			ir.Assign{Local: item.Local, Value: step},
 		}
-		loop.Body = append(pass, loop.Body[3:]...)
+		dispatch := ir.If{
+			Condition: ir.IsGenerator{Value: held},
+			Then:      generatorArm,
+			Else: []ir.Statement{ir.If{
+				Condition: ir.IsCollectionIterator{Value: held},
+				Then:      collectionArm,
+				Else:      []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}},
+			}},
+		}
+		loop.Body = append([]ir.Statement{ir.Declare{Local: item.Local}, dispatch}, loop.Body[3:]...)
 		rewritten = true
 		return ir.Block{Body: []ir.Statement{declared, loop}, Closes: view.holder + 1}
 	}

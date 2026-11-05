@@ -893,6 +893,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.value(expression.Value)
 	case ir.IsGenerator:
 		return "adamicIsGenerator(" + e.value(expression.Value) + ")"
+	case ir.IsCollectionIterator:
+		return "(" + e.value(expression.Value) + " instanceof AdamicCollectionIterator)"
 	case ir.PromiseValue:
 		name := "resolve"
 		if expression.Reject {
