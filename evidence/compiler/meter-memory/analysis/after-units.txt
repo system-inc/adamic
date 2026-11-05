@@ -1,0 +1,29 @@
+units 4063 total seconds 8216 total live growth 1.90 GiB
+spearman(seconds, spread heap) 0.157 ; spearman(seconds, raw delta) 0.374
+
+TOP 10 BY HEAP ADDED (spread)
+ 3696 compiler/builderStatePublic. builderStatePublic.ts:1:1              6.59 s    +165.5 MiB spread   +165.5 MiB raw
+ 3834 compiler/watch.ts            watch.ts:1:1                           6.55 s    +163.7 MiB spread   +163.7 MiB raw
+ 3503 compiler/transformers/module impliedNodeFormatDependent.ts:1:1      6.31 s    +144.6 MiB spread   +144.6 MiB raw
+ 2327 compiler/factory/baseNodeFac baseNodeFactory.ts:1:1                 6.46 s    +125.6 MiB spread   +125.6 MiB raw
+ 3450 compiler/transformers/es2020 es2020.ts:42:1                         0.24 s     +87.5 MiB spread     +0.0 MiB raw
+ 3451 compiler/transformers/es2021 es2021.ts:1:1                          6.29 s     +87.5 MiB spread   +175.0 MiB raw
+ 3341 compiler/transformers/destru destructuring.ts:1:1                  37.89 s     +73.3 MiB spread    +73.3 MiB raw
+ 3889 compiler/tsbuild.ts          tsbuild.ts:10:1                        0.12 s     +73.1 MiB spread    +73.1 MiB raw
+ 3136 compiler/binder.ts           binder.ts:3905:1                       0.10 s     +72.3 MiB spread     +0.0 MiB raw
+ 3137 compiler/symbolWalker.ts     symbolWalker.ts:1:1                    5.95 s     +72.3 MiB spread   +144.6 MiB raw
+
+TOP 10 BY SECONDS
+ 3188 compiler/checker.ts          checker.ts:1:1                       115.41 s     -48.5 MiB spread    -48.5 MiB raw
+ 2424 compiler/factory/nodeTests.t nodeTests.ts:1:1                      59.81 s      -3.8 MiB spread     -3.8 MiB raw
+ 3542 compiler/emitter.ts          emitter.ts:1:1                        55.66 s      -9.7 MiB spread   -145.1 MiB raw
+ 1251 compiler/utilitiesPublic.ts  utilitiesPublic.ts:1:1                46.51 s      +1.6 MiB spread    +35.3 MiB raw
+ 3121 compiler/binder.ts           binder.ts:1:1                         45.05 s     +12.6 MiB spread    +88.3 MiB raw
+ 3428 compiler/transformers/esDeco esDecorators.ts:1:1                   42.60 s      +1.7 MiB spread     +3.4 MiB raw
+ 3392 compiler/transformers/ts.ts  ts.ts:1:1                             42.03 s     -28.8 MiB spread   -144.1 MiB raw
+ 1493 compiler/utilities.ts        utilities.ts:1:1                      41.22 s     +29.7 MiB spread    +59.4 MiB raw
+ 2761 compiler/parser.ts           parser.ts:1:1                         40.35 s     -43.2 MiB spread   -129.6 MiB raw
+ 3496 compiler/transformers/module module.ts:1:1                         39.43 s      +4.5 MiB spread    +13.6 MiB raw
+
+top-decile overlap: 89 of 406 units are in both the top 10% by heap and top 10% by seconds
+time share of top-decile-by-seconds 95.5%; heap share (positive spread) of top-decile-by-heap 78.7%
