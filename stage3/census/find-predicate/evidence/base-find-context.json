@@ -1,0 +1,930 @@
+[
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/builder.ts:268:1",
+    "node": "FunctionDeclaration",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/core.ts:342:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/core.ts:656:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/builder.ts:1181:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/core.ts:1337:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/builder.ts:1663:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/builder.ts:1192:1",
+    "node": "FunctionDeclaration",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/checker.ts:1708:51",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "getParseTreeNode"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/checker.ts:1793:51",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "getParseTreeNode"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/checker.ts:4748:40",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "or",
+      "findAncestor"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/checker.ts:4767:44",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "or",
+      "findAncestor"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/checker.ts:4778:44",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "or",
+      "findAncestor"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/checker.ts:4830:65",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/checker.ts:9708:112",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/checker.ts:10367:76",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/checker.ts:10911:50",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "or",
+      "p.declarations?.find",
+      "setTextRange"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/checker.ts:27788:72",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/checker.ts:30280:62",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "findAncestor"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/checker.ts:30331:76",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "findAncestor"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/checker.ts:30332:93",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "findAncestor"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/checker.ts:48229:65",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/checker.ts:48434:66",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "or",
+      "findAncestor"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/checker.ts:50074:48",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "or",
+      "findAncestor"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/checker.ts:50083:58",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "or",
+      "findAncestor"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/checker.ts:50747:47",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "getParseTreeNode"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/checker.ts:50897:52",
+    "node": "ArrowFunction",
+    "direct_find": false,
+    "calls": [
+      "getParseTreeNode"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/checker.ts:50922:52",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "getParseTreeNode"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/checker.ts:51449:55",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "getParseTreeNode"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/commandLineParser.ts:1729:1",
+    "node": "FunctionDeclaration",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/core.ts:1403:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/commandLineParser.ts:2442:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/core.ts:261:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/commandLineParser.ts:3797:1",
+    "node": "FunctionDeclaration",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:9992:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/core.ts:2474:66",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/core.ts:2474:91",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/core.ts:2476:80",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/core.ts:2476:105",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/core.ts:2476:130",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/factory/nodeConverters.ts:66:40",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/factory/nodeConverters.ts:84:36",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/factory/nodeConverters.ts:55:13",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isBlock"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilitiesPublic.ts:946:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/factory/parenthesizerRules.ts:461:5",
+    "node": "FunctionDeclaration",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/factory/utilities.ts:761:47",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/factory/utilities.ts:189:9",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isComputedPropertyName"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/factory/utilities.ts:216:9",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isQualifiedName"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/factory/utilities.ts:310:9",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isVariableDeclarationList"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/factory/utilities.ts:335:9",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isQualifiedName"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/factory/utilities.ts:349:9",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isIdentifier"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/factory/utilities.ts:466:26",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isPrivateIdentifier"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/factory/utilities.ts:607:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/factory/utilities.ts:626:5",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "Debug.assertIsDefined"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/factory/utilities.ts:654:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/factory/utilities.ts:1024:21",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isPrivateIdentifier"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/factory/utilities.ts:1096:17",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isIdentifier"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/factory/utilities.ts:1573:9",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isPrivateIdentifier"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:9028:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/path.ts:492:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/sourcemap.ts:547:5",
+    "node": "FunctionDeclaration",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/transformer.ts:203:20",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isBundle"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/transformers/classThis.ts:72:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/transformers/declarations/diagnostics.ts:708:43",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilitiesPublic.ts:786:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/transformers/destructuring.ts:185:34",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "Debug.assertNode"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/transformers/destructuring.ts:171:14",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "some"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/transformers/destructuring.ts:202:14",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isIdentifier"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/debug.ts:273:82",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/visitorPublic.ts:123:5",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/transformers/destructuring.ts:558:9",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isComputedPropertyName"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/debug.ts:257:86",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/visitorPublic.ts:587:119",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/transformers/es2017.ts:736:5",
+    "node": "FunctionDeclaration",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/transformers/es2018.ts:1220:5",
+    "node": "FunctionDeclaration",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/transformers/namedEvaluation.ts:74:9",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isPropertyNameLiteral"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/transformers/namedEvaluation.ts:139:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/transformers/namedEvaluation.ts:173:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/transformers/namedEvaluation.ts:469:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/transformers/ts.ts:1384:44",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/transformers/utilities.ts:585:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/tsbuildPublic.ts:259:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:3908:53",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:2400:17",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isIdentifier"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilitiesPublic.ts:615:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:3182:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:3335:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:3471:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:3773:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:7563:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:5041:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:4139:1",
+    "node": "FunctionDeclaration",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:4179:9",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isCallExpression"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:4213:9",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isPropertyAccessExpression"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:4231:13",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isIdentifier"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:4104:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:4302:11",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isElementAccessExpression"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:2724:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:4754:10",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isIdentifier"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:5185:12",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isExportAssignment"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:5391:18",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isElementAccessExpression"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:5367:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:5440:12",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isMemberName"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:5445:12",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isMemberName"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:5470:12",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isIdentifier"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:5522:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:6150:27",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isNoSubstitutionTemplateLiteral"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:6784:41",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isJSDocSignature"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:6838:9",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "hasDynamicName"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:6912:12",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isJSDocSignature"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:7541:9",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isPropertyAccessExpression"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:4148:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/core.ts:162:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:10014:105",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/core.ts:2474:20",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:11131:12",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isIdentifier"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:11136:12",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isIdentifier"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:11158:12",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isIdentifier"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilities.ts:11209:12",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isIdentifier"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/debug.ts:344:5",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilitiesPublic.ts:1280:52",
+    "node": "Identifier",
+    "direct_find": true,
+    "calls": [
+      "find"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilitiesPublic.ts:1285:38",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "getJSDocTags(node).filter"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilitiesPublic.ts:826:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilitiesPublic.ts:888:9",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isDeclaration"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilitiesPublic.ts:1391:38",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "isNonNullExpression"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilitiesPublic.ts:1431:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilitiesPublic.ts:1536:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/utilitiesPublic.ts:2534:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/visitorPublic.ts:196:5",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/visitorPublic.ts:276:5",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/visitorPublic.ts:316:5",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/visitorPublic.ts:393:126",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/visitorPublic.ts:508:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/visitorPublic.ts:548:9",
+    "node": "Identifier",
+    "direct_find": false,
+    "calls": [
+      "some"
+    ]
+  },
+  {
+    "where": "/workspace/scratch/find-adapted/src/compiler/program.ts:1163:1",
+    "node": "ExportKeyword",
+    "direct_find": false,
+    "calls": []
+  }
+]
