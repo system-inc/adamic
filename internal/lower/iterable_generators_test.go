@@ -64,6 +64,7 @@ func TestGeneratorIntoAnIterableParameterLowers(t *testing.T) {
 func TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
 	t.Parallel()
 	const readTwice = "read 2 times"
+	const halved = "function* halved(limit: number): Generator<number, undefined, undefined> { for (let index = 0; index < limit; index++) { yield index / 2; } }\n"
 	const other = "used other than by a for-of"
 	function := func(body string) string {
 		return iterableCounted + "function total(items: IterableIterator<number>): number { let sum = 0; " + body + " return sum; }\nconsole.log(String(total(counted(3))));"
@@ -81,7 +82,13 @@ func TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
 		{"a call through a function value", iterableCounted + iterableTotal + "const add = total;\nconsole.log(String(add(counted(2))));", other},
 		{"a method", iterableCounted + "class Summer { total(items: Iterable<number>): number { let sum = 0; for (const value of items) { sum += value; } return sum; } }\nconsole.log(String(new Summer().total(counted(2))));", other},
 		{"a stored generator passed in", iterableCounted + iterableTotal + "const made = counted(2);\nconsole.log(String(total(made)));", other},
-		{"two generator functions", iterableCounted + iterableTotal + "function* halved(limit: number): Generator<number, undefined, undefined> { for (let index = 0; index < limit; index++) { yield index / 2; } }\nconsole.log(String(total(counted(2)) + total(halved(2))));", "generators of more than one function"},
+		// Language's identity and reassignment probes with a generator as the other value. Written
+		// as another generator's call in the callee, it stops where that call is lowered, a generator
+		// used other than by a consumer, before any count; given as a second generator parameter, the
+		// one-read count is what stops it (the "it === other" and "reassigning it" rows above).
+		{"it === g2()", iterableCounted + halved + "function total(items: Iterable<number>): number { let sum = items === halved(2) ? 1 : 0; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(3))));", other},
+		{"it = g2() before the loop", iterableCounted + halved + "function total(items: Iterable<number>): number { let sum = 0; items = halved(2); for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(3))));", other},
+		{"two generator functions", iterableCounted + iterableTotal + halved + "console.log(String(total(counted(2)) + total(halved(2))));", "generators of more than one function"},
 		{"a generator beside a collection's iterator", iterableCounted + iterableTotal + "const sizes = new Map<string, number>([[`a${String(1)}`, 1]]);\nconsole.log(String(total(counted(2)) + total(sizes.values())));", "both a generator and a collection's iterator"},
 		{"an Iterable<string> parameter", "function* words(limit: number): Generator<string, undefined, undefined> { for (let index = 0; index < limit; index++) { yield `w${String(index)}`; } }\nfunction joined(items: Iterable<string>): string { let all = ''; for (const word of items) { all += word; } return all; }\nconsole.log(joined(words(2)));", "held as a union"},
 		{"yields held otherwise", iterableCounted + "function show(items: Iterable<number | boolean>): void { for (const value of items) { console.log(String(value)); } }\nshow(counted(2));", "held differently"},
