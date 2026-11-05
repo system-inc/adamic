@@ -84,8 +84,9 @@ statements, each saying the form (written as an expression, a method, a static m
 literal's method, declared inside a function or a block, inside a namespace, without a name). No
 function's body is lowered before its signature is written, so none can compile as an ordinary
 function. A generic generator nothing instantiates is never lowered, so what its body holds costs
-nothing; the refusal walk still reads it, and refuses what is refused for good (an async generator,
-rule 2400, among them).
+nothing, and so is a generator method of a class nothing in the whole program constructs, whose
+static parts still run; the refusal walk still reads both, and refuses what is refused for good (an
+async generator, rule 2400, among them).
 
 - **A generator anywhere but its consumer:** stored in a variable, passed as an argument, returned,
   put in an array or a field, read through a view, or the generator function used as a value. A

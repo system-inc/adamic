@@ -1,0 +1,15 @@
+// A class nothing constructs keeps its static parts: its static block runs where the class is
+// declared, as on Node, beside a generator method lowering never reaches (#qk8rztp, Lower's open
+// question 7). Its strings are built, so a block that never ran, or ran twice, shows.
+let trace = `t${String(0)}`;
+class Lines {
+    static label = `lines${String(2)}`;
+    static {
+        trace += `-${this.label}`;
+        console.log(`static ${trace}`);
+    }
+    *each(): Generator<string, void, unknown> {
+        yield `${Lines.label}!`;
+    }
+}
+console.log(`main ${trace}`);
