@@ -72,7 +72,9 @@ func lengthSite(value any) int {
 }
 
 // statementValue is the expression a statement evaluates first and whole: a declaration's or an
-// assignment's value, an evaluated expression, or a written line's string, or nil.
+// assignment's value, or an evaluated expression, or nil. A written line (console.log) is none of
+// these, so an await in one never counts as leading and the proof fails closed on it (Runtime's and
+// Language's read on #c3bk0fp).
 func statementValue(statement ir.Statement) ir.Expression {
 	switch statement := statement.(type) {
 	case ir.Declare:
@@ -80,8 +82,6 @@ func statementValue(statement ir.Statement) ir.Expression {
 	case ir.Assign:
 		return statement.Value
 	case ir.Evaluate:
-		return statement.Value
-	case ir.WriteLine:
 		return statement.Value
 	}
 	return nil
