@@ -1,0 +1,98 @@
+// Array destructuring of a RegExp match into names: index reads in order, a hole skips its index,
+// an absent capture or an index past the end is undefined, and a default is evaluated only then.
+const versionRegExp = /^(0|[1-9]\d*)(?:\.(0|[1-9]\d*)(?:\.(0|[1-9]\d*)(?:-([a-z0-9-.]+))?(?:\+([a-z0-9-.]+))?)?)?$/i;
+const partialRegExp = /^([x*0]|[1-9]\d*)(?:\.([x*0]|[1-9]\d*)(?:\.([x*0]|[1-9]\d*)(?:-([a-z0-9-.]+))?(?:\+([a-z0-9-.]+))?)?)?$/i;
+
+// Lines 142 to 145 and 297 to 300 of TypeScript's semver.ts, as they are written there.
+function tryParseComponents(text: string): string | undefined {
+	const match = versionRegExp.exec(text);
+	if (!match) return undefined;
+	const [, major, minor = "0", patch = "0", prerelease = "", build = ""] = match;
+	return `${major}|${minor}|${patch}|${prerelease}|${build}`;
+}
+
+function parsePartial(text: string): string | undefined {
+	const match = partialRegExp.exec(text);
+	if (!match) return undefined;
+	const [, major, minor = "*", patch = "*", prerelease, build] = match;
+	return `${major}|${minor}|${patch}|${prerelease === undefined ? "undefined" : prerelease}|${build === undefined ? "undefined" : build}`;
+}
+
+for (const text of ["1", "1.2", "1.2.3", "1.2.3-beta.1", "1.2.3+build5", "1.2.3-rc+b", "01", "x"]) {
+	console.log(`${text} => ${tryParseComponents(text)} / ${parsePartial(text)}`);
+}
+
+// Absent optional groups are undefined, not empty strings.
+const optional = /(a)?(b)?(c)?/;
+const absent = optional.exec("b");
+if (absent !== null) {
+	const [whole, first, second, third] = absent;
+	console.log(`${whole} ${first === undefined} ${second} ${third === undefined}`);
+}
+
+// Holes at the start and in the middle.
+const wide = /(\d)-(\d)-(\d)-(\d)/.exec("1-2-3-4");
+if (wide !== null) {
+	const [, one, , three, ,] = wide;
+	const [, , , , fifth, sixth] = wide;
+	console.log(`${one} ${three} ${fifth} ${sixth}`);
+	const [, , , , , ] = wide;
+}
+
+// A pattern longer than the match: past the end is undefined, and the default fills it.
+const narrow = /(x)/.exec("x");
+if (narrow !== null) {
+	const [whole, capture, past, farther = "far"] = narrow;
+	console.log(`${whole} ${capture} ${past === undefined} ${farther}`);
+}
+
+// A default that logs runs only when its read is undefined, and in pattern order with the reads.
+function fallback(name: string): string {
+	console.log(`default ${name}`);
+	return `<${name}>`;
+}
+const logged = /(a)(b)?(c)?(d)?/.exec("acx");
+if (logged !== null) {
+	console.log("before");
+	const [, a = fallback("a"), b = fallback("b"), c = fallback("c"), d = fallback("d")] = logged;
+	console.log(`${a} ${b} ${c} ${d}`);
+}
+
+// A default may use the names before it, and a match is read once into a held value.
+let reads = 0;
+function nextMatch(): RegExpExecArray | null {
+	reads += 1;
+	return /(\w)(\w)?/.exec("q");
+}
+const read = nextMatch();
+if (read !== null) {
+	const [, head, tail = head + "!"] = read;
+	console.log(`${head} ${tail} ${reads}`);
+}
+const again = nextMatch();
+if (again !== null) {
+	const [, held, heldTail = "none"] = again;
+	console.log(`${held} ${heldTail} ${reads}`);
+}
+
+// A match from String.prototype.match is a RegExpMatchArray.
+const viaMatch = "k=v".match(/(\w)=(\w)(\w)?/);
+if (viaMatch) {
+	const [, key, value, extra = "none"] = viaMatch;
+	console.log(`${key} ${value} ${extra}`);
+}
+
+// Names that are let can be reassigned.
+const reassigned = /(a)(b)?/.exec("a");
+if (reassigned !== null) {
+	let [, left, right] = reassigned;
+	right = right === undefined ? left + "?" : right;
+	console.log(`${left} ${right}`);
+}
+
+// A default is for undefined only: a capture that matched the empty string keeps it.
+const empty = /(a*)(b)/.exec("b");
+if (empty !== null) {
+	const [, run = "DEFAULT", tail = "T"] = empty;
+	console.log(`[${run}] ${run.length} ${tail}`);
+}
