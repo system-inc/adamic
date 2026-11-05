@@ -110,6 +110,9 @@ func castMembers(proven *checker.Type) []*checker.Type {
 // l.refusal.checkedCasts for stringWideningRefusal (3100).
 func (l *lowering) castRefusal(node *ast.Node) error {
 	if node.Kind == ast.KindAsExpression && l.processPath(node.AsAsExpression().Expression) == "" {
+		if err := l.erasedWritableViewCast(node); err != nil {
+			return err
+		}
 		proof, err := l.castProof(node)
 		if err != nil {
 			return err

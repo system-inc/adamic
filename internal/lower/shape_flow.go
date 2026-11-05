@@ -205,6 +205,9 @@ func (graph *allocationFlowGraph) projectionIndex() *allocationProjection {
 // projectedSources joins initial fields and all visible stores across all paths.
 // An opaque receiver can alias any allocation; its field name stays unknown.
 func (graph *allocationFlowGraph) projectedSources(expression ir.Expression, depth int) ([]ir.Expression, []string, bool) {
+	if read, ok := expression.(ir.ViewElement); ok {
+		expression = ir.ArrayIndex{Array: read.Array, Index: read.Index, Relative: read.Relative}
+	}
 	var receiver ir.Expression
 	name := ""
 	array := false

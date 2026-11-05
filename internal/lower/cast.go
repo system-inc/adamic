@@ -12,7 +12,7 @@ import (
 // value itself. A downcast to members of a discriminated union is checked at runtime: the tag is
 // there to read. Any other cast is a type the compiler would have to trust, and 0.1 refuses it
 // (adamic/no-unchecked-cast).
-func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) castValue(node *ast.Node) (ir.Expression, error) {
 	as := node.AsAsExpression()
 	proof, err := l.castProof(node)
 	if err != nil {

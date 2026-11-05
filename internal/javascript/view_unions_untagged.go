@@ -47,8 +47,8 @@ func (e *emitter) viewUntaggedObjectUnion(property ir.Property, value string) st
 }
 
 const viewUntaggedPlainRuntime = `
-const adamicUntaggedPlainSelect = (value, contracts, id, expression, declared) => {
- if(value===undefined && contracts[id-1]?.Undefined) return 0;
+const adamicUntaggedPlainSelect = (value, contracts, id, expression, declared, element = false) => {
+ if(value===undefined && contracts[id-1]?.Undefined) return element ? true : 0;
  const slot = (object,name) => {
   if(object===null || typeof object!=='object' || object instanceof Map) return undefined;
   const field=Object.getOwnPropertyDescriptor(object,name);
@@ -86,10 +86,11 @@ const adamicUntaggedPlainSelect = (value, contracts, id, expression, declared) =
    if(contract.ProducerCertified && !(contract.Functions || []).includes(recorded?.function)) return false;
    return adamicViewCallableSignaturesMatch(recorded,expected);
   }
-  if(contract.Kind===3) return false; // awaits views-v3: array element kind
+  if(contract.Kind===3) return Array.isArray(value) && !adamicTupleObjects.has(value);
   if(contract.Kind===6) return value===null;
   if(contract.Kind===7) return value===undefined;
   if(contract.Kind===4){for(const member of contract.Members || []){if(matches(value,member,depth+1)) return true;}return false;}
+  if(contract.Kind===2 && contract.Of===10) return value!==null && (typeof value==='object' || typeof value==='function' || value instanceof AdamicClosure);
   if(contract.Kind!==2 || value===null || typeof value!=='object' || (Array.isArray(value) && !adamicTupleObjects.has(value)) || value instanceof Map) return false;
   if(contract.FixedTuple && (!Array.isArray(value) || !adamicTupleObjects.has(value) || value.length !== contract.Tuple.length)) return false;
   const fields=contract.Fields || [];
@@ -101,6 +102,7 @@ const adamicUntaggedPlainSelect = (value, contracts, id, expression, declared) =
   return true;
   } finally {if(reference){seen.delete(id);if(seen.size===0) active.delete(value);}}
  };
+ if(element) return matches(value,id);
  if(contracts[id-1].FixedTuple && matches(value,id)) return id;
  for(const member of contracts[id-1].Members || []){if(matches(value,member)) return member;}
  panic('field read failed: '+expression+' matches no member of '+declared+'; expected '+declared+', found '+(value===null?'null':value===undefined?'undefined':Array.isArray(value)?'array':value instanceof Map?'Map':adamicTypeOf(value)));

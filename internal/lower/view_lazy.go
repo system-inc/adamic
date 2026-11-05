@@ -131,6 +131,9 @@ func (l *lowering) plainObjectIntersection(target *checker.Type) bool {
 func (l *lowering) checkLazyViewReads() error {
 	l.certifyUntaggedCallableProducers()
 	l.completeUntaggedRecursiveContracts()
+	if err := l.checkViewArrays(); err != nil {
+		return err
+	}
 	program := l.result
 	if len(program.ViewOrigins) == 0 {
 		return unemittableCheckedViewRead(program)
@@ -199,8 +202,8 @@ func (l *lowering) checkLazyViewReads() error {
 				refused = &NotYet{Where: where, What: "a checked view of mutable array field " + field}
 				return false
 			}
-			if strings.Contains(family, "views-v3: array element kind") {
-				refused = &NotYet{Where: where, What: "checked view union arm awaits views-v3: array element kind"}
+			if strings.Contains(family, "array element") {
+				refused = &NotYet{Where: where, What: "a checked view array field " + field + " whose element contract is not checked yet"}
 				return false
 			}
 			if family == intersectionPastDepthBound {

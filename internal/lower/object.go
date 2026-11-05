@@ -364,7 +364,7 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 			}
 		} else if contextual := l.slotType(literal); contextual != nil && l.checker.IsArrayType(contextual) {
 			// Layout must follow the destination, even when the literal infers narrower elements.
-			if declared, known := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); known && declared == ir.Union {
+			if declared, known := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); known && declared == ir.Union && l.checker.GetElementTypeOfArrayType(contextual).Flags()&checker.TypeFlagsUnknown == 0 {
 				if inferred, known := l.kept(l.checker.GetElementTypeOfArrayType(arrayType)); known && inferred != ir.Union {
 					return 0, &Refused{Where: l.program.Where(literal), What: "union-typed array built from a narrower literal", Fix: "declare the literal's element type explicitly, or build the array with a mixed literal"}
 				}
@@ -391,7 +391,7 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		return ir.Number, nil
 	}
 	if element.Flags()&checker.TypeFlagsUnknown != 0 {
-		return 0, l.notYet(node, "an array of unknown with erased element storage (retain its declared element type before reading elements)")
+		return ir.Union, nil
 	}
 	valueType, isKnown := l.kept(element)
 	if !isKnown || (slotless(valueType) && valueType != ir.Union) {
@@ -688,12 +688,6 @@ func (l *lowering) fixedFieldRead(node *ast.Node, object ir.Expression, name str
 			if stored, isKnown := l.representation(l.checker.GetTypeOfSymbol(field)); isKnown && stored == of.Present() {
 				return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: stored, Optional: true, Class: l.classOf(node)}), nil
 			}
-		}
-	}
-	if symbol := l.checker.GetSymbolAtLocation(node.Name()); symbol != nil {
-		id := l.result.ViewContractTypes[int(l.checker.GetTypeOfSymbol(symbol).Id())]
-		if id > 0 && strings.Contains(l.result.ViewContracts[id-1].Unsupported, "views-v3: array element kind") {
-			return nil, l.notYet(node, "checked view union arm awaits "+l.result.ViewContracts[id-1].Unsupported)
 		}
 	}
 	if censusFieldSlotless(of) && !l.unionReadCertificate(node, of) {
@@ -1177,6 +1171,12 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 		return nil, l.notYet(statement.Expression, "for...of over a "+typeName(iterable.Type()))
 	}
 	lowered := ir.ForOf{Iterable: iterable, Element: element, RegexIterator: iterable.Type() == ir.Object}
+	if iterable.Type() == ir.Array {
+		lowered.ElementCheck, err = l.viewArrayElementCheck(node, iterated)
+		if err != nil {
+			return nil, err
+		}
+	}
 	if ast.IsIdentifier(name) {
 		if lowered.Local, err = l.declareLocal(name); err != nil {
 			return nil, err
@@ -1414,7 +1414,8 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 				return nil, true, err
 			}
 		}
-		return ir.ArrayMap{Array: array, Callback: callback, Element: element, Result: result, CallbackType: callbackType}, true, nil
+		check, err := l.viewArrayElementCheck(node, receiver)
+		return ir.ArrayMap{Array: array, Callback: callback, Element: element, Result: result, CallbackType: callbackType, ElementCheck: check}, true, err
 	}
 	if _, isVisit := visits[name]; isVisit {
 		return l.arrayVisit(node, array, element, name)
@@ -1450,7 +1451,7 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 		if len(arguments) != 1 {
 			return nil, true, l.notYet(node, "push with other than one value")
 		}
-		return ir.ArrayPush{Array: array, Value: fit(arguments[0], element), Element: element, Site: l.writeSite(receiver)}, true, nil
+		return ir.ArrayPush{Array: array, Value: fit(arguments[0], element), Element: element, Site: l.writeSite(receiver), UnknownElements: l.checker.GetElementTypeOfArrayType(l.concrete(l.checker.GetTypeAtLocation(receiver))).Flags()&checker.TypeFlagsUnknown != 0}, true, nil
 	}
 	switch name {
 	case "includes", "indexOf":
@@ -1468,7 +1469,8 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 		if len(arguments) != 1 || arguments[0].Type() != ir.Number {
 			return nil, true, l.notYet(node, "at with other than one number")
 		}
-		return ir.ArrayIndex{Array: array, Index: arguments[0], Element: element, Relative: true}, true, nil
+		read, err := l.viewArrayIndex(node, receiver, ir.ArrayIndex{Array: array, Index: arguments[0], Element: element, Relative: true})
+		return read, true, err
 	case "reverse":
 		return ir.ArrayReverse{Array: array}, true, nil
 	case "fill":
@@ -1638,6 +1640,10 @@ func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Ty
 		return nil, true, err
 	}
 	visit.Callback, visit.CallbackType = callback, callbackType
+	visit.ElementCheck, err = l.viewArrayElementCheck(node, node.AsCallExpression().Expression.AsPropertyAccessExpression().Expression)
+	if err != nil {
+		return nil, true, err
+	}
 	return visit, true, nil
 }
 
@@ -1674,7 +1680,8 @@ func (l *lowering) arrayReduce(node *ast.Node, array ir.Expression, element ir.T
 	if err != nil {
 		return nil, true, err
 	}
-	return ir.ArrayReduce{Array: array, Callback: callback, Initial: initial, Element: element, Result: result, CallbackType: callbackType}, true, nil
+	check, err := l.viewArrayElementCheck(node, node.AsCallExpression().Expression.AsPropertyAccessExpression().Expression)
+	return ir.ArrayReduce{Array: array, Callback: callback, Initial: initial, Element: element, Result: result, CallbackType: callbackType, ElementCheck: check}, true, err
 }
 
 // mapTypes is a Map's key and value representations. 0.1's maps have string or number keys.
@@ -2075,7 +2082,11 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		if position.Type() != ir.Number {
 			return nil, l.notYet(node, "an array index that isn't a number")
 		}
-		return l.defined(node, ir.ArrayIndex{Array: object, Index: position, Element: element, Optional: optional}), nil
+		read, err := l.viewArrayIndex(node, access.Expression, ir.ArrayIndex{Array: object, Index: position, Element: element, Optional: optional})
+		if err != nil {
+			return nil, err
+		}
+		return l.defined(node, read), nil
 	}
 	if object.Type() == ir.Object {
 		if value, handled, err := l.indexedTupleRead(node, object); handled {

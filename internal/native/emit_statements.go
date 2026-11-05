@@ -566,6 +566,10 @@ func (e *emitter) forOf(statement ir.ForOf) {
 		e.declareLocal(statement.Local, entryValue, true)
 	} else if overString {
 		e.declareLocal(statement.Local, fmt.Sprintf("adamic_string_slice_bytes(%s, %s, %s)", held, index, size), true)
+	} else if statement.ElementCheck != nil {
+		checked := e.temporary()
+		e.line("adamic_value %s = %s.payload;", checked, e.checkedElement(statement.ElementCheck, held, index, false, statement.Element))
+		e.declareLocal(statement.Local, unslotted(statement.Element, checked+"."+member(statement.Element)), true)
 	} else {
 		if statement.Element.IsReference() {
 			element = fmt.Sprintf("(%s)%s", cType(statement.Element), element)

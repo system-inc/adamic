@@ -675,7 +675,7 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		}
 		if null && l.includesUndefined(l.concrete(l.checker.GetTypeAtLocation(written))) {
 			switch operand.(type) {
-			case ir.ArrayIndex, ir.MapGet, ir.ArrayPop:
+			case ir.ArrayIndex, ir.ViewElement, ir.MapGet, ir.ArrayPop:
 				// The lookup still has a presence slot, so typeof can distinguish null from undefined.
 			default:
 				return nil, l.notYet(node, "typeof a value holding both null and undefined without a presence slot")
