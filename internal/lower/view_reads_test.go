@@ -32,6 +32,7 @@ type viewReadExample struct {
 
 // viewChecks read each field they read through a check.
 var viewChecks = []viewReadExample{
+	{ir.ViewElement{}, "checks an element against its declared contract at the read"},
 	{ir.Property{ViewReceiverTypeID: 1, Name: "text"}, "a field a view checks under its receiver's type: emitted through the view's check (checkLazyViewReads, unemittableCheckedViewRead)"},
 	{ir.CheckedCast{}, "reads the discriminant through the cast's own check"},
 	{ir.ObjectCall{Method: "values", Checked: true}, "checks each value against the declared element at run time"},

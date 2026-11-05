@@ -286,7 +286,7 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			found = found || l.result.ObjectSpreadMayThrow(node)
 		case ir.PhantomMember:
 			found = found || !node.Optional
-		case ir.Throw:
+		case ir.Throw, ir.ViewElement:
 			found = true
 		case ir.RecordCall, ir.RecordCoalesce, ir.SetProperty:
 			found = found || l.result.RecordWriteMayThrow(node)

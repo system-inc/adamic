@@ -1182,6 +1182,8 @@ func (a *analysis) value(expression ir.Expression) value {
 		return a.value(expression.Value)
 	case ir.Narrow:
 		return a.value(expression.Value)
+	case ir.ViewElement:
+		return a.value(expression.Value)
 	case ir.PlaceholderUse:
 		// A checked use forwards the value; it cannot create a reference or a write.
 		return a.value(expression.Value)
