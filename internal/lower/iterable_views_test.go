@@ -51,7 +51,10 @@ func TestIterableViewsOverCollectionIteratorsLower(t *testing.T) {
 // that stops for another reason goes red too. An array never reaches the view's proof: going where a
 // structural type is held, it stops at the call (shape_fit.go), and that row holds it stays so. A
 // host callback's parameter, a record's value and a Map's value are origins the walk doesn't follow,
-// and a string handed to an Iterable<string> slot is a second kind, not built until a dispatch is.
+// and a string handed to an Iterable<string> slot is a second kind, not built until a dispatch is. A
+// program arrow kept in a local and called through it is a function value: the graph marks its
+// parameters unknown (view_flow.go's MakeClosure arm), whatever its one call site hands it, since
+// the closure may be called from anywhere it reaches.
 // Mutants (testdata/iterable_views/mutants.md in internal/oracle): the unproven test made false turns
 // every unproven row but the array's into a program that compiles; the held test made false does that
 // to the held-differently rows; the pass not run, or the view not recorded, does it to both.
@@ -63,6 +66,7 @@ func TestIterableViewsOfOtherOriginsAreNotYet(t *testing.T) {
 		{"an array at a second call site", iterableViewCounts + iterableViewTotal + "console.log(String(total(counts.values())));\nconsole.log(String(total([1, 2])));", "an array going where a plain object type is held"},
 		{"a program's own iterable object", iterableViewCounts + iterableViewTotal + "const wrapped = { [Symbol.iterator](): MapIterator<number> { return counts.values(); } };\nconsole.log(String(total(counts.values())));\nconsole.log(String(total(wrapped)));", unproven},
 		{"the function as a value", iterableViewCounts + iterableViewTotal + "const add = total;\nconsole.log(String(total(counts.values())));\nconsole.log(String(add(counts.values())));", unproven},
+		{"a program arrow called through its local", iterableViewCounts + "const total = (it: Iterable<number>): number => { let sum = 0; for (const x of it) { sum += x; } return sum; };\nconsole.log(String(total(counts.values())));", unproven},
 		{"an object literal's method", iterableViewCounts + "const summer = { total(items: Iterable<number>): number { let sum = 0; for (const value of items) { sum += value; } return sum; } };\nconsole.log(String(summer.total(counts.values())));", unproven},
 		{"a field", iterableViewCounts + "const box: { items: Iterable<number> } = { items: counts.values() };\nfor (const value of box.items) { console.log(String(value)); }", unproven},
 		{"a host callback's parameter", iterableViewCounts + "const lists: Iterable<number>[] = [counts.values()];\nlists.forEach((items: Iterable<number>): void => { for (const value of items) { console.log(String(value)); } });", unproven},
