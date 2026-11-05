@@ -175,21 +175,31 @@ func TestUnbrandedPresenceControls(t *testing.T) {
 	}
 }
 
-// A brand still typed void (rulings.md, Oct 29: a program that brands with void fails closed under the
-// void-container rule) used as a value, by length alone and by a read of its elements. This head probes
-// what each does and logs it; each must stop, NotYet or Refused, and the words are pinned once seen.
+// A brand still typed void fails closed under the void-container rule (rulings.md, Oct 29), so unbranded
+// keeps it as it is and it never gains its base's layout: by length alone it stops NotYet at its value, as
+// every branded array did before #gb0fqaa, and a read of its elements is the void-container rule's
+// refusal. Neither lowers whole. Mutant: unbranded's void guard removed; the length row lowers.
 func TestUnbrandedVoidBrandStops(t *testing.T) {
 	t.Parallel()
 	const declaration = "interface VoidSorted<T> extends Array<T> { \" __b\": void; }\n"
-	for _, row := range []struct{ name, body string }{
-		{"its length", "return xs === undefined ? 0 : xs.length;"},
-		{"its elements read", "return xs === undefined ? 0 : xs.join(',').length;"},
+	for _, row := range []struct {
+		name, body string
+		refused    bool
+		want       string
+	}{
+		{"its length", "return xs === undefined ? 0 : xs.length;", false, "a value of type VoidSorted<number>"},
+		{"its elements read", "return xs === undefined ? 0 : xs.join(',').length;", true, "a read of a void container's elements"},
 	} {
 		source := declaration + "function count(xs: VoidSorted<number> | undefined): number { " + row.body + " }\nconsole.log(String(count(undefined)));\nconsole.log(String(count([1, 2] as unknown as VoidSorted<number>)));\n"
 		_, err := lowerSourceAs(t, source, ".ts")
 		t.Logf("%s: %v", row.name, err)
-		if err == nil {
-			t.Errorf("%s: a void brand lowers whole, want a stop", row.name)
+		var stopped *NotYet
+		var refused *Refused
+		switch {
+		case row.refused && (!errors.As(err, &refused) || !strings.Contains(refused.Error(), row.want)):
+			t.Errorf("%s: got %v, want a refusal containing %q", row.name, err, row.want)
+		case !row.refused && (!errors.As(err, &stopped) || !strings.Contains(stopped.Error(), row.want)):
+			t.Errorf("%s: got %v, want NotYet containing %q", row.name, err, row.want)
 		}
 	}
 }
