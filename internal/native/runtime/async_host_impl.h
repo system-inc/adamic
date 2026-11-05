@@ -83,22 +83,32 @@ static void host_default_wake(void) {
     if (result == -1 && errno != EAGAIN && errno != EWOULDBLOCK) abort();
 }
 static void host_default_wait(void) {
-    /* The queue is the predicate. A byte published before poll stays readable. */
+    /* The queue is the predicate. A byte published before poll stays readable.
+     * A source of either kind is something to wait on, as an unref timer is. */
+    size_t source_total = source_count();
     host_lock();
     int timeout = timer_wait_ms();
-    bool ready = host_completions != NULL || (host_requests == NULL && timeout < 0);
+    bool ready = host_completions != NULL || (host_requests == NULL && timeout < 0 && source_total == 0);
     host_unlock();
+    /* Polls no source this turn, a known one-turn delay: see the note atop sources_impl.h. */
     if (ready || adamic_host_stdout_refresh_pending()) return;
-    struct pollfd descriptors[2] = {
-        {.fd = host_pipe[0], .events = POLLIN},
-        {.fd = adamic_host_stdout_wake_descriptor(), .events = POLLIN}
-    };
+    /* The two pipes come first, then each source. Without sources the set
+     * stays on the stack, as it was before there were any. */
+    struct pollfd pipes[2], *descriptors = pipes;
+    if (source_total != 0 && (descriptors = calloc(2 + source_total, sizeof *descriptors)) == NULL) abort();
+    descriptors[0] = (struct pollfd){.fd = host_pipe[0], .events = POLLIN};
+    descriptors[1] = (struct pollfd){.fd = adamic_host_stdout_wake_descriptor(), .events = POLLIN};
+    source_poll_set(descriptors + 2);
     int result;
     do {
-        result = poll(descriptors, 2, timeout);
+        result = poll(descriptors, (nfds_t)(2 + source_total), timeout);
         if (result == -1 && errno == EINTR) timeout = timer_wait_ms();
     } while (result == -1 && errno == EINTR);
+    /* An error on either pipe is the runtime's own failure. One on a source is
+     * its owner's to handle, so it reaches the dispatch as an error bit. */
     if (result < 0 || ((descriptors[0].revents | descriptors[1].revents) & (POLLERR | POLLNVAL))) abort();
+    source_record(descriptors + 2);
+    if (descriptors != pipes) free(descriptors);
 }
 #endif
 bool adamic_host_set_loop_hooks(adamic_host_loop_hook wake, adamic_host_loop_hook wait) {
