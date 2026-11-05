@@ -1,0 +1,21 @@
+{
+  "measurement": "main plus S2a",
+  "main_sha": "fd30fac46130d994f0cd470652d90dffa84f9518",
+  "s2a_sha": "d231af0d34a4a145b14139dbc76d74f87e478b98",
+  "merge_sha": "d231af0d34a4a145b14139dbc76d74f87e478b98",
+  "merge_note": "git merge --no-edit origin/main reported Already up to date; main is already an ancestor of S2a, so no new merge commit was created.",
+  "upstream": {
+    "repository": "https://github.com/microsoft/TypeScript.git",
+    "tag": "v6.0.3",
+    "commit": "050880ce59e30b356b686bd3144efe24f875ebc8"
+  },
+  "compiler_build_command": "go build -o /workspace/scratch/s2a-bin/census ./stage3/census/tool",
+  "census_binary_sha256": "b287c69758f61965d24612a3fff5fa9dd1b28e20b2a6d04628e6aecd84f6a771",
+  "compiler_submodules": [
+    "06af2e399c6c1fb93fd570b774027942747400b4 cohere (06af2e39)",
+    " d92d9bfee114c80be2c375d72edae966176e3a4f cohere/TypeScript (d92d9bfee1)"
+  ],
+  "mode": "ordinary per-file compiler census, first error; no latent or tsc-entry passes",
+  "coverage_note": "The unchanged census tool also emits non-source entries and a final aggregate row. The report counts only the 79 individual source roots.",
+  "created_utc": "2026-11-05T04:01:08.754860+00:00"
+}

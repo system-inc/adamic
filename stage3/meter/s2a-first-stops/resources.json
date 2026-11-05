@@ -1,0 +1,12 @@
+{
+  "measurement": "main plus S2a",
+  "command": [
+    "/workspace/scratch/s2a-bin/census",
+    "/workspace/scratch/s2a-adapted/src/compiler",
+    "/workspace/adamic/stage3/meter/s2a-first-stops/census.jsonl"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 557.959419083,
+  "peak_rss_kib": 935060,
+  "peak_memory_method": "Linux getrusage(RUSAGE_CHILDREN).ru_maxrss for the census process"
+}
