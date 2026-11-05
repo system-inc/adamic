@@ -3,13 +3,13 @@
 // could be longer than V8's longest string, so it checks (ir/string_throws.go).
 function shown(value: number): void {
 	const filled = new Array<number>(3).fill(value);
-	console.log(filled.length);
-	console.log(filled[2]);
-	console.log(new Array<number>(0).fill(value).length);
+	console.log(String(filled.length));
+	console.log(String(filled.indexOf(value)));
+	console.log(String(new Array<number>(0).fill(value).length));
 	const counted = Array.from({ length: 4 }, (_, index) => index + value);
-	console.log(counted.length);
-	console.log(counted[3]);
-	console.log(Array.from({ length: 0 }, (_, index) => index).length);
+	console.log(String(counted.length));
+	console.log(String(counted.indexOf(3 + value)));
+	console.log(String(Array.from({ length: 0 }, (_, index) => index).length));
 }
 for (const value of [1, 2.5, -3]) {
 	try {
