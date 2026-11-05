@@ -1,0 +1,18 @@
+{
+  "node": "v24.19.0",
+  "typescript": "6.0.3",
+  "mutable": {
+    "call": "mutable(undefined, [])",
+    "declared": "number[]",
+    "actual": "undefined"
+  },
+  "readonly": {
+    "call": "readonly(undefined, Object.freeze([]))",
+    "declared": "readonly number[]",
+    "actual": "undefined"
+  },
+  "truthfulInferredReturns": [
+    "number[] | undefined",
+    "readonly number[] | undefined"
+  ]
+}

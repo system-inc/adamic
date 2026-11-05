@@ -1,0 +1,8 @@
+{
+  "baselineExit": 0,
+  "roots": 79,
+  "exit": 1,
+  "red": true,
+  "mutation": "drop only the defined-array relativeComplement overload",
+  "diagnostics": "/workspace/scratch/99r/relative-mutant/src/compiler/checker.ts:49743:17: error TS2322: Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.\n  Type 'undefined' is not assignable to type 'Diagnostic[]'.\n"
+}
