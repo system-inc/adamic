@@ -1,0 +1,14 @@
+// commandLineParser.ts:141's shape, a Map inverted from another's [name, value] pairs, each value
+// made the key and each name the value. A generator over map.entries() waits on S2b-1b, so the pairs
+// arrive as an array of tuples the generator is handed.
+function* inverted(entries: readonly (readonly [string, number])[]): Generator<[string, string], undefined, undefined> {
+    for(const entry of entries) {
+        yield ['' + entry[1], entry[0]];
+    }
+}
+const options: (readonly [string, number])[] = [['preserve', 1], ['react', 2], [`react${'-native'}`, 3]];
+const byValue = new Map(inverted(options));
+console.log(String(byValue.size));
+console.log(`${byValue.get('2') ?? 'none'} ${byValue.get('9') ?? 'none'}`);
+console.log([...byValue.keys()].join(','));
+console.log([...byValue.values()].join(','));

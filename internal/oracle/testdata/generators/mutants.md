@@ -78,3 +78,16 @@ run by `s2a-proof.sh` with the one test it must turn red:
 | The overload check taken out | lower/functions.go, `signature`: `if implementation := generatorImplementation(declaration); implementation != nil {` made `...; false && implementation != nil {` | TestOverloadedGeneratorMethodStopsAtItsImplementation (f): the first overload is written as an ordinary method and stops in other words |
 | signature lets an object literal's generator method through (e) | as the second row | TestGeneratorFormsStopAtLowering's object literal method rows: the dropped ones compile, the for-of ones stop in other words |
 | The walk stops every generator method | lower/refusals.go, `asyncGeneratorRefusal`: `if asyncGenerator(node) {` made `if asyncGenerator(node) \|\| generatorDeclaration(node) && node.Kind == ast.KindMethodDeclaration {` | unused_class.a, refused before its static block can run, and the unused half of TestGeneratorMethodBothWays |
+
+S2b-1a (new Map and new Set of a generator's call), each one exact line, run by `s2b1a-proof.sh`
+with the one test it must turn red:
+
+| Mutant | Edit | Red |
+|---|---|---|
+| The pair's key and value swapped | lower/generators.go, `generatorPairTypes`: `return key, value, keyKnown && valueKnown` made `return value, key, keyKnown && valueKnown` | new_map.a, NotYet: its `[string, number]` pairs read as held otherwise than the Map's |
+| The step's throw never tested | lower/exceptions.go: the generator arm of the fixed point made `if false && functions[index].Generator && ...`, so no step is `ResumeMayThrow` | new_map_throw.a: the throw is never seen, the Map is built from the two pairs before it and printed |
+| The collected pairs not let go of | native/emit_ownership.go, `releaseScopes`: a local whose name ends `_collected` not released | new_map_throw.a, a counted leak of what the helper had collected when the step threw |
+| new Set doesn't route a generator by origin | lower/collections.go, `iterated`: its generator arm made `false && isGenerator` | new_set.a, NotYet as destructuring (planIteration's generator arm) |
+| The collected pairs dropped | lower/generators.go, `newMapFromGenerator`: the MapNew made from an empty array, its pairs unused | TestNewMapAndNewSetStepAGeneratorsCall (internal/lower), and new_map_entries.a prints an empty Map |
+| generatorPairTypes' tuple test taken out | lower/generators.go: `if len(arguments) == 0 \|\| !checker.IsTupleType(arguments[0]) {` made `if len(arguments) == 0 {` | TestNewMapOfAGeneratorsCallStopsWhereItsYieldsArentItsPairs, its union row |
+| newMapFromGenerator's held-otherwise test taken out | lower/generators.go: `if pairKey != key \|\| pairValue != value {` made `if false && (pairKey != key \|\| pairValue != value) {` | TestNewMapOfAGeneratorsCallStopsWhereItsYieldsArentItsPairs, its held-otherwise row |
