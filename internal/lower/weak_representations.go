@@ -57,7 +57,7 @@ func (l *lowering) weakArrayCallback(node *ast.Node) error {
 		return nil
 	}
 	receiver := l.concrete(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))
-	if !l.checker.IsArrayType(receiver) {
+	if !l.isArrayType(receiver) {
 		return nil
 	}
 	arguments := l.typeArguments(receiver)

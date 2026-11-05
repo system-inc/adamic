@@ -168,7 +168,7 @@ func (f *cycleFinder) made(proven *checker.Type, where *ast.Node) {
 		f.use(proven, where)
 	case f.l.recordElement(proven) != nil:
 		f.use(f.l.recordElement(proven), where)
-	case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
+	case f.l.isArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
 		for _, argument := range f.l.checker.GetTypeArguments(proven) {
 			f.use(argument, where)
 		}
@@ -279,7 +279,7 @@ func (f *cycleFinder) use(proven *checker.Type, where *ast.Node) {
 		f.use(element, where)
 		return
 	}
-	if f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise") {
+	if f.l.isArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise") {
 		for _, argument := range f.l.checker.GetTypeArguments(proven) {
 			f.use(argument, where)
 		}
@@ -367,7 +367,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 	}
 	name := l.checker.TypeToString(holder)
 	switch {
-	case l.checker.IsArrayType(holder) || checker.IsTupleType(holder):
+	case l.isArrayType(holder) || checker.IsTupleType(holder):
 		if l.isLibraryType(holder, "ReadonlyArray") || (checker.IsTupleType(holder) && holder.TargetTupleType().IsReadonly()) {
 			return nil
 		}
@@ -652,7 +652,7 @@ func (f *cycleFinder) reachLinks(node cycleNode) []cycleNode {
 		}
 	case f.l.recordElement(proven) != nil:
 		links = append(links, cycleNode{proven: f.l.recordElement(proven)})
-	case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
+	case f.l.isArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
 		for _, argument := range f.l.checker.GetTypeArguments(proven) {
 			links = append(links, cycleNode{proven: argument})
 		}

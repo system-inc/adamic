@@ -212,7 +212,7 @@ func (l *lowering) destructureIterator(pattern, sourceNode *ast.Node, plan *iter
 func (l *lowering) iterationArrayWriteSite(where *ast.Node) int {
 	var holder *checker.Type
 	proven := l.concrete(l.checker.GetTypeAtLocation(where))
-	if l.checker.IsArrayType(proven) {
+	if l.isArrayType(proven) {
 		holder = proven
 	}
 	l.writeSites = append(l.writeSites, writeSite{holder: holder, node: where})

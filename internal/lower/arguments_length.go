@@ -111,7 +111,7 @@ func (l *lowering) callArguments(nodes []*ast.Node) ([]ir.Expression, []bool, er
 				spread[index], anySpread = true, true
 				continue
 			}
-			if !l.checker.IsArrayType(proven) {
+			if !l.isArrayType(proven) {
 				return nil, nil, l.notYet(node, "a call spreading something other than an array")
 			}
 			elements := l.checker.GetTypeArguments(proven)

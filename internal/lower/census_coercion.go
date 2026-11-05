@@ -13,7 +13,7 @@ import (
 func (l *lowering) censusNumberObject(node *ast.Node, value ir.Expression) (ir.Expression, error) {
 	proven := l.checker.GetTypeAtLocation(node)
 	if value.Type() == ir.Array {
-		if !l.checker.IsArrayType(proven) {
+		if !l.isArrayType(proven) {
 			return nil, l.notYet(node, "numeric coercion of a non-array view")
 		}
 		for _, name := range []string{"valueOf", "toString", "join"} {
@@ -26,7 +26,7 @@ func (l *lowering) censusNumberObject(node *ast.Node, value ir.Expression) (ir.E
 				}
 			}
 		}
-		element, known := l.kept(l.checker.GetElementTypeOfArrayType(proven))
+		element, known := l.kept(l.elementTypeOfArray(proven))
 		if !known || (element != ir.Number && element != ir.String && element != ir.Boolean && element != ir.MaybeNumber) {
 			return nil, l.notYet(node, "numeric coercion of an array with non-primitive elements")
 		}

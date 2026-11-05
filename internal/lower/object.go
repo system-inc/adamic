@@ -261,8 +261,8 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 	}
 	literal := ir.ArrayLiteral{Element: element}
 	items := node.AsArrayLiteralExpression().Elements.Nodes
-	if contextual := l.slotType(node); contextual != nil && l.checker.IsArrayType(contextual) {
-		declared, known := l.representation(l.checker.GetElementTypeOfArrayType(contextual))
+	if contextual := l.slotType(node); contextual != nil && l.isArrayType(contextual) {
+		declared, known := l.representation(l.elementTypeOfArray(contextual))
 		if !known || declared != element {
 			for _, item := range items {
 				if item.Kind == ast.KindSpreadElement {
@@ -282,7 +282,7 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 		}
 	}
 
-	if len(items) == 1 && items[0].Kind == ast.KindSpreadElement && !l.checker.IsArrayType(l.checker.GetTypeAtLocation(items[0].AsSpreadElement().Expression)) {
+	if len(items) == 1 && items[0].Kind == ast.KindSpreadElement && !l.isArrayType(l.checker.GetTypeAtLocation(items[0].AsSpreadElement().Expression)) {
 		// [...text] is the text's code points, [...set] its elements, [...map] its entries, and
 		// [...map.keys()] and the rest what they give (collections.go).
 		spread, given, err := l.iterated(items[0].AsSpreadElement().Expression)
@@ -364,15 +364,15 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 					}
 				}
 			}
-		} else if contextual := l.slotType(literal); contextual != nil && l.checker.IsArrayType(contextual) {
+		} else if contextual := l.slotType(literal); contextual != nil && l.isArrayType(contextual) {
 			// Layout must follow the destination, even when the literal infers narrower elements.
-			if declared, known := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); known && declared == ir.Union {
-				if inferred, known := l.kept(l.checker.GetElementTypeOfArrayType(arrayType)); known && inferred != ir.Union {
+			if declared, known := l.representation(l.elementTypeOfArray(contextual)); known && declared == ir.Union {
+				if inferred, known := l.kept(l.elementTypeOfArray(arrayType)); known && inferred != ir.Union {
 					return 0, &Refused{Where: l.program.Where(literal), What: "union-typed array built from a narrower literal", Fix: "declare the literal's element type explicitly, or build the array with a mixed literal"}
 				}
 			}
 			// Keep every proven nonempty contextual element representation, including weak handles.
-			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); declared != 0 && boxedSlot(declared) {
+			if declared, _ := l.representation(l.elementTypeOfArray(contextual)); declared != 0 && boxedSlot(declared) {
 				arrayType = contextual
 			}
 		}
@@ -385,10 +385,10 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		held, _ := l.representation(element)
 		return held, nil
 	}
-	if !l.checker.IsArrayType(arrayType) {
+	if !l.isArrayType(arrayType) {
 		return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(arrayType)+" where an array goes")
 	}
-	element := l.checker.GetElementTypeOfArrayType(arrayType)
+	element := l.elementTypeOfArray(arrayType)
 	if literal := ast.SkipParentheses(node); element.Flags()&checker.TypeFlagsNever != 0 && literal.Kind == ast.KindArrayLiteralExpression && len(literal.AsArrayLiteralExpression().Elements.Nodes) == 0 {
 		return ir.Number, nil
 	}
@@ -2385,11 +2385,11 @@ func (l *lowering) tupleWhereArrayGoes(value *checker.Type, target *checker.Type
 	}
 	valueTuple, targetTuple := checker.IsTupleType(value), checker.IsTupleType(target)
 	switch {
-	case valueTuple && !targetTuple && l.checker.IsArrayType(target):
+	case valueTuple && !targetTuple && l.isArrayType(target):
 		return true
 	case valueTuple && targetTuple:
 		return l.pairwiseTupleWhereArrayGoes(l.checker.GetTypeArguments(value), l.checker.GetTypeArguments(target), depth)
-	case l.checker.IsArrayType(value) && l.checker.IsArrayType(target):
+	case l.isArrayType(value) && l.isArrayType(target):
 		return l.pairwiseTupleWhereArrayGoes(l.checker.GetTypeArguments(value), l.checker.GetTypeArguments(target), depth)
 	case l.isLibraryType(value, "Map", "ReadonlyMap") && l.isLibraryType(target, "Map", "ReadonlyMap"):
 		return l.pairwiseTupleWhereArrayGoes(l.checker.GetTypeArguments(value), l.checker.GetTypeArguments(target), depth)

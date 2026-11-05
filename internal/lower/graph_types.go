@@ -256,7 +256,7 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 				continue
 			}
 			proven := node.proven
-			if f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
+			if f.l.isArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
 				for _, argument := range f.graphArguments(proven) {
 					if graph[cycleNode{proven: argument}] {
 						graph[node] = true
@@ -413,7 +413,7 @@ func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 				}
 			}
 		}
-	case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
+	case f.l.isArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
 		for _, argument := range f.graphArguments(proven) {
 			links = append(links, cycleNode{proven: argument})
 		}

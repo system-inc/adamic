@@ -15,11 +15,9 @@ const emptyArray: never[] = [];
 
 // tsc's four brand constructions (core.ts:736, 759, 764 and 1039), each spelled as Adamic ruled on
 // #b5w3ycg (Nov 5): `x as unknown as Brand<T>`, the one spelling tsc accepts for a required undefined
-// brand member. Each mint is admitted at its cast, and then the value stops: a branded array has no
-// representation yet, which is the next piece of #yth65gz (the normalization, Compiler's (b) on
-// #b5w3ycg). So this head moves no tsc line on its own, and every row must stop NotYet at the value,
-// never Refused at the cast. Mutant: brandMintOf returning nil; every row reads "a cast the runtime
-// can't check".
+// brand member. Each mint is admitted at its cast, and its value is held as the brand's base array
+// (unbranded.go, #gb0fqaa), so every row lowers whole. Mutants: brandMintOf returning nil, and every row
+// reads "a cast the runtime can't check"; unbranded returning t, and every row stops NotYet at the value.
 func TestBrandMintsOfTscsSortedArraysAreAdmitted(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
@@ -28,10 +26,8 @@ func TestBrandMintsOfTscsSortedArraysAreAdmitted(t *testing.T) {
 		brandMintPrelude + "function createSortedArray<T>(): SortedArray<T> { return [] as unknown as SortedArray<T>; }\nconsole.log(String(createSortedArray<number>().length));\n",
 		brandMintPrelude + "function toSorted<T>(array: readonly T[], compare: (a: T, b: T) => number): SortedReadonlyArray<T> { return array.slice().sort(compare) as unknown as SortedReadonlyArray<T>; }\nconsole.log(String(toSorted([3, 1], (a, b) => a - b).length));\n",
 	} {
-		_, err := lowerSourceAs(t, source, ".ts")
-		var stopped *NotYet
-		if !errors.As(err, &stopped) {
-			t.Errorf("%s: got %v, want the cast admitted and the branded value NotYet", source, err)
+		if _, err := lowerSourceAs(t, source, ".ts"); err != nil {
+			t.Errorf("%s: got %v, want the cast admitted and the branded value held as its base", source, err)
 		}
 	}
 }
@@ -80,9 +76,9 @@ func TestBrandMintRecognitionIsExact(t *testing.T) {
 // A value at a cast is judged by optionalRelationFailure with its own origin: an object literal written
 // there is exact, so `{ a: 1 }` mints an object brand whose base has an optional b, and lowers whole (an
 // object brand is held as an object today). An array literal of objects is judged by its elements and
-// mints, then stops at its value as every array brand does until #gb0fqaa. Mutants: the operand not
-// passed as origin; the object row refused. castOptionalFields kept for object literals; the object row
-// refused.
+// mints, and its value is held as the base array (#gb0fqaa), so it lowers whole too. Mutants: the operand
+// not passed as origin; the object row refused. castOptionalFields kept for object literals; the object
+// row refused. unbranded returning t; the array row stops NotYet at its value.
 func TestBrandMintOfALiteralIsExact(t *testing.T) {
 	t.Parallel()
 	object := "interface Shape { a: number; b?: string; }\ninterface ObjBrand extends Shape { \" __brand\": undefined; }\nconst minted = { a: 1 } as unknown as ObjBrand;\nconsole.log(String(minted.a) + ' ' + typeof minted.b);\n"
@@ -90,9 +86,7 @@ func TestBrandMintOfALiteralIsExact(t *testing.T) {
 		t.Errorf("an object literal: %v", err)
 	}
 	array := brandMintPrelude + "const minted = [{ a: 1 }] as unknown as SortedArray<{ a: number; b?: string }>;\nconsole.log(String(minted.length));\n"
-	_, err := lowerSourceAs(t, array, ".ts")
-	var stopped *NotYet
-	if !errors.As(err, &stopped) {
-		t.Errorf("an array literal of objects: got %v, want the cast admitted and the branded value NotYet", err)
+	if _, err := lowerSourceAs(t, array, ".ts"); err != nil {
+		t.Errorf("an array literal of objects: %v", err)
 	}
 }

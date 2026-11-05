@@ -21,10 +21,10 @@ func (l *lowering) censusRestParameter(declaration, parameter *ast.Node) error {
 		return l.notYet(parameter, "a rest parameter before another parameter")
 	}
 	proven := l.checker.GetTypeAtLocation(parameter.Name())
-	if !l.checker.IsArrayType(proven) {
+	if !l.isArrayType(proven) {
 		return l.notYet(parameter, "a rest parameter other than an array")
 	}
-	element, known := l.kept(l.checker.GetElementTypeOfArrayType(proven))
+	element, known := l.kept(l.elementTypeOfArray(proven))
 	if !known || slotless(element) {
 		return l.notYet(parameter, "a rest array of "+l.checker.TypeToString(proven))
 	}
@@ -56,7 +56,7 @@ func (l *lowering) censusRestCall(call *ast.CallExpression, function int, declar
 	parameters := declaration.Parameters()
 	fixed := len(parameters) - 1
 	proven := l.checker.GetTypeAtLocation(parameters[fixed].Name())
-	element, _ := l.kept(l.checker.GetElementTypeOfArrayType(proven))
+	element, _ := l.kept(l.elementTypeOfArray(proven))
 	rest := ir.ArrayLiteral{Element: element}
 	arguments := []ir.Expression{}
 	for index, argument := range call.Arguments.Nodes {
@@ -78,10 +78,10 @@ func (l *lowering) censusRestCall(call *ast.CallExpression, function int, declar
 		}
 		if spread {
 			source := l.checker.GetTypeAtLocation(valueNode)
-			if !l.checker.IsArrayType(source) {
+			if !l.isArrayType(source) {
 				return nil, l.notYet(argument, "a rest spread other than an array")
 			}
-			held, known := l.kept(l.checker.GetElementTypeOfArrayType(source))
+			held, known := l.kept(l.elementTypeOfArray(source))
 			if !known || held != element {
 				return nil, l.notYet(argument, "a rest spread with differently held elements")
 			}
@@ -274,10 +274,10 @@ func (l *lowering) censusOverloadParameter(parameters []*ast.Node, index int) (*
 	}
 	proven = l.concrete(proven)
 	if rest {
-		if !l.checker.IsArrayType(proven) {
+		if !l.isArrayType(proven) {
 			return nil, parameter, true, l.notYet(parameter, "an overload rest other than an array")
 		}
-		proven = l.checker.GetElementTypeOfArrayType(proven)
+		proven = l.elementTypeOfArray(proven)
 	}
 	return proven, parameter, rest, nil
 }
@@ -438,8 +438,8 @@ func (l *lowering) censusNeverRestSignature(signature *checker.Signature) bool {
 		return false
 	}
 	parameter := l.concrete(l.checker.GetTypeOfSymbol(parameters[0]))
-	if l.checker.IsArrayType(parameter) {
-		parameter = l.checker.GetElementTypeOfArrayType(parameter)
+	if l.isArrayType(parameter) {
+		parameter = l.elementTypeOfArray(parameter)
 	}
 	return parameter.Flags()&checker.TypeFlagsNever != 0
 }

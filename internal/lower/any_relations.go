@@ -98,7 +98,7 @@ func (l *lowering) anyRelated(source, target *checker.Type, callback bool, depth
 	if source.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 || target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 {
 		return nil
 	}
-	if (l.checker.IsArrayType(source) || checker.IsTupleType(source)) && (l.checker.IsArrayType(target) || checker.IsTupleType(target)) {
+	if (l.isArrayType(source) || checker.IsTupleType(source)) && (l.isArrayType(target) || checker.IsTupleType(target)) {
 		if checker.IsTupleType(source) && checker.IsTupleType(target) {
 			sources, targets := l.checker.GetTypeArguments(source), l.checker.GetTypeArguments(target)
 			for index, inside := range sources {

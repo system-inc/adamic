@@ -17,7 +17,7 @@ func (l *lowering) arraySearchContract(node *ast.Node, signature *checker.Signat
 	}
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	receiver := callee.AsPropertyAccessExpression().Expression
-	element := l.concrete(l.checker.GetElementTypeOfArrayType(l.checker.GetTypeAtLocation(receiver)))
+	element := l.concrete(l.elementTypeOfArray(l.checker.GetTypeAtLocation(receiver)))
 	visit.SearchElementName = l.checker.TypeToString(element)
 	parameters := signature.Parameters()
 	if len(parameters) == 0 {
