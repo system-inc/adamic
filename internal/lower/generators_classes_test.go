@@ -96,3 +96,31 @@ func TestGeneratorMethodBothWays(t *testing.T) {
 		t.Errorf("the class constructed and its generator method called: got %v, want a NotYet saying it is written as a method", err)
 	}
 }
+
+// (f) A class method overloaded around a generator implementation: tsc refuses `*` on an overload
+// signature (TS1222), so only the implementation carries it, and the class writes each overload's
+// signature into the implementation's function first (class.go). The gate reads the implementation
+// from the first overload, so the method, stepped or dropped, stops in generatorForm's words, never
+// as an overload's ordinary signature. Mutant: signature's overload check (generatorImplementation)
+// taken out; the first overload is written as an ordinary method and stops in other words, and this
+// goes red.
+//
+// (e), an object literal's generator method on a used object, called, is
+// TestGeneratorFormsStopAtLowering's "object literal method" rows.
+func TestOverloadedGeneratorMethodStopsAtItsImplementation(t *testing.T) {
+	t.Parallel()
+	const overloads = "class Box {\n    each(limit: number): Generator<number, void, unknown>;\n    each(limit: string): Generator<number, void, unknown>;\n    *each(limit: number | string): Generator<number, void, unknown> { BODY }\n}\n"
+	for _, probe := range []struct{ name, body, use string }{
+		{"stepped", "yield 1;", "for (const value of new Box().each(1)) console.log(String(value));\n"},
+		{"dropped", "return;", "new Box().each('a');\nconsole.log('control');\n"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSource(t, strings.ReplaceAll(overloads, "BODY", probe.body)+probe.use)
+			var gap *NotYet
+			if !errors.As(err, &gap) || !strings.Contains(gap.What, "a generator function written as a method") {
+				t.Fatalf("got %v, want a NotYet saying it is written as a method", err)
+			}
+		})
+	}
+}

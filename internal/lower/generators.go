@@ -47,6 +47,21 @@ func loweredGenerator(node *ast.Node) bool {
 		!ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync)
 }
 
+// generatorImplementation is the generator a method's overload signature signs for, when its
+// implementation is one. tsc refuses `*` on an overload signature (TS1222), so only the
+// implementation says it is a generator.
+func generatorImplementation(declaration *ast.Node) *ast.Node {
+	if declaration.Kind != ast.KindMethodDeclaration || declaration.Body() != nil || declaration.Symbol() == nil {
+		return nil
+	}
+	for _, candidate := range declaration.Symbol().Declarations {
+		if candidate.Kind == ast.KindMethodDeclaration && candidate.Body() != nil && generatorDeclaration(candidate) {
+			return candidate
+		}
+	}
+	return nil
+}
+
 // generatorForm names the form of a generator declaration this slice doesn't lower, for its stop.
 func generatorForm(node *ast.Node) string {
 	switch {
