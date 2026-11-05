@@ -1554,15 +1554,16 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 		if reason == "" {
 			reason = refusedHandedRead(entry, set, facts.home)
 		}
-		// The code a build ran: a windowed lean build's own when it's buildcache's (leanRecipeOf, #earlycut), every other
-		// build's process's binary whole (decision 1). A lean caller's build keeps its window and the whole recipe until its
-		// census holds: native's archives reach the jobserver, a package variable written outside its initializer, until it's
-		// handed in as a value (#yzwm4rj, Node's reading 1).
+		// The code a build ran: a windowed lean build's own when it's buildcache's or a lean caller's that names its census
+		// (leanRecipeOf, leanRecipeTaken: #earlycut, #gr5y0yf item 1), every other build's process's binary whole (decision
+		// 1). A lean caller naming no census keeps its window and the whole recipe (Node's reading 1). A lean recipe is the
+		// caller's own, so recipes holds it by the caller as well as the binary: one process settling two callers' builds
+		// keys each by its own package.
 		own := processes[entry.Process]
 		name := recipeName(own)
-		leanRecipe := window == BuildWindowed && entry.LeanCaller == ""
+		leanRecipe := window == BuildWindowed && leanRecipeTaken(entry.LeanCaller)
 		if leanRecipe {
-			name = "lean " + name
+			name = "lean " + cmp.Or(entry.LeanCaller, buildcachePackage) + " " + name
 		}
 		if reason == "" {
 			if _, ok := recipes[name]; !ok {
@@ -2115,18 +2116,19 @@ var leanRecipeFor = leanRecipeOf
 // leanRecipeOf is a lean build's recipe (#earlycut, Node's approved design): the code that makes it, never the code of
 // the test binary that settled it, which keyed every native runtime archive and every go oracle built in a test linking
 // the compiler on the whole compiler. It's buildcache and each package of the tree buildcache links, all their non-test
-// files (buildcache whole, Tests' ruling of Oct 16: goProduct's plan runs a go build, and
-// they're no make file), and a lean caller's own package (caller, leanCallers), never what the caller links: what its
-// build calls there is in the Files it declares, which the window keys as read (leanReads), and the caller's census holds
-// the build's reach to them (runtimeproducts' TestTheRuntimeBuildReachesOnlyItsDeclaredFiles). Under process's build
-// settings, as the binary was built, and refused as recipeOf refuses when process names no package.
+// files (buildcache whole, Tests' ruling of Oct 16: goProduct's plan runs a go build, and they're no make file), and a
+// lean caller's package with its whole import closure, every package of the tree it links by its non-test files, as go
+// list derives it when the build settles (Node's must 1 on #gr5y0yf item 1): never two packages named, so a package the
+// caller comes to import is keyed the moment it does. What the build reaches there is held by the caller's census too
+// (leanCallers), and its declared Files are keyed again as read (leanReads). Under process's build settings, as the
+// binary was built, and refused as recipeOf refuses when process names no package.
 func leanRecipeOf(root, caller string, process journalEntry) recipe {
 	if pkg := strings.TrimSuffix(process.Package, ".test"); pkg == "" || pkg == "command-line-arguments" {
 		return recipe{reason: fmt.Sprintf("its process's binary (%s) names no package, so the code it ran can't be keyed", process.Executable)}
 	}
 	listings := []recipeListing{{pkg: buildcachePackage, deps: true, whole: true}}
 	if caller != "" && caller != buildcachePackage {
-		listings = append(listings, recipeListing{pkg: caller})
+		listings = append(listings, recipeListing{pkg: caller, deps: true})
 	}
 	return recipeListed(root, process, listings)
 }

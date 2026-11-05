@@ -142,7 +142,7 @@ func leanBuildOf(caller string) *leanBuild {
 		return nil
 	case caller == buildcachePackage:
 		return &leanBuild{}
-	case slices.Contains(leanCallers, strings.TrimPrefix(caller, modulePath+"/")):
+	case slices.ContainsFunc(leanCallers, func(reviewed leanCaller) bool { return reviewed.pkg == strings.TrimPrefix(caller, modulePath+"/") }):
 		return &leanBuild{caller: caller}
 	}
 	return nil
@@ -172,7 +172,48 @@ func functionPackage(symbol string) string {
 // TypeScript source and the two installs it's handed, settled by its own package's binary, never lane's, whose census
 // holds its reach to its one file and buildcache's slice (TestTheAdaptedTreeBuildReachesOnlyItsDeclaredFile), and
 // whose runtime reads, apply.py's and node's, are its window's (TestAHandedBuildsUndeclaredReadIsKeyedByItsWindow).
-var leanCallers = []string{"internal/native/agreementproducts", "internal/native/runtimeproducts", "stage1/cohere/tsprinter/oracles", "stage3/lane/adaptedtree"}
+//
+// Each is keyed by its window and the settling binary's whole recipe, unless it names its census: the tests that prove
+// its build reaches nothing its key doesn't hold, which open the lean recipe to it (leanRecipeTaken, #gr5y0yf item 1,
+// Node's ruling: per caller, the census the gate, each test named and checked by
+// TestEveryLeanCallersCensusIsATestOfItsPackage). A caller naming none fails closed, to the whole recipe. runtimeproducts
+// alone names one: its archives' build is native.RuntimeRequest.Build, handed its jobserver as a value (#yzwm4rj), and
+// everything that decides an archive's bytes is in its Inputs (runtimeproducts.Inputs: the runtime's files, every flag
+// and the IR's tags as the request's portable parts, the compiler and archiver by their reports). Its census is two
+// tests, each named, since each holds half of that: the build's reach to the files its key declares
+// (TestTheRuntimeBuildReachesOnlyItsDeclaredFiles), and what the path to it reads, the jobserver and every package
+// variable among them (TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds), so neither goes without failing the guard.
+var leanCallers = []leanCaller{
+	{pkg: "internal/native/agreementproducts"},
+	{pkg: "internal/native/runtimeproducts", census: leanCensus{pkg: "internal/native/runtimeproducts", tests: []string{"TestTheRuntimeBuildReachesOnlyItsDeclaredFiles", "TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds"}}},
+	{pkg: "stage1/cohere/tsprinter/oracles"},
+	{pkg: "stage3/lane/adaptedtree"},
+}
+
+// A leanCaller is one of leanCallers: its package, by its directory from the tree's root, and its census, naming no test
+// when it names none.
+type leanCaller struct {
+	pkg    string
+	census leanCensus
+}
+
+// A leanCensus is the tests proving a lean caller's build reaches nothing its key doesn't hold: the package whose tests
+// hold it, by its directory from the tree's root, and each test's name.
+type leanCensus struct {
+	pkg   string
+	tests []string
+}
+
+// leanRecipeTaken says whether a windowed lean build of caller's, an import path, "" for buildcache's own, is keyed by
+// the lean recipe (leanRecipeOf): buildcache's own always, a lean caller's only when its census names a test
+// (leanCallers), and anything else never.
+func leanRecipeTaken(caller string) bool {
+	if caller == "" {
+		return true
+	}
+	index := slices.IndexFunc(leanCallers, func(reviewed leanCaller) bool { return modulePath+"/"+reviewed.pkg == caller })
+	return index >= 0 && len(leanCallers[index].census.tests) > 0
+}
 
 func product(t testing.TB, inputs Inputs, build func(directory string) error, lean *leanBuild) string {
 	t.Helper()
