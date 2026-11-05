@@ -15,7 +15,6 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
@@ -51,7 +50,7 @@ func mutantRuleMutation(t *testing.T, descriptor registry.Descriptor) mutantRule
 var mutantRuleInputsOnce sync.Once
 var mutantRuleFiles, mutantRuleTools []string
 
-func mutantRuleInputs(t *testing.T, slug, kind string) buildcache.Inputs {
+func mutantRuleInputs(t *testing.T, slug string) buildcache.Inputs {
 	t.Helper()
 	mutantRuleInputsOnce.Do(func() {
 		mutantRuleFiles, mutantRuleTools = ownedWitnessInputs(t)
@@ -64,7 +63,7 @@ func mutantRuleInputs(t *testing.T, slug, kind string) buildcache.Inputs {
 		t.Fatal("mutant product input preparation failed earlier in this process")
 	}
 	return buildcache.Inputs{
-		Name:  "lint-mutant-" + kind + "-" + slug,
+		Name:  "lint-mutant-javascript-" + slug,
 		Files: append([]string(nil), mutantRuleFiles...),
 		// Copied port imports outside this package resolve against this checkout.
 		Flags:     []string{"rule=" + slug, "source-root=" + packageDirectory},
@@ -88,7 +87,7 @@ func mutantRuleProduct(t *testing.T, slug string) string {
 	value.once.Do(func() {
 		descriptor := mutantRuleDescriptor(t, slug)
 		change := mutantRuleMutation(t, descriptor)
-		value.directory = buildcache.Product(t, mutantRuleInputs(t, slug, "javascript"), func(out string) error {
+		value.directory = buildcache.Product(t, mutantRuleInputs(t, slug), func(out string) error {
 			started := time.Now()
 			port := copyPort(t, filepath.Join(out, "port"), change.From, change.To, filepath.Join("rules", slug, change.File))
 			if _, err := registry.Generate(port); err != nil {
@@ -124,6 +123,8 @@ func mutantRuleProduct(t *testing.T, slug string) string {
 var mutantRuleNativeOnce sync.Once
 var mutantRuleNativePath string
 
+// The canary's native is the yepesta product's: the same mutation of the same rule, built with the same options from
+// its relocatable port, so the canary runs that binary rather than building the mutant again from a port of its own.
 func mutantRuleNative(t *testing.T) string {
 	t.Helper()
 	mutantRuleNativeOnce.Do(func() {
@@ -131,29 +132,7 @@ func mutantRuleNative(t *testing.T) string {
 		if descriptor.Name != nativeCanaryRule {
 			t.Fatal("native mutant canary descriptor changed")
 		}
-		port := filepath.Join(mutantRuleProduct(t, descriptor.Slug), "port")
-		inputs := mutantRuleInputs(t, descriptor.Slug, "native")
-		options := native.Options{Sanitize: true, Split: true, Jobs: 4}
-		inputs.Flags = append(inputs.Flags, native.Flags(options)...)
-		inputs.Flags = append(inputs.Flags, "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-		out := buildcache.Product(t, inputs, func(out string) error {
-			started := time.Now()
-			program, err := load.Load([]string{filepath.Join(port, "main.ts")})
-			if err != nil {
-				return err
-			}
-			lowered, err := lower.Lower(context.Background(), program)
-			if err != nil {
-				return err
-			}
-			if err := native.Build(native.C(lowered), filepath.Join(out, "native"), options); err != nil {
-				return err
-			}
-			t.Logf("cold native mutant=%s", time.Since(started))
-			return nil
-		})
-		mutantRuleNativePath = filepath.Join(out, "native")
+		mutantRuleNativePath = jsxTextnodesFoundNative(t)
 	})
 	if mutantRuleNativePath == "" {
 		t.Fatal("native mutant product failed earlier in this process")

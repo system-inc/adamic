@@ -502,6 +502,9 @@
     "stage1/cohere/lint TestProduct_LintFindsYepestaSetup": [
       "stage1/cohere/lint/oracles TestProduct_YepestaSetup"
     ],
+    "stage1/cohere/lint TestProduct_LintMutantNativeCanary": [
+      "stage1/cohere/lint TestProduct_JsxTextnodesMutantNative"
+    ],
     "stage1/cohere/lint TestProduct_ShardsAgreePrepared": [
       "stage1/cohere/lint/oracles TestProduct_LintGoOracle",
       "stage1/cohere/lint/oracles TestProduct_RulesAgreeCapture"
