@@ -1,0 +1,27 @@
+{
+  "base": "b729c7e07010fe6db34c6afc1d11c8ca63a86ae3",
+  "main": "82b0c076395636800764ed1af7ada569681fc2ae",
+  "sortBranch": "ad29102e9c145c5b480629227574d2ffa235a4b1",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "checker": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "stockTypeScript": "6.0.3",
+  "mainDependency": "Scratch main cohere/TypeScript links to the base checkout at the identical pinned checker commit. No compiler source is patched.",
+  "binaries": {
+    "adamic-base": {
+      "sha256": "f52de08475e75f7812c169666a642859cb2df4fd9d7d348335de83275193a10f",
+      "bytes": 41783760
+    },
+    "adamic": {
+      "sha256": "4a1655781ad18ab256834586d2ea995f0e8468316c0fc2a41c42361e1d23e6f2",
+      "bytes": 41809215
+    },
+    "tool": {
+      "sha256": "1d9b2b256d603ad328474cf301fa8e90ded61337cb3fb4ee71c43ba7d6dc49dd",
+      "bytes": 35677834
+    },
+    "latent": {
+      "sha256": "426a5f13da9873182c4bea98668934589111b11e5f1bd5dd77ad7e532fb20132",
+      "bytes": 34836069
+    }
+  }
+}

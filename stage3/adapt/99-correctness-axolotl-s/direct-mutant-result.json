@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "compiler": "/workspace/scratch/s-bin/adamic-base",
+  "compilerSha256": "f52de08475e75f7812c169666a642859cb2df4fd9d7d348335de83275193a10f",
+  "bodyScope": "Exact adapted bodies; filterMutate instantiated with number; clear parameter specialized to number[] to examine concrete storage. Each control changes only the truncation statement.",
+  "cases": [
+    {
+      "owner": "filterMutate",
+      "state": "splice",
+      "file": "filterMutate-mutant-splice.ts",
+      "exit": 0,
+      "classification": "lowered",
+      "diagnostic": "",
+      "log": "filterMutate-mutant-splice.log",
+      "sourceSha256": "e4e32b0f2a355dca5c37a7fed38ff47af956acdc3e57d3c9efa773d593f5c14f"
+    },
+    {
+      "owner": "filterMutate",
+      "state": "length",
+      "file": "filterMutate-mutant-length.ts",
+      "exit": 1,
+      "classification": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/stage3/adapt/99-correctness-axolotl-s/filterMutate-mutant-length.ts:9:5: stage 0 can't lower assigning a field of a value yet",
+      "log": "filterMutate-mutant-length.log",
+      "sourceSha256": "5172c3c87304fb124974533af8f0916b999c78d7386a441f218bb5bf9b7b8662"
+    },
+    {
+      "owner": "clear",
+      "state": "splice",
+      "file": "clear-mutant-splice.ts",
+      "exit": 0,
+      "classification": "lowered",
+      "diagnostic": "",
+      "log": "clear-mutant-splice.log",
+      "sourceSha256": "b5bfd8e5b95d304b743587caba2d6607f4b7b8ee99d56f59c5eee901e2697d01"
+    },
+    {
+      "owner": "clear",
+      "state": "length",
+      "file": "clear-mutant-length.ts",
+      "exit": 1,
+      "classification": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/stage3/adapt/99-correctness-axolotl-s/clear-mutant-length.ts:2:5: stage 0 can't lower assigning a field of a value yet",
+      "log": "clear-mutant-length.log",
+      "sourceSha256": "93a8c752a1b541391c80ddde3efb8e673971d4fd464b88ca320853beb77f6270"
+    }
+  ]
+}

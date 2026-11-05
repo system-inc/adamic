@@ -1,0 +1,30 @@
+{
+  "node": "v24.19.0",
+  "castFree": true,
+  "typeChecks": true,
+  "kept": false,
+  "reason": "Sparse input changes from returning undefined to an occupancy error",
+  "cases": [
+    {
+      "name": "undefined payload",
+      "before": {
+        "result": "undefined",
+        "isEmpty": true
+      },
+      "draft": {
+        "result": "undefined",
+        "isEmpty": true
+      }
+    },
+    {
+      "name": "sparse initial array",
+      "before": {
+        "result": "undefined",
+        "isEmpty": true
+      },
+      "draft": {
+        "error": "Queue invariant violated"
+      }
+    }
+  ]
+}

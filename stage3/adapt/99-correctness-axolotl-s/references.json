@@ -1,0 +1,101 @@
+{
+  "version": "6.0.3",
+  "files": 711,
+  "references": [
+    {
+      "textSpan": {
+        "start": 92237,
+        "length": 9
+      },
+      "fileName": "/workspace/s-before/src/compiler/core.ts",
+      "contextSpan": {
+        "start": 92221,
+        "length": 121
+      },
+      "isWriteAccess": false,
+      "isDefinition": true,
+      "line": 2590,
+      "column": 17,
+      "context": "export function skipWhile<T, U extends T>(array: readonly T[], predicate: (element: T) => element is U): Exclude<T, U>[];\r"
+    },
+    {
+      "textSpan": {
+        "start": 92378,
+        "length": 9
+      },
+      "fileName": "/workspace/s-before/src/compiler/core.ts",
+      "contextSpan": {
+        "start": 92362,
+        "length": 145
+      },
+      "isWriteAccess": false,
+      "isDefinition": true,
+      "line": 2592,
+      "column": 17,
+      "context": "export function skipWhile<T, U extends T>(array: readonly T[] | undefined, predicate: (element: T) => element is U): Exclude<T, U>[] | undefined;\r"
+    },
+    {
+      "textSpan": {
+        "start": 92543,
+        "length": 9
+      },
+      "fileName": "/workspace/s-before/src/compiler/core.ts",
+      "contextSpan": {
+        "start": 92527,
+        "length": 394
+      },
+      "isWriteAccess": true,
+      "isDefinition": true,
+      "line": 2594,
+      "column": 17,
+      "context": "export function skipWhile<T, U extends T>(array: readonly T[] | undefined, predicate: (element: T) => element is U): Exclude<T, U>[] | undefined {\r"
+    },
+    {
+      "textSpan": {
+        "start": 4668,
+        "length": 9
+      },
+      "fileName": "/workspace/s-before/src/compiler/transformers/ts.ts",
+      "contextSpan": {
+        "start": 0,
+        "length": 5168
+      },
+      "isWriteAccess": true,
+      "isDefinition": false,
+      "line": 183,
+      "column": 5,
+      "context": "    skipWhile,\r"
+    },
+    {
+      "textSpan": {
+        "start": 43642,
+        "length": 9
+      },
+      "fileName": "/workspace/s-before/src/compiler/transformers/ts.ts",
+      "isWriteAccess": false,
+      "isDefinition": false,
+      "line": 1089,
+      "column": 45,
+      "context": "            addRange(modifiersArray, filter(skipWhile(modifiers, isExportOrDefaultModifier), isModifier));\r"
+    }
+  ],
+  "calls": [
+    {
+      "file": "/workspace/s-before/src/compiler/transformers/ts.ts",
+      "line": 1089,
+      "result": "(AbstractKeyword | AccessorKeyword | AsyncKeyword | ConstKeyword | DeclareKeyword | InKeyword | ... 7 more ... | Decorator)[] | undefined",
+      "parentResult": "Modifier[] | undefined",
+      "source": "filter(skipWhile(modifiers, isExportOrDefaultModifier), isModifier)"
+    }
+  ],
+  "publicDeclarations": [
+    {
+      "file": "/workspace/s-before/lib/typescript.d.ts",
+      "skipWhileIdentifiers": 0
+    },
+    {
+      "file": "/workspace/s-before/lib/tsserverlibrary.d.ts",
+      "skipWhileIdentifiers": 0
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "full": {
+    "command": [
+      "go",
+      "test",
+      "-count=1",
+      "-parallel=1",
+      "-skip",
+      "TestShard_|TestProduct_",
+      "./stage3/lane/"
+    ],
+    "exit": 0,
+    "seconds": 128.54387796900028,
+    "log": "/workspace/scratch/s2-lane-go.log"
+  },
+  "isolated": [],
+  "knownSlowSplit": "chg_9as1ymj5",
+  "noTestSourceOrDeadlineChanged": true,
+  "status": "PASS"
+}
