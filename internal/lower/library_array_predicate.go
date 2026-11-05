@@ -84,7 +84,7 @@ func (l *lowering) arrayPredicateMembers(proven *checker.Type, array bool) *chec
 			return
 		}
 		_, _, nodeArray := l.nodeArrayLayoutOf(member)
-		if (l.checker.IsArrayType(member) || nodeArray) == array {
+		if (l.isArrayType(member) || nodeArray) == array {
 			members = append(members, member)
 		}
 	}
@@ -113,7 +113,7 @@ func (l *lowering) arrayPredicateDomain(proven *checker.Type) bool {
 	if _, _, known := l.nodeArrayLayoutOf(proven); known {
 		return true
 	}
-	if l.checker.IsArrayType(proven) {
+	if l.isArrayType(proven) {
 		return true
 	}
 	return proven.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(proven) || l.isLibraryType(proven, "Uint8Array", "Int32Array", "Float64Array")

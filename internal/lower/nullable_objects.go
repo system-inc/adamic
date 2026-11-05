@@ -134,7 +134,7 @@ func (l *lowering) nullableObjectSharedView(from, to *checker.Type, visited map[
 		}
 		return shared(l.checker.GetReturnTypeOfSignature(a[0]), l.checker.GetReturnTypeOfSignature(b[0]))
 	}
-	if l.checker.IsArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
+	if l.isArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
 		a, b := l.typeArguments(from), l.typeArguments(to)
 		for i := range a {
 			if i < len(b) && shared(a[i], b[i]) {
@@ -205,7 +205,7 @@ func (l *lowering) nullableObjectAdaptedMapCallback(node *ast.Node, contextual *
 	}
 	callee := ast.SkipParentheses(outer.Parent.AsCallExpression().Expression)
 	receiver := l.concrete(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))
-	if !l.checker.IsArrayType(receiver) && !checker.IsTupleType(receiver) {
+	if !l.isArrayType(receiver) && !checker.IsTupleType(receiver) {
 		return false
 	}
 	actual := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node), checker.SignatureKindCall)
@@ -254,7 +254,7 @@ func (l *lowering) nullableObjectAdaptedSearchCallback(node *ast.Node, contextua
 		return false
 	}
 	receiver := l.concrete(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))
-	if !l.checker.IsArrayType(receiver) && !checker.IsTupleType(receiver) {
+	if !l.isArrayType(receiver) && !checker.IsTupleType(receiver) {
 		return false
 	}
 	actual := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node), checker.SignatureKindCall)

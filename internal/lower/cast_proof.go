@@ -70,8 +70,13 @@ func (l *lowering) castAssignableAt(operand *ast.Node, source, target *checker.T
 	return l.optionalRelationFailure(source, target, operand, map[[2]*checker.Type]bool{}) == ""
 }
 
-// arrayLikeType is whether a type is an array, mutable or readonly, by the checker's own test.
+// arrayLikeType is whether a type is an array, mutable or readonly, by the checker's own test. A cast is
+// judged on the brand, so a phantom extension isn't one here, though lowering holds it as its base
+// (unbranded.go): this asks the checker directly, and keeps isLibraryType's unbranding off the brand.
 func (l *lowering) arrayLikeType(proven *checker.Type) bool {
+	if base, _ := l.phantomExtension(proven); base != nil {
+		return false
+	}
 	return l.checker.IsArrayType(proven) || l.isLibraryType(proven, "ReadonlyArray")
 }
 

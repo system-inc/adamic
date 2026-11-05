@@ -25,7 +25,7 @@ import (
 // call is a fresh RegExp, so no write to an instance reaches it.
 func (l *lowering) captureFreeSplit(expression *ast.Node, target *checker.Type) bool {
 	call := ast.SkipParentheses(expression)
-	if call.Kind != ast.KindCallExpression || !l.checker.IsArrayType(target) || l.checker.GetElementTypeOfArrayType(target) != l.checker.GetStringType() {
+	if call.Kind != ast.KindCallExpression || !l.isArrayType(target) || l.elementTypeOfArray(target) != l.checker.GetStringType() {
 		return false
 	}
 	callee := ast.SkipParentheses(call.AsCallExpression().Expression)

@@ -85,7 +85,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	if l.finitePartialRecordElement(proven) != nil {
 		return ir.Record, true
 	}
-	if flags&checker.TypeFlagsObject != 0 && enumObjectSymbol(proven) == nil && len(l.checker.GetIndexInfosOfType(proven)) > 0 && !l.checker.IsArrayType(proven) && !checker.IsTupleType(proven) && !l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray") {
+	if flags&checker.TypeFlagsObject != 0 && enumObjectSymbol(proven) == nil && len(l.checker.GetIndexInfosOfType(proven)) > 0 && !l.isArrayType(proven) && !checker.IsTupleType(proven) && !l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray") {
 		if l.recordElement(proven) != nil {
 			return ir.Record, true
 		}
@@ -129,7 +129,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return ir.String, true
 	case flags&checker.TypeFlagsBooleanLike != 0:
 		return ir.Boolean, true
-	case flags&checker.TypeFlagsObject != 0 && (l.checker.IsArrayType(proven) || l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray")):
+	case flags&checker.TypeFlagsObject != 0 && (l.isArrayType(proven) || l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray")):
 		return ir.Array, true
 	case flags&checker.TypeFlagsObject != 0 && l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
 		// A Set is held as a Map whose values aren't used (set.go).
@@ -207,9 +207,10 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 }
 
 // isLibraryType reports whether a type is one of the library's, by name: Map, not a program's own
-// interface that happens to be called Map.
+// interface that happens to be called Map. A phantom extension is judged as its base (unbranded.go), so
+// tsc's SortedReadonlyArray<T> is a ReadonlyArray wherever lowering asks.
 func (l *lowering) isLibraryType(proven *checker.Type, names ...string) bool {
-	symbol := proven.Symbol()
+	symbol := l.unbranded(proven).Symbol()
 	if symbol == nil || len(symbol.Declarations) == 0 || !load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
 		return false
 	}
@@ -403,7 +404,7 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 			}
 		}
 		return sameCallable(l.checker.GetReturnTypeOfSignature(fromSignatures[0]), l.checker.GetReturnTypeOfSignature(toSignatures[0]))
-	case from.ObjectFlags()&checker.ObjectFlagsReference != 0 && to.ObjectFlags()&checker.ObjectFlagsReference != 0 && (l.checker.IsArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet")):
+	case from.ObjectFlags()&checker.ObjectFlagsReference != 0 && to.ObjectFlags()&checker.ObjectFlagsReference != 0 && (l.isArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet")):
 		fromArguments, toArguments := l.typeArguments(from), l.typeArguments(to)
 		for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
 			if !same(fromArguments[index], toArguments[index]) {
@@ -453,9 +454,9 @@ func (l *lowering) tupleSeenAsArray(from *checker.Type, to *checker.Type, visite
 			}
 		}
 		return l.tupleSeenAsArray(l.checker.GetReturnTypeOfSignature(fromSignatures[0]), l.checker.GetReturnTypeOfSignature(toSignatures[0]), visited)
-	case from.ObjectFlags()&checker.ObjectFlagsReference != 0 && to.ObjectFlags()&checker.ObjectFlagsReference != 0 && (l.checker.IsArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet")):
+	case from.ObjectFlags()&checker.ObjectFlagsReference != 0 && to.ObjectFlags()&checker.ObjectFlagsReference != 0 && (l.isArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet")):
 		fromArguments, toArguments := l.typeArguments(from), l.typeArguments(to)
-		if checker.IsTupleType(from) && l.checker.IsArrayType(to) {
+		if checker.IsTupleType(from) && l.isArrayType(to) {
 			return from, to
 		}
 		for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {

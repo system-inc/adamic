@@ -23,17 +23,37 @@ import (
 // as a mutable SortedArray<T> is refused (the base is T[], which the source doesn't relate to), and
 // so is an Animal[] as SortedArray<Dog>. A fresh `[]` relates to any element type, and a mutable T[] relates
 // to a mutable base, because the brand carries no layout. Array brands are phantom only while every
-// observation of a member's presence is refused (rulings.md:31); Language holds those roads.
+// observation of a member's presence is refused (rulings.md:31), which phantom_array_presence.go does,
+// so a minted value is held as its base (unbranded.go).
 type brandMint struct {
 	base    *checker.Type
 	members []string
 }
 
-// brandMintOf is the mint a cast of operand makes, or nil when it isn't one.
+// brandMintOf is the mint a cast of operand makes, or nil when it isn't one: a target phantomExtension
+// calls a phantom extension of its base, and a source that relates to that base.
 func (l *lowering) brandMintOf(operand *ast.Node, source, target *checker.Type) *brandMint {
 	// The innermost value is what's judged, so one typed any or unknown has nothing to judge.
-	if source.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0 || target.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(target) {
+	if source.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0 {
 		return nil
+	}
+	base, members := l.phantomExtension(target)
+	if base == nil {
+		return nil
+	}
+	if !l.checker.IsTypeAssignableTo(source, base) || !l.castAssignableAt(operand, source, base) {
+		return nil
+	}
+	return &brandMint{base: base, members: members}
+}
+
+// phantomExtension is the one judgement of a phantom extension (#gb0fqaa): an interface that extends
+// exactly one base and adds nothing to it but members phantomBrandMember calls phantom. It's target's
+// base, instantiated as target is, and the members it adds, or nil when target isn't one. A mint
+// (brandMintOf) adds a source relation to it, and unbranded reads a value of target as its base.
+func (l *lowering) phantomExtension(target *checker.Type) (*checker.Type, []string) {
+	if target.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(target) {
+		return nil, nil
 	}
 	declared := target
 	var arguments []*checker.Type
@@ -42,17 +62,17 @@ func (l *lowering) brandMintOf(operand *ast.Node, source, target *checker.Type) 
 		arguments = l.checker.GetTypeArguments(target)
 	}
 	if declared.ObjectFlags()&checker.ObjectFlagsInterface == 0 || declared.AsInterfaceType() == nil {
-		return nil
+		return nil, nil
 	}
 	bases := checker.Checker_getBaseTypes(l.checker, declared)
 	if len(bases) != 1 {
 		// Several bases, or none, would need a relation per base; a brand tsc writes extends one.
-		return nil
+		return nil, nil
 	}
 	base := bases[0]
 	if parameters := declared.AsInterfaceType().TypeParameters(); len(parameters) > 0 {
 		if len(arguments) < len(parameters) {
-			return nil
+			return nil, nil
 		}
 		base = instantiateType(l.checker, base, newTypeMapper(parameters, arguments[:len(parameters)]))
 	}
@@ -60,50 +80,47 @@ func (l *lowering) brandMintOf(operand *ast.Node, source, target *checker.Type) 
 	// and every property the base lacks is one phantomBrandMember admits.
 	for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
 		if len(l.checker.GetSignaturesOfType(target, kind)) != len(l.checker.GetSignaturesOfType(base, kind)) {
-			return nil
+			return nil, nil
 		}
 	}
 	if len(l.checker.GetIndexInfosOfType(target)) != len(l.checker.GetIndexInfosOfType(base)) {
-		return nil
+		return nil, nil
 	}
 	// Judged from what the interface itself declares, never from its members' types: a member that
 	// redeclares one of the base's (`v: number` over `v: number | string`) would otherwise pass as the
 	// base's own and mint a narrowing no check holds (Language's must on #b5w3ycg, Nov 5). So every
 	// member the interface declares is a property signature phantomBrandMember admits that the base
 	// doesn't have, and nothing else: no method, signature, index entry or redeclaration.
-	mint := &brandMint{base: base}
 	symbol := declared.Symbol()
 	if symbol == nil {
-		return nil
+		return nil, nil
 	}
+	var members []string
 	for _, declaration := range symbol.Declarations {
 		if declaration.Kind != ast.KindInterfaceDeclaration {
-			return nil
+			return nil, nil
 		}
 		for _, member := range declaration.AsInterfaceDeclaration().Members.Nodes {
 			if member.Kind != ast.KindPropertySignature || member.Name() == nil {
-				return nil
+				return nil, nil
 			}
 			property := l.checker.GetSymbolAtLocation(member.Name())
 			if property == nil || !l.phantomBrandMember(property) || l.checker.GetPropertyOfType(base, property.Name) != nil {
-				return nil
+				return nil, nil
 			}
-			mint.members = append(mint.members, property.Name)
+			members = append(members, property.Name)
 		}
 	}
-	if len(mint.members) == 0 {
-		return nil
+	if len(members) == 0 {
+		return nil, nil
 	}
 	// Every property the target has is the base's or one of those, so nothing reaches it another way.
 	for _, member := range l.checker.GetPropertiesOfType(target) {
-		if l.checker.GetPropertyOfType(base, member.Name) == nil && !slices.Contains(mint.members, member.Name) {
-			return nil
+		if l.checker.GetPropertyOfType(base, member.Name) == nil && !slices.Contains(members, member.Name) {
+			return nil, nil
 		}
 	}
-	if !l.checker.IsTypeAssignableTo(source, base) || !l.castAssignableAt(operand, source, base) {
-		return nil
-	}
-	return mint
+	return base, members
 }
 
 // mintOperand is what a cast mints from: its operand, or, when the operand is itself a cast to unknown

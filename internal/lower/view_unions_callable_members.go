@@ -83,8 +83,8 @@ func (l *lowering) prepareUntaggedCallableMember(node *ast.Node, target *checker
 
 // This is descriptor construction, not an array consumer admission.
 func (l *lowering) viewArrayElementType(target *checker.Type) *checker.Type {
-	if !l.checker.IsArrayType(target) {
+	if !l.isArrayType(target) {
 		return nil
 	}
-	return l.checker.GetElementTypeOfArrayType(target)
+	return l.elementTypeOfArray(target)
 }

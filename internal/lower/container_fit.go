@@ -203,9 +203,9 @@ func (l *lowering) containerPairGoes(value *checker.Type, target *checker.Type, 
 		}
 		return l.shapeFitReached(target, value)
 	}
-	if (l.checker.IsArrayType(value) || checker.IsTupleType(value)) && (l.checker.IsArrayType(target) || checker.IsTupleType(target)) {
+	if (l.isArrayType(value) || checker.IsTupleType(value)) && (l.isArrayType(target) || checker.IsTupleType(target)) {
 		values, targets := l.typeArguments(value), l.typeArguments(target)
-		if l.checker.IsArrayType(target) && len(targets) == 1 {
+		if l.isArrayType(target) && len(targets) == 1 {
 			// Every element of a tuple goes where the array's element goes.
 			for _, element := range values {
 				if stop := l.containerPairGoes(element, targets[0], false, depth+1, visited); stop != "" {

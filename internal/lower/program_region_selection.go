@@ -151,7 +151,7 @@ func (f *cycleFinder) programRegionSelectionMode(indexed bool) map[cycleNode]boo
 }
 
 func (f *cycleFinder) programContainer(proven *checker.Type) bool {
-	return f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet")
+	return f.l.isArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet")
 }
 
 // Container chains and unions can connect to a selected graph without being an
@@ -212,7 +212,7 @@ func sameProgramLinks(a, b []cycleNode) bool {
 // Empty-literal never[] views must not connect scalar scratch arrays/maps to a
 // recursive object component merely because they are assignable to both.
 func (f *cycleFinder) programScalarStorage(proven *checker.Type) bool {
-	if !(f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
+	if !(f.l.isArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
 		return false
 	}
 	var scalar func(*checker.Type) bool
@@ -292,7 +292,7 @@ func (f *cycleFinder) programOwningLinks(node cycleNode) []cycleNode {
 				}
 			}
 		}
-	case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
+	case f.l.isArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
 		for _, argument := range f.graphArguments(proven) {
 			links = append(links, cycleNode{proven: argument})
 		}

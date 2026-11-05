@@ -58,7 +58,7 @@ func (l *lowering) iterated(node *ast.Node) (ir.Expression, ir.Type, error) {
 			}
 		}
 	}
-	if l.checker.IsArrayType(l.checker.GetTypeAtLocation(node)) {
+	if l.isArrayType(l.checker.GetTypeAtLocation(node)) {
 		element, err := l.elementType(node)
 		if err != nil {
 			return nil, 0, err
@@ -189,7 +189,7 @@ func (l *lowering) newMapFromOptional(source *ast.Node, sourceType *checker.Type
 func (l *lowering) pairTypes(source *ast.Node) (ir.Type, ir.Type, bool) {
 	source = ast.SkipParentheses(source)
 	sourceType := l.checker.GetTypeAtLocation(source)
-	if l.checker.IsArrayType(sourceType) || l.isLibraryType(sourceType, "MapIterator", "SetIterator", "Set", "ReadonlySet") {
+	if l.isArrayType(sourceType) || l.isLibraryType(sourceType, "MapIterator", "SetIterator", "Set", "ReadonlySet") {
 		return l.pairArrayTypes(sourceType)
 	}
 	if source.Kind == ast.KindCallExpression {
@@ -213,7 +213,7 @@ func (l *lowering) pairTypes(source *ast.Node) (ir.Type, ir.Type, bool) {
 // pairArrayTypes is how an array (or a library iterator or Set) of [key, value] tuples holds its keys
 // and values, by its tuple's types.
 func (l *lowering) pairArrayTypes(sourceType *checker.Type) (ir.Type, ir.Type, bool) {
-	element := l.checker.GetElementTypeOfArrayType(sourceType)
+	element := l.elementTypeOfArray(sourceType)
 	if element == nil {
 		arguments := l.typeArguments(sourceType)
 		if len(arguments) != 1 {

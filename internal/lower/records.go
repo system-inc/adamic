@@ -14,7 +14,7 @@ func (l *lowering) recordElement(t *checker.Type) *checker.Type {
 		return nil
 	}
 	t = l.concrete(t)
-	if t.Flags()&checker.TypeFlagsObject == 0 || l.checker.IsArrayType(t) || checker.IsTupleType(t) || isClassInstance(t) {
+	if t.Flags()&checker.TypeFlagsObject == 0 || l.isArrayType(t) || checker.IsTupleType(t) || isClassInstance(t) {
 		return nil
 	}
 	if element := l.finitePartialRecordElement(t); element != nil {
@@ -610,7 +610,7 @@ func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*che
 		})
 		return parameters && l.sameRecordStorage(l.checker.GetReturnTypeOfSignature(a[0]), l.checker.GetReturnTypeOfSignature(b[0]), visited)
 	}
-	if l.checker.IsArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
+	if l.isArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
 		a, b := l.typeArguments(from), l.typeArguments(to)
 		for i := 0; i < len(a) && i < len(b); i++ {
 			if !l.sameRecordStorage(a[i], b[i], visited) {

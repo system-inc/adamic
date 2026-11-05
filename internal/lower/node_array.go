@@ -32,7 +32,7 @@ func (l *lowering) nodeArrayBase(proven *checker.Type, seen map[*checker.Type]bo
 }
 
 func (l *lowering) nodeArrayLayoutOf(proven *checker.Type) (ArrayLayout, *checker.Type, bool) {
-	if proven == nil || l.checker.IsArrayType(proven) || checker.IsTupleType(proven) {
+	if proven == nil || l.isArrayType(proven) || checker.IsTupleType(proven) {
 		return ArrayLayout{}, nil, false
 	}
 	base := l.nodeArrayBase(proven, map[*checker.Type]bool{})
@@ -43,7 +43,7 @@ func (l *lowering) nodeArrayLayoutOf(proven *checker.Type) (ArrayLayout, *checke
 	if element == nil {
 		return ArrayLayout{}, nil, false
 	}
-	if l.nodeArrayBase(element, map[*checker.Type]bool{}) != nil && !l.checker.IsArrayType(element) {
+	if l.nodeArrayBase(element, map[*checker.Type]bool{}) != nil && !l.isArrayType(element) {
 		return ArrayLayout{}, nil, false
 	}
 	held, known := l.representation(element)
@@ -75,7 +75,7 @@ func (l *lowering) nodeArrayCast(node *ast.Node) bool {
 	if !known || len(layout.Fields) == 0 {
 		return false
 	}
-	actual := l.checker.GetElementTypeOfArrayType(l.checker.GetTypeAtLocation(as.Expression))
+	actual := l.elementTypeOfArray(l.checker.GetTypeAtLocation(as.Expression))
 	// Mutable array elements keep their representation and their full element contract.
 	return actual != nil && l.castAssignable(actual, element) && l.castAssignable(element, l.checker.GetWidenedType(actual)) && l.sameKeeping(actual, element, map[[2]*checker.Type]bool{})
 }

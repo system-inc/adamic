@@ -34,7 +34,7 @@ func (l *lowering) regexReplacement(node *ast.Node, input ir.Expression, argumen
 		proven := l.checker.GetTypeOfSymbol(parameter)
 		rest := len(parameter.Declarations) == 1 && parameter.Declarations[0].Kind == ast.KindParameter && parameter.Declarations[0].AsParameterDeclaration().DotDotDotToken != nil
 		if rest {
-			proven = l.checker.GetElementTypeOfArrayType(proven)
+			proven = l.elementTypeOfArray(proven)
 		}
 		of, known := l.representation(proven)
 		if !known || of != ir.String && of != ir.Number && of != ir.Object && of != ir.Union {

@@ -328,10 +328,10 @@ func (l *lowering) stringRaw(node *ast.Node, written []*ast.Node) (ir.Expression
 		return nil, l.notYet(node, "String.raw without a template")
 	}
 	rawType := l.checker.GetTypeOfPropertyOfType(l.checker.GetTypeAtLocation(written[0]), "raw")
-	if rawType == nil || !l.checker.IsArrayType(rawType) || l.includesUndefined(rawType) {
+	if rawType == nil || !l.isArrayType(rawType) || l.includesUndefined(rawType) {
 		return nil, l.notYet(node, "String.raw without a present array of strings in raw")
 	}
-	element := l.checker.GetElementTypeOfArrayType(rawType)
+	element := l.elementTypeOfArray(rawType)
 	if element.Flags()&checker.TypeFlagsStringLike == 0 {
 		return nil, l.notYet(node, "String.raw with raw elements that are not strings")
 	}
