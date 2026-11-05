@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"os"
@@ -255,6 +256,10 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 	// registering every file's locals, re-walked all of the program's modules once a statement: 35% of the latent step's
 	// CPU on tsc's 79 files (#pv935yw).
 	identities := map[*ast.Node]ir.SourceIdentity{}
+	// One map of type strings too: a type's TypeToString is a function of the type alone (typeString), and a fresh
+	// lowering a statement asked again for every schema node's type, keeping each answer's type nodes live in the checker
+	// (#wy2dyf0: the entry census's peak, 7.57 against 5.04 GiB).
+	typeStrings := map[*checker.Type]string{}
 	var facts *latentProgramFacts
 	for _, file := range program.Files() {
 		latentFindings = nil
@@ -262,7 +267,7 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 		record := LatentFile{Measurement: LatentMeasurementLabel, File: program.FileName(file), Declarations: latentDeclarations(program, file), Units: []LatentUnit{}}
 		checker, release := program.Checker(ctx, file)
 		fresh := func() *lowering {
-			return &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1, sourceIdentities: identities}
+			return &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1, sourceIdentities: identities, typeStrings: typeStrings}
 		}
 		func() {
 			defer func() {

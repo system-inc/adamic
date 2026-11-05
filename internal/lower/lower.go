@@ -313,6 +313,8 @@ type lowering struct {
 	result           *ir.Program
 	sourceIdentities map[*ast.Node]ir.SourceIdentity
 	sourceModules    map[*ast.SourceFile]string
+	// typeStrings is each type's TypeToString, held for the lowering (typeString).
+	typeStrings map[*checker.Type]string
 	// predicateProofs is every type predicate's proof, run once per verifier mode (predicates_proof.go).
 	predicateProofs *predicateProofs
 
