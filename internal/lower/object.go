@@ -1185,6 +1185,18 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 			return nil, l.notYet(iterated, "for...of over an object")
 		}
 		element = ir.Array
+	case ir.Union:
+		held, isView := l.iterableViewElement(iterated)
+		if !isView {
+			return nil, l.notYet(statement.Expression, "for...of over a "+typeName(iterable.Type()))
+		}
+		// Iterable<string> is held as a union, since a string fits it too. The same proof admits it
+		// (Lower's ruling on #qk8rztp), and the loop reads the slot as the iterator through the checked
+		// unbox, whose tag test stops the program if the proof is ever wrong. A string origin is a second
+		// kind, unproven until a dispatch exists.
+		l.iterableViews = append(l.iterableViews, iterableView{where: iterated, iterated: iterable, held: held})
+		unboxed := ir.Narrow{Value: iterable, To: ir.Object, Checked: true, Message: "a view over an iterable held something other than a collection's iterator at " + l.program.Where(iterated)}
+		return l.libraryForOfIterator(node, unboxed, held.element, name)
 	default:
 		return nil, l.notYet(statement.Expression, "for...of over a "+typeName(iterable.Type()))
 	}
