@@ -130,11 +130,11 @@ func TestGenericGeneratorCalledOtherThanByItsNameIsNotYet(t *testing.T) {
 }
 
 // tsc's own mapIterator (core.ts:332-336). Its for-of over iter is a view since S2b-1b
-// (iterable_views.go), so instantiated over an array it stops at the array, never compiling. Either
-// the argument stops where it goes into Iterable<number> (shape_fit.go), or, if that check doesn't
-// reach a generic generator's argument, the view's proof stops at the for-of, the array an unproven
-// origin. Both are right; which one fires first is the box run's to say, and this pin can then be held
-// to that one. Handed a Map's keys(), mapIterator lowers.
+// (iterable_views.go), so the body lowers, and instantiated over an array it stops at the array:
+// expression() judges every value against its contextual slot (containerWhereOtherGoes), and an
+// argument of a generic call has the instantiated parameter's, Iterable<number>, where an array is
+// shape_fit.go's stop. That fires while the call is lowered, before the view's proof runs after
+// lowering, which would stop the same program at 2:21. Handed a Map's keys(), mapIterator lowers.
 func TestTscMapIteratorOverAnArrayStops(t *testing.T) {
 	t.Parallel()
 	const mapIterator = `export function* mapIterator<T, U>(iter: Iterable<T>, mapFn: (x: T) => U): Generator<U, void, unknown> {
@@ -145,10 +145,8 @@ func TestTscMapIteratorOverAnArrayStops(t *testing.T) {
 `
 	_, err := lowerSource(t, mapIterator+`console.log([...mapIterator([1, 2, 3], x => x * 2)].join(","));`)
 	var gap *NotYet
-	atArgument := errors.As(err, &gap) && strings.Contains(gap.Where, "main.a:6:29") && strings.Contains(gap.What, "an array going where a plain object type is held")
-	atView := errors.As(err, &gap) && strings.Contains(gap.Where, "main.a:2:21") && strings.Contains(gap.What, "a view over an iterable of unproven origin")
-	if !atArgument && !atView {
-		t.Fatalf("got %v, want a NotYet at the array (6:29) or at the view's for-of (2:21)", err)
+	if !errors.As(err, &gap) || !strings.Contains(gap.Where, "main.a:6:29") || !strings.Contains(gap.What, "an array going where a plain object type is held") {
+		t.Fatalf("got %v, want a NotYet at the array, 6:29", err)
 	}
 	keys := "const ids = new Map<number, string>();\nfor (let index = 1; index < 4; index++) { ids.set(index * 10, `id ${String(index)}`); }\n"
 	if _, err := lowerSource(t, mapIterator+keys+`console.log([...mapIterator(ids.keys(), x => x + 1)].join(","));`); err != nil {
