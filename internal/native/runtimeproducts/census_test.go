@@ -2,6 +2,7 @@ package runtimeproducts
 
 import (
 	"bytes"
+	"cmp"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -19,6 +20,7 @@ import (
 	"path/filepath"
 	"slices"
 	"sort"
+	"strconv"
 	"strings"
 	"syscall"
 	"testing"
@@ -851,9 +853,10 @@ func TestTheRuntimeBuildReachesOnlyItsDeclaredFiles(t *testing.T) {
 
 // buildPath are the entries of an archive's path to its build, by package, each held by a census of its package's own
 // (TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds), and what each may reach of the next: runtimeproducts' product
-// tests and supplier, native's request and the build its window runs, and the jobserver handed to it.
+// tests and supplier, a program region's archive (ProgramArchive), native's request and the build its window runs, and
+// the jobserver handed to it. Every exported function of runtimeproducts is one of its entries.
 var buildPath = map[string][]string{
-	modulePath + "/internal/native/runtimeproducts": {"Build", "Supply", "Find", "Archive", "Inputs", "Declared"},
+	modulePath + "/internal/native/runtimeproducts": {"Build", "Supply", "Find", "Archive", "ProgramArchive", "Inputs", "Declared"},
 	modulePath + "/internal/native":                 {"RuntimeRequestFor", "RuntimeRequest.Build", "OpenJobserver", "UseJobserver"},
 	modulePath + "/internal/ccjobserver":            {"Process"},
 }
@@ -876,10 +879,13 @@ func TestProduct_RuntimeProductsCensusExports(t *testing.T) {
 // its reason, and nothing the census can't follow. clang's environment is toolchain.Env's, buildcache's slice.
 // Each package of the path is held by a census of its own from the entries buildPath names, and a reach into another
 // package must be one of that package's entries, or a keyedValues function, whose result the key holds. Its recipe is
-// the import closure (buildcache's leanRecipeOf), so declared is each package whole. It's the other test buildcache's
-// leanCallers names as this package's census, beside TestTheRuntimeBuildReachesOnlyItsDeclaredFiles. Mutants that each
-// fail it: an os.Getenv planted in Build; Build reading another package's variable; native's entries left without
-// UseJobserver.
+// the import closure (buildcache's leanRecipeOf), so declared is each package whole. A program region's archive
+// (ProgramArchive) is one of its entries, so its path is held as the rest are: ADAMIC_PROGRAM_REGION is read on it only
+// as the refusal requestEnvironment names, and its options reach the archive as a flag (TestAProgramRegionKeysItsArchiveApart).
+// Every exported function of runtimeproducts is an entry, since each is a way into an archive's build from another
+// package. It's the other test buildcache's leanCallers names as this package's census, beside
+// TestTheRuntimeBuildReachesOnlyItsDeclaredFiles. Mutants that each fail it: an os.Getenv planted in Build; Build reading
+// another package's variable; native's entries left without UseJobserver; ProgramArchive left out of buildPath.
 func TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds(t *testing.T) {
 	t.Parallel()
 	root := repositoryRoot(t)
@@ -918,9 +924,37 @@ func TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds(t *testing.T) {
 			}
 		}
 	}
+	findings = append(findings, unfollowedEntries(t, root, buildPath[modulePath+"/internal/native/runtimeproducts"])...)
 	if len(findings) > 0 {
 		t.Fatalf("an archive's path to its build reads past what its key holds:\n%s", strings.Join(findings, "\n"))
 	}
+}
+
+// unfollowedEntries are runtimeproducts' exported functions entries doesn't name, each a way into an archive's build
+// from another package that no census follows, read from its files as the line builds them (linux/amd64).
+func unfollowedEntries(t *testing.T, root string, entries []string) []string {
+	t.Helper()
+	context := build.Default
+	context.GOOS, context.GOARCH = "linux", "amd64"
+	directory := filepath.Join(root, "internal", "native", "runtimeproducts")
+	listed, err := context.ImportDir(directory, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var findings []string
+	for _, name := range listed.GoFiles {
+		file, err := parser.ParseFile(token.NewFileSet(), filepath.Join(directory, name), nil, parser.SkipObjectResolution)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, declaration := range file.Decls {
+			function, ok := declaration.(*ast.FuncDecl)
+			if ok && function.Recv == nil && function.Name.IsExported() && !slices.Contains(entries, function.Name.Name) {
+				findings = append(findings, fmt.Sprintf("internal/native/runtimeproducts %s: exported, a way into an archive's build, and no entry of buildPath, so no census follows it", function.Name.Name))
+			}
+		}
+	}
+	return findings
 }
 
 // runtimeproductsEnvironment, requestEnvironment and jobserverEnvironment are the environment variables each package of
@@ -1076,8 +1110,267 @@ var jobserverState = map[string]string{
 
 // productsState are runtimeproducts' exported tables an archive's path reads, each with its reason.
 var productsState = map[string]string{
-	"Sets":     "decides which archives are asked for and built ahead; each request's features are its key's flags (TestRuntimeProductKeyHoldsEveryFeatureAndOption), so a write elsewhere asks for another archive, never other bytes under one key",
-	"Variants": "decides which options archives are asked for with; each request's options are its key's flags (TestRuntimeProductKeyHoldsEveryFeatureAndOption), so a write elsewhere asks for another archive, never other bytes under one key",
+	"Sets":            "decides which archives are asked for and built ahead; each request's features are its key's flags (TestRuntimeProductKeyHoldsEveryFeatureAndOption), so a write elsewhere asks for another archive, never other bytes under one key",
+	"Variants":        "decides which options archives are asked for with; each request's options are its key's flags (TestRuntimeProductKeyHoldsEveryFeatureAndOption), so a write elsewhere asks for another archive, never other bytes under one key",
+	"ProgramVariants": "decides which options a program region's archives are asked for with (ProgramArchive); each request's options are its key's flags, a program region's -DADAMIC_PROGRAM_REGION among them (TestAProgramRegionKeysItsArchiveApart), so a write elsewhere asks for another archive, never other bytes under one key",
+}
+
+// A program region's archive is keyed apart from the plain one by what the region changes in it, its flag (Node's
+// condition 1 on the program region archives): native.RuntimeRequestFor turns options.ProgramRegion into
+// -DADAMIC_PROGRAM_REGION among the request's flags, which RuntimeRequest.Build compiles with and its Portable holds, so
+// Inputs holds it. For each region variant, its request and the one with ProgramRegion off differ in Inputs by that flag,
+// and by the headers part if the flag reaches what the compile includes, and nothing else, and their name keys and
+// their keys for this machine differ. Mutant: Inputs dropping the flag.
+func TestAProgramRegionKeysItsArchiveApart(t *testing.T) {
+	t.Parallel()
+	root := repositoryRoot(t)
+	const flag = "flag -DADAMIC_PROGRAM_REGION"
+	regions := 0
+	for _, variant := range ProgramVariants {
+		if !variant.Options.ProgramRegion {
+			continue
+		}
+		regions++
+		withoutRegion := variant.Options
+		withoutRegion.ProgramRegion = false
+		region, err := native.RuntimeRequestFor(variant.Options)
+		if err != nil {
+			t.Fatalf("%s: %v", variant.Name, err)
+		}
+		plain, err := native.RuntimeRequestFor(withoutRegion)
+		if err != nil {
+			t.Fatalf("%s without its region: %v", variant.Name, err)
+		}
+		regionInputs, plainInputs := Inputs(region), Inputs(plain)
+		if !slices.Contains(regionInputs.Flags, flag) || slices.Contains(plainInputs.Flags, flag) {
+			t.Errorf("%s: the region's Inputs hold %q: %v, the plain one's: %v; want the region's alone", variant.Name, flag, slices.Contains(regionInputs.Flags, flag), slices.Contains(plainInputs.Flags, flag))
+		}
+		for _, sides := range [][2]buildcache.Inputs{{regionInputs, plainInputs}, {plainInputs, regionInputs}} {
+			for _, part := range sides[0].Flags {
+				if part != flag && !strings.HasPrefix(part, "headers ") && !slices.Contains(sides[1].Flags, part) {
+					t.Errorf("%s: the requests with and without the region differ by %.80q too, not the region's flag", variant.Name, part)
+				}
+			}
+		}
+		if !slices.Equal(regionInputs.Files, plainInputs.Files) || !slices.Equal(regionInputs.Toolchain, plainInputs.Toolchain) || regionInputs.Name != plainInputs.Name {
+			t.Errorf("%s: the requests with and without the region differ beyond their flags: %+v and %+v", variant.Name, regionInputs, plainInputs)
+		}
+		if buildcache.NameKey(root, regionInputs) == buildcache.NameKey(root, plainInputs) {
+			t.Errorf("%s: the region's archive and the plain one share a name key", variant.Name)
+		}
+		regionKey, err := buildcache.Key(root, regionInputs)
+		if err != nil {
+			t.Fatal(err)
+		}
+		plainKey, err := buildcache.Key(root, plainInputs)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if regionKey == plainKey {
+			t.Errorf("%s: the region's archive and the plain one share a key", variant.Name)
+		}
+	}
+	if regions == 0 {
+		t.Fatal("ProgramVariants names no program region")
+	}
+}
+
+// ProgramArchive fails the test that asks it for an archive it doesn't declare, by the guard's own words, before any
+// request is made: a feature set Sets doesn't hold, or options ProgramVariants doesn't. ProgramVariants are a list apart
+// from Variants: each is refused by Declared, so Supply, which a native build mid-test asks, never builds a program
+// region's archive. Mutants that each fail it: either guard dropped; a program region's options added to Variants.
+func TestProgramArchiveRefusesWhatItDoesntDeclare(t *testing.T) {
+	t.Parallel()
+	for name, ask := range map[string]struct {
+		options  native.Options
+		features []string
+		want     string
+	}{
+		"a feature set Sets doesn't hold":    {ProgramVariants[0].Options, []string{"ADAMIC_NO_SUCH_FEATURE"}, "undeclared Program runtime feature set: [ADAMIC_NO_SUCH_FEATURE]"},
+		"options ProgramVariants don't hold": {native.Options{ProgramRegion: true, Target: "wasm32-wasi"}, nil, "undeclared Program runtime options: "},
+	} {
+		recorder := &stoppingTB{TB: t}
+		func() {
+			defer recorder.recover()
+			directory := ProgramArchive(recorder, ask.options, ask.features)
+			t.Errorf("%s: ProgramArchive built %s", name, directory)
+		}()
+		if !strings.Contains(recorder.failed, ask.want) {
+			t.Errorf("%s: ProgramArchive failed with %q, want %q", name, recorder.failed, ask.want)
+		}
+	}
+	for _, variant := range ProgramVariants {
+		if Declared(native.RuntimeRequest{Options: variant.Options}) == nil {
+			t.Errorf("Declared takes %s's options %+v, so Supply would build its archive mid-test", variant.Name, variant.Options)
+		}
+	}
+}
+
+// A stoppingTB is a testing.TB whose Fatal, Fatalf and Skipf record what they're given and stop the caller there, as
+// the testing package's do, so a test can read what a helper of this package failed with.
+type stoppingTB struct {
+	testing.TB
+	failed string
+}
+
+// stopped is what a stoppingTB panics with to stop its caller, which recover takes back.
+type stopped struct{}
+
+func (recorder *stoppingTB) Helper() {}
+
+func (recorder *stoppingTB) Fatal(arguments ...any) {
+	recorder.failed = fmt.Sprint(arguments...)
+	panic(stopped{})
+}
+
+func (recorder *stoppingTB) Fatalf(format string, arguments ...any) {
+	recorder.failed = fmt.Sprintf(format, arguments...)
+	panic(stopped{})
+}
+
+func (recorder *stoppingTB) Skipf(format string, arguments ...any) {
+	recorder.failed = "skipped: " + fmt.Sprintf(format, arguments...)
+	panic(stopped{})
+}
+
+// recover, deferred, takes back a stoppingTB's stop and lets any other panic go on.
+func (recorder *stoppingTB) recover() {
+	if recovered := recover(); recovered != nil {
+		if _, ok := recovered.(stopped); !ok {
+			panic(recovered)
+		}
+	}
+}
+
+// internal/oracle makes no runtime archive of its own: none of its files, its test files with them, builds a
+// native.RuntimeRequest, so every archive its tests link is built here, lean, keyed by runtimeproducts' import closure
+// (buildcache's leanRecipeOf), which holds no file of internal/oracle (buildcache's
+// TestALeanRecipeIsTheCodeThatMakesTheBuild), and an edit of an oracle test leaves every archive's key alone. Its program
+// region's archives were built there with buildcache.Product, keyed by oracle's whole test binary, so an edit of any
+// oracle test rebuilt all 54; they're asked of ProgramArchive now, by the product shards and the builds that link them
+// alike. The scan itself is held on a file of its own holding that old build. Mutant: oracle's program region archives
+// built with buildcache.Product again.
+func TestOracleMakesNoArchiveOfItsOwn(t *testing.T) {
+	t.Parallel()
+	findings, asked, err := archivesMadeIn(filepath.Join(repositoryRoot(t), "internal", "oracle"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(findings) > 0 {
+		t.Errorf("internal/oracle builds a runtime archive of its own, keyed by its test binary rather than runtimeproducts' lean recipe:\n%s", strings.Join(findings, "\n"))
+	}
+	if asked == 0 {
+		t.Error("no file of internal/oracle asks ProgramArchive for a program region's archive, so the scan read nothing it should")
+	}
+	fixture := t.TempDir()
+	old := "package oracle\n\nimport (\n\t\"testing\"\n\n\t\"github.com/system-inc/adamic/internal/buildcache\"\n\t\"github.com/system-inc/adamic/internal/ccjobserver\"\n\t\"github.com/system-inc/adamic/internal/native\"\n\t\"github.com/system-inc/adamic/internal/native/runtimeproducts\"\n)\n\n" +
+		"func programRegionRuntime(t *testing.T, options native.Options, features []string) string {\n\trequest, err := native.RuntimeRequestFor(options, features...)\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n\tjobserver, err := ccjobserver.Process()\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n" +
+		"\treturn buildcache.Product(t, runtimeproducts.Inputs(request), func(directory string) error { return request.Build(directory, 1, jobserver) })\n}\n"
+	if err := os.WriteFile(filepath.Join(fixture, "program_region_products_test.go"), []byte(old), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if found, _, err := archivesMadeIn(fixture); err != nil || len(found) != 1 {
+		t.Errorf("the scan of oracle's old program region build found %q (%v), want its one request.Build", found, err)
+	}
+}
+
+// archivesMadeIn is each place a Go file of directory, test files with them, builds a runtime archive: Build named on a
+// request a function there holds, a value of native.RuntimeRequestFor or a parameter or variable of
+// native.RuntimeRequest's type, and how many calls there ask runtimeproducts.ProgramArchive for one.
+func archivesMadeIn(directory string) (findings []string, asked int, err error) {
+	entries, err := os.ReadDir(directory)
+	if err != nil {
+		return nil, 0, err
+	}
+	fileSet := token.NewFileSet()
+	for _, entry := range entries {
+		if entry.IsDir() || !strings.HasSuffix(entry.Name(), ".go") {
+			continue
+		}
+		file, err := parser.ParseFile(fileSet, filepath.Join(directory, entry.Name()), nil, parser.SkipObjectResolution)
+		if err != nil {
+			return nil, 0, err
+		}
+		nativeName, productsName := "", ""
+		for _, imported := range file.Imports {
+			path, _ := strconv.Unquote(imported.Path.Value)
+			name := ""
+			if imported.Name != nil {
+				name = imported.Name.Name
+			}
+			switch path {
+			case modulePath + "/internal/native":
+				nativeName = cmp.Or(name, "native")
+			case modulePath + "/internal/native/runtimeproducts":
+				productsName = cmp.Or(name, "runtimeproducts")
+			}
+		}
+		qualified := func(expression ast.Expr, pkg, name string) bool {
+			selector, ok := ast.Unparen(expression).(*ast.SelectorExpr)
+			if !ok || pkg == "" {
+				return false
+			}
+			qualifier, ok := selector.X.(*ast.Ident)
+			return ok && qualifier.Name == pkg && selector.Sel.Name == name
+		}
+		isRequest := func(typ ast.Expr) bool {
+			if star, ok := typ.(*ast.StarExpr); ok {
+				typ = star.X
+			}
+			return qualified(typ, nativeName, "RuntimeRequest")
+		}
+		for _, declaration := range file.Decls {
+			function, ok := declaration.(*ast.FuncDecl)
+			if !ok || function.Body == nil {
+				continue
+			}
+			requests := map[string]bool{}
+			ast.Inspect(function, func(node ast.Node) bool {
+				switch node := node.(type) {
+				case *ast.Field:
+					if isRequest(node.Type) {
+						for _, name := range node.Names {
+							requests[name.Name] = true
+						}
+					}
+				case *ast.ValueSpec:
+					made := node.Type != nil && isRequest(node.Type)
+					for _, value := range node.Values {
+						if call, ok := value.(*ast.CallExpr); ok && qualified(call.Fun, nativeName, "RuntimeRequestFor") {
+							made = true
+						}
+					}
+					for _, name := range node.Names {
+						requests[name.Name] = requests[name.Name] || made
+					}
+				case *ast.AssignStmt:
+					if len(node.Rhs) == 1 && len(node.Lhs) > 0 {
+						if call, ok := node.Rhs[0].(*ast.CallExpr); ok && qualified(call.Fun, nativeName, "RuntimeRequestFor") {
+							if name, ok := node.Lhs[0].(*ast.Ident); ok {
+								requests[name.Name] = true
+							}
+						}
+					}
+				}
+				return true
+			})
+			ast.Inspect(function.Body, func(node ast.Node) bool {
+				switch node := node.(type) {
+				case *ast.SelectorExpr:
+					if name, ok := node.X.(*ast.Ident); ok && requests[name.Name] && node.Sel.Name == "Build" {
+						position := fileSet.Position(node.Pos())
+						findings = append(findings, fmt.Sprintf("%s:%d: %s.Build in %s", filepath.Base(position.Filename), position.Line, name.Name, function.Name.Name))
+					}
+				case *ast.CallExpr:
+					if qualified(node.Fun, productsName, "ProgramArchive") {
+						asked++
+					}
+				}
+				return true
+			})
+		}
+	}
+	return findings, asked, nil
 }
 
 // An agreement native's build, native.BuildLean, reaches nothing of internal/native but the files its key declares
