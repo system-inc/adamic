@@ -1,0 +1,3 @@
+import { later, setLater } from './n14_imported_binding/back.a';
+setLater();
+console.log(String(later));
