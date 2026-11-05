@@ -2,6 +2,7 @@ package lower
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 )
@@ -15,9 +16,14 @@ import (
 // or an initializer, an argument, a return, an alias and a comma operand.
 //
 // Only a method each of whose declarations is a method declaration or signature with no question
-// token is admitted. On a value the checker proved to have its type such a method is always there, so
-// the test's answer is a constant once the receiver is evaluated, once, for its effects. Through ?.
-// the receiver may be missing, and its presence is the answer. An optional method (m?(): T) stays
+// token is admitted, and its answer is a constant only where the receiver's construction proves the
+// method there: a library global's library method (Object.setPrototypeOf), a library method on a value
+// Adamic holds as its own array or string (array.fill, ch.repeat), and a program class's method on a
+// receiver of that class's type. Anything else, a method signature on a program's interface or object
+// type above all, may be a checked view or a host value whose real object lacks the method, where Node
+// says "undefined": it is not yet (methodPresenceUnproven), never folded. The constant comes once the
+// receiver is evaluated, once, for its effects. Through ?. the receiver may be missing, and its
+// presence is the answer. An optional method (m?(): T) stays
 // refused, since nothing proves it there and nothing yet reads whether it is: its read goes the way an
 // optional function-typed field's does (property), and that stops for every method behind it, an
 // object literal's as a literal method through a view that erases its receiver, a class's as a class
@@ -111,25 +117,90 @@ func (l *lowering) methodPresence(operand *ast.Node) (read methodPresenceRead, h
 	if receiver.Kind == ast.KindSuperKeyword {
 		return methodPresenceRead{}, true, l.notYet(node, "a presence test of a method read through super")
 	}
+	library := l.libraryDeclaredMethod(node)
 	if access.QuestionDotToken == nil && l.libraryGlobalReceiver(receiver) {
+		if !library {
+			return methodPresenceRead{}, true, l.notYet(node, methodPresenceUnproven)
+		}
 		// Object, Array, Math: reading a library global has no effects, and Object isn't a value Adamic
 		// holds (libraryGlobalValue), so there is nothing to evaluate.
 		return methodPresenceRead{}, true, nil
+	}
+	class := l.programClassMethod(node)
+	if !class && !library {
+		return methodPresenceRead{}, true, l.notYet(node, methodPresenceUnproven)
 	}
 	value, err := l.expression(access.Expression)
 	if err != nil {
 		return methodPresenceRead{}, true, err
 	}
+	if !class && value.Type() != ir.Array && value.Type() != ir.String {
+		// A library method on an object Adamic didn't build as its own array or string: a Map, a host
+		// value, a view. Only the object itself can say whether it has the method.
+		return methodPresenceRead{}, true, l.notYet(node, methodPresenceUnproven)
+	}
 	if access.QuestionDotToken == nil {
 		return methodPresenceRead{effects: []ir.Statement{ir.Evaluate{Value: value}}}, true, nil
 	}
 	switch value.Type() {
-	case ir.Object, ir.Array, ir.Map:
-		// An object, an array or a Map is falsy only when it's missing (combine's && says why), so its
+	case ir.Object, ir.Array:
+		// An object or an array is falsy only when it's missing (combine's && says why), so its
 		// truthiness is ?.'s nullish test, on the receiver's one evaluation.
 		return methodPresenceRead{present: ir.Truthy{Value: value}}, true, nil
 	}
 	return methodPresenceRead{}, true, l.notYet(node, "a presence test of a method read through ?. on a "+typeName(value.Type()))
+}
+
+// methodPresenceUnproven is what a presence test stops as where nothing about how the receiver was made
+// proves the method there.
+const methodPresenceUnproven = "a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it"
+
+// libraryDeclaredMethod reports whether every declaration of the method node reads is TypeScript's
+// bundled library's.
+func (l *lowering) libraryDeclaredMethod(node *ast.Node) bool {
+	symbol := l.checker.GetSymbolAtLocation(node)
+	if symbol == nil || len(symbol.Declarations) == 0 {
+		return false
+	}
+	for _, declaration := range symbol.Declarations {
+		if !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+			return false
+		}
+	}
+	return true
+}
+
+// programClassMethod reports whether node reads, off a receiver whose type is one of the program's own
+// classes, a method each declaration of which is a class's method with a body: what callOrMethod calls
+// directly on such a receiver, by the class's own method. A value of a class type is never a view (every
+// view's target is an object type no class is, interfaceCast to speculation), and a cast to one is
+// checked by the class's identity (checkedClassCast), so such a receiver is an instance, and the method
+// is on its prototype. this is read as its class, the constraint of its polymorphic this type.
+func (l *lowering) programClassMethod(node *ast.Node) bool {
+	receiver := ast.SkipParentheses(node.AsPropertyAccessExpression().Expression)
+	proven := l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeAtLocation(receiver)))
+	if receiver.Kind == ast.KindThisKeyword && proven.Flags()&checker.TypeFlagsTypeParameter != 0 {
+		if constraint := l.checker.GetBaseConstraintOfType(proven); constraint != nil {
+			proven = constraint
+		}
+	}
+	if !isClassInstance(proven) {
+		return false
+	}
+	symbol := l.checker.GetSymbolAtLocation(node)
+	if symbol == nil || len(symbol.Declarations) == 0 {
+		return false
+	}
+	for _, declaration := range symbol.Declarations {
+		class := declaration.Parent
+		if declaration.Kind != ast.KindMethodDeclaration || declaration.Body() == nil || class == nil || class.Name() == nil {
+			return false
+		}
+		if _, known := l.classes[l.symbol(class.Name())]; !known {
+			return false
+		}
+	}
+	return true
 }
 
 // libraryGlobalReceiver reports whether node names a library global, as isLibraryGlobal does for one
