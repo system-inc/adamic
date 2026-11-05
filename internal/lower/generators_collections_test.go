@@ -52,9 +52,10 @@ console.log(String(map.size) + " " + String(set.size));`)
 	}
 	// A generic generator's instance is consumed as a plain one is (S2a): its pairs are read from the
 	// call's instantiated type.
-	if _, err := lowerSource(t, `function* zip<K, V>(keys: readonly K[], values: readonly V[]): Generator<[K, V], undefined, undefined> {
-	for (let index = 0; index < keys.length; index++) {
-		yield [keys[index], values[index]];
+	// A tuple's fixed indices read K and V as they are, where an array's index would read K | undefined.
+	if _, err := lowerSource(t, `function* zip<K, V>(items: readonly (readonly [K, V])[]): Generator<[K, V], undefined, undefined> {
+	for (const item of items) {
+		yield [item[0], item[1]];
 	}
 }
 function* each<T>(items: readonly T[]): Generator<T, undefined, undefined> {
@@ -62,7 +63,7 @@ function* each<T>(items: readonly T[]): Generator<T, undefined, undefined> {
 		yield item;
 	}
 }
-console.log(String(new Map(zip(["a", "b"], [1, 2])).size) + " " + String(new Set(each([3, 3])).size));`); err != nil {
+console.log(String(new Map(zip([["a", 1], ["b", 2]])).size) + " " + String(new Set(each([3, 3])).size));`); err != nil {
 		t.Errorf("new Map and new Set of generic generators' instances: %v", err)
 	}
 }
