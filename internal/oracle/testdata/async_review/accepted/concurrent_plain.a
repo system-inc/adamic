@@ -1,9 +1,14 @@
-// Two tasks interleave at their suspensions, as refused/concurrent.a's do, with no operation that can
-// throw: each task writes the strings it's given and makes none, so it always fulfills, and awaiting
-// the first before the second leaves no rejection unobserved. The suspension mutants read this one.
+// Two tasks interleave at their suspensions, as refused/concurrent.a's do, with nothing that can throw
+// out of them: each writes the strings it's given and makes none, and its await is inside a try, so it
+// always fulfills, and awaiting the first before the second leaves no rejection unobserved. The
+// suspension mutants read this one.
 async function task(start: string, resume: string, result: string): Promise<string> {
 	console.log(start);
-	await Promise.resolve();
+	try {
+		await Promise.resolve();
+	} catch {
+		return 'never';
+	}
 	console.log(resume);
 	return result;
 }
