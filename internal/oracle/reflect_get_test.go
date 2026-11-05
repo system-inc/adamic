@@ -43,7 +43,10 @@ func reflectGetFixture(t *testing.T, name string) string {
 // bytes read only for an object with a write order, as before #rany24c, so decoded_scalar_reads.a's
 // decoded number panics natively; directory.c's byte for a status's size dropped, so that row
 // panics; emptySpread's representation bytes dropped (reuse.go), so undefined_spread.a's absent
-// fields panic natively (#2ncah99).
+// fields panic natively (#2ncah99); keyed_array_element boxing a number array's elements as
+// references, so array_reads.a's numbers are read as pointers natively; keyed_array's index bound
+// taken as <= length, so array_reads.a's reads at length read past the last element natively
+// (#ys4naww).
 func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ file, stdout string }{
@@ -60,6 +63,8 @@ func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 		{"decoded_scalar_reads.a", decodedScalarReadsAnswers},
 		{"undefined_spread.a", undefinedSpreadAnswers},
 		{"spread_plain.a", "constructor function\ngiven x number constructor function\nwidth number constructor function\n"},
+		{"array_reads.a", arrayReadsAnswers},
+		{"stop_array.a", "before\nnumber\n"},
 		{"error_fields.a", "code: \"ENOENT\"\nmessage: \"ENOENT: no such file or directory, open '/nonexistent-adamic-reflect-get/file'\"\ncaught foo: undefined\ncaught in: code yes message yes foo no\nerrorCode: \"ENOENT\"\ncoded code: \"ERR_INVALID_ARG_VALUE\"\ncoded name: \"TypeError\"\ncoded foo: undefined\ncoded in: code yes message yes foo no\nthrown: \"thrown\"\nname: \"Error\"\nthrown foo: undefined\nthrown in: message yes name yes foo no\n"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
@@ -97,6 +102,45 @@ concatenated: "first"
 substring: "second"
 null: "Cannot read properties of null (reading 'code')"
 undefined: "Cannot read properties of undefined (reading 'code')"
+`
+
+// arrayReadsAnswers is what array_reads.a prints on Node.
+const arrayReadsAnswers = `numbers 0 number 1.5
+numbers 1 number 2
+numbers 3 undefined
+numbers length number 3
+booleans 0 boolean true
+booleans 1 boolean false
+booleans 2 undefined
+booleans length number 2
+strings 0 string a
+strings 1 string b
+strings 2 undefined
+objects 0 object first
+objects 1 object second
+objects 2 undefined
+maybe 0 number 4
+maybe 1 undefined
+maybe length number 2
+mixed 0 number 5
+mixed 1 string five
+mixed 2 boolean true
+mixed 3 null
+empty 0 undefined
+empty length number 0
+missing undefined
+leading zero undefined
+negative undefined
+fraction undefined
+past the last index undefined
+match 0 string bc
+match 1 string c
+match 2 undefined
+match 3 undefined
+match length number 3
+match index number 1
+match input string abcd
+match groups undefined
 `
 
 // undefinedSpreadAnswers is what undefined_spread.a prints on Node.
@@ -200,7 +244,9 @@ var reflectGetStops = []struct{ file, stdout, stop, key, node string }{
 	{"stop_keys_iterator.a", "iterator\n", "OwnKeys", "", "iterator\nkeys []\n"},
 	{"stop_keys_memory.a", "memory\n", "OwnKeys", "", "memory\nkeys rss,heapTotal,heapUsed,external,arrayBuffers\n"},
 	{"stop_error_stack.a", "before\n", "ErrorProperty", "stack", "before\nstring\n"},
-	{"stop_array.a", "before\n", "Array", "length", "before\nnumber\n"},
+	{"stop_array_method.a", "before\n", "ArrayPrototype", "map", "before\nfunction\n"},
+	{"stop_tuple.a", "before\n", "Tuple", "0", "before\nnumber\n"},
+	{"stop_tuple_indices.a", "before\n", "Tuple", "0", "before\nnumber\n"},
 	{"stop_literal_getter.a", "got\n", "ObjectLiteralGetter", "value", "got\nstring\n"},
 }
 
@@ -245,7 +291,10 @@ func reflectGetStop(t *testing.T, stdout, stop, key string) run {
 // natively. The stop_keys_ rows are Object.keys of a host value, stopping in the keyless message
 // (OwnKeys, Adamic's ruling at 08:28Z); their mutants are the keys guard dropped from
 // adamic_object_keys and from adamic_class_object_keys, and the fixture each path serves answers from
-// native's slots.
+// native's slots. stop_array_method.a's mutants are keyed_array's inherited-name stop dropped
+// natively, and the helper's, so map reads undefined on each (#ys4naww). stop_tuple_indices.a's is
+// the helper's marking of a match's indices pairs dropped, so the JavaScript backend reads the pair
+// as an array where native stops.
 func TestReflectGetStopsAlikeOnBothBackends(t *testing.T) {
 	t.Parallel()
 	for _, probe := range reflectGetStops {

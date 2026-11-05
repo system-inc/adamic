@@ -180,12 +180,15 @@ static bool object_prototype_name(const char *name) {
 	return named(name, names, sizeof names / sizeof names[0]);
 }
 
-static bool array_key(const char *name, size_t *result) {
-	if (*name == '\0' || (name[0] == '0' && name[1] != '\0')) return false;
+// array_key says whether a name of length bytes is a canonical array index, digits with no leading
+// zero below 2^32-1, and which. A run-time key's bytes aren't terminated, so it's given by length.
+static bool array_key(const char *name, size_t length, size_t *result) {
+	if (length == 0 || (name[0] == '0' && length > 1)) return false;
 	uint64_t index = 0;
-	for (const unsigned char *at = (const unsigned char *)name; *at != '\0'; at++) {
-		if (*at < '0' || *at > '9') return false;
-		index = index * 10 + (*at - '0');
+	for (size_t at = 0; at < length; at++) {
+		unsigned char digit = (unsigned char)name[at];
+		if (digit < '0' || digit > '9') return false;
+		index = index * 10 + (digit - '0');
 		if (index >= UINT32_MAX) return false;
 	}
 	*result = (size_t)index;
@@ -261,7 +264,7 @@ static bool has_property(const adamic_heap *value, const char *name) {
 	if (value->kind == adamic_kind_array) {
 		const adamic_array *array = (const adamic_array *)value;
 		size_t index;
-		if (array_key(name, &index)) return index < array->length;
+		if (array_key(name, strlen(name), &index)) return index < array->length;
 		if (array->metadata != NULL && has_property(&array->metadata->heap, name)) return true;
 		if (array->properties != NULL && has_property(&array->properties->heap, name)) return true;
 		static const char *const names[] = {"length", "at", "concat", "copyWithin", "fill", "find", "findIndex", "findLast", "findLastIndex", "lastIndexOf", "pop", "push", "reverse", "shift", "unshift", "slice", "sort", "splice", "includes", "indexOf", "join", "keys", "entries", "values", "forEach", "filter", "flat", "flatMap", "map", "every", "some", "reduce", "reduceRight", "toReversed", "toSorted", "toSpliced", "with"};
@@ -541,6 +544,60 @@ static adamic_heap *prototype_value(const adamic_string *key) {
 	return NULL;
 }
 
+// keyed_array_element is an array's element as a union, owned, boxed by how the array holds its
+// slots (adamic_array's element byte), as dynamic_slot boxes a slot. A kind not known (0) is a compiler
+// bug said out loud: a guess could read a number's bits as a pointer.
+static adamic_heap *keyed_array_element(const adamic_array *array, size_t index) {
+	const adamic_value element = array->elements[index];
+	switch (array->element) {
+	case adamic_ir_Number: return adamic_box_number(element.number);
+	case adamic_ir_Boolean: return element.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
+	case adamic_ir_MaybeNumber: {
+		adamic_maybe_number number = adamic_maybe_number_unpack(element.number);
+		return number.present ? adamic_box_number(number.number) : NULL;
+	}
+	case adamic_ir_Union: return adamic_retain(element.reference);
+	}
+	static const char message[] = "compiler bug: a run-time key read reached an array of unknown element kind";
+	adamic_panic(message, sizeof message - 1);
+}
+
+// keyed_array is a run-time key read of an array as Node's answers it (#ys4naww): an index below
+// length its element and one past it undefined, length a number, and an own field its value, one the
+// program set (metadata) or a match's (properties). A name the array inherits, Array.prototype's or
+// Object.prototype's, stops, since its methods aren't read yet, and any other key reads undefined.
+// Only array_key's canonical indexes are indexes: "01", "-1" and "1.5" are names, as on Node.
+static adamic_heap *keyed_array(const adamic_array *array, const adamic_string *key) {
+	size_t index;
+	if (array_key(key->bytes, key->length, &index)) return index < array->length ? keyed_array_element(array, index) : NULL;
+	if (key_is(key, "length")) return adamic_box_number((double)array->length);
+	if (array->metadata != NULL) {
+		size_t slot = keyed_slot(array->metadata, key, NULL);
+		if (slot < array->metadata->shape->count && adamic_object_present(array->metadata, slot)) return dynamic_slot(array->metadata, slot);
+	}
+	// A match's fields are regexp.c's match shape, marked host, so they're read here, by the array, and
+	// by the shape's kinds: the shape registers no types for dynamic_slot. An indices array (the d
+	// flag's) holds the same shape with groups alone set, as Node's holds groups alone, while a result's
+	// input is always its string.
+	const adamic_object *match = array->properties;
+	if (match != NULL) {
+		size_t slot = keyed_slot(match, key, NULL);
+		size_t input = keyed_slot(match, key, "input");
+		bool indices = input < match->shape->count && match->slots[input].reference == NULL;
+		if (slot < match->shape->count && (!indices || key_is(key, "groups"))) {
+			switch (match->shape->kinds[slot]) {
+			case adamic_field_number: return adamic_box_number(match->slots[slot].number);
+			case adamic_field_boolean: return match->slots[slot].boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
+			case adamic_field_reference: return adamic_retain(match->slots[slot].reference);
+			}
+		}
+	}
+	if (key_named(key, adamic_dynamic_keyed_array_prototype_names, sizeof adamic_dynamic_keyed_array_prototype_names / sizeof adamic_dynamic_keyed_array_prototype_names[0]) || key_is(key, "__proto__") || prototype_value(key) != NULL) {
+		keyed_stop(adamic_dynamic_keyed_stop_array_prototype, key);
+	}
+	return NULL;
+}
+
 adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_string *key, const adamic_keyed_class *classes, size_t count) {
 	if (value == NULL || value == &adamic_null) keyed_stop(adamic_dynamic_keyed_stop_nullish, key);
 	switch (value->kind) {
@@ -551,7 +608,7 @@ adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_stri
 	case adamic_kind_closure:
 		keyed_stop(adamic_dynamic_keyed_stop_function, key);
 	case adamic_kind_array:
-		keyed_stop(adamic_dynamic_keyed_stop_array, key);
+		return keyed_array((const adamic_array *)value, key);
 	case adamic_kind_map:
 		keyed_stop(adamic_dynamic_keyed_stop_collection, key);
 	case adamic_kind_typed_array:
@@ -562,7 +619,7 @@ adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_stri
 		keyed_stop(adamic_dynamic_keyed_stop_runtime_value, key);
 	}
 	adamic_object *object = (adamic_object *)value;
-	if (object->tuple) keyed_stop(adamic_dynamic_keyed_stop_array, key);
+	if (object->tuple) keyed_stop(adamic_dynamic_keyed_stop_tuple, key);
 	if (object->class != NULL && object->class->is_static) keyed_stop(adamic_dynamic_keyed_stop_static_class, key);
 	if (key->length > 0 && key->bytes[0] == '#') keyed_stop(adamic_dynamic_keyed_stop_private, key);
 	if (key_is(key, "__proto__")) keyed_stop(adamic_dynamic_keyed_stop_proto, key);
