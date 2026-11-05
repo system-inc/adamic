@@ -225,7 +225,7 @@ const p: PropertyDeclaration = { kind: 172, pos: 1, _declarationBrand: undefined
 		// A member assignable to S beside an unrelated one: the checker keeps the first and drops the second,
 		// so the call is NotYet, never a model of which member it drops (Compiler's must on 8c7afca2). It's
 		// held by both members now, so passing a subtype member alone still leaves Identifier to stop it.
-		{"unrelated member", `interface Loose extends Declaration { _typeElementBrand: undefined; readonly kind: 174; readonly name: any; }
+		{"unrelated member", `interface Loose extends Declaration { _typeElementBrand: undefined; readonly kind: 174; readonly name: unknown; }
 function show(x: Loose | Identifier): void { if (isTypeElementLie(x)) { console.log(String(x.pos)); } }
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" }; show(i);`, "a checked predicate target TypeElement that narrows Identifier, which isn't its supertype"},
 		// A subtype in the argument's type keeps its own type, so the lie's typeText or arity would be read
@@ -256,13 +256,14 @@ const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; const v: Node = w; sh
 		// either way, so this pins the reason it has, and a later loosening of either rule shows here.
 		{"generic anonymous argument", `function show<K extends number>(n: { readonly kind: K; readonly pos: number }): void { if (isTypeElementLie(n)) { console.log(String(n.name)); } }
 const w = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(w);`, "which isn't its supertype"},
-		// A member typed any is no brand (Adamic's correction on #tmdhz1d: #bw3xg7c refuses any), so a
-		// supertype whose only brand-like member is any keeps the old reason. Mutant: any taken as a brand
-		// again, and it lowers.
+		// A member typed any is no brand (Adamic's correction on #tmdhz1d: #bw3xg7c refuses any). Since
+		// #tmdhz1d's step 2, a member the program declares any is refused where it's declared, ahead of the
+		// branded rule, so this supertype stops there. The branded rule's own any check still guards a
+		// library's declaration, which step 2 leaves to the relation rule.
 		{"any is no brand", `interface Opaque extends Node { _opaqueBrand: any; readonly text?: string; }
 function isOpaque(n: Node): n is Opaque { return kindOf(n) === 9; }
 function show(n: Node): void { if (isOpaque(n)) { console.log(String(n.text)); } }
-const v = { kind: 9, pos: 1, text: "x" }; show(v);`, "checked predicate overload target Opaque"},
+const v = { kind: 9, pos: 1, text: "x" }; show(v);`, "a member typed any (_opaqueBrand, declared)"},
 		{"no brand", `interface Expression extends Node { readonly text: string; }
 function isExpression(n: Node): n is Expression { return kindOf(n) === 9; }
 function show(n: Node): void { if (isExpression(n)) { console.log(n.text); } }
