@@ -68,6 +68,34 @@ func TestMethodReadsThatKeepTheValueAreRefused(t *testing.T) {
 	}
 }
 
+// A presence test is a constant only where the receiver's construction proves the method there. A
+// method signature on a program's interface reaches values Adamic didn't build as that type: an object
+// literal handed to a parameter, a value let in by a checked cast whose real object may lack the
+// method (Node says "undefined"), a host value; and a library method off anything but Adamic's own
+// array or string, a Map's. Each is not yet, never folded to "function". Mutant
+// (testdata/method_presence/mutants.md in internal/oracle): methodPresence's guard dropped folds these.
+func TestMethodPresenceTheReceiverDoesntProveIsNotYet(t *testing.T) {
+	t.Parallel()
+	const unproven = "stage 0 can't lower " + methodPresenceUnproven + " yet"
+	for _, probe := range []struct{ name, extension, source, want string }{
+		{"an object literal handed to an interface parameter", ".a", "interface Greeter {\n\tgreet(): string;\n}\nfunction probe(greeter: Greeter): string {\n\treturn typeof greeter.greet;\n}\nconsole.log(probe({ greet: () => 'hi' }));\n", "main.a:5:16: " + unproven},
+		{"an interface condition", ".a", "interface Greeter {\n\tgreet(): string;\n}\nfunction probe(greeter: Greeter): string {\n\tif (greeter.greet) {\n\t\treturn greeter.greet();\n\t}\n\treturn 'none';\n}\nconsole.log(probe({ greet: () => 'hi' }));\n", "main.a:5:6: " + unproven},
+		// .a refuses this downcast outright; .ts keeps it a checked cast, whose view is the receiver.
+		{"a cast receiver", ".ts", "interface Circle {\n\treadonly kind: 'circle';\n\tarea(): number;\n}\nfunction probe(raw: { readonly kind: string }): string {\n\treturn typeof (raw as Circle).area;\n}\nconsole.log(probe({ kind: 'circle' }));\n", "main.ts:6:16: " + unproven},
+		{"a host value's method", ".a", "import * as fs from 'node:fs';\nconst stats = fs.statSync('.');\nconsole.log(typeof stats.isFile);\n", "main.a:3:20: " + unproven},
+		{"a library method on a Map", ".a", "const counts = new Map<string, number>();\ncounts.set('a', 1);\nconsole.log(typeof counts.get);\n", "main.a:3:20: " + unproven},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, probe.source, probe.extension)
+			var notYet *NotYet
+			if !errors.As(err, &notYet) || !strings.HasSuffix(err.Error(), probe.want) {
+				t.Errorf("got %v, want a not-yet ending %q", err, probe.want)
+			}
+		})
+	}
+}
+
 // What the IR can't yet say through ?. is not yet, in its own words: the left of && whose missing
 // receiver would be the whole value, and a receiver held as a string, whose truthiness isn't its
 // presence ("" has repeat).
