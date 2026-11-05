@@ -71,48 +71,6 @@ func lengthSite(value any) int {
 	return site
 }
 
-// statementValue is the expression a statement evaluates first and whole: a declaration's or an
-// assignment's value, an evaluated expression, or a written line's string, or nil.
-func statementValue(statement ir.Statement) ir.Expression {
-	switch statement := statement.(type) {
-	case ir.Declare:
-		return statement.Value
-	case ir.Assign:
-		return statement.Value
-	case ir.Evaluate:
-		return statement.Value
-	case ir.WriteLine:
-		return statement.Value
-	}
-	return nil
-}
-
-// leadingAwait is the await value evaluates before anything else: value itself, or the first part of
-// a concatenation, or what a conversion to a string writes, followed down.
-func leadingAwait(value ir.Expression) (ir.Await, bool) {
-	for {
-		switch node := value.(type) {
-		case ir.Await:
-			return node, true
-		case ir.Concat:
-			if len(node.Parts) == 0 {
-				return ir.Await{}, false
-			}
-			value = node.Parts[0]
-		case ir.NumberToString:
-			value = node.Value
-		case ir.BooleanToString:
-			value = node.Value
-		case ir.MaybeToString:
-			value = node.Value
-		case ir.UnionToString:
-			value = node.Value
-		default:
-			return ir.Await{}, false
-		}
-	}
-}
-
 // asyncCompletion is how an async function's graph can end by a throw: safe when it can't at all,
 // lengthOnly when every way out by a throw is an instruction that can throw only past V8's longest,
 // and site the first template or concatenation among those.
@@ -263,13 +221,6 @@ func (l *lowering) promiseConsumption(graphs map[int]*flow.Function, lengths boo
 				}
 			}
 			if awaited, ok := expression.(ir.Await); ok {
-				if read, ok := awaited.Value.(ir.Read); ok && origin(read.Local, map[int]bool{}) == origin(local, map[int]bool{}) {
-					return true
-				}
-			}
-			// An await of it that the statement evaluates before anything else, a template's first
-			// value among them, observes its rejection before anything in the statement can throw.
-			if awaited, ok := leadingAwait(statementValue(statement)); ok {
 				if read, ok := awaited.Value.(ir.Read); ok && origin(read.Local, map[int]bool{}) == origin(local, map[int]bool{}) {
 					return true
 				}
