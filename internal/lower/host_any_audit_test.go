@@ -158,34 +158,70 @@ import 'node:net'; import 'node:path'; import 'node:os';`
 	return a
 }
 
-// Modelled positions come only from the audit's Modelled section, never a
-// parallel Go allow-list. Locations are declaration file:line, as in the table.
+// Modelled positions come only from declaration-wide tables in the audit.
+// A Forms column scopes a row to call forms, never its declaration's whole any.
 func hostAnyModelled(t *testing.T) map[string]bool {
+	t.Helper()
+	allowed := map[string]bool{}
+	location := regexp.MustCompile(`(?:[A-Za-z0-9_./-]+\.d\.ts):[1-9][0-9]*`)
+	for _, row := range hostAnyModelledRows(t) {
+		if _, formScoped := row["Forms"]; formScoped {
+			continue
+		}
+		for _, cell := range row {
+			for _, one := range location.FindAllString(cell, -1) {
+				allowed[one] = true
+			}
+		}
+	}
+	return allowed
+}
+
+// Read column names rather than prose, so even an empty Forms cell fails closed.
+func hostAnyModelledRows(t *testing.T) []map[string]string {
 	t.Helper()
 	data, err := os.ReadFile("../../docs/axioms/host-any.md")
 	if err != nil {
 		t.Fatal(err)
 	}
-	found := false
-	active := false
-	allowed := map[string]bool{}
-	location := regexp.MustCompile(`(?:[A-Za-z0-9_./-]+\.d\.ts):[1-9][0-9]*`)
-	for _, line := range strings.Split(string(data), "\n") {
+	found, active := false, false
+	var columns []string
+	var rows []map[string]string
+	for index, line := range strings.Split(string(data), "\n") {
 		if strings.HasPrefix(line, "## ") {
 			active = strings.TrimSpace(line) == "## Modelled"
 			found = found || active
+			columns = nil
 		}
-		if !active || !strings.HasPrefix(strings.TrimSpace(line), "|") {
+		line = strings.TrimSpace(line)
+		if !active || !strings.HasPrefix(line, "|") {
+			columns = nil
 			continue
 		}
-		for _, one := range location.FindAllString(line, -1) {
-			allowed[one] = true
+		cells := strings.Split(strings.Trim(line, "|"), "|")
+		for i := range cells {
+			cells[i] = strings.TrimSpace(cells[i])
 		}
+		if strings.Trim(cells[0], "-: ") == "" {
+			continue
+		}
+		if columns == nil {
+			columns = cells
+			continue
+		}
+		if len(cells) != len(columns) {
+			t.Fatalf("host-any.md:%d: malformed Modelled table row", index+1)
+		}
+		row := map[string]string{}
+		for i, column := range columns {
+			row[column] = cells[i]
+		}
+		rows = append(rows, row)
 	}
 	if !found {
 		t.Fatal("host-any.md has no Modelled section")
 	}
-	return allowed
+	return rows
 }
 
 func hostAnyLibraryFile(file *ast.SourceFile) bool {
