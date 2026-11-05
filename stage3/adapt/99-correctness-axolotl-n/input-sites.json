@@ -1,0 +1,1073 @@
+{
+  "branch": "typescript/core-walls-sort",
+  "commit": "ad29102e9c145c5b480629227574d2ffa235a4b1",
+  "sourceSha256": "63fe112db53e7715eab721f81be48c973ae8b420c781c724cdcd4ebea10ba7cf",
+  "rows": [
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:288:72",
+      "reason": "a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read",
+      "kind": "Refused",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:288:72: Adamic 0.1 refuses a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+          "unit": "src/compiler/debug.ts:113:1",
+          "where": "src/compiler/debug.ts:288:72"
+        }
+      ],
+      "function": "assertEachNode",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:288:72",
+        "start_line": 286,
+        "excerpt": "                test === undefined || every(nodes, test),\n                message || \"Unexpected node.\",\n                () => `Node array did not pass test '${getFunctionName(test!)}'.`,\n                stackCrawlMark || assertEachNode,\n            );",
+        "owner_start_line": 283,
+        "owner_sha256": "175e6fe28b193606e3f9ed99071f751ca9aecfdbe507310da276750d3907ff23",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Retype getFunctionName func as (...args: never[]) => unknown, a readonly callable observation accepting boolean-returning predicates without void result erasure. It never invokes func. Keep its name/prototype inspection unchanged.",
+      "confidence": "low",
+      "legacy_index": 92,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW093",
+      "rule_source": [
+        "internal/lower/invariance.go:642"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": "downstream hasProperty and Function.prototype.toString remain separate compiler stops"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:301:98",
+      "reason": "a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read",
+      "kind": "Refused",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:301:98: Adamic 0.1 refuses a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+          "unit": "src/compiler/debug.ts:113:1",
+          "where": "src/compiler/debug.ts:301:98"
+        }
+      ],
+      "function": "assertNode",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:301:98",
+        "start_line": 299,
+        "excerpt": "                node !== undefined && (test === undefined || test(node)),\n                message || \"Unexpected node.\",\n                () => `Node ${formatSyntaxKind(node?.kind)} did not pass test '${getFunctionName(test!)}'.`,\n                stackCrawlMark || assertNode,\n            );",
+        "owner_start_line": 296,
+        "owner_sha256": "cb5808f86321a3b93fd13dd0f44485e85135da25d252550be787cc8a6653f365",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Retype getFunctionName func as (...args: never[]) => unknown, a readonly callable observation accepting boolean-returning predicates without void result erasure. It never invokes func. Keep its name/prototype inspection unchanged.",
+      "confidence": "low",
+      "legacy_index": 94,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW095",
+      "rule_source": [
+        "internal/lower/invariance.go:642"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": "downstream hasProperty and Function.prototype.toString remain separate compiler stops"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:314:108",
+      "reason": "a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read",
+      "kind": "Refused",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:314:108: Adamic 0.1 refuses a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+          "unit": "src/compiler/debug.ts:113:1",
+          "where": "src/compiler/debug.ts:314:108"
+        }
+      ],
+      "function": "assertNotNode",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:314:108",
+        "start_line": 312,
+        "excerpt": "                node === undefined || test === undefined || !test(node),\n                message || \"Unexpected node.\",\n                () => `Node ${formatSyntaxKind(node!.kind)} should not have passed test '${getFunctionName(test!)}'.`,\n                stackCrawlMark || assertNotNode,\n            );",
+        "owner_start_line": 309,
+        "owner_sha256": "79c5db36a8a597aa3291a830d22e87afb9304bccd7e1a13cd2d519dca7560760",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Retype getFunctionName func as (...args: never[]) => unknown, a readonly callable observation accepting boolean-returning predicates without void result erasure. It never invokes func. Keep its name/prototype inspection unchanged.",
+      "confidence": "low",
+      "legacy_index": 95,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW096",
+      "rule_source": [
+        "internal/lower/invariance.go:642"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": "downstream hasProperty and Function.prototype.toString remain separate compiler stops"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:328:98",
+      "reason": "a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read",
+      "kind": "Refused",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:328:98: Adamic 0.1 refuses a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+          "unit": "src/compiler/debug.ts:113:1",
+          "where": "src/compiler/debug.ts:328:98"
+        }
+      ],
+      "function": "assertOptionalNode",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:328:98",
+        "start_line": 326,
+        "excerpt": "                test === undefined || node === undefined || test(node),\n                message || \"Unexpected node.\",\n                () => `Node ${formatSyntaxKind(node?.kind)} did not pass test '${getFunctionName(test!)}'.`,\n                stackCrawlMark || assertOptionalNode,\n            );",
+        "owner_start_line": 323,
+        "owner_sha256": "8bd09e911365ae8a178e22a30729f22a3ecc5baea280c861aa6a95588271e9df",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Retype getFunctionName func as (...args: never[]) => unknown, a readonly callable observation accepting boolean-returning predicates without void result erasure. It never invokes func. Keep its name/prototype inspection unchanged.",
+      "confidence": "low",
+      "legacy_index": 96,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW097",
+      "rule_source": [
+        "internal/lower/invariance.go:642"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": "downstream hasProperty and Function.prototype.toString remain separate compiler stops"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:445:34",
+      "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SyntaxKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SyntaxKind is read",
+      "kind": "Refused",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SyntaxKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SyntaxKind is read",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:445:34: Adamic 0.1 refuses a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SyntaxKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SyntaxKind is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "unit": "src/compiler/debug.ts:113:1",
+          "where": "src/compiler/debug.ts:445:34"
+        }
+      ],
+      "function": "formatSyntaxKind",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:445:34",
+        "start_line": 443,
+        "excerpt": "\n    export function formatSyntaxKind(kind: SyntaxKind | undefined): string {\n        return formatEnum(kind, (ts as Record<\"SyntaxKind\", Record<string, string | number>>).SyntaxKind, /*isFlags*/ false);\n    }\n",
+        "owner_start_line": 444,
+        "owner_sha256": "72763ba2d12e7c0b6e64c8ce780bbea601cf26748a1519a4db05a69c95bfa751",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Make each key-specific namespace view deeply readonly: Readonly<Record<K, Readonly<Record<string, string | number>>>>, and make formatEnum/getEnumMembers enum-record parameters readonly as one coordinated hand. These paths only read enum records. JavaScript is unchanged; the separate namespace-value refusal remains compiler work.",
+      "confidence": "high",
+      "legacy_index": 101,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW102",
+      "rule_source": [
+        "internal/lower/invariance.go:642"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": null
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:449:34",
+      "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SnippetKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SnippetKind is read",
+      "kind": "Refused",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SnippetKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SnippetKind is read",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:449:34: Adamic 0.1 refuses a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SnippetKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SnippetKind is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "unit": "src/compiler/debug.ts:113:1",
+          "where": "src/compiler/debug.ts:449:34"
+        }
+      ],
+      "function": "formatSnippetKind",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:449:34",
+        "start_line": 447,
+        "excerpt": "\n    export function formatSnippetKind(kind: SnippetKind | undefined): string {\n        return formatEnum(kind, (ts as Record<\"SnippetKind\", Record<string, string | number>>).SnippetKind, /*isFlags*/ false);\n    }\n",
+        "owner_start_line": 448,
+        "owner_sha256": "69a3f88a65a74162ce4ba5a663a0c45bce9506ef24eb1a5f7b1c1e78e383dceb",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Make each key-specific namespace view deeply readonly: Readonly<Record<K, Readonly<Record<string, string | number>>>>, and make formatEnum/getEnumMembers enum-record parameters readonly as one coordinated hand. These paths only read enum records. JavaScript is unchanged; the separate namespace-value refusal remains compiler work.",
+      "confidence": "high",
+      "legacy_index": 103,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW104",
+      "rule_source": [
+        "internal/lower/invariance.go:642"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": null
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:453:34",
+      "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"ScriptKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ScriptKind is read",
+      "kind": "Refused",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"ScriptKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ScriptKind is read",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:453:34: Adamic 0.1 refuses a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"ScriptKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ScriptKind is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "unit": "src/compiler/debug.ts:113:1",
+          "where": "src/compiler/debug.ts:453:34"
+        }
+      ],
+      "function": "formatScriptKind",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:453:34",
+        "start_line": 451,
+        "excerpt": "\n    export function formatScriptKind(kind: ScriptKind | undefined): string {\n        return formatEnum(kind, (ts as Record<\"ScriptKind\", Record<string, string | number>>).ScriptKind, /*isFlags*/ false);\n    }\n",
+        "owner_start_line": 452,
+        "owner_sha256": "0c0b78547ff9484c0248db59852abae735bcd5bbba7597714c92edc0830f98d3",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Make each key-specific namespace view deeply readonly: Readonly<Record<K, Readonly<Record<string, string | number>>>>, and make formatEnum/getEnumMembers enum-record parameters readonly as one coordinated hand. These paths only read enum records. JavaScript is unchanged; the separate namespace-value refusal remains compiler work.",
+      "confidence": "high",
+      "legacy_index": 105,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW106",
+      "rule_source": [
+        "internal/lower/invariance.go:642"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": null
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:457:35",
+      "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"NodeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeFlags is read",
+      "kind": "Refused",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"NodeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeFlags is read",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:457:35: Adamic 0.1 refuses a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"NodeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "unit": "src/compiler/debug.ts:113:1",
+          "where": "src/compiler/debug.ts:457:35"
+        }
+      ],
+      "function": "formatNodeFlags",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:457:35",
+        "start_line": 455,
+        "excerpt": "\n    export function formatNodeFlags(flags: NodeFlags | undefined): string {\n        return formatEnum(flags, (ts as Record<\"NodeFlags\", Record<string, string | number>>).NodeFlags, /*isFlags*/ true);\n    }\n",
+        "owner_start_line": 456,
+        "owner_sha256": "9e7968c959b3f7e3120a93d3f6ba05c8a0378aa60c219ab29ddcf7600d27c4e5",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Make each key-specific namespace view deeply readonly: Readonly<Record<K, Readonly<Record<string, string | number>>>>, and make formatEnum/getEnumMembers enum-record parameters readonly as one coordinated hand. These paths only read enum records. JavaScript is unchanged; the separate namespace-value refusal remains compiler work.",
+      "confidence": "high",
+      "legacy_index": 107,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW108",
+      "rule_source": [
+        "internal/lower/invariance.go:642"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": null
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:461:35",
+      "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"NodeCheckFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeCheckFlags is read",
+      "kind": "Refused",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"NodeCheckFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeCheckFlags is read",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:461:35: Adamic 0.1 refuses a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"NodeCheckFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeCheckFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "unit": "src/compiler/debug.ts:113:1",
+          "where": "src/compiler/debug.ts:461:35"
+        }
+      ],
+      "function": "formatNodeCheckFlags",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:461:35",
+        "start_line": 459,
+        "excerpt": "\n    export function formatNodeCheckFlags(flags: NodeCheckFlags | undefined): string {\n        return formatEnum(flags, (ts as Record<\"NodeCheckFlags\", Record<string, string | number>>).NodeCheckFlags, /*isFlags*/ true);\n    }\n",
+        "owner_start_line": 460,
+        "owner_sha256": "dcb4f28b75f0b12fe4c732759354040078810535c9cd5f831e6884696065dc04",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Make each key-specific namespace view deeply readonly: Readonly<Record<K, Readonly<Record<string, string | number>>>>, and make formatEnum/getEnumMembers enum-record parameters readonly as one coordinated hand. These paths only read enum records. JavaScript is unchanged; the separate namespace-value refusal remains compiler work.",
+      "confidence": "high",
+      "legacy_index": 109,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW110",
+      "rule_source": [
+        "internal/lower/invariance.go:642"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": null
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:465:35",
+      "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"ModifierFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ModifierFlags is read",
+      "kind": "Refused",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"ModifierFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ModifierFlags is read",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:465:35: Adamic 0.1 refuses a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"ModifierFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ModifierFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "unit": "src/compiler/debug.ts:113:1",
+          "where": "src/compiler/debug.ts:465:35"
+        }
+      ],
+      "function": "formatModifierFlags",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:465:35",
+        "start_line": 463,
+        "excerpt": "\n    export function formatModifierFlags(flags: ModifierFlags | undefined): string {\n        return formatEnum(flags, (ts as Record<\"ModifierFlags\", Record<string, string | number>>).ModifierFlags, /*isFlags*/ true);\n    }\n",
+        "owner_start_line": 464,
+        "owner_sha256": "7abb572812af4bcfc184487c2beacdd15aeb3ffdd201e5b4594f8b04632cabcb",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Make each key-specific namespace view deeply readonly: Readonly<Record<K, Readonly<Record<string, string | number>>>>, and make formatEnum/getEnumMembers enum-record parameters readonly as one coordinated hand. These paths only read enum records. JavaScript is unchanged; the separate namespace-value refusal remains compiler work.",
+      "confidence": "high",
+      "legacy_index": 111,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW112",
+      "rule_source": [
+        "internal/lower/invariance.go:642"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": null
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:469:35",
+      "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"TransformFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TransformFlags is read",
+      "kind": "Refused",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"TransformFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TransformFlags is read",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:469:35: Adamic 0.1 refuses a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"TransformFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TransformFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "unit": "src/compiler/debug.ts:113:1",
+          "where": "src/compiler/debug.ts:469:35"
+        }
+      ],
+      "function": "formatTransformFlags",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:469:35",
+        "start_line": 467,
+        "excerpt": "\n    export function formatTransformFlags(flags: TransformFlags | undefined): string {\n        return formatEnum(flags, (ts as Record<\"TransformFlags\", Record<string, string | number>>).TransformFlags, /*isFlags*/ true);\n    }\n",
+        "owner_start_line": 468,
+        "owner_sha256": "36ee58e9b1f61ef582bce832d4be9bf8551d1937472a121882fef14056c01f0a",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Make each key-specific namespace view deeply readonly: Readonly<Record<K, Readonly<Record<string, string | number>>>>, and make formatEnum/getEnumMembers enum-record parameters readonly as one coordinated hand. These paths only read enum records. JavaScript is unchanged; the separate namespace-value refusal remains compiler work.",
+      "confidence": "high",
+      "legacy_index": 113,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW114",
+      "rule_source": [
+        "internal/lower/invariance.go:642"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": null
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:473:35",
+      "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"EmitFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof EmitFlags is read",
+      "kind": "Refused",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"EmitFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof EmitFlags is read",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:473:35: Adamic 0.1 refuses a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"EmitFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof EmitFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "unit": "src/compiler/debug.ts:113:1",
+          "where": "src/compiler/debug.ts:473:35"
+        }
+      ],
+      "function": "formatEmitFlags",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:473:35",
+        "start_line": 471,
+        "excerpt": "\n    export function formatEmitFlags(flags: EmitFlags | undefined): string {\n        return formatEnum(flags, (ts as Record<\"EmitFlags\", Record<string, string | number>>).EmitFlags, /*isFlags*/ true);\n    }\n",
+        "owner_start_line": 472,
+        "owner_sha256": "e7f96a4222c09932561f8fa3b39254e8c07fee2eafef669b1fd914f14d02179c",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Make each key-specific namespace view deeply readonly: Readonly<Record<K, Readonly<Record<string, string | number>>>>, and make formatEnum/getEnumMembers enum-record parameters readonly as one coordinated hand. These paths only read enum records. JavaScript is unchanged; the separate namespace-value refusal remains compiler work.",
+      "confidence": "high",
+      "legacy_index": 115,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW116",
+      "rule_source": [
+        "internal/lower/invariance.go:642"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": null
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:477:35",
+      "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SymbolFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SymbolFlags is read",
+      "kind": "Refused",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SymbolFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SymbolFlags is read",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:477:35: Adamic 0.1 refuses a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SymbolFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SymbolFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "unit": "src/compiler/debug.ts:113:1",
+          "where": "src/compiler/debug.ts:477:35"
+        }
+      ],
+      "function": "formatSymbolFlags",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:477:35",
+        "start_line": 475,
+        "excerpt": "\n    export function formatSymbolFlags(flags: SymbolFlags | undefined): string {\n        return formatEnum(flags, (ts as Record<\"SymbolFlags\", Record<string, string | number>>).SymbolFlags, /*isFlags*/ true);\n    }\n",
+        "owner_start_line": 476,
+        "owner_sha256": "7b5a65c5f2d20f5cc6c182b38ad953d4b03449e15e8f599f447f1a4df2c138e9",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Make each key-specific namespace view deeply readonly: Readonly<Record<K, Readonly<Record<string, string | number>>>>, and make formatEnum/getEnumMembers enum-record parameters readonly as one coordinated hand. These paths only read enum records. JavaScript is unchanged; the separate namespace-value refusal remains compiler work.",
+      "confidence": "high",
+      "legacy_index": 117,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW118",
+      "rule_source": [
+        "internal/lower/invariance.go:642"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": null
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:481:35",
+      "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"TypeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFlags is read",
+      "kind": "Refused",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"TypeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFlags is read",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:481:35: Adamic 0.1 refuses a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"TypeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "unit": "src/compiler/debug.ts:113:1",
+          "where": "src/compiler/debug.ts:481:35"
+        }
+      ],
+      "function": "formatTypeFlags",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:481:35",
+        "start_line": 479,
+        "excerpt": "\n    export function formatTypeFlags(flags: TypeFlags | undefined): string {\n        return formatEnum(flags, (ts as Record<\"TypeFlags\", Record<string, string | number>>).TypeFlags, /*isFlags*/ true);\n    }\n",
+        "owner_start_line": 480,
+        "owner_sha256": "2a81655f47220ea006a89d9ebbd0433d03b9c2aacabad6f7f3d7f40aa7f61c7f",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Make each key-specific namespace view deeply readonly: Readonly<Record<K, Readonly<Record<string, string | number>>>>, and make formatEnum/getEnumMembers enum-record parameters readonly as one coordinated hand. These paths only read enum records. JavaScript is unchanged; the separate namespace-value refusal remains compiler work.",
+      "confidence": "high",
+      "legacy_index": 119,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW120",
+      "rule_source": [
+        "internal/lower/invariance.go:642"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": null
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:485:35",
+      "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SignatureFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureFlags is read",
+      "kind": "Refused",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SignatureFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureFlags is read",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:485:35: Adamic 0.1 refuses a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SignatureFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "unit": "src/compiler/debug.ts:113:1",
+          "where": "src/compiler/debug.ts:485:35"
+        }
+      ],
+      "function": "formatSignatureFlags",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:485:35",
+        "start_line": 483,
+        "excerpt": "\n    export function formatSignatureFlags(flags: SignatureFlags | undefined): string {\n        return formatEnum(flags, (ts as Record<\"SignatureFlags\", Record<string, string | number>>).SignatureFlags, /*isFlags*/ true);\n    }\n",
+        "owner_start_line": 484,
+        "owner_sha256": "0f534d96141e85bfbc67e6686fea8ef048871b7c3e35efab8c21dc4263eecf8d",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Make each key-specific namespace view deeply readonly: Readonly<Record<K, Readonly<Record<string, string | number>>>>, and make formatEnum/getEnumMembers enum-record parameters readonly as one coordinated hand. These paths only read enum records. JavaScript is unchanged; the separate namespace-value refusal remains compiler work.",
+      "confidence": "high",
+      "legacy_index": 121,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW122",
+      "rule_source": [
+        "internal/lower/invariance.go:642"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": null
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:489:35",
+      "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"ObjectFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ObjectFlags is read",
+      "kind": "Refused",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"ObjectFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ObjectFlags is read",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:489:35: Adamic 0.1 refuses a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"ObjectFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ObjectFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "unit": "src/compiler/debug.ts:113:1",
+          "where": "src/compiler/debug.ts:489:35"
+        }
+      ],
+      "function": "formatObjectFlags",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:489:35",
+        "start_line": 487,
+        "excerpt": "\n    export function formatObjectFlags(flags: ObjectFlags | undefined): string {\n        return formatEnum(flags, (ts as Record<\"ObjectFlags\", Record<string, string | number>>).ObjectFlags, /*isFlags*/ true);\n    }\n",
+        "owner_start_line": 488,
+        "owner_sha256": "a969a0373eec53a5eeeb7fd24a7fadf0843c2acff219aa42c3fde6eeb8eb295a",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Make each key-specific namespace view deeply readonly: Readonly<Record<K, Readonly<Record<string, string | number>>>>, and make formatEnum/getEnumMembers enum-record parameters readonly as one coordinated hand. These paths only read enum records. JavaScript is unchanged; the separate namespace-value refusal remains compiler work.",
+      "confidence": "high",
+      "legacy_index": 123,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW124",
+      "rule_source": [
+        "internal/lower/invariance.go:642"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": null
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:493:35",
+      "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"FlowFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof FlowFlags is read",
+      "kind": "Refused",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"FlowFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof FlowFlags is read",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:493:35: Adamic 0.1 refuses a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"FlowFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof FlowFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "unit": "src/compiler/debug.ts:113:1",
+          "where": "src/compiler/debug.ts:493:35"
+        }
+      ],
+      "function": "formatFlowFlags",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:493:35",
+        "start_line": 491,
+        "excerpt": "\n    export function formatFlowFlags(flags: FlowFlags | undefined): string {\n        return formatEnum(flags, (ts as Record<\"FlowFlags\", Record<string, string | number>>).FlowFlags, /*isFlags*/ true);\n    }\n",
+        "owner_start_line": 492,
+        "owner_sha256": "a7e9bbccbcf648286a12b833e621b769b0b8104e9879d68292edfc0f3144c259",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Make each key-specific namespace view deeply readonly: Readonly<Record<K, Readonly<Record<string, string | number>>>>, and make formatEnum/getEnumMembers enum-record parameters readonly as one coordinated hand. These paths only read enum records. JavaScript is unchanged; the separate namespace-value refusal remains compiler work.",
+      "confidence": "high",
+      "legacy_index": 125,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW126",
+      "rule_source": [
+        "internal/lower/invariance.go:642"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": null
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:497:36",
+      "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"RelationComparisonResult\", Record<string, string | number>>, which can write Record<string, string | number> where typeof RelationComparisonResult is read",
+      "kind": "Refused",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"RelationComparisonResult\", Record<string, string | number>>, which can write Record<string, string | number> where typeof RelationComparisonResult is read",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:497:36: Adamic 0.1 refuses a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"RelationComparisonResult\", Record<string, string | number>>, which can write Record<string, string | number> where typeof RelationComparisonResult is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "unit": "src/compiler/debug.ts:113:1",
+          "where": "src/compiler/debug.ts:497:36"
+        }
+      ],
+      "function": "formatRelationComparisonResult",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:497:36",
+        "start_line": 495,
+        "excerpt": "\n    export function formatRelationComparisonResult(result: RelationComparisonResult | undefined): string {\n        return formatEnum(result, (ts as Record<\"RelationComparisonResult\", Record<string, string | number>>).RelationComparisonResult, /*isFlags*/ true);\n    }\n",
+        "owner_start_line": 496,
+        "owner_sha256": "57dad254a5d8c1c66e6e23e7817a0f4f54d8d28e72ffd51289c5ddc0c3c63943",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Make each key-specific namespace view deeply readonly: Readonly<Record<K, Readonly<Record<string, string | number>>>>, and make formatEnum/getEnumMembers enum-record parameters readonly as one coordinated hand. These paths only read enum records. JavaScript is unchanged; the separate namespace-value refusal remains compiler work.",
+      "confidence": "high",
+      "legacy_index": 127,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW128",
+      "rule_source": [
+        "internal/lower/invariance.go:642"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": null
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:501:34",
+      "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"CheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof CheckMode is read",
+      "kind": "Refused",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"CheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof CheckMode is read",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:501:34: Adamic 0.1 refuses a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"CheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof CheckMode is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "unit": "src/compiler/debug.ts:113:1",
+          "where": "src/compiler/debug.ts:501:34"
+        }
+      ],
+      "function": "formatCheckMode",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:501:34",
+        "start_line": 499,
+        "excerpt": "\n    export function formatCheckMode(mode: CheckMode | undefined): string {\n        return formatEnum(mode, (ts as Record<\"CheckMode\", Record<string, string | number>>).CheckMode, /*isFlags*/ true);\n    }\n",
+        "owner_start_line": 500,
+        "owner_sha256": "5d938b1641d67994b6ecde38aa7ebf19d437d3828c20fa2f95dc3ec2ccf355ae",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Make each key-specific namespace view deeply readonly: Readonly<Record<K, Readonly<Record<string, string | number>>>>, and make formatEnum/getEnumMembers enum-record parameters readonly as one coordinated hand. These paths only read enum records. JavaScript is unchanged; the separate namespace-value refusal remains compiler work.",
+      "confidence": "high",
+      "legacy_index": 129,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW130",
+      "rule_source": [
+        "internal/lower/invariance.go:642"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": null
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:505:34",
+      "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SignatureCheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureCheckMode is read",
+      "kind": "Refused",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SignatureCheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureCheckMode is read",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:505:34: Adamic 0.1 refuses a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SignatureCheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureCheckMode is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "unit": "src/compiler/debug.ts:113:1",
+          "where": "src/compiler/debug.ts:505:34"
+        }
+      ],
+      "function": "formatSignatureCheckMode",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:505:34",
+        "start_line": 503,
+        "excerpt": "\n    export function formatSignatureCheckMode(mode: SignatureCheckMode | undefined): string {\n        return formatEnum(mode, (ts as Record<\"SignatureCheckMode\", Record<string, string | number>>).SignatureCheckMode, /*isFlags*/ true);\n    }\n",
+        "owner_start_line": 504,
+        "owner_sha256": "d52a47280af18a53cf89302fdb2297c7f3ac136dab6deef52b5f298cb8780e66",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Make each key-specific namespace view deeply readonly: Readonly<Record<K, Readonly<Record<string, string | number>>>>, and make formatEnum/getEnumMembers enum-record parameters readonly as one coordinated hand. These paths only read enum records. JavaScript is unchanged; the separate namespace-value refusal remains compiler work.",
+      "confidence": "high",
+      "legacy_index": 131,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW132",
+      "rule_source": [
+        "internal/lower/invariance.go:642"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": null
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:509:35",
+      "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"TypeFacts\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFacts is read",
+      "kind": "Refused",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"TypeFacts\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFacts is read",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:509:35: Adamic 0.1 refuses a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"TypeFacts\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFacts is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "unit": "src/compiler/debug.ts:113:1",
+          "where": "src/compiler/debug.ts:509:35"
+        }
+      ],
+      "function": "formatTypeFacts",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:509:35",
+        "start_line": 507,
+        "excerpt": "\n    export function formatTypeFacts(facts: TypeFacts | undefined): string {\n        return formatEnum(facts, (ts as Record<\"TypeFacts\", Record<string, string | number>>).TypeFacts, /*isFlags*/ true);\n    }\n",
+        "owner_start_line": 508,
+        "owner_sha256": "f80ff32b8077bc13a5fe3950e1be0f9f14100fb4621aa648582ba4faa1f48b04",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Make each key-specific namespace view deeply readonly: Readonly<Record<K, Readonly<Record<string, string | number>>>>, and make formatEnum/getEnumMembers enum-record parameters readonly as one coordinated hand. These paths only read enum records. JavaScript is unchanged; the separate namespace-value refusal remains compiler work.",
+      "confidence": "high",
+      "legacy_index": 133,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW134",
+      "rule_source": [
+        "internal/lower/invariance.go:642"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": null
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:540:56",
+      "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"FlowFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof FlowFlags is read",
+      "kind": "Refused",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"FlowFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof FlowFlags is read",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:540:56: Adamic 0.1 refuses a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"FlowFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof FlowFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "unit": "src/compiler/debug.ts:113:1",
+          "where": "src/compiler/debug.ts:540:56"
+        }
+      ],
+      "function": "attachFlowNodeDebugInfoWorker.get",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:540:56",
+        "start_line": 538,
+        "excerpt": "                __debugFlowFlags: {\n                    get(this: FlowNode) {\n                        return formatEnum(this.flags, (ts as Record<\"FlowFlags\", Record<string, string | number>>).FlowFlags, /*isFlags*/ true);\n                    },\n                },",
+        "owner_start_line": 539,
+        "owner_sha256": "cb74d994907292e239207ae611e8423d66146d1e7be3b85ef9fed521aa5be757",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Make each key-specific namespace view deeply readonly: Readonly<Record<K, Readonly<Record<string, string | number>>>>, and make formatEnum/getEnumMembers enum-record parameters readonly as one coordinated hand. These paths only read enum records. JavaScript is unchanged; the separate namespace-value refusal remains compiler work.",
+      "confidence": "high",
+      "legacy_index": 135,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW136",
+      "rule_source": [
+        "internal/lower/invariance.go:642"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": null
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:1014:29",
+      "reason": "a value of type { id: number; flowNode: FlowNode; edges: never[]; text: string; lane: number; endLane: number; level: number; circular: false; } seen as FlowGraphNode, which can write FlowGraphEdge[] where never[] is read",
+      "kind": "Refused",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "a value of type { id: number; flowNode: FlowNode; edges: never[]; text: string; lane: number; endLane: number; level: number; circular: false; } seen as FlowGraphNode, which can write FlowGraphEdge[] where never[] is read",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:1014:29: Adamic 0.1 refuses a value of type { id: number; flowNode: FlowNode; edges: never[]; text: string; lane: number; endLane: number; level: number; circular: false; } seen as FlowGraphNode, which can write FlowGraphEdge[] where never[] is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+          "unit": "src/compiler/debug.ts:113:1",
+          "where": "src/compiler/debug.ts:1014:29"
+        }
+      ],
+      "function": "formatControlFlowGraph.buildGraphNode",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:1014:29",
+        "start_line": 1012,
+        "excerpt": "            seen.add(flowNode);\n            if (!graphNode) {\n                links[id] = graphNode = { id, flowNode, edges: [], text: \"\", lane: -1, endLane: -1, level: -1, circular: false };\n                nodes.push(graphNode);\n                if (hasAntecedents(flowNode)) {",
+        "owner_start_line": 994,
+        "owner_sha256": "75b27f51063e9628cbc73d3e9383a53a9c7d2d586547caad281d8e8e85732f28",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Contextually type the fresh graph-node literal as FlowGraphNode (including edges: FlowGraphEdge[] and circular: boolean) through an erasable annotation/assertion at construction; do not widen a shared already-typed object.",
+      "confidence": "low",
+      "legacy_index": 154,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW155",
+      "rule_source": [
+        "internal/lower/invariance.go:642"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": "validate that the contextual literal rule admits the complete cast without unchecked widening"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:1057:39",
+      "reason": "a member typed any ([]) related to number at the initializer site",
+      "kind": "NotYet",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "a member typed any ([]) related to number at the initializer site",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:1057:39: stage 0 can't lower a member typed any ([]) related to number at the initializer site yet",
+          "unit": "src/compiler/debug.ts:1255:1",
+          "where": "src/compiler/debug.ts:1057:39"
+        }
+      ],
+      "function": "formatControlFlowGraph.computeColumnWidths",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:1057:39",
+        "start_line": 1055,
+        "excerpt": "\n        function computeColumnWidths(height: number) {\n            const columns: number[] = fill(Array(height), 0);\n            for (const node of nodes) {\n                columns[node.level] = Math.max(columns[node.level]!, node.text.length);",
+        "owner_start_line": 1056,
+        "owner_sha256": "22687f7dd4e9bdd0ae8fd8305494dae0f94ca2921e25cfe81f87223cf72f7e67",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Use Array<number>(height) so fill receives number[] instead of any[]. Type arguments erase; allocation and fill calls are unchanged.",
+      "confidence": "high",
+      "legacy_index": 155,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW156",
+      "rule_source": [
+        "internal/lower/any_relations.go:43"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": null
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:1120:30",
+      "reason": "a value of type FlowArrayMutation | FlowAssignment | FlowCall | FlowCondition | FlowLabel | FlowReduceLabel | FlowStart | FlowUnreachable seen as FlowNode, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read",
+      "kind": "Refused",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "a value of type FlowArrayMutation | FlowAssignment | FlowCall | FlowCondition | FlowLabel | FlowReduceLabel | FlowStart | FlowUnreachable seen as FlowNode, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:1120:30: Adamic 0.1 refuses a value of type FlowArrayMutation | FlowAssignment | FlowCall | FlowCondition | FlowLabel | FlowReduceLabel | FlowStart | FlowUnreachable seen as FlowNode, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+          "unit": "src/compiler/debug.ts:113:1",
+          "where": "src/compiler/debug.ts:1120:30"
+        }
+      ],
+      "function": "formatControlFlowGraph.renderFlowNode",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:1120:30",
+        "start_line": 1118,
+        "excerpt": "                text += ` (${clauses.join(\", \")})`;\n            }\n            else if (hasNode(flowNode)) {\n                if (flowNode.node) {\n                    text += ` (${getNodeText(flowNode.node)})`;",
+        "owner_start_line": 1101,
+        "owner_sha256": "43be8a944b78270381b02497f79292b6bb60c5cc4582b86fc5bdbaf211050615",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Make hasNode accept Readonly<FlowNode> and return a predicate over the corresponding readonly union member. Its implementation only reads flags and its caller only reads node, so no writable FlowNode view is needed.",
+      "confidence": "low",
+      "legacy_index": 156,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW157",
+      "rule_source": [
+        "internal/lower/invariance.go:642"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": "verify the readonly predicate target with the existing predicate prover before dispatch"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "where": "src/compiler/debug.ts:1133:48",
+      "reason": "an unproven value assigned to a numeric literal or enum member slot Connection",
+      "kind": "Refused",
+      "instances": [
+        {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "refusal_scan",
+          "reason": "an unproven value assigned to a numeric literal or enum member slot Connection",
+          "root_kind": "",
+          "text": "/tmp/adamic-gate/stage3-meter.EyQEeg/main-adapted/src/compiler/debug.ts:1133:48: Adamic 0.1 refuses an unproven value assigned to a numeric literal or enum member slot Connection; compare with this literal and return that constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)",
+          "unit": "src/compiler/debug.ts:113:1",
+          "where": "src/compiler/debug.ts:1133:48"
+        }
+      ],
+      "function": "formatControlFlowGraph.renderGraph",
+      "source": {
+        "adapted_where": "src/compiler/debug.ts:1133:48",
+        "start_line": 1131,
+        "excerpt": "            const lanes: string[] = fill(Array(laneCount), \"\");\n            const grid: (FlowGraphNode | undefined)[][] = columnWidths.map(() => Array(laneCount));\n            const connectors: Connection[][] = columnWidths.map(() => fill(Array(laneCount), 0));\n\n            // build connectors",
+        "owner_start_line": 1128,
+        "owner_sha256": "56a370d8310d56d0cd36a72ef9e7e9926fe4498c35564244026f4d3ec7c41c31",
+        "file_sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+      },
+      "classification": "type-only",
+      "proposal": "Instantiate Array<Connection> and fill<Connection>, and type the zero literal as the zero enum member. Preserve literal 0 and all calls in emitted JavaScript.",
+      "confidence": "low",
+      "legacy_index": 157,
+      "instance_count": 1,
+      "unit_count": 1,
+      "id": "CW158",
+      "rule_source": [
+        "internal/lower/enums.go:433"
+      ],
+      "owner": "Correctness (@system_adamic_compiler_correctness)",
+      "existing_task": null,
+      "confidence_reason": "verify enum-literal proof and erased output before dispatch"
+    }
+  ]
+}

@@ -1,0 +1,337 @@
+[
+  {
+    "owner": "Debug.getFunctionName",
+    "sites": [
+      "CW093",
+      "CW095",
+      "CW096",
+      "CW097"
+    ],
+    "beforeSha256": "521a9c85135b783326d58e0e7da3e75e5d5b4d07df2fafebfac94dfbb15d4538",
+    "afterSha256": "885ecb4fac1639e183dfdd5b7547c3cfb3517b2c4ae565f844a5a0c94d8dc262",
+    "edits": [
+      {
+        "before": "func: AnyFunction",
+        "after": "func: (...args: never[]) => unknown"
+      }
+    ]
+  },
+  {
+    "owner": "Debug.formatEnum",
+    "sites": [],
+    "beforeSha256": "0665e2a06088fe3731a378e95ae3dc8c8c1083df750a7303056c0b1651fc48a3",
+    "afterSha256": "69f475633c9f9558f1ce5b309c9fc21b613ae7a4e7b39ab0e4a69d8630de528b",
+    "edits": [
+      {
+        "before": "enumObject: Record<string, string | number>",
+        "after": "enumObject: Readonly<Record<string, string | number>>"
+      }
+    ]
+  },
+  {
+    "owner": "Debug.getEnumMembers",
+    "sites": [],
+    "beforeSha256": "c826a3be3ff8cda9a297c8b56691ff86ee0ad0ef716f82cc0e402c068d095f7d",
+    "afterSha256": "7846399485f2f2ba8dfc8cea2462a19b7eb7332cd7b647c5cb69e705cd782ccc",
+    "edits": [
+      {
+        "before": "enumObject: Record<string, string | number>",
+        "after": "enumObject: Readonly<Record<string, string | number>>"
+      }
+    ]
+  },
+  {
+    "owner": "Debug.formatSyntaxKind",
+    "sites": [
+      "CW102"
+    ],
+    "beforeSha256": "72763ba2d12e7c0b6e64c8ce780bbea601cf26748a1519a4db05a69c95bfa751",
+    "afterSha256": "f305702d00b9141422635769a165985ec806869cd2391e19ffe0e372e314d393",
+    "edits": [
+      {
+        "before": "Record<\"SyntaxKind\", Record<string, string | number>>",
+        "after": "Readonly<Record<\"SyntaxKind\", Readonly<Record<string, string | number>>>>"
+      }
+    ]
+  },
+  {
+    "owner": "Debug.formatSnippetKind",
+    "sites": [
+      "CW104"
+    ],
+    "beforeSha256": "69a3f88a65a74162ce4ba5a663a0c45bce9506ef24eb1a5f7b1c1e78e383dceb",
+    "afterSha256": "3825d96f1723a79ee6e793bd9a0c2ef3b0f98058ca2410573b885a3e170efa21",
+    "edits": [
+      {
+        "before": "Record<\"SnippetKind\", Record<string, string | number>>",
+        "after": "Readonly<Record<\"SnippetKind\", Readonly<Record<string, string | number>>>>"
+      }
+    ]
+  },
+  {
+    "owner": "Debug.formatScriptKind",
+    "sites": [
+      "CW106"
+    ],
+    "beforeSha256": "0c0b78547ff9484c0248db59852abae735bcd5bbba7597714c92edc0830f98d3",
+    "afterSha256": "e0a95fc2c90abda4650d2bf7da0275c06983099167a26179da11f6dc7a23a2b1",
+    "edits": [
+      {
+        "before": "Record<\"ScriptKind\", Record<string, string | number>>",
+        "after": "Readonly<Record<\"ScriptKind\", Readonly<Record<string, string | number>>>>"
+      }
+    ]
+  },
+  {
+    "owner": "Debug.formatNodeFlags",
+    "sites": [
+      "CW108"
+    ],
+    "beforeSha256": "9e7968c959b3f7e3120a93d3f6ba05c8a0378aa60c219ab29ddcf7600d27c4e5",
+    "afterSha256": "f2d601536231e0ae0a02392a23c764c033a73d60566e0083de7959ef17508ef6",
+    "edits": [
+      {
+        "before": "Record<\"NodeFlags\", Record<string, string | number>>",
+        "after": "Readonly<Record<\"NodeFlags\", Readonly<Record<string, string | number>>>>"
+      }
+    ]
+  },
+  {
+    "owner": "Debug.formatNodeCheckFlags",
+    "sites": [
+      "CW110"
+    ],
+    "beforeSha256": "dcb4f28b75f0b12fe4c732759354040078810535c9cd5f831e6884696065dc04",
+    "afterSha256": "463b1d338401bfec5615c6595e947fb53c906f558da4f5217f5b3bc7f6add86b",
+    "edits": [
+      {
+        "before": "Record<\"NodeCheckFlags\", Record<string, string | number>>",
+        "after": "Readonly<Record<\"NodeCheckFlags\", Readonly<Record<string, string | number>>>>"
+      }
+    ]
+  },
+  {
+    "owner": "Debug.formatModifierFlags",
+    "sites": [
+      "CW112"
+    ],
+    "beforeSha256": "7abb572812af4bcfc184487c2beacdd15aeb3ffdd201e5b4594f8b04632cabcb",
+    "afterSha256": "65daf46a3c6e01d8ef912c527e9666668ac65d0feaa160fa8ca78beefc2a07a0",
+    "edits": [
+      {
+        "before": "Record<\"ModifierFlags\", Record<string, string | number>>",
+        "after": "Readonly<Record<\"ModifierFlags\", Readonly<Record<string, string | number>>>>"
+      }
+    ]
+  },
+  {
+    "owner": "Debug.formatTransformFlags",
+    "sites": [
+      "CW114"
+    ],
+    "beforeSha256": "36ee58e9b1f61ef582bce832d4be9bf8551d1937472a121882fef14056c01f0a",
+    "afterSha256": "8cdced4ca90e75fbbbb0d9af2457768305c0d55e19587baedd21431da2e134e8",
+    "edits": [
+      {
+        "before": "Record<\"TransformFlags\", Record<string, string | number>>",
+        "after": "Readonly<Record<\"TransformFlags\", Readonly<Record<string, string | number>>>>"
+      }
+    ]
+  },
+  {
+    "owner": "Debug.formatEmitFlags",
+    "sites": [
+      "CW116"
+    ],
+    "beforeSha256": "e7f96a4222c09932561f8fa3b39254e8c07fee2eafef669b1fd914f14d02179c",
+    "afterSha256": "001d9fad5a4d2fe5094efe7d87093b63e76bd8cad423cc25ec4cedfd126cffe0",
+    "edits": [
+      {
+        "before": "Record<\"EmitFlags\", Record<string, string | number>>",
+        "after": "Readonly<Record<\"EmitFlags\", Readonly<Record<string, string | number>>>>"
+      }
+    ]
+  },
+  {
+    "owner": "Debug.formatSymbolFlags",
+    "sites": [
+      "CW118"
+    ],
+    "beforeSha256": "7b5a65c5f2d20f5cc6c182b38ad953d4b03449e15e8f599f447f1a4df2c138e9",
+    "afterSha256": "e96e9dc507aced63d497ad8704f039cb7336538ec90a07735a0338fc6b6b1eb1",
+    "edits": [
+      {
+        "before": "Record<\"SymbolFlags\", Record<string, string | number>>",
+        "after": "Readonly<Record<\"SymbolFlags\", Readonly<Record<string, string | number>>>>"
+      }
+    ]
+  },
+  {
+    "owner": "Debug.formatTypeFlags",
+    "sites": [
+      "CW120"
+    ],
+    "beforeSha256": "2a81655f47220ea006a89d9ebbd0433d03b9c2aacabad6f7f3d7f40aa7f61c7f",
+    "afterSha256": "799dfbffbf5b31478f31e8559a2eb3a0b2fbc3dab4ab205b209f04bb49b9c062",
+    "edits": [
+      {
+        "before": "Record<\"TypeFlags\", Record<string, string | number>>",
+        "after": "Readonly<Record<\"TypeFlags\", Readonly<Record<string, string | number>>>>"
+      }
+    ]
+  },
+  {
+    "owner": "Debug.formatSignatureFlags",
+    "sites": [
+      "CW122"
+    ],
+    "beforeSha256": "0f534d96141e85bfbc67e6686fea8ef048871b7c3e35efab8c21dc4263eecf8d",
+    "afterSha256": "ca16aea83669eddbec5687f3e0daa8a4b79026ce92ec67d80bc1ffdba4e01f99",
+    "edits": [
+      {
+        "before": "Record<\"SignatureFlags\", Record<string, string | number>>",
+        "after": "Readonly<Record<\"SignatureFlags\", Readonly<Record<string, string | number>>>>"
+      }
+    ]
+  },
+  {
+    "owner": "Debug.formatObjectFlags",
+    "sites": [
+      "CW124"
+    ],
+    "beforeSha256": "a969a0373eec53a5eeeb7fd24a7fadf0843c2acff219aa42c3fde6eeb8eb295a",
+    "afterSha256": "47ff3134904848ec79f69c3226ca3b53c8ad558a0b17255932f3c3bbc19ce0d9",
+    "edits": [
+      {
+        "before": "Record<\"ObjectFlags\", Record<string, string | number>>",
+        "after": "Readonly<Record<\"ObjectFlags\", Readonly<Record<string, string | number>>>>"
+      }
+    ]
+  },
+  {
+    "owner": "Debug.formatFlowFlags",
+    "sites": [
+      "CW126"
+    ],
+    "beforeSha256": "a7e9bbccbcf648286a12b833e621b769b0b8104e9879d68292edfc0f3144c259",
+    "afterSha256": "dfeeff1689b8893bc7f5f54472440ba33e7621555f19af3743f554febf97d14d",
+    "edits": [
+      {
+        "before": "Record<\"FlowFlags\", Record<string, string | number>>",
+        "after": "Readonly<Record<\"FlowFlags\", Readonly<Record<string, string | number>>>>"
+      }
+    ]
+  },
+  {
+    "owner": "Debug.formatRelationComparisonResult",
+    "sites": [
+      "CW128"
+    ],
+    "beforeSha256": "57dad254a5d8c1c66e6e23e7817a0f4f54d8d28e72ffd51289c5ddc0c3c63943",
+    "afterSha256": "8d19ce5bd49e4fc86bccef185c172201e9982cd0f8ebda559ecfd3a281a8f3bb",
+    "edits": [
+      {
+        "before": "Record<\"RelationComparisonResult\", Record<string, string | number>>",
+        "after": "Readonly<Record<\"RelationComparisonResult\", Readonly<Record<string, string | number>>>>"
+      }
+    ]
+  },
+  {
+    "owner": "Debug.formatCheckMode",
+    "sites": [
+      "CW130"
+    ],
+    "beforeSha256": "5d938b1641d67994b6ecde38aa7ebf19d437d3828c20fa2f95dc3ec2ccf355ae",
+    "afterSha256": "e2f4bf57c94f4bd93246349f4a812aa40eaa222cb437b1295260bac545a1fd46",
+    "edits": [
+      {
+        "before": "Record<\"CheckMode\", Record<string, string | number>>",
+        "after": "Readonly<Record<\"CheckMode\", Readonly<Record<string, string | number>>>>"
+      }
+    ]
+  },
+  {
+    "owner": "Debug.formatSignatureCheckMode",
+    "sites": [
+      "CW132"
+    ],
+    "beforeSha256": "d52a47280af18a53cf89302fdb2297c7f3ac136dab6deef52b5f298cb8780e66",
+    "afterSha256": "992cacc8412bf76eadb5f60245440ebfb4a305417d45727b51d8b4ed04b1ebe2",
+    "edits": [
+      {
+        "before": "Record<\"SignatureCheckMode\", Record<string, string | number>>",
+        "after": "Readonly<Record<\"SignatureCheckMode\", Readonly<Record<string, string | number>>>>"
+      }
+    ]
+  },
+  {
+    "owner": "Debug.formatTypeFacts",
+    "sites": [
+      "CW134"
+    ],
+    "beforeSha256": "f80ff32b8077bc13a5fe3950e1be0f9f14100fb4621aa648582ba4faa1f48b04",
+    "afterSha256": "309d5070b037d3e565ea8e14ef7a46483e1126be70aebda6209f34cb06f3379a",
+    "edits": [
+      {
+        "before": "Record<\"TypeFacts\", Record<string, string | number>>",
+        "after": "Readonly<Record<\"TypeFacts\", Readonly<Record<string, string | number>>>>"
+      }
+    ]
+  },
+  {
+    "owner": "Debug.attachFlowNodeDebugInfoWorker",
+    "sites": [
+      "CW136"
+    ],
+    "beforeSha256": "3296cb53651e9280130697c9995ba8c6f63b071c0223acd6f4c2b8ba79a4b78c",
+    "afterSha256": "f008afb4b18a12b6021e1fbb0f11166b538270529b433196b64fe2fe6e7a712c",
+    "edits": [
+      {
+        "before": "Record<\"FlowFlags\", Record<string, string | number>>",
+        "after": "Readonly<Record<\"FlowFlags\", Readonly<Record<string, string | number>>>>"
+      }
+    ]
+  },
+  {
+    "owner": "Debug.formatControlFlowGraph.computeColumnWidths",
+    "sites": [
+      "CW156"
+    ],
+    "beforeSha256": "22687f7dd4e9bdd0ae8fd8305494dae0f94ca2921e25cfe81f87223cf72f7e67",
+    "afterSha256": "7dccb35002f19d28f4bc14a222ded825c6dcf087f00860ee7385b52360f0f5da",
+    "edits": [
+      {
+        "before": "fill(Array(height), 0)",
+        "after": "fill(Array<number>(height), 0)"
+      }
+    ]
+  },
+  {
+    "owner": "Debug.formatControlFlowGraph.hasNode",
+    "sites": [
+      "CW157"
+    ],
+    "beforeSha256": "778b4b35d7f8348251b310035cc0e4ce20f52e2cc64cc1f5b3acd46c18b9d3df",
+    "afterSha256": "443ff2d8b83bca8026dccf3a07e2203ffd87dba535057edfbebb5875b1426dae",
+    "edits": [
+      {
+        "before": "function hasNode(f: FlowNode): f is Extract<FlowNode, { node?: Node; }>",
+        "after": "function hasNode(f: Readonly<FlowNode>): f is Readonly<Extract<FlowNode, { node?: Node; }>>"
+      }
+    ]
+  },
+  {
+    "owner": "Debug.formatControlFlowGraph.renderGraph",
+    "sites": [
+      "CW158"
+    ],
+    "beforeSha256": "56a370d8310d56d0cd36a72ef9e7e9926fe4498c35564244026f4d3ec7c41c31",
+    "afterSha256": "8ccc5feac14d2e42f4cbdb1e71f899a30ec527891e49e9a676bf1e2510a8a2be",
+    "edits": [
+      {
+        "before": "fill(Array(laneCount), 0)",
+        "after": "fill<Connection>(Array<Connection>(laneCount), 0)"
+      }
+    ]
+  }
+]

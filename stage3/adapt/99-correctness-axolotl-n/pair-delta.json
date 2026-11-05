@@ -1,0 +1,843 @@
+{
+  "schema_version": 1,
+  "normalization": true,
+  "source_hashes": {
+    "src/compiler/debug.ts": "1f6b606709a92ad3acbbb03ef77beddd3383b2eba941ffe72503f2f2631dd9d3"
+  },
+  "raw_findings": {
+    "per_reason": {
+      "Array as a value outside equality or typeof (overloaded calls and static properties need their own representation)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "Object.defineProperties": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "Object.setPrototypeOf": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a cast the runtime can't check": {
+        "before": 11,
+        "after": 11,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a checked predicate target whose check would read past the depth bound (FlowSwitchClause)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function returning SortedReadonlyArray<[number, string]>": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function viewed as unknown or object (dynamic function descriptors)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a generic instantiation whose type argument for T, constrained to Node, can't be read": {
+        "before": 6,
+        "after": 6,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a library method value outside a const alias, typed call/apply, or supported map callback (its receiver and callable ABI are not proven); wrap the call in an arrow": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a member typed any ([]) related to number at the initializer site": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (fill would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (repeat would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (setPrototypeOf would lose its object, and this with it)": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (toString would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a non-object representation passed through an opaque object parameter": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a template interpolating an object, an array, a map, a function or undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type FlowArrayMutation | FlowAssignment | FlowCall | FlowCondition | FlowLabel | FlowReduceLabel | FlowStart | FlowUnreachable seen as FlowNode, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read": {
+        "before": 1,
+        "after": 0,
+        "lowered": 1,
+        "moved_by_reason": {}
+      },
+      "a value of type Record<number, FlowGraphNode>": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type SortedReadonlyArray<[number, string]>": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type T": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"CheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof CheckMode is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"EmitFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof EmitFlags is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"FlowFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof FlowFlags is read": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"ModifierFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ModifierFlags is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"NodeCheckFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeCheckFlags is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"NodeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeFlags is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"ObjectFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ObjectFlags is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"RelationComparisonResult\", Record<string, string | number>>, which can write Record<string, string | number> where typeof RelationComparisonResult is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"ScriptKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ScriptKind is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"SignatureCheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureCheckMode is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"SignatureFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureFlags is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"SnippetKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SnippetKind is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"SymbolFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SymbolFlags is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"SyntaxKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SyntaxKind is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"TransformFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TransformFlags is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"TypeFacts\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFacts is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"TypeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFlags is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type { id: number; flowNode: FlowNode; edges: never[]; text: string; lane: number; endLane: number; level: number; circular: false; } seen as FlowGraphNode, which can write FlowGraphEdge[] where never[] is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an ESM namespace object used as a value; use qualified live bindings": {
+        "before": 18,
+        "after": 18,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an enum inside a function or block; declare it at module scope": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an overloaded function as a value": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot Connection": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.SourceFile": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "assigning to a NonNullExpression": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "failed statement; state rolled back; continued at next statement or declaration": {
+        "before": 56,
+        "after": 56,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "function signature or prologue failed; continued at next declaration": {
+        "before": 9,
+        "after": 9,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "in that narrows a union of object types (any object with the key passes)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "in when a possibly absent spread has no property presence descriptors": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "inherited library member prototype read as an own field": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "inherited library member repeat read as an own field": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "new an Identifier": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of assertEachNode parameter test cannot be served by implementation parameter test": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of assertNode parameter test cannot be served by implementation parameter test": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading columns": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading graphNode": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading links": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading members": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "returning a property or element assignment": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      }
+    },
+    "lowered": [
+      {
+        "identity": [
+          "src/compiler/debug.ts",
+          "1f6b606709a92ad3acbbb03ef77beddd3383b2eba941ffe72503f2f2631dd9d3",
+          50986
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/99n-main/src/compiler/debug.ts:1080:9",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "/workspace/scratch/99n-main/src/compiler/debug.ts:1099:30",
+          "reason": "a value of type FlowArrayMutation | FlowAssignment | FlowCall | FlowCondition | FlowLabel | FlowReduceLabel | FlowStart | FlowUnreachable seen as FlowNode, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read",
+          "text": "/workspace/scratch/99n-main/src/compiler/debug.ts:1099:30: Adamic 0.1 refuses a value of type FlowArrayMutation | FlowAssignment | FlowCall | FlowCondition | FlowLabel | FlowReduceLabel | FlowStart | FlowUnreachable seen as FlowNode, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+        },
+        "head": []
+      }
+    ],
+    "moved": [],
+    "new_findings": [],
+    "new_sites": [],
+    "unit_first_stop_delta": [],
+    "regressions": [],
+    "totals": {
+      "before": {
+        "NotYet": 63,
+        "Refused": 52,
+        "Boundary": 65
+      },
+      "after": {
+        "NotYet": 63,
+        "Refused": 51,
+        "Boundary": 65
+      }
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  },
+  "distinct_reads": {
+    "per_reason": {
+      "Array as a value outside equality or typeof (overloaded calls and static properties need their own representation)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "Object.defineProperties": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "Object.setPrototypeOf": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a cast the runtime can't check": {
+        "before": 11,
+        "after": 11,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a checked predicate target whose check would read past the depth bound (FlowSwitchClause)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function returning SortedReadonlyArray<[number, string]>": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function viewed as unknown or object (dynamic function descriptors)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a generic instantiation whose type argument for T, constrained to Node, can't be read": {
+        "before": 6,
+        "after": 6,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a library method value outside a const alias, typed call/apply, or supported map callback (its receiver and callable ABI are not proven); wrap the call in an arrow": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a member typed any ([]) related to number at the initializer site": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (fill would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (repeat would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (setPrototypeOf would lose its object, and this with it)": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (toString would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a non-object representation passed through an opaque object parameter": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a template interpolating an object, an array, a map, a function or undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type FlowArrayMutation | FlowAssignment | FlowCall | FlowCondition | FlowLabel | FlowReduceLabel | FlowStart | FlowUnreachable seen as FlowNode, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read": {
+        "before": 1,
+        "after": 0,
+        "lowered": 1,
+        "moved_by_reason": {}
+      },
+      "a value of type Record<number, FlowGraphNode>": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type SortedReadonlyArray<[number, string]>": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type T": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"CheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof CheckMode is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"EmitFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof EmitFlags is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"FlowFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof FlowFlags is read": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"ModifierFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ModifierFlags is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"NodeCheckFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeCheckFlags is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"NodeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeFlags is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"ObjectFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ObjectFlags is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"RelationComparisonResult\", Record<string, string | number>>, which can write Record<string, string | number> where typeof RelationComparisonResult is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"ScriptKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ScriptKind is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"SignatureCheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureCheckMode is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"SignatureFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureFlags is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"SnippetKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SnippetKind is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"SymbolFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SymbolFlags is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"SyntaxKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SyntaxKind is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"TransformFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TransformFlags is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"TypeFacts\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFacts is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type typeof import(\"/workspace/scratch/99n-main/src/compiler/_namespaces/ts\") seen as Record<\"TypeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFlags is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type { id: number; flowNode: FlowNode; edges: never[]; text: string; lane: number; endLane: number; level: number; circular: false; } seen as FlowGraphNode, which can write FlowGraphEdge[] where never[] is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an ESM namespace object used as a value; use qualified live bindings": {
+        "before": 18,
+        "after": 18,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an enum inside a function or block; declare it at module scope": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an overloaded function as a value": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot Connection": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.SourceFile": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "assigning to a NonNullExpression": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "failed statement; state rolled back; continued at next statement or declaration": {
+        "before": 56,
+        "after": 56,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "function signature or prologue failed; continued at next declaration": {
+        "before": 9,
+        "after": 9,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "in that narrows a union of object types (any object with the key passes)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "in when a possibly absent spread has no property presence descriptors": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "inherited library member prototype read as an own field": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "inherited library member repeat read as an own field": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "new an Identifier": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of assertEachNode parameter test cannot be served by implementation parameter test": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of assertNode parameter test cannot be served by implementation parameter test": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading columns": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading graphNode": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading links": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading members": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "returning a property or element assignment": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      }
+    },
+    "lowered": [
+      {
+        "identity": [
+          "src/compiler/debug.ts",
+          "1f6b606709a92ad3acbbb03ef77beddd3383b2eba941ffe72503f2f2631dd9d3",
+          50986
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/99n-main/src/compiler/debug.ts:1080:9",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "/workspace/scratch/99n-main/src/compiler/debug.ts:1099:30",
+          "reason": "a value of type FlowArrayMutation | FlowAssignment | FlowCall | FlowCondition | FlowLabel | FlowReduceLabel | FlowStart | FlowUnreachable seen as FlowNode, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read",
+          "text": "/workspace/scratch/99n-main/src/compiler/debug.ts:1099:30: Adamic 0.1 refuses a value of type FlowArrayMutation | FlowAssignment | FlowCall | FlowCondition | FlowLabel | FlowReduceLabel | FlowStart | FlowUnreachable seen as FlowNode, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+        },
+        "head": []
+      }
+    ],
+    "moved": [],
+    "new_findings": [],
+    "new_sites": [],
+    "unit_first_stop_delta": [],
+    "regressions": [],
+    "totals": {
+      "before": {
+        "NotYet": 63,
+        "Refused": 52,
+        "Boundary": 65
+      },
+      "after": {
+        "NotYet": 63,
+        "Refused": 51,
+        "Boundary": 65
+      }
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  }
+}

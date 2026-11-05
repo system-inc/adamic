@@ -1,0 +1,16 @@
+[
+  {
+    "owner": "Debug.formatControlFlowGraph.hasNode",
+    "sites": [
+      "CW157"
+    ],
+    "beforeSha256": "778b4b35d7f8348251b310035cc0e4ce20f52e2cc64cc1f5b3acd46c18b9d3df",
+    "afterSha256": "443ff2d8b83bca8026dccf3a07e2203ffd87dba535057edfbebb5875b1426dae",
+    "edits": [
+      {
+        "before": "function hasNode(f: FlowNode): f is Extract<FlowNode, { node?: Node; }>",
+        "after": "function hasNode(f: Readonly<FlowNode>): f is Readonly<Extract<FlowNode, { node?: Node; }>>"
+      }
+    ]
+  }
+]

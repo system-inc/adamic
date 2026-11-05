@@ -1,0 +1,48 @@
+{
+  "results": [
+    {
+      "name": "apply",
+      "first": {
+        "files": 1,
+        "edits": 1,
+        "javascriptChanging": false
+      },
+      "replay": {
+        "files": 0,
+        "edits": 0
+      },
+      "unchangedReplayMtime": true
+    },
+    {
+      "name": "foreign",
+      "first": {
+        "files": 1,
+        "edits": 1,
+        "javascriptChanging": false
+      },
+      "replay": {
+        "files": 0,
+        "edits": 0
+      },
+      "unchangedReplayMtime": true
+    },
+    {
+      "name": "changed-owner",
+      "refused": true,
+      "writes": 0,
+      "reason": "changed owner Debug.formatControlFlowGraph.hasNode"
+    },
+    {
+      "name": "half-adapted",
+      "refused": true,
+      "writes": 0,
+      "reason": "changed owner Debug.formatControlFlowGraph.hasNode"
+    },
+    {
+      "name": "changed-after-owner",
+      "refused": true,
+      "writes": 0,
+      "reason": "changed owner Debug.formatControlFlowGraph.hasNode"
+    }
+  ]
+}
