@@ -35,9 +35,10 @@ func (graph *allocationFlowGraph) reachingAllocations(expression ir.Expression, 
 		// A projected query of any other receiver-shaped expression is a function of the expression, its
 		// depth and which Reads are busy around it: projectionReads is written once, so a later query
 		// reads what this one did, and a busy Read is the only thing that can cut it differently. So it's
-		// computed once per key. Without this, a ring of stores (`a.n = b.n; a.n = c.n; b.n = a.n; ...`)
-		// opens a fresh frame for every receiver on every path, fan-out^32 before the depth cap
-		// (#tzy22kd, binder.ts:1311).
+		// computed once per key. Without this, a function that recurses on a field of its own parameter
+		// seen through a cast (binder.ts's isNarrowableOperand, `isNarrowableOperand((expr as
+		// BinaryExpression).left)`) reopens a frame for the cast receiver at every level, once per
+		// recursive call, fan-out^32 before the depth cap, and lowering never finished (#tzy22kd).
 		if key, keyed := graph.projectionFrame(expression, depth); keyed {
 			if graph.projectionFrames == nil {
 				graph.projectionFrames = map[string]ir.AllocationSet{}
