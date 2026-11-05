@@ -1,0 +1,89 @@
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+native: unit main.c compiles uncached: main.c holds a directive past its first line
+--- FAIL: TestClosureMergeRefusals (0.00s)
+    --- FAIL: TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_utimes.a (0.17s)
+        closure_merge_refusals_test.go:37: source Node: exit 70 stderr "adamic: panic: Error: EPERM: operation not permitted, utime '/tmp/adamic-gate/adamic-input-1381883195/refused-node/file'\n"
+    --- FAIL: TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_stat.a (0.10s)
+        closure_merge_refusals_test.go:37: source Node: exit 70 stderr "adamic: panic: Error: EPERM: operation not permitted, utime '/tmp/adamic-gate/adamic-input-192729099/refused-node/file'\n"
+FAIL
+gate cache: native hits=5048 misses=1826
+gate cache: node hits=5627 misses=1425
+gate cache: probe hits=39 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	898.956s
+FAIL
+exit=1

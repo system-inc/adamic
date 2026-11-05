@@ -1,0 +1,48 @@
+--- FAIL: TestDecoderGetterBesideCheckedNodeViewAgrees (0.10s)
+panic: typeString mismatch: held "number!", TypeToString "number" [recovered, repanicked]
+
+goroutine 21 [running]:
+testing.tRunner.func1.2({0x278a120, 0x18782f322720})
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/testing/testing.go:2123 +0x232
+testing.tRunner.func1()
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/testing/testing.go:2126 +0x329
+panic({0x278a120?, 0x18782f322720?})
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/runtime/panic.go:859 +0x125
+github.com/system-inc/adamic/internal/lower.typeStringVerify(0x18782efe5b08, 0x18782c727770, {0x18782f124758, 0x7})
+	/home/user/adamic/internal/lower/library_json_decode.go:469 +0x114
+github.com/system-inc/adamic/internal/lower.(*lowering).typeString(0x18782efe5b08, 0x18782c727770)
+	/home/user/adamic/internal/lower/library_json_decode.go:135 +0x13c
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x18782c2504df?)
+	/home/user/adamic/internal/lower/library_json_decode.go:175 +0x2a7
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x18782f3222c0?)
+	/home/user/adamic/internal/lower/library_json_decode.go:317 +0xd5d
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema(0x18782efe5b08, 0x18782d2c3130, 0x18782f1b4780, 0x2, 0x18782df74fa0)
+	/home/user/adamic/internal/lower/library_json_decode.go:330 +0x1a8
+github.com/system-inc/adamic/internal/lower.(*lowering).boundarySchema(0x18782efe5b08, 0x18782d2c3130, 0x18782f1b4780)
+	/home/user/adamic/internal/lower/functions.go:402 +0x85
+github.com/system-inc/adamic/internal/lower.(*lowering).signature(0x18782efe5b08, 0x1, 0x18782d2c3130, 0xffffffffffffffff)
+	/home/user/adamic/internal/lower/functions.go:102 +0x5d3
+github.com/system-inc/adamic/internal/lower.(*lowering).declareModule(0x18782efe5b08, {0x18782f173080?, 0x1?, 0x18782dc5ae80?})
+	/home/user/adamic/internal/lower/modules.go:179 +0xab6
+github.com/system-inc/adamic/internal/lower.lowerCheckedWithCycleTypes(0x18782dc115c0, 0x18782de25508, 0x18782dc6f888, 0x0, 0x0, 0x0, 0x0, {0x18782df75bd4, 0x1, 0x1})
+	/home/user/adamic/internal/lower/lower.go:103 +0x469
+github.com/system-inc/adamic/internal/lower.lowerChecked(...)
+	/home/user/adamic/internal/lower/lower.go:66
+github.com/system-inc/adamic/internal/lower.LowerWithOptions({0x2875a88, 0x29a66a0}, 0x18782dc115c0, {0x0?, 0x40?, 0x0?})
+	/home/user/adamic/internal/lower/lower.go:57 +0x245
+github.com/system-inc/adamic/internal/lower.Lower({0x2875a88, 0x29a66a0}, 0x18782dc115c0)
+	/home/user/adamic/internal/lower/lower.go:34 +0x90
+github.com/system-inc/adamic/internal/lower.lowerAgreementEntry({0x2875af8, 0x18782c3b7688}, {0x18782d2ba000, 0x53})
+	/home/user/adamic/internal/lower/agree_test.go:335 +0x11d
+github.com/system-inc/adamic/internal/lower.agreeEntry({0x2875af8, 0x18782c3b7688}, {0x18782d2ba000, 0x53}, 0x0, 0x0, 0x0, 0x0)
+	/home/user/adamic/internal/lower/agree_test.go:347 +0x98
+github.com/system-inc/adamic/internal/lower.lowersAndAgreesWithNodeAs(0x18782c3b7688, {0x1145707, 0x332}, {0x1018a33, 0x3})
+	/home/user/adamic/internal/lower/agree_test.go:60 +0x92
+github.com/system-inc/adamic/internal/lower.TestDecoderGetterBesideCheckedNodeViewAgrees(0x18782c3b7688)
+	/home/user/adamic/internal/lower/accessor_reach_test.go:51 +0x3e
+testing.tRunner(0x18782c3b7688, 0x2881950)
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64/src/testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/internal/lower	0.174s
+FAIL

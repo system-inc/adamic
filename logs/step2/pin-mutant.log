@@ -1,0 +1,8 @@
+=== RUN   TestATypeStringIsTheCheckersAnswer
+=== PAUSE TestATypeStringIsTheCheckersAnswer
+=== CONT  TestATypeStringIsTheCheckersAnswer
+    type_string_test.go:19: record, asked 2 times: typeString "{ count: number; names: string[]; }!", TypeToString "{ count: number; names: string[]; }"
+--- FAIL: TestATypeStringIsTheCheckersAnswer (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.059s
+FAIL

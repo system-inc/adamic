@@ -1,0 +1,13 @@
+diff --git a/internal/lower/library_json_decode.go b/internal/lower/library_json_decode.go
+index 43e5636a7..a375cd6bb 100644
+--- a/internal/lower/library_json_decode.go
++++ b/internal/lower/library_json_decode.go
+@@ -126,7 +126,7 @@ func (l *lowering) jsonSchemaType(node *ast.Node, mode jsonSchemaMode) (ir.JSOND
+ // (#wy2dyf0, #rw2vjhn). A lowering is one goroutine's, as sourceIdentities is.
+ func (l *lowering) typeString(t *checker.Type) string {
+ 	if text, found := l.typeStrings[t]; found {
+-		return text
++		return text + "!"
+ 	}
+ 	if l.typeStrings == nil {
+ 		l.typeStrings = map[*checker.Type]string{}

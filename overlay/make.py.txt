@@ -1,0 +1,68 @@
+# make.py <repo> <out dir> [mutant]: writes verify.go.txt-shaped replacement of library_json_decode.go and overlay.json.
+import json, sys, os
+repo, out = sys.argv[1], sys.argv[2]
+mutant = len(sys.argv) > 3 and sys.argv[3] == "mutant"
+path = os.path.join(repo, "internal/lower/library_json_decode.go")
+src = open(path).read()
+old = """	if text, found := l.typeStrings[t]; found {
+		return text
+	}
+"""
+held = '		return text + "!"\n' if mutant else '		return text\n'
+if mutant:
+    # The verify checks the value the held branch returns, so a held branch that alters its answer is caught by it.
+    new = """	if text, found := l.typeStrings[t]; found {
+		answer := text + "!"
+		typeStringVerify(l, t, answer)
+		return answer
+	}
+"""
+else:
+    new = """	if text, found := l.typeStrings[t]; found {
+		typeStringVerify(l, t, text)
+		return text
+	}
+"""
+assert src.count(old) == 1
+miss = "	text := l.checker.TypeToString(t)\n	l.typeStrings[t] = text\n"
+assert src.count(miss) == 1
+src = src.replace(miss, "	text := l.checker.TypeToString(t)\n	typeStringVerifyRecord(\"miss\")\n	l.typeStrings[t] = text\n")
+src = src.replace(old, new)
+src = src.replace('import (', 'import (\n\t"fmt"\n\t"os"\n\t"path/filepath"\n\t"sync"\n', 1)
+src += '''
+// Scratch verify (never committed): a held answer is recomputed and compared; one byte per event is appended to
+// $TYPE_STRING_VERIFY_DIR/<test binary>.<hit|miss|mismatch>.
+var typeStringVerifyFiles = map[string]*os.File{}
+var typeStringVerifyLock sync.Mutex
+
+func typeStringVerifyRecord(kind string) {
+	typeStringVerifyLock.Lock()
+	defer typeStringVerifyLock.Unlock()
+	file := typeStringVerifyFiles[kind]
+	if file == nil {
+		directory := os.Getenv("TYPE_STRING_VERIFY_DIR")
+		if directory == "" {
+			return
+		}
+		opened, err := os.OpenFile(filepath.Join(directory, filepath.Base(os.Args[0])+"."+kind), os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0o666)
+		if err != nil {
+			return
+		}
+		file = opened
+		typeStringVerifyFiles[kind] = file
+	}
+	file.Write([]byte{'x'})
+}
+
+func typeStringVerify(l *lowering, t *checker.Type, held string) {
+	typeStringVerifyRecord("hit")
+	fresh := l.checker.TypeToString(t)
+	if fresh != held {
+		typeStringVerifyRecord("mismatch")
+		panic(fmt.Sprintf("typeString mismatch: held %q, TypeToString %q", held, fresh))
+	}
+}
+'''
+os.makedirs(out, exist_ok=True)
+open(os.path.join(out, "library_json_decode.go.txt"), "w").write(src)
+json.dump({"Replace": {path: os.path.join(out, "library_json_decode.go.txt")}}, open(os.path.join(out, "overlay.json"), "w"), indent=1)
