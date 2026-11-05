@@ -1,0 +1,5 @@
+import { fill } from './n06_module_setter/back.ts';
+export let later: number | undefined = undefined;
+export function setLater(value: number): void { later = value; }
+fill();
+console.log(String(later));
