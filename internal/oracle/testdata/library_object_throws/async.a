@@ -36,7 +36,8 @@ async function bare(entry: Entry): Promise<number> {
 
 async function run(): Promise<string> {
 	const live: Entry = { key: 'live', hits: 0 };
-	const fixed: Entry = { key: 'fixed', hits: 0 };
+	// Unannotated, so its literal proves the shape Object.freeze is given (lower's exactObject).
+	const fixed = { key: 'fixed', hits: 0 };
 	Object.freeze(fixed);
 	const first = await touch(live);
 	const second = await touch(fixed);
