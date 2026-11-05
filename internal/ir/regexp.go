@@ -27,7 +27,9 @@ func (r RegExpCall) Type() Type { return r.Returns }
 // is a literal made right there with it, whose flags can't change. Lowering counts the calls that
 // can, the flow graph gives them an exception edge, and the emitter tests the word after each one.
 func (p *Program) GlobalFlagMayThrow(call RegExpCall) bool {
-	if call.Method != "matchAll" && call.Method != "replaceAll" {
+	// Given no argument there is no RegExp to lack the flag: matchAll() and replaceAll() given nothing
+	// don't throw this, and an IR-built call may carry none (fresh's regexp_test.go).
+	if (call.Method != "matchAll" && call.Method != "replaceAll") || len(call.Arguments) == 0 {
 		return false
 	}
 	made, literal := call.Arguments[0].(RegExpNew)
