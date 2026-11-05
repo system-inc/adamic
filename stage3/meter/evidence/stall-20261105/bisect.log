@@ -1,0 +1,3 @@
+# bad: [1f7df6a2e8145391dea19da63a172d5385638e39] buildcache, runtimeproducts: a runtime archive is keyed by the code that makes it, its import closure, never the oracle test binary's whole compiler (#gr5y0yf item 1)
+# good: [f87d7884807161162c98a2d0ef3b5339e16b315f] admission-delta: a keyless run-time NotYet that isn't a conversion is its own closed table of whole messages, so Object.keys of a runtime host value can be listed as "this runtime value's own keys aren't enumerated yet" under #0sps03r (#ey7aysy, Adamic's ruling)
+git bisect start '1f7df6a2' 'f87d7884' '--' 'internal/lower' 'internal/load' 'internal/flow' 'internal/fresh'

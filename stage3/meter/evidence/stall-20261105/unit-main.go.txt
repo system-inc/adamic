@@ -1,0 +1,20 @@
+package main
+import (
+ "context"
+ "encoding/json"
+ "fmt"
+ "os"
+ "time"
+ "github.com/system-inc/adamic/internal/load"
+ "github.com/system-inc/adamic/internal/lower"
+)
+func main() {
+ started:=time.Now()
+ p,err:=load.LatentLoad([]string{os.Args[1]}); if err!=nil {panic(err)}
+ p.LatentEntryReach()
+ fmt.Fprintln(os.Stderr,"loaded",time.Since(started))
+ record,err:=lower.LatentReplay(context.Background(),p,os.Args[2],"NotYet","stall-investigation-no-signature")
+ if err!=nil {fmt.Fprintln(os.Stderr,err)}
+ if err:=json.NewEncoder(os.Stdout).Encode(record);err!=nil {panic(err)}
+ fmt.Fprintln(os.Stderr,"completed",time.Since(started))
+}

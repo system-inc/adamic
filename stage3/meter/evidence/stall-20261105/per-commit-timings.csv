@@ -1,0 +1,8 @@
+commit,test,wall_seconds,result
+1f7df6a2e8145391dea19da63a172d5385638e39,full tsc latent,919.42712223,SIGQUIT after 900 seconds without JSONL/log growth; 905 units completed
+f87d7884807161162c98a2d0ef3b5339e16b315f,dumpTypes replay,41.250013608,completed
+1f7df6a2e8145391dea19da63a172d5385638e39,dumpTypes replay 180-second cap,180,timeout; disproved as a hang predicate by full-pass completion
+1f7df6a2e8145391dea19da63a172d5385638e39,dumpTypes within full pass,156.775619383,completed body attempt
+1f7df6a2e8145391dea19da63a172d5385638e39,DestructuringPattern replay,26.399144306,completed
+e28e4bc8f99d410f8ec055166ac642f9788c36b9,bisect midpoint,,build interrupted before test; unclassified
+1f7df6a2e8145391dea19da63a172d5385638e39,dumpTypes replay 300-second cap,145.12109997,completed
