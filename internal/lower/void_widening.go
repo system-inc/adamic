@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 
@@ -196,7 +197,7 @@ func (l *lowering) voidWidened(source, target *checker.Type, depth int, seen map
 		return nil
 	}
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
-		for _, member := range target.Types() {
+		for _, member := range l.reachableArms(source, target.Types()) {
 			if found := l.voidWidened(source, member, depth+1, seen); found != nil {
 				return found
 			}
@@ -276,6 +277,87 @@ func (l *lowering) typeArgumentName(reference *checker.Type, index int) string {
 		}
 	}
 	return strconv.Itoa(index + 1)
+}
+
+// reachableArms is the arms of a target union a value of source can be read through: every arm except
+// one source is disjoint from by a discriminant, a property both declare whose types are unit literals
+// with no value in common. A generator's IteratorReturnResult<void> (done: true) is never read through
+// IteratorYieldResult<number> (done?: false), so relating the two refused `Iterable<number, void>`
+// taking a function*'s call (#wcva20f, #54c1r7k). Disjointness is the only proof (Compiler's rule,
+// ruled by Adamic, Nov 5): a source that isn't assignable to an arm can still be read through it, since
+// a program selects an arm by a user predicate, an in test or a typeof on another field, so tsc's
+// assignability would drop a pairing that's really read. A source disjoint from every arm, which a
+// checked relation shouldn't produce, keeps them all.
+func (l *lowering) reachableArms(source *checker.Type, arms []*checker.Type) []*checker.Type {
+	reachable := make([]*checker.Type, 0, len(arms))
+	for _, arm := range arms {
+		if !l.discriminatedApart(source, arm) {
+			reachable = append(reachable, arm)
+		}
+	}
+	if len(reachable) == 0 {
+		return arms
+	}
+	return reachable
+}
+
+// discriminatedApart is whether source and arm share a property whose types on each side are unit
+// literal types, or unions of them, with no value in common: done: true against done?: false, or
+// kind: 'a' against kind: 'b'. A property that isn't all unit literals on either side proves nothing.
+func (l *lowering) discriminatedApart(source, arm *checker.Type) bool {
+	if source.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 || arm.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 {
+		return false
+	}
+	for _, property := range l.checker.GetPropertiesOfType(arm) {
+		from := l.checker.GetTypeOfPropertyOfType(source, property.Name)
+		to := l.checker.GetTypeOfPropertyOfType(arm, property.Name)
+		if from == nil || to == nil {
+			continue
+		}
+		fromValues, fromUnits := l.unitValues(from)
+		toValues, toUnits := l.unitValues(to)
+		if !fromUnits || !toUnits {
+			continue
+		}
+		shared := false
+		for value := range fromValues {
+			shared = shared || toValues[value]
+		}
+		if !shared {
+			return true
+		}
+	}
+	return false
+}
+
+// unitValues is the values a type admits when it's a unit literal type or a union of them: true,
+// false, undefined, null, and string, number and bigint literals (an enum member is its number). A
+// type that admits any other value has none.
+func (l *lowering) unitValues(t *checker.Type) (map[string]bool, bool) {
+	members := []*checker.Type{t}
+	if t.Flags()&checker.TypeFlagsUnion != 0 {
+		members = t.Types()
+	}
+	values := map[string]bool{}
+	for _, member := range members {
+		switch flags := member.Flags(); {
+		case flags&checker.TypeFlagsBooleanLiteral != 0:
+			values["boolean "+l.checker.TypeToString(member)] = true
+		case flags&checker.TypeFlagsUndefined != 0:
+			values["undefined"] = true
+		case flags&checker.TypeFlagsNull != 0:
+			values["null"] = true
+		case flags&checker.TypeFlagsStringLiteral != 0:
+			values["string "+fmt.Sprint(member.AsLiteralType().Value())] = true
+		case flags&checker.TypeFlagsNumberLiteral != 0:
+			values["number "+fmt.Sprint(member.AsLiteralType().Value())] = true
+		case flags&checker.TypeFlagsBigIntLiteral != 0:
+			values["bigint "+fmt.Sprint(member.AsLiteralType().Value())] = true
+		default:
+			return nil, false
+		}
+	}
+	return values, true
 }
 
 // A function can hand out a void function from its return, or receive one through
