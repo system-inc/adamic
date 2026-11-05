@@ -26,6 +26,7 @@ var viewReceiverCallers = []struct {
 	{"object.go viewedField viewFieldReceiverTypeID", 1, "read: a property access's emitted field read, raw when it's an assignment target's read half"},
 	{"object.go elementAccess viewFieldReceiverTypeID", 1, "read: a tuple element's emitted read, raw when it's an assignment target's read half"},
 	{"collections.go destructureFrom viewFieldReceiverTypeID", 1, "read: a destructured binding's emitted field read"},
+	{"assignments.go objectDestructuringAssignment viewFieldReceiverTypeID", 1, "read: an object pattern assignment's emitted field read, as a destructured binding's"},
 	{"view_widened.go viewLie viewFieldReceiverTypeID", 1, "read guard: whether a view's source holds a field honestly, or only as a checked read"},
 	{"view_copies.go checkedViewType viewFieldReceiverTypeID", 1, "read guard: a whole copy reads every field, NotYet when its type is a checked view's receiver"},
 	{"interface_cast.go checkedViewReceiverField viewFieldReceiverTypeID", 1, "read guard: the id the asked access is checked under, read or write by its node"},
