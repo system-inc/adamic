@@ -1,0 +1,32 @@
+// A for-of over an Iterable<[string, number]> parameter, called with two Maps' entries(): the view
+// steps each Map's own iterator, destructured and read as a pair, as tsc's mapIterator is handed
+// `jsxOptionMap.entries()`.
+function total(items: Iterable<[string, number]>): number {
+    let sum = 0;
+    for(const [name, count] of items) {
+        console.log(`${name}=${String(count)}`);
+        sum += count;
+    }
+    return sum;
+}
+function longest(items: Iterable<[string, number]>): string {
+    let best = '';
+    for(const pair of items) {
+        if(pair[0].length > best.length) {
+            best = `${pair[0]}:${String(pair[1])}`;
+        }
+    }
+    return best;
+}
+const first = new Map<string, number>();
+for(let index = 0; index < 4; index++) {
+    first.set(`first ${'x'.repeat(index)}`, index * 3);
+}
+const second = new Map<string, number>();
+for(let index = 5; index > 2; index--) {
+    second.set(`second ${String(index * index)}`, index - 0.5);
+}
+console.log(String(total(first.entries())));
+console.log(String(total(second.entries())));
+console.log(longest(first.entries()));
+console.log(longest(second.entries()));
