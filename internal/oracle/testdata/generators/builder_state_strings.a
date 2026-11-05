@@ -1,0 +1,30 @@
+// builderState.ts:493's shape (#qk8rztp S2c-1, commit 3): one instance of tsc's arrayFrom, its
+// implementation signature alone, takes Iterable<string>, which is held as a union, since a string
+// fits it too. It is fed mapDefinedIterator's call yielding strings at one site and a Set<string>'s
+// keys() at another, so the union view's dispatch steps a generator and a collection's iterator. The
+// generator itself steps the Set's keys() through its own union view (S2b-1b).
+export function arrayFrom<T, U>(iterator: Iterable<T>, map?: (t: T) => U): (T | U)[] {
+    const result: (T | U)[] = [];
+    for (const value of iterator) {
+        result.push(map ? map(value) : value);
+    }
+    return result;
+}
+// eslint-disable-next-line no-restricted-syntax
+export function* mapDefinedIterator<T, U>(iter: Iterable<T>, mapFn: (x: T) => U | undefined): Generator<U & ({} | null), void, unknown> {
+    for (const x of iter) {
+        const value = mapFn(x);
+        if (value !== undefined) {
+            yield value;
+        }
+    }
+}
+const seenMap = new Set<string>();
+for(let index = 0; index < 4; index++) {
+    seenMap.add(`/src/file${String(index)}.ts`);
+}
+const declared = new Set<string>([`/src/file${String(1)}.ts`, `/src/file${String(3)}.ts`]);
+const fileNames = arrayFrom(mapDefinedIterator(seenMap.keys(), (path: string) => declared.has(path) ? `${path}.d` : undefined), (name: string) => name);
+const roots = arrayFrom(seenMap.keys(), (path: string) => path);
+console.log(fileNames.join(','));
+console.log(roots.join(','));

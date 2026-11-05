@@ -65,8 +65,10 @@ its own next, a Map's or a Set's iterator by the collection loop's own step, so 
 fed both at different call sites, and anything else is a compiler bug that stops the program, naming
 the site. Every way out of the loop finishes a generator, as Node's `return()` does, so a later pass
 over the same parameter finds it done and its frame's cells are let go of at once; a collection's
-iterator has no `return()` and is left as it is. A view fed by generators of two functions, and an
-`Iterable<string>` one fed by a generator, stay not yet built.
+iterator has no `return()` and is left as it is. An `Iterable<string>` view, held as a union since a
+string fits it too, is read through a plain cast of the union's reference into the same dispatch,
+whose kind tests stand where the checked unbox's would, so a string there still stops it loudly. A
+view fed by generators of two functions stays not yet built.
 
 ## How it runs
 
