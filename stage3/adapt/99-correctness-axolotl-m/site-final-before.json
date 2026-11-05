@@ -1,0 +1,108 @@
+{
+  "typescript": "6.0.3",
+  "edit": false,
+  "roots": 79,
+  "rows": [
+    {
+      "owner": "flatMap",
+      "text": "export function flatMap<T, U extends {}>(array: readonly T[] | undefined, mapfn: (x: T, i: number) => U | readonly U[] | undefined): readonly U[] {\r\n    let result: U[] | undefined;\r\n    if (array !== undefined) {\r\n        for (let i = 0; i < array.length; i++) {\r\n            const v = mapfn(array[i]!, i);\r\n            if (v) {\r\n                if (isArray(v)) {\r\n                    result = addRange(result, v);\r\n                }\r\n                else {\r\n                    result = append(result, v);\r\n                }\r\n            }\r\n        }\r\n    }\r\n    return result ?? emptyArray;\r\n}"
+    },
+    {
+      "call": "mapfn(array[i]!, i)",
+      "position": {
+        "line": 402,
+        "character": 22
+      },
+      "signature": "(x: T, i: number): U | readonly U[] | undefined",
+      "arguments": [
+        {
+          "text": "array[i]!",
+          "type": "NonNullable<T>"
+        },
+        {
+          "text": "i",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "call": "isArray(v)",
+      "position": {
+        "line": 404,
+        "character": 20
+      },
+      "signature": "(value: unknown): value is readonly unknown[]",
+      "arguments": [
+        {
+          "text": "v",
+          "type": "U | readonly U[]"
+        }
+      ]
+    },
+    {
+      "call": "addRange(result, v)",
+      "position": {
+        "line": 405,
+        "character": 29
+      },
+      "signature": "(to: U[] | undefined, from: readonly U[] | undefined, start?: number | undefined, end?: number | undefined): U[] | undefined",
+      "inferred": [
+        {
+          "parameter": "T",
+          "type": "U"
+        }
+      ],
+      "arguments": [
+        {
+          "text": "result",
+          "type": "U[] | undefined"
+        },
+        {
+          "text": "v",
+          "type": "readonly U[]"
+        }
+      ]
+    },
+    {
+      "call": "append(result, v)",
+      "position": {
+        "line": 408,
+        "character": 29
+      },
+      "signature": "(to: U[] | undefined, value: U): U[]",
+      "inferred": [
+        {
+          "parameter": "T",
+          "type": "U"
+        }
+      ],
+      "arguments": [
+        {
+          "text": "result",
+          "type": "U[] | undefined"
+        },
+        {
+          "text": "v",
+          "type": "U"
+        }
+      ]
+    },
+    {
+      "owner": "addRange",
+      "text": "export function addRange<T>(to: T[], from: readonly T[] | undefined, start?: number, end?: number): T[];"
+    },
+    {
+      "owner": "addRange",
+      "text": "export function addRange<T>(to: T[] | undefined, from: readonly T[] | undefined, start?: number, end?: number): T[] | undefined;"
+    },
+    {
+      "owner": "addRange",
+      "text": "export function addRange<T>(to: T[] | undefined, from: readonly T[] | undefined, start?: number, end?: number): T[] | undefined {\r\n    if (from === undefined || from.length === 0) return to;\r\n    if (to === undefined) return from.slice(start, end);\r\n    start = start === undefined ? 0 : toOffset(from, start);\r\n    end = end === undefined ? from.length : toOffset(from, end);\r\n    for (let i = start; i < end && i < from.length; i++) {\r\n        if (from[i] !== undefined) {\r\n            to.push(from[i]!);\r\n        }\r\n    }\r\n    return to;\r\n}"
+    },
+    {
+      "owner": "isArray",
+      "text": "export function isArray(value: unknown): value is readonly unknown[] {\r\n    // See: https://github.com/microsoft/TypeScript/issues/17002\r\n    return Array.isArray(value);\r\n}"
+    }
+  ],
+  "diagnostics": []
+}

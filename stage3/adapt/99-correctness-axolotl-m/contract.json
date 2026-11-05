@@ -1,0 +1,24 @@
+{
+  "firstRun": {
+    "files": 1,
+    "edits": 1,
+    "writes": 1
+  },
+  "secondRun": {
+    "files": 0,
+    "edits": 0,
+    "writes": 0,
+    "bytesAndMtimePreserved": true
+  },
+  "refusals": [
+    "flatMap: changed owner",
+    "flatMap: changed adapted owner",
+    "flatMap: partly adapted type argument",
+    "flatMap: missing owner",
+    "flatMap: duplicate owner",
+    "flatMap: moved owner",
+    "parse error"
+  ],
+  "unrelatedEditPreserved": true,
+  "crlfAndLfPreserved": true
+}

@@ -1,0 +1,31 @@
+{
+  "file": "src/compiler/core.ts",
+  "line": 409,
+  "column": 37,
+  "expression": "result",
+  "call": "append(result, v)",
+  "role": "first argument of append, not addRange",
+  "edit": "append<U>(result, v)",
+  "addRangeLine": 406,
+  "stockTypeScript": "6.0.3",
+  "stockInferredTypeArguments": {
+    "append.T": "U",
+    "addRange.T": "U"
+  },
+  "stockAppendSignature": "(to: U[] | undefined, value: U): U[]",
+  "stockNarrowedArrayArm": "readonly U[]",
+  "stockNarrowedElseArm": "U",
+  "nativeRefusal": "U[] | undefined seen as {}[] | undefined",
+  "nextProbe": "debug.ts:167:31 unchecked cast",
+  "ownerPins": {
+    "file": "core.ts",
+    "owner": "flatMap",
+    "beforeDeclarations": 1,
+    "afterDeclarations": 1,
+    "before": "export function flatMap<T, U extends {}>(array: readonly T[] | undefined, mapfn: (x: T, i: number) => U | readonly U[] | undefined): readonly U[] {\n    let result: U[] | undefined;\n    if (array !== undefined) {\n        for (let i = 0; i < array.length; i++) {\n            const v = mapfn(array[i]!, i);\n            if (v) {\n                if (isArray(v)) {\n                    result = addRange(result, v);\n                }\n                else {\n                    result = append(result, v);\n                }\n            }\n        }\n    }\n    return result ?? emptyArray;\n}",
+    "after": "export function flatMap<T, U extends {}>(array: readonly T[] | undefined, mapfn: (x: T, i: number) => U | readonly U[] | undefined): readonly U[] {\n    let result: U[] | undefined;\n    if (array !== undefined) {\n        for (let i = 0; i < array.length; i++) {\n            const v = mapfn(array[i]!, i);\n            if (v) {\n                if (isArray(v)) {\n                    result = addRange(result, v);\n                }\n                else {\n                    result = append<U>(result, v);\n                }\n            }\n        }\n    }\n    return result ?? emptyArray;\n}",
+    "ownerBeforeSha256": "0b0c77ac541abd605caf166bab8d0f341c69263dae4d35006654e957d505c868",
+    "ownerAfterSha256": "1e0b1503d0a641823011c6d0e04fb20edac23999638abcbc905c7915e39f0b92",
+    "siteEdits": 1
+  }
+}
