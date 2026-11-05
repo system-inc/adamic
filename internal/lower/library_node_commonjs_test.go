@@ -26,7 +26,6 @@ var commonJSReasonPrograms = []struct{ name, where, what string }{
 	{"fs", "main.ts:2:1", "node:module.require"},
 	{"fs-asserted", "main.ts:4:1", "node:module.require"},
 	{"crypto-asserted", "main.ts:3:1", `node:module.require("crypto"): CommonJS loading with no ES-module answer yet (fix: import it with an import declaration)`},
-	{"inspector", "main.ts:2:1", "node:module.require"},
 }
 
 // commonJSThrowPrograms is each program under testdata/commonjs_reasons whose require lowers as the
@@ -38,6 +37,10 @@ var commonJSThrowPrograms = []struct{ name, holds string }{
 	{"source-map-support-install", `Operation:"host_require_missing"`},
 	{"source-map-support-asserted", `Operation:"host_require_missing"`},
 	{"computed", `Name:"require_javascript"`},
+	{"inspector", `Operation:"host_inspector_unavailable"`},
+	{"inspector-node", `Operation:"host_inspector_unavailable"`},
+	{"inspector-promises", `Operation:"host_inspector_unavailable"`},
+	{"inspector-wrapped", `Operation:"host_inspector_unavailable"`},
 }
 
 func TestNodeCommonJSNamesItsReasons(t *testing.T) {
@@ -70,6 +73,9 @@ func TestNodeCommonJSRequiresLowerAsThrows(t *testing.T) {
 			program, err := lowerSourceAs(t, string(source), ".ts")
 			if err != nil {
 				t.Fatal(err)
+			}
+			if sites := commonJSSites(t, one.name); len(sites) != 0 {
+				t.Fatalf("admitted require still counted by the meter: %v", sites)
 			}
 			if held := strings.Count(fmt.Sprintf("%#v", program), one.holds); held != 1 {
 				t.Fatalf("want %s once, got %d", one.holds, held)

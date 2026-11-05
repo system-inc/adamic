@@ -52,3 +52,16 @@ in one program.
 The oracle runs every program as an ES module (`oracle/node.mjs`), where `require` isn't defined: the source
 of each fixture above throws a `ReferenceError` there, before a computed path is ever evaluated. That is
 pinned in each row too, as Node's side.
+
+### node-without-inspector
+
+The literal requires of inspector, node:inspector and inspector/promises throw
+Error with code ERR_INSPECTOR_NOT_AVAILABLE and message Inspector is not available,
+as Node v24.19.0 built --without-inspector does. Its coded String(error) brackets
+the code. Native, generated JavaScript and WASI give the same throw; the original
+source runs as an ES module and gives ReferenceError for require instead.
+
+The node-without-inspector ruled rows pin both caught and uncaught results.
+TestInspectorUnavailableIsNodes measures the CommonJS load under the configured
+Node. No inspector member is admitted by this binding. Ruling: @system_adamic and
+@system_adamic_platforms, task #cn4yapb, November 5, 2026.

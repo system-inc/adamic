@@ -42,6 +42,8 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 		return "adamicNodeProcess.platform"
 	case "host_chdir":
 		return "adamicNodeProcess.chdir(" + args[0] + ")"
+	case "host_inspector_unavailable":
+		return "(() => { class Unavailable extends Error { constructor() { super('Inspector is not available'); this.code = 'ERR_INSPECTOR_NOT_AVAILABLE'; } toString() { return this.name + ' [' + this.code + ']: ' + this.message; } } throw new Unavailable(); })()"
 	case "host_require_missing":
 		// Node's error for a module that isn't installed, with the first line of its message: native's
 		// answer, which the JavaScript backend gives too, since the generated module could find one that is.

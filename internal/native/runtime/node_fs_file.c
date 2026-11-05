@@ -780,3 +780,9 @@ double adamic_fs_file_host_require_missing(const adamic_string *specifier) {
     adamic_thrown = error;
     return 0;
 }
+
+// The no-inspector Node build raises on load, before any inspector value exists.
+double adamic_fs_file_host_inspector_unavailable(void) {
+    raise_error(&coded_error_shape, "Error", "ERR_INSPECTOR_NOT_AVAILABLE", "Inspector is not available");
+    return 0;
+}

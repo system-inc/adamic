@@ -6,6 +6,11 @@ import "fmt"
 // installed, which ships no dependencies: its name, code and the first line of its message. The
 // rows below pin native's output from them, and TestInstalledLayoutIsNodes measures them on Node.
 const (
+	inspectorUnavailableName    = "Error"
+	inspectorUnavailableCode    = "ERR_INSPECTOR_NOT_AVAILABLE"
+	inspectorUnavailableMessage = "Inspector is not available"
+	inspectorUnavailableString  = "Error [ERR_INSPECTOR_NOT_AVAILABLE]: Inspector is not available"
+
 	installedLayoutName    = "Error"
 	installedLayoutCode    = "MODULE_NOT_FOUND"
 	installedLayoutMessage = "Cannot find module 'source-map-support'"
@@ -42,6 +47,19 @@ var ruledBackendDivergences = []struct {
 		native:     run{stderr: []byte("adamic: panic: RangeError: Maximum call stack size exceeded in depth\n"), exitCode: 70},
 		javascript: run{stderr: []byte("adamic: panic: RangeError: Maximum call stack size exceeded\n"), exitCode: 70},
 	},
+
+	{fixture: "internal/oracle/testdata/node_inspector_unavailable.a", name: "node-without-inspector",
+		ruling:     "@system_adamic and @system_adamic_platforms, task #cn4yapb, Nov 5",
+		reason:     "Native and generated JavaScript model Node built --without-inspector; the source is an ES module with no require.",
+		node:       &run{stdout: []byte("ReferenceError\nnone\nrequire is not defined\nReferenceError: require is not defined\nafter\n")},
+		native:     run{stdout: []byte(inspectorUnavailableName + "\n" + inspectorUnavailableCode + "\n" + inspectorUnavailableMessage + "\n" + inspectorUnavailableString + "\nafter\n")},
+		javascript: run{stdout: []byte(inspectorUnavailableName + "\n" + inspectorUnavailableCode + "\n" + inspectorUnavailableMessage + "\n" + inspectorUnavailableString + "\nafter\n")}},
+	{fixture: "internal/oracle/testdata/node_inspector_unavailable_uncaught.a", name: "node-without-inspector",
+		ruling:     "@system_adamic and @system_adamic_platforms, task #cn4yapb, Nov 5",
+		reason:     "The no-inspector host raises on load; source Node has no CommonJS require in its ES module.",
+		node:       &run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: " + requireInESModule + " in ES module scope, you can use import instead\n"), exitCode: 70},
+		native:     run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: " + inspectorUnavailableString + "\n"), exitCode: 70},
+		javascript: run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: " + inspectorUnavailableString + "\n"), exitCode: 70}},
 	{
 		fixture:    "internal/oracle/testdata/node_commonjs_require_missing.a",
 		name:       "installed-layout",
@@ -141,6 +159,8 @@ func init() {
 	for _, path := range []string{
 		"internal/oracle/testdata/d96d304_try_stack.a",
 		"internal/oracle/testdata/backend_stop_catches.a",
+		"internal/oracle/testdata/node_inspector_unavailable.a",
+		"internal/oracle/testdata/node_inspector_unavailable_uncaught.a",
 		"internal/oracle/testdata/node_commonjs_require_missing.a",
 		"internal/oracle/testdata/node_commonjs_require_missing_uncaught.a",
 		"internal/oracle/testdata/node_commonjs_require_computed.a",
