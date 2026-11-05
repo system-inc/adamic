@@ -7,6 +7,7 @@ package ir
 // and true respectively. Every operation except raw output, environment operations and platform
 // reads, exists and the Stats/Date observations may throw. host_require_missing, a require of a module
 // that isn't installed, always throws: Node's MODULE_NOT_FOUND for its specifier.
+// host_inspector_unavailable also always throws, on every target, including WASI.
 type NodeFSFile struct {
 	Operation string
 	Arguments []Expression

@@ -56,7 +56,7 @@ func (l *lowering) nodeCommonJSUseRefusal(node *ast.Node) (bool, error) {
 	if call == nil || len(call.AsCallExpression().Arguments.Nodes) == 0 {
 		return false, nil
 	}
-	if nodeCommonJSRequireThrows(call) {
+	if nodeCommonJSRequireThrows(call) || nodeInspectorRequireThrows(call) {
 		return true, nil
 	}
 	argument := nodeCommonJSRequireArgument(call)
@@ -99,11 +99,12 @@ func nodeCommonJSRequireThrows(call *ast.Node) bool {
 // parentheses, assertions and a non-null. The require throws before anything after it in the chain
 // is evaluated, so the whole chain lowers as its throw. Nil for any other node.
 func (l *lowering) nodeCommonJSRequireRoot(node *ast.Node) *ast.Node {
+	original := node
 	for {
 		switch node.Kind {
 		case ast.KindCallExpression:
 			if l.nodeLibraryMember(node) == nodeRequireMember {
-				if !nodeCommonJSRequireThrows(node) {
+				if !nodeCommonJSRequireThrows(node) && !(node == original && nodeInspectorRequireThrows(node)) {
 					return nil
 				}
 				return node
@@ -135,6 +136,10 @@ func (l *lowering) nodeCommonJSRequireValue(node *ast.Node) (ir.Expression, bool
 		}
 		effects.Result = placeholderZero(of)
 	}
+	if nodeInspectorRequireThrows(call) {
+		effects.Body = append(effects.Body, ir.Evaluate{Value: ir.NodeFSFile{Operation: "host_inspector_unavailable", Of: ir.Number}})
+		return effects, true, nil
+	}
 	if argument := nodeCommonJSRequireArgument(call); argument.Kind == ast.KindStringLiteral || argument.Kind == ast.KindNoSubstitutionTemplateLiteral {
 		missing := ir.NodeFSFile{Operation: "host_require_missing", Arguments: []ir.Expression{ir.StringConstant{Index: l.constant(argument.Text())}}, Of: ir.Number}
 		effects.Body = append(effects.Body, ir.Evaluate{Value: missing})
@@ -156,4 +161,22 @@ func (l *lowering) nodeCommonJSRequireValue(node *ast.Node) (ir.Expression, bool
 	l.result.Functions = append(l.result.Functions, ir.Function{Name: "require_javascript", Parameters: []int{parameter}, Body: []ir.Statement{ir.Throw{Value: failure}}})
 	effects.Body = append(effects.Body, ir.Evaluate{Value: ir.Call{Function: index, Arguments: []ir.Expression{path}}})
 	return effects, true, nil
+}
+
+// Inspector has no runtime value on the configured no-inspector host. Keep this
+// literal-only rule separate from the form-scoped Modelled require audit. Member
+// chains are not admitted: their independent inspector bindings belong to head 2.
+func nodeInspectorRequireThrows(call *ast.Node) bool {
+	if len(call.AsCallExpression().Arguments.Nodes) != 1 {
+		return false
+	}
+	argument := nodeCommonJSRequireArgument(call)
+	if argument.Kind != ast.KindStringLiteral && argument.Kind != ast.KindNoSubstitutionTemplateLiteral {
+		return false
+	}
+	switch argument.Text() {
+	case "inspector", "node:inspector", "inspector/promises":
+		return true
+	}
+	return false
 }

@@ -40,6 +40,7 @@ adamic_string *adamic_fs_file_host_cwd(void);
 adamic_string *adamic_fs_file_host_tmpdir(void);
 adamic_string *adamic_fs_file_host_platform(void);
 double adamic_fs_file_host_chdir(const adamic_string *);
+double adamic_fs_file_host_inspector_unavailable(void);
 double adamic_fs_file_host_require_missing(const adamic_string *);
 #endif
 

@@ -1,0 +1,16 @@
+import 'node:process';
+function errorCode(error: unknown): string {
+ return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : 'none';
+}
+function errorString(error: unknown): string { return String(error); }
+try {
+ require('inspector');
+} catch (error) {
+ if (error instanceof Error) {
+  console.log(error.name);
+  console.log(errorCode(error));
+  console.log(error.message);
+  console.log(errorString(error));
+ }
+}
+console.log('after');

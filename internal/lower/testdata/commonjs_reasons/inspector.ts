@@ -1,2 +1,2 @@
-// A require of inspector keeps the generic reason: its task is another team's.
+// Loading fails on the configured no-inspector host.
 require("inspector");
