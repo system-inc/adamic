@@ -10,14 +10,15 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
-	ProgramRegion     bool
-	ProgramTypes      SortedMap[int, bool]
-	GraphTypes        SortedMap[int, bool]
-	ViewOrigins       []Expression
-	ViewArrayUses     []ViewArrayUse
-	ViewArrayCasts    []ViewArrayCast
-	ViewContracts     []ViewContract
-	ViewContractTypes SortedMap[int, ViewContractID]
+	ProgramRegion        bool
+	ProgramTypes         SortedMap[int, bool]
+	GraphTypes           SortedMap[int, bool]
+	ViewOrigins          []Expression
+	ViewArrayUses        []ViewArrayUse
+	ViewLegacyNullArrays bool // Legacy nullable-pointer slots have no distinct null tag.
+	ViewArrayCasts       []ViewArrayCast
+	ViewContracts        []ViewContract
+	ViewContractTypes    SortedMap[int, ViewContractID]
 	// PlaceholderSources records source-slot provenance during lowering, keyed by declaration.
 	PlaceholderSources SortedMap[string, string]
 	PlaceholderViews   SortedMap[string, string]

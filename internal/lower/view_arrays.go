@@ -44,6 +44,7 @@ var viewArrayRoads = map[reflect.Type]viewArrayRoad{
 	reflect.TypeFor[ir.ForOf]():          {member: "for-of", handout: true},
 	reflect.TypeFor[ir.ArrayIsArray]():   {member: "Array.isArray", noElement: true},
 	reflect.TypeFor[ir.ArrayLiteral]():   {member: "spread", noElement: true},
+	reflect.TypeFor[ir.ParallelMap]():    {member: "parallelMap"},
 	reflect.TypeFor[ir.ArrayConcat]():    {member: "concat"},
 	reflect.TypeFor[ir.ArrayFill]():      {member: "fill"},
 	reflect.TypeFor[ir.ArrayFrom]():      {member: "Array.from"},
@@ -223,35 +224,66 @@ func (l *lowering) checkViewArrays() error {
 		}
 		return false
 	}
-	// Copies returned by map/filter and arrays storing viewed values preserve reach.
+	// A fresh container inherits viewed reach when it stores a viewed value.
+	// This includes stores after construction and collection-to-array handoffs.
 	for changed := true; changed; {
 		changed = false
-		visit := func(node any) bool {
-			var source ir.Expression
-			var sites []int
-			switch value := node.(type) {
-			case ir.ArrayMap:
-				source = value.Array
-				sites = value.GraphTypes
-			case ir.ArrayVisit:
-				if value.Method == "filter" {
-					source = value.Array
-					sites = value.GraphTypes
+		mark := func(source, destination ir.Expression) {
+			if !viewArrayAggregate(source) || !demanded(source) || destination == nil {
+				return
+			}
+			reaches := graph.ReachingAllocations(destination)
+			if reaches.Unknown && !unknown {
+				unknown = true
+				changed = true
+			}
+			for _, site := range reaches.Sites {
+				if !viewed[site] {
+					viewed[site] = true
+					changed = true
 				}
+			}
+		}
+		visit := func(node any) bool {
+			switch value := node.(type) {
 			case ir.ArrayLiteral:
 				for _, item := range value.Elements {
-					if demanded(item) {
-						source = item
-						break
-					}
+					mark(item, value)
 				}
-				sites = value.GraphTypes
-			}
-			if source != nil && demanded(source) && len(sites) > 0 {
-				for _, site := range sites[len(sites)-1:] {
-					if !viewed[site] {
-						viewed[site] = true
-						changed = true
+			case ir.ObjectLiteral:
+				for _, field := range value.Fields {
+					mark(field.Value, value)
+				}
+				mark(value.Spread, value)
+			case ir.ArrayPush:
+				mark(value.Value, value.Array)
+			case ir.SetIndex:
+				mark(value.Value, value.Array)
+			case ir.SetProperty:
+				mark(value.Value, value.Object)
+			case ir.SetAdd:
+				mark(value.Value, value.Set)
+			case ir.MapSet:
+				mark(value.Key, value.Map)
+				mark(value.Value, value.Map)
+			case ir.ArrayMap:
+				mark(value.Array, value)
+			case ir.ArrayVisit:
+				if value.Method == "filter" {
+					mark(value.Array, value)
+				}
+			case ir.SetValues:
+				mark(value.Set, value)
+			case ir.MapKeys:
+				mark(value.Map, value)
+			case ir.MapValues:
+				mark(value.Map, value)
+			case ir.MapEntries:
+				mark(value.Map, value)
+			case ir.ObjectCall:
+				if value.Method == "values" || value.Method == "entries" {
+					for _, argument := range value.Arguments {
+						mark(argument, value)
 					}
 				}
 			}
@@ -262,6 +294,7 @@ func (l *lowering) checkViewArrays() error {
 			walk(fn.Body, visit)
 		}
 	}
+
 	var refused error
 	stop := func(where, member string) {
 		if refused == nil {
@@ -292,9 +325,12 @@ func (l *lowering) checkViewArrays() error {
 	rewrite := func(node any) any {
 		var array ir.Expression
 		var check *ir.ViewElementCheck
+		var element ir.Expression
+		whole := false
 		road := viewArrayRoadOf(node)
 		switch value := node.(type) {
 		case ir.ViewElement:
+			element = value
 			array = value.Array
 			check = &ir.ViewElementCheck{Contract: value.Contract, Where: value.Where, ViewType: value.ViewType}
 		case ir.ArrayPush:
@@ -303,25 +339,35 @@ func (l *lowering) checkViewArrays() error {
 			}
 			array = value.Array
 		case ir.ArrayIndex:
+			element = value
 			array = value.Array
 		case ir.ArrayVisit:
+			element = ir.ArrayIndex{Array: value.Array, Index: ir.NumberConstant{Value: -1}, Element: value.Element}
 			array = value.Array
 			check = value.ElementCheck
 		case ir.ArrayMap:
+			element = ir.ArrayIndex{Array: value.Array, Index: ir.NumberConstant{Value: -1}, Element: value.Element}
 			array = value.Array
 			check = value.ElementCheck
 		case ir.ArrayReduce:
+			element = ir.ArrayIndex{Array: value.Array, Index: ir.NumberConstant{Value: -1}, Element: value.Element}
 			array = value.Array
 			check = value.ElementCheck
 		case ir.ForOf:
 			if value.Iterable.Type() == ir.Array {
 				array = value.Iterable
+				element = ir.ArrayIndex{Array: value.Iterable, Index: ir.NumberConstant{Value: -1}, Element: value.Element}
 				check = value.ElementCheck
 				if value.Pattern != nil {
 					road.handout = false
 					road.member = "destructuring"
 				}
 			}
+		case ir.ParallelMap:
+			array = value.Items
+		case ir.ArrayFrom:
+			array = value
+			element = ir.ArrayIndex{Array: value, Index: ir.NumberConstant{Value: -1}, Element: value.Element}
 		case ir.ArrayConcat:
 			array = value.Array
 			for _, other := range value.Others {
@@ -330,9 +376,11 @@ func (l *lowering) checkViewArrays() error {
 				}
 			}
 		case ir.JSONEncode:
+			whole = true
 			array = value.Value
 			road.member = "JSON.stringify"
 		case ir.JSONStringify:
+			whole = true
 			array = value.Value
 			road.member = "JSON.stringify"
 		case ir.CollectionIterator:
@@ -368,10 +416,22 @@ func (l *lowering) checkViewArrays() error {
 				}
 			}
 		}
+		if whole && viewArrayAggregate(array) && demanded(array) {
+			stop(program.Source, road.member)
+			return node
+		}
 		if array == nil || array.Type() != ir.Array {
 			return node
 		}
 		needed := demanded(array)
+		if viewArrayAggregate(element) {
+			needed = needed || demanded(element)
+		}
+		if check != nil && program.ViewLegacyNullArrays && (needed || check.Contract == 0) {
+			if refused == nil {
+				refused = &NotYet{Where: check.Where, What: "an array element read in a program with legacy nullable-pointer storage"}
+			}
+		}
 		if needed && !road.handout && !road.noElement {
 			stop(program.Source, road.member)
 		}
@@ -410,6 +470,31 @@ func (l *lowering) checkViewArrays() error {
 	program.Main = rewriteShapeStatements(program.Main, rewrite)
 	for i := range program.Functions {
 		program.Functions[i].Body = rewriteShapeStatements(program.Functions[i].Body, rewrite)
+	}
+	// Pure annotations must not leave checker-private symbol names in programs
+	// that have no view reads. They are dead after the ordinary reads are restored.
+	if len(program.ViewOrigins) == 0 {
+		live := false
+		inspect := func(node any) bool {
+			switch value := node.(type) {
+			case ir.Property:
+				live = live || program.CheckedRead(value)
+			case ir.ViewElement:
+				live = live || value.Contract > 0
+			case ir.ObjectCall:
+				live = live || value.Checked
+			}
+			return !live
+		}
+		walk(program.Main, inspect)
+		for _, fn := range program.Functions {
+			walk(fn.Body, inspect)
+		}
+		if !live {
+			program.ViewContracts = nil
+			program.ViewContractTypes = nil
+			l.untaggedCallableTargets = nil
+		}
 	}
 	return refused
 }
@@ -502,4 +587,128 @@ func viewArrayHandoutChecks(node any) bool {
 		return value.ElementCheck != nil
 	}
 	return false
+}
+
+// Reference arrays currently share NULL for legacy null and undefined slots.
+// Until storage preserves a distinct tag, an erased or checked handout cannot
+// reconstruct that value from its heap header. Never guess from the static view.
+func (l *lowering) noteViewArrayStorage(node *ast.Node, value ir.Expression) error {
+	if value.Type() != ir.Array {
+		return nil
+	}
+	target := l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeAtLocation(node)))
+	if !l.checker.IsArrayType(target) {
+		return nil
+	}
+	element := l.concrete(l.checker.GetElementTypeOfArrayType(target))
+	if element.Flags()&checker.TypeFlagsUnknown != 0 {
+		if err := l.unknownArrayMutation(node); err != nil {
+			return err
+		}
+	}
+	if literal, ok := value.(ir.ArrayLiteral); ok && literal.Element == ir.Union {
+		return nil
+	}
+	if l.includesNull(element) {
+		if of, known := l.representation(element); known && of != ir.Union {
+			l.result.ViewLegacyNullArrays = true
+		}
+	}
+	return nil
+}
+
+// Unknown slots have no ownership schema. The compiler pin writes a scalar
+// through an original unknown[] owner. That does not license reference cycles
+// or ownership of a scalar-storage array widened to a mutable unknown[].
+func (l *lowering) unknownArrayMutation(node *ast.Node) error {
+	source := node
+	parent := node.Parent
+	for parent != nil && (parent.Kind == ast.KindParenthesizedExpression || parent.Kind == ast.KindNonNullExpression || parent.Kind == ast.KindSatisfiesExpression) {
+		source, parent = parent, parent.Parent
+	}
+	if parent == nil {
+		return nil
+	}
+	if parent.Kind == ast.KindSpreadElement {
+		return l.notYet(parent, "a checked view's array read through spread (not checked yet)")
+	}
+	if parent.Kind == ast.KindCallExpression {
+		callee := ast.SkipParentheses(parent.AsCallExpression().Expression)
+		if callee.Kind == ast.KindPropertyAccessExpression && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Array") && callee.Name().Text() != "isArray" {
+			return l.notYet(parent, "a checked view's array read through Array."+callee.Name().Text()+" (not checked yet)")
+		}
+	}
+	if parent.Kind == ast.KindElementAccessExpression {
+		access := parent
+		outer := access.Parent
+		for outer != nil && outer.Kind == ast.KindParenthesizedExpression {
+			access, outer = outer, outer.Parent
+		}
+		if outer != nil && outer.Kind == ast.KindBinaryExpression {
+			binary := outer.AsBinaryExpression()
+			if binary.Left == access && ast.IsAssignmentOperator(binary.OperatorToken.Kind) {
+				return l.notYet(outer, "an index write into an unknown array whose ownership is not proven")
+			}
+		}
+	}
+	if parent.Kind != ast.KindPropertyAccessExpression || parent.AsPropertyAccessExpression().Expression != source {
+		return nil
+	}
+	member := parent.Name().Text()
+	switch member {
+	case "push":
+		call := parent.Parent
+		if call == nil || call.Kind != ast.KindCallExpression {
+			return nil
+		}
+		for _, argument := range call.AsCallExpression().Arguments.Nodes {
+			if !l.unknownArrayScalar(l.concrete(l.checker.GetTypeAtLocation(argument))) {
+				return l.notYet(call, "a reference write into an unknown array whose ownership is not proven")
+			}
+		}
+	case "pop", "shift", "unshift", "splice", "fill", "copyWithin", "reverse", "sort":
+		return l.notYet(parent, "a mutation of an unknown array through "+member+" (not checked yet)")
+	default:
+		admitted := false
+		if member == "at" {
+			admitted = viewArrayRoads[reflect.TypeFor[ir.ArrayIndex]()].handout
+		}
+		if member == "values" {
+			call := parent.Parent
+			admitted = call != nil && call.Kind == ast.KindCallExpression && call.Parent != nil && call.Parent.Kind == ast.KindForOfStatement && viewArrayRoads[reflect.TypeFor[ir.ForOf]()].handout
+		}
+		if viewArrayRoadOf(ir.ArrayVisit{Method: member}).handout {
+			admitted = true
+		}
+		for _, road := range viewArrayRoads {
+			if road.member == member && (road.handout || road.noElement) {
+				admitted = true
+			}
+		}
+		if !admitted {
+			return l.notYet(parent, "a checked view's array read through "+member+" (not checked yet)")
+		}
+	}
+	return nil
+}
+
+func (l *lowering) unknownArrayScalar(target *checker.Type) bool {
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range target.Types() {
+			if !l.unknownArrayScalar(member) {
+				return false
+			}
+		}
+		return true
+	}
+	return target.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsNull|checker.TypeFlagsUndefined|checker.TypeFlagsVoid|checker.TypeFlagsNever) != 0
+}
+
+// A known boxed primitive cannot carry a viewed allocation. Unknown references
+// and mutable aggregates retain the existing fail-closed reach rule.
+func viewArrayAggregate(value ir.Expression) bool {
+	if boxed, ok := value.(ir.Box); ok {
+		return viewArrayAggregate(boxed.Value)
+	}
+	return viewAggregate(value)
 }

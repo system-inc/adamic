@@ -74,7 +74,6 @@ func TestArrayPredicateIgnoresAProgramsOwnMerge(t *testing.T) {
 func TestUnknownArrayPredicateRefusesUnrepresentedObservations(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
-		`function test(value: unknown): unknown { if (Array.isArray(value)) return value[0]; return undefined; }`,
 		`function test(value: unknown): boolean { return Array.isArray(value); } const pair: [number, string] = [1, 'x']; console.log(String(test(pair)));`,
 	} {
 		_, err := lowerSource(t, source)
@@ -117,4 +116,10 @@ func TestArrayPredicateReadsTheCheckersNarrowing(t *testing.T) {
 	} {
 		lowersAndAgreesWithNode(t, source)
 	}
+}
+
+func TestUnknownArrayPredicateElementReads(t *testing.T) {
+	t.Parallel()
+	lowersAndAgreesWithNode(t, `function first(value:unknown):unknown {if(Array.isArray(value)) return value[0]; return undefined;}
+ console.log(typeof first([7]));console.log(typeof first(['x']));console.log(typeof first([{kind:1}]));console.log(typeof first([]));console.log(typeof first('x'));`)
 }
