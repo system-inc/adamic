@@ -1,0 +1,2 @@
+import { other } from '../e01_class_exported_by_list.a';
+export function callBack(): string { return other(); }
