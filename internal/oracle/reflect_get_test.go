@@ -242,6 +242,12 @@ flags 2 undefined
 flags length number 2
 flags map is an array's: true
 flags missing undefined
+nullable 0 null
+nullable 1 string two
+nullable 2 undefined
+nullable length number 2
+nullable map is an array's: true
+nullable missing undefined
 number entry 0 string b
 number entry 1 number 2
 number entry 2 undefined
@@ -575,12 +581,13 @@ func TestReflectGetOtherShapesNotYet(t *testing.T) {
 		{"refuse_null_object_array_array.a", "refuse_null_object_array_array.a:10:35", nullableArrayRefusal},
 		{"refuse_null_object_array_record.a", "refuse_null_object_array_record.a:10:35", nullableArrayRefusal},
 		// A tuple an unknown reaches is read as an array (#g187f1e), so one whose length natively its
-		// shape can't say, or whose null its slot holds as a null pointer, is NotYet where it's viewed.
-		// Mutants: unknownView's variableTuple test dropped, so the optional row lowers and natively
-		// reads [1]'s length as 2; its nullableReferenceTuple test dropped, so the null row lowers and
-		// natively reads null as undefined.
-		{"refuse_tuple_optional.a", "refuse_tuple_optional.a:11:39", "a tuple with an optional or rest element viewed as unknown or object (no length descriptor)"},
-		{"refuse_tuple_null.a", "refuse_tuple_null.a:11:37", "a tuple with a nullable element viewed as unknown or object (null and undefined slot tags)"},
+		// shape can't say is NotYet where it's viewed, and so is one whose null its slot holds as a null
+		// pointer, as such an array is. tuple_reads.a's string | null slot is the control, boxed as a
+		// Union, which answers null. Mutants: unknownView's variableTuple test dropped, so the optional
+		// row lowers and natively reads [1]'s length as 2; nullableReferenceArray's tuple step dropped,
+		// so the null row lowers and natively reads null as undefined.
+		{"refuse_tuple_optional.a", "refuse_tuple_optional.a:11:39", "a tuple with optional or rest elements viewed as unknown or object (tuple length)"},
+		{"refuse_tuple_null.a", "refuse_tuple_null.a:11:37", nullableArrayRefusal},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()

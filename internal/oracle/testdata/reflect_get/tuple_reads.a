@@ -8,6 +8,7 @@ function show(label: string, value: unknown): void {
 	if (typeof value === 'string') console.log(`${label} string ${value}`);
 	else if (typeof value === 'number') console.log(`${label} number ${String(value)}`);
 	else if (typeof value === 'boolean') console.log(`${label} boolean ${value ? 'true' : 'false'}`);
+	else if (value === null) console.log(`${label} null`);
 	else console.log(`${label} ${typeof value}`);
 }
 
@@ -20,9 +21,14 @@ function read(label: string, tuple: unknown): void {
 	show(`${label} missing`, propertyOf(tuple, 'missing'));
 }
 
-const holder = { pair: [1.5, 'one'] as [number, string], flags: [true, 2] as [boolean, number] };
+const holder = {
+	pair: [1.5, 'one'] as [number, string],
+	flags: [true, 2] as [boolean, number],
+	nullable: [null, 'two'] as [string | null, string],
+};
 read('literal', propertyOf(holder, 'pair'));
 read('flags', propertyOf(holder, 'flags'));
+read('nullable', propertyOf(holder, 'nullable'));
 const numberEntries = Object.entries({ a: 1, b: 2 });
 read('number entry', propertyOf(numberEntries, '1'));
 const stringEntries = Object.entries({ c: 'see' });
