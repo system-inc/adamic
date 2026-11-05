@@ -1,0 +1,28 @@
+// A method read through ?. on a receiver that may be missing: typeof is "undefined" where it is and
+// "function" where it isn't, and so are a condition and !. The receiver is a call, made once a test.
+class Lamp {
+    lit = false;
+    toggle(): boolean {
+        this.lit = !this.lit;
+        return this.lit;
+    }
+}
+let picks = 0;
+function pick(index: number): Lamp | undefined {
+    picks += 1;
+    return index % 2 === 0 ? new Lamp() : undefined;
+}
+for(let index = 0; index < 4; index++) {
+    console.log(`${String(index)} ${typeof pick(index)?.toggle}`);
+    if(pick(index)?.toggle) {
+        console.log(`${String(index)} has toggle`);
+    } else {
+        console.log(`${String(index)} has none`);
+    }
+    console.log(`${String(index)} ${String(!pick(index)?.toggle)}`);
+}
+const kept = pick(0);
+if(kept?.toggle) {
+    console.log(String(kept.toggle()));
+}
+console.log(`picks ${String(picks)}`);

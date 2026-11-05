@@ -668,6 +668,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if value, intrinsic := l.stringTypeOf(node); intrinsic {
 			return value, nil
 		}
+		if value, handled, err := l.methodPresenceTypeOf(node); handled {
+			return value, err
+		}
 		operand, err := l.expression(node.AsTypeOfExpression().Expression)
 		if err != nil {
 			return nil, err
@@ -712,6 +715,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 				return lowered, nil
 			}
 			return l.classInstanceOf(node)
+		}
+		if value, handled, err := l.methodPresenceAnd(node); handled {
+			return value, err
 		}
 		// A flow-narrowed never expression still reads its declared boolean slots.
 		// Only a live result needs a placeholder for a non-returning arm.
@@ -907,6 +913,11 @@ func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
 			operator = ir.BitNot
 		}
 		return ir.Unary{Operator: operator, Operand: operand}, nil
+	}
+	if prefix.Operator == ast.KindExclamationToken {
+		if negated, handled, err := l.methodPresenceNot(prefix.Operand); handled {
+			return negated, err
+		}
 	}
 	operand, err := l.expression(prefix.Operand)
 	if err != nil {
