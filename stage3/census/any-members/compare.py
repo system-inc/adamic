@@ -27,9 +27,13 @@ def norm(value):
         return {k: norm(v) for k, v in value.items()}
     return value
 
+def observed(label, suffix):
+    prefix = 'rerun-head' if label == 'head' and (E / 'rerun-head-run.json').exists() else label
+    return E / f'{prefix}-{suffix}'
+
 def load(label, kind):
-    compressed = E / f'{label}-{kind}.jsonl.gz'
-    plain = E / f'{label}-{kind}.jsonl'
+    compressed = observed(label, f'{kind}.jsonl.gz')
+    plain = observed(label, f'{kind}.jsonl')
     rows = pair.load(compressed if compressed.exists() else plain)
     rows = norm(rows)
     if not compressed.exists():
@@ -39,18 +43,18 @@ def load(label, kind):
     return rows
 
 D = {label: load(label, 'latent') for label in ('base', 'head')}
-if any(not (E / f'{label}-exit.txt').exists() for label in D):
+if any(not observed(label, 'exit.txt').exists() for label in D):
     import incomplete
     incomplete.write(OUT, TREE, pair, D, load, BASE, HEAD)
     raise SystemExit(0)
 assert all(rows[0]['latent_mode'] == 'first-error' for rows in D.values())
-assert all((E / f'{label}-exit.txt').read_text().strip() == '0' for label in D)
+assert all(observed(label, 'exit.txt').read_text().strip() == '0' for label in D)
 assert D['base'][0] == D['head'][0]
 assert {row['file'] for row in D['base'][1:]} == {str(p.relative_to(TREE)) for p in (TREE / 'src/compiler').rglob('*.ts')}
 assert {row['file'] for row in D['base'][1:]} == {row['file'] for row in D['head'][1:]}
 result = pair.compare(D['base'], D['head'], TREE, OUT / 'scratch/base/stage3/api/node_modules/typescript')
 (OUT / 'pair-report.md').write_text(pair.report(result))
-result.update(base_commit=BASE, head_commit=HEAD, latent_mode='first-error', typescript_pin=json.loads((OUT / 'scratch/base/stage3/source.json').read_text()))
+result.update(base_commit=BASE, head_commit=HEAD, head_evidence_prefix='rerun-head' if (E / 'rerun-head-run.json').exists() else 'head', latent_mode='first-error', typescript_pin=json.loads((OUT / 'scratch/base/stage3/source.json').read_text()))
 units = {label: {u['where']: u for row in rows[1:] for u in row['units']} for label, rows in D.items()}
 first = {}
 for row in D['head'][1:]:
@@ -74,13 +78,13 @@ assert {x['where'] for x in T['base']} == {x['where'] for x in T['head']}
 for label in D:
     assert len(T[label]) == len({x['where'] for x in T[label]})
     assert len(T[label]) == sum(u['status'] in ('attempted', 'panic') for u in units[label].values())
-    assert (E / f'{label}-memory-before.txt').read_text() == (E / f'{label}-memory-after.txt').read_text()
+    assert observed(label, 'memory-before.txt').read_text() == observed(label, 'memory-after.txt').read_text()
     assert not (E / f'{label}-status.txt').read_text()
 result['unit_time_sums'] = {label: {k: sum(x[k] for x in rows) for k in ('wall_seconds', 'cpu_seconds')} for label, rows in T.items()}
 result['unit_time_sample_counts'] = {label: len(rows) for label, rows in T.items()}
 times = {label: {r['where']: r for r in rows} for label, rows in T.items()}
 result['unit_timing_delta'] = [dict(where=w, base=times['base'][w], head=times['head'][w], wall_delta_seconds=times['head'][w]['wall_seconds']-times['base'][w]['wall_seconds'], cpu_delta_seconds=times['head'][w]['cpu_seconds']-times['base'][w]['cpu_seconds']) for w in sorted(times['base'])]
-result['process_elapsed_seconds_from_utc_timestamps'] = {label: (datetime.datetime.fromisoformat((E / f'{label}-end.txt').read_text().strip()) - datetime.datetime.fromisoformat((E / f'{label}-start.txt').read_text().strip())).total_seconds() for label in D}
+result['process_elapsed_seconds_from_utc_timestamps'] = {label: (datetime.datetime.fromisoformat(observed(label, 'end.txt').read_text().strip()) - datetime.datetime.fromisoformat(observed(label, 'start.txt').read_text().strip())).total_seconds() for label in D}
 manifest = {str(p.relative_to(TREE)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((TREE / 'src').rglob('*')) if p.is_file()}
 manifest_path = E / 'source-manifest.json'
 if manifest_path.exists():
@@ -124,6 +128,6 @@ for kind in ('NotYet', 'Refused', 'panic', 'error'):
 lines += ['', '## Unit lowering time', '', 'One sequential sample per compiler on this box. Sums of unit timers include registration and synchronous dependency work, and exclude checker work, file scans and shared setup.', '', '| Sum | Base seconds | Head seconds |', '| --- | ---: | ---: |']
 for k in ('wall_seconds', 'cpu_seconds'):
     lines += [f'| {k} | {result["unit_time_sums"]["base"][k]:.6f} | {result["unit_time_sums"]["head"][k]:.6f} |']
-lines += ['', '## Method and validation', '', 'Copied the method in `typescript/kind-predicate-census` (`33dca393`), after reading its REPORT.md and compare.py and the meter launcher and README. One shared adapted tree was made with base stage3/apply.sh, its lockfile-pinned API packages and the upstream TypeScript pin above. Both exact compiler worktrees use their recorded submodule pins. The head has no stage3 changes.', '', f'Process elapsed times from UTC start/end records: base {result["process_elapsed_seconds_from_utc_timestamps"]["base"]:.0f} seconds; head {result["process_elapsed_seconds_from_utc_timestamps"]["head"]:.0f} seconds. The base build and run completed before the head build and run. Each guarded overlay was generated by main stage3/census/latent/make_overlay.py, formatted with gofmt and built with `go build -buildvcs=false -overlay=... ./stage3/census/latent/tool`. Each ran sequentially over the same `src/compiler` with `LATENT_TIMES=... LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1`. No backend was invoked.', '', 'The findings file stayed at its header while unit timers advanced. This main revision buffers every file record inside Latent until all callers finish so deferred-generic instantiation witnesses can be finalized. A header-only stream therefore did not establish a stall; no sustained timer stall was observed and neither mode was changed. Main stage3/census/pair supplies both raw and access-chain-normalized pairing. Only lowering-phase events define unit first stops; refusal-scan owners are retained separately. delta.json preserves all changed sites, first stops, regressions, panics, any-member owners and all unit timers. pair-report.md retains the standard pair report.', '', f'Validated matching first-error headers, all {len(D["base"])-1} compiler file rows, unit identities and eligibility, and {len(T["base"])} timed attempts per run. Both runs exited 0, both compiler status files are empty, and cgroup memory event counters were unchanged. Source hashes and compressed raw streams are retained in evidence/.', '', f'The header reports checker_rejected={D["base"][0]["checker_rejected"]} with {len(D["base"][0]["diagnostics"])} checker diagnostics. The tool retains its fixed measurement label verbatim in the evidence. Finding-free means no finding in this first-error census; later blockers and deferred or checker-skipped bodies remain outside that claim. Any zero result is limited to these eligible attempts and scans.', '']
+lines += ['', '## Method and validation', '', 'Copied the method in `typescript/kind-predicate-census` (`33dca393`), after reading its REPORT.md and compare.py and the meter launcher and README. One shared adapted tree was made with base stage3/apply.sh, its lockfile-pinned API packages and the upstream TypeScript pin above. Both exact compiler worktrees use their recorded submodule pins. The adaptation and census inputs are unchanged; the head also edits unrelated interface-downcast fixtures.', '', f'Process elapsed times from UTC start/end records: base {result["process_elapsed_seconds_from_utc_timestamps"]["base"]:.0f} seconds; head {result["process_elapsed_seconds_from_utc_timestamps"]["head"]:.0f} seconds. The base build and run completed before the head build and run. Each guarded overlay was generated by main stage3/census/latent/make_overlay.py, formatted with gofmt and built with `go build -buildvcs=false -overlay=... ./stage3/census/latent/tool`. Each ran sequentially over the same `src/compiler` with `LATENT_TIMES=... LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1`. No backend was invoked.', '', 'The findings file stayed at its header while unit timers advanced. This main revision buffers every file record inside Latent until all callers finish so deferred-generic instantiation witnesses can be finalized. A header-only stream therefore did not establish a stall; no sustained timer stall was observed and neither mode was changed. Main stage3/census/pair supplies both raw and access-chain-normalized pairing. Only lowering-phase events define unit first stops; refusal-scan owners are retained separately. delta.json preserves all changed sites, first stops, regressions, panics, any-member owners and all unit timers. pair-report.md retains the standard pair report.', '', f'Validated matching first-error headers, all {len(D["base"])-1} compiler file rows, unit identities and eligibility, and {len(T["base"])} timed attempts per run. Both runs exited 0, both compiler status files are empty, and cgroup memory event counters were unchanged. Source hashes and compressed raw streams are retained in evidence/.', '', f'The header reports checker_rejected={D["base"][0]["checker_rejected"]} with {len(D["base"][0]["diagnostics"])} checker diagnostics. The tool retains its fixed measurement label verbatim in the evidence. Finding-free means no finding in this first-error census; later blockers and deferred or checker-skipped bodies remain outside that claim. Any zero result is limited to these eligible attempts and scans.', '']
 (OUT / 'REPORT.md').write_text('\n'.join(lines))
 print(json.dumps(dict(any_member_findings=any_members, regressions=result['distinct_reads']['regressions'], changed_first_stops=result['distinct_reads']['unit_first_stop_delta'], counts=result['raw_findings']['totals'], time_sums=result['unit_time_sums']), indent=2))

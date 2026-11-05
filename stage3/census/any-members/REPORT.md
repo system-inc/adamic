@@ -2,13 +2,13 @@
 
 **Any-member findings and first stops: unknown. This run cannot establish 0.**
 
-The head findings list is unavailable. Head completed 3,865 of 4,056 timed attempts, but its process and driver were found defunct before the census flushed any file records. Only its measurement header survived. No head member location, owner unit, full reason, or first-stop status can be recovered from unit timers.
+The head findings list is unavailable. The foreground rerun completed 3,153 of 4,056 timed attempts before interruption. Its compiler was found defunct, and only the measurement header survived. No head member location, owner unit, full reason, or first-stop status can be recovered from unit timers.
 
 ## Regressions
 
 **Unknown:** previously finding-free units or sites that stop on head, new panics, and units whose first lowering stop changed cannot be assessed. No empty regression list or zero-panic claim is made for head.
 
-Main stage3/census/pair was attempted on these saved streams and refused them with `unit identities differ`. Its traceback is in `evidence/pair-error.log`. `delta.json` uses null for unavailable answers.
+Main stage3/census/pair was attempted on these saved streams and refused them with `unit identities differ`. Its traceback is in `evidence/rerun-head-pair-error.log.gz`. `delta.json` uses null for unavailable answers.
 
 ## Pins and box
 
@@ -31,32 +31,32 @@ Meter definition: unique `(kind, where, reason, text)` across attempts. The head
 
 ## Unit lowering time on this box
 
-One sample per compiler on this box. Base is complete; head is interrupted and partial. These sums are not comparable full-run totals. Timers include unit registration, synchronous dependency lowering and recovery; they exclude checker work, file scans and other shared setup. The active interrupted unit has no completed timer.
+No base was rerun. This table uses the retained complete base and the latest foreground head attempt on the same box. Head is interrupted and partial. These sums are not comparable full-run totals. Timers include unit registration, synchronous dependency lowering and recovery; they exclude checker work, file scans and other shared setup. The active interrupted unit has no completed timer.
 
-| Sum | Base, 4,056 completed attempts | Head, 3,865 completed attempts only |
+| Sum | Base, 4,056 completed attempts | Foreground head rerun, 3,153 completed attempts only |
 | --- | ---: | ---: |
-| wall_seconds | 5902.087133 | 5175.161776 |
-| cpu_seconds | 6887.892272 | 6002.433103 |
+| wall_seconds | 5902.087133 | 2990.183421 |
+| cpu_seconds | 6887.892272 | 3458.155521 |
 
 ## Method and stopping evidence
 
-Read `typescript/kind-predicate-census` (`33dca393`) REPORT.md and compare.py, and the meter launcher and README. Built one adapted tree with b0efce6d stage3/apply.sh, its lockfile-pinned API packages and the upstream pin above. Both census tools were separately built from their exact compiler commits with recorded cohere/checker pins, main make_overlay.py, gofmt, and `go build -buildvcs=false -overlay=... ./stage3/census/latent/tool`. No stage3 files differ between the compiler pins.
+Read `typescript/kind-predicate-census` (`33dca393`) REPORT.md and compare.py, and the meter launcher and README. Built one adapted tree with b0efce6d stage3/apply.sh, its lockfile-pinned API packages and the upstream pin above. Both census tools were separately built from their exact compiler commits with recorded cohere/checker pins, main make_overlay.py, gofmt, and `go build -buildvcs=false -overlay=... ./stage3/census/latent/tool`. The adaptation and census inputs do not differ between the compiler pins. The head also changes interface-downcast test fixtures, outside those inputs.
 
-The base build and run finished before the head build and run. Both used the same source bytes and exact invocation:
+The retained base finished before either head attempt. The foreground rerun reused the verified head binary and the same adapted tree: all 746 source hashes matched the manifest before launch and after interruption. Both used this invocation:
 
 ```sh
 LATENT_TIMES=times.jsonl LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 latent-census ADAPTED/src/compiler latent.jsonl
 ```
 
-No full mode, entry mode, backend, replay, subset, or replacement census was run. Base started at 16:43:29 UTC and finished at 18:49:21 UTC (7,552 seconds), exiting 0 with all 79 compiler files and 4,056 timed attempts. Its attempted-unit identities independently match the stock TypeScript top-level catalog.
+No base rerun, full mode, entry mode, backend, replay, or subset run was performed. Base started at 16:43:29 UTC and finished at 18:49:21 UTC (7,552 seconds), exiting 0 with all 79 compiler files and 4,056 timed attempts. Its attempted-unit identities independently match the stock TypeScript top-level catalog.
 
-Head started at 18:51:50 UTC. Its last completed timer was written at 20:45:21.924659 UTC for `src/compiler/utilitiesPublic.ts:1748:1`. The interrupted current unit is not identified by that previous-unit timer.
+Foreground head rerun started at 2026-11-05T20:54:59.377910+00:00. Its last completed timer was written at 2026-11-05T22:10:00.284428+00:00 for `src/compiler/utilities.ts:4407:1`. The interrupted current unit is not identified by that previous-unit timer.
 
-The tool wait was then reported as aborted and the environment reannounced as starting. On reconnection, both head PID 9441 and driver PID 800 were defunct (state Z, parent PID 1). No head driver exit code or end timestamp was saved. The termination cause is not established. The post-interruption memory observation has `max=2450`, `oom=0`, and `oom_kill=0`; this is not evidence of an OOM kill. The process snapshots, timestamps and counters are retained.
+The foreground supervisor awaited the compiler and recorded timer progress every 30 seconds; it used no detached or background shell job. No other work was performed while the census ran. The tool wait was then reported as aborted and the environment reannounced as starting. On reconnection, head PID 11440 was defunct (state Z, parent PID 1). No supervisor exit code or end timestamp was saved. The termination cause is not established. Process snapshots, progress logs, timestamps and memory counters are retained under the rerun-head prefix.
 
 The findings files stayed at their headers while timers advanced. This revision deliberately buffers every file record in `Latent` until all callers finish, to finalize deferred-generic instantiation witnesses (`stage3/census/latent/lower.go.txt:213`, the Latent wrapper). Base emitted all its records only at completion. This was observable progress, not a live timer stall; no mode was switched. After interruption the head was already dead, so a goroutine dump could not be obtained. The logs contain no crash diagnosis.
 
-Stopping here preserves the requested one launch per compiler. A complete paired answer requires a new complete head measurement. No zero result is inferred from the lost buffer.
+The first head attempt remains preserved: it had 3,865 completed timers before interruption at 20:45 UTC. The explicitly requested foreground rerun is a separate attempt with 3,153 completed timers. Neither emitted a file finding record, so their timer streams cannot be combined into a paired finding ledger. No additional census was launched after the foreground attempt died. No zero result is inferred from either lost buffer.
 
 Both headers agree and report first-error mode with zero checker diagnostics (`checker_rejected=false`). The tool retains its fixed measurement label verbatim in the streams. Ordinary Load/Lower output guards were enabled. Compiler and dependency trees are clean, and all 746 adapted source hashes still match the pre-run manifest.
 

@@ -1,0 +1,18 @@
+{
+  "observed_utc": "2026-11-05T22:12:07.881667+00:00",
+  "head_pid": 11440,
+  "state": "Z",
+  "parent_pid": 1,
+  "completed_timers": 3153,
+  "last_completed_timer": {
+    "file": "/workspace/adamic/stage3/census/any-members/scratch/adapted/src/compiler/utilities.ts",
+    "where": "/workspace/adamic/stage3/census/any-members/scratch/adapted/src/compiler/utilities.ts:4407:1",
+    "wall_seconds": 0.131887787,
+    "cpu_seconds": 0.1322760000002745
+  },
+  "last_timer_mtime_utc": "2026-11-05T22:10:00.284428+00:00",
+  "exit_record_present": false,
+  "end_record_present": false,
+  "cause": "Not established. The foreground tool wait was aborted and the environment reannounced as starting; the compiler was defunct on reconnection.",
+  "goroutine_dump": "Unavailable: the compiler was already dead when inspected; progress had continued before the interruption."
+}
