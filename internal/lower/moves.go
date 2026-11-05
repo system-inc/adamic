@@ -38,7 +38,7 @@ func (l *lowering) classifyParallelMove(node *ast.Node) bool {
 		return false
 	}
 	items := l.concrete(l.checker.GetTypeAtLocation(arguments[0]))
-	if !l.checker.IsArrayType(items) || l.isLibraryType(items, "ReadonlyArray") {
+	if !l.isArrayType(items) || l.isLibraryType(items, "ReadonlyArray") {
 		return false
 	}
 	for _, element := range l.checker.GetTypeArguments(items) {

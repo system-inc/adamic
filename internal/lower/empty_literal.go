@@ -10,8 +10,8 @@ func (l *lowering) literalArrayElement(proven *checker.Type) *checker.Type {
 		return nil
 	}
 	proven = l.concrete(proven)
-	if l.checker.IsArrayType(proven) {
-		return l.checker.GetElementTypeOfArrayType(proven)
+	if l.isArrayType(proven) {
+		return l.elementTypeOfArray(proven)
 	}
 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
 		return nil

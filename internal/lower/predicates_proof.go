@@ -860,15 +860,15 @@ func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, sour
 		}
 		return nil, test, nil
 	}
-	if l.checker.IsArrayType(target) && (source.Flags()&checker.TypeFlagsUndefined != 0 || value.Type() == ir.Number || value.Type() == ir.String || value.Type() == ir.Boolean) {
+	if l.isArrayType(target) && (source.Flags()&checker.TypeFlagsUndefined != 0 || value.Type() == ir.Number || value.Type() == ir.String || value.Type() == ir.Boolean) {
 		return nil, ir.BooleanConstant{Value: false}, nil
 	}
-	if l.checker.IsArrayType(target) && value.Type() == ir.Array {
+	if l.isArrayType(target) && value.Type() == ir.Array {
 		arraySource := source
 		if source.Flags()&checker.TypeFlagsUnion != 0 {
 			arraySource = nil
 			for _, member := range source.Types() {
-				if l.checker.IsArrayType(member) {
+				if l.isArrayType(member) {
 					if arraySource != nil {
 						return nil, nil, l.notYet(node, "a predicate overload over multiple array representations")
 					}
@@ -876,13 +876,13 @@ func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, sour
 				}
 			}
 		}
-		if arraySource == nil || !l.checker.IsArrayType(arraySource) {
+		if arraySource == nil || !l.isArrayType(arraySource) {
 			return nil, nil, l.notYet(node, "a predicate overload without a known array representation")
 		}
-		element := l.checker.GetElementTypeOfArrayType(arraySource)
+		element := l.elementTypeOfArray(arraySource)
 		// An identical element contract is already admitted on the source array.
 		// The overload strengthens only presence, not its element view.
-		if checker.Checker_isTypeIdenticalTo(l.checker, l.concrete(element), l.concrete(l.checker.GetElementTypeOfArrayType(target))) {
+		if checker.Checker_isTypeIdenticalTo(l.checker, l.concrete(element), l.concrete(l.elementTypeOfArray(target))) {
 			return nil, censusCondition(value), nil
 		}
 		held, known := l.kept(element)
@@ -892,7 +892,7 @@ func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, sour
 		matches := local("array_matches", ir.Boolean)
 		counter := local("array_index", ir.Number)
 		read := ir.Read{Local: counter, Of: ir.Number}
-		statements, test, err := l.predicateMembership(node, ir.ArrayIndex{Array: value, Index: read, Element: held}, element, l.checker.GetElementTypeOfArrayType(target), local, depth+1)
+		statements, test, err := l.predicateMembership(node, ir.ArrayIndex{Array: value, Index: read, Element: held}, element, l.elementTypeOfArray(target), local, depth+1)
 		if err != nil {
 			return nil, nil, err
 		}
@@ -1008,7 +1008,7 @@ func (l *lowering) untaggedRecord(t *checker.Type, visited map[*checker.Type]boo
 		}
 		return false
 	}
-	if l.checker.IsArrayType(t) || checker.IsTupleType(t) {
+	if l.isArrayType(t) || checker.IsTupleType(t) {
 		for _, element := range l.checker.GetTypeArguments(t) {
 			if l.untaggedRecord(element, visited) {
 				return true

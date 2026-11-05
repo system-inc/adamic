@@ -86,7 +86,7 @@ func (l *lowering) genericFunctionIdentityCall(node *ast.Node) error {
 		switch callee.Name().Text() {
 		case "includes", "indexOf", "lastIndexOf", "has", "add", "delete", "get", "set":
 			receiver := l.concrete(l.checker.GetTypeAtLocation(property.Expression))
-			if l.checker.IsArrayType(receiver) || l.isLibraryType(receiver, "Set", "ReadonlySet", "Map", "ReadonlyMap") {
+			if l.isArrayType(receiver) || l.isLibraryType(receiver, "Set", "ReadonlySet", "Map", "ReadonlyMap") {
 				arguments := l.typeArguments(receiver)
 				if len(arguments) > 0 {
 					observes = l.functionIdentityType(arguments[0])

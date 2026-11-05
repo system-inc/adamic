@@ -13,7 +13,7 @@ import (
 func (l *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
 	statement := node.AsForInOrOfStatement()
 	proven := l.checker.GetTypeAtLocation(statement.Expression)
-	if l.checker.IsArrayType(proven) || checker.IsTupleType(proven) {
+	if l.isArrayType(proven) || checker.IsTupleType(proven) {
 		return nil, l.notYet(statement.Expression, "for...in over an array (holes and own enumerable properties are not represented; use for...of for elements)")
 	}
 	// Structural types can hide an array, and synthetic undefined spread fields are not real keys.

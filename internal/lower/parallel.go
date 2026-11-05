@@ -96,7 +96,7 @@ func (l *lowering) checkParallelMap(node *ast.Node) error {
 		return l.notYet(node, "parallelMap with other than items and work")
 	}
 	items := l.concrete(l.checker.GetTypeAtLocation(arguments[0]))
-	if !l.checker.IsArrayType(items) {
+	if !l.isArrayType(items) {
 		return &Refused{Where: l.program.Where(arguments[0]), What: "parallelMap items must be an array", Fix: parallelMoveFix}
 	}
 	if l.parallelMoves(node) {
@@ -454,7 +454,7 @@ func (p *parallelProof) call(node, owner *ast.Node, chain []string) error {
 			if t.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike) != 0 {
 				return nil
 			}
-			if p.l.checker.IsArrayType(t) || p.l.isLibraryType(t, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
+			if p.l.isArrayType(t) || p.l.isLibraryType(t, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
 				switch method {
 				case "set", "add", "delete", "clear", "push", "pop", "shift", "unshift", "splice", "fill", "sort", "reverse", "copyWithin":
 					if p.fresh(receiver, owner) {

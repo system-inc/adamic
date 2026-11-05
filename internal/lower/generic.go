@@ -376,7 +376,7 @@ func (l *lowering) checkInstantiatedJSONInput(node *ast.Node) error {
 		held, known := l.representation(concrete)
 		if known && held == ir.Union {
 			for _, member := range concrete.Types() {
-				if l.checker.IsArrayType(member) {
+				if l.isArrayType(member) {
 					return l.notYet(node, "JSON.stringify unions containing arrays (adamic/json-union-array)")
 				}
 			}

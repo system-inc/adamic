@@ -14,7 +14,7 @@ func (l *lowering) enumStoredType(node *ast.Node) *checker.Type {
 	}
 	if node.Kind == ast.KindElementAccessExpression {
 		stored := l.checker.GetTypeAtLocation(node.AsElementAccessExpression().Expression)
-		if l.checker.IsArrayType(stored) {
+		if l.isArrayType(stored) {
 			if arguments := l.checker.GetTypeArguments(stored); len(arguments) == 1 {
 				return arguments[0]
 			}

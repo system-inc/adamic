@@ -400,16 +400,16 @@ func (l *lowering) checkedPredicateTagDomainSeen(source, target *checker.Type, p
 	}
 	seen[key] = true
 	defer delete(seen, key)
-	if l.checker.IsArrayType(target) {
+	if l.isArrayType(target) {
 		members := []*checker.Type{source}
 		if source.Flags()&checker.TypeFlagsUnion != 0 {
 			members = source.Types()
 		}
 		for _, member := range members {
-			if !l.checker.IsArrayType(member) {
+			if !l.isArrayType(member) {
 				continue
 			}
-			from, to := l.checker.GetElementTypeOfArrayType(member), l.checker.GetElementTypeOfArrayType(target)
+			from, to := l.elementTypeOfArray(member), l.elementTypeOfArray(target)
 			if !checker.Checker_isTypeIdenticalTo(l.checker, from, to) && !l.checkedPredicateTagDomainSeen(from, to, positive, seen) {
 				return false
 			}
@@ -424,7 +424,7 @@ func (l *lowering) checkedPredicateTagDomainSeen(source, target *checker.Type, p
 		}
 		return true
 	}
-	if target.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(target) || l.checker.IsArrayType(target) {
+	if target.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(target) || l.isArrayType(target) {
 		return true
 	}
 	tag := l.fieldLiteral(target, "kind")

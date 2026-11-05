@@ -66,7 +66,7 @@ func (l *lowering) clockGenericReturnsT01Shape(proven *checker.Type, active map[
 	defer delete(active, proven)
 	// Arrays are admitted only as nested string fields, using the existing string
 	// array representation. Intersections of containers never pass this check.
-	if l.checker.IsArrayType(proven) {
+	if l.isArrayType(proven) {
 		arguments := l.checker.GetTypeArguments(proven)
 		return len(arguments) == 1 && l.concrete(arguments[0]).Flags()&checker.TypeFlagsStringLike != 0
 	}
@@ -86,7 +86,7 @@ func (l *lowering) clockGenericReturnsT01Shape(proven *checker.Type, active map[
 	if flags&checker.TypeFlagsIntersection != 0 {
 		for _, part := range proven.Types() {
 			part = l.concrete(part)
-			if part.Flags()&checker.TypeFlagsObject == 0 || l.checker.IsArrayType(part) || !l.clockGenericReturnsT01Shape(part, active) {
+			if part.Flags()&checker.TypeFlagsObject == 0 || l.isArrayType(part) || !l.clockGenericReturnsT01Shape(part, active) {
 				return false
 			}
 		}
