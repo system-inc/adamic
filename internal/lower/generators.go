@@ -406,6 +406,49 @@ func (l *lowering) collectGenerator(node *ast.Node, function int) (ir.Expression
 	return ir.Call{Function: helper, Arguments: call.Arguments, Returns: ir.Array}, yields, nil
 }
 
+// newMapFromGenerator lowers new Map(gen(a)) by the generator's origin: collectGenerator steps it to
+// its end, as a spread does, and the Map is made from the pairs it gave, each set in order. Node's
+// constructor sets each pair before it takes the next step; setting them all after the last step is
+// the same, since nothing can see the Map before the constructor returns it (no step reaches it) and
+// set on a fresh built-in Map can't throw. A step that throws leaves the helper before any Map is
+// made, and the pairs it had are let go of with it. The pair's types are read from what the
+// generator yields, never from its declared iterator type.
+func (l *lowering) newMapFromGenerator(source *ast.Node, function int, key ir.Type, value ir.Type) (ir.Expression, error) {
+	pairKey, pairValue, isPair := l.generatorPairTypes(source)
+	if !isPair {
+		return nil, l.generatorNotYet(source, "consumed by new Map, yielding something other than [key, value] pairs")
+	}
+	if pairKey != key || pairValue != value {
+		return nil, l.generatorNotYet(source, "consumed by new Map, yielding pairs held otherwise than the Map's keys and values")
+	}
+	pairs, yields, err := l.collectGenerator(source, function)
+	if err != nil {
+		return nil, err
+	}
+	if yields != ir.Object {
+		return nil, l.generatorNotYet(source, "consumed by new Map, yielding something other than [key, value] pairs")
+	}
+	return ir.MapNew{Key: key, Value: value, Pairs: pairs}, nil
+}
+
+// generatorPairTypes is how the [key, value] pairs a generator's call yields hold their keys and
+// values: its yielded type, the first type argument of what it returns, must be a tuple of exactly
+// two required elements, each held in one slot.
+func (l *lowering) generatorPairTypes(source *ast.Node) (ir.Type, ir.Type, bool) {
+	arguments := l.checker.GetTypeArguments(l.concrete(l.checker.GetTypeAtLocation(ast.SkipParentheses(source))))
+	if len(arguments) == 0 || !checker.IsTupleType(arguments[0]) {
+		return 0, 0, false
+	}
+	elements := l.checker.GetTypeArguments(arguments[0])
+	flags := arguments[0].TargetTupleType().ElementFlags()
+	if len(elements) != 2 || len(flags) != 2 || flags[0] != checker.ElementFlagsRequired || flags[1] != checker.ElementFlagsRequired {
+		return 0, 0, false
+	}
+	key, keyKnown := l.representation(elements[0])
+	value, valueKnown := l.representation(elements[1])
+	return key, value, keyKnown && valueKnown
+}
+
 // generatorStepped is a direct call to a generator this slice lowers that a spread or Array.from
 // consumes. Both step it to its end and never read its last result's value, so a TReturn of void,
 // what a plain function* infers, is never read there, and the void rules (adamic/no-void-read,
