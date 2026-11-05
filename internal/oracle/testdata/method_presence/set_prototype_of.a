@@ -1,0 +1,13 @@
+// tsc's debug.ts asks whether its host has Object.setPrototypeOf before it reaches for it: typeof of
+// a library method read off a library global, compared with "function". Object needs no evaluating.
+const kinds: string[] = [];
+for(let index = 0; index < 3; index++) {
+    if(typeof Object.setPrototypeOf === 'function') {
+        kinds.push(`present ${String(index)}`);
+    } else {
+        kinds.push(`missing ${String(index)}`);
+    }
+}
+console.log(kinds.join(', '));
+console.log(typeof Object.setPrototypeOf);
+console.log(typeof (Object.freeze));

@@ -1,0 +1,36 @@
+// A program class's method tested at each consumer that only tests it: typeof, !, the left of &&, the
+// test of ?:, of while, of for and of do...while, and through parentheses. Each is constant, and the
+// method is called where the test lets it be.
+class Counter {
+    count = 0;
+    step(): number {
+        this.count += 1;
+        return this.count;
+    }
+}
+const counter = new Counter();
+console.log(typeof counter.step);
+console.log(String(!counter.step));
+console.log(String(counter.step && counter.step()));
+console.log(counter.step ? `called ${String(counter.step())}` : 'never');
+while(counter.step) {
+    if(counter.step() > 4) {
+        break;
+    }
+}
+console.log(String(counter.count));
+for(let index = 0; counter.step; index++) {
+    counter.step();
+    if(index === 2) {
+        break;
+    }
+}
+console.log(String(counter.count));
+do {
+    if(counter.step() > 11) {
+        break;
+    }
+} while(counter.step);
+console.log(String(counter.count));
+console.log(typeof ((counter.step)));
+console.log(String(!(counter.step)));
