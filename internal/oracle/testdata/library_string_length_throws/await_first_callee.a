@@ -1,0 +1,6 @@
+// Language's c1 (#c3bk0fp): a function declaration as callee runs nothing before the await, so the
+// await consumes the promise, and the program lowers and agrees with Node.
+async function later(text: string): Promise<string> { return `${text}!`; }
+function wrap(s: string): string { return s; }
+async function run(): Promise<string> { const first = later("a"); return wrap(`${await first}|`); }
+console.log(await run());
