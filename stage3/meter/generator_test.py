@@ -33,11 +33,16 @@ class HookTests(unittest.TestCase):
                     self.assertFalse(output.exists(), 'unknown hook published output')
                     continue
                 self.assertEqual(code, 0, log)
-                generated = output.read_text().replace('github.com/microsoft/TypeScript/tsc/shim/', 'probe/')
+                generated = (output.read_text().replace('github.com/microsoft/TypeScript/tsc/shim/', 'probe/')
+                             .replace('github.com/system-inc/adamic/internal/ir', 'probe/ir'))
                 (root / 'go.mod').write_text('module probe\n\ngo 1.23\n')
                 for package, typename in [('ast', 'Node'), ('checker', 'Type')]:
                     (root / package).mkdir()
                     (root / package / 'stub.go').write_text('package ' + package + '\ntype ' + typename + ' struct{}\n')
+                # The generator's IR cache policies name these types even in a hook-only fixture.
+                (root / 'ir').mkdir()
+                (root / 'ir/stub.go').write_text('package ir\ntype Program struct{}\n'
+                                              'type BoundaryStringTable struct{}\ntype GeneratedType struct{}\n')
                 output.write_text(generated)
                 (root / 'shape.go').write_text('package lower\nimport("probe/ast";"probe/checker")\ntype lowering struct { ' + field + ' }\n')
                 (root / 'copy_test.go').write_text('''package lower
