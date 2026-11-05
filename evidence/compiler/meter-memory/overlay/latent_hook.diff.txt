@@ -1,0 +1,10 @@
+--- /tmp/m/scratch/latent-overlay/internal_lower_latent_hook.go	2026-11-04 20:20:25.864376111 +0000
++++ /tmp/m/scratch/latent-overlay-heap/internal_lower_latent_hook.go	2026-11-05 00:09:22.578510948 +0000
+@@ -225,6 +225,7 @@
+ var latentUnitTimer *UnitTimer
+ 
+ func Latent(ctx context.Context, program *load.Program, emit func(LatentFile)) {
++	defer heapFinal()
+ 	latentUnitTimer = nil
+ 	if path := os.Getenv("LATENT_TIMES"); path != "" {
+ 		output, err := os.Create(path)

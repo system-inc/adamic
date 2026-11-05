@@ -1,0 +1,86 @@
+package lower
+
+// Measurement-only heap probe (task #rw2vjhn). Lives in the scratch overlay.
+// HEAP_DIR: directory for heap-<N>GiB.pprof files. HEAP_SIDECAR: per-unit JSONL.
+// The heap profile is the runtime's view as of the most recently completed GC
+// cycle, and runtime.GC is never called here, so it shows what that cycle found live.
+
+import (
+	"encoding/json"
+	"fmt"
+	"os"
+	"path/filepath"
+	"runtime/metrics"
+	"runtime/pprof"
+	"sync"
+	"time"
+)
+
+var heapSamples = []metrics.Sample{
+	{Name: "/gc/heap/live:bytes"},
+	{Name: "/memory/classes/heap/objects:bytes"},
+	{Name: "/memory/classes/total:bytes"},
+}
+var heapMutex sync.Mutex
+var heapSidecar *json.Encoder
+var heapUnitCount int
+
+func heapRead() (live, objects, total uint64) {
+	heapMutex.Lock()
+	defer heapMutex.Unlock()
+	metrics.Read(heapSamples)
+	return heapSamples[0].Value.Uint64(), heapSamples[1].Value.Uint64(), heapSamples[2].Value.Uint64()
+}
+
+func heapWriteProfile(name string) {
+	directory := os.Getenv("HEAP_DIR")
+	if directory == "" {
+		return
+	}
+	file, err := os.Create(filepath.Join(directory, name))
+	if err != nil {
+		return
+	}
+	defer file.Close()
+	_ = pprof.WriteHeapProfile(file)
+}
+
+func init() {
+	if path := os.Getenv("HEAP_SIDECAR"); path != "" {
+		if file, err := os.Create(path); err == nil {
+			heapSidecar = json.NewEncoder(file)
+		}
+	}
+	if os.Getenv("HEAP_DIR") == "" {
+		return
+	}
+	go func() {
+		next := uint64(1)
+		for range time.Tick(250 * time.Millisecond) {
+			live, objects, _ := heapRead()
+			// Cross a new whole GiB by live-after-last-GC or by heap objects.
+			level := objects >> 30
+			if live>>30 > level {
+				level = live >> 30
+			}
+			if level >= next {
+				heapWriteProfile(fmt.Sprintf("heap-%dGiB.pprof", level))
+				next = level + 1
+			}
+		}
+	}()
+}
+
+// heapUnit records live heap after one unit finished.
+func heapUnit(file, where string) {
+	heapUnitCount++
+	if heapSidecar == nil {
+		return
+	}
+	live, objects, total := heapRead()
+	_ = heapSidecar.Encode(map[string]any{"n": heapUnitCount, "file": file, "where": where,
+		"live_after_last_gc": live, "heap_objects": objects, "runtime_total": total,
+		"t": time.Now().UnixNano()})
+}
+
+func heapFinal() { heapWriteProfile("heap-exit.pprof") }

@@ -1,0 +1,18 @@
+--- /tmp/m/scratch/latent-overlay/internal_lower_latent_timing.go	2026-11-04 20:20:25.884376113 +0000
++++ /tmp/m/scratch/latent-overlay-heap/internal_lower_latent_timing.go	2026-11-05 00:09:22.578369553 +0000
+@@ -31,7 +31,7 @@
+ // the time record. A nil timer leaves the deterministic census path untimed.
+ func (timer *UnitTimer) Start(file, where string) func() {
+ 	if timer == nil {
+-		return func() {}
++		return func() { heapUnit(file, where) }
+ 	}
+ 	wall, cpu := time.Now(), processCPUSeconds()
+ 	return func() {
+@@ -39,5 +39,6 @@
+ 		if err := timer.encoder.Encode(record); err != nil {
+ 			panic(err)
+ 		}
++		heapUnit(file, where)
+ 	}
+ }
