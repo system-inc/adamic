@@ -1,0 +1,19 @@
+{
+  "label": "main plus S1c",
+  "status": "incomplete: daily 7200-second timeout",
+  "main_sha": "04e43c2ee3a7c9cb580f46013fe7f50b5acb600d",
+  "s1c_sha": "d395a9a68c2fdb65701aa08a632d996bf75939b2",
+  "merge_sha": "b5733921511af8146a299502b31407dec3a1ab74",
+  "compiler_census_records": 71,
+  "entry_latent_file_records": 81,
+  "peak_container_memory_bytes": 16813543424,
+  "sampled_peak_container_memory_bytes": 16794144768,
+  "memory_limit_bytes": 17179869184,
+  "oom_events": 0,
+  "oom_kills": 0,
+  "memory_note": "Container memory includes filesystem cache. The cgroup lifetime peak was 9436672000 bytes after setup and rose to the reported peak during the run. Per-second sampler ended during environment reconnection at 2026-11-04T23:33:25.079989+00:00. Final cgroup memory.peak matches the peak recorded in the samples.",
+  "exit_status_note": "Original process handle and sampler were lost during reconnection; exact shell exit code unavailable. Census stopped as the configured 7200-second timeout elapsed.",
+  "totals": null,
+  "first_stop_note": "Ordinary tsc entry census reports NotYet at src/compiler/core.ts:332:1: a generator function (its counted frame is being built, #qk8rztp). S1c loweredGenerator explicitly excludes generic declarations; mapIterator<T, U> is generic.",
+  "published": false
+}
