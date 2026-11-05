@@ -74,6 +74,9 @@ func (l *lowering) elementsHeldOtherwise(node *ast.Node, slot *checker.Type) str
 		// An object literal's fields are values at their own slots, each judged there.
 		return ""
 	}
+	if !l.slotSet(node) && patternInitializer(node) {
+		return ""
+	}
 	own := l.checker.GetTypeAtLocation(node)
 	key := elementFitKey{own: own, slot: slot, built: built, shallow: node.Kind == ast.KindArrayLiteralExpression}
 	found, answered := l.elementFits[key]
@@ -95,6 +98,33 @@ func (l *lowering) elementsHeldOtherwise(node *ast.Node, slot *checker.Type) str
 		return where + ", with no representation Adamic can name for the " + found.unnamed + " elements (" + l.checker.TypeToString(found.stored) + " stored, read as " + l.checker.TypeToString(found.read) + ")"
 	}
 	return where + ": its " + l.checker.TypeToString(found.stored) + " elements are stored as " + heldName(found.held) + " and read there as " + l.checker.TypeToString(found.read) + ", held as " + heldName(found.as) + " (build it as the slot's type where it's made, or copy its elements into one)"
+}
+
+// patternInitializer is whether node is the initializer of a variable declaration whose name is a
+// binding pattern with no type of its own, through parentheses and as const. tsc gives such an
+// initializer the pattern's implied type as its contextual type, every element any ([any, any] for
+// const [key, value] = entry), but no slot holds the value at it: the declaration takes the
+// initializer's own type, and each binding reads its element there. An annotated pattern's type is a
+// slot its bindings read through, so it's still judged.
+func patternInitializer(node *ast.Node) bool {
+	for node.Parent != nil {
+		parent := node.Parent
+		switch parent.Kind {
+		case ast.KindParenthesizedExpression:
+			node = parent
+			continue
+		case ast.KindAsExpression:
+			if as := parent.AsAsExpression(); as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+				node = parent
+				continue
+			}
+		case ast.KindVariableDeclaration:
+			declaration := parent.AsVariableDeclaration()
+			return declaration.Initializer == node && declaration.Type == nil && ast.IsBindingPattern(declaration.Name())
+		}
+		return false
+	}
+	return false
 }
 
 // elementsSeenAs finds, in a value of type stored seen as type viewed, a container whose elements (an

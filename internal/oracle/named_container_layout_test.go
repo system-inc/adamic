@@ -18,6 +18,11 @@ import (
 // numbers read as number | undefined (c01), whose NaN-packed undefined holds every number as itself, and
 // strings (c02) and objects (c03) read as a union, whose box for a reference is the reference, and a
 // never[] (c04, tsc's emptyArray) seen through two wider readonly slots, since it holds nothing to read.
+// A destructuring declaration with no type of its own reads each element at the initializer's type, so
+// the pattern's implied [any, any] is no slot: a tuple a call returns (c05, collections.a's shape) and a
+// Map entry and an as const literal (c06, host_map_union.a's and gaps.a's) lower and agree. An annotated
+// pattern is a slot its bindings read through, and n07, a number[] destructured as readonly
+// (number | string)[], stops.
 // k01, a number[] passed as readonly unknown[], keeps its erased-storage stop. Each program's whole stop
 // is pinned in its .stop file, or "lowers". Mutant: elementsHeldOtherwise judging only fresh values again,
 // and every n row lowers and goes red here.
@@ -74,7 +79,7 @@ func TestNamedContainerLayout(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 22 {
-		t.Fatalf("found %d programs, want 22", programs)
+	if programs != 28 {
+		t.Fatalf("found %d programs, want 28", programs)
 	}
 }
