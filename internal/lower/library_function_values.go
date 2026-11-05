@@ -17,7 +17,10 @@ import (
 // string`) would read as boxed. It lowers to one function value whose body is the direct call, made
 // before anything runs and held by a global of its own, as a module function's (functionValue) and
 // Error.captureStackTrace's (nodeCaptureStackTraceValue) are, so Date.now read twice is === as Node
-// says. Every other read stays refused as a method read as a value. Intl.Collator's compare is not one
+// says. An === operand is not a slot, so `f === Date.now` stays refused, and that refusal is what keeps
+// the backends agreeing: the JavaScript backend's value is a wrapper, not Date.now itself, so whoever
+// lifts it must make the comparison hold on both. Every other read stays refused as a method read as a
+// value. Intl.Collator's compare is not one
 // of these: it reads its collator (#zjndrx5, #9tw2b9z).
 
 // libraryFunctionValue is an allowlisted receiver-free library member: its global and name, its
