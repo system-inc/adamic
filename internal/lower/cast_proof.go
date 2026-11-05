@@ -184,6 +184,11 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	if l.phantomCast(source, target) {
 		return castProof{}, nil
 	}
+	// A value the host audit models as never is never had, so its cast has nothing to check, whatever
+	// the operand's declared any says (host-any.md's Modelled rows).
+	if l.hostModelledNever(as.Expression) {
+		return castProof{}, nil
+	}
 	operand, from := l.mintOperand(as)
 	if mint := l.brandMintOf(operand, from, target); mint != nil {
 		return castProof{brandMint: mint}, l.brandMintRefusal(node, target, mint)
