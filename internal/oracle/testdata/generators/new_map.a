@@ -1,0 +1,14 @@
+// new Map of a generator's call steps it to its end by its origin, as a spread does, and sets each
+// [key, value] pair it yields in order: a key given again keeps its first place and takes its last
+// value, as on Node. Keys and values are built.
+function* pairs(count: number): Generator<[string, number], undefined, undefined> {
+    for(let index = 0; index < count; index++) {
+        yield [`k${String(index % 3)}`, index * 10];
+    }
+}
+const map = new Map(pairs(5));
+console.log(String(map.size));
+console.log([...map.keys()].join(','));
+console.log([...map.values()].map((value: number): string => `v${String(value)}`).join(','));
+console.log(String(map.get(`k${String(1)}`)));
+console.log(String(new Map(pairs(0)).size));
