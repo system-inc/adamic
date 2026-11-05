@@ -292,29 +292,25 @@ func (l *lowering) generatorParameter(call ir.Call, position int, of ir.Iterable
 	case l.result.Locals[parameter].Captured:
 		return l.generatorNotYet(where, "passed into the parameter "+name+", which a closure captures")
 	}
-	reads, writes := 0, 0
+	// Every field that names a local counts, not only Read and Assign: a for-of head, a pattern's
+	// binding and a catch write one too (Lower's must), and anything else that names it is a use.
+	var uses localUseCount
 	count := func(node any) bool {
-		switch node := node.(type) {
-		case ir.Read:
-			if node.Local == parameter {
-				reads++
-			}
-		case ir.Assign:
-			if node.Local == parameter {
-				writes++
-			}
-		}
+		uses.node(node, parameter)
 		return true
 	}
 	walk(l.result.Main, count)
 	for _, function := range l.result.Functions {
 		walk(function.Body, count)
 	}
-	if writes != 0 {
-		return l.generatorNotYet(where, "passed into the parameter "+name+", which the function assigns")
+	if uses.writes != 0 {
+		return l.generatorNotYet(where, "passed into the parameter "+name+", which the function writes (an assignment, a for-of head, a pattern or a catch)")
 	}
-	if reads != 1 {
-		return l.generatorNotYet(where, fmt.Sprintf("passed into the parameter %s, read %d times where one for-of over it is its only use", name, reads))
+	if uses.named != 0 {
+		return l.generatorNotYet(where, "passed into the parameter "+name+", which the lowered function names other than by a read")
+	}
+	if uses.reads != 1 {
+		return l.generatorNotYet(where, fmt.Sprintf("passed into the parameter %s, read %d times where one for-of over it is its only use", name, uses.reads))
 	}
 	return nil
 }
