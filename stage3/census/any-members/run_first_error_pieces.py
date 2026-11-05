@@ -16,6 +16,7 @@ from pieces_common import OUT,E,S,TREE,digest,dump,load,norm,validate_piece,veri
 parser=argparse.ArgumentParser()
 parser.add_argument('--piece')
 parser.add_argument('--label',choices=['base','head'])
+parser.add_argument('--continue-on-push-error',action='store_true',help='keep committing locally when the remote publication hook is unavailable')
 args=parser.parse_args()
 repo=OUT.parents[2]
 plan=json.loads((E/'plan.json').read_text())
@@ -39,8 +40,11 @@ assert manifest=={str(p.relative_to(TREE)):digest(p) for p in sorted((TREE/'src'
 assert git(repo,'branch','--show-current').strip()=='typescript/any-members-census'
 now=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
 publication=S/'piece-publication.log'
+last_push_attempt=None
+last_push_ok=False
 
 def publish(label,piece,work,metrics):
+    global last_push_attempt,last_push_ok
     target=E/label/piece['id']; target.mkdir(parents=True,exist_ok=True)
     for name in ('latent.jsonl','times.jsonl','census.log','progress.log'):
         path=target/(name+'.gz')
@@ -68,9 +72,18 @@ def publish(label,piece,work,metrics):
             staged=git(repo,'diff','--cached','--name-only').splitlines()
             assert staged and all(p.startswith('stage3/census/any-members/') for p in staged)
             subprocess.run(['git','-C',str(repo),'commit','-m',f'stage3/census: checkpoint {label} first-error {piece["id"]}'],check=True,stdout=log,stderr=subprocess.STDOUT)
-    with publication.open('a') as log:
-        subprocess.run(['git','-C',str(repo),'push','origin','HEAD:refs/heads/typescript/any-members-census'],check=True,stdout=log,stderr=subprocess.STDOUT)
-    print(now(), 'PUSHED',label,piece['id'],git(repo,'rev-parse','HEAD').strip(),flush=True)
+    revision=git(repo,'rev-parse','HEAD').strip()
+    if revision!=last_push_attempt:
+        last_push_attempt=revision
+        with publication.open('a') as log:
+            publication_result=subprocess.run(['git','-C',str(repo),'push','origin','HEAD:refs/heads/typescript/any-members-census'],stdout=log,stderr=subprocess.STDOUT)
+        last_push_ok=publication_result.returncode==0
+        if not last_push_ok:
+            with (S/'piece-publication-errors.jsonl').open('a') as f:
+                f.write(json.dumps(dict(utc=now(),revision=revision,label=label,piece=piece['id'],returncode=publication_result.returncode))+'\n')
+            if not args.continue_on_push_error:
+                raise RuntimeError('checkpoint committed locally; ordinary push failed; see '+str(publication))
+    print(now(), 'PUSHED' if last_push_ok else 'LOCAL_COMMITTED_PUSH_PENDING',label,piece['id'],revision,flush=True)
 
 def run(label,piece):
     binary=S/f'piece-{label}-bin/latent-census'
@@ -156,4 +169,4 @@ selected=[p for p in plan['pieces'] if not args.piece or p['id']==args.piece]
 assert selected,'unknown piece'
 for piece in selected:
     for label in ([args.label] if args.label else ['base','head']):run(label,piece)
-print(now(),'ALL REQUESTED PIECES SAVED AND PUSHED',flush=True)
+print(now(),'ALL REQUESTED PIECES SAVED; final push status='+str(last_push_ok),flush=True)
