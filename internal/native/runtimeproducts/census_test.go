@@ -943,6 +943,7 @@ var requestState = map[string]string{
 	"jobserver":        schedulingState["jobserver"],
 	"processJobserver": "the process's compile token pool the header scan behind RuntimeRequestFor runs clang -M under (UseJobserver): when it runs, never what it lists",
 	"headerScans":      "the process's memo of the header scan, by the runtime key of the same sources, flags and compiler: what it holds is the request's headers part, which the key holds (TestRuntimeProductKeyHoldsEveryPart)",
+	"ErrJobserverSet":  "the error UseJobserver returns for a second jobserver, which fails the process's setup before any compile, never reaches one",
 }
 
 // jobserverState are ccjobserver's package variables that decide when a compile runs, never what one writes.
