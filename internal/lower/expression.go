@@ -1307,6 +1307,11 @@ func boxedSlot(valueType ir.Type) bool {
 // call lowers a call to one of the module's functions, or to a function value.
 func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 	call := node.AsCallExpression()
+	// Before any road below: a nested sibling's or a closure's call skips censusOverloadResult, and a
+	// predicate overload's narrower result rests on its callback's origin on every road.
+	if err := l.predicateOverloadOrigins(call); err != nil {
+		return nil, err
+	}
 	callee := ast.SkipParentheses(call.Expression)
 	if direct := l.nestedSibling(callee); direct >= 0 {
 		arguments := []ir.Expression{}
