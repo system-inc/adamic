@@ -21,7 +21,13 @@ import (
 // Adamic holds as its own array or string (array.fill, ch.repeat), and a program class's method on a
 // receiver of that class's type. Anything else, a method signature on a program's interface or object
 // type above all, may be a checked view or a host value whose real object lacks the method, where Node
-// says "undefined": it is not yet (methodPresenceUnproven), never folded. The constant comes once the
+// says "undefined": it is not yet (methodPresenceUnproven), never folded. The library cases are true
+// only because load pins every program to lib.es2024.d.ts (load.go's compilerOptions): a bundled
+// declaration is then one Node 24 has, where lib.es2026's Math.sumPrecise and Uint8Array.fromBase64,
+// say, are not (TestMethodPresenceLibraryStopsAtES2024 goes red if the pin moves). And all three rest
+// on the stops that keep a method from being taken off such a receiver, Object.defineProperty,
+// Object.setPrototypeOf, Object.assign, Reflect.set, a write and a delete
+// (TestMethodPresenceRestsOnTheseStops). The constant comes once the
 // receiver is evaluated, once, for its effects. Through ?. the receiver may be missing, and its
 // presence is the answer. An optional method (m?(): T) stays
 // refused, since nothing proves it there and nothing yet reads whether it is: its read goes the way an
