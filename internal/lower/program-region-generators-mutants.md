@@ -56,3 +56,13 @@ Unmutated, the same 34 shards pass, logging 37 programs whose ProgramRegion=true
 `gofmt -l` on the touched Go files is empty, `go vet ./internal/lower ./internal/oracle` is clean,
 `go test ./internal/oracle -count=1 -run 'ProgramRegion' -timeout 30m` passes (72 s), and
 `go test ./internal/lower -count=1 -timeout 40m` passes (515 s).
+
+## Re-cut onto main 28897e4da0, on Pupa
+
+The four commits cherry-picked onto main at 28897e4da0, run at e117950dee on Pupa. Main's new fixtures make 44
+programs with `function*` across 35 shards, shard 030 joining the 34 above. `gofmt -l` is empty, `go vet` is clean,
+every pin passes with its message unchanged, `go test ./internal/oracle -count=1 -run 'ProgramRegion' -timeout 30m`
+passes (112 s), the 35 shards pass unmutated, logging 39 skipped ProgramRegion=true comparisons, and
+`go test ./internal/lower -count=1 -timeout 40m` passes (522 s). The mutants weren't rerun, since no pin's message
+and not the skip changed. After the pin of a generator held in a local was renamed (afa1553364), the same runs passed
+again on Golem (oracle 103 s, the 35 shards with 39 skipped, internal/lower 455 s).
