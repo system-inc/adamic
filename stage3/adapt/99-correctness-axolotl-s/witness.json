@@ -1,0 +1,250 @@
+{
+  "node": "v24.19.0",
+  "records": [
+    {
+      "owner": "filterMutate",
+      "n": 0,
+      "initial": {
+        "contents": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "length": 4
+      },
+      "before": {
+        "contents": [],
+        "length": 0
+      },
+      "after": {
+        "contents": [],
+        "length": 0
+      },
+      "returnValue": "undefined"
+    },
+    {
+      "owner": "filterMutate",
+      "n": 2,
+      "initial": {
+        "contents": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "length": 4
+      },
+      "before": {
+        "contents": [
+          1,
+          2
+        ],
+        "length": 2
+      },
+      "after": {
+        "contents": [
+          1,
+          2
+        ],
+        "length": 2
+      },
+      "returnValue": "undefined"
+    },
+    {
+      "owner": "filterMutate",
+      "n": 4,
+      "initial": {
+        "contents": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "length": 4
+      },
+      "before": {
+        "contents": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "length": 4
+      },
+      "after": {
+        "contents": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "length": 4
+      },
+      "returnValue": "undefined"
+    },
+    {
+      "owner": "clear",
+      "n": 0,
+      "initial": {
+        "contents": [],
+        "length": 0
+      },
+      "before": {
+        "contents": [],
+        "length": 0
+      },
+      "after": {
+        "contents": [],
+        "length": 0
+      },
+      "returnValue": "undefined"
+    },
+    {
+      "owner": "clear",
+      "n": 2,
+      "initial": {
+        "contents": [
+          1,
+          2
+        ],
+        "length": 2
+      },
+      "before": {
+        "contents": [],
+        "length": 0
+      },
+      "after": {
+        "contents": [],
+        "length": 0
+      },
+      "returnValue": "undefined"
+    },
+    {
+      "owner": "clear",
+      "n": 4,
+      "initial": {
+        "contents": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "length": 4
+      },
+      "before": {
+        "contents": [],
+        "length": 0
+      },
+      "after": {
+        "contents": [],
+        "length": 0
+      },
+      "returnValue": "undefined"
+    },
+    {
+      "owner": "createQueue.dequeue truncation fragment",
+      "n": 0,
+      "initial": {
+        "contents": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "length": 4
+      },
+      "before": {
+        "contents": [],
+        "length": 0
+      },
+      "after": {
+        "contents": [],
+        "length": 0
+      }
+    },
+    {
+      "owner": "createQueue.dequeue truncation fragment",
+      "n": 2,
+      "initial": {
+        "contents": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "length": 4
+      },
+      "before": {
+        "contents": [
+          3,
+          4
+        ],
+        "length": 2
+      },
+      "after": {
+        "contents": [
+          3,
+          4
+        ],
+        "length": 2
+      }
+    },
+    {
+      "owner": "createQueue.dequeue truncation fragment",
+      "n": 4,
+      "initial": {
+        "contents": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "length": 4
+      },
+      "before": {
+        "contents": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "length": 4
+      },
+      "after": {
+        "contents": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "length": 4
+      }
+    }
+  ],
+  "queue": {
+    "fifo": true,
+    "undefinedPayload": true,
+    "consumedSlotUndefined": true,
+    "compaction": true,
+    "sparseInitialSlotReturnsUndefined": true,
+    "emptyThrows": true
+  },
+  "skipWhile": {
+    "input": [
+      1,
+      "x",
+      2
+    ],
+    "predicate": "typeof x === \"number\"",
+    "before": [
+      "x",
+      2
+    ],
+    "after": [
+      "x",
+      2
+    ],
+    "laterElementSatisfiesPredicate": true
+  }
+}

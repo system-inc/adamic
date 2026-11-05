@@ -1,0 +1,199 @@
+{
+  "complete": false,
+  "reason": "Stopped after finding unmet delivery contract",
+  "ordinaryRowsCompleted": 20,
+  "typescriptRootsCompleted": 18,
+  "requiredTypeScriptRoots": 79,
+  "rows": [
+    {
+      "roots": [
+        "/workspace/s-probe/src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/s-probe/src/compiler/core.ts:736:36",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 16.156643423
+    },
+    {
+      "roots": [
+        "/workspace/s-probe/src/compiler/_namespaces/ts.performance.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/s-probe/src/compiler/core.ts:736:36",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 16.400107423
+    },
+    {
+      "roots": [
+        "/workspace/s-probe/src/compiler/_namespaces/ts.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/s-probe/src/compiler/core.ts:736:36",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 17.880948766
+    },
+    {
+      "roots": [
+        "/workspace/s-probe/src/compiler/binder.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/s-probe/src/compiler/core.ts:736:36",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 17.382033395
+    },
+    {
+      "roots": [
+        "/workspace/s-probe/src/compiler/builder.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/s-probe/src/compiler/core.ts:736:36",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 14.312765359
+    },
+    {
+      "roots": [
+        "/workspace/s-probe/src/compiler/builderPublic.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/s-probe/src/compiler/core.ts:736:36",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 16.666876074
+    },
+    {
+      "roots": [
+        "/workspace/s-probe/src/compiler/builderState.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/s-probe/src/compiler/core.ts:736:36",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 14.750282515
+    },
+    {
+      "roots": [
+        "/workspace/s-probe/src/compiler/builderStatePublic.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/s-probe/src/compiler/core.ts:736:36",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 12.671390772
+    },
+    {
+      "roots": [
+        "/workspace/s-probe/src/compiler/checker.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/s-probe/src/compiler/core.ts:736:36",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 14.107004522
+    },
+    {
+      "roots": [
+        "/workspace/s-probe/src/compiler/commandLineParser.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/s-probe/src/compiler/core.ts:736:36",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 13.282614639
+    },
+    {
+      "roots": [
+        "/workspace/s-probe/src/compiler/core.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/s-probe/src/compiler/debug.ts:243:59",
+      "reason": "a generic instantiation whose type argument for T, constrained to Node, can't be read",
+      "seconds": 15.795299474
+    },
+    {
+      "roots": [
+        "/workspace/s-probe/src/compiler/corePublic.ts"
+      ],
+      "kind": "accepted",
+      "seconds": 0.045430029
+    },
+    {
+      "roots": [
+        "/workspace/s-probe/src/compiler/debug.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/s-probe/src/compiler/semver.ts:71:9",
+      "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+      "seconds": 4.588752802
+    },
+    {
+      "roots": [
+        "/workspace/s-probe/src/compiler/diagnosticInformationMap.generated.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/s-probe/src/compiler/commandLineParser.ts:293:35",
+      "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+      "seconds": 4.261195142
+    },
+    {
+      "roots": [
+        "/workspace/s-probe/src/compiler/diagnosticMessages.generated.json"
+      ],
+      "kind": "error",
+      "reason": "load: /workspace/s-probe/src/compiler/diagnosticMessages.generated.json is not an Adamic source; want a .ts or .a file",
+      "seconds": 6.7973e-05
+    },
+    {
+      "roots": [
+        "/workspace/s-probe/src/compiler/diagnosticMessages.json"
+      ],
+      "kind": "error",
+      "reason": "load: /workspace/s-probe/src/compiler/diagnosticMessages.json is not an Adamic source; want a .ts or .a file",
+      "seconds": 5.569e-06
+    },
+    {
+      "roots": [
+        "/workspace/s-probe/src/compiler/emitter.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/s-probe/src/compiler/core.ts:736:36",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 14.750161229
+    },
+    {
+      "roots": [
+        "/workspace/s-probe/src/compiler/executeCommandLine.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/s-probe/src/compiler/core.ts:736:36",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 15.375114066
+    },
+    {
+      "roots": [
+        "/workspace/s-probe/src/compiler/expressionToTypeNode.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/s-probe/src/compiler/core.ts:736:36",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 17.285080586
+    },
+    {
+      "roots": [
+        "/workspace/s-probe/src/compiler/factory/baseNodeFactory.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/s-probe/src/compiler/core.ts:736:36",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 15.479080755
+    }
+  ]
+}

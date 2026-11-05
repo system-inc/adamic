@@ -1,0 +1,46 @@
+{
+  "firstRun": {
+    "files": 1,
+    "edits": 4,
+    "writes": 1
+  },
+  "secondRun": {
+    "files": 0,
+    "edits": 0,
+    "writes": 0,
+    "bytesAndMtimePreserved": true
+  },
+  "refusals": [
+    "skipWhile: changed owner",
+    "skipWhile: changed adapted owner",
+    "skipWhile: missing owner",
+    "skipWhile: duplicate owner",
+    "skipWhile: nested duplicate owner",
+    "skipWhile: moved owner",
+    "skipWhile: half-adapted tree",
+    "filterMutate: changed owner",
+    "filterMutate: changed adapted owner",
+    "filterMutate: missing owner",
+    "filterMutate: duplicate owner",
+    "filterMutate: nested duplicate owner",
+    "filterMutate: moved owner",
+    "filterMutate: half-adapted tree",
+    "clear: changed owner",
+    "clear: changed adapted owner",
+    "clear: missing owner",
+    "clear: duplicate owner",
+    "clear: nested duplicate owner",
+    "clear: moved owner",
+    "clear: half-adapted tree",
+    "createQueue: changed owner",
+    "createQueue: changed adapted owner",
+    "createQueue: missing owner",
+    "createQueue: duplicate owner",
+    "createQueue: nested duplicate owner",
+    "createQueue: moved owner",
+    "createQueue: half-adapted tree",
+    "parse error"
+  ],
+  "foreignEditPreserved": true,
+  "crlfAndLfPreserved": true
+}
