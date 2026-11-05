@@ -138,6 +138,9 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 	if err := checkGeneratorRoads(lowering.result); err != nil {
 		return nil, err
 	}
+	if err := lowering.checkIterableViews(); err != nil {
+		return nil, err
+	}
 	if err := flow.NormalizeAsync(lowering.result); err != nil {
 		where := entry.AsNode()
 		var located *flow.AsyncError
@@ -255,6 +258,10 @@ type lowering struct {
 	// value (view_widened.go).
 	narrowedReads  map[int]map[int]*checker.Type
 	narrowedFields []*checker.Type
+	// iterableViews are the for-ofs over an Iterable<T> or IterableIterator<T> slot lowered as a
+	// collection's iterator, each proven by checkIterableViews once every call is in
+	// (iterable_views.go).
+	iterableViews []iterableView
 
 	programPlan          *programMembership
 	programDiscovery     bool

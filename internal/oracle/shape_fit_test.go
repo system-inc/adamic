@@ -31,17 +31,18 @@ import (
 // converse fails closed (shapeFitReached): an array five readonly fields down stops at its leaf, and six
 // down too. The two library interfaces exempt as a library call's own argument (shapeFitProtocols) each have
 // a pin in a program's own slot: a Set where a program's ReadonlySetLike is held, as a parameter and an
-// initializer, stops here, and an array where a program's Iterable<number> parameter is held stops at its
-// own for...of. The table's one entry, an array where `{ readonly length: number }` is held, is a control
-// that lowers and agrees with Node on sanitized, release and JavaScript, through an argument, an initializer
-// read after a push, an object literal's field, a return, an optional slot and five readonly fields down,
-// and so are a plain object seen that way, a readonly array, an array six fields down where an array is
-// held, Set.union and isSubsetOf with a Set (the prelude's ReadonlySetLike), and new Set(xs) and new
-// Map(entries) (Iterable). Mutants (each red, the controls green): the converse leaf answering "" (every
-// probe but depth_6, which shapeFitReached still stops, and iterable_parameter, at its own stop), the length
+// initializer, stops here, and so does an array where a program's Iterable<number> parameter is held, whose
+// for...of lowers as a view (#qk8rztp S2b-1b, lower/iterable_views.go). The table's one entry, an array where
+// `{ readonly length: number }` is held, is a control that lowers and agrees with Node on sanitized, release
+// and JavaScript, through an argument, an initializer read after a push, an object literal's field, a return,
+// an optional slot and five readonly fields down, and so are a plain object seen that way, a readonly array,
+// an array six fields down where an array is held, Set.union and isSubsetOf with a Set (the prelude's
+// ReadonlySetLike), and new Set(xs) and new Map(entries) (Iterable). Mutants (each red, the controls green):
+// the converse leaf answering "" (every probe but depth_6, which shapeFitReached still stops;
+// iterable_parameter then stops at its view's proof, an array being no origin the view names), the length
 // entry dropped (the length controls), shapeFitProtocols emptied (set_union, set_from_array,
-// map_from_entries), shapeFitReached answering "" (depth_6), eachReached cutting a library anonymous type
-// off (foreach_parameter), and an intersection skipped (intersection_view_map, intersection_view_array).
+// map_from_entries), shapeFitReached answering "" (depth_6), eachReached cutting a library anonymous type off
+// (foreach_parameter), and an intersection skipped (intersection_view_map, intersection_view_array).
 func TestContainerIsNotYetWhereAShapeIsHeld(t *testing.T) {
 	t.Parallel()
 	const mapStop = "a Map or Set going where a plain object type is held"
@@ -83,7 +84,7 @@ func TestContainerIsNotYetWhereAShapeIsHeld(t *testing.T) {
 		{"intersection_view_array", "const source = { v: [1, 2], tag: 'x' };\nconst holder: { readonly v: { indexOf(x: number): number } } & { readonly tag: string } = source;\nconsole.log(String(holder.v.indexOf(2)));\n", "1\n", ":2:91", arrayStop},
 		{"depth_5", deep + "function use(v: { readonly b: { readonly c: { readonly d: { readonly e: { readonly f: { indexOf(x: number): number } } } } } }): number {\n\treturn v.b.c.d.e.f.indexOf(2);\n}\nconsole.log(String(use(new A())));\n", "1\n", ":9:24", arrayStop},
 		{"depth_6", deeper + "function use(v: { readonly b: { readonly c: { readonly d: { readonly e: { readonly f: { readonly g: { indexOf(x: number): number } } } } } } }): number {\n\treturn v.b.c.d.e.f.g.indexOf(2);\n}\nconsole.log(String(use(new A())));\n", "1\n", ":10:24", arrayStop},
-		{"iterable_parameter", "function total(xs: Iterable<number>): number {\n\tlet sum = 0;\n\tfor (const x of xs) {\n\t\tsum += x;\n\t}\n\treturn sum;\n}\nconsole.log(String(total([1, 2, 3])));\n", "6\n", ":3:18", "for...of over an object"},
+		{"iterable_parameter", "function total(xs: Iterable<number>): number {\n\tlet sum = 0;\n\tfor (const x of xs) {\n\t\tsum += x;\n\t}\n\treturn sum;\n}\nconsole.log(String(total([1, 2, 3])));\n", "6\n", ":8:26", arrayStop},
 		{"function_value", "const take = (v: number[]): number => v.indexOf(2);\nconst f: (v: number[]) => number = take;\nconst g: (v: { indexOf(x: number): number }) => number = (v) => v.indexOf(2);\nconsole.log(String(f([1, 2]) + g([1, 2])));\n", "2\n", ":4:34", arrayStop},
 	} {
 		for _, extension := range []string{".a", ".ts"} {

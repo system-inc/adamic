@@ -1173,6 +1173,14 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 		}
 		return l.forOfMap(node, iterable, iterated, mapPart, name)
 	case ir.Object:
+		if held, isView := l.iterableViewElement(iterated); isView {
+			// One kind is listed for a view today, a collection's library iterator, so there is no
+			// dispatch and no default arm (Lower's condition 5 on #qk8rztp comes with a second kind):
+			// the view runs that iterator's own loop, and checkIterableViews proves, once every call
+			// is lowered, that nothing else reaches it.
+			l.iterableViews = append(l.iterableViews, iterableView{where: iterated, iterated: iterable, held: held})
+			return l.libraryForOfIterator(node, iterable, held.element, name)
+		}
 		if !l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(iterated)), "RegExpStringIterator") {
 			return nil, l.notYet(iterated, "for...of over an object")
 		}

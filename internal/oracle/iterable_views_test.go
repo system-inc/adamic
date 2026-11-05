@@ -1,0 +1,39 @@
+package oracle
+
+import (
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+// A for-of over a slot typed Iterable<T> or IterableIterator<T> whose every origin is a Map's or a
+// Set's iterator (#qk8rztp S2b-1b): the shape tsc's mapIterator and mapDefinedIterator are called
+// with. Each program in testdata/iterable_views agrees with Node natively, sanitized and on the
+// JavaScript backend, and leaks nothing: entries destructured and read as a pair, from two callers
+// with two maps; a Set's and a Map's values through one parameter; an iterator already stepped, so
+// the view sees only the rest; and a loop that adds to the map it walks, which Node's iterator visits.
+// Keys and values are built, never only literals. The mutants are in testdata/iterable_views/mutants.md.
+func TestIterableViewsAgreeWithNode(t *testing.T) {
+	t.Parallel()
+	directory := "internal/oracle/testdata/iterable_views"
+	entries, err := os.ReadDir(filepath.Join(repository, directory))
+	if err != nil {
+		t.Fatal(err)
+	}
+	programs := 0
+	for _, entry := range entries {
+		if !strings.HasSuffix(entry.Name(), ".a") {
+			continue
+		}
+		programs++
+		t.Run(entry.Name(), func(t *testing.T) {
+			t.Parallel()
+			// generatorAgrees holds any program to Node on every backend and to leaking nothing.
+			generatorAgrees(t, directory+"/"+entry.Name())
+		})
+	}
+	if programs != 4 {
+		t.Fatalf("%d programs in %s, want 4: a program added or removed needs this count changed with it", programs, directory)
+	}
+}
