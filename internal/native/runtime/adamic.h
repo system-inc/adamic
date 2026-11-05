@@ -1174,7 +1174,8 @@ void adamic_array_sort_undefined_last(adamic_array *array, int (*compare)(adamic
 // adamic_map_entries is [...map]: [key, value] pairs, each an object of the shape given.
 adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair);
 
-// adamic_array_join is array.join(separator), each element written as String() would.
+// adamic_array_join is array.join(separator), each element written as String() would, and the empty
+// string when the join would be longer than V8's longest (adamic_string_check_length).
 enum adamic_join {
 	adamic_join_numbers = 1,
 	adamic_join_booleans,
@@ -1206,6 +1207,8 @@ bool adamic_number_has_own_property(const adamic_string *key, bool prototype);
 double adamic_math_clz32(double value);
 double adamic_math_imul(double left, double right);
 double adamic_math_fround(double value);
+// adamic_string_concat is the parts joined, a string the caller owns: the empty string when it would
+// be longer than V8's longest (adamic_string_check_length).
 adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]);
 
 // The strings every program has: "", and String(true) and String(false).
@@ -1283,7 +1286,8 @@ adamic_string *adamic_string_slice_bytes(const adamic_string *string, size_t off
 adamic_string *adamic_string_share(const adamic_string *string, size_t offset, size_t size);
 
 // The rest of a string's UTF-16 view (string.c), each as JavaScript means it. These that return a
-// string return one the caller owns.
+// string return one the caller owns. repeat, pad and replace return the empty string when theirs would
+// be longer than V8's longest (adamic_string_check_length).
 adamic_string *adamic_string_slice(const adamic_string *string, double start, double end, bool has_end);
 adamic_maybe_number adamic_string_code_point_at(const adamic_string *string, double position);
 int adamic_string_compare(const adamic_string *left, const adamic_string *right);
@@ -1316,20 +1320,24 @@ adamic_string *adamic_string_replace(const adamic_string *string, const adamic_s
 // ADAMIC_STRING_MAX_UNITS is V8's longest string, in UTF-16 units (String::kMaxLength on 64-bit).
 #define ADAMIC_STRING_MAX_UNITS 536870888
 
-// adamic_string_check_length panics, as V8 throws RangeError: Invalid string length, when a string
-// would be longer than V8's longest, in UTF-16 units.
-void adamic_string_check_length(double units);
+// adamic_string_check_length is whether a string of units UTF-16 units can be made: past V8's longest,
+// it sets adamic_thrown to Node's RangeError, "Invalid string length", and says false, and the caller
+// returns what it promises on a throw (the empty string, for those that return one) without making the
+// string. A RangeError already pending is kept: the first failure is the one Node throws.
+bool adamic_string_check_length(double units);
 
 // adamic_string_allocate makes a string of length bytes for the caller to fill, references 1.
 adamic_string *adamic_string_allocate(size_t length);
 
 // toUpperCase and toLowerCase (case.c): Unicode's full, locale-independent case mapping, final
-// sigma included, as Node does it. They return a string the caller owns.
+// sigma included, as Node does it. They return a string the caller owns: the empty string when a
+// mapping that lengthens it (ß to SS) would make it longer than V8's longest.
 adamic_string *adamic_string_to_upper(const adamic_string *string);
 adamic_string *adamic_string_to_lower(const adamic_string *string);
 
 // normalize (normalize.c): NFC, NFD, NFKC or NFKD as form names it. It returns a string the caller
-// owns: the empty string when any other form sets adamic_thrown to Node's RangeError.
+// owns: the empty string when any other form, or a result longer than V8's longest, sets adamic_thrown
+// to Node's RangeError.
 adamic_string *adamic_string_normalize(const adamic_string *string, const adamic_string *form);
 
 // adamic_string_units is a string's length in UTF-16 units, counted once. adamic_string_locate is
@@ -1347,7 +1355,9 @@ size_t adamic_string_put(char *bytes, size_t written, const adamic_string *part)
 
 // adamic_string_append is string + parts, taking the caller's reference to string: written in place
 // when the caller held the only reference and there's room, and otherwise a new string with room to
-// grow, string let go (string_append.c).
+// grow, string let go (string_append.c). When the result would be longer than V8's longest, string
+// comes back unchanged, with the RangeError pending (adamic_string_check_length): text = text + more
+// throws before text is written.
 adamic_string *adamic_string_append(adamic_string *string, size_t count, adamic_string *const parts[]);
 
 size_t adamic_string_units(const adamic_string *string);

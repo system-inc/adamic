@@ -1,0 +1,52 @@
+// An async function's try around a concatenation and around a pad past V8's longest string: the
+// RangeError takes the flow graph's exception edge to the catch. Without a try, it rejects the
+// promise, and the caller's await throws it.
+const half = 'ab'.repeat(2 ** 27);
+
+async function joined(text: string): Promise<string> {
+	await Promise.resolve();
+	try {
+		const whole = text + text;
+		return `ok ${whole.length}`;
+	} catch (error) {
+		if (error instanceof Error) {
+			return `${error.name}|${error.message}`;
+		}
+		return 'not an error';
+	}
+}
+
+async function padded(target: number): Promise<void> {
+	const label = `padStart(${target})`;
+	try {
+		console.log(`${label}: ${'a'.padStart(target, 'xy').length}`);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(`${label} threw ${error.name}|${error.message}`);
+		}
+	}
+	await Promise.resolve();
+}
+
+async function bare(text: string): Promise<number> {
+	await Promise.resolve();
+	return [text, text].join('').length;
+}
+
+async function run(): Promise<string> {
+	const first = await joined('ab');
+	const second = await joined(half);
+	await padded(5);
+	await padded(536870889);
+	let text = `${first} ${second}`;
+	try {
+		const third = await bare(half);
+		text = `${text} ${third}`;
+	} catch (error) {
+		if (error instanceof Error) {
+			text = `${text} rejected ${error.name}|${error.message}`;
+		}
+	}
+	return text;
+}
+console.log(await run());
