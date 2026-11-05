@@ -3,16 +3,18 @@
 #include <stdlib.h>
 #include <string.h>
 
+// too_long is the text gone past V8's longest string: nothing more is written, and the encode throws
+// Node's RangeError once the walk is done (adamic_json_encode).
 typedef struct encode_builder {
 	char *bytes;
 	size_t length, capacity, units;
+	bool too_long;
 } encode_builder;
 
 static void append(encode_builder *w, const char *bytes, size_t length, size_t units) {
-	adamic_string_check_length((double)w->units + (double)units);
-	if (length > SIZE_MAX - w->length) {
-		static const char message[] = "RangeError: Invalid string length";
-		adamic_panic(message, sizeof message - 1);
+	if (w->too_long || (double)w->units + (double)units > ADAMIC_STRING_MAX_UNITS || length > SIZE_MAX - w->length) {
+		w->too_long = true;
+		return;
 	}
 	size_t needed = w->length + length;
 	if (needed > w->capacity) {
@@ -280,12 +282,18 @@ static void encode_write(encode_builder *builder, adamic_value value,
 	}
 }
 adamic_string *adamic_json_encode(adamic_value value, const adamic_encode_schema *schema) {
-	encode_builder builder = {NULL, 0, 64, 0};
+	encode_builder builder = {NULL, 0, 64, 0, false};
 	builder.bytes = malloc(builder.capacity);
 	if (builder.bytes == NULL) {
 		adamic_panic("out of memory", sizeof "out of memory" - 1);
 	}
 	encode_write(&builder, value, schema, schema->root, 0);
+	if (builder.too_long) {
+		// Node's RangeError on the pending word, and an empty string the caller lets go.
+		(void)adamic_string_check_length((double)ADAMIC_STRING_MAX_UNITS + 1);
+		free(builder.bytes);
+		return adamic_retain(&adamic_string_empty);
+	}
 	adamic_string *result = adamic_string_allocate(builder.length);
 	if (builder.length != 0) {
 		memcpy((char *)result->bytes, builder.bytes, builder.length);

@@ -38,9 +38,24 @@ func (e *emitter) appendTo(local int, parts []ir.Expression) {
 	}
 	name := e.localName(local)
 	e.line("%s = adamic_string_append(%s, %d, (adamic_string *const[]){%s});", name, name, len(values), strings.Join(values, ", "))
+	// Past V8's longest, a RangeError is pending and text holds what it held, as JavaScript leaves a
+	// variable an assignment threw in (ir.StringLengthMayThrow: two parts or more always can).
+	e.checkThrown()
 }
 
+// stringCall is one of a string's methods. One that can lengthen its string (ir.StringCall's MayThrow)
+// can make it longer than V8's longest, and normalize can be given a form that isn't one of the four:
+// either leaves a RangeError pending and an empty result, tested once the result is owned, and let go
+// with the rest.
 func (e *emitter) stringCall(call ir.StringCall) string {
+	result := e.stringMethod(call)
+	if call.MayThrow() {
+		e.checkThrown()
+	}
+	return result
+}
+
+func (e *emitter) stringMethod(call ir.StringCall) string {
 	value := e.value(call.Value)
 	arguments := make([]string, 0, len(call.Arguments))
 	for _, argument := range call.Arguments {
@@ -82,13 +97,7 @@ func (e *emitter) stringCall(call ir.StringCall) string {
 	case "toLowerCase":
 		return e.own(ir.String, fmt.Sprintf("adamic_string_to_lower(%s)", value))
 	case "normalize":
-		result := e.own(ir.String, fmt.Sprintf("adamic_string_normalize(%s, %s)", value, arguments[0]))
-		// A form that isn't one of the four leaves a RangeError pending, and an empty result, let go
-		// with the rest.
-		if call.MayThrow(e.program.Strings) {
-			e.checkThrown()
-		}
-		return result
+		return e.own(ir.String, fmt.Sprintf("adamic_string_normalize(%s, %s)", value, arguments[0]))
 	case "replace", "replaceAll":
 		return e.own(ir.String, fmt.Sprintf("adamic_string_replace(%s, %s, %s, %t)", value, arguments[0], arguments[1], call.Method == "replaceAll"))
 	case "includes":

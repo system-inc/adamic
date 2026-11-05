@@ -168,7 +168,12 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		for _, part := range expression.Parts {
 			parts = append(parts, e.value(part))
 		}
-		return e.own(ir.String, fmt.Sprintf("adamic_string_concat(%d, (adamic_string *const[]){%s})", len(parts), strings.Join(parts, ", ")))
+		result := e.own(ir.String, fmt.Sprintf("adamic_string_concat(%d, (adamic_string *const[]){%s})", len(parts), strings.Join(parts, ", ")))
+		// Past V8's longest, a RangeError is pending and the result empty, let go with the rest.
+		if ir.StringLengthMayThrow(expression) {
+			e.checkThrown()
+		}
+		return result
 	case ir.Conditional:
 		return e.conditional(expression)
 	case ir.ObjectLiteral:
@@ -711,7 +716,10 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		array := e.value(expression.Array)
 		separator := e.value(expression.Separator)
-		return e.own(ir.String, fmt.Sprintf("adamic_array_join(%s, %s, %s)", array, separator, joinKind(expression.Element)))
+		result := e.own(ir.String, fmt.Sprintf("adamic_array_join(%s, %s, %s)", array, separator, joinKind(expression.Element)))
+		// Past V8's longest, a RangeError is pending and the result empty, let go with the rest.
+		e.checkThrown()
+		return result
 	case ir.ArrayLiteral:
 		if len(expression.Metadata) != 0 {
 			return e.nodeArrayLiteral(expression)

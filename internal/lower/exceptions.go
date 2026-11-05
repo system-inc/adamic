@@ -259,11 +259,16 @@ func (l *lowering) exceptions() error {
 }
 
 // throwsOut reports whether a throw can leave statements: a throw, a call to a function that can
-// throw (through a function value too, a sort's comparator among them), or a read or write in its
-// temporal dead zone (ir.Program's DeadZoneMayThrow), that isn't inside a try's body with a catch.
+// throw (through a function value too, a sort's comparator among them), a read or write in its
+// temporal dead zone (ir.Program's DeadZoneMayThrow), or a string made past V8's longest
+// (ir.StringLengthMayThrow), that isn't inside a try's body with a catch.
 func (l *lowering) throwsOut(statements []ir.Statement) bool {
 	found := false
 	walk(statements, func(node any) bool {
+		if ir.StringLengthMayThrow(node) {
+			found = true
+			return false
+		}
 		switch node := node.(type) {
 		case ir.Try:
 			if node.HasCatch {
@@ -283,8 +288,6 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			found = found || node.MayThrow()
 		case ir.ArrayFill:
 			found = found || node.MayThrow()
-		case ir.StringCall:
-			found = found || node.MayThrow(l.result.Strings)
 		case ir.StringFromCodes:
 			found = found || node.MayThrow()
 		case ir.ObjectLiteral:
