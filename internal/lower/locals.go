@@ -189,7 +189,12 @@ func (l *lowering) symbol(node *ast.Node) *ast.Symbol {
 // local finds the local an identifier refers to, and notes a capture if it belongs to another
 // function.
 func (l *lowering) local(identifier *ast.Node) (int, bool) {
-	symbol := l.symbol(identifier)
+	return l.localOf(identifier, l.symbol(identifier))
+}
+
+// localOf is local for a symbol the identifier refers to other than the one it names: in
+// { a } = value, a names the pattern's property, and the variable written is its value symbol.
+func (l *lowering) localOf(identifier *ast.Node, symbol *ast.Symbol) (int, bool) {
 	local, isLocal := l.locals[symbol]
 	if isLocal {
 		l.touch(local)
