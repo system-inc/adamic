@@ -20,8 +20,11 @@ import (
 // The storage is decided where the value is made, and it's what every slot that holds the value reads,
 // as #fsb6n82 found for a literal's tuple. A union slot is any member the value is assignable to, and
 // narrowing can pick any of them, so every such container member must read the elements as they're
-// stored, not one. Only a value made right there is judged: one lowering builds at a representation it
-// can name. A named container seen through a wider readonly slot is a ruling of its own, not made here.
+// stored, not one. An array literal is judged at the representation lowering built it with. Any other
+// value is judged at its own type, the one it was stored as when it was made, a named one included:
+// invariant-mutable lets a named number[] go where readonly (number | string)[] is held, since that slot
+// can't write, but its reads still worked the numbers as boxes and segfaulted natively, and a
+// Map<string, number> read through ReadonlyMap<string, number | string> printed undefined (#3vsp1ds).
 
 // elementFitDepth bounds elementsSeenAs. A container reached no sooner is judged, so it fails closed.
 const elementFitDepth = 16
@@ -58,8 +61,8 @@ func (l *lowering) elementsHeldOtherwise(node *ast.Node, slot *checker.Type) str
 			return "a " + l.checker.TypeToString(l.checker.GetTypeAtLocation(node)) + " where " + l.checker.TypeToString(slot) + " goes, its elements stored in a way Adamic can't name here"
 		}
 		built = element
-	case !l.freshValue(node):
-		// An object literal's fields are values at their own slots, and a named value isn't made here.
+	case node.Kind == ast.KindObjectLiteralExpression:
+		// An object literal's fields are values at their own slots, each judged there.
 		return ""
 	}
 	own := l.checker.GetTypeAtLocation(node)
