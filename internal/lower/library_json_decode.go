@@ -37,8 +37,8 @@ func (l *lowering) jsonDecodeContainsNull(t *checker.Type, seen map[*checker.Typ
 			}
 		}
 	} else if t.Flags()&checker.TypeFlagsObject != 0 {
-		if l.checker.IsArrayType(t) {
-			return l.jsonDecodeContainsNull(l.checker.GetElementTypeOfArrayType(t), seen)
+		if l.isArrayType(t) {
+			return l.jsonDecodeContainsNull(l.elementTypeOfArray(t), seen)
 		}
 		if checker.IsTupleType(t) {
 			for _, element := range l.checker.GetTypeArguments(t) {
@@ -246,7 +246,7 @@ func (l *lowering) jsonDecodeSchema(node *ast.Node, rootType *checker.Type, mode
 			if mode == jsonSchemaEncode && isClassInstance(t) {
 				return 0, l.notYet(node, "encodeJson of a class instance is not yet supported; describe the data with an interface")
 			}
-			if isClassInstance(t) || l.isLibraryType(t, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Date", "RegExp") || len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(t, checker.SignatureKindConstruct)) != 0 || len(l.checker.GetIndexInfosOfType(t)) != 0 && !l.checker.IsArrayType(t) && !checker.IsTupleType(t) {
+			if isClassInstance(t) || l.isLibraryType(t, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Date", "RegExp") || len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(t, checker.SignatureKindConstruct)) != 0 || len(l.checker.GetIndexInfosOfType(t)) != 0 && !l.isArrayType(t) && !checker.IsTupleType(t) {
 				return 0, refuse(t)
 			}
 			if checker.IsTupleType(t) {
@@ -259,10 +259,10 @@ func (l *lowering) jsonDecodeSchema(node *ast.Node, rootType *checker.Type, mode
 					}
 					n.Fields = append(n.Fields, ir.JSONDecodeField{Name: strconv.Itoa(i), Node: child})
 				}
-			} else if l.checker.IsArrayType(t) {
+			} else if l.isArrayType(t) {
 				n.Kind = "array"
 				n.Of = ir.Array
-				child, err := visit(l.checker.GetElementTypeOfArrayType(t))
+				child, err := visit(l.elementTypeOfArray(t))
 				if err != nil {
 					return 0, err
 				}

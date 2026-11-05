@@ -67,7 +67,7 @@ func (l *lowering) libraryArrayMethodArguments(node, receiver *ast.Node, name st
 		// Stage 0 arrays are dense. Copying first preserves identity and reference ownership.
 		return ir.ArrayReverse{Array: ir.ArraySlice{Array: array, Element: element}}, true, nil
 	case "toSorted":
-		if l.includesUndefined(l.checker.GetElementTypeOfArrayType(l.checker.GetTypeAtLocation(receiver))) {
+		if l.includesUndefined(l.elementTypeOfArray(l.checker.GetTypeAtLocation(receiver))) {
 			return nil, true, l.notYet(node, "toSorted on optional elements")
 		}
 		copy := ir.ArraySlice{Array: array, Element: element}
@@ -75,7 +75,7 @@ func (l *lowering) libraryArrayMethodArguments(node, receiver *ast.Node, name st
 			if element != ir.Number && element != ir.Boolean && element != ir.String {
 				return nil, true, l.notYet(node, "toSorted without a comparator on these elements")
 			}
-			if l.includesUndefined(l.checker.GetElementTypeOfArrayType(l.checker.GetTypeAtLocation(receiver))) {
+			if l.includesUndefined(l.elementTypeOfArray(l.checker.GetTypeAtLocation(receiver))) {
 				return nil, true, l.notYet(node, "toSorted without a comparator on optional elements")
 			}
 			return ir.ArraySort{Array: copy, Element: element, Comparator: l.libraryArrayComparator(element)}, true, nil
@@ -233,7 +233,7 @@ func (l *lowering) libraryArrayFlat(node, receiver *ast.Node, array ir.Expressio
 	layer := l.checker.GetTypeAtLocation(receiver)
 	types := []ir.Type{}
 	for step := 0; step <= depth; step++ {
-		item := l.checker.GetElementTypeOfArrayType(layer)
+		item := l.elementTypeOfArray(layer)
 		of, known := l.kept(item)
 		if !known || slotless(of) {
 			return nil, true, l.notYet(node, "flat on heterogeneous layers")
@@ -381,7 +381,7 @@ func (l *lowering) libraryArrayFlatMap(node *ast.Node, array ir.Expression, elem
 		if l.includesUndefined(returned) {
 			return nil, true, l.notYet(node, "flatMap with optional array results")
 		}
-		inner, known := l.kept(l.checker.GetElementTypeOfArrayType(returned))
+		inner, known := l.kept(l.elementTypeOfArray(returned))
 		if !known || inner != output {
 			return nil, true, l.notYet(node, "flatMap with this callback element type")
 		}
@@ -603,7 +603,7 @@ func (l *lowering) libraryArrayJoin(node, receiver *ast.Node, array ir.Expressio
 	depth := 0
 	var element ir.Type
 	for {
-		item := l.checker.GetElementTypeOfArrayType(l.checker.GetNonNullableType(layer))
+		item := l.elementTypeOfArray(l.checker.GetNonNullableType(layer))
 		of, known := l.kept(item)
 		if !known {
 			return nil, true, l.notYet(node, "join on heterogeneous nested arrays")

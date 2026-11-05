@@ -113,10 +113,10 @@ func (l *lowering) boundArgumentsRefusal(binding typeArgumentBinding) (judged bo
 			return true, l.notYet(argument, "a spread argument "+l.checker.TypeToString(binding.parameter)+"'s type argument can be inferred from, judged against its constraint "+l.checker.TypeToString(binding.constraint))
 		}
 		if rest {
-			if !l.checker.IsArrayType(slot) {
+			if !l.isArrayType(slot) {
 				return true, l.notYet(argument, "an argument to a rest parameter that isn't an array, which "+l.checker.TypeToString(binding.parameter)+"'s type argument can be inferred from, judged against its constraint "+l.checker.TypeToString(binding.constraint))
 			}
-			slot = l.checker.GetElementTypeOfArrayType(slot)
+			slot = l.elementTypeOfArray(slot)
 		}
 		// Only a slot tsc's relation takes the argument into is one the relation rules can judge it in,
 		// as they judge only what tsc accepted. One it doesn't is a place the type parameter is taken in,
@@ -279,8 +279,8 @@ func (l *lowering) judgeBoundArray(literal *ast.Node, target *checker.Type) erro
 			if index < len(arguments) && !slices.ContainsFunc(elements[:index], func(before *ast.Node) bool { return before.Kind == ast.KindSpreadElement }) {
 				slot = arguments[index]
 			}
-		case l.checker.IsArrayType(array):
-			slot = l.checker.GetElementTypeOfArrayType(array)
+		case l.isArrayType(array):
+			slot = l.elementTypeOfArray(array)
 		}
 		if slot == nil {
 			return l.notYet(element, "an element of an array literal a type argument is inferred from, whose type in its constraint "+l.checker.TypeToString(target)+" can't be read")

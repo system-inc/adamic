@@ -351,8 +351,8 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
 			return nil, true, l.notYet(node, "a delayed library result whose contextual representation is not proven")
 		}
 		if value.Type() == ir.Array && method.family == "Array.prototype" {
-			from := l.checker.GetElementTypeOfArrayType(l.checker.GetTypeAtLocation(receiver))
-			to := l.checker.GetElementTypeOfArrayType(contextual)
+			from := l.elementTypeOfArray(l.checker.GetTypeAtLocation(receiver))
+			to := l.elementTypeOfArray(contextual)
 			if from == nil || to == nil || from != to || !l.sameKeeping(from, to, map[[2]*checker.Type]bool{}) {
 				return nil, true, l.notYet(node, "a delayed Array result with an erased or different element type; preserve the receiver's exact element type")
 			}
@@ -391,7 +391,7 @@ func (l *lowering) delayedArrayWritesFit(node, receiver *ast.Node, name string, 
 	if !delayedArrayWriters[name] {
 		return l.notYet(node, "a delayed "+name+" whose writes aren't classified")
 	}
-	element := l.checker.GetElementTypeOfArrayType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver)))
+	element := l.elementTypeOfArray(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver)))
 	var values []*ast.Node
 	switch name {
 	case "push":
@@ -404,7 +404,7 @@ func (l *lowering) delayedArrayWritesFit(node, receiver *ast.Node, name string, 
 		// Each array's elements are written into the result, so the array is judged as the receiver's
 		// type, element by element, by the same check.
 		for _, other := range written {
-			inside := l.checker.GetElementTypeOfArrayType(l.checker.GetTypeAtLocation(other))
+			inside := l.elementTypeOfArray(l.checker.GetTypeAtLocation(other))
 			if element == nil || inside == nil || !l.checker.IsTypeAssignableTo(inside, element) {
 				return l.notYet(other, "a delayed concat of an array whose elements aren't the receiver's element type")
 			}
@@ -489,7 +489,7 @@ func (l *lowering) libraryMapCallback(node, receiver *ast.Node, element ir.Type)
 	}
 	// Reference-valued optional elements use NULL. String(undefined) is a real string, not an
 	// absent result slot, so normalize presence before passing it to the intrinsic adapter.
-	sourceElement := l.checker.GetElementTypeOfArrayType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver)))
+	sourceElement := l.elementTypeOfArray(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver)))
 	if element == ir.String && sourceElement != nil && l.includesUndefined(sourceElement) {
 		reads[0] = ir.Coalesce{Value: reads[0], Fallback: ir.StringConstant{Index: l.constant("undefined")}, Of: ir.String}
 	}

@@ -376,7 +376,7 @@ func (l *lowering) placeholderAllowsUnset(node *ast.Node) bool {
 		callee := ast.SkipParentheses(parent.AsCallExpression().Expression)
 		if callee.Kind == ast.KindPropertyAccessExpression {
 			receiver := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))
-			if l.checker.IsArrayType(receiver) || l.isLibraryType(receiver, "Map", "Set") {
+			if l.isArrayType(receiver) || l.isLibraryType(receiver, "Map", "Set") {
 				switch callee.Name().Text() {
 				case "set", "add", "push", "unshift", "splice", "fill":
 					return false

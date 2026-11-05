@@ -14,5 +14,5 @@ func (l *lowering) arrayOrUndefined(proven *checker.Type) bool {
 		}
 		return true
 	}
-	return l.checker.IsArrayType(proven)
+	return l.isArrayType(proven)
 }

@@ -54,7 +54,7 @@ func (l *lowering) shapeFit(value *checker.Type, target *checker.Type, libraryAr
 	if !valueKnown || !slotKnown || (held != ir.Map && held != ir.Array) || (slot != ir.Object && slot != ir.Union) {
 		return "", false
 	}
-	if target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 || l.checker.IsArrayType(target) || checker.IsTupleType(target) {
+	if target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 || l.isArrayType(target) || checker.IsTupleType(target) {
 		return "", false
 	}
 	if libraryArgument && l.shapeFitProtocol(target) {

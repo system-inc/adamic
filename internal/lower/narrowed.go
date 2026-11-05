@@ -23,7 +23,7 @@ import (
 func (l *lowering) narrowedAway(node *ast.Node) bool {
 	if node.Kind == ast.KindElementAccessExpression {
 		receiver := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsElementAccessExpression().Expression))
-		if l.checker.IsArrayType(receiver) {
+		if l.isArrayType(receiver) {
 			// Even T[] can read undefined after pop, or at an index past its end.
 			return !l.includesUndefined(l.checker.GetTypeAtLocation(node))
 		}

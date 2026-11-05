@@ -212,7 +212,7 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 		return &ir.JSONSchema{Kind: "record", Element: child}, nil
 	}
 	if of == ir.Array {
-		element := l.checker.GetElementTypeOfArrayType(l.checker.GetNonNullableType(t))
+		element := l.elementTypeOfArray(l.checker.GetNonNullableType(t))
 		if _, extraElement, known := l.nodeArrayLayoutOf(l.checker.GetNonNullableType(t)); known {
 			element = extraElement
 		}
