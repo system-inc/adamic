@@ -297,6 +297,8 @@ type lowering struct {
 	writtenAccessorNames map[string]bool
 	// crossFunctionWrites is every binding a function other than its own writes (narrowed_nullish.go).
 	crossFunctionWrites map[*ast.Symbol]bool
+	// propertyWrites is every property write in the program, by what it can reach (narrowed_nullish.go).
+	propertyWrites *propertyWrites
 
 	// predicateFalse is the false-direction walk's switch and memo (predicate_false_flow.go).
 	predicateFalse *predicateFalseFlow
