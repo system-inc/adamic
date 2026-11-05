@@ -584,12 +584,15 @@ func toolMaps(compiler string, arguments []string) []string {
 	return maps
 }
 
-// headerScans holds each process's scan of the headers a runtime's compile reads, once per sources, flags and compiler:
-// the system's headers don't change while a process runs.
+// headerScans holds each process's scan of the headers a runtime's compile reads, per sources, flags and compiler, so
+// clang -M runs once for them. The scan is found by those, never by the headers, so what it lists is checked against
+// what each header holds now before it's handed out (headersHold): a header rewritten while the process runs scans
+// again, and the headers part moves with it.
 var headerScans sync.Map
 
 type headerScan struct {
-	once    sync.Once
+	lock    sync.Mutex
+	scanned bool
 	headers string
 	err     error
 }
@@ -598,11 +601,38 @@ type headerScan struct {
 // dependencies (-M): the C library's headers and the compiler's own, each by its path and the sha256 of what it holds.
 // A traced build reads the runtime cache as no entry, as it reads Go's build cache (#vt46geg), and only an address of
 // everything the compile read makes that safe: these headers are the one part the sources, flags and compiler don't name.
+// A scan the memo holds is the answer only while every header it lists still holds what it hashed; a failed scan is the
+// answer as it was, since nothing it listed can be checked.
 func headersRead(files []runtimeFile, flags []string, compiler string) (string, error) {
 	value, _ := headerScans.LoadOrStore(runtimeKey(files, flags, compiler, "", ""), &headerScan{})
 	scan := value.(*headerScan)
-	scan.once.Do(func() { scan.headers, scan.err = scanHeaders(files, flags, compiler) })
+	scan.lock.Lock()
+	defer scan.lock.Unlock()
+	if scan.scanned && (scan.err != nil || headersHold(scan.headers)) {
+		return scan.headers, scan.err
+	}
+	scan.headers, scan.err = scanHeaders(files, flags, compiler)
+	scan.scanned = true
 	return scan.headers, scan.err
+}
+
+// headersHold says whether every header of a scan (scanHeaders' lines, each a path and the sha256 of what it held)
+// still holds what it did: one that moved, or can't be read, means the scan is another one now.
+func headersHold(headers string) bool {
+	if headers == "" {
+		return true
+	}
+	for _, line := range strings.Split(headers, "\n") {
+		separator := strings.LastIndex(line, " ")
+		if separator < 0 {
+			return false
+		}
+		contents, err := os.ReadFile(line[:separator])
+		if err != nil || fmt.Sprintf("%x", sha256.Sum256(contents)) != line[separator+1:] {
+			return false
+		}
+	}
+	return true
 }
 
 func scanHeaders(files []runtimeFile, flags []string, compiler string) (string, error) {

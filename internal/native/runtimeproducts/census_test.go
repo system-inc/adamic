@@ -944,7 +944,7 @@ var jobserverEnvironment = map[string]string{
 var requestState = map[string]string{
 	"jobserver":        schedulingState["jobserver"],
 	"processJobserver": "the process's compile token pool the header scan behind RuntimeRequestFor runs clang -M under (UseJobserver): when it runs, never what it lists",
-	"headerScans":      "the process's memo of the header scan, by the runtime key of the same sources, flags and compiler: what it holds is the request's headers part, which the key holds (TestRuntimeProductKeyHoldsEveryPart)",
+	"headerScans":      "the process's memo of the header scan, found by the runtime key of the same sources, flags and compiler and handed out only while each header it lists holds what it hashed (headersHold, TestARewrittenHeaderMovesAHeldScan): what it holds is the request's headers part, which the key holds (TestRuntimeProductKeyHoldsEveryPart)",
 	"ErrJobserverSet":  "the error UseJobserver returns for a second jobserver, which fails the process's setup before any compile, never reaches one",
 }
 
