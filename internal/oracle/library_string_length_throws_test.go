@@ -18,7 +18,21 @@ import (
 // a time.
 func TestLibraryStringLengthThrowsCaught(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"caught", "propagated", "async", "constant"} {
+	holdStringLengthFixtures(t, []string{"caught", "propagated", "async", "constant"})
+}
+
+// One pending promise awaited before anything in its statement can run code or throw, Language's c1,
+// c7, c9 and d2 (#c3bk0fp): the await consumes the promise, so each lowers, and each agrees with Node.
+func TestStringLengthAwaitFirstAgrees(t *testing.T) {
+	t.Parallel()
+	holdStringLengthFixtures(t, []string{"await_first_callee", "await_first_concat", "await_first_binary", "await_first_declared_rejecting"})
+}
+
+// holdStringLengthFixtures holds each named program of library_string_length_throws to Node, natively
+// with the leak check, in the release build and on the JavaScript backend, one at a time.
+func holdStringLengthFixtures(t *testing.T, names []string) {
+	t.Helper()
+	for _, name := range names {
 		t.Run(name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_string_length_throws/"+name+".a"))
 			if err != nil {
@@ -26,7 +40,7 @@ func TestLibraryStringLengthThrowsCaught(t *testing.T) {
 			}
 			program, err := lowered(t, path)
 			if err != nil {
-				t.Fatalf("a try around a string past V8's longest must lower: %v", err)
+				t.Fatalf("must lower: %v", err)
 			}
 			node := onNode(t, path)
 			if node.exitCode != 0 {
