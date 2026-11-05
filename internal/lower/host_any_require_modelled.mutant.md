@@ -32,3 +32,24 @@ The real failing line:
 ```text
 host_any_require_modelled_test.go:33: host-any.md must name exactly the two Modelled require forms at module.d.ts:707; got 0 rows, forms map[]
 ```
+
+
+Third mutant: in the require row's Fixtures and divergences cell, rename
+`internal/lower/testdata/commonjs_reasons/source-map-support.ts` to
+`internal/lower/testdata/commonjs_reasons/source-map-supprot.ts`. A scratch tree
+contains the changed audit file and links to the unchanged repository fixtures.
+Run the package's compiled test binary from that tree's internal/lower directory:
+
+```sh
+lower.test -test.run '^TestHostAnyModelledRequireForms$' -test.count=1 -test.v
+```
+
+Result with the typo: exit 1. The real failing line names the misspelled path:
+
+```text
+host_any_require_modelled_test.go:28: require's Modelled fixture internal/lower/testdata/commonjs_reasons/source-map-supprot.ts does not name a repository file: stat /tmp/host-any-require-evidence/followup/typo-tree/internal/lower/testdata/commonjs_reasons/source-map-supprot.ts: no such file or directory
+```
+
+The unmodified row passes TestHostAnyModelledRequireForms. The same test checks
+the two divergence names in backend_divergences_test.go and the installed-layout
+test's declaration in installed_layout_test.go by reading their source text.
