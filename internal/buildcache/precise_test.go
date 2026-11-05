@@ -6,8 +6,10 @@ import (
 	"errors"
 	"fmt"
 	"go/ast"
+	"go/build"
 	"go/parser"
 	"go/token"
+	"go/types"
 	"math/rand/v2"
 	"net/http/httptest"
 	"os"
@@ -2844,7 +2846,7 @@ func TestOnlyReviewedPackagesBuildLean(t *testing.T) {
 	root := repositoryRootForTest(t)
 	callers := leanCallersIn(t, root)
 	for _, caller := range callers {
-		if !slices.Contains(leanCallers, caller) {
+		if !slices.ContainsFunc(leanCallers, func(reviewed leanCaller) bool { return reviewed.pkg == caller }) {
 			t.Errorf("%s builds lean, and isn't one of buildcache's reviewed lean callers %v", caller, leanCallers)
 		}
 	}
@@ -3197,27 +3199,37 @@ func TestALeanBuildsDeclaredPathItCantReadWholeRefusesIt(t *testing.T) {
 	}
 }
 
-// A windowed lean build of buildcache's own is keyed by the code that makes it (leanRecipeFor, #earlycut, Node's approved
-// design), never by the recipe of the binary that settled it. A build that isn't lean, a lean build whose window opened
-// late, and a lean caller's windowed build keep the binary's whole recipe: a caller's code is keyed lean only once its
-// census holds, and native's archives reach the jobserver until it's handed in (#yzwm4rj, Node's reading 1). Mutants
-// that each fail it: a windowed lean build given the whole recipe; a late window given the lean recipe; a caller's
-// windowed build given the lean recipe; Report.Lean set for the whole recipe.
+// A windowed lean build of buildcache's own, or of a lean caller naming its census (runtimeproducts, #gr5y0yf item 1), is
+// keyed by the code that makes it (leanRecipeFor, #earlycut, Node's approved design), never by the recipe of the binary
+// that settled it. A build that isn't lean, a lean build whose window opened late, and the windowed build of a lean
+// caller naming no census (agreementproducts) keep the binary's whole recipe: a caller's code is keyed lean only once
+// its census holds, failing closed (Node's reading 1). Two lean builds one process settles, buildcache's own and
+// runtimeproducts', are each keyed by its own caller's recipe. Mutants that each fail it: a windowed lean build given
+// the whole recipe; a late window given the lean recipe; a caller naming no census given the lean recipe; a caller
+// naming one given the whole recipe; the lean recipes held by the binary alone, not the caller; Report.Lean set for the
+// whole recipe.
 // Not parallel: newRig, and it replaces recipeFor and leanRecipeFor.
 func TestALeanBuildIsKeyedByTheCodeThatMakesIt(t *testing.T) {
-	caller := modulePath + "/internal/native/runtimeproducts"
+	runtimeCaller, agreementCaller := modulePath+"/internal/native/runtimeproducts", modulePath+"/internal/native/agreementproducts"
+	// Each recipe by a file of its own: the whole recipe go.mod, buildcache's lean recipe notes.txt, a caller's go.sum.
+	stub := func(asked *[]string) {
+		recipeFor = func(string, journalEntry) recipe {
+			*asked = append(*asked, "whole")
+			return recipe{entries: []readEntry{{Kind: "content", Path: "go.mod"}}}
+		}
+		leanRecipeFor = func(_, called string, _ journalEntry) recipe {
+			*asked = append(*asked, "lean "+called)
+			if called == "" {
+				return recipe{entries: []readEntry{{Kind: "content", Path: "notes.txt"}}}
+			}
+			return recipe{entries: []readEntry{{Kind: "content", Path: "go.sum"}}}
+		}
+	}
 	run := func(lean *leanBuild, late bool) (Report, []string, []string) {
 		t.Helper()
 		r := newRig(t)
 		var asked []string
-		recipeFor = func(string, journalEntry) recipe {
-			asked = append(asked, "whole")
-			return recipe{entries: []readEntry{{Kind: "content", Path: "go.mod"}}}
-		}
-		leanRecipeFor = func(_, called string, _ journalEntry) recipe {
-			asked = append(asked, "lean "+called)
-			return recipe{entries: []readEntry{{Kind: "content", Path: "notes.txt"}}}
-		}
+		stub(&asked)
 		product(t, port, building("built"), lean)
 		build := r.built(t)["port"]
 		if late {
@@ -3243,9 +3255,13 @@ func TestALeanBuildIsKeyedByTheCodeThatMakesIt(t *testing.T) {
 	if report.Window != BuildWindowed || !report.Lean || !slices.Contains(entries, "content notes.txt") || slices.Contains(entries, "content go.mod") || !slices.Equal(asked, []string{"lean "}) {
 		t.Errorf("a windowed lean build of buildcache's own: taken as %q, entries %q, recipes asked %q; want the lean recipe alone", report.Window, entries, asked)
 	}
-	report, entries, asked = run(&leanBuild{caller: caller}, false)
-	if report.Window != BuildWindowed || report.Lean || !slices.Contains(entries, "content go.mod") || slices.Contains(entries, "content notes.txt") || !slices.Equal(asked, []string{"whole"}) {
-		t.Errorf("a lean caller's windowed build: taken as %q, entries %q, recipes asked %q; want its window and the binary's whole recipe", report.Window, entries, asked)
+	report, entries, asked = run(&leanBuild{caller: runtimeCaller}, false)
+	if report.Window != BuildWindowed || !report.Lean || !slices.Contains(entries, "content go.sum") || slices.Contains(entries, "content go.mod") || !slices.Equal(asked, []string{"lean " + runtimeCaller}) {
+		t.Errorf("a windowed build of a lean caller naming its census: taken as %q, entries %q, recipes asked %q; want its window and its own lean recipe", report.Window, entries, asked)
+	}
+	report, entries, asked = run(&leanBuild{caller: agreementCaller}, false)
+	if report.Window != BuildWindowed || report.Lean || !slices.Contains(entries, "content go.mod") || slices.Contains(entries, "content go.sum") || !slices.Equal(asked, []string{"whole"}) {
+		t.Errorf("a windowed build of a lean caller naming no census: taken as %q, entries %q, recipes asked %q; want its window and the binary's whole recipe", report.Window, entries, asked)
 	}
 	for name, lean := range map[string]*leanBuild{"a build that isn't lean": nil, "a lean build whose window opened late": {}} {
 		_, entries, asked := run(lean, lean != nil)
@@ -3253,6 +3269,114 @@ func TestALeanBuildIsKeyedByTheCodeThatMakesIt(t *testing.T) {
 			t.Errorf("%s: entries %q, recipes asked %q; want the binary's whole recipe", name, entries, asked)
 		}
 	}
+	// One process settling buildcache's own lean build and runtimeproducts': each its own caller's recipe, asked once.
+	r := newRig(t)
+	var askedTogether []string
+	stub(&askedTogether)
+	other := Inputs{Name: "archive", Files: []string{"source"}, Flags: []string{"-DARCHIVE"}, Toolchain: port.Toolchain}
+	product(t, port, building("port"), &leanBuild{})
+	product(t, other, building("archive"), &leanBuild{caller: runtimeCaller})
+	builds := r.built(t)
+	for _, name := range []string{"port", "archive"} {
+		r.window(builds[name].Build, func() { r.open(r.pid, "source/a.c") })
+	}
+	if settlement := r.settle(t); len(settlement.Settled) != 2 {
+		t.Fatalf("settled %q, refused %q; want both", settlement.Settled, settlement.Refused)
+	}
+	own, archive := r.entries(t, builds["port"].NameKey), r.entries(t, builds["archive"].NameKey)
+	if !slices.Contains(own, "content notes.txt") || slices.Contains(own, "content go.sum") || !slices.Contains(archive, "content go.sum") || slices.Contains(archive, "content notes.txt") ||
+		len(askedTogether) != 2 || !slices.Contains(askedTogether, "lean ") || !slices.Contains(askedTogether, "lean "+runtimeCaller) {
+		t.Errorf("one process's two lean builds: buildcache's own %q, runtimeproducts' %q, recipes asked %q; want each its own caller's", own, archive, askedTogether)
+	}
+}
+
+// A lean caller opens the lean recipe to its builds only by naming its census (#gr5y0yf item 1, Node's condition 1), and
+// a census it names is a test its package's test binary runs on the line: a top-level func Test<Name>(t *testing.T) in
+// a _test.go file of that package, one go builds for linux/amd64. An entry naming none fails closed, to the whole recipe
+// (leanRecipeTaken), and so does any package that isn't a lean caller. Mutants that each fail it: an entry naming a
+// census that doesn't exist; one naming a census in a file built for another platform; one naming a function that
+// isn't a test; leanRecipeTaken true for a caller naming no census.
+func TestEveryLeanCallersCensusIsATestOfItsPackage(t *testing.T) {
+	t.Parallel()
+	root := repositoryRootForTest(t)
+	named := 0
+	for _, caller := range leanCallers {
+		if caller.census == (leanCensus{}) {
+			if leanRecipeTaken(modulePath + "/" + caller.pkg) {
+				t.Errorf("%s names no census and takes the lean recipe", caller.pkg)
+			}
+			continue
+		}
+		named++
+		if why := censusMissing(root, caller.census); why != "" {
+			t.Errorf("%s names its census %s %s, which %s", caller.pkg, caller.census.pkg, caller.census.test, why)
+		}
+		if !leanRecipeTaken(modulePath + "/" + caller.pkg) {
+			t.Errorf("%s names its census and keeps the whole recipe", caller.pkg)
+		}
+	}
+	if named == 0 {
+		t.Error("no lean caller names a census; want runtimeproducts' TestTheRuntimeBuildReachesOnlyItsDeclaredFiles")
+	}
+	if !leanRecipeTaken("") || leanRecipeTaken(modulePath+"/stage1/cohere/lint") {
+		t.Error("buildcache's own build must take the lean recipe, and a package that isn't a lean caller never")
+	}
+	// The check itself, on a package of its own.
+	fixture := t.TempDir()
+	write(t, fixture, "census/census_test.go", "package census\n\nimport \"testing\"\n\nfunc TestTheCensus(t *testing.T) {}\n\nfunc helperCensus(t *testing.T) {}\n")
+	write(t, fixture, "census/darwin_test.go", "//go:build darwin\n\npackage census\n\nimport \"testing\"\n\nfunc TestOnTheMac(t *testing.T) {}\n")
+	write(t, fixture, "census/census.go", "package census\n\nimport \"testing\"\n\nfunc TestInTheLibrary(t *testing.T) {}\n")
+	if why := censusMissing(fixture, leanCensus{pkg: "census", test: "TestTheCensus"}); why != "" {
+		t.Errorf("a census that runs: %s", why)
+	}
+	for _, missing := range []string{"TestNoSuchCensus", "TestOnTheMac", "helperCensus", "TestInTheLibrary"} {
+		if censusMissing(fixture, leanCensus{pkg: "census", test: missing}) == "" {
+			t.Errorf("%s was taken for a census its package runs", missing)
+		}
+	}
+	if censusMissing(fixture, leanCensus{pkg: "nowhere", test: "TestTheCensus"}) == "" {
+		t.Error("a census in a package that isn't there was taken")
+	}
+}
+
+// censusMissing says why census isn't a test its package's test binary runs on the line (linux/amd64), under root, or ""
+// when it is one: a func with census.test's name, no receiver, no type parameters and one *testing.T parameter, in a
+// _test.go file of census.pkg's directory that go builds there.
+func censusMissing(root string, census leanCensus) string {
+	directory := filepath.Join(root, filepath.FromSlash(census.pkg))
+	entries, err := os.ReadDir(directory)
+	if err != nil {
+		return "is in no package there: " + err.Error()
+	}
+	if !strings.HasPrefix(census.test, "Test") {
+		return "isn't named as a test"
+	}
+	line := build.Default
+	line.GOOS, line.GOARCH = "linux", "amd64"
+	for _, entry := range entries {
+		if entry.IsDir() || !strings.HasSuffix(entry.Name(), "_test.go") {
+			continue
+		}
+		if matched, err := line.MatchFile(directory, entry.Name()); err != nil || !matched {
+			continue
+		}
+		file, err := parser.ParseFile(token.NewFileSet(), filepath.Join(directory, entry.Name()), nil, parser.SkipObjectResolution)
+		if err != nil {
+			return "can't be read: " + err.Error()
+		}
+		for _, declaration := range file.Decls {
+			function, ok := declaration.(*ast.FuncDecl)
+			if !ok || function.Name.Name != census.test || function.Recv != nil || function.Type.TypeParams != nil {
+				continue
+			}
+			parameters := function.Type.Params.List
+			if len(parameters) == 1 && len(parameters[0].Names) <= 1 && types.ExprString(parameters[0].Type) == "*testing.T" && function.Type.Results == nil {
+				return ""
+			}
+			return "isn't a test: its signature isn't func(*testing.T)"
+		}
+	}
+	return "isn't a test of a _test.go file go builds for linux/amd64 there"
 }
 
 // A lean build's recipe is the code that makes it, from the tree (leanRecipeOf): buildcache and every package of the tree

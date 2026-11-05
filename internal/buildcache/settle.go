@@ -1554,15 +1554,16 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 		if reason == "" {
 			reason = refusedHandedRead(entry, set, facts.home)
 		}
-		// The code a build ran: a windowed lean build's own when it's buildcache's (leanRecipeOf, #earlycut), every other
-		// build's process's binary whole (decision 1). A lean caller's build keeps its window and the whole recipe until its
-		// census holds: native's archives reach the jobserver, a package variable written outside its initializer, until it's
-		// handed in as a value (#yzwm4rj, Node's reading 1).
+		// The code a build ran: a windowed lean build's own when it's buildcache's or a lean caller's that names its census
+		// (leanRecipeOf, leanRecipeTaken: #earlycut, #gr5y0yf item 1), every other build's process's binary whole (decision
+		// 1). A lean caller naming no census keeps its window and the whole recipe (Node's reading 1). A lean recipe is the
+		// caller's own, so recipes holds it by the caller as well as the binary: one process settling two callers' builds
+		// keys each by its own package.
 		own := processes[entry.Process]
 		name := recipeName(own)
-		leanRecipe := window == BuildWindowed && entry.LeanCaller == ""
+		leanRecipe := window == BuildWindowed && leanRecipeTaken(entry.LeanCaller)
 		if leanRecipe {
-			name = "lean " + name
+			name = "lean " + cmp.Or(entry.LeanCaller, buildcachePackage) + " " + name
 		}
 		if reason == "" {
 			if _, ok := recipes[name]; !ok {
