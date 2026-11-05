@@ -6,9 +6,15 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"sync/atomic"
 
 	"github.com/system-inc/adamic/internal/ir"
 )
+
+// projectionFramesOpened, when a test sets it, counts the projected queries computed rather than read
+// from a memo, so a pin bounds the work itself instead of a clock that a loaded box can miss
+// (#tzy22kd). It's nil outside that test.
+var projectionFramesOpened atomic.Pointer[atomic.Int64]
 
 // ReachingAllocations queries the shared graph without selecting graph ownership.
 // Unknown frontiers retain checks. Joined assignments, returns and arguments use
@@ -48,6 +54,9 @@ func (graph *allocationFlowGraph) reachingAllocations(expression ir.Expression, 
 			}
 			defer func() { graph.projectionFrames[key] = result }()
 		}
+	}
+	if counter := projectionFramesOpened.Load(); counter != nil && project {
+		counter.Add(1)
 	}
 	result = ir.AllocationSet{}
 	sites, visited, reasons := map[int]bool{}, map[int]bool{}, map[string]bool{}
