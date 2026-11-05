@@ -1,0 +1,14 @@
+// tsc's mapIterator, declared as core.ts:332 declares it, Generator<U, void, unknown>, instantiated
+// over an array of [name, value] tuples and handed to new Map, as commandLineParser.ts:141 does: the
+// mapper inverts each pair, and its void completion is never read (Adamic, on #qk8rztp).
+function* mapIterator<T, U>(iter: readonly T[], mapFn: (x: T) => U): Generator<U, void, unknown> {
+    for(const x of iter) {
+        yield mapFn(x);
+    }
+}
+const options: (readonly [string, number])[] = [['preserve', 1], ['react', 2], [`react${'-jsx'}`, 4]];
+const byValue = new Map(mapIterator(options, (entry: readonly [string, number]): [string, string] => ['' + String(entry[1]), entry[0]]));
+console.log(String(byValue.size));
+console.log(`${byValue.get('4') ?? 'none'} ${byValue.get('3') ?? 'none'}`);
+console.log([...byValue.keys()].join(','));
+console.log([...byValue.values()].join(','));
