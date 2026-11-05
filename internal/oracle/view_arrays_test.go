@@ -11,7 +11,7 @@ import (
 
 func TestViewArrays(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"legacy-null", "generic-object-lie", "identity", "cast-unknown", "cast-object", "cast-union", "storage-lie", "renamed-lie", "unknown-scalar", "find-result-lie", "findLast-result-lie", "join", "json", "string", "index-good", "index-lie", "at-lie", "per-read", "bounds", "unknown-wide", "object-wide", "generic", "no-element", "for-of-good", "for-of-lie", "values-lie", "forEach-good", "forEach-lie", "map-good", "map-lie", "filter-good", "filter-lie", "some-good", "some-lie", "every-good", "every-lie", "find-good", "find-lie", "findIndex-good", "findIndex-lie", "findLast-good", "findLast-lie", "findLastIndex-good", "findLastIndex-lie", "reduce-good", "reduce-lie", "mutable", "slice", "spread", "concat"} {
+	for _, name := range []string{"tagged-null-read", "tagged-null-lie", "guard-forwarded", "guard-ref-push", "guard-index-write", "guard-mutable-param", "guard-slice", "guard-spread", "guard-from", "unknown-null", "legacy-null", "generic-object-lie", "identity", "cast-unknown", "cast-object", "cast-union", "storage-lie", "renamed-lie", "unknown-scalar", "find-result-lie", "findLast-result-lie", "join", "json", "string", "index-good", "index-lie", "at-lie", "per-read", "bounds", "unknown-wide", "object-wide", "generic", "no-element", "for-of-good", "for-of-lie", "values-lie", "forEach-good", "forEach-lie", "map-good", "map-lie", "filter-good", "filter-lie", "some-good", "some-lie", "every-good", "every-lie", "find-good", "find-lie", "findIndex-good", "findIndex-lie", "findLast-good", "findLast-lie", "findLastIndex-good", "findLastIndex-lie", "reduce-good", "reduce-lie", "mutable", "slice", "spread", "concat"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs("testdata/views_v3/" + name + ".ts")
@@ -23,10 +23,20 @@ func TestViewArrays(t *testing.T) {
 				t.Fatalf("source Node failed: %#v", node)
 			}
 			program, err := lowered(t, path)
-			if name == "legacy-null" || strings.HasPrefix(name, "cast-") || name == "join" || name == "json" || name == "string" || name == "mutable" || name == "slice" || name == "spread" || name == "concat" {
+			if name == "guard-mutable-param" {
+				var refused *lower.Refused
+				if !errors.As(err, &refused) || !strings.Contains(refused.Error(), "adamic/invariant-mutable") {
+					t.Fatalf("want existing mutable-storage invariant, got %v", err)
+				}
+				return
+			}
+			if strings.HasPrefix(name, "guard-") || name == "unknown-null" || name == "legacy-null" || strings.HasPrefix(name, "cast-") || name == "join" || name == "json" || name == "string" || name == "mutable" || name == "slice" || name == "spread" || name == "concat" {
 				var notYet *lower.NotYet
 				if !errors.As(err, &notYet) {
 					t.Fatalf("want NotYet at reader, got %v", err)
+				}
+				if name == "unknown-null" && !strings.Contains(notYet.What, "legacy nullable-pointer storage") {
+					t.Fatal(notYet)
 				}
 				if strings.HasPrefix(name, "cast-") && notYet.What != "a cast that makes a viewed readonly array writable" {
 					t.Fatal(notYet)
@@ -52,6 +62,9 @@ func TestViewArrays(t *testing.T) {
 						prefix = "first\n"
 					}
 					found := "; found number"
+					if name == "tagged-null-lie" {
+						found = "; found null"
+					}
 					if strings.Contains(name, "result-lie") || name == "generic-object-lie" {
 						found = "; found object"
 					}

@@ -266,6 +266,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	value, err := l.value(node)
 	if err == nil {
 		value = l.graphAllocation(value, node)
+		if err := l.noteViewArrayStorage(node, value); err != nil {
+			return nil, err
+		}
 	}
 	if err == nil {
 		if value.Type() == ir.Object && l.nullableObjectUnion(l.checker.GetTypeAtLocation(node)) && !nullableObjectLookupTypeOf(node, value) {

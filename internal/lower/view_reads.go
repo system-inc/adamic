@@ -71,6 +71,11 @@ func viewReadOf(program *ir.Program, expression ir.Expression) viewRead {
 		case "assign":
 			return viewReadNotYet
 		case "values", "entries":
+			for _, argument := range value.Arguments {
+				if argument.Type() == ir.Array {
+					return viewReadNotYet
+				}
+			}
 			// Unchecked, the operand is a literal's own const binding (enumerationProven), whose
 			// fields no cast claimed.
 			if value.Checked {
@@ -80,6 +85,16 @@ func viewReadOf(program *ir.Program, expression ir.Expression) viewRead {
 		return viewReadsNoField
 	case ir.JSONEncode:
 		return viewReadNotYet
+	case ir.JSONStringify:
+		if value.Value != nil && value.Value.Type() == ir.Array {
+			return viewReadNotYet
+		}
+		return viewReadsNoField
+	case ir.CollectionIterator:
+		if value.Collection != nil && value.Collection.Type() == ir.Array {
+			return viewReadNotYet
+		}
+		return viewReadsNoField
 	case ir.CheckedCast, ir.DynamicProperty, ir.ViewElement:
 		return viewReadChecks
 	case ir.DynamicKeyedProperty:
@@ -90,9 +105,9 @@ func viewReadOf(program *ir.Program, expression ir.Expression) viewRead {
 	case ir.ArrayConcat, ir.ArrayFill, ir.ArrayFrom, ir.ArrayIndex, ir.ArrayIsArray, ir.ArrayJoin, ir.ArrayLiteral,
 		ir.ArrayMap, ir.ArrayOfScalars, ir.ArrayPop, ir.ArrayPush, ir.ArrayReduce, ir.ArrayReverse, ir.ArraySearch, ir.ArraySlice,
 		ir.ArraySort, ir.ArraySplice, ir.ArrayVisit, ir.Await, ir.Binary, ir.BooleanToString, ir.Box, ir.Call,
-		ir.CallClosure, ir.CharCodeAt, ir.Coalesce, ir.CodePoints, ir.CollectionIterator, ir.Comma, ir.Concat,
+		ir.CallClosure, ir.CharCodeAt, ir.Coalesce, ir.CodePoints, ir.Comma, ir.Concat,
 		ir.Conditional, ir.Defined, ir.Effects, ir.ErrorToString, ir.FileStatus, ir.GeneratorDone, ir.GeneratorNext, ir.HasAccessor, ir.HasOwn, ir.HasProperty,
-		ir.InstanceOf, ir.IsNull, ir.IsUndefined, ir.JSONDecode, ir.JSONStringify, ir.JoinEnter, ir.Length, ir.Logical,
+		ir.InstanceOf, ir.IsNull, ir.IsUndefined, ir.JSONDecode, ir.JoinEnter, ir.Length, ir.Logical,
 		ir.LogicalAssignment, ir.MakeError, ir.MapClear, ir.MapDelete, ir.MapEntries, ir.MapForEach, ir.MapGet,
 		ir.MapHas, ir.MapKeys, ir.MapNew, ir.MapSet, ir.MapSize, ir.MapValues, ir.MathCall, ir.MaybeOf,
 		ir.MaybeToString, ir.Narrow, ir.NodeBufferCall, ir.NodeFSFile, ir.NodeHostCall, ir.NumberCall,
