@@ -406,6 +406,7 @@ func checkGeneratorRoads(program *ir.Program) error {
 	// kind test and its steps (Compiler's and Memory's conditions on #qk8rztp S2c-1).
 	iterables, handed := 0, 0
 	dispatched, stepped, nexts, reads := map[int]bool{}, map[int]int{}, map[int]int{}, map[int]int{}
+	collectionTests := map[int]int{}
 	var visit func(value reflect.Value)
 	visit = func(value reflect.Value) {
 		if !value.IsValid() {
@@ -461,6 +462,7 @@ func checkGeneratorRoads(program *ir.Program) error {
 		case ir.IsCollectionIterator:
 			if read, ok := node.Value.(ir.Read); ok && read.Of == ir.Object {
 				stepped[read.Local]++
+				collectionTests[read.Local]++
 			}
 		case ir.Property:
 			if read, ok := node.Object.(ir.Read); ok && read.Of == ir.Object && node.Name == "next" {
@@ -499,7 +501,9 @@ func checkGeneratorRoads(program *ir.Program) error {
 		return fmt.Errorf("lower: compiler bug: %d generators seen as objects where only %d are a call's own argument", iterables, handed)
 	}
 	for local := range dispatched {
-		if reads[local] != stepped[local]+nexts[local] {
+		// One read of next per collection test, the arm's own step (Lower's must on #qk8rztp S2c-1,
+		// her option (b)): any other next of the local isn't the dispatch's.
+		if nexts[local] != collectionTests[local] || reads[local] != stepped[local]+nexts[local] {
 			return fmt.Errorf("lower: compiler bug: the iterable view's local %s is read %d times where only its dispatch's %d kind tests and steps may read it", program.Locals[local].Name, reads[local], stepped[local]+nexts[local])
 		}
 	}
