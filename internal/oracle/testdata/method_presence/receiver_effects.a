@@ -1,0 +1,29 @@
+// The receiver of a method read only to test for it is evaluated once for each test, for its effects:
+// here a getter that counts its calls and makes a fresh object each time, released after the test.
+class Lamp {
+    readonly name: string;
+    constructor(name: string) {
+        this.name = name;
+    }
+    shine(): string {
+        return `${this.name} shines`;
+    }
+}
+class Shelf {
+    reads = 0;
+    get lamp(): Lamp {
+        this.reads += 1;
+        return new Lamp(`lamp ${String(this.reads)}`);
+    }
+}
+const shelf = new Shelf();
+console.log(typeof shelf.lamp.shine);
+console.log(String(shelf.reads));
+console.log(String(!shelf.lamp.shine));
+console.log(String(shelf.reads));
+console.log(shelf.lamp.shine && `${String(shelf.reads)} then ${shelf.lamp.shine()}`);
+if(shelf.lamp.shine) {
+    console.log(shelf.lamp.shine());
+}
+console.log(shelf.lamp.shine ? `${String(shelf.reads)} then ${shelf.lamp.shine()}` : 'never');
+console.log(`reads ${String(shelf.reads)}`);
