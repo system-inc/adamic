@@ -1,0 +1,31 @@
+const a = [1, 2, 3];
+console.log(`absent-start:${a.slice().join(',')}`);
+console.log(`absent-end:${a.slice(1).join(',')}`);
+console.log(`both-absent:${a.slice().join(',')}`);
+console.log(`undefined-start:${a.slice(undefined, 2).join(',')}`);
+console.log(`undefined-end:${a.slice(1, undefined).join(',')}`);
+console.log(`both-undefined:${a.slice(undefined, undefined).join(',')}`);
+function range(a: readonly number[], from?: number, to?: number) { return a.slice(from, to); }
+console.log(`optional-passed:${range(a, 1, 2).join(',')}`);
+console.log(`optional-omitted:${range(a).join(',')}`);
+function maybe(value?: number): number | undefined { return value; }
+const bound: number | undefined = maybe();
+console.log(`maybe-local:${a.slice(bound, bound).join(',')}`);
+console.log(`negative-one:${a.slice(-1).join(',')}`);
+console.log(`below-length:${a.slice(-9).join(',')}`);
+console.log(`past-length:${a.slice(9).join(',')}`);
+console.log(`fraction-positive:${a.slice(1.5).join(',')}`);
+console.log(`fraction-negative:${a.slice(-0.5).join(',')}`);
+console.log(`end-negative:${a.slice(0, -1).join(',')}`);
+console.log(`end-below-length:${a.slice(0, -9).join(',')}`);
+console.log(`end-past-length:${a.slice(0, 9).join(',')}`);
+console.log(`end-fraction-positive:${a.slice(0, 1.5).join(',')}`);
+console.log(`end-fraction-negative:${a.slice(0, -0.5).join(',')}`);
+const log: string[] = [];
+function receiver(): number[] { log.push('receiver'); return a; }
+function start(): number | undefined { log.push('start'); return maybe(); }
+function end(): number | undefined { log.push('end'); return maybe(); }
+console.log(`order-result:${receiver().slice(start(), end()).join(',')}`);
+console.log(`order-log:${log.join(',')}`);
+function text(from?: number, to?: number): string { return 'abc'.slice(from, to); }
+console.log(`string-optional:${text()}/${text(1, 2)}`);
