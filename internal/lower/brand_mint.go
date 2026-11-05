@@ -18,9 +18,9 @@ import (
 // "Only by phantom members" is judged by Adamic's relation, never tsc's. The target is an interface
 // that extends exactly one base and declares nothing of its own but members phantomMember calls
 // phantom, and the source must relate to that base, instantiated as the target is, as an upcast
-// would: castAssignable's rules, with a fresh literal judged as freshOrWidened judges one. So `readonly T[]` as a mutable
-// SortedArray<T> is refused (the base is T[], which the source doesn't relate to), and so is an
-// Animal[] as SortedArray<Dog>. A fresh `[]` relates to any element type, and a mutable T[] relates
+// would, by castAssignableAt, which judges a fresh literal as freshOrWidened does. So `readonly T[]`
+// as a mutable SortedArray<T> is refused (the base is T[], which the source doesn't relate to), and
+// so is an Animal[] as SortedArray<Dog>. A fresh `[]` relates to any element type, and a mutable T[] relates
 // to a mutable base, because the brand carries no layout. Array brands are phantom only while every
 // observation of a member's presence is refused (rulings.md:31); Language holds those roads.
 type brandMint struct {
@@ -78,9 +78,7 @@ func (l *lowering) brandMintOf(operand *ast.Node, source, target *checker.Type) 
 	if len(mint.members) == 0 {
 		return nil
 	}
-	// castAssignable's rules, with the widening judged as at any slot: a fresh literal ([]) is held by
-	// nothing else, so its own elements are the slot's (freshOrWidened).
-	if !l.checker.IsTypeAssignableTo(source, base) || !l.classAssignable(source, base) || !l.enumAssignable(source, base) || l.freshOrWidened(operand, source, base) != nil || !l.castOptionalFields(source, base, map[[2]*checker.Type]bool{}) || l.optionalRelationFailure(source, base, nil, map[[2]*checker.Type]bool{}) != "" {
+	if !l.checker.IsTypeAssignableTo(source, base) || !l.castAssignableAt(operand, source, base) {
 		return nil
 	}
 	return mint
