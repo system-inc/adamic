@@ -174,6 +174,21 @@ func (count *localUseCount) add(role localRole) {
 	}
 }
 
+// undefinedTestOf says whether a node is an undefined test of a local: ir.IsUndefined whose value is
+// a plain read of it, what `x === undefined` and `x !== undefined` lower to for an object slot that
+// may be missing (the `!==` inside an ir.Unary, which the walk passes through). It asks only whether
+// the slot holds a pointer, never steps or hands on what it holds, so the one-read rule counts it as a
+// test, not a read (#qk8rztp S2c-3). Nothing else is one: a truthiness test, a null test, or any
+// other node holding the read.
+func undefinedTestOf(node any, local int) bool {
+	test, isTest := node.(ir.IsUndefined)
+	if !isTest {
+		return false
+	}
+	read, isRead := test.Value.(ir.Read)
+	return isRead && read.Local == local
+}
+
 // irNode is a statement or an expression, which walk visits on its own.
 func irNode(of reflect.Type) bool {
 	return of.Implements(expressionType) || of.Implements(statementType)
