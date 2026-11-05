@@ -40,6 +40,48 @@ for (const value of values) { console.log(value.toString()); }
 console.log(values.length.toString());
 for (const value of values) { console.log(value.toString()); }
 `,
+	"ObjectDestructuringAssignmentWiden": `function parse(text: string): { major: number; minor: number; prerelease: string } {
+	return { major: text.length, minor: 2, prerelease: 'beta.1' };
+}
+class Version {
+	readonly major: number;
+	readonly minor: number;
+	readonly prerelease: readonly string[];
+	constructor(major: number | string, minor = 0, prerelease: string | readonly string[] = '') {
+		if (typeof major === 'string') {
+			const result = parse(major);
+			({ major, minor, prerelease } = result);
+		}
+		this.major = major;
+		this.minor = minor;
+		this.prerelease = typeof prerelease === 'string' ? prerelease.split('.') : prerelease;
+	}
+}
+const parsed = new Version('1.2.3');
+const given = new Version(4, 5, ['rc']);
+console.log(` + "`${parsed.major}.${parsed.minor}-${parsed.prerelease.join('.')} ${given.major}.${given.minor}-${given.prerelease.join('.')}`" + `);
+`,
+	"ObjectDestructuringAssignmentGetter": `class Clock {
+	count = 0;
+	readonly minor: number = 7;
+	get major(): number {
+		this.count += 1;
+		return this.count * 10;
+	}
+}
+let major: number | string = 'none';
+let minor = 0;
+const clock = new Clock();
+({ major, minor } = clock);
+({ major } = clock);
+console.log(` + "`${major} ${minor} ${clock.count}`" + `);
+`,
+	"ObjectDestructuringAssignmentSwap": `let first: number | string = 1;
+let second: number | string = 'two';
+const pair = { first: second, second: first };
+({ first, second } = pair);
+console.log(` + "`${first} ${second}`" + `);
+`,
 	"PlantedWrongOutput": "console.log('computed');",
 	"PlantedWrongExit":   "console.log('computed');",
 }
