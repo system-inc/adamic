@@ -16,7 +16,9 @@ import (
 // Mutants: generatorStepped's new Map and new Set arm taken out (the lowering rows are refused
 // again); widened to any Generator-typed expression at the site (the stored rows go red); its
 // yielded-type test taken out (the void rows go red); the constructor judged by its name (the
-// shadowed row goes red).
+// shadowed row goes red); steppedSite seeing through a cast as it sees through parentheses (the cast
+// row goes red if a void rule is its stop; if the cast's own rule stops it first, that mutant is
+// equivalent here).
 func TestGeneratorVoidReturnIsNeverReadByNewMapOrNewSet(t *testing.T) {
 	t.Parallel()
 	// Plain function*s, so each infers Generator<T, void, unknown>. The pair's tuple type comes
@@ -52,6 +54,26 @@ func TestGeneratorVoidReturnIsNeverReadByNewMapOrNewSet(t *testing.T) {
 			var refusal *Refused
 			if !errors.As(err, &refusal) || !strings.Contains(refusal.Error(), "adamic/no-void") {
 				t.Fatalf("got %v, want a void rule's refusal", err)
+			}
+		})
+	}
+	// Two roads around the site, each with a plain function*'s call, so a void TReturn: a cast between
+	// the call and the constructor makes the call's parent the cast, not the new, and a spread of an
+	// array literal puts the call in the array, not in the constructor's argument list. Neither is a
+	// stepped site, so each stays judged. Which stop each meets first (a void rule or the cast's own
+	// rule for the cast; a void rule on the array or not yet for the spread) isn't pinned, only that
+	// it is a stop and never a program.
+	for _, probe := range []struct{ name, source string }{
+		{"a cast between the call and new Map", pairs + "console.log(String(new Map(pairs(3) as Iterable<[string, number]>).size));"},
+		{"a spread of an array holding the call into new Map", pairs + "console.log(String(new Map(...[pairs(3)]).size));"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSource(t, probe.source)
+			var refusal *Refused
+			var gap *NotYet
+			if !errors.As(err, &refusal) && !errors.As(err, &gap) {
+				t.Fatalf("got %v, want it refused or not yet, never lowered", err)
 			}
 		})
 	}
