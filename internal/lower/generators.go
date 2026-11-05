@@ -416,17 +416,19 @@ func (l *lowering) collectGenerator(node *ast.Node, function int) (ir.Expression
 func (l *lowering) newMapFromGenerator(source *ast.Node, function int, key ir.Type, value ir.Type) (ir.Expression, error) {
 	pairKey, pairValue, isPair := l.generatorPairTypes(source)
 	if !isPair {
-		return nil, l.generatorNotYet(source, "consumed by new Map, yielding something other than [key, value] pairs")
+		// The words newMapFrom gives any other source that isn't pairs, and below any other pairs held
+		// otherwise, so each stop is found beside the original (Lower, on #qk8rztp).
+		return nil, l.notYet(source, "new Map from something that isn't [key, value] pairs")
 	}
 	if pairKey != key || pairValue != value {
-		return nil, l.generatorNotYet(source, "consumed by new Map, yielding pairs held otherwise than the Map's keys and values")
+		return nil, l.notYet(source, "new Map from pairs held otherwise than the Map's keys and values")
 	}
 	pairs, yields, err := l.collectGenerator(source, function)
 	if err != nil {
 		return nil, err
 	}
 	if yields != ir.Object {
-		return nil, l.generatorNotYet(source, "consumed by new Map, yielding something other than [key, value] pairs")
+		return nil, l.notYet(source, "new Map from something that isn't [key, value] pairs")
 	}
 	return ir.MapNew{Key: key, Value: value, Pairs: pairs}, nil
 }

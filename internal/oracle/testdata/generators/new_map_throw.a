@@ -1,6 +1,8 @@
-// A step that throws, on the third, leaves new Map before any Map is made: the try around it prints
-// the message and nothing of the map, the pairs already collected are let go of, and the same
-// generator, asked for fewer pairs, makes a Map after.
+// A step that throws, on the third, leaves new Map mid-construction: the try around it prints the
+// message and nothing of the map. What construction had built, the two pairs collected so far, and
+// the suspended frame that still holds the label it was building, are both let go of on the way out,
+// so the counted leak check finds nothing. The same generator, asked for fewer pairs, makes a Map
+// after.
 function* pairs(limit: number): Generator<[string, string], undefined, undefined> {
     for(let index = 1; index <= limit; index++) {
         if(index === 3) {
