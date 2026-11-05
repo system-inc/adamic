@@ -280,6 +280,9 @@ type lowering struct {
 	// objectIntersections are the intersections objectIntersection is proving, so a field that
 	// holds one of them again ends there.
 	objectIntersections map[*checker.Type]bool
+	// elementFits is elementsHeldOtherwise's walk answered once per value type and slot type, so
+	// judging every value handed to a slot costs each pair once (element_fit.go).
+	elementFits map[elementFitKey]*elementMismatch
 	// intersectionViewDepth is how many intersections' view contracts are being built, each inside
 	// a field of the one before (view_lazy.go's intersectionViewDepthBound).
 	intersectionViewDepth int
