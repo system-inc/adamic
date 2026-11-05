@@ -1,0 +1,8 @@
+// A tuple an unknown holds stops on both backends: lowering refuses a tuple viewed as unknown, but a
+// run-time key read can still reach one, an object's field here. Node prints number.
+import { propertyOf } from './hostErrors.ts';
+
+const holder = { pair: [1, 2] as [number, number] };
+const pair = propertyOf(holder, 'pair');
+console.log('before');
+console.log(typeof propertyOf(pair, '0'));

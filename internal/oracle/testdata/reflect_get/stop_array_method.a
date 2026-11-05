@@ -1,0 +1,8 @@
+// A name an array inherits stops on both backends (#ys4naww): Array.prototype's methods aren't read
+// by a run-time key yet, where an array's own indexes and length are (array_reads.a). Node prints
+// function.
+import { propertyOf } from './hostErrors.ts';
+
+console.log('before');
+const value = propertyOf([1], 'map');
+console.log(typeof value);
