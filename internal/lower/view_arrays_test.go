@@ -135,6 +135,9 @@ func TestViewArrayAllowlist(t *testing.T) {
 			source := ir.Read{Of: ir.Array}
 			value := reflect.New(kind).Elem()
 			field := value.FieldByName("Array")
+			if kind == reflect.TypeFor[ir.ParallelMap]() {
+				field = value.FieldByName("Items")
+			}
 			if kind == reflect.TypeFor[ir.ArrayFrom]() {
 				if viewReadOf(nil, value.Interface().(ir.Expression)) != viewReadNotYet {
 					t.Fatal("Array.from must fail closed")
