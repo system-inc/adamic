@@ -31,6 +31,15 @@ func literalStorageProgram(t *testing.T, name, source string) string {
 // takes the checker's path, its number | string elements read as destructureFrom reads them (before,
 // every union element stopped). A parameter destructured from a literal argument is destructureFrom's,
 // which reads the parameter's declared tuple, the literal's storage, and is the control.
+//
+// The other arm reads a value from where it's held at the type the checker gives it there, and for a
+// local or a field that's the flow-narrowed type, not the declared one it's stored as. A local or a
+// field declared as a union of tuples and narrowed by an assignment is the same shape one hop later
+// (Compiler's question on #fsb6n82), and so is a union whose member has a union element. Each agreed
+// with Node on main before this fix (or stopped), and each is held here: union_local and union_field
+// read a narrowed [string, number] out of a declared [number, string] | [string, number], and the
+// single_narrowed and union_member_wider programs read a [number | string, number] the fix now lets
+// through, assigned, held in a local or held in a field.
 func TestDestructureLiteralStorageAgrees(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source string }{
@@ -39,6 +48,12 @@ func TestDestructureLiteralStorageAgrees(t *testing.T) {
 		{"rotation", literalStorageLets + "let third: number | string = 3;\n[first, second, third] = [third, first, second];\nconsole.log(`${first} ${second} ${third}`);\n"},
 		{"tuple_local", literalStorageLets + "const tuple: [number | string, number | string] = [second, first];\n[first, second] = tuple;\nconsole.log(`${first} ${second}`);\n"},
 		{"parameter", literalStorageLets + "function show([a, b]: [number | string, number | string]): string {\n\treturn `${a} ${b}`;\n}\nconsole.log(show([second, first]));\n"},
+		{"union_local", literalStorageLets + "let tuple: [number, string] | [string, number] = ['a', 1];\n[first, second] = tuple;\nconsole.log(`${first} ${second}`);\n"},
+		{"union_field", literalStorageLets + "const holder: { tuple: [number, string] | [string, number] } = { tuple: [1, 'x'] };\nholder.tuple = ['a', 1];\n[first, second] = holder.tuple;\nconsole.log(`${first} ${second}`);\n"},
+		{"single_narrowed", literalStorageLets + "let tuple: [number | string, number] = [1, 2];\ntuple = ['a', 2];\n[first, second] = tuple;\nconsole.log(`${first} ${second}`);\n"},
+		{"union_member_wider_local", literalStorageLets + "let tuple: [number | string, number] | [boolean, boolean] = ['a', 1];\n[first, second] = tuple;\nconsole.log(`${first} ${second}`);\n"},
+		{"union_member_wider_assigned", literalStorageLets + "let tuple: [number | string, number] | [boolean, boolean] = [true, false];\ntuple = ['a', 1];\n[first, second] = tuple;\nconsole.log(`${first} ${second}`);\n"},
+		{"union_member_wider_field", literalStorageLets + "const holder: { tuple: [number | string, number] | [boolean, boolean] } = { tuple: [true, false] };\nholder.tuple = ['a', 1];\n[first, second] = holder.tuple;\nconsole.log(`${first} ${second}`);\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
