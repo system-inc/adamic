@@ -1,15 +1,19 @@
 // Constant lengths an array can't fail on: nothing here can throw, so no call is followed by a check
-// and no function is one that can throw.
-function shown(value: number): string {
-	const filled = new Array<number>(3).fill(value).join(',');
-	const none = new Array<number>(0).fill(value).length;
-	const counted = Array.from({ length: 4 }, (_, index) => index + value).join(',');
-	const empty = Array.from({ length: 0 }, (_, index) => index).length;
-	return `${filled} | ${none} | ${counted} | ${empty}`;
+// and no function is one that can throw. Each is written on a line of its own: a join or a template
+// could be longer than V8's longest string, so it checks (ir/string_throws.go).
+function shown(value: number): void {
+	const filled = new Array<number>(3).fill(value);
+	console.log(filled.length);
+	console.log(filled[2]);
+	console.log(new Array<number>(0).fill(value).length);
+	const counted = Array.from({ length: 4 }, (_, index) => index + value);
+	console.log(counted.length);
+	console.log(counted[3]);
+	console.log(Array.from({ length: 0 }, (_, index) => index).length);
 }
 for (const value of [1, 2.5, -3]) {
 	try {
-		console.log(shown(value));
+		shown(value);
 	} catch {
 		console.log('never');
 	}

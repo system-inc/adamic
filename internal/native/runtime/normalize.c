@@ -351,13 +351,15 @@ static bool normalized(const adamic_string *string, bool compatibility, bool com
 // A batch ends only at a starter. Its last starter stays pending when it could join the next
 // one. Growing the buffer never ends a combining run.
 // A first pass counts bytes and UTF-16 units; a second writes straight into one exact allocation.
-// This also checks V8's length limit before allocating or encoding an oversized result.
+// This also checks V8's length limit before allocating or encoding an oversized result: the first pass
+// marks too_long once its count goes past it, stops adding blocks, and nothing is written.
 typedef struct normalization {
 	points segment;
 	bool composed;
 	char *out;
 	size_t length;
 	size_t units;
+	bool too_long;
 } normalization;
 
 static void emit_point(normalization *state, uint32_t point) {
@@ -366,7 +368,7 @@ static void emit_point(normalization *state, uint32_t point) {
 	state->length += size;
 	state->units += point >= 0x10000 ? 2 : 1;
 	if (state->units > ADAMIC_STRING_MAX_UNITS) {
-		adamic_string_check_length((double)state->units);
+		state->too_long = true;
 	}
 }
 
@@ -399,8 +401,10 @@ static void emit_blocks(normalization *state, const char *bytes, size_t length, 
 	if (count == 0) {
 		return;
 	}
-	if (count > (ADAMIC_STRING_MAX_UNITS - state->units) / units) {
-		adamic_string_check_length((double)ADAMIC_STRING_MAX_UNITS + 1);
+	// Until too_long, units is at most V8's longest, so the subtraction can't wrap.
+	if (state->too_long || count > (ADAMIC_STRING_MAX_UNITS - state->units) / units) {
+		state->too_long = true;
+		return;
 	}
 	size_t size = length * count;
 	if (state->out != NULL) {
@@ -477,7 +481,7 @@ static size_t repeated_prefix(normalization *state, const adamic_string *string,
 }
 
 static normalization stream(const adamic_string *string, bool compatibility, bool composed, char *out) {
-	normalization state = {{NULL, 0, 0}, composed, out, 0, 0};
+	normalization state = {{NULL, 0, 0}, composed, out, 0, 0, false};
 	points expanded = {NULL, 0, 0}, ordered = {NULL, 0, 0};
 	uint32_t cached = UINT32_MAX;
 	bool starters = false, separate = false;
@@ -592,6 +596,10 @@ adamic_string *adamic_string_normalize(const adamic_string *string, const adamic
 		return adamic_retain((adamic_string *)string);
 	}
 	normalization sized = stream(string, compatibility, composed, NULL);
+	if (sized.too_long) {
+		(void)adamic_string_check_length((double)ADAMIC_STRING_MAX_UNITS + 1);
+		return adamic_retain(&adamic_string_empty);
+	}
 	adamic_string *result = adamic_string_allocate(sized.length);
 	stream(string, compatibility, composed, (char *)result->bytes);
 	result->units = sized.units + 1;

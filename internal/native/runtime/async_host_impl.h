@@ -235,7 +235,11 @@ static void host_settle(host_entry *entry) {
     }
     adamic_string *text = adamic_string_allocate(length);
     if (length != 0) memcpy((char *)text->bytes, bytes, length);
-    adamic_string_check_length(adamic_string_length(text));
+    if (adamic_string_length(text) > ADAMIC_STRING_MAX_UNITS) {
+        /* A host payload past V8's longest stays a stop: no string operation made it. */
+        static const char message[] = "RangeError: Invalid string length";
+        adamic_panic(message, sizeof message - 1);
+    }
     adamic_object *value;
     if (rejected) {
         value = adamic_error_new(text);

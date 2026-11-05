@@ -485,8 +485,9 @@ func (b *builder) try(at *ir.Statement, statement ir.Try) {
 }
 
 // CanThrow reports whether an instruction can throw: it calls a function a throw can leave, directly,
-// through a function value when one in the program can throw, or as a sort's comparator, or it reads
-// or writes a binding in its temporal dead zone (ir.Program's DeadZoneMayThrow). A throw
+// through a function value when one in the program can throw, or as a sort's comparator, it reads
+// or writes a binding in its temporal dead zone (ir.Program's DeadZoneMayThrow), or it makes a string
+// that can be longer than V8's longest (ir.StringLengthMayThrow). A throw
 // statement isn't one of these: it always throws, and its block goes straight to its handler.
 func CanThrow(program *ir.Program, instruction *Instruction) bool {
 	var node any = instruction.Expression
@@ -540,7 +541,8 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 			if call, ok := value.Interface().(ir.ArrayFrom); ok && call.MayThrow() {
 				throws = true
 			}
-			if call, ok := value.Interface().(ir.StringCall); ok && call.MayThrow(program.Strings) {
+			// A string made past V8's longest (ir/string_throws.go).
+			if ir.StringLengthMayThrow(value.Interface()) {
 				throws = true
 			}
 			if call, ok := value.Interface().(ir.StringFromCodes); ok && call.MayThrow() {

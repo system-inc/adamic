@@ -1,0 +1,21 @@
+// Operations that make a string no longer than what they're given can't reach V8's longest string: a
+// slice, a trim, a number or a boolean written out, and a search or a split, which make no new text.
+// None of them checks (ir/string_throws.go), so no function here can throw and the C tests the pending
+// word nowhere.
+function shown(text: string, value: number): void {
+	console.log(text.slice(1, 3));
+	console.log(text.trim());
+	console.log(text.trimEnd());
+	console.log(String(value));
+	console.log(value.toString());
+	console.log(String(value > 1));
+	console.log(text.indexOf('b'));
+	console.log(text.split(',').length);
+}
+for (const value of [1.5, -2]) {
+	try {
+		shown(' a,b ', value);
+	} catch {
+		console.log('never');
+	}
+}
