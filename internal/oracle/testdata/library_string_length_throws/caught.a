@@ -4,7 +4,7 @@
 // built; repeat and pad are refused before anything is. The step written into each line is a string
 // made at run time, let go on the way to the catch, so the leak check holds it.
 const half = 'ab'.repeat(2 ** 27);
-console.log(half.length);
+console.log(String(half.length));
 let step = 0;
 
 step = step + 1;
@@ -102,5 +102,5 @@ function grown(): number {
 	}
 	return text.length;
 }
-console.log(grown());
+console.log(String(grown()));
 console.log('done');
