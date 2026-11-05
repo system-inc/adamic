@@ -107,8 +107,24 @@ func (l *lowering) typeString(t *checker.Type) string {
 	key := memoKey{l.checker, t}
 	memoCalls++
 	memoDistinctSeen[key] = true
-	if os.Getenv("MEMO_TOSTRING") == "1" {
+	mode := os.Getenv("MEMO_TOSTRING")
+	if mode == "1" || mode == "verify" || mode == "mutant" {
 		if text, found := memoTable[key]; found {
+			if mode == "verify" || mode == "mutant" {
+				// verify: recompute and compare. mutant: the memo hands back a wrong spelling, to prove the check can fail.
+				fresh := l.checker.TypeToString(t)
+				if mode == "mutant" {
+					text = "MUTANT"
+				}
+				memoVerified++
+				if fresh != text {
+					memoMismatches++
+					fmt.Fprintf(os.Stderr, "MEMO MISMATCH: memo %q fresh %q\n", text, fresh)
+				}
+				if memoVerified%100000 == 0 {
+					fmt.Fprintf(os.Stderr, "memo verified %d hits, %d mismatches\n", memoVerified, memoMismatches)
+				}
+			}
 			return text
 		}
 		memoMisses++
@@ -118,6 +134,8 @@ func (l *lowering) typeString(t *checker.Type) string {
 	}
 	return l.checker.TypeToString(t)
 }
+
+var memoVerified, memoMismatches int
 
 func memoCountBoundary(node *ast.Node, proven *checker.Type) {
 	boundaryCalls++
@@ -138,7 +156,7 @@ func memoStats() {
 	defer file.Close()
 	_ = json.NewEncoder(file).Encode(map[string]any{
 		"memo_enabled":                        os.Getenv("MEMO_TOSTRING") == "1",
-		"jsonDecodeSchema_TypeToString_calls": memoCalls, "distinct_types": len(memoDistinctSeen), "memo_misses": memoMisses,
+		"jsonDecodeSchema_TypeToString_calls": memoCalls, "distinct_types": len(memoDistinctSeen), "memo_misses": memoMisses, "memo_hits_verified": memoVerified, "memo_mismatches": memoMismatches,
 		"boundarySchema_calls": boundaryCalls, "boundary_distinct_proven_types": len(boundaryDistinctType),
 		"boundary_distinct_declaration_nodes": len(boundaryDistinctNode), "boundary_distinct_node_type_pairs": len(boundaryDistinctPair),
 		"units": heapUnitCount})

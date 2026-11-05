@@ -1,0 +1,6 @@
+type Point = { x: number; y: number };
+function origin(): Point { return { x: 0, y: 0 }; }
+function add(a: Point, b: Point): Point { return { x: a.x + b.x, y: a.y + b.y }; }
+function neg(a: Point): Point { return { x: -a.x, y: -a.y }; }
+function show(a: Point): string { return a.x + "," + a.y; }
+console.log(show(add(origin(), neg(origin()))));
