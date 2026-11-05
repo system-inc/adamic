@@ -462,8 +462,12 @@ type (
 	// BooleanToString is String(value): "true" or "false".
 	BooleanToString struct{ Value Expression }
 
-	// Concat joins strings, as + and template literals do.
-	Concat struct{ Parts []Expression }
+	// Concat joins strings, as + and template literals do. Site is the template or + it was written
+	// as, a diagnostic site (lowering's stringSites, from 1), or 0 for one lowering made itself.
+	Concat struct {
+		Parts []Expression
+		Site  int
+	}
 
 	// Conditional is the ?: operator.
 	Conditional struct {
