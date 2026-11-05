@@ -79,7 +79,9 @@ func TestProgramRegionGeneratorPushedIntoArrayStops(t *testing.T) {
 	programRegionGeneratorStops(t, source, "whose generator is used other than by a for-of over its call or a call as a statement")
 }
 
-func TestProgramRegionGeneratorCapturedByClosureStops(t *testing.T) {
+// A generator held in a local stops there, at the call that would fill the local, before any closure could
+// capture it.
+func TestProgramRegionGeneratorHeldInLocalStops(t *testing.T) {
 	t.Parallel()
 	source := programRegionGeneratorTree + programRegionGeneratorRun(" const steps = walk(branch);\n const read = (): Generator<Tree, undefined, undefined> => steps;\n for (const tree of read()) { console.log(tree.name); }")
 	programRegionGeneratorStops(t, source, "whose generator is used other than by a for-of over its call or a call as a statement")
