@@ -7,9 +7,9 @@ interface SortedArray<T> extends Array<T> { " __sortedArrayBrand": undefined; }
 const emptyArray: never[] = [];
 function deduplicateSorted<T>(array: SortedReadonlyArray<T>): SortedReadonlyArray<T> {
     if (array.length === 0) return emptyArray as unknown as SortedReadonlyArray<T>;
-    const deduplicated: T[] = [array[0]];
-    for (let index = 1; index < array.length; index++) {
-        if (array[index] !== deduplicated[deduplicated.length - 1]) deduplicated.push(array[index]);
+    const deduplicated: T[] = [];
+    for (const value of array) {
+        if (deduplicated.length === 0 || value !== deduplicated[deduplicated.length - 1]) deduplicated.push(value);
     }
     return deduplicated as unknown as SortedReadonlyArray<T>;
 }

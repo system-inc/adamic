@@ -24,9 +24,9 @@ func TestBrandMintsOfTscsSortedArrays(t *testing.T) {
 	t.Parallel()
 	source := brandMintPrelude + `function deduplicateSorted<T>(array: SortedReadonlyArray<T>): SortedReadonlyArray<T> {
     if (array.length === 0) return emptyArray as unknown as SortedReadonlyArray<T>;
-    const deduplicated: T[] = [array[0]];
-    for (let index = 1; index < array.length; index++) {
-        if (array[index] !== deduplicated[deduplicated.length - 1]) deduplicated.push(array[index]);
+    const deduplicated: T[] = [];
+    for (const value of array) {
+        if (deduplicated.length === 0 || value !== deduplicated[deduplicated.length - 1]) deduplicated.push(value);
     }
     return deduplicated as unknown as SortedReadonlyArray<T>;
 }
@@ -84,8 +84,9 @@ func TestBrandMintIsTheOperandsOwnValue(t *testing.T) {
 }
 
 // What isn't a pure brand of its operand's base stays as it is on main, refused with today's reason,
-// and the mint itself stays refused in .a. Mutant: brandMintOf skipping its every-added-member-is-phantom
-// test; the real-member row lowers.
+// and the mint itself stays refused in .a. Mutants: brandMintOf skipping its every-added-member-is-phantom
+// test, so the real-member row lowers; and the declared-member walk replaced by the base's bare
+// `continue`, so the redeclaration rows (n01, n07, n08) lower.
 func TestBrandMintRecognitionIsExact(t *testing.T) {
 	t.Parallel()
 	const animals = "class Animal { name = 'animal'; }\nclass Dog extends Animal { bark(): string { return 'woof'; } }\n"
@@ -95,6 +96,12 @@ func TestBrandMintRecognitionIsExact(t *testing.T) {
 		{"a dropped readonly", brandMintPrelude + "function unsort(xs: readonly number[]): SortedArray<number> { return xs as unknown as SortedArray<number>; }\nconsole.log(String(unsort([1]).length));\n", ".ts", "a cast the runtime can't check"},
 		{"through any", brandMintPrelude + "function viaAny(xs: number[]): SortedArray<number> { return xs as any as SortedArray<number>; }\nconsole.log(String(viaAny([1]).length));\n", ".ts", "a cast the runtime can't check"},
 		{"an unknown innermost value", brandMintPrelude + "function fromUnknown(xs: unknown): SortedArray<number> { return xs as unknown as SortedArray<number>; }\nconsole.log(String(fromUnknown([1]).length));\n", ".ts", "a cast the runtime can't check"},
+		// Language's must (#b5w3ycg, Nov 5): a member the base has, redeclared narrower, isn't a mint.
+		{"a redeclared base member (n01)", "interface Base { v: number | string; }\ninterface NumV extends Base { v: number; \" __numBrand\": undefined; }\nfunction mint(value: Base): NumV { return value as unknown as NumV; }\nconsole.log(typeof mint({ v: 'hello' }).v);\n", ".ts", "a cast the runtime can't check"},
+		{"a redeclared optional member (n07)", "interface Base { v?: number | string; }\ninterface NumV extends Base { v?: number; \" __numBrand\": undefined; }\nfunction mint(value: Base): NumV { return value as unknown as NumV; }\nconsole.log(String(mint({ v: 'x' }).v));\n", ".ts", "a cast the runtime can't check"},
+		{"a redeclared generic member (n08)", "interface Box<T> { value: T; }\ninterface NumBox extends Box<number | string> { value: number; \" __numBrand\": undefined; }\nfunction mint(value: Box<number | string>): NumBox { return value as unknown as NumBox; }\nconsole.log(mint({ value: 'x' }).value.toFixed(1));\n", ".ts", "a cast the runtime can't check"},
+		{"an own index entry", "interface Base { v: number; }\ninterface Keyed extends Base { [key: string]: number; \" __keyBrand\": undefined; }\nfunction mint(value: Base): Keyed { return value as unknown as Keyed; }\nconsole.log(String(mint({ v: 1 }).v));\n", ".ts", "a cast the runtime can't check"},
+		{"an own method", "interface Base { v: number; }\ninterface Shown extends Base { show(): string; \" __showBrand\": undefined; }\nfunction mint(value: Base): Shown { return value as unknown as Shown; }\nconsole.log(String(mint({ v: 1 }).v));\n", ".ts", "a cast the runtime can't check"},
 		{"the .a twin", brandMintPrelude + "function createSortedArray(): SortedArray<number> { return [] as unknown as SortedArray<number>; }\nconsole.log(String(createSortedArray().length));\n", ".a", "a brand mint in .a"},
 	} {
 		_, err := lowerSourceAs(t, row.source, row.extension)

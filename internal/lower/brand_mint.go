@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"slices"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -65,18 +66,39 @@ func (l *lowering) brandMintOf(operand *ast.Node, source, target *checker.Type) 
 	if len(l.checker.GetIndexInfosOfType(target)) != len(l.checker.GetIndexInfosOfType(base)) {
 		return nil
 	}
+	// Judged from what the interface itself declares, never from its members' types: a member that
+	// redeclares one of the base's (`v: number` over `v: number | string`) would otherwise pass as the
+	// base's own and mint a narrowing no check holds (Language's must on #b5w3ycg, Nov 5). So every
+	// member the interface declares is a property signature phantomBrandMember admits that the base
+	// doesn't have, and nothing else: no method, signature, index entry or redeclaration.
 	mint := &brandMint{base: base}
-	for _, member := range l.checker.GetPropertiesOfType(target) {
-		if l.checker.GetPropertyOfType(base, member.Name) != nil {
-			continue
-		}
-		if !l.phantomBrandMember(member) {
+	symbol := declared.Symbol()
+	if symbol == nil {
+		return nil
+	}
+	for _, declaration := range symbol.Declarations {
+		if declaration.Kind != ast.KindInterfaceDeclaration {
 			return nil
 		}
-		mint.members = append(mint.members, member.Name)
+		for _, member := range declaration.AsInterfaceDeclaration().Members.Nodes {
+			if member.Kind != ast.KindPropertySignature || member.Name() == nil {
+				return nil
+			}
+			property := l.checker.GetSymbolAtLocation(member.Name())
+			if property == nil || !l.phantomBrandMember(property) || l.checker.GetPropertyOfType(base, property.Name) != nil {
+				return nil
+			}
+			mint.members = append(mint.members, property.Name)
+		}
 	}
 	if len(mint.members) == 0 {
 		return nil
+	}
+	// Every property the target has is the base's or one of those, so nothing reaches it another way.
+	for _, member := range l.checker.GetPropertiesOfType(target) {
+		if l.checker.GetPropertyOfType(base, member.Name) == nil && !slices.Contains(mint.members, member.Name) {
+			return nil
+		}
 	}
 	if !l.checker.IsTypeAssignableTo(source, base) || !l.castAssignableAt(operand, source, base) {
 		return nil
