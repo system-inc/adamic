@@ -1,0 +1,10 @@
+test_planted_diagnostic_changes_only_its_own_file (report_test.ReportTests.test_planted_diagnostic_changes_only_its_own_file) ... ok
+test_unknown_kind_is_rejected (report_test.ReportTests.test_unknown_kind_is_rejected) ... ok
+test_blocked_stream_cannot_claim_lowering (entry_test.EntryReportTests.test_blocked_stream_cannot_claim_lowering) ... ok
+test_unreachable_pin_fails_before_output (compiler_test.CompilerSelectionTests.test_unreachable_pin_fails_before_output) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.142s
+
+OK
+Shard result: PASS

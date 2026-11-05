@@ -1,0 +1,18 @@
+=== level 0 internal/oracle exit=0
+ok  	github.com/system-inc/adamic/internal/oracle	109.897s
+=== level 0 internal/native exit=0
+ok  	github.com/system-inc/adamic/internal/native	56.137s
+=== level 0 internal/lower exit=0
+ok  	github.com/system-inc/adamic/internal/lower	3.546s
+=== level 0 cmd/adamic exit=0
+ok  	github.com/system-inc/adamic/cmd/adamic	1.614s
+=== level 1 internal/oracle exit=0
+ok  	github.com/system-inc/adamic/internal/oracle	7.094s
+=== level 1 internal/native exit=0
+ok  	github.com/system-inc/adamic/internal/native	2.037s
+=== level 1 internal/lower exit=0
+ok  	github.com/system-inc/adamic/internal/lower	1.040s
+=== level 2 internal/oracle exit=0
+ok  	github.com/system-inc/adamic/internal/oracle	39.436s
+=== level 2 internal/lower exit=0
+ok  	github.com/system-inc/adamic/internal/lower	2.340s

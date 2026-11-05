@@ -1,0 +1,16 @@
+#!/bin/bash
+source /tmp/adamic-gate/env.sh
+cd /home/user/adamic
+L=/tmp/adamic-gate/logs/main; mkdir -p $L
+git checkout -q --detach 006b3687 && git submodule update --init --recursive --depth 1 >/dev/null 2>&1
+git rev-parse HEAD > $L/sha
+gofmt -l cmd internal > $L/gofmt.log 2>&1; echo "gofmt lines=$(wc -l < $L/gofmt.log)" > $L/status
+go vet ./internal/lower/ > $L/vet.log 2>&1; echo "vet exit=$?" >> $L/status
+python3 /tmp/adamic-gate/waves.py $L/products-waves.log internal/native internal/oracle internal/lower > $L/products-waves.out 2>&1
+echo "products: $(tail -1 $L/products-waves.out)" >> $L/status
+go test -count=1 -timeout 30m -skip '^TestProduct_' ./internal/lower/ > $L/lower.log 2>&1; echo "lower exit=$?" >> $L/status
+go test -count=1 -timeout 30m -skip '^TestProduct_' ./internal/oracle/ > $L/oracle.log 2>&1; echo "oracle exit=$?" >> $L/status
+go test -count=1 -timeout 30m ./stage3/census/latent/... > $L/latent.log 2>&1; echo "latent exit=$?" >> $L/status
+/tmp/adamic-gate/meter.sh main
+cat /tmp/adamic-gate/logs/main/meter.status >> $L/status
+echo done >> $L/status

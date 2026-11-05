@@ -1,0 +1,25 @@
+=== level 0 internal/oracle exit=1
+--- FAIL: TestProduct_ProgramTscNodeAPI (1.07s)
+    program_region_node_records_test.go:63: build program-tsc-node-api: gate TypeScript API version "6.0.2", lock requires 6.0.3
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=8 misses=9
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	717.492s
+FAIL
+=== level 0 internal/native exit=0
+ok  	github.com/system-inc/adamic/internal/native	296.892s
+=== level 0 internal/lower exit=0
+ok  	github.com/system-inc/adamic/internal/lower	80.076s
+=== level 0 cmd/adamic exit=0
+ok  	github.com/system-inc/adamic/cmd/adamic	2.434s
+=== level 1 internal/oracle exit=0
+ok  	github.com/system-inc/adamic/internal/oracle	85.441s
+=== level 1 internal/native exit=0
+ok  	github.com/system-inc/adamic/internal/native	38.283s
+=== level 1 internal/lower exit=0
+ok  	github.com/system-inc/adamic/internal/lower	13.639s
+=== level 2 internal/oracle exit=0
+ok  	github.com/system-inc/adamic/internal/oracle	206.255s
+=== level 2 internal/lower exit=0
+ok  	github.com/system-inc/adamic/internal/lower	4.336s

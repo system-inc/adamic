@@ -1,0 +1,32 @@
+import json, subprocess, sys, os, re
+repo='/home/user/adamic'; log=sys.argv[1]; pkgs=sys.argv[2:]
+waits=json.load(open(repo+'/cloud/fast-gate/product-order.json'))['waits']
+def lst(p):
+    out=subprocess.run(['go','test','-list','^TestProduct_',  './'+p+'/'],cwd=repo,capture_output=True,text=True).stdout
+    return [p+' '+l for l in out.split('\n') if l.startswith('TestProduct_')]
+need=set(); todo=[]
+for p in pkgs: todo+=lst(p)
+while todo:
+    x=todo.pop()
+    if x in need: continue
+    need.add(x); todo+=waits.get(x,[])
+level={}
+def lv(x):
+    if x not in level: level[x]=1+max([lv(y) for y in waits.get(x,[])],default=-1)
+    return level[x]
+for x in need: lv(x)
+bylevel={}
+for x in need: bylevel.setdefault(level[x],[]).append(x)
+print('products',len(need),'levels',sorted((k,len(v)) for k,v in bylevel.items()),flush=True)
+bad=0
+with open(log,'w') as f:
+    for k in sorted(bylevel):
+        bypkg={}
+        for x in bylevel[k]:
+            p,n=x.split(' '); bypkg.setdefault(p,[]).append(n)
+        cmd=['go','test','-count=1','-timeout','60m']
+        for p,ns in bypkg.items():
+            r=subprocess.run(cmd+['-run','^('+'|'.join(ns)+')$','./'+p+'/'],cwd=repo,capture_output=True,text=True)
+            f.write('=== level %d %s exit=%d\n'%(k,p,r.returncode)+r.stdout+r.stderr); f.flush()
+            if r.returncode: bad+=1
+print('failed groups',bad)

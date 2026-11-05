@@ -1,0 +1,11 @@
+test_no_panic_or_error_names_no_site (report_test.LatentReportTests.test_no_panic_or_error_names_no_site) ... ok
+test_duplicate_file_is_rejected (report_test.ReportTests.test_duplicate_file_is_rejected) ... ok
+test_meter_unit_times_block_sorts_files_and_shortens_units (report_test.ReportTests.test_meter_unit_times_block_sorts_files_and_shortens_units) ... ok
+test_whole_program_roots_are_checked (report_test.ReportTests.test_whole_program_roots_are_checked) ... ok
+test_reach_includes_dependency_outside_compiler_and_excludes_unused_file (entry_test.EntryCensusTests.test_reach_includes_dependency_outside_compiler_and_excludes_unused_file) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.620s
+
+OK
+Shard result: PASS

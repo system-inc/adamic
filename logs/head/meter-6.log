@@ -1,0 +1,14 @@
+test_type_error_in_dependency_changes_only_dependency_own_file (report_test.CensusAttributionTests.test_type_error_in_dependency_changes_only_dependency_own_file) ... ok
+test_top_ten_excludes_dependency_skips_and_orders_ties (report_test.LatentReportTests.test_top_ten_excludes_dependency_skips_and_orders_ties) ... ok
+test_unowned_threshold_uses_either_tree_and_summarizes_tail (report_test.LatentReportTests.test_unowned_threshold_uses_either_tree_and_summarizes_tail) ... ok
+test_meter_old_run_has_no_unit_times (report_test.ReportTests.test_meter_old_run_has_no_unit_times) ... ok
+test_missing_file_is_rejected (report_test.ReportTests.test_missing_file_is_rejected) ... ok
+test_missing_entry_is_rejected (entry_test.EntryReportTests.test_missing_entry_is_rejected) ... ok
+test_different_pins_fail_before_output (compiler_test.CompilerSelectionTests.test_different_pins_fail_before_output) ... ok
+test_missing_local_dependency_transport_retries_recorded_origins (compiler_test.CompilerSelectionTests.test_missing_local_dependency_transport_retries_recorded_origins) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 3.238s
+
+OK
+Shard result: PASS

@@ -1,0 +1,9 @@
+#!/bin/bash
+# meter.sh <label>: prepared probes then every meter and census shard.
+source /tmp/adamic-gate/env.sh
+cd /home/user/adamic
+L=/tmp/adamic-gate/logs/$1; mkdir -p $L
+python3 stage3/meter/build-probes.py --prepare > $L/probe-build.log 2>&1; echo "prepare exit=$?" > $L/meter.status
+for i in 0 1 2 3 4 5 6 7; do ADAMIC_TEST_SHARD=$i/8 python3 stage3/meter/shards.py meter > $L/meter-$i.log 2>&1; echo "meter $i/8 exit=$?" >> $L/meter.status; done
+for i in 0 1; do ADAMIC_TEST_SHARD=$i/2 python3 stage3/meter/shards.py census > $L/census-$i.log 2>&1; echo "census $i/2 exit=$?" >> $L/meter.status; done
+echo done >> $L/meter.status

@@ -1,0 +1,11 @@
+test_panic_and_error_sites_are_named_from_src (report_test.LatentReportTests.test_panic_and_error_sites_are_named_from_src) ... ok
+test_global_and_external_diagnostics_are_not_attributed_to_root (report_test.ReportTests.test_global_and_external_diagnostics_are_not_attributed_to_root) ... ok
+test_malformed_diagnostic_is_rejected (report_test.ReportTests.test_malformed_diagnostic_is_rejected) ... ok
+test_wrong_root_is_rejected (entry_test.EntryReportTests.test_wrong_root_is_rejected) ... ok
+test_per_ref_builds_and_runs_each_pinned_compiler (compiler_test.CompilerSelectionTests.test_per_ref_builds_and_runs_each_pinned_compiler) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.231s
+
+OK
+Shard result: PASS

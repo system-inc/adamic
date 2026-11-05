@@ -1,0 +1,11 @@
+test_measurement_label_is_required (report_test.LatentReportTests.test_measurement_label_is_required) ... ok
+test_planted_notyet_moves_only_its_reason_count (report_test.LatentReportTests.test_planted_notyet_moves_only_its_reason_count) ... ok
+test_missing_whole_program_is_rejected (report_test.ReportTests.test_missing_whole_program_is_rejected) ... ok
+test_checker_and_lowering_diagnostics_must_agree (entry_test.EntryReportTests.test_checker_and_lowering_diagnostics_must_agree) ... ok
+test_overlay_keeps_the_entry_first (entry_test.EntryReportTests.test_overlay_keeps_the_entry_first) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.012s
+
+OK
+Shard result: PASS
