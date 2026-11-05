@@ -218,8 +218,9 @@ static adamic_string *convert(const adamic_string *string, bool upper) {
 		at += size;
 	}
 	// A mapping can lengthen a string (ß to SS) past V8's longest; units are never more than bytes.
-	if (length > ADAMIC_STRING_MAX_UNITS) {
-		adamic_string_check_length(adamic_string_length(result));
+	if (length > ADAMIC_STRING_MAX_UNITS && !adamic_string_check_length(adamic_string_length(result))) {
+		adamic_release(result);
+		return adamic_retain(&adamic_string_empty);
 	}
 	return result;
 }

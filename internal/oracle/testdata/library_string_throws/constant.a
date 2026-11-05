@@ -1,9 +1,7 @@
-// Constants that can't fail: each of normalize's four forms written out, its form left out, and
-// String.fromCodePoint given integer code points from 0 to 0x10FFFF. fromCharCode never throws. None
-// of these is a call that can throw, so nothing here tests the pending word.
-const text = 'Å';
-console.log(`${text.normalize('NFC').length} ${text.normalize('NFD').length} ${text.normalize('NFKC').length} ${text.normalize('NFKD').length}`);
-console.log(`${text.normalize().length}`);
+// Constants that can't fail: String.fromCodePoint given integer code points from 0 to 0x10FFFF, and
+// fromCharCode, which never throws. None of these is a call that can throw, so nothing here tests the
+// pending word. normalize isn't here: a decomposition can make its string longer than V8's longest,
+// so it always checks (ir/string_throws.go), and so would a template.
 console.log(String.fromCodePoint(72, 105, 0x1f30d, 0, 0x10ffff).length.toString());
 console.log(String.fromCodePoint());
 console.log(String.fromCharCode(72, 1.5, -1, 0x110000).length.toString());

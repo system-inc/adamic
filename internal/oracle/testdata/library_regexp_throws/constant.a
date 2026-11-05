@@ -1,6 +1,7 @@
-// replaceAll and matchAll given a literal with the g flag, and object writes in a program that never
-// calls Object.freeze: nothing here can throw, so no call is followed by a check and no function is
-// one that can throw.
+// matchAll given a literal with the g flag, and object writes in a program that never calls
+// Object.freeze: nothing here can throw, so no call is followed by a check and no function is one that
+// can throw. replaceAll isn't here: a replace can make its string longer than V8's longest, so it
+// always checks (ir/string_throws.go), and so would a template.
 type Tally = { text: string; count: number };
 
 function tallied(text: string): Tally {
@@ -8,14 +9,14 @@ function tallied(text: string): Tally {
 	for (const match of text.matchAll(/[aeiou]/g)) {
 		tally.count = tally.count + match[0].length;
 	}
-	tally.text = text.replaceAll(/[aeiou]/g, '*');
-	tally.text = `${tally.text} ${text.replaceAll(new RegExp('s', 'g'), '$')}`;
+	tally.text = text;
 	return tally;
 }
 for (const text of ['adamic', 'strings', 'rhythm']) {
 	try {
 		const tally = tallied(text);
-		console.log(`${tally.text} ${tally.count}`);
+		console.log(tally.text);
+		console.log(tally.count);
 	} catch {
 		console.log('never');
 	}

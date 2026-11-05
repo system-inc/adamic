@@ -18,6 +18,9 @@ typedef struct json_writer {
 	bool pretty;
 	const adamic_json_runtime *runtime;
 	const json_ancestor *ancestors;
+	// too_long is the text gone past V8's longest string: nothing more is written, and the stringify
+	// throws Node's RangeError once the walk is done.
+	bool too_long;
 } json_writer;
 
 static void *json_memory(size_t size) {
@@ -29,10 +32,9 @@ static void *json_memory(size_t size) {
 	return value;
 }
 static void append(json_writer *w, const char *bytes, size_t length, size_t units) {
-	adamic_string_check_length((double)w->units + (double)units);
-	if (length > SIZE_MAX - w->length) {
-		static const char message[] = "RangeError: Invalid string length";
-		adamic_panic(message, sizeof message - 1);
+	if (w->too_long || (double)w->units + (double)units > ADAMIC_STRING_MAX_UNITS || length > SIZE_MAX - w->length) {
+		w->too_long = true;
+		return;
 	}
 	size_t needed = w->length + length;
 	if (needed > w->capacity) {
@@ -370,11 +372,15 @@ adamic_string *adamic_json_stringify_runtime(adamic_value value, const adamic_js
 			gap = adamic_string_slice(&blanks, 0, width, true);
 		}
 	}
-	json_writer writer = {json_memory(64), 0, 64, 0, gap, NULL, 0, false, pretty, runtime, NULL};
+	json_writer writer = {json_memory(64), 0, 64, 0, gap, NULL, 0, false, pretty, runtime, NULL, false};
 	keys(&writer, replacer, replacer_schema);
 	bool present = write_value(&writer, value, schema, 0, &empty);
 	adamic_string *result = NULL;
-	if (present) {
+	if (writer.too_long) {
+		// Node's RangeError on the pending word, and an empty string the caller lets go.
+		(void)adamic_string_check_length((double)ADAMIC_STRING_MAX_UNITS + 1);
+		result = adamic_retain(&adamic_string_empty);
+	} else if (present) {
 		result = adamic_string_allocate(writer.length);
 		if (writer.length != 0) { memcpy((char *)result->bytes, writer.bytes, writer.length); }
 		// Repeated gaps may join a high surrogate at one gap's end to the next gap's low.

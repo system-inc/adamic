@@ -54,12 +54,9 @@ func (e *emitter) regexReplacement(call ir.RegExpCall) string {
 	}
 	result := e.temporary()
 	e.line("adamic_string *%s = adamic_regex_replace_callback(%s, %s, %s, %t, %s, %d, %d, %d, %s, %d, %d);", result, input, regex, callback, call.Method == "replaceAll", schema, len(kinds), rest, regexReplacementKind(call.Replacement.Returns), groups, len(groupChecks), restSlot)
-	// The callback's throw, and replaceAll's TypeError for a RegExp without the g flag, return no
-	// string: the pending word is tested before there's one to own.
-	if e.program.GlobalFlagMayThrow(call) {
-		e.checkThrown()
-	} else {
-		e.closureThrown()
-	}
+	// The callback's throw, replaceAll's TypeError for a RegExp without the g flag, and a result past
+	// V8's longest return no string: the pending word is tested before there's one to own. A replace
+	// can always be too long, so it's always tested (ir.StringLengthMayThrow).
+	e.checkThrown()
 	return e.own(ir.String, result)
 }

@@ -49,9 +49,9 @@ func TestLibraryTypeErrorThrowsCaught(t *testing.T) {
 	}
 }
 
-// A literal with the g flag given to matchAll or replaceAll, and an object write in a program that
-// never freezes one, isn't a call that can throw: no function is marked as one that can, and the C
-// tests the pending word nowhere.
+// A literal with the g flag given to matchAll, and an object write in a program that never freezes
+// one, isn't a call that can throw: no function is marked as one that can, and the C tests the pending
+// word nowhere. replaceAll always can, past V8's longest string (ir/string_throws.go).
 func TestLibraryTypeErrorConstantsDoNotCheck(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_regexp_throws/constant.a"))
@@ -74,6 +74,6 @@ func TestLibraryTypeErrorConstantsDoNotCheck(t *testing.T) {
 		t.Error("a program that never calls Object.freeze is marked as one that may freeze")
 	}
 	if source := native.C(program); strings.Contains(source, "adamic_thrown") {
-		t.Error("the C tests the pending word after a global literal or an object write no freeze reaches")
+		t.Error("the C tests the pending word after matchAll given a global literal or an object write no freeze reaches")
 	}
 }
