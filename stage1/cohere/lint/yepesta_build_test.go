@@ -29,6 +29,14 @@ import (
 // and a runner's, wherever either checkout is. Its key names the files that change it and never this checkout's path.
 func jsxTextnodesLowered(t *testing.T) (string, buildcache.Inputs) {
 	t.Helper()
+	inputs, build := jsxTextnodesLoweredRecipe(t)
+	return buildcache.Product(t, inputs, build), inputs
+}
+
+// jsxTextnodesLoweredRecipe is the lowered mutant's key and its build, apart, so a reader of the native can key the
+// native without building the lowered port it's made from.
+func jsxTextnodesLoweredRecipe(t *testing.T) (buildcache.Inputs, func(out string) error) {
+	t.Helper()
 	d := jsxTextnodesDescriptor(t)
 	var change struct{ Name, File, From, To string }
 	data, err := os.ReadFile(filepath.Join("rules", d.Slug, "mutant.json"))
@@ -47,7 +55,7 @@ func jsxTextnodesLowered(t *testing.T) (string, buildcache.Inputs) {
 	}
 	inputs := buildcache.Inputs{Name: "jsx-textnodes-mutant-lowered", Files: files,
 		Flags: []string{change.From, change.To, change.File}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
-	lowered := buildcache.Product(t, inputs, func(out string) error {
+	return inputs, func(out string) error {
 		port, err := portTree(t, filepath.Join(out, "tree"), change.From, change.To, filepath.Join("rules", d.Slug, change.File))
 		if err != nil {
 			return err
@@ -78,8 +86,7 @@ func jsxTextnodesLowered(t *testing.T) (string, buildcache.Inputs) {
 		}
 		// The port's imports name this checkout for the build's own lowering; the product names it <repository> (#tqrqx60).
 		return buildcache.RelativeFiles(out)
-	})
-	return lowered, inputs
+	}
 }
 
 // jsxTextnodesPackage is this package's path in the repository, where portTree places the copied port.
@@ -162,16 +169,44 @@ func jsxTextnodesNative(t *testing.T) string {
 
 func jsxTextnodesNativeFrom(t *testing.T, lowered string, inputs buildcache.Inputs) string {
 	t.Helper()
+	built := buildcache.Product(t, jsxTextnodesNativeInputs(inputs), func(out string) error {
+		return jsxTextnodesNativeBuild(lowered, out)
+	})
+	return filepath.Join(built, "scanner")
+}
+
+// jsxTextnodesNativeInputs is the sanitized native's key: the lowered mutant's, whose flags and files carry the mutation
+// (mutant.json's from, to and file, and the rules directory that holds it), with the native build's own options.
+func jsxTextnodesNativeInputs(inputs buildcache.Inputs) buildcache.Inputs {
 	inputs.Name = "jsx-textnodes-mutant-native"
 	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true, Split: true, Jobs: 4})...)
 	inputs.Flags = append(inputs.Flags, "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-	built := buildcache.Product(t, inputs, func(out string) error {
-		source, err := os.ReadFile(filepath.Join(lowered, "main.c"))
-		if err != nil {
-			return err
-		}
-		return native.Build(string(source), filepath.Join(out, "scanner"), native.Options{Sanitize: true, Split: true, Jobs: 4})
+	return inputs
+}
+
+// jsxTextnodesNativeBuild builds the sanitized native, the executable scanner, into out from the lowered mutant's C.
+func jsxTextnodesNativeBuild(lowered, out string) error {
+	source, err := os.ReadFile(filepath.Join(lowered, "main.c"))
+	if err != nil {
+		return err
+	}
+	return native.Build(string(source), filepath.Join(out, "scanner"), native.Options{Sanitize: true, Split: true, Jobs: 4})
+}
+
+// jsxTextnodesNativeOwner is the one product test that builds the sanitized native. Every other product test that reads
+// it finds it by name, after this owner in cloud/fast-gate/product-order.json, so the tree settles it once, under one key.
+const jsxTextnodesNativeOwner = "stage1/cohere/lint TestProduct_JsxTextnodesMutantNative"
+
+// jsxTextnodesFoundNative is the sanitized native's scanner for every reader but its owner: the native mutant canary
+// reads it as well, so the same mutant isn't built a second time from a port of its own. Under the trace it is only
+// found, and the lowered port is never built here; outside one it builds both, as the owner would.
+func jsxTextnodesFoundNative(t *testing.T) string {
+	t.Helper()
+	inputs, _ := jsxTextnodesLoweredRecipe(t)
+	built := buildcache.BuiltElsewhere(t, "the JSX textnode mutant's sanitized native", jsxTextnodesNativeInputs(inputs), jsxTextnodesNativeOwner, func(out string) error {
+		lowered, _ := jsxTextnodesLowered(t)
+		return jsxTextnodesNativeBuild(lowered, out)
 	})
 	return filepath.Join(built, "scanner")
 }
