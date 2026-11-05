@@ -119,7 +119,7 @@ S2c-1 (a generator's call into a one-read Iterable<T> parameter), each one exact
 
 | Mutant | Edit | Red |
 |---|---|---|
-| The one-read check dropped | lower/iterable_views.go, `generatorParameter`: `if uses.reads != 1 {` made `if false && uses.reads != 1 {` | TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad (internal/lower): the next-through-the-parameter, typeof, next-inside-the-loop, labeled-break, identity and default rows compile |
+| The one-read check dropped | lower/iterable_views.go, `generatorParameter`: `if uses.reads != 1 {` made `if false && uses.reads != 1 {` | TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad (internal/lower): the typeof, labeled-break, identity and default rows compile (a hand-driven next is refused earlier, by unbound-method) |
 | Widened to a stored generator | lower/expression.go, `call`'s plain generator arm: `if l.iterableArgument(node) {` made `if true {` | the same test's stored-generator row: the stored call goes through IterableOf into a local, and checkGeneratorRoads says so as a compiler bug instead of the stored-generator stop |
 | The close at the break dropped | native/emit_ownership.go, `releaseScopes`: the `adamic_iterator_close` line made `(void)` of the local | view_outer_loop.a, natively: the second and third passes resume the generator and print its next values, where Node prints nothing |
 | The dispatch's generator arm removed | lower/iterable_views.go, `dispatchView`: the kind test's condition, `ir.Unary{Operator: ir.Not, Operand: ir.IsGenerator{Value: held}}`, made `ir.BooleanConstant{Value: true}` | every fixture with a view a generator feeds (array_from_view.a, elementwise_view.a, view_outer_loop.a, view_throw.a): the loud default panics, a compiler bug naming the site |

@@ -88,15 +88,21 @@ func (l *lowering) viewLoop(view int, statements []ir.Statement, err error) ([]i
 // (generatorPairTypes, read from what the call yields, never the declared iterator type).
 func (l *lowering) generatorOrigin(of ir.IterableOf) iterableOrigin {
 	call, isCall := of.Value.(ir.Call)
-	if !isCall || call.Returns != ir.Generator || of.Site < 1 || of.Site > len(l.generatorArguments) {
+	if !isCall || call.Returns != ir.Generator || call.Virtual != 0 || of.Site < 1 || of.Site > len(l.generatorArguments) {
 		return iterableOrigin{name: "a generator seen as an object other than by its own call"}
 	}
+	// A direct call has the one target it names.
+	targets := l.result.CallTargets(call)
+	if len(targets) != 1 {
+		return iterableOrigin{name: "a generator seen as an object other than by its own call"}
+	}
+	generator := targets[0]
 	argument := l.generatorArguments[of.Site-1]
-	held := iterableElement{element: l.result.Functions[call.Function].Yields}
+	held := iterableElement{element: l.result.Functions[generator].Yields}
 	if argument.pair {
 		held.pair, held.key, held.value = true, argument.key, argument.value
 	}
-	return iterableOrigin{name: "a generator from " + l.result.Functions[call.Function].Name + "()", generator: call.Function + 1, held: held}
+	return iterableOrigin{name: "a generator from " + l.result.Functions[generator].Name + "()", generator: generator + 1, held: held}
 }
 
 // iterableViewElement says whether a for-of's iterated value is typed the library's Iterable<T> or
@@ -275,13 +281,18 @@ func (l *lowering) generatorParameter(call ir.Call, position int, of ir.Iterable
 		return fmt.Errorf("lower: compiler bug: a generator seen as an object with no site")
 	}
 	where := l.generatorArguments[of.Site-1].node
-	if call.Virtual != 0 || len(call.Spread) != 0 || position >= len(l.result.Functions[call.Function].Parameters) {
+	if call.Virtual != 0 || len(call.Spread) != 0 {
 		return l.generatorNotYet(where, "passed into a parameter of no one body")
 	}
-	callee := l.result.Functions[call.Function]
+	targets := l.result.CallTargets(call)
+	if len(targets) != 1 || position >= len(l.result.Functions[targets[0]].Parameters) {
+		return l.generatorNotYet(where, "passed into a parameter of no one body")
+	}
+	target := targets[0]
+	callee := l.result.Functions[target]
 	parameter := callee.Parameters[position]
 	name := l.result.Locals[parameter].Name
-	if index, isView := views[parameter]; !isView || l.iterableViews[index].function != call.Function {
+	if index, isView := views[parameter]; !isView || l.iterableViews[index].function != target {
 		return l.generatorNotYet(where, "passed into the parameter "+name+", whose one use isn't a for-of over it")
 	}
 	switch {
