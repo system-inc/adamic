@@ -1,9 +1,11 @@
 package lower
 
 import (
+	"fmt"
 	"reflect"
 	"sort"
 	"strconv"
+	"strings"
 
 	"github.com/system-inc/adamic/internal/ir"
 )
@@ -29,9 +31,30 @@ func (graph *allocationFlowGraph) reachingAllocations(expression ir.Expression, 
 		}
 		graph.projectionBusy[read.Local] = true
 		defer func() { delete(graph.projectionBusy, read.Local); graph.projectionReads[read.Local] = result }()
+	} else if project {
+		// A projected query of any other receiver-shaped expression is a function of the expression, its
+		// depth and which Reads are busy around it: projectionReads is written once, so a later query
+		// reads what this one did, and a busy Read is the only thing that can cut it differently. So it's
+		// computed once per key. Without this, a function that recurses on a field of its own parameter
+		// seen through a cast (binder.ts's isNarrowableOperand, `isNarrowableOperand((expr as
+		// BinaryExpression).left)`) reopens a frame for the cast receiver at every level, once per
+		// recursive call, fan-out^32 before the depth cap, and lowering never finished (#tzy22kd).
+		if key, keyed := graph.projectionFrame(expression, depth); keyed {
+			if graph.projectionFrames == nil {
+				graph.projectionFrames = map[string]ir.AllocationSet{}
+			}
+			if cached, ok := graph.projectionFrames[key]; ok {
+				return cached
+			}
+			defer func() { graph.projectionFrames[key] = result }()
+		}
 	}
 	result = ir.AllocationSet{}
 	sites, visited, reasons := map[int]bool{}, map[int]bool{}, map[string]bool{}
+	// followed is each receiver-shaped value this query already followed, by value and level: a second
+	// follow adds only the sites, reasons and demands the first did, since nothing between them changes
+	// what it reads (a nested Read projection clears its busy mark before follow resumes).
+	followed := map[string]bool{}
 	queue := []int{}
 	demand := func(node int) {
 		if !visited[node] {
@@ -42,6 +65,13 @@ func (graph *allocationFlowGraph) reachingAllocations(expression ir.Expression, 
 	unknown := func(reason string) { result.Unknown = true; reasons[reason] = true }
 	var follow func(ir.Expression, int)
 	follow = func(value ir.Expression, level int) {
+		if key, keyed := projectionValueKey(value); keyed {
+			key = strconv.Itoa(level) + " " + key
+			if followed[key] {
+				return
+			}
+			followed[key] = true
+		}
 		if graph.entry != nil {
 			if site := graph.entry(value); site != 0 {
 				sites[site] = true
@@ -107,6 +137,58 @@ func (graph *allocationFlowGraph) reachingAllocations(expression ir.Expression, 
 	sort.Ints(result.Sites)
 	sort.Strings(result.Reasons)
 	return result
+}
+
+// projectionFrame is the memo key of a projected query: the expression, its depth, and the Reads busy
+// around it, sorted. An expression that isn't receiver-shaped has none, and isn't memoized.
+func (graph *allocationFlowGraph) projectionFrame(expression ir.Expression, depth int) (string, bool) {
+	key, keyed := projectionValueKey(expression)
+	if !keyed {
+		return "", false
+	}
+	busy := make([]int, 0, len(graph.projectionBusy))
+	for local := range graph.projectionBusy {
+		busy = append(busy, local)
+	}
+	sort.Ints(busy)
+	var builder strings.Builder
+	builder.WriteString(strconv.Itoa(depth))
+	for _, local := range busy {
+		builder.WriteString(",")
+		builder.WriteString(strconv.Itoa(local))
+	}
+	builder.WriteString(" ")
+	builder.WriteString(key)
+	return builder.String(), true
+}
+
+// projectionValueKey spells a receiver-shaped value whole, every field of every node printed, so two
+// values share a key only when they're the same value: a Read, a property or a constant element of
+// one, and the wrappers follow looks through. Anything else has no key.
+func projectionValueKey(value ir.Expression) (string, bool) {
+	for node := value; ; {
+		switch current := node.(type) {
+		case ir.Read:
+			return fmt.Sprintf("%#v", value), true
+		case ir.Property:
+			node = current.Object
+		case ir.ArrayIndex:
+			if _, constant := current.Index.(ir.NumberConstant); !constant {
+				return "", false
+			}
+			node = current.Array
+		case ir.Box:
+			node = current.Value
+		case ir.Narrow:
+			node = current.Value
+		case ir.Unwrap:
+			node = current.Value
+		case ir.CheckedCast:
+			node = current.Value
+		default:
+			return "", false
+		}
+	}
 }
 
 // rewriteShapeStatements preserves the IR tree's containers and rewrites only
