@@ -1,0 +1,27 @@
+// tsbuildPublic.ts:1149's shape (#qk8rztp S2c-3): tsc's firstOrUndefinedIterator, verbatim, handed a
+// Map's values(), with no generator anywhere in the program. Its parameter is Iterable<T> | undefined,
+// held as a nullable object. Inside its undefined test the for-of reads it through ir.Defined, the
+// narrowing's check, and the view's proof follows that check to the read it holds; before S2c-3 the
+// check was an origin the proof couldn't name, and this stopped not yet. The loop is the collection's
+// own, its holder still declared through the check. Names are built, never only literals.
+export function firstOrUndefinedIterator<T>(iter: Iterable<T> | undefined): T | undefined {
+    if (iter !== undefined) {
+        for (const value of iter) {
+            return value;
+        }
+    }
+    return undefined;
+}
+interface Project {
+    readonly name: string;
+    readonly order: number;
+}
+const projects = new Map<string, Project>();
+for(let index = 0; index < 3; index++) {
+    projects.set(`/src/${String(index)}`, { name: `project ${String(index)}`, order: index * 3 });
+}
+const none = new Map<string, Project>();
+const first = firstOrUndefinedIterator(projects.values());
+console.log(first === undefined ? 'undefined' : `${first.name}:${String(first.order)}`);
+const missing = firstOrUndefinedIterator(none.values());
+console.log(missing === undefined ? 'undefined' : missing.name);

@@ -198,7 +198,16 @@ func (l *lowering) checkIterableViews() error {
 		return site(iterableOrigin{name: "a value made by " + strings.TrimPrefix(fmt.Sprintf("%T", value), "ir.")})
 	}
 	for index, view := range l.iterableViews {
-		reaches := graph.ReachingAllocations(view.iterated)
+		// A view read where the checker narrowed undefined out is ir.Defined over the read
+		// (narrowed.go's defined), which passes the value through or panics, so its origins are the
+		// read's (#qk8rztp S2c-3). view.iterated itself stays the Defined: the loop's holder is
+		// declared with it, keeping the narrowing's `NULL` check, so an undefined this proof missed
+		// panics loudly in Defined's words and is never stepped.
+		proven := view.iterated
+		if viewed, isViewed := iterableViewRead(view.iterated); isViewed {
+			proven = viewed
+		}
+		reaches := graph.ReachingAllocations(proven)
 		unproven := slices.Clone(reaches.Reasons)
 		var differently []string
 		var generators []iterableOrigin
@@ -251,7 +260,7 @@ func (l *lowering) checkIterableViews() error {
 func (l *lowering) checkGeneratorArguments() error {
 	views := map[int]int{}
 	for index, view := range l.iterableViews {
-		if read, isRead := view.iterated.(ir.Read); isRead {
+		if read, isRead := iterableViewRead(view.iterated); isRead {
 			views[read.Local] = index
 		}
 	}
@@ -276,6 +285,19 @@ func (l *lowering) checkGeneratorArguments() error {
 		walk(function.Body, inspect)
 	}
 	return failed
+}
+
+// iterableViewRead is the read a view's for-of iterates: a bare ir.Read, or one ir.Defined, one level
+// deep, whose value is a bare ir.Read, what a read of a slot the checker narrowed undefined out of
+// lowers to, as a nullable parameter's is inside its undefined test (#qk8rztp S2c-3). Any other
+// wrapper is no read of a view: the parameter isn't mapped to it, and the proof doesn't see through
+// it.
+func iterableViewRead(iterated ir.Expression) (ir.Read, bool) {
+	if defined, isDefined := iterated.(ir.Defined); isDefined {
+		iterated = defined.Value
+	}
+	read, isRead := iterated.(ir.Read)
+	return read, isRead
 }
 
 // generatorParameter is checkGeneratorArguments for one generator handed in at one call. A nullable
@@ -374,7 +396,9 @@ func (l *lowering) generatorView(index int, generators []iterableOrigin) error {
 // The block closes what it holds at every way out (ir.Block's Closes), so a break, a return, a
 // throw or a jump to an outer label finishes a generator, as Node's return() does, and a later pass
 // over it finds it done (Lower's must); a collection's iterator has no return(), and the close
-// leaves it as it is.
+// leaves it as it is. The holder's declaration keeps the value forOf gave it, for a nullable
+// parameter an ir.Defined over its read, so the narrowing's `NULL` check still runs before any arm
+// (#qk8rztp S2c-3).
 func (l *lowering) dispatchView(view iterableView, function int) error {
 	yields := l.result.Functions[function].Yields
 	held := ir.Read{Local: view.holder, Of: ir.Object}
