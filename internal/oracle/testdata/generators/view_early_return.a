@@ -1,0 +1,22 @@
+// Compiler's first short path (#qk8rztp S2c-1): the callee returns before its for-of, so the
+// generator handed into its Iterable<T> parameter is dropped at start, never stepped and never
+// closed, as Node drops it: its body never runs, and the built string its frame keeps for its
+// parameter is let go of with it.
+function* labelled(prefix: string, count: number): Generator<number, void, undefined> {
+    console.log(`${prefix} starts`);
+    for(let index = 0; index < count; index++) {
+        yield index * 2;
+    }
+}
+function evens(items: Iterable<number>, count: number): number[] {
+    if (count === 0) {
+        return [];
+    }
+    const result: number[] = [];
+    for (const value of items) {
+        result.push(value);
+    }
+    return result;
+}
+console.log(`[${evens(labelled(`skipped ${String(0)}`, 0), 0).join(',')}]`);
+console.log(`[${evens(labelled(`walked ${String(3)}`, 3), 3).join(',')}]`);

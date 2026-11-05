@@ -1,0 +1,29 @@
+// Compiler's third short path (#qk8rztp S2c-1): a throw from the consumer's own loop body, caught
+// outside the callee. Leaving the for-of by the throw closes the generator while it is suspended,
+// as Node's return() does, so its body never reaches its last line. view_throw.a is the other path,
+// a throw from the generator's own body during a step, where the close finds the frame done.
+function* numbers(limit: number, label: string): Generator<number, void, undefined> {
+    for(let index = 0; index < limit; index++) {
+        yield index;
+    }
+    console.log(`${label} finished`);
+}
+function check(items: Iterable<number>): number {
+    let seen = 0;
+    for (const value of items) {
+        if (value === 2) {
+            throw new Error(`rejected ${String(value)}`);
+        }
+        seen++;
+    }
+    return seen;
+}
+try {
+    console.log(String(check(numbers(5, `run ${String(1)}`))));
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(`caught ${error.message}`);
+    }
+}
+console.log(String(check(numbers(2, `run ${String(2)}`))));

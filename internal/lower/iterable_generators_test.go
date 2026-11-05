@@ -2,6 +2,11 @@ package lower
 
 import (
 	"errors"
+	goast "go/ast"
+	"go/parser"
+	"go/token"
+	"path/filepath"
+	"sort"
 	"strings"
 	"testing"
 
@@ -72,7 +77,7 @@ func TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
 		{"a default naming it", iterableCounted + "function total(items: Iterable<number>, base: number = typeof items === 'object' ? 1 : 0): number { let sum = base; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(2))));", readTwice},
 		{"a closure capturing it, never called", function("const keep = (): Iterable<number> => items; for (const value of items) { sum += value; }"), "which a closure captures"},
 		{"passing it on", iterableCounted + iterableTotal + "function outer(items: Iterable<number>): number { return total(items); }\nconsole.log(String(outer(counted(3))));", "whose one use isn't a for-of over it"},
-		{"reassigning it", iterableCounted + "function total(items: Iterable<number>, other: Iterable<number>): number { let sum = 0; items = other; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(2), counted(3))));", "which the function assigns"},
+		{"reassigning it", iterableCounted + "function total(items: Iterable<number>, other: Iterable<number>): number { let sum = 0; items = other; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(2), counted(3))));", "which the function writes"},
 		{"arguments", function("sum += arguments.length; for (const value of items) { sum += value; }"), "reads arguments"},
 		{"an async callee", iterableCounted + "async function total(items: Iterable<number>): Promise<number> { let sum = 0; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(await total(counted(2))));", other},
 		{"a call through a function value", iterableCounted + iterableTotal + "const add = total;\nconsole.log(String(add(counted(2))));", other},
@@ -92,9 +97,16 @@ func TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
 			}
 		})
 	}
+	// A for-of head and a destructuring assignment that rebind the parameter stop before the proof
+	// today, a for-of whose head isn't a const or let declaration and a pattern assigned to an existing
+	// name being not yet built, so these rows hold only that neither compiles; were either to lower,
+	// its ForOf.Local or Binding.Local write is counted (TestLocalUseCountSeesEveryWrite).
+	const sizes = "const sizes = new Map<string, number>([[`a${String(1)}`, 1]]);\n"
 	for _, probe := range []struct{ name, source string }{
 		{"spreading it", function("const all = [...items]; sum += all.length; for (const value of items) { sum += value; }")},
 		{"destructuring it", function("const [first] = items; sum += first ?? 0; for (const value of items) { sum += value; }")},
+		{"a for-of head rebinding it", sizes + function("for (items of [sizes.values()]) { sum += 1; } for (const value of items) { sum += value; }")},
+		{"a destructuring assignment rebinding it", sizes + function("[items] = [sizes.values()]; for (const value of items) { sum += value; }")},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -152,5 +164,154 @@ func TestGeneratorViewDispatchesOnTheHeapKind(t *testing.T) {
 	}
 	if closes != 1 || kinds != 1 || steps != 1 || iterables != 1 {
 		t.Fatalf("%d closing blocks, %d kind tests, %d generator steps of an object and %d IterableOf arguments, want one each", closes, kinds, steps, iterables)
+	}
+}
+
+// Every IR field that names a local is counted by the one-read rule's walk, as a read, a write or
+// another naming (Lower's must on #qk8rztp S2c-1): a for-of head, a pattern's binding and a catch
+// write a local with no Assign. Mutant: ForOf.Local classified as no local, and the for-of row
+// counts no write.
+func TestLocalUseCountSeesEveryWrite(t *testing.T) {
+	t.Parallel()
+	const local = 7
+	for _, probe := range []struct {
+		name                 string
+		node                 any
+		reads, writes, named int
+	}{
+		{"a read", ir.Read{Local: local, Of: ir.Object}, 1, 0, 0},
+		{"an assignment", ir.Assign{Local: local}, 0, 1, 0},
+		{"a declaration", ir.Declare{Local: local}, 0, 1, 0},
+		{"a for-of head", ir.ForOf{Local: local}, 0, 1, 0},
+		{"a for-of pattern's binding", ir.ForOf{Local: 0, Pattern: []ir.Binding{{Local: local, Field: "0"}}}, 0, 1, 0},
+		{"a for-of with a pattern leaves Local unused", ir.ForOf{Local: local, Pattern: []ir.Binding{{Local: 3, Field: "0"}}}, 0, 0, 0},
+		{"a catch", ir.Try{CatchLocal: local}, 0, 1, 0},
+		{"a closing block", ir.Block{Closes: local + 1}, 0, 0, 1},
+		{"a per-iteration copy", ir.Loop{PerIteration: []int{local}}, 0, 0, 1},
+		{"an environment's cell", ir.AllocateEnvironment{Cells: []int{local}}, 0, 0, 1},
+		{"another local", ir.Assign{Local: local + 1}, 0, 0, 0},
+	} {
+		var uses localUseCount
+		uses.node(probe.node, local)
+		if uses.reads != probe.reads || uses.writes != probe.writes || uses.named != probe.named {
+			t.Errorf("%s: %d reads, %d writes, %d other namings, want %d, %d, %d", probe.name, uses.reads, uses.writes, uses.named, probe.reads, probe.writes, probe.named)
+		}
+	}
+}
+
+// localFields lists every int and []int field of every struct the ir package's statements and
+// expressions hold, read from its source, so a field added there that names a local can't be missed
+// by the one-read rule's count: it fails here until it's classified. A field listed that the source
+// no longer has fails too.
+func TestLocalFieldsClassifyEveryIntField(t *testing.T) {
+	t.Parallel()
+	paths, err := filepath.Glob("../ir/*.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	files := token.NewFileSet()
+	structs := map[string]*goast.StructType{}
+	roots := map[string]bool{}
+	for _, path := range paths {
+		if strings.HasSuffix(path, "_test.go") {
+			continue
+		}
+		file, err := parser.ParseFile(files, path, nil, 0)
+		if err != nil {
+			t.Fatal(err)
+		}
+		goast.Inspect(file, func(node goast.Node) bool {
+			switch node := node.(type) {
+			case *goast.TypeSpec:
+				if structure, isStruct := node.Type.(*goast.StructType); isStruct {
+					structs[node.Name.Name] = structure
+				}
+			case *goast.FuncDecl:
+				// A statement has the unexported statement(), an expression Type() Type.
+				if node.Recv != nil && len(node.Recv.List) == 1 && (node.Name.Name == "statement" || node.Name.Name == "Type") {
+					receiver := node.Recv.List[0].Type
+					if star, isStar := receiver.(*goast.StarExpr); isStar {
+						receiver = star.X
+					}
+					if identifier, isIdentifier := receiver.(*goast.Ident); isIdentifier {
+						roots[identifier.Name] = true
+					}
+				}
+			}
+			return true
+		})
+	}
+	found := map[string]bool{}
+	seen := map[string]bool{}
+	var queue []string
+	for root := range roots {
+		queue = append(queue, root)
+	}
+	sort.Strings(queue)
+	for len(queue) != 0 {
+		name := queue[0]
+		queue = queue[1:]
+		structure, isStruct := structs[name]
+		if seen[name] || !isStruct {
+			continue
+		}
+		seen[name] = true
+		for _, field := range structure.Fields.List {
+			held := field.Type
+			if list, isList := held.(*goast.ArrayType); isList && list.Len == nil {
+				held = list.Elt
+			}
+			if identifier, isIdentifier := held.(*goast.Ident); isIdentifier && identifier.Name == "int" {
+				for _, fieldName := range field.Names {
+					found[name+"."+fieldName.Name] = true
+				}
+			}
+			goast.Inspect(field.Type, func(node goast.Node) bool {
+				if identifier, isIdentifier := node.(*goast.Ident); isIdentifier && structs[identifier.Name] != nil && !seen[identifier.Name] {
+					queue = append(queue, identifier.Name)
+				}
+				return true
+			})
+		}
+	}
+	for field := range found {
+		classified, listed := localFields[field]
+		if !listed {
+			t.Errorf("ir field %s holds an int and isn't in localFields: say whether it reads, writes or names a local, or why it isn't one (local_uses.go)", field)
+		} else if classified.role == localNot && strings.TrimSpace(classified.why) == "" {
+			t.Errorf("ir field %s is listed as no local without saying why", field)
+		}
+	}
+	for field := range localFields {
+		if !found[field] {
+			t.Errorf("localFields lists %s, which no IR statement or expression holds", field)
+		}
+	}
+}
+
+// checkGeneratorRoads counts every Generator-typed value in the lowered program and allows only a
+// consumer's own and IterableOf's, a call's own argument; that count is the guard that IterableOf is
+// the one door from a generator to an object's slot (Compiler's departure 1 on #qk8rztp S2c-1). A
+// generator's call boxed or cast into an Object slot by hand is its compiler bug. Mutant: the count's
+// test made false, and both rows go red.
+func TestGeneratorRoadsRefuseAGeneratorBoxedOrCastIntoAnObject(t *testing.T) {
+	t.Parallel()
+	made := ir.Call{Function: 0, Returns: ir.Generator}
+	for _, probe := range []struct {
+		name  string
+		value ir.Expression
+	}{
+		{"boxed", ir.Box{Value: made}},
+		{"cast", ir.CheckedCast{Value: made}},
+	} {
+		program := &ir.Program{
+			Functions: []ir.Function{{Name: "gen", Generator: true, Returns: ir.Generator}},
+			Locals:    []ir.Local{{Name: "slot", Type: ir.Object, Function: -1}},
+			Main:      []ir.Statement{ir.Declare{Local: 0, Value: probe.value}},
+		}
+		err := checkGeneratorRoads(program)
+		if err == nil || !strings.Contains(err.Error(), "compiler bug") {
+			t.Errorf("%s: got %v, want checkGeneratorRoads' compiler bug", probe.name, err)
+		}
 	}
 }
