@@ -176,6 +176,14 @@ func TestGeneratorRuntimeReturnWhileRunning(t *testing.T) {
 	generatorRuntimeGuard(t, "returning", "", "", "", "")
 }
 
+// A view's dispatch handed NULL answers "not a generator", and adamic_collection_iterator_is answers
+// the same, so the dispatch reaches its loud default naming the site (Memory's should on #qk8rztp
+// S2c-1 commit 3). Mutant: the NULL test dropped, and the read faults under ASan.
+func TestGeneratorRuntimeIsNull(t *testing.T) {
+	t.Parallel()
+	generatorRuntimeGuard(t, "is", "0 0 1\n", "return value != NULL && ((const adamic_heap *)value)->kind == adamic_kind_generator;", "return ((const adamic_heap *)value)->kind == adamic_kind_generator;", "SEGV")
+}
+
 func TestGeneratorRuntimeInitialize(t *testing.T) {
 	t.Parallel()
 	// Each cell starts empty and owned by the generator, and the initializer is the only thing that
