@@ -6,6 +6,7 @@ Each is one edit, run on a house box, then put back. The presence design is Diag
 |---|---|---|
 | No unbranding | unbranded.go, `unbranded`: return t first | TestBrandMintsOfTscsSortedArraysAreAdmitted, TestBrandMintOfALiteralIsExact, TestUnbrandedArraysAgreeWithNode, TestUnbrandedMintLowersToItsOperand: each stops NotYet at the branded value |
 | No void guard | unbranded.go, `unbranded`: the voidBrandMember test dropped | TestUnbrandedVoidBrandStops, the length row lowers whole |
+| A cast that unbrands | cast_proof.go, `arrayLikeType`: the phantomExtension guard removed (survived every program pin on Home for 1663124c, so pinned directly) | TestUnbrandedCastSeesTheBrand, SortedReadonlyArray reads as an array |
 | A raw array question | expression.go, `representation`: `l.checker.IsArrayType(proven)` put back in the Array case | TestArrayQuestionsGoThroughUnbranded |
 | A real member admitted | brand_mint.go, `phantomExtension`: `!l.phantomBrandMember(property) ||` made `false ||` | TestUnbrandedOnlyPhantomExtensions, the real-member row lowers; TestBrandMintRecognitionIsExact, its real-member row passes the cast |
 | No `in` road | phantom_array_presence.go: the `in` clause made `false &&` | TestUnbrandedPresenceIsRefused, the three `in` rows (b09's union heard as inProperty's union refusal) |
@@ -18,10 +19,6 @@ Each is one edit, run on a house box, then put back. The presence design is Diag
 | Every key refused | phantom_array_presence.go, `phantomPresenceKeyed`: a literal key refused whatever it names | TestUnbrandedPresenceControls, the `"length" in` and hasOwn `"length"` rows |
 | Every literal write refused | phantom_array_presence.go, `phantomPresenceWrite`: a literal key refused whatever it names | TestUnbrandedPresenceControls, the write at a number |
 | An array spread refused | phantom_array_presence.go: SpreadElement judged as an object spread is | TestUnbrandedPresenceControls, the array spread row |
-
-Survived, on Home for 1663124c: cast_proof.go's arrayLikeType guard, which keeps a cast seeing the brand, removed. No test
-turns red, so the guard keeps the head's behavior (a phantom extension is no array to castAssignableAt's skip) without a
-case that tells the two apart. It's kept for Diagnostics to rule on.
 
 Not held by a mutant: the oracle fixture of tsc's four shapes on both backends. Adding one means a recorded count row and
 the fixture families on a box; the JavaScript backend holds the shapes to Node (TestUnbrandedArraysAgreeWithNode), and
