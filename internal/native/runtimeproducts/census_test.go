@@ -932,7 +932,7 @@ var runtimeproductsEnvironment = map[string]string{
 var requestEnvironment = map[string]string{
 	"ADAMIC_BUILD_LOG":      buildLogReading,
 	"WASI_SYSROOT":          "a wasm request's --sysroot flag, exactly what the variable holds and none on another request (TestTheSysrootReadIsTheSysrootFlag), a part of the request's Portable the key holds (TestRuntimeProductKeyHoldsEveryPart), relocated from the compiler's installation, and the compiler beside it, which the key holds by its report; otherwise it only refuses a request (ValidateOptions)",
-	"ADAMIC_PROGRAM_REGION": "only refuses a request for options a program region can't take (ValidateOptions), never reaches a flag or a byte",
+	"ADAMIC_PROGRAM_REGION": "only refuses a request for options a program region can't take (ValidateOptions), never reaches a flag or a byte (TestAProgramRegionOnlyRefusesARequest)",
 }
 var jobserverEnvironment = map[string]string{
 	"ADAMIC_CC_JOBSERVER": "names the FIFO of the compile token pool handed to the build: when clang runs, never what it writes (TestTheJobserverNeverReachesAnArchivesBytes)",
@@ -988,6 +988,40 @@ func TestTheSysrootReadIsTheSysrootFlag(t *testing.T) {
 	}
 	if len(portable) != 2 || portable[0] != portable[1] {
 		t.Errorf("two installations' wasm requests key apart:\n%s", strings.Join(portable, "\n--\n"))
+	}
+}
+
+// ADAMIC_PROGRAM_REGION only ever refuses an archive's request and never changes its bytes: set, every variant's
+// request is refused as one a program region can't take (a wasm target, a request reactor), or is the request it is
+// unset, every part of its key, its portable parts, compiler, archiver and options alike, and what the request's build
+// compiles is its Parts' files and flags with that compiler, so its bytes are the same. The wasm variants ask a
+// stand-in installation (fakeWASISDK), so they're asked where no wasi-sdk is installed. Mutants that each fail it: Flags
+// adding -DADAMIC_PROGRAM_REGION when the variable is set; ValidateOptions refusing no variant for it.
+// Not parallel: it sets ADAMIC_PROGRAM_REGION and WASI_SYSROOT, which are process-wide.
+func TestAProgramRegionOnlyRefusesARequest(t *testing.T) {
+	t.Setenv("WASI_SYSROOT", filepath.Join(fakeWASISDK(t), "share", "wasi-sysroot"))
+	refused := 0
+	for _, variant := range Variants {
+		t.Setenv("ADAMIC_PROGRAM_REGION", "")
+		unset, err := native.RuntimeRequestFor(variant.Options)
+		if err != nil {
+			t.Fatalf("%s, the variable unset: %v", variant.Name, err)
+		}
+		t.Setenv("ADAMIC_PROGRAM_REGION", "1")
+		set, err := native.RuntimeRequestFor(variant.Options)
+		if err != nil {
+			if !strings.Contains(err.Error(), "Program regions require a one-shot native CLI") {
+				t.Errorf("%s, the variable set, failed for another reason than a program region's refusal: %v", variant.Name, err)
+			}
+			refused++
+			continue
+		}
+		if !slices.Equal(set.Parts, unset.Parts) || !slices.Equal(set.Portable, unset.Portable) || set.Compiler != unset.Compiler || set.Archiver != unset.Archiver || set.Options != unset.Options {
+			t.Errorf("%s: the variable set moved the request from\n%s\nto\n%s", variant.Name, strings.Join(unset.Parts, "\n"), strings.Join(set.Parts, "\n"))
+		}
+	}
+	if refused == 0 {
+		t.Error("the variable set refused no variant; want the wasm variants refused, as a program region can't take them")
 	}
 }
 
