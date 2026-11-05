@@ -103,3 +103,13 @@ run by `s2b1c-proof.sh` with the one test it must turn red:
 | The yielded-type test dropped | lower/generators.go, `generatorStepped`: `return len(arguments) == 3 && !l.isVoidValue(arguments[0]) && !l.holdsVoid(arguments[0])` made `return len(arguments) == 3` | TestGeneratorVoidReturnIsNeverReadByNewMapOrNewSet's void rows: the void-yielding Set and both void pairs reach lowering |
 | The constructor judged by its name | lower/generators.go, `collectionConstructor`: the library-symbol test made a name test | TestGeneratorVoidReturnIsNeverReadByNewMapOrNewSet's user-class row |
 | steppedSite sees through a cast | lower/generators.go, `steppedSite`: `for site.Parent != nil && site.Parent.Kind == ast.KindParenthesizedExpression {` made to climb an `AsExpression` too | survives, equivalent: on Pupa (job 01M6N04CHA7P2ZCMK8M0AV6NDP) the cast row stops before any void rule judges the call, so seeing through the cast admits nothing. The row is held by its own stop, not by this mutant |
+
+S2b-1b (a view stepped in a generator's body: tsc's mapIterator and mapDefinedIterator over a
+collection's iterator), each one exact line, run by `s2b1b-proof.sh` with the one test it must turn
+red:
+
+| Mutant | Edit | Red |
+|---|---|---|
+| The held iterator's frame cell not counted | native/generator.go, `generatorFunction`'s `counted`: `return e.program.Locals[local].IterationCell \|\| e.program.Locals[local].Type.IsReference()` made to answer false for a local whose name starts `iterator` (the view's held iterator, libraryIteratorLoop's local) | map_iterator_entries.a and map_defined_iterator.a: the cell is never released at finish or by the drop walk, a counted leak of the iterator, its next closure and its state, and of the collection the state keeps (and under LeakSanitizer on the box) |
+| The view arm skipped | lower/object.go, `forOf`: `if held, isView := l.iterableViewElement(iterated); isView {` made `...; false && isView {` | map_iterator_entries.a, NotYet "for...of over an object" at its for-of; map_defined_iterator.a is held as a union and still lowers |
+| The union view arm skipped | lower/object.go, `forOf`'s union case: `held, isView := l.iterableViewElement(iterated)` followed by `; isView = false` | map_defined_iterator.a, NotYet "for...of over a union of differently held members" |
