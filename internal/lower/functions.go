@@ -80,6 +80,12 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		function.Boundary.Parameters = append(function.Boundary.Parameters, ir.BoundaryParameter{})
 		function.Receiver = true
 	}
+	if implementation := generatorImplementation(declaration); implementation != nil {
+		// A class writes each overload's signature into its implementation's function before the
+		// implementation's own (class.go), so the gate reads the implementation from the first one,
+		// before an overload could write it as an ordinary function's.
+		return l.generatorNotYet(implementation, generatorForm(implementation))
+	}
 	if generatorDeclaration(declaration) {
 		// Every function body is lowered after its signature is written, here, so this is where a
 		// generator of a form this slice doesn't lower stops, before its body could be lowered as an

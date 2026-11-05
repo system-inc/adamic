@@ -67,3 +67,14 @@ programs: generatorStepped reading `T` from the declaration (the spread's array 
 whatever the exemption says), and generatorSignature reading its result without `concrete`
 (representation reads a bare `T` through the instance's substitution; only an unread instance's
 words change, `T` for `unknown`, red on that row alone).
+
+Wave 3b (Lower's and Compiler's pins on an unused class, after rule 2500 went), each one exact line,
+run by `s2a-proof.sh` with the one test it must turn red:
+
+| Mutant | Edit | Red |
+|---|---|---|
+| The walk skips a module's classes | lower/refusals.go, `refuse`: `module.AsNode().ForEachChild(visit)` (the line after `l.refusal.deferred = nil`) made to skip a `ClassDeclaration` | TestUnusedClassGeneratorMethodIsStillWalked: the any cast in the unused class's generator method is never judged, and the program lowers |
+| signature lets a generator method through | lower/functions.go, `signature`: `if !loweredGenerator(declaration) {` made `if false && !loweredGenerator(declaration) {` | TestGeneratorMethodUseIsDecidedAcrossModules (the dropped rows compile, the for-of rows stop in other words) and the used half of TestGeneratorMethodBothWays |
+| The overload check taken out | lower/functions.go, `signature`: `if implementation := generatorImplementation(declaration); implementation != nil {` made `...; false && implementation != nil {` | TestOverloadedGeneratorMethodStopsAtItsImplementation (f): the first overload is written as an ordinary method and stops in other words |
+| signature lets an object literal's generator method through (e) | as the second row | TestGeneratorFormsStopAtLowering's object literal method rows: the dropped ones compile, the for-of ones stop in other words |
+| The walk stops every generator method | lower/refusals.go, `asyncGeneratorRefusal`: `if asyncGenerator(node) {` made `if asyncGenerator(node) \|\| generatorDeclaration(node) && node.Kind == ast.KindMethodDeclaration {` | unused_class.a, refused before its static block can run, and the unused half of TestGeneratorMethodBothWays |

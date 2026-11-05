@@ -36,8 +36,8 @@ func TestGeneratorsAgreeWithNode(t *testing.T) {
 			generatorAgrees(t, directory+"/"+entry.Name())
 		})
 	}
-	if programs != 20 {
-		t.Fatalf("%d programs in %s, want 20: a program added or removed needs this count changed with it", programs, directory)
+	if programs != 21 {
+		t.Fatalf("%d programs in %s, want 21: a program added or removed needs this count changed with it", programs, directory)
 	}
 }
 
