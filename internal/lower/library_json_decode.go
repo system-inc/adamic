@@ -119,6 +119,23 @@ func (l *lowering) jsonSchemaType(node *ast.Node, mode jsonSchemaMode) (ir.JSOND
 	return l.jsonDecodeSchema(node, rootType, mode, l.constant)
 }
 
+// typeString is l.checker.TypeToString(t), held per type for the lowering. TypeToString takes no enclosing node and no
+// flags, so its answer is a function of the type alone, and a held answer is the answer. A schema node's expected text
+// is asked once a node and a node once a function's return type, so tsc's entry census asked 1,866,154 times for 3,790
+// types, and each answer's synthesized type nodes stayed live in the checker: 7.57 against 5.04 GiB at its peak
+// (#wy2dyf0, #rw2vjhn). A lowering is one goroutine's, as sourceIdentities is.
+func (l *lowering) typeString(t *checker.Type) string {
+	if text, found := l.typeStrings[t]; found {
+		return text
+	}
+	if l.typeStrings == nil {
+		l.typeStrings = map[*checker.Type]string{}
+	}
+	text := l.checker.TypeToString(t)
+	l.typeStrings[t] = text
+	return text
+}
+
 // jsonDecodeSchema is the one checker-type descriptor builder. Boundary mode
 // preserves undefined for fields; decode and encode retain JSON admission rules.
 func (l *lowering) jsonDecodeSchema(node *ast.Node, rootType *checker.Type, mode jsonSchemaMode, intern func(string) int) (ir.JSONDecodeSchema, error) {
@@ -147,7 +164,7 @@ func (l *lowering) jsonDecodeSchema(node *ast.Node, rootType *checker.Type, mode
 		index := len(schema.Nodes)
 		seen[t] = index
 		schema.Nodes = append(schema.Nodes, ir.JSONDecodeNode{})
-		n := ir.JSONDecodeNode{Expected: l.checker.TypeToString(t)}
+		n := ir.JSONDecodeNode{Expected: l.typeString(t)}
 		flags := t.Flags()
 		var literal ir.Expression
 		var of ir.Type
