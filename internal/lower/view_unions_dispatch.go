@@ -26,6 +26,9 @@ func buildUnionReadContract(l *lowering, node *ast.Node, target *checker.Type, b
 			contract.Unsupported = "views-v3: array element kind: " + child.Name
 		}
 	}
+	if mutableViewArrayContract(l.result, id, map[ir.ViewContractID]bool{}) {
+		contract.Unsupported = "mutable array"
+	}
 	if contract.Of == ir.Object {
 		for _, field := range l.checker.GetPropertiesOfType(target) {
 			child, err := build(l.checker.GetTypeOfSymbol(field))
@@ -71,7 +74,11 @@ func (l *lowering) unionAggregateContract(node *ast.Node, target *checker.Type) 
 		}
 	} else {
 		contract.Kind = ir.ViewArray
+		contract.ArrayReadonly = l.isLibraryType(target, "ReadonlyArray")
 		contract.Unsupported = "views-v3: array element kind"
+		if !contract.ArrayReadonly {
+			contract.Unsupported = "mutable array"
+		}
 		contract.Of = ir.Array
 		element := l.viewArrayElementType(target)
 		if element == nil {
