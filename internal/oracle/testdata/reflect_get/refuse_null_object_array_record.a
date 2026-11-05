@@ -1,0 +1,10 @@
+// A record whose values are arrays of objects or null is refused where it's viewed as unknown: a
+// run-time key read hands out a value, whose null would read as undefined (#ys4naww, Language's z1).
+// Node prints null.
+import { propertyOf } from './hostErrors.ts';
+
+class Point {
+	x = 1;
+}
+const records: Record<string, (Point | null)[]> = { a: [new Point(), null] };
+console.log(propertyOf(propertyOf(records, 'a'), '1') === null ? 'null' : 'not null');
