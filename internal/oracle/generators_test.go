@@ -7,10 +7,11 @@ import (
 	"testing"
 )
 
-// Generators' first slice (#qk8rztp S1c, S2a's generic ones per instance, and S2b-1a's new Set and
-// new Map): a top-level function* consumed by a for-of over its call, a spread, Array.from, new Set
-// or new Map of it, or dropped by a call as a statement, whatever iterator type it is declared to
-// return. Each fixture in testdata/generators agrees with Node natively,
+// Generators' first slice (#qk8rztp S1c, S2a's generic ones per instance, S2b-1a's new Set and
+// new Map, and S2b-1b's views, tsc's mapIterator and mapDefinedIterator stepping a collection's
+// iterator in their bodies): a top-level function* consumed by a for-of over its call, a spread,
+// Array.from, new Set or new Map of it, or dropped by a call as a statement, whatever iterator type
+// it is declared to return. Each fixture in testdata/generators agrees with Node natively,
 // sanitized and on the JavaScript backend, and one that finishes leaks nothing: every way out of the
 // consuming loop (exhaustion, break, return, a throw from the body or the loop, a labeled jump to an
 // outer loop) and of the body (completion, an early return, a throw) lets go of the generator once
@@ -36,8 +37,8 @@ func TestGeneratorsAgreeWithNode(t *testing.T) {
 			generatorAgrees(t, directory+"/"+entry.Name())
 		})
 	}
-	if programs != 28 {
-		t.Fatalf("%d programs in %s, want 28: a program added or removed needs this count changed with it", programs, directory)
+	if programs != 30 {
+		t.Fatalf("%d programs in %s, want 30: a program added or removed needs this count changed with it", programs, directory)
 	}
 }
 
