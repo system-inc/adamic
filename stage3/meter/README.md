@@ -265,3 +265,30 @@ counts and tsc entry diagnostic count with the latest earlier paired report
 committed in the measured main revision. Both measured SHAs are printed. Uncommitted scratch runs cannot
 become the previous baseline. The Oct 19 report fixture retains the relevant
 fields from commit 11a32835 and is tested beside the committed Oct 8 iBLy18 run.
+
+A per-root stop is a root-order artifact only for the two exact runtime-readiness
+reasons, when the entry census attempted units in the stop's file without any
+readiness finding there, and that root throws on Node. The meter runs
+`node_readiness.py` itself: TypeScript 6.0.3 emits ES modules with normal import
+elision and const-enum inlining, then the installed setup-pinned Node v24 runs
+each qualifying root with a 5-second limit (emit has a separate 60-second limit).
+JSON retains exit, first error line, version and timeout; build failures,
+timeouts and clean runs keep counting against the root file. `debug.ts` throws;
+`diagnosticInformationMap.generated.ts` and `types.ts` run clean and still count.
+`root_order_artifacts` lists the excluded file failures; `readiness_node_checks`
+also retains clean and inconclusive probes. Every artifact's root, stop, reason
+and Node result appears beside lowering counts in single, paired and daily
+README tables, without truncation. This ruling changes the file's meter score,
+not its raw outcome or latent finding-site totals; no successful IR after that
+first stop is claimed. Probe logs remain in each run's `node-readiness/`.
+
+For a partial historical ordinary census, `python3 -E -S -B
+stage3/meter/report.py --root-order-only <adapted-tree> <run/main>` writes and
+prints the artifact table and Node checks without claiming complete coverage.
+Paths in both streams must name that adapted tree. A complete ordinary census
+uses the normal single-tree report command. The two direction mutants run with
+`python3 -E -S -B stage3/meter/check-root-order-mutants.py`; each names its red
+`RootOrderTests` regression. The Node runner has its own real-tool tests in
+`node_readiness_test.py`. Go wrappers in `meter_test.go` run all meter Python
+suites; new tests keep the existing `*_test.py` naming and the stage3 Python
+suite census stays unchanged.

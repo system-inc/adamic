@@ -109,6 +109,8 @@ class ReportTests(unittest.TestCase):
         self.assertEqual(result['files'], result['trees']['area']['files'])
         text = (self.run / 'report.md').read_text()
         self.assertIn(MEASUREMENT, text)
+        self.assertIn('Lowering, main: 1/4; root-order artifacts: 0.', text)
+        self.assertIn('| Root | Stop | Reason | Node result | Classification |', text)
         self.assertIn('| area-only blocker | OWNER BLANK |', text)
         self.assertLess(text.index('### Unowned'), text.index('Latent lowering, main:'))
         self.assertEqual(result['trees']['main']['latent_lowering']['totals']['NotYet'], 0)
@@ -430,3 +432,129 @@ class PreviousRunTests(unittest.TestCase):
             text = (run / 'README.md').read_text()
             self.assertIn('| Current | 295df3bc6aa3d47933ccf675da1c33e745856313 | 2/79 | 56/79 | 2/79 | 235 |', text)
             self.assertIn('| 20261008T171021Z.iBLy18 | 45487a809f89885a3fc651cd590e7dabf31362dc | 2/79 | 56/79 | 0/79 | 320 |', text)
+
+
+class RootOrderTests(unittest.TestCase):
+    setUp = ReportTests.setUp
+    render = ReportTests.render
+
+    def readiness(self, *, entry_reason=None, attempted=True, node_throws=True):
+        from entry_test import write_entry
+        from report import READINESS_REASONS, ENTRY_MEASUREMENT
+        self.reason = sorted(READINESS_REASONS)[0]
+        self.root = self.tree / 'src/compiler/later.ts'
+        self.stop = self.tree / 'src/compiler/good.ts'
+        self.records[2].update(where=f'{self.stop}:7:9', reason=self.reason)
+        entry = self.tree / 'src/tsc/tsc.ts'
+        entry.parent.mkdir(parents=True)
+        entry.write_text('export {};\n')
+        directory = self.run / 'tsc'
+        write_entry(self.tree, directory, sources=[entry, self.stop])
+        path = directory / 'latent.jsonl'
+        rows = [json.loads(line) for line in path.read_text().splitlines()]
+        rows[2]['units'] = [{'status': 'attempted' if attempted else 'skipped_checker_body'}]
+        if entry_reason:
+            # Attribute by finding location even when a different file's unit found it.
+            rows[1]['findings'] = [{'measurement': ENTRY_MEASUREMENT, 'kind': 'NotYet',
+                                    'where': f'{self.stop}:99:1', 'reason': entry_reason, 'text': 'stop'}]
+        path.write_text(''.join(json.dumps(row) + '\n' for row in rows))
+        self.node = {'node_version': 'v24.19.0', 'build_exit': 0, 'exit': 1 if node_throws else 0,
+                     'timeout': False, 'throws': node_throws,
+                     'first_error': "ReferenceError: Cannot access 'early' before initialization" if node_throws else ''}
+        self.probe = patch('report.run_roots', return_value={str(self.root): self.node})
+        self.mock = self.probe.start()
+        self.addCleanup(self.probe.stop)
+
+    def root_row(self, result):
+        return next(row for row in result['files'] if row['file'] == 'src/compiler/later.ts')
+
+    def test_entry_order_readiness_still_counts_against_root_file(self):
+        from report import READINESS_REASONS
+        self.readiness(entry_reason=sorted(READINESS_REASONS)[1])
+        result = self.render()
+        self.assertFalse(self.root_row(result)['lowering'])
+        self.assertEqual(result['totals']['lowering'], 1)
+        self.assertEqual(result['root_order_artifacts'], [])
+        self.mock.assert_called_once()
+        self.assertEqual(self.mock.call_args.args[1], [])
+
+    def test_root_only_readiness_with_node_throw_is_visible_artifact(self):
+        self.readiness()
+        result = self.render()
+        self.assertTrue(self.root_row(result)['lowering'])
+        self.assertEqual(result['totals']['lowering'], 2)
+        artifact = {'root': 'src/compiler/later.ts', 'where': 'src/compiler/good.ts:7:9',
+                    'reason': self.reason, 'node': self.node}
+        self.assertEqual(result['root_order_artifacts'], [artifact])
+        self.assertEqual(result['readiness_node_checks'], [artifact])
+        text = (self.run / 'report.md').read_text()
+        self.assertIn('root-order artifacts: 1', text)
+        self.assertIn('| src/compiler/later.ts | src/compiler/good.ts:7:9 | ' + self.reason, text)
+        self.assertIn('Node throws here as well; exit 1; ReferenceError:', text)
+        self.assertIn('| src/compiler/later.ts | pass | pass | pass |', text)
+        self.assertEqual(self.mock.call_args.args[1], [str(self.root)])
+
+    def test_root_only_readiness_with_clean_node_still_counts(self):
+        from report import READINESS_REASONS
+        self.readiness(node_throws=False)
+        self.records[2]['reason'] = sorted(READINESS_REASONS)[1]
+        result = self.render()
+        self.assertFalse(self.root_row(result)['lowering'])
+        self.assertEqual(result['totals']['lowering'], 1)
+        self.assertEqual(result['root_order_artifacts'], [])
+        self.assertEqual(result['readiness_node_checks'][0]['node']['exit'], 0)
+        self.assertIn('Node runs clean; exit 0;', (self.run / 'report.md').read_text())
+
+    def test_unattempted_file_is_not_evidence(self):
+        self.readiness(attempted=False)
+        result = self.render()
+        self.assertFalse(self.root_row(result)['lowering'])
+        self.assertEqual(result['readiness_node_checks'], [])
+        self.assertEqual(self.mock.call_args.args[1], [])
+
+    def test_other_reason_never_gets_an_artifact(self):
+        self.readiness()
+        self.records[2]['reason'] = 'reading unrelated'
+        result = self.render()
+        self.assertFalse(self.root_row(result)['lowering'])
+        self.assertEqual(result['readiness_node_checks'], [])
+        self.assertEqual(self.mock.call_args.args[1], [])
+
+    def test_inconclusive_node_still_counts(self):
+        self.readiness()
+        self.node.update(throws=False, exit=None, timeout=True, first_error='')
+        result = self.render()
+        self.assertFalse(self.root_row(result)['lowering'])
+        self.assertEqual(result['root_order_artifacts'], [])
+        self.assertIn('Node probe inconclusive', (self.run / 'report.md').read_text())
+
+    def test_daily_table_keeps_artifacts_beside_counts(self):
+        from shutil import copytree
+        self.readiness()
+        self.render()
+        for label in ('main', 'area'):
+            directory = self.run / label
+            directory.mkdir()
+            (directory / 'census.jsonl').write_bytes((self.run / 'census.jsonl').read_bytes())
+            copytree(self.run / 'tsc', directory / 'tsc')
+            latent = [{'measurement': MEASUREMENT, 'status': 'measurement', 'checker_rejected': True}]
+            latent += [{'measurement': MEASUREMENT, 'file': str(path), 'findings': []}
+                       for path in sorted((self.tree / 'src/compiler').glob('*.ts'))]
+            (directory / 'latent.jsonl').write_text(''.join(json.dumps(row) + '\n' for row in latent))
+        result = report_pair(self.tree, self.tree, self.run, 'stamp', 'main-sha', 'main-sha')
+        text = (self.run / 'report.md').read_text()
+        for label in ('main', 'area'):
+            self.assertEqual(len(result['trees'][label]['root_order_artifacts']), 1)
+            self.assertIn(f'Lowering, {label}: 2/4; root-order artifacts: 1.', text)
+        self.assertEqual(text.count('Node throws here as well; exit 1; ReferenceError:'), 2)
+        self.assertIn('Node throws here as well; exit 1; ReferenceError:', (self.run / 'README.md').read_text())
+        disk = json.loads((self.run / 'report.json').read_text())
+        self.assertEqual(disk['trees']['main']['root_order_artifacts'], result['root_order_artifacts'])
+
+    def test_enum_readiness_with_node_throw_is_also_an_artifact(self):
+        from report import READINESS_REASONS
+        self.readiness()
+        self.records[2]['reason'] = sorted(READINESS_REASONS)[1]
+        result = self.render()
+        self.assertTrue(self.root_row(result)['lowering'])
+        self.assertEqual(result['root_order_artifacts'][0]['reason'], sorted(READINESS_REASONS)[1])
