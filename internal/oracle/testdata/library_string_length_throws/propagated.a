@@ -32,7 +32,7 @@ function guarded(text: string): number {
 }
 for (const text of ['xy', half]) {
 	try {
-		console.log(guarded(text));
+		console.log(String(guarded(text)));
 	} catch (error) {
 		if (error instanceof Error) {
 			console.log(error.name);
