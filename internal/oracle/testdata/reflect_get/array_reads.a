@@ -1,0 +1,65 @@
+// An array read by a run-time key answers as Node's does (#ys4naww): an index below length answers
+// its element, boxed by how the array holds its slots (numbers, booleans, numbers that may be
+// undefined, and references: strings, objects, a mix, null); an index at or past length, a key that
+// isn't a canonical index, and a name no array has read undefined; length answers a number; and a
+// match array answers its own index, input and groups. Array.prototype's names stop
+// (stop_array_method.a).
+import { propertyOf } from './hostErrors.ts';
+
+function show(label: string, value: unknown): void {
+	if (typeof value === 'string') console.log(`${label} string ${value}`);
+	else if (typeof value === 'number') console.log(`${label} number ${String(value)}`);
+	else if (typeof value === 'boolean') console.log(`${label} boolean ${value ? 'true' : 'false'}`);
+	else if (value === null) console.log(`${label} null`);
+	else if (typeof value === 'object') {
+		const name = propertyOf(value, 'name');
+		console.log(`${label} object ${typeof name === 'string' ? name : typeof name}`);
+	} else console.log(`${label} ${typeof value}`);
+}
+
+const numbers = [1.5, 2, 3];
+show('numbers 0', propertyOf(numbers, '0'));
+show('numbers 1', propertyOf(numbers, '1'));
+show('numbers 3', propertyOf(numbers, '3'));
+show('numbers length', propertyOf(numbers, 'length'));
+const booleans = [true, false];
+show('booleans 0', propertyOf(booleans, '0'));
+show('booleans 1', propertyOf(booleans, '1'));
+show('booleans 2', propertyOf(booleans, '2'));
+show('booleans length', propertyOf(booleans, 'length'));
+const strings = ['a', 'b'];
+show('strings 0', propertyOf(strings, '0'));
+show('strings 1', propertyOf(strings, '1'));
+show('strings 2', propertyOf(strings, '2'));
+const objects = [{ name: 'first' }, { name: 'second' }];
+show('objects 0', propertyOf(objects, '0'));
+show('objects 1', propertyOf(objects, '1'));
+show('objects 2', propertyOf(objects, '2'));
+const maybe: (number | undefined)[] = [4, undefined];
+show('maybe 0', propertyOf(maybe, '0'));
+show('maybe 1', propertyOf(maybe, '1'));
+show('maybe length', propertyOf(maybe, 'length'));
+const mixed: (number | string | boolean | null)[] = [5, 'five', true, null];
+show('mixed 0', propertyOf(mixed, '0'));
+show('mixed 1', propertyOf(mixed, '1'));
+show('mixed 2', propertyOf(mixed, '2'));
+show('mixed 3', propertyOf(mixed, '3'));
+const empty: number[] = [];
+show('empty 0', propertyOf(empty, '0'));
+show('empty length', propertyOf(empty, 'length'));
+show('missing', propertyOf(numbers, 'missing'));
+show('leading zero', propertyOf(numbers, '01'));
+show('negative', propertyOf(numbers, '-1'));
+show('fraction', propertyOf(numbers, '1.5'));
+show('past the last index', propertyOf(numbers, '4294967295'));
+const match = /b(c)(x)?/.exec('abcd');
+if (match !== null) {
+	show('match 0', propertyOf(match, '0'));
+	show('match 1', propertyOf(match, '1'));
+	show('match 2', propertyOf(match, '2'));
+	show('match 3', propertyOf(match, '3'));
+	show('match length', propertyOf(match, 'length'));
+	show('match index', propertyOf(match, 'index'));
+	show('match input', propertyOf(match, 'input'));
+	show('match groups', propertyOf(match, 'groups'));
+}

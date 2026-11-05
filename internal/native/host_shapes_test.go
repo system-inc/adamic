@@ -174,7 +174,7 @@ var hostShapeTable = []hostShapeRow{
 	{file: hostShapeRuntime + "record.c", name: "record_reference_shape", verdict: hostShapePlain, answer: "records.a", row: "show('name', "},
 	{file: hostShapeRuntime + "record.c", name: "iteration_shape", verdict: hostShapeHost, internal: "a record iterator's state, which only the emitter's loops over a record read"},
 	{file: hostShapeRuntime + "regexp.c", name: "regex_shape", verdict: hostShapeUnreachable, refusal: "regexp.a", refused: opaqueRefusal},
-	{file: hostShapeRuntime + "regexp.c", name: "match_shape", verdict: hostShapeHost, internal: "a match array's own properties, held behind the array, which stops as an array"},
+	{file: hostShapeRuntime + "regexp.c", name: "match_shape", verdict: hostShapeHost, internal: "a match array's own properties, held behind the array and read only through it (union.c's keyed_array, array_reads.a)"},
 	{file: hostShapeRuntime + "regexp.c", name: "pair_shape", verdict: hostShapeHost, internal: "a match's indices pair: " + tupleReason},
 	{file: hostShapeRuntime + "regexp.c", name: "iterator_shape", verdict: hostShapeHost, stop: "stop_host_matchall_input.a"},
 	{file: hostShapeRuntime + "regexp.c", name: "next_shape", verdict: hostShapePlain, answer: plainFixture, row: "show('match', "},
@@ -325,7 +325,7 @@ var hostShapeReaders = []struct {
 	{"regexp_compile_runtime.c", "adamic_regex_compile_new", "copies the run-time compiler's own groups shape", "", ""},
 	{"union.c", "has_property", "reached past host_stop at adamic_has_property, or for an array's own properties", "", ""},
 	{"union.c", "dynamic_property", "reached past host_stop at adamic_dynamic_property, or for an array's own properties", "", ""},
-	{"union.c", "keyed_slot", "called by adamic_dynamic_property_keyed after its host_object test", "", ""},
+	{"union.c", "keyed_slot", "called by adamic_dynamic_property_keyed after its host_object test, or by keyed_array for an array's own properties", "", ""},
 }
 
 // hostShapeDoors are the closed doors with no runtime reader of their own: lowering refuses the
