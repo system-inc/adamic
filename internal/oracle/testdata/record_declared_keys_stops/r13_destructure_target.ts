@@ -1,7 +1,8 @@
 interface Options { outFile?: string; [name: string]: string | number | undefined; }
-type Dict = { [name: string]: string | number | undefined };
 function key(): string { return 'outFile'; }
 const name: string = key();
 const options: Options = {};
-({ x: options[name] } = { x: 3 });
+const source: { x: string | number | undefined } = { x: 3 };
+({ x: options[name] } = source);
 console.log(typeof options.outFile);
+console.log(String(options.outFile));

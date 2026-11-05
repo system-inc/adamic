@@ -165,7 +165,7 @@ func TestRecordDeclaredKeyStopsArePinned(t *testing.T) {
 			}
 		})
 	}
-	if programs != 60 {
-		t.Fatalf("found %d programs, want 60", programs)
+	if programs != 61 {
+		t.Fatalf("found %d programs, want 61", programs)
 	}
 }

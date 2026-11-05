@@ -65,7 +65,7 @@ func TestDestructureLiteralStorageAgrees(t *testing.T) {
 // slot holding an object, which a destructuring read takes only when every member is one a template
 // writes, as destructureFrom does; a nested pattern, whose inner literal is refused as a mutable
 // [string] seen as [string | number]; a defaulted slot and a rest element, whose literals stop first;
-// the object twin, which assignment doesn't lower; and a declaration, whose names are held as the
+// the object twin, whose literal assignment lowers only from a held value; and a declaration, whose names are held as the
 // pattern's slots while destructureFrom reads the checker's narrowed literal, so the two disagree and
 // it stops.
 func TestDestructureLiteralStorageStops(t *testing.T) {
@@ -75,7 +75,7 @@ func TestDestructureLiteralStorageStops(t *testing.T) {
 		{"nested", literalStorageLets + "[[first], second] = [[second], first];\nconsole.log(`${first} ${second}`);\n", "a value of type [string] seen as [string | number], which can write string | number where string is read"},
 		{"defaulted", literalStorageLets + "[first = 0, second] = [second, first];\nconsole.log(`${first} ${second}`);\n", "a tuple element of another type than its tuple's"},
 		{"rest", literalStorageLets + "let third: number | string = 3;\nlet rest: (number | string)[] = [];\n[first, ...rest] = [second, third, first];\nconsole.log(`${first} ${rest.join(',')}`);\n", "a tuple literal with more values than its tuple has elements"},
-		{"object_twin", literalStorageLets + "({ x: first, y: second } = { x: second, y: first });\nconsole.log(`${first} ${second}`);\n", "assigning to an ObjectLiteralExpression"},
+		{"object_twin", literalStorageLets + "({ x: first, y: second } = { x: second, y: first });\nconsole.log(`${first} ${second}`);\n", "destructuring a value made in the assignment itself"},
 		{"declaration", literalStorageLets + "const [p, q]: [number | string, number | string] = [second, first];\nconsole.log(`${p} ${q}`);\n", "a destructured name held otherwise than its field"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
