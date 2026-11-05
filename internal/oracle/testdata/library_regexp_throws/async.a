@@ -14,14 +14,20 @@ async function cleaned(text: string, pattern: RegExp): Promise<string> {
 	}
 }
 
+// The matches, collected where a for...of over matchAll lowers: outside the async function, whose
+// try still takes the TypeError this throws.
+function collected(text: string, pattern: RegExp): string[] {
+	const found: string[] = [];
+	for (const match of text.matchAll(pattern)) {
+		found.push(match[0]);
+	}
+	return found;
+}
+
 async function listed(text: string, pattern: RegExp): Promise<void> {
 	const label = `matchAll on ${text}`;
 	try {
-		const found: string[] = [];
-		for (const match of text.matchAll(pattern)) {
-			found.push(match[0]);
-		}
-		console.log(`${label}: ${found.join('|')}`);
+		console.log(`${label}: ${collected(text, pattern).join('|')}`);
 	} catch (error) {
 		if (error instanceof Error) {
 			console.log(`${label} threw ${error.name}|${error.message}`);
