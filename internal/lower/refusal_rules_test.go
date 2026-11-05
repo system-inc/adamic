@@ -57,6 +57,8 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		// refuseAnyRelation records its NotYet and lets the walk go on, so a NotYet here can lose to
 		// a later rule anywhere in the module (refusalPass.deferred).
 		"3270 refuseAnyRelation",
+		// A member the program declares any is refused where it's declared (#tmdhz1d, step 2).
+		"3280 refuseAnyMember",
 		"3300 refuseOptionalWidening",
 		// constraintRelationRefusal judges the type arguments a site binds once every rule has judged
 		// the site itself, and before the walk reaches its arguments.
