@@ -234,31 +234,44 @@ func (l *lowering) generatorCall(node *ast.Node, function int) (ir.Expression, e
 }
 
 // iterableArgument reports whether a generator's call, parentheses aside, is an argument passed
-// straight into a parameter typed the library's Iterable<T> or IterableIterator<T>, of a callee
-// resolved by its symbol to exactly one body: a module's own function declaration, an overload set
-// judged at its implementation, or a generic one, judged per instance where it's lowered. Never a
-// method, a function value, a closure, a library function, a generator or an async function, and
-// never through a spread or an optional call (Adamic's ruling on #qk8rztp S2c-1, conditions 1 and
-// 2). It is syntactic, so the refusal walk and lowering agree on it; that the parameter's one use is
-// one for-of is proven after lowering (checkIterableViews), and a program this admits that the proof
-// refuses stops there, not yet, which fails closed.
+// straight into a parameter typed the library's Iterable<T> or IterableIterator<T>, or either
+// `| undefined` (iterableParameter), of a callee resolved by its symbol to exactly one body: a
+// module's own function declaration, an overload set judged at its implementation, or a generic
+// one, judged per instance where it's lowered. Never a method, a function value, a closure, a
+// library function, a generator or an async function, and never through a spread or an optional
+// call (Adamic's ruling on #qk8rztp S2c-1, conditions 1 and 2). It is syntactic, so the refusal walk
+// and lowering agree on it; that the parameter's one use is one for-of is proven after lowering
+// (checkIterableViews), and a program this admits that the proof refuses stops there, not yet, which
+// fails closed.
 func (l *lowering) iterableArgument(node *ast.Node) bool {
+	admitted, _ := l.iterableParameter(node)
+	return admitted
+}
+
+// iterableParameter is iterableArgument, and whether the parameter it admits is nullable: typed
+// `Iterable<T> | undefined` or `IterableIterator<T> | undefined`, a union of exactly one of the
+// library's two and undefined, as tsc's firstOrUndefinedIterator's is (#qk8rztp S2c-3). Never
+// `| null`, which a for-of's undefined test doesn't rule out, and never `?` or a default, which stay
+// refused above. That a nullable one is held as a nullable object, never a union, is decided where
+// the parameter's slot is known, after lowering (generatorParameter), since a generic instance's
+// T isn't known to the refusal walk.
+func (l *lowering) iterableParameter(node *ast.Node) (bool, bool) {
 	site := node
 	for site.Parent != nil && site.Parent.Kind == ast.KindParenthesizedExpression {
 		site = site.Parent
 	}
 	parent := site.Parent
 	if parent == nil || parent.Kind != ast.KindCallExpression {
-		return false
+		return false, false
 	}
 	call := parent.AsCallExpression()
 	if call.QuestionDotToken != nil || call.Expression == site {
-		return false
+		return false, false
 	}
 	position := -1
 	for index, argument := range call.Arguments.Nodes {
 		if argument.Kind == ast.KindSpreadElement {
-			return false
+			return false, false
 		}
 		if argument == site {
 			position = index
@@ -266,22 +279,37 @@ func (l *lowering) iterableArgument(node *ast.Node) bool {
 	}
 	callee := ast.SkipParentheses(call.Expression)
 	if position < 0 || !ast.IsIdentifier(callee) {
-		return false
+		return false, false
 	}
 	implementation := l.iterableCallee(l.symbol(callee))
 	if implementation == nil {
-		return false
+		return false, false
 	}
 	parameters := implementation.Parameters()
 	if position >= len(parameters) {
-		return false
+		return false, false
 	}
 	parameter := parameters[position]
 	declared := parameter.AsParameterDeclaration()
 	if !ast.IsIdentifier(parameter.Name()) || parameter.Name().Text() == "this" || declared.DotDotDotToken != nil || declared.QuestionToken != nil || declared.Initializer != nil {
-		return false
+		return false, false
 	}
-	return l.isLibraryType(l.checker.GetTypeAtLocation(parameter.Name()), "Iterable", "IterableIterator")
+	parameterType := l.checker.GetTypeAtLocation(parameter.Name())
+	if l.isLibraryType(parameterType, "Iterable", "IterableIterator") {
+		return true, false
+	}
+	if parameterType.Flags()&checker.TypeFlagsUnion == 0 || len(parameterType.Types()) != 2 {
+		return false, false
+	}
+	// Two members, one of them undefined, and what's left once it's taken away the library's own.
+	missing := 0
+	for _, member := range parameterType.Types() {
+		if member.Flags()&checker.TypeFlagsUndefined != 0 {
+			missing++
+		}
+	}
+	nullable := missing == 1 && l.isLibraryType(l.checker.GetNonNullableType(parameterType), "Iterable", "IterableIterator")
+	return nullable, nullable
 }
 
 // iterableCallee is the one body a symbol names, when it is a module-level function declaration
@@ -323,17 +351,20 @@ func (l *lowering) iterableOfGenerator(node *ast.Node, function int) (ir.Express
 	}
 	argument := generatorArgument{node: node, generator: function}
 	argument.key, argument.value, argument.pair = l.generatorPairTypes(node)
+	_, argument.nullable = l.iterableParameter(node)
 	l.generatorArguments = append(l.generatorArguments, argument)
 	return ir.IterableOf{Value: made, Site: len(l.generatorArguments)}, nil
 }
 
-// generatorArgument is a generator's call iterableOfGenerator handed over, and how its yields hold
-// a [key, value] pair when they are one.
+// generatorArgument is a generator's call iterableOfGenerator handed over, how its yields hold a
+// [key, value] pair when they are one, and whether the parameter it goes into may be undefined
+// (iterableParameter).
 type generatorArgument struct {
 	node       *ast.Node
 	generator  int
 	pair       bool
 	key, value ir.Type
+	nullable   bool
 }
 
 // forOfGenerator lowers for (const x of gen(a)) by the generator's origin, never by its declared
@@ -647,10 +678,11 @@ func (l *lowering) generatorStepped(node *ast.Node) bool {
 // the library's new Map or new Set. The constructors are judged by the built-in's symbol, never by
 // the name, so a user class called Map, or a subclass of the built-in, isn't one (Language, on
 // #qk8rztp): a subclass's set is program code a step can run. And, since S2c-1, the argument for a
-// one-body function's Iterable<T> parameter (iterableArgument), whose only use is one for-of, which
-// never reads the completion value either (Adamic's ruling on #qk8rztp, rulings.md:294 one call
-// deeper). That use is proven after lowering; a program this lets past the void rules that the proof
-// then refuses stops there, not yet, so the arm fails closed.
+// one-body function's Iterable<T> parameter (iterableArgument, `| undefined` too since S2c-3), whose
+// only use besides its undefined tests is one for-of, which never reads the completion value either
+// (Adamic's ruling on #qk8rztp, rulings.md:294 one call deeper). That use is proven after lowering; a
+// program this lets past the void rules that the proof then refuses stops there, not yet, so the arm
+// fails closed.
 func (l *lowering) steppedSite(node *ast.Node) bool {
 	if l.iterableArgument(node) {
 		return true
