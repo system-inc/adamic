@@ -293,7 +293,7 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			found = found || l.result.FrozenWriteMayThrow(node)
 		case ir.PhantomMember:
 			found = found || !node.Optional
-		case ir.Throw:
+		case ir.Throw, ir.ViewElement:
 			found = true
 		case ir.RecordCall, ir.RecordCoalesce:
 			found = found || l.result.RecordWriteMayThrow(node)
