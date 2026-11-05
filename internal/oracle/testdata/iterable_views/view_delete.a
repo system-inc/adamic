@@ -1,0 +1,30 @@
+// A view over a Map's keys() while the loop deletes from the Map: a key deleted before the walk
+// reaches it is skipped, the key being visited deleted lets the walk go on to the next, and a
+// visited key deleted and set again is visited once more at the end, as Node's live iterator does.
+function prune(items: Iterable<number>, from: Map<number, string>): void {
+    let readded = false;
+    for(const key of items) {
+        console.log(`visit ${String(key)} ${from.get(key) ?? 'gone'}`);
+        if(key === 1) {
+            from.delete(2);
+        }
+        if(key === 3) {
+            from.delete(3);
+        }
+        if(key === 4 && !readded) {
+            readded = true;
+            from.delete(1);
+            from.set(1, `back ${String(key)}`);
+        }
+    }
+}
+const table = new Map<number, string>();
+for(let index = 1; index <= 6; index++) {
+    table.set(index, `start ${String(index)}`);
+}
+prune(table.keys(), table);
+const left: string[] = [];
+for(const [key, value] of table) {
+    left.push(`${String(key)}=${value}`);
+}
+console.log(left.join(' '));
