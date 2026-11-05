@@ -10,9 +10,11 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// A slot typed Iterable<T> or IterableIterator<T> is held as an object, and nothing in the type says
-// which object: an array, a generator, a string, a Map itself or a program's own iterator all fit it,
-// and each steps differently. tsc's mapIterator and mapDefinedIterator take one and are handed a
+// A slot typed Iterable<T> or IterableIterator<T> is held as an object (as a union for
+// Iterable<string>, which a string fits too), and nothing in the type says which object: an array, a
+// generator, a string, a Map itself or a program's own iterator all fit it, and each steps
+// differently. A union-held view reads its slot through a checked unbox, the loud backstop should
+// this proof ever be wrong. tsc's mapIterator and mapDefinedIterator take one and are handed a
 // collection's iterator (`jsxOptionMap.entries()`, `fileInfos.keys()`), so a for-of over such a slot
 // lowers as that iterator's own loop (libraryForOfIterator), and is proven after lowering, when every
 // call that can reach the slot is in, to be handed nothing else (#qk8rztp S2b-1b, Lower's ruling on q1).
