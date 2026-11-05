@@ -264,6 +264,10 @@ func (l *lowering) exceptions() error {
 func (l *lowering) throwsOut(statements []ir.Statement) bool {
 	found := false
 	walk(statements, func(node any) bool {
+		if viewArrayHandoutChecks(node) {
+			found = true
+			return false
+		}
 		switch node := node.(type) {
 		case ir.Try:
 			if node.HasCatch {

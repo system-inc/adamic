@@ -43,6 +43,19 @@ var viewChecks = []viewReadExample{
 
 // viewNotYet read fields raw, and are NotYet where their operand may hold a viewed value.
 var viewNotYet = []viewReadExample{
+	{ir.ArrayConcat{}, "an array road whose element handouts are not checked yet"},
+	{ir.ArrayFill{}, "an array road whose element handouts are not checked yet"},
+	{ir.ArrayFrom{}, "an array road whose element handouts are not checked yet"},
+	{ir.ArrayJoin{}, "an array road whose element handouts are not checked yet (pinned by view_widened_held_join.ts)"},
+	{ir.ArrayOfScalars{}, "an array road whose element handouts are not checked yet"},
+	{ir.ArrayPop{}, "an array road whose element handouts are not checked yet"},
+	{ir.ArrayPush{}, "an array road whose element handouts are not checked yet"},
+	{ir.ArrayReverse{}, "an array road whose element handouts are not checked yet"},
+	{ir.ArraySearch{}, "an array road whose element handouts are not checked yet"},
+	{ir.ArraySlice{}, "an array road whose element handouts are not checked yet"},
+	{ir.ArraySort{}, "an array road whose element handouts are not checked yet"},
+	{ir.ArraySplice{}, "an array road whose element handouts are not checked yet"},
+
 	{ir.Property{ViewReceiverTypeID: 2, Name: "text"}, "a field read through a receiver type no view checks it under (checkViewWidenedReads)"},
 	{ir.ObjectLiteral{Spread: ir.Read{}}, "copies its spread source's fields whole (checkViewCopies)"},
 	{ir.ObjectCall{Method: "assign"}, "copies each source's fields whole (checkViewCopies)"},
@@ -51,23 +64,11 @@ var viewNotYet = []viewReadExample{
 
 // viewNoField read no field of an object operand, each with why.
 var viewNoField = []viewReadExample{
-	{ir.ArrayConcat{}, "a new array of the arrays' elements, moved"},
-	{ir.ArrayFill{}, "writes a value into an array's elements"},
-	{ir.ArrayFrom{}, "a new array from a length and a callback, whose reads are classed where they are"},
 	{ir.ArrayIndex{}, "reads an array's element, which is no field; a tuple's is a Property"},
 	{ir.ArrayIsArray{}, "tests a value's brand"},
-	{ir.ArrayJoin{}, "joins scalar elements; an array of objects is NotYet before it lowers (pinned by view_widened_held_join.ts)"},
 	{ir.ArrayLiteral{}, "a new array of the elements it's given, moved"},
 	{ir.ArrayMap{}, "calls back with the elements, moved; the callback's reads are classed where they are"},
-	{ir.ArrayOfScalars{}, "tests each element's own runtime kind, never a field"},
-	{ir.ArrayPop{}, "moves an element out"},
-	{ir.ArrayPush{}, "moves a value in"},
 	{ir.ArrayReduce{}, "calls back with the elements, moved"},
-	{ir.ArrayReverse{}, "moves the elements"},
-	{ir.ArraySearch{}, "compares elements by identity or SameValueZero"},
-	{ir.ArraySlice{}, "a new array of some of the elements, moved"},
-	{ir.ArraySort{}, "calls back with the elements, moved"},
-	{ir.ArraySplice{}, "moves elements out and in"},
 	{ir.ArrayVisit{}, "calls back with the elements, moved"},
 	{ir.Await{}, "the settled value itself"},
 	{ir.Binary{}, "an operator on numbers, booleans or strings, or an identity comparison"},
@@ -334,7 +335,7 @@ var viewReadPins = map[string]struct{ at, stops, checked string }{
 func TestViewReadReasonsArePinned(t *testing.T) {
 	t.Parallel()
 	named := map[string]bool{}
-	for _, example := range viewNoField {
+	for _, example := range append(append([]viewReadExample{}, viewNoField...), viewNotYet...) {
 		rests := strings.Contains(example.why, "before it lowers") || strings.Contains(example.why, "const binding")
 		_, pinned, found := strings.Cut(example.why, "(pinned by ")
 		if rests && !found {
