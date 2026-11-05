@@ -1,0 +1,441 @@
+    --- FAIL: TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_stat.a
+    --- FAIL: TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_utimes.a
+    --- FAIL: TestCountsAreRecorded_005/Program_region:_internal/oracle/testdata/program_region/cycles_graph_parent.a
+    --- FAIL: TestCountsAreRecorded_005/internal/load/testdata/0.1/compile/06_stack.ts
+    --- FAIL: TestCountsAreRecorded_005/internal/lower/testdata/callable_producers/p61.ts
+    --- FAIL: TestCountsAreRecorded_005/internal/lower/testdata/predicates_checked/condition_once.a_(.ts_checked_mode)
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/array_literal_empty_union.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/cast_enum_const.ts
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/concurrency/accepted/recursive_tree.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/devirtualize_abstract.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/instantiation_callback.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/json_stringify_options.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/library_math_number_math.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/long_literals.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/loops.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/map_shrinks.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/namespaces_parser_factory.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/node_buffer_crypto.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/node_globals_gc_call.ts
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/non_null_refuse_undefined.ts
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/non_null_static_initialized.ts
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/non_null_uninitialized_default.ts
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/notyet_library_string_bounds.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/omitted_scanner_required.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/optional_after_call_propagation.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/placeholder_nonnull_null_json.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/predicate_qualified/false_read_truth/main.ts
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/predicate_qualified/module_truth/main.ts
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/predicate_qualified/reexport_lie/main.ts
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/predicate_qualified/type_truth/main.ts
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/process_env/reads.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/prompt_then_read.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/regexp_unicode.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/route_targets_try_loop.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/route_targets_virtual_fresh.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/scout_nullable_string_stale_field.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/set_foreach_named_more.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/statements_small_throw.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/switch_case_declarations/dead_zone_write.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/typeof_null_compare.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/unused_parameters.a
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/utf8_view_fails.a
+    --- FAIL: TestCountsAreRecorded_005/stage3/interface-downcasts/lane4b/fixtures/diagnostic-boolean.ts
+    --- FAIL: TestCountsAreRecorded_005/stage3/interface-downcasts/lane4b/fixtures/node-indicator-good.ts
+    --- FAIL: TestCountsAreRecorded_005/stage3/interface-downcasts/readiness-identifier-uninitialized.ts
+    --- FAIL: TestCountsAreRecorded_005/stage3/interface-downcasts/untagged/fixtures/binding-name-source-wrong.ts
+    --- FAIL: TestCountsAreRecorded_005/stage3/interface-downcasts/untagged/fixtures/class-data-good.ts
+    --- FAIL: TestCountsAreRecorded_005/stage3/interface-downcasts/untagged/fixtures/structural-source-wrong.ts
+    --- FAIL: TestCountsAreRecorded_005/stage3/interface-downcasts/v2/tuple-identity-wrong.ts
+    --- FAIL: TestCountsAreRecorded_005/stage3/interface-downcasts/visitor.ts
+    --- FAIL: TestCountsAreRecorded_007/internal/lower/testdata/callable_producers/p23.ts
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/adversarial_order.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/borrow_chain_walk.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/callback_widening/number-find.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/callback_widening/number-generic.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/cast_enum_string_fails.ts
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/census_append_overload.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/class_features_static.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/class_features_static_private.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/collections.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/conditions_ledger78.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/devirtualize_accessors.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/entries_checked_boolean.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/environment_callback_escape.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/environment_coverage_local_containers.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/graph_regions_entries.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/host_phantom_overload_primitive.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/library_object_assign.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/map_union_value_host_file_info.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/method_coverage_array_mutations.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/method_coverage_string_codepointat.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/method_coverage_string_concat.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/method_coverage_string_trim.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/modules/main.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/namespaces_unknown_enum_before.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/nested_destructured_tdz.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/nested_hoisting.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/nested_mixed.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/node_process_host.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/non_null_uninitialized_iteration.ts
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/placeholder_nonnull_null_optional.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/predicate_qualified/defined_lie/main.ts
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/read_arguments.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/records_literal_branches.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/refusal_rulings/merge_missing.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/regexp_match.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/scout_nullable_object_null_field.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/set_foreach_keep.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/typed_arrays_int32array.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/undefined_references.a
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/void_discards_canonical.a
+    --- FAIL: TestCountsAreRecorded_007/stage3/fixtures/nested-functions/06_parser_token_state.a
+    --- FAIL: TestCountsAreRecorded_007/stage3/fixtures/self-compare/array-fill.a
+    --- FAIL: TestCountsAreRecorded_007/stage3/interface-downcasts/lane1/interfaces-missing-inherited.ts
+    --- FAIL: TestCountsAreRecorded_007/stage3/interface-downcasts/lane4b/fixtures/required-missing.ts
+    --- FAIL: TestCountsAreRecorded_007/stage3/namespaces/shapes/ReactNames.a
+    --- FAIL: TestCountsAreRecorded_010/internal/lower/testdata/predicates_checked/condition_lie.a_(.ts_checked_mode)
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/arguments.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/array_from.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/borrow_chain_coverage_parents.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/callback_widening/object-some.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/census_overload_binders.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/concurrency/accepted/readonly_forms.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/conditions_union.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/coverage_uncaught_no_argument.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/defaults.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/element_access_optional.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/element_access_tuple.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/environment_capture.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/environment_virtual_call.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/function_values_boundary.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/graph_regions/classification_override.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/host_realpath/nul.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/host_realpath/walk-errors.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/host_scanner_never.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/host_watch_file/mtime.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/library_globals.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/library_map_set_keys.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/library_object_keys.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/logical_and_reference_maybe.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/method_coverage_string_charat.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/module_namespace_reads/early.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/nbody_spread_fields.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/nested_callback_recursive.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/nested_destructured.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/non_null_literal_return.ts
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/non_null_static_uninitialized.ts
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/normalize_coverage_quick.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/normalize_coverage_repeat.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/overload_mutate_map.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/placeholder_nonnull_before_use.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/predicate_qualified/namespace_truth/main.ts
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/proven_assertions.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/records_scalars.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/records_union_lying.ts
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/regexp_cycle_fields.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/regions_spread_fresh.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/replace_all_large.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/scout_class_boolean_fields.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/search_halves.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/set_foreach_numbers.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/stack_tail_call.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/string_build_caches.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/structural_statics_inherited.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/structural_statics_optional.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/taste_stage3_representations.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/typed_arrays_views.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/view_write_union_declared.ts
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/void_widening_legal.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_single_narrowed.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/weak_miscompiles/held_union.a
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/write_after_shrink.a
+    --- FAIL: TestCountsAreRecorded_010/stage3/drivers/scanner/probes/nested-generic-sibling-call.a
+    --- FAIL: TestCountsAreRecorded_010/stage3/fixtures/enums/04_parse_tree_mask.a
+    --- FAIL: TestCountsAreRecorded_010/stage3/fixtures/enums/07_regex_array_map.a
+    --- FAIL: TestCountsAreRecorded_010/stage3/fixtures/taste/04_jsx_runtime.a
+    --- FAIL: TestCountsAreRecorded_010/stage3/interface-downcasts/lane4b/fixtures/diagnostic-code-wrong.ts
+    --- FAIL: TestCountsAreRecorded_010/stage3/interface-downcasts/lane4b/fixtures/diagnostic-good.ts
+    --- FAIL: TestCountsAreRecorded_010/stage3/interface-downcasts/untagged/fixtures/flow-generic-good.ts
+    --- FAIL: TestCountsAreRecorded_013/Program_region:_internal/oracle/testdata/program_region/program_region_ownership.a
+    --- FAIL: TestCountsAreRecorded_013/internal/lower/testdata/predicates_checked/false_unchanged.a_(.ts_checked_mode)
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/arrow_this_field.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/backend_stop_catches.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/bitwise.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/callback_widening/number-every.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/cast_enum_string.ts
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/census_boolean_sieve.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/census_overload_lie.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/class_features_distinct.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/conditions_function.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/coverage_plain_view.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/e4eec87_f1_class_narrowed.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/e4eec87_f1_field_narrowed.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/entries_checked_misfit.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/entries_proven_import.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/enums_open_never_field.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/enums_open_never_index.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/graph_regions_regression_08.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/host_phantom_optional_array.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/json_decode_coverage_shapes.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/json_stringify_replacer.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/method_coverage_array_values.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/namespaces_debug_probe.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/nested_owned_parameter.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/non_null_uninitialized_exception.ts
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/optional_strings.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/override_same_representation.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/placeholder_nonnull_null_loose.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/proven_guards.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/records_named_intrinsics.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/regexp.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/regexp_replace/arguments.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/repeat_huge.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/reuse_handover_throw.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/route_targets_bound_method.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/set_undefined.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/taste_logical_assignment.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/user_iterators_rest_tdz.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/walk.a
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/writes_past_end.a
+    --- FAIL: TestCountsAreRecorded_013/stage3/drivers/scanner/probes/cyclic-initialized-value/main.a
+    --- FAIL: TestCountsAreRecorded_013/stage3/fixtures/enums/10_string_enum.a
+    --- FAIL: TestCountsAreRecorded_013/stage3/interface-downcasts/default-boxed-write.ts
+    --- FAIL: TestCountsAreRecorded_013/stage3/interface-downcasts/fx7/p33.ts
+    --- FAIL: TestCountsAreRecorded_013/stage3/interface-downcasts/v2/callable-producer-wrong.ts
+    --- FAIL: TestCountsAreRecorded_013/stage3/interface-downcasts/wrong-kind.ts
+    --- FAIL: TestCountsAreRecorded_013/stage3/parser-next/speculation/truthiness-rewind.a
+    --- FAIL: TestCountsAreRecorded_021/internal/lower/testdata/predicates_checked/false_switch_true.a_(.ts_checked_mode)
+    --- FAIL: TestCountsAreRecorded_021/internal/lower/testdata/scalar_union_views/p54_n.ts
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/047cb0d_n_arrayindex.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/accessor_spread_throw_last.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/aside_throw.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/async_review/accepted/concurrent.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/borrow_chain_argument.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/borrow_chain_coverage_return.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/callback_widening/object-find.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/cast_enum_numeric.ts
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/class_as_interface.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/conditions_sites.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/from_codes.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/graph_regions_coverage_payload_loop.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/graph_regions_regression_13.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/host_map_generic_union.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/library_map_set_construct.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/literal_optional_shapes.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/map_union_value_paths.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/narrowed_writes.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/nested_callback_late_capture.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/node_path_basename.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/non_null_checked_present.ts
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/non_null_uninitialized_spread.ts
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/normalize_coverage_stream.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/predicate_false_flow/library_live.ts
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/process_platform/print.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/regexp_cycle_closures.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/scout_nullable_objects.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/search_shrink_found.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/sort_releases.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/spread_calls.a
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/tuple_values.a
+    --- FAIL: TestCountsAreRecorded_021/stage3/drivers/scanner/probes/nested-sibling-callback.a
+    --- FAIL: TestCountsAreRecorded_021/stage3/interface-downcasts/lane4b/fixtures/literal-boolean.ts
+    --- FAIL: TestCountsAreRecorded_021/stage3/interface-downcasts/lane4b/fixtures/node-indicator-false.ts
+    --- FAIL: TestCountsAreRecorded_021/stage3/interface-downcasts/v2/snapshot-maybe-number.ts
+    --- FAIL: TestCountsAreRecorded_021/stage3/namespace-parser-stops/native-namespace-object-receiver.a
+    --- FAIL: TestCountsAreRecorded_021/stage3/parser-ahead/rulings/factory-unset.a
+    --- FAIL: TestCountsAreRecorded_023/Program_region:_internal/oracle/testdata/program_region/parse.a_(Program=true)
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/async_review/accepted/closure.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/async_review/accepted/parallel_catch.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/callback_widening/object-every.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/cast_enum_const_string_fails.ts
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/census_optional_values_system.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/class_inheritance_generic.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/declared_later.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/devirtualize_interfaces.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/element_access_presence.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/entries_record_alias.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/enums_names.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/function_values_chain.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/function_values_diagnostic.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/functions.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/getters_census_throwing_object.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/host_void_method.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/import_cycles/runtime/even.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/json_decode_coverage_depth_extra.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/library_fnexpr_loops.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/library_map_set_group_by.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/library_map_set_next.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/library_object_has_own.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/long_field_name.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/method_coverage_codes.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/method_coverage_string_tostring.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/module_namespace_reads/initialized.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/namespaces_pair/main.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/nested_reduced_parameter_unreachable.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/non_null_uninitialized_catch.ts
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/process_bad_code.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/read_order.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/refusal_rulings/function_unused.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/review/agree/fxspptb_aee89b2_map_entries_pattern.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/scout_nullable_object_stale_field.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/scout_tsc_source_content.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/scout_values_optional_boolean.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/search_from.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/self_assignments.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/size_class_churn.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/structural_statics_mixed.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/throw_keeps_old_value.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/unknown_narrowing_host.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_union_narrowed.a
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/weak_miscompiles/matching_methods.a
+    --- FAIL: TestCountsAreRecorded_023/stage3/fixtures/nested-functions/03_scanner_hoisting.a
+    --- FAIL: TestCountsAreRecorded_023/stage3/interface-downcasts/default-destructure.ts
+    --- FAIL: TestCountsAreRecorded_023/stage3/interface-downcasts/readiness-number-uninitialized.ts
+    --- FAIL: TestCountsAreRecorded_023/stage3/namespaces/shapes/Parser.JSDocParser.a
+    --- FAIL: TestCountsAreRecorded_023/stage3/parser-ahead/factories/already-complete.a
+    --- FAIL: TestCountsAreRecorded_023/stage3/parser-ahead/rulings/node-array-unset.a
+    --- FAIL: TestCountsAreRecorded_async_catches/internal/oracle/testdata/async_catches.a
+    --- FAIL: TestCountsAreRecorded_async_counts_captured/internal/oracle/testdata/async_counts/async_counts_captured.a
+    --- FAIL: TestCountsAreRecorded_async_counts_parameter/internal/oracle/testdata/async_counts/async_counts_parameter.a
+    --- FAIL: TestCountsAreRecorded_async_counts_root_error/internal/oracle/testdata/async_counts/async_counts_root_error.a
+    --- FAIL: TestCountsAreRecorded_async_coverage_unions/internal/oracle/testdata/async_coverage_unions.a
+    --- FAIL: TestCountsAreRecorded_async_finally_break/internal/oracle/testdata/async_finally_break.a
+    --- FAIL: TestCountsAreRecorded_async_finally_throw/internal/oracle/testdata/async_finally_throw.a
+    --- FAIL: TestCountsAreRecorded_async_for_of_body/internal/oracle/testdata/async_for_of_body.a
+    --- FAIL: TestCountsAreRecorded_async_for_of_capture/internal/oracle/testdata/async_for_of_capture.a
+    --- FAIL: TestCountsAreRecorded_async_iterable_map_break_function/internal/oracle/testdata/async_iterable_map_break_function.a
+    --- FAIL: TestCountsAreRecorded_async_iterable_map_break_module/internal/oracle/testdata/async_iterable_map_break_module.a
+    --- FAIL: TestCountsAreRecorded_async_iterable_set_entries_module/internal/oracle/testdata/async_iterable_set_entries_module.a
+    --- FAIL: TestCountsAreRecorded_async_iterable_string_ascii_module/internal/oracle/testdata/async_iterable_string_ascii_module.a
+    --- FAIL: TestCountsAreRecorded_async_iterable_string_break_function/internal/oracle/testdata/async_iterable_string_break_function.a
+    --- FAIL: TestCountsAreRecorded_async_labels_finally/internal/oracle/testdata/async_labels_finally.a
+    --- FAIL: TestCountsAreRecorded_async_loop_body_capture/internal/oracle/testdata/async_loop_body_capture.a
+    --- FAIL: TestCountsAreRecorded_async_methods/internal/oracle/testdata/async_methods.a
+    --- FAIL: TestCountsAreRecorded_async_mutation/internal/oracle/testdata/async_mutation.a
+    --- FAIL: TestCountsAreRecorded_async_operand_order/internal/oracle/testdata/async_operand_order.a
+    --- FAIL: TestCountsAreRecorded_async_promise_expression/internal/oracle/testdata/async_promise_expression.a
+    --- FAIL: TestCountsAreRecorded_async_three/internal/oracle/testdata/async_three.a
+    --- FAIL: TestCountsAreRecorded_async_throw/internal/oracle/testdata/async_throw.a
+    --- FAIL: TestCountsAreRecorded_counters_shapes/internal/oracle/testdata/counters_shapes.a
+    --- FAIL: TestCountsAreRecorded_counters_square_jump/internal/oracle/testdata/counters_square_jump.a
+    --- FAIL: TestCountsAreRecorded_flat/internal/oracle/testdata/ownership-query/flat.a
+    --- FAIL: TestCountsAreRecorded_label_block_break_async/internal/oracle/testdata/label_block_break_async.a
+    --- FAIL: TestCountsAreRecorded_label_block_break_sync/internal/oracle/testdata/label_block_break_sync.a
+    --- FAIL: TestCountsAreRecorded_lots_streams/internal/oracle/testdata/stdout_edges/lots_streams.a
+    --- FAIL: TestCountsAreRecorded_release_fast_graph/internal/oracle/testdata/release_fast_graph.a
+    --- FAIL: TestCountsAreRecorded_slab_sizes/internal/oracle/testdata/slab_sizes.a
+    --- FAIL: TestCountsAreRecorded_typed_arrays_sort_uint16array/internal/oracle/testdata/typed_arrays_sort_uint16array.a
+--- FAIL: TestAllocatorFreshHandoverMutant
+--- FAIL: TestAssignmentProofChained
+--- FAIL: TestAssignmentProofChainedMutant
+--- FAIL: TestAssignmentProofCompound
+--- FAIL: TestAssignmentProofCompoundMutant
+--- FAIL: TestAssignmentProofIfNarrowing
+--- FAIL: TestAssignmentProofIfNarrowingMutant
+--- FAIL: TestAssignmentProofReturnDefined
+--- FAIL: TestAssignmentProofReturnDefinedMutant
+--- FAIL: TestAssignmentProofScannerKeyword
+--- FAIL: TestAssignmentProofScannerKeywordMutant
+--- FAIL: TestAssignmentProofWiderTarget
+--- FAIL: TestAssignmentProofWiderTargetMutant
+--- FAIL: TestClosureMergeRefusals
+--- FAIL: TestCountsAreRecorded_005
+--- FAIL: TestCountsAreRecorded_007
+--- FAIL: TestCountsAreRecorded_010
+--- FAIL: TestCountsAreRecorded_013
+--- FAIL: TestCountsAreRecorded_021
+--- FAIL: TestCountsAreRecorded_023
+--- FAIL: TestCountsAreRecorded_026
+--- FAIL: TestCountsAreRecorded_029
+--- FAIL: TestCountsAreRecorded_async_catches
+--- FAIL: TestCountsAreRecorded_async_counts_captured
+--- FAIL: TestCountsAreRecorded_async_counts_parameter
+--- FAIL: TestCountsAreRecorded_async_counts_reassigned
+--- FAIL: TestCountsAreRecorded_async_counts_root_error
+--- FAIL: TestCountsAreRecorded_async_counts_stable
+--- FAIL: TestCountsAreRecorded_async_coverage_unions
+--- FAIL: TestCountsAreRecorded_async_finally_break
+--- FAIL: TestCountsAreRecorded_async_finally_throw
+--- FAIL: TestCountsAreRecorded_async_for_of_body
+--- FAIL: TestCountsAreRecorded_async_for_of_capture
+--- FAIL: TestCountsAreRecorded_async_iterable_map_break_function
+--- FAIL: TestCountsAreRecorded_async_iterable_map_break_module
+--- FAIL: TestCountsAreRecorded_async_iterable_set_entries_module
+--- FAIL: TestCountsAreRecorded_async_iterable_string_ascii_module
+--- FAIL: TestCountsAreRecorded_async_iterable_string_break_function
+--- FAIL: TestCountsAreRecorded_async_labels_finally
+--- FAIL: TestCountsAreRecorded_async_loop_body_capture
+--- FAIL: TestCountsAreRecorded_async_methods
+--- FAIL: TestCountsAreRecorded_async_mutation
+--- FAIL: TestCountsAreRecorded_async_operand_order
+--- FAIL: TestCountsAreRecorded_async_promise_expression
+--- FAIL: TestCountsAreRecorded_async_three
+--- FAIL: TestCountsAreRecorded_async_throw
+--- FAIL: TestCountsAreRecorded_counters_shapes
+--- FAIL: TestCountsAreRecorded_counters_square_jump
+--- FAIL: TestCountsAreRecorded_flat
+--- FAIL: TestCountsAreRecorded_label_block_break_async
+--- FAIL: TestCountsAreRecorded_label_block_break_sync
+--- FAIL: TestCountsAreRecorded_lots_streams
+--- FAIL: TestCountsAreRecorded_release_fast_graph
+--- FAIL: TestCountsAreRecorded_slab_sizes
+--- FAIL: TestCountsAreRecorded_typed_arrays_sort_uint16array
+--- FAIL: TestFamiliesCatchAPlantedCase_Stage0EmitsDeterministically
+--- FAIL: TestMovesEmitsDeterministically
+--- FAIL: TestProduct_Adamic
+--- FAIL: TestProduct_AdamicMapOrderMutant
+--- FAIL: TestProduct_AllocatorFreshHandoverCompiler
+--- FAIL: TestProduct_CountMeasurements05
+--- FAIL: TestProduct_CountMeasurements07
+--- FAIL: TestProduct_CountMeasurements10
+--- FAIL: TestProduct_CountMeasurements13
+--- FAIL: TestProduct_MovesDeterminism
+--- FAIL: TestProduct_OracleCompilingFixtures
+--- FAIL: TestProduct_ProgramTscNodeAPI
+--- FAIL: TestProduct_ProgramTscSource
+--- FAIL: TestProgramRegionParseMeasurement0
+--- FAIL: TestProgramRegionParseMeasurement1
+--- FAIL: TestProgramRegionParseMeasurement2
+--- FAIL: TestProgramRegionParseMeasurement3
+--- FAIL: TestProgramRegionParseMeasurement4
+--- FAIL: TestProgramRegionParseOffAgreesWithNode
+--- FAIL: TestProgramRegionParseOnAgreesWithNode
+--- FAIL: TestProgramRegionRecordedCountParseOff
+--- FAIL: TestProgramRegionRecordedCountParseOn
+--- FAIL: TestProgramRegionScalarContainersOnNode
+--- FAIL: TestStage0EmitsDeterministically_000
+--- FAIL: TestStage0EmitsDeterministically_001
+--- FAIL: TestStage0EmitsDeterministically_002
+--- FAIL: TestStage0EmitsDeterministically_003
+--- FAIL: TestStage0EmitsDeterministically_004
+--- FAIL: TestStage0EmitsDeterministically_005
+--- FAIL: TestStage0EmitsDeterministically_006
+--- FAIL: TestStage0EmitsDeterministically_007
+--- FAIL: TestStage0EmitsDeterministically_008
+--- FAIL: TestStage0EmitsDeterministically_009
+--- FAIL: TestStage0EmitsDeterministically_010
+--- FAIL: TestStage0EmitsDeterministically_011
+--- FAIL: TestStage0EmitsDeterministically_012
+--- FAIL: TestStage0EmitsDeterministically_013
+--- FAIL: TestStage0EmitsDeterministically_014
+--- FAIL: TestStage0EmitsDeterministically_015
+--- FAIL: TestStage0EmitsDeterministically_016
+--- FAIL: TestStage0EmitsDeterministically_017
+--- FAIL: TestStage0EmitsDeterministically_018
+--- FAIL: TestStage0EmitsDeterministically_019
+--- FAIL: TestStage0EmitsDeterministically_020
+--- FAIL: TestStage0EmitsDeterministically_021
+--- FAIL: TestStage0EmitsDeterministically_022
+--- FAIL: TestStage0EmitsDeterministically_023
+--- FAIL: TestStage0EmitsDeterministically_024
+--- FAIL: TestStage0EmitsDeterministically_025
+--- FAIL: TestStage0EmitsDeterministically_026
+--- FAIL: TestStage0EmitsDeterministically_027
+--- FAIL: TestStage0EmitsDeterministically_028
+--- FAIL: TestStage0EmitsDeterministically_029
+--- FAIL: TestStage0EmitsDeterministically_030
+--- FAIL: TestStage0EmitsDeterministically_031
+--- FAIL: TestStdoutColumnsRefusesWASI

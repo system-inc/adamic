@@ -1,0 +1,86 @@
+--- FAIL: TestTypedArrayFromEmptyArray (1.05s)
+    typed_arrays_test.go:79: go list ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestTypedArrayFromArray (0.93s)
+    typed_arrays_test.go:73: go list ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestNodeRealpathNativeUseMutantIsCaught (0.81s)
+    library_node_realpath_mutants_test.go:28: go test -c ./internal/lower: go list -deps -json -test ./internal/lower: exit status 1
+        go: can't load test package: error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestProduct_NativeRealpathUseMutant (0.67s)
+    library_node_realpath_mutants_test.go:24: go test -c ./internal/lower: go list -deps -json -test ./internal/lower: exit status 1
+        go: can't load test package: error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestFX5MixedLiteralAgrees (1.03s)
+    fx5_literal_test.go:32: go list ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestCycleFinderCensusEquality (0.05s)
+    cycles_census_equality_test.go:280: build program-tsc-source: repository Program compiler pin 050880ce59e30b356b686bd3144efe24f875ebc8: environment: the commit is not in the checkout at /tmp/ad/base/cohere/TypeScript, and the corpus never fetches; a shallow checkout carries it with git fetch --depth=1 origin 050880ce59e30b356b686bd3144efe24f875ebc8 before the run (pinned git cat-file -e 050880ce59e30b356b686bd3144efe24f875ebc8^{commit} for program-tsc-source: exit status 128: fatal: not a git repository: /tmp/ad/base/cohere/TypeScript/../../.git/modules/cohere/modules/TypeScript)
+--- FAIL: TestProduct_CycleScanningCensus (0.04s)
+    cycles_census_equality_test.go:280: build program-tsc-source: repository Program compiler pin 050880ce59e30b356b686bd3144efe24f875ebc8: environment: the commit is not in the checkout at /tmp/ad/base/cohere/TypeScript, and the corpus never fetches; a shallow checkout carries it with git fetch --depth=1 origin 050880ce59e30b356b686bd3144efe24f875ebc8 before the run (pinned git cat-file -e 050880ce59e30b356b686bd3144efe24f875ebc8^{commit} for program-tsc-source: exit status 128: fatal: not a git repository: /tmp/ad/base/cohere/TypeScript/../../.git/modules/cohere/modules/TypeScript)
+--- FAIL: TestArrayNarrowingBooleanCallbackAgrees (0.76s)
+    array_narrowing_test.go:151: go list ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestArrayNarrowingPreservedUnionAgrees (0.61s)
+    array_narrowing_test.go:145: go list ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestArrayNarrowingFindLastIndexAgrees (0.69s)
+    array_narrowing_test.go:139: go list ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestArrayNarrowingSomeNegatedAgrees (0.69s)
+    array_narrowing_test.go:133: go list ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestArrayNarrowingOptionalStringAgrees (0.29s)
+    array_narrowing_test.go:127: go list ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestArrayNarrowingOptionalNumberAgrees (0.73s)
+    array_narrowing_test.go:121: go list ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestNativeAgreementRejectsWrongExit (0.85s)
+    agree_test.go:539: planted native exit was not caught by exit comparison: "go list ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1\nerror obtaining VCS status: exit status 128\n\tUse -buildvcs=false to disable VCS stamping.\n"
+--- FAIL: TestNativeAgreementRejectsWrongOutput (0.66s)
+    agree_test.go:530: planted native output was not caught by stdout comparison: "go list ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1\nerror obtaining VCS status: exit status 128\n\tUse -buildvcs=false to disable VCS stamping.\n"
+--- FAIL: TestNativeAgreementLeanBuildIsBuildsBytes (0.75s)
+    agree_test.go:126: go list ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestProduct_LowerAgreementNative (0.73s)
+    agree_test.go:97: go list ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestProduct_LowerAgreementC (0.56s)
+    agree_test.go:90: go list ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestProgramRegionCensusMembership (0.02s)
+    program_region_census_test.go:369: build program-tsc-source: repository Program compiler pin 050880ce59e30b356b686bd3144efe24f875ebc8: environment: the commit is not in the checkout at /tmp/ad/base/cohere/TypeScript, and the corpus never fetches; a shallow checkout carries it with git fetch --depth=1 origin 050880ce59e30b356b686bd3144efe24f875ebc8 before the run (pinned git cat-file -e 050880ce59e30b356b686bd3144efe24f875ebc8^{commit} for program-tsc-source: exit status 128: fatal: not a git repository: /tmp/ad/base/cohere/TypeScript/../../.git/modules/cohere/modules/TypeScript)
+--- FAIL: TestProduct_ProgramRegionCensusPairwise (0.03s)
+    program_region_census_test.go:369: build program-tsc-source: repository Program compiler pin 050880ce59e30b356b686bd3144efe24f875ebc8: environment: the commit is not in the checkout at /tmp/ad/base/cohere/TypeScript, and the corpus never fetches; a shallow checkout carries it with git fetch --depth=1 origin 050880ce59e30b356b686bd3144efe24f875ebc8 before the run (pinned git cat-file -e 050880ce59e30b356b686bd3144efe24f875ebc8^{commit} for program-tsc-source: exit status 128: fatal: not a git repository: /tmp/ad/base/cohere/TypeScript/../../.git/modules/cohere/modules/TypeScript)
+--- FAIL: TestProduct_ProgramRegionCensusIndexed (0.02s)
+    program_region_census_test.go:369: build program-tsc-source: repository Program compiler pin 050880ce59e30b356b686bd3144efe24f875ebc8: environment: the commit is not in the checkout at /tmp/ad/base/cohere/TypeScript, and the corpus never fetches; a shallow checkout carries it with git fetch --depth=1 origin 050880ce59e30b356b686bd3144efe24f875ebc8 before the run (pinned git cat-file -e 050880ce59e30b356b686bd3144efe24f875ebc8^{commit} for program-tsc-source: exit status 128: fatal: not a git repository: /tmp/ad/base/cohere/TypeScript/../../.git/modules/cohere/modules/TypeScript)
+--- FAIL: TestRegExpEscapedSlashSourceAgreesWithNode (0.74s)
+    regexp_test.go:72: go list ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestRegExpSlashClassSourceAgreesWithNode (0.63s)
+    regexp_test.go:66: go list ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestRegExpUnicodeClassSourceAgreesWithNode (0.42s)
+    regexp_test.go:60: go list ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	711.634s
+FAIL
+exit=1

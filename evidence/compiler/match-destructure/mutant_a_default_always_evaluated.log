@@ -1,0 +1,20 @@
+--- FAIL: TestNativeAgreesWithNode_028 (0.01s)
+    --- FAIL: TestNativeAgreesWithNode_028/internal/oracle/testdata/match_destructure.a (25.08s)
+        oracle_test.go:800: gate cache node hit
+        oracle_test.go:800: gate cache node miss
+        oracle_test.go:634: build go_build_./oracle/json_types.go_json-types d0899b3dfe07 miss 15.64
+        oracle_test.go:684: gate cache native miss
+        oracle_test.go:691: gate cache native hit
+        oracle_test.go:677: gate cache native miss
+        oracle_test.go:831: stdout differs
+            node:   exit 0, stdout "1 => 1|0|0|| / 1|*|*|undefined|undefined\n1.2 => 1|2|0|| / 1|2|*|undefined|undefined\n1.2.3 => 1|2|3|| / 1|2|3|undefined|undefined\n1.2.3-beta.1 => 1|2|3|beta.1| / 1|2|3|beta.1|undefined\n1.2.3+build5 => 1|2|3||build5 / 1|2|3|undefined|build5\n1.2.3-rc+b => 1|2|3|rc|b / 1|2|3|rc|b\n01 => undefined / undefined\nx => undefined / x|*|*|undefined|undefined\nb true b true\n1 3 4 undefined\nx x true far\nbefore\ndefault b\ndefault d\na <b> c <d>\nq q! 1\nq none 2\nk v none\na a?\n", stderr ""
+            native: exit 0, stdout "1 => 1|0|0|| / 1|*|*|undefined|undefined\n1.2 => 1|2|0|| / 1|2|*|undefined|undefined\n1.2.3 => 1|2|3|| / 1|2|3|undefined|undefined\n1.2.3-beta.1 => 1|2|3|beta.1| / 1|2|3|beta.1|undefined\n1.2.3+build5 => 1|2|3||build5 / 1|2|3|undefined|build5\n1.2.3-rc+b => 1|2|3|rc|b / 1|2|3|rc|b\n01 => undefined / undefined\nx => undefined / x|*|*|undefined|undefined\nb true b true\n1 3 4 undefined\nx x true far\nbefore\ndefault a\ndefault b\ndefault b\ndefault c\ndefault d\ndefault d\na <b> c <d>\nq q! 1\nq none 2\nk v none\na a?\n", stderr ""
+        oracle_test.go:837: JavaScript backend: stdout differs
+            node:    exit 0, stdout "1 => 1|0|0|| / 1|*|*|undefined|undefined\n1.2 => 1|2|0|| / 1|2|*|undefined|undefined\n1.2.3 => 1|2|3|| / 1|2|3|undefined|undefined\n1.2.3-beta.1 => 1|2|3|beta.1| / 1|2|3|beta.1|undefined\n1.2.3+build5 => 1|2|3||build5 / 1|2|3|undefined|build5\n1.2.3-rc+b => 1|2|3|rc|b / 1|2|3|rc|b\n01 => undefined / undefined\nx => undefined / x|*|*|undefined|undefined\nb true b true\n1 3 4 undefined\nx x true far\nbefore\ndefault b\ndefault d\na <b> c <d>\nq q! 1\nq none 2\nk v none\na a?\n", stderr ""
+            backend: exit 0, stdout "1 => 1|0|0|| / 1|*|*|undefined|undefined\n1.2 => 1|2|0|| / 1|2|*|undefined|undefined\n1.2.3 => 1|2|3|| / 1|2|3|undefined|undefined\n1.2.3-beta.1 => 1|2|3|beta.1| / 1|2|3|beta.1|undefined\n1.2.3+build5 => 1|2|3||build5 / 1|2|3|undefined|build5\n1.2.3-rc+b => 1|2|3|rc|b / 1|2|3|rc|b\n01 => undefined / undefined\nx => undefined / x|*|*|undefined|undefined\nb true b true\n1 3 4 undefined\nx x true far\nbefore\ndefault a\ndefault b\ndefault b\ndefault c\ndefault d\ndefault d\na <b> c <d>\nq q! 1\nq none 2\nk v none\na a?\n", stderr ""
+FAIL
+gate cache: native hits=1 misses=2
+gate cache: node hits=1 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	25.198s
+FAIL

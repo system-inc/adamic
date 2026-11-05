@@ -1,0 +1,1750 @@
+--- FAIL: TestProduct_OracleCompilingFixtures (1.14s)
+    worker_fixture_manifest_test.go:19: go list -deps -json -test ./internal/oracle: exit status 1
+        go: can't load test package: error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+        
+--- FAIL: TestProgramRegionParseOnAgreesWithNode (0.01s)
+    program_region_parse_oracle_test.go:39: build program-tsc-source: repository Program compiler pin 050880ce59e30b356b686bd3144efe24f875ebc8: environment: the commit is not in the checkout at /tmp/ad/base/cohere/TypeScript, and the corpus never fetches; a shallow checkout carries it with git fetch --depth=1 origin 050880ce59e30b356b686bd3144efe24f875ebc8 before the run (pinned git cat-file -e 050880ce59e30b356b686bd3144efe24f875ebc8^{commit} for program-tsc-source: exit status 128: fatal: not a git repository: /tmp/ad/base/cohere/TypeScript/../../.git/modules/cohere/modules/TypeScript)
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+--- FAIL: TestAssignmentProofWiderTargetMutant (0.05s)
+    assignment_proofs_test.go:202: stock TypeScript: exit status 1, node:internal/modules/cjs/loader:1568
+          throw err;
+          ^
+        
+        Error: Cannot find module 'typescript'
+        Require stack:
+        - /tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs
+            at Module._resolveFilename (node:internal/modules/cjs/loader:1564:15)
+            at wrapResolveFilename (node:internal/modules/cjs/loader:1118:27)
+            at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1142:10)
+            at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1169:12)
+            at Module._load (node:internal/modules/cjs/loader:1341:5)
+            at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+            at Module.require (node:internal/modules/cjs/loader:1674:12)
+            at require (node:internal/modules/helpers:157:16)
+            at Object.<anonymous> (/tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs:5:12)
+            at Module._compile (node:internal/modules/cjs/loader:1929:14) {
+          code: 'MODULE_NOT_FOUND',
+          requireStack: [ '/tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs' ]
+        }
+        
+        Node.js v24.22.2
+--- FAIL: TestAssignmentProofWiderTarget (0.05s)
+    assignment_proofs_test.go:197: stock TypeScript: exit status 1, node:internal/modules/cjs/loader:1568
+          throw err;
+          ^
+        
+        Error: Cannot find module 'typescript'
+        Require stack:
+        - /tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs
+            at Module._resolveFilename (node:internal/modules/cjs/loader:1564:15)
+            at wrapResolveFilename (node:internal/modules/cjs/loader:1118:27)
+            at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1142:10)
+            at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1169:12)
+            at Module._load (node:internal/modules/cjs/loader:1341:5)
+            at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+            at Module.require (node:internal/modules/cjs/loader:1674:12)
+            at require (node:internal/modules/helpers:157:16)
+            at Object.<anonymous> (/tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs:5:12)
+            at Module._compile (node:internal/modules/cjs/loader:1929:14) {
+          code: 'MODULE_NOT_FOUND',
+          requireStack: [ '/tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs' ]
+        }
+        
+        Node.js v24.22.2
+--- FAIL: TestAssignmentProofCompoundMutant (0.04s)
+    assignment_proofs_test.go:192: stock TypeScript: exit status 1, node:internal/modules/cjs/loader:1568
+          throw err;
+          ^
+        
+        Error: Cannot find module 'typescript'
+        Require stack:
+        - /tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs
+            at Module._resolveFilename (node:internal/modules/cjs/loader:1564:15)
+            at wrapResolveFilename (node:internal/modules/cjs/loader:1118:27)
+            at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1142:10)
+            at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1169:12)
+            at Module._load (node:internal/modules/cjs/loader:1341:5)
+            at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+            at Module.require (node:internal/modules/cjs/loader:1674:12)
+            at require (node:internal/modules/helpers:157:16)
+            at Object.<anonymous> (/tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs:5:12)
+            at Module._compile (node:internal/modules/cjs/loader:1929:14) {
+          code: 'MODULE_NOT_FOUND',
+          requireStack: [ '/tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs' ]
+        }
+        
+        Node.js v24.22.2
+--- FAIL: TestAssignmentProofCompound (0.04s)
+    assignment_proofs_test.go:187: stock TypeScript: exit status 1, node:internal/modules/cjs/loader:1568
+          throw err;
+          ^
+        
+        Error: Cannot find module 'typescript'
+        Require stack:
+        - /tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs
+            at Module._resolveFilename (node:internal/modules/cjs/loader:1564:15)
+            at wrapResolveFilename (node:internal/modules/cjs/loader:1118:27)
+            at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1142:10)
+            at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1169:12)
+            at Module._load (node:internal/modules/cjs/loader:1341:5)
+            at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+            at Module.require (node:internal/modules/cjs/loader:1674:12)
+            at require (node:internal/modules/helpers:157:16)
+            at Object.<anonymous> (/tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs:5:12)
+            at Module._compile (node:internal/modules/cjs/loader:1929:14) {
+          code: 'MODULE_NOT_FOUND',
+          requireStack: [ '/tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs' ]
+        }
+        
+        Node.js v24.22.2
+--- FAIL: TestAssignmentProofChainedMutant (0.05s)
+    assignment_proofs_test.go:182: stock TypeScript: exit status 1, node:internal/modules/cjs/loader:1568
+          throw err;
+          ^
+        
+        Error: Cannot find module 'typescript'
+        Require stack:
+        - /tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs
+            at Module._resolveFilename (node:internal/modules/cjs/loader:1564:15)
+            at wrapResolveFilename (node:internal/modules/cjs/loader:1118:27)
+            at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1142:10)
+            at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1169:12)
+            at Module._load (node:internal/modules/cjs/loader:1341:5)
+            at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+            at Module.require (node:internal/modules/cjs/loader:1674:12)
+            at require (node:internal/modules/helpers:157:16)
+            at Object.<anonymous> (/tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs:5:12)
+            at Module._compile (node:internal/modules/cjs/loader:1929:14) {
+          code: 'MODULE_NOT_FOUND',
+          requireStack: [ '/tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs' ]
+        }
+        
+        Node.js v24.22.2
+--- FAIL: TestAssignmentProofChained (0.06s)
+    assignment_proofs_test.go:177: stock TypeScript: exit status 1, node:internal/modules/cjs/loader:1568
+          throw err;
+          ^
+        
+        Error: Cannot find module 'typescript'
+        Require stack:
+        - /tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs
+            at Module._resolveFilename (node:internal/modules/cjs/loader:1564:15)
+            at wrapResolveFilename (node:internal/modules/cjs/loader:1118:27)
+            at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1142:10)
+            at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1169:12)
+            at Module._load (node:internal/modules/cjs/loader:1341:5)
+            at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+            at Module.require (node:internal/modules/cjs/loader:1674:12)
+            at require (node:internal/modules/helpers:157:16)
+            at Object.<anonymous> (/tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs:5:12)
+            at Module._compile (node:internal/modules/cjs/loader:1929:14) {
+          code: 'MODULE_NOT_FOUND',
+          requireStack: [ '/tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs' ]
+        }
+        
+        Node.js v24.22.2
+--- FAIL: TestAssignmentProofReturnDefinedMutant (0.05s)
+    assignment_proofs_test.go:172: stock TypeScript: exit status 1, node:internal/modules/cjs/loader:1568
+          throw err;
+          ^
+        
+        Error: Cannot find module 'typescript'
+        Require stack:
+        - /tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs
+            at Module._resolveFilename (node:internal/modules/cjs/loader:1564:15)
+            at wrapResolveFilename (node:internal/modules/cjs/loader:1118:27)
+            at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1142:10)
+            at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1169:12)
+            at Module._load (node:internal/modules/cjs/loader:1341:5)
+            at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+            at Module.require (node:internal/modules/cjs/loader:1674:12)
+            at require (node:internal/modules/helpers:157:16)
+            at Object.<anonymous> (/tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs:5:12)
+            at Module._compile (node:internal/modules/cjs/loader:1929:14) {
+          code: 'MODULE_NOT_FOUND',
+          requireStack: [ '/tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs' ]
+        }
+        
+        Node.js v24.22.2
+--- FAIL: TestAssignmentProofReturnDefined (0.05s)
+    assignment_proofs_test.go:167: stock TypeScript: exit status 1, node:internal/modules/cjs/loader:1568
+          throw err;
+          ^
+        
+        Error: Cannot find module 'typescript'
+        Require stack:
+        - /tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs
+            at Module._resolveFilename (node:internal/modules/cjs/loader:1564:15)
+            at wrapResolveFilename (node:internal/modules/cjs/loader:1118:27)
+            at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1142:10)
+            at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1169:12)
+            at Module._load (node:internal/modules/cjs/loader:1341:5)
+            at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+            at Module.require (node:internal/modules/cjs/loader:1674:12)
+            at require (node:internal/modules/helpers:157:16)
+            at Object.<anonymous> (/tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs:5:12)
+            at Module._compile (node:internal/modules/cjs/loader:1929:14) {
+          code: 'MODULE_NOT_FOUND',
+          requireStack: [ '/tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs' ]
+        }
+        
+        Node.js v24.22.2
+--- FAIL: TestAssignmentProofIfNarrowingMutant (0.05s)
+    assignment_proofs_test.go:162: stock TypeScript: exit status 1, node:internal/modules/cjs/loader:1568
+          throw err;
+          ^
+        
+        Error: Cannot find module 'typescript'
+        Require stack:
+        - /tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs
+            at Module._resolveFilename (node:internal/modules/cjs/loader:1564:15)
+            at wrapResolveFilename (node:internal/modules/cjs/loader:1118:27)
+            at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1142:10)
+            at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1169:12)
+            at Module._load (node:internal/modules/cjs/loader:1341:5)
+            at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+            at Module.require (node:internal/modules/cjs/loader:1674:12)
+            at require (node:internal/modules/helpers:157:16)
+            at Object.<anonymous> (/tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs:5:12)
+            at Module._compile (node:internal/modules/cjs/loader:1929:14) {
+          code: 'MODULE_NOT_FOUND',
+          requireStack: [ '/tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs' ]
+        }
+        
+        Node.js v24.22.2
+--- FAIL: TestAssignmentProofIfNarrowing (0.05s)
+    assignment_proofs_test.go:157: stock TypeScript: exit status 1, node:internal/modules/cjs/loader:1568
+          throw err;
+          ^
+        
+        Error: Cannot find module 'typescript'
+        Require stack:
+        - /tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs
+            at Module._resolveFilename (node:internal/modules/cjs/loader:1564:15)
+            at wrapResolveFilename (node:internal/modules/cjs/loader:1118:27)
+            at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1142:10)
+            at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1169:12)
+            at Module._load (node:internal/modules/cjs/loader:1341:5)
+            at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+            at Module.require (node:internal/modules/cjs/loader:1674:12)
+            at require (node:internal/modules/helpers:157:16)
+            at Object.<anonymous> (/tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs:5:12)
+            at Module._compile (node:internal/modules/cjs/loader:1929:14) {
+          code: 'MODULE_NOT_FOUND',
+          requireStack: [ '/tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs' ]
+        }
+        
+        Node.js v24.22.2
+--- FAIL: TestAssignmentProofScannerKeywordMutant (0.07s)
+    assignment_proofs_test.go:152: stock TypeScript: exit status 1, node:internal/modules/cjs/loader:1568
+          throw err;
+          ^
+        
+        Error: Cannot find module 'typescript'
+        Require stack:
+        - /tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs
+            at Module._resolveFilename (node:internal/modules/cjs/loader:1564:15)
+            at wrapResolveFilename (node:internal/modules/cjs/loader:1118:27)
+            at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1142:10)
+            at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1169:12)
+            at Module._load (node:internal/modules/cjs/loader:1341:5)
+            at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+            at Module.require (node:internal/modules/cjs/loader:1674:12)
+            at require (node:internal/modules/helpers:157:16)
+            at Object.<anonymous> (/tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs:5:12)
+            at Module._compile (node:internal/modules/cjs/loader:1929:14) {
+          code: 'MODULE_NOT_FOUND',
+          requireStack: [ '/tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs' ]
+        }
+        
+        Node.js v24.22.2
+--- FAIL: TestAssignmentProofScannerKeyword (0.04s)
+    assignment_proofs_test.go:147: stock TypeScript: exit status 1, node:internal/modules/cjs/loader:1568
+          throw err;
+          ^
+        
+        Error: Cannot find module 'typescript'
+        Require stack:
+        - /tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs
+            at Module._resolveFilename (node:internal/modules/cjs/loader:1564:15)
+            at wrapResolveFilename (node:internal/modules/cjs/loader:1118:27)
+            at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1142:10)
+            at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1169:12)
+            at Module._load (node:internal/modules/cjs/loader:1341:5)
+            at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+            at Module.require (node:internal/modules/cjs/loader:1674:12)
+            at require (node:internal/modules/helpers:157:16)
+            at Object.<anonymous> (/tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs:5:12)
+            at Module._compile (node:internal/modules/cjs/loader:1929:14) {
+          code: 'MODULE_NOT_FOUND',
+          requireStack: [ '/tmp/ad/base/stage3/fixtures/assignment-proofs/check-types.cjs' ]
+        }
+        
+        Node.js v24.22.2
+--- FAIL: TestProduct_AllocatorFreshHandoverCompiler (0.67s)
+    allocator_witnesses_test.go:179: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestAllocatorFreshHandoverMutant (0.84s)
+    allocator_witnesses_test.go:188: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestProduct_ProgramTscNodeAPI (0.37s)
+    program_region_node_records_test.go:63: build program-tsc-node-api: gate TypeScript API version "6.0.2", lock requires 6.0.3
+--- FAIL: TestProduct_ProgramTscSource (0.01s)
+    program_region_source_test.go:15: build program-tsc-source: repository Program compiler pin 050880ce59e30b356b686bd3144efe24f875ebc8: environment: the commit is not in the checkout at /tmp/ad/base/cohere/TypeScript, and the corpus never fetches; a shallow checkout carries it with git fetch --depth=1 origin 050880ce59e30b356b686bd3144efe24f875ebc8 before the run (pinned git cat-file -e 050880ce59e30b356b686bd3144efe24f875ebc8^{commit} for program-tsc-source: exit status 128: fatal: not a git repository: /tmp/ad/base/cohere/TypeScript/../../.git/modules/cohere/modules/TypeScript)
+--- FAIL: TestProgramRegionParseMeasurement4 (0.00s)
+    program_region_parse_test.go:122: build program-tsc-source: repository Program compiler pin 050880ce59e30b356b686bd3144efe24f875ebc8: environment: the commit is not in the checkout at /tmp/ad/base/cohere/TypeScript, and the corpus never fetches; a shallow checkout carries it with git fetch --depth=1 origin 050880ce59e30b356b686bd3144efe24f875ebc8 before the run (pinned git cat-file -e 050880ce59e30b356b686bd3144efe24f875ebc8^{commit} for program-tsc-source: exit status 128: fatal: not a git repository: /tmp/ad/base/cohere/TypeScript/../../.git/modules/cohere/modules/TypeScript)
+--- FAIL: TestProgramRegionParseMeasurement3 (0.00s)
+    program_region_parse_test.go:121: build program-tsc-source: repository Program compiler pin 050880ce59e30b356b686bd3144efe24f875ebc8: environment: the commit is not in the checkout at /tmp/ad/base/cohere/TypeScript, and the corpus never fetches; a shallow checkout carries it with git fetch --depth=1 origin 050880ce59e30b356b686bd3144efe24f875ebc8 before the run (pinned git cat-file -e 050880ce59e30b356b686bd3144efe24f875ebc8^{commit} for program-tsc-source: exit status 128: fatal: not a git repository: /tmp/ad/base/cohere/TypeScript/../../.git/modules/cohere/modules/TypeScript)
+--- FAIL: TestProgramRegionParseMeasurement2 (0.01s)
+    program_region_parse_test.go:120: build program-tsc-source: repository Program compiler pin 050880ce59e30b356b686bd3144efe24f875ebc8: environment: the commit is not in the checkout at /tmp/ad/base/cohere/TypeScript, and the corpus never fetches; a shallow checkout carries it with git fetch --depth=1 origin 050880ce59e30b356b686bd3144efe24f875ebc8 before the run (pinned git cat-file -e 050880ce59e30b356b686bd3144efe24f875ebc8^{commit} for program-tsc-source: exit status 128: fatal: not a git repository: /tmp/ad/base/cohere/TypeScript/../../.git/modules/cohere/modules/TypeScript)
+--- FAIL: TestProgramRegionParseMeasurement1 (0.00s)
+    program_region_parse_test.go:119: build program-tsc-source: repository Program compiler pin 050880ce59e30b356b686bd3144efe24f875ebc8: environment: the commit is not in the checkout at /tmp/ad/base/cohere/TypeScript, and the corpus never fetches; a shallow checkout carries it with git fetch --depth=1 origin 050880ce59e30b356b686bd3144efe24f875ebc8 before the run (pinned git cat-file -e 050880ce59e30b356b686bd3144efe24f875ebc8^{commit} for program-tsc-source: exit status 128: fatal: not a git repository: /tmp/ad/base/cohere/TypeScript/../../.git/modules/cohere/modules/TypeScript)
+--- FAIL: TestProgramRegionParseMeasurement0 (0.01s)
+    program_region_parse_test.go:118: build program-tsc-source: repository Program compiler pin 050880ce59e30b356b686bd3144efe24f875ebc8: environment: the commit is not in the checkout at /tmp/ad/base/cohere/TypeScript, and the corpus never fetches; a shallow checkout carries it with git fetch --depth=1 origin 050880ce59e30b356b686bd3144efe24f875ebc8 before the run (pinned git cat-file -e 050880ce59e30b356b686bd3144efe24f875ebc8^{commit} for program-tsc-source: exit status 128: fatal: not a git repository: /tmp/ad/base/cohere/TypeScript/../../.git/modules/cohere/modules/TypeScript)
+--- FAIL: TestProgramRegionParseOffAgreesWithNode (0.00s)
+    program_region_parse_oracle_test.go:42: build program-tsc-source: repository Program compiler pin 050880ce59e30b356b686bd3144efe24f875ebc8: environment: the commit is not in the checkout at /tmp/ad/base/cohere/TypeScript, and the corpus never fetches; a shallow checkout carries it with git fetch --depth=1 origin 050880ce59e30b356b686bd3144efe24f875ebc8 before the run (pinned git cat-file -e 050880ce59e30b356b686bd3144efe24f875ebc8^{commit} for program-tsc-source: exit status 128: fatal: not a git repository: /tmp/ad/base/cohere/TypeScript/../../.git/modules/cohere/modules/TypeScript)
+--- FAIL: TestProgramRegionRecordedCountParseOff (0.10s)
+    program_region_parse_counts_test.go:22: build program-parse-source-false e1b27f9d2201 hit 0.02
+    program_region_parse_test.go:23: build program-parse-false-false 614108f1be4f hit 0.04
+    program_region_parse_counts_test.go:33: build program-tsc-source: repository Program compiler pin 050880ce59e30b356b686bd3144efe24f875ebc8: environment: the commit is not in the checkout at /tmp/ad/base/cohere/TypeScript, and the corpus never fetches; a shallow checkout carries it with git fetch --depth=1 origin 050880ce59e30b356b686bd3144efe24f875ebc8 before the run (pinned git cat-file -e 050880ce59e30b356b686bd3144efe24f875ebc8^{commit} for program-tsc-source: exit status 128: fatal: not a git repository: /tmp/ad/base/cohere/TypeScript/../../.git/modules/cohere/modules/TypeScript)
+--- FAIL: TestProgramRegionRecordedCountParseOn (0.05s)
+    program_region_parse_counts_test.go:22: build program-parse-source-true dc6ada9a2d4e hit 0.02
+    program_region_parse_test.go:23: build program-parse-true-false 8ba6f0ac8c78 hit 0.02
+    program_region_parse_counts_test.go:33: build program-tsc-source: repository Program compiler pin 050880ce59e30b356b686bd3144efe24f875ebc8: environment: the commit is not in the checkout at /tmp/ad/base/cohere/TypeScript, and the corpus never fetches; a shallow checkout carries it with git fetch --depth=1 origin 050880ce59e30b356b686bd3144efe24f875ebc8 before the run (pinned git cat-file -e 050880ce59e30b356b686bd3144efe24f875ebc8^{commit} for program-tsc-source: exit status 128: fatal: not a git repository: /tmp/ad/base/cohere/TypeScript/../../.git/modules/cohere/modules/TypeScript)
+--- FAIL: TestProgramRegionScalarContainersOnNode (0.26s)
+    program_region_node_records_test.go:66: build program-tsc-node-api: gate TypeScript API version "6.0.2", lock requires 6.0.3
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+--- FAIL: TestStdoutColumnsRefusesWASI (0.44s)
+    library_node_stdout_columns_test.go:246: want typed, named WASI refusal, got native: wasm32-wasi requires WASI_SYSROOT
+--- FAIL: TestProduct_Adamic (0.92s)
+    interface_cast_counts_test.go:18: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_030 (0.74s)
+    families_generated_test.go:5415: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_031 (0.91s)
+    families_generated_test.go:5420: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_029 (0.54s)
+    families_generated_test.go:5410: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_028 (0.73s)
+    families_generated_test.go:5405: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_027 (0.73s)
+    families_generated_test.go:5400: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_026 (0.72s)
+    families_generated_test.go:5395: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_023 (0.87s)
+    families_generated_test.go:5380: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_025 (0.87s)
+    families_generated_test.go:5390: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_024 (0.87s)
+    families_generated_test.go:5385: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_022 (0.72s)
+    families_generated_test.go:5375: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_021 (0.72s)
+    families_generated_test.go:5370: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_020 (0.72s)
+    families_generated_test.go:5365: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_019 (0.66s)
+    families_generated_test.go:5360: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_017 (0.66s)
+    families_generated_test.go:5350: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_018 (0.66s)
+    families_generated_test.go:5355: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_015 (0.70s)
+    families_generated_test.go:5340: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_016 (0.70s)
+    families_generated_test.go:5345: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_014 (0.70s)
+    families_generated_test.go:5335: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_013 (0.82s)
+    families_generated_test.go:5330: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_012 (0.82s)
+    families_generated_test.go:5325: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_011 (0.82s)
+    families_generated_test.go:5320: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestFamiliesCatchAPlantedCase_Stage0EmitsDeterministically (5.88s)
+    families_generated_test.go:5425: want exactly TestStage0EmitsDeterministically_020 to fail, on internal/oracle/testdata/determinism_dispatch.a; failed: [["--- FAIL: TestStage0EmitsDeterministically_000 " "TestStage0EmitsDeterministically_000"] ["--- FAIL: TestStage0EmitsDeterministically_016 " "TestStage0EmitsDeterministically_016"] ["--- FAIL: TestStage0EmitsDeterministically_031 " "TestStage0EmitsDeterministically_031"] ["--- FAIL: TestStage0EmitsDeterministically_030 " "TestStage0EmitsDeterministically_030"] ["--- FAIL: TestStage0EmitsDeterministically_029 " "TestStage0EmitsDeterministically_029"] ["--- FAIL: TestStage0EmitsDeterministically_028 " "TestStage0EmitsDeterministically_028"] ["--- FAIL: TestStage0EmitsDeterministically_026 " "TestStage0EmitsDeterministically_026"] ["--- FAIL: TestStage0EmitsDeterministically_027 " "TestStage0EmitsDeterministically_027"] ["--- FAIL: TestStage0EmitsDeterministically_024 " "TestStage0EmitsDeterministically_024"] ["--- FAIL: TestStage0EmitsDeterministically_025 " "TestStage0EmitsDeterministically_025"] ["--- FAIL: TestStage0EmitsDeterministically_022 " "TestStage0EmitsDeterministically_022"] ["--- FAIL: TestStage0EmitsDeterministically_023 " "TestStage0EmitsDeterministically_023"] ["--- FAIL: TestStage0EmitsDeterministically_021 " "TestStage0EmitsDeterministically_021"] ["--- FAIL: TestStage0EmitsDeterministically_020 " "TestStage0EmitsDeterministically_020"] ["--- FAIL: TestStage0EmitsDeterministically_018 " "TestStage0EmitsDeterministically_018"] ["--- FAIL: TestStage0EmitsDeterministically_019 " "TestStage0EmitsDeterministically_019"] ["--- FAIL: TestStage0EmitsDeterministically_017 " "TestStage0EmitsDeterministically_017"] ["--- FAIL: TestStage0EmitsDeterministically_008 " "TestStage0EmitsDeterministically_008"] ["--- FAIL: TestStage0EmitsDeterministically_015 " "TestStage0EmitsDeterministically_015"] ["--- FAIL: TestStage0EmitsDeterministically_014 " "TestStage0EmitsDeterministically_014"] ["--- FAIL: TestStage0EmitsDeterministically_013 " "TestStage0EmitsDeterministically_013"] ["--- FAIL: TestStage0EmitsDeterministically_012 " "TestStage0EmitsDeterministically_012"] ["--- FAIL: TestStage0EmitsDeterministically_011 " "TestStage0EmitsDeterministically_011"] ["--- FAIL: TestStage0EmitsDeterministically_010 " "TestStage0EmitsDeterministically_010"] ["--- FAIL: TestStage0EmitsDeterministically_009 " "TestStage0EmitsDeterministically_009"] ["--- FAIL: TestStage0EmitsDeterministically_004 " "TestStage0EmitsDeterministically_004"] ["--- FAIL: TestStage0EmitsDeterministically_007 " "TestStage0EmitsDeterministically_007"] ["--- FAIL: TestStage0EmitsDeterministically_006 " "TestStage0EmitsDeterministically_006"] ["--- FAIL: TestStage0EmitsDeterministically_005 " "TestStage0EmitsDeterministically_005"] ["--- FAIL: TestStage0EmitsDeterministically_002 " "TestStage0EmitsDeterministically_002"] ["--- FAIL: TestStage0EmitsDeterministically_003 " "TestStage0EmitsDeterministically_003"] ["--- FAIL: TestStage0EmitsDeterministically_001 " "TestStage0EmitsDeterministically_001"]]
+        === RUN   TestStage0EmitsDeterministically_000
+        === PAUSE TestStage0EmitsDeterministically_000
+        === RUN   TestStage0EmitsDeterministically_001
+        === PAUSE TestStage0EmitsDeterministically_001
+        === RUN   TestStage0EmitsDeterministically_002
+        === PAUSE TestStage0EmitsDeterministically_002
+        === RUN   TestStage0EmitsDeterministically_003
+        === PAUSE TestStage0EmitsDeterministically_003
+        === RUN   TestStage0EmitsDeterministically_004
+        === PAUSE TestStage0EmitsDeterministically_004
+        === RUN   TestStage0EmitsDeterministically_005
+        === PAUSE TestStage0EmitsDeterministically_005
+        === RUN   TestStage0EmitsDeterministically_006
+        === PAUSE TestStage0EmitsDeterministically_006
+        === RUN   TestStage0EmitsDeterministically_007
+        === PAUSE TestStage0EmitsDeterministically_007
+        === RUN   TestStage0EmitsDeterministically_008
+        === PAUSE TestStage0EmitsDeterministically_008
+        === RUN   TestStage0EmitsDeterministically_009
+        === PAUSE TestStage0EmitsDeterministically_009
+        === RUN   TestStage0EmitsDeterministically_010
+        === PAUSE TestStage0EmitsDeterministically_010
+        === RUN   TestStage0EmitsDeterministically_011
+        === PAUSE TestStage0EmitsDeterministically_011
+        === RUN   TestStage0EmitsDeterministically_012
+        === PAUSE TestStage0EmitsDeterministically_012
+        === RUN   TestStage0EmitsDeterministically_013
+        === PAUSE TestStage0EmitsDeterministically_013
+        === RUN   TestStage0EmitsDeterministically_014
+        === PAUSE TestStage0EmitsDeterministically_014
+        === RUN   TestStage0EmitsDeterministically_015
+        === PAUSE TestStage0EmitsDeterministically_015
+        === RUN   TestStage0EmitsDeterministically_016
+        === PAUSE TestStage0EmitsDeterministically_016
+        === RUN   TestStage0EmitsDeterministically_017
+        === PAUSE TestStage0EmitsDeterministically_017
+        === RUN   TestStage0EmitsDeterministically_018
+        === PAUSE TestStage0EmitsDeterministically_018
+        === RUN   TestStage0EmitsDeterministically_019
+        === PAUSE TestStage0EmitsDeterministically_019
+        === RUN   TestStage0EmitsDeterministically_020
+        === PAUSE TestStage0EmitsDeterministically_020
+        === RUN   TestStage0EmitsDeterministically_021
+        === PAUSE TestStage0EmitsDeterministically_021
+        === RUN   TestStage0EmitsDeterministically_022
+        === PAUSE TestStage0EmitsDeterministically_022
+        === RUN   TestStage0EmitsDeterministically_023
+        === PAUSE TestStage0EmitsDeterministically_023
+        === RUN   TestStage0EmitsDeterministically_024
+        === PAUSE TestStage0EmitsDeterministically_024
+        === RUN   TestStage0EmitsDeterministically_025
+        === PAUSE TestStage0EmitsDeterministically_025
+        === RUN   TestStage0EmitsDeterministically_026
+        === PAUSE TestStage0EmitsDeterministically_026
+        === RUN   TestStage0EmitsDeterministically_027
+        === PAUSE TestStage0EmitsDeterministically_027
+        === RUN   TestStage0EmitsDeterministically_028
+        === PAUSE TestStage0EmitsDeterministically_028
+        === RUN   TestStage0EmitsDeterministically_029
+        === PAUSE TestStage0EmitsDeterministically_029
+        === RUN   TestStage0EmitsDeterministically_030
+        === PAUSE TestStage0EmitsDeterministically_030
+        === RUN   TestStage0EmitsDeterministically_031
+        === PAUSE TestStage0EmitsDeterministically_031
+        === CONT  TestStage0EmitsDeterministically_000
+        === CONT  TestStage0EmitsDeterministically_016
+        === CONT  TestStage0EmitsDeterministically_031
+        === CONT  TestStage0EmitsDeterministically_030
+        === NAME  TestStage0EmitsDeterministically_000
+            families_generated_test.go:5265: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_000 (0.72s)
+        === CONT  TestStage0EmitsDeterministically_029
+        === NAME  TestStage0EmitsDeterministically_016
+            families_generated_test.go:5345: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_016 (0.72s)
+        === CONT  TestStage0EmitsDeterministically_028
+        === NAME  TestStage0EmitsDeterministically_031
+            families_generated_test.go:5420: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_031 (0.72s)
+        === CONT  TestStage0EmitsDeterministically_027
+        === NAME  TestStage0EmitsDeterministically_030
+            families_generated_test.go:5415: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_030 (0.72s)
+        === CONT  TestStage0EmitsDeterministically_026
+        === NAME  TestStage0EmitsDeterministically_027
+            families_generated_test.go:5400: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        === NAME  TestStage0EmitsDeterministically_029
+            families_generated_test.go:5410: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_029 (0.73s)
+        === CONT  TestStage0EmitsDeterministically_025
+        === NAME  TestStage0EmitsDeterministically_028
+            families_generated_test.go:5405: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_028 (0.73s)
+        === NAME  TestStage0EmitsDeterministically_026
+            families_generated_test.go:5395: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        === CONT  TestStage0EmitsDeterministically_024
+        --- FAIL: TestStage0EmitsDeterministically_026 (0.73s)
+        === CONT  TestStage0EmitsDeterministically_023
+        --- FAIL: TestStage0EmitsDeterministically_027 (0.73s)
+        === CONT  TestStage0EmitsDeterministically_022
+        === NAME  TestStage0EmitsDeterministically_024
+            families_generated_test.go:5385: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_024 (0.76s)
+        === CONT  TestStage0EmitsDeterministically_021
+        === NAME  TestStage0EmitsDeterministically_025
+            families_generated_test.go:5390: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        === NAME  TestStage0EmitsDeterministically_022
+            families_generated_test.go:5375: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_025 (0.76s)
+        --- FAIL: TestStage0EmitsDeterministically_022 (0.76s)
+        === CONT  TestStage0EmitsDeterministically_020
+        === CONT  TestStage0EmitsDeterministically_019
+        === NAME  TestStage0EmitsDeterministically_023
+            families_generated_test.go:5380: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_023 (0.76s)
+        === CONT  TestStage0EmitsDeterministically_018
+        === NAME  TestStage0EmitsDeterministically_021
+            families_generated_test.go:5370: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_021 (0.72s)
+        === CONT  TestStage0EmitsDeterministically_017
+        === NAME  TestStage0EmitsDeterministically_020
+            families_generated_test.go:5365: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_020 (0.72s)
+        === CONT  TestStage0EmitsDeterministically_008
+        === NAME  TestStage0EmitsDeterministically_018
+            families_generated_test.go:5355: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_018 (0.72s)
+        === CONT  TestStage0EmitsDeterministically_015
+        === NAME  TestStage0EmitsDeterministically_019
+            families_generated_test.go:5360: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_019 (0.72s)
+        === CONT  TestStage0EmitsDeterministically_014
+        === NAME  TestStage0EmitsDeterministically_017
+            families_generated_test.go:5350: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_017 (0.67s)
+        === CONT  TestStage0EmitsDeterministically_013
+        === NAME  TestStage0EmitsDeterministically_008
+            families_generated_test.go:5305: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_008 (0.67s)
+        === CONT  TestStage0EmitsDeterministically_012
+        === NAME  TestStage0EmitsDeterministically_015
+            families_generated_test.go:5340: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_015 (0.67s)
+        === CONT  TestStage0EmitsDeterministically_011
+        === NAME  TestStage0EmitsDeterministically_014
+            families_generated_test.go:5335: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_014 (0.67s)
+        === CONT  TestStage0EmitsDeterministically_010
+        === NAME  TestStage0EmitsDeterministically_013
+            families_generated_test.go:5330: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_013 (0.72s)
+        === CONT  TestStage0EmitsDeterministically_009
+        === NAME  TestStage0EmitsDeterministically_012
+            families_generated_test.go:5325: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_012 (0.72s)
+        === CONT  TestStage0EmitsDeterministically_004
+        === NAME  TestStage0EmitsDeterministically_011
+            families_generated_test.go:5320: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_011 (0.72s)
+        === CONT  TestStage0EmitsDeterministically_007
+        === NAME  TestStage0EmitsDeterministically_010
+            families_generated_test.go:5315: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_010 (0.72s)
+        === CONT  TestStage0EmitsDeterministically_006
+        === NAME  TestStage0EmitsDeterministically_009
+            families_generated_test.go:5310: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_009 (0.74s)
+        === CONT  TestStage0EmitsDeterministically_005
+        === NAME  TestStage0EmitsDeterministically_004
+            families_generated_test.go:5285: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_004 (0.74s)
+        === CONT  TestStage0EmitsDeterministically_002
+        === NAME  TestStage0EmitsDeterministically_007
+            families_generated_test.go:5300: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_007 (0.74s)
+        === CONT  TestStage0EmitsDeterministically_003
+        === NAME  TestStage0EmitsDeterministically_006
+            families_generated_test.go:5295: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_006 (0.74s)
+        === CONT  TestStage0EmitsDeterministically_001
+        === NAME  TestStage0EmitsDeterministically_005
+            families_generated_test.go:5290: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_005 (0.81s)
+        === NAME  TestStage0EmitsDeterministically_002
+            families_generated_test.go:5275: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_002 (0.81s)
+        === NAME  TestStage0EmitsDeterministically_003
+            families_generated_test.go:5280: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        === NAME  TestStage0EmitsDeterministically_001
+            families_generated_test.go:5270: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+                error obtaining VCS status: exit status 128
+                	Use -buildvcs=false to disable VCS stamping.
+        --- FAIL: TestStage0EmitsDeterministically_003 (0.81s)
+        --- FAIL: TestStage0EmitsDeterministically_001 (0.81s)
+        FAIL
+--- FAIL: TestStage0EmitsDeterministically_010 (0.80s)
+    families_generated_test.go:5315: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_008 (0.80s)
+    families_generated_test.go:5305: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_009 (0.80s)
+    families_generated_test.go:5310: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_007 (0.32s)
+    families_generated_test.go:5300: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_004 (0.68s)
+    families_generated_test.go:5285: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_003 (0.68s)
+    families_generated_test.go:5280: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_005 (0.68s)
+    families_generated_test.go:5290: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_006 (0.68s)
+    families_generated_test.go:5295: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_001 (0.71s)
+    families_generated_test.go:5270: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_002 (0.71s)
+    families_generated_test.go:5275: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestStage0EmitsDeterministically_000 (0.71s)
+    families_generated_test.go:5265: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestCountsAreRecorded_async_counts_reassigned (7.42s)
+    interface_cast_counts_test.go:26: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestCountsAreRecorded_029 (7.34s)
+    interface_cast_counts_test.go:26: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestCountsAreRecorded_async_counts_stable (39.24s)
+    program_region_parse_counts_test.go:22: build program-parse-source-true dc6ada9a2d4e hit 0.02
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native hit
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native hit
+    counts_test.go:191: gate cache native hit
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native hit
+    counts_test.go:191: gate cache native hit
+    program_region_parse_test.go:23: build program-parse-true-false 8ba6f0ac8c78 hit 0.02
+    program_region_parse_counts_test.go:33: build program-tsc-source: repository Program compiler pin 050880ce59e30b356b686bd3144efe24f875ebc8: environment: the commit is not in the checkout at /tmp/ad/base/cohere/TypeScript, and the corpus never fetches; a shallow checkout carries it with git fetch --depth=1 origin 050880ce59e30b356b686bd3144efe24f875ebc8 before the run (pinned git cat-file -e 050880ce59e30b356b686bd3144efe24f875ebc8^{commit} for program-tsc-source: exit status 128: fatal: not a git repository: /tmp/ad/base/cohere/TypeScript/../../.git/modules/cohere/modules/TypeScript)
+--- FAIL: TestCountsAreRecorded_026 (45.21s)
+    program_region_parse_counts_test.go:22: build program-parse-source-false e1b27f9d2201 hit 0.03
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native hit
+    counts_test.go:191: gate cache native hit
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    counts_test.go:191: gate cache native miss
+    predicates_checked_test.go:256: gate cache native hit
+    program_region_parse_test.go:23: build program-parse-false-false 614108f1be4f hit 0.02
+    program_region_parse_counts_test.go:33: build program-tsc-source: repository Program compiler pin 050880ce59e30b356b686bd3144efe24f875ebc8: environment: the commit is not in the checkout at /tmp/ad/base/cohere/TypeScript, and the corpus never fetches; a shallow checkout carries it with git fetch --depth=1 origin 050880ce59e30b356b686bd3144efe24f875ebc8 before the run (pinned git cat-file -e 050880ce59e30b356b686bd3144efe24f875ebc8^{commit} for program-tsc-source: exit status 128: fatal: not a git repository: /tmp/ad/base/cohere/TypeScript/../../.git/modules/cohere/modules/TypeScript)
+--- FAIL: TestProduct_CountMeasurements13 (0.00s)
+    counts_test.go:411: count-measurements shard 13 couldn't be had: the test that first asked for it says why
+--- FAIL: TestProduct_CountMeasurements10 (0.00s)
+    counts_test.go:408: count-measurements shard 10 couldn't be had: the test that first asked for it says why
+--- FAIL: TestProduct_CountMeasurements07 (0.00s)
+    counts_test.go:405: count-measurements shard 7 couldn't be had: the test that first asked for it says why
+--- FAIL: TestProduct_CountMeasurements05 (0.00s)
+    counts_test.go:403: count-measurements shard 5 couldn't be had: the test that first asked for it says why
+--- FAIL: TestProduct_AdamicMapOrderMutant (0.98s)
+    determinism_test.go:29: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+--- FAIL: TestMovesEmitsDeterministically (1.17s)
+    moves_test.go:319: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+--- FAIL: TestProduct_MovesDeterminism (1.54s)
+    moves_test.go:319: go build ./cmd/adamic: go list -deps -json ./cmd/adamic: exit status 1
+        error obtaining VCS status: exit status 128
+        	Use -buildvcs=false to disable VCS stamping.
+native: units compile uncached: clang links libLLVM.so.18.1, whose code the key doesn't read
+--- FAIL: TestCountsAreRecorded_slab_sizes (0.00s)
+    --- FAIL: TestCountsAreRecorded_slab_sizes/internal/oracle/testdata/slab_sizes.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/slab_sizes.a: ""
+--- FAIL: TestCountsAreRecorded_async_throw (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_throw/internal/oracle/testdata/async_throw.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_throw.a: ""
+--- FAIL: TestCountsAreRecorded_async_three (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_three/internal/oracle/testdata/async_three.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_three.a: ""
+--- FAIL: TestCountsAreRecorded_async_coverage_unions (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_coverage_unions/internal/oracle/testdata/async_coverage_unions.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_coverage_unions.a: ""
+--- FAIL: TestCountsAreRecorded_async_for_of_capture (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_for_of_capture/internal/oracle/testdata/async_for_of_capture.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_for_of_capture.a: ""
+--- FAIL: TestCountsAreRecorded_async_for_of_body (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_for_of_body/internal/oracle/testdata/async_for_of_body.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_for_of_body.a: ""
+--- FAIL: TestCountsAreRecorded_async_iterable_string_break_function (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_iterable_string_break_function/internal/oracle/testdata/async_iterable_string_break_function.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_iterable_string_break_function.a: ""
+--- FAIL: TestCountsAreRecorded_async_iterable_map_break_module (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_iterable_map_break_module/internal/oracle/testdata/async_iterable_map_break_module.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_iterable_map_break_module.a: ""
+--- FAIL: TestCountsAreRecorded_async_iterable_map_break_function (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_iterable_map_break_function/internal/oracle/testdata/async_iterable_map_break_function.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_iterable_map_break_function.a: ""
+--- FAIL: TestCountsAreRecorded_async_iterable_set_entries_module (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_iterable_set_entries_module/internal/oracle/testdata/async_iterable_set_entries_module.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_iterable_set_entries_module.a: ""
+--- FAIL: TestCountsAreRecorded_async_iterable_string_ascii_module (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_iterable_string_ascii_module/internal/oracle/testdata/async_iterable_string_ascii_module.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_iterable_string_ascii_module.a: ""
+--- FAIL: TestCountsAreRecorded_async_finally_break (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_finally_break/internal/oracle/testdata/async_finally_break.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_finally_break.a: ""
+--- FAIL: TestCountsAreRecorded_async_finally_throw (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_finally_throw/internal/oracle/testdata/async_finally_throw.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_finally_throw.a: ""
+--- FAIL: TestCountsAreRecorded_label_block_break_async (0.00s)
+    --- FAIL: TestCountsAreRecorded_label_block_break_async/internal/oracle/testdata/label_block_break_async.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/label_block_break_async.a: ""
+--- FAIL: TestCountsAreRecorded_label_block_break_sync (0.00s)
+    --- FAIL: TestCountsAreRecorded_label_block_break_sync/internal/oracle/testdata/label_block_break_sync.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/label_block_break_sync.a: ""
+--- FAIL: TestCountsAreRecorded_async_labels_finally (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_labels_finally/internal/oracle/testdata/async_labels_finally.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_labels_finally.a: ""
+--- FAIL: TestCountsAreRecorded_async_loop_body_capture (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_loop_body_capture/internal/oracle/testdata/async_loop_body_capture.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_loop_body_capture.a: ""
+--- FAIL: TestCountsAreRecorded_flat (0.00s)
+    --- FAIL: TestCountsAreRecorded_flat/internal/oracle/testdata/ownership-query/flat.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/ownership-query/flat.a: ""
+--- FAIL: TestCountsAreRecorded_release_fast_graph (0.00s)
+    --- FAIL: TestCountsAreRecorded_release_fast_graph/internal/oracle/testdata/release_fast_graph.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/release_fast_graph.a: ""
+--- FAIL: TestCountsAreRecorded_counters_square_jump (0.00s)
+    --- FAIL: TestCountsAreRecorded_counters_square_jump/internal/oracle/testdata/counters_square_jump.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/counters_square_jump.a: ""
+--- FAIL: TestCountsAreRecorded_counters_shapes (0.00s)
+    --- FAIL: TestCountsAreRecorded_counters_shapes/internal/oracle/testdata/counters_shapes.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/counters_shapes.a: ""
+--- FAIL: TestCountsAreRecorded_typed_arrays_sort_uint16array (0.00s)
+    --- FAIL: TestCountsAreRecorded_typed_arrays_sort_uint16array/internal/oracle/testdata/typed_arrays_sort_uint16array.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/typed_arrays_sort_uint16array.a: ""
+--- FAIL: TestCountsAreRecorded_async_promise_expression (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_promise_expression/internal/oracle/testdata/async_promise_expression.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_promise_expression.a: ""
+--- FAIL: TestCountsAreRecorded_async_operand_order (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_operand_order/internal/oracle/testdata/async_operand_order.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_operand_order.a: ""
+--- FAIL: TestCountsAreRecorded_async_mutation (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_mutation/internal/oracle/testdata/async_mutation.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_mutation.a: ""
+--- FAIL: TestCountsAreRecorded_async_methods (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_methods/internal/oracle/testdata/async_methods.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_methods.a: ""
+--- FAIL: TestCountsAreRecorded_async_catches (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_catches/internal/oracle/testdata/async_catches.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_catches.a: ""
+--- FAIL: TestCountsAreRecorded_async_counts_root_error (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_counts_root_error/internal/oracle/testdata/async_counts/async_counts_root_error.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_counts/async_counts_root_error.a: ""
+--- FAIL: TestCountsAreRecorded_async_counts_parameter (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_counts_parameter/internal/oracle/testdata/async_counts/async_counts_parameter.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_counts/async_counts_parameter.a: ""
+--- FAIL: TestCountsAreRecorded_async_counts_captured (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_counts_captured/internal/oracle/testdata/async_counts/async_counts_captured.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_counts/async_counts_captured.a: ""
+--- FAIL: TestCountsAreRecorded_lots_streams (30.72s)
+    --- FAIL: TestCountsAreRecorded_lots_streams/internal/oracle/testdata/stdout_edges/lots_streams.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/stdout_edges/lots_streams.a: ""
+--- FAIL: TestCountsAreRecorded_023 (0.00s)
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/library_object_has_own.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/library_object_has_own.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/host_void_method.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/host_void_method.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_union_narrowed.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_union_narrowed.a: ""
+    --- FAIL: TestCountsAreRecorded_023/Program_region:_internal/oracle/testdata/program_region/parse.a_(Program=true) (0.00s)
+        counts_test.go:453: invalid runtime count row for Program region: internal/oracle/testdata/program_region/parse.a (Program=true): ""
+    --- FAIL: TestCountsAreRecorded_023/stage3/parser-ahead/rulings/node-array-unset.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/parser-ahead/rulings/node-array-unset.a: ""
+    --- FAIL: TestCountsAreRecorded_023/stage3/parser-ahead/factories/already-complete.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/parser-ahead/factories/already-complete.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/refusal_rulings/function_unused.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/refusal_rulings/function_unused.a: ""
+    --- FAIL: TestCountsAreRecorded_023/stage3/interface-downcasts/readiness-number-uninitialized.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/readiness-number-uninitialized.ts: ""
+    --- FAIL: TestCountsAreRecorded_023/stage3/interface-downcasts/default-destructure.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/default-destructure.ts: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/weak_miscompiles/matching_methods.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/weak_miscompiles/matching_methods.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/unknown_narrowing_host.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/unknown_narrowing_host.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/structural_statics_mixed.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/structural_statics_mixed.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/review/agree/fxspptb_aee89b2_map_entries_pattern.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/review/agree/fxspptb_aee89b2_map_entries_pattern.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/scout_tsc_source_content.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/scout_tsc_source_content.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/getters_census_throwing_object.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/getters_census_throwing_object.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/scout_nullable_object_stale_field.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/scout_nullable_object_stale_field.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/scout_values_optional_boolean.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/scout_values_optional_boolean.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/function_values_diagnostic.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/function_values_diagnostic.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/function_values_chain.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/function_values_chain.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/enums_names.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/enums_names.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/entries_record_alias.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/entries_record_alias.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/element_access_presence.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/element_access_presence.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/devirtualize_interfaces.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/devirtualize_interfaces.a: ""
+    --- FAIL: TestCountsAreRecorded_023/stage3/fixtures/nested-functions/03_scanner_hoisting.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/fixtures/nested-functions/03_scanner_hoisting.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/class_inheritance_generic.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/class_inheritance_generic.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/non_null_uninitialized_catch.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/non_null_uninitialized_catch.ts: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/process_bad_code.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/process_bad_code.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/nested_reduced_parameter_unreachable.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/nested_reduced_parameter_unreachable.a: ""
+    --- FAIL: TestCountsAreRecorded_023/stage3/namespaces/shapes/Parser.JSDocParser.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/namespaces/shapes/Parser.JSDocParser.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/namespaces_pair/main.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/namespaces_pair/main.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/module_namespace_reads/initialized.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/module_namespace_reads/initialized.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/census_optional_values_system.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/census_optional_values_system.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/method_coverage_string_tostring.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/method_coverage_string_tostring.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/method_coverage_codes.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/method_coverage_codes.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/cast_enum_const_string_fails.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/cast_enum_const_string_fails.ts: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/json_decode_coverage_depth_extra.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/json_decode_coverage_depth_extra.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/callback_widening/object-every.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/callback_widening/object-every.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/import_cycles/runtime/even.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/import_cycles/runtime/even.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/async_review/accepted/closure.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_review/accepted/closure.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/async_review/accepted/parallel_catch.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_review/accepted/parallel_catch.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/library_map_set_next.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/library_map_set_next.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/long_field_name.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/long_field_name.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/search_from.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/search_from.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/declared_later.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/declared_later.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/library_map_set_group_by.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/library_map_set_group_by.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/throw_keeps_old_value.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/throw_keeps_old_value.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/size_class_churn.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/size_class_churn.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/self_assignments.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/self_assignments.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/read_order.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/read_order.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/functions.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/functions.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/library_fnexpr_loops.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/library_fnexpr_loops.a: ""
+--- FAIL: TestCountsAreRecorded_021 (0.00s)
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/borrow_chain_coverage_return.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/borrow_chain_coverage_return.a: ""
+    --- FAIL: TestCountsAreRecorded_021/stage3/parser-ahead/rulings/factory-unset.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/parser-ahead/rulings/factory-unset.a: ""
+    --- FAIL: TestCountsAreRecorded_021/stage3/interface-downcasts/lane4b/fixtures/node-indicator-false.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/lane4b/fixtures/node-indicator-false.ts: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/lower/testdata/predicates_checked/false_switch_true.a_(.ts_checked_mode) (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/lower/testdata/predicates_checked/false_switch_true.a (.ts checked mode): ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/node_path_basename.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/node_path_basename.a: ""
+    --- FAIL: TestCountsAreRecorded_021/stage3/interface-downcasts/lane4b/fixtures/literal-boolean.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/lane4b/fixtures/literal-boolean.ts: ""
+    --- FAIL: TestCountsAreRecorded_021/stage3/interface-downcasts/v2/snapshot-maybe-number.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/v2/snapshot-maybe-number.ts: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/search_shrink_found.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/search_shrink_found.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/scout_nullable_objects.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/scout_nullable_objects.a: ""
+    --- FAIL: TestCountsAreRecorded_021/stage3/drivers/scanner/probes/nested-sibling-callback.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/drivers/scanner/probes/nested-sibling-callback.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/regexp_cycle_closures.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/regexp_cycle_closures.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/non_null_uninitialized_spread.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/non_null_uninitialized_spread.ts: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/predicate_false_flow/library_live.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/predicate_false_flow/library_live.ts: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/lower/testdata/scalar_union_views/p54_n.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/lower/testdata/scalar_union_views/p54_n.ts: ""
+    --- FAIL: TestCountsAreRecorded_021/stage3/namespace-parser-stops/native-namespace-object-receiver.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/namespace-parser-stops/native-namespace-object-receiver.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/non_null_checked_present.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/non_null_checked_present.ts: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/047cb0d_n_arrayindex.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/047cb0d_n_arrayindex.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/e4eec87_f1_alias_narrowed.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/literal_optional_shapes.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/literal_optional_shapes.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/nested_callback_late_capture.a (0.01s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/nested_callback_late_capture.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/process_platform/print.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/process_platform/print.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/host_map_generic_union.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/host_map_generic_union.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/graph_regions_regression_13.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/graph_regions_regression_13.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/graph_regions_coverage_payload_loop.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/graph_regions_coverage_payload_loop.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/conditions_sites.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/conditions_sites.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/cast_enum_numeric.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/cast_enum_numeric.ts: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/callback_widening/object-find.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/callback_widening/object-find.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/async_review/accepted/concurrent.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_review/accepted/concurrent.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/accessor_spread_throw_last.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/accessor_spread_throw_last.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/spread_calls.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/spread_calls.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/aside_throw.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/aside_throw.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/tuple_values.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/tuple_values.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/from_codes.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/from_codes.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/library_map_set_construct.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/library_map_set_construct.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/map_union_value_paths.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/map_union_value_paths.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/class_as_interface.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/class_as_interface.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/narrowed_writes.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/narrowed_writes.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/sort_releases.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/sort_releases.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/borrow_chain_argument.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/borrow_chain_argument.a: ""
+    --- FAIL: TestCountsAreRecorded_021/internal/oracle/testdata/normalize_coverage_stream.a (0.01s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/normalize_coverage_stream.a: ""
+--- FAIL: TestCountsAreRecorded_013 (0.00s)
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/route_targets_bound_method.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/route_targets_bound_method.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/graph_regions_regression_08.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/graph_regions_regression_08.a: ""
+    --- FAIL: TestCountsAreRecorded_013/Program_region:_internal/oracle/testdata/program_region/program_region_ownership.a (0.00s)
+        counts_test.go:453: invalid runtime count row for Program region: internal/oracle/testdata/program_region/program_region_ownership.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/lower/testdata/predicates_checked/false_unchanged.a_(.ts_checked_mode) (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/lower/testdata/predicates_checked/false_unchanged.a (.ts checked mode): ""
+    --- FAIL: TestCountsAreRecorded_013/stage3/interface-downcasts/v2/callable-producer-wrong.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/v2/callable-producer-wrong.ts: ""
+    --- FAIL: TestCountsAreRecorded_013/stage3/interface-downcasts/default-boxed-write.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/default-boxed-write.ts: ""
+    --- FAIL: TestCountsAreRecorded_013/stage3/interface-downcasts/wrong-kind.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/wrong-kind.ts: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/walk.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/walk.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/taste_logical_assignment.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/taste_logical_assignment.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/regexp_replace/arguments.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/regexp_replace/arguments.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/records_named_intrinsics.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/records_named_intrinsics.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/non_null_uninitialized_exception.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/non_null_uninitialized_exception.ts: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/proven_guards.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/proven_guards.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/placeholder_nonnull_null_loose.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/placeholder_nonnull_null_loose.a: ""
+    --- FAIL: TestCountsAreRecorded_013/stage3/parser-next/speculation/truthiness-rewind.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/parser-next/speculation/truthiness-rewind.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/override_same_representation.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/override_same_representation.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/nested_owned_parameter.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/nested_owned_parameter.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/e4eec87_f1_class_narrowed.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/e4eec87_f1_class_narrowed.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/e4eec87_f1_field_narrowed.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/e4eec87_f1_field_narrowed.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/namespaces_debug_probe.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/namespaces_debug_probe.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/method_coverage_array_values.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/method_coverage_array_values.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/json_decode_coverage_shapes.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/json_decode_coverage_shapes.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/user_iterators_rest_tdz.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/user_iterators_rest_tdz.a: ""
+    --- FAIL: TestCountsAreRecorded_013/stage3/drivers/scanner/probes/cyclic-initialized-value/main.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/drivers/scanner/probes/cyclic-initialized-value/main.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/host_phantom_optional_array.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/host_phantom_optional_array.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/callback_widening/number-every.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/callback_widening/number-every.a: ""
+    --- FAIL: TestCountsAreRecorded_013/stage3/interface-downcasts/fx7/p33.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/fx7/p33.ts: ""
+    --- FAIL: TestCountsAreRecorded_013/stage3/fixtures/enums/10_string_enum.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/fixtures/enums/10_string_enum.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/enums_open_never_index.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/enums_open_never_index.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/enums_open_never_field.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/enums_open_never_field.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/entries_proven_import.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/entries_proven_import.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/entries_checked_misfit.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/entries_checked_misfit.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/conditions_function.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/conditions_function.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/class_features_distinct.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/class_features_distinct.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/census_overload_lie.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/census_overload_lie.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/census_boolean_sieve.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/census_boolean_sieve.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/cast_enum_string.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/cast_enum_string.ts: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/reuse_handover_throw.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/reuse_handover_throw.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/backend_stop_catches.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/backend_stop_catches.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/arrow_this_field.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/arrow_this_field.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/regexp.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/regexp.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/coverage_plain_view.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/coverage_plain_view.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/repeat_huge.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/repeat_huge.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/set_undefined.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/set_undefined.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/bitwise.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/bitwise.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/optional_strings.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/optional_strings.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/writes_past_end.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/writes_past_end.a: ""
+    --- FAIL: TestCountsAreRecorded_013/internal/oracle/testdata/json_stringify_replacer.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/json_stringify_replacer.a: ""
+--- FAIL: TestCountsAreRecorded_007 (0.00s)
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/set_foreach_keep.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/set_foreach_keep.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/refusal_rulings/merge_missing.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/refusal_rulings/merge_missing.a: ""
+    --- FAIL: TestCountsAreRecorded_007/stage3/interface-downcasts/lane4b/fixtures/required-missing.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/lane4b/fixtures/required-missing.ts: ""
+    --- FAIL: TestCountsAreRecorded_007/stage3/interface-downcasts/lane1/interfaces-missing-inherited.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/lane1/interfaces-missing-inherited.ts: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/node_process_host.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/node_process_host.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/read_arguments.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/read_arguments.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/typed_arrays_int32array.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/typed_arrays_int32array.a: ""
+    --- FAIL: TestCountsAreRecorded_007/stage3/fixtures/self-compare/array-fill.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/fixtures/self-compare/array-fill.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/scout_nullable_object_null_field.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/scout_nullable_object_null_field.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/records_literal_branches.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/records_literal_branches.a: ""
+    --- FAIL: TestCountsAreRecorded_007/stage3/fixtures/nested-functions/06_parser_token_state.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/fixtures/nested-functions/06_parser_token_state.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/non_null_uninitialized_iteration.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/non_null_uninitialized_iteration.ts: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/predicate_qualified/defined_lie/main.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/predicate_qualified/defined_lie/main.ts: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/placeholder_nonnull_null_optional.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/placeholder_nonnull_null_optional.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/nested_mixed.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/nested_mixed.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/nested_destructured_tdz.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/nested_destructured_tdz.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/nested_hoisting.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/nested_hoisting.a: ""
+    --- FAIL: TestCountsAreRecorded_007/stage3/namespaces/shapes/ReactNames.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/namespaces/shapes/ReactNames.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/namespaces_unknown_enum_before.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/namespaces_unknown_enum_before.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/method_coverage_string_trim.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/method_coverage_string_trim.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/method_coverage_string_concat.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/method_coverage_string_concat.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/method_coverage_string_codepointat.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/method_coverage_string_codepointat.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/method_coverage_array_mutations.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/method_coverage_array_mutations.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/host_phantom_overload_primitive.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/host_phantom_overload_primitive.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/graph_regions_entries.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/graph_regions_entries.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/environment_coverage_local_containers.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/environment_coverage_local_containers.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/environment_callback_escape.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/environment_callback_escape.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/entries_checked_boolean.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/entries_checked_boolean.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/devirtualize_accessors.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/devirtualize_accessors.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/conditions_ledger78.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/conditions_ledger78.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/class_features_static_private.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/class_features_static_private.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/class_features_static.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/class_features_static.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/census_append_overload.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/census_append_overload.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/cast_enum_string_fails.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/cast_enum_string_fails.ts: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/callback_widening/number-generic.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/callback_widening/number-generic.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/callback_widening/number-find.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/callback_widening/number-find.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/lower/testdata/callable_producers/p23.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/lower/testdata/callable_producers/p23.ts: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/regexp_match.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/regexp_match.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/undefined_references.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/undefined_references.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/collections.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/collections.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/map_union_value_host_file_info.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/map_union_value_host_file_info.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/adversarial_order.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/adversarial_order.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/void_discards_canonical.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/void_discards_canonical.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/modules/main.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/modules/main.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/library_object_assign.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/library_object_assign.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/borrow_chain_walk.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/borrow_chain_walk.a: ""
+--- FAIL: TestCountsAreRecorded_005 (0.00s)
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/route_targets_virtual_fresh.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/route_targets_virtual_fresh.a: ""
+    --- FAIL: TestCountsAreRecorded_005/Program_region:_internal/oracle/testdata/program_region/cycles_graph_parent.a (0.00s)
+        counts_test.go:453: invalid runtime count row for Program region: internal/oracle/testdata/program_region/cycles_graph_parent.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/lower/testdata/predicates_checked/condition_once.a_(.ts_checked_mode) (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/lower/testdata/predicates_checked/condition_once.a (.ts checked mode): ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/process_env/reads.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/process_env/reads.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/instantiation_callback.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/instantiation_callback.a: ""
+    --- FAIL: TestCountsAreRecorded_005/stage3/interface-downcasts/v2/tuple-identity-wrong.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/v2/tuple-identity-wrong.ts: ""
+    --- FAIL: TestCountsAreRecorded_005/stage3/interface-downcasts/untagged/fixtures/structural-source-wrong.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/untagged/fixtures/structural-source-wrong.ts: ""
+    --- FAIL: TestCountsAreRecorded_005/stage3/interface-downcasts/untagged/fixtures/class-data-good.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/untagged/fixtures/class-data-good.ts: ""
+    --- FAIL: TestCountsAreRecorded_005/stage3/interface-downcasts/untagged/fixtures/binding-name-source-wrong.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/untagged/fixtures/binding-name-source-wrong.ts: ""
+    --- FAIL: TestCountsAreRecorded_005/stage3/interface-downcasts/lane4b/fixtures/node-indicator-good.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/lane4b/fixtures/node-indicator-good.ts: ""
+    --- FAIL: TestCountsAreRecorded_005/stage3/interface-downcasts/lane4b/fixtures/diagnostic-boolean.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/lane4b/fixtures/diagnostic-boolean.ts: ""
+    --- FAIL: TestCountsAreRecorded_005/stage3/interface-downcasts/readiness-identifier-uninitialized.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/readiness-identifier-uninitialized.ts: ""
+    --- FAIL: TestCountsAreRecorded_005/stage3/interface-downcasts/visitor.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/visitor.ts: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/typeof_null_compare.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/typeof_null_compare.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/switch_case_declarations/dead_zone_write.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/switch_case_declarations/dead_zone_write.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/statements_small_throw.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/statements_small_throw.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/scout_nullable_string_stale_field.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/scout_nullable_string_stale_field.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/non_null_static_initialized.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/non_null_static_initialized.ts: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/non_null_uninitialized_default.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/non_null_uninitialized_default.ts: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/predicate_qualified/false_read_truth/main.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/predicate_qualified/false_read_truth/main.ts: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/predicate_qualified/module_truth/main.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/predicate_qualified/module_truth/main.ts: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/predicate_qualified/reexport_lie/main.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/predicate_qualified/reexport_lie/main.ts: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/predicate_qualified/type_truth/main.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/predicate_qualified/type_truth/main.ts: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/placeholder_nonnull_null_json.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/placeholder_nonnull_null_json.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/concurrency/accepted/recursive_tree.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/concurrency/accepted/recursive_tree.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/optional_after_call_propagation.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/optional_after_call_propagation.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/omitted_scanner_required.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/omitted_scanner_required.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/notyet_library_string_bounds.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/notyet_library_string_bounds.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/non_null_refuse_undefined.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/non_null_refuse_undefined.ts: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/node_buffer_crypto.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/node_buffer_crypto.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/node_globals_gc_call.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/node_globals_gc_call.ts: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/namespaces_parser_factory.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/namespaces_parser_factory.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/devirtualize_abstract.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/devirtualize_abstract.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/cast_enum_const.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/cast_enum_const.ts: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/array_literal_empty_union.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/array_literal_empty_union.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/lower/testdata/callable_producers/p61.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/lower/testdata/callable_producers/p61.ts: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/regexp_unicode.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/regexp_unicode.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/utf8_view_fails.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/utf8_view_fails.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/prompt_then_read.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/prompt_then_read.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/map_shrinks.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/map_shrinks.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/long_literals.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/long_literals.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/unused_parameters.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/unused_parameters.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/library_math_number_math.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/library_math_number_math.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/loops.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/loops.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/load/testdata/0.1/compile/06_stack.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/load/testdata/0.1/compile/06_stack.ts: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/json_stringify_options.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/json_stringify_options.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/route_targets_try_loop.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/route_targets_try_loop.a: ""
+    --- FAIL: TestCountsAreRecorded_005/internal/oracle/testdata/set_foreach_named_more.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/set_foreach_named_more.a: ""
+--- FAIL: TestCountsAreRecorded_010 (11.13s)
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/set_foreach_numbers.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/set_foreach_numbers.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/method_coverage_string_charat.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/method_coverage_string_charat.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_single_narrowed.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_single_narrowed.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/lower/testdata/predicates_checked/condition_lie.a_(.ts_checked_mode) (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/lower/testdata/predicates_checked/condition_lie.a (.ts checked mode): ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/host_realpath/walk-errors.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/host_realpath/walk-errors.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/host_realpath/nul.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/host_realpath/nul.a: ""
+    --- FAIL: TestCountsAreRecorded_010/stage3/interface-downcasts/untagged/fixtures/flow-generic-good.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/untagged/fixtures/flow-generic-good.ts: ""
+    --- FAIL: TestCountsAreRecorded_010/stage3/interface-downcasts/lane4b/fixtures/diagnostic-good.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/lane4b/fixtures/diagnostic-good.ts: ""
+    --- FAIL: TestCountsAreRecorded_010/stage3/interface-downcasts/lane4b/fixtures/diagnostic-code-wrong.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/lane4b/fixtures/diagnostic-code-wrong.ts: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/arguments.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/arguments.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/weak_miscompiles/held_union.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/weak_miscompiles/held_union.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/void_widening_legal.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/void_widening_legal.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/typed_arrays_views.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/typed_arrays_views.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/taste_stage3_representations.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/taste_stage3_representations.a: ""
+    --- FAIL: TestCountsAreRecorded_010/stage3/fixtures/taste/04_jsx_runtime.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/fixtures/taste/04_jsx_runtime.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/structural_statics_optional.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/structural_statics_optional.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/structural_statics_inherited.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/structural_statics_inherited.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/scout_class_boolean_fields.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/scout_class_boolean_fields.a: ""
+    --- FAIL: TestCountsAreRecorded_010/stage3/drivers/scanner/probes/nested-generic-sibling-call.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/drivers/scanner/probes/nested-generic-sibling-call.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/regexp_cycle_fields.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/regexp_cycle_fields.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/records_union_lying.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/records_union_lying.ts: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/records_scalars.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/records_scalars.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/non_null_literal_return.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/non_null_literal_return.ts: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/non_null_static_uninitialized.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/non_null_static_uninitialized.ts: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/proven_assertions.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/proven_assertions.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/predicate_qualified/namespace_truth/main.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/predicate_qualified/namespace_truth/main.ts: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/placeholder_nonnull_before_use.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/placeholder_nonnull_before_use.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/concurrency/accepted/readonly_forms.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/concurrency/accepted/readonly_forms.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/overload_mutate_map.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/overload_mutate_map.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/nested_callback_recursive.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/nested_callback_recursive.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/nested_destructured.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/nested_destructured.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/module_namespace_reads/early.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/module_namespace_reads/early.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/coverage_uncaught_no_argument.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/coverage_uncaught_no_argument.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/logical_and_reference_maybe.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/logical_and_reference_maybe.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/host_watch_file/mtime.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/host_watch_file/mtime.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/host_scanner_never.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/host_scanner_never.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/graph_regions/classification_override.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/graph_regions/classification_override.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/function_values_boundary.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/function_values_boundary.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/environment_virtual_call.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/environment_virtual_call.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/environment_capture.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/environment_capture.a: ""
+    --- FAIL: TestCountsAreRecorded_010/stage3/fixtures/enums/07_regex_array_map.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/fixtures/enums/07_regex_array_map.a: ""
+    --- FAIL: TestCountsAreRecorded_010/stage3/fixtures/enums/04_parse_tree_mask.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/fixtures/enums/04_parse_tree_mask.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/element_access_tuple.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/element_access_tuple.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/element_access_optional.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/element_access_optional.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/conditions_union.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/conditions_union.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/census_overload_binders.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/census_overload_binders.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/callback_widening/object-some.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/callback_widening/object-some.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/view_write_union_declared.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/view_write_union_declared.ts: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/write_after_shrink.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/write_after_shrink.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/normalize_coverage_repeat.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/normalize_coverage_repeat.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/normalize_coverage_quick.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/normalize_coverage_quick.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/replace_all_large.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/replace_all_large.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/stack_tail_call.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/stack_tail_call.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/library_map_set_keys.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/library_map_set_keys.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/regions_spread_fresh.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/regions_spread_fresh.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/nbody_spread_fields.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/nbody_spread_fields.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/string_build_caches.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/string_build_caches.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/array_from.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/array_from.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/search_halves.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/search_halves.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/defaults.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/defaults.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/library_object_keys.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/library_object_keys.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/library_globals.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/library_globals.a: ""
+    --- FAIL: TestCountsAreRecorded_010/internal/oracle/testdata/borrow_chain_coverage_parents.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/borrow_chain_coverage_parents.a: ""
+--- FAIL: TestClosureMergeRefusals (0.00s)
+    --- FAIL: TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_utimes.a (0.11s)
+        closure_merge_refusals_test.go:37: source Node: exit 70 stderr "adamic: panic: Error: EPERM: operation not permitted, utime '/tmp/adamic-gate/adamic-input-1284072613/refused-node/file'\n"
+    --- FAIL: TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_stat.a (0.17s)
+        closure_merge_refusals_test.go:37: source Node: exit 70 stderr "adamic: panic: Error: EPERM: operation not permitted, utime '/tmp/adamic-gate/adamic-input-1927545478/refused-node/file'\n"
+FAIL
+gate cache: native hits=2525 misses=4662
+gate cache: node hits=1651 misses=5424
+gate cache: probe hits=0 misses=39
+FAIL	github.com/system-inc/adamic/internal/oracle	1776.020s
+FAIL
+exit=1

@@ -1,0 +1,677 @@
+    --- FAIL: TestDebugReviewOutputAndOwnership_000/fxspptb_047cb0d_n_arrayindex.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_000/fxspptb_3ab8f94_set_throw.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_000/fxspptb_aa17d3c_defined_lent_field.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_000/fxspptb_aa17d3c_super_consumed_borrow.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_000/fxspptb_abfe962_split_throw.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_000/fxspptb_e4eec87_f2_union_narrow_call.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_000/fxspptb_oct9_native_p54_maybe_b.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_000/fxspptb_oct9_predicates_q15_every_optional_string.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_001/fxspptb_047cb0d_n_template.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_001/fxspptb_1d3929c_convert_sources.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_001/fxspptb_abfe962_split_region_alias.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_001/fxspptb_e23c7ab_fold_strings.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_001/fxspptb_oct9_native_p04_undefined_slot_write.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_002/fxspptb_3ab8f94_def_move.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_002/fxspptb_93122fa_s1.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_002/fxspptb_e4eec87_v01_typeof_null.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_002/fxspptb_fa49e43_paths.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_002/fxspptb_iterators_fields_empty_spread.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_003/fxspptb_047cb0d_n_element.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_003/fxspptb_047cb0d_n_optional.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_003/fxspptb_047cb0d_n_paren.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_003/fxspptb_e4eec87_v02_typeof_null_literal.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_004/fxspptb_aa17d3c_comparator_spread.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_004/fxspptb_aee89b2_map_entries_pattern.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_004/fxspptb_d96d304_normalize_long.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_004/fxspptb_oct9_native_p18_cast_kind_no_field_types.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_004/fxspptb_oct9_native_p70_recursive_depth_40.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_005/fxspptb_oct9_native_p54_maybe_s.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_005/fxspptb_oct9_native_p60_named_function_producer.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_005/fxspptb_oct9_native_p70_recursive_depth_70.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_005/fxspptb_oct9_views_p32_boxed_slot_string_good.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_006/fxspptb_047cb0d_n_numparam.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_006/fxspptb_e4eec87_f1_field_narrowed.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_006/fxspptb_oct9_native_p23_tuple_from_map_entries.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_006/fxspptb_oct9_native_p24_tuple_from_object_entries.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_007/fxspptb_047cb0d_n_element_method.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_007/fxspptb_9984394_aside_throw.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_007/fxspptb_aee89b2_throw_keeps_old.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_007/fxspptb_devirt_fresh_method_keeps_argument.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_007/fxspptb_e4eec87_f2b_union_narrow_number.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_007/fxspptb_oct8_nodehost_fs_fd_ownership.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_007/fxspptb_oct9_native_p06_undefined_other_name.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_008/fxspptb_047cb0d_n_element_plain.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_008/fxspptb_3ab8f94_def_spread.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_008/fxspptb_fa49e43_big.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_009/cwd.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_009/fxspptb_oct9_views_p33_boxed_slot_union_member.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_010/fxspptb_abfe962_split_consume.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_010/fxspptb_bdb950b_shapes.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_010/fxspptb_fa49e43_escapes.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_010/fxspptb_oct9_native_p17_callable_call_first_half.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_010/fxspptb_oct9_views_p38_same_name_closure_value.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_010/fxspptb_oct9_views_p38_same_name_object_union.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_010/smoke.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_011/fxspptb_93122fa_s2.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_011/fxspptb_a34388d_pin_free.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_011/fxspptb_fa49e43_spreadfresh.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_012/fxspptb_047cb0d_n_coalesce.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_012/fxspptb_1d3929c_math_edges.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_012/fxspptb_1d3929c_own_names.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_012/fxspptb_4e1649c_raw_crlf.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_012/fxspptb_aa17d3c_spread_method_alias.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_012/fxspptb_fa49e43_reduce_null.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_012/fxspptb_oct8_nodehost_fs_zero_read.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_012/fxspptb_oct9_views_p38_same_name_closure.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_013/fxspptb_3ab8f94_def_variants.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_013/fxspptb_aee89b2_spread_outside.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_013/fxspptb_oct8_nodehost_host_directory.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_013/fxspptb_oct9_native_p21_callable_view_raw_union_slot.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_014/fxspptb_047cb0d_n_param.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_014/fxspptb_3ab8f94_later_arg.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_014/fxspptb_4e1649c_generic_conversion.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_014/fxspptb_a34388d_pin_held.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_014/fxspptb_d96d304_crash_min4.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_014/fxspptb_e23c7ab_match_memory.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_014/fxspptb_oct9_views_p35_write_after_view_valid.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_014/non_null.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_015/fxspptb_1d3929c_optional_field_min.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_015/fxspptb_aee89b2_alias_sort.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_015/fxspptb_devirt_borrow_doc_claim.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_015/fxspptb_e23c7ab_split_pair_pattern.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_015/fxspptb_oct9_native_p08_null_array_write.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_016/fxspptb_oct9_native_p01_maybe_boolean_spread.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_016/fxspptb_oct9_native_p69_deep_recursive_union.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_016/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_017/fxspptb_e4eec87_u03_discriminated_undefined.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_017/fxspptb_oct9_native_p61_method_value_producer.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_018/fxspptb_abfe962_split_region.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_018/fxspptb_e4eec87_u01_undefined_field_widened.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_018/fxspptb_e4eec87_w01_uncovered_paths.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_018/fxspptb_oct9_native_p72_tuple_count_mismatch.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_018/fxspptb_oct9_views_p68_object_view_over_tuple.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_019/fxspptb_a34388d_cyc_iface_control.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_019/fxspptb_aa17d3c_defined_lent.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_019/fxspptb_aa17d3c_move_before_ready.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_019/fxspptb_aee89b2_clobber_link_loop.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_019/fxspptb_fa49e43_ctor_capture.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_019/fxspptb_oct9_native_p75_unviewed_undefined_read.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_020/fxspptb_4ddd17f_long_name.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_020/fxspptb_9984394_lib_dispatch.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_020/fxspptb_aee89b2_alias_setadd.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_020/fxspptb_oct8_nodehost_fs_large_roundtrip.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_020/fxspptb_oct9_native_p54_maybe_n.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_020/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_021/fxspptb_a34388d_hash_small.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_021/fxspptb_aee89b2_alias_mapset.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_021/fxspptb_aee89b2_alias_reverse.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_021/fxspptb_classfeat_private_literal.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_021/fxspptb_oct9_native_p67_static_class_union_member.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_021/fxspptb_oct9_predicates_q16_every_maybe_number.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_022/fxspptb_047cb0d_n_typeof.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_022/fxspptb_aa17d3c_virtual_map_borrow.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_022/fxspptb_abfe962_super_closure.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_022/fxspptb_aee89b2_alias_fill.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_022/fxspptb_d7054e9_share_paths.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_022/fxspptb_oct9_native_p20_callable_member_call_good.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_022/fxspptb_oct9_native_p59_map_null_write.ts
+    --- FAIL: TestDebugReviewOutputAndOwnership_023/fxspptb_aa17d3c_spread_method.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_023/fxspptb_abfe962_private_generic_only.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_023/fxspptb_aee89b2_escaped_before.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_023/fxspptb_oct9_native_p14_callable_union_no_view.a
+    --- FAIL: TestDebugReviewOutputAndOwnership_023/fxspptb_oct9_views_p09_tuple_destructure_wrong.ts
+    --- FAIL: TestDebugTwoDirectories/debug
+    --- FAIL: TestDebugTwoDirectories/release
+    --- FAIL: TestDebugTwoDirectories/sanitized
+    --- FAIL: TestObjectCacheHitIsTheUncachedBinary/debug
+    --- FAIL: TestObjectCacheHitIsTheUncachedBinary/release
+    --- FAIL: TestObjectCacheHitIsTheUncachedBinary/sanitized
+    --- FAIL: TestObjectKeyHoldsEveryColumn/debug
+    --- FAIL: TestObjectKeyHoldsEveryColumn/release
+    --- FAIL: TestObjectKeyRecheckSeesWhatMovedUnderTheCompile/a_header_planted
+    --- FAIL: TestObjectKeyRecheckSeesWhatMovedUnderTheCompile/adamic.h_rewritten_with_the_same_bytes
+    --- FAIL: TestObjectKeyRecheckSeesWhatMovedUnderTheCompile/adamic.h_with_one_byte_changed
+    --- FAIL: TestObjectKeyRecheckSeesWhatMovedUnderTheCompile/untouched
+    --- FAIL: TestProduct_DebugReviewDebug_000/fxspptb_047cb0d_n_arrayindex.a
+    --- FAIL: TestProduct_DebugReviewDebug_000/fxspptb_3ab8f94_set_throw.a
+    --- FAIL: TestProduct_DebugReviewDebug_000/fxspptb_aa17d3c_defined_lent_field.a
+    --- FAIL: TestProduct_DebugReviewDebug_000/fxspptb_aa17d3c_super_consumed_borrow.a
+    --- FAIL: TestProduct_DebugReviewDebug_000/fxspptb_abfe962_split_throw.a
+    --- FAIL: TestProduct_DebugReviewDebug_000/fxspptb_e4eec87_f2_union_narrow_call.a
+    --- FAIL: TestProduct_DebugReviewDebug_000/fxspptb_oct9_native_p54_maybe_b.ts
+    --- FAIL: TestProduct_DebugReviewDebug_000/fxspptb_oct9_predicates_q15_every_optional_string.a
+    --- FAIL: TestProduct_DebugReviewDebug_001/fxspptb_047cb0d_n_template.a
+    --- FAIL: TestProduct_DebugReviewDebug_001/fxspptb_1d3929c_convert_sources.a
+    --- FAIL: TestProduct_DebugReviewDebug_001/fxspptb_abfe962_split_region_alias.a
+    --- FAIL: TestProduct_DebugReviewDebug_001/fxspptb_e23c7ab_fold_strings.a
+    --- FAIL: TestProduct_DebugReviewDebug_001/fxspptb_oct9_native_p04_undefined_slot_write.ts
+    --- FAIL: TestProduct_DebugReviewDebug_002/fxspptb_3ab8f94_def_move.a
+    --- FAIL: TestProduct_DebugReviewDebug_002/fxspptb_93122fa_s1.a
+    --- FAIL: TestProduct_DebugReviewDebug_002/fxspptb_e4eec87_v01_typeof_null.a
+    --- FAIL: TestProduct_DebugReviewDebug_002/fxspptb_fa49e43_paths.a
+    --- FAIL: TestProduct_DebugReviewDebug_002/fxspptb_iterators_fields_empty_spread.a
+    --- FAIL: TestProduct_DebugReviewDebug_003/fxspptb_047cb0d_n_element.a
+    --- FAIL: TestProduct_DebugReviewDebug_003/fxspptb_047cb0d_n_optional.a
+    --- FAIL: TestProduct_DebugReviewDebug_003/fxspptb_047cb0d_n_paren.a
+    --- FAIL: TestProduct_DebugReviewDebug_003/fxspptb_e4eec87_v02_typeof_null_literal.a
+    --- FAIL: TestProduct_DebugReviewDebug_004/fxspptb_aa17d3c_comparator_spread.a
+    --- FAIL: TestProduct_DebugReviewDebug_004/fxspptb_aee89b2_map_entries_pattern.a
+    --- FAIL: TestProduct_DebugReviewDebug_004/fxspptb_d96d304_normalize_long.a
+    --- FAIL: TestProduct_DebugReviewDebug_004/fxspptb_oct9_native_p18_cast_kind_no_field_types.ts
+    --- FAIL: TestProduct_DebugReviewDebug_004/fxspptb_oct9_native_p70_recursive_depth_40.ts
+    --- FAIL: TestProduct_DebugReviewDebug_005/fxspptb_oct9_native_p54_maybe_s.ts
+    --- FAIL: TestProduct_DebugReviewDebug_005/fxspptb_oct9_native_p60_named_function_producer.ts
+    --- FAIL: TestProduct_DebugReviewDebug_005/fxspptb_oct9_native_p70_recursive_depth_70.ts
+    --- FAIL: TestProduct_DebugReviewDebug_005/fxspptb_oct9_views_p32_boxed_slot_string_good.ts
+    --- FAIL: TestProduct_DebugReviewDebug_006/fxspptb_047cb0d_n_numparam.a
+    --- FAIL: TestProduct_DebugReviewDebug_006/fxspptb_e4eec87_f1_field_narrowed.a
+    --- FAIL: TestProduct_DebugReviewDebug_006/fxspptb_oct9_native_p23_tuple_from_map_entries.ts
+    --- FAIL: TestProduct_DebugReviewDebug_006/fxspptb_oct9_native_p24_tuple_from_object_entries.ts
+    --- FAIL: TestProduct_DebugReviewDebug_007/fxspptb_047cb0d_n_element_method.a
+    --- FAIL: TestProduct_DebugReviewDebug_007/fxspptb_9984394_aside_throw.a
+    --- FAIL: TestProduct_DebugReviewDebug_007/fxspptb_aee89b2_throw_keeps_old.a
+    --- FAIL: TestProduct_DebugReviewDebug_007/fxspptb_devirt_fresh_method_keeps_argument.a
+    --- FAIL: TestProduct_DebugReviewDebug_007/fxspptb_e4eec87_f2b_union_narrow_number.a
+    --- FAIL: TestProduct_DebugReviewDebug_007/fxspptb_oct8_nodehost_fs_fd_ownership.a
+    --- FAIL: TestProduct_DebugReviewDebug_007/fxspptb_oct9_native_p06_undefined_other_name.ts
+    --- FAIL: TestProduct_DebugReviewDebug_008/fxspptb_047cb0d_n_element_plain.a
+    --- FAIL: TestProduct_DebugReviewDebug_008/fxspptb_3ab8f94_def_spread.a
+    --- FAIL: TestProduct_DebugReviewDebug_008/fxspptb_fa49e43_big.a
+    --- FAIL: TestProduct_DebugReviewDebug_009/cwd.a
+    --- FAIL: TestProduct_DebugReviewDebug_009/fxspptb_oct9_views_p33_boxed_slot_union_member.ts
+    --- FAIL: TestProduct_DebugReviewDebug_010/fxspptb_abfe962_split_consume.a
+    --- FAIL: TestProduct_DebugReviewDebug_010/fxspptb_bdb950b_shapes.a
+    --- FAIL: TestProduct_DebugReviewDebug_010/fxspptb_fa49e43_escapes.a
+    --- FAIL: TestProduct_DebugReviewDebug_010/fxspptb_oct9_native_p17_callable_call_first_half.ts
+    --- FAIL: TestProduct_DebugReviewDebug_010/fxspptb_oct9_views_p38_same_name_closure_value.ts
+    --- FAIL: TestProduct_DebugReviewDebug_010/fxspptb_oct9_views_p38_same_name_object_union.ts
+    --- FAIL: TestProduct_DebugReviewDebug_010/smoke.a
+    --- FAIL: TestProduct_DebugReviewDebug_011/fxspptb_93122fa_s2.a
+    --- FAIL: TestProduct_DebugReviewDebug_011/fxspptb_a34388d_pin_free.a
+    --- FAIL: TestProduct_DebugReviewDebug_011/fxspptb_fa49e43_spreadfresh.a
+    --- FAIL: TestProduct_DebugReviewDebug_012/fxspptb_047cb0d_n_coalesce.a
+    --- FAIL: TestProduct_DebugReviewDebug_012/fxspptb_1d3929c_math_edges.a
+    --- FAIL: TestProduct_DebugReviewDebug_012/fxspptb_1d3929c_own_names.a
+    --- FAIL: TestProduct_DebugReviewDebug_012/fxspptb_4e1649c_raw_crlf.a
+    --- FAIL: TestProduct_DebugReviewDebug_012/fxspptb_aa17d3c_spread_method_alias.a
+    --- FAIL: TestProduct_DebugReviewDebug_012/fxspptb_fa49e43_reduce_null.a
+    --- FAIL: TestProduct_DebugReviewDebug_012/fxspptb_oct8_nodehost_fs_zero_read.a
+    --- FAIL: TestProduct_DebugReviewDebug_012/fxspptb_oct9_views_p38_same_name_closure.ts
+    --- FAIL: TestProduct_DebugReviewDebug_013/fxspptb_3ab8f94_def_variants.a
+    --- FAIL: TestProduct_DebugReviewDebug_013/fxspptb_aee89b2_spread_outside.a
+    --- FAIL: TestProduct_DebugReviewDebug_013/fxspptb_oct8_nodehost_host_directory.a
+    --- FAIL: TestProduct_DebugReviewDebug_013/fxspptb_oct9_native_p21_callable_view_raw_union_slot.ts
+    --- FAIL: TestProduct_DebugReviewDebug_014/fxspptb_047cb0d_n_param.a
+    --- FAIL: TestProduct_DebugReviewDebug_014/fxspptb_3ab8f94_later_arg.a
+    --- FAIL: TestProduct_DebugReviewDebug_014/fxspptb_4e1649c_generic_conversion.a
+    --- FAIL: TestProduct_DebugReviewDebug_014/fxspptb_a34388d_pin_held.a
+    --- FAIL: TestProduct_DebugReviewDebug_014/fxspptb_d96d304_crash_min4.a
+    --- FAIL: TestProduct_DebugReviewDebug_014/fxspptb_e23c7ab_match_memory.a
+    --- FAIL: TestProduct_DebugReviewDebug_014/fxspptb_oct9_views_p35_write_after_view_valid.ts
+    --- FAIL: TestProduct_DebugReviewDebug_014/non_null.a
+    --- FAIL: TestProduct_DebugReviewDebug_015/fxspptb_1d3929c_optional_field_min.a
+    --- FAIL: TestProduct_DebugReviewDebug_015/fxspptb_aee89b2_alias_sort.a
+    --- FAIL: TestProduct_DebugReviewDebug_015/fxspptb_devirt_borrow_doc_claim.a
+    --- FAIL: TestProduct_DebugReviewDebug_015/fxspptb_e23c7ab_split_pair_pattern.a
+    --- FAIL: TestProduct_DebugReviewDebug_015/fxspptb_oct9_native_p08_null_array_write.ts
+    --- FAIL: TestProduct_DebugReviewDebug_016/fxspptb_oct9_native_p01_maybe_boolean_spread.ts
+    --- FAIL: TestProduct_DebugReviewDebug_016/fxspptb_oct9_native_p69_deep_recursive_union.ts
+    --- FAIL: TestProduct_DebugReviewDebug_016/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.ts
+    --- FAIL: TestProduct_DebugReviewDebug_017/fxspptb_e4eec87_u03_discriminated_undefined.a
+    --- FAIL: TestProduct_DebugReviewDebug_017/fxspptb_oct9_native_p61_method_value_producer.ts
+    --- FAIL: TestProduct_DebugReviewDebug_018/fxspptb_abfe962_split_region.a
+    --- FAIL: TestProduct_DebugReviewDebug_018/fxspptb_e4eec87_u01_undefined_field_widened.a
+    --- FAIL: TestProduct_DebugReviewDebug_018/fxspptb_e4eec87_w01_uncovered_paths.a
+    --- FAIL: TestProduct_DebugReviewDebug_018/fxspptb_oct9_native_p72_tuple_count_mismatch.ts
+    --- FAIL: TestProduct_DebugReviewDebug_018/fxspptb_oct9_views_p68_object_view_over_tuple.ts
+    --- FAIL: TestProduct_DebugReviewDebug_019/fxspptb_a34388d_cyc_iface_control.a
+    --- FAIL: TestProduct_DebugReviewDebug_019/fxspptb_aa17d3c_defined_lent.a
+    --- FAIL: TestProduct_DebugReviewDebug_019/fxspptb_aa17d3c_move_before_ready.a
+    --- FAIL: TestProduct_DebugReviewDebug_019/fxspptb_aee89b2_clobber_link_loop.a
+    --- FAIL: TestProduct_DebugReviewDebug_019/fxspptb_fa49e43_ctor_capture.a
+    --- FAIL: TestProduct_DebugReviewDebug_019/fxspptb_oct9_native_p75_unviewed_undefined_read.ts
+    --- FAIL: TestProduct_DebugReviewDebug_020/fxspptb_4ddd17f_long_name.a
+    --- FAIL: TestProduct_DebugReviewDebug_020/fxspptb_9984394_lib_dispatch.a
+    --- FAIL: TestProduct_DebugReviewDebug_020/fxspptb_aee89b2_alias_setadd.a
+    --- FAIL: TestProduct_DebugReviewDebug_020/fxspptb_oct8_nodehost_fs_large_roundtrip.a
+    --- FAIL: TestProduct_DebugReviewDebug_020/fxspptb_oct9_native_p54_maybe_n.ts
+    --- FAIL: TestProduct_DebugReviewDebug_020/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.ts
+    --- FAIL: TestProduct_DebugReviewDebug_021/fxspptb_a34388d_hash_small.a
+    --- FAIL: TestProduct_DebugReviewDebug_021/fxspptb_aee89b2_alias_mapset.a
+    --- FAIL: TestProduct_DebugReviewDebug_021/fxspptb_aee89b2_alias_reverse.a
+    --- FAIL: TestProduct_DebugReviewDebug_021/fxspptb_classfeat_private_literal.a
+    --- FAIL: TestProduct_DebugReviewDebug_021/fxspptb_oct9_native_p67_static_class_union_member.ts
+    --- FAIL: TestProduct_DebugReviewDebug_021/fxspptb_oct9_predicates_q16_every_maybe_number.a
+    --- FAIL: TestProduct_DebugReviewDebug_022/fxspptb_047cb0d_n_typeof.a
+    --- FAIL: TestProduct_DebugReviewDebug_022/fxspptb_aa17d3c_virtual_map_borrow.a
+    --- FAIL: TestProduct_DebugReviewDebug_022/fxspptb_abfe962_super_closure.a
+    --- FAIL: TestProduct_DebugReviewDebug_022/fxspptb_aee89b2_alias_fill.a
+    --- FAIL: TestProduct_DebugReviewDebug_022/fxspptb_d7054e9_share_paths.a
+    --- FAIL: TestProduct_DebugReviewDebug_022/fxspptb_oct9_native_p20_callable_member_call_good.ts
+    --- FAIL: TestProduct_DebugReviewDebug_022/fxspptb_oct9_native_p59_map_null_write.ts
+    --- FAIL: TestProduct_DebugReviewDebug_023/fxspptb_aa17d3c_spread_method.a
+    --- FAIL: TestProduct_DebugReviewDebug_023/fxspptb_abfe962_private_generic_only.a
+    --- FAIL: TestProduct_DebugReviewDebug_023/fxspptb_aee89b2_escaped_before.a
+    --- FAIL: TestProduct_DebugReviewDebug_023/fxspptb_oct9_native_p14_callable_union_no_view.a
+    --- FAIL: TestProduct_DebugReviewDebug_023/fxspptb_oct9_views_p09_tuple_destructure_wrong.ts
+    --- FAIL: TestProduct_DebugReviewRelease_000/fxspptb_047cb0d_n_arrayindex.a
+    --- FAIL: TestProduct_DebugReviewRelease_000/fxspptb_3ab8f94_set_throw.a
+    --- FAIL: TestProduct_DebugReviewRelease_000/fxspptb_aa17d3c_defined_lent_field.a
+    --- FAIL: TestProduct_DebugReviewRelease_000/fxspptb_aa17d3c_super_consumed_borrow.a
+    --- FAIL: TestProduct_DebugReviewRelease_000/fxspptb_abfe962_split_throw.a
+    --- FAIL: TestProduct_DebugReviewRelease_000/fxspptb_e4eec87_f2_union_narrow_call.a
+    --- FAIL: TestProduct_DebugReviewRelease_000/fxspptb_oct9_native_p54_maybe_b.ts
+    --- FAIL: TestProduct_DebugReviewRelease_000/fxspptb_oct9_predicates_q15_every_optional_string.a
+    --- FAIL: TestProduct_DebugReviewRelease_001/fxspptb_047cb0d_n_template.a
+    --- FAIL: TestProduct_DebugReviewRelease_001/fxspptb_1d3929c_convert_sources.a
+    --- FAIL: TestProduct_DebugReviewRelease_001/fxspptb_abfe962_split_region_alias.a
+    --- FAIL: TestProduct_DebugReviewRelease_001/fxspptb_e23c7ab_fold_strings.a
+    --- FAIL: TestProduct_DebugReviewRelease_001/fxspptb_oct9_native_p04_undefined_slot_write.ts
+    --- FAIL: TestProduct_DebugReviewRelease_002/fxspptb_3ab8f94_def_move.a
+    --- FAIL: TestProduct_DebugReviewRelease_002/fxspptb_93122fa_s1.a
+    --- FAIL: TestProduct_DebugReviewRelease_002/fxspptb_e4eec87_v01_typeof_null.a
+    --- FAIL: TestProduct_DebugReviewRelease_002/fxspptb_fa49e43_paths.a
+    --- FAIL: TestProduct_DebugReviewRelease_002/fxspptb_iterators_fields_empty_spread.a
+    --- FAIL: TestProduct_DebugReviewRelease_003/fxspptb_047cb0d_n_element.a
+    --- FAIL: TestProduct_DebugReviewRelease_003/fxspptb_047cb0d_n_optional.a
+    --- FAIL: TestProduct_DebugReviewRelease_003/fxspptb_047cb0d_n_paren.a
+    --- FAIL: TestProduct_DebugReviewRelease_003/fxspptb_e4eec87_v02_typeof_null_literal.a
+    --- FAIL: TestProduct_DebugReviewRelease_004/fxspptb_aa17d3c_comparator_spread.a
+    --- FAIL: TestProduct_DebugReviewRelease_004/fxspptb_aee89b2_map_entries_pattern.a
+    --- FAIL: TestProduct_DebugReviewRelease_004/fxspptb_d96d304_normalize_long.a
+    --- FAIL: TestProduct_DebugReviewRelease_004/fxspptb_oct9_native_p18_cast_kind_no_field_types.ts
+    --- FAIL: TestProduct_DebugReviewRelease_004/fxspptb_oct9_native_p70_recursive_depth_40.ts
+    --- FAIL: TestProduct_DebugReviewRelease_005/fxspptb_oct9_native_p54_maybe_s.ts
+    --- FAIL: TestProduct_DebugReviewRelease_005/fxspptb_oct9_native_p60_named_function_producer.ts
+    --- FAIL: TestProduct_DebugReviewRelease_005/fxspptb_oct9_native_p70_recursive_depth_70.ts
+    --- FAIL: TestProduct_DebugReviewRelease_005/fxspptb_oct9_views_p32_boxed_slot_string_good.ts
+    --- FAIL: TestProduct_DebugReviewRelease_006/fxspptb_047cb0d_n_numparam.a
+    --- FAIL: TestProduct_DebugReviewRelease_006/fxspptb_e4eec87_f1_field_narrowed.a
+    --- FAIL: TestProduct_DebugReviewRelease_006/fxspptb_oct9_native_p23_tuple_from_map_entries.ts
+    --- FAIL: TestProduct_DebugReviewRelease_006/fxspptb_oct9_native_p24_tuple_from_object_entries.ts
+    --- FAIL: TestProduct_DebugReviewRelease_007/fxspptb_047cb0d_n_element_method.a
+    --- FAIL: TestProduct_DebugReviewRelease_007/fxspptb_9984394_aside_throw.a
+    --- FAIL: TestProduct_DebugReviewRelease_007/fxspptb_aee89b2_throw_keeps_old.a
+    --- FAIL: TestProduct_DebugReviewRelease_007/fxspptb_devirt_fresh_method_keeps_argument.a
+    --- FAIL: TestProduct_DebugReviewRelease_007/fxspptb_e4eec87_f2b_union_narrow_number.a
+    --- FAIL: TestProduct_DebugReviewRelease_007/fxspptb_oct8_nodehost_fs_fd_ownership.a
+    --- FAIL: TestProduct_DebugReviewRelease_007/fxspptb_oct9_native_p06_undefined_other_name.ts
+    --- FAIL: TestProduct_DebugReviewRelease_008/fxspptb_047cb0d_n_element_plain.a
+    --- FAIL: TestProduct_DebugReviewRelease_008/fxspptb_3ab8f94_def_spread.a
+    --- FAIL: TestProduct_DebugReviewRelease_008/fxspptb_fa49e43_big.a
+    --- FAIL: TestProduct_DebugReviewRelease_009/cwd.a
+    --- FAIL: TestProduct_DebugReviewRelease_009/fxspptb_oct9_views_p33_boxed_slot_union_member.ts
+    --- FAIL: TestProduct_DebugReviewRelease_010/fxspptb_abfe962_split_consume.a
+    --- FAIL: TestProduct_DebugReviewRelease_010/fxspptb_bdb950b_shapes.a
+    --- FAIL: TestProduct_DebugReviewRelease_010/fxspptb_fa49e43_escapes.a
+    --- FAIL: TestProduct_DebugReviewRelease_010/fxspptb_oct9_native_p17_callable_call_first_half.ts
+    --- FAIL: TestProduct_DebugReviewRelease_010/fxspptb_oct9_views_p38_same_name_closure_value.ts
+    --- FAIL: TestProduct_DebugReviewRelease_010/fxspptb_oct9_views_p38_same_name_object_union.ts
+    --- FAIL: TestProduct_DebugReviewRelease_010/smoke.a
+    --- FAIL: TestProduct_DebugReviewRelease_011/fxspptb_93122fa_s2.a
+    --- FAIL: TestProduct_DebugReviewRelease_011/fxspptb_a34388d_pin_free.a
+    --- FAIL: TestProduct_DebugReviewRelease_011/fxspptb_fa49e43_spreadfresh.a
+    --- FAIL: TestProduct_DebugReviewRelease_012/fxspptb_047cb0d_n_coalesce.a
+    --- FAIL: TestProduct_DebugReviewRelease_012/fxspptb_1d3929c_math_edges.a
+    --- FAIL: TestProduct_DebugReviewRelease_012/fxspptb_1d3929c_own_names.a
+    --- FAIL: TestProduct_DebugReviewRelease_012/fxspptb_4e1649c_raw_crlf.a
+    --- FAIL: TestProduct_DebugReviewRelease_012/fxspptb_aa17d3c_spread_method_alias.a
+    --- FAIL: TestProduct_DebugReviewRelease_012/fxspptb_fa49e43_reduce_null.a
+    --- FAIL: TestProduct_DebugReviewRelease_012/fxspptb_oct8_nodehost_fs_zero_read.a
+    --- FAIL: TestProduct_DebugReviewRelease_012/fxspptb_oct9_views_p38_same_name_closure.ts
+    --- FAIL: TestProduct_DebugReviewRelease_013/fxspptb_3ab8f94_def_variants.a
+    --- FAIL: TestProduct_DebugReviewRelease_013/fxspptb_aee89b2_spread_outside.a
+    --- FAIL: TestProduct_DebugReviewRelease_013/fxspptb_oct8_nodehost_host_directory.a
+    --- FAIL: TestProduct_DebugReviewRelease_013/fxspptb_oct9_native_p21_callable_view_raw_union_slot.ts
+    --- FAIL: TestProduct_DebugReviewRelease_014/fxspptb_047cb0d_n_param.a
+    --- FAIL: TestProduct_DebugReviewRelease_014/fxspptb_3ab8f94_later_arg.a
+    --- FAIL: TestProduct_DebugReviewRelease_014/fxspptb_4e1649c_generic_conversion.a
+    --- FAIL: TestProduct_DebugReviewRelease_014/fxspptb_a34388d_pin_held.a
+    --- FAIL: TestProduct_DebugReviewRelease_014/fxspptb_d96d304_crash_min4.a
+    --- FAIL: TestProduct_DebugReviewRelease_014/fxspptb_e23c7ab_match_memory.a
+    --- FAIL: TestProduct_DebugReviewRelease_014/fxspptb_oct9_views_p35_write_after_view_valid.ts
+    --- FAIL: TestProduct_DebugReviewRelease_014/non_null.a
+    --- FAIL: TestProduct_DebugReviewRelease_015/fxspptb_1d3929c_optional_field_min.a
+    --- FAIL: TestProduct_DebugReviewRelease_015/fxspptb_aee89b2_alias_sort.a
+    --- FAIL: TestProduct_DebugReviewRelease_015/fxspptb_devirt_borrow_doc_claim.a
+    --- FAIL: TestProduct_DebugReviewRelease_015/fxspptb_e23c7ab_split_pair_pattern.a
+    --- FAIL: TestProduct_DebugReviewRelease_015/fxspptb_oct9_native_p08_null_array_write.ts
+    --- FAIL: TestProduct_DebugReviewRelease_016/fxspptb_oct9_native_p01_maybe_boolean_spread.ts
+    --- FAIL: TestProduct_DebugReviewRelease_016/fxspptb_oct9_native_p69_deep_recursive_union.ts
+    --- FAIL: TestProduct_DebugReviewRelease_016/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.ts
+    --- FAIL: TestProduct_DebugReviewRelease_017/fxspptb_e4eec87_u03_discriminated_undefined.a
+    --- FAIL: TestProduct_DebugReviewRelease_017/fxspptb_oct9_native_p61_method_value_producer.ts
+    --- FAIL: TestProduct_DebugReviewRelease_018/fxspptb_abfe962_split_region.a
+    --- FAIL: TestProduct_DebugReviewRelease_018/fxspptb_e4eec87_u01_undefined_field_widened.a
+    --- FAIL: TestProduct_DebugReviewRelease_018/fxspptb_e4eec87_w01_uncovered_paths.a
+    --- FAIL: TestProduct_DebugReviewRelease_018/fxspptb_oct9_native_p72_tuple_count_mismatch.ts
+    --- FAIL: TestProduct_DebugReviewRelease_018/fxspptb_oct9_views_p68_object_view_over_tuple.ts
+    --- FAIL: TestProduct_DebugReviewRelease_019/fxspptb_a34388d_cyc_iface_control.a
+    --- FAIL: TestProduct_DebugReviewRelease_019/fxspptb_aa17d3c_defined_lent.a
+    --- FAIL: TestProduct_DebugReviewRelease_019/fxspptb_aa17d3c_move_before_ready.a
+    --- FAIL: TestProduct_DebugReviewRelease_019/fxspptb_aee89b2_clobber_link_loop.a
+    --- FAIL: TestProduct_DebugReviewRelease_019/fxspptb_fa49e43_ctor_capture.a
+    --- FAIL: TestProduct_DebugReviewRelease_019/fxspptb_oct9_native_p75_unviewed_undefined_read.ts
+    --- FAIL: TestProduct_DebugReviewRelease_020/fxspptb_4ddd17f_long_name.a
+    --- FAIL: TestProduct_DebugReviewRelease_020/fxspptb_9984394_lib_dispatch.a
+    --- FAIL: TestProduct_DebugReviewRelease_020/fxspptb_aee89b2_alias_setadd.a
+    --- FAIL: TestProduct_DebugReviewRelease_020/fxspptb_oct8_nodehost_fs_large_roundtrip.a
+    --- FAIL: TestProduct_DebugReviewRelease_020/fxspptb_oct9_native_p54_maybe_n.ts
+    --- FAIL: TestProduct_DebugReviewRelease_020/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.ts
+    --- FAIL: TestProduct_DebugReviewRelease_021/fxspptb_a34388d_hash_small.a
+    --- FAIL: TestProduct_DebugReviewRelease_021/fxspptb_aee89b2_alias_mapset.a
+    --- FAIL: TestProduct_DebugReviewRelease_021/fxspptb_aee89b2_alias_reverse.a
+    --- FAIL: TestProduct_DebugReviewRelease_021/fxspptb_classfeat_private_literal.a
+    --- FAIL: TestProduct_DebugReviewRelease_021/fxspptb_oct9_native_p67_static_class_union_member.ts
+    --- FAIL: TestProduct_DebugReviewRelease_021/fxspptb_oct9_predicates_q16_every_maybe_number.a
+    --- FAIL: TestProduct_DebugReviewRelease_022/fxspptb_047cb0d_n_typeof.a
+    --- FAIL: TestProduct_DebugReviewRelease_022/fxspptb_aa17d3c_virtual_map_borrow.a
+    --- FAIL: TestProduct_DebugReviewRelease_022/fxspptb_abfe962_super_closure.a
+    --- FAIL: TestProduct_DebugReviewRelease_022/fxspptb_aee89b2_alias_fill.a
+    --- FAIL: TestProduct_DebugReviewRelease_022/fxspptb_d7054e9_share_paths.a
+    --- FAIL: TestProduct_DebugReviewRelease_022/fxspptb_oct9_native_p20_callable_member_call_good.ts
+    --- FAIL: TestProduct_DebugReviewRelease_022/fxspptb_oct9_native_p59_map_null_write.ts
+    --- FAIL: TestProduct_DebugReviewRelease_023/fxspptb_aa17d3c_spread_method.a
+    --- FAIL: TestProduct_DebugReviewRelease_023/fxspptb_abfe962_private_generic_only.a
+    --- FAIL: TestProduct_DebugReviewRelease_023/fxspptb_aee89b2_escaped_before.a
+    --- FAIL: TestProduct_DebugReviewRelease_023/fxspptb_oct9_native_p14_callable_union_no_view.a
+    --- FAIL: TestProduct_DebugReviewRelease_023/fxspptb_oct9_views_p09_tuple_destructure_wrong.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_000/fxspptb_047cb0d_n_arrayindex.a
+    --- FAIL: TestProduct_DebugReviewSanitized_000/fxspptb_3ab8f94_set_throw.a
+    --- FAIL: TestProduct_DebugReviewSanitized_000/fxspptb_aa17d3c_defined_lent_field.a
+    --- FAIL: TestProduct_DebugReviewSanitized_000/fxspptb_aa17d3c_super_consumed_borrow.a
+    --- FAIL: TestProduct_DebugReviewSanitized_000/fxspptb_abfe962_split_throw.a
+    --- FAIL: TestProduct_DebugReviewSanitized_000/fxspptb_e4eec87_f2_union_narrow_call.a
+    --- FAIL: TestProduct_DebugReviewSanitized_000/fxspptb_oct9_native_p54_maybe_b.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_000/fxspptb_oct9_predicates_q15_every_optional_string.a
+    --- FAIL: TestProduct_DebugReviewSanitized_001/fxspptb_047cb0d_n_template.a
+    --- FAIL: TestProduct_DebugReviewSanitized_001/fxspptb_1d3929c_convert_sources.a
+    --- FAIL: TestProduct_DebugReviewSanitized_001/fxspptb_abfe962_split_region_alias.a
+    --- FAIL: TestProduct_DebugReviewSanitized_001/fxspptb_e23c7ab_fold_strings.a
+    --- FAIL: TestProduct_DebugReviewSanitized_001/fxspptb_oct9_native_p04_undefined_slot_write.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_002/fxspptb_3ab8f94_def_move.a
+    --- FAIL: TestProduct_DebugReviewSanitized_002/fxspptb_93122fa_s1.a
+    --- FAIL: TestProduct_DebugReviewSanitized_002/fxspptb_e4eec87_v01_typeof_null.a
+    --- FAIL: TestProduct_DebugReviewSanitized_002/fxspptb_fa49e43_paths.a
+    --- FAIL: TestProduct_DebugReviewSanitized_002/fxspptb_iterators_fields_empty_spread.a
+    --- FAIL: TestProduct_DebugReviewSanitized_003/fxspptb_047cb0d_n_element.a
+    --- FAIL: TestProduct_DebugReviewSanitized_003/fxspptb_047cb0d_n_optional.a
+    --- FAIL: TestProduct_DebugReviewSanitized_003/fxspptb_047cb0d_n_paren.a
+    --- FAIL: TestProduct_DebugReviewSanitized_003/fxspptb_e4eec87_v02_typeof_null_literal.a
+    --- FAIL: TestProduct_DebugReviewSanitized_004/fxspptb_aa17d3c_comparator_spread.a
+    --- FAIL: TestProduct_DebugReviewSanitized_004/fxspptb_aee89b2_map_entries_pattern.a
+    --- FAIL: TestProduct_DebugReviewSanitized_004/fxspptb_d96d304_normalize_long.a
+    --- FAIL: TestProduct_DebugReviewSanitized_004/fxspptb_oct9_native_p18_cast_kind_no_field_types.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_004/fxspptb_oct9_native_p70_recursive_depth_40.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_005/fxspptb_oct9_native_p54_maybe_s.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_005/fxspptb_oct9_native_p60_named_function_producer.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_005/fxspptb_oct9_native_p70_recursive_depth_70.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_005/fxspptb_oct9_views_p32_boxed_slot_string_good.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_006/fxspptb_047cb0d_n_numparam.a
+    --- FAIL: TestProduct_DebugReviewSanitized_006/fxspptb_e4eec87_f1_field_narrowed.a
+    --- FAIL: TestProduct_DebugReviewSanitized_006/fxspptb_oct9_native_p23_tuple_from_map_entries.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_006/fxspptb_oct9_native_p24_tuple_from_object_entries.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_007/fxspptb_047cb0d_n_element_method.a
+    --- FAIL: TestProduct_DebugReviewSanitized_007/fxspptb_9984394_aside_throw.a
+    --- FAIL: TestProduct_DebugReviewSanitized_007/fxspptb_aee89b2_throw_keeps_old.a
+    --- FAIL: TestProduct_DebugReviewSanitized_007/fxspptb_devirt_fresh_method_keeps_argument.a
+    --- FAIL: TestProduct_DebugReviewSanitized_007/fxspptb_e4eec87_f2b_union_narrow_number.a
+    --- FAIL: TestProduct_DebugReviewSanitized_007/fxspptb_oct8_nodehost_fs_fd_ownership.a
+    --- FAIL: TestProduct_DebugReviewSanitized_007/fxspptb_oct9_native_p06_undefined_other_name.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_008/fxspptb_047cb0d_n_element_plain.a
+    --- FAIL: TestProduct_DebugReviewSanitized_008/fxspptb_3ab8f94_def_spread.a
+    --- FAIL: TestProduct_DebugReviewSanitized_008/fxspptb_fa49e43_big.a
+    --- FAIL: TestProduct_DebugReviewSanitized_009/cwd.a
+    --- FAIL: TestProduct_DebugReviewSanitized_009/fxspptb_oct9_views_p33_boxed_slot_union_member.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_010/fxspptb_abfe962_split_consume.a
+    --- FAIL: TestProduct_DebugReviewSanitized_010/fxspptb_bdb950b_shapes.a
+    --- FAIL: TestProduct_DebugReviewSanitized_010/fxspptb_fa49e43_escapes.a
+    --- FAIL: TestProduct_DebugReviewSanitized_010/fxspptb_oct9_native_p17_callable_call_first_half.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_010/fxspptb_oct9_views_p38_same_name_closure_value.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_010/fxspptb_oct9_views_p38_same_name_object_union.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_010/smoke.a
+    --- FAIL: TestProduct_DebugReviewSanitized_011/fxspptb_93122fa_s2.a
+    --- FAIL: TestProduct_DebugReviewSanitized_011/fxspptb_a34388d_pin_free.a
+    --- FAIL: TestProduct_DebugReviewSanitized_011/fxspptb_fa49e43_spreadfresh.a
+    --- FAIL: TestProduct_DebugReviewSanitized_012/fxspptb_047cb0d_n_coalesce.a
+    --- FAIL: TestProduct_DebugReviewSanitized_012/fxspptb_1d3929c_math_edges.a
+    --- FAIL: TestProduct_DebugReviewSanitized_012/fxspptb_1d3929c_own_names.a
+    --- FAIL: TestProduct_DebugReviewSanitized_012/fxspptb_4e1649c_raw_crlf.a
+    --- FAIL: TestProduct_DebugReviewSanitized_012/fxspptb_aa17d3c_spread_method_alias.a
+    --- FAIL: TestProduct_DebugReviewSanitized_012/fxspptb_fa49e43_reduce_null.a
+    --- FAIL: TestProduct_DebugReviewSanitized_012/fxspptb_oct8_nodehost_fs_zero_read.a
+    --- FAIL: TestProduct_DebugReviewSanitized_012/fxspptb_oct9_views_p38_same_name_closure.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_013/fxspptb_3ab8f94_def_variants.a
+    --- FAIL: TestProduct_DebugReviewSanitized_013/fxspptb_aee89b2_spread_outside.a
+    --- FAIL: TestProduct_DebugReviewSanitized_013/fxspptb_oct8_nodehost_host_directory.a
+    --- FAIL: TestProduct_DebugReviewSanitized_013/fxspptb_oct9_native_p21_callable_view_raw_union_slot.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_014/fxspptb_047cb0d_n_param.a
+    --- FAIL: TestProduct_DebugReviewSanitized_014/fxspptb_3ab8f94_later_arg.a
+    --- FAIL: TestProduct_DebugReviewSanitized_014/fxspptb_4e1649c_generic_conversion.a
+    --- FAIL: TestProduct_DebugReviewSanitized_014/fxspptb_a34388d_pin_held.a
+    --- FAIL: TestProduct_DebugReviewSanitized_014/fxspptb_d96d304_crash_min4.a
+    --- FAIL: TestProduct_DebugReviewSanitized_014/fxspptb_e23c7ab_match_memory.a
+    --- FAIL: TestProduct_DebugReviewSanitized_014/fxspptb_oct9_views_p35_write_after_view_valid.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_014/non_null.a
+    --- FAIL: TestProduct_DebugReviewSanitized_015/fxspptb_1d3929c_optional_field_min.a
+    --- FAIL: TestProduct_DebugReviewSanitized_015/fxspptb_aee89b2_alias_sort.a
+    --- FAIL: TestProduct_DebugReviewSanitized_015/fxspptb_devirt_borrow_doc_claim.a
+    --- FAIL: TestProduct_DebugReviewSanitized_015/fxspptb_e23c7ab_split_pair_pattern.a
+    --- FAIL: TestProduct_DebugReviewSanitized_015/fxspptb_oct9_native_p08_null_array_write.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_016/fxspptb_oct9_native_p01_maybe_boolean_spread.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_016/fxspptb_oct9_native_p69_deep_recursive_union.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_016/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_017/fxspptb_e4eec87_u03_discriminated_undefined.a
+    --- FAIL: TestProduct_DebugReviewSanitized_017/fxspptb_oct9_native_p61_method_value_producer.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_018/fxspptb_abfe962_split_region.a
+    --- FAIL: TestProduct_DebugReviewSanitized_018/fxspptb_e4eec87_u01_undefined_field_widened.a
+    --- FAIL: TestProduct_DebugReviewSanitized_018/fxspptb_e4eec87_w01_uncovered_paths.a
+    --- FAIL: TestProduct_DebugReviewSanitized_018/fxspptb_oct9_native_p72_tuple_count_mismatch.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_018/fxspptb_oct9_views_p68_object_view_over_tuple.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_019/fxspptb_a34388d_cyc_iface_control.a
+    --- FAIL: TestProduct_DebugReviewSanitized_019/fxspptb_aa17d3c_defined_lent.a
+    --- FAIL: TestProduct_DebugReviewSanitized_019/fxspptb_aa17d3c_move_before_ready.a
+    --- FAIL: TestProduct_DebugReviewSanitized_019/fxspptb_aee89b2_clobber_link_loop.a
+    --- FAIL: TestProduct_DebugReviewSanitized_019/fxspptb_fa49e43_ctor_capture.a
+    --- FAIL: TestProduct_DebugReviewSanitized_019/fxspptb_oct9_native_p75_unviewed_undefined_read.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_020/fxspptb_4ddd17f_long_name.a
+    --- FAIL: TestProduct_DebugReviewSanitized_020/fxspptb_9984394_lib_dispatch.a
+    --- FAIL: TestProduct_DebugReviewSanitized_020/fxspptb_aee89b2_alias_setadd.a
+    --- FAIL: TestProduct_DebugReviewSanitized_020/fxspptb_oct8_nodehost_fs_large_roundtrip.a
+    --- FAIL: TestProduct_DebugReviewSanitized_020/fxspptb_oct9_native_p54_maybe_n.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_020/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_021/fxspptb_a34388d_hash_small.a
+    --- FAIL: TestProduct_DebugReviewSanitized_021/fxspptb_aee89b2_alias_mapset.a
+    --- FAIL: TestProduct_DebugReviewSanitized_021/fxspptb_aee89b2_alias_reverse.a
+    --- FAIL: TestProduct_DebugReviewSanitized_021/fxspptb_classfeat_private_literal.a
+    --- FAIL: TestProduct_DebugReviewSanitized_021/fxspptb_oct9_native_p67_static_class_union_member.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_021/fxspptb_oct9_predicates_q16_every_maybe_number.a
+    --- FAIL: TestProduct_DebugReviewSanitized_022/fxspptb_047cb0d_n_typeof.a
+    --- FAIL: TestProduct_DebugReviewSanitized_022/fxspptb_aa17d3c_virtual_map_borrow.a
+    --- FAIL: TestProduct_DebugReviewSanitized_022/fxspptb_abfe962_super_closure.a
+    --- FAIL: TestProduct_DebugReviewSanitized_022/fxspptb_aee89b2_alias_fill.a
+    --- FAIL: TestProduct_DebugReviewSanitized_022/fxspptb_d7054e9_share_paths.a
+    --- FAIL: TestProduct_DebugReviewSanitized_022/fxspptb_oct9_native_p20_callable_member_call_good.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_022/fxspptb_oct9_native_p59_map_null_write.ts
+    --- FAIL: TestProduct_DebugReviewSanitized_023/fxspptb_aa17d3c_spread_method.a
+    --- FAIL: TestProduct_DebugReviewSanitized_023/fxspptb_abfe962_private_generic_only.a
+    --- FAIL: TestProduct_DebugReviewSanitized_023/fxspptb_aee89b2_escaped_before.a
+    --- FAIL: TestProduct_DebugReviewSanitized_023/fxspptb_oct9_native_p14_callable_union_no_view.a
+    --- FAIL: TestProduct_DebugReviewSanitized_023/fxspptb_oct9_views_p09_tuple_destructure_wrong.ts
+    --- FAIL: TestSplitAttributedBindingsAgreeWithNode/wasm32-wasi
+    --- FAIL: TestUnitKeyHoldsIncludeNext/HasIncludeNext
+    --- FAIL: TestUnitKeyHoldsIncludeNext/IncludeNext
+    --- FAIL: TestUnitKeyRefusesWhatItCannotFollow/Date
+    --- FAIL: TestUnitKeyRefusesWhatItCannotFollow/Embed
+    --- FAIL: TestUnitKeyRefusesWhatItCannotFollow/HasEmbed
+    --- FAIL: TestUnitKeyRefusesWhatItCannotFollow/Macro
+    --- FAIL: TestUnitKeyRefusesWhatItCannotFollow/Time
+    --- FAIL: TestUnitKeyRefusesWhatItCannotFollow/Timestamp
+--- FAIL: TestARepassAfterAMismatchSaysRepass
+--- FAIL: TestDebugAsyncTerminals
+--- FAIL: TestDebugCommandWitnessReproducible
+--- FAIL: TestDebugLineTable
+--- FAIL: TestDebugLineWitnessReproducible
+--- FAIL: TestDebugReviewOutputAndOwnership_000
+--- FAIL: TestDebugReviewOutputAndOwnership_001
+--- FAIL: TestDebugReviewOutputAndOwnership_002
+--- FAIL: TestDebugReviewOutputAndOwnership_003
+--- FAIL: TestDebugReviewOutputAndOwnership_004
+--- FAIL: TestDebugReviewOutputAndOwnership_005
+--- FAIL: TestDebugReviewOutputAndOwnership_006
+--- FAIL: TestDebugReviewOutputAndOwnership_007
+--- FAIL: TestDebugReviewOutputAndOwnership_008
+--- FAIL: TestDebugReviewOutputAndOwnership_009
+--- FAIL: TestDebugReviewOutputAndOwnership_010
+--- FAIL: TestDebugReviewOutputAndOwnership_011
+--- FAIL: TestDebugReviewOutputAndOwnership_012
+--- FAIL: TestDebugReviewOutputAndOwnership_013
+--- FAIL: TestDebugReviewOutputAndOwnership_014
+--- FAIL: TestDebugReviewOutputAndOwnership_015
+--- FAIL: TestDebugReviewOutputAndOwnership_016
+--- FAIL: TestDebugReviewOutputAndOwnership_017
+--- FAIL: TestDebugReviewOutputAndOwnership_018
+--- FAIL: TestDebugReviewOutputAndOwnership_019
+--- FAIL: TestDebugReviewOutputAndOwnership_020
+--- FAIL: TestDebugReviewOutputAndOwnership_021
+--- FAIL: TestDebugReviewOutputAndOwnership_022
+--- FAIL: TestDebugReviewOutputAndOwnership_023
+--- FAIL: TestDebugRuntimeArchiveShared
+--- FAIL: TestDebugSanitizedUnitInputs
+--- FAIL: TestDebugSharingWitnessReproducible
+--- FAIL: TestDebugSourcePaths
+--- FAIL: TestDebugSourcePathsSplit
+--- FAIL: TestDebugTwoDirectories
+--- FAIL: TestObjectCacheForcedCheckCatchesAPlantedObject
+--- FAIL: TestObjectCacheHitIsTheUncachedBinary
+--- FAIL: TestObjectCacheNeverLinksATornEntry
+--- FAIL: TestObjectCacheRecheckFailureStoresNothing
+--- FAIL: TestObjectCacheTrust
+--- FAIL: TestObjectKeyHoldsEveryColumn
+--- FAIL: TestObjectKeyIsTheSameFromAnyDirectory
+--- FAIL: TestObjectKeyMovesWithEachInput
+--- FAIL: TestObjectKeyOffRunsNoPreprocessing
+--- FAIL: TestObjectKeyRecheckSeesWhatMovedUnderTheCompile
+--- FAIL: TestProduct_DebugCommandDriver
+--- FAIL: TestProduct_DebugLineTable
+--- FAIL: TestProduct_DebugReviewDebug_000
+--- FAIL: TestProduct_DebugReviewDebug_001
+--- FAIL: TestProduct_DebugReviewDebug_002
+--- FAIL: TestProduct_DebugReviewDebug_003
+--- FAIL: TestProduct_DebugReviewDebug_004
+--- FAIL: TestProduct_DebugReviewDebug_005
+--- FAIL: TestProduct_DebugReviewDebug_006
+--- FAIL: TestProduct_DebugReviewDebug_007
+--- FAIL: TestProduct_DebugReviewDebug_008
+--- FAIL: TestProduct_DebugReviewDebug_009
+--- FAIL: TestProduct_DebugReviewDebug_010
+--- FAIL: TestProduct_DebugReviewDebug_011
+--- FAIL: TestProduct_DebugReviewDebug_012
+--- FAIL: TestProduct_DebugReviewDebug_013
+--- FAIL: TestProduct_DebugReviewDebug_014
+--- FAIL: TestProduct_DebugReviewDebug_015
+--- FAIL: TestProduct_DebugReviewDebug_016
+--- FAIL: TestProduct_DebugReviewDebug_017
+--- FAIL: TestProduct_DebugReviewDebug_018
+--- FAIL: TestProduct_DebugReviewDebug_019
+--- FAIL: TestProduct_DebugReviewDebug_020
+--- FAIL: TestProduct_DebugReviewDebug_021
+--- FAIL: TestProduct_DebugReviewDebug_022
+--- FAIL: TestProduct_DebugReviewDebug_023
+--- FAIL: TestProduct_DebugReviewRelease_000
+--- FAIL: TestProduct_DebugReviewRelease_001
+--- FAIL: TestProduct_DebugReviewRelease_002
+--- FAIL: TestProduct_DebugReviewRelease_003
+--- FAIL: TestProduct_DebugReviewRelease_004
+--- FAIL: TestProduct_DebugReviewRelease_005
+--- FAIL: TestProduct_DebugReviewRelease_006
+--- FAIL: TestProduct_DebugReviewRelease_007
+--- FAIL: TestProduct_DebugReviewRelease_008
+--- FAIL: TestProduct_DebugReviewRelease_009
+--- FAIL: TestProduct_DebugReviewRelease_010
+--- FAIL: TestProduct_DebugReviewRelease_011
+--- FAIL: TestProduct_DebugReviewRelease_012
+--- FAIL: TestProduct_DebugReviewRelease_013
+--- FAIL: TestProduct_DebugReviewRelease_014
+--- FAIL: TestProduct_DebugReviewRelease_015
+--- FAIL: TestProduct_DebugReviewRelease_016
+--- FAIL: TestProduct_DebugReviewRelease_017
+--- FAIL: TestProduct_DebugReviewRelease_018
+--- FAIL: TestProduct_DebugReviewRelease_019
+--- FAIL: TestProduct_DebugReviewRelease_020
+--- FAIL: TestProduct_DebugReviewRelease_021
+--- FAIL: TestProduct_DebugReviewRelease_022
+--- FAIL: TestProduct_DebugReviewRelease_023
+--- FAIL: TestProduct_DebugReviewSanitized_000
+--- FAIL: TestProduct_DebugReviewSanitized_001
+--- FAIL: TestProduct_DebugReviewSanitized_002
+--- FAIL: TestProduct_DebugReviewSanitized_003
+--- FAIL: TestProduct_DebugReviewSanitized_004
+--- FAIL: TestProduct_DebugReviewSanitized_005
+--- FAIL: TestProduct_DebugReviewSanitized_006
+--- FAIL: TestProduct_DebugReviewSanitized_007
+--- FAIL: TestProduct_DebugReviewSanitized_008
+--- FAIL: TestProduct_DebugReviewSanitized_009
+--- FAIL: TestProduct_DebugReviewSanitized_010
+--- FAIL: TestProduct_DebugReviewSanitized_011
+--- FAIL: TestProduct_DebugReviewSanitized_012
+--- FAIL: TestProduct_DebugReviewSanitized_013
+--- FAIL: TestProduct_DebugReviewSanitized_014
+--- FAIL: TestProduct_DebugReviewSanitized_015
+--- FAIL: TestProduct_DebugReviewSanitized_016
+--- FAIL: TestProduct_DebugReviewSanitized_017
+--- FAIL: TestProduct_DebugReviewSanitized_018
+--- FAIL: TestProduct_DebugReviewSanitized_019
+--- FAIL: TestProduct_DebugReviewSanitized_020
+--- FAIL: TestProduct_DebugReviewSanitized_021
+--- FAIL: TestProduct_DebugReviewSanitized_022
+--- FAIL: TestProduct_DebugReviewSanitized_023
+--- FAIL: TestProduct_DebugRuntimeDebug
+--- FAIL: TestProduct_DebugRuntimeDebugSanitized
+--- FAIL: TestProduct_DebugRuntimeRelease
+--- FAIL: TestProduct_DebugRuntimeSanitized
+--- FAIL: TestProduct_DebugRuntimeSharing
+--- FAIL: TestProduct_RegExpWitnessClosureInventory
+--- FAIL: TestRegExpCompilerArchiveCacheWASM
+--- FAIL: TestRegExpConstructorFlagErrorsArchiveWASM
+--- FAIL: TestRegExpConstructorFlagsArchiveWASM
+--- FAIL: TestRegExpConstructorOwnershipArchiveWASM
+--- FAIL: TestRegExpConstructorSourceArchiveWASM
+--- FAIL: TestRegExpConstructorSplitSourceArchiveWASM
+--- FAIL: TestRegExpConstructorSyntaxBracketArchiveWASM
+--- FAIL: TestRegExpConstructorSyntaxEscapeArchiveWASM
+--- FAIL: TestRegExpConstructorSyntaxGroupArchiveWASM
+--- FAIL: TestRegExpRuntimeBytecodeWASI
+--- FAIL: TestRegExpRuntimeCompilerMatchesNodeWASMCached
+--- FAIL: TestRegExpRuntimeParserWASI
+--- FAIL: TestRegExpRuntimePropertiesWASI
+--- FAIL: TestRegExpRuntimeV8WASI
+--- FAIL: TestRegExpWitnessClosureDropDTOAMutant
+--- FAIL: TestRegExpWitnessClosureNewCallMutant
+--- FAIL: TestRegExpWitnessRuntimeClosure
+--- FAIL: TestSplitAttributedBindingsAgreeWithNode
+--- FAIL: TestSplitBuildLogsEachUnitAndTheLink
+--- FAIL: TestSplitMixesHitsAndMisses
+--- FAIL: TestTSGoCacheRelease
+--- FAIL: TestTSGoCacheSanitized
+--- FAIL: TestTSGoCacheShippedRelease
+--- FAIL: TestUnitCacheColdCheck
+--- FAIL: TestUnitCacheFlagsHoldSanitizer
+--- FAIL: TestUnitCacheMismatchCompilesEveryUnitCold
+--- FAIL: TestUnitCacheOffCompilesUncached
+--- FAIL: TestUnitKeyHoldsClangsBuild
+--- FAIL: TestUnitKeyHoldsCommonFiles
+--- FAIL: TestUnitKeyHoldsEnvironment
+--- FAIL: TestUnitKeyHoldsFlags
+--- FAIL: TestUnitKeyHoldsHasInclude
+--- FAIL: TestUnitKeyHoldsIncludeNext
+--- FAIL: TestUnitKeyHoldsShadowing
+--- FAIL: TestUnitKeyHoldsSystemHeaders
+--- FAIL: TestUnitKeyHoldsTarget
+--- FAIL: TestUnitKeyHoldsTheUnit
+--- FAIL: TestUnitKeyKeepsOtherUnits
+--- FAIL: TestUnitKeyReadsAHasIncludeDefinition
+--- FAIL: TestUnitKeyReadsClangsLibraries
+--- FAIL: TestUnitKeyRefusesWhatItCannotFollow
+--- FAIL: TestUnitSourceRefusal
+--- FAIL: TestUnitSystemHeaderProvenance
