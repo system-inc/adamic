@@ -1,0 +1,27 @@
+{
+  "base": "9f1cd6e37ad89f2db0e10fba4bdb51a026363193",
+  "compilerSourcesEqualUnderlyingStack": true,
+  "underlyingStack": "b729c7e07010fe6db34c6afc1d11c8ca63a86ae3",
+  "stockTypeScript": "6.0.3",
+  "ordinaryCensusHasOverlay": false,
+  "siteCensusMeasurementOnlyOverlay": true,
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "binaries": {
+    "adamic": {
+      "sha256": "f52de08475e75f7812c169666a642859cb2df4fd9d7d348335de83275193a10f",
+      "bytes": 41783760
+    },
+    "census": {
+      "sha256": "b84f253b42a4454457e5823a64bec1ad73d223830c1842a78dc18d700c30c680",
+      "bytes": 35654291
+    },
+    "latent": {
+      "sha256": "7d91381fb1514b1dd859cfffb721d772d7797babce512d27ba422a6c10f79e7d",
+      "bytes": 34824536
+    }
+  },
+  "adapterInputs": {
+    "adapt.cjs": "674018ed9128f223075e2465bf22cb19e6e0a5cac963e929af9647e8db937542",
+    "owners.json": "5b154595ec0b57b6ff19976dfd6f5145a6fec5b6d4ee1f226ab77ed57b7a3ed4"
+  }
+}

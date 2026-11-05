@@ -1,0 +1,917 @@
+{
+  "typescript": "6.0.3",
+  "roots": 79,
+  "options": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "erasableSyntaxOnly": false,
+    "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "module": 99,
+    "moduleDetection": 3,
+    "moduleResolution": 100,
+    "target": 11,
+    "lib": [
+      "lib.es2024.d.ts"
+    ],
+    "types": []
+  },
+  "sites": [
+    {
+      "owner": "deduplicateSorted",
+      "line": 736,
+      "column": 36,
+      "expression": "emptyArray as unknown as SortedReadonlyArray<T>",
+      "operand": "emptyArray",
+      "ownType": "never[]",
+      "typeFlags": 1048576,
+      "isArrayOrUnionOfArrays": true,
+      "isAny": false,
+      "isUnknown": false,
+      "shape": "as Brand -> as unknown -> array operand (parentheses ignored)"
+    },
+    {
+      "owner": "deduplicateSorted",
+      "line": 759,
+      "column": 12,
+      "expression": "deduplicated as unknown as SortedReadonlyArray<T>",
+      "operand": "deduplicated",
+      "ownType": "T[]",
+      "typeFlags": 1048576,
+      "isArrayOrUnionOfArrays": true,
+      "isAny": false,
+      "isUnknown": false,
+      "shape": "as Brand -> as unknown -> array operand (parentheses ignored)"
+    },
+    {
+      "owner": "createSortedArray",
+      "line": 764,
+      "column": 12,
+      "expression": "[] as unknown as SortedArray<T>",
+      "operand": "[]",
+      "ownType": "never[]",
+      "typeFlags": 1048576,
+      "isArrayOrUnionOfArrays": true,
+      "isAny": false,
+      "isUnknown": false,
+      "shape": "as Brand -> as unknown -> array operand (parentheses ignored)"
+    },
+    {
+      "owner": "toSorted",
+      "line": 1039,
+      "column": 12,
+      "expression": "(array.length === 0 ? emptyArray : array.slice().sort(comparer)) as unknown as SortedReadonlyArray<T>",
+      "operand": "array.length === 0 ? emptyArray : array.slice().sort(comparer)",
+      "ownType": "T[]",
+      "typeFlags": 1048576,
+      "isArrayOrUnionOfArrays": true,
+      "isAny": false,
+      "isUnknown": false,
+      "shape": "as Brand -> as unknown -> array operand (parentheses ignored)"
+    }
+  ],
+  "brands": [
+    "export interface SortedReadonlyArray<T> extends ReadonlyArray<T> {\r\n    \" __sortedArrayBrand\": undefined;\r\n}",
+    "export interface SortedArray<T> extends Array<T> {\r\n    \" __sortedArrayBrand\": undefined;\r\n}"
+  ],
+  "sourceUnchanged": true,
+  "coreBeforeSha256": "273133f9c289af51604cf558f60c212f20e7840b1c63e15a311d9cc37e4b69ac",
+  "coreAfterSha256": "95ebcbb3e041590addab1aced5d029102abb244bf3ebbad590a11851c369381a",
+  "corePublicSha256": "579512600ac65a6312f761f46db67357483c010e8e2c271cb03cce67328b32e7",
+  "beforeDiagnostics": [
+    {
+      "code": 2339,
+      "file": "src/compiler/debug.ts",
+      "line": 179,
+      "column": 19,
+      "message": "Property 'captureStackTrace' does not exist on type 'ErrorConstructor'."
+    },
+    {
+      "code": 2339,
+      "file": "src/compiler/debug.ts",
+      "line": 180,
+      "column": 19,
+      "message": "Property 'captureStackTrace' does not exist on type 'ErrorConstructor'."
+    },
+    {
+      "code": 2584,
+      "file": "src/compiler/debug.ts",
+      "line": 844,
+      "column": 16,
+      "message": "Cannot find name 'console'. Do you need to change your target library? Try changing the 'lib' compiler option to include 'dom'."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 50,
+      "column": 22,
+      "message": "Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 51,
+      "column": 24,
+      "message": "Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 52,
+      "column": 22,
+      "message": "Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 53,
+      "column": 26,
+      "message": "Cannot find name 'node:crypto'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2503,
+      "file": "src/compiler/sys.ts",
+      "line": 55,
+      "column": 68,
+      "message": "Cannot find namespace 'NodeJS'."
+    },
+    {
+      "code": 2503,
+      "file": "src/compiler/sys.ts",
+      "line": 56,
+      "column": 39,
+      "message": "Cannot find namespace 'NodeJS'."
+    },
+    {
+      "code": 2339,
+      "file": "src/compiler/sys.ts",
+      "line": 80,
+      "column": 15,
+      "message": "Property 'stackTraceLimit' does not exist on type 'ErrorConstructor'."
+    },
+    {
+      "code": 2339,
+      "file": "src/compiler/sys.ts",
+      "line": 81,
+      "column": 15,
+      "message": "Property 'stackTraceLimit' does not exist on type 'ErrorConstructor'."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1475,
+      "column": 35,
+      "message": "Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1478,
+      "column": 25,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1479,
+      "column": 32,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1485,
+      "column": 56,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2304,
+      "file": "src/compiler/sys.ts",
+      "line": 1492,
+      "column": 35,
+      "message": "Cannot find name '__filename'."
+    },
+    {
+      "code": 2304,
+      "file": "src/compiler/sys.ts",
+      "line": 1492,
+      "column": 92,
+      "message": "Cannot find name '__dirname'."
+    },
+    {
+      "code": 2304,
+      "file": "src/compiler/sys.ts",
+      "line": 1492,
+      "column": 121,
+      "message": "Cannot find name '__filename'."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1494,
+      "column": 44,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1495,
+      "column": 51,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1510,
+      "column": 27,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1511,
+      "column": 38,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1512,
+      "column": 32,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1518,
+      "column": 19,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1522,
+      "column": 17,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1525,
+      "column": 24,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1528,
+      "column": 26,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1560,
+      "column": 24,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2304,
+      "file": "src/compiler/sys.ts",
+      "line": 1569,
+      "column": 21,
+      "message": "Cannot find name 'global'."
+    },
+    {
+      "code": 2304,
+      "file": "src/compiler/sys.ts",
+      "line": 1570,
+      "column": 21,
+      "message": "Cannot find name 'global'."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1572,
+      "column": 24,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1582,
+      "column": 42,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1586,
+      "column": 68,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1586,
+      "column": 112,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1588,
+      "column": 26,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1588,
+      "column": 62,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1588,
+      "column": 107,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2345,
+      "file": "src/compiler/sys.ts",
+      "line": 1588,
+      "column": 180,
+      "message": "Argument of type 'unknown' is not assignable to parameter of type 'string'."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1588,
+      "column": 192,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1591,
+      "column": 21,
+      "message": "Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1600,
+      "column": 17,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1603,
+      "column": 33,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1608,
+      "column": 36,
+      "message": "Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1609,
+      "column": 36,
+      "message": "Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1613,
+      "column": 38,
+      "message": "Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1623,
+      "column": 49,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1644,
+      "column": 44,
+      "message": "Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1644,
+      "column": 59,
+      "message": "Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1666,
+      "column": 47,
+      "message": "Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 7006,
+      "file": "src/compiler/sys.ts",
+      "line": 1690,
+      "column": 54,
+      "message": "Parameter 'err' implicitly has an 'any' type."
+    },
+    {
+      "code": 7031,
+      "file": "src/compiler/sys.ts",
+      "line": 1690,
+      "column": 61,
+      "message": "Binding element 'profile' implicitly has an 'any' type."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1693,
+      "column": 120,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2304,
+      "file": "src/compiler/sys.ts",
+      "line": 1722,
+      "column": 41,
+      "message": "Cannot find name '__filename'."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1740,
+      "column": 47,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1740,
+      "column": 73,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1782,
+      "column": 25,
+      "message": "Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1847,
+      "column": 38,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1847,
+      "column": 59,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1877,
+      "column": 96,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  ],
+  "afterDiagnostics": [
+    {
+      "code": 2339,
+      "file": "src/compiler/debug.ts",
+      "line": 179,
+      "column": 19,
+      "message": "Property 'captureStackTrace' does not exist on type 'ErrorConstructor'."
+    },
+    {
+      "code": 2339,
+      "file": "src/compiler/debug.ts",
+      "line": 180,
+      "column": 19,
+      "message": "Property 'captureStackTrace' does not exist on type 'ErrorConstructor'."
+    },
+    {
+      "code": 2584,
+      "file": "src/compiler/debug.ts",
+      "line": 844,
+      "column": 16,
+      "message": "Cannot find name 'console'. Do you need to change your target library? Try changing the 'lib' compiler option to include 'dom'."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 50,
+      "column": 22,
+      "message": "Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 51,
+      "column": 24,
+      "message": "Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 52,
+      "column": 22,
+      "message": "Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 53,
+      "column": 26,
+      "message": "Cannot find name 'node:crypto'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2503,
+      "file": "src/compiler/sys.ts",
+      "line": 55,
+      "column": 68,
+      "message": "Cannot find namespace 'NodeJS'."
+    },
+    {
+      "code": 2503,
+      "file": "src/compiler/sys.ts",
+      "line": 56,
+      "column": 39,
+      "message": "Cannot find namespace 'NodeJS'."
+    },
+    {
+      "code": 2339,
+      "file": "src/compiler/sys.ts",
+      "line": 80,
+      "column": 15,
+      "message": "Property 'stackTraceLimit' does not exist on type 'ErrorConstructor'."
+    },
+    {
+      "code": 2339,
+      "file": "src/compiler/sys.ts",
+      "line": 81,
+      "column": 15,
+      "message": "Property 'stackTraceLimit' does not exist on type 'ErrorConstructor'."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1475,
+      "column": 35,
+      "message": "Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1478,
+      "column": 25,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1479,
+      "column": 32,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1485,
+      "column": 56,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2304,
+      "file": "src/compiler/sys.ts",
+      "line": 1492,
+      "column": 35,
+      "message": "Cannot find name '__filename'."
+    },
+    {
+      "code": 2304,
+      "file": "src/compiler/sys.ts",
+      "line": 1492,
+      "column": 92,
+      "message": "Cannot find name '__dirname'."
+    },
+    {
+      "code": 2304,
+      "file": "src/compiler/sys.ts",
+      "line": 1492,
+      "column": 121,
+      "message": "Cannot find name '__filename'."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1494,
+      "column": 44,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1495,
+      "column": 51,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1510,
+      "column": 27,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1511,
+      "column": 38,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1512,
+      "column": 32,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1518,
+      "column": 19,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1522,
+      "column": 17,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1525,
+      "column": 24,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1528,
+      "column": 26,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1560,
+      "column": 24,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2304,
+      "file": "src/compiler/sys.ts",
+      "line": 1569,
+      "column": 21,
+      "message": "Cannot find name 'global'."
+    },
+    {
+      "code": 2304,
+      "file": "src/compiler/sys.ts",
+      "line": 1570,
+      "column": 21,
+      "message": "Cannot find name 'global'."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1572,
+      "column": 24,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1582,
+      "column": 42,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1586,
+      "column": 68,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1586,
+      "column": 112,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1588,
+      "column": 26,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1588,
+      "column": 62,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1588,
+      "column": 107,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2345,
+      "file": "src/compiler/sys.ts",
+      "line": 1588,
+      "column": 180,
+      "message": "Argument of type 'unknown' is not assignable to parameter of type 'string'."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1588,
+      "column": 192,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1591,
+      "column": 21,
+      "message": "Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1600,
+      "column": 17,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1603,
+      "column": 33,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1608,
+      "column": 36,
+      "message": "Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1609,
+      "column": 36,
+      "message": "Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1613,
+      "column": 38,
+      "message": "Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1623,
+      "column": 49,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1644,
+      "column": 44,
+      "message": "Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1644,
+      "column": 59,
+      "message": "Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1666,
+      "column": 47,
+      "message": "Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 7006,
+      "file": "src/compiler/sys.ts",
+      "line": 1690,
+      "column": 54,
+      "message": "Parameter 'err' implicitly has an 'any' type."
+    },
+    {
+      "code": 7031,
+      "file": "src/compiler/sys.ts",
+      "line": 1690,
+      "column": 61,
+      "message": "Binding element 'profile' implicitly has an 'any' type."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1693,
+      "column": 120,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2304,
+      "file": "src/compiler/sys.ts",
+      "line": 1722,
+      "column": 41,
+      "message": "Cannot find name '__filename'."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1740,
+      "column": 47,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1740,
+      "column": 73,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1782,
+      "column": 25,
+      "message": "Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1847,
+      "column": 38,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1847,
+      "column": 59,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1877,
+      "column": 96,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  ],
+  "stockAmbientContext": "The unchanged full-stock diagnostics are retained; Adamic supplies its embedded host overlay in the independent types checks.",
+  "newStockDiagnostics": 0,
+  "witness": "export interface SortedReadonlyArray<T> extends ReadonlyArray<T> {\r\n    \" __sortedArrayBrand\": undefined;\r\n}\nexport interface SortedArray<T> extends Array<T> {\r\n    \" __sortedArrayBrand\": undefined;\r\n}\nexport const emptyArray: never[] = [] as never[];\nfunction allMints<T>(array: readonly T[], comparer?: (a:T,b:T)=>number) {\nconst deduplicated: T[] = [];\nconst mint0 = emptyArray as unknown as SortedReadonlyArray<T>;\nconst mint1 = deduplicated as unknown as SortedReadonlyArray<T>;\nconst mint2 = [] as unknown as SortedArray<T>;\nconst mint3 = (array.length === 0 ? emptyArray : array.slice().sort(comparer)) as unknown as SortedReadonlyArray<T>;\nreturn [mint0,mint1,mint2,mint3];\n}\n",
+  "witnessDiagnostics": []
+}

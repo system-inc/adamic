@@ -1,0 +1,41 @@
+{
+  "firstRun": {
+    "files": 1,
+    "edits": 4,
+    "writes": 1
+  },
+  "secondRun": {
+    "files": 0,
+    "edits": 0,
+    "writes": 0,
+    "bytesAndMtimePreserved": true
+  },
+  "refusals": [
+    "deduplicateSorted: changed owner",
+    "deduplicateSorted: changed adapted owner",
+    "deduplicateSorted: missing owner",
+    "deduplicateSorted: duplicate owner",
+    "deduplicateSorted: nested duplicate owner",
+    "deduplicateSorted: moved owner",
+    "deduplicateSorted: half-adapted tree",
+    "createSortedArray: changed owner",
+    "createSortedArray: changed adapted owner",
+    "createSortedArray: missing owner",
+    "createSortedArray: duplicate owner",
+    "createSortedArray: nested duplicate owner",
+    "createSortedArray: moved owner",
+    "createSortedArray: half-adapted tree",
+    "toSorted: changed owner",
+    "toSorted: changed adapted owner",
+    "toSorted: missing owner",
+    "toSorted: duplicate owner",
+    "toSorted: nested duplicate owner",
+    "toSorted: moved owner",
+    "toSorted: half-adapted tree",
+    "deduplicateSorted: first mint only",
+    "deduplicateSorted: second mint only",
+    "parse error"
+  ],
+  "foreignEditPreserved": true,
+  "crlfAndLfPreserved": true
+}

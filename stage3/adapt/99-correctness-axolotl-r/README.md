@@ -1,58 +1,53 @@
-# 99r: blocked direct SortedArray mints and concatenate caller read
+# 99r: SortedArray mints through unknown
 
-Base: origin/typescript/core-typeonly-adapt at
+This revision is one commit on 9f1cd6e37ad89f2db0e10fba4bdb51a026363193,
+which stopped the original single-cast proposal on stock TS2352. The underlying
+stack is origin/typescript/core-typeonly-adapt at
 b729c7e07010fe6db34c6afc1d11c8ca63a86ae3.
-This branch is evidence of a stopped proposal. It is not an accepted adaptation.
-No adapted source, compiler, lowering code, brand declaration, concatenate
-implementation, or checker caller is edited. Only this new directory is committed.
-The adapter deliberately refuses before any write so a full apply cannot silently
-claim that the blocked source change was accepted.
 
-## Stock checker stop
+Adamic's subsequent #b5w3ycg ruling specifies `x as unknown as Brand`.
+This adapter changes only the four core.ts mints to that spelling. It does not
+change the checker callers, brand declarations, concatenate, or any compiler
+lowering code. The source change is type-only. The old direct-cast rejection and
+fail-closed adapter evidence are archived under initial-direct-cast/.
 
-The requested stop condition is reached at the first mint, core.ts:736.
-Stock TypeScript 6.0.3 rejects `emptyArray as SortedReadonlyArray<T>` with TS2352.
-The checker reports:
+The source, type, replay, JavaScript, declaration, shard and census proofs are
+complete. The lane Go proof remains failed: both API-generator wrappers exceed
+their unchanged 55-second limits even in isolation. The underlying 22 Python
+cases pass in 111.715 seconds. PROOF.md retains all attempts and this proof gap.
 
-```text
-Conversion of type 'never[]' to type 'SortedReadonlyArray<T>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
-  Property '" __sortedArrayBrand"' is missing in type 'never[]' but required in type 'SortedReadonlyArray<T>'.
-```
+## Mints and own operand types
 
-The exact diagnostic, all options, source hashes, brand declarations, and
-complete cast inventory are retained in
-probe-result.json. The trial exists only in the compiler host's memory. It changes
-only the first mint, then stops. No unknown intermediate cast or declaration
-change is substituted. The full stock run does not reproduce Adamic's embedded
-Node/host overlays: its 59 ambient-context diagnostics are retained, and the
-first mint adds exactly one diagnostic, TS2352. A separate stock witness extracts
-the exact two brand declarations and emptyArray declaration from the applied tree;
-it has zero diagnostics before and only TS2352 after the same expression change.
-The 79-root Adamic baseline is independently checker-clean.
+Stock TypeScript 6.0.3 checks each innermost operand in the actual applied program.
+The audit strips only parentheses, requires an outer `as SortedArray<T>` or
+`as SortedReadonlyArray<T>` whose operand is exactly an `as unknown` expression,
+and requires the innermost operand's own type to be an array, never any or unknown.
+For toSorted it also requires that operand to be the complete conditional.
 
-Reproduce against a fully applied base tree:
+| core.ts site and owner | Before | After | Innermost operand's own type |
+| --- | --- | --- | --- |
+| 736, deduplicateSorted | `emptyArray as any as SortedReadonlyArray<T>` | `emptyArray as unknown as SortedReadonlyArray<T>` | `never[]` |
+| 759, deduplicateSorted | `deduplicated as any as SortedReadonlyArray<T>` | `deduplicated as unknown as SortedReadonlyArray<T>` | `T[]` |
+| 764, createSortedArray | `[] as any as SortedArray<T>` | `[] as unknown as SortedArray<T>` | `never[]` |
+| 1039, toSorted | `(array.length === 0 ? emptyArray : array.slice().sort(comparer)) as readonly T[] as SortedReadonlyArray<T>` | `(array.length === 0 ? emptyArray : array.slice().sort(comparer)) as unknown as SortedReadonlyArray<T>` | `T[]` for the whole conditional |
 
-```sh
-NODE_PATH=stage3/api/node_modules node stage3/adapt/99-correctness-axolotl-r/probe.cjs /workspace/r-before
-NODE_PATH=stage3/api/node_modules node stage3/adapt/99-correctness-axolotl-r/read-callers.cjs /workspace/r-before
-```
+The adapted corePublic.ts:17 and :21 targets each add exactly one required member,
+`" __sortedArrayBrand": undefined`, to ReadonlyArray<T> and Array<T>, respectively.
+The key includes its leading space. Neither adds any other member.
 
-| Mint in core.ts | Requested direct form | Decision |
-| --- | --- | --- |
-| 736, deduplicateSorted | `emptyArray as SortedReadonlyArray<T>` | Stock TS2352; stop; unchanged |
-| 759, deduplicateSorted | `deduplicated as SortedReadonlyArray<T>` | Not built after the first rejection; unchanged |
-| 764, createSortedArray | `[] as SortedArray<T>` | Not built after the first rejection; unchanged |
-| 1039, toSorted | `(array.length === 0 ? emptyArray : array.slice().sort(comparer)) as SortedReadonlyArray<T>` | Not built after the first rejection; unchanged |
+audit-result.json retains all own types, flags, exact expressions and stock options.
+The full-stock before/after diagnostic lists are identical. They include 59
+unrelated ambient errors because this stock host does not reproduce Adamic's
+embedded Node declarations. No diagnostic is suppressed. A clean witness formed
+from the exact applied brand and emptyArray declarations, and all four exact
+mint expressions, separately has zero stock diagnostics. Both complete 79-root
+Adamic types checks use the real embedded host and are zero.
 
-Both adapted interfaces in corePublic.ts:17 and :21 add exactly one member to
-ReadonlyArray<T> and Array<T>, respectively: the required property
-`" __sortedArrayBrand": undefined`. The key includes a leading space. Neither
-interface adds any other member. This erased brand ruling does not change stock
-TypeScript's overlap check. The missing required property is the checker's stated
-objection, even though the proposed assertion would erase from JavaScript.
+## Whole-src cast inventory
 
-The full adapted src cast inventory is in probe-result.json. In addition to the
-four mints above:
+The complete initial whole-src AST inventory contains 17 brand casts: these four
+core mints and the following 13 casts. Only the four core mints change. The source
+comparison checks all 746 files and refuses any change outside the pinned owners.
 
 | File:line | Cast source | Changed |
 | --- | --- | --- |
@@ -69,6 +64,19 @@ four mints above:
 | src/services/services.ts:2957 | `[] as number[] as SortedArray<number>` | No, outside core.ts |
 | src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:386 | `cloned.entries.map(clone) as SortedArray<FSEntry>` | No, outside core.ts |
 | src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:976 | `[] as FSEntry[] as SortedArray<FSEntry>` | No, outside core.ts |
+
+## Owner contract
+
+owners.json pins the complete exact normalized text and SHA-256 of the three
+before/after owners, not a whole-file hash. Missing, duplicate, nested, moved,
+changed or mixed owners refuse before any write. Both ways of half-adapting the
+two-mint deduplicateSorted owner are explicitly refused. All files are reread
+before writing. Foreign selectIndex edits and LF/CRLF are preserved.
+
+The contract has 24 refused fixtures, one accepted foreign-edit fixture, both
+line endings, and replay with zero writes plus identical bytes and mtime.
+Whole core.ts JavaScript is required to match with comments kept and removed.
+The directory's real Python sort remains directly after 99-correctness-axolotl-q.
 
 ## Concatenate's six checker.ts diagnostics: read only
 
@@ -97,57 +105,36 @@ The proofs above distinguish declarations the checker can use from facts visible
 only by reading helper bodies. They do not claim that changing concatenate alone
 would pass checking, or that an array's existence proves it is nonempty.
 
-## Proof status
 
-This proposal stops at stock TypeScript admission, before any mint is written.
-Consequently there is no accepted 99r after-tree, owner rewrite contract, zero-edit
-rewrite replay, emitted-JavaScript or public-declaration comparison, or fresh
-79-root Adamic before/after census. Those successful-change proofs must not be
-claimed for a checker-rejected proposal. The baseline full apply and stock checker
-probe are separate from Adamic types and the compiler census.
+## Proofs and next stops
 
-| Check | Result |
-| --- | --- |
-| Prescribed setup with requested GOPROXY | Exit 0, 731.121 seconds |
-| Base full apply with product packaging | Exit 0 |
-| Baseline Adamic types over all 79 recursive roots | Exit 0, zero diagnostics; types-before-result.json |
-| Exact-tree stock first-mint delta | One added TS2352; unrelated ambient diagnostics retained |
-| Isolated stock witness from exact declarations | Zero diagnostics before; one TS2352 after |
-| generate_shards --check with configured toolchain | Exit 0 |
-| Real directory sort | 99r directly follows 99q |
-| Blocked adapter refusal | Exit 1 before writes; all 746 source files have the same aggregate hash before and after |
-| Accepted 99r replay, owner fixtures, JS/d.ts comparisons, lane Go tests, fresh census | Not run: stopped at the required checker gate |
+See PROOF.md for commands, results and provenance, CENSUS.md for the ordinary
+79-root next-stop table, and site-results.json for each mint's exact reason.
+The ordinary census uses the unchanged production compiler. A separate existing
+measurement-only overlay scans the complete core.ts to see beyond the first stop;
+it has output disabled and is never used for the ordinary next-stop census.
+This change does not claim that those four mints lower successfully before
+Diagnostics' corresponding compiler change lands.
 
-The initial root preflight enumerated only 40 top-level files and refused its
-79-root count assertion. It was corrected to recurse before the final checks.
-The initial stock-context preflight expected zero diagnostics without installing
-Adamic's host overlay, and refused that assertion. The final comparison retains
-those ambient diagnostics, checks the exact one-diagnostic delta, and separately
-requires the clean extracted witness. The first shard invocation lacked gofmt on
-PATH; sourcing the setup environment resolved it. No checker diagnostics are
-suppressed or relabeled as a clean full-stock build.
+## Exact current lowering reasons
 
-99q's retained CENSUS.md records the prior stack's 73 core.ts:736:36 refusals
-(`a cast the runtime can't check`), two accepted roots, and four other NotYet
-roots. That historical table is not relabeled as a fresh 99r measurement. No
-single-cast lowering next-stop claim is possible because the source trial fails
-stock checking first. The requested lowering work remains someone else's.
+| Site | Kind | Exact reason |
+| --- | --- | --- |
+| core.ts:736:36 | Refused | a cast the runtime can't check |
+| core.ts:759:12 | Refused | a cast the runtime can't check |
+| core.ts:764:12 | Refused | a cast the runtime can't check |
+| core.ts:1039:12 | Refused | a cast the runtime can't check |
 
-sort.json records the real Python directory sort, placing this proposal directly
-after 99-correctness-axolotl-q. Reproduction requires a base-only checkout: this
-blocked branch's adapt.cjs intentionally refuses rather than admitting a no-op.
+The unchanged castProof in internal/lower/cast_proof.go explicitly refuses an
+outer cast whose parenthesis-stripped operand is an as expression typed unknown.
+The array operand proof does not bypass that current guard. Diagnostics' matching
+brand-construction recognition is not included in this source-only commit.
 
-## Historical 79-root next stops, not rerun
-
-Source: ../99-correctness-axolotl-q/CENSUS.md and census-results.json, on its
-recorded d40c2470e compiler. These rows describe the unchanged double-cast stack.
-They are provided for context only, not as a single-cast 99r proof.
-
-| Roots | Kind | First stop | Exact reason |
-| ---: | --- | --- | --- |
-| 73 | Refused | core.ts:736:36 | a cast the runtime can't check |
-| 1 | NotYet | commandLineParser.ts:293:35 | reading an enum before its runtime initialization; move the call after the enum declaration |
-| 1 | NotYet | diagnosticInformationMap.generated.ts:13:45 | reading an enum before its runtime initialization; move the call after the enum declaration |
-| 1 | NotYet | debug.ts:243:59 | a generic instantiation whose type argument for T, constrained to Node, can't be read |
-| 1 | NotYet | semver.ts:71:9 | a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration |
-| 2 | accepted | corePublic.ts and hostErrors.ts | No stop |
+The complete core scan also retains the pre-existing core.ts:1039:34 refusal:
+`a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold`.
+It concerns the emptyArray branch's mutable array relation; the conditional's own type is T[]. It is present before
+and after; this adaptation does not claim to fix it. Both full-core scans have
+82 distinct (kind, location, exact reason) findings, with none added or removed.
+The measurement stream's historical label says "measured on a checker-rejected
+program"; its actual metadata has checker_rejected=false and no diagnostics in
+both runs. It remains a no-output measurement, not a successful-lowering claim.

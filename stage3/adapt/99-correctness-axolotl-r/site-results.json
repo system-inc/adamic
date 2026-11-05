@@ -1,0 +1,65 @@
+{
+  "beforeCheckerRejected": false,
+  "afterCheckerRejected": false,
+  "beforeDistinctFindings": 82,
+  "afterDistinctFindings": 82,
+  "added": [],
+  "removed": [],
+  "mintSiteFindings": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/r2-probe/src/compiler/core.ts:735:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/r2-probe/src/compiler/core.ts:736:36",
+      "reason": "a cast the runtime can't check",
+      "text": "/workspace/r2-probe/src/compiler/core.ts:736:36: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/r2-probe/src/compiler/core.ts:735:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/r2-probe/src/compiler/core.ts:759:12",
+      "reason": "a cast the runtime can't check",
+      "text": "/workspace/r2-probe/src/compiler/core.ts:759:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/r2-probe/src/compiler/core.ts:763:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/r2-probe/src/compiler/core.ts:764:12",
+      "reason": "a cast the runtime can't check",
+      "text": "/workspace/r2-probe/src/compiler/core.ts:764:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/r2-probe/src/compiler/core.ts:1038:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/r2-probe/src/compiler/core.ts:1039:12",
+      "reason": "a cast the runtime can't check",
+      "text": "/workspace/r2-probe/src/compiler/core.ts:1039:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/r2-probe/src/compiler/core.ts:1038:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/r2-probe/src/compiler/core.ts:1039:34",
+      "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+      "text": "/workspace/r2-probe/src/compiler/core.ts:1039:34: Adamic 0.1 refuses a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold; take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+    }
+  ]
+}

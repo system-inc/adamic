@@ -1,0 +1,35 @@
+[
+  {
+    "file": "core.ts",
+    "owner": "deduplicateSorted",
+    "beforeDeclarations": 1,
+    "afterDeclarations": 1,
+    "before": "function deduplicateSorted<T>(array: SortedReadonlyArray<T>, comparer: EqualityComparer<T> | Comparer<T>): SortedReadonlyArray<T> {\n    if (array.length === 0) return emptyArray as any as SortedReadonlyArray<T>;\n\n    let last = array[0]!;\n    const deduplicated: T[] = [last];\n    for (let i = 1; i < array.length; i++) {\n        const next = array[i]!;\n        switch (comparer(next, last)) {\n            // equality comparison\n            case true:\n\n            // relational comparison\n            // falls through\n            case Comparison.EqualTo:\n                continue;\n\n            case Comparison.LessThan:\n                // If `array` is sorted, `next` should **never** be less than `last`.\n                return Debug.fail(\"Array is unsorted.\");\n        }\n\n        deduplicated.push(last = next);\n    }\n\n    return deduplicated as any as SortedReadonlyArray<T>;\n}",
+    "after": "function deduplicateSorted<T>(array: SortedReadonlyArray<T>, comparer: EqualityComparer<T> | Comparer<T>): SortedReadonlyArray<T> {\n    if (array.length === 0) return emptyArray as unknown as SortedReadonlyArray<T>;\n\n    let last = array[0]!;\n    const deduplicated: T[] = [last];\n    for (let i = 1; i < array.length; i++) {\n        const next = array[i]!;\n        switch (comparer(next, last)) {\n            // equality comparison\n            case true:\n\n            // relational comparison\n            // falls through\n            case Comparison.EqualTo:\n                continue;\n\n            case Comparison.LessThan:\n                // If `array` is sorted, `next` should **never** be less than `last`.\n                return Debug.fail(\"Array is unsorted.\");\n        }\n\n        deduplicated.push(last = next);\n    }\n\n    return deduplicated as unknown as SortedReadonlyArray<T>;\n}",
+    "ownerBeforeSha256": "009d177547023d4672e2a8fbe0f8d1934bedc808ba6c9d9ac9313420d98686da",
+    "ownerAfterSha256": "8e43b33289f580d8226c7e08d33f26ec080d1988ef379d1373789d0a0eded221",
+    "siteEdits": 2
+  },
+  {
+    "file": "core.ts",
+    "owner": "createSortedArray",
+    "beforeDeclarations": 1,
+    "afterDeclarations": 1,
+    "before": "export function createSortedArray<T>(): SortedArray<T> {\n    return [] as any as SortedArray<T>; // TODO: GH#19873\n}",
+    "after": "export function createSortedArray<T>(): SortedArray<T> {\n    return [] as unknown as SortedArray<T>; // TODO: GH#19873\n}",
+    "ownerBeforeSha256": "24f6ed79363c038cc9443cd057e69447d04d3b42828a87dc2bd833a29c08d57d",
+    "ownerAfterSha256": "b5e5a0270300fc5592425d982414a19eb7eb84f3737263a87c6357a2b394a46b",
+    "siteEdits": 1
+  },
+  {
+    "file": "core.ts",
+    "owner": "toSorted",
+    "beforeDeclarations": 1,
+    "afterDeclarations": 1,
+    "before": "export function toSorted<T>(array: readonly T[], comparer?: Comparer<T>): SortedReadonlyArray<T> {\n    return (array.length === 0 ? emptyArray : array.slice().sort(comparer)) as readonly T[] as SortedReadonlyArray<T>;\n}",
+    "after": "export function toSorted<T>(array: readonly T[], comparer?: Comparer<T>): SortedReadonlyArray<T> {\n    return (array.length === 0 ? emptyArray : array.slice().sort(comparer)) as unknown as SortedReadonlyArray<T>;\n}",
+    "ownerBeforeSha256": "935f1008af6a5f21ee2ba715919df6bd3a558c2c84e51b7de39eebd7a701ac05",
+    "ownerAfterSha256": "23d781206a9b66c9e107e514eb9712d719356d7854d3d1674e5777630077b3eb",
+    "siteEdits": 1
+  }
+]
